@@ -12,14 +12,30 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-
+        './utils/comparators',
+        './utils/helpers',
+        './utils/htmlHelpers',
+        './utils/keyCode'
     ],
     function (
-
+        comparators,
+        helpers,
+        htmlHelpers,
+        keyCode
     ) {
         'use strict';
 
+        //noinspection UnnecessaryLocalVariableJS
+        /**
+         * Core UI components. These are the ground components to build Comindware web application.
+         * @exports core
+         * */
         return {
-
+            utils: {
+                comparators: comparators,
+                helpers: helpers,
+                htmlHelpers: htmlHelpers,
+                keyCode: keyCode
+            }
         };
     });
