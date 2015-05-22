@@ -12,7 +12,7 @@
 /* global define, require, Backbone, _, shared */
 
 define(['module/utils', 'shared/models/behaviors/SelectableBehavior', 'core/utils/utilsApi'],
-    function (mutils, SelectableBehavior, utils) {
+    function (system, SelectableBehavior, utils) {
         'use strict';
 
         var selectableBehavior = {

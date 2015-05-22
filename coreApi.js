@@ -12,19 +12,32 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        './utils/utilsApi'
+        './utils/utilsApi',
+        './collections/SlidingWindowCollection',
+        './collections/VirtualCollection',
+        './collections/behaviors/HighlightableBehavior'
     ],
     function (
-        utilsApi
+        utilsApi,
+        SlidingWindowCollection,
+        VirtualCollection,
+        HighlightableBehavior
     ) {
         'use strict';
 
         //noinspection UnnecessaryLocalVariableJS
         /**
-         * Core UI components. These are the ground components to build Comindware web application.
+         * Core UI components: the ground components to build Comindware web application.
          * @exports core
          * */
         return {
+            collections: {
+                behaviors: {
+                    HighlightableBehavior: HighlightableBehavior
+                },
+                SlidingWindowCollection: SlidingWindowCollection,
+                VirtualCollection: VirtualCollection
+            },
             utils: utilsApi
         };
     });
