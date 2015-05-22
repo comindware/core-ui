@@ -15,13 +15,19 @@ define([
         './utils/utilsApi',
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
-        './collections/behaviors/HighlightableBehavior'
+        './collections/behaviors/HighlightableBehavior',
+        'core/models/behaviors/CollapsibleBehavior',
+        'core/models/behaviors/HighlightableBehavior',
+        'core/models/behaviors/SelectableBehavior'
     ],
     function (
         utilsApi,
         SlidingWindowCollection,
         VirtualCollection,
-        HighlightableBehavior
+        CollectionHighlightableBehavior,
+        CollapsibleBehavior,
+        HighlightableBehavior,
+        SelectableBehavior
     ) {
         'use strict';
 
@@ -33,10 +39,17 @@ define([
         return {
             collections: {
                 behaviors: {
-                    HighlightableBehavior: HighlightableBehavior
+                    HighlightableBehavior: CollectionHighlightableBehavior
                 },
                 SlidingWindowCollection: SlidingWindowCollection,
                 VirtualCollection: VirtualCollection
+            },
+            models: {
+                behaviors: {
+                    CollapsibleBehavior: CollapsibleBehavior,
+                    HighlightableBehavior: HighlightableBehavior,
+                    SelectableBehavior: SelectableBehavior
+                }
             },
             utils: utilsApi
         };
