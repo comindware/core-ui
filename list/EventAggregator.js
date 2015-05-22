@@ -29,16 +29,16 @@
     });
  */
 
-define(['shared/list/views/EmptyListView',
-        'shared/list/views/GridColumnHeaderView',
-        'shared/list/views/GridHeaderView',
-        'shared/list/views/GridView',
-        'shared/list/views/ListView',
-        'shared/list/views/ScrollbarView',
-        'shared/list/views/behaviors/ListGroupViewBehavior',
-        'shared/list/views/behaviors/ListItemViewBehavior',
-        'shared/list/models/behaviors/ListGroupBehavior',
-        'shared/list/models/behaviors/ListItemBehavior',
+define(['./views/EmptyListView',
+        './views/GridColumnHeaderView',
+        './views/GridHeaderView',
+        './views/GridView',
+        './views/ListView',
+        './views/ScrollbarView',
+        './views/behaviors/ListGroupViewBehavior',
+        './views/behaviors/ListItemViewBehavior',
+        './models/behaviors/ListGroupBehavior',
+        './models/behaviors/ListItemBehavior',
         'module/utils'
     ],
     function () {

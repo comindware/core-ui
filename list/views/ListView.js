@@ -26,7 +26,7 @@ define([
         'module/utils',
         'core/utils/utilsApi',
         'core/collections/SlidingWindowCollection',
-        'text!shared/list/templates/list.html'
+        'text!core/list/templates/list.html'
     ],
     function (lib, utils, SlidingWindowCollection, template) {
         'use strict';

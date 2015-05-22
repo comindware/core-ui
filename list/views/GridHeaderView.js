@@ -17,7 +17,7 @@
 *
 * */
 
-define(['text!shared/list/templates/gridheader.html', 'module/utils'],
+define(['text!core/list/templates/gridheader.html', 'module/utils'],
     function (template) {
         'use strict';
         var GridHeaderView = Marionette.ItemView.extend({

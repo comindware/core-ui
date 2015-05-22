@@ -22,7 +22,7 @@
         viewportHeight change (when we resize content views attached to this scrollbar): updateViewportHeight(newViewportHeight)
 */
 
-define(['text!shared/list/templates/scrollbar.html', 'module/utils'],
+define(['text!core/list/templates/scrollbar.html', 'module/utils'],
     function (template) {
         'use strict';
         var ScrollbarView = Marionette.ItemView.extend({

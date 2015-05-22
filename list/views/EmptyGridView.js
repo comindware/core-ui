@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars, Backbone */
 
-define(['text!shared/list/templates/emptyGrid.html', 'module/utils'],
+define(['text!core/list/templates/emptyGrid.html', 'module/utils'],
     function (template) {
         'use strict';
 

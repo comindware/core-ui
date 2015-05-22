@@ -22,7 +22,7 @@
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
 
-define(['text!shared/list/templates/grid.html', 'module/utils', 'core/utils/utilsApi', 'shared/list/views/ListView', 'shared/list/views/GridHeaderView'],
+define(['text!core/list/templates/grid.html', 'module/utils', 'core/utils/utilsApi', 'core/list/views/ListView', 'core/list/views/GridHeaderView'],
     function (template, lib, utils) {
         'use strict';
 
