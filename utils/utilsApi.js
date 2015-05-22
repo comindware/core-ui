@@ -1,6 +1,6 @@
 /**
  * Developer: Stepan Burguchev
- * Date: 5/21/2015
+ * Date: 5/22/2015
  * Copyright: 2009-2015 Comindware®
  *       All Rights Reserved
  *
@@ -12,19 +12,23 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        './utils/utilsApi'
+        './comparators',
+        './helpers',
+        './htmlHelpers',
+        './keyCode'
     ],
     function (
-        utilsApi
+        comparators,
+        helpers,
+        htmlHelpers,
+        keyCode
     ) {
         'use strict';
 
-        //noinspection UnnecessaryLocalVariableJS
-        /**
-         * Core UI components. These are the ground components to build Comindware web application.
-         * @exports core
-         * */
         return {
-            utils: utilsApi
+            comparators: comparators,
+            helpers: helpers,
+            htmlHelpers: htmlHelpers,
+            keyCode: keyCode
         };
     });
