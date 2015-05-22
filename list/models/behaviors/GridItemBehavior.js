@@ -12,13 +12,15 @@
 /* global define, require, _, classes */
 
 define([
-        'core/utils/utilsApi'
+        'core/utils/utilsApi',
+        'core/models/behaviors/SelectableBehavior',
+        'core/models/behaviors/HighlightableBehavior'
     ],
-    function (utils) {
+    function (utils, SelectableBehavior, HighlightableBehavior) {
         'use strict';
 
         return function (model) {
-            _.extend(this, new utils.models.behaviors.SelectableBehavior.Selectable(model));
-            _.extend(this, new utils.models.behaviors.HighlightableBehavior(model));
+            _.extend(this, new SelectableBehavior.Selectable(model));
+            _.extend(this, new HighlightableBehavior(model));
         };
     });
