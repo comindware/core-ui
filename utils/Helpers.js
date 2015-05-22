@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, _, ClassLoader, $ */
+/* global define, require, _, $ */
 
 define(['module/utils'],
     function () {

@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, _, ClassLoader, Handlebars */
+/* global define, require, _, Handlebars */
 
 /*
 * HtmlHelpers contains methods that somehow modify dom elements or generate html.

@@ -21,9 +21,9 @@ define([
 
         './views/behaviors/CustomAnchorBehavior',
 
-        './Factory'
+        './factory'
     ],
-    function (PopoutView, DropdownView, ListPanelView, MenuItemView, MenuPanelView, DefaultButtonView, CustomAnchorBehavior, Factory) {
+    function (PopoutView, DropdownView, ListPanelView, MenuItemView, MenuPanelView, DefaultButtonView, CustomAnchorBehavior, factory) {
         'use strict';
 
         return {
@@ -38,6 +38,6 @@ define([
                 MenuPanelView: MenuPanelView,
                 DefaultButtonView: DefaultButtonView
             },
-            factory: Factory
+            factory: factory
         };
     });

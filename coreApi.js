@@ -13,7 +13,8 @@
 
 define([
         './utils/utilsApi',
-        './utils/dropdownApi',
+        './dropdown/dropdownApi',
+        './list/listApi',
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
@@ -24,6 +25,7 @@ define([
     function (
         utilsApi,
         dropdownApi,
+        listApi,
         SlidingWindowCollection,
         VirtualCollection,
         CollectionHighlightableBehavior,
@@ -54,6 +56,7 @@ define([
                 }
             },
             dropdown: dropdownApi,
+            list: listApi,
             utils: utilsApi
         };
     });
