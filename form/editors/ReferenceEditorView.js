@@ -13,8 +13,8 @@
 
 define([
         'module/lib',
-        'module/core',
-        'text!../templates/referenceEditor.html',
+        'core/dropdown/dropdownApi',
+        'text!./templates/referenceEditor.html',
         './base/BaseLayoutEditorView',
         './impl/reference/views/ReferenceButtonView',
         './impl/reference/views/ReferencePanelView',
@@ -24,7 +24,7 @@ define([
     ],
     function (
         lib,
-        core,
+        dropdown,
         template,
         BaseLayoutEditorView,
         ReferenceButtonView,
@@ -104,7 +104,7 @@ define([
 
             onRender: function () {
                 // dropdown
-                this.dropdownView = core.dropdown.factory.createDropdown({
+                this.dropdownView = dropdown.factory.createDropdown({
                     buttonView: ReferenceButtonView,
                     buttonViewOptions: {
                         model: this.viewModel.get('button'),

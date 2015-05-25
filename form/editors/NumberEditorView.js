@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'module/lib', 'core/utilsApi'],
+define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'module/lib', 'core/utils/utilsApi'],
     function (template, BaseItemEditorView, lib, utils) {
         'use strict';
 

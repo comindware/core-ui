@@ -17,7 +17,7 @@ define([
         'core/utils/utilsApi',
         'text!./templates/memberSelectEditor.html',
         './base/BaseLayoutEditorView',
-        'shared/services/CacheService',
+        'core/serviceLocator',
         './impl/memberSelect/views/DefaultButtonView',
         './impl/memberSelect/views/PanelView',
         './impl/memberSelect/collections/MembersCollection',
@@ -30,7 +30,7 @@ define([
         utils,
         template,
         BaseLayoutEditorView,
-        CacheService,
+        serviceLocator,
         DefaultButtonView,
         PanelView,
         MembersCollection,
@@ -183,7 +183,7 @@ define([
             },
 
             __initCollection: function () {
-                CacheService.ListUsers().then(function (users) {
+                serviceLocator.cacheService.ListUsers().then(function (users) {
                     this.collection = new MembersVirtualCollection(new MembersCollection(users), {
                         comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'fullName')
                     });

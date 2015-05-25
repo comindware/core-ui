@@ -15,9 +15,9 @@ define([
         'module/lib',
         'core/dropdown/dropdownApi',
         'core/utils/utilsApi',
-        'text!../templates/membersBubbleEditor.html',
+        'core/serviceLocator',
+        'text!./templates/membersBubbleEditor.html',
         './base/BaseLayoutEditorView',
-        'shared/services/CacheService',
         './impl/membersBubble/models/MemberModel',
         './impl/membersBubble/models/FakeInputModel',
         './impl/membersBubble/collection/MembersCollection',
@@ -28,9 +28,9 @@ define([
         lib,
         dropdown,
         utils,
+        serviceLocator,
         template,
         BaseLayoutEditorView,
-        cacheService,
         MemberModel,
         FakeInputModel,
         MembersCollection,
@@ -180,7 +180,7 @@ define([
 
             __createViewModel: function () {
                 this.viewModel = new Backbone.Model();
-                var users = cacheService.GetUsers();
+                var users = serviceLocator.cacheService.GetUsers();
                 var members = {};
 
                 _.each(users, function(model) {

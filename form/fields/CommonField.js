@@ -12,12 +12,13 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
+        'module/lib',
     'text!./templates/CommonField.html',
     './models/FieldInfoModel',
     './views/InfoButtonView',
     './views/InfoMessageView',
-    'module/core'],
-    function (template, FieldInfoModel, InfoButtonView, InfoMessageView, core) {
+    'core/dropdown/dropdownApi'],
+    function (lib, template, FieldInfoModel, InfoButtonView, InfoMessageView, dropdown) {
         'use strict';
 
         var classes = {
@@ -79,7 +80,7 @@ define([
                         text: '',
                         error: true
                     });
-                    var errorPopout = core.dropdown.factory.createPopout({
+                    var errorPopout = dropdown.factory.createPopout({
                         panelView: InfoMessageView,
                         panelViewOptions: {
                             model: this.fieldErrorModel
@@ -99,7 +100,7 @@ define([
                     this.fieldInfoModel = new FieldInfoModel({
                         text: this.schema.helpText
                     });
-                    var infoPopout = core.dropdown.factory.createPopout({
+                    var infoPopout = dropdown.factory.createPopout({
                         panelView: InfoMessageView,
                         panelViewOptions: {
                             model: this.fieldInfoModel

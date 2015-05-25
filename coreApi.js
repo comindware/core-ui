@@ -16,6 +16,7 @@ define([
         './dropdown/dropdownApi',
         './list/listApi',
         './form/formApi',
+        './serviceLocator',
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
@@ -28,6 +29,7 @@ define([
         dropdownApi,
         listApi,
         formApi,
+        serviceLocator,
         SlidingWindowCollection,
         VirtualCollection,
         CollectionHighlightableBehavior,
@@ -60,6 +62,7 @@ define([
             dropdown: dropdownApi,
             form: formApi,
             list: listApi,
-            utils: utilsApi
+            utils: utilsApi,
+            serviceLocator: serviceLocator
         };
     });

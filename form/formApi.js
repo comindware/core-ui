@@ -16,6 +16,11 @@ define([
 
         './fields/CommonField',
 
+        './editors/base/BaseItemEditorView',
+        './editors/base/BaseLayoutEditorView',
+        './editors/base/BaseCollectionEditorView',
+        './editors/base/BaseCompositeEditorView',
+
         './editors/BooleanEditorView',
         './editors/NumberEditorView',
         './editors/TextAreaEditorView',
@@ -25,6 +30,7 @@ define([
         './editors/DropdownEditorView',
         './editors/MembersBubbleEditorView',
         './editors/DurationEditorView',
+        './editors/RadioGroupEditorView',
 
         './editors/impl/reference/controllers/DemoReferenceEditorController',
         './editors/impl/reference/controllers/DataSourceReferenceEditorController',
@@ -32,6 +38,12 @@ define([
         './editors/impl/reference/collections/DataSourceReferenceCollection',
         './editors/impl/reference/collections/BaseReferenceCollection',
         './editors/impl/reference/models/DefaultReferenceModel',
+        './editors/impl/reference/models/SearchMoreModel',
+        './editors/impl/reference/views/ReferenceListItemView',
+        './editors/impl/reference/views/SearchMoreListItemView',
+        './editors/impl/reference/views/LoadingView',
+        './editors/impl/reference/views/ReferenceButtonView',
+        './editors/impl/reference/views/ReferencePanelView',
 
         './validators/RequiredValidator',
         './validators/LengthValidator',
@@ -42,6 +54,10 @@ define([
 	function (
         BackboneFormBehavior,
         CommonField,
+        BaseItemEditorView,
+        BaseLayoutEditorView,
+        BaseCollectionEditorView,
+        BaseCompositeEditorView,
         ExtendedForm,
         BooleanEditorView,
         NumberEditorView,
@@ -52,12 +68,20 @@ define([
         DropdownEditorView,
         MembersBubbleEditorView,
         DurationEditorView,
+        RadioGroupEditorView,
+
         DemoReferenceEditorController,
         DataSourceReferenceEditorController,
         BaseReferenceEditorController,
         DataSourceReferenceCollection,
         BaseReferenceCollection,
-        DefaultReferenceModel
+        DefaultReferenceModel,
+        SearchMoreModel,
+        ReferenceListItemView,
+        SearchMoreListItemView,
+        LoadingView,
+        ReferenceButtonView,
+        ReferencePanelView
         ) {
 		'use strict';
 
@@ -69,6 +93,12 @@ define([
                 CommonField: CommonField
             },
 			editors: {
+                base: {
+                    BaseItemEditorView: BaseItemEditorView,
+                    BaseLayoutEditorView: BaseLayoutEditorView,
+                    BaseCollectionEditorView: BaseCollectionEditorView,
+                    BaseCompositeEditorView: BaseCompositeEditorView
+                },
                 reference: {
                     controllers: {
                         DemoReferenceEditorController: DemoReferenceEditorController,
@@ -80,7 +110,15 @@ define([
                         DataSourceReferenceCollection: DataSourceReferenceCollection
                     },
                     models: {
-                        DefaultReferenceModel: DefaultReferenceModel
+                        DefaultReferenceModel: DefaultReferenceModel,
+                        SearchMoreModel: SearchMoreModel
+                    },
+                    views: {
+                        ReferenceListItemView: ReferenceListItemView,
+                        SearchMoreListItemView: SearchMoreListItemView,
+                        LoadingView: LoadingView,
+                        ReferenceButtonView: ReferenceButtonView,
+                        ReferencePanelView: ReferencePanelView
                     }
                 },
 				BooleanEditor: BooleanEditorView,
