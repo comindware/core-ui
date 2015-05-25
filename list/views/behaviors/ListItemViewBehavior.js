@@ -29,7 +29,7 @@
     1. The htmlHelpers.highlightText(text, fragment, escape = true) function was created for this purpose and recommended to use for implementation. It also escapes the input text by default.
     2. (!) Be sure that the text you set into html is escaped.
 */
-define(['module/utils'],
+define(['module/lib'],
     function () {
         'use strict';
         var ListItemViewBehavior = Marionette.Behavior.extend({

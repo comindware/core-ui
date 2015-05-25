@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars, _, $ */
 
-define(['module/utils', 'core/utils/utilsApi'],
+define(['module/lib', 'core/utils/utilsApi'],
     function (lib, utils) {
         'use strict';
         var GridItemViewBehavior = Marionette.Behavior.extend({

@@ -26,7 +26,7 @@ define(['./EventAggregator',
         './models/behaviors/ListItemBehavior',
         './models/behaviors/GridItemBehavior',
         './factory',
-        'module/utils'
+        'module/lib'
     ],
     function (EventAggregator,
               EmptyListView,

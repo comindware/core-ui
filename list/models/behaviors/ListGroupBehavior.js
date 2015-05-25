@@ -13,7 +13,7 @@
 
 define([
         'core/models/behaviors/CollapsibleBehavior',
-        'module/utils'
+        'module/lib'
     ],
     function (CollapsibleBehavior) {
         'use strict';

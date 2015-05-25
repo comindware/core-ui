@@ -17,7 +17,7 @@
     Options:
         collapseButton - jquery selector string that points to the collapse/expand button. If omitted, whole view is considered the button and toggle the collapse state on click.
 */
-define(['module/utils'],
+define(['module/lib'],
     function () {
         'use strict';
         var ListGroupViewBehavior = Marionette.Behavior.extend({

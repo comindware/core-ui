@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars */
 
-define(['text!core/list/templates/gridcolumnheader.html', 'module/utils'],
+define(['text!core/list/templates/gridcolumnheader.html', 'module/lib'],
     function (template) {
         'use strict';
         var GridColumnHeaderView = Marionette.ItemView.extend({

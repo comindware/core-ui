@@ -16,7 +16,7 @@
 *
 * */
 
-define(['module/utils'],
+define(['module/lib'],
     function () {
         'use strict';
 

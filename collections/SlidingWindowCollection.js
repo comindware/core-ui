@@ -11,7 +11,7 @@
 
 /* global define, require, Backbone, _ */
 
-define(['module/utils'],
+define(['module/lib'],
     function () {
         'use strict';
 

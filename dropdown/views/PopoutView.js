@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!../templates/popout.html', 'module/utils', 'core/utils/utilsApi'],
+define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
     function (template, lib, utils) {
         'use strict';
 

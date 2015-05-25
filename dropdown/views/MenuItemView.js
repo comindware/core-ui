@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!../templates/menuItem.html', 'module/utils'],
+define(['text!../templates/menuItem.html', 'module/lib'],
     function (template) {
         'use strict';
         return Marionette.ItemView.extend({

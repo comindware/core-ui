@@ -15,7 +15,7 @@
 * HtmlHelpers contains methods that somehow modify dom elements or generate html.
 *
 * */
-define(['module/utils'],
+define(['module/lib'],
     function () {
         'use strict';
 

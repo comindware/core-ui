@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars, Backbone */
 
-define(['text!core/list/templates/emptyList.html', 'module/utils'],
+define(['text!core/list/templates/emptyList.html', 'module/lib'],
     function (template) {
         'use strict';
 
