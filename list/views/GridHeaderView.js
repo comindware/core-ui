@@ -17,8 +17,8 @@
 *
 * */
 
-define(['text!core/list/templates/gridheader.html', 'module/lib'],
-    function (template) {
+define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/utilsApi'],
+    function (template, lib, utils) {
         'use strict';
         var GridHeaderView = Marionette.ItemView.extend({
             initialize: function (options) {
@@ -224,7 +224,7 @@ define(['text!core/list/templates/gridheader.html', 'module/lib'],
             },
 
             __handleResize: function () {
-                core.utils.helpers.setUniqueTimeout(this.__handleResizeInternal, this.__handleResizeInternal, 100);
+                utils.helpers.setUniqueTimeout(this.__handleResizeInternal, this.__handleResizeInternal, 100);
             },
 
             __handleResizeInternal: function ()

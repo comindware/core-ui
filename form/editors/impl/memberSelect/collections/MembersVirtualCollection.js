@@ -23,7 +23,7 @@ define([
 
         return VirtualCollection.extend({
             initialize: function () {
-                utils.applyBehavior(this, HighlightableBehavior);
+                utils.helpers.applyBehavior(this, HighlightableBehavior);
             },
 
             model: MemberModel

@@ -21,6 +21,8 @@ define([
         './editors/base/BaseCollectionEditorView',
         './editors/base/BaseCompositeEditorView',
 
+        './ExtendedForm',
+
         './editors/BooleanEditorView',
         './editors/NumberEditorView',
         './editors/TextAreaEditorView',
@@ -86,6 +88,7 @@ define([
 		'use strict';
 
 		return {
+            ExtendedForm: ExtendedForm,
             behaviors: {
                 BackboneFormBehavior: BackboneFormBehavior
             },
@@ -129,7 +132,8 @@ define([
                 MemberSelectEditor: MemberSelectEditorView,
                 DropdownEditor: DropdownEditorView,
                 MembersBubbleEditor: MembersBubbleEditorView,
-                DurationEditor: DurationEditorView
+                DurationEditor: DurationEditorView,
+                RadioGroupEditor: RadioGroupEditorView
 			}
 		};
 	});

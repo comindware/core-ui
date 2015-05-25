@@ -20,7 +20,7 @@ define([
 
         return Backbone.AssociatedModel.extend({
             initialize: function () {
-                utils.applyBehavior(this, list.models.behaviors.ListItemBehavior);
+                utils.helpers.applyBehavior(this, list.models.behaviors.ListItemBehavior);
             }
         });
     });

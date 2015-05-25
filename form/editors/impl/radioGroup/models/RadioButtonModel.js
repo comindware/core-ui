@@ -21,7 +21,7 @@ define([
 
         return Backbone.Model.extend({
             initialize: function () {
-                utils.applyBehavior(this, SelectableBehavior.SingleSelect);
+                utils.helpers.applyBehavior(this, SelectableBehavior.Selectable);
             }
         });
     });
