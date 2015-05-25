@@ -12,11 +12,13 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define(['module/lib',
+        'core/list/listApi',
+        'core/dropdown/dropdownApi',
+        'core/utils/utilsApi',
         'text!../templates/panel.html',
-        './ListItemView',
-        'module/core'
+        './ListItemView'
     ],
-    function (lib, template, ListItemView, core) {
+    function (lib, list, dropdown, utils, template, ListItemView) {
         'use strict';
 
         var config = {
@@ -26,8 +28,8 @@ define(['module/lib',
 
         return Marionette.LayoutView.extend({
             initialize: function (options) {
-                core.utils.helpers.ensureOption(options, 'model');
-                core.utils.helpers.ensureOption(options, 'reqres');
+                utils.helpers.ensureOption(options, 'model');
+                utils.helpers.ensureOption(options, 'reqres');
 
                 this.reqres = options.reqres;
 
@@ -44,7 +46,7 @@ define(['module/lib',
 
             behaviors: {
                 CustomAnchorBehavior: {
-                    behaviorClass: core.dropdown.views.behaviors.CustomAnchorBehavior,
+                    behaviorClass: dropdown.views.behaviors.CustomAnchorBehavior,
                     anchor: '.js-anchor'
                 }
             },
@@ -66,7 +68,7 @@ define(['module/lib',
             },
 
             onShow: function () {
-                var result = core.list.factory.createDefaultList({
+                var result = list.factory.createDefaultList({
                     collection: this.model.get('collection'),
                     listViewOptions: {
                         childView: ListItemView,
@@ -123,7 +125,7 @@ define(['module/lib',
                 if (this.activeText === text) {
                     return;
                 }
-                core.utils.helpers.setUniqueTimeout(this.fetchDelayId, function () {
+                utils.helpers.setUniqueTimeout(this.fetchDelayId, function () {
                     this.activeText = text;
                     var collection = this.model.get('collection');
                     collection.deselect();

@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/core', './ListItemView', 'text!../templates/panel.html'],
-    function (core, ListItemView, template) {
+define(['core/list/listApi', './ListItemView', 'text!../templates/panel.html'],
+    function (list, ListItemView, template) {
         'use strict';
 
         var config = {
@@ -34,7 +34,7 @@ define(['module/core', './ListItemView', 'text!../templates/panel.html'],
             },
 
             onShow: function () {
-                this.availableList = core.list.factory.createDefaultList({
+                this.availableList = list.factory.createDefaultList({
                     collection: this.collection,
                     listViewOptions: {
                         childView: ListItemView,

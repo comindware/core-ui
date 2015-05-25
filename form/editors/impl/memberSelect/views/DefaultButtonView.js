@@ -11,10 +11,11 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/core',
-        'text!../../memberSelect/templates/defaultButton.html'
+define(['core/dropdown/dropdownApi',
+        'module/lib',
+        'text!../templates/defaultButton.html'
     ],
-    function (core, template) {
+    function (dropdown, lib, template) {
         'use strict';
 
         var classes = {
@@ -30,7 +31,7 @@ define(['module/core',
 
             behaviors: {
                 CustomAnchorBehavior: {
-                    behaviorClass: core.dropdown.views.behaviors.CustomAnchorBehavior,
+                    behaviorClass: dropdown.views.behaviors.CustomAnchorBehavior,
                     anchor: '.js-anchor'
                 }
             },

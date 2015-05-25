@@ -109,6 +109,13 @@ define(['module/lib'],
                 }
                 return deferred.promise();
             },
+
+            applyBehavior: function (model) {
+                var behaviors = _.rest(arguments, 1);
+                _.each(behaviors, function (Behavior) {
+                    _.extend(model, new Behavior(model));
+                });
+            },
             
             ensureOption: function (options, optionName) {
                 if (!options) {

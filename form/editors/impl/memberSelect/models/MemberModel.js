@@ -11,13 +11,16 @@
 
 /* global define, require, Backbone, Marionette, $, _ */
 
-define(['module/core'],
-    function (core) {
+define([
+        'core/list/listApi',
+        'core/utils/utilsApi'
+    ],
+    function (list, utils) {
         'use strict';
 
         return Backbone.AssociatedModel.extend({
             initialize: function () {
-                _.extend(this, new core.list.models.behaviors.ListItemBehavior(this));
+                utils.applyBehavior(this, list.models.behaviors.ListItemBehavior);
             }
         });
     });

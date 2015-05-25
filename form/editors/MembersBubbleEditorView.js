@@ -13,27 +13,30 @@
 
 define([
         'module/lib',
-        'module/core',
+        'core/dropdown/dropdownApi',
+        'core/utils/utilsApi',
         'text!../templates/membersBubbleEditor.html',
-        './EditorBaseLayoutView',
+        './base/BaseLayoutEditorView',
         'shared/services/CacheService',
-        './membersBubble/models/MemberModel',
-        './membersBubble/models/FakeInputModel',
-        './membersBubble/collection/MembersCollection',
-        './membersBubble/views/ButtonView',
-        './membersBubble/views/PanelView'
+        './impl/membersBubble/models/MemberModel',
+        './impl/membersBubble/models/FakeInputModel',
+        './impl/membersBubble/collection/MembersCollection',
+        './impl/membersBubble/views/ButtonView',
+        './impl/membersBubble/views/PanelView'
     ],
     function (
+        lib,
+        dropdown,
         utils,
-        core,
         template,
-        EditorBaseLayoutView,
+        BaseLayoutEditorView,
         cacheService,
         MemberModel,
         FakeInputModel,
         MembersCollection,
         ButtonView,
-        PanelView) {
+        PanelView
+    ) {
 
         'use strict';
 
@@ -44,7 +47,7 @@ define([
             canDeleteMember: true
         };
 
-        Backbone.Form.editors.MembersBubble = EditorBaseLayoutView.extend({
+        Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -81,7 +84,7 @@ define([
                     this.stopListening(this.dropdownView);
                 }
                 this.__applyFilter();
-                this.dropdownView = core.dropdown.factory.createDropdown({
+                this.dropdownView = dropdown.factory.createDropdown({
                     buttonView: ButtonView,
                     buttonViewOptions: {
                         model: this.viewModel,
@@ -181,6 +184,7 @@ define([
                 var members = {};
 
                 _.each(users, function(model) {
+                    //noinspection JSUnresolvedVariable
                     members[model.Id] = {
                         id: model.Id,
                         name: (model.Text || model.Username),
@@ -194,13 +198,13 @@ define([
                 var availableModels = new MembersCollection(new Backbone.Collection([], {
                     model: MemberModel
                 }), {
-                    comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'name')
+                    comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'name')
                 });
                 this.viewModel.set('available', availableModels);
 
                 var selectedModels = new Backbone.Collection([], {
                     model: MemberModel,
-                    comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'name')
+                    comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'name')
                 });
                 this.viewModel.set('selected', selectedModels);
             },

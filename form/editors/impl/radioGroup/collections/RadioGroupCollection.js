@@ -1,7 +1,7 @@
 /**
  * Developer: Ksenia Kartvelishvili
- * Date: 05.12.2014
- * Copyright: 2009-2014 Comindware®
+ * Date: 04.03.2015
+ * Copyright: 2009-2015 Comindware®
  *       All Rights Reserved
  *
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
@@ -12,19 +12,18 @@
 /* global define, require, Backbone, Marionette, $, _ */
 
 define([
+        'module/lib',
         'core/utils/utilsApi',
-        'core/collections/VirtualCollection',
-        'core/collections/behaviors/HighlightableBehavior',
-        '../models/MemberModel'
-    ],
-    function (utils, VirtualCollection, HighlightableBehavior, MemberModel) {
+        'core/models/behaviors/SelectableBehavior',
+        '../models/RadioButtonModel'],
+    function (lib, utils, SelectableBehavior, RadioButtonModel) {
         'use strict';
 
-        return VirtualCollection.extend({
+        return Backbone.Collection.extend({
             initialize: function () {
-                utils.applyBehavior(this, HighlightableBehavior);
+                utils.applyBehavior(this, SelectableBehavior.SingleSelect);
             },
 
-            model: MemberModel
+            model: RadioButtonModel
         });
     });

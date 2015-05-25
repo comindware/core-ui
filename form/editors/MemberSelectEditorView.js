@@ -13,21 +13,23 @@
 
 define([
         'module/lib',
-        'module/core',
-        'text!../templates/memberSelectEditor.html',
-        './EditorBaseLayoutView',
+        'core/dropdown/dropdownApi',
+        'core/utils/utilsApi',
+        'text!./templates/memberSelectEditor.html',
+        './base/BaseLayoutEditorView',
         'shared/services/CacheService',
-        './memberSelect/views/DefaultButtonView',
-        './memberSelect/views/PanelView',
-        './memberSelect/collections/MembersCollection',
-        './memberSelect/models/MemberModel',
-        './memberSelect/collections/MembersVirtualCollection'
+        './impl/memberSelect/views/DefaultButtonView',
+        './impl/memberSelect/views/PanelView',
+        './impl/memberSelect/collections/MembersCollection',
+        './impl/memberSelect/models/MemberModel',
+        './impl/memberSelect/collections/MembersVirtualCollection'
     ],
     function (
         lib,
-        core,
+        dropdown,
+        utils,
         template,
-        EditorBaseLayoutView,
+        BaseLayoutEditorView,
         CacheService,
         DefaultButtonView,
         PanelView,
@@ -58,7 +60,7 @@ define([
             ]
         });
 
-        Backbone.Form.editors.MemberSelect = EditorBaseLayoutView.extend({
+        Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend({
             initialize: function (options) {
                 var defOpts = _.cloneDeep(defaultOptions);
                 if (options.schema) {
@@ -125,7 +127,7 @@ define([
                         reqres: this.reqres
                     }
                 }, this.options.dropdownOptions);
-                this.dropdownView = core.dropdown.factory.createPopout(dropdownOptions);
+                this.dropdownView = dropdown.factory.createPopout(dropdownOptions);
                 this.dropdownRegion.show(this.dropdownView);
                 // hotkeys
                 if (this.keyListener) {
@@ -183,7 +185,7 @@ define([
             __initCollection: function () {
                 CacheService.ListUsers().then(function (users) {
                     this.collection = new MembersVirtualCollection(new MembersCollection(users), {
-                        comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'fullName')
+                        comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'fullName')
                     });
                     this.viewModel.get('button').set('member', this.__findModel(this.getValue()));
                     this.viewModel.get('panel').set('collection', this.collection);

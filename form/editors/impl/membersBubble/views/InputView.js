@@ -9,10 +9,10 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'module/core', 'text!../templates/input.html'],
-    function (lib, core, template) {
+define(['module/lib', 'core/utils/utilsApi', 'text!../templates/input.html'],
+    function (lib, utils, template) {
         'use strict';
 
         var config = {
@@ -91,7 +91,7 @@ define(['module/lib', 'module/core', 'text!../templates/input.html'],
                 },
                 'backspace': function () {
                     var value = this.__getFilterValue();
-                    if (value.length == 0) {
+                    if (value.length === 0) {
                         if (!this.options.enabled) {
                             return;
                         }
@@ -118,7 +118,7 @@ define(['module/lib', 'module/core', 'text!../templates/input.html'],
                     return;
                 }
                 this.__updateInputWidth(this.__calculateDesiredInputWidth(value || this.ui.input.attr('placeholder')));
-                core.utils.helpers.setUniqueTimeout(this.fetchDelayId, function () {
+                utils.helpers.setUniqueTimeout(this.fetchDelayId, function () {
                     this.filterValue = value;
                     this.reqres.request('input:search', value);
                 }.bind(this), config.TEXT_FETCH_DELAY);
@@ -140,7 +140,7 @@ define(['module/lib', 'module/core', 'text!../templates/input.html'],
                 width = div.width() + 25;
                 div.remove();
                 parentWidth = this.parent.outerWidth();
-                if (parentWidth != 0 && ( width > parentWidth - 10 )) {
+                if (parentWidth !== 0 && ( width > parentWidth - 10 )) {
                     width = parentWidth - 10;
                 }
                 return width;

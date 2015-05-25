@@ -11,13 +11,19 @@
 
 /* global define, require, Backbone, Marionette, $, _ */
 
-define(['../models/MemberModel', 'module/core'],
-    function (MemberModel, core) {
+define([
+        '../models/MemberModel',
+        'core/list/listApi',
+        'core/utils/utilsApi',
+        'core/collections/VirtualCollection',
+        'core/collections/behaviors/HighlightableBehavior'
+    ],
+    function (MemberModel, list, utils, VirtualCollection, HighlightableBehavior) {
         'use strict';
 
-        return core.collections.VirtualCollection.extend({
+        return VirtualCollection.extend({
             initialize: function () {
-                _.extend(this, new core.collections.behaviors.HighlightableBehavior());
+                utils.applyBehavior(this, HighlightableBehavior);
             },
 
             model: MemberModel

@@ -11,8 +11,13 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'module/core', 'text!../templates/listItem.html'],
-    function (utils, core, template) {
+define([
+        'module/lib',
+        'core/list/listApi',
+        'core/utils/utilsApi',
+        'text!../templates/listItem.html'
+    ],
+    function (lib, list, utils, template) {
         'use strict';
         return Marionette.ItemView.extend({
             initialize: function (options) {
@@ -21,7 +26,7 @@ define(['module/lib', 'module/core', 'text!../templates/listItem.html'],
 
             behaviors: {
                 ListItemViewBehavior: {
-                    behaviorClass: core.list.views.behaviors.ListItemViewBehavior
+                    behaviorClass: list.views.behaviors.ListItemViewBehavior
                 }
             },
 
@@ -45,7 +50,7 @@ define(['module/lib', 'module/core', 'text!../templates/listItem.html'],
 
             OnHighlighted: function (fragment)
             {
-                var text = core.utils.htmlHelpers.highlightText(this.__getText(), fragment);
+                var text = utils.htmlHelpers.highlightText(this.__getText(), fragment);
                 this.ui.fullName.html(text);
             },
 
