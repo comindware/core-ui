@@ -1,0 +1,22 @@
+<span class="js-anchor">
+    {{#with member}}
+      {{#if userpicUri}}
+       <span style="background-image: url({{userpicUri}});" class="js-avatar avatar-icon avatar-icon_field"></span>
+      {{else}}
+      <span class="avatar-icon avatar-icon_field">
+        {{abbreviation}}
+      </span>
+      {{/if}}
+    {{else}}
+    <span class="avatar-icon avatar-icon_field avatar-icon_assignee avatar-icon_field">
+    </span>
+    {{/with}}
+</span>
+<span class="js-text field-user__content">
+    {{#with member}}
+    {{fullName}}
+    {{else}}
+      <span class="dev-member-not-set">{{localize 'SUITEGENERAL.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>
+    {{/with}}
+    {{#if enabled}} <span class="js-clear-button button-delete button-delete_absolute"></span>{{/if}}
+</span>

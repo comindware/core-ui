@@ -1,0 +1,10 @@
+<div class="js-menu-select-item menu-bselect__item">
+    {{#if userpicUri}}
+    <img src="{{userpicUri}}" alt="" class="dev-user-icon avatar-icon avatar-icon_list">
+    {{else}}
+        {{#if abbreviation}}
+    <div class="avatar-icon avatar-icon_list">{{abbreviation}}</div>
+        {{/if}}
+    {{/if}}
+    <span class="js-name">{{name}}</span>
+</div>

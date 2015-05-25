@@ -15,12 +15,14 @@ define([
         './comparators',
         './helpers',
         './htmlHelpers',
+        './dateHelpers',
         './keyCode'
     ],
     function (
         comparators,
         helpers,
         htmlHelpers,
+        dateHelpers,
         keyCode
     ) {
         'use strict';
@@ -29,6 +31,7 @@ define([
             comparators: comparators,
             helpers: helpers,
             htmlHelpers: htmlHelpers,
+            dateHelpers: dateHelpers,
             keyCode: keyCode
         };
     });

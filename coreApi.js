@@ -15,6 +15,7 @@ define([
         './utils/utilsApi',
         './dropdown/dropdownApi',
         './list/listApi',
+        './form/formApi',
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
@@ -26,6 +27,7 @@ define([
         utilsApi,
         dropdownApi,
         listApi,
+        formApi,
         SlidingWindowCollection,
         VirtualCollection,
         CollectionHighlightableBehavior,
@@ -56,6 +58,7 @@ define([
                 }
             },
             dropdown: dropdownApi,
+            form: formApi,
             list: listApi,
             utils: utilsApi
         };
