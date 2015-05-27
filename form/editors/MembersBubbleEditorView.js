@@ -59,7 +59,7 @@ define([
                 this.__createViewModel();
                 this.__updateViewModel(this.getValue());
                 this.__updateFakeInputModel();
-                this.value = [];
+                this.value = this.getValue() || [];
             },
 
             __bindReqres: function () {
