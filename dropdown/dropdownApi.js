@@ -26,8 +26,16 @@ define([
     function (PopoutView, DropdownView, ListPanelView, MenuItemView, MenuPanelView, DefaultButtonView, CustomAnchorBehavior, factory) {
         'use strict';
 
-        return /** @lends module:core.utils.Helpers */ {
+        return /** @lends module:core.dropdown */ {
+            /**
+             * Компоненты общего назначения для Backbone-коллекций.
+             * @namespace
+             * */
             views: {
+                /**
+                 * Behavior-объекты общего назначения для Backbone-коллекций.
+                 * @namespace
+                 * */
                 behaviors: {
                     CustomAnchorBehavior: CustomAnchorBehavior
                 },
