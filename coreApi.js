@@ -1,7 +1,7 @@
 /**
  * Developer: Stepan Burguchev
  * Date: 5/21/2015
- * Copyright: 2009-2015 Comindware�
+ * Copyright: 2009-2015 Comindware®
  *       All Rights Reserved
  *
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
@@ -41,17 +41,29 @@ define([
 
         //noinspection UnnecessaryLocalVariableJS
         /**
-         * Core UI components: the ground components to build Comindware web application.
+         * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
          * @exports core
          * */
         return {
+            /**
+             * Backbone-коллекции общего назначения
+             * @namespace
+             * */
             collections: {
+                /**
+                 * Behavior-объекты общего назначения для Backbone-коллекций.
+                 * @namespace
+                 * */
                 behaviors: {
                     HighlightableBehavior: CollectionHighlightableBehavior
                 },
                 SlidingWindowCollection: SlidingWindowCollection,
                 VirtualCollection: VirtualCollection
             },
+            /**
+             * Backbone-модели общего назначения
+             * @namespace
+             * */
             models: {
                 behaviors: {
                     CollapsibleBehavior: CollapsibleBehavior,
@@ -59,6 +71,11 @@ define([
                     SelectableBehavior: SelectableBehavior
                 }
             },
+            /**
+             * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
+             * Не подпадающий под концепцию этих компонентов дизайн выпадающих элементов должен быть пересмотрен.
+             * @namespace
+             * */
             dropdown: dropdownApi,
             form: formApi,
             list: listApi,
