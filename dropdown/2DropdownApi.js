@@ -26,7 +26,7 @@ define([
     function (PopoutView, DropdownView, ListPanelView, MenuItemView, MenuPanelView, DefaultButtonView, CustomAnchorBehavior, factory) {
         'use strict';
 
-        return {
+        return /** @lends module:core.utils.Helpers */ {
             views: {
                 behaviors: {
                     CustomAnchorBehavior: CustomAnchorBehavior
