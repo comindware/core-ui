@@ -44,7 +44,7 @@ define([
          * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
          * @exports core
          * */
-        return {
+        var exports = {
             /**
              * Backbone-коллекции общего назначения
              * @namespace
@@ -82,4 +82,5 @@ define([
             utils: utilsApi,
             serviceLocator: serviceLocator
         };
+        return exports;
     });
