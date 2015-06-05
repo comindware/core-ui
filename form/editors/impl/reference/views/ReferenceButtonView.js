@@ -24,7 +24,7 @@ define(['module/lib', 'text!../../reference/templates/referenceButton.html'],
                 this.reqres = options.reqres;
             },
 
-            className: 'reference-field pr-arrow-right',
+            className: 'reference-field pr-arrow-right btn-wrp',
 
             template: Handlebars.compile(template),
 
