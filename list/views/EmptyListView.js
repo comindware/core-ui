@@ -15,7 +15,7 @@ define(['text!core/list/templates/emptyList.html', 'module/lib'],
     function (template) {
         'use strict';
 
-        var defaultText = 'The list is empty';
+        var defaultText = Localizer.get("PROCESS.COMMON.VIEW.GRID.EMPTY");
 
         var EmptyListView = Marionette.ItemView.extend({
             initialize: function (options) {

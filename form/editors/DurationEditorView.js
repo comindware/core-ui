@@ -223,8 +223,11 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
             },
 
             __value: function (value) {
+                var triggerChange = value !== this.value;
                 this.value = value;
-                this.__triggerChange();
+                if (triggerChange) {
+                    this.__triggerChange();
+                }
             },
 
             __keydown: function (event) {
@@ -273,16 +276,16 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
                     break;
                 case keyCode.DELETE:
                     if (this.atSegmentStart(position)) {
-                        if (this.getSegmentValue(index).length === 1) {
-                            this.setSegmentValue(index, 0, true);
-                            this.setCaretPos(focusedParts[index].end);
+                        var segmentValue = this.getSegmentValue(index);
+                        if (segmentValue.length === 1) {
+                            if (segmentValue !== '0') {
+                                this.setSegmentValue(index, 0, true);
+                                this.setCaretPos(position);
+                            }    
                             return false;
                         }
                     }
                     if (this.atSegmentEnd(position)) {
-                        if (focusedParts[index + 1]) {
-                            this.setCaretPos(focusedParts[index + 1].start);
-                        }
                         return false;
                     }
                     break;
@@ -356,12 +359,17 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
             },
 
             applyDisplayValue: function (clear) {
-                var val = clear ? [0, 0, 0] : this.getSegmentValue();
-                var obj = {
-                    days: parseInt(val[0]),
-                    hours: parseInt(val[1]),
-                    minutes: parseInt(val[2])
-                };
+	    	var obj;
+                var val = clear ? null : this.getSegmentValue();
+                if (val) {
+                    obj = {
+                        days: parseInt(val[0]),
+                        hours: parseInt(val[1]),
+                        minutes: parseInt(val[2])
+                    };
+                } else {
+                    obj = val;
+                }
                 this._setCurrentDisplayValue(utils.dateHelpers.objToTimestampTakingWorkHours(obj));
                 var newValue = utils.dateHelpers.durationToServerFormat(this._currentDisplayValue);
                 if (newValue !== this.value) {
@@ -414,7 +422,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
                 var days = this._currentDisplayValue ? this._currentDisplayValue.days : Math.floor(v / 60 / defaultOptions.workHours);
                 if (trimmed) {
                     var res = '';
-                    if (days) {
+                    if (days || (v !== null && !hours && !minutes)) {
                         res += days + focusedParts[0].text;
                     }
                     if (hours) {

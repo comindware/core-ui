@@ -101,16 +101,19 @@ define(['./fields/CommonField'], function (CommonField) {
 		checkLockedSubmit: function () {
 			var errors = this.silentValidate();
             var $submitElem = $(this.submitAction);
-			if (errors) {
-				if (!$submitElem.is(':disabled')) {
-                    $submitElem.prop('disabled', true);
-                }
-			}
-			else {
-				if ($submitElem.is(':disabled')) {
-                    $submitElem.prop('disabled', false);
-                }
-			}
+		    if (errors) {
+		        if (!this.locked) {
+		            this.locked = true;
+			    if (!$submitElem.is(':disabled')) {
+		                $submitElem.prop('disabled', true);
+		            }
+		        }
+		    } else {
+		        this.locked = false;
+		    	if ($submitElem.is(':disabled')) {
+	                    $submitElem.prop('disabled', false);
+	                }
+		    }
 		},
 
 		validationDelay: 1000,

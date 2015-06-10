@@ -51,8 +51,9 @@ define(['module/lib', 'text!../../reference/templates/referenceButton.html'],
             },
 
             __navigate: function () {
-                this.reqres.request('value:navigate', this.model.get('value'));
-                return false;
+                if (this.reqres.request('value:navigate', this.model.get('value'))) {
+                    return false;
+                }
             },
 
             modelEvents: {

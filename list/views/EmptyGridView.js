@@ -15,7 +15,7 @@ define(['text!core/list/templates/emptyGrid.html', 'module/lib'],
     function (template) {
         'use strict';
 
-        var defaultText = 'The grid is empty';
+        var defaultText = Localizer.get('PROCESS.COMMON.VIEW.GRID.EMPTY');
 
         return Marionette.ItemView.extend({
             initialize: function (options) {

@@ -81,6 +81,9 @@ define(['module/lib',
                         childViewOptions: {
                             reqres: this.reqres
                         },
+                        emptyViewOptions: {
+                            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.REFERENCE.NOITEMS')
+                        },
                         childHeight: config.CHILD_HEIGHT
                     }
                 });

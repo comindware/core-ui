@@ -24,34 +24,38 @@ define([],
     function () {
         'use strict';
 
+        var stringComparator2Asc = function (a, b) {
+            if (a) {
+                if (b) {
+                    return a.localeCompare(b);
+                } else {
+                    return -1;
+                }
+            } else if (b) {
+                return 1;
+            }
+            return 0;
+        };
+
+        var stringComparator2Desc = function (a, b) {
+            if (a) {
+                if (b) {
+                    return -a.localeCompare(b);
+                } else {
+                    return 1;
+                }
+            } else if (b) {
+                return -1;
+            }
+            return 0;
+        };
+
         return {
             stringComparator1: function (a) {
                 return a;
             },
-            stringComparator2Asc: function (a, b) {
-                if (a) {
-                    if (b) {
-                        return a.localeCompare(b);
-                    } else {
-                        return -1;
-                    }
-                } else if (b) {
-                    return 1;
-                }
-                return 0;
-            },
-            stringComparator2Desc: function (a, b) {
-                if (a) {
-                    if (b) {
-                        return -a.localeCompare(b);
-                    } else {
-                        return 1;
-                    }
-                } else if (b) {
-                    return -1;
-                }
-                return 0;
-            },
+            stringComparator2Asc: stringComparator2Asc,
+            stringComparator2Desc: stringComparator2Desc,
             emptyComparator: function () {
                 return 0;
             },
@@ -86,9 +90,23 @@ define([],
                 // true goes first
                 return a ? (b ? 0 : -1) : (b ? 1 : 0);
             },
+
             booleanComparator2Desc: function (a, b)
             {
                 return a ? (b ? 0 : 1) : (b ? -1 : 0);
-            }
+            },
+
+            referenceComparator2Asc: function(a, b) {
+                var effectiveA = a ? a.name ? a.name : "" : "";
+                var effectiveB = b ? b.name ? b.name : "" : "";
+                return stringComparator2Asc(effectiveA, effectiveB);
+            },
+
+            referenceComparator2Desc: function(a, b) {
+                var effectiveA = a ? a.name ? a.name : "" : "";
+                var effectiveB = b ? b.name ? b.name : "" : "";
+                return stringComparator2Desc(effectiveA, effectiveB);
+            },
+
         };
     });

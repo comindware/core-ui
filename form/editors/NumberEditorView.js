@@ -244,6 +244,8 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                     } else {
                         return;
                     }
+                } else if (value === "") {
+                    value = null;
                 }
 
                 this.value = value;

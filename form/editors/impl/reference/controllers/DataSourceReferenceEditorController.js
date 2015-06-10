@@ -19,6 +19,7 @@ define(['./BaseReferenceEditorController',
 
         return BaseReferenceEditorController.extend({
             navigate: function (model) {
+                return false;
             }
         });
     });

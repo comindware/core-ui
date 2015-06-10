@@ -25,7 +25,11 @@ define([],
         * */
         return {
             dateToServerFormat: function(date){
-                return moment(date).format('YYYY-MM-DDTHH:mm:ss');
+                return moment(date).toISOString();
+            },
+
+            dateFromServerFormat: function (dateIsoString) {
+                return moment(dateIsoString).toDate();
             },
 
             serverTimestampToStr: function(milliseconds) {
@@ -49,8 +53,11 @@ define([],
             },
 
             durationToServerFormat:  function(duration){
+                if (duration === null) {
+                    return duration;    
+                }    
                 var serverFormat = "P";
-                if (duration.days)
+                if (duration.days || !duration.hours && !duration.minutes)
                     serverFormat += duration.days + 'D';
                 if(duration.hours || duration.minutes)
                     serverFormat += 'T';
@@ -62,15 +69,16 @@ define([],
             },
 
             timestampToObjTakingWorkHours: function (value) {
-                if (value !== null) {
-                    var v = value || 0;
-                    v = v / defaultOptions.ms;
-                    return {
-                        days: Math.floor(v / 60 / defaultOptions.workHours),
-                        hours: Math.floor((v / 60) % defaultOptions.workHours),
-                        minutes: Math.floor(v % 60)
-                    };
-                }
+                if (value === null) {
+                    return value;    
+                }    
+                var v = value || 0;
+                v = v / defaultOptions.ms;
+                return {
+                    days: Math.floor(v / 60 / defaultOptions.workHours),
+                    hours: Math.floor((v / 60) % defaultOptions.workHours),
+                    minutes: Math.floor(v % 60)
+                };
             },
 
             objToTimestampTakingWorkHours: function (object) {

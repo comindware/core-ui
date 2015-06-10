@@ -104,7 +104,7 @@ define([
             template: Handlebars.compile(template),
 
             setValue: function (value) {
-                this.__value(value, false);
+                this.__value(_.isArray(value) ? (value.length ? value[0] : null) : value, false);
             },
 
             onRender: function () {
