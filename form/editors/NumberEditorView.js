@@ -67,7 +67,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
 
             focusElement: '.js-input',
 
-            className: 'fr-number',
+            className: 'l-field l-field_number',
 
             ui: {
                 input: '.js-input',

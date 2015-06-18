@@ -24,7 +24,7 @@ define([
         'use strict';
 
         var classes = {
-            disabled: 'dev-editor__disabled'
+            disabled: 'l-field_disabled'
         };
 
         var onFocus = function () {
