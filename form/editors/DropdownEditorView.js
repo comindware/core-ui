@@ -69,6 +69,8 @@ define([
                 this.listenTo(this.collection, 'remove', this.__onCollectionChange);
                 this.listenTo(this.collection, 'reset', this.__onCollectionChange);
 
+                this.listenTo(this, 'change', this.__onValueChange);
+
                 this.viewModel = new Backbone.Model({
                     button: new Backbone.Model({
                         value: this.__findModel(this.getValue()),
@@ -184,6 +186,10 @@ define([
                 if (triggerChange) {
                     this.__triggerChange();
                 }
+            },
+
+            __onValueChange: function () {
+                this.model.set('linkedObjectType', this.viewModel.get('button').get('value').get('id'));
             },
 
             onValueSet: function (o) {
