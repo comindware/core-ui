@@ -445,6 +445,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
 
             setValue: function(value) {
                 this.__value(value);
+                this.setDisplayValue(value);
             }
         });
 
