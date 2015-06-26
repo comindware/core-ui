@@ -23,21 +23,23 @@ define(['module/lib'], function () {
         }, options);
 
         return function length(value) {
-            options.value = value;
+
+            var val = _.isObject(value) ? value.value : value;
+            options.value = val;
             var err = {
                 type: options.type,
                 message: _.isFunction(options.message) ? options.message(options) : options.message
             };
             //Don't check empty values (add a 'required' validator for this)
-            if (value === null || value === undefined || value === '') return;
+            if (val === null || val === undefined || val === '') return;
 
             if (options.min) {
-                if (value.length < options.min) {
+                if (val.length < options.min) {
                     return err;
                 }
             }
             if (options.max) {
-                if (value.length > options.max) {
+                if (val.length > options.max) {
                     return err;
                 }
             }
