@@ -17,12 +17,16 @@ define([
         './list/listApi',
         './form/formApi',
         './serviceLocator',
+
+        './services/RoutingService',
+
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
-        'core/models/behaviors/CollapsibleBehavior',
-        'core/models/behaviors/HighlightableBehavior',
-        'core/models/behaviors/SelectableBehavior'
+
+        './models/behaviors/CollapsibleBehavior',
+        './models/behaviors/HighlightableBehavior',
+        './models/behaviors/SelectableBehavior'
     ],
     function (
         utilsApi,
@@ -30,9 +34,13 @@ define([
         listApi,
         formApi,
         serviceLocator,
+
+        RoutingService,
+
         SlidingWindowCollection,
         VirtualCollection,
         CollectionHighlightableBehavior,
+
         CollapsibleBehavior,
         HighlightableBehavior,
         SelectableBehavior
@@ -45,6 +53,13 @@ define([
          * @exports core
          * */
         var exports = {
+            /**
+             * Базовые сервисы системы
+             * @namespace
+             * */
+            services: {
+                RoutingService: RoutingService
+            },
             /**
              * Backbone-коллекции общего назначения
              * @namespace

@@ -11,13 +11,18 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define([],
+define([
+        'module/lib'
+    ],
     function () {
         'use strict';
 
         return {
             initialize: function () {
 
+                // Then we start loading default module (after that we can start history)
+                // this.__navigateToDefaultModule();
+                Backbone.history.start();
                 /*new AppRouter({
                  controller:new Controller()
                  });*/
