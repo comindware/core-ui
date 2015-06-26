@@ -185,12 +185,6 @@ define([
                         this.__getFocusElement().focus();
                     },
 
-                    focusAndSelect: function () {
-                        var elem = this.__getFocusElement();
-                        elem.focus();
-                        elem.select();
-                    },
-
                     /**
                      * Remove focus from the editor
                      * Extend and override this method

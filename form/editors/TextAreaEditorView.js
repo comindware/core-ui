@@ -83,7 +83,6 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
                     }.bind(this));
                     break;
                 }
-
             },
 
             setEnabled: function (enabled) {
@@ -116,6 +115,10 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
                 if (this.options.changeMode === changeMode.keydown) {
                     this.__value(this.ui.textarea.val(), false, true);
                 }
+            },
+
+            select: function () {
+                this.ui.textarea.select();
             }
         });
 

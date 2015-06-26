@@ -92,6 +92,14 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
                 if (triggerChange) {
                     this.__triggerChange();
                 }
+            },
+
+            select: function () {
+                this.ui.input.select();
+            },
+
+            deselect: function () {
+                this.ui.input.deselect();
             }
         });
 
