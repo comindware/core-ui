@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['core/utils/helpers', './views/LoadingView'],
+define(['core/utils/helpers', './loading/views/LoadingView'],
     function (helpers, LoadingView) {
         'use strict';
 
