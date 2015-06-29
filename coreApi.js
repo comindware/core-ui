@@ -22,7 +22,8 @@ define([
         './collections/behaviors/HighlightableBehavior',
         'core/models/behaviors/CollapsibleBehavior',
         'core/models/behaviors/HighlightableBehavior',
-        'core/models/behaviors/SelectableBehavior'
+        'core/models/behaviors/SelectableBehavior',
+        'core/views/behaviors/LoadingBehavior'
     ],
     function (
         utilsApi,
@@ -35,7 +36,8 @@ define([
         CollectionHighlightableBehavior,
         CollapsibleBehavior,
         HighlightableBehavior,
-        SelectableBehavior
+        SelectableBehavior,
+        LoadingBehavior
     ) {
         'use strict';
 
@@ -69,6 +71,11 @@ define([
                     CollapsibleBehavior: CollapsibleBehavior,
                     HighlightableBehavior: HighlightableBehavior,
                     SelectableBehavior: SelectableBehavior
+                }
+            },
+            views: {
+                behaviors: {
+                    LoadingBehavior: LoadingBehavior
                 }
             },
             /**
