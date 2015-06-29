@@ -60,7 +60,7 @@ define(['module/core'],
             createObjectLink: function (objectType, options) {
                 switch (objectType) {
                 case objectTypes.RECORD_TYPE:
-                    return '#RecordType/' + this.encodeObjectId(options.recordTypeId) + '/Overview';
+                    return '#RecordType/' + this.encodeObjectId(objectType, options.recordTypeId) + '/Overview';
                 default:
                     core.utils.helpers.throwFormatError('Invalid objectType.');
                 }

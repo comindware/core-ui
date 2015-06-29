@@ -12,10 +12,15 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-        'module/lib'
+        'module/lib',
+        'module/moduleConfigs',
+        'project/module/moduleConfigs',
+        'process/module/moduleConfigs'
     ],
-    function () {
+    function (lib, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
         'use strict';
+
+        var moduleConfigs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
         return {
             initialize: function () {
