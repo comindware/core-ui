@@ -19,6 +19,7 @@ define([
         './serviceLocator',
 
         './services/RoutingService',
+        './services/UrlService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -36,6 +37,7 @@ define([
         serviceLocator,
 
         RoutingService,
+        UrlService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -58,7 +60,8 @@ define([
              * @namespace
              * */
             services: {
-                RoutingService: RoutingService
+                RoutingService: RoutingService,
+                UrlService: UrlService
             },
             /**
              * Backbone-коллекции общего назначения
