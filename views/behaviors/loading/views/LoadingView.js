@@ -23,6 +23,6 @@ define(['module/lib', 'text!../templates/loading.html'],
 
             template: Handlebars.compile(template),
 
-            className: 'loader'
+            className: 'l-loader'
         });
     });

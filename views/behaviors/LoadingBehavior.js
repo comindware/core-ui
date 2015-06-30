@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Promise */
 
 define(['core/utils/helpers', './loading/views/LoadingView'],
     function (helpers, LoadingView) {
@@ -34,6 +34,17 @@ define(['core/utils/helpers', './loading/views/LoadingView'],
                     } else {
                         this.view[this.options.region].reset();
                     }
+                } else if (_.isObject(visible)) {
+                    this.setLoading(true);
+                    Promise.resolve(visible).bind(this).then(function () {
+                        //noinspection JSPotentiallyInvalidUsageOfThis
+                        this.setLoading(false);
+                    }, function () {
+                        //noinspection JSPotentiallyInvalidUsageOfThis
+                        this.setLoading(false);
+                    });
+                } else {
+                    helpers.throwError('Invalid argument format.', 'FormatError');
                 }
             }
         });
