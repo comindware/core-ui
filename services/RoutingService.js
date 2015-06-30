@@ -13,77 +13,48 @@
 
 define([
         'module/lib',
+        './routing/ModuleProxy',
         'module/moduleConfigs',
         'project/module/moduleConfigs',
         'process/module/moduleConfigs'
     ],
-    function (lib, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
+    function (lib, ModuleProxy, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
         'use strict';
 
-        var moduleConfigs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
+        var application = window.application;
 
-        var loadModule = function (path) {
+        var configs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
-        }
+        var activeModule = null;
+
+        var __onModuleLoading = function () {
+            // set loading region
+        };
+
+        var __onModuleLoaded = function () {
+            // reset loading region
+            // destroy active module
+            // construct new module
+            // navigate to new module
+        };
 
         return {
             initialize: function () {
-                // TODO: moduleConfigs unique id
-                _.each(moduleConfigs, function (config) {
-
-                    var ModuleRouter = Marionette.AppRouter.extend({
+                _.each(configs, function (config) {
+                    var moduleProxy = new ModuleProxy({
+                        config: config
+                    });
+                    this.on(moduleProxy, 'module:loading', __onModuleLoading);
+                    this.on(moduleProxy, 'module:loaded', __onModuleLoaded);
+                    new Marionette.AppRouter({
+                        controller: moduleProxy,
                         appRoutes: config.routes
                     });
+                }, this);
 
-                    var handlerProxy = function () {
-                        require([ config.module ], function (Module) {
-                            // TODO: if exists and activated?
-                            var module = new Module();
-                            module.
-                        });
-                        // load
-                        // start
-                    };
-
-                    var Module = {
-                        handler: null
-                    };
-                    //config.routes
-                    // config
-                    routes: {
-                        'People/Users': 'showUsers',
-                            'People/Users/:uid': 'routePreview',
-                            'People/Users/cfid-:id': 'routePreviewClearFilter',
-                            'People/Users/id-:id/:name': 'routePreviewAndSearch'
-                    }
-
-                    new ModuleRouter();
-                });
                 // Then we start loading default module (after that we can start history)
-                // this.__navigateToDefaultModule();
+                this.__navigateToDefaultModule();
                 Backbone.history.start();
-                /*new AppRouter({
-                 controller:new Controller()
-                 });*/
-                /*var Controller = Backbone.Marionette.Controller.extend({
-                    initialize: function (options) {
-                        //App.headerRegion.show(new HeaderView());
-                    },
-                    //gets mapped to in AppRouter's appRoutes
-                    index:function () {
-                        //App.mainRegion.show(new WelcomeView());
-                    }
-                });
-
-                //--
-                var AppRouter = Marionette.AppRouter.extend({
-                    //"index" must be a method in AppRouter's controller
-                    appRoutes: {
-                        "": "index"
-                    }
-                });
-
-                //--*/
             }
         };
     });

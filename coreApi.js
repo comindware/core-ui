@@ -17,6 +17,7 @@ define([
         './list/listApi',
         './form/formApi',
         './serviceLocator',
+        './application/Module',
 
         './services/RoutingService',
         './services/UrlService',
@@ -35,6 +36,7 @@ define([
         listApi,
         formApi,
         serviceLocator,
+        Module,
 
         RoutingService,
         UrlService,
@@ -98,7 +100,8 @@ define([
             form: formApi,
             list: listApi,
             utils: utilsApi,
-            serviceLocator: serviceLocator
+            serviceLocator: serviceLocator,
+            Module: Module
         };
         return exports;
     });
