@@ -24,7 +24,37 @@ define([
 
         return {
             initialize: function () {
+                // TODO: moduleConfigs unique id
+                _.each(moduleConfigs, function (config) {
 
+                    var ModuleRouter = Marionette.AppRouter.extend({
+                        appRoutes: config.routes
+                    });
+
+                    var handlerProxy = function () {
+                        require([ config.module ], function (Module) {
+                            // TODO: if exists and activated?
+                            var module = new Module();
+                            module.
+                        });
+                        // load
+                        // start
+                    };
+
+                    var Module = {
+                        handler: null
+                    };
+                    //config.routes
+                    // config
+                    routes: {
+                        'People/Users': 'showUsers',
+                            'People/Users/:uid': 'routePreview',
+                            'People/Users/cfid-:id': 'routePreviewClearFilter',
+                            'People/Users/id-:id/:name': 'routePreviewAndSearch'
+                    }
+
+                    new ModuleRouter();
+                });
                 // Then we start loading default module (after that we can start history)
                 // this.__navigateToDefaultModule();
                 Backbone.history.start();
