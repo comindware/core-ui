@@ -23,15 +23,17 @@ define([
                 utilsApi.helpers.ensureOption(options, 'config');
 
                 _.bindAll(this, '__callbackProxy');
-                _.each(options.config, function (callbackName) {
-                    this[callbackName] = this.__callbackProxy;
+                _.each(options.config.routes, function (callbackName) {
+                    this[callbackName] = function () {
+                        this.__callbackProxy(callbackName, _.toArray(arguments));
+                    };
                 }, this);
             },
 
-            __callbackProxy: function () {
-                this.trigger('module:loading', this.options.config);
+            __callbackProxy: function (callbackName, routingArgs) {
+                this.trigger('module:loading', callbackName, routingArgs, this.options.config);
                 this.__loadModule().then(function (Module) {
-                    this.trigger('module:loaded', this.options.config, Module);
+                    this.trigger('module:loaded', callbackName, routingArgs, this.options.config, Module);
                 }.bind(this));
             },
 

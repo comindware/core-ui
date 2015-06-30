@@ -11,18 +11,12 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define([
-        'module/lib',
-        'core/utils/utilsApi'
-    ],
-    function (lib, utilsApi) {
+define(['module/lib', 'text!../templates/moduleLoading.html'],
+    function (lib, template) {
         'use strict';
-
-        return Marionette.Controller.extend({
-            constructor: function (options) {
-                utilsApi.helpers.ensureOption(options, 'contentRegion');
-                this.contentRegion = options.contentRegion;
-                Marionette.Controller.prototype.constructor.apply(this, arguments);
-            }
+        return Marionette.ItemView.extend({
+            initialize: function () {
+            },
+            template: Handlebars.compile(template)
         });
     });
