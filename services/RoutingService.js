@@ -13,13 +13,14 @@
 
 define([
         'module/lib',
+        'core/utils/utilsApi',
         './routing/ModuleProxy',
         'core/application/views/ModuleLoadingView',
         'module/moduleConfigs',
         'project/module/moduleConfigs',
         'process/module/moduleConfigs'
     ],
-    function (lib, ModuleProxy, ModuleLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
+    function (lib, utilsApi, ModuleProxy, ModuleLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
         'use strict';
 
         var application = window.application;
@@ -27,16 +28,18 @@ define([
         var configs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
         var activeModule = null;
+        var thisOptions = null;
 
         var __registerDefaultRoute = function () {
             var DefaultRouter = Marionette.AppRouter.extend({
-                controller: moduleProxy,
-                appRoutes: config.routes,
                 routes: {
-                    "": "index"
+                    "": "defaultRoute"
+                },
+                defaultRoute: function () {
+                    router.navigate(thisOptions.defaultUrl, { trigger: true, replace: true });
                 }
             });
-            new DefaultRouter();
+            var router = new DefaultRouter();
         };
 
         var __onModuleLoading = function (callbackName, routingArgs, config) {
@@ -64,7 +67,9 @@ define([
         };
 
         return {
-            initialize: function () {
+            initialize: function (options) {
+                utilsApi.helpers.ensureOption(options, 'defaultUrl');
+                thisOptions = options;
                 _.each(configs, function (config) {
                     var moduleProxy = new ModuleProxy({
                         config: config
