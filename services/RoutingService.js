@@ -22,6 +22,10 @@ define([
 
         var moduleConfigs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
+        var loadModule = function (path) {
+
+        }
+
         return {
             initialize: function () {
                 // TODO: moduleConfigs unique id
