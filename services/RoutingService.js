@@ -35,7 +35,7 @@ define([
                     "": "defaultRoute"
                 },
                 defaultRoute: function () {
-                    routingService.navigateToUrl(thisOptions.defaultUrl, true);
+                    routingService.navigateToUrl(thisOptions.defaultUrl, { replace: true });
                 }
             });
             router = new DefaultRouter();
@@ -100,9 +100,13 @@ define([
                 Backbone.history.start();
             },
 
-            navigateToUrl: function (url, replaceHistory) {
-                replaceHistory = replaceHistory === undefined ? false : replaceHistory;
-                router.navigate(url, { trigger: true, replace: replaceHistory });
+            // options: replace (history), trigger (routing)
+            navigateToUrl: function (url, options) {
+                options = options || {};
+                if (options.trigger === undefined) {
+                    options.trigger = true;
+                }
+                router.navigate(url, options);
             }
         };
         return routingService;
