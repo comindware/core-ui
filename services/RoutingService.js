@@ -15,20 +15,19 @@ define([
         'module/lib',
         'core/utils/utilsApi',
         './routing/ModuleProxy',
-        'core/application/views/ModuleLoadingView',
+        'core/application/views/ContentLoadingView',
         'module/moduleConfigs',
         'project/module/moduleConfigs',
         'process/module/moduleConfigs'
     ],
-    function (lib, utilsApi, ModuleProxy, ModuleLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
+    function (lib, utilsApi, ModuleProxy, ContentLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
         'use strict';
-
-        var application = window.application;
 
         var configs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
         var activeModule = null;
         var thisOptions = null;
+        var router;
 
         var __registerDefaultRoute = function () {
             var DefaultRouter = Marionette.AppRouter.extend({
@@ -36,20 +35,26 @@ define([
                     "": "defaultRoute"
                 },
                 defaultRoute: function () {
-                    router.navigate(thisOptions.defaultUrl, { trigger: true, replace: true });
+                    routingService.navigateToUrl(thisOptions.defaultUrl, true);
                 }
             });
-            var router = new DefaultRouter();
+            router = new DefaultRouter();
         };
 
         var __onModuleLoading = function (callbackName, routingArgs, config) {
-            // set loading region
-            application.moduleLoadingRegion.show(new ModuleLoadingView());
+            if (!activeModule) {
+                window.application.contentLoadingRegion.show(new ContentLoadingView());
+            } else {
+                activeModule.contentView.setModuleLoading(true);
+            }
         };
 
         var __onModuleLoaded = function (callbackName, routingArgs, config, Module) {
             // reset loading region
-            application.moduleLoadingRegion.reset();
+            window.application.contentLoadingRegion.reset();
+            if (activeModule) {
+                activeModule.contentView.setModuleLoading(false);
+            }
 
             // destroy active module
             if (activeModule) {
@@ -58,15 +63,24 @@ define([
 
             // construct new module
             activeModule = new Module({
-                config: config,
-                contentRegion: application.moduleRegion
+                config: config
             });
+            //     Creating content view
+            var ContentViewClass = activeModule.contentView;
+            var contentViewOptions = _.result(activeModule, 'contentViewOptions', {});
+            var contentView = new ContentViewClass(contentViewOptions);
+            window.application.contentRegion.show(contentView);
+            activeModule.contentView = contentView;
+            activeModule.contentRegion = contentView.moduleRegion;
 
             // navigate to new module
+            if (activeModule.onRoute) {
+                activeModule.onRoute.apply(activeModule, routingArgs);
+            }
             activeModule[callbackName].apply(activeModule, routingArgs);
         };
 
-        return {
+        var routingService = {
             initialize: function (options) {
                 utilsApi.helpers.ensureOption(options, 'defaultUrl');
                 thisOptions = options;
@@ -84,6 +98,12 @@ define([
 
                 __registerDefaultRoute();
                 Backbone.history.start();
+            },
+
+            navigateToUrl: function (url, replaceHistory) {
+                replaceHistory = replaceHistory === undefined ? false : replaceHistory;
+                router.navigate(url, { trigger: true, replace: replaceHistory });
             }
         };
+        return routingService;
     });

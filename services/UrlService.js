@@ -11,8 +11,10 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/core'],
-    function (core) {
+define([
+        'core/utils/utilsApi'
+    ],
+    function (utilsApi) {
         'use strict';
 
         var modules = {
@@ -21,6 +23,11 @@ define(['module/core'],
             PEOPLE_USERS: 'module:people:users',
             PROCESS_PROCESSTEMPLATES_SHOWALL: 'module:process:processTemplates:showAll',
             PROCESS_ARCHITECTURE_SHOWALL: 'module:process:architecture:showAll',
+            PROCESS_RECORDTYPES_ATTRIBUTES: 'module:process:recordTypes:attributes',
+            PROCESS_RECORDTYPES_DIAGRAM: 'module:process:recordTypes:diagram',
+            PROCESS_RECORDTYPES_FORMDESIGNER: 'module:process:recordTypes:formDesigner',
+            PROCESS_RECORDTYPES_SETTINGS: 'module:process:recordTypes:settings',
+            PROCESS_RECORDTYPES_RECORDS: 'module:process:recordTypes:records',
             PROCESS_RECORDTYPES_SHOWALL: 'module:process:recordTypes:showAll',
             PROCESS_PROCESSMONITOR: 'module:process:processMonitor',
             PROCESS_DATADIAGRAM: 'module:process:dataDiagram'
@@ -52,7 +59,7 @@ define(['module/core'],
             createModuleLink: function (moduleId) {
                 var url = '#' + moduleUrlMap[moduleId];
                 if (!url) {
-                    core.utils.helpers.throwFormatError('Failed to find a module with id `' + moduleId + '`.');
+                    utilsApi.helpers.throwFormatError('Failed to find a module with id `' + moduleId + '`.');
                 }
                 return url;
             },
@@ -62,17 +69,17 @@ define(['module/core'],
                 case objectTypes.RECORD_TYPE:
                     return '#RecordType/' + this.encodeObjectId(objectType, options.recordTypeId) + '/Overview';
                 default:
-                    core.utils.helpers.throwFormatError('Invalid objectType.');
+                    utilsApi.helpers.throwFormatError('Invalid objectType.');
                 }
             },
 
             encodeObjectId: function (objectType, objectId) {
                 var prefix = objectIdPrefixes[objectType];
                 if (!prefix) {
-                    core.utils.helpers.throwFormatError('Invalid objectType.');
+                    utilsApi.helpers.throwFormatError('Invalid objectType.');
                 }
                 if (!objectId) {
-                    core.utils.helpers.throwFormatError('Empty object id: `' + objectId + '`.');
+                    utilsApi.helpers.throwFormatError('Empty object id: `' + objectId + '`.');
                 }
                 if (objectId.indexOf(prefix) === 0) {
                     return objectId.substring(prefix.length);
@@ -83,16 +90,16 @@ define(['module/core'],
             decodeObjectId: function (objectType, objectId) {
                 var prefix = objectIdPrefixes[objectType];
                 if (!prefix) {
-                    core.utils.helpers.throwFormatError('Invalid objectType.');
+                    utilsApi.helpers.throwFormatError('Invalid objectType.');
                 }
                 if (!objectId) {
-                    core.utils.helpers.throwFormatError('Empty object id: `' + objectId + '`.');
+                    utilsApi.helpers.throwFormatError('Empty object id: `' + objectId + '`.');
                 }
                 if (_.isString(objectId) && objectId.indexOf(prefix) === 0) {
                     return objectId;
                 }
                 if (!_.isFinite(parseInt(objectId))) {
-                    core.utils.helpers.throwFormatError('Invalid object id: `' + objectId + '`.');
+                    utilsApi.helpers.throwFormatError('Invalid object id: `' + objectId + '`.');
                 }
 
                 return prefix + objectId;

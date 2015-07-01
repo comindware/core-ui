@@ -1,6 +1,6 @@
 /**
  * Developer: Stepan Burguchev
- * Date: 6/30/2015
+ * Date: 7/1/2015
  * Copyright: 2009-2015 Comindware®
  *       All Rights Reserved
  *
@@ -12,21 +12,17 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-        'module/lib',
-        'core/utils/utilsApi',
-        'core/services/UrlService',
-        './views/DefaultContentView'
+        './TabItemView'
     ],
-    function (lib, utilsApi, UrlService, DefaultContentView) {
+    function (TabItemView) {
         'use strict';
+        return Marionette.CollectionView.extend({
+            initialize: function () {
+            },
 
-        return Marionette.Controller.extend({
-            contentView: DefaultContentView,
+            className: 'dev-default-content-view__header-tabs-view',
 
-            /**
-             * Объект или функция
-             * */
-            contentViewOptions: {
-            }
+            childView: TabItemView
         });
     });
+

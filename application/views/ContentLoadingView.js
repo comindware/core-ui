@@ -11,22 +11,12 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define([
-        'module/lib',
-        'core/utils/utilsApi',
-        'core/services/UrlService',
-        './views/DefaultContentView'
-    ],
-    function (lib, utilsApi, UrlService, DefaultContentView) {
+define(['module/lib', 'text!../templates/contentLoading.html'],
+    function (lib, template) {
         'use strict';
-
-        return Marionette.Controller.extend({
-            contentView: DefaultContentView,
-
-            /**
-             * Объект или функция
-             * */
-            contentViewOptions: {
-            }
+        return Marionette.ItemView.extend({
+            initialize: function () {
+            },
+            template: Handlebars.compile(template)
         });
     });

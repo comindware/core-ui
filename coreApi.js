@@ -17,6 +17,7 @@ define([
         './list/listApi',
         './form/formApi',
         './serviceLocator',
+
         './application/Module',
 
         './services/RoutingService',
@@ -57,6 +58,13 @@ define([
          * @exports core
          * */
         var exports = {
+            /**
+             * Базовые компонеты приложения: модуль, header views etc
+             * @namespace
+             * */
+            application: {
+                Module: Module
+            },
             /**
              * Базовые сервисы системы
              * @namespace
@@ -100,8 +108,7 @@ define([
             form: formApi,
             list: listApi,
             utils: utilsApi,
-            serviceLocator: serviceLocator,
-            Module: Module
+            serviceLocator: serviceLocator
         };
         return exports;
     });
