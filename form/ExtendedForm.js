@@ -27,6 +27,32 @@ define(['./fields/CommonField'], function (CommonField) {
 			}
 		},
 
+        commit: function(options) {
+            options = options || {};
+
+            if (!options.skipAllValidation) {
+                var validateOptions = {
+                    skipModelValidate: !options.validate
+                };
+
+                var errors = this.validate(validateOptions);
+                if (errors) return errors;
+            }
+
+            //Commit
+            var modelError;
+
+            var setOptions = _.extend({
+                error: function (model, e) {
+                    modelError = e;
+                }
+            }, options);
+
+            this.model.set(this.getValue(), setOptions);
+
+            if (modelError) return modelError;
+        },
+
 		name: 'form',
 
 		handleEditorEvent: function (event, editor, field) {
@@ -40,7 +66,8 @@ define(['./fields/CommonField'], function (CommonField) {
                     this.state = editor.state;
                     break;
 				case 'change':
-                    this.trigger('change', this);
+				    this.trigger('change', this, editor);
+				    this.trigger(editor.key + ':change', this, editor);
                     break;
 				case 'focus':
                     if (!this.hasFocus) {
