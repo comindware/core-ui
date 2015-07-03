@@ -16,13 +16,30 @@ define([
     'text!../../templates/content/tabItem.html'
 ], function (lib, template) {
         'use strict';
-        
+
+        var classes = {
+            SELECTED: 'dev-selected'
+        };
+
         return Marionette.ItemView.extend({
             initialize: function () {
+            },
+
+            modelEvents: {
+                'selected': '__updateSelected',
+                'deselected': '__updateSelected'
             },
             
             className: 'dev-default-content-view__header-tabs__tab-item',
 
-            template: Handlebars.compile(template)
+            template: Handlebars.compile(template),
+
+            onRender: function () {
+                this.__updateSelected();
+            },
+
+            __updateSelected: function () {
+                this.$el.toggleClass(classes.SELECTED, Boolean(this.model.selected));
+            }
         });
     });
