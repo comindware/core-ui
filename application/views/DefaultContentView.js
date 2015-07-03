@@ -13,11 +13,12 @@
 
 define([
     'module/lib',
+    'core/utils/utilsApi',
     'text!../templates/defaultContent.html',
     './content/HeaderTabsView',
     '../collections/SelectableCollection',
     './ModuleLoadingView'
-], function (lib, template, HeaderTabsView, SelectableCollection, ModuleLoadingView) {
+], function (lib, utilsApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView) {
         'use strict';
 
         return Marionette.LayoutView.extend({
@@ -47,8 +48,15 @@ define([
             },
 
             selectHeaderTab: function (tabId) {
-                var tabModel = this.model.get('headerTabs').findWhere({id: tabId});
+                var tabModel = this.findTabModel(tabId);
+                if (!tabModel) {
+                    utilsApi.helpers.throwError('Failed to filed tab item with id `' + tabId + '`');
+                }
                 tabModel.select();
+            },
+
+            findTabModel: function (tabId) {
+                return this.model.get('headerTabs').findWhere({id: tabId}) || null;
             },
 
             setModuleLoading: function (visible) {

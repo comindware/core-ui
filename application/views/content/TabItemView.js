@@ -27,7 +27,8 @@ define([
 
             modelEvents: {
                 'selected': '__updateSelected',
-                'deselected': '__updateSelected'
+                'deselected': '__updateSelected',
+                'change': 'render'
             },
             
             className: 'dev-default-content-view__header-tabs__tab-item',
