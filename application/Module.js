@@ -21,12 +21,13 @@ define([
         'use strict';
 
         return Marionette.Controller.extend({
-            contentView: DefaultContentView,
+            constructor: function (options) {
+                utilsApi.helpers.ensureOption(options, 'config');
+                this.view = new this.contentView();
+                this.moduleRegion  = this.view.moduleRegion;
+                Marionette.Controller.prototype.constructor.apply(this, arguments);
+            },
 
-            /**
-             * Объект или функция
-             * */
-            contentViewOptions: {
-            }
+            contentView: DefaultContentView
         });
     });

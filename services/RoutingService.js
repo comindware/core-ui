@@ -45,7 +45,7 @@ define([
             if (!activeModule) {
                 window.application.contentLoadingRegion.show(new ContentLoadingView());
             } else {
-                activeModule.contentView.setModuleLoading(true);
+                activeModule.view.setModuleLoading(true);
             }
         };
 
@@ -53,7 +53,7 @@ define([
             // reset loading region
             window.application.contentLoadingRegion.reset();
             if (activeModule) {
-                activeModule.contentView.setModuleLoading(false);
+                activeModule.view.setModuleLoading(false);
             }
 
             // destroy active module
@@ -65,13 +65,7 @@ define([
             activeModule = new Module({
                 config: config
             });
-            //     Creating content view
-            var ContentViewClass = activeModule.contentView;
-            var contentViewOptions = _.result(activeModule, 'contentViewOptions', {});
-            var contentView = new ContentViewClass(contentViewOptions);
-            window.application.contentRegion.show(contentView);
-            activeModule.contentView = contentView;
-            activeModule.contentRegion = contentView.moduleRegion;
+            window.application.contentRegion.show(activeModule.view);
 
             // navigate to new module
             if (activeModule.onRoute) {
