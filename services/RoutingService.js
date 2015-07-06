@@ -41,7 +41,7 @@ define([
             router = new DefaultRouter();
         };
 
-        var __onModuleLoading = function (callbackName, routingArgs, config) {
+        var __onModuleLoading = function (callbackName, routingArgs, config, result) {
             if (!activeModule) {
                 window.application.contentLoadingRegion.show(new ContentLoadingView());
             } else {
@@ -55,17 +55,20 @@ define([
             if (activeModule) {
                 activeModule.view.setModuleLoading(false);
             }
+            var movingOut = activeModule && activeModule.options.config.module !== config.module;
 
             // destroy active module
-            if (activeModule) {
+            if (activeModule && movingOut) {
                 activeModule.destroy();
             }
 
             // construct new module
-            activeModule = new Module({
-                config: config
-            });
-            window.application.contentRegion.show(activeModule.view);
+            if (!activeModule || movingOut) {
+                activeModule = new Module({
+                    config: config,
+                    region: window.application.contentRegion
+                });
+            }
 
             // navigate to new module
             if (activeModule.onRoute) {
@@ -107,6 +110,17 @@ define([
                     options.trigger = true;
                 }
                 router.navigate(url, options);
+            },
+
+            logout: function () {
+                utilsApi.helpers.throwNotImplementedError('Logout is not implemented yet.');
+                /* TODO: how will we work with cookies?
+                js.util.Cookie.remove('SessionId');
+                js.util.Cookie.remove('KeySessionId');
+                js.util.Cookie.remove('Username');
+                js.util.Cookie.remove('RememberMe');
+                js.util.Cookie.remove('UserId');
+                window.location = "/Home/Login/";*/
             }
         };
         return routingService;

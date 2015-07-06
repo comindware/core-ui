@@ -25,11 +25,12 @@ define([
                 utilsApi.helpers.ensureOption(options, 'config');
                 this.view = new this.contentView();
                 this.moduleRegion  = this.view.moduleRegion;
+                options.region.show(this.view); // <- this can be moved out to routing services after we get rid of old modules
                 Marionette.Controller.prototype.constructor.apply(this, arguments);
             },
 
-            setLoading: function (visible) {
-                this.view.setModuleLoading(visible);
+            setLoading: function (isLoading) {
+                this.view.setModuleLoading(isLoading);
             },
 
             contentView: DefaultContentView

@@ -28,6 +28,8 @@ define([
             MYTASKS: 'module:myTasks',
             PEOPLE_USERS: 'module:people:users',
 
+            PROJECT_ROOMS_SHOWALL: 'module:project:rooms:showAll',
+
             PROCESS_PROCESSTEMPLATES_DESIGNER: 'module:process:processTemplates:designer',
             PROCESS_PROCESSTEMPLATES_ATTRIBUTES: 'module:process:processTemplates:attributes',
             PROCESS_PROCESSTEMPLATES_STATISTICS: 'module:process:processTemplates:statistics',
@@ -38,6 +40,9 @@ define([
             PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_FORMDESIGNER: 'module:process:processTemplates:designer:activity:formDesigner',
             PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_SETTINGS: 'module:process:processTemplates:designer:activity:settings',
 
+            PROCESS_ARCHITECTURE_OVERVIEW: 'module:process:architecture:overview',
+            PROCESS_ARCHITECTURE_DESIGNER: 'module:process:architecture:designer',
+            PROCESS_ARCHITECTURE_DESIGNER_ACTIVITY_SETTINGS: 'module:process:architecture:designer:activity:settings',
             PROCESS_ARCHITECTURE_SHOWALL: 'module:process:architecture:showAll',
 
             PROCESS_RECORDTYPES_ATTRIBUTES: 'module:process:recordTypes:attributes',

@@ -181,6 +181,10 @@ define(['module/lib'],
 
             throwNotSupportedError: function (message) {
                 helpers.throwError(message || 'Not Supported', 'NotSupportedError');
+            },
+
+            throwNotImplementedError: function (message) {
+                helpers.throwError(message || 'Not Implemented', 'NotImplementedError');
             }
         };
 

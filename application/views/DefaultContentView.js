@@ -74,7 +74,7 @@ define([
             selectHeaderTab: function (tabId) {
                 var tabModel = this.findTabModel(tabId);
                 if (!tabModel) {
-                    utilsApi.helpers.throwError('Failed to filed tab item with id `' + tabId + '`');
+                    utilsApi.helpers.throwError('Failed to find a tab item with id `' + tabId + '`');
                 }
                 tabModel.select();
             },
@@ -83,8 +83,8 @@ define([
                 return this.model.get('headerTabs').findWhere({id: tabId}) || null;
             },
 
-            setModuleLoading: function (visible) {
-                if (visible) {
+            setModuleLoading: function (isLoading) {
+                if (isLoading) {
                     this.moduleLoadingRegion.show(new ModuleLoadingView());
                 } else {
                     this.moduleLoadingRegion.reset();

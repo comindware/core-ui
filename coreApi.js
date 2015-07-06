@@ -23,6 +23,7 @@ define([
         './services/RoutingService',
         './services/UrlService',
         './services/ModuleService',
+        './services/WindowService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -43,6 +44,7 @@ define([
         RoutingService,
         UrlService,
         ModuleService,
+        WindowService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -74,7 +76,8 @@ define([
             services: {
                 RoutingService: RoutingService,
                 UrlService: UrlService,
-                ModuleService: ModuleService
+                ModuleService: ModuleService,
+                WindowService: WindowService
             },
             /**
              * Backbone-коллекции общего назначения
