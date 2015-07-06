@@ -17,8 +17,9 @@ define([
     'text!../templates/defaultContent.html',
     './content/HeaderTabsView',
     '../collections/SelectableCollection',
-    './ModuleLoadingView'
-], function (lib, utilsApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView) {
+    './ModuleLoadingView',
+    'core/services/RoutingService'
+], function (lib, utilsApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView, RoutingService) {
         'use strict';
 
         return Marionette.LayoutView.extend({
@@ -31,6 +32,15 @@ define([
 
             className: 'dev-default-content-view',
 
+            ui: {
+                backButton: '.js-back-button',
+                backButtonText: '.js-back-button-text'
+            },
+
+            events: {
+                'click @ui.backButton': '__back'
+            },
+
             regions: {
                 headerTabsRegion: '.js-header-tabs-region',
                 moduleRegion: '.js-module-region',
@@ -41,6 +51,7 @@ define([
                 this.headerTabsRegion.show(new HeaderTabsView({
                     collection: this.model.get('headerTabs')
                 }));
+                this.hideBackButton();
             },
 
             setHeaderTabs: function (tabs) {
@@ -48,11 +59,16 @@ define([
             },
 
             showBackButton: function (options) {
-
+                utilsApi.helpers.ensureOption(options, 'url');
+                this.backButtonOptions = options;
+                if (options.name) {
+                    this.ui.backButtonText.text(options.name);
+                }
+                this.ui.backButton.show();
             },
 
             hideBackButton: function () {
-
+                this.ui.backButton.hide();
             },
 
             selectHeaderTab: function (tabId) {
@@ -73,6 +89,10 @@ define([
                 } else {
                     this.moduleLoadingRegion.reset();
                 }
+            },
+
+            __back: function () {
+                RoutingService.navigateToUrl(this.backButtonOptions.url);
             }
         });
     });
