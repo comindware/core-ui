@@ -108,7 +108,7 @@ define([
                     },
 
                     updateValue: function () {
-                        this.setValue(this.getModelValue(), true);
+                        this.setValue(this.getModelValue());
                     },
 
                     getModelValue: function () {
