@@ -17,62 +17,22 @@ define([
     function (utilsApi) {
         'use strict';
 
-        var modules = {
-            SETTINGS_WORKSPACE: 'module:settings:workspace',
-            MYTASKS: 'module:myTasks',
-            PEOPLE_USERS: 'module:people:users',
-            PROCESS_PROCESSTEMPLATES_SHOWALL: 'module:process:processTemplates:showAll',
-            PROCESS_ARCHITECTURE_SHOWALL: 'module:process:architecture:showAll',
-            PROCESS_RECORDTYPES_ATTRIBUTES: 'module:process:recordTypes:attributes',
-            PROCESS_RECORDTYPES_DIAGRAM: 'module:process:recordTypes:diagram',
-            PROCESS_RECORDTYPES_FORMDESIGNER: 'module:process:recordTypes:formDesigner',
-            PROCESS_RECORDTYPES_SETTINGS: 'module:process:recordTypes:settings',
-            PROCESS_RECORDTYPES_RECORDS: 'module:process:recordTypes:records',
-            PROCESS_RECORDTYPES_SHOWALL: 'module:process:recordTypes:showAll',
-            PROCESS_PROCESSMONITOR: 'module:process:processMonitor',
-            PROCESS_DATADIAGRAM: 'module:process:dataDiagram'
-        };
-
-        var moduleUrlMap = {};
-        moduleUrlMap[modules.SETTINGS_WORKSPACE] = 'Settings/Workspaces';
-        moduleUrlMap[modules.MYTASKS] = 'MyTasks/Main';
-        moduleUrlMap[modules.PEOPLE_USERS] = 'People/Users';
-        moduleUrlMap[modules.PROCESS_PROCESSTEMPLATES_SHOWALL] = 'ProcessTemplate/ShowAll';
-        moduleUrlMap[modules.PROCESS_ARCHITECTURE_SHOWALL] = 'Architecture/ShowAll';
-        moduleUrlMap[modules.PROCESS_RECORDTYPES_SHOWALL] = 'RecordType/ShowAll';
-        moduleUrlMap[modules.PROCESS_PROCESSMONITOR] = 'ProcessMonitor';
-        moduleUrlMap[modules.PROCESS_DATADIAGRAM] = 'DataDiagram/Diagram';
-
         var objectTypes = {
-            RECORD_TYPE: 'RecordType'
+            RECORD_TYPE: 'RecordType',
+            ROOM: 'Room',
+            PROJECT: 'Project',
+            ACCOUNT_GROUP: 'AccountGroup',
+            PROCESS_TEMPLATE: 'ProcessTemplate'
         };
 
         var objectIdPrefixes = {};
         objectIdPrefixes[objectTypes.RECORD_TYPE] = 'oa.';
+        objectIdPrefixes[objectTypes.PROCESS_TEMPLATE] = 'pa.';
+        objectIdPrefixes[objectTypes.ROOM] = 'room.';
+        objectIdPrefixes[objectTypes.PROJECT] = 'project.';
+        objectIdPrefixes[objectTypes.ACCOUNT_GROUP] = 'group.';
 
         return {
-            /**
-             * Функция создает URL-ссылку к модулю на базе его moduleId.
-             * @param {string} moduleId Уникальный идентификатор модуля, указываемый в атрибуте id файла Config.js
-             * @returns {string} URL-ссылка на модуль
-             * */
-            createModuleLink: function (moduleId) {
-                var url = '#' + moduleUrlMap[moduleId];
-                if (!url) {
-                    utilsApi.helpers.throwFormatError('Failed to find a module with id `' + moduleId + '`.');
-                }
-                return url;
-            },
-
-            createObjectLink: function (objectType, options) {
-                switch (objectType) {
-                case objectTypes.RECORD_TYPE:
-                    return '#RecordType/' + this.encodeObjectId(objectType, options.recordTypeId) + '/Overview';
-                default:
-                    utilsApi.helpers.throwFormatError('Invalid objectType.');
-                }
-            },
-
             encodeObjectId: function (objectType, objectId) {
                 var prefix = objectIdPrefixes[objectType];
                 if (!prefix) {
@@ -104,8 +64,6 @@ define([
 
                 return prefix + objectId;
             },
-
-            modules: modules,
 
             objectTypes: objectTypes
         };
