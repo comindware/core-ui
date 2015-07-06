@@ -28,6 +28,10 @@ define([
                 Marionette.Controller.prototype.constructor.apply(this, arguments);
             },
 
+            setLoading: function (visible) {
+                this.view.setModuleLoading(visible);
+            },
+
             contentView: DefaultContentView
         });
     });

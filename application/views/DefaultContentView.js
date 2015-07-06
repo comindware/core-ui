@@ -47,6 +47,14 @@ define([
                 this.model.get('headerTabs').reset(tabs);
             },
 
+            showBackButton: function (options) {
+
+            },
+
+            hideBackButton: function () {
+
+            },
+
             selectHeaderTab: function (tabId) {
                 var tabModel = this.findTabModel(tabId);
                 if (!tabModel) {

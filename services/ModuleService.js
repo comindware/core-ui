@@ -28,7 +28,15 @@ define([
             MYTASKS: 'module:myTasks',
             PEOPLE_USERS: 'module:people:users',
 
+            PROCESS_PROCESSTEMPLATES_DESIGNER: 'module:process:processTemplates:designer',
+            PROCESS_PROCESSTEMPLATES_ATTRIBUTES: 'module:process:processTemplates:attributes',
+            PROCESS_PROCESSTEMPLATES_STATISTICS: 'module:process:processTemplates:statistics',
+            PROCESS_PROCESSTEMPLATES_SETTINGS: 'module:process:processTemplates:settings',
             PROCESS_PROCESSTEMPLATES_SHOWALL: 'module:process:processTemplates:showAll',
+
+            PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_CONTEXT: 'module:process:processTemplates:designer:activity:context',
+            PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_FORMDESIGNER: 'module:process:processTemplates:designer:activity:formDesigner',
+            PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_SETTINGS: 'module:process:processTemplates:designer:activity:settings',
 
             PROCESS_ARCHITECTURE_SHOWALL: 'module:process:architecture:showAll',
 
@@ -45,11 +53,12 @@ define([
 
         return {
             getDefaultModuleUrl: function (moduleId, options) {
-                return this.getModuleUrlByName(moduleId, 'default', options);
+                return this.getModuleUrlByName('default', moduleId, options);
             },
 
-            getModuleUrlByName: function (moduleId, urlName, options) {
-                var moduleConfig = configs.findWhere({ id : moduleId });
+            getModuleUrlByName: function (urlName, moduleId, options) {
+                options = options || {};
+                var moduleConfig = _.findWhere(configs, { id : moduleId });
                 if (!moduleConfig) {
                     utilsApi.helpers.throwError('Failed to find a module with id `' + moduleId + '`.');
                 }
@@ -60,8 +69,31 @@ define([
                 if (!url) {
                     utilsApi.helpers.throwError('Failed to find navigation url `' + urlName + '` in the module `' + moduleId + '`');
                 }
-                // TODO: match and replace options
-                return url;
+
+                var result = [];
+                var lastIndex = 0;
+                var match;
+                var re = /:[^/]+(?=\/|$)/g;
+                while (true) {
+                    match = re.exec(url);
+                    if (!match) {
+                        break;
+                    }
+                    result.push(url.substring(lastIndex, match.index));
+                    var param = match[0].substring(1);
+                    var opt = options[param];
+                    if (!opt) {
+                        utilsApi.helpers.throwFormatError('Missing url options `' + param + '`.');
+                    }
+                    result.push(opt);
+                    lastIndex = match.index + param.length + 1;
+                }
+                result.push(url.substring(lastIndex));
+                var resultUrl = result.join('');
+                if (resultUrl[0] !== '#') {
+                    resultUrl = '#' + resultUrl;
+                }
+                return resultUrl;
             },
 
             modules: modules

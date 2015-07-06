@@ -71,7 +71,13 @@ define([
             if (activeModule.onRoute) {
                 activeModule.onRoute.apply(activeModule, routingArgs);
             }
-            activeModule[callbackName].apply(activeModule, routingArgs);
+            var routingCallback = activeModule[callbackName];
+            if (!routingCallback) {
+                var moduleId = config.id || config.module;
+                utilsApi.helpers.throwError(
+                    'Failed to find callback method `' + callbackName + '` for the module `' + moduleId + '`.');
+            }
+            routingCallback.apply(activeModule, routingArgs);
         };
 
         var routingService = {
