@@ -222,8 +222,8 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
                 return (position) === focusedParts[index].start;
             },
 
-            __value: function (value) {
-                var triggerChange = value !== this.value;
+            __value: function (value, triggerChange) {
+                triggerChange = triggerChange && value !== this.value;
                 this.value = value;
                 if (triggerChange) {
                     this.__triggerChange();
@@ -373,7 +373,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
                 this._setCurrentDisplayValue(utils.dateHelpers.objToTimestampTakingWorkHours(obj));
                 var newValue = utils.dateHelpers.durationToServerFormat(this._currentDisplayValue);
                 if (newValue !== this.value) {
-                    this.__value(newValue);
+                    this.__value(newValue, true);
                 }
                 this.display.shortValue = this.formatValue(true);
                 this.refresh();
@@ -444,7 +444,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
             },
 
             setValue: function(value) {
-                this.__value(value);
+                this.__value(value, false);
                 this.setDisplayValue(value);
             }
         });

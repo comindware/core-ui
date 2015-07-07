@@ -23,7 +23,7 @@ define(['module/lib'], function () {
         }, options);
 
         return function required(value) {
-            var val = _.isObject(value) ? value.value : value;
+            var val = _.isObject(value) && _.has(value, 'value') ? value.value : value;
             options.value = val;
 
             var err = {
