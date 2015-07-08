@@ -35,13 +35,21 @@ define([
             },
 
             showPopup: function (view, options) {
-                state.fadingPanelView.fadeIn(options);
+                this.fadeIn(options);
                 state.popupRegion.show(view);
             },
 
             closePopup: function () {
-                state.fadingPanelView.fadeOut();
+                this.fadeOut();
                 state.popupRegion.reset();
+            },
+
+            fadeIn: function (options) {
+                state.fadingPanelView.fadeIn(options);
+            },
+
+            fadeOut: function () {
+                state.fadingPanelView.fadeOut();
             }
         };
     });

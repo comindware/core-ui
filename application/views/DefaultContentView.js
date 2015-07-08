@@ -14,12 +14,15 @@
 define([
     'module/lib',
     'core/utils/utilsApi',
+    'core/dropdown/dropdownApi',
     'text!../templates/defaultContent.html',
     './content/HeaderTabsView',
     '../collections/SelectableCollection',
     './ModuleLoadingView',
-    'core/services/RoutingService'
-], function (lib, utilsApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView, RoutingService) {
+    'core/services/RoutingService',
+    './content/ProfileButtonView',
+    './content/ProfilePanelView'
+], function (lib, utilsApi, dropdownApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView, RoutingService, ProfileButtonView, ProfilePanelView) {
         'use strict';
 
         return Marionette.LayoutView.extend({
@@ -44,14 +47,27 @@ define([
             regions: {
                 headerTabsRegion: '.js-header-tabs-region',
                 moduleRegion: '.js-module-region',
-                moduleLoadingRegion: '.js-module-loading-region'
+                moduleLoadingRegion: '.js-module-loading-region',
+                profileRegion: '.js-profile-region'
             },
 
             onRender: function () {
+                this.hideBackButton();
                 this.headerTabsRegion.show(new HeaderTabsView({
                     collection: this.model.get('headerTabs')
                 }));
-                this.hideBackButton();
+                var currentUser = window.application.currentUser;
+                this.profileRegion.show(dropdownApi.factory.createPopout({
+                    customAnchor: true,
+                    buttonView: ProfileButtonView,
+                    buttonViewOptions: {
+                        model: currentUser
+                    },
+                    panelView: ProfilePanelView,
+                    panelViewOptions: {
+                        model: currentUser
+                    }
+                }));
             },
 
             setHeaderTabs: function (tabs) {

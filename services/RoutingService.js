@@ -113,14 +113,14 @@ define([
             },
 
             logout: function () {
-                utilsApi.helpers.throwNotImplementedError('Logout is not implemented yet.');
-                /* TODO: how will we work with cookies?
-                js.util.Cookie.remove('SessionId');
-                js.util.Cookie.remove('KeySessionId');
-                js.util.Cookie.remove('Username');
-                js.util.Cookie.remove('RememberMe');
-                js.util.Cookie.remove('UserId');
-                window.location = "/Home/Login/";*/
+                // Should be reworked to logout via server request (need to remove http-only cookie)
+                utilsApi.cookieHelpers.removeItem('SessionId');
+                utilsApi.cookieHelpers.removeItem('KeySessionId');
+                utilsApi.cookieHelpers.removeItem('ProtectorId');
+                utilsApi.cookieHelpers.removeItem('Username');
+                utilsApi.cookieHelpers.removeItem('RememberMe');
+                utilsApi.cookieHelpers.removeItem('UserId');
+                window.location = "/Home/Login";
             }
         };
         return routingService;
