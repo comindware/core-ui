@@ -4,8 +4,13 @@ define(['./fields/CommonField'], function (CommonField) {
     "use strict";
 
     //noinspection JSUnresolvedFunction,UnnecessaryLocalVariableJS
-	var ExtendedForm = Backbone.Form.extend({
-		focusRequiredInput: function () {
+    var ExtendedForm = Backbone.Form.extend({
+        initialize: function(options) {
+            _.extend(this, _.pick(options, 'stateModel'));
+            Backbone.Form.prototype.initialize.apply(this, arguments);
+        },
+
+        focusRequiredInput: function () {
 			var errors = this.silentValidate();
 			var self = this;
 			if (errors) {
@@ -84,12 +89,6 @@ define(['./fields/CommonField'], function (CommonField) {
 		onShow: function () {
 			if (this.lockSubmit) {
 				this.checkLockedSubmit();
-				$(this.submitAction).on('click', function (e) {
-					if ($(this).is(':disabled')) {
-						e.stopPropagation();
-						e.preventDefault();
-					}
-				});
 			}
             _.each(this.fields || {}, function (v) {
                 if (v.editor.onShow) {
@@ -100,19 +99,18 @@ define(['./fields/CommonField'], function (CommonField) {
 
 		checkLockedSubmit: function () {
 			var errors = this.silentValidate();
-            var $submitElem = $(this.submitAction);
 		    if (errors) {
 		        if (!this.locked) {
 		            this.locked = true;
-			    if (!$submitElem.is(':disabled')) {
-		                $submitElem.prop('disabled', true);
+		            if (this.stateModel && this.stateModel.has('disableSubmit')) {
+		                this.stateModel.set('disableSubmit', true);
 		            }
 		        }
 		    } else {
 		        this.locked = false;
-		    	if ($submitElem.is(':disabled')) {
-	                    $submitElem.prop('disabled', false);
-	                }
+		        if (this.stateModel && this.stateModel.has('disableSubmit')) {
+		            this.stateModel.set('disableSubmit', false);
+		        }
 		    }
 		},
 
