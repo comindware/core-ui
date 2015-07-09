@@ -26,6 +26,7 @@ define([
         var configs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
         var activeModule = null;
+        var loadingModulePath = null;
         var thisOptions = null;
         var router;
 
@@ -42,6 +43,7 @@ define([
         };
 
         var __onModuleLoading = function (callbackName, routingArgs, config, result) {
+            loadingModulePath = config.module;
             if (!activeModule) {
                 window.application.contentLoadingRegion.show(new ContentLoadingView());
             } else {
@@ -50,6 +52,11 @@ define([
         };
 
         var __onModuleLoaded = function (callbackName, routingArgs, config, Module) {
+            // reject race condition
+            if (loadingModulePath !== config.module) {
+                return;
+            }
+
             // reset loading region
             window.application.contentLoadingRegion.reset();
             if (activeModule) {
