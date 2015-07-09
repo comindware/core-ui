@@ -45,7 +45,8 @@ define(['./fields/CommonField'], function (CommonField) {
                     this.state = editor.state;
                     break;
 				case 'change':
-                    this.trigger('change', this);
+				    this.trigger('change', this, editor);
+				    this.trigger(editor.key + ':change', this, editor);
                     break;
 				case 'focus':
                     if (!this.hasFocus) {
