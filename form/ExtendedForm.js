@@ -27,32 +27,6 @@ define(['./fields/CommonField'], function (CommonField) {
 			}
 		},
 
-        commit: function(options) {
-            options = options || {};
-
-            if (!options.skipAllValidation) {
-                var validateOptions = {
-                    skipModelValidate: !options.validate
-                };
-
-                var errors = this.validate(validateOptions);
-                if (errors) return errors;
-            }
-
-            //Commit
-            var modelError;
-
-            var setOptions = _.extend({
-                error: function (model, e) {
-                    modelError = e;
-                }
-            }, options);
-
-            this.model.set(this.getValue(), setOptions);
-
-            if (modelError) return modelError;
-        },
-
 		name: 'form',
 
 		handleEditorEvent: function (event, editor, field) {
