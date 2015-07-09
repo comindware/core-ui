@@ -5,11 +5,6 @@ define(['./fields/CommonField'], function (CommonField) {
 
     //noinspection JSUnresolvedFunction,UnnecessaryLocalVariableJS
     var ExtendedForm = Backbone.Form.extend({
-        initialize: function(options) {
-            _.extend(this, _.pick(options, 'stateModel'));
-            Backbone.Form.prototype.initialize.apply(this, arguments);
-        },
-
         focusRequiredInput: function () {
 			var errors = this.silentValidate();
 			var self = this;
@@ -102,15 +97,11 @@ define(['./fields/CommonField'], function (CommonField) {
 		    if (errors) {
 		        if (!this.locked) {
 		            this.locked = true;
-		            if (this.stateModel && this.stateModel.has('disableSubmit')) {
-		                this.stateModel.set('disableSubmit', true);
-		            }
+		            this.trigger('disable:submit');
 		        }
 		    } else {
 		        this.locked = false;
-		        if (this.stateModel && this.stateModel.has('disableSubmit')) {
-		            this.stateModel.set('disableSubmit', false);
-		        }
+		        this.trigger('enable:submit');
 		    }
 		},
 

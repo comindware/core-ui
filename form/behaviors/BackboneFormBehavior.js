@@ -140,15 +140,10 @@ define(['../ExtendedForm'],
                 if (_.isFunction(schema)) {
                     schema = schema.call(this.view);
                 }
-                var stateModel = this.options.stateModel;
-                if (_.isFunction(stateModel)) {
-                    stateModel = stateModel.call(this.view);
-                }
                 var form = new this.CustomizedForm({
                     model: model,
                     schema: schema,
-                    $target: this.$el,
-                    stateModel: stateModel
+                    $target: this.$el
                 });
                 this.view.form = this.form = form;
                 if (this.view.initForm) {
