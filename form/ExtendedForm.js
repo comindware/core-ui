@@ -94,13 +94,9 @@ define(['./fields/CommonField'], function (CommonField) {
 
 		checkLockedSubmit: function () {
 			var errors = this.silentValidate();
-		    if (errors) {
-		        if (!this.locked) {
-		            this.locked = true;
-		            this.trigger('disable:submit');
-		        }
+			if (errors) {
+			    this.trigger('disable:submit');
 		    } else {
-		        this.locked = false;
 		        this.trigger('enable:submit');
 		    }
 		},
