@@ -6,7 +6,9 @@ define(['./fields/CommonField'], function (CommonField) {
     //noinspection JSUnresolvedFunction,UnnecessaryLocalVariableJS
     var ExtendedForm = Backbone.Form.extend({
         focusRequiredInput: function () {
-			var errors = this.silentValidate();
+            this.methodOptions.silent = true;
+            var errors = this.validate();
+            this.methodOptions.silent = false;
 			var self = this;
 			if (errors) {
 				var fieldToFocus = _.chain(_.keys(errors))
@@ -30,9 +32,11 @@ define(['./fields/CommonField'], function (CommonField) {
 		name: 'form',
 
 		handleEditorEvent: function (event, editor, field) {
-			var formEvent = this.name + ':' + event;
-			//Re-trigger editor events on the form
-			this.trigger.call(this, formEvent, this, editor, Array.prototype.slice.call(arguments, 2));
+		    var formEvent = this.name + ':' + event;
+		    if (event !== 'validated') {
+		        //Re-trigger editor events on the form
+		        this.trigger.call(this, formEvent, this, editor, Array.prototype.slice.call(arguments, 2));
+		    }
 
 			//Trigger additional events
 			switch (event) {
@@ -62,9 +66,9 @@ define(['./fields/CommonField'], function (CommonField) {
                     }
                     break;
 				case 'validated':
-                    if (this.lockSubmit) {
-                        this.checkLockedSubmit();
-                    }
+                    this.validate({
+                        silent: true
+                    });
                     break;
                 case 'resize':
                     $(window).trigger('resize');
@@ -82,9 +86,9 @@ define(['./fields/CommonField'], function (CommonField) {
 		},
 
 		onShow: function () {
-			if (this.lockSubmit) {
-				this.checkLockedSubmit();
-			}
+		    this.validate({
+		        silent: true
+		    });
             _.each(this.fields || {}, function (v) {
                 if (v.editor.onShow) {
                     v.editor.onShow();
@@ -92,23 +96,68 @@ define(['./fields/CommonField'], function (CommonField) {
             });
 		},
 
-		checkLockedSubmit: function () {
-			var errors = this.silentValidate();
-			if (errors) {
-			    this.trigger('disable:submit');
-		    } else {
-		        this.trigger('enable:submit');
+        /**
+         * Validate the data
+         *
+         * @return {Object}       Validation errors
+         */
+		validate: function (options) {
+		    var self = this,
+                fields = this.fields,
+                model = this.model,
+                errors = {};
+
+		    options = options || {};
+
+		    //Collect errors from schema validation
+		    _.each(fields, function (field) {
+		        var error = field.validate(options);
+		        if (error) {
+		            errors[field.key] = error;
+		        }
+		    });
+
+		    //Get errors from default Backbone model validator
+		    if (!options.skipModelValidate && model && model.validate) {
+		        var modelErrors = model.validate(this.getValue());
+
+		        if (modelErrors) {
+		            var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+
+		            //If errors are not in object form then just store on the error object
+		            if (!isDictionary) {
+		                errors._others = errors._others || [];
+		                errors._others.push(modelErrors);
+		            }
+
+		            //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
+		            if (isDictionary) {
+		                _.each(modelErrors, function (val, key) {
+		                    //Set error on field if there isn't one already
+		                    if (fields[key] && !errors[key]) {
+		                        fields[key].setError(val);
+		                        errors[key] = val;
+		                    }
+
+		                    else {
+		                        //Otherwise add to '_others' key
+		                        errors._others = errors._others || [];
+		                        var tmpErr = {};
+		                        tmpErr[key] = val;
+		                        errors._others.push(tmpErr);
+		                    }
+		                });
+		            }
+		        }
 		    }
+
+		    var result = _.isEmpty(errors) ? null : errors;
+		    this.trigger('form:validated', !result, result);
+            return result;
 		},
 
 		validationDelay: 1000,
 
-		silentValidate: function () {
-			this.silentValidation = true;
-			var errors = this.validate();
-			this.silentValidation = false;
-			return errors;
-		},
 		Field: CommonField
 	});
 	return ExtendedForm;
