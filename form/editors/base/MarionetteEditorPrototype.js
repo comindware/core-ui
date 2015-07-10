@@ -99,6 +99,7 @@ define([
                         }
 
                         this.enabled = schema.enabled = schema.enabled || options.enabled || (schema.enabled === undefined && options.enabled === undefined);
+                        schema.forceCommit = options.forceCommit || schema.forceCommit;
 
                         viewClass.prototype.constructor.apply(this, arguments);
                         if (this.model) {
@@ -207,7 +208,7 @@ define([
                     commit: function(options) {
                         options = options || {};
                         var error = this.validate();
-                        if (error) {
+                        if (error && !this.schema.forceCommit) {
                             return error;
                         }
 
@@ -220,7 +221,7 @@ define([
                             validate: options.validate === true
                         });
 
-                        if (error) {
+                        if (error && !this.schema.forceCommit) {
                             return error;
                         }
                         this.trigger(this.key + ':committed', this, this.model, this.getValue());
