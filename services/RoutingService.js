@@ -26,7 +26,7 @@ define([
         var configs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
         var activeModule = null;
-        var loadingModulePath = null;
+        var loadingContext = null;
         var thisOptions = null;
         var router;
 
@@ -42,18 +42,24 @@ define([
             router = new DefaultRouter();
         };
 
-        var __onModuleLoading = function (callbackName, routingArgs, config, result) {
-            loadingModulePath = config.module;
+        var __onModuleLoading = function (callbackName, routingArgs, config) {
+            loadingContext = {
+                config: config
+            };
             if (!activeModule) {
                 window.application.contentLoadingRegion.show(new ContentLoadingView());
             } else {
+                // TODO
+                Promise.resolve((activeModule.onLeave && activeModule.onLeave()) || true).then(function (canLeave) {
+
+                });
                 activeModule.view.setModuleLoading(true);
             }
         };
 
         var __onModuleLoaded = function (callbackName, routingArgs, config, Module) {
             // reject race condition
-            if (loadingModulePath !== config.module) {
+            if (loadingContext.config.module !== config.module) {
                 return;
             }
 
