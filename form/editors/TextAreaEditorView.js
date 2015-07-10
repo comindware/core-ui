@@ -64,7 +64,7 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
 
             setMaxHeight: function(){
                 if (this.options.textHeight) {
-                    this.options.maxHeight = parseInt(this.ui.textarea.css('lineHeight')) * this.options.textHeight;
+                    this.options.maxHeight = parseInt(this.ui.textarea.css('lineHeight') || 14) * this.options.textHeight;
                 }
             },
 
