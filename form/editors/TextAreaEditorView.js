@@ -85,9 +85,16 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
                 }
             },
 
-            setEnabled: function (enabled) {
-                BaseItemEditorView.prototype.setEnabled.call(this, enabled);
+            __setEnabled: function (enabled) {
+                BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
                 this.ui.textarea.prop('disabled', !enabled);
+            },
+
+            __setReadonly: function (readonly) {
+                BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+                if (this.getEnabled()) {
+                    this.ui.textarea.prop('readonly', readonly);
+                }
             },
 
             setValue: function (value) {

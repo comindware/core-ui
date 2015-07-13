@@ -72,9 +72,16 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
                 this.__value(value, true, false);
             },
 
-            setEnabled: function (enabled) {
-                BaseItemEditorView.prototype.setEnabled.call(this, enabled);
+            __setEnabled: function (enabled) {
+                BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
                 this.ui.input.prop('disabled', !enabled);
+            },
+
+            __setReadonly: function (readonly) {
+                BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+                if (this.getEnabled()) {
+                    this.ui.input.prop('readonly', readonly);
+                }
             },
 
             onRender: function () {

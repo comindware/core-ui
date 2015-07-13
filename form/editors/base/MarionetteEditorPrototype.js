@@ -24,7 +24,8 @@ define([
         'use strict';
 
         var classes = {
-            disabled: 'l-field_disabled'
+            disabled: 'l-field_disabled',
+            readonly: 'dev-field_readonly'
         };
 
         var onFocus = function () {
@@ -38,7 +39,7 @@ define([
         var onRender = function () {
             this.$el.attr('id', this.id);
             this.$el.attr('name', this.getName());
-            this.setEnabled(this.enabled);
+            this.setPermissions(this.enabled, this.readonly);
             //noinspection JSUnresolvedVariable
             if (this.schema.editorClass) {
                 //noinspection JSUnresolvedVariable
@@ -99,6 +100,7 @@ define([
                         }
 
                         this.enabled = schema.enabled = schema.enabled || options.enabled || (schema.enabled === undefined && options.enabled === undefined);
+                        this.readonly = schema.readonly = schema.readonly || options.readonly || (schema.readonly !== undefined && options.readonly !== undefined);
                         schema.forceCommit = options.forceCommit || schema.forceCommit;
 
                         viewClass.prototype.constructor.apply(this, arguments);
@@ -162,7 +164,22 @@ define([
                         this.value = value;
                     },
 
+                    setPermissions: function (enabled, readonly) {
+                        this.__setEnabled(enabled);
+                        this.__setReadonly(readonly);
+                    },
+
                     setEnabled: function (enabled) {
+                        var readonly = this.getReadonly();
+                        this.setPermissions(enabled, readonly);
+                    },
+
+                    setReadonly: function (readonly) {
+                        var enabled = this.getEnabled();
+                        this.setPermissions(enabled, readonly);
+                    },
+
+                    __setEnabled: function (enabled) {
                         this.enabled = enabled;
                         if (!this.enabled) {
                             this.$el.addClass(classes.disabled);
@@ -173,6 +190,19 @@ define([
 
                     getEnabled: function () {
                         return this.enabled;
+                    },
+
+                    __setReadonly: function (readonly) {
+                        this.readonly = readonly;
+                        if (this.readonly && this.getEnabled()) {
+                            this.$el.addClass(classes.readonly);
+                        } else {
+                            this.$el.removeClass(classes.readonly);
+                        }
+                    },
+
+                    getReadonly: function () {
+                        return this.readonly;
                     },
 
                     /**
