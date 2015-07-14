@@ -45,7 +45,7 @@ define([
             childViewOptions: function () {
                 return {
                     selected: this.getValue(),
-                    enabled: this.getEnabled()
+                    enabled: this.getEnabled() && !this.getReadonly()
                 };
             },
 

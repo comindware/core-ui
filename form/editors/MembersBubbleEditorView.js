@@ -89,7 +89,7 @@ define([
                     buttonViewOptions: {
                         model: this.viewModel,
                         reqres: this.reqres,
-                        enabled: this.getEnabled() && this.options.canDeleteMember
+                        enabled: this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember
                     },
                     panelView: PanelView,
                     panelViewOptions: {
@@ -278,7 +278,7 @@ define([
                         return model !== this.fakeInputModel;
                     }.bind(this));
 
-                return this.getEnabled() &&
+                return this.getEnabled() && !this.getReadonly() &&
                     (!this.options.maxQuantitySelected || (this.options.maxQuantitySelected !== selectedMembers.length)) &&
                     this.viewModel.get('available').length > 0;
             },

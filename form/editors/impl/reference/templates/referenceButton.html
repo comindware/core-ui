@@ -1,7 +1,7 @@
 <span class="js-text reference-field__txt btn-wrp">
     {{#if text}}
         {{text}}
-        <span class="js-clear-button btn-del btn-del_absolute"></span>
+        {{#if enabled}}<span class="js-clear-button btn-del btn-del_absolute"></span>{{/if}}
     {{else}}
         {{localize 'SUITEGENERAL.FORM.EDITORS.REFERENCE.NOTSET'}}
     {{/if}}

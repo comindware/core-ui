@@ -80,7 +80,7 @@ define([
 
                 this.viewModel = new Backbone.Model({
                     button: new ButtonModel({
-                        enabled: this.getEnabled()
+                        enabled: this.getEnabled() && !this.getReadonly()
                     }),
                     panel: new Backbone.Model({
                     })
@@ -108,7 +108,7 @@ define([
             },
 
             onRender: function () {
-                if (!this.getEnabled()) {
+                if (!this.getEnabled() || this.getReadonly()) {
                     this.dropdownRegion.show(new this.options.dropdownOptions.buttonView(_.extend({
                         model: this.viewModel.get('button'),
                         reqres: this.reqres

@@ -56,6 +56,8 @@ define([
 
                 this.value = this.__adjustValue(this.value);
 
+
+                this.reqres.setHandler('panel:open', this.onPanelOpen, this);
                 this.reqres.setHandler('value:clear', this.onValueClear, this);
                 this.reqres.setHandler('value:set', this.onValueSet, this);
                 this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
@@ -65,7 +67,8 @@ define([
                 this.viewModel = new Backbone.Model({
                     button: new Backbone.Model({
                         value: this.getValue(),
-                        state: 'view'
+                        state: 'view',
+                        enabled: this.getEnabled() && !this.getReadonly()
                     }),
                     panel: new Backbone.Model({
                         value: this.getValue(),
@@ -115,9 +118,11 @@ define([
                         model: this.viewModel.get('panel'),
                         reqres: this.reqres
                     },
-                    panelPosition: 'down-over'
+                    panelPosition: 'down-over',
+                    autoOpen: false
                 });
                 this.dropdownRegion.show(this.dropdownView);
+
                 // hotkeys
                 if (this.keyListener) {
                     this.keyListener.reset();
@@ -184,6 +189,12 @@ define([
                     deferred.resolve();
                 }.bind(this));
                 return deferred.promise();
+            },
+
+            onPanelOpen: function () {
+                if (this.getEnabled() && !this.getReadonly()) {
+                    this.dropdownView.open();
+                }
             }
         });
 

@@ -42,7 +42,8 @@ define(['module/lib', 'text!../../reference/templates/referenceButton.html'],
 
             events: {
                 'click @ui.clearButton': '__clear',
-                'click @ui.text': '__navigate'
+                'click @ui.text': '__navigate',
+                'click': '__click'
             },
 
             __clear: function () {
@@ -58,6 +59,10 @@ define(['module/lib', 'text!../../reference/templates/referenceButton.html'],
 
             modelEvents: {
                 'change:value': 'render'
+            },
+
+            __click: function () {
+                this.reqres.request('panel:open');
             },
 
             onRender: function () {
