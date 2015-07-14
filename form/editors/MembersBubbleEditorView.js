@@ -106,7 +106,7 @@ define([
                 if (_.isUndefined(value) || value === null) {
                     value = [];
                 }
-                if (this.value === value) {
+                if ((this.value === value) || (JSON.stringify(this.value) === JSON.stringify(value))) {
                     return;
                 }
                 this.value = value;
