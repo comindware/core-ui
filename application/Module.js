@@ -29,6 +29,13 @@ define([
                 Marionette.Controller.prototype.constructor.apply(this, arguments);
             },
 
+            leave: function () {
+                if (_.isFunction(this.onLeave)) {
+                    return this.onLeave();
+                }
+                return Promise.resolve(true);
+            },
+
             setLoading: function (isLoading) {
                 this.view.setModuleLoading(isLoading);
             },

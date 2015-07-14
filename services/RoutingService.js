@@ -23,6 +23,16 @@ define([
     function (lib, utilsApi, ModuleProxy, ContentLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
         'use strict';
 
+        // storing active url to get back to it while canceling module leave
+        var previousUrl;
+        var activeUrl;
+        var originalCheckUrl = Backbone.history.checkUrl;
+        Backbone.history.checkUrl = function (e) {
+            previousUrl = activeUrl;
+            activeUrl = window.location.hash;
+            originalCheckUrl.apply(this, arguments);
+        };
+
         var configs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
         var activeModule = null;
@@ -44,56 +54,72 @@ define([
 
         var __onModuleLoading = function (callbackName, routingArgs, config) {
             loadingContext = {
-                config: config
+                config: config,
+                leavingPromise: null,
+                loaded: false
             };
             if (!activeModule) {
                 window.application.contentLoadingRegion.show(new ContentLoadingView());
             } else {
-                // TODO
-                Promise.resolve((activeModule.onLeave && activeModule.onLeave()) || true).then(function (canLeave) {
-
-                });
-                activeModule.view.setModuleLoading(true);
+                loadingContext.leavingPromise = Promise.resolve(activeModule.leave());
+                loadingContext.leavingPromise.then(function (canLeave) {
+                    if (!canLeave) {
+                        // getting back to last url
+                        routingService.navigateToUrl(previousUrl, { replace: true, trigger: false });
+                        return;
+                    }
+                    if (!loadingContext.loaded) {
+                        activeModule.view.setModuleLoading(true);
+                    }
+                }.bind(this));
             }
         };
 
         var __onModuleLoaded = function (callbackName, routingArgs, config, Module) {
             // reject race condition
-            if (loadingContext.config.module !== config.module) {
+            if (loadingContext === null || loadingContext.config.module !== config.module) {
                 return;
             }
 
-            // reset loading region
-            window.application.contentLoadingRegion.reset();
-            if (activeModule) {
-                activeModule.view.setModuleLoading(false);
-            }
-            var movingOut = activeModule && activeModule.options.config.module !== config.module;
+            loadingContext.loaded = true;
+            Promise.resolve(loadingContext.leavingPromise ? loadingContext.leavingPromise : true).then(function (canLeave) {
+                if (!canLeave) {
+                    return;
+                }
 
-            // destroy active module
-            if (activeModule && movingOut) {
-                activeModule.destroy();
-            }
+                // reset loading region
+                window.application.contentLoadingRegion.reset();
+                if (activeModule) {
+                    activeModule.view.setModuleLoading(false);
+                }
+                var movingOut = activeModule && activeModule.options.config.module !== config.module;
 
-            // construct new module
-            if (!activeModule || movingOut) {
-                activeModule = new Module({
-                    config: config,
-                    region: window.application.contentRegion
-                });
-            }
+                // destroy active module
+                if (activeModule && movingOut) {
+                    activeModule.destroy();
+                }
 
-            // navigate to new module
-            if (activeModule.onRoute) {
-                activeModule.onRoute.apply(activeModule, routingArgs);
-            }
-            var routingCallback = activeModule[callbackName];
-            if (!routingCallback) {
-                var moduleId = config.id || config.module;
-                utilsApi.helpers.throwError(
-                    'Failed to find callback method `' + callbackName + '` for the module `' + moduleId + '`.');
-            }
-            routingCallback.apply(activeModule, routingArgs);
+                // construct new module
+                if (!activeModule || movingOut) {
+                    activeModule = new Module({
+                        config: config,
+                        region: window.application.contentRegion
+                    });
+                }
+
+                // navigate to new module
+                if (activeModule.onRoute) {
+                    activeModule.onRoute.apply(activeModule, routingArgs);
+                }
+                var routingCallback = activeModule[callbackName];
+                if (!routingCallback) {
+                    var moduleId = config.id || config.module;
+                    utilsApi.helpers.throwError(
+                        'Failed to find callback method `' + callbackName + '` for the module `' + moduleId + '`.');
+                }
+                routingCallback.apply(activeModule, routingArgs);
+                loadingContext = null;
+            }.bind(this));
         };
 
         var routingService = {
