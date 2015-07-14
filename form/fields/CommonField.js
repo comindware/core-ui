@@ -44,10 +44,11 @@ define([
                     }.bind(this));
                 }
             },
-            validate: function () {
+            validate: function (options) {
+                options = options || {};
                 if (this.schema.validators) {
                     var error = this.editor.validate();
-                    if (!this.form.silentValidation) {
+                    if (!options.silent) {
                         if (error) {
                             this.setError(error.message);
                         } else {
