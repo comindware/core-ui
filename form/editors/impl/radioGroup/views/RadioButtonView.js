@@ -27,6 +27,10 @@ define(['module/lib', 'text!../templates/radioButton.html'],
                 'tabindex': '0'
             },
 
+            initialize: function (options) {
+                this.enabled = options.enabled;
+            },
+
             ui: {
                 toggleButton: '.js-toggle-button',
                 displayText: '.js-display-text'
@@ -57,7 +61,7 @@ define(['module/lib', 'text!../templates/radioButton.html'],
             },
 
             __changeModelSelected: function () {
-                if (!this.options.enabled) {
+                if (!this.enabled) {
                     return;
                 }
                 this.model.select();

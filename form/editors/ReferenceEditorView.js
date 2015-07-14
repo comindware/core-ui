@@ -195,6 +195,16 @@ define([
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
+            },
+
+            setReadonly: function (readonly) {
+                BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+                this.dropdownView.button.model.set('enabled', this.getEnabled() && !this.getReadonly());
+            },
+
+            setEnabled: function (enabled) {
+                BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+                this.dropdownView.button.model.set('enabled', this.getEnabled() && !this.getReadonly());
             }
         });
 

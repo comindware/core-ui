@@ -22,9 +22,9 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
 
         var defaultOptions = {
             changeMode: 'blur',
-            emptyPlaceholder: Localizer.get('FORMEDITOR.TEXTEDITOR.ENTERTEXT'),
-            readonlyPlaceholder: 'Field is readonly',
-            disablePlaceholder: 'Field is disabled',
+            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.READONLYPLACEHOLDER'),
+            disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false
         };

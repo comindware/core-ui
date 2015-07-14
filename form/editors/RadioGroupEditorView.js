@@ -31,6 +31,7 @@ define([
                 } else {
                     _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
+
                 this.collection = new RadioGroupCollection(this.options.radioOptions);
             },
 
@@ -55,6 +56,20 @@ define([
 
             setValue: function (value) {
                 this.__value(value, false);
+            },
+
+            __setEnabled: function (enabled) {
+                EditorBaseCollectionView.prototype.__setEnabled.call(this, enabled);
+                this.children.each(function (cv) {
+                    cv.enabled = this.getEnabled() && !this.getReadonly();
+                }.bind(this));
+            },
+
+            __setReadonly: function (readonly) {
+                EditorBaseCollectionView.prototype.__setReadonly.call(this, readonly);
+                this.children.each(function (cv) {
+                    cv.enabled = this.getEnabled() && !this.getReadonly();
+                }.bind(this));
             },
 
             __value: function (value, triggerChange) {

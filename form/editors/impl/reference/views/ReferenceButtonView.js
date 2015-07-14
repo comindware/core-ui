@@ -22,6 +22,7 @@ define(['module/lib', 'text!../../reference/templates/referenceButton.html'],
         return Marionette.ItemView.extend({
             initialize: function (options) {
                 this.reqres = options.reqres;
+                this.listenTo(this.model, 'change:enabled', this.setEnabled.bind(this));
             },
 
             className: 'reference-field pr-arrow-right btn-wrp',
@@ -65,7 +66,17 @@ define(['module/lib', 'text!../../reference/templates/referenceButton.html'],
                 this.reqres.request('panel:open');
             },
 
+
+            setEnabled: function () {
+                if (this.model.get('enabled')) {
+                    this.ui.clearButton.show();
+                } else {
+                    this.ui.clearButton.hide();
+                }
+            },
+
             onRender: function () {
+                this.setEnabled();
                 if (!this.model.get('value')) {
                     this.$el.addClass(classes.EMPTY);
                 }

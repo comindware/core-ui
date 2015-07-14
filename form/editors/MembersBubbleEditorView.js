@@ -320,6 +320,26 @@ define([
                 var selectedModels = this.viewModel.get('selected');
                 var model = selectedModels.models[selectedModels.models.length - 2];
                 this.__onBubbleDelete(model);
+            },
+
+            __setEnabled: function (enabled) {
+                BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+                var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
+                this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
+                this.dropdownView.button.children.each(function (cv) {
+                    cv.options.enabled = isEnabled;
+                    cv.setEnabled && cv.setEnabled();
+                });
+            },
+
+            __setReadonly: function (readonly) {
+                BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+                var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
+                this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
+                this.dropdownView.button.children.each(function (cv) {
+                    cv.options.enabled = isEnabled;
+                    cv.setEnabled && cv.setEnabled();
+                });
             }
         });
 

@@ -28,9 +28,9 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
         var defaultOptions = {
             changeMode: changeMode.blur,
             size: size.auto,
-            emptyPlaceholder: Localizer.get('FORMEDITOR.TEXTEDITOR.ENTERTEXT'),
-            readonlyPlaceholder: 'Field is readonly',
-            disablePlaceholder: 'Field is disabled',
+            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
+            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
+            disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false,
             textHeight: null

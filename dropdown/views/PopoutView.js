@@ -41,7 +41,8 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
         var defaultOptions = {
             popoutAlign: popoutAlign.RIGHT,
             fade: false,
-            height: 'auto'
+            height: 'auto',
+            autoOpen: true
         };
 
         return Marionette.LayoutView.extend({
@@ -67,7 +68,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
             },
 
             events: {
-                'click @ui.button': 'open',
+                'click @ui.button': '__handleClick',
                 'blur @ui.panel': '__handleBlur'
             },
 
@@ -91,6 +92,12 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                     this.ui.button.addClass(classes.CUSTOM_ANCHOR);
                 } else {
                     this.ui.button.addClass(classes.DEFAULT_ANCHOR);
+                }
+            },
+
+            __handleClick: function () {
+                if (this.options.autoOpen) {
+                    this.open();
                 }
             },
 
