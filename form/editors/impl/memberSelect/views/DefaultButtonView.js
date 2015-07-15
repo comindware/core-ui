@@ -67,9 +67,8 @@ define(['core/dropdown/dropdownApi',
                 }
             },
 
-            updateEnabled: function (enabled) {
-                this.enabled = enabled;
-                if (enabled) {
+            updateEnabled: function () {
+                if (this.model.get('enabled')) {
                     this.ui.clearButton.show();
                 } else {
                     this.ui.clearButton.hide();
@@ -77,7 +76,8 @@ define(['core/dropdown/dropdownApi',
             },
 
             modelEvents: {
-                'change:member': 'changeMember'
+                'change:member': 'changeMember',
+                'change:enabled': 'updateEnabled'
             },
 
             changeMember: function() {
@@ -86,7 +86,7 @@ define(['core/dropdown/dropdownApi',
             },
 
             onRender: function () {
-                this.updateEnabled(this.enabled);
+                this.updateEnabled();
                 if (!this.model.get('member')) {
                     this.$el.addClass(classes.EMPTY_EL);
                 }
