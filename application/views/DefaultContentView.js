@@ -21,14 +21,20 @@ define([
     './ModuleLoadingView',
     'core/services/RoutingService',
     './content/ProfileButtonView',
-    './content/ProfilePanelView'
-], function (lib, utilsApi, dropdownApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView, RoutingService, ProfileButtonView, ProfilePanelView) {
+    './content/ProfilePanelView',
+    './content/EllipsisButtonView'
+], function (lib, utilsApi, dropdownApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView,
+             RoutingService, ProfileButtonView, ProfilePanelView, EllipsisButtonView) {
         'use strict';
 
         return Marionette.LayoutView.extend({
             initialize: function () {
                 this.model = new Backbone.Model();
-                this.model.set('headerTabs', new SelectableCollection([]));
+                this.model.set('headerTabs', new SelectableCollection());
+                this.model.set('visibleHeaderTabs', new Backbone.Collection());
+                this.model.set('hiddenHeaderTabs', new Backbone.Collection());
+
+                this.listenTo(this.model.get('headerTabs'), 'add remove reset', this.__updateHeaderTabs);
             },
 
             template: Handlebars.compile(template),
@@ -37,7 +43,8 @@ define([
 
             ui: {
                 backButton: '.js-back-button',
-                backButtonText: '.js-back-button-text'
+                backButtonText: '.js-back-button-text',
+                headerTabsMenu: '.js-header-tabs-menu-region'
             },
 
             events: {
@@ -46,6 +53,7 @@ define([
 
             regions: {
                 headerTabsRegion: '.js-header-tabs-region',
+                headerTabsMenuRegion: '.js-header-tabs-menu-region',
                 moduleRegion: '.js-module-region',
                 moduleLoadingRegion: '.js-module-loading-region',
                 profileRegion: '.js-profile-region'
@@ -53,9 +61,21 @@ define([
 
             onRender: function () {
                 this.hideBackButton();
+
                 this.headerTabsRegion.show(new HeaderTabsView({
                     collection: this.model.get('headerTabs')
                 }));
+
+                var headerTabsMenuView = dropdownApi.factory.createMenu({
+                    buttonView: EllipsisButtonView,
+                    items: this.model.get('hiddenHeaderTabs'),
+                    customAnchor: true
+                });
+                this.listenTo(headerTabsMenuView, 'execute', function (modelId, model) {
+                    RoutingService.navigateToUrl(model.get('url'));
+                });
+                this.headerTabsMenuRegion.show(headerTabsMenuView);
+
                 var currentUser = window.application.currentUser;
                 this.profileRegion.show(dropdownApi.factory.createPopout({
                     customAnchor: true,
@@ -72,6 +92,12 @@ define([
 
             setHeaderTabs: function (tabs) {
                 this.model.get('headerTabs').reset(tabs);
+                this.model.get('visibleHeaderTabs').reset(tabs);
+                this.model.get('hiddenHeaderTabs').reset([]);
+            },
+
+            __updateHeaderTabs: function () {
+                this.ui.headerTabsMenu.hide();
             },
 
             showBackButton: function (options) {
