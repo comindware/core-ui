@@ -31,6 +31,7 @@ define([
                 } else {
                     _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
+
                 this.collection = new RadioGroupCollection(this.options.radioOptions);
             },
 
@@ -45,7 +46,7 @@ define([
             childViewOptions: function () {
                 return {
                     selected: this.getValue(),
-                    enabled: this.getEnabled()
+                    enabled: this.getEnabled() && !this.getReadonly()
                 };
             },
 
@@ -55,6 +56,22 @@ define([
 
             setValue: function (value) {
                 this.__value(value, false);
+            },
+
+            __setEnabled: function (enabled) {
+                EditorBaseCollectionView.prototype.__setEnabled.call(this, enabled);
+                var isEnabled = this.getEnabled() && !this.getReadonly();
+                this.children.each(function (cv) {
+                    cv.setEnabled(isEnabled);
+                }.bind(this));
+            },
+
+            __setReadonly: function (readonly) {
+                EditorBaseCollectionView.prototype.__setReadonly.call(this, readonly);
+                var isEnabled = this.getEnabled() && !this.getReadonly();
+                this.children.each(function (cv) {
+                    cv.setEnabled(isEnabled);
+                }.bind(this));
             },
 
             __value: function (value, triggerChange) {

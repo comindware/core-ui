@@ -28,7 +28,9 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
         var defaultOptions = {
             changeMode: changeMode.blur,
             size: size.auto,
-            placeholder: Localizer.get('FORMEDITOR.TEXTEDITOR.ENTERTEXT'),
+            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
+            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
+            disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false,
             textHeight: null
@@ -41,6 +43,8 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
                 } else {
                     _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
+
+                this.placeholder = this.options.emptyPlaceholder;
             },
 
             focusElement: '.js-textarea',
@@ -85,9 +89,33 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
                 }
             },
 
-            setEnabled: function (enabled) {
-                BaseItemEditorView.prototype.setEnabled.call(this, enabled);
+            setPermissions: function (enabled, readonly) {
+                BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
+                this.setPlaceholder();
+            },
+
+            setPlaceholder: function () {
+                if (!this.getEnabled()) {
+                    this.placeholder = this.options.disablePlaceholder;
+                } else if (this.getReadonly()) {
+                    this.placeholder = this.options.readonlyPlaceholder;
+                } else {
+                    this.placeholder = this.options.emptyPlaceholder;
+                }
+
+                this.ui.textarea.prop('placeholder', this.placeholder);
+            },
+
+            __setEnabled: function (enabled) {
+                BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
                 this.ui.textarea.prop('disabled', !enabled);
+            },
+
+            __setReadonly: function (readonly) {
+                BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+                if (this.getEnabled()) {
+                    this.ui.textarea.prop('readonly', readonly);
+                }
             },
 
             setValue: function (value) {

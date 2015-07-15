@@ -89,7 +89,7 @@ define([
                     buttonViewOptions: {
                         model: this.viewModel,
                         reqres: this.reqres,
-                        enabled: this.getEnabled() && this.options.canDeleteMember
+                        enabled: this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember
                     },
                     panelView: PanelView,
                     panelViewOptions: {
@@ -278,7 +278,7 @@ define([
                         return model !== this.fakeInputModel;
                     }.bind(this));
 
-                return this.getEnabled() &&
+                return this.getEnabled() && !this.getReadonly() &&
                     (!this.options.maxQuantitySelected || (this.options.maxQuantitySelected !== selectedMembers.length)) &&
                     this.viewModel.get('available').length > 0;
             },
@@ -320,6 +320,21 @@ define([
                 var selectedModels = this.viewModel.get('selected');
                 var model = selectedModels.models[selectedModels.models.length - 2];
                 this.__onBubbleDelete(model);
+            },
+
+            __setEnabled: function (enabled) {
+                BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+                var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
+                this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
+                this.dropdownView.button.updateEnabled(isEnabled);
+            },
+
+            __setReadonly: function (readonly) {
+                BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+                var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
+                this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
+                this.dropdownView.button.updateEnabled(isEnabled);
+
             }
         });
 
