@@ -65,6 +65,10 @@ define(['module/lib', 'text!../templates/radioButton.html'],
                     return;
                 }
                 this.model.select();
+            },
+
+            setEnabled: function (enabled) {
+                this.enabled = enabled;
             }
         });
     });

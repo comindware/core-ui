@@ -60,15 +60,17 @@ define([
 
             __setEnabled: function (enabled) {
                 EditorBaseCollectionView.prototype.__setEnabled.call(this, enabled);
+                var isEnabled = this.getEnabled() && !this.getReadonly();
                 this.children.each(function (cv) {
-                    cv.enabled = this.getEnabled() && !this.getReadonly();
+                    cv.setEnabled(isEnabled);
                 }.bind(this));
             },
 
             __setReadonly: function (readonly) {
                 EditorBaseCollectionView.prototype.__setReadonly.call(this, readonly);
+                var isEnabled = this.getEnabled() && !this.getReadonly();
                 this.children.each(function (cv) {
-                    cv.enabled = this.getEnabled() && !this.getReadonly();
+                    cv.setEnabled(isEnabled);
                 }.bind(this));
             },
 

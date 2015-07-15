@@ -326,20 +326,15 @@ define([
                 BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
                 var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
                 this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-                this.dropdownView.button.children.each(function (cv) {
-                    cv.options.enabled = isEnabled;
-                    cv.setEnabled && cv.setEnabled();
-                });
+                this.dropdownView.button.updateEnabled(isEnabled);
             },
 
             __setReadonly: function (readonly) {
                 BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
                 var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
                 this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-                this.dropdownView.button.children.each(function (cv) {
-                    cv.options.enabled = isEnabled;
-                    cv.setEnabled && cv.setEnabled();
-                });
+                this.dropdownView.button.updateEnabled(isEnabled);
+
             }
         });
 

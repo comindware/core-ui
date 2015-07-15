@@ -85,6 +85,12 @@ define(['module/lib', 'text!../templates/button.html', './BubbleView', './InputV
 
             __click: function () {
                 this.reqres.request('button:click');
+            },
+
+            updateEnabled: function (enabled) {
+                this.children.each(function (cv) {
+                    cv.updateEnabled && cv.updateEnabled(enabled);
+                });
             }
         });
     });

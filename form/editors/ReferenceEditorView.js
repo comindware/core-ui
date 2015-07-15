@@ -199,12 +199,12 @@ define([
 
             setReadonly: function (readonly) {
                 BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
-                this.dropdownView.button.model.set('enabled', this.getEnabled() && !this.getReadonly());
+                this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
             },
 
             setEnabled: function (enabled) {
                 BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
-                this.dropdownView.button.model.set('enabled', this.getEnabled() && !this.getReadonly());
+                this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
             }
         });
 

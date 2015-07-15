@@ -67,7 +67,7 @@ define(['core/dropdown/dropdownApi',
                 }
             },
 
-            setEnabled: function (enabled) {
+            updateEnabled: function (enabled) {
                 this.enabled = enabled;
                 if (enabled) {
                     this.ui.clearButton.show();
@@ -86,7 +86,7 @@ define(['core/dropdown/dropdownApi',
             },
 
             onRender: function () {
-                this.setEnabled(this.enabled);
+                this.updateEnabled(this.enabled);
                 if (!this.model.get('member')) {
                     this.$el.addClass(classes.EMPTY_EL);
                 }

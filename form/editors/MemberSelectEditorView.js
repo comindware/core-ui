@@ -201,14 +201,14 @@ define([
                 BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
                 var isEnabled = this.getEnabled() && !this.getReadonly();
                 this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-                this.dropdownView.button.setEnabled(isEnabled);
+                this.dropdownView.button.updateEnabled(isEnabled);
             },
 
             __setReadonly: function (readonly) {
                 BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
                 var isEnabled = this.getEnabled() && !this.getReadonly();
                 this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-                this.dropdownView.button.setEnabled(isEnabled);
+                this.dropdownView.button.updateEnabled(isEnabled);
             }
         });
 

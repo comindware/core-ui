@@ -45,8 +45,9 @@ define(['module/lib', 'text!../templates/bubble.html'],
                 this.reqres.request('bubble:delete', this.model);
             },
 
-            setEnabled: function () {
-                if (this.options.enabled) {
+            updateEnabled: function (enabled) {
+                this.options.enabled = enabled;
+                if (enabled) {
                     this.ui.clearButton.show();
                 } else {
                     this.ui.clearButton.hide();
@@ -54,7 +55,7 @@ define(['module/lib', 'text!../templates/bubble.html'],
             },
 
             onRender: function () {
-                this.setEnabled();
+                this.updateEnabled(this.options.enabled);
             }
         });
     });
