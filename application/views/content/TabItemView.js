@@ -31,7 +31,7 @@ define([
                 'change': 'render'
             },
             
-            className: 'dev-default-content-view__header-tabs__tab-item',
+            className: 'top-nav__i',
 
             template: Handlebars.compile(template),
 

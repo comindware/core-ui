@@ -21,7 +21,7 @@ define([
         initialize: function () {
         },
 
-        className: 'dev-default-content-view__profile__button',
+        className: 'top-nav-person',
 
         behaviors: {
             CustomAnchorBehavior: {

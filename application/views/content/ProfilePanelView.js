@@ -22,7 +22,7 @@ define([
         initialize: function () {
         },
 
-        className: 'dev-default-content-view__profile__panel',
+        className: 'top-nav-person-dd',
 
         events: {
             'click .js-logout': '__logout'

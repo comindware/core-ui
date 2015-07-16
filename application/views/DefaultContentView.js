@@ -33,7 +33,7 @@ define([
 
             template: Handlebars.compile(template),
 
-            className: 'dev-default-content-view',
+            className: 'content-view',
 
             ui: {
                 backButton: '.js-back-button',
