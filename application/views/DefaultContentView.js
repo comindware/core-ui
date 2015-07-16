@@ -44,6 +44,8 @@ define([
             ui: {
                 backButton: '.js-back-button',
                 backButtonText: '.js-back-button-text',
+                headerTabsContainer: '.js-header-tabs-container',
+                headerTabs: '.js-header-tabs-region',
                 headerTabsMenu: '.js-header-tabs-menu-region'
             },
 
@@ -63,7 +65,7 @@ define([
                 this.hideBackButton();
 
                 this.headerTabsRegion.show(new HeaderTabsView({
-                    collection: this.model.get('headerTabs')
+                    collection: this.model.get('visibleHeaderTabs')
                 }));
 
                 var headerTabsMenuView = dropdownApi.factory.createMenu({
@@ -92,11 +94,19 @@ define([
 
             setHeaderTabs: function (tabs) {
                 this.model.get('headerTabs').reset(tabs);
-                this.model.get('visibleHeaderTabs').reset(tabs);
-                this.model.get('hiddenHeaderTabs').reset([]);
             },
 
             __updateHeaderTabs: function () {
+                var newModels = this.model.get('headerTabs').models;
+                this.model.get('visibleHeaderTabs').reset(newModels);
+                var tabsContainerWidth = this.ui.headerTabsContainer.width();
+                var allTabsWidth = this.ui.headerTabs.width();
+                while (allTabsWidth > tabsContainerWidth) {
+                    newModels = _.take(newModels, newModels.length - 1);
+                    this.model.get('visibleHeaderTabs').reset(newModels);
+                    allTabsWidth = this.ui.headerTabs.width();
+                }
+                this.model.get('hiddenHeaderTabs').reset([]);
                 this.ui.headerTabsMenu.hide();
             },
 
