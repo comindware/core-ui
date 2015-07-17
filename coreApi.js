@@ -24,6 +24,7 @@ define([
         './services/UrlService',
         './services/ModuleService',
         './services/WindowService',
+        './services/GlobalEventService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -45,6 +46,7 @@ define([
         UrlService,
         ModuleService,
         WindowService,
+        GlobalEventService,
 
         SlidingWindowCollection,
         VirtualCollection,

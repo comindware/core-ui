@@ -20,11 +20,12 @@ define([
     '../collections/SelectableCollection',
     './ModuleLoadingView',
     'core/services/RoutingService',
+    'core/services/GlobalEventService',
     './content/ProfileButtonView',
     './content/ProfilePanelView',
     './content/EllipsisButtonView'
 ], function (lib, utilsApi, dropdownApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView,
-             RoutingService, ProfileButtonView, ProfilePanelView, EllipsisButtonView) {
+             RoutingService, GlobalEventService, ProfileButtonView, ProfilePanelView, EllipsisButtonView) {
         'use strict';
 
         var constants = {
@@ -45,10 +46,10 @@ define([
 
                 _.bindAll(this, '__updateHeaderTabs');
 
-                this.onResize = _.debounce(this.__updateHeaderTabs, constants.RESIZE_HANDLER_DELAY);
+                var onResize = _.debounce(this.__updateHeaderTabs, constants.RESIZE_HANDLER_DELAY);
 
-                this.listenTo(this.model.get('headerTabs'), 'add remove reset', this.onResize);
-                $(window).on('resize', null, this.__updateHeaderTabs);
+                this.listenTo(this.model.get('headerTabs'), 'add remove reset', this.__updateHeaderTabs);
+                this.listenTo(GlobalEventService, 'resize', onResize);
             },
 
             template: Handlebars.compile(template),
@@ -73,10 +74,6 @@ define([
                 moduleRegion: '.js-module-region',
                 moduleLoadingRegion: '.js-module-loading-region',
                 profileRegion: '.js-profile-region'
-            },
-
-            onDestroy: function () {
-                $(window).off('resize', null, this.onResize);
             },
 
             onRender: function () {
