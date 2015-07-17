@@ -17,6 +17,9 @@ define(['module/lib', 'text!../templates/contentLoading.html'],
         return Marionette.ItemView.extend({
             initialize: function () {
             },
-            template: Handlebars.compile(template)
+
+            template: Handlebars.compile(template),
+
+            className: 'loader'
         });
     });
