@@ -27,6 +27,15 @@ define([
              RoutingService, ProfileButtonView, ProfilePanelView, EllipsisButtonView) {
         'use strict';
 
+        var constants = {
+            RESIZE_HANDLER_DELAY: 100,
+            FULL_HEADER_TABS_WIDTH_OFFSET: 30
+        };
+
+        var classes = {
+            TABS_CONTAINER_WITH_BACK: 'dev-default-content-view__header__tabs-container_with-back-button'
+        };
+
         return Marionette.LayoutView.extend({
             initialize: function () {
                 this.model = new Backbone.Model();
@@ -34,7 +43,12 @@ define([
                 this.model.set('visibleHeaderTabs', new Backbone.Collection());
                 this.model.set('hiddenHeaderTabs', new Backbone.Collection());
 
-                this.listenTo(this.model.get('headerTabs'), 'add remove reset', this.__updateHeaderTabs);
+                _.bindAll(this, '__updateHeaderTabs');
+
+                this.onResize = _.debounce(this.__updateHeaderTabs, constants.RESIZE_HANDLER_DELAY);
+
+                this.listenTo(this.model.get('headerTabs'), 'add remove reset', this.onResize);
+                $(window).on('resize', null, this.__updateHeaderTabs);
             },
 
             template: Handlebars.compile(template),
@@ -61,12 +75,18 @@ define([
                 profileRegion: '.js-profile-region'
             },
 
+            onDestroy: function () {
+                $(window).off('resize', null, this.onResize);
+            },
+
             onRender: function () {
+                this.rendering = true;
                 this.hideBackButton();
 
-                this.headerTabsRegion.show(new HeaderTabsView({
+                this.headerTabsView = new HeaderTabsView({
                     collection: this.model.get('visibleHeaderTabs')
-                }));
+                });
+                this.headerTabsRegion.show(this.headerTabsView);
 
                 var headerTabsMenuView = dropdownApi.factory.createMenu({
                     buttonView: EllipsisButtonView,
@@ -90,6 +110,9 @@ define([
                         model: currentUser
                     }
                 }));
+                this.rendering = false;
+
+                this.__updateHeaderTabs();
             },
 
             setHeaderTabs: function (tabs) {
@@ -97,17 +120,33 @@ define([
             },
 
             __updateHeaderTabs: function () {
-                var newModels = this.model.get('headerTabs').models;
-                this.model.get('visibleHeaderTabs').reset(newModels);
-                var tabsContainerWidth = this.ui.headerTabsContainer.width();
-                var allTabsWidth = this.ui.headerTabs.width();
-                while (allTabsWidth > tabsContainerWidth) {
-                    newModels = _.take(newModels, newModels.length - 1);
-                    this.model.get('visibleHeaderTabs').reset(newModels);
-                    allTabsWidth = this.ui.headerTabs.width();
+                if (this.rendering) {
+                    return;
                 }
-                this.model.get('hiddenHeaderTabs').reset([]);
-                this.ui.headerTabsMenu.hide();
+                var tabsContainerWidth = this.ui.headerTabsContainer.width();
+                var newModels = this.model.get('headerTabs').models;
+
+                this.model.get('visibleHeaderTabs').reset(newModels);
+                var widths = this.headerTabsView.getWidths();
+                var sumFn = function (m, e) {
+                    return m + e;
+                };
+                var visibleCount = 0;
+                for (var i = 0; i < widths.length; i++) {
+                    var fullTabsWidth = _.reduce(_.take(widths, widths.length - i), sumFn, 0);
+                    if (fullTabsWidth < tabsContainerWidth - constants.FULL_HEADER_TABS_WIDTH_OFFSET) {
+                        visibleCount = widths.length - i;
+                        break;
+                    }
+                }
+
+                this.model.get('visibleHeaderTabs').reset(_.take(newModels, visibleCount));
+                this.model.get('hiddenHeaderTabs').reset(_.rest(newModels, visibleCount));
+                if (visibleCount === newModels.length) {
+                    this.ui.headerTabsMenu.hide();
+                } else {
+                    this.ui.headerTabsMenu.show();
+                }
             },
 
             showBackButton: function (options) {
@@ -117,10 +156,14 @@ define([
                     this.ui.backButtonText.text(options.name);
                 }
                 this.ui.backButton.show();
+                this.ui.headerTabsContainer.addClass(classes.TABS_CONTAINER_WITH_BACK);
+                this.__updateHeaderTabs();
             },
 
             hideBackButton: function () {
                 this.ui.backButton.hide();
+                this.ui.headerTabsContainer.removeClass(classes.TABS_CONTAINER_WITH_BACK);
+                this.__updateHeaderTabs();
             },
 
             selectHeaderTab: function (tabId) {

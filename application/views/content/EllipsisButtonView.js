@@ -21,6 +21,8 @@ define([
         initialize: function () {
         },
 
+        className: 'dev-default-content-view__header__tabs-menu__button',
+
         template: Handlebars.compile(template),
 
         behaviors: {
