@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html', 'moment'],
-    function (lib, utils, template, moment) {
+define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html'],
+    function (lib, utils, template) {
         'use strict';
         return Marionette.ItemView.extend({
 
@@ -23,7 +23,6 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html',
 
             initialize: function (options) {
                 this.reqres = options.reqres;
-                this.timeFormat = options.timeFormat;
             },
 
             template: Handlebars.compile(template),
@@ -68,7 +67,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html',
 
                 var format = this.timeEditFormat,
                     currentValue = this.model.get('value'),
-                    parsedVal = moment(val, format, true),
+                    parsedVal = lib.moment(val, format, true),
                     parsedDate;
 
                 if (parsedVal.isValid()) {
@@ -129,7 +128,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html',
                 if (val === null || val === '') {
                     formattedVal = '';
                 } else {
-                    formattedVal = utils.dateHelpers.getDisplayTime(moment(val));
+                    formattedVal = utils.dateHelpers.getDisplayTime(lib.moment(val));
                 }
 
                 return formattedVal;
@@ -150,7 +149,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html',
             showEditFormattedTime: function () {
                 var val = this.model.get('value'),
                     format = this.timeEditFormat,
-                    editFormattedDate = val ? moment(new Date(val)).format(format) : moment(new Date()).format(format);
+                    editFormattedDate = val ? lib.moment(new Date(val)).format(format) : lib.moment(new Date()).format(format);
 
                 this.ui.input.val(editFormattedDate);
             },

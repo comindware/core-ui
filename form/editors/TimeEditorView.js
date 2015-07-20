@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['text!./templates/timeEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/TimeView', 'moment'],
-    function (template, BaseLayoutEditorView, TimeView, moment) {
+define(['module/lib', 'text!./templates/timeEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/TimeView'],
+    function (lib, template, BaseLayoutEditorView, TimeView) {
         'use strict';
 
         var defaultOptions = {
@@ -73,6 +73,10 @@ define(['text!./templates/timeEditor.html', './base/BaseLayoutEditorView', './im
                 if (triggerChange) {
                     this.__triggerChange();
                 }
+            },
+
+            getValue: function () {
+                return lib.moment(this.value).toISOString();
             },
 
             __setEnabled: function (enabled) {

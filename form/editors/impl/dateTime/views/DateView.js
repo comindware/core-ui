@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'datetimePicker', 'moment'],
-    function (lib, utils, template, datetimePicker, moment) {
+define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
+    function (lib, utils, template) {
         'use strict';
 
         var defaultOptions = {
@@ -110,7 +110,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'dat
             showEditFormattedDate: function () {
                 var val = this.model.get('value'),
                     format = this.options.editDateFormat,
-                    editFormattedDate = val ? moment(new Date(val)).format(format) : moment(new Date()).format(format);
+                    editFormattedDate = val ? lib.moment(new Date(val)).format(format) : moment(new Date()).format(format);
 
                 this.ui.dateInput.val(editFormattedDate);
             },
@@ -124,7 +124,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'dat
 
                 var format = this.options.editDateFormat,
                     currentValue = this.model.get('value'),
-                    parsedVal = moment(val, format, true),
+                    parsedVal = lib.moment(val, format, true),
                     parsedDate;
 
                 if (parsedVal.isValid()) {
@@ -170,7 +170,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'dat
             updatePickerDate: function () {
                 var val = this.model.get('value'),
                     format = this.options.pickerFormat,
-                    pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment(new Date()).format(format);
+                    pickerFormattedDate = val ? lib.moment(new Date(val)).format(format) : lib.moment(new Date()).format(format);
 
                 this.ui.pickerInput.val(pickerFormattedDate);
             },
@@ -208,8 +208,8 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'dat
                 if (date === null || date === '') {
                     newVal = null;
                 } else if (oldVal) {
-                    var momentDate = moment(date);
-                    newVal = moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toString();
+                    var momentDate = lib.moment(date);
+                    newVal = lib.moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toString();
                 } else {
                     newVal = date;
                 }

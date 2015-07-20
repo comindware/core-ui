@@ -11,12 +11,12 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['text!./templates/dateTimeEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/DateView', './impl/dateTime/views/TimeView', 'moment'],
-    function (template, BaseLayoutEditorView, DateView, TimeView, moment) {
+define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/DateView', './impl/dateTime/views/TimeView'],
+    function (lib, template, BaseLayoutEditorView, DateView, TimeView) {
         'use strict';
 
         var defaultOptions = {
-            };
+        };
 
         Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend({
             initialize: function (options) {
@@ -34,14 +34,6 @@ define(['text!./templates/dateTimeEditor.html', './base/BaseLayoutEditorView', '
                     value: this.value,
                     readonly: readonly,
                     enabled: enabled
-                });
-
-                this.dateView = new DateView({
-                    model: this.dateTimeModel
-                });
-
-                this.timeView = new TimeView({
-                    model: this.dateTimeModel
                 });
 
                 this.listenTo(this.dateTimeModel, 'change:value', this.__change, this);
@@ -69,7 +61,19 @@ define(['text!./templates/dateTimeEditor.html', './base/BaseLayoutEditorView', '
                 this.dateTimeModel.set('value', value);
             },
 
+            getValue: function () {
+                return lib.moment(this.value).toISOString();
+            },
+
             onRender: function () {
+                this.dateView = new DateView({
+                    model: this.dateTimeModel
+                });
+
+                this.timeView = new TimeView({
+                    model: this.dateTimeModel
+                });
+
                 this.dateRegion.show(this.dateView);
                 this.timeRegion.show(this.timeView);
             },

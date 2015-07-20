@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['text!./templates/dateEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/DateView', 'moment'],
-    function (template, BaseLayoutEditorView, DateView, moment) {
+define(['module/lib', 'text!./templates/dateEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/DateView'],
+    function (lib, template, BaseLayoutEditorView, DateView) {
         'use strict';
 
         var defaultOptions = {
@@ -62,6 +62,10 @@ define(['text!./templates/dateEditor.html', './base/BaseLayoutEditorView', './im
 
             onRender: function () {
                 this.dateRegion.show(this.dateView);
+            },
+
+            getValue: function () {
+                return lib.moment(this.value).toISOString();
             },
 
             __value: function (value, updateUi, triggerChange) {

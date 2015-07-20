@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/list/listApi', 'text!../templates/time.html', './TimeInputView', 'moment'],
-    function (lib, utils, dropdown, list, template, TimeInputView, moment) {
+define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/list/listApi', 'text!../templates/time.html', './TimeInputView'],
+    function (lib, utils, dropdown, list, template, TimeInputView) {
         'use strict';
 
         return Marionette.LayoutView.extend({
@@ -21,8 +21,6 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                 this.reqres.setHandler('time:selected', this.__onTimeSelected, this);
                 this.reqres.setHandler('panel:open', this.__onPanelOpen, this);
                 this.reqres.setHandler('panel:close', this.__onPanelClose, this);
-
-                this.timeFormat = 'HH:mm';
             },
 
             className: 'dev-time-view',
@@ -39,8 +37,8 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                 for (var h = 0; h < 24; h++) {
                     for (var m = 0; m < 60; m+=30) {
                         var val = {hours: h, minutes: m},
-                            time = moment(val),
-                            formattedTime = utils.dateHelpers.getDisplayTime(time);//time.format(this.timeFormat);
+                            time = lib.moment(val),
+                            formattedTime = utils.dateHelpers.getDisplayTime(time);
 
                         timeArray.push({
                             time: time,
@@ -51,7 +49,7 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
 
                 this.dropdownView = dropdown.factory.createDropdown({
                     buttonView: TimeInputView,
-                    buttonViewOptions: {reqres: this.reqres, model: this.model, timeFormat: this.timeFormat},
+                    buttonViewOptions: {reqres: this.reqres, model: this.model},
                     panelView: Marionette.CollectionView.extend({
                         reqres: this.reqres,
                         collection: new Backbone.Collection(timeArray),
@@ -84,8 +82,8 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                 if (time === null || time === '') {
                     newVal = null;
                 } else if (oldVal) {
-                    var momentTime = moment(time);
-                    newVal = moment(oldVal).hour(momentTime.hour()).minute(momentTime.minute()).toString();
+                    var momentTime = lib.moment(time);
+                    newVal = lib.moment(oldVal).hour(momentTime.hour()).minute(momentTime.minute()).toString();
                 } else {
                     newVal = time;
                 }
