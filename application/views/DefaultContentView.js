@@ -20,12 +20,22 @@ define([
     '../collections/SelectableCollection',
     './ModuleLoadingView',
     'core/services/RoutingService',
+    'core/services/GlobalEventService',
     './content/ProfileButtonView',
     './content/ProfilePanelView',
     './content/EllipsisButtonView'
 ], function (lib, utilsApi, dropdownApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView,
-             RoutingService, ProfileButtonView, ProfilePanelView, EllipsisButtonView) {
+             RoutingService, GlobalEventService, ProfileButtonView, ProfilePanelView, EllipsisButtonView) {
         'use strict';
+
+        var constants = {
+            RESIZE_HANDLER_DELAY: 100,
+            FULL_HEADER_TABS_WIDTH_OFFSET: 30
+        };
+
+        var classes = {
+            TABS_CONTAINER_WITH_BACK: 'dev-default-content-view__header__tabs-container_with-back-button'
+        };
 
         return Marionette.LayoutView.extend({
             initialize: function () {
@@ -34,7 +44,12 @@ define([
                 this.model.set('visibleHeaderTabs', new Backbone.Collection());
                 this.model.set('hiddenHeaderTabs', new Backbone.Collection());
 
+                _.bindAll(this, '__updateHeaderTabs');
+
+                var onResize = _.debounce(this.__updateHeaderTabs, constants.RESIZE_HANDLER_DELAY);
+
                 this.listenTo(this.model.get('headerTabs'), 'add remove reset', this.__updateHeaderTabs);
+                this.listenTo(GlobalEventService, 'resize', onResize);
             },
 
             template: Handlebars.compile(template),
@@ -44,6 +59,8 @@ define([
             ui: {
                 backButton: '.js-back-button',
                 backButtonText: '.js-back-button-text',
+                headerTabsContainer: '.js-header-tabs-container',
+                headerTabs: '.js-header-tabs-region',
                 headerTabsMenu: '.js-header-tabs-menu-region'
             },
 
@@ -60,11 +77,13 @@ define([
             },
 
             onRender: function () {
+                this.rendering = true;
                 this.hideBackButton();
 
-                this.headerTabsRegion.show(new HeaderTabsView({
-                    collection: this.model.get('headerTabs')
-                }));
+                this.headerTabsView = new HeaderTabsView({
+                    collection: this.model.get('visibleHeaderTabs')
+                });
+                this.headerTabsRegion.show(this.headerTabsView);
 
                 var headerTabsMenuView = dropdownApi.factory.createMenu({
                     buttonView: EllipsisButtonView,
@@ -88,16 +107,43 @@ define([
                         model: currentUser
                     }
                 }));
+                this.rendering = false;
+
+                this.__updateHeaderTabs();
             },
 
             setHeaderTabs: function (tabs) {
                 this.model.get('headerTabs').reset(tabs);
-                this.model.get('visibleHeaderTabs').reset(tabs);
-                this.model.get('hiddenHeaderTabs').reset([]);
             },
 
             __updateHeaderTabs: function () {
-                this.ui.headerTabsMenu.hide();
+                if (this.rendering) {
+                    return;
+                }
+                var tabsContainerWidth = this.ui.headerTabsContainer.width();
+                var newModels = this.model.get('headerTabs').models;
+
+                this.model.get('visibleHeaderTabs').reset(newModels);
+                var widths = this.headerTabsView.getWidths();
+                var sumFn = function (m, e) {
+                    return m + e;
+                };
+                var visibleCount = 0;
+                for (var i = 0; i < widths.length; i++) {
+                    var fullTabsWidth = _.reduce(_.take(widths, widths.length - i), sumFn, 0);
+                    if (fullTabsWidth < tabsContainerWidth - constants.FULL_HEADER_TABS_WIDTH_OFFSET) {
+                        visibleCount = widths.length - i;
+                        break;
+                    }
+                }
+
+                this.model.get('visibleHeaderTabs').reset(_.take(newModels, visibleCount));
+                this.model.get('hiddenHeaderTabs').reset(_.rest(newModels, visibleCount));
+                if (visibleCount === newModels.length) {
+                    this.ui.headerTabsMenu.hide();
+                } else {
+                    this.ui.headerTabsMenu.show();
+                }
             },
 
             showBackButton: function (options) {
@@ -107,10 +153,14 @@ define([
                     this.ui.backButtonText.text(options.name);
                 }
                 this.ui.backButton.show();
+                this.ui.headerTabsContainer.addClass(classes.TABS_CONTAINER_WITH_BACK);
+                this.__updateHeaderTabs();
             },
 
             hideBackButton: function () {
                 this.ui.backButton.hide();
+                this.ui.headerTabsContainer.removeClass(classes.TABS_CONTAINER_WITH_BACK);
+                this.__updateHeaderTabs();
             },
 
             selectHeaderTab: function (tabId) {

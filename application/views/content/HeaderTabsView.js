@@ -22,7 +22,11 @@ define([
 
             className: 'dev-default-content-view__header-tabs-view',
 
-            childView: TabItemView
+            childView: TabItemView,
+
+            getWidths: function () {
+                return _.map(this.children.toArray(), function (v) { return v.$el.outerWidth(true); });
+            }
         });
     });
 
