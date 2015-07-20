@@ -34,7 +34,7 @@ define([
         };
 
         var classes = {
-            TABS_CONTAINER_WITH_BACK: 'dev-default-content-view__header__tabs-container_with-back-button'
+            TABS_CONTAINER_WITH_BACK: 'top-nav-back'
         };
 
         return Marionette.LayoutView.extend({

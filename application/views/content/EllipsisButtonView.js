@@ -21,7 +21,7 @@ define([
         initialize: function () {
         },
 
-        className: 'dev-default-content-view__header__tabs-menu__button',
+        className: 'top-nav-more',
 
         template: Handlebars.compile(template),
 
