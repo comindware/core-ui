@@ -85,6 +85,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                     this.triggerMethod.apply(this, args);
                 });
                 this.buttonRegion.show(this.button);
+
                 if (this.options.popoutAlign === popoutAlign.RIGHT) {
                     this.ui.panel.addClass(classes.ALIGN_RIGHT);
                 }
@@ -106,6 +107,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                     return;
                 }
                 this.trigger('before:open', this);
+
                 var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
                     parent: this
                 });
@@ -131,12 +133,32 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                             $(window).on('resize', this.__handleWindowResize);
                             this.__handleWindowResize();
                         }
+                        this.correctPosition();
                         this.focus();
                         //noinspection JSValidateTypes
                         this.isOpen = true;
                         this.trigger('open', this);
                     }.bind(this)
                 });
+            },
+
+            correctPosition: function () {
+                var panelHeight = this.panelRegion.$el.height(),
+                    bodyHeight = $('body').height(),
+                    panelTopOffset = this.panelRegion.$el.offset().top,
+                    isTopPosition = bodyHeight - panelTopOffset < panelHeight;
+
+                if (isTopPosition) {
+                    this.panelRegion.$el.css({
+                        top: -(panelHeight + config.BOTTOM_HEIGHT_OFFSET)
+                    });
+
+                    this.panelRegion.$el.addClass('dev-panel-top');
+                    this.ui.button.addClass('dev-panel-top');
+                } else {
+                    this.panelRegion.$el.removeClass('dev-panel-top');
+                    this.ui.button.removeClass('dev-panel-top');
+                }
             },
 
             close: function () {

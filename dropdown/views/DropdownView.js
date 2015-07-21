@@ -69,13 +69,31 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                 });
                 this.buttonRegion.show(this.button);
 
-                switch (this.options.panelPosition)
-                {
+                switch (this.options.panelPosition) {
                 case panelPosition.DOWN:
                     break;
                 case panelPosition.DOWN_OVER:
                     this.ui.panel.addClass(classes.DROPDOWN_WRP_OVER);
                     break;
+                }
+            },
+
+            correctPosition: function () {
+                var panelHeight = this.panelRegion.$el.height(),
+                    bodyHeight = $('body').height(),
+                    panelTopOffset = this.panelRegion.$el.offset().top,
+                    isTopPosition = bodyHeight - panelTopOffset < panelHeight;
+
+                if (isTopPosition) {
+                    this.panelRegion.$el.css({
+                        top: -panelHeight
+                    });
+
+                    this.panelRegion.$el.addClass('dev-panel-top');
+                    this.ui.button.addClass('dev-panel-top');
+                } else {
+                    this.panelRegion.$el.removeClass('dev-panel-top');
+                    this.ui.button.removeClass('dev-panel-top');
                 }
             },
 
@@ -99,7 +117,8 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                     this.triggerMethod.apply(this, args);
                 });
                 this.panelRegion.show(this.panelView);
-                
+                this.correctPosition();
+
                 if ($.contains(this.el, document.activeElement)) {
                     $(document.activeElement).one('blur', this.__handleBlur);
                 } else {
