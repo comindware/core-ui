@@ -20,7 +20,7 @@ define([
             initialize: function () {
             },
 
-            className: 'dev-default-content-view__header-tabs-view',
+            className: '',
 
             childView: TabItemView,
 

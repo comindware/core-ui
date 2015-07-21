@@ -22,7 +22,7 @@ define([
         var state = {};
 
         var classes = {
-            HIDDEN: 'dev-hidden-application-region'
+            HIDDEN: 'hidden'
         };
 
         return {
