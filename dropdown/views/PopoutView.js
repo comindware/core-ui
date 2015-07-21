@@ -19,6 +19,8 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
 
         var classes = {
             OPEN: 'open',
+            DIRECTION_UP: 'dev-direction-up',
+            DIRECTION_DOWN: 'dev-direction-down',
             ALIGN_RIGHT: 'popout__wrp_right',
             CUSTOM_ANCHOR: 'popout__action-btn',
             DEFAULT_ANCHOR: 'popout__action'
@@ -33,6 +35,11 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
             RIGHT: 'right'
         };
 
+        var popoutDirection = {
+            UP: 'up',
+            DOWN: 'down'
+        };
+
         var height = {
             AUTO: 'auto',
             BOTTOM: 'bottom'
@@ -42,7 +49,8 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
             popoutAlign: popoutAlign.RIGHT,
             fade: false,
             height: 'auto',
-            autoOpen: true
+            autoOpen: true,
+            direction: popoutDirection.DOWN
         };
 
         return Marionette.LayoutView.extend({
@@ -94,6 +102,29 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                 } else {
                     this.ui.button.addClass(classes.DEFAULT_ANCHOR);
                 }
+
+                this.currentDirection = this.options.direction;
+                this.updateDirectionClasses();
+            },
+
+            updateDirectionClasses: function () {
+                if (this.currentDirection === popoutDirection.UP) {
+                    this.ui.button.addClass(classes.DIRECTION_UP);
+                    this.ui.button.removeClass(classes.DIRECTION_DOWN);
+
+                    if (this.panelRegion.$el) {
+                        this.panelRegion.$el.removeClass(classes.DIRECTION_DOWN);
+                        this.panelRegion.$el.addClass(classes.DIRECTION_UP);
+                    }
+                }  else {
+                    this.ui.button.addClass(classes.DIRECTION_DOWN);
+                    this.ui.button.removeClass(classes.DIRECTION_UP);
+
+                    if (this.panelRegion.$el) {
+                        this.panelRegion.$el.removeClass(classes.DIRECTION_UP);
+                        this.panelRegion.$el.addClass(classes.DIRECTION_DOWN);
+                    }
+                }
             },
 
             __handleClick: function () {
@@ -133,7 +164,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                             $(window).on('resize', this.__handleWindowResize);
                             this.__handleWindowResize();
                         }
-                        this.correctPosition();
+                        this.correctDirection();
                         this.focus();
                         //noinspection JSValidateTypes
                         this.isOpen = true;
@@ -142,22 +173,22 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                 });
             },
 
-            correctPosition: function () {
+            correctDirection: function () {
                 var panelHeight = this.panelRegion.$el.height(),
-                    bodyHeight = $('body').height(),
-                    panelTopOffset = this.panelRegion.$el.offset().top,
-                    isTopPosition = bodyHeight - panelTopOffset < panelHeight;
+                    $viewport = $('#viewportContent'),
+                    viewportHeight = $viewport.height(),
+                    viewportTopOffset = $viewport.offset().top,
+                    panelTopOffset = this.panelRegion.$el.offset().top;
 
-                if (isTopPosition) {
+                if (this.currentDirection === popoutDirection.UP && panelTopOffset - viewportTopOffset < panelHeight) {
+                    this.currentDirection = popoutDirection.DOWN;
+                    this.updateDirectionClasses();
+                } else if (this.currentDirection === popoutDirection.DOWN && viewportHeight - panelTopOffset < panelHeight){
+                    this.currentDirection = popoutDirection.UP;
                     this.panelRegion.$el.css({
                         top: -(panelHeight + config.BOTTOM_HEIGHT_OFFSET)
                     });
-
-                    this.panelRegion.$el.addClass('dev-panel-top');
-                    this.ui.button.addClass('dev-panel-top');
-                } else {
-                    this.panelRegion.$el.removeClass('dev-panel-top');
-                    this.ui.button.removeClass('dev-panel-top');
+                    this.updateDirectionClasses();
                 }
             },
 
