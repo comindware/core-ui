@@ -18,7 +18,7 @@ define([
         'use strict';
 
         var classes = {
-            SELECTED: 'dev-selected'
+            SELECTED: 'top-nav__i_selected'
         };
 
         return Marionette.ItemView.extend({
