@@ -175,12 +175,10 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
 
             correctDirection: function () {
                 var panelHeight = this.panelRegion.$el.height(),
-                    $viewport = $('#viewportContent'),
-                    viewportHeight = $viewport.height(),
-                    viewportTopOffset = $viewport.offset().top,
-                    panelTopOffset = this.panelRegion.$el.offset().top;
+                    viewportHeight = window.innerHeight,
+                    panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top;
 
-                if (this.currentDirection === popoutDirection.UP && panelTopOffset - viewportTopOffset < panelHeight) {
+                if (this.currentDirection === popoutDirection.UP && panelTopOffset < panelHeight) {
                     this.currentDirection = popoutDirection.DOWN;
                     this.updateDirectionClasses();
                 } else if (this.currentDirection === popoutDirection.DOWN && viewportHeight - panelTopOffset < panelHeight){

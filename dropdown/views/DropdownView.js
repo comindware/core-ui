@@ -109,13 +109,11 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
 
             correctPosition: function () {
                 var panelHeight = this.panelRegion.$el.height(),
-                    $viewport = $('#viewportContent'),
-                    viewportHeight = $viewport.height(),
-                    viewportTopOffset = $viewport.offset().top,
-                    panelTopOffset = this.panelRegion.$el.offset().top;
+                    viewportHeight = window.innerHeight,
+                    panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top;
 
                 if ((this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) &&
-                        panelTopOffset - viewportTopOffset < panelHeight) {
+                        panelTopOffset < panelHeight) {
                     this.currentPosition = panelPosition.DOWN;
                     this.updatePositionClasses();
                 } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) &&
