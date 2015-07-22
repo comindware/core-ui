@@ -21,7 +21,8 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
             OPEN: 'open',
             DIRECTION_UP: 'dev-direction-up',
             DIRECTION_DOWN: 'dev-direction-down',
-            ALIGN_RIGHT: 'popout__wrp_right',
+            FLOW_LEFT: 'dev-popout-flow-left',
+            FLOW_RIGHT: 'dev-popout-flow-right',
             CUSTOM_ANCHOR: 'popout__action-btn',
             DEFAULT_ANCHOR: 'popout__action'
         };
@@ -30,7 +31,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
             BOTTOM_HEIGHT_OFFSET: 20
         };
 
-        var popoutAlign = {
+        var popoutFlow = {
             LEFT: 'left',
             RIGHT: 'right'
         };
@@ -46,7 +47,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
         };
 
         var defaultOptions = {
-            popoutAlign: popoutAlign.RIGHT,
+            popoutFlow: popoutFlow.LEFT,
             fade: false,
             height: 'auto',
             autoOpen: true,
@@ -87,15 +88,19 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                     this.stopListening(this.button);
                 }
                 this.button = new this.options.buttonView(_.result(this.options, 'buttonViewOptions'));
-                this.listenTo(this.button, 'all', function() {
+                this.listenTo(this.button, 'all', function () {
                     var args = slice.call(arguments);
                     args[0] = 'button:' + args[0];
                     this.triggerMethod.apply(this, args);
                 });
                 this.buttonRegion.show(this.button);
 
-                if (this.options.popoutAlign === popoutAlign.RIGHT) {
-                    this.ui.panel.addClass(classes.ALIGN_RIGHT);
+                if (this.options.popoutFlow === popoutFlow.LEFT) {
+                    this.ui.panel.addClass(classes.FLOW_LEFT);
+                    this.ui.panel.removeClass(classes.FLOW_RIGHT);
+                } else {
+                    this.ui.panel.addClass(classes.FLOW_RIGHT);
+                    this.ui.panel.removeClass(classes.FLOW_LEFT);
                 }
                 if (this.options.customAnchor) {
                     this.ui.button.addClass(classes.CUSTOM_ANCHOR);
@@ -107,6 +112,41 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                 this.updateDirectionClasses();
             },
 
+            updatePanelFlow: function () {
+                var rect = {},
+                    leftPos = 0,
+                    rightPos = 0,
+                    triangleWidth = 16,
+                    panelOffset = 8,
+                    isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
+
+                if (this.options.customAnchor) {
+                    rect = this.button.$el.find('.js-anchor')[0].getBoundingClientRect();
+                    if (isFlowRight) {
+                        leftPos = rect.width / 2 - triangleWidth / 2 - panelOffset;
+                    } else {
+                        rightPos = this.button.$el.width() - rect.width + rect.width / 2 - triangleWidth / 2 - panelOffset;
+                    }
+                } else {
+                    rect = this.ui.button[0].getBoundingClientRect();
+                    if (isFlowRight) {
+                        leftPos = rect.width - triangleWidth - panelOffset;
+                    } else {
+                        rightPos = -panelOffset;
+                    }
+                }
+
+                if (isFlowRight) {
+                    this.panelRegion.$el.css({
+                        left: leftPos
+                    });
+                } else {
+                    this.panelRegion.$el.css({
+                        right: rightPos
+                    });
+                }
+            },
+
             updateDirectionClasses: function () {
                 if (this.currentDirection === popoutDirection.UP) {
                     this.ui.button.addClass(classes.DIRECTION_UP);
@@ -116,7 +156,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                         this.panelRegion.$el.removeClass(classes.DIRECTION_DOWN);
                         this.panelRegion.$el.addClass(classes.DIRECTION_UP);
                     }
-                }  else {
+                } else {
                     this.ui.button.addClass(classes.DIRECTION_DOWN);
                     this.ui.button.removeClass(classes.DIRECTION_UP);
 
@@ -146,7 +186,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                     this.stopListening(this.panelView);
                 }
                 this.panelView = new this.options.panelView(panelViewOptions);
-                this.listenTo(this.panelView, 'all', function() {
+                this.listenTo(this.panelView, 'all', function () {
                     var args = slice.call(arguments);
                     args[0] = 'panel:' + args[0];
                     this.triggerMethod.apply(this, args);
@@ -165,6 +205,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                             this.__handleWindowResize();
                         }
                         this.correctDirection();
+                        this.updatePanelFlow();
                         this.focus();
                         //noinspection JSValidateTypes
                         this.isOpen = true;
@@ -181,7 +222,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                 if (this.currentDirection === popoutDirection.UP && panelTopOffset < panelHeight) {
                     this.currentDirection = popoutDirection.DOWN;
                     this.updateDirectionClasses();
-                } else if (this.currentDirection === popoutDirection.DOWN && viewportHeight - panelTopOffset < panelHeight){
+                } else if (this.currentDirection === popoutDirection.DOWN && viewportHeight - panelTopOffset < panelHeight) {
                     this.currentDirection = popoutDirection.UP;
                     this.panelRegion.$el.css({
                         top: -(panelHeight + config.BOTTOM_HEIGHT_OFFSET)
