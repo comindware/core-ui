@@ -28,7 +28,9 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
         };
 
         var config = {
-            BOTTOM_HEIGHT_OFFSET: 20
+            BOTTOM_HEIGHT_OFFSET: 20,
+            TRIANGLE_WIDTH: 16,
+            PANEL_OFFSET: 8
         };
 
         var popoutFlow = {
@@ -116,8 +118,8 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                 var rect = {},
                     leftPos = 0,
                     rightPos = 0,
-                    triangleWidth = 16,
-                    panelOffset = 8,
+                    triangleWidth = config.TRIANGLE_WIDTH,
+                    panelOffset = config.PANEL_OFFSET,
                     isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
 
                 if (this.options.customAnchor) {

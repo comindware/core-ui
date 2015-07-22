@@ -70,8 +70,8 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
                     },
                     customAnchor: options.customAnchor
                 };
-                if (options.popoutAlign) {
-                    popoutOptions.popoutAlign = options.popoutAlign;
+                if (options.popoutFlow) {
+                    popoutOptions.popoutFlow = options.popoutFlow;
                 }
                 return factory.createPopout(popoutOptions);
             },

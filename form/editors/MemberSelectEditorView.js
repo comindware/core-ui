@@ -45,7 +45,7 @@ define([
         var defaultOptions = {
             dropdownOptions: {
                 buttonView: DefaultButtonView,
-                popoutAlign: 'right',
+                popoutFlow: 'right',
                 customAnchor: true
             }
         };
