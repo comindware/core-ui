@@ -72,6 +72,7 @@ define(['text!core/list/templates/scrollbar.html', 'module/lib'],
             
             onShow: function () {
                 this.rendered = true;
+                this.__updateScrollbarVisibility();
                 this.__updateDraggerPosition();
                 this.__updateDraggerHeight();
             },
@@ -102,6 +103,7 @@ define(['text!core/list/templates/scrollbar.html', 'module/lib'],
 
                 if (this.state.viewportHeight !== newViewportHeight) {
                     this.state.viewportHeight = newViewportHeight;
+                    this.__updateScrollbarVisibility();
                     this.__updateDraggerHeight();
 
                     var maxPos = this.__getMaxPosition();
@@ -141,6 +143,7 @@ define(['text!core/list/templates/scrollbar.html', 'module/lib'],
                     }
 
                     this.state.count = newCount;
+                    this.__updateScrollbarVisibility();
                     this.__updateDraggerHeight();
                     this.__updateDraggerPosition();
                 }
@@ -255,6 +258,14 @@ define(['text!core/list/templates/scrollbar.html', 'module/lib'],
                         oldPosition: oldPosition,
                         position: newPosition
                     });
+                }
+            },
+
+            __updateScrollbarVisibility: function() {
+                if (this.state.count > this.state.viewportHeight) {
+                    this.$el.removeClass('dev-scrollbar__hidden');
+                } else {
+                    this.$el.addClass('dev-scrollbar__hidden');
                 }
             },
 

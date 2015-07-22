@@ -41,6 +41,7 @@ define([
             PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_CONTEXT: 'module:process:processTemplates:designer:activity:context',
             PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_FORMDESIGNER: 'module:process:processTemplates:designer:activity:formDesigner',
             PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_SETTINGS: 'module:process:processTemplates:designer:activity:settings',
+            PROCESS_PROCESSTEMPLATES_DESIGNER_ACTIVITY_RULES: 'module:process:processTemplates:designer:activity:rules',
 
             PROCESS_ARCHITECTURE_OVERVIEW: 'module:process:architecture:overview',
             PROCESS_ARCHITECTURE_DESIGNER: 'module:process:architecture:designer',

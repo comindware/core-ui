@@ -22,7 +22,9 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
 
         var defaultOptions = {
             changeMode: 'blur',
-            placeholder: Localizer.get('FORMEDITOR.TEXTEDITOR.ENTERTEXT'),
+            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.READONLYPLACEHOLDER'),
+            disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false
         };
@@ -35,6 +37,8 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
                 } else {
                     _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
+
+                this.placeholder = this.options.emptyPlaceholder;
             },
 
             focusElement: '.js-input',
@@ -72,9 +76,33 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
                 this.__value(value, true, false);
             },
 
-            setEnabled: function (enabled) {
-                BaseItemEditorView.prototype.setEnabled.call(this, enabled);
+            setPermissions: function (enabled, readonly) {
+                BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
+                this.setPlaceholder();
+            },
+
+            setPlaceholder: function () {
+                if (!this.getEnabled()) {
+                    this.placeholder = this.options.disablePlaceholder;
+                } else if (this.getReadonly()) {
+                    this.placeholder = this.options.readonlyPlaceholder;
+                } else {
+                    this.placeholder = this.options.emptyPlaceholder;
+                }
+
+                this.ui.input.prop('placeholder', this.placeholder);
+            },
+
+            __setEnabled: function (enabled) {
+                BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
                 this.ui.input.prop('disabled', !enabled);
+            },
+
+            __setReadonly: function (readonly) {
+                BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+                if (this.getEnabled()) {
+                    this.ui.input.prop('readonly', readonly);
+                }
             },
 
             onRender: function () {
@@ -92,6 +120,14 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
                 if (triggerChange) {
                     this.__triggerChange();
                 }
+            },
+
+            select: function () {
+                this.ui.input.select();
+            },
+
+            deselect: function () {
+                this.ui.input.deselect();
             }
         });
 

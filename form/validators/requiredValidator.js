@@ -23,16 +23,17 @@ define(['module/lib'], function () {
         }, options);
 
         return function required(value) {
-            options.value = value;
+            var val = _.isObject(value) && _.has(value, 'value') ? value.value : value;
+            options.value = val;
 
             var err = {
                 type: options.type,
                 message: _.isFunction(options.message) ? options.message(options) : options.message
             };
-            if (value === null || value === undefined || value === false || value === '') {
+            if (val === null || val === undefined || val === false || val === '') {
                 return err;
             }
-            if (_.isArray(value) && value.length === 0) {
+            if (_.isArray(val) && val.length === 0) {
                 return err;
             }
         };

@@ -193,7 +193,7 @@ define([
             },
 
             onPanelOpen: function () {
-                if (this.getEnabled()) {
+                if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
             }
