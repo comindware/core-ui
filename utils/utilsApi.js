@@ -1,7 +1,7 @@
 /**
  * Developer: Stepan Burguchev
  * Date: 5/22/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2015 Comindwareï¿½
  *       All Rights Reserved
  *
  * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
@@ -16,6 +16,7 @@ define([
         './helpers',
         './htmlHelpers',
         './dateHelpers',
+        './cookieHelpers',
         './keyCode'
     ],
     function (
@@ -23,6 +24,7 @@ define([
         helpers,
         htmlHelpers,
         dateHelpers,
+        cookieHelpers,
         keyCode
     ) {
         'use strict';
@@ -32,6 +34,7 @@ define([
             helpers: helpers,
             htmlHelpers: htmlHelpers,
             dateHelpers: dateHelpers,
+            cookieHelpers: cookieHelpers,
             keyCode: keyCode
         };
     });

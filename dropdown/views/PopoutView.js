@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
-    function (template, lib, utils) {
+define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'core/services/WindowService'],
+    function (template, lib, utils, WindowService) {
         'use strict';
 
         var slice = Array.prototype.slice;
@@ -50,6 +50,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
 
         var defaultOptions = {
             popoutFlow: popoutFlow.LEFT,
+            customAnchor: false,
             fade: false,
             height: 'auto',
             autoOpen: true,
@@ -195,7 +196,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                 });
                 this.$el.addClass(classes.OPEN);
                 if (this.options.fade) {
-                    window.application.fadingPanel.fadeIn();
+                    WindowService.fadeIn();
                 }
                 this.ui.panel.css('display', 'block');
                 this.ui.panel.show({
@@ -239,7 +240,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi'],
                 }
                 this.trigger('before:close', this);
                 if (this.options.fade) {
-                    window.application.fadingPanel.fadeOut();
+                    WindowService.fadeOut();
                 }
                 if (this.options.height === height.BOTTOM) {
                     $(window).off('resize', this.__handleWindowResize);

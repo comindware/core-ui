@@ -1,0 +1,15 @@
+<div class="nav-profile__user">
+	<div class="nav-profile__avatar">
+		<div class="user-avatar">
+			<div class="user-avatar__img"{{#if UserpicUri}} style="background-image: url({{UserpicUri}})"{{/if}}>
+				{{#unless UserpicUri}}{{UserAbbreviation}}{{/unless}}
+			</div>
+		</div>
+	</div>
+	<div class="nav-profile__name">{{FullName}}</div>
+	<a href="#Profile/Profile">View profile</a>
+</div>
+<div class="nav-profile__links">
+	<a href="{{profileUrl}}" class="nav-profile__link">View profile</a>
+</div>
+<div class="js-logout nav-profile__logout">Logout</div>

@@ -37,7 +37,7 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
             * */
             createMenu: function (options) {
                 options = options || {};
-                options.buttonView = DefaultButtonView;
+                options.buttonView = options.buttonView || DefaultButtonView;
                 return factory.createButtonMenu(options);
             },
 
