@@ -45,7 +45,7 @@ define([
         var defaultOptions = {
             dropdownOptions: {
                 buttonView: DefaultButtonView,
-                popoutAlign: 'right',
+                popoutFlow: 'right',
                 customAnchor: true
             }
         };
@@ -77,10 +77,11 @@ define([
                 this.reqres.setHandler('value:set', this.onValueSet, this);
                 this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
                 this.reqres.setHandler('filter:text', this.onFilterText, this);
+                this.reqres.setHandler('panel:open', this.onPanelOpen, this);
 
                 this.viewModel = new Backbone.Model({
                     button: new ButtonModel({
-                        enabled: this.getEnabled()
+                        enabled: this.getEnabled() && !this.getReadonly()
                     }),
                     panel: new Backbone.Model({
                     })
@@ -108,13 +109,6 @@ define([
             },
 
             onRender: function () {
-                if (!this.getEnabled()) {
-                    this.dropdownRegion.show(new this.options.dropdownOptions.buttonView(_.extend({
-                        model: this.viewModel.get('button'),
-                        reqres: this.reqres
-                    }, this.options.dropdownOptions.buttonViewOptions)));
-                    return;
-                }
                 // dropdown
                 var dropdownOptions = _.extendDeep({
                     buttonViewOptions: {
@@ -125,7 +119,8 @@ define([
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
                         reqres: this.reqres
-                    }
+                    },
+                    autoOpen: false
                 }, this.options.dropdownOptions);
                 this.dropdownView = dropdown.factory.createPopout(dropdownOptions);
                 this.dropdownRegion.show(this.dropdownView);
@@ -182,6 +177,12 @@ define([
                 return deferred.promise();
             },
 
+            onPanelOpen: function () {
+                if (this.getEnabled() && !this.getReadonly()) {
+                    this.dropdownView.open();
+                }
+            },
+
             __initCollection: function () {
                 serviceLocator.cacheService.ListUsers().then(function (users) {
                     this.collection = new MembersVirtualCollection(new MembersCollection(users), {
@@ -194,6 +195,16 @@ define([
 
             __findModel: function (value) {
                 return this.collection.findWhere({ id: value });
+            },
+
+            __setEnabled: function (enabled) {
+                BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+                this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
+            },
+
+            __setReadonly: function (readonly) {
+                BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+                this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
             }
         });
 

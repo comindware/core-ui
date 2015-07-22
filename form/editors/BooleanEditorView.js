@@ -55,7 +55,7 @@ define(['text!./templates/booleanEditor.html', './base/BaseItemEditorView'],
             },
 
             __toggle: function () {
-                if (!this.getEnabled()) {
+                if (!this.getEnabled() || this.getReadonly()) {
                     return;
                 }
                 this.setValue(!this.getValue());

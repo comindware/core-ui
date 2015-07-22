@@ -35,10 +35,27 @@ define(['module/lib', 'text!../templates/bubble.html'],
                 'click .js-bubble-delete': '__delete'
             },
 
+            ui: {
+                clearButton: '.js-bubble-delete'
+            },
+
             __delete: function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 this.reqres.request('bubble:delete', this.model);
+            },
+
+            updateEnabled: function (enabled) {
+                this.options.enabled = enabled;
+                if (enabled) {
+                    this.ui.clearButton.show();
+                } else {
+                    this.ui.clearButton.hide();
+                }
+            },
+
+            onRender: function () {
+                this.updateEnabled(this.options.enabled);
             }
         });
     });

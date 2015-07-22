@@ -17,13 +17,24 @@ define([
         './list/listApi',
         './form/formApi',
         './serviceLocator',
+
+        './application/Module',
+
+        './services/RoutingService',
+        './services/UrlService',
+        './services/ModuleService',
+        './services/WindowService',
+        './services/GlobalEventService',
+
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
-        'core/models/behaviors/CollapsibleBehavior',
-        'core/models/behaviors/HighlightableBehavior',
-        'core/models/behaviors/SelectableBehavior',
-        'core/views/behaviors/LoadingBehavior'
+
+        './models/behaviors/CollapsibleBehavior',
+        './models/behaviors/HighlightableBehavior',
+        './models/behaviors/SelectableBehavior',
+	
+        './views/behaviors/LoadingBehavior'
     ],
     function (
         utilsApi,
@@ -31,12 +42,22 @@ define([
         listApi,
         formApi,
         serviceLocator,
+        Module,
+
+        RoutingService,
+        UrlService,
+        ModuleService,
+        WindowService,
+        GlobalEventService,
+
         SlidingWindowCollection,
         VirtualCollection,
         CollectionHighlightableBehavior,
+
         CollapsibleBehavior,
         HighlightableBehavior,
         SelectableBehavior,
+	
         LoadingBehavior
     ) {
         'use strict';
@@ -47,6 +68,23 @@ define([
          * @exports core
          * */
         var exports = {
+            /**
+             * Базовые компонеты приложения: модуль, header views etc
+             * @namespace
+             * */
+            application: {
+                Module: Module
+            },
+            /**
+             * Базовые сервисы системы
+             * @namespace
+             * */
+            services: {
+                RoutingService: RoutingService,
+                UrlService: UrlService,
+                ModuleService: ModuleService,
+                WindowService: WindowService
+            },
             /**
              * Backbone-коллекции общего назначения
              * @namespace

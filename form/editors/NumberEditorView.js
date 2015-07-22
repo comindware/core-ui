@@ -79,9 +79,6 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
             events: {
                 'keydown @ui.input': '__keydown',
                 'keyup @ui.input': function (event) {
-                    if (this.options.readonly) {
-                        return;
-                    }
                     if ([keyCode.UP, keyCode.DOWN, keyCode.PAGE_UP, keyCode.PAGE_DOWN].indexOf(event.keyCode) !== -1) {
                         this.__stop();
                     }
@@ -93,10 +90,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                     this.__value(this.ui.input.val(), false, true, false);
                 },
                 'mousewheel @ui.input': function (event) {
-                    if (!this.getEnabled()) {
-                        return;
-                    }
-                    if (this.options.readonly) {
+                    if (!this.getEnabled() || this.getReadonly()) {
                         return;
                     }
                     this.__start();
@@ -136,15 +130,26 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                 }
             },
 
-            setEnabled: function (enabled) {
-                BaseItemEditorView.prototype.setEnabled.call(this, enabled);
-                this.ui.input.prop('disabled', !enabled);
-                if (enabled) {
+            setPermissions: function (enabled, readonly) {
+                BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
+                if (enabled && !readonly) {
                     this.ui.spinnerUp.show();
                     this.ui.spinnerDown.show();
                 } else {
                     this.ui.spinnerUp.hide();
                     this.ui.spinnerDown.hide();
+                }
+            },
+
+            __setEnabled: function (enabled) {
+                BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+                this.ui.input.prop('disabled', !enabled);
+            },
+
+            __setReadonly: function (readonly) {
+                BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+                if (this.getEnabled()) {
+                    this.ui.input.prop('readonly', readonly);
                 }
             },
 
@@ -159,11 +164,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                 this.__spin(steps * this.options.step);
             },
 
-            __keydown: function(event)
-            {
-                if (this.options.readonly) {
-                    return;
-                }
+            __keydown: function(event) {
                 this.__start();
                 var options = this.options;
 

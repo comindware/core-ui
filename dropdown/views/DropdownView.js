@@ -17,12 +17,17 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
 
         var classes = {
             OPEN: 'open',
-            DROPDOWN_WRP_OVER: 'dropdown__wrp_over'
+            DROPDOWN_DOWN: 'dev-panel-down',
+            DROPDOWN_WRP_OVER: 'dropdown__wrp_over',
+            DROPDOWN_UP: 'dev-panel-up',
+            DROPDOWN_UP_OVER: 'dev-panel-up-over'
         };
 
         var panelPosition = {
             DOWN: 'down',
-            DOWN_OVER: 'down-over'
+            DOWN_OVER: 'down-over',
+            UP: 'up',
+            UP_OVER: 'up-over'
         };
 
         var defaultOptions = {
@@ -69,13 +74,55 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                 });
                 this.buttonRegion.show(this.button);
 
-                switch (this.options.panelPosition)
-                {
-                case panelPosition.DOWN:
-                    break;
-                case panelPosition.DOWN_OVER:
+                this.currentPosition = this.options.panelPosition;
+                this.updatePositionClasses();
+
+            },
+
+            updatePositionClasses: function () {
+                if (this.currentPosition === panelPosition.DOWN) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER)
+                        .removeClass(classes.DROPDOWN_UP)
+                        .removeClass(classes.DROPDOWN_UP_OVER);
+
+                    this.ui.panel.addClass(classes.DROPDOWN_DOWN);
+                } else if (this.currentPosition === panelPosition.DOWN_OVER) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_DOWN)
+                        .removeClass(classes.DROPDOWN_UP)
+                        .removeClass(classes.DROPDOWN_UP_OVER);
+
                     this.ui.panel.addClass(classes.DROPDOWN_WRP_OVER);
-                    break;
+                } else if (this.currentPosition === panelPosition.UP) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER)
+                        .removeClass(classes.DROPDOWN_DOWN)
+                        .removeClass(classes.DROPDOWN_UP_OVER);
+
+                    this.ui.panel.addClass(classes.DROPDOWN_UP);
+                } else if (this.currentPosition === panelPosition.UP_OVER) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER)
+                        .removeClass(classes.DROPDOWN_UP)
+                        .removeClass(classes.DROPDOWN_DOWN);
+
+                    this.ui.panel.addClass(classes.DROPDOWN_UP_OVER);
+                }
+            },
+
+            correctPosition: function () {
+                var panelHeight = this.panelRegion.$el.height(),
+                    viewportHeight = window.innerHeight,
+                    panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top;
+
+                if ((this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) &&
+                        panelTopOffset < panelHeight) {
+                    this.currentPosition = panelPosition.DOWN;
+                    this.updatePositionClasses();
+                } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) &&
+                        viewportHeight - panelTopOffset < panelHeight) {
+                    this.currentPosition = panelPosition.UP;
+                    this.panelRegion.$el.css({
+                        top: -panelHeight
+                    });
+                    this.updatePositionClasses();
                 }
             },
 
@@ -99,7 +146,8 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                     this.triggerMethod.apply(this, args);
                 });
                 this.panelRegion.show(this.panelView);
-                
+                this.correctPosition();
+
                 if ($.contains(this.el, document.activeElement)) {
                     $(document.activeElement).one('blur', this.__handleBlur);
                 } else {

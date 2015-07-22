@@ -90,7 +90,7 @@ define([
                         buttonViewOptions: {
                             model: this.fieldErrorModel
                         },
-                        popoutAlign: 'left',
+                        popoutFlow: 'left',
                         customAnchor: true
                     });
                     errorPopout.render();
@@ -110,7 +110,7 @@ define([
                         buttonViewOptions: {
                             model: this.fieldInfoModel
                         },
-                        popoutAlign: 'left',
+                        popoutFlow: 'left',
                         customAnchor: true
                     });
                     infoPopout.render();

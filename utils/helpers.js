@@ -79,41 +79,18 @@ define(['module/lib'],
             * The Operation must return promise object.
             * */
             enqueueOperation: function (operation, queueId) {
-                // perform model.save or post it into the queue
-                var deferred = $.Deferred();
-                var storedDeferred = queueCache[queueId];
-                queueCache[queueId] = deferred;
-                if (storedDeferred) {
-                    storedDeferred.then(function () {
-                        var operationResult = operation();
-                        if (!operationResult) {
-                            deferred.resolve();
-                        } else {
-                            operationResult.then(function () {
-                                deferred.resolve();
-                            });
-                        }
-                    });
+                if (queueCache[queueId]) {
+                    queueCache[queueId] = queueCache[queueId].then(Promise.resolve(operation()));
                 } else {
-                    var operationResult = operation();
-                    if (!operationResult) {
-                        deferred.resolve();
-                    } else {
-                        operationResult.then(function () {
-                            if (queueCache[queueId] === deferred) {
-                                queueCache[queueId] = null;
-                            }
-                            deferred.resolve();
-                        });
-                    }
+                    queueCache[queueId] = Promise.resolve(operation());
                 }
-                return deferred.promise();
+                return queueCache[queueId];
             },
 
-            applyBehavior: function (model) {
+            applyBehavior: function (target) {
                 var behaviors = _.rest(arguments, 1);
                 _.each(behaviors, function (Behavior) {
-                    _.extend(model, new Behavior(model));
+                    _.extend(target, new Behavior(target));
                 });
             },
             
@@ -181,6 +158,10 @@ define(['module/lib'],
 
             throwNotSupportedError: function (message) {
                 helpers.throwError(message || 'Not Supported', 'NotSupportedError');
+            },
+
+            throwNotImplementedError: function (message) {
+                helpers.throwError(message || 'Not Implemented', 'NotImplementedError');
             }
         };
 

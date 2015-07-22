@@ -24,6 +24,7 @@ define(['core/dropdown/dropdownApi',
 
         return Marionette.ItemView.extend({
             initialize: function (options) {
+                this.enabled = options.enabled;
                 this.reqres = options.reqres;
                 this.emptyElClass = options.emptyElClass || classes.EMPTY_EL;
                 this.options.template = Handlebars.compile(options.template || template);
@@ -45,7 +46,12 @@ define(['core/dropdown/dropdownApi',
 
             events: {
                 'click @ui.clearButton': '__clear',
-                'click @ui.text': '__navigate'
+                'click @ui.text': '__navigate',
+                'click': '__click'
+            },
+
+            __click: function () {
+                this.reqres.request('panel:open');
             },
 
             __clear: function () {
@@ -61,8 +67,17 @@ define(['core/dropdown/dropdownApi',
                 }
             },
 
+            updateEnabled: function () {
+                if (this.model.get('enabled')) {
+                    this.ui.clearButton.show();
+                } else {
+                    this.ui.clearButton.hide();
+                }
+            },
+
             modelEvents: {
-                'change:member': 'changeMember'
+                'change:member': 'changeMember',
+                'change:enabled': 'updateEnabled'
             },
 
             changeMember: function() {
@@ -71,6 +86,7 @@ define(['core/dropdown/dropdownApi',
             },
 
             onRender: function () {
+                this.updateEnabled();
                 if (!this.model.get('member')) {
                     this.$el.addClass(classes.EMPTY_EL);
                 }
