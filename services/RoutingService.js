@@ -108,6 +108,7 @@ define([
                 }
 
                 // navigate to new module
+                loadingContext = null;
                 if (activeModule.onRoute) {
                     activeModule.onRoute.apply(activeModule, routingArgs);
                 }
@@ -118,7 +119,6 @@ define([
                         'Failed to find callback method `' + callbackName + '` for the module `' + moduleId + '`.');
                 }
                 routingCallback.apply(activeModule, routingArgs);
-                loadingContext = null;
             }.bind(this));
         };
 
