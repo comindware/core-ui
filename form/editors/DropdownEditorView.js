@@ -129,7 +129,7 @@ define([
 
                     return;
                 }
-                
+
                 if (this.options.allowEmptyValue || this.collection.length === null) {
                     this.setValue(null);
                 } else {
