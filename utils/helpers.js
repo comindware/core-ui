@@ -80,9 +80,9 @@ define(['module/lib'],
             * */
             enqueueOperation: function (operation, queueId) {
                 if (queueCache[queueId]) {
-                    queueCache[queueId] = queueCache[queueId].then(Promise.resolve(operation()));
+                    queueCache[queueId] = queueCache[queueId].then(Promise.resolve(_.isFunction(operation) ? operation() : operation));
                 } else {
-                    queueCache[queueId] = Promise.resolve(operation());
+                    queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
                 }
                 return queueCache[queueId];
             },
