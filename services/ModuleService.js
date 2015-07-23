@@ -56,7 +56,9 @@ define([
             PROCESS_RECORDTYPES_SHOWALL: 'module:process:recordTypes:showAll',
 
             PROCESS_PROCESSMONITOR: 'module:process:processMonitor',
-            PROCESS_DATADIAGRAM: 'module:process:dataDiagram'
+            PROCESS_DATADIAGRAM: 'module:process:dataDiagram',
+
+            SUPPORT_GLOBAL_FUNCTIONS: 'module:support:globalFunctions'
         };
 
         return {
