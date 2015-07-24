@@ -24,6 +24,7 @@ define([
             constructor: function (options) {
                 utilsApi.helpers.ensureOption(options, 'config');
                 this.view = new this.contentView();
+                utilsApi.helpers.ensureProperty(this.view, 'moduleRegion');
                 this.moduleRegion  = this.view.moduleRegion;
                 options.region.show(this.view); // <- this can be moved out to routing services after we get rid of old modules
                 Marionette.Controller.prototype.constructor.apply(this, arguments);

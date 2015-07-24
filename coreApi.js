@@ -19,6 +19,7 @@ define([
         './serviceLocator',
 
         './application/Module',
+        './application/views/behaviors/ContentViewBehavior',
 
         './services/RoutingService',
         './services/UrlService',
@@ -42,7 +43,9 @@ define([
         listApi,
         formApi,
         serviceLocator,
+
         Module,
+        ContentViewBehavior,
 
         RoutingService,
         UrlService,
@@ -73,7 +76,12 @@ define([
              * @namespace
              * */
             application: {
-                Module: Module
+                Module: Module,
+                views: {
+                    behaviors: {
+                        ContentViewBehavior: ContentViewBehavior
+                    }
+                }
             },
             /**
              * Базовые сервисы системы

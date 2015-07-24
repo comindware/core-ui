@@ -28,6 +28,7 @@ define([
             SETTINGS_GROUPS: 'module:settings:groups',
             MYTASKS: 'module:myTasks',
             PEOPLE_USERS: 'module:people:users',
+            DEMO_CORE: 'module:demo:core',
 
             PROJECT_ROOMS_SHOWALL: 'module:project:rooms:showAll',
             PROJECT_ROOMS_OVERVIEW: 'module:project:rooms:overview',

@@ -18,14 +18,12 @@ define([
     'text!../templates/defaultContent.html',
     './content/HeaderTabsView',
     '../collections/SelectableCollection',
-    './ModuleLoadingView',
     'core/services/RoutingService',
     'core/services/GlobalEventService',
-    './content/ProfileButtonView',
-    './content/ProfilePanelView',
-    './content/EllipsisButtonView'
-], function (lib, utilsApi, dropdownApi, template, HeaderTabsView, SelectableCollection, ModuleLoadingView,
-             RoutingService, GlobalEventService, ProfileButtonView, ProfilePanelView, EllipsisButtonView) {
+    './content/EllipsisButtonView',
+    './behaviors/ContentViewBehavior'
+], function (lib, utilsApi, dropdownApi, template, HeaderTabsView, SelectableCollection,
+             RoutingService, GlobalEventService, EllipsisButtonView, ContentViewBehavior) {
         'use strict';
 
         var constants = {
@@ -76,6 +74,14 @@ define([
                 profileRegion: '.js-profile-region'
             },
 
+            behaviors: {
+                ContentViewBehavior: {
+                    behaviorClass: ContentViewBehavior,
+                    profileRegion: 'profileRegion',
+                    moduleLoadingRegion: 'moduleLoadingRegion'
+                }
+            },
+
             onRender: function () {
                 this.rendering = true;
                 this.hideBackButton();
@@ -94,19 +100,6 @@ define([
                     RoutingService.navigateToUrl(model.get('url'));
                 });
                 this.headerTabsMenuRegion.show(headerTabsMenuView);
-
-                var currentUser = window.application.currentUser;
-                this.profileRegion.show(dropdownApi.factory.createPopout({
-                    customAnchor: true,
-                    buttonView: ProfileButtonView,
-                    buttonViewOptions: {
-                        model: currentUser
-                    },
-                    panelView: ProfilePanelView,
-                    panelViewOptions: {
-                        model: currentUser
-                    }
-                }));
                 this.rendering = false;
 
                 this.__updateHeaderTabs();
@@ -173,14 +166,6 @@ define([
 
             findTabModel: function (tabId) {
                 return this.model.get('headerTabs').findWhere({id: tabId}) || null;
-            },
-
-            setModuleLoading: function (isLoading) {
-                if (isLoading) {
-                    this.moduleLoadingRegion.show(new ModuleLoadingView());
-                } else {
-                    this.moduleLoadingRegion.reset();
-                }
             },
 
             __back: function () {
