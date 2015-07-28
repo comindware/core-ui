@@ -17,9 +17,9 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
 
         var classes = {
             OPEN: 'open',
-            DROPDOWN_DOWN: 'dev-panel-down',
+            DROPDOWN_DOWN: 'dropdown__wrp_down',
             DROPDOWN_WRP_OVER: 'dropdown__wrp_over',
-            DROPDOWN_UP: 'dev-panel-up',
+            DROPDOWN_UP: 'dropdown__wrp_up',
             DROPDOWN_UP_OVER: 'dev-panel-up-over'
         };
 

@@ -19,8 +19,8 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
 
         var classes = {
             OPEN: 'open',
-            DIRECTION_UP: 'dev-direction-up',
-            DIRECTION_DOWN: 'dev-direction-down',
+            DIRECTION_UP: 'popout__up',
+            DIRECTION_DOWN: 'popout__down',
             FLOW_LEFT: 'dev-popout-flow-left',
             FLOW_RIGHT: 'dev-popout-flow-right',
             CUSTOM_ANCHOR: 'popout__action-btn',
