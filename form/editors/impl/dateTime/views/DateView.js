@@ -35,7 +35,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
 
             template: Handlebars.compile(template),
 
-            className: 'dev-time-view',
+            className: 'date-view',
 
             ui: {
                 clearButton: '.js-date-remove',

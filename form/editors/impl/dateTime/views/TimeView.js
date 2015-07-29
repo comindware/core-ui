@@ -23,7 +23,7 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                 this.reqres.setHandler('panel:close', this.__onPanelClose, this);
             },
 
-            className: 'dev-time-view',
+            className: 'time-view',
 
             template: Handlebars.compile(template),
 
