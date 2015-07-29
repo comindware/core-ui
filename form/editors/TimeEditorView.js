@@ -43,7 +43,7 @@ define(['module/lib', 'text!./templates/timeEditor.html', './base/BaseLayoutEdit
                 timeRegion: '.js-time-region'
             },
 
-            className: 'l-field',
+            className: 'l-field l-field_time',
 
             template: Handlebars.compile(template),
 

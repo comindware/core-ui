@@ -54,9 +54,10 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                         reqres: this.reqres,
                         collection: new Backbone.Collection(timeArray),
                         tagName: 'ul',
-                        className: 'dev-time-dropdown',
+                        className: 'time-dropdown',
                         childView: Marionette.ItemView.extend({
                             tagName: 'li',
+                            className: 'time-dropdown__i',
                             reqres: this.reqres,
                             events: {
                                 'click': '__handleClick'

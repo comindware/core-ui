@@ -43,7 +43,7 @@ define(['module/lib', 'text!./templates/dateEditor.html', './base/BaseLayoutEdit
                 dateRegion: '.js-date-region'
             },
 
-            className: 'l-field',
+            className: 'l-field l-field_date',
 
             template: Handlebars.compile(template),
 

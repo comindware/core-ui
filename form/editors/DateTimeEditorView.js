@@ -44,7 +44,7 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
                 timeRegion: '.js-time-region'
             },
 
-            className: 'l-field',
+            className: 'l-field date-time',
 
             template: Handlebars.compile(template),
 
