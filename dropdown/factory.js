@@ -26,11 +26,13 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
             *   items: [
             *       {
             *           id: 'create',
-            *           name: 'Create'
+            *           name: 'Create',
+            *           tooltip: 'Create'
             *       },
             *       {
             *           id: 'delete',
-            *           name: 'Delete'
+            *           name: 'Delete',
+            *           tooltip: 'Create'
             *       }
             *   ]
             * }
