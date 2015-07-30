@@ -62,7 +62,7 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
             },
 
             getValue: function () {
-                return lib.moment(this.value).toISOString();
+                return this.value === null ? '' : lib.moment(this.value).toISOString();
             },
 
             onRender: function () {

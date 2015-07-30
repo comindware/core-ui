@@ -65,7 +65,7 @@ define(['module/lib', 'text!./templates/dateEditor.html', './base/BaseLayoutEdit
             },
 
             getValue: function () {
-                return lib.moment(this.value).toISOString();
+                return this.value === null ? '' : lib.moment(this.value).toISOString();
             },
 
             __value: function (value, updateUi, triggerChange) {
