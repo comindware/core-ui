@@ -382,7 +382,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
                     obj = val;
                 }
                 this._setCurrentDisplayValue(utils.dateHelpers.objToTimestampTakingWorkHours(obj));
-                var newValue = utils.dateHelpers.durationToServerFormat(this._currentDisplayValue);
+                var newValue = utils.dateHelpers.durationToISOString(this._currentDisplayValue);
                 if (newValue !== this.value) {
                     this.__value(newValue, true);
                 }
@@ -412,7 +412,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
             },
 
             _parseServerValue: function (value) {
-                var durationValue = utils.dateHelpers.parseServerDuration(value);
+                var durationValue = utils.dateHelpers.durationISOToObject(value);
                 var totalValue = utils.dateHelpers.objToTimestampTakingWorkHours({
                     days: durationValue[0],
                     hours: durationValue[1],

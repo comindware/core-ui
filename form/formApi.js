@@ -33,6 +33,9 @@ define([
         './editors/MembersBubbleEditorView',
         './editors/DurationEditorView',
         './editors/RadioGroupEditorView',
+        './editors/DateEditorView',
+        './editors/TimeEditorView',
+        './editors/DateTimeEditorView',
 
         './editors/impl/reference/controllers/DemoReferenceEditorController',
         './editors/impl/reference/controllers/DataSourceReferenceEditorController',
@@ -71,6 +74,9 @@ define([
         MembersBubbleEditorView,
         DurationEditorView,
         RadioGroupEditorView,
+        DateEditorView,
+        TimeEditorView,
+        DateTimeEditorView,
 
         DemoReferenceEditorController,
         DataSourceReferenceEditorController,
@@ -133,7 +139,10 @@ define([
                 DropdownEditor: DropdownEditorView,
                 MembersBubbleEditor: MembersBubbleEditorView,
                 DurationEditor: DurationEditorView,
-                RadioGroupEditor: RadioGroupEditorView
+                RadioGroupEditor: RadioGroupEditorView,
+                DateEditor: DateEditorView,
+                TimeEditor: TimeEditorView,
+                DateTimeEditor: DateTimeEditorView
 			}
 		};
 	});
