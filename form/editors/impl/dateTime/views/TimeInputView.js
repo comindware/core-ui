@@ -23,6 +23,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html']
 
             initialize: function (options) {
                 this.reqres = options.reqres;
+                this.timeEditFormat = utils.dateHelpers.getTimeEditFormatTime();
             },
 
             template: Handlebars.compile(template),
