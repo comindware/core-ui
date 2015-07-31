@@ -155,6 +155,10 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html']
             },
 
             __onClick: function () {
+                if (!this.model.get('enabled') || this.model.get('readonly')) {
+                    return;
+                }
+                
                 this.showEditFormattedTime();
                 this.reqres.request('panel:open');
             }
