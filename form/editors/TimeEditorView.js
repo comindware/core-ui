@@ -76,7 +76,7 @@ define(['module/lib', 'text!./templates/timeEditor.html', './base/BaseLayoutEdit
             },
 
             getValue: function () {
-                return this.value === null ? '' : lib.moment(this.value).toISOString();
+                return this.value === null ? this.value : lib.moment(this.value).toISOString();
             },
 
             __setEnabled: function (enabled) {

@@ -35,7 +35,7 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                 var timeArray = [];
 
                 for (var h = 0; h < 24; h++) {
-                    for (var m = 0; m < 60; m+=30) {
+                    for (var m = 0; m < 60; m+=15) {
                         var val = {hours: h, minutes: m},
                             time = lib.moment(val),
                             formattedTime = utils.dateHelpers.getDisplayTime(time);
