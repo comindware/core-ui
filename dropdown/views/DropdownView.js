@@ -113,12 +113,12 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                     panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top;
 
                 if ((this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) &&
-                        panelTopOffset < panelHeight) {
-                    this.currentPosition = panelPosition.DOWN;
+                    panelTopOffset < panelHeight) {
+                    this.currentPosition = this.currentPosition === panelPosition.UP ? panelPosition.DOWN : panelPosition.DOWN_OVER;
                     this.updatePositionClasses();
                 } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) &&
-                        viewportHeight - panelTopOffset < panelHeight) {
-                    this.currentPosition = panelPosition.UP;
+                    viewportHeight - panelTopOffset < panelHeight) {
+                    this.currentPosition = this.currentPosition === panelPosition.DOWN_OVER ? panelPosition.UP_OVER : panelPosition.UP;
                     this.panelRegion.$el.css({
                         top: -panelHeight
                     });
