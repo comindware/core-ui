@@ -152,14 +152,9 @@ define([
             },
 
             logout: function () {
-                // Should be reworked to logout via server request (need to remove http-only cookie)
-                utilsApi.cookieHelpers.removeItem('SessionId');
-                utilsApi.cookieHelpers.removeItem('KeySessionId');
-                utilsApi.cookieHelpers.removeItem('ProtectorId');
-                utilsApi.cookieHelpers.removeItem('Username');
-                utilsApi.cookieHelpers.removeItem('RememberMe');
-                utilsApi.cookieHelpers.removeItem('UserId');
-                window.location = "/Home/Login";
+                Promise.resolve(Ajax.Home.Logout()).then(function () {
+                    window.location = "/Home/Login";
+                });
             }
         };
         return routingService;
