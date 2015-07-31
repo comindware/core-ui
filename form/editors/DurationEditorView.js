@@ -146,6 +146,9 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
             },
 
             __focus: function () {
+                if (this.readonly) {
+                    return;
+                }
                 if(this.currentState !== 'edit') {
                     this.currentState = 'edit';
                     this.setDisplayValue(this.value);
