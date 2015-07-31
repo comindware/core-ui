@@ -110,7 +110,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
             showEditFormattedDate: function () {
                 var val = this.model.get('value'),
                     format = this.options.editDateFormat,
-                    editFormattedDate = val ? lib.moment(new Date(val)).format(format) : moment(new Date()).format(format);
+                    editFormattedDate = val ? lib.moment(new Date(val)).format(format) : '';
 
                 this.ui.dateInput.val(editFormattedDate);
             },
