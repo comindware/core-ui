@@ -243,9 +243,16 @@ define([],
                 return time.locale(lang).format(format);
             },
 
-            getTimeEditFormatTime: function (time) {
+            getTimeEditFormat: function (time) {
                 var lang = Context.langCode,
                     format = dateTimeFormats[lang].generalDateShortTime.time;
+
+                return format;
+            },
+
+            getDateEditFormat: function (time) {
+                var lang = Context.langCode,
+                    format = dateTimeFormats[lang].generalDateShortTime.date;
 
                 return format;
             }

@@ -19,11 +19,10 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html']
             emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'),
             readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TIME.READONLYPLACEHOLDER'),
             disabledPlaceholder: Localizer.get('CORE.FORM.EDITORS.TIME.DISABLEDPLACEHOLDER'),
-            timeEditFormat: 'HH:mm',
 
             initialize: function (options) {
                 this.reqres = options.reqres;
-                this.timeEditFormat = utils.dateHelpers.getTimeEditFormatTime();
+                this.timeEditFormat = utils.dateHelpers.getTimeEditFormat();
             },
 
             template: Handlebars.compile(template),

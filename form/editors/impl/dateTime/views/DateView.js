@@ -19,7 +19,6 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
             emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'),
             readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.READONLYPLACEHOLDER'),
             disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.DISABLEDPLACEHOLDER'),
-            editDateFormat: 'MM/DD/YYYY',
             pickerFormat: 'YYYY-MM-DD'
         };
 
@@ -31,6 +30,8 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
                 } else {
                     _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
+
+                this.editDateFormat = utils.dateHelpers.getDateEditFormat();
             },
 
             template: Handlebars.compile(template),
@@ -109,7 +110,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
 
             showEditFormattedDate: function () {
                 var val = this.model.get('value'),
-                    format = this.options.editDateFormat,
+                    format = this.editDateFormat,
                     editFormattedDate = val ? lib.moment(new Date(val)).format(format) : '';
 
                 this.ui.dateInput.val(editFormattedDate);
@@ -122,7 +123,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
                     return null;
                 }
 
-                var format = this.options.editDateFormat,
+                var format = this.editDateFormat,
                     currentValue = this.model.get('value'),
                     parsedVal = lib.moment(val, format, true),
                     parsedDate;
