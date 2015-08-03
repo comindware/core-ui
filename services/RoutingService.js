@@ -153,7 +153,7 @@ define([
 
             logout: function () {
                 Promise.resolve(Ajax.Home.Logout()).then(function () {
-                    window.location = "/Home/Login";
+                    window.location = "";
                 });
             }
         };
