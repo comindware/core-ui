@@ -82,10 +82,8 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
             },
 
             setPlaceholder: function () {
-                if (!this.getEnabled()) {
-                    this.placeholder = this.options.disablePlaceholder;
-                } else if (this.getReadonly()) {
-                    this.placeholder = this.options.readonlyPlaceholder;
+                if (!this.getEnabled() || this.getReadonly()) {
+                    this.placeholder = '';
                 } else {
                     this.placeholder = this.options.emptyPlaceholder;
                 }

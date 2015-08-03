@@ -183,10 +183,8 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
             },
 
             setPlaceholder: function () {
-                if (!this.model.get('enabled')) {
-                    this.placeholder = this.options.disablePlaceholder;
-                } else if (this.model.get('readonly')) {
-                    this.placeholder = this.options.readonlyPlaceholder;
+                if (!this.model.get('enabled') || this.model.get('readonly')) {
+                    this.placeholder = '';
                 } else {
                     this.placeholder = this.options.emptyPlaceholder;
                 }

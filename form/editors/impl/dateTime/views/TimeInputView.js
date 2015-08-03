@@ -135,10 +135,8 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html']
             },
 
             setPlaceholder: function () {
-                if (!this.model.get('enabled')) {
-                    this.placeholder = this.disabledPlaceholder;
-                } else if (this.model.get('readonly')) {
-                    this.placeholder = this.readonlyPlaceholder;
+                if (!this.model.get('enabled') || this.model.get('readonly')) {
+                    this.placeholder = '';
                 } else {
                     this.placeholder = this.emptyPlaceholder;
                 }
