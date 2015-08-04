@@ -37,7 +37,8 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html']
             events: {
                 'click': '__onClick',
                 'click @ui.clearButton': '__onClear',
-                'change @ui.input': '__onInputChange'
+                'change @ui.input': '__onInputChange',
+                'blur @ui.input': '__onBlur'
             },
 
             modelEvents: {
@@ -152,13 +153,18 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html']
                 this.ui.input.val(editFormattedDate);
             },
 
+            __onBlur: function () {
+                this.isEditing = false;
+            },
+
             __onClick: function () {
-                if (!this.model.get('enabled') || this.model.get('readonly')) {
+                if (this.isEditing || !this.model.get('enabled') || this.model.get('readonly')) {
                     return;
                 }
                 
                 this.showEditFormattedTime();
                 this.reqres.request('panel:open');
+                this.isEditing = true;
             }
         });
     });

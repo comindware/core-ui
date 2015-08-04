@@ -57,12 +57,17 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
             events: {
                 'click @ui.dateInput': '__handleClick',
                 'change @ui.dateInput': '__change',
-                'click @ui.clearButton': '__onClear'
+                'click @ui.clearButton': '__onClear',
+                'blur @ui.dateInput': '__onBlur'
             },
 
             __onEnabledChange: function () {
                 this.setPlaceholder();
                 this.setInputPermissions();
+            },
+
+            __onBlur: function () {
+                this.isEditing = false;
             },
 
             setInputPermissions: function () {
@@ -100,12 +105,13 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
             },
 
             __handleClick: function () {
-                if (!this.model.get('enabled') || this.model.get('readonly')) {
+                if (this.isEditing || !this.model.get('enabled') || this.model.get('readonly')) {
                     return;
                 }
 
                 this.showEditFormattedDate();
                 this.showPicker();
+                this.isEditing = true;
             },
 
             showEditFormattedDate: function () {
