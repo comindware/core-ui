@@ -24,7 +24,8 @@ define([
         var classes = {
             REQUIRED: 'required',
             READONLY: 'readonly',
-            HIDDEN: 'fr-hidden'
+            HIDDEN: 'fr-hidden',
+            DISABLED: 'disabled'
         };
 
         return Backbone.Form.Field.extend({
@@ -122,6 +123,9 @@ define([
                 }
                 if (this.schema.readonly) {
                     this.$el.addClass(classes.READONLY);
+                }
+                if (this.schema.readonly || !this.schema.enabled) {
+                    this.$el.addClass(classes.DISABLED);
                 }
                 if (this.schema.hidden) {
                     this.$el.addClass(classes.HIDDEN);

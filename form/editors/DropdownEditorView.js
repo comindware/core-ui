@@ -148,7 +148,9 @@ define([
                 this.keyListener = new lib.keypress.Listener(this.el);
                 _.each('enter,num_enter'.split(','), function (key) {
                     this.keyListener.simple_combo(key, function () {
-                        this.dropdownView.open();
+                        if (this.getEnabled() && !this.getReadonly()) {
+                            this.dropdownView.open();
+                        }
                     }.bind(this));
                 }, this);
                 this.keyListener.simple_combo('up', function () {

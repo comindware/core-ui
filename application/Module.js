@@ -23,7 +23,8 @@ define([
         return Marionette.Controller.extend({
             constructor: function (options) {
                 utilsApi.helpers.ensureOption(options, 'config');
-                this.view = new this.contentView();
+                var contentViewOptions = _.result(this, 'contentViewOptions') || {};
+                this.view = new this.contentView(contentViewOptions);
                 utilsApi.helpers.ensureProperty(this.view, 'moduleRegion');
                 this.moduleRegion  = this.view.moduleRegion;
                 options.region.show(this.view); // <- this can be moved out to routing services after we get rid of old modules
@@ -41,6 +42,8 @@ define([
                 this.view.setModuleLoading(isLoading);
             },
 
-            contentView: DefaultContentView
+            contentView: DefaultContentView,
+
+            contentViewOptions: null
         });
     });

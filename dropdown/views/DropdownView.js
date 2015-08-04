@@ -17,9 +17,9 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
 
         var classes = {
             OPEN: 'open',
-            DROPDOWN_DOWN: 'dev-panel-down',
+            DROPDOWN_DOWN: 'dropdown__wrp_down',
             DROPDOWN_WRP_OVER: 'dropdown__wrp_over',
-            DROPDOWN_UP: 'dev-panel-up',
+            DROPDOWN_UP: 'dropdown__wrp_up',
             DROPDOWN_UP_OVER: 'dev-panel-up-over'
         };
 
@@ -110,18 +110,15 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
             correctPosition: function () {
                 var panelHeight = this.panelRegion.$el.height(),
                     viewportHeight = window.innerHeight,
-                    panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top;
+                    panelTopOffset = $(this.buttonRegion.$el)[0].getBoundingClientRect().top;
 
                 if ((this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) &&
-                        panelTopOffset < panelHeight) {
-                    this.currentPosition = panelPosition.DOWN;
+                    panelTopOffset < panelHeight) {
+                    this.currentPosition = this.currentPosition === panelPosition.UP ? panelPosition.DOWN : panelPosition.DOWN_OVER;
                     this.updatePositionClasses();
                 } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) &&
-                        viewportHeight - panelTopOffset < panelHeight) {
-                    this.currentPosition = panelPosition.UP;
-                    this.panelRegion.$el.css({
-                        top: -panelHeight
-                    });
+                    viewportHeight - panelTopOffset < panelHeight || (this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER)) {
+                    this.currentPosition = this.currentPosition === panelPosition.DOWN_OVER ? panelPosition.UP_OVER : panelPosition.UP;
                     this.updatePositionClasses();
                 }
             },
@@ -145,6 +142,7 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                     args[0] = 'panel:' + args[0];
                     this.triggerMethod.apply(this, args);
                 });
+
                 this.panelRegion.show(this.panelView);
                 this.correctPosition();
 
