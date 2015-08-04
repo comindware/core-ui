@@ -26,6 +26,7 @@ define([
         var modules = {
             SETTINGS_WORKSPACE: 'module:settings:workspace',
             SETTINGS_GROUPS: 'module:settings:groups',
+            SETTINGS_ROLES: 'module:settings:roles',
             MYTASKS: 'module:myTasks',
             PEOPLE_USERS: 'module:people:users',
             DEMO_CORE: 'module:demo:core',
