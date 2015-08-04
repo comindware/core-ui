@@ -242,8 +242,5 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
             }
         });
 
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.GridHeaderView = GridHeaderView;
-
         return GridHeaderView;
     });

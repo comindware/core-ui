@@ -142,8 +142,5 @@ define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi
             }
         });
 
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.GridView = GridView;
-
         return GridView;
     });

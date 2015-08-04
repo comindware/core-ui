@@ -28,8 +28,5 @@ define(['text!core/list/templates/emptyList.html', 'module/lib', 'core/services/
             className: 'empty-view'
         });
 
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.EmptyListView = EmptyListView;
-
         return EmptyListView;
     });

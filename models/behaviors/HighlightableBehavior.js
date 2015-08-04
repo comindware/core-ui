@@ -44,8 +44,5 @@ define([ 'module/lib' ],
             }
         });
 
-        var behaviors = window.ClassLoader.createNS("shared.models.behaviors");
-        behaviors.HighlightableBehavior = HighlightableBehavior;
-
         return HighlightableBehavior;
     });

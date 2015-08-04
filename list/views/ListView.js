@@ -294,8 +294,5 @@ define([
             }
         });
 
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.ListView = ListView;
-
         return ListView;
     });

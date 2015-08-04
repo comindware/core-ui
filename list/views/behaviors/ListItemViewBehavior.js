@@ -88,8 +88,5 @@ define(['module/lib'],
             }
         });
 
-        var behaviors = window.ClassLoader.createNS("shared.list.views.behaviors");
-        behaviors.ListItemViewBehavior = ListItemViewBehavior;
-
         return ListItemViewBehavior;
     });
