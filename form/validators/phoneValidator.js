@@ -11,10 +11,10 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib'], function () {
+define(['module/lib', 'core/services/LocalizationService'], function (lib, LocalizationService) {
     'use strict';
     
-    Backbone.Form.validators.errMessages.phone = Localizer.get('PROJECT.COMMON.FORM.VALIDATION.PHONE');
+    Backbone.Form.validators.errMessages.phone = LocalizationService.get('PROJECT.COMMON.FORM.VALIDATION.PHONE');
 
     Backbone.Form.validators.phone = function (options) {
         options = _.extend({

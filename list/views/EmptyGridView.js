@@ -11,11 +11,11 @@
 
 /* global define, require, Marionette, Handlebars, Backbone */
 
-define(['text!core/list/templates/emptyGrid.html', 'module/lib'],
-    function (template) {
+define(['text!core/list/templates/emptyGrid.html', 'module/lib', 'core/services/LocalizationService'],
+    function (template, lib, LocalizationService) {
         'use strict';
 
-        var defaultText = Localizer.get('PROCESS.COMMON.VIEW.GRID.EMPTY');
+        var defaultText = LocalizationService.get('PROCESS.COMMON.VIEW.GRID.EMPTY');
 
         return Marionette.ItemView.extend({
             initialize: function (options) {

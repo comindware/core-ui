@@ -26,6 +26,7 @@ define([
         './services/ModuleService',
         './services/WindowService',
         './services/GlobalEventService',
+        './services/LocalizationService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -52,6 +53,7 @@ define([
         ModuleService,
         WindowService,
         GlobalEventService,
+        LocalizationService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -91,7 +93,8 @@ define([
                 RoutingService: RoutingService,
                 UrlService: UrlService,
                 ModuleService: ModuleService,
-                WindowService: WindowService
+                WindowService: WindowService,
+                LocalizationService: LocalizationService
             },
             /**
              * Backbone-коллекции общего назначения

@@ -11,8 +11,8 @@
 
 /* global define, require, Backbone, Marionette, $, _, Localizer, Handlebars */
 
-define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'module/lib', 'core/utils/utilsApi' ],
-    function (template, BaseItemEditorView, lib, utils) {
+define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'module/lib', 'core/utils/utilsApi', 'core/services/LocalizationService' ],
+    function (template, BaseItemEditorView, lib, utils, LocalizationService) {
         'use strict';
 
         var ws = ' ';
@@ -25,19 +25,19 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
         ];
         var focusedParts = [
             {
-                text: Localizer.get('PROJECT.COMMON.WIDGET.WORKDURATION.DAYS'),
-                separator: Localizer.get('PROJECT.COMMON.WIDGET.WORKDURATION.DAYS.SEPARATORCHAR'),
+                text: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.DAYS'),
+                separator: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.DAYS.SEPARATORCHAR'),
                 maxLength: 4
             },
             {
-                text: Localizer.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS'),
-                prefix: Localizer.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS.PREFIX'),
-                separator: Localizer.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS.SEPARATORCHAR'),
+                text: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS'),
+                prefix: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS.PREFIX'),
+                separator: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS.SEPARATORCHAR'),
                 maxLength: 4
             },
             {
-                text: Localizer.get('PROJECT.COMMON.WIDGET.WORKDURATION.MINUTES'),
-                prefix: Localizer.get('PROJECT.COMMON.WIDGET.WORKDURATION.MINUTES.PREFIX'),
+                text: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.MINUTES'),
+                prefix: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.MINUTES.PREFIX'),
                 maxLength: 4
             }
         ];
@@ -373,7 +373,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
             },
 
             applyDisplayValue: function (clear) {
-	    	var obj;
+                var obj;
                 var val = clear ? null : this.getSegmentValue();
                 if (val) {
                     obj = {
