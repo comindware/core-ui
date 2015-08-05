@@ -23,7 +23,7 @@
  */
 
 define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi', 'core/list/views/ListView', 'core/list/views/GridHeaderView'],
-    function (template, lib, utils) {
+    function (template, lib, utils, ListView, GridHeaderView) {
         'use strict';
 
         var GridView = Marionette.LayoutView.extend({
@@ -38,7 +38,7 @@ define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi
                     throw 'You must provide columns definition ("columns" option)';
                 }
 
-                this.headerView = new classes.shared.list.views.GridHeaderView({
+                this.headerView = new GridHeaderView({
                     collection: this.collection,
                     columns: options.columns,
                     gridEventAggregator: this,
@@ -49,7 +49,7 @@ define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi
                     columns: options.columns,
                     gridEventAggregator: this
                 });
-                this.listView = new classes.shared.list.views.ListView({
+                this.listView = new ListView({
                     collection: this.collection,
                     childView: options.childView,
                     childViewSelector: options.childViewSelector,
