@@ -15,30 +15,36 @@
 (function (global) {
     'use strict';
 
-    define([ 'module/lib', 'ajaxMap' ], function (lib) {
+    define([ 'module/lib', 'ajaxMap' ], function () {
         var ajaxMap = global.ajaxMap;
 
-        debugger;
-        global.Ajax = {
-            /*get: function (locId) {
-                if (!locId) {
-                    throw new Error('Bad localization id: (locId = ' + locId + ')');
-                }
-                var text = ajaxMap[locId];
-                if (text === undefined) {
-                    throw new Error('Failed to find localization constant ' + locId);
-                }
-                return text;
-            },
+        var request = function () {
 
-            resolveLocalizedText: function (localizedText) {
-                if (!localizedText) {
-                    return '';
-                }
-
-                return localizedText[langCode] || localizedText[defaultLangCode] || '';
-            }*/
         };
-        return global.Ajax;
+
+        var Ajax = {
+            getResponse: function (type, url, data, options) {
+                var config = _.extend({
+                    type: type,
+                    url: url,
+                    data: JSON.stringify(data || {}),
+                    traditional: true,
+                    dataType: 'json',
+                    contentType: 'application/json'
+                }, options || {});
+                return $.ajax(config);
+            }
+        };
+
+        _.each(ajaxMap, function (actionInfo) {
+            var controller = Ajax[actionInfo.className] || (Ajax[actionInfo.className] = {});
+            //noinspection JSUnresolvedVariable
+            controller[actionInfo.methodName] = function () {
+
+            };
+        });
+        
+        global.Ajax = Ajax;
+        return Ajax;
     });
 }(this));
