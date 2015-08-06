@@ -22,7 +22,8 @@ define([
             ROOM: 'Room',
             PROJECT: 'Project',
             ACCOUNT_GROUP: 'AccountGroup',
-            PROCESS_TEMPLATE: 'ProcessTemplate'
+            PROCESS_TEMPLATE: 'ProcessTemplate',
+            FORM: 'Form'
         };
 
         var objectIdPrefixes = {};
@@ -31,6 +32,7 @@ define([
         objectIdPrefixes[objectTypes.ROOM] = 'room.';
         objectIdPrefixes[objectTypes.PROJECT] = 'project.';
         objectIdPrefixes[objectTypes.ACCOUNT_GROUP] = 'group.';
+        objectIdPrefixes[objectTypes.FORM] = 'form.';
 
         return {
             encodeObjectId: function (objectType, objectId) {
