@@ -36,12 +36,13 @@
                 if (callback && !_.isFunction(callback)) {
                     utilsApi.helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
                 }
-                if (parameters.length < parameterNames.length || _.last(parameters) === callback) {
+                var parametersLength = _.last(parameters) === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
+                if (parametersLength < parameterNames.length) {
                     utilsApi.helpers.throwFormatError(
                         utilsApi.helpers.format(
                             'Invalid request parameters: expected {0} parameters, actual: {1}.',
                             parameterNames.length,
-                            parameters.length));
+                            parametersLength));
                 }
                 var successCallback = callback || null;
 
