@@ -37,7 +37,9 @@ define([
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
 	
-        './views/behaviors/LoadingBehavior'
+        './views/behaviors/LoadingBehavior',
+
+        './Bootstrapper'
     ],
     function (
         utilsApi,
@@ -65,7 +67,9 @@ define([
         HighlightableBehavior,
         SelectableBehavior,
 	
-        LoadingBehavior
+        LoadingBehavior,
+
+        Bootstrapper
     ) {
         'use strict';
 
@@ -139,7 +143,8 @@ define([
             form: formApi,
             list: listApi,
             utils: utilsApi,
-            serviceLocator: serviceLocator
+            serviceLocator: serviceLocator,
+            bootstrapper: Bootstrapper
         };
         return exports;
     });
