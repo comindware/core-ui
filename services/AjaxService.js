@@ -33,6 +33,16 @@
             },
 
             getJsApiResponse: function (url, parameterNames, parameters, callback) {
+                if (callback && !_.isFunction(callback)) {
+                    utilsApi.helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
+                }
+                if (parameters.length < parameterNames.length || _.last(parameters) === callback) {
+                    utilsApi.helpers.throwFormatError(
+                        utilsApi.helpers.format(
+                            'Invalid request parameters: expected {0} parameters, actual: {1}.',
+                            parameterNames.length,
+                            parameters.length));
+                }
                 var successCallback = callback || null;
 
                 var data = {};
