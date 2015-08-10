@@ -185,11 +185,9 @@ define([
                     return;
                 }
                 this.value = value;
-                var valueModel = this.__findModel(value);
-                if (valueModel) {
-                    this.viewModel.get('button').set('value', valueModel);
-                    this.viewModel.get('panel').set('value', valueModel);
-                }
+                var valueModel = this.__findModel(value) || null;
+                this.viewModel.get('button').set('value', valueModel);
+                this.viewModel.get('panel').set('value', valueModel);
                 if (triggerChange) {
                     this.__triggerChange();
                 }
