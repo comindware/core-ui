@@ -16,16 +16,18 @@ define([ 'core/utils/utilsApi'],
         'use strict';
 
         var globalPermissions = {
-            SYSTEM_ADMINISTRATION: 'system_administration'
+            SYSTEM_ADMINISTRATION: 'system_administration',
+            USER_MANAGEMENT: 'user_management',
+            APP_DESIGN: 'app_design',
+            DEFAULT_USER: 'default_user'
         };
 
         return {
             initialize: function (options) {
-
             },
 
             hasGlobalPermission: function (permissionId) {
-                return true;
+                return Context.configurationModel.GlobalPermissions[0] === permissionId;
             },
 
             globalPermissions: globalPermissions
