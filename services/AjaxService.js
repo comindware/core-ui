@@ -29,7 +29,7 @@
                     dataType: 'json',
                     contentType: 'application/json'
                 }, options || {});
-                return $.ajax(config);
+                return Promise.resolve($.ajax(config));
             },
 
             getJsApiResponse: function (url, parameterNames, parameters, callback) {
@@ -60,13 +60,17 @@
                             successCallback(result.data);
                         }
                     }.bind(this)
-                });
+                }).get('data');
             }
         };
 
         _.each(ajaxMap, function (actionInfo) {
             var controller = AjaxServicePrototype[actionInfo.className] || (AjaxServicePrototype[actionInfo.className] = {});
 
+            // The result of compilation below is something like this:
+            //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {
+            //         return window.Ajax.getJsApiResponse('RecordTypes/List', [  ], _.take(arguments, 0), callback);
+            //     };
             var actionParameters = _.map(actionInfo.parameters, function (parameterInfo) {
                 return '/*' + parameterInfo.typeName + '*/ ' + parameterInfo.name;
             });

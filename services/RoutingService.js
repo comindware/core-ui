@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Ajax */
 
 define([
         'module/lib',
@@ -152,7 +152,8 @@ define([
             },
 
             logout: function () {
-                Promise.resolve(Ajax.Home.Logout()).then(function () {
+                //noinspection JSUnresolvedVariable
+                Ajax.Home.Logout().then(function () {
                     window.location = "";
                 });
             }
