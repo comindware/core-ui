@@ -185,6 +185,10 @@ define(['module/lib', 'core/services/LocalizationService'],
                 helpers.throwError(message || 'Invalid format', 'FormatError');
             },
 
+            throwArgumentError: function (message) {
+                helpers.throwError(message || 'Invalid argument', 'ArgumentError');
+            },
+
             throwNotSupportedError: function (message) {
                 helpers.throwError(message || 'The operation is not supported', 'NotSupportedError');
             },

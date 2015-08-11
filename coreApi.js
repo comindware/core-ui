@@ -28,15 +28,17 @@ define([
         './services/WindowService',
         './services/GlobalEventService',
         './services/LocalizationService',
+        './services/AjaxService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
-        'core/models/behaviors/CollapsibleBehavior',
-        'core/models/behaviors/HighlightableBehavior',
-        'core/models/behaviors/SelectableBehavior',
-        'core/views/behaviors/LoadingBehavior'
+        './models/behaviors/CollapsibleBehavior',
+        './models/behaviors/HighlightableBehavior',
+        './models/behaviors/SelectableBehavior',
+        './views/behaviors/LoadingBehavior'
 
+        './Bootstrapper'
     ],
     function (
         utilsApi,
@@ -55,6 +57,7 @@ define([
         WindowService,
         GlobalEventService,
         LocalizationService,
+        AjaxService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -64,7 +67,9 @@ define([
         HighlightableBehavior,
         SelectableBehavior,
 	
-        LoadingBehavior
+        LoadingBehavior,
+
+        Bootstrapper
     ) {
         'use strict';
 
@@ -95,7 +100,8 @@ define([
                 UrlService: UrlService,
                 ModuleService: ModuleService,
                 WindowService: WindowService,
-                LocalizationService: LocalizationService
+                LocalizationService: LocalizationService,
+                AjaxService: AjaxService
             },
             /**
              * Backbone-коллекции общего назначения
@@ -133,12 +139,13 @@ define([
              * Не подпадающий под концепцию этих компонентов дизайн выпадающих элементов должен быть пересмотрен.
              * @namespace
              * */
-            meta: meta,
             dropdown: dropdownApi,
             form: formApi,
             list: listApi,
             utils: utilsApi,
-            serviceLocator: serviceLocator
+            meta: meta,
+            serviceLocator: serviceLocator,
+            bootstrapper: Bootstrapper
         };
         return exports;
     });
