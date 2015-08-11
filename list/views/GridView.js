@@ -22,48 +22,96 @@
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
 
-define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi', 'core/list/views/ListView', 'core/list/views/GridHeaderView'],
-    function (template, lib, utils, ListView, GridHeaderView) {
+define(['text!core/list/templates/grid.html',
+        'module/lib',
+        'core/utils/utilsApi',
+        'core/list/views/ListView',
+        'core/list/views/RowView',
+        'core/list/views/GridHeaderView',
+        'core/list/views/NoColumnsView',
+        'core/list/views/LoadingRowView'],
+
+    function (template, lib, utils, ListView, RowView, GridHeaderView, NoColumnsDefaultView, LoadingChildView) {
         'use strict';
+
+        var constants = {
+            gridRowHeight: 41,
+            gridHeaderHeight: 51
+        };
 
         var GridView = Marionette.LayoutView.extend({
             initialize: function (options) {
                 if (this.collection === undefined) {
                     throw 'You must provide a collection to display.';
                 }
-                if (options.childHeight === undefined) {
-                    throw 'You must provide a childHeight for the child item view (in pixels).';
-                }
+
                 if (options.columns === undefined) {
                     throw 'You must provide columns definition ("columns" option)';
                 }
 
+                options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
+
                 this.headerView = new GridHeaderView({
-                    collection: this.collection,
                     columns: options.columns,
                     gridEventAggregator: this,
                     gridColumnHeaderView: options.gridColumnHeaderView
                 });
 
+                this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
+
+                if (options.noColumnsView) {
+                    this.noColumnsView = options.noColumnsView;
+                } else {
+                    this.noColumnsView = NoColumnsDefaultView;
+                }
+                options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
+
+                var childView = options.childView;
+                if (options.useDefaultRowView) {
+                    _.each(options.columns, function (column) {
+                        if (column.cellView === undefined)
+                            throw 'You must specify cellView for each column (useDefaultRowView flag is true)';
+                    });
+
+                    childView = RowView;
+                    options.childHeight = constants.gridRowHeight;
+                } else if (options.childHeight === undefined) {
+                    throw 'You must provide a childHeight for the child item view (in pixels).';
+                }
+
                 var childViewOptions = _.extend(options.childViewOptions || {}, {
                     columns: options.columns,
                     gridEventAggregator: this
                 });
+
                 this.listView = new ListView({
                     collection: this.collection,
-                    childView: options.childView,
+                    childView: childView,
                     childViewSelector: options.childViewSelector,
                     emptyView: options.emptyView,
                     emptyViewOptions: options.emptyViewOptions,
+                    noColumnsView: options.noColumnsView,
+                    noColumnsViewOptions: options.noColumnsViewOptions,
                     childHeight: options.childHeight,
-                    childViewOptions: childViewOptions
+                    childViewOptions: childViewOptions,
+                    loadingChildView: options.loadingChildView || LoadingChildView,
+                    maxRows: options.maxRows,
+                    autosize: options.autosize
+                });
+
+                this.listenTo(this.listView, 'row:click', function (model) {
+                    this.trigger('row:click', model);
+                });
+
+                this.listenTo(this.listView, 'row:dblclick', function (model) {
+                    this.trigger('row:dblclick', model);
                 });
                 this.listenTo(this.listView, 'positionChanged', function (sender, args) {
                     this.trigger('positionChanged', this, args);
                 }.bind(this));
-                this.listenTo(this.listView, 'viewportHeightChanged', function (sender, args) {
-                    this.trigger('viewportHeightChanged', this, args);
-                }.bind(this));
+
+                this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
+
                 this.updatePosition = this.listView.updatePosition.bind(this.listView);
 
                 this.listenTo(this.collection, 'reset', function (collection, options) {
@@ -77,23 +125,35 @@ define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi
                 }.bind(this));
             },
 
-            regions: {
-                headerRegion: '.grid-header-view',
-                contentViewRegion: '.grid-content-view'
+            __updateHeight: function (sender, args) {
+                args.gridHeight = args.listViewHeight + constants.gridHeaderHeight;
+                this.$el.height(args.gridHeight);
+                this.trigger('viewportHeightChanged', this, args);
             },
 
-            events: {
+            onColumnSort: function (column, comparator) {
+                this.collection.comparator = comparator;
+                this.collection.sort();
             },
-            
+
+            regions: {
+                headerRegion: '.grid-header-view',
+                contentViewRegion: '.grid-content-view',
+                noColumnsViewRegion: '.js-nocolumns-view-region'
+            },
+
             className: 'grid',
             template: Handlebars.compile(template),
-  
-            onShow: function ()
-            {
-                this.contentViewRegion.show(this.listView);
+
+            onShow: function () {
+                if (this.options.columns.length === 0) {
+                    var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
+                    this.noColumnsViewRegion.show(noColumnsView);
+                }
                 this.headerRegion.show(this.headerView);
+                this.contentViewRegion.show(this.listView);
             },
-            
+
             onRender: function () {
                 utils.htmlHelpers.forbidSelection(this.el);
             },
@@ -101,13 +161,11 @@ define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi
             sortBy: function (columnIndex, sorting) {
                 var column = this.options.columns[columnIndex];
                 if (sorting) {
-                    _.each(this.options.columns, function (c)
-                    {
+                    _.each(this.options.columns, function (c) {
                         c.sorting = null;
                     });
                     column.sorting = sorting;
-                    switch (sorting)
-                    {
+                    switch (sorting) {
                     case 'asc':
                         this.collection.comparator = column.sortAsc;
                         break;
@@ -137,7 +195,7 @@ define(['text!core/list/templates/grid.html', 'module/lib', 'core/utils/utilsApi
                         break;
                     }
                 }
-                this.collection.sort();
+                this.onColumnSort();
                 this.headerView.updateSorting();
             }
         });

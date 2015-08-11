@@ -14,6 +14,7 @@
 define([
         './utils/utilsApi',
         './dropdown/dropdownApi',
+        './meta',
         './list/listApi',
         './form/formApi',
         './serviceLocator',
@@ -31,16 +32,16 @@ define([
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
+        'core/models/behaviors/CollapsibleBehavior',
+        'core/models/behaviors/HighlightableBehavior',
+        'core/models/behaviors/SelectableBehavior',
+        'core/views/behaviors/LoadingBehavior'
 
-        './models/behaviors/CollapsibleBehavior',
-        './models/behaviors/HighlightableBehavior',
-        './models/behaviors/SelectableBehavior',
-	
-        './views/behaviors/LoadingBehavior'
     ],
     function (
         utilsApi,
         dropdownApi,
+        meta,
         listApi,
         formApi,
         serviceLocator,
@@ -132,6 +133,7 @@ define([
              * Не подпадающий под концепцию этих компонентов дизайн выпадающих элементов должен быть пересмотрен.
              * @namespace
              * */
+            meta: meta,
             dropdown: dropdownApi,
             form: formApi,
             list: listApi,

@@ -43,9 +43,14 @@ define([
                     return childViewSelector(child);
                 }
 
-                var childView = this.getOption('childView');
-                if (!childView) {
-                    throw new Error('A "childView" must be specified', 'NoChildViewError');
+                var childView;
+                if (child.get('isLoadingRowModel')) {
+                    childView = this.getOption('loadingChildView');
+                } else {
+                    childView = this.getOption('childView');
+                    if (!childView) {
+                        throw new Error('A "childView" must be specified', 'NoChildViewError');
+                    }
                 }
 
                 return childView;
@@ -57,6 +62,7 @@ define([
                 if (this.collection === undefined) {
                     throw 'You must provide a collection to display.';
                 }
+
                 if (options.childHeight === undefined) {
                     throw 'You must provide a childHeight for the child item view (in pixels).';
                 }
@@ -71,8 +77,10 @@ define([
                 options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
                 options.childView && (this.childView = options.childView); // jshint ignore:line
                 options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
-
+                options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
                 this.handleResizeUniqueId = _.uniqueId();
+                this.maxRows = options.maxRows;
+                this.autosize = options.autosize;
 
                 this.childHeight = options.childHeight;
                 this.state = {
@@ -96,8 +104,7 @@ define([
                 this.$window.off('resize', this.__handleResize);
             },
 
-            onShow: function ()
-            {
+            onShow: function () {
                 // Updating viewportHeight and rendering subviews
                 this.__handleResizeInternal();
                 var visibleCollectionView = new VisibleCollectionView({
@@ -107,7 +114,15 @@ define([
                     collection: this.visibleCollection,
                     emptyView: this.emptyView,
                     emptyViewOptions: this.emptyViewOptions,
-                    childViewOptions: this.childViewOptions
+                    childViewOptions: this.childViewOptions,
+                    loadingChildView: this.loadingChildView
+                });
+                this.listenTo(visibleCollectionView, 'childview:click', function (child) {
+                    this.trigger('row:click', child.model);
+                });
+
+                this.listenTo(visibleCollectionView, 'childview:dblclick', function (child) {
+                    this.trigger('row:dblclick', child.model);
                 });
                 this.visibleCollectionRegion.show(visibleCollectionView);
                 this.__handleResizeInternal();
@@ -266,20 +281,44 @@ define([
                 var oldViewportHeight = this.state.viewportHeight;
                 var elementHeight = this.$el.height();
                 this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
-                if (this.state.viewportHeight === oldViewportHeight) {
-                    return;
+
+                if (!this.maxRows && this.autosize !== 'auto' && elementHeight === 0) {
+                    throw 'You should specify height of list or maximum number of elements or set "autosize" flag "auto"';
                 }
 
+                elementHeight = this.getElementHeight() || elementHeight;
+                this.$el.height(elementHeight);
                 var reserve = elementHeight === 0 ?
                     config.VISIBLE_COLLECTION_AUTOSIZE_RESERVE :
                     config.VISIBLE_COLLECTION_RESERVE;
-                var visibleCollectionSize = this.state.viewportHeight + reserve;
+                var collectionL = this.collection.length,
+                    viewportHeight = this.state.viewportHeight > collectionL && collectionL !== 0 ? collectionL : this.state.viewportHeight,
+                    visibleCollectionSize = viewportHeight + reserve;
+
+                if (viewportHeight === oldViewportHeight) {
+                    return;
+                }
+
                 this.visibleCollection.updateWindowSize(visibleCollectionSize);
 
                 this.trigger('viewportHeightChanged', this, {
                     oldViewportHeight: oldViewportHeight,
-                    viewportHeight: this.state.viewportHeight
+                    viewportHeight: viewportHeight,
+                    listViewHeight: elementHeight
                 });
+            },
+
+            getElementHeight: function () {
+                var collectionL = this.collection.length,
+                    numberOfElements;
+
+                if (this.maxRows) {
+                    numberOfElements = Math.min(this.maxRows, collectionL);
+                } else if (this.autosize === 'auto' && this.state.viewportHeight > collectionL) {
+                    numberOfElements = collectionL;
+                }
+
+                return this.childHeight * numberOfElements;
             },
 
             __mousewheel: function (e) {
