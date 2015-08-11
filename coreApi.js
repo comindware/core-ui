@@ -36,7 +36,7 @@ define([
         './models/behaviors/CollapsibleBehavior',
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
-        './views/behaviors/LoadingBehavior'
+        './views/behaviors/LoadingBehavior',
 
         './Bootstrapper'
     ],
