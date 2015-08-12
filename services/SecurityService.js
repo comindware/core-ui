@@ -17,8 +17,8 @@ define([ 'core/utils/utilsApi'],
 
         var globalPermissions = {
             SYSTEM_ADMINISTRATION: 'system_administration',
-            USER_MANAGEMENT: 'user_management',
-            APP_DESIGN: 'app_design',
+            USER_MANAGEMENT: 'cmw.privilege.manageAccounts',
+            APP_DESIGN: 'cmw.privilege.designSystem',
             DEFAULT_USER: 'default_user'
         };
 
