@@ -27,6 +27,7 @@ define([
             SETTINGS_GROUPS: 'module:settings:groups',
             SETTINGS_WORKSPACE: 'module:settings:workspace',
             SETTINGS_ROLES: 'module:settings:roles',
+            SETTINGS_ACTIVE_DIRECTORY: 'module:settings:activeDirectory',
 
             MYTASKS: 'module:myTasks',
             MYTASKS_DESIGNER: 'module:myTasks:formDesigner',
