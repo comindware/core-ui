@@ -142,6 +142,14 @@ define([
                 Backbone.history.start();
             },
 
+            canNavigateBack: function () {
+                return previousUrl !== undefined;
+            },
+
+            navigateBack: function () {
+                this.navigateToUrl(previousUrl, {trigger: true});
+            },
+
             // options: replace (history), trigger (routing)
             navigateToUrl: function (url, options) {
                 options = options || {};
