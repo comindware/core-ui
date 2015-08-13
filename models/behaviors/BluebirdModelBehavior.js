@@ -2,21 +2,38 @@
     function() {
         'use strict';
 
-        var BluebirdModelBehavior = function (model) {
+        //Wraps Backbone jQuery promises for model operations with Bluebird promises and makes them cancellable
+
+        var BluebirdModelBehavior = function(model) {
             this.__model = model;
         };
 
         _.extend(BluebirdModelBehavior.prototype, {
             save: function() {
-                return Promise.resolve(this.__model.save.apply(this.__model, arguments));
+                var $saveXhr = this.__model.save.apply(this.__model, arguments);
+                return Promise.resolve($saveXhr)
+                    .cancellable()
+                    .catch(Promise.CancellationError, function() {
+                        $saveXhr.abort();
+                    });
             },
 
             fetch: function() {
-                return Promise.resolve(this.__model.fetch.apply(this.__model, arguments));
+                var $fetchXhr = this.__model.fetch.apply(this.__model, arguments);
+                return Promise.resolve($fetchXhr)
+                    .cancellable()
+                    .catch(Promise.CancellationError, function() {
+                        $fetchXhr.abort();
+                    });;
             },
 
             destroy: function() {
-                return Promise.resolve(this.__model.destroy.apply(this.__model, arguments));
+                var $destroyXhr = this.__model.destroy.apply(this.__model, arguments);
+                return Promise.resolve($destroyXhr)
+                    .cancellable()
+                    .catch(Promise.CancellationError, function() {
+                        $destroyXhr.abort();
+                    });;
             }
         });
 
