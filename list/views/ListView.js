@@ -33,8 +33,7 @@ define([
 
         var config = {
             VISIBLE_COLLECTION_RESERVE: 5,
-            VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
-            MIN_HEIGHT: 60
+            VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
         };
 
         var VisibleCollectionView = Marionette.CollectionView.extend({
@@ -99,6 +98,9 @@ define([
                 this.state = {
                     position: 0
                 };
+
+                window.recordCollection = this.collection;
+                this.listenTo(this.collection, 'add remove reset', this.__handleResize, this);
                 this.visibleCollection = new SlidingWindowCollection(this.collection);
             },
 
@@ -120,7 +122,7 @@ define([
             onShow: function () {
                 // Updating viewportHeight and rendering subviews
                 this.__handleResizeInternal();
-                var visibleCollectionView = new VisibleCollectionView({
+                this.visibleCollectionView = new VisibleCollectionView({
                     childView: this.childView,
                     childViewSelector: this.childViewSelector,
                     className: 'visible-collection',
@@ -130,14 +132,15 @@ define([
                     childViewOptions: this.childViewOptions,
                     loadingChildView: this.loadingChildView
                 });
-                this.listenTo(visibleCollectionView, 'childview:click', function (child) {
+
+                this.listenTo(this.visibleCollectionView, 'childview:click', function (child) {
                     this.trigger('row:click', child.model);
                 });
 
-                this.listenTo(visibleCollectionView, 'childview:dblclick', function (child) {
+                this.listenTo(this.visibleCollectionView, 'childview:dblclick', function (child) {
                     this.trigger('row:dblclick', child.model);
                 });
-                this.visibleCollectionRegion.show(visibleCollectionView);
+                this.visibleCollectionRegion.show(this.visibleCollectionView);
                 this.__handleResizeInternal();
             },
             
@@ -292,7 +295,8 @@ define([
             // Updates state.viewportSize and visibleCollection.state.windowSize.
             __handleResizeInternal: function () {
                 var oldViewportHeight = this.state.viewportHeight;
-                var elementHeight = this.$el.height();
+                var elementHeight = this.$el.height(),
+                    oldElementHeight = elementHeight;
                 this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
 
                 if (this.height === heightOptions.FIXED && elementHeight === 0) {
@@ -313,7 +317,7 @@ define([
                     viewportHeight = this.state.viewportHeight > collectionL && collectionL !== 0 ? collectionL : this.state.viewportHeight,
                     visibleCollectionSize = viewportHeight + reserve;
 
-                if (viewportHeight === oldViewportHeight) {
+                if (viewportHeight === oldViewportHeight && elementHeight === oldElementHeight) {
                     return;
                 }
 
@@ -328,7 +332,8 @@ define([
 
             getElementHeight: function () {
                 var collectionL = this.collection.length,
-                    numberOfElements;
+                    numberOfElements,
+                    minHeight = 0;
 
                 if (this.maxRows) {
                     numberOfElements = Math.min(this.maxRows, collectionL);
@@ -336,7 +341,11 @@ define([
                     numberOfElements = collectionL;
                 }
 
-                return Math.max(this.childHeight * numberOfElements, config.MIN_HEIGHT);
+                if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
+                    minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
+                }
+
+                return Math.max(this.childHeight * numberOfElements, minHeight);
             },
 
             __mousewheel: function (e) {
