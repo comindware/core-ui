@@ -148,7 +148,7 @@ define([
             },
 
             navigateBack: function () {
-                this.navigateToUrl(previousUrl, {trigger: true});
+                Backbone.history.history.back();
             },
 
             // options: replace (history), trigger (routing)
