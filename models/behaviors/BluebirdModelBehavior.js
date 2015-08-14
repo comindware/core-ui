@@ -5,12 +5,14 @@
         //Wraps Backbone jQuery promises for model operations with Bluebird promises and makes them cancellable
 
         var BluebirdModelBehavior = function(model) {
-            this.__model = model;
+            this.__oldSave = model.save;
+            this.__oldFetch = model.fetch;
+            this.__oldDestroy = model.destroy;
         };
 
         _.extend(BluebirdModelBehavior.prototype, {
             save: function() {
-                var $saveXhr = this.__model.save.apply(this.__model, arguments);
+                var $saveXhr = this.__oldSave.apply(this, arguments);
                 return Promise.resolve($saveXhr)
                     .cancellable()
                     .catch(Promise.CancellationError, function() {
@@ -19,7 +21,7 @@
             },
 
             fetch: function() {
-                var $fetchXhr = this.__model.fetch.apply(this.__model, arguments);
+                var $fetchXhr = this.__oldFetch.apply(this, arguments);
                 return Promise.resolve($fetchXhr)
                     .cancellable()
                     .catch(Promise.CancellationError, function() {
@@ -28,7 +30,7 @@
             },
 
             destroy: function() {
-                var $destroyXhr = this.__model.destroy.apply(this.__model, arguments);
+                var $destroyXhr = this.__oldDestroy.apply(this, arguments);
                 return Promise.resolve($destroyXhr)
                     .cancellable()
                     .catch(Promise.CancellationError, function() {
