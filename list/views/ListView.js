@@ -33,7 +33,8 @@ define([
 
         var config = {
             VISIBLE_COLLECTION_RESERVE: 5,
-            VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
+            VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100,
+            MIN_HEIGHT: 60
         };
 
         var VisibleCollectionView = Marionette.CollectionView.extend({
@@ -318,7 +319,7 @@ define([
                     numberOfElements = collectionL;
                 }
 
-                return this.childHeight * numberOfElements;
+                return Math.max(this.childHeight * numberOfElements, config.MIN_HEIGHT);
             },
 
             __mousewheel: function (e) {
