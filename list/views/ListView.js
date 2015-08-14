@@ -39,33 +39,41 @@ define([
 
         var VisibleCollectionView = Marionette.CollectionView.extend({
             getChildView: function(child) {
+                if (child.get('isLoadingRowModel'))
+                {
+                    return this.getOption('loadingChildView');
+                }
+
                 var childViewSelector = this.getOption('childViewSelector');
                 if (childViewSelector) {
                     return childViewSelector(child);
                 }
 
-                var childView;
-                if (child.get('isLoadingRowModel')) {
-                    childView = this.getOption('loadingChildView');
-                } else {
-                    childView = this.getOption('childView');
-                    if (!childView) {
-                        throw new Error('A "childView" must be specified', 'NoChildViewError');
-                    }
+                var childView = this.getOption('childView');
+                if (!childView) {
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
                 }
-
                 return childView;
             }
         });
 
+        var heightOptions = {
+            AUTO: 'auto',
+            FIXED: 'fixed'
+        };
+
+        var defaultOptions = {
+            height: heightOptions.FIXED
+        };
+
         var ListView = Marionette.LayoutView.extend({
             initialize: function (options) {
                 if (this.collection === undefined) {
-                    throw 'You must provide a collection to display.';
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'collection\' option.');
                 }
 
                 if (options.childHeight === undefined) {
-                    throw 'You must provide a childHeight for the child item view (in pixels).';
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - outer height for childView view (in pixels).');
                 }
 
                 _.bindAll(this, '__handleResize');
@@ -81,7 +89,11 @@ define([
                 options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
                 this.handleResizeUniqueId = _.uniqueId();
                 this.maxRows = options.maxRows;
-                this.autosize = options.autosize;
+                this.height = options.height;
+
+                if (options.height === undefined) {
+                    this.height = defaultOptions.height;
+                }
 
                 this.childHeight = options.childHeight;
                 this.state = {
@@ -252,7 +264,7 @@ define([
             __updatePositionInternal: function (newPosition, triggerEvents)
             {
                 if (this.state.viewportHeight === undefined) {
-                    throw 'updatePosition() has been called before the full initialization of the view';
+                    utils.helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
                 }
 
                 newPosition = this.__normalizePosition(newPosition);
@@ -283,8 +295,13 @@ define([
                 var elementHeight = this.$el.height();
                 this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
 
-                if (!this.maxRows && this.autosize !== 'auto' && elementHeight === 0) {
-                    throw 'You should specify height of list or maximum number of elements or set "autosize" flag "auto"';
+                if (this.height === heightOptions.FIXED && elementHeight === 0) {
+                    utils.helpers.throwInvalidOperationError(
+                        'ListView configuration error: ' +
+                        'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
+                } else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
+                    utils.helpers.throwInvalidOperationError(
+                        'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
                 }
 
                 elementHeight = this.getElementHeight() || elementHeight;
@@ -315,7 +332,7 @@ define([
 
                 if (this.maxRows) {
                     numberOfElements = Math.min(this.maxRows, collectionL);
-                } else if (this.autosize === 'auto' && this.state.viewportHeight > collectionL) {
+                } else if (this.height === 'auto' && this.state.viewportHeight > collectionL) {
                     numberOfElements = collectionL;
                 }
 

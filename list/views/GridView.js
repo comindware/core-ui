@@ -96,7 +96,7 @@ define(['text!core/list/templates/grid.html',
                     childViewOptions: childViewOptions,
                     loadingChildView: options.loadingChildView || LoadingChildView,
                     maxRows: options.maxRows,
-                    autosize: options.autosize
+                    height: options.height
                 });
 
                 this.listenTo(this.listView, 'row:click', function (model) {

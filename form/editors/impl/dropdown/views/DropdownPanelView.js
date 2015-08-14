@@ -81,6 +81,7 @@ define(['module/lib',
                             displayAttribute: this.model.get('displayAttribute')
                         },
                         maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
+                        height: 'auto',
                         childHeight: config.CHILD_HEIGHT
                     }
                 });
