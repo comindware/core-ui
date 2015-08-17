@@ -140,6 +140,15 @@ define([
 
                 __registerDefaultRoute();
                 Backbone.history.start();
+                Backbone.history.checkUrl();
+            },
+
+            canNavigateBack: function () {
+                return previousUrl !== undefined;
+            },
+
+            navigateBack: function () {
+                Backbone.history.history.back();
             },
 
             // options: replace (history), trigger (routing)
