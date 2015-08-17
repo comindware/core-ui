@@ -24,8 +24,10 @@ define([
         var configs = _.flatten([ moduleConfigs, projectModuleConfigs, processModuleConfigs ]);
 
         var modules = {
-            SETTINGS_WORKSPACE: 'module:settings:workspace',
             SETTINGS_GROUPS: 'module:settings:groups',
+            SETTINGS_WORKSPACE: 'module:settings:workspace',
+            SETTINGS_ROLES: 'module:settings:roles',
+
             MYTASKS: 'module:myTasks',
             PEOPLE_USERS: 'module:people:users',
             DEMO_CORE: 'module:demo:core',
@@ -57,7 +59,9 @@ define([
             PROCESS_RECORDTYPES_SHOWALL: 'module:process:recordTypes:showAll',
 
             PROCESS_PROCESSMONITOR: 'module:process:processMonitor',
-            PROCESS_DATADIAGRAM: 'module:process:dataDiagram'
+            PROCESS_DATADIAGRAM: 'module:process:dataDiagram',
+
+            SUPPORT_GLOBAL_FUNCTIONS: 'module:support:globalFunctions'
         };
 
         return {

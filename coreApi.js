@@ -30,6 +30,7 @@ define([
         './services/GlobalEventService',
         './services/LocalizationService',
         './services/AjaxService',
+        './services/SecurityService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -60,6 +61,7 @@ define([
         GlobalEventService,
         LocalizationService,
         AjaxService,
+	SecurityService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -104,7 +106,8 @@ define([
                 MessageService: MessageService,
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
-                AjaxService: AjaxService
+                AjaxService: AjaxService,
+		SecurityService: SecurityService
             },
             /**
              * Backbone-коллекции общего назначения
