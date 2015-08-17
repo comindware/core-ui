@@ -442,8 +442,5 @@ define(['module/lib', '../models/behaviors/SelectableBehavior', 'core/utils/util
 
         _.extend(VirtualCollection.prototype, Backbone.Events);
 
-        var collections = window.ClassLoader.createNS("shared.collections");
-        collections.VirtualCollection = VirtualCollection;
-
         return VirtualCollection;
     });

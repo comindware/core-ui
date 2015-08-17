@@ -41,8 +41,5 @@ define(['text!core/list/templates/gridcolumnheader.html', 'module/lib'],
             }
         });
 
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.GridColumnHeaderView = GridColumnHeaderView;
-
         return GridColumnHeaderView;
     });

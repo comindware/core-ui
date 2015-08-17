@@ -61,7 +61,9 @@ define([
                 utils.helpers.ensureOption(options, 'collection');
                 utils.helpers.ensureOption(options, 'gridViewOptions.columns');
                 utils.helpers.ensureOption(options, 'gridViewOptions.childHeight');
-                utils.helpers.ensureOption(options, 'gridViewOptions.childView');
+                if (!options.gridViewOptions.useDefaultRowView) {
+                    utils.helpers.ensureOption(options, 'gridViewOptions.childView');
+                }
 
                 var collection = factory.createWrappedCollection(options.collection);
 

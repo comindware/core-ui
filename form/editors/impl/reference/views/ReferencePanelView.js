@@ -18,9 +18,10 @@ define(['module/lib',
         './ReferenceListItemView',
         '../models/SearchMoreModel',
         './SearchMoreListItemView',
-        './LoadingView'
+        './LoadingView',
+        'core/services/LocalizationService'
     ],
-    function (lib, list, utils, template, ReferenceListItemView, SearchMoreModel, SearchMoreListItemView, LoadingView) {
+    function (lib, list, utils, template, ReferenceListItemView, SearchMoreModel, SearchMoreListItemView, LoadingView, LocalizationService) {
         'use strict';
 
         var config = {
@@ -82,7 +83,7 @@ define(['module/lib',
                             reqres: this.reqres
                         },
                         emptyViewOptions: {
-                            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.REFERENCE.NOITEMS')
+                            text: LocalizationService.get('SUITEGENERAL.FORM.EDITORS.REFERENCE.NOITEMS')
                         },
                         childHeight: config.CHILD_HEIGHT
                     }

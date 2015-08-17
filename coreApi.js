@@ -14,6 +14,7 @@
 define([
         './utils/utilsApi',
         './dropdown/dropdownApi',
+        './meta',
         './list/listApi',
         './form/formApi',
         './serviceLocator',
@@ -24,23 +25,27 @@ define([
         './services/RoutingService',
         './services/UrlService',
         './services/ModuleService',
+        './services/MessageService',
         './services/WindowService',
         './services/GlobalEventService',
+        './services/LocalizationService',
+        './services/AjaxService',
         './services/SecurityService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
-
         './models/behaviors/CollapsibleBehavior',
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
-	
-        './views/behaviors/LoadingBehavior'
+        './views/behaviors/LoadingBehavior',
+
+        './Bootstrapper'
     ],
     function (
         utilsApi,
         dropdownApi,
+        meta,
         listApi,
         formApi,
         serviceLocator,
@@ -51,9 +56,12 @@ define([
         RoutingService,
         UrlService,
         ModuleService,
+        MessageService,
         WindowService,
         GlobalEventService,
-        SecurityService,
+        LocalizationService,
+        AjaxService,
+	SecurityService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -63,7 +71,9 @@ define([
         HighlightableBehavior,
         SelectableBehavior,
 	
-        LoadingBehavior
+        LoadingBehavior,
+
+        Bootstrapper
     ) {
         'use strict';
 
@@ -93,8 +103,11 @@ define([
                 RoutingService: RoutingService,
                 UrlService: UrlService,
                 ModuleService: ModuleService,
+                MessageService: MessageService,
                 WindowService: WindowService,
-                SecurityService: SecurityService
+                LocalizationService: LocalizationService,
+                AjaxService: AjaxService,
+		SecurityService: SecurityService
             },
             /**
              * Backbone-коллекции общего назначения
@@ -136,7 +149,9 @@ define([
             form: formApi,
             list: listApi,
             utils: utilsApi,
-            serviceLocator: serviceLocator
+            meta: meta,
+            serviceLocator: serviceLocator,
+            bootstrapper: Bootstrapper
         };
         return exports;
     });

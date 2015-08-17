@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Ajax */
 
 define([
         'module/lib',
@@ -140,6 +140,15 @@ define([
 
                 __registerDefaultRoute();
                 Backbone.history.start();
+                Backbone.history.checkUrl();
+            },
+
+            canNavigateBack: function () {
+                return previousUrl !== undefined;
+            },
+
+            navigateBack: function () {
+                Backbone.history.history.back();
             },
 
             // options: replace (history), trigger (routing)
@@ -152,7 +161,8 @@ define([
             },
 
             logout: function () {
-                Promise.resolve(Ajax.Home.Logout()).then(function () {
+                //noinspection JSUnresolvedVariable
+                Ajax.Home.Logout().then(function () {
                     window.location = "";
                 });
             }
