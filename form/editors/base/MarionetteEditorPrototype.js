@@ -181,6 +181,7 @@ define([
 
                     __setEnabled: function (enabled) {
                         this.enabled = enabled;
+                        this.trigger('enabled', enabled);
                         if (!this.enabled) {
                             this.$el.addClass(classes.disabled);
                         } else {
@@ -194,6 +195,7 @@ define([
 
                     __setReadonly: function (readonly) {
                         this.readonly = readonly;
+                        this.trigger('readonly', readonly);
                         if (this.readonly && this.getEnabled()) {
                             this.$el.addClass(classes.readonly);
                         } else {

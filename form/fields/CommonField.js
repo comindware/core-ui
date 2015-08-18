@@ -12,13 +12,13 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        'module/lib',
+    'module/lib',
     'text!./templates/CommonField.html',
     './models/FieldInfoModel',
     './views/InfoButtonView',
     './views/InfoMessageView',
-    'core/dropdown/dropdownApi'],
-    function (lib, template, FieldInfoModel, InfoButtonView, InfoMessageView, dropdown) {
+    'core/dropdown/dropdownApi'
+], function (lib, template, FieldInfoModel, InfoButtonView, InfoMessageView, dropdown) {
         'use strict';
 
         var classes = {
@@ -44,6 +44,12 @@ define([
                         this.editor.trigger('validated', this);
                     }.bind(this));
                 }
+                this.editor.on('readonly', function (readonly) {
+                    this.__updateEditorState(readonly, this.editor.getEnabled());
+                }.bind(this));
+                this.editor.on('enabled', function (enabled) {
+                    this.__updateEditorState(this.editor.getReadonly(), enabled);
+                }.bind(this));
             },
             validate: function (options) {
                 options = options || {};
@@ -121,16 +127,16 @@ define([
                 if (this.schema.required) {
                     this.$el.addClass(classes.REQUIRED);
                 }
-                if (this.schema.readonly) {
-                    this.$el.addClass(classes.READONLY);
-                }
-                if (this.schema.readonly || !this.schema.enabled) {
-                    this.$el.addClass(classes.DISABLED);
-                }
                 if (this.schema.hidden) {
                     this.$el.addClass(classes.HIDDEN);
                 }
+                this.__updateEditorState(this.schema.readonly, this.schema.enabled);
                 return this;
+            },
+
+            __updateEditorState: function (readonly, enabled) {
+                this.$el.toggleClass(classes.READONLY, readonly);
+                this.$el.toggleClass(classes.DISABLED, readonly || !enabled);
             }
         }, {
             template: Handlebars.compile(template)
