@@ -108,6 +108,11 @@ define([
         },
 
         __onInput: function (text, caret) {
+            // 1. Open dropdown when: @ is immediately before caret, @ is at start or prepended by whitespace
+            // 2. Maintain dropdown open (and filter the list) when: text between caret and @ matches username pattern [a-zA-Z0-9_\.]
+            // 3. Hide dropdown when: username text doesn't match
+            // 4. TODO: track caret change and hide dropdown if resulting username patters doesn't match
+            // 5. hide dropdown on blur
             if (text.indexOf('@') !== -1) {
                 this.dropdownView.open();
             }
