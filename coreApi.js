@@ -30,6 +30,7 @@ define([
         './services/GlobalEventService',
         './services/LocalizationService',
         './services/AjaxService',
+        './services/SecurityService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -38,6 +39,8 @@ define([
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
         './views/behaviors/LoadingBehavior',
+
+        './views/SearchBarView',
 
         './Bootstrapper'
     ],
@@ -60,6 +63,7 @@ define([
         GlobalEventService,
         LocalizationService,
         AjaxService,
+        SecurityService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -70,6 +74,8 @@ define([
         SelectableBehavior,
 	
         LoadingBehavior,
+
+        SearchBarView,
 
         Bootstrapper
     ) {
@@ -104,7 +110,8 @@ define([
                 MessageService: MessageService,
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
-                AjaxService: AjaxService
+                AjaxService: AjaxService,
+                SecurityService: SecurityService
             },
             /**
              * Backbone-коллекции общего назначения
@@ -135,7 +142,8 @@ define([
             views: {
                 behaviors: {
                     LoadingBehavior: LoadingBehavior
-                }
+                },
+                SearchBarView: SearchBarView
             },
             /**
              * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
