@@ -27,14 +27,19 @@ define([ 'core/utils/utilsApi'],
             },
 
             hasGlobalPermission: function (permissionId) {
-               var hasPermision = Context.configurationModel.GlobalPermissions.filter(function (permission) {
-                    if (permission === permissionId) {
+                var globalPermissions = Context.configurationModel.GlobalPermissions;
+                if (globalPermissions) {
+                    var hasPermision = globalPermissions.filter(function(permission) {
+                        if (permission === permissionId) {
+                            return true;
+                        }
+                    });
+
+                    if (hasPermision.length > 0) {
                         return true;
+                    } else {
+                        return false;
                     }
-                });
-                
-               if (hasPermision.length > 0) {
-                    return true;
                 } else {
                     return false;
                 }
