@@ -72,7 +72,8 @@ define([
                 }
 
                 if (options.childHeight === undefined) {
-                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - outer height for childView view (in pixels).');
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - ' +
+                        'outer height for childView view (in pixels).');
                 }
 
                 _.bindAll(this, '__handleResize');
@@ -80,7 +81,12 @@ define([
                 this.$window = $(window);
                 this.$window.on('resize', this.__handleResize);
 
-                options.childViewOptions && (this.childViewOptions = options.childViewOptions); // jshint ignore:line
+                this.__createReqres();
+
+                this.childViewOptions = _.extend(options.childViewOptions || {}, {
+                    internalListViewReqres: this.internalReqres
+                });
+
                 options.emptyView && (this.emptyView = options.emptyView); // jshint ignore:line
                 options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
                 options.childView && (this.childView = options.childView); // jshint ignore:line
@@ -133,13 +139,6 @@ define([
                     loadingChildView: this.loadingChildView
                 });
 
-                this.listenTo(this.visibleCollectionView, 'childview:click', function (child) {
-                    this.trigger('row:click', child.model);
-                });
-
-                this.listenTo(this.visibleCollectionView, 'childview:dblclick', function (child) {
-                    this.trigger('row:dblclick', child.model);
-                });
                 this.visibleCollectionRegion.show(this.visibleCollectionView);
                 this.__handleResizeInternal();
             },
@@ -170,6 +169,15 @@ define([
                 'end': function (e) {
                     this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
                 }
+            },
+
+            __createReqres: function () {
+                this.internalReqres = new Backbone.Wreqr.RequestResponse();
+                this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+            },
+
+            __handleChildViewEvent: function (view, eventName, eventArguments) {
+                this.trigger.apply(this, [ 'childview:' + eventName, view ].concat(eventArguments));
             },
 
             __moveCursorTo: function (newCursorIndex, shiftPressed)

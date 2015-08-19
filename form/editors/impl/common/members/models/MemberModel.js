@@ -1,6 +1,6 @@
 /**
- * Developer: Stepan Burguchev
- * Date: 1/29/2015
+ * Developer: Ksenia Kartvelishvili
+ * Date: 16.04.2015
  * Copyright: 2009-2015 Comindware®
  *       All Rights Reserved
  *
@@ -12,20 +12,23 @@
 /* global define, require, Backbone, Marionette, $, _ */
 
 define([
-        '../models/MemberModel',
         'core/list/listApi',
-        'core/utils/utilsApi',
-        'core/collections/VirtualCollection',
-        'core/collections/behaviors/HighlightableBehavior'
+        'core/utils/utilsApi'
     ],
-    function (MemberModel, list, utils, VirtualCollection, HighlightableBehavior) {
+    function (
+        list,
+        utils
+    ) {
         'use strict';
 
-        return VirtualCollection.extend({
+        return Backbone.Model.extend({
             initialize: function () {
-                utils.helpers.applyBehavior(this, HighlightableBehavior);
+                utils.helpers.applyBehavior(this, list.models.behaviors.ListItemBehavior);
             },
 
-            model: MemberModel
+            matchText: function (text) {
+                var modelName = this.get('name');
+                return modelName && modelName.toLowerCase().indexOf(text) !== -1;
+            }
         });
     });

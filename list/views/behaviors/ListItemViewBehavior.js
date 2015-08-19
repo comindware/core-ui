@@ -17,7 +17,8 @@
     The selectable behavior expects that the model implements SelectableBehavior and works as follows:
     
     1. The 'selected' class is set to $el when the model is selected.
-    2. The item becomes selected on $el `mousedown` event. NOTE: use stopPropagation() method in a child element's `mousedown` callback to prevent item selection.
+    2. The item becomes selected on $el `mousedown` event. NOTE: use stopPropagation() method in a child element's `mousedown` callback
+        to prevent item selection.
     
     The highlightable behavior expects that the model implements HighlightableBehavior and works as follows:
     
@@ -26,13 +27,34 @@
     IMPLEMENTATION NOTE: onHighlighted(text) and onUnhighlighted() methods are expected to modify element's DOM marking
     highlighted text with <SPAN class='highlight'> tags. Please note the following:
 
-    1. The htmlHelpers.highlightText(text, fragment, escape = true) function was created for this purpose and recommended to use for implementation. It also escapes the input text by default.
+    1. The htmlHelpers.highlightText(text, fragment, escape = true) function was created for this purpose and recommended
+        to use for implementation. It also escapes the input text by default.
     2. (!) Be sure that the text you set into html is escaped.
 */
 define(['module/lib'],
     function () {
         'use strict';
-        var ListItemViewBehavior = Marionette.Behavior.extend({
+
+        var eventBubblingIgnoreList = [
+            'before:render',
+            'render',
+            'dom:refresh',
+            'before:show',
+            'show',
+            'before:destroy',
+            'destroy'
+        ];
+
+        return Marionette.Behavior.extend({
+            initialize: function (options, view) {
+                this.listenTo(view, 'all', function (eventName) {
+                    if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
+                        return;
+                    }
+                    view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
+                });
+            },
+
             modelEvents: {
                 'selected': '__handleSelection',
                 'deselected': '__handleDeselection',
@@ -87,6 +109,4 @@ define(['module/lib'],
                 this.$el.removeClass('selected');
             }
         });
-
-        return ListItemViewBehavior;
     });

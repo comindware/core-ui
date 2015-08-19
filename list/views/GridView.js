@@ -99,12 +99,12 @@ define(['text!core/list/templates/grid.html',
                     height: options.height
                 });
 
-                this.listenTo(this.listView, 'row:click', function (model) {
-                    this.trigger('row:click', model);
+                this.listenTo(this.listView, 'childview:click', function (model) {
+                    this.trigger('childview:click', model);
                 });
 
-                this.listenTo(this.listView, 'row:dblclick', function (model) {
-                    this.trigger('row:dblclick', model);
+                this.listenTo(this.listView, 'childview:dblclick', function (model) {
+                    this.trigger('childview:dblclick', model);
                 });
                 this.listenTo(this.listView, 'positionChanged', function (sender, args) {
                     this.trigger('positionChanged', this, args);

@@ -72,19 +72,12 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
-            __keyup: function () {
-                this.trigger('keyup', this);
-            },
-
             onShow: function () {
                 this.setMaxHeight();
                 this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
                 switch (this.options.size) {
                 case size.auto:
                     this.ui.textarea.autosize({ append: '' });
-                    this.ui.textarea.on('autosize.resized', function(){
-                        this.trigger('resize');
-                    }.bind(this));
                     break;
                 }
             },
