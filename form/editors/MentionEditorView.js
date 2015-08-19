@@ -85,10 +85,13 @@ define([
                 autoOpen: false
             });
             this.dropdownRegion.show(this.dropdownView);
+
             this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
             this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
             this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
             this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
+            this.listenTo(this.dropdownView, 'button:input', this.__onInput);
+
         },
 
         __onTextChange: function () {
@@ -102,6 +105,12 @@ define([
 
         __onBlur: function () {
             this.trigger('blur', this);
+        },
+
+        __onInput: function (text, caret) {
+            if (text.indexOf('@') !== -1) {
+                this.dropdownView.open();
+            }
         },
 
         setValue: function (value) {

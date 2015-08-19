@@ -111,14 +111,6 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
-            setValue: function (value) {
-                this.__value(value, true, false);
-            },
-
-            __change: function () {
-                this.__value(this.ui.textarea.val(), false, true);
-            },
-
             __value: function (value, updateUi, triggerChange) {
                 if (this.value === value) {
                     return;
@@ -132,10 +124,39 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
+            setValue: function (value) {
+                this.__value(value, true, false);
+            },
+
+            __change: function () {
+                this.__triggerInput();
+                this.__value(this.ui.textarea.val(), false, true);
+            },
+
             __input: function () {
+                this.__triggerInput();
                 if (this.options.changeMode === changeMode.keydown) {
                     this.__value(this.ui.textarea.val(), false, true);
                 }
+            },
+
+            __keyup: function () {
+                this.__triggerInput();
+            },
+
+            __triggerInput: function () {
+                var text = this.ui.textarea.val();
+                if (this.oldText === text) {
+                    return;
+                }
+
+                this.oldText = text;
+                var caret = this.ui.textarea.caret();
+
+                this.trigger('input', text, {
+                    start: caret.start,
+                    end: caret.end
+                });
             },
 
             select: function () {
