@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
-    function (template, BaseItemEditorView) {
+define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService' ],
+    function (template, BaseItemEditorView, LocalizationService) {
         'use strict';
 
         var changeMode = {
@@ -28,9 +28,9 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
         var defaultOptions = {
             changeMode: changeMode.blur,
             size: size.auto,
-            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
-            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
-            disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
+            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
+            readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
+            disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false,
             textHeight: null
@@ -68,7 +68,7 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView'],
 
             setMaxHeight: function(){
                 if (this.options.textHeight) {
-                    this.options.maxHeight = parseInt(this.ui.textarea.css('lineHeight')) * this.options.textHeight;
+                    this.options.maxHeight = parseInt(this.ui.textarea.css('line-height')) * this.options.textHeight;
                 }
             },
 

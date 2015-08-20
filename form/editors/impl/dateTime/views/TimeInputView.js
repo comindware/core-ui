@@ -11,14 +11,14 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html'],
-    function (lib, utils, template) {
+define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html', 'core/services/LocalizationService'],
+    function (lib, utils, template, LocalizationService) {
         'use strict';
         return Marionette.ItemView.extend({
 
-            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'),
-            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TIME.READONLYPLACEHOLDER'),
-            disabledPlaceholder: Localizer.get('CORE.FORM.EDITORS.TIME.DISABLEDPLACEHOLDER'),
+            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'),
+            readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.READONLYPLACEHOLDER'),
+            disabledPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.DISABLEDPLACEHOLDER'),
 
             initialize: function (options) {
                 this.reqres = options.reqres;

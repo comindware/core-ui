@@ -124,8 +124,5 @@ define(['module/lib', 'core/utils/utilsApi'],
             }
         });
 
-        var behaviors = window.ClassLoader.createNS("shared.list.views.behaviors");
-        behaviors.GridItemViewBehavior = GridItemViewBehavior;
-
         return GridItemViewBehavior;
     });

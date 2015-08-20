@@ -99,6 +99,7 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
             {
                 var column = args.column;
                 var sorting = column.sorting;
+                var comparator;
                 _.each(this.columns, function (c)
                 {
                     c.sorting = null;
@@ -107,19 +108,20 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                 {
                 case 'asc':
                     column.sorting = 'desc';
-                    this.collection.comparator = column.sortDesc;
+                    comparator = column.sortDesc;
                     break;
                 case 'desc':
                     column.sorting = 'asc';
-                    this.collection.comparator = column.sortAsc;
+                    comparator = column.sortAsc;
                     break;
                 default:
                     column.sorting = 'asc';
-                    this.collection.comparator = column.sortAsc;
+                    comparator = column.sortAsc;
                     break;
                 }
-                this.collection.sort();
                 this.updateSorting();
+
+                this.trigger('onColumnSort', column, comparator);
             },
 
             __handleDraggerMousedown: function (e)
@@ -241,9 +243,6 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                 });
             }
         });
-
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.GridHeaderView = GridHeaderView;
 
         return GridHeaderView;
     });

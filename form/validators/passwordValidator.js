@@ -11,10 +11,10 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib'], function() {
+define(['module/lib', 'core/services/LocalizationService'], function(lib, LocalizationService) {
     'use strict';
 
-    Backbone.Form.validators.errMessages.password = Localizer.get('PROJECT.COMMON.FORM.VALIDATION.PASSWORD');
+    Backbone.Form.validators.errMessages.password = LocalizationService.get('PROJECT.COMMON.FORM.VALIDATION.PASSWORD');
 
     Backbone.Form.validators.password = function(options) {
         options = _.extend({

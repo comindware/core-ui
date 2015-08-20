@@ -120,9 +120,16 @@ define([
 
             __onCollectionChange: function () {
                 var value = this.getValue();
-                if (this.collection.findWhere({ id: value })) {
+                var valueModel = this.collection.findWhere({id: value});
+                if (valueModel != null) {
+                    if (valueModel != this.viewModel.get('button').get("value"))
+                        this.viewModel.get('button').set('value', valueModel);
+                    if (valueModel != this.viewModel.get('panel').get("value"))
+                        this.viewModel.get('panel').set('value', valueModel);
+
                     return;
                 }
+
                 if (this.options.allowEmptyValue || this.collection.length === null) {
                     this.setValue(null);
                 } else {
@@ -178,11 +185,9 @@ define([
                     return;
                 }
                 this.value = value;
-                var valueModel = this.__findModel(value);
-                if (valueModel) {
-                    this.viewModel.get('button').set('value', valueModel);
-                    this.viewModel.get('panel').set('value', valueModel);
-                }
+                var valueModel = this.__findModel(value) || null;
+                this.viewModel.get('button').set('value', valueModel);
+                this.viewModel.get('panel').set('value', valueModel);
                 if (triggerChange) {
                     this.__triggerChange();
                 }

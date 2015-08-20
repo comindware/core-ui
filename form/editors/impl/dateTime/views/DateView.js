@@ -11,14 +11,14 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html'],
-    function (lib, utils, template) {
+define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'core/services/LocalizationService'],
+    function (lib, utils, template, LocalizationService) {
         'use strict';
 
         var defaultOptions = {
-            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'),
-            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.READONLYPLACEHOLDER'),
-            disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.DATE.DISABLEDPLACEHOLDER'),
+            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'),
+            readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.READONLYPLACEHOLDER'),
+            disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.DISABLEDPLACEHOLDER'),
             pickerFormat: 'YYYY-MM-DD'
         };
 

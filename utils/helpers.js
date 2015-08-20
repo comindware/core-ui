@@ -11,8 +11,8 @@
 
 /* global define, require, _, $ */
 
-define(['module/lib'],
-    function () {
+define(['module/lib', 'core/services/LocalizationService'],
+    function (lib, LocalizationService) {
         'use strict';
 
         var timeoutCache = {};
@@ -73,6 +73,33 @@ define(['module/lib'],
                     ru: defaultText
                 };
             },
+
+            /*
+            * Javascript version of string.Format in .NET
+            * */
+            format: function(text) {
+                if (!_.isString(text)) {
+                    return '';
+                }
+                for (var i = 1; i < arguments.length; i++) {
+                    var regexp = new RegExp('\\{'+(i-1)+'\\}', 'gi');
+                    text = text.replace(regexp, arguments[i]);
+                }
+                return text;
+            },
+
+            /*
+            * Taking a number and array of strings, returns a valid plural form:
+            * getPluralForm(1, ['car','cars']) -> 'car'
+            * getPluralForm(10, ['car','cars']) -> 'cars'
+            * Works with complex cases and valid for all supported languages (en, de, ru)
+            * */
+            getPluralForm: (function (formula) {
+                var getIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
+                return function (n, texts) {
+                    return texts.split(',')[getIndex(n)];
+                };
+            })(LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM')),
 
             /*
             * Puts operation into the fifo queue with specific Id and returns a promise that resolves on operation complete.
@@ -158,12 +185,20 @@ define(['module/lib'],
                 helpers.throwError(message || 'Invalid format', 'FormatError');
             },
 
+            throwArgumentError: function (message) {
+                helpers.throwError(message || 'Invalid argument', 'ArgumentError');
+            },
+
             throwNotSupportedError: function (message) {
-                helpers.throwError(message || 'Not Supported', 'NotSupportedError');
+                helpers.throwError(message || 'The operation is not supported', 'NotSupportedError');
             },
 
             throwNotImplementedError: function (message) {
-                helpers.throwError(message || 'Not Implemented', 'NotImplementedError');
+                helpers.throwError(message || 'The operation is not implemented', 'NotImplementedError');
+            },
+
+            throwNotFoundError: function (message) {
+                helpers.throwError(message || 'Object not found', 'NotFoundError');
             }
         };
 

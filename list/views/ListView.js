@@ -38,6 +38,11 @@ define([
 
         var VisibleCollectionView = Marionette.CollectionView.extend({
             getChildView: function(child) {
+                if (child.get('isLoadingRowModel'))
+                {
+                    return this.getOption('loadingChildView');
+                }
+
                 var childViewSelector = this.getOption('childViewSelector');
                 if (childViewSelector) {
                     return childViewSelector(child);
@@ -45,20 +50,29 @@ define([
 
                 var childView = this.getOption('childView');
                 if (!childView) {
-                    throw new Error('A "childView" must be specified', 'NoChildViewError');
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
                 }
-
                 return childView;
             }
         });
 
+        var heightOptions = {
+            AUTO: 'auto',
+            FIXED: 'fixed'
+        };
+
+        var defaultOptions = {
+            height: heightOptions.FIXED
+        };
+
         var ListView = Marionette.LayoutView.extend({
             initialize: function (options) {
                 if (this.collection === undefined) {
-                    throw 'You must provide a collection to display.';
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'collection\' option.');
                 }
+
                 if (options.childHeight === undefined) {
-                    throw 'You must provide a childHeight for the child item view (in pixels).';
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - outer height for childView view (in pixels).');
                 }
 
                 _.bindAll(this, '__handleResize');
@@ -71,13 +85,22 @@ define([
                 options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
                 options.childView && (this.childView = options.childView); // jshint ignore:line
                 options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
-
+                options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
                 this.handleResizeUniqueId = _.uniqueId();
+                this.maxRows = options.maxRows;
+                this.height = options.height;
+
+                if (options.height === undefined) {
+                    this.height = defaultOptions.height;
+                }
 
                 this.childHeight = options.childHeight;
                 this.state = {
                     position: 0
                 };
+
+                window.recordCollection = this.collection;
+                this.listenTo(this.collection, 'add remove reset', this.__handleResize, this);
                 this.visibleCollection = new SlidingWindowCollection(this.collection);
             },
 
@@ -96,20 +119,28 @@ define([
                 this.$window.off('resize', this.__handleResize);
             },
 
-            onShow: function ()
-            {
+            onShow: function () {
                 // Updating viewportHeight and rendering subviews
                 this.__handleResizeInternal();
-                var visibleCollectionView = new VisibleCollectionView({
+                this.visibleCollectionView = new VisibleCollectionView({
                     childView: this.childView,
                     childViewSelector: this.childViewSelector,
                     className: 'visible-collection',
                     collection: this.visibleCollection,
                     emptyView: this.emptyView,
                     emptyViewOptions: this.emptyViewOptions,
-                    childViewOptions: this.childViewOptions
+                    childViewOptions: this.childViewOptions,
+                    loadingChildView: this.loadingChildView
                 });
-                this.visibleCollectionRegion.show(visibleCollectionView);
+
+                this.listenTo(this.visibleCollectionView, 'childview:click', function (child) {
+                    this.trigger('row:click', child.model);
+                });
+
+                this.listenTo(this.visibleCollectionView, 'childview:dblclick', function (child) {
+                    this.trigger('row:dblclick', child.model);
+                });
+                this.visibleCollectionRegion.show(this.visibleCollectionView);
                 this.__handleResizeInternal();
             },
             
@@ -236,7 +267,7 @@ define([
             __updatePositionInternal: function (newPosition, triggerEvents)
             {
                 if (this.state.viewportHeight === undefined) {
-                    throw 'updatePosition() has been called before the full initialization of the view';
+                    utils.helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
                 }
 
                 newPosition = this.__normalizePosition(newPosition);
@@ -264,22 +295,57 @@ define([
             // Updates state.viewportSize and visibleCollection.state.windowSize.
             __handleResizeInternal: function () {
                 var oldViewportHeight = this.state.viewportHeight;
-                var elementHeight = this.$el.height();
+                var elementHeight = this.$el.height(),
+                    oldElementHeight = elementHeight;
                 this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
-                if (this.state.viewportHeight === oldViewportHeight) {
-                    return;
+
+                if (this.height === heightOptions.FIXED && elementHeight === 0) {
+                    utils.helpers.throwInvalidOperationError(
+                        'ListView configuration error: ' +
+                        'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
+                } else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
+                    utils.helpers.throwInvalidOperationError(
+                        'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
                 }
 
+                elementHeight = this.getElementHeight() || elementHeight;
+                this.$el.height(elementHeight);
                 var reserve = elementHeight === 0 ?
                     config.VISIBLE_COLLECTION_AUTOSIZE_RESERVE :
                     config.VISIBLE_COLLECTION_RESERVE;
-                var visibleCollectionSize = this.state.viewportHeight + reserve;
+                var collectionL = this.collection.length,
+                    viewportHeight = this.state.viewportHeight > collectionL && collectionL !== 0 ? collectionL : this.state.viewportHeight,
+                    visibleCollectionSize = viewportHeight + reserve;
+
+                if (viewportHeight === oldViewportHeight && elementHeight === oldElementHeight) {
+                    return;
+                }
+
                 this.visibleCollection.updateWindowSize(visibleCollectionSize);
 
                 this.trigger('viewportHeightChanged', this, {
                     oldViewportHeight: oldViewportHeight,
-                    viewportHeight: this.state.viewportHeight
+                    viewportHeight: viewportHeight,
+                    listViewHeight: elementHeight
                 });
+            },
+
+            getElementHeight: function () {
+                var collectionL = this.collection.length,
+                    numberOfElements,
+                    minHeight = 0;
+
+                if (this.maxRows) {
+                    numberOfElements = Math.min(this.maxRows, collectionL);
+                } else if (this.height === 'auto' && this.state.viewportHeight > collectionL) {
+                    numberOfElements = collectionL;
+                }
+
+                if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
+                    minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
+                }
+
+                return Math.max(this.childHeight * numberOfElements, minHeight);
             },
 
             __mousewheel: function (e) {
@@ -293,9 +359,6 @@ define([
                 return false;
             }
         });
-
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.ListView = ListView;
 
         return ListView;
     });

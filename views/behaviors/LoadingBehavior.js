@@ -9,10 +9,10 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Promise */
+/* global define, require, Handlebars, Backbone, Marionette, $, _, Promise */
 
-define(['core/utils/helpers', './loading/views/LoadingView'],
-    function (helpers, LoadingView) {
+define(['core/utils/helpers', './loading/views/LoadingView', 'core/services/LocalizationService'],
+    function (helpers, LoadingView, LocalizationService) {
         'use strict';
 
         return Marionette.Behavior.extend({
@@ -20,7 +20,7 @@ define(['core/utils/helpers', './loading/views/LoadingView'],
                 helpers.ensureOption(options, 'region');
 
                 this.loadingViewOptions = {
-                    text: options.text || Localizer.get('PROCESS.COMMON.DEFAULTLOADINGSMALL')
+                    text: options.text || LocalizationService.get('PROCESS.COMMON.DEFAULTLOADINGSMALL')
                 };
                 view.loading = {
                     setLoading: this.setLoading.bind(this)

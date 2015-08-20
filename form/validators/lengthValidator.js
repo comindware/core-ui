@@ -11,10 +11,10 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib'], function () {
+define(['module/lib', 'core/services/LocalizationService'], function (lib, LocalizationService) {
     'use strict';
 
-    Backbone.Form.validators.errMessages.length = Localizer.get('PROJECT.COMMON.FORM.VALIDATION.LENGTH');
+    Backbone.Form.validators.errMessages.length = LocalizationService.get('PROJECT.COMMON.FORM.VALIDATION.LENGTH');
 
     Backbone.Form.validators.length = function(options) {
         options = _.extend({

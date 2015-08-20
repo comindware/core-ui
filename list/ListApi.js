@@ -18,14 +18,18 @@ define(['./EventAggregator',
         './views/GridHeaderView',
         './views/GridView',
         './views/ListView',
+        './views/RowView',
         './views/ScrollbarView',
         './views/behaviors/ListGroupViewBehavior',
         './views/behaviors/ListItemViewBehavior',
         './views/behaviors/GridItemViewBehavior',
+        './models/LoadingRowModel',
         './models/behaviors/ListGroupBehavior',
         './models/behaviors/ListItemBehavior',
         './models/behaviors/GridItemBehavior',
+
         './factory',
+        './CellViewFactory',
         'module/lib'
     ],
     function (EventAggregator,
@@ -35,19 +39,23 @@ define(['./EventAggregator',
               GridHeaderView,
               GridView,
               ListView,
+              RowView,
               ScrollbarView,
               ListGroupViewBehavior,
               ListItemViewBehavior,
               GridItemViewBehavior,
+              LoadingRowModel,
               ListGroupBehavior,
               ListItemBehavior,
               GridItemBehavior,
-              factory) {
+              factory,
+              cellFactory) {
         'use strict';
 
         return {
             EventAggregator: EventAggregator,
             factory: factory,
+            cellFactory: cellFactory,
             views: {
                 EmptyListView: EmptyListView,
                 EmptyGridView: EmptyGridView,
@@ -55,6 +63,7 @@ define(['./EventAggregator',
                 GridHeaderView: GridHeaderView,
                 GridView: GridView,
                 ListView: ListView,
+                RowView: RowView,
                 ScrollbarView: ScrollbarView,
                 behaviors: {
                     ListGroupViewBehavior: ListGroupViewBehavior,
@@ -63,6 +72,7 @@ define(['./EventAggregator',
                 }
             },
             models: {
+                LoadingRowModel:LoadingRowModel,
                 behaviors: {
                     ListGroupBehavior: ListGroupBehavior,
                     ListItemBehavior: ListItemBehavior,

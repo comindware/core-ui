@@ -21,7 +21,7 @@ define(['module/lib',
         'use strict';
 
         var config = {
-            CHILD_HEIGHT: 30,
+            CHILD_HEIGHT: 34,
             MAX_HEIGHT: 410
         };
 
@@ -72,12 +72,6 @@ define(['module/lib',
                     valueModel.select();
                 }
 
-                if (virtualCollection.length > config.MAX_HEIGHT / config.CHILD_HEIGHT) {
-                    this.$el.css('height', config.MAX_HEIGHT);
-                } else {
-                    this.$el.css('max-height', config.MAX_HEIGHT);
-                }
-
                 var result = list.factory.createDefaultList({
                     collection: virtualCollection,
                     listViewOptions: {
@@ -86,6 +80,8 @@ define(['module/lib',
                             reqres: this.reqres,
                             displayAttribute: this.model.get('displayAttribute')
                         },
+                        maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
+                        height: 'auto',
                         childHeight: config.CHILD_HEIGHT
                     }
                 });

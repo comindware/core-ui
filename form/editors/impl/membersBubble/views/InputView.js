@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'text!../templates/input.html'],
-    function (lib, utils, template) {
+define(['module/lib', 'core/utils/utilsApi', 'text!../templates/input.html', 'core/services/LocalizationService'],
+    function (lib, utils, template, LocalizationService) {
         'use strict';
 
         var config = {
@@ -152,7 +152,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/input.html'],
 
             __updateInputPlaceholder: function () {
                 var empty = this.model.get('empty');
-                var placeholder = empty ? Localizer.get('SUITEGENERAL.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
+                var placeholder = empty ? LocalizationService.get('SUITEGENERAL.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
                 this.__updateInputWidth(this.__calculateDesiredInputWidth(placeholder));
                 this.ui.input.attr({'placeholder': placeholder}).toggleClass(classes.EMPTY, empty);
             }

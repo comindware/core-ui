@@ -58,8 +58,5 @@ define([ 'module/lib' ],
             }
         });
 
-        var behaviors = window.ClassLoader.createNS("shared.models.behaviors");
-        behaviors.CollapsibleBehavior = CollapsibleBehavior;
-
         return CollapsibleBehavior;
     });

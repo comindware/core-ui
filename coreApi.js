@@ -14,6 +14,7 @@
 define([
         './utils/utilsApi',
         './dropdown/dropdownApi',
+        './meta',
         './list/listApi',
         './form/formApi',
         './serviceLocator',
@@ -24,24 +25,31 @@ define([
         './services/RoutingService',
         './services/UrlService',
         './services/ModuleService',
+        './services/MessageService',
         './services/WindowService',
         './services/GlobalEventService',
+        './services/LocalizationService',
+        './services/AjaxService',
+        './services/SecurityService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
         './collections/behaviors/BluebirdCollectionBehavior',
-
         './models/behaviors/CollapsibleBehavior',
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
         './models/behaviors/BluebirdModelBehavior',
-	
-        './views/behaviors/LoadingBehavior'
+        './views/behaviors/LoadingBehavior',
+
+        './views/SearchBarView',
+
+        './Bootstrapper'
     ],
     function (
         utilsApi,
         dropdownApi,
+        meta,
         listApi,
         formApi,
         serviceLocator,
@@ -52,8 +60,12 @@ define([
         RoutingService,
         UrlService,
         ModuleService,
+        MessageService,
         WindowService,
         GlobalEventService,
+        LocalizationService,
+        AjaxService,
+        SecurityService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -65,7 +77,11 @@ define([
         SelectableBehavior,
         BluebirdModelBehavior,
 	
-        LoadingBehavior
+        LoadingBehavior,
+
+        SearchBarView,
+
+        Bootstrapper
     ) {
         'use strict';
 
@@ -95,7 +111,11 @@ define([
                 RoutingService: RoutingService,
                 UrlService: UrlService,
                 ModuleService: ModuleService,
-                WindowService: WindowService
+                MessageService: MessageService,
+                WindowService: WindowService,
+                LocalizationService: LocalizationService,
+                AjaxService: AjaxService,
+                SecurityService: SecurityService
             },
             /**
              * Backbone-коллекции общего назначения
@@ -128,7 +148,8 @@ define([
             views: {
                 behaviors: {
                     LoadingBehavior: LoadingBehavior
-                }
+                },
+                SearchBarView: SearchBarView
             },
             /**
              * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
@@ -139,7 +160,9 @@ define([
             form: formApi,
             list: listApi,
             utils: utilsApi,
-            serviceLocator: serviceLocator
+            meta: meta,
+            serviceLocator: serviceLocator,
+            bootstrapper: Bootstrapper
         };
         return exports;
     });

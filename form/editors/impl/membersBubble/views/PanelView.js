@@ -41,7 +41,9 @@ define(['core/list/listApi', './ListItemView', 'text!../templates/panel.html'],
                         childViewOptions: {
                             reqres: this.reqres
                         },
-                        childHeight: config.CHILD_HEIGHT
+                        childHeight: config.CHILD_HEIGHT,
+                        height: 'auto',
+                        maxRows: 12
                     }
                 });
                 this.listRegion.show(this.availableList.listView);

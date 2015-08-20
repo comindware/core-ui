@@ -11,20 +11,21 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
-    function (template, BaseItemEditorView) {
+define(['text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService'],
+    function (template, BaseItemEditorView, LocalizationService) {
         'use strict';
 
         var changeMode = {
-            blur: 'blur',
-            keydown: 'keydown'
+            blur: 'change',
+            keydown: 'keydown',
+            input: 'input'
         };
 
         var defaultOptions = {
             changeMode: 'blur',
-            emptyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-            readonlyPlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.READONLYPLACEHOLDER'),
-            disablePlaceholder: Localizer.get('CORE.FORM.EDITORS.TEXTEDITOR.DISABLEPLACEHOLDER'),
+            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+            readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.READONLYPLACEHOLDER'),
+            disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false
         };
@@ -57,7 +58,8 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView'],
 
             events: {
                 'keyup @ui.input': '__keyup',
-                'change @ui.input': '__change'
+                'change @ui.input': '__change',
+                'input @ui.input': '__change'
             },
 
             __keyup: function () {

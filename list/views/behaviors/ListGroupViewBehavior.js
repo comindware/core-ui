@@ -52,8 +52,5 @@ define(['module/lib'],
             }
         });
 
-        var behaviors = window.ClassLoader.createNS("shared.list.views.behaviors");
-        behaviors.ListGroupViewBehavior = ListGroupViewBehavior;
-
         return ListGroupViewBehavior;
     });

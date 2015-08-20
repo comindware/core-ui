@@ -20,8 +20,8 @@
 *
 * */
 
-define([],
-    function () {
+define(['core/meta'],
+    function (meta) {
         'use strict';
 
         var stringComparator2Asc = function (a, b) {
@@ -50,6 +50,88 @@ define([],
             return 0;
         };
 
+        var numberComparator2Asc = function (a, b) {
+            return a - b;
+        };
+
+        var numberComparator2Desc = function (a, b) {
+            return b - a;
+        };
+
+        var durationComparator2Asc = function (a, b) {
+            // TODO: fix me!
+            return a - b;
+        };
+
+        var durationComparator2Desc = function (a, b) {
+            // TODO: fix me!
+            return b - a;
+        };
+
+        var booleanComparator2Asc = function (a, b) {
+            // true goes first
+            return a ? (b ? 0 : -1) : (b ? 1 : 0);
+        };
+
+        var dateComparator2Asc = function (a, b) {
+            return a - b;
+        };
+
+        var dateComparator2Desc = function (a, b) {
+            return b - a;
+        };
+
+        var booleanComparator2Desc = function (a, b) {
+            return a ? (b ? 0 : 1) : (b ? -1 : 0);
+        };
+
+        var referenceComparator2Asc = function(a, b) {
+            var effectiveA = a ? a.name ? a.name : "" : "";
+            var effectiveB = b ? b.name ? b.name : "" : "";
+            return stringComparator2Asc(effectiveA, effectiveB);
+        };
+
+        var referenceComparator2Desc = function(a, b) {
+            var effectiveA = a ? a.name ? a.name : "" : "";
+            var effectiveB = b ? b.name ? b.name : "" : "";
+            return stringComparator2Desc(effectiveA, effectiveB);
+        };
+
+        var getComparatorByDataType = function (dataType, sorting) {
+            var comparator,
+                isDesc = sorting === 'desc';
+            switch (dataType) {
+            case meta.objectPropertyTypes.STRING:
+                comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
+                break;
+            case meta.objectPropertyTypes.DOUBLE:
+            case meta.objectPropertyTypes.INTEGER:
+            case meta.objectPropertyTypes.DECIMAL:
+                comparator = isDesc ? numberComparator2Desc : numberComparator2Asc;
+                break;
+            case meta.objectPropertyTypes.DURATION:
+                comparator = isDesc ? durationComparator2Desc : durationComparator2Asc;
+                break;
+            case meta.objectPropertyTypes.DATETIME:
+                comparator = isDesc ? dateComparator2Desc : dateComparator2Asc;
+                break;
+            case meta.objectPropertyTypes.BOOLEAN:
+                comparator = isDesc ? booleanComparator2Desc : booleanComparator2Asc;
+                break;
+            case meta.objectPropertyTypes.ACCOUNT:
+            case meta.objectPropertyTypes.INSTANCE:
+            case meta.objectPropertyTypes.DOCUMENT:
+            case meta.objectPropertyTypes.ENUM:
+                comparator = isDesc ? referenceComparator2Desc : referenceComparator2Asc;
+                break;
+            default:
+                comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
+                break;
+            }
+
+            return comparator;
+        };
+
         return {
             stringComparator1: function (a) {
                 return a;
@@ -67,46 +149,14 @@ define([],
             {
                 return b - a;
             },
-            numberComparator2Asc: function (a, b)
-            {
-                return a - b;
-            },
-            numberComparator2Desc: function (a, b)
-            {
-                return b - a;
-            },
-            durationComparator2Asc: function (a, b)
-            {
-                // TODO: fix me!
-                return a - b;
-            },
-            durationComparator2Desc: function (a, b)
-            {
-                // TODO: fix me!
-                return b - a;
-            },
-            booleanComparator2Asc: function (a, b)
-            {
-                // true goes first
-                return a ? (b ? 0 : -1) : (b ? 1 : 0);
-            },
-
-            booleanComparator2Desc: function (a, b)
-            {
-                return a ? (b ? 0 : 1) : (b ? -1 : 0);
-            },
-
-            referenceComparator2Asc: function(a, b) {
-                var effectiveA = a ? a.name ? a.name : "" : "";
-                var effectiveB = b ? b.name ? b.name : "" : "";
-                return stringComparator2Asc(effectiveA, effectiveB);
-            },
-
-            referenceComparator2Desc: function(a, b) {
-                var effectiveA = a ? a.name ? a.name : "" : "";
-                var effectiveB = b ? b.name ? b.name : "" : "";
-                return stringComparator2Desc(effectiveA, effectiveB);
-            },
-
+            numberComparator2Asc: numberComparator2Asc,
+            numberComparator2Desc: numberComparator2Desc,
+            durationComparator2Asc: durationComparator2Asc,
+            durationComparator2Desc: durationComparator2Desc,
+            booleanComparator2Asc: booleanComparator2Asc,
+            booleanComparator2Desc: booleanComparator2Desc,
+            referenceComparator2Asc: referenceComparator2Asc,
+            referenceComparator2Desc: referenceComparator2Desc,
+            getComparatorByDataType: getComparatorByDataType
         };
     });

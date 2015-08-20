@@ -345,8 +345,5 @@ define(['text!core/list/templates/scrollbar.html', 'module/lib'],
             }
         });
 
-        var ns = window.ClassLoader.createNS("shared.list.views");
-        ns.ScrollbarView = ScrollbarView;
-
         return ScrollbarView;
     });
