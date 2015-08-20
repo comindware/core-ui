@@ -35,11 +35,9 @@ define([
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
         './collections/behaviors/HighlightableBehavior',
-        './collections/behaviors/BluebirdCollectionBehavior',
         './models/behaviors/CollapsibleBehavior',
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
-        './models/behaviors/BluebirdModelBehavior',
         './views/behaviors/LoadingBehavior',
 
         './views/SearchBarView',
@@ -70,12 +68,10 @@ define([
         SlidingWindowCollection,
         VirtualCollection,
         CollectionHighlightableBehavior,
-        BluebirdCollectionBehavior, 
 
         CollapsibleBehavior,
         HighlightableBehavior,
         SelectableBehavior,
-        BluebirdModelBehavior,
 	
         LoadingBehavior,
 
@@ -127,8 +123,7 @@ define([
                  * @namespace
                  * */
                 behaviors: {
-                    HighlightableBehavior: CollectionHighlightableBehavior,
-                    BluebirdCollectionBehavior: BluebirdCollectionBehavior
+                    HighlightableBehavior: CollectionHighlightableBehavior
                 },
                 SlidingWindowCollection: SlidingWindowCollection,
                 VirtualCollection: VirtualCollection
@@ -141,8 +136,7 @@ define([
                 behaviors: {
                     CollapsibleBehavior: CollapsibleBehavior,
                     HighlightableBehavior: HighlightableBehavior,
-                    SelectableBehavior: SelectableBehavior,
-                    BluebirdModelBehavior: BluebirdModelBehavior
+                    SelectableBehavior: SelectableBehavior
                 }
             },
             views: {
