@@ -50,7 +50,12 @@ define([
 
         __createViewModel: function () {
             this.viewModel = new Backbone.Model();
-            this.viewModel.set('availableMembers', membersFactory.createMembersCollection());
+            var membersCollection = membersFactory.createMembersCollection();
+            this.viewModel.set('availableMembers', membersCollection);
+            this.viewModel.set('membersByUserName', membersCollection.reduce(function (memo, value) {
+                memo[value.get('userName')] = value;
+                return memo;
+            }, {}));
         },
 
         template: Handlebars.compile(template),
@@ -86,6 +91,7 @@ define([
             this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
             this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
             this.listenTo(this.dropdownView, 'button:input', this.__onInput);
+            this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
             _.each(this.keyboardShortcuts, function (v, k) {
                 this.dropdownView.button.addKeyboardListener(k, v.bind(this));
             }, this);
@@ -154,6 +160,11 @@ define([
             }
         },
 
+        __onMemberSelect: function () {
+            this.__updateMentionInText();
+            this.dropdownView.close();
+        },
+
         __updateMentionInText: function () {
             var selectedMember = this.viewModel.get('availableMembers').selected;
             if (!selectedMember) {
@@ -173,20 +184,28 @@ define([
                 text.substring(this.mentionState.end);
             editor.setValue(updatedText);
             editor.setCaretPos(this.mentionState.start + mention.length);
+            this.value = updatedText;
+            this.__triggerChange();
         },
 
         getMentions: function () {
             var text = this.getValue();
             var regex = /(?:\s|^)@([a-z0-9_\.]+)/gi;
+            var members = this.viewModel.get('membersByUserName');
 
+            var result = [];
             while (true) {
                 var matches = regex.exec(text);
                 if (!matches) {
                     break;
                 }
                 var userName = matches[1];
-                debugger;
+                var member = members[userName];
+                if (member) {
+                    result.push(member.id);
+                }
             }
+            return _.uniq(result);
         },
 
         setValue: function (value) {
