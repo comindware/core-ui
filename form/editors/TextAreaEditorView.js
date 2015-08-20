@@ -11,8 +11,16 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService' ],
-    function (template, BaseItemEditorView, LocalizationService) {
+define(['text!./templates/textAreaEditor.html',
+        './base/BaseItemEditorView',
+        'core/services/LocalizationService',
+        'module/lib',
+        'core/utils/utilsApi' ],
+    function (template,
+              BaseItemEditorView,
+              LocalizationService,
+              lib,
+              utilsApi) {
         'use strict';
 
         var changeMode = {
@@ -72,6 +80,31 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
+            onRender: function () {
+                // Keyboard shortcuts listener
+                if (this.keyListener) {
+                    this.keyListener.reset();
+                }
+                this.keyListener = new lib.keypress.Listener(this.ui.textarea[0]);
+                _.each(this.keyboardShortcuts, function (value, key)
+                {
+                    var keys = key.split(',');
+                    _.each(keys, function (k) {
+                        this.keyListener.simple_combo(k, value.bind(this));
+                    }, this);
+                }, this);
+            },
+
+            addKeyboardListener: function (key, callback) {
+                if (!this.keyListener) {
+                    utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+                }
+                var keys = key.split(',');
+                _.each(keys, function (k) {
+                    this.keyListener.simple_combo(k, callback);
+                }, this);
+            },
+
             onShow: function () {
                 this.setMaxHeight();
                 this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
@@ -124,6 +157,10 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
+            setCaretPos: function (position) {
+                this.ui.textarea.caret(position, position);
+            },
+
             setValue: function (value) {
                 this.__value(value, true, false);
             },
@@ -138,10 +175,6 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 if (this.options.changeMode === changeMode.keydown) {
                     this.__value(this.ui.textarea.val(), false, true);
                 }
-            },
-
-            __keyup: function () {
-                this.__triggerInput();
             },
 
             __triggerInput: function () {

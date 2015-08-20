@@ -38,6 +38,7 @@ define([
                 members.push({
                     id: model.Id,
                     name: (model.Text || model.Username),
+                    userName: model.Username,
                     abbreviation: model.abbreviation,
                     avatarUrl: model.userpicUrl,
                     link: model.link

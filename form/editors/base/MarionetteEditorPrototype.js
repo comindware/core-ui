@@ -127,7 +127,7 @@ define([
                     },
 
                     __triggerChange: function () {
-                        this.trigger('change', this);
+                        this.trigger.apply(this, [ 'change', this].concat(arguments));
                     },
 
                     /**

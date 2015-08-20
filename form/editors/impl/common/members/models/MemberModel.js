@@ -27,8 +27,10 @@ define([
             },
 
             matchText: function (text) {
-                var modelName = this.get('name');
-                return modelName && modelName.toLowerCase().indexOf(text) !== -1;
+                var name = this.get('name');
+                var userName = this.get('userName');
+                return (name && name.toLowerCase().indexOf(text) !== -1) ||
+                       (userName && userName.toLowerCase().indexOf(text) !== -1);
             }
         });
     });

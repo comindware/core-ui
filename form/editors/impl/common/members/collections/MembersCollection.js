@@ -33,6 +33,7 @@ define([
 
                 if(!text) {
                     this.filter(null);
+                    this.selectFirst();
                     return;
                 }
                 text = text.toLowerCase();
