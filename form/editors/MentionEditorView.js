@@ -99,16 +99,22 @@ define([
 
         keyboardShortcuts: {
             'up': function () {
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
                 this.__sendPanelCommand('up');
                 this.__updateMentionInText();
             },
             'down': function () {
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
                 this.__sendPanelCommand('down');
                 this.__updateMentionInText();
             },
             'enter,num_enter': function () {
                 if (!this.dropdownView.isOpen) {
-                    return;
+                    return true;
                 }
                 this.__updateMentionInText();
                 this.dropdownView.close();

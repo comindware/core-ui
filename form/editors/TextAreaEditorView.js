@@ -86,13 +86,6 @@ define(['text!./templates/textAreaEditor.html',
                     this.keyListener.reset();
                 }
                 this.keyListener = new lib.keypress.Listener(this.ui.textarea[0]);
-                _.each(this.keyboardShortcuts, function (value, key)
-                {
-                    var keys = key.split(',');
-                    _.each(keys, function (k) {
-                        this.keyListener.simple_combo(k, value.bind(this));
-                    }, this);
-                }, this);
             },
 
             addKeyboardListener: function (key, callback) {
