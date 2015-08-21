@@ -29,6 +29,7 @@ define([
             SETTINGS_ROLES: 'module:settings:roles',
 
             MYTASKS: 'module:myTasks',
+            MYTASKS_DESIGNER: 'module:myTasks:formDesigner',
             PEOPLE_USERS: 'module:people:users',
             DEMO_CORE: 'module:demo:core',
 
