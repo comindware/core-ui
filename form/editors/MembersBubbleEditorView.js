@@ -227,6 +227,7 @@ define([
                     return;    
                 }
                 this.__applyFilter();
+                availableModels.deselect();
                 availableModels.remove(selectedModel);
                 selectedModels.add(selectedModel, {at: selectedModels.length - 1});
                 availableModels.selectFirst();
