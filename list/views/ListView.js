@@ -300,13 +300,12 @@ define([
                 utils.helpers.setUniqueTimeout(this.handleResizeUniqueId, this.__handleResizeInternal.bind(this), 100);
             },
 
-            // Updates state.viewportSize and visibleCollection.state.windowSize.
+            // Updates state.viewportHeight and visibleCollection.state.windowSize.
             __handleResizeInternal: function () {
                 var oldViewportHeight = this.state.viewportHeight;
-                var elementHeight = this.$el.height(),
-                    oldElementHeight = elementHeight;
-                this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
+                var elementHeight = this.$el.height();
 
+                // Checking options consistency
                 if (this.height === heightOptions.FIXED && elementHeight === 0) {
                     utils.helpers.throwInvalidOperationError(
                         'ListView configuration error: ' +
@@ -316,44 +315,38 @@ define([
                         'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
                 }
 
-                elementHeight = this.getElementHeight() || elementHeight;
-                this.$el.height(elementHeight);
-                var reserve = elementHeight === 0 ?
-                    config.VISIBLE_COLLECTION_AUTOSIZE_RESERVE :
-                    config.VISIBLE_COLLECTION_RESERVE;
-                var collectionL = this.collection.length,
-                    viewportHeight = this.state.viewportHeight > collectionL && collectionL !== 0 ? collectionL : this.state.viewportHeight,
-                    visibleCollectionSize = viewportHeight + reserve;
+                // Computing new elementHeight and viewportHeight
+                var adjustedElementHeight = this.getAdjustedElementHeight(elementHeight);
+                this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
+                var visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE;
 
-                if (viewportHeight === oldViewportHeight && elementHeight === oldElementHeight) {
+                // Applying the result of computation
+                if (this.state.viewportHeight === oldViewportHeight && adjustedElementHeight === elementHeight) {
+                    // nothing changed
                     return;
                 }
 
+                this.$el.height(adjustedElementHeight);
                 this.visibleCollection.updateWindowSize(visibleCollectionSize);
 
                 this.trigger('viewportHeightChanged', this, {
                     oldViewportHeight: oldViewportHeight,
-                    viewportHeight: viewportHeight,
-                    listViewHeight: elementHeight
+                    viewportHeight: this.state.viewportHeight,
+                    listViewHeight: adjustedElementHeight
                 });
             },
 
-            getElementHeight: function () {
-                var collectionL = this.collection.length,
-                    numberOfElements,
-                    minHeight = 0;
-
-                if (this.maxRows) {
-                    numberOfElements = Math.min(this.maxRows, collectionL);
-                } else if (this.height === 'auto' && this.state.viewportHeight > collectionL) {
-                    numberOfElements = collectionL;
+            getAdjustedElementHeight: function (elementHeight) {
+                if (this.height !== heightOptions.AUTO) {
+                    return elementHeight;
                 }
 
+                var computedViewportHeight = Math.min(this.maxRows, this.collection.length);
+                var minHeight = 0;
                 if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
                     minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
                 }
-
-                return Math.max(this.childHeight * numberOfElements, minHeight);
+                return Math.max(this.childHeight * computedViewportHeight, minHeight);
             },
 
             __mousewheel: function (e) {
