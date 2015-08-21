@@ -15,11 +15,13 @@ define(['text!./templates/textAreaEditor.html',
         './base/BaseItemEditorView',
         'core/services/LocalizationService',
         'module/lib',
+        'core/utils/keyCode',
         'core/utils/utilsApi' ],
     function (template,
               BaseItemEditorView,
               LocalizationService,
               lib,
+              keyCode,
               utilsApi) {
         'use strict';
 
@@ -168,6 +170,26 @@ define(['text!./templates/textAreaEditor.html',
                 if (this.options.changeMode === changeMode.keydown) {
                     this.__value(this.ui.textarea.val(), false, true);
                 }
+            },
+
+            __keyup: function (e) {
+                if ([
+                    keyCode.LEFT,
+                    keyCode.RIGHT,
+                    keyCode.HOME,
+                    keyCode.END,
+                ].indexOf(e.keyCode) === -1) {
+                    return;
+                }
+
+                var caret = this.ui.textarea.caret();
+                if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
+                    return;
+                }
+
+                this.oldCaret = caret;
+                var text = this.ui.textarea.val();
+                this.trigger('caretChange', text, caret);
             },
 
             __triggerInput: function () {

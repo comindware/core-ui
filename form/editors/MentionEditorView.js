@@ -91,6 +91,7 @@ define([
             this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
             this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
             this.listenTo(this.dropdownView, 'button:input', this.__onInput);
+            this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
             this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
             _.each(this.keyboardShortcuts, function (v, k) {
                 this.dropdownView.button.addKeyboardListener(k, v.bind(this));
@@ -141,7 +142,7 @@ define([
             // 1. Open dropdown when: @ is immediately before caret, @ is at start or prepended by whitespace
             // 2. Maintain dropdown open (and filter the list) when: text between caret and @ matches username pattern [a-zA-Z0-9_\.]
             // 3. Hide dropdown when: username text doesn't match
-            // 4. TODO: track caret change and hide dropdown if resulting username patters doesn't match
+            // 4. track caret change and hide dropdown if resulting username patters doesn't match
             // 5. hide dropdown on blur
 
             var leftFragment = text.substring(0, caret.end);
@@ -166,6 +167,12 @@ define([
             }
         },
 
+        __onCaretChange: function (text, caret) {
+            if (this.dropdownView.isOpen) {
+                this.__onInput(text, caret);
+            }
+        },
+
         __onMemberSelect: function () {
             this.__updateMentionInText();
             this.dropdownView.close();
@@ -181,7 +188,7 @@ define([
             var text = this.mentionState.text;
 
             var mention = selectedMember.get('userName') || '';
-            if (mention && !text.match(/^\s/)) {
+            if (mention && !text.substring(this.mentionState.end).match(/^\s/)) {
                 mention += ' ';
             }
 
