@@ -15,8 +15,8 @@
 * HtmlHelpers contains methods that somehow modify dom elements or generate html.
 *
 * */
-define(['module/lib'],
-    function () {
+define(['module/lib', 'core/serviceLocator'],
+    function (lib, serviceLocator) {
         'use strict';
 
         var htmlHelpers = {
@@ -28,6 +28,9 @@ define(['module/lib'],
             * */
             highlightText: function (text, fragment, escape)
             {
+                if (!text) {
+                    return '';
+                }
                 if (escape || escape === undefined) {
                     text = Handlebars.Utils.escapeExpression(text);
                 }
@@ -47,6 +50,35 @@ define(['module/lib'],
                 }
 
                 return output;
+            },
+
+            highlightMentions: function (text, escape)
+            {
+                if (!text) {
+                    return '';
+                }
+                if (escape || escape === undefined) {
+                    text = Handlebars.Utils.escapeExpression(text);
+                }
+
+                var membersByUserName = _.reduce(serviceLocator.cacheService.GetUsers(), function (memo, value) {
+                    if (value.Username) {
+                        //noinspection JSUnresolvedVariable
+                        memo[value.Username] = value;
+                    }
+                    return memo;
+                }, {});
+                var regex = /(\s|^)@([a-z0-9_\.]+)/gi;
+
+                return text.replace(regex, function(fragment, whitespace, userName) {
+                    var member = membersByUserName[userName];
+                    if (member) {
+                        //noinspection JSUnresolvedVariable
+                        return whitespace + '<a href="' + member.link + '" title="' + (member.FullName || '') + '">@' + member.Username + '</a>';
+                    } else {
+                        return fragment;
+                    }
+                });
             },
 
             isElementInDom: function (el) {

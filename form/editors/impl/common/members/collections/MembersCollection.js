@@ -25,6 +25,29 @@ define([
                 utils.helpers.applyBehavior(this, HighlightableBehavior);
             },
 
-            model: MemberModel
+            model: MemberModel,
+
+            applyTextFilter: function (text) {
+                this.deselect();
+                this.unhighlight();
+
+                if(!text) {
+                    this.filter(null);
+                    this.selectFirst();
+                    return;
+                }
+                text = text.toLowerCase();
+                this.filter(function (model) {
+                    return model.matchText(text);
+                });
+                this.highlight(text);
+                this.selectFirst();
+            },
+
+            selectFirst: function () {
+                if (this.length > 0) {
+                    this.at(0).select();
+                }
+            }
         });
     });
