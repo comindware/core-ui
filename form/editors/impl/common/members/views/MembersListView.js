@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['core/list/listApi', './ListItemView', 'text!../templates/panel.html'],
-    function (list, ListItemView, template) {
+define(['core/list/listApi', 'core/utils/utilsApi', './MembersListItemView', 'text!../templates/panel.html'],
+    function (list, utils, ListItemView, template) {
         'use strict';
 
         var config = {
@@ -21,9 +21,9 @@ define(['core/list/listApi', './ListItemView', 'text!../templates/panel.html'],
 
         return Marionette.LayoutView.extend({
             initialize: function (options) {
-                this.reqres = options.reqres;
-                this.collection = this.model.get('available');
+                utils.helpers.ensureOption(options, 'collection');
             },
+
             template: Handlebars.compile(template),
 
             className: 'dev-members-container',
@@ -34,7 +34,7 @@ define(['core/list/listApi', './ListItemView', 'text!../templates/panel.html'],
             },
 
             onShow: function () {
-                this.availableList = list.factory.createDefaultList({
+                this.listBundle = list.factory.createDefaultList({
                     collection: this.collection,
                     listViewOptions: {
                         childView: ListItemView,
@@ -46,17 +46,22 @@ define(['core/list/listApi', './ListItemView', 'text!../templates/panel.html'],
                         maxRows: 12
                     }
                 });
-                this.listRegion.show(this.availableList.listView);
-                this.scrollbarRegion.show(this.availableList.scrollbarView);
+
+                this.listenTo(this.listBundle.listView, 'childview:member:select', function (view, model) {
+                    this.trigger('member:select', model);
+                }.bind(this));
+
+                this.listRegion.show(this.listBundle.listView);
+                this.scrollbarRegion.show(this.listBundle.scrollbarView);
             },
 
             handleCommand: function(command, options) {
                 switch (command) {
                 case 'up':
-                    this.availableList.listView.moveCursorBy(-1, false);
+                    this.listBundle.listView.moveCursorBy(-1, false);
                     break;
                 case 'down':
-                    this.availableList.listView.moveCursorBy(1, false);
+                    this.listBundle.listView.moveCursorBy(1, false);
                     break;
                 }
             }

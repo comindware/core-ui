@@ -18,11 +18,11 @@ define([
         'core/serviceLocator',
         'text!./templates/membersBubbleEditor.html',
         './base/BaseLayoutEditorView',
-        './impl/membersBubble/models/MemberModel',
+        './impl/common/members/models/MemberModel',
         './impl/membersBubble/models/FakeInputModel',
-        './impl/membersBubble/collection/MembersCollection',
+        './impl/common/members/collections/MembersCollection',
         './impl/membersBubble/views/ButtonView',
-        './impl/membersBubble/views/PanelView'
+        './impl/common/members/services/factory'
     ],
     function (
         lib,
@@ -35,7 +35,7 @@ define([
         FakeInputModel,
         MembersCollection,
         ButtonView,
-        PanelView
+        factory
     ) {
 
         'use strict';
@@ -91,15 +91,15 @@ define([
                         reqres: this.reqres,
                         enabled: this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember
                     },
-                    panelView: PanelView,
+                    panelView: factory.getMembersListView(),
                     panelViewOptions: {
-                        model: this.viewModel,
-                        reqres: this.reqres
+                        collection: this.viewModel.get('available')
                     },
                     autoOpen: false
                 });
                 this.dropdownRegion.show(this.dropdownView);
                 this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
+                this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
             },
 
             setValue: function (value) {
@@ -115,25 +115,11 @@ define([
             },
 
             __applyFilter: function (value) {
-                var collection = this.viewModel.get('available');
-                collection.deselect();
-                collection.unhighlight();
-
-                if(!value) {
-                    collection.filter(null);
-                    return;
-                }
-                value = value.toLowerCase();
-                collection.filter(function (model) {
-                    var modelName = model.get('name');
-                    return modelName && modelName.toLowerCase().indexOf(value) !== -1;
-                });
-                collection.highlight(value);
+                this.viewModel.get('available').applyTextFilter(value);
             },
 
             __onInputSearch: function (value) {
                 this.__applyFilter(value);
-                this.__selectFirstMember(this.viewModel.get('available'));
                 this.__onButtonClick();
             },
 
@@ -156,14 +142,8 @@ define([
             },
 
             __onDropdownOpen: function () {
-                this.__selectFirstMember(this.viewModel.get('available'));
+                this.viewModel.get('available').selectFirst();
                 this.__focusButton();
-            },
-
-            __selectFirstMember: function (collection) {
-                if (collection.models.length !== 0) {
-                    collection.models[0].select();
-                }
             },
 
             __onButtonClick: function () {
@@ -180,21 +160,14 @@ define([
 
             __createViewModel: function () {
                 this.viewModel = new Backbone.Model();
-                var users = serviceLocator.cacheService.GetUsers();
-                var members = {};
 
-                _.each(users, function(model) {
-                    //noinspection JSUnresolvedVariable
-                    members[model.Id] = {
-                        id: model.Id,
-                        name: (model.Text || model.Username),
-                        abbreviation: model.abbreviation,
-                        userpicUrl: model.userpicUrl,
-                        link: model.link
-                    };
-                });
+                var membersCollection = factory.createMembersCollection();
+                var members = membersCollection.reduce(function (memo, model) {
+                    memo[model.id] = model.toJSON();
+                    return memo;
+                }, {});
+
                 this.viewModel.set('members', members);
-
                 var availableModels = new MembersCollection(new Backbone.Collection([], {
                     model: MemberModel
                 }), {
@@ -256,7 +229,7 @@ define([
                 this.__applyFilter();
                 availableModels.remove(selectedModel);
                 selectedModels.add(selectedModel, {at: selectedModels.length - 1});
-                this.__selectFirstMember(availableModels);
+                availableModels.selectFirst();
 
                 this.value = this.getValue().concat(selectedModel.get('id'));
                 this.__triggerChange();

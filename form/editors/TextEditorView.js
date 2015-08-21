@@ -16,8 +16,9 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/s
         'use strict';
 
         var changeMode = {
-            blur: 'blur',
-            keydown: 'keydown'
+            blur: 'change',
+            keydown: 'keydown',
+            input: 'input'
         };
 
         var defaultOptions = {
@@ -57,7 +58,8 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/s
 
             events: {
                 'keyup @ui.input': '__keyup',
-                'change @ui.input': '__change'
+                'change @ui.input': '__change',
+                'input @ui.input': '__change'
             },
 
             __keyup: function () {

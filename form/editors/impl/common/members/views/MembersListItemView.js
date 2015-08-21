@@ -16,7 +16,6 @@ define(['module/lib', 'core/list/listApi', 'core/utils/utilsApi', 'text!../templ
         'use strict';
         return Marionette.ItemView.extend({
             initialize: function (options) {
-                this.reqres = options.reqres;
             },
 
             template: Handlebars.compile(template),
@@ -32,11 +31,11 @@ define(['module/lib', 'core/list/listApi', 'core/utils/utilsApi', 'text!../templ
             },
 
             events: {
-              'click': '__select'
+                'click': '__select'
             },
 
-            __select: function (model) {
-                this.reqres.request('member:select', model);
+            __select: function () {
+                this.trigger('member:select', this.model);
             },
 
             onHighlighted: function (fragment) {

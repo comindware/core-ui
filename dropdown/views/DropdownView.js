@@ -32,6 +32,7 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
 
         var defaultOptions = {
             autoOpen: true,
+            renderAfterClose: true,
             panelPosition: panelPosition.DOWN
         };
 
@@ -116,7 +117,8 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                     this.currentPosition = this.currentPosition === panelPosition.UP ? panelPosition.DOWN : panelPosition.DOWN_OVER;
                     this.updatePositionClasses();
                 } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) &&
-                    viewportHeight - panelTopOffset < panelHeight || (this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER)) {
+                            viewportHeight - panelTopOffset < panelHeight ||
+                            (this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER)) {
                     this.currentPosition = this.currentPosition === panelPosition.DOWN_OVER ? panelPosition.UP_OVER : panelPosition.UP;
                     this.updatePositionClasses();
                 }
@@ -174,7 +176,9 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                         }
                         
                         this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
-                        this.render();
+                        if (this.options.renderAfterClose) {
+                            this.render();
+                        }
                     }.bind(this)
                 });
             },

@@ -72,7 +72,8 @@ define([
                 }
 
                 if (options.childHeight === undefined) {
-                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - outer height for childView view (in pixels).');
+                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - ' +
+                        'outer height for childView view (in pixels).');
                 }
 
                 _.bindAll(this, '__handleResize');
@@ -80,7 +81,12 @@ define([
                 this.$window = $(window);
                 this.$window.on('resize', this.__handleResize);
 
-                options.childViewOptions && (this.childViewOptions = options.childViewOptions); // jshint ignore:line
+                this.__createReqres();
+
+                this.childViewOptions = _.extend(options.childViewOptions || {}, {
+                    internalListViewReqres: this.internalReqres
+                });
+
                 options.emptyView && (this.emptyView = options.emptyView); // jshint ignore:line
                 options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
                 options.childView && (this.childView = options.childView); // jshint ignore:line
@@ -132,20 +138,13 @@ define([
                     loadingChildView: this.loadingChildView
                 });
 
-                this.listenTo(this.visibleCollectionView, 'childview:click', function (child) {
-                    this.trigger('row:click', child.model);
-                });
-
-                this.listenTo(this.visibleCollectionView, 'childview:dblclick', function (child) {
-                    this.trigger('row:dblclick', child.model);
-                });
                 this.visibleCollectionRegion.show(this.visibleCollectionView);
                 this.__handleResizeInternal();
             },
             
             onRender: function () {
-                //utils.htmlHelpers.forbidSelection(this.el);
-                //this.__assignKeyboardShortcuts();
+                utils.htmlHelpers.forbidSelection(this.el);
+                this.__assignKeyboardShortcuts();
             },
 
             keyboardShortcuts: {
@@ -169,6 +168,15 @@ define([
                 'end': function (e) {
                     this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
                 }
+            },
+
+            __createReqres: function () {
+                this.internalReqres = new Backbone.Wreqr.RequestResponse();
+                this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+            },
+
+            __handleChildViewEvent: function (view, eventName, eventArguments) {
+                this.trigger.apply(this, [ 'childview:' + eventName, view ].concat(eventArguments));
             },
 
             __moveCursorTo: function (newCursorIndex, shiftPressed)
@@ -291,60 +299,53 @@ define([
                 utils.helpers.setUniqueTimeout(this.handleResizeUniqueId, this.__handleResizeInternal.bind(this), 100);
             },
 
-            // Updates state.viewportSize and visibleCollection.state.windowSize.
+            // Updates state.viewportHeight and visibleCollection.state.windowSize.
             __handleResizeInternal: function () {
                 var oldViewportHeight = this.state.viewportHeight;
-                var elementHeight = this.$el.height(),
-                    oldElementHeight = elementHeight;
-                this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
+                var elementHeight = this.$el.height();
 
-                //if (this.height === heightOptions.FIXED && elementHeight === 0) {
-                //    utils.helpers.throwInvalidOperationError(
-                //        'ListView configuration error: ' +
-                //        'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
-                //} else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
-                //    utils.helpers.throwInvalidOperationError(
-                //        'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
-                //}
+                // Checking options consistency
+                if (this.height === heightOptions.FIXED && elementHeight === 0) {
+                    utils.helpers.throwInvalidOperationError(
+                        'ListView configuration error: ' +
+                        'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
+                } else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
+                    utils.helpers.throwInvalidOperationError(
+                        'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
+                }
 
-                elementHeight = this.getElementHeight() || elementHeight;
-                this.$el.height(elementHeight);
-                var reserve = elementHeight === 0 ?
-                    config.VISIBLE_COLLECTION_AUTOSIZE_RESERVE :
-                    config.VISIBLE_COLLECTION_RESERVE;
-                var collectionL = this.collection.length,
-                    viewportHeight = this.state.viewportHeight > collectionL && collectionL !== 0 ? collectionL : this.state.viewportHeight,
-                    visibleCollectionSize = viewportHeight + reserve;
+                // Computing new elementHeight and viewportHeight
+                var adjustedElementHeight = this.getAdjustedElementHeight(elementHeight);
+                this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
+                var visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE;
 
-                if (viewportHeight === oldViewportHeight && elementHeight === oldElementHeight) {
+                // Applying the result of computation
+                if (this.state.viewportHeight === oldViewportHeight && adjustedElementHeight === elementHeight) {
+                    // nothing changed
                     return;
                 }
 
+                this.$el.height(adjustedElementHeight);
                 this.visibleCollection.updateWindowSize(visibleCollectionSize);
 
                 this.trigger('viewportHeightChanged', this, {
                     oldViewportHeight: oldViewportHeight,
-                    viewportHeight: viewportHeight,
-                    listViewHeight: elementHeight
+                    viewportHeight: this.state.viewportHeight,
+                    listViewHeight: adjustedElementHeight
                 });
             },
 
-            getElementHeight: function () {
-                var collectionL = this.collection.length,
-                    numberOfElements,
-                    minHeight = 0;
-
-                if (this.maxRows) {
-                    numberOfElements = Math.min(this.maxRows, collectionL);
-                } else if (this.height === 'auto' && this.state.viewportHeight > collectionL) {
-                    numberOfElements = collectionL;
+            getAdjustedElementHeight: function (elementHeight) {
+                if (this.height !== heightOptions.AUTO) {
+                    return elementHeight;
                 }
 
+                var computedViewportHeight = Math.min(this.maxRows, this.collection.length);
+                var minHeight = 0;
                 if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
                     minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
                 }
-
-                return Math.max(this.childHeight * numberOfElements, minHeight);
+                return Math.max(this.childHeight * computedViewportHeight, minHeight);
             },
 
             __mousewheel: function (e) {
