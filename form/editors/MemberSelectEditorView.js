@@ -20,9 +20,8 @@ define([
         'core/serviceLocator',
         './impl/memberSelect/views/DefaultButtonView',
         './impl/memberSelect/views/PanelView',
-        './impl/memberSelect/collections/MembersCollection',
-        './impl/memberSelect/models/MemberModel',
-        './impl/memberSelect/collections/MembersVirtualCollection'
+        './impl/common/members/models/MemberModel',
+        './impl/common/members/collections/MembersCollection'
     ],
     function (
         lib,
@@ -33,14 +32,10 @@ define([
         serviceLocator,
         DefaultButtonView,
         PanelView,
-        MembersCollection,
         MemberModel,
-        MembersVirtualCollection
+        MembersCollection
     ) {
         'use strict';
-
-        var classes = {
-        };
 
         var defaultOptions = {
             dropdownOptions: {
@@ -187,7 +182,9 @@ define([
 
             __initCollection: function () {
                 serviceLocator.cacheService.ListUsers().then(function (users) {
-                    this.collection = new MembersVirtualCollection(new MembersCollection(users), {
+                    this.collection = new MembersCollection(new Backbone.Collection(users, {
+                        model: MemberModel
+                    }), {
                         comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'fullName')
                     });
                     this.viewModel.get('button').set('member', this.__findModel(this.getValue()));

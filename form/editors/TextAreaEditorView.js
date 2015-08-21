@@ -11,8 +11,18 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService' ],
-    function (template, BaseItemEditorView, LocalizationService) {
+define(['text!./templates/textAreaEditor.html',
+        './base/BaseItemEditorView',
+        'core/services/LocalizationService',
+        'module/lib',
+        'core/utils/keyCode',
+        'core/utils/utilsApi' ],
+    function (template,
+              BaseItemEditorView,
+              LocalizationService,
+              lib,
+              keyCode,
+              utilsApi) {
         'use strict';
 
         var changeMode = {
@@ -72,8 +82,22 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
-            __keyup: function () {
-                this.trigger('keyup', this);
+            onRender: function () {
+                // Keyboard shortcuts listener
+                if (this.keyListener) {
+                    this.keyListener.reset();
+                }
+                this.keyListener = new lib.keypress.Listener(this.ui.textarea[0]);
+            },
+
+            addKeyboardListener: function (key, callback) {
+                if (!this.keyListener) {
+                    utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+                }
+                var keys = key.split(',');
+                _.each(keys, function (k) {
+                    this.keyListener.simple_combo(k, callback);
+                }, this);
             },
 
             onShow: function () {
@@ -82,9 +106,6 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 switch (this.options.size) {
                 case size.auto:
                     this.ui.textarea.autosize({ append: '' });
-                    this.ui.textarea.on('autosize.resized', function(){
-                        this.trigger('resize');
-                    }.bind(this));
                     break;
                 }
             },
@@ -118,14 +139,6 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
-            setValue: function (value) {
-                this.__value(value, true, false);
-            },
-
-            __change: function () {
-                this.__value(this.ui.textarea.val(), false, true);
-            },
-
             __value: function (value, updateUi, triggerChange) {
                 if (this.value === value) {
                     return;
@@ -139,10 +152,59 @@ define(['text!./templates/textAreaEditor.html', './base/BaseItemEditorView', 'co
                 }
             },
 
+            setCaretPos: function (position) {
+                this.ui.textarea.caret(position, position);
+            },
+
+            setValue: function (value) {
+                this.__value(value, true, false);
+            },
+
+            __change: function () {
+                this.__triggerInput();
+                this.__value(this.ui.textarea.val(), false, true);
+            },
+
             __input: function () {
+                this.__triggerInput();
                 if (this.options.changeMode === changeMode.keydown) {
                     this.__value(this.ui.textarea.val(), false, true);
                 }
+            },
+
+            __keyup: function (e) {
+                if ([
+                    keyCode.LEFT,
+                    keyCode.RIGHT,
+                    keyCode.HOME,
+                    keyCode.END,
+                ].indexOf(e.keyCode) === -1) {
+                    return;
+                }
+
+                var caret = this.ui.textarea.caret();
+                if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
+                    return;
+                }
+
+                this.oldCaret = caret;
+                var text = this.ui.textarea.val();
+                this.trigger('caretChange', text, caret);
+            },
+
+            __triggerInput: function () {
+                var text = this.ui.textarea.val();
+                if (this.oldText === text) {
+                    return;
+                }
+
+                this.oldText = text;
+                var caret = this.ui.textarea.caret();
+
+                this.trigger('input', text, {
+                    start: caret.start,
+                    end: caret.end
+                });
             },
 
             select: function () {

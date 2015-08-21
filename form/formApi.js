@@ -36,6 +36,7 @@ define([
         './editors/DateEditorView',
         './editors/TimeEditorView',
         './editors/DateTimeEditorView',
+        './editors/MentionEditorView',
 
         './editors/impl/reference/controllers/DemoReferenceEditorController',
         './editors/impl/reference/controllers/DataSourceReferenceEditorController',
@@ -77,6 +78,7 @@ define([
         DateEditorView,
         TimeEditorView,
         DateTimeEditorView,
+        MentionEditorView,
 
         DemoReferenceEditorController,
         DataSourceReferenceEditorController,
@@ -142,7 +144,8 @@ define([
                 RadioGroupEditor: RadioGroupEditorView,
                 DateEditor: DateEditorView,
                 TimeEditor: TimeEditorView,
-                DateTimeEditor: DateTimeEditorView
+                DateTimeEditor: DateTimeEditorView,
+                MentionEditor: MentionEditorView
 			}
 		};
 	});
