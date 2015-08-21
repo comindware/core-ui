@@ -17,12 +17,9 @@ define(['module/lib', 'core/utils/utilsApi'],
         var GridItemViewBehavior = Marionette.Behavior.extend({
             initialize: function (options, view)
             {
-                if (!view.options.columns) {
-                    throw new Error('`columns` option is required.');
-                }
-                if (!view.options.gridEventAggregator) {
-                    throw new Error('`gridEventAggregator` option is required.');
-                }
+                utils.helpers.ensureOption(view.options, 'columns');
+                utils.helpers.ensureOption(view.options, 'gridEventAggregator');
+                utils.helpers.ensureOption(options, 'padding');
 
                 this.padding = options.padding;
                 _.bindAll(this, '__handleColumnsResize');
