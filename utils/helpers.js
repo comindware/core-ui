@@ -90,8 +90,8 @@ define(['module/lib', 'core/services/LocalizationService'],
 
             /*
             * Taking a number and array of strings, returns a valid plural form:
-            * getPluralForm(1, ['car','cars']) -> 'car'
-            * getPluralForm(10, ['car','cars']) -> 'cars'
+            * getPluralForm(1, 'car,cars') -> 'car'
+            * getPluralForm(10, 'car,cars') -> 'cars'
             * Works with complex cases and valid for all supported languages (en, de, ru)
             * */
             getPluralForm: (function (formula) {
