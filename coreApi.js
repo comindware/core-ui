@@ -18,6 +18,7 @@ define([
         './list/listApi',
         './form/formApi',
         './serviceLocator',
+        './nativeGrid/nativeGridApi',
 
         './application/Module',
         './application/views/behaviors/ContentViewBehavior',
@@ -48,6 +49,7 @@ define([
         listApi,
         formApi,
         serviceLocator,
+        nativeGridApi,
 
         Module,
         ContentViewBehavior,
@@ -145,6 +147,7 @@ define([
             dropdown: dropdownApi,
             form: formApi,
             list: listApi,
+            nativeGrid: nativeGridApi,
             utils: utilsApi,
             meta: meta,
             serviceLocator: serviceLocator,

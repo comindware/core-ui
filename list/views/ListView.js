@@ -99,7 +99,6 @@ define([
                     position: 0
                 };
 
-                window.recordCollection = this.collection;
                 this.listenTo(this.collection, 'add remove reset', this.__handleResize, this);
                 this.visibleCollection = new SlidingWindowCollection(this.collection);
             },
@@ -145,8 +144,8 @@ define([
             },
             
             onRender: function () {
-                utils.htmlHelpers.forbidSelection(this.el);
-                this.__assignKeyboardShortcuts();
+                //utils.htmlHelpers.forbidSelection(this.el);
+                //this.__assignKeyboardShortcuts();
             },
 
             keyboardShortcuts: {
@@ -299,14 +298,14 @@ define([
                     oldElementHeight = elementHeight;
                 this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
 
-                if (this.height === heightOptions.FIXED && elementHeight === 0) {
-                    utils.helpers.throwInvalidOperationError(
-                        'ListView configuration error: ' +
-                        'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
-                } else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
-                    utils.helpers.throwInvalidOperationError(
-                        'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
-                }
+                //if (this.height === heightOptions.FIXED && elementHeight === 0) {
+                //    utils.helpers.throwInvalidOperationError(
+                //        'ListView configuration error: ' +
+                //        'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
+                //} else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
+                //    utils.helpers.throwInvalidOperationError(
+                //        'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
+                //}
 
                 elementHeight = this.getElementHeight() || elementHeight;
                 this.$el.height(elementHeight);

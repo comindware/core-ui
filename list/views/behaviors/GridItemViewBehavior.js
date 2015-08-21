@@ -59,6 +59,7 @@ define(['module/lib', 'core/utils/utilsApi'],
             },
 
             onShow: function () {
+                debugger;
                 var $cells = this.__getCellElements();
                 this.cellWidthDiff = $cells.outerWidth() - $cells.width();
                 var availableWidth = this.__getAvailableWidth();
@@ -116,6 +117,7 @@ define(['module/lib', 'core/utils/utilsApi'],
             },
 
             __handleSelection: function () {
+                debugger;
                 this.$el.addClass('selected');
             },
 

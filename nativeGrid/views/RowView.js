@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavior'],
-    function (GridItemViewBehavior, GridItemBehavior) {
+define(['module/lib', './behaviors/GridItemViewBehavior', '../../list/models/behaviors/GridItemBehavior'],
+    function (lib, GridItemViewBehavior, GridItemBehavior) {
         'use strict';
 
         var RowView = Marionette.ItemView.extend({
@@ -44,7 +44,6 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
             },
 
             _renderTemplate: function () {
-                debugger;
                 this.cellViews = [];
                 this.$el.append('<div class="padding js-padding" style="width: ' + this.constants.paddingLeft + 'px"></div>');
                 _.each(this.options.columns, function (gridColumn) {
@@ -58,7 +57,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
                     }
 
                     var cellView = new gridColumn.cellView({
-                        className: 'grid-cell js-grid-cell',
+                        className: 'grid-cell js-grid-c ell',
                         model: new Backbone.Model({
                             value: value,
                             rowModel: this.model,
@@ -93,7 +92,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
            },
 
            __onDblClick: function () {
-                this.trigger('dblclick', this.model);
+               this.trigger('dblclick', this.model);
            }
         });
 

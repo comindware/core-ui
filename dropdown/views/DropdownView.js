@@ -76,7 +76,6 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
 
                 this.currentPosition = this.options.panelPosition;
                 this.updatePositionClasses();
-
             },
 
             updatePositionClasses: function () {
@@ -187,6 +186,7 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
             },
 
             __handleBlur: function () {
+                debugger;
                 setTimeout(function () {
                     if ($.contains(this.el, document.activeElement)) {
                         $(document.activeElement).one('blur', this.__handleBlur);

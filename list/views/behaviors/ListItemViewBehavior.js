@@ -80,6 +80,7 @@ define(['module/lib'],
             },
 
             __handleSelection: function () {
+                debugger;
                 this.$el.addClass('selected');
             },
 
