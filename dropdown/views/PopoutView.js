@@ -59,7 +59,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
 
         return Marionette.LayoutView.extend({
             initialize: function (options) {
-                _.extend(this.options, _.clone(defaultOptions), options || {});
+                _.defaults(this.options, defaultOptions);
                 utils.helpers.ensureOption(options, 'buttonView');
                 utils.helpers.ensureOption(options, 'panelView');
                 _.bindAll(this, 'open', 'close', '__handleBlur', '__handleWindowResize');
@@ -126,9 +126,9 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
                 if (this.options.customAnchor) {
                     rect = this.button.$el.find('.js-anchor')[0].getBoundingClientRect();
                     if (isFlowRight) {
-                        leftPos = rect.width / 2 - triangleWidth / 2 - panelOffset;
-                    } else {
                         rightPos = this.button.$el.width() - rect.width + rect.width / 2 - triangleWidth / 2 - panelOffset;
+                    } else {
+                        leftPos = rect.width / 2 - triangleWidth / 2 - panelOffset;
                     }
                 } else {
                     rect = this.ui.button[0].getBoundingClientRect();
