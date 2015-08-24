@@ -14,17 +14,36 @@
 define(['module/lib', 'core/utils/utilsApi'],
     function (lib, utils) {
         'use strict';
-        var GridItemViewBehavior = Marionette.Behavior.extend({
+
+        var eventBubblingIgnoreList = [
+            'before:render',
+            'render',
+            'dom:refresh',
+            'before:show',
+            'show',
+            'before:destroy',
+            'destroy'
+        ];
+
+        return Marionette.Behavior.extend({
             initialize: function (options, view)
             {
                 utils.helpers.ensureOption(view.options, 'columns');
                 utils.helpers.ensureOption(view.options, 'gridEventAggregator');
+                utils.helpers.ensureOption(view.options, 'internalListViewReqres');
                 utils.helpers.ensureOption(options, 'padding');
 
                 this.padding = options.padding;
                 _.bindAll(this, '__handleColumnsResize');
                 this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
                 this.columns = view.options.columns;
+
+                this.listenTo(view, 'all', function (eventName) {
+                    if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
+                        return;
+                    }
+                    view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
+                });
             },
 
             modelEvents: {
@@ -120,6 +139,4 @@ define(['module/lib', 'core/utils/utilsApi'],
                 this.$el.removeClass('selected');
             }
         });
-
-        return GridItemViewBehavior;
     });

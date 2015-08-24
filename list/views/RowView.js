@@ -15,7 +15,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
     function (GridItemViewBehavior, GridItemBehavior) {
         'use strict';
 
-        var RowView = Marionette.ItemView.extend({
+        return Marionette.ItemView.extend({
             constants: {
                 paddingLeft: 20,
                 paddingRight: 10
@@ -28,7 +28,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
                 'dblclick': '__onDblClick'
             },
 
-            initialize: function (options) {
+            initialize: function () {
                 _.extend(this.model, new GridItemBehavior(this));
             },
 
@@ -87,14 +87,12 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
                 });
             },
 
-           __onClick: function () {
-               this.trigger('click', this.model);
-           },
+            __onClick: function () {
+                this.trigger('click', this.model);
+            },
 
-           __onDblClick: function () {
+            __onDblClick: function () {
                 this.trigger('dblclick', this.model);
-           }
+            }
         });
-
-        return RowView;
     });
