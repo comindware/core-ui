@@ -62,6 +62,11 @@ define([
                 if (options.childHeight === undefined) {
                     utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - outer height for childView view (in pixels).');
                 }
+                this.__createReqres();
+
+                this.childViewOptions = _.extend(options.childViewOptions || {}, {
+                    internalListViewReqres: this.internalReqres
+                });
 
                 options.childViewOptions && (this.childViewOptions = options.childViewOptions); // jshint ignore:line
                 options.emptyView && (this.emptyView = options.emptyView); // jshint ignore:line
@@ -153,6 +158,15 @@ define([
                 'end': function (e) {
                     this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
                 }
+            },
+
+            __createReqres: function () {
+                this.internalReqres = new Backbone.Wreqr.RequestResponse();
+                this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+            },
+
+            __handleChildViewEvent: function (view, eventName, eventArguments) {
+                this.trigger.apply(this, [ 'childview:' + eventName, view ].concat(eventArguments));
             },
 
             __moveCursorTo: function (newCursorIndex, shiftPressed)
