@@ -195,7 +195,7 @@ define(['text!core/list/templates/grid.html',
                         break;
                     }
                 }
-                this.onColumnSort();
+                this.onColumnSort(column, this.collection.comparator);
                 this.headerView.updateSorting();
             }
         });
