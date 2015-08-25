@@ -69,6 +69,7 @@ define([
                 options.childView && (this.childView = options.childView); // jshint ignore:line
                 options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
                 options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
+
                 this.maxRows = options.maxRows;
                 this.height = options.height;
 
@@ -294,14 +295,16 @@ define([
 
             __handleResize: function () {
                 this.__handleResizeInternal();
-                utils.helpers.setUniqueTimeout(this.__handleResizeInternal, this.__handleResizeInternal, 100);
             },
 
             __handleResizeInternal: function () {
-                debugger;
                 setTimeout(function () {
-                this.$el.width(this.$el.parent().parent().parent().width());
-                //this.$el.css('width', '100%');
+                    var fullWidth = this.$el.parent().width(),
+                        currentWidth = this.$el.width();
+
+                    if (fullWidth > currentWidth) {
+                        this.$el.width(fullWidth);
+                    }
                 }.bind(this), 200);
             }
         });

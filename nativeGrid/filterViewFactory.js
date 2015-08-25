@@ -12,58 +12,17 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([],
-    function (
-        utils, NativeGridView
-
-    ) {
+    function () {
         'use strict';
 
         return {
             getFilterViewByType: function (type) {
-                var FilterView =  Marionette.ItemView.extend({
-                    template: Handlebars.compile('<div class="innerDiv">popoutView</div>'),
-
-                    className: 'dev-filter-popout',
-
-                    onShow: function () {
-                    },
-
-                    __handleBlur: function () {
-                        setTimeout(function () {
-                            if ($.contains(this.el, document.activeElement)) {
-                                $(document.activeElement).one('blur', this.__handleBlur);
-                            }
-                            //else {
-                       //         this.close();
-                       //     }
-                        }.bind(this), 15);
-                    }
-
-                    //close: function () {
-                    //    if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
-                    //        return;
-                    //    }
-                    //    var closeArgs = _.toArray(arguments);
-                    //    this.ui.panel.hide({
-                    //        duration: 0,
-                    //        complete: function () {
-                    //            this.$el.removeClass(classes.OPEN);
-                    //            this.panelRegion.reset();
-                    //            //noinspection JSValidateTypes
-                    //            this.isOpen = false;
-                    //            // selecting focusable parent after closing is important to maintant nested dropdowns
-                    //            var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
-                    //            if (firstFocusableParent) {
-                    //                $(firstFocusableParent).focus();
-                    //            }
-                    //
-                    //            this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
-                    //            this.render();
-                    //        }.bind(this)
-                    //    });
-                    //}
+                var PanelView =  Marionette.ItemView.extend({
+                    template: Handlebars.compile('<div class="innerDiv">PopoutView</div>'),
+                    className: 'dev-filter-popout'
                 });
-                return FilterView;
+
+                return PanelView;
             }
         };
 

@@ -11,64 +11,27 @@
 
 /* global define, require, Marionette, _, Handlebars, shared, $ */
 
-define(['text!../templates/header.html', 'module/lib', 'core/utils/utilsApi'],
-    function (template, lib, utils) {
+define(['../../list/views/GridHeaderView'],
+    function (GridHeaderView) {
         'use strict';
-        var GridHeaderView = Marionette.ItemView.extend({
+        var HeaderView = GridHeaderView.extend({
             initialize: function (options) {
-                if (!options.columns) {
-                    throw new Error('You must provide columns definition ("columns" option)');
-                }
-                if (!options.gridEventAggregator) {
-                    throw new Error('You must provide grid event aggregator ("gridEventAggregator" option)');
-                }
-                if (!options.columnHeaderView) {
-                    throw new Error('You must provide grid column header view ("columnHeaderView" option)');
-                }
-
-                this.gridEventAggregator = options.gridEventAggregator;
-                this.columnHeaderView = options.columnHeaderView;
-                this.columnHeaderViewOptions = options.gridColumnHeaderViewOptions;
-                this.columns = options.columns;
-                this.$document = $(document);
+                GridHeaderView.prototype.initialize.apply(this, arguments);
+                this.columnsFit = options.columnsFit;
                 _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort', '__setColumnsWidth');
                 $(window).resize(this.__handleResize);
 
                 this.listenTo(this.gridEventAggregator, 'columnsSetWidth', this.__setColumnsWidth);
             },
 
-            template: Handlebars.compile(template),
-
-            className: 'grid-header',
-
-            ui: {
-                gridHeaderColumn: '.grid-header-column',
-                gridHeaderColumnContent: '.grid-header-column-content-view'
-            },
-
-            events: {
-                'mousedown .grid-header-dragger': '__handleDraggerMousedown'
-            },
-
-            constants: {
-                MIN_COLUMN_WIDTH: 20
-            },
-
-            templateHelpers: function () {
-                return {
-                    columns: this.columns
-                };
-            },
-
-            onRender: function ()
-            {
+            onRender: function () {
                 var self = this;
-                this.ui.gridHeaderColumnContent.each(function (i, el)
-                {
+                this.ui.gridHeaderColumnContent.each(function (i, el) {
                     var column = self.columns[i];
-                    var view = new self.columnHeaderView(_.extend(self.columnHeaderViewOptions || {}, {
+                    var view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
                         model: column.viewModel,
-                        column: column
+                        column: column,
+                        gridEventAggregator: self.gridEventAggregator
                     }));
                     self.listenTo(view, 'columnSort', self.__handleColumnSort);
                     var childEl = view.render().el;
@@ -76,75 +39,25 @@ define(['text!../templates/header.html', 'module/lib', 'core/utils/utilsApi'],
                 });
             },
 
-            onShow: function ()
-            {
+            onShow: function () {
                 this.__handleResizeInternal();
                 this.headerMinWidth = this.$el.parent().width();
             },
 
-            onDestroy: function () {
-                $(window).off('resize');
-            },
-
-            updateSorting: function ()
-            {
-                this.render();
-                this.__handleResizeInternal();
-            },
-
-            __handleColumnSort: function (sender, args)
-            {
-                var column = args.column;
-                var sorting = column.sorting;
-                var comparator;
-                _.each(this.columns, function (c)
-                {
-                    c.sorting = null;
-                });
-                switch (sorting)
-                {
-                case 'asc':
-                    column.sorting = 'desc';
-                    comparator = column.sortDesc;
-                    break;
-                case 'desc':
-                    column.sorting = 'asc';
-                    comparator = column.sortAsc;
-                    break;
-                default:
-                    column.sorting = 'asc';
-                    comparator = column.sortAsc;
-                    break;
-                }
-                this.updateSorting();
-
-                this.trigger('onColumnSort', column, comparator);
-            },
-
-            __handleDraggerMousedown: function (e)
-            {
-                this.__stopDrag();
-                this.__startDrag(e);
-                return false;
-            },
-
-            __startDrag: function (e)
-            {
+            __startDrag: function (e) {
                 var $dragger = $(e.target);
                 var $column = $dragger.parent();
 
-                this.updateDragContext($column, e.pageX)
+                this.updateDragContext($column, e.pageX);
 
                 this.dragContext.$dragger = $dragger;
-                this.isPrevScroll = true;
+                this.isPrevScroll = false;
 
-                this.originalDragContext = {};
                 $dragger.addClass('active');
                 this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
             },
 
-            __stopDrag: function ()
-            {
+            __stopDrag: function () {
                 if (!this.dragContext) {
                     return;
                 }
@@ -157,8 +70,7 @@ define(['text!../templates/header.html', 'module/lib', 'core/utils/utilsApi'],
                 this.gridEventAggregator.trigger('columnStopDrag');
             },
 
-            __draggerMouseMove: function (e)
-            {
+            __draggerMouseMove: function (e) {
                 if (!this.dragContext) {
                     return;
                 }
@@ -174,14 +86,12 @@ define(['text!../templates/header.html', 'module/lib', 'core/utils/utilsApi'],
                     var newDraggerColumnWidth = Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta);
                     delta = newDraggerColumnWidth - draggedColumn.initialWidth;
 
-                    if (this.headerMinWidth < ctx.tableInitialWidth + delta) {
+                    if (this.columnsFit === 'scroll' && this.headerMinWidth < ctx.tableInitialWidth + delta) {
                         if (!this.isPrevScroll) {
                             this.updateDragContext(draggedColumn.$el, e.pageX);
                             this.isPrevScroll = true;
                             return false;
                         }
-                        this.isPrevScroll = true;
-
                         var tableWidth = Math.max(this.headerMinWidth, this.headerMinWidth + delta);
                         draggedColumn.$el.parent().width(tableWidth);
                         draggedColumn.$el.width(newDraggerColumnWidth);
@@ -256,28 +166,14 @@ define(['text!../templates/header.html', 'module/lib', 'core/utils/utilsApi'],
                 this.gridEventAggregator.trigger('columnStartDrag');
             },
 
-            __draggerMouseUp: function ()
-            {
-                this.__stopDrag();
-                return false;
-            },
+            __handleResizeInternal: function () {
+                var fullWidth = this.$el.parent().width(),
+                    currentWidth = this.$el.width();
 
-            __handleResize: function () {
-                debugger;
-                this.headerMinWidth = this.$el.parent().width();
-                utils.helpers.setUniqueTimeout(this.__handleResizeInternal, this.__handleResizeInternal, 100);
-            },
-
-            __handleResizeInternal: function ()
-            {
-                debugger;
-                this.$el.width(this.headerMinWidth);
-                var columns = this.columns;
-                this.ui.gridHeaderColumn.each(function (i, el)
-                {
-                    var child = $(el);
-                    var col = columns[i];
-                });
+                if (fullWidth > currentWidth) {
+                    this.$el.width(fullWidth);
+                }
+                this.headerMinWidth = fullWidth;
             },
 
             __setColumnsWidth: function (opts) {
@@ -289,5 +185,5 @@ define(['text!../templates/header.html', 'module/lib', 'core/utils/utilsApi'],
             }
         });
 
-        return GridHeaderView;
+        return HeaderView;
     });

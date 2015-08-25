@@ -44,7 +44,6 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
             },
 
             _renderTemplate: function () {
-                debugger;
                 this.cellViews = [];
                 this.$el.append('<div class="padding js-padding" style="width: ' + this.constants.paddingLeft + 'px"></div>');
                 _.each(this.options.columns, function (gridColumn) {

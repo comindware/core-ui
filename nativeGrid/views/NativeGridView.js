@@ -17,10 +17,12 @@ define(['module/lib',
         './RowView',
         './HeaderView',
         './ColumnHeaderView',
-        './NoColumnsView',
-        '../../models/behaviors/SelectableBehavior'
+        '../../list/views/NoColumnsView',
+        '../../models/behaviors/SelectableBehavior',
+         '../../dropdown/factory',
+         '../../dropdown/dropdownApi'
     ],
-    function (lib, template, ListView, RowView, HeaderView, ColumnHeaderView, NoColumnsDefaultView, SelectableBehavior) {
+    function (lib, template, ListView, RowView, HeaderView, ColumnHeaderView, NoColumnsDefaultView, SelectableBehavior, dropdownFactory, dropdownApi) {
         'use strict';
 
         var NativeGridView = Marionette.LayoutView.extend({
@@ -29,7 +31,8 @@ define(['module/lib',
             regions: {
                 headerRegion: '.js-native-grid-header-region',
                 listRegion: '.js-native-grid-list-region',
-                noColumnsViewRegion: '.js-nocolumns-view-region'
+                noColumnsViewRegion: '.js-nocolumns-view-region',
+                popoutRegion: '.js-popout-region'
             },
 
             className: 'dev-native-grid',
@@ -40,12 +43,13 @@ define(['module/lib',
                 this.columsFit = options.columsFit;
 
                 this.initializeViews();
+                this.$document = $(document);
             },
 
             initializeViews: function () {
                 this.headerView = new HeaderView({
                     columns: this.options.columns,
-                    columnHeaderView: ColumnHeaderView,
+                    gridColumnHeaderView: ColumnHeaderView,
                     gridEventAggregator: this,
                     columnsFit: this.options.columnsFit
                 });
@@ -73,13 +77,8 @@ define(['module/lib',
                     gridEventAggregator: this
                 });
 
-                this.listenTo(this, 'listResized', this.__onListResized, this);
                 this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-            },
-
-            __onListResized: function (fullWidth) {
-                this.listRegion.$el.width(fullWidth);
-                this.$el.width(fullWidth);
+                this.listenTo(this, 'showFilterView', this.showFilterPopout, this);
             },
 
             onShow: function () {
@@ -89,11 +88,67 @@ define(['module/lib',
                 }
                 this.headerRegion.show(this.headerView);
                 this.listRegion.show(this.listView);
+                this.bindListRegionScroll();
+            },
+
+            bindListRegionScroll: function () {
+                this.listRegion.$el.scroll(function (event) {
+                    this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
+                }.bind(this));
             },
 
             onColumnSort: function (column, comparator) {
                 this.collection.comparator = comparator;
                 this.collection.sort();
+            },
+
+            showFilterPopout: function (options) {
+                if (this.isPopupVisible && this.filterContext && options.columnHeader === this.filterContext.columnHeader) {
+                    this.closeFilterPopout();
+                    return;
+                }
+
+                var AnchoredButtonView = Marionette.ItemView.extend({
+                    template: Handlebars.compile('<span class="js-anchor"></span>'),
+                    behaviors: {
+                        CustomAnchorBehavior: {
+                            behaviorClass: dropdownApi.views.behaviors.CustomAnchorBehavior,
+                            anchor: '.js-anchor'
+                        }
+                    },
+                    tagName: 'div'
+                });
+
+                this.filterDropdown = dropdownFactory.createPopout({
+                    buttonView: AnchoredButtonView,
+                    panelView: options.filterView,
+                    customAnchor: true
+                });
+
+                this.popoutRegion.show(this.filterDropdown);
+                this.filterDropdown.$el.offset(options.position);
+                this.filterDropdown.open();
+                this.isPopupVisible = true;
+                this.filterContext = {
+                    columnHeader: options.columnHeader
+                };
+
+                this.$document.on('mousedown', this.handleClick.bind(this));
+            },
+
+            handleClick: function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (this.isPopupVisible && !$(event.target).closest('.' + this.filterDropdown.className).length && !$(event.target).hasClass('js-filter-btn')) {
+                    this.closeFilterPopout();
+                }
+            },
+
+            closeFilterPopout: function () {
+                this.$document.off('mousedown');
+                this.isPopupVisible = false;
+                this.popoutRegion.reset();
+                delete this.filterContext;
             }
         });
 

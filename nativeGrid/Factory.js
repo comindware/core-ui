@@ -14,7 +14,6 @@
 define([
         'core/utils/utilsApi',
         './views/NativeGridView'
-
     ],
     function (
         utils, NativeGridView

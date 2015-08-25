@@ -11,25 +11,19 @@
 
 /* global define, require, Marionette, Handlebars */
 
-define(['text!../templates/columnHeader.html', 'module/lib', '../FilterViewFactory'],
-    function (template, lib, FilterViewFactory) {
+define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/GridColumnHeaderView'],
+    function (template, lib, GridColumnHeaderView) {
         'use strict';
 
-
-        var ColumnHeaderView = Marionette.LayoutView.extend({
+        var ColumnHeaderView = GridColumnHeaderView.extend({
             initialize: function (options) {
-                this.column = options.column;
-                this.column.filterView && (this.filterView = this.column.filterView); //jshint ignore:line
+                GridColumnHeaderView.prototype.initialize.apply(this, arguments);
 
-                this.$document = $(document);
+                this.column.filterView && (this.filterView = this.column.filterView); //jshint ignore:line
+                this.gridEventAggregator = options.gridEventAggregator;
             },
 
             template: Handlebars.compile(template),
-            className: 'grid-header-column-content',
-
-            regions: {
-                filterPopoutRegion: '.js-filter-popout-region'
-            },
 
             ui: {
                 cellContent: '.js-cell-content',
@@ -41,39 +35,14 @@ define(['text!../templates/columnHeader.html', 'module/lib', '../FilterViewFacto
                 'click @ui.filterBtn': 'showFilterPopout'
             },
 
-            __handleSorting: function (e)
-            {
-                this.trigger('columnSort', this, {
-                    column: this.column
-                });
-            },
-
-            showFilterPopout: function(event) {
-                if (this.isPopupVisible)
-                    return;
-
-                var FilterView = FilterViewFactory.getFilterViewByType();
-                this.filterView = new FilterView();
-                this.filterPopoutRegion.show(this.filterView);
-
-                setTimeout(function () {
-                    this.$document.on('mousedown', this.handleClick.bind(this));
-                    this.isPopupVisible = true;
-                }.bind(this));
-            },
-
-            handleClick: function (event) {
+            showFilterPopout: function (event) {
                 event.preventDefault();
                 event.stopPropagation();
-                if (this.isPopupVisible && !$(event.target).closest('.' + this.filterView.className).length) {
-                    this.closeFilterPopout();
-                }
-            },
-
-            closeFilterPopout: function () {
-                this.$document.off('mousedown');
-                this.isPopupVisible = false;
-                this.filterPopoutRegion.reset();
+                this.gridEventAggregator.trigger('showFilterView', {
+                    columnHeader: this,
+                    filterView: this.filterView,
+                    position: $(event.currentTarget).offset()
+                });
             },
 
             templateHelpers: function () {
