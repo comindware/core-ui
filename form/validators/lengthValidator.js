@@ -14,7 +14,7 @@
 define(['module/lib', 'core/services/LocalizationService'], function (lib, LocalizationService) {
     'use strict';
 
-    Backbone.Form.validators.errMessages.length = LocalizationService.get('PROJECT.COMMON.FORM.VALIDATION.LENGTH');
+    Backbone.Form.validators.errMessages.length = LocalizationService.get('CORE.FORM.VALIDATION.LENGTH');
 
     Backbone.Form.validators.length = function(options) {
         options = _.extend({

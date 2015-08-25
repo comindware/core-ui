@@ -15,7 +15,7 @@ define(['text!core/list/templates/emptyGrid.html', 'module/lib', 'core/services/
     function (template, lib, LocalizationService) {
         'use strict';
 
-        var defaultText = LocalizationService.get('PROCESS.COMMON.VIEW.GRID.EMPTY');
+        var defaultText = LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY');
 
         return Marionette.ItemView.extend({
             initialize: function (options) {
