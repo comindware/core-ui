@@ -255,6 +255,21 @@ define([],
                     format = dateTimeFormats[lang].generalDateShortTime.date;
 
                 return format;
+            },
+
+            dateToDateTimeString: function(date, formatName) {
+                var lang = Context.langCode;
+                return moment(date).format(dateTimeFormats[lang][formatName].general);
+            },
+
+            dateToDateString: function (date, formatName) {
+                var lang = Context.langCode;
+                return moment(date).format(dateTimeFormats[lang][formatName].date);
+            },
+
+            dateToTimeString: function (date, formatName) {
+                var lang = Context.langCode;
+                return moment(date).format(dateTimeFormats[lang][formatName].time);
             }
         };
     });
