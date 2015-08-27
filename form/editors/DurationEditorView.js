@@ -25,19 +25,19 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
         ];
         var focusedParts = [
             {
-                text: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.DAYS'),
-                separator: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.DAYS.SEPARATORCHAR'),
+                text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
+                separator: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS.SEPARATORCHAR'),
                 maxLength: 4
             },
             {
-                text: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS'),
-                prefix: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS.PREFIX'),
-                separator: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.HOURS.SEPARATORCHAR'),
+                text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
+                prefix: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS.PREFIX'),
+                separator: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS.SEPARATORCHAR'),
                 maxLength: 4
             },
             {
-                text: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.MINUTES'),
-                prefix: LocalizationService.get('PROJECT.COMMON.WIDGET.WORKDURATION.MINUTES.PREFIX'),
+                text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
+                prefix: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES.PREFIX'),
                 maxLength: 4
             }
         ];

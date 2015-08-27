@@ -27,6 +27,8 @@ define([
 
             model: MemberModel,
 
+            comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'name'),
+
             applyTextFilter: function (text) {
                 this.deselect();
                 this.unhighlight();

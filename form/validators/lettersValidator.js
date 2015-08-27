@@ -14,7 +14,7 @@
 define(['module/lib', 'core/services/LocalizationService'], function (lib, LocalizationService) {
     'use strict';
 
-    Backbone.Form.validators.errMessages.letters = LocalizationService.get('PROJECT.COMMON.FORM.VALIDATION.LETTERS');
+    Backbone.Form.validators.errMessages.letters = LocalizationService.get('CORE.FORM.VALIDATION.LETTERS');
 
     Backbone.Form.validators.letters = function (options) {
         options = _.extend({

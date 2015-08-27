@@ -38,6 +38,9 @@ define([
         './editors/DateTimeEditorView',
         './editors/MentionEditorView',
 
+        './editors/impl/common/members/services/factory',
+        './editors/impl/common/members/collections/MembersCollection',
+        './editors/impl/common/members/models/MemberModel',
         './editors/impl/reference/controllers/DemoReferenceEditorController',
         './editors/impl/reference/controllers/DataSourceReferenceEditorController',
         './editors/impl/reference/controllers/BaseReferenceEditorController',
@@ -80,6 +83,9 @@ define([
         DateTimeEditorView,
         MentionEditorView,
 
+        editorsImplCommonMembersFactory,
+        editorsImplCommonMembersCollection,
+        editorsImplCommonMemberModel,
         DemoReferenceEditorController,
         DataSourceReferenceEditorController,
         BaseReferenceEditorController,
@@ -104,6 +110,19 @@ define([
                 CommonField: CommonField
             },
 			editors: {
+                impl: {
+                    common: {
+                        members: {
+                            collections: {
+                                MembersCollection: editorsImplCommonMembersCollection
+                            },
+                            models: {
+                                MemberModel: editorsImplCommonMemberModel
+                            },
+                            factory: editorsImplCommonMembersFactory
+                        }
+                    }
+                },
                 base: {
                     BaseItemEditorView: BaseItemEditorView,
                     BaseLayoutEditorView: BaseLayoutEditorView,

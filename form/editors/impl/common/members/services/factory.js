@@ -45,9 +45,7 @@ define([
                 });
             });
 
-            var membersCollection = new MembersCollection(null, {
-                comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'name')
-            });
+            var membersCollection = new MembersCollection();
             membersCollection.reset(members);
             return membersCollection;
         },

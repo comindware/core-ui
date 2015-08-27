@@ -14,7 +14,7 @@
 define(['module/lib', 'core/services/LocalizationService'], function(lib, LocalizationService) {
     'use strict';
 
-    Backbone.Form.validators.errMessages.password = LocalizationService.get('PROJECT.COMMON.FORM.VALIDATION.PASSWORD');
+    Backbone.Form.validators.errMessages.password = LocalizationService.get('CORE.FORM.VALIDATION.PASSWORD');
 
     Backbone.Form.validators.password = function(options) {
         options = _.extend({

@@ -31,6 +31,7 @@ define(['module/lib', 'text!../templates/dropdownButton.html'],
                 var value = this.model.get('value');
                 var displayAttribute = this.model.get('displayAttribute');
                 return {
+                    hasValue: Boolean(value),
                     text: value ? _.result(value.toJSON(), displayAttribute) : null
                 };
             },

@@ -20,7 +20,7 @@ define(['core/utils/helpers', './loading/views/LoadingView', 'core/services/Loca
                 helpers.ensureOption(options, 'region');
 
                 this.loadingViewOptions = {
-                    text: options.text || LocalizationService.get('PROCESS.COMMON.DEFAULTLOADINGSMALL')
+                    text: options.text || LocalizationService.get('CORE.VIEWS.BEHAVIORS.LOADING.DEFAULTLOADINGSMALL')
                 };
                 view.loading = {
                     setLoading: this.setLoading.bind(this)

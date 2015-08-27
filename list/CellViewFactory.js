@@ -93,8 +93,8 @@ define([
 
             getBooleanCellView: function () {
                 return factory.__getSimpleView(
-                    "{{#if value}}{{localize 'PROCESS.FORMDESIGNER.COMPONENTS.BOOLEAN.YES'}}{{/if}}" +
-                    "{{#unless value}}{{localize 'PROCESS.FORMDESIGNER.COMPONENTS.BOOLEAN.NO'}}{{/unless}}");
+                    "{{#if value}}{{localize 'CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.YES'}}{{/if}}" +
+                    "{{#unless value}}{{localize 'CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.NO'}}{{/unless}}");
             },
 
             getDateTimeCellView: function () {

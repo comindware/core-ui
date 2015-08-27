@@ -11,12 +11,12 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'text!../templates/searchBar.html'],
-    function (utils, template) {
+define(['module/lib', 'text!../templates/searchBar.html', 'core/services/LocalizationService'],
+    function (utils, template, LocalizationService) {
         'use strict';
 
         var defaultOptions = {
-            placeholder: Localizer.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
+            placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
             delay: 300
         };
 
