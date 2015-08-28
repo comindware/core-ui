@@ -225,7 +225,8 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
                 if (this.currentDirection === popoutDirection.UP && panelTopOffset < panelHeight) {
                     this.currentDirection = popoutDirection.DOWN;
                     this.updateDirectionClasses();
-                } else if (this.currentDirection === popoutDirection.DOWN && viewportHeight - panelTopOffset < panelHeight) {
+                } else if (this.currentDirection === popoutDirection.DOWN && viewportHeight - panelTopOffset < panelHeight
+                    && panelHeight < panelTopOffset ) {
                     this.currentDirection = popoutDirection.UP;
                     this.panelRegion.$el.css({
                         top: -(panelHeight + config.BOTTOM_HEIGHT_OFFSET)
