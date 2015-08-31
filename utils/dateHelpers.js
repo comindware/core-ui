@@ -229,6 +229,19 @@ define([],
                 return startDay;
             },
 
+            getRelativeDate: function (val) {
+                var lang = Context.langCode,
+                    now = moment(),
+                    daysFromNow = now.diff(val, 'days');
+
+                if (daysFromNow < 2) {
+                    return moment(val).locale(lang).calendar();
+                } else {
+                    var format = dateTimeFormats[lang].condensedDate.general;
+                    return moment(val).locale(lang).format(format);
+                }
+            },
+
             getDisplayDate: function (val) {
                 var lang = Context.langCode,
                     format = dateTimeFormats[lang].condensedDate.general;
