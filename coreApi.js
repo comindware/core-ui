@@ -12,6 +12,8 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
+        'module/lib',
+
         './utils/utilsApi',
         './dropdown/dropdownApi',
         './meta',
@@ -46,6 +48,8 @@ define([
         './Bootstrapper'
     ],
     function (
+        lib,
+
         utilsApi,
         dropdownApi,
         meta,
@@ -161,5 +165,12 @@ define([
             serviceLocator: serviceLocator,
             bootstrapper: Bootstrapper
         };
+
+        if (_.isFunction(lib.initialize)) {
+            lib.initialize({
+                core: exports
+            });
+        }
+
         return exports;
     });
