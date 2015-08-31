@@ -14,7 +14,7 @@
 define(['module/lib',
         'text!../templates/nativeGrid.html',
         './ListView',
-        './RowView',
+        'core/nativeGrid/views/RowView',
         './HeaderView',
         './ColumnHeaderView',
         '../../list/views/NoColumnsView',
