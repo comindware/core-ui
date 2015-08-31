@@ -14,10 +14,10 @@
 define([
         'module/lib',
         'core/utils/utilsApi',
-        '../collections/ListCollection',
+        'core/collections/VirtualCollection',
         'text!core/list/templates/list.html'
     ],
-    function (lib, utils, ListCollection, template) {
+    function (lib, utils, VirtualCollection, template) {
         'use strict';
 
         var VisibleCollectionView = Marionette.CollectionView.extend({
@@ -88,7 +88,7 @@ define([
                 };
 
                 this.listenTo(this.options.gridEventAggregator, 'listResized', this.__onListResized, this);
-                this.visibleCollection = new ListCollection(this.collection);
+                this.visibleCollection = new VirtualCollection(this.collection);
                 _.bindAll(this, '__handleResize', '__handleResizeInternal');
                 $(window).resize(this.__handleResize);
             },
@@ -263,9 +263,9 @@ define([
 
             __updatePositionInternal: function (newPosition, triggerEvents)
             {
-                if (this.state.viewportHeight === undefined) {
-                    utils.helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
-                }
+                //if (this.state.viewportHeight === undefined) {
+                //    utils.helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
+                //}
 
                 newPosition = this.__normalizePosition(newPosition);
                 if (newPosition === this.state.position) {
