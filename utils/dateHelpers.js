@@ -170,8 +170,9 @@ define([
         },
 
         durationISOToObject: function (duration) {
-            if (!duration) return [0, 0, 0];
-
+            if (!duration) {
+                return [0, 0, 0];
+            }
             var mDuration = moment.duration(duration);
             return [mDuration._days, mDuration.hours(), mDuration.minutes()]; //don't use moment.days() cause it's returns (duration._days % 30)
         },
@@ -215,7 +216,7 @@ define([
         getWeekStartDay: function () {
             var startDay = 0;
 
-            switch (Context.langCode) {
+            switch (window.langCode) {
             case 'ru':
             case 'de':
                 startDay = 1;
@@ -229,7 +230,7 @@ define([
         },
 
         getRelativeDate: function (val) {
-            var lang = Context.langCode,
+            var lang = window.langCode,
                 now = moment(),
                 daysFromNow = now.diff(val, 'days');
 
@@ -242,45 +243,39 @@ define([
         },
 
         getDisplayDate: function (val) {
-            var lang = Context.langCode,
+            var lang = window.langCode,
                 format = dateTimeFormats[lang].condensedDate.general;
 
             return val ? moment(val).locale(lang).format(format) : '';
         },
 
         getDisplayTime: function (time) {
-            var lang = Context.langCode,
+            var lang = window.langCode,
                 format = dateTimeFormats[lang].fullDateShortTime.time;
 
             return time.locale(lang).format(format);
         },
 
-        getTimeEditFormat: function (time) {
-            var lang = Context.langCode,
-                format = dateTimeFormats[lang].generalDateShortTime.time;
-
-            return format;
+        getTimeEditFormat: function () {
+            return dateTimeFormats[window.langCode].generalDateShortTime.time;
         },
 
-        getDateEditFormat: function (time) {
-            var lang = Context.langCode,
-                format = dateTimeFormats[lang].generalDateShortTime.date;
-
-            return format;
+        getDateEditFormat: function () {
+            return dateTimeFormats[window.langCode].generalDateShortTime.date;
         },
 
         dateToDateTimeString: function(date, formatName) {
-            var lang = Context.langCode;
+            var lang = window.langCode;
             return moment(date).format(dateTimeFormats[lang][formatName].general);
         },
 
         dateToDateString: function (date, formatName) {
-            var lang = Context.langCode;
+            var lang = window.langCode;
             return moment(date).format(dateTimeFormats[lang][formatName].date);
         },
 
         dateToTimeString: function (date, formatName) {
-            var lang = Context.langCode;
+            var lang = window.langCode;
             return moment(date).format(dateTimeFormats[lang][formatName].time);
         }
     };
