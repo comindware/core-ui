@@ -17,7 +17,8 @@ define([
         './htmlHelpers',
         './dateHelpers',
         './cookieHelpers',
-        './keyCode'
+        './keyCode',
+        './handlebarsHelpers'
     ],
     function (
         comparators,
