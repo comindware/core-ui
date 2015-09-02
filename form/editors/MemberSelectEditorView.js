@@ -180,16 +180,15 @@ define([
                 }
             },
 
-            __initCollection: function () {
-                serviceLocator.cacheService.ListUsers().then(function (users) {
-                    this.collection = new MembersCollection(new Backbone.Collection(users, {
-                        model: MemberModel
-                    }), {
-                        comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'fullName')
-                    });
-                    this.viewModel.get('button').set('member', this.__findModel(this.getValue()));
-                    this.viewModel.get('panel').set('collection', this.collection);
-                }.bind(this));
+            __initCollection: function() {
+                var users = serviceLocator.cacheService.ListUsers();
+                this.collection = new MembersCollection(new Backbone.Collection(users, {
+                    model: MemberModel
+                }), {
+                    comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'fullName')
+                });
+                this.viewModel.get('button').set('member', this.__findModel(this.getValue()));
+                this.viewModel.get('panel').set('collection', this.collection);
             },
 
             __findModel: function (value) {

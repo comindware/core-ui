@@ -25,7 +25,9 @@ define(['text!core/list/templates/emptyList.html', 'module/lib', 'core/services/
             },
 
             template: Handlebars.compile(template),
-            className: 'empty-view dev-list-empty'
+
+            className: 'empty-view'
+
         });
 
         return EmptyListView;
