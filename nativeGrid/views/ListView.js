@@ -101,6 +101,7 @@ define([
             template: Handlebars.compile(template),
 
             onShow: function () {
+                this.state.visibleHeight = this.$el.parent().height();
                 // Updating viewportHeight and rendering subviews
                 this.visibleCollectionView = new VisibleCollectionView({
                     childView: this.childView,
@@ -131,7 +132,7 @@ define([
                 this.$el.height(h);
                 this.visibleCollectionView && this.visibleCollectionView.updateHeight(h);
             },
-            
+
             onRender: function () {
                 utils.htmlHelpers.forbidSelection(this.el);
                 this.__assignKeyboardShortcuts();
@@ -139,24 +140,24 @@ define([
 
             keyboardShortcuts: {
                 'up': function (e) {
-                    this.moveCursorBy(-1, e.shiftKey);
+                    this.moveToNeighbor('top', e.shiftKey);
                 },
                 'down': function (e) {
-                    this.moveCursorBy(+1, e.shiftKey);
+                    this.moveToNeighbor('bottom', e.shiftKey);
                 },
                 'pageup': function (e) {
-                    var delta = Math.ceil(this.state.viewportHeight * 0.8);
-                    this.moveCursorBy(-delta, e.shiftKey);
+                    this.moveToNextPage('top', e.shiftKey);
                 },
                 'pagedown': function (e) {
-                    var delta = Math.ceil(this.state.viewportHeight * 0.8);
-                    this.moveCursorBy(delta, e.shiftKey);
+                    this.moveToNextPage('bottom', e.shiftKey);
                 },
                 'home': function (e) {
-                    this.__moveCursorTo(0, e.shiftKey);
+                    this.selectByIndex(this.getSelectedViewIndex(), 0, e.shiftKey);
+                    this.scrollToTop();
                 },
                 'end': function (e) {
-                    this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
+                    this.selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
+                    this.scrollToBottom();
                 }
             },
 
@@ -169,76 +170,139 @@ define([
                 this.trigger.apply(this, [ 'childview:' + eventName, view ].concat(eventArguments));
             },
 
-            __moveCursorTo: function (newCursorIndex, shiftPressed)
-            {
-                var cid = this.collection.cursorCid;
+            scrollToTop: function () {
+                var $parentEl = this.$el.parent();
+                $parentEl.scrollTop(0);
+            },
+
+            scrollToBottom : function () {
+                var $parentEl = this.$el.parent();
+                $parentEl.scrollTop(this.$el.height());
+            },
+
+            scrollToNeighbor: function (index) {
+                var view = this.visibleCollectionView.children.findByIndex(index),
+                    $parentEl = this.$el.parent(),
+                    currentScrollTop = $parentEl.scrollTop(),
+                    visibleHeight = this.state.visibleHeight,
+                    viewPositionTop = view.$el.position().top,
+                    viewHeight = view.$el.height(),
+                    viewBottomPos = viewPositionTop + viewHeight;
+
+                if (viewBottomPos > visibleHeight) {
+                    $parentEl.scrollTop(currentScrollTop + viewHeight);
+                } else if (viewPositionTop < 0) {
+                    $parentEl.scrollTop(currentScrollTop - viewHeight);
+                }
+            },
+
+            scrollToIndex: function (index, offset) {
+                var view = this.visibleCollectionView.children.findByIndex(index),
+                    $parentEl = this.$el.parent(),
+                    currentScrollTop = $parentEl.scrollTop(),
+                    viewPositionTop = view.$el.position().top,
+                    newScrollPos = offset ? currentScrollTop + viewPositionTop + offset : currentScrollTop + viewPositionTop;
+
+                $parentEl.scrollTop(newScrollPos);
+            },
+
+            selectByIndex: function (currentIndex, nextIndex, shiftPressed) {
+                var model = this.collection.at(nextIndex);
+                var selectFn = this.collection.selectSmart || this.collection.select;
+                if (selectFn) {
+                    selectFn.call(this.collection, model, false, shiftPressed);
+                }
+            },
+
+            moveToNeighbor: function (direction, shiftPressed) {
+                var selectedIndex = this.getSelectedViewIndex(),
+                    nextIndex = selectedIndex;
+
+                direction === 'top' ? nextIndex-- : nextIndex++; //jshint ignore: line
+
+                if (nextIndex !== selectedIndex) {
+                    nextIndex = this.__normalizeCollectionIndex(nextIndex);
+                    this.selectByIndex(selectedIndex, nextIndex, shiftPressed);
+                    this.scrollToNeighbor(nextIndex);
+                }
+            },
+
+            moveToNextPage: function (direction, shiftPressed) {
+                var selectedIndex = this.getSelectedViewIndex(),
+                    selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex),
+                    selectedPositionTop = selectedView.$el.position().top,
+                    nextIndex = selectedIndex;
+
+                if (direction === 'top') {
+                    nextIndex = this.getTopIndex(selectedIndex);
+                } else {
+                    nextIndex = this.getBottomIndex(selectedIndex);
+                }
+
+                if (nextIndex !== selectedIndex) {
+                    nextIndex = this.__normalizeCollectionIndex(nextIndex);
+                    this.selectByIndex(selectedIndex, nextIndex, shiftPressed);
+                    this.scrollToIndex(nextIndex, -selectedPositionTop);
+                }
+            },
+
+            getSelectedViewIndex: function () {
+                var cid = this.visibleCollection.cursorCid;
                 var index = 0;
-                this.collection.find(function (x, i) {
+                this.visibleCollection.find(function (x, i) {
                     if (x.cid === cid) {
                         index = i;
                         return true;
                     }
                 });
 
-                var nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
-                if (nextIndex !== index) {
-                    var model = this.collection.at(nextIndex);
-                    var selectFn = this.collection.selectSmart || this.collection.select;
-                    if (selectFn) {
-                        selectFn.call(this.collection, model, false, shiftPressed);
-                    }
-                    this.scrollTo(nextIndex);
-                }
+                return index;
             },
 
-            // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
-            moveCursorBy: function (cursorIndexDelta, shiftPressed)
-            {
-                var cid = this.collection.cursorCid;
-                var index = 0;
-                this.collection.find(function (x, i) {
-                    if (x.cid === cid) {
-                        index = i;
-                        return true;
-                    }
-                });
+            getTopIndex: function (index) {
+                var cHeight = 0,
+                    newIndex = index,
+                    childViews = this.visibleCollectionView.children.toArray();
 
-                var nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
-                if (nextIndex !== index) {
-                    var model = this.collection.at(nextIndex);
-                    var selectFn = this.collection.selectSmart || this.collection.select;
-                    if (selectFn) {
-                        selectFn.call(this.collection, model, false, shiftPressed);
+                for (var i = index - 1; i >= 0; i--) {
+                    var newH = cHeight + childViews[i].$el.height();
+
+                    if (newH > this.state.visibleHeight) {
+                        break;
+                    } else {
+                        newIndex = i;
+                        cHeight = newH;
                     }
-                    this.scrollTo(nextIndex);
                 }
+
+                return newIndex;
             },
 
-            scrollTo: function (index)
-            {
-                var indexDelta = index - this.state.position;
-                var criticalOffset = 2;
-                if (indexDelta < criticalOffset || indexDelta > this.state.viewportHeight - criticalOffset) {
-                    var centerItemDelta = Math.floor(this.state.viewportHeight / 2 - 1);
-                    var newPosition = this.state.position + indexDelta - centerItemDelta;
-                    this.__updatePositionInternal(newPosition, true);
-                }
-            },
+            getBottomIndex: function (index) {
+                var cHeight = 0,
+                    newIndex = index,
+                    childViews = this.visibleCollectionView.children.toArray();
 
-            __normalizePosition: function (position)
-            {
-                var maxPos = Math.max(0, (this.collection.length - 1) - this.state.viewportHeight + 1);
-                return Math.max(0, Math.min(maxPos, position));
+                for (var i = index + 1; i < childViews.length; i++) {
+                    var newH = cHeight + childViews[i].$el.height();
+
+                    if (newH > this.state.visibleHeight) {
+                        break;
+                    } else {
+                        newIndex = i;
+                        cHeight = newH;
+                    }
+                }
+
+                return newIndex;
             },
 
             // normalized the index so that it fits in range [0, this.collection.length - 1]
-            __normalizeCollectionIndex: function (index)
-            {
+            __normalizeCollectionIndex: function (index) {
                 return Math.max(0, Math.min(this.collection.length - 1, index));
             },
 
-            __assignKeyboardShortcuts: function ()
-            {
+            __assignKeyboardShortcuts: function () {
                 if (this.keyListener) {
                     this.keyListener.reset();
                 }
@@ -255,52 +319,19 @@ define([
                     }
                 }, this);
             },
-            
-            updatePosition: function (newPosition)
-            {
-                this.__updatePositionInternal(newPosition, false);
-            },
-
-            __updatePositionInternal: function (newPosition, triggerEvents)
-            {
-                //if (this.state.viewportHeight === undefined) {
-                //    utils.helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
-                //}
-
-                newPosition = this.__normalizePosition(newPosition);
-                if (newPosition === this.state.position) {
-                    return;
-                }
-
-                newPosition = this.visibleCollection.updatePosition(newPosition);
-                var oldPosition = this.state.position;
-                this.state.position = newPosition;
-                if (triggerEvents) {
-                    this.trigger('positionChanged', this, {
-                        oldPosition: oldPosition,
-                        position: newPosition
-                    });
-                }
-
-                return newPosition;
-            },
 
             getElementHeight: function () {
-                var collectionL = this.collection.length,
-                    numberOfElements,
-                    minHeight = 0;
-
-                if (this.maxRows) {
-                    numberOfElements = Math.min(this.maxRows, collectionL);
-                } else if (this.height === 'auto' && this.state.viewportHeight > collectionL) {
-                    numberOfElements = collectionL;
-                }
+                var minHeight = 0;
 
                 if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
                     minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
+                } else {
+                    this.visibleCollectionView.children.forEach(function (view) {
+                        minHeight += view.$el.height();
+                    });
                 }
 
-                return Math.max(this.childHeight * numberOfElements, minHeight);
+                return minHeight;
             },
 
             __onListResized: function (fullWidth) {
@@ -312,6 +343,9 @@ define([
             },
 
             __handleResizeInternal: function () {
+                this.visibleCollection.updateWindowSize(500);
+                this.state.visibleHeight = this.$el.parent().height();
+                
                 setTimeout(function () {
                     var fullWidth = this.$el.parent().width(),
                         currentWidth = this.$el.width();
