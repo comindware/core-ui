@@ -140,24 +140,24 @@ define([
 
             keyboardShortcuts: {
                 'up': function (e) {
-                    this.moveToNeighbor('top', e.shiftKey);
+                    this.__moveToNeighbor('top', e.shiftKey);
                 },
                 'down': function (e) {
-                    this.moveToNeighbor('bottom', e.shiftKey);
+                    this.__moveToNeighbor('bottom', e.shiftKey);
                 },
                 'pageup': function (e) {
-                    this.moveToNextPage('top', e.shiftKey);
+                    this.__moveToNextPage('top', e.shiftKey);
                 },
                 'pagedown': function (e) {
-                    this.moveToNextPage('bottom', e.shiftKey);
+                    this.__moveToNextPage('bottom', e.shiftKey);
                 },
                 'home': function (e) {
-                    this.selectByIndex(this.getSelectedViewIndex(), 0, e.shiftKey);
-                    this.scrollToTop();
+                    this.__selectByIndex(this.getSelectedViewIndex(), 0, e.shiftKey);
+                    this.__scrollToTop();
                 },
                 'end': function (e) {
-                    this.selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
-                    this.scrollToBottom();
+                    this.__selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
+                    this.__scrollToBottom();
                 }
             },
 
@@ -170,17 +170,17 @@ define([
                 this.trigger.apply(this, [ 'childview:' + eventName, view ].concat(eventArguments));
             },
 
-            scrollToTop: function () {
+            __scrollToTop: function () {
                 var $parentEl = this.$el.parent();
                 $parentEl.scrollTop(0);
             },
 
-            scrollToBottom : function () {
+            __scrollToBottom : function () {
                 var $parentEl = this.$el.parent();
                 $parentEl.scrollTop(this.$el.height());
             },
 
-            scrollToNeighbor: function (index) {
+            __scrollToNeighbor: function (index) {
                 var view = this.visibleCollectionView.children.findByIndex(index),
                     $parentEl = this.$el.parent(),
                     currentScrollTop = $parentEl.scrollTop(),
@@ -196,7 +196,7 @@ define([
                 }
             },
 
-            scrollToIndex: function (index, offset) {
+            __scrollToIndex: function (index, offset) {
                 var view = this.visibleCollectionView.children.findByIndex(index),
                     $parentEl = this.$el.parent(),
                     currentScrollTop = $parentEl.scrollTop(),
@@ -206,7 +206,7 @@ define([
                 $parentEl.scrollTop(newScrollPos);
             },
 
-            selectByIndex: function (currentIndex, nextIndex, shiftPressed) {
+            __selectByIndex: function (currentIndex, nextIndex, shiftPressed) {
                 var model = this.collection.at(nextIndex);
                 var selectFn = this.collection.selectSmart || this.collection.select;
                 if (selectFn) {
@@ -214,7 +214,7 @@ define([
                 }
             },
 
-            moveToNeighbor: function (direction, shiftPressed) {
+            __moveToNeighbor: function (direction, shiftPressed) {
                 var selectedIndex = this.getSelectedViewIndex(),
                     nextIndex = selectedIndex;
 
@@ -222,27 +222,27 @@ define([
 
                 if (nextIndex !== selectedIndex) {
                     nextIndex = this.__normalizeCollectionIndex(nextIndex);
-                    this.selectByIndex(selectedIndex, nextIndex, shiftPressed);
-                    this.scrollToNeighbor(nextIndex);
+                    this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+                    this.__scrollToNeighbor(nextIndex);
                 }
             },
 
-            moveToNextPage: function (direction, shiftPressed) {
+            __moveToNextPage: function (direction, shiftPressed) {
                 var selectedIndex = this.getSelectedViewIndex(),
                     selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex),
                     selectedPositionTop = selectedView.$el.position().top,
                     nextIndex = selectedIndex;
 
                 if (direction === 'top') {
-                    nextIndex = this.getTopIndex(selectedIndex);
+                    nextIndex = this.__getTopIndex(selectedIndex);
                 } else {
-                    nextIndex = this.getBottomIndex(selectedIndex);
+                    nextIndex = this.__getBottomIndex(selectedIndex);
                 }
 
                 if (nextIndex !== selectedIndex) {
                     nextIndex = this.__normalizeCollectionIndex(nextIndex);
-                    this.selectByIndex(selectedIndex, nextIndex, shiftPressed);
-                    this.scrollToIndex(nextIndex, -selectedPositionTop);
+                    this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+                    this.__scrollToIndex(nextIndex, -selectedPositionTop);
                 }
             },
 
@@ -259,7 +259,7 @@ define([
                 return index;
             },
 
-            getTopIndex: function (index) {
+            __getTopIndex: function (index) {
                 var cHeight = 0,
                     newIndex = index,
                     childViews = this.visibleCollectionView.children.toArray();
@@ -278,7 +278,7 @@ define([
                 return newIndex;
             },
 
-            getBottomIndex: function (index) {
+            __getBottomIndex: function (index) {
                 var cHeight = 0,
                     newIndex = index,
                     childViews = this.visibleCollectionView.children.toArray();
