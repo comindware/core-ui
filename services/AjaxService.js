@@ -52,11 +52,14 @@
                 }
 
                 return this.getResponse('POST', url, data, {
-                    success: function(result) {
-                        if (result.success !== true) {
+                    success: function (result) {
+                        if (result.refresh) {
+                            location.reload();
+                        }
+                        else if (result.success !== true) {
                             this.trigger('jsApi:error', result);
                         }
-                        if (successCallback) {
+                        else if (successCallback) {
                             successCallback(result.data);
                         }
                     }.bind(this)
