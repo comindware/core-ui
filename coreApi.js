@@ -41,7 +41,9 @@ define([
         './models/behaviors/CollapsibleBehavior',
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
+
         './views/behaviors/LoadingBehavior',
+        './views/behaviors/BlurableBehavior',
 
         './views/SearchBarView',
 
@@ -80,6 +82,7 @@ define([
         SelectableBehavior,
 	
         LoadingBehavior,
+        BlurableBehavior,
 
         SearchBarView,
 
@@ -147,7 +150,8 @@ define([
             },
             views: {
                 behaviors: {
-                    LoadingBehavior: LoadingBehavior
+                    LoadingBehavior: LoadingBehavior,
+                    BlurableBehavior: BlurableBehavior
                 },
                 SearchBarView: SearchBarView
             },
