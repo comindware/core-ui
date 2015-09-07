@@ -51,18 +51,17 @@
                     data[parameterNames[i]] = parameters[i];
                 }
 
-                return this.getResponse('POST', url, data, {
-                    success: function (result) {
-                        if (result.refresh) {
-                            location.reload();
-                        }
-                        else if (result.success !== true) {
-                            this.trigger('jsApi:error', result);
-                        }
-                        else if (successCallback) {
-                            successCallback(result.data);
-                        }
-                    }.bind(this)
+                return this.getResponse('POST', url, data).then(function (result) {
+                    if (result.success !== true) {
+                        throw new Error();
+                    }
+                    if (result.refresh) {
+                        location.reload();
+                    }
+                    else if (successCallback) {
+                        successCallback(result.data);
+                    }
+                    return result;
                 }).get('data');
             }
         };
