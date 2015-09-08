@@ -60,7 +60,16 @@
                             successCallback(result.data);
                         }
                     }.bind(this)
-                }).get('data');
+                }).then(function (result) {
+                    if (!result.success) {
+                        var error = new Error(result.errorMessage);
+                        error.name = 'JsApiError';
+                        error.errorType = result.errorType;
+                        error.errorData = result.errorData;
+                        throw error;
+                    }
+                    return result.data;
+                });
             }
         };
 
