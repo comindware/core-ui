@@ -40,9 +40,7 @@ define(['text!../templates/fadingPanel.html', 'module/lib'],
             },
 
             __onClick: function () {
-                if (!this.activeOptions || this.activeOptions.fadeOut !== false) {
-                    this.fadeOut();
-                }
+                this.trigger('click', this, this.activeOptions);
             }
         });
     });
