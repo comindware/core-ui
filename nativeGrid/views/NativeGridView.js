@@ -73,12 +73,16 @@ define(['module/lib',
                     collection: this.collection,
                     childViewOptions: childViewOptions,
                     height: 'auto',
-                    maxRows: 1000,
-                    gridEventAggregator: this
+                    maxRows: 1000
                 });
 
+                this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
                 this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
                 this.listenTo(this, 'showFilterView', this.showFilterPopout, this);
+            },
+
+            __afterColumnsResize: function (width) {
+                this.listView.setWidth(width);
             },
 
             onShow: function () {

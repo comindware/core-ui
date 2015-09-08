@@ -87,7 +87,6 @@ define([
                     position: 0
                 };
 
-                this.listenTo(this.options.gridEventAggregator, 'listResized', this.__onListResized, this);
                 this.visibleCollection = new VirtualCollection(this.collection);
                 _.bindAll(this, '__handleResize', '__handleResizeInternal');
                 $(window).resize(this.__handleResize);
@@ -111,8 +110,7 @@ define([
                     emptyView: this.emptyView,
                     emptyViewOptions: this.emptyViewOptions,
                     childViewOptions: this.childViewOptions,
-                    loadingChildView: this.loadingChildView,
-                    gridEventAggregator: this.options.gridEventAggregator
+                    loadingChildView: this.loadingChildView
                 });
 
                 this.listenTo(this.visibleCollectionView, 'childview:click', function (child) {
@@ -334,7 +332,7 @@ define([
                 return minHeight;
             },
 
-            __onListResized: function (fullWidth) {
+            setWidth: function (fullWidth) {
                 this.$el.width(fullWidth);
             },
 
