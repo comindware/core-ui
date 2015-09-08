@@ -77,7 +77,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                     $cell.width(v * availableWidth - this.cellWidthDiff);
                 }, this);
 
-                this.view.options.gridEventAggregator.trigger('listResized', args.fullWidth);
+                this.view.options.gridEventAggregator.trigger('afterColumnsResize', args.fullWidth);
             },
 
             __onSingleColumnResize: function (sender, args) {
@@ -87,7 +87,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 var fullWidth = this.initialFullWidth + args.delta;
                 $cell.width(this.columnsWidth[args.index] + args.delta);
 
-                this.view.options.gridEventAggregator.trigger('listResized', fullWidth);
+                this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             }
         });
 
