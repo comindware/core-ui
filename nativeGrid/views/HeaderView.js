@@ -95,6 +95,7 @@ define(['../../list/views/GridHeaderView'],
                         var tableWidth = Math.max(this.headerMinWidth, this.headerMinWidth + delta);
                         draggedColumn.$el.parent().width(tableWidth);
                         draggedColumn.$el.width(newDraggerColumnWidth);
+                        this.columns[index].width = newDraggerColumnWidth;
                         this.gridEventAggregator.trigger('singleColumnResize', this, {
                             index: index,
                             delta: delta
@@ -113,7 +114,8 @@ define(['../../list/views/GridHeaderView'],
                         draggedColumn.$el.width(newDraggerColumnWidth);
 
                         var newColumnWidthPc = newDraggerColumnWidth / ctx.fullWidth;
-                        this.columns[index].width = changes[index] = newColumnWidthPc;
+                        this.columns[index].width = newDraggerColumnWidth;
+                        changes[index] = newColumnWidthPc;
                         index++;
 
                         var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth;
@@ -123,7 +125,8 @@ define(['../../list/views/GridHeaderView'],
                             c.$el.width(newColumnWidth);
 
                             var newColumnWidthPc = newColumnWidth / ctx.fullWidth;
-                            this.columns[index].width = changes[index] = newColumnWidthPc;
+                            this.columns[index].width = newColumnWidth;
+                            changes[index] = newColumnWidthPc;
                             index++;
                         }, this);
 
