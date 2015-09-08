@@ -52,11 +52,11 @@
                 }
 
                 return this.getResponse('POST', url, data).then(function (result) {
-                    if (result.success !== true) {
-                        throw new Error();
-                    }
                     if (result.refresh) {
                         location.reload();
+                    }
+                    if (result.success !== true) {
+                        throw new Error();
                     }
                     else if (successCallback) {
                         successCallback(result.data);
