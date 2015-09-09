@@ -159,7 +159,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'cor
                     todayBtn: true,
                     pickerPosition: isTopPosition ? 'top-right' : 'bottom-right',
                     weekStart: utils.dateHelpers.getWeekStartDay(),
-                    language: Context.langCode
+                    language: window.langCode
                 }).on('changeDate', function (e) {
                     var newValue = new Date(e.date.setMinutes(e.date.getMinutes() + e.date.getTimezoneOffset()));
                     this.updateValue(newValue);
