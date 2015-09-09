@@ -54,6 +54,7 @@
                 return this.getResponse('POST', url, data).then(function (result) {
                     if (result.refresh) {
                         location.reload();
+                        return result;
                     }
                     if (result.success !== true) {
                         throw new Error();
