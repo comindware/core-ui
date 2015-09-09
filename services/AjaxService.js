@@ -61,7 +61,8 @@
                         }
                     }.bind(this)
                 }).then(function (result) {
-                    if (!result.success) {
+                    if (result.success !== true) {
+                        this.trigger('jsApi:error', result);
                         var error = new Error(result.errorMessage);
                         error.name = 'JsApiError';
                         error.errorType = result.errorType;
