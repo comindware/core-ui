@@ -51,6 +51,7 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
         var defaultOptions = {
             popoutFlow: popoutFlow.LEFT,
             customAnchor: false,
+            dropByAnchor: false,
             fade: false,
             height: 'auto',
             autoOpen: true,
@@ -80,7 +81,6 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
             },
 
             events: {
-                'click @ui.button': '__handleClick',
                 'blur @ui.panel': '__handleBlur'
             },
 
@@ -113,6 +113,11 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
 
                 this.currentDirection = this.options.direction;
                 this.updateDirectionClasses();
+                if (this.options.dropByAnchor) {
+                    $('.js-anchor', this.button.$el).click(this.__handleClick.bind(this));
+                } else {
+                    this.ui.button.click(this.__handleClick.bind(this));
+                }
             },
 
             updatePanelFlow: function () {

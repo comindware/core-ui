@@ -71,6 +71,7 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
                         collection: collection
                     },
                     customAnchor: options.customAnchor,
+                    dropByAnchor: options.dropByAnchor,
                     popoutFlow: options.popoutFlow
                 };
                 return factory.createPopout(popoutOptions);
