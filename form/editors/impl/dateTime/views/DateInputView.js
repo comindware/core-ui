@@ -38,7 +38,7 @@ define(['module/lib',
                 }
             },
 
-            className: 'date-view js-anchor',
+            className: 'date-view',
 
             ui: {
                 clearButton: '.js-date-remove',
