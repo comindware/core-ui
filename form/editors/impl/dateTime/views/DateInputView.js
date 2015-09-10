@@ -21,20 +21,11 @@ define(['module/lib',
         'use strict';
 
         var defaultOptions = {
-            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'),
-            readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.READONLYPLACEHOLDER'),
-            disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.DISABLEDPLACEHOLDER')
+            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER')
         };
 
         return Marionette.ItemView.extend({
             initialize: function (options) {
-                options = options || {};
-                if (options.schema) {
-                    _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-                } else {
-                    _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-                }
-
                 this.editDateFormat = utils.dateHelpers.getDateEditFormat();
             },
 
@@ -165,7 +156,7 @@ define(['module/lib',
                 if (!this.model.get('enabled') || this.model.get('readonly')) {
                     this.placeholder = '';
                 } else {
-                    this.placeholder = this.options.emptyPlaceholder;
+                    this.placeholder = defaultOptions.emptyPlaceholder;
                 }
 
                 this.ui.dateInput.prop('placeholder', this.placeholder);

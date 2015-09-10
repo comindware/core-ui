@@ -67,7 +67,7 @@ define([
             _.defaults(this.options, defaultOptions);
             utils.helpers.ensureOption(options, 'buttonView');
             utils.helpers.ensureOption(options, 'panelView');
-            _.bindAll(this, 'open', 'close', '__handleWindowResize', '__handleBlur');
+            _.bindAll(this, 'open', 'close', '__handleWindowResize');
         },
 
         template: Handlebars.compile(template),
@@ -75,8 +75,7 @@ define([
         behaviors: {
             BlurableBehavior: {
                 behaviorClass: BlurableBehavior,
-                selector: '.js-panel-region',
-                onBlur: '__handleBlur'
+                onBlur: 'close'
             }
         },
 
@@ -277,16 +276,6 @@ define([
             var outlineDiff = (this.panelView.$el.outerHeight() - this.panelView.$el.height());
             var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff - config.BOTTOM_HEIGHT_OFFSET;
             this.panelView.$el.height(panelHeight);
-        },
-
-        __handleBlur: function () {
-            setTimeout(function () {
-                if ($.contains(this.el, document.activeElement)) {
-                    $(document.activeElement).one('blur', this.__handleBlur);
-                } else {
-                    this.close();
-                }
-            }.bind(this), 15);
         }
     });
 });
