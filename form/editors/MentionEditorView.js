@@ -19,7 +19,8 @@ define([
     'core/serviceLocator',
     './base/BaseLayoutEditorView',
     './impl/common/members/services/factory',
-    './TextAreaEditorView'
+    './TextAreaEditorView',
+    'core/services/LocalizationService'
 ], function (
     template,
     lib,
@@ -28,7 +29,8 @@ define([
     serviceLocator,
     BaseLayoutEditorView,
     membersFactory,
-    TextAreaEditorView) {
+    TextAreaEditorView,
+    LocalizationService) {
     'use strict';
 
     var defaultOptions = {
@@ -69,7 +71,11 @@ define([
                 this.stopListening(this.dropdownView);
             }
             this.dropdownView = dropdown.factory.createDropdown({
-                buttonView: TextAreaEditorView,
+                buttonView: TextAreaEditorView.extend({
+                    initialize: function () {
+                        this.options.emptyPlaceholder = LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER');
+                    },
+                }),
                 buttonViewOptions: _.extend({}, this.options.editorOptions || {}, {
                     model: this.model,
                     readonly: this.getReadonly(),
@@ -240,6 +246,9 @@ define([
         __setReadonly: function (readonly) {
             BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
             this.dropdownView.button.setReadonly(readonly);
+        },
+        __setPlaceholder:function() {
+            BaseLayoutEditorView.prototype
         }
     });
 
