@@ -119,7 +119,7 @@ define(['module/lib',
                 });
 
                 var filterViewOptions = this.options.columns.find(function (c) {
-                    return c.id === options.columnHeader.id;
+                    return c.id === options.columnHeader.options.column.id;
                 }).filterViewOptions;
 
                 this.filterDropdown = dropdownFactory.createPopout({
@@ -137,7 +137,7 @@ define(['module/lib',
             },
 
             __onFilterClose: function (child) {
-                this.trigger('filterClose', child.model);
+                this.trigger('filterClose', child.panelView.model);
             }
         });
 
