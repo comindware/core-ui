@@ -246,9 +246,6 @@ define([
         __setReadonly: function (readonly) {
             BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
             this.dropdownView.button.setReadonly(readonly);
-        },
-        __setPlaceholder:function() {
-            BaseLayoutEditorView.prototype
         }
     });
 
