@@ -126,8 +126,7 @@ define(['module/lib',
                     buttonView: AnchoredButtonView,
                     panelView: options.filterView,
                     panelViewOptions: filterViewOptions,
-                    customAnchor: true,
-                    columnId: options.columnHeader.id
+                    customAnchor: true
                 });
 
                 this.listenTo(this.filterDropdown, 'close', this.__onFilterClose, this);

@@ -19,7 +19,6 @@ define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/G
             initialize: function (options) {
                 GridColumnHeaderView.prototype.initialize.apply(this, arguments);
 
-                this.id = options.column.id;
                 this.column.filterView && (this.filterView = this.column.filterView); //jshint ignore:line
                 this.gridEventAggregator = options.gridEventAggregator;
             },

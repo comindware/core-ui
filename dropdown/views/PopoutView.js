@@ -59,7 +59,8 @@ define([
         fade: false,
         height: 'auto',
         autoOpen: true,
-        direction: popoutDirection.DOWN
+        direction: popoutDirection.DOWN,
+        renderAfterClose: true
     };
 
     return Marionette.LayoutView.extend({
