@@ -21,6 +21,8 @@
         //noinspection JSUnusedGlobalSymbols
         var AjaxServicePrototype = {
             getResponse: function (type, url, data, options) {
+                utilsApi.helpers.assertArgumentNotFalsy(type, 'type');
+                utilsApi.helpers.assertArgumentNotFalsy(url, 'url');
                 var config = _.extend({
                     type: type,
                     url: url,
@@ -30,6 +32,18 @@
                     contentType: 'application/json'
                 }, options || {});
                 return Promise.resolve($.ajax(config));
+            },
+
+            sendFormData: function (url, formData) {
+                utilsApi.helpers.assertArgumentNotFalsy(url, 'url');
+                utilsApi.helpers.assertArgumentNotFalsy(formData, 'formData');
+                return Promise.resolve($.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                }));
             },
 
             getJsApiResponse: function (url, parameterNames, parameters, callback) {
@@ -60,7 +74,17 @@
                             successCallback(result.data);
                         }
                     }.bind(this)
-                }).get('data');
+                }).then(function (result) {
+                    if (result.success !== true) {
+                        this.trigger('jsApi:error', result);
+                        var error = new Error(result.errorMessage);
+                        error.name = 'JsApiError';
+                        error.errorType = result.errorType;
+                        error.errorData = result.errorData;
+                        throw error;
+                    }
+                    return result.data;
+                });
             }
         };
 

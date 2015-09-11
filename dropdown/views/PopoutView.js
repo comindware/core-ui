@@ -75,7 +75,6 @@ define([
         behaviors: {
             BlurableBehavior: {
                 behaviorClass: BlurableBehavior,
-                selector: '.js-panel-region',
                 onBlur: 'close'
             }
         },
