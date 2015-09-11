@@ -107,11 +107,6 @@ define(['module/lib',
             },
 
             showFilterPopout: function (options) {
-                if (this.isPopupVisible && this.filterContext && options.columnHeader === this.filterContext.columnHeader) {
-                    this.closeFilterPopout();
-                    return;
-                }
-
                 var AnchoredButtonView = Marionette.ItemView.extend({
                     template: Handlebars.compile('<span class="js-anchor"></span>'),
                     behaviors: {
@@ -123,36 +118,27 @@ define(['module/lib',
                     tagName: 'div'
                 });
 
+                var filterViewOptions = this.options.columns.find(function (c) {
+                    return c.id === options.columnHeader.id;
+                }).filterViewOptions;
+
                 this.filterDropdown = dropdownFactory.createPopout({
                     buttonView: AnchoredButtonView,
                     panelView: options.filterView,
-                    customAnchor: true
+                    panelViewOptions: filterViewOptions,
+                    customAnchor: true,
+                    columnId: options.columnHeader.id
                 });
+
+                this.listenTo(this.filterDropdown, 'close', this.__onFilterClose, this);
 
                 this.popoutRegion.show(this.filterDropdown);
                 this.filterDropdown.$el.offset(options.position);
                 this.filterDropdown.open();
-                this.isPopupVisible = true;
-                this.filterContext = {
-                    columnHeader: options.columnHeader
-                };
-
-                this.$document.on('mousedown', this.handleClick.bind(this));
             },
 
-            handleClick: function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                if (this.isPopupVisible && !$(event.target).closest('.' + this.filterDropdown.className).length && !$(event.target).hasClass('js-filter-btn')) {
-                    this.closeFilterPopout();
-                }
-            },
-
-            closeFilterPopout: function () {
-                this.$document.off('mousedown');
-                this.isPopupVisible = false;
-                this.popoutRegion.reset();
-                delete this.filterContext;
+            __onFilterClose: function (child) {
+                this.trigger('filterClose', child.model);
             }
         });
 

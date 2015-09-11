@@ -259,6 +259,8 @@ define([
             if (this.options.height === height.BOTTOM) {
                 $(window).off('resize', this.__handleWindowResize);
             }
+
+            var closeArgs = _.toArray(arguments);
             this.ui.panel.hide({
                 duration: 0,
                 complete: function () {
@@ -266,9 +268,17 @@ define([
                     this.panelRegion.reset();
                     //noinspection JSValidateTypes
                     this.isOpen = false;
-                    this.ui.panel.blur();
-                    this.render();
-                    this.trigger('close', this);
+
+                    // selecting focusable parent after closing is important to maintant nested dropdowns
+                    var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
+                    if (firstFocusableParent) {
+                        $(firstFocusableParent).focus();
+                    }
+
+                    this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
+                    if (this.options.renderAfterClose) {
+                        this.render();
+                    }
                 }.bind(this)
             });
         },
