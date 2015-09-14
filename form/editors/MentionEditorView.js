@@ -71,17 +71,14 @@ define([
                 this.stopListening(this.dropdownView);
             }
             this.dropdownView = dropdown.factory.createDropdown({
-                buttonView: TextAreaEditorView.extend({
-                    initialize: function () {
-                        this.options.emptyPlaceholder = LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER');
-                    },
-                }),
+                buttonView: TextAreaEditorView,
                 buttonViewOptions: _.extend({}, this.options.editorOptions || {}, {
                     model: this.model,
                     readonly: this.getReadonly(),
                     enabled: this.getEnabled(),
                     key: this.key,
-                    autocommit: this.options.autocommit
+                    autocommit: this.options.autocommit,
+                    emptyPlaceholder:LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER')
                 }),
                 panelView: membersFactory.getMembersListView(),
                 panelViewOptions: {
