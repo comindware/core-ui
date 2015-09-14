@@ -260,6 +260,13 @@ define([
                 $(window).off('resize', this.__handleWindowResize);
             }
 
+            // selecting focusable parent after closing is important to maintant nested dropdowns
+            // focused element MUST be changed BEFORE active element is hidden or destroyed (!)
+            var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
+            if (firstFocusableParent) {
+                $(firstFocusableParent).focus();
+            }
+
             var closeArgs = _.toArray(arguments);
             this.ui.panel.hide({
                 duration: 0,
@@ -268,12 +275,6 @@ define([
                     this.panelRegion.reset();
                     //noinspection JSValidateTypes
                     this.isOpen = false;
-
-                    // selecting focusable parent after closing is important to maintant nested dropdowns
-                    var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
-                    if (firstFocusableParent) {
-                        $(firstFocusableParent).focus();
-                    }
 
                     this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
                     if (this.options.renderAfterClose) {
