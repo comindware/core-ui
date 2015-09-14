@@ -137,7 +137,7 @@ define(['module/lib',
             },
 
             __onFilterClose: function (child) {
-                this.trigger('filterClose', child.panelView.model);
+                this.trigger('filterClose', child.panelView);
             }
         });
 
