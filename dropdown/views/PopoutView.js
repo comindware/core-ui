@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-    'text!../templates/popout.html',
+    'text!../templates/pop.out.html',
     'module/lib',
     'core/utils/utilsApi',
     'core/services/WindowService',
