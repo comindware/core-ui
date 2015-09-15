@@ -46,6 +46,7 @@ define([
         './views/behaviors/BlurableBehavior',
 
         './views/SearchBarView',
+        './views/SplitPanelView',
 
         './Bootstrapper'
     ],
@@ -85,6 +86,7 @@ define([
         BlurableBehavior,
 
         SearchBarView,
+        SplitPanelView,
 
         Bootstrapper
     ) {
@@ -153,7 +155,8 @@ define([
                     LoadingBehavior: LoadingBehavior,
                     BlurableBehavior: BlurableBehavior
                 },
-                SearchBarView: SearchBarView
+                SearchBarView: SearchBarView,
+                SplitPanelView: SplitPanelView
             },
             /**
              * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
