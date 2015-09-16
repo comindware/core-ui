@@ -70,6 +70,7 @@ define(['module/lib',
                 this.listView = new ListView({
                     childView: RowView,
                     childHeight: 41,
+                    selectableBehavior: this.options.selectableBehavior,
                     collection: this.collection,
                     childViewOptions: childViewOptions,
                     height: 'auto',

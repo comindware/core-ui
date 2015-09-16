@@ -87,7 +87,7 @@ define([
                     position: 0
                 };
 
-                this.visibleCollection = new VirtualCollection(this.collection);
+                this.visibleCollection = new VirtualCollection(this.collection, {selectableBehavior: options.selectableBehavior});
                 _.bindAll(this, '__handleResize', '__handleResizeInternal');
                 $(window).resize(this.__handleResize);
             },
@@ -154,7 +154,7 @@ define([
                     this.__scrollToTop();
                 },
                 'end': function (e) {
-                    this.__selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
+                    this.__selectByIndex(this.getSelectedViewIndex(), this.visibleCollection.length - 1, e.shiftKey);
                     this.__scrollToBottom();
                 }
             },
@@ -205,10 +205,10 @@ define([
             },
 
             __selectByIndex: function (currentIndex, nextIndex, shiftPressed) {
-                var model = this.collection.at(nextIndex);
-                var selectFn = this.collection.selectSmart || this.collection.select;
+                var model = this.visibleCollection.at(nextIndex);
+                var selectFn = this.visibleCollection.selectSmart || this.visibleCollection.select;
                 if (selectFn) {
-                    selectFn.call(this.collection, model, false, shiftPressed);
+                    selectFn.call(this.visibleCollection, model, false, shiftPressed);
                 }
             },
 
@@ -297,7 +297,7 @@ define([
 
             // normalized the index so that it fits in range [0, this.collection.length - 1]
             __normalizeCollectionIndex: function (index) {
-                return Math.max(0, Math.min(this.collection.length - 1, index));
+                return Math.max(0, Math.min(this.visibleCollection.length - 1, index));
             },
 
             __assignKeyboardShortcuts: function () {
