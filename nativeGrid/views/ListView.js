@@ -14,10 +14,9 @@
 define([
         'module/lib',
         'core/utils/utilsApi',
-        'core/collections/VirtualCollection',
         'text!core/list/templates/list.html'
     ],
-    function (lib, utils, VirtualCollection, template) {
+    function (lib, utils, template) {
         'use strict';
 
         var VisibleCollectionView = Marionette.CollectionView.extend({
@@ -87,7 +86,6 @@ define([
                     position: 0
                 };
 
-                this.visibleCollection = new VirtualCollection(this.collection, {selectableBehavior: options.selectableBehavior});
                 _.bindAll(this, '__handleResize', '__handleResizeInternal');
                 $(window).resize(this.__handleResize);
             },
@@ -106,7 +104,7 @@ define([
                     childView: this.childView,
                     childViewSelector: this.childViewSelector,
                     className: 'visible-collection',
-                    collection: this.visibleCollection,
+                    collection: this.collection,
                     emptyView: this.emptyView,
                     emptyViewOptions: this.emptyViewOptions,
                     childViewOptions: this.childViewOptions,
@@ -154,7 +152,7 @@ define([
                     this.__scrollToTop();
                 },
                 'end': function (e) {
-                    this.__selectByIndex(this.getSelectedViewIndex(), this.visibleCollection.length - 1, e.shiftKey);
+                    this.__selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
                     this.__scrollToBottom();
                 }
             },
@@ -205,10 +203,10 @@ define([
             },
 
             __selectByIndex: function (currentIndex, nextIndex, shiftPressed) {
-                var model = this.visibleCollection.at(nextIndex);
-                var selectFn = this.visibleCollection.selectSmart || this.visibleCollection.select;
+                var model = this.collection.at(nextIndex);
+                var selectFn = this.collection.selectSmart || this.collection.select;
                 if (selectFn) {
-                    selectFn.call(this.visibleCollection, model, false, shiftPressed);
+                    selectFn.call(this.collection, model, false, shiftPressed);
                 }
             },
 
@@ -245,9 +243,9 @@ define([
             },
 
             getSelectedViewIndex: function () {
-                var cid = this.visibleCollection.cursorCid;
+                var cid = this.collection.cursorCid;
                 var index = 0;
-                this.visibleCollection.find(function (x, i) {
+                this.collection.find(function (x, i) {
                     if (x.cid === cid) {
                         index = i;
                         return true;
@@ -297,7 +295,7 @@ define([
 
             // normalized the index so that it fits in range [0, this.collection.length - 1]
             __normalizeCollectionIndex: function (index) {
-                return Math.max(0, Math.min(this.visibleCollection.length - 1, index));
+                return Math.max(0, Math.min(this.collection.length - 1, index));
             },
 
             __assignKeyboardShortcuts: function () {
@@ -341,7 +339,7 @@ define([
             },
 
             __handleResizeInternal: function () {
-                this.visibleCollection.updateWindowSize(500);
+                this.collection.updateWindowSize(500);
                 this.state.visibleHeight = this.$el.parent().height();
                 
                 setTimeout(function () {

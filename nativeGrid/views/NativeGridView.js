@@ -39,7 +39,6 @@ define(['module/lib',
 
             initialize: function (options) {
                 this.collection = options.collection;
-                _.extend(this.collection, new SelectableBehavior.MultiSelect(this));
                 this.columsFit = options.columsFit;
 
                 this.initializeViews();
@@ -70,7 +69,6 @@ define(['module/lib',
                 this.listView = new ListView({
                     childView: RowView,
                     childHeight: 41,
-                    selectableBehavior: this.options.selectableBehavior,
                     collection: this.collection,
                     childViewOptions: childViewOptions,
                     height: 'auto',

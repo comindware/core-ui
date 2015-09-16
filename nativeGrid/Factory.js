@@ -13,20 +13,35 @@
 
 define([
         'core/utils/utilsApi',
-        './views/NativeGridView'
+        './views/NativeGridView',
+        'core/collections/VirtualCollection'
     ],
     function (
-        utils, NativeGridView
+        utils, NativeGridView, VirtualCollection
 
     ) {
         'use strict';
 
+        var createWrappedCollection = function (collection, options) {
+            if (!(collection instanceof VirtualCollection)) {
+                if (_.isArray(collection)) {
+                    collection = new VirtualCollection(new Backbone.Collection(collection), options);
+                } else if (collection instanceof Backbone.Collection) {
+                    collection = new VirtualCollection(collection, options);
+                } else {
+                    utils.helpers.throwError('Invalid collection', 'ArgumentError');
+                }
+            }
+            return collection;
+        };
+
         return {
             createNativeGrid: function (options) {
+                var collection = createWrappedCollection(options.collection, {selectableBehavior: options.gridViewOptions.selectableBehavior});
+
                 var gridViewOptions = _.extend({
                     columnsFit: options.columnsFit,
-                    collection: options.collection,
-                    selectableBehavior: options.selectableBehavior
+                    collection: collection
                 }, options.gridViewOptions);
 
                 return new NativeGridView(gridViewOptions);
