@@ -78,6 +78,16 @@ define(['module/lib',
                 this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
                 this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
                 this.listenTo(this, 'showFilterView', this.showFilterPopout, this);
+                this.listenTo(this.listView, 'row:click', this.__onRowClick, this);
+                this.listenTo(this.listView, 'row:dblclick', this.__onRowDblClick, this);
+            },
+
+            __onRowClick: function (model) {
+                this.trigger('row:click', model);
+            },
+
+            __onRowDblClick: function (model) {
+                this.trigger('row:dblclick', model);
             },
 
             __afterColumnsResize: function (width) {
