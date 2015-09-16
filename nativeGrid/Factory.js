@@ -25,7 +25,8 @@ define([
             createNativeGrid: function (options) {
                 var gridViewOptions = _.extend({
                     columnsFit: options.columnsFit,
-                    collection: options.collection
+                    collection: options.collection,
+                    selectableBehavior: options.selectableBehavior
                 }, options.gridViewOptions);
 
                 return new NativeGridView(gridViewOptions);
