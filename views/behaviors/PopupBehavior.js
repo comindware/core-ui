@@ -25,25 +25,13 @@ define([
             onBlur: null
         };
 
-        return Marionette.Behavior.extend({
+        return BlurableBehavior.extend({
             initialize: function (options, view) {
                 _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 
                 _.bindAll(this, '__onBlur');
 
                 view.focus = this.__focus.bind(this);
-            },
-
-            modelEvents: {},
-
-            events: function () {
-                var eventsMap = {};
-                var key = 'blur';
-                if (this.options.selector) {
-                    key += ' ' + this.options.selector;
-                }
-                eventsMap[key] = '__onBlur';
-                return eventsMap;
             },
 
             onRender: function () {
@@ -53,18 +41,6 @@ define([
 
             onShow: function () {
                 this.__focus();
-            },
-
-            __getFocusableEl: function () {
-                if (this.options.selector) {
-                    return this.$(this.options.selector);
-                } else {
-                    return this.$el;
-                }
-            },
-
-            __focus: function () {
-                this.__getFocusableEl().focus();
             },
 
             close: function (result) {

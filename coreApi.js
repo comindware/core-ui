@@ -44,6 +44,7 @@ define([
 
         './views/behaviors/LoadingBehavior',
         './views/behaviors/BlurableBehavior',
+        './views/behaviors/PopupBehavior',
 
         './views/SearchBarView',
         './views/SplitPanelView',
@@ -84,6 +85,7 @@ define([
 	
         LoadingBehavior,
         BlurableBehavior,
+        PopupBehavior,
 
         SearchBarView,
         SplitPanelView,
@@ -153,7 +155,8 @@ define([
             views: {
                 behaviors: {
                     LoadingBehavior: LoadingBehavior,
-                    BlurableBehavior: BlurableBehavior
+                    BlurableBehavior: BlurableBehavior,
+                    PopupBehavior: PopupBehavior
                 },
                 SearchBarView: SearchBarView,
                 SplitPanelView: SplitPanelView
