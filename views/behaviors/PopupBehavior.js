@@ -25,22 +25,34 @@ define([
             onBlur: null
         };
 
-        return BlurableBehavior.extend({
+        return Marionette.Behavior.extend({
             initialize: function (options, view) {
                 _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 
-                _.bindAll(this, '__onBlur');
+                view.close = this.close.bind(this);
+            },
 
-                view.focus = this.__focus.bind(this);
+            behaviors: {
+                BlurableBehavior: {
+                    behaviorClass: BlurableBehavior,
+                    onBlur: 'close'
+                }
             },
 
             onRender: function () {
-                this.__getFocusableEl().attr('tabindex', 0);
                 this.__getFocusableEl().addClass('l-popup');
             },
 
             onShow: function () {
-                this.__focus();
+                this.__getFocusableEl().focus();
+            },
+
+            __getFocusableEl: function () {
+                if (this.options.selector) {
+                    return this.$(this.options.selector);
+                } else {
+                    return this.$el;
+                }
             },
 
             close: function (result) {
@@ -51,17 +63,6 @@ define([
                 }
                 this.view.trigger('close');
                 WindowService.closePopup();
-            },
-
-            __onBlur: function () {
-                var $focusableEl = this.__getFocusableEl();
-                _.defer(function () {
-                    if ($focusableEl[0] === document.activeElement || $focusableEl.find(document.activeElement).length > 0) {
-                        $(document.activeElement).one('blur', this.__onBlur);
-                    } else {
-                        this.close();
-                    }
-                }.bind(this));
             }
         });
     });
