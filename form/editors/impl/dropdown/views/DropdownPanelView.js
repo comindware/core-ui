@@ -14,10 +14,11 @@
 define(['module/lib',
         'text!../templates/dropdownPanel.html',
         './DefaultDropdownListItemView',
+        '../collections/DropdownCollection',
         'core/list/listApi',
         'core/utils/utilsApi'
     ],
-    function (lib, template, DefaultDropdownListItemView, list, utils) {
+    function (lib, template, DefaultDropdownListItemView, DropdownCollection, list, utils) {
         'use strict';
 
         var config = {
@@ -81,11 +82,11 @@ define(['module/lib',
                             return (_.result(model.toJSON(), displayAttribute) || '').toString().toLowerCase();
                         };
                     }
+
                     if (collection.comparator) {
                         collection.sort();
                     }
-                        virtualCollection = list.factory.createWrappedCollection(collection, {
-                        selectableBehavior: 'single',
+                        virtualCollection = new DropdownCollection(collection, {
                         comparator: collection.comparator
                     });
                     this.model.set('virtualCollection', virtualCollection);
