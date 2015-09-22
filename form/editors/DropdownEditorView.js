@@ -18,9 +18,10 @@ define([
         'text!./templates/dropdownEditor.html',
         './base/BaseLayoutEditorView',
         './impl/dropdown/views/DropdownPanelView',
-        './impl/dropdown/views/DropdownButtonView'
+        './impl/dropdown/views/DropdownButtonView',
+        './impl/dropdown/collections/DropdownCollection'
     ],
-    function (lib, list, dropdown, template, BaseLayoutEditorView, DropdownPanelView, DropdownButtonView) {
+    function (lib, list, dropdown, template, BaseLayoutEditorView, DropdownPanelView, DropdownButtonView, DropdownCollection) {
         'use strict';
 
         var classes = {
@@ -29,7 +30,8 @@ define([
         var defaultOptions = {
             collection: null,
             displayAttribute: 'text',
-            allowEmptyValue: true
+            allowEmptyValue: true,
+            enableSearch: false
         };
 
         Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend({
@@ -50,6 +52,11 @@ define([
                 if (_.isArray(this.options.collection)) {
                     this.options.collection = new Backbone.Collection(this.options.collection);
                 }
+
+                if (this.options.collection instanceof Backbone.Collection) {
+                    this.options.collection = new DropdownCollection(this.options.collection);
+                }
+                
                 this.collection = this.options.collection;
                 
                 // adding ListItem behavior to collection model
@@ -111,7 +118,9 @@ define([
                     panelView: DropdownPanelView,
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
-                        reqres: this.reqres
+                        reqres: this.reqres,
+                        enableSearch: this.options.enableSearch,
+                        onFilter: this.options.onFilter
                     },
                     autoOpen: false
                 });

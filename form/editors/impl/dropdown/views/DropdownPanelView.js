@@ -27,6 +27,8 @@ define(['module/lib',
 
         return Marionette.LayoutView.extend({
             initialize: function (options) {
+                options.onFilter && (this.onFilter = options.onFilter); //jshint ignore:line
+
                 utils.helpers.ensureOption(options, 'model');
                 utils.helpers.ensureOption(options, 'reqres');
 
@@ -41,9 +43,32 @@ define(['module/lib',
 
             template: Handlebars.compile(template),
 
+            events: {
+                'keyup @ui.input': 'onFilter',
+                'change @ui.input': 'onFilter',
+                'input @ui.input': 'onFilter'
+            },
+
+
+            ui: {
+                input: '.js-input'
+            },
+
             regions: {
                 listRegion: '.js-list-region',
                 scrollbarRegion: '.js-scrollbar-region'
+            },
+
+            templateHelpers: function () {
+                return {
+                    enableSearch: this.options.enableSearch
+                };
+            },
+
+            onRender: function () {
+                if (this.options.enableSearch) {
+                    this.$el.addClass('dev-allow_search');
+                }
             },
 
             onShow: function () {
@@ -59,7 +84,7 @@ define(['module/lib',
                     if (collection.comparator) {
                         collection.sort();
                     }
-                    virtualCollection = list.factory.createWrappedCollection(collection, {
+                        virtualCollection = list.factory.createWrappedCollection(collection, {
                         selectableBehavior: 'single',
                         comparator: collection.comparator
                     });
@@ -125,6 +150,35 @@ define(['module/lib',
                     var selectedModel = this.model.get('virtualCollection').selected;
                     this.reqres.request('value:set', selectedModel);
                 }
+            },
+
+            onFilter: function () {
+                var text = (this.ui.input.val() || '').trim();
+                if (this.activeText === text) {
+                    return;
+                }
+                utils.helpers.setUniqueTimeout(this.fetchDelayId, function () {
+                    this.activeText = text;
+                    var collection = this.model.get('virtualCollection');
+                    collection.deselect();
+
+                    text = text.toLocaleLowerCase();
+                    collection.unhighlight();
+                    if (text === '') {
+                        collection.filter(null);
+                    } else {
+                        collection.filter(function (model) {
+                            var itemText = (model.get('text') || '').toLocaleLowerCase();
+                            return itemText.indexOf(text) !== -1;
+                        });
+                        collection.highlight(text);
+                    }
+
+                    if (collection.length > 0) {
+                        var model = collection.at(0);
+                        model.select();
+                    }
+                }.bind(this), config.TEXT_FETCH_DELAY);
             }
         });
     });

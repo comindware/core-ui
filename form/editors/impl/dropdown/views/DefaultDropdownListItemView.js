@@ -45,6 +45,15 @@ define([
                 'click': '__select'
             },
 
+            onHighlighted: function (fragment) {
+                var text = utils.htmlHelpers.highlightText(this.model.get('text'), fragment);
+                this.$el.html(text);
+            },
+
+            onUnhighlighted: function () {
+                this.$el.html(this.model.get('text'));
+            },
+
             __select: function () {
                 this.reqres.request('value:set', this.model);
                 return false;
