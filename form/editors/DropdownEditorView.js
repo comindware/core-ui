@@ -114,8 +114,7 @@ define([
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
                         reqres: this.reqres,
-                        enableSearch: this.options.enableSearch,
-                        onFilter: this.options.onFilter
+                        enableSearch: this.options.enableSearch
                     },
                     autoOpen: false
                 });

@@ -28,8 +28,6 @@ define(['module/lib',
 
         return Marionette.LayoutView.extend({
             initialize: function (options) {
-                options.onFilter && (this.onFilter = options.onFilter); //jshint ignore:line
-
                 utils.helpers.ensureOption(options, 'model');
                 utils.helpers.ensureOption(options, 'reqres');
 
