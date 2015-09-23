@@ -40,6 +40,7 @@ define(['module/lib',
             initialize: function (options) {
                 this.collection = options.collection;
                 this.columsFit = options.columsFit;
+                options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
 
                 this.initializeViews();
                 this.$document = $(document);
