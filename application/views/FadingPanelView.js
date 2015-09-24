@@ -30,13 +30,13 @@ define(['text!../templates/fadingPanel.html', 'module/lib'],
             fadeIn: function (options)
             {
                 this.activeOptions = options || null;
-                this.$el.fadeTo(400, 0.3);
+                this.$el.addClass('dev-fade');
             },
 
             fadeOut: function ()
             {
                 this.activeOptions = null;
-                this.$el.fadeOut(400, 0);
+                this.$el.removeClass('dev-fade');
             },
 
             __onClick: function () {

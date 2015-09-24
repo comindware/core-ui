@@ -42,6 +42,8 @@ define([
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
 
+        './views/behaviors/loading/views/LoadingView',
+
         './views/behaviors/LoadingBehavior',
         './views/behaviors/BlurableBehavior',
         './views/behaviors/PopupBehavior',
@@ -82,7 +84,9 @@ define([
         CollapsibleBehavior,
         HighlightableBehavior,
         SelectableBehavior,
-	
+	    
+        LoadingView,
+
         LoadingBehavior,
         BlurableBehavior,
         PopupBehavior,
@@ -158,6 +162,7 @@ define([
                     BlurableBehavior: BlurableBehavior,
                     PopupBehavior: PopupBehavior
                 },
+                LoadingView: LoadingView,
                 SearchBarView: SearchBarView,
                 SplitPanelView: SplitPanelView
             },
