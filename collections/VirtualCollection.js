@@ -138,7 +138,7 @@ define(['module/lib', '../models/behaviors/SelectableBehavior', 'core/utils/util
 
                 var SelectableBehaviorClass;
                 var selectableBehaviorOption = this.options.selectableBehavior;
-                if (selectableBehaviorOption && selectableBehavior[selectableBehaviorOption]) {
+                if (selectableBehaviorOption && selectableBehavior[selectableBehaviorOption] !== undefined) {
                     SelectableBehaviorClass = selectableBehavior[selectableBehaviorOption];
                 } else {
                     SelectableBehaviorClass = selectableBehavior.single;
