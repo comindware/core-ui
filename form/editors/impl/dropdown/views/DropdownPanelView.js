@@ -167,9 +167,9 @@ define(['module/lib',
                         collection.filter(null);
                     } else {
                         collection.filter(function (model) {
-                            var itemText = (model.get('text') || '').toLocaleLowerCase();
+                            var itemText = (model.get(this.model.get('displayAttribute')) || '').toLocaleLowerCase();
                             return itemText.indexOf(text) !== -1;
-                        });
+                        }.bind(this));
                         collection.highlight(text);
                     }
 

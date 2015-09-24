@@ -46,12 +46,12 @@ define([
             },
 
             onHighlighted: function (fragment) {
-                var text = utils.htmlHelpers.highlightText(this.model.get('text'), fragment);
+                var text = utils.htmlHelpers.highlightText(this.model.get(this.options.displayAttribute), fragment);
                 this.$el.html(text);
             },
 
             onUnhighlighted: function () {
-                this.$el.html(this.model.get('text'));
+                this.$el.html(this.model.get(this.options.displayAttribute));
             },
 
             __select: function () {
