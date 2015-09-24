@@ -142,15 +142,19 @@ define(['module/lib',
                     customAnchor: true
                 });
 
-                this.listenTo(this.filterDropdown, 'close', this.__onFilterClose, this);
+                this.listenTo(this.filterDropdown, 'all', function (eventName, view, eventArguments) {
+                    if (_.string.startsWith(eventName, 'panel:')) {
+                        this.trigger.apply(this, ['column:filter:' + eventName.slice(6), options.columnHeader.options.column.id, view ].concat(eventArguments));
+                    }
+                }.bind(this));
+
+                this.listenTo(this.filterDropdown, 'close', function (child) {
+                    this.trigger('column:filter:close', options.columnHeader.options.column.id, child.panelView);
+                }.bind(this));
 
                 this.popoutRegion.show(this.filterDropdown);
                 this.filterDropdown.$el.offset(options.position);
                 this.filterDropdown.open();
-            },
-
-            __onFilterClose: function (child) {
-                this.trigger('filterClose', child.panelView);
             }
         });
 
