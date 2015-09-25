@@ -142,9 +142,9 @@ define(['module/lib',
                     customAnchor: true
                 });
 
-                this.listenTo(this.filterDropdown, 'all', function (eventName, view, eventArguments) {
+                this.listenTo(this.filterDropdown, 'all', function (eventName, eventArguments) {
                     if (_.string.startsWith(eventName, 'panel:')) {
-                        this.trigger.apply(this, ['column:filter:' + eventName.slice(6), options.columnHeader.options.column.id, view ].concat(eventArguments));
+                        this.trigger.apply(this, ['column:filter:' + eventName.slice(6), options.columnHeader.options.column.id, this.filterDropdown.panelView ].concat(eventArguments));
                     }
                 }.bind(this));
 
