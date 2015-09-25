@@ -19,7 +19,10 @@ define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/G
             initialize: function (options) {
                 GridColumnHeaderView.prototype.initialize.apply(this, arguments);
 
-                this.column.filterView && (this.filterView = this.column.filterView); //jshint ignore:line
+                if (this.column.filterView) {
+                    this.filterView = this.column.filterView;
+                    this.listenTo(this.model, 'change:hasFilter', this.__resolveFilterClass, this);
+                }
                 this.gridEventAggregator = options.gridEventAggregator;
             },
 
@@ -33,6 +36,20 @@ define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/G
             events: {
                 'click @ui.cellContent': '__handleSorting',
                 'click @ui.filterBtn': 'showFilterPopout'
+            },
+
+            __resolveFilterClass: function () {
+                if (!this.column.filterView) {
+                    return;
+                }
+
+                var hasFilter = this.model.get('hasFilter');
+
+                if (hasFilter) {
+                    this.$el.addClass('dev-has-filter');
+                } else {
+                    this.$el.removeClass('dev-has-filter');
+                }
             },
 
             showFilterPopout: function (event) {
@@ -51,6 +68,10 @@ define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/G
                     sortingDesc: this.column.sorting === 'desc',
                     filterView: this.filterView !== undefined
                 };
+            },
+
+            onRender: function () {
+                this.__resolveFilterClass();
             }
         });
 
