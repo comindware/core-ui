@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService'],
-    function (template, BaseItemEditorView, LocalizationService) {
+define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService'],
+    function (lib, template, BaseItemEditorView, LocalizationService) {
         'use strict';
 
         var changeMode = {
@@ -107,6 +107,22 @@ define(['text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/s
 
             onRender: function () {
                 this.ui.input.val(this.getValue() || '');
+                
+                // Keyboard shortcuts listener
+                if (this.keyListener) {
+                    this.keyListener.reset();
+                }
+                this.keyListener = new lib.keypress.Listener(this.ui.input[0]);
+            },
+
+            addKeyboardListener: function (key, callback) {
+                if (!this.keyListener) {
+                    utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+                }
+                var keys = key.split(',');
+                _.each(keys, function (k) {
+                    this.keyListener.simple_combo(k, callback);
+                }, this);
             },
 
             __value: function (value, updateUi, triggerChange) {
