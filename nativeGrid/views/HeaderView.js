@@ -18,10 +18,8 @@ define(['../../list/views/GridHeaderView'],
             initialize: function (options) {
                 GridHeaderView.prototype.initialize.apply(this, arguments);
                 this.columnsFit = options.columnsFit;
-                _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort', '__setColumnsWidth');
+                _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort');
                 $(window).resize(this.__handleResize);
-
-                this.listenTo(this.gridEventAggregator, 'columnsSetWidth', this.__setColumnsWidth);
             },
 
             onRender: function () {
@@ -177,14 +175,20 @@ define(['../../list/views/GridHeaderView'],
                     this.$el.width(fullWidth);
                 }
                 this.headerMinWidth = fullWidth;
+
+                this.__updateColumnsWidth();
             },
 
-            __setColumnsWidth: function (opts) {
-                _.each(this.columns, function (col, i) {
-                    var $col = $(this.ui.gridHeaderColumn[i]);
-                    col.width = opts.columns[i];
-                    $col.width(col.width);
-                }.bind(this));
+            __updateColumnsWidth: function () {
+                var columns = this.columns;
+                this.ui.gridHeaderColumn.each(function (i, el)
+                {
+                    var child = $(el);
+                    var col = columns[i];
+                    if (col.width) {
+                        child.width(col.width);
+                    }
+                });
             }
         });
 

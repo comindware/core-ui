@@ -14,6 +14,9 @@
 define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/GridItemViewBehavior'],
     function (lib, utils, GridItemViewBehavior) {
         'use strict';
+
+        var cellRightOffset = 15;
+
         var NativeGridItemViewBehavior = GridItemViewBehavior.extend({
             initialize: function (options, view)
             {
@@ -47,14 +50,16 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                     this.cellWidthDiff = $cells.outerWidth() - $cells.width();
                     _.each(this.columns, function (c, k) {
                         var $cell = $(cells[k]),
-                            cellWidth = $cell.outerWidth();
+                            cellFullWidth = c.width ||$cell.outerWidth(),
+                            cellWidth = cellFullWidth - cellRightOffset;
 
                         columnsWidth.push(cellWidth);
                         $cell.width(cellWidth);
-                        fullWidth += cellWidth;
+                        c.width = cellFullWidth;
+                        fullWidth += cellFullWidth;
                     }, this);
                     this.$el.width(fullWidth);
-                    this.view.options.gridEventAggregator.trigger('columnsSetWidth', {columns: columnsWidth, fullWidth: fullWidth});
+                    this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
                 } else {
                     this.cellWidthDiff = $cells.outerWidth() - $cells.width();
                     var availableWidth = this.__getAvailableWidth();
