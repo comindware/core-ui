@@ -19,7 +19,7 @@ define(['../../list/views/RowView', './behaviors/NativeGridItemViewBehavior'],
             behaviors: {
                 NativeGridItemViewBehavior: {
                     behaviorClass: NativeGridItemViewBehavior,
-                    padding: 30
+                    padding: 15
                 }
             }
         });

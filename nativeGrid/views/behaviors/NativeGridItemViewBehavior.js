@@ -15,8 +15,6 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
     function (lib, utils, GridItemViewBehavior) {
         'use strict';
 
-        var cellRightOffset = 15;
-
         var NativeGridItemViewBehavior = GridItemViewBehavior.extend({
             initialize: function (options, view)
             {
@@ -51,7 +49,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                     _.each(this.columns, function (c, k) {
                         var $cell = $(cells[k]),
                             cellFullWidth = c.width ||$cell.outerWidth(),
-                            cellWidth = cellFullWidth - cellRightOffset;
+                            cellWidth = cellFullWidth - this.padding;
 
                         columnsWidth.push(cellWidth);
                         $cell.width(cellWidth);
