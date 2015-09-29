@@ -13,13 +13,21 @@
 
 define(['./Factory',
         './FilterViewFactory',
+        './views/RowView',
+        './views/HeaderView',
+        './views/NativeGridView',
         'module/lib'
     ],
-    function (factory, filterViewFactory) {
+    function (factory, filterViewFactory, RowView, HeaderView, NativeGridView) {
         'use strict';
 
         return {
             factory: factory,
-            filterViewFactory: filterViewFactory
+            filterViewFactory: filterViewFactory,
+            views: {
+                RowView: RowView,
+                HeaderView: HeaderView,
+                NativeGridView: NativeGridView
+            }
         };
     });

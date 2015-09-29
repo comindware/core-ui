@@ -42,7 +42,8 @@ define([
                 var gridViewOptions = _.extend({
                     columnsFit: options.columnsFit,
                     collection: collection,
-                    onColumnSort: options.onColumnSort
+                    onColumnSort: options.onColumnSort,
+                    rowView: options.rowView
                 }, options.gridViewOptions);
 
                 return new NativeGridView(gridViewOptions);

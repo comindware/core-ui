@@ -38,6 +38,7 @@ define(['module/lib',
             className: 'dev-native-grid',
 
             initialize: function (options) {
+                this.rowView = options.rowView || RowView;
                 this.collection = options.collection;
                 this.columsFit = options.columsFit;
                 options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
@@ -68,7 +69,7 @@ define(['module/lib',
                 });
 
                 this.listView = new ListView({
-                    childView: RowView,
+                    childView: this.rowView,
                     childHeight: 41,
                     collection: this.collection,
                     childViewOptions: childViewOptions,
