@@ -29,7 +29,8 @@
                 }
                 var text = localizationMap[locId];
                 if (text === undefined) {
-                    throw new Error('Failed to find localization constant ' + locId);
+                    //throw new Error('Failed to find localization constant ' + locId);
+                    return "<missing:" +  locId + ">";
                 }
                 return text;
             },
