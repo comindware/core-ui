@@ -132,7 +132,7 @@ define(['module/lib',
                     tagName: 'div'
                 });
 
-                var filterViewOptions = this.options.columns.find(function (c) {
+                var filterViewOptions = _.find(this.options.columns, function (c) {
                     return c.id === options.columnHeader.options.column.id;
                 }).filterViewOptions;
 
