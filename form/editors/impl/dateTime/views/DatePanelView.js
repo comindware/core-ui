@@ -32,7 +32,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/datePanel.html']
                 };
             },
 
-            className: 'dev-datepicker_panel',
+            className: 'datepicker_panel',
 
             modelEvents: {
                 'change:value': 'updatePickerDate'

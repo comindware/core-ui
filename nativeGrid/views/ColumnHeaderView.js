@@ -46,9 +46,9 @@ define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/G
                 var hasFilter = this.model.get('hasFilter');
 
                 if (hasFilter) {
-                    this.$el.addClass('dev-has-filter');
+                    this.$el.addClass('has-filter');
                 } else {
-                    this.$el.removeClass('dev-has-filter');
+                    this.$el.removeClass('has-filter');
                 }
             },
 

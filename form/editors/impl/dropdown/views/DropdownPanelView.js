@@ -66,7 +66,7 @@ define(['module/lib',
 
             onRender: function () {
                 if (this.options.enableSearch) {
-                    this.$el.addClass('dev-allow_search');
+                    this.$el.addClass('popup-allow_search');
                 }
             },
 
