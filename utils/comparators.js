@@ -74,11 +74,11 @@ define(['core/meta'],
         };
 
         var dateComparator2Asc = function (a, b) {
-            return a - b;
+            return a ? (b ? a - b : 1) : ( b ? -1 : 0);
         };
 
         var dateComparator2Desc = function (a, b) {
-            return b - a;
+            return b ? (a ? b - a : 1) : (a ? -1 : 0);
         };
 
         var booleanComparator2Desc = function (a, b) {
