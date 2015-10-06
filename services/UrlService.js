@@ -23,7 +23,8 @@ define([
             PROJECT: 'Project',
             ACCOUNT_GROUP: 'AccountGroup',
             PROCESS_TEMPLATE: 'ProcessTemplate',
-            FORM: 'Form'
+            FORM: 'Form',
+            DATA_SOURCE: 'DataSource'
         };
 
         var objectIdPrefixes = {};
@@ -33,6 +34,7 @@ define([
         objectIdPrefixes[objectTypes.PROJECT] = 'project.';
         objectIdPrefixes[objectTypes.ACCOUNT_GROUP] = 'group.';
         objectIdPrefixes[objectTypes.FORM] = 'form.';
+        objectIdPrefixes[objectTypes.DATA_SOURCE] = 'ds.';
 
         return {
             encodeObjectId: function (objectType, objectId) {

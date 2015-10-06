@@ -66,6 +66,8 @@ define([
             SUPPORT_GLOBAL_FUNCTIONS: 'module:support:globalFunctions'
         };
 
+        var messagesCache = {};
+
         return {
             getDefaultModuleUrl: function (moduleId, options) {
                 return this.getModuleUrlByName('default', moduleId, options);
@@ -109,6 +111,28 @@ define([
                     resultUrl = '#' + resultUrl;
                 }
                 return resultUrl;
+            },
+
+            pushMessage: function (moduleId, json) {
+                if (!_.has(messagesCache, moduleId)) {
+                    messagesCache[moduleId] = [];
+                }
+                messagesCache[moduleId].push(json);
+            },
+
+            listMessages: function (moduleId) {
+                return messagesCache[moduleId] || [];
+            },
+
+            deleteMessages: function (moduleId, messageId) {
+                if (!moduleId || !_.isNumber(messageId) || !messagesCache[moduleId]) {
+                    return;
+                }
+                if (messagesCache[moduleId].length <= 1) {
+                    delete messagesCache[moduleId];
+                    return;  
+                }    
+                messagesCache[moduleId] = messagesCache[moduleId].splice(messageId, 1); 
             },
 
             modules: modules
