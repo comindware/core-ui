@@ -129,18 +129,25 @@ define(['text!../templates/popout.html', 'module/lib', 'core/utils/utilsApi', 'c
                     isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
 
                 if (this.options.customAnchor) {
-                    rect = this.button.$el.find('.js-anchor')[0].getBoundingClientRect();
-                    if (isFlowRight) {
-                        rightPos = this.button.$el.width() - rect.width + rect.width / 2 - triangleWidth / 2 - panelOffset;
-                    } else {
-                        leftPos = rect.width / 2 - triangleWidth / 2 - panelOffset;
+                    var anchorElement = this.button.$el.find('.js-anchor')[0];
+                    if (anchorElement) {
+                        rect = anchorElement.getBoundingClientRect();
+                        if (isFlowRight) {
+                            rightPos = this.button.$el.width() - rect.width + rect.width / 2 - triangleWidth / 2 - panelOffset;
+                        } else {
+                            leftPos = rect.width / 2 - triangleWidth / 2 - panelOffset;
+                        }
                     }
                 } else {
-                    rect = this.ui.button[0].getBoundingClientRect();
-                    if (isFlowRight) {
-                        leftPos = rect.width - triangleWidth - panelOffset;
-                    } else {
-                        rightPos = -panelOffset;
+                    var buttonElement = this.ui.button[0];
+                    if (buttonElement) {
+                        rect = buttonElement.getBoundingClientRect();
+
+                        if (isFlowRight) {
+                            leftPos = rect.width - triangleWidth - panelOffset;
+                        } else {
+                            rightPos = -panelOffset;
+                        }
                     }
                 }
 
