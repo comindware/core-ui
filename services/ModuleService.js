@@ -113,26 +113,32 @@ define([
                 return resultUrl;
             },
 
-            pushMessage: function (moduleId, json) {
+            pushMessage: function (moduleId, jsonObj) {
                 if (!_.has(messagesCache, moduleId)) {
                     messagesCache[moduleId] = [];
                 }
-                messagesCache[moduleId].push(json);
+                messagesCache[moduleId].push(jsonObj);
             },
 
             listMessages: function (moduleId) {
                 return messagesCache[moduleId] || [];
             },
 
-            deleteMessages: function (moduleId, messageId) {
-                if (!moduleId || !_.isNumber(messageId) || !messagesCache[moduleId]) {
+            deleteMessages: function (moduleId, messageIndex) {
+                if (!moduleId) {
+                    throw "Invalid input parameter `moduleId`";
+                }
+                if (!_.isNumber(messageIndex)) {
+                    throw "Invalid input parameter `messageIndex`";
+                }
+                if (!messagesCache[moduleId]) {
                     return;
                 }
                 if (messagesCache[moduleId].length <= 1) {
                     delete messagesCache[moduleId];
                     return;  
                 }    
-                messagesCache[moduleId] = messagesCache[moduleId].splice(messageId, 1); 
+                messagesCache[moduleId] = messagesCache[moduleId].splice(messageIndex, 1);
             },
 
             modules: modules
