@@ -126,10 +126,10 @@ define([
 
             deleteMessage: function (moduleId, messageIndex) {
                 if (!moduleId) {
-                    utilsApi.helpers.throwError("Invalid input parameter `moduleId`");
+                    utilsApi.helpers.throwArgumentError("Invalid input parameter `moduleId`");
                 }
                 if (!_.isNumber(messageIndex)) {
-                    utilsApi.helpers.throwError("Invalid input parameter `messageIndex`");
+                    utilsApi.helpers.throwArgumentError("Invalid input parameter `messageIndex`");
                 }
                 if (!messagesCache[moduleId]) {
                     return;
