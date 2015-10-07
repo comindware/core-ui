@@ -124,7 +124,7 @@ define([
                 return messagesCache[moduleId] || [];
             },
 
-            deleteMessages: function (moduleId, messageIndex) {
+            deleteMessage: function (moduleId, messageIndex) {
                 if (!moduleId) {
                     throw "Invalid input parameter `moduleId`";
                 }
