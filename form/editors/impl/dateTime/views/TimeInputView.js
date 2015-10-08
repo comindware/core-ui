@@ -72,7 +72,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/timeInput.html',
                     parsedDate;
 
                 if (parsedVal.isValid()) {
-                    parsedDate = new Date(parsedVal);
+                    parsedDate = lib.moment(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()).toString();
                 } else if (currentValue !== '' && currentValue !== null) {
                     parsedDate = new Date(currentValue);
                 } else {
