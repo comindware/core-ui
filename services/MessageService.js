@@ -53,7 +53,7 @@ define(['module/lib', './message/views/MessageView', './WindowService', './Local
 
             showMessageDialog: function (description, text, buttons, iconId) {
                 iconId = iconId || iconIds.NONE;
-                var deferred = $.Deferred();
+                var deferred = Promise.pending();
                 var view = new MessageView({
                     model: new Backbone.Model({
                         iconId: iconId,
@@ -66,7 +66,7 @@ define(['module/lib', './message/views/MessageView', './WindowService', './Local
                     deferred.resolve(result);
                 });
                 WindowService.showPopup(view, { fadeOut: false });
-                return deferred.promise();
+                return deferred.promise;
             }
         };
     });
