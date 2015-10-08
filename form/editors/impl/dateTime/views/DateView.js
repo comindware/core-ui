@@ -214,7 +214,7 @@ define(['module/lib', 'core/utils/utilsApi', 'text!../templates/date.html', 'cor
                     newVal = null;
                 } else if (oldVal) {
                     var momentDate = lib.moment(date);
-                    newVal = lib.moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toString();
+                    newVal = new Date(lib.moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()));
                 } else {
                     newVal = date;
                 }
