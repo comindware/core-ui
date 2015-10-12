@@ -145,6 +145,9 @@ define([
                                 }, null).
                                 value();
                         }
+                        else if (value.name) {
+                            text = value.name
+                        }
 
                         return {
                             text: text
