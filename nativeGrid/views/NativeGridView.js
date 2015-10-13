@@ -70,11 +70,8 @@ define(['module/lib',
 
                 this.listView = new ListView({
                     childView: this.rowView,
-                    childHeight: 41,
                     collection: this.collection,
-                    childViewOptions: childViewOptions,
-                    height: 'auto',
-                    maxRows: 1000
+                    childViewOptions: childViewOptions
                 });
 
                 this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
