@@ -81,6 +81,23 @@ define(['module/lib', 'core/serviceLocator'],
                 });
             },
 
+            highlightUrls: function (text, escape) {
+                if (!text) {
+                    return '';
+                }
+                if (escape || escape === undefined) {
+                    text = Handlebars.Utils.escapeExpression(text);
+                }
+
+                var textArr = text.split(' ');
+                textArr.forEach(function (word, index) {
+                    if (word.indexOf('http') === 0)
+                    { textArr.splice(index, 1, '<a href="' + word + '">' + word + '</a>'); }
+                });
+
+                return textArr.join(' ');
+            },
+
             isElementInDom: function (el) {
                 return document.body.contains(el);
             },
