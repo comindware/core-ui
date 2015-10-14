@@ -89,13 +89,10 @@ define(['module/lib', 'core/serviceLocator'],
                     text = Handlebars.Utils.escapeExpression(text);
                 }
 
-                var textArr = text.split(' ');
-                textArr.forEach(function (word, index) {
-                    if (word.indexOf('http') === 0)
-                    { textArr.splice(index, 1, '<a href="' + word + '">' + word + '</a>'); }
+                var regex = /(?:ht|f)tp(?:s?):\/\/[^ ]*/gi
+                return  text.replace(regex, function(url){
+                    return '<a href="' + url + '">'+url+'</a>';
                 });
-
-                return textArr.join(' ');
             },
 
             isElementInDom: function (el) {
