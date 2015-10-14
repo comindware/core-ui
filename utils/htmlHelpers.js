@@ -89,7 +89,7 @@ define(['module/lib', 'core/serviceLocator'],
                     text = Handlebars.Utils.escapeExpression(text);
                 }
 
-                var regex = /(?:ht|f)tp(?:s?):\/\/[^ ]*/gi
+                var regex = /(?:ht|f)tp(?:s?):\/\/[^\s ]*/gi
                 return  text.replace(regex, function(url){
                     return '<a href="' + url + '">'+url+'</a>';
                 });
