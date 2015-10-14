@@ -64,7 +64,7 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                             },
                             __handleClick: function () {
                                 //noinspection JSPotentiallyInvalidUsageOfThis
-                                this.reqres.request('time:selected', this.model.get('time').toString());
+                                this.reqres.request('time:selected', new Date(this.model.get('time')));
                             },
                             template: Handlebars.compile('{{this.formattedTime}}')
                         })
@@ -84,7 +84,7 @@ define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/
                     newVal = null;
                 } else if (oldVal) {
                     var momentTime = lib.moment(time);
-                    newVal = lib.moment(oldVal).hour(momentTime.hour()).minute(momentTime.minute()).toString();
+                    newVal = new Date(lib.moment(oldVal).hour(momentTime.hour()).minute(momentTime.minute()));
                 } else {
                     newVal = time;
                 }
