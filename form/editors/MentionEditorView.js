@@ -77,7 +77,8 @@ define([
                     readonly: this.getReadonly(),
                     enabled: this.getEnabled(),
                     key: this.key,
-                    autocommit: this.options.autocommit,
+                    changeMode: this.options.schema.changeMode,
+                    autocommit: this.options.schema.autocommit,
                     emptyPlaceholder:LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER')
                 }),
                 panelView: membersFactory.getMembersListView(),
