@@ -35,6 +35,18 @@
                 return text;
             },
 
+            getDefault: function(locId, defaultValue) {
+                if (!locId) {
+                    throw new Error('Bad localization id: (locId = ' + locId + ')');
+                }
+                var text = localizationMap[locId];
+                if (text === undefined) {
+                    //throw new Error('Failed to find localization constant ' + locId);
+                    return defaultValue || "<missing:" +  locId + ">";
+                }
+                return text;
+            },
+
             resolveLocalizedText: function (localizedText) {
                 if (!localizedText) {
                     return '';
