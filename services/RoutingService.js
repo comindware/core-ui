@@ -89,7 +89,7 @@ define([
 
                 // reset loading region
                 window.application.contentLoadingRegion.reset();
-                if (activeModule && activeModule.view && activeModule.setModuleLoading) {
+                if (activeModule && activeModule.view && activeModule.view.setModuleLoading) {
                     activeModule.view.setModuleLoading(false);
                 }
                 var movingOut =
