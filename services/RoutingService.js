@@ -164,13 +164,20 @@ define([
                 router.navigate(url, options);
             },
 
+            logoutImmediate: function() {
+                Ajax.Home.Logout().then(function (canLeave) {
+                    if (canLeave)
+                        window.location = "";
+                });
+
+            },
+
             logout: function () {
                 //noinspection JSUnresolvedVariable
-                if (!activeModule || !_.isFunction(activeModule.leave) || activeModule.leave()) {
-                    Ajax.Home.Logout().then(function () {
-                        window.location = "";
-                    });
-                }
+                if (!activeModule || !activeModule.leave)
+                    this.logoutImmediate();
+
+                Promise.resolve(_.result(activeModule, "leave")).then(this.logoutImmediate);
             }
         };
         return routingService;
