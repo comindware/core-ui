@@ -89,13 +89,17 @@ define([
 
                 // reset loading region
                 window.application.contentLoadingRegion.reset();
-                if (activeModule) {
+                if (activeModule && activeModule.view && activeModule.setModuleLoading) {
                     activeModule.view.setModuleLoading(false);
                 }
-                var movingOut = activeModule && activeModule.options.config.module !== config.module;
+                var movingOut =
+                    activeModule &&
+                    activeModule.options &&
+                    activeModule.options.config &&
+                    activeModule.options.config.module !== config.module;
 
                 // destroy active module
-                if (activeModule && movingOut) {
+                if (activeModule && movingOut && activeModule.destroy) {
                     activeModule.destroy();
                 }
 
