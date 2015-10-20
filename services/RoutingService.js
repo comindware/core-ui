@@ -166,9 +166,11 @@ define([
 
             logout: function () {
                 //noinspection JSUnresolvedVariable
-                Ajax.Home.Logout().then(function () {
-                    window.location = "";
-                });
+                if (!activeModule || !_.isFunction(activeModule.leave) || activeModule.leave()) {
+                    Ajax.Home.Logout().then(function () {
+                        window.location = "";
+                    });
+                }
             }
         };
         return routingService;
