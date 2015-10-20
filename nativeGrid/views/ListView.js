@@ -45,9 +45,7 @@ define([
 
         var ListView = Marionette.LayoutView.extend({
             initialize: function (options) {
-                if (this.collection === undefined) {
-                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'collection\' option.');
-                }
+                utils.helpers.ensureOption(options, 'collection');
 
                 this.__createReqres();
 
