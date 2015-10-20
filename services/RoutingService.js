@@ -165,9 +165,8 @@ define([
             },
 
             logoutImmediate: function() {
-                Ajax.Home.Logout().then(function (canLeave) {
-                    if (canLeave)
-                        window.location = "";
+                Ajax.Home.Logout().then(function () {
+                    window.location = "";
                 });
 
             },
@@ -177,7 +176,10 @@ define([
                 if (!activeModule || !activeModule.leave)
                     this.logoutImmediate();
 
-                Promise.resolve(_.result(activeModule, "leave")).then(this.logoutImmediate);
+                Promise.resolve(_.result(activeModule, "leave")).then(function(canLeave) {
+                    if (canLeave)
+                        this.logoutImmediate();
+                }.bind(this));
             }
         };
         return routingService;
