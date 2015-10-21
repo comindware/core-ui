@@ -40,9 +40,9 @@ define([
     Backbone.Form.editors.Mention = BaseLayoutEditorView.extend({
         initialize: function (options) {
             if (options.schema) {
-                _.extend(this.options, options.schema.editorOptions);
+                _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
             } else {
-                _.extend(this.options, options.editorOptions);
+                _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
             }
 
             this.__createViewModel();
@@ -77,7 +77,6 @@ define([
                     readonly: this.getReadonly(),
                     enabled: this.getEnabled(),
                     key: this.key,
-                    changeMode: this.options.changeMode,
                     autocommit: this.options.autocommit,
                     emptyPlaceholder:LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER')
                 }),
