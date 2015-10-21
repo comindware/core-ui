@@ -40,9 +40,9 @@ define([
     Backbone.Form.editors.Mention = BaseLayoutEditorView.extend({
         initialize: function (options) {
             if (options.schema) {
-                _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
+                _.extend(this.options, options.schema.editorOptions);
             } else {
-                _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+                _.extend(this.options, options.editorOptions);
             }
 
             this.__createViewModel();
