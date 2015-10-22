@@ -149,8 +149,8 @@ define(['module/lib',
                     }
                 }.bind(this));
 
-                this.listenTo(this.filterDropdown, 'close', function (child) {
-                    this.trigger('column:filter:close', options.columnHeader.options.column.id, child.panelView);
+                this.listenTo(this.filterDropdown, 'close', function (child, closeOptions) {
+                    this.trigger('column:filter:close', options.columnHeader.options.column.id, child.panelView, closeOptions);
                 }.bind(this));
 
                 this.popoutRegion.show(this.filterDropdown);
