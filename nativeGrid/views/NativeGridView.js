@@ -20,12 +20,19 @@ define(['module/lib',
         '../../list/views/NoColumnsView',
         '../../models/behaviors/SelectableBehavior',
          '../../dropdown/factory',
-         '../../dropdown/dropdownApi'
+         '../../dropdown/dropdownApi',
+        '../../utils/utilsApi'
     ],
-    function (lib, template, ListView, RowView, HeaderView, ColumnHeaderView, NoColumnsDefaultView, SelectableBehavior, dropdownFactory, dropdownApi) {
+    function (lib, template, ListView, RowView, HeaderView, ColumnHeaderView, NoColumnsDefaultView, SelectableBehavior, dropdownFactory, dropdownApi, utilsApi) {
         'use strict';
 
-        var NativeGridView = Marionette.LayoutView.extend({
+        var defaultOptions = {
+            rowView: RowView,
+            paddingLeft: 20,
+            paddingRight: 10
+        };
+
+        return Marionette.LayoutView.extend({
             template: Handlebars.compile(template),
 
             regions: {
@@ -35,13 +42,21 @@ define(['module/lib',
                 popoutRegion: '.js-popout-region'
             },
 
+            ui: {
+                headerRegion: '.js-native-grid-header-region'
+            },
+
             className: 'dev-native-grid',
 
             initialize: function (options) {
-                this.rowView = options.rowView || RowView;
-                this.collection = options.collection;
-                this.columsFit = options.columsFit;
-                options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
+                utilsApi.helpers.ensureOption(options, 'collection');
+                utilsApi.helpers.ensureOption(options, 'columnsFit');
+                _.defaults(this.options, defaultOptions);
+
+                this.rowView = this.options.rowView;
+                this.collection = this.options.collection;
+                this.columsFit = this.options.columsFit;
+                options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
                 this.initializeViews();
                 this.$document = $(document);
@@ -65,16 +80,15 @@ define(['module/lib',
                 var childViewOptions = _.extend(this.options.gridViewOptions || {}, {
                     columns: this.options.columns,
                     gridEventAggregator: this,
-                    columnsFit: this.options.columnsFit
+                    columnsFit: this.options.columnsFit,
+                    paddingLeft: this.options.paddingLeft,
+                    paddingRight: this.options.paddingRight
                 });
 
                 this.listView = new ListView({
                     childView: this.rowView,
-                    childHeight: 41,
                     collection: this.collection,
-                    childViewOptions: childViewOptions,
-                    height: 'auto',
-                    maxRows: 1000
+                    childViewOptions: childViewOptions
                 });
 
                 this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
@@ -97,6 +111,13 @@ define(['module/lib',
 
             __afterColumnsResize: function (width) {
                 this.listView.setWidth(width);
+            },
+
+            onRender: function () {
+                this.ui.headerRegion.css({
+                    left: this.options.paddingLeft + 'px',
+                    right: this.options.paddingRight + 'px'
+                });
             },
 
             onShow: function () {
@@ -158,6 +179,4 @@ define(['module/lib',
                 this.filterDropdown.open();
             }
         });
-
-        return NativeGridView;
     });

@@ -43,24 +43,10 @@ define([
             }
         });
 
-        var heightOptions = {
-            AUTO: 'auto',
-            FIXED: 'fixed'
-        };
-
-        var defaultOptions = {
-            height: heightOptions.FIXED
-        };
-
         var ListView = Marionette.LayoutView.extend({
             initialize: function (options) {
-                if (this.collection === undefined) {
-                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'collection\' option.');
-                }
+                utils.helpers.ensureOption(options, 'collection');
 
-                if (options.childHeight === undefined) {
-                    utils.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - outer height for childView view (in pixels).');
-                }
                 this.__createReqres();
 
                 this.childViewOptions = _.extend(options.childViewOptions || {}, {
@@ -74,14 +60,6 @@ define([
                 options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
                 options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
 
-                this.maxRows = options.maxRows;
-                this.height = options.height;
-
-                if (options.height === undefined) {
-                    this.height = defaultOptions.height;
-                }
-
-                this.childHeight = options.childHeight;
                 this.state = {
                     position: 0
                 };
@@ -339,9 +317,8 @@ define([
             },
 
             __handleResizeInternal: function () {
-                this.collection.updateWindowSize(500);
                 this.state.visibleHeight = this.$el.parent().height();
-                
+
                 setTimeout(function () {
                     var fullWidth = this.$el.parent().width(),
                         currentWidth = this.$el.width();

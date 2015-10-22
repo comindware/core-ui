@@ -26,7 +26,7 @@ define(['module/lib', 'text!../templates/searchBar.html', 'core/services/Localiz
                 this.model = new Backbone.Model({
                     placeholder: this.options.placeholder
                 });
-                _.debounce(this.__triggerSearch, this.options.delay);
+                this.__triggerSearch = _.debounce(this.__triggerSearch, this.options.delay);
             },
 
             template: Handlebars.compile(template),
@@ -59,7 +59,7 @@ define(['module/lib', 'text!../templates/searchBar.html', 'core/services/Localiz
 
             __clear: function() {
                 this.ui.input.val('');
-                this.search();
+                this.__search();
                 this.ui.input.focus();
             }
         });

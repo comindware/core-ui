@@ -84,7 +84,7 @@
                         throw error;
                     }
                     return result.data;
-                });
+                }.bind(this));
             }
         };
 
