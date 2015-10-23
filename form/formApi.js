@@ -38,6 +38,7 @@ define([
         './editors/TimeEditorView',
         './editors/DateTimeEditorView',
         './editors/MentionEditorView',
+        './editors/MultiSelectEditorView',
 
         './editors/impl/common/members/services/factory',
         './editors/impl/common/members/collections/MembersCollection',
@@ -84,6 +85,7 @@ define([
         TimeEditorView,
         DateTimeEditorView,
         MentionEditorView,
+        MultiSelectEditorView,
 
         editorsImplCommonMembersFactory,
         editorsImplCommonMembersCollection,
@@ -167,7 +169,8 @@ define([
                 DateEditor: DateEditorView,
                 TimeEditor: TimeEditorView,
                 DateTimeEditor: DateTimeEditorView,
-                MentionEditor: MentionEditorView
+                MentionEditor: MentionEditorView,
+                MultiSelectEditor: MultiSelectEditorView
 			}
 		};
 	});
