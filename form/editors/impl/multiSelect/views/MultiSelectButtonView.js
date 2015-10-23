@@ -13,7 +13,7 @@
 
 define(
     ['module/lib', 'text!../templates/multiSelectButton.html'],
-    function (lib, template) {
+    function(lib, template) {
         'use strict';
 
         return Marionette.ItemView.extend({
@@ -21,7 +21,7 @@ define(
 
             template: Handlebars.compile(template),
 
-            templateHelpers: function () {
+            templateHelpers: function() {
                 var value = this.model.get('value'),
                     collection = this.model.get('collection');
                 
@@ -46,7 +46,7 @@ define(
                 this.reqres = options.reqres;
             },
 
-            __click: function () {
+            __click: function() {
                 this.reqres.request('panel:open');
             }
         });

@@ -28,10 +28,6 @@ define(
         };
 
         return Marionette.LayoutView.extend({
-            initialize: function (options) {
-                utils.helpers.ensureOption(options, 'model');
-            },
-
             attributes: {
                 tabindex: 0
             },
@@ -41,11 +37,13 @@ define(
             template: Handlebars.compile(template),
 
             ui: {
-                selectAll: '.js-select-all'
+                selectAll: '.js-select-all',
+                apply: '.js-apply'
             },
 
             events: {
-                'click @ui.selectAll': '__selectAll'
+                'click @ui.selectAll': '__selectAll',
+                'click @ui.apply': '__apply'
             },
 
             regions: {
@@ -53,7 +51,9 @@ define(
                 scrollbarRegion: '.js-scrollbar-region'
             },
 
-            onShow: function () {
+            onShow: function() {
+                this.__deselectAll(true);
+
                 var valueModels = this.model.get('value');
 
                 _.each(valueModels, function(valueModel) {
@@ -79,10 +79,25 @@ define(
                 this.$el.focus();
             },
 
-            __selectAll: function () {
+            initialize: function(options) {
+                utils.helpers.ensureOption(options, 'model');
+                this.reqres = options.reqres;
+            },
+
+            __selectAll: function(silent) {
                 this.model.get('collection').each(function(model) {
-                    model.set('selected', true);
+                    model.set('selected', true, {silent: silent === true});
                 });
+            },
+
+            __deselectAll: function(silent) {
+                this.model.get('collection').each(function(model) {
+                    model.set('selected', false, {silent: silent === true});
+                });
+            },
+
+            __apply: function() {
+                this.reqres.request('apply');
             }
         });
     }

@@ -11,12 +11,13 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define([
+define(
+    [
         'core/list/listApi',
         'core/utils/utilsApi',
         'text!../templates/multiSelectItem.html'
     ],
-    function (list, utils, template) {
+    function(list, utils, template) {
         'use strict';
 
         var classes = {
@@ -60,4 +61,5 @@ define([
                 this.el.className = this.className();
             }
         });
-    });
+    }
+);

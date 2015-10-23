@@ -21,7 +21,7 @@ define(
         './impl/multiSelect/views/MultiSelectPanelView',
         './impl/multiSelect/views/MultiSelectButtonView'
     ],
-    function (lib, list, dropdown, template, BaseLayoutEditorView, MultiSelectPanelView, MultiSelectButtonView) {
+    function(lib, list, dropdown, template, BaseLayoutEditorView, MultiSelectPanelView, MultiSelectButtonView) {
         'use strict';
 
         var defaultOptions = {
@@ -30,21 +30,16 @@ define(
         };
 
         Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend({
-            initialize: function (options) {
+            initialize: function(options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
                 } else {
                     _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
 
-                _.bindAll(this, '__onCollectionChange');
-
                 this.reqres = new Backbone.Wreqr.RequestResponse();
                 this.reqres.setHandler('panel:open', this.onPanelOpen, this);
-
-                if (!this.getValue()) {
-                    this.setValue([]);
-                }
+                this.reqres.setHandler('apply', this.__applyValue, this);
 
                 if (_.isArray(this.options.collection)) {
                     this.options.collection = new Backbone.Collection(this.options.collection);
@@ -84,7 +79,7 @@ define(
 
             template: Handlebars.compile(template),
 
-            onRender: function () {
+            onRender: function() {
                 this.dropdownView = dropdown.factory.createDropdown({
                     buttonView: MultiSelectButtonView,
                     buttonViewOptions: {
@@ -94,6 +89,7 @@ define(
                     panelView: MultiSelectPanelView,
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
+                        reqres: this.reqres
                     },
                     autoOpen: false
                 });
@@ -101,25 +97,23 @@ define(
                 this.dropdownRegion.show(this.dropdownView);
             },
 
-            __onCollectionChange: function () {
+            __onCollectionChange: function() {
                 var values = this.getValue();
                 var valueModels = this.__findModels(values);
 
                 if (valueModels != null) {
-                    if (valueModels != this.viewModel.get('button').get("value"))
-                        this.viewModel.get('button').set('value', valueModels);
-                    if (valueModels != this.viewModel.get('panel').get("value"))
+                    if (valueModels != this.viewModel.get('panel').get("value")) {
                         this.viewModel.get('panel').set('value', valueModels);
-
+                    }
                     return;
                 }
 
                 if (this.collection.length === null) {
-                    this.setValue([]);
+                    this.setValue(null);
                 }
             },
 
-            __onItemToggle: function (itemModel) {
+            __onItemToggle: function(itemModel) {
                 if (itemModel.get('selected')) {
                     this.__setValue(itemModel.id);
                 } else {
@@ -127,41 +121,47 @@ define(
                 }
             },
 
-            __findModels: function (values) {
+            __findModels: function(values) {
                 return this.collection ? this.collection.filter(function(model) {
                     return ~_.indexOf(values, model.id);
                 }) : null;
             },
 
-            __setValue: function (value) {
-                if (~_.indexOf(this.value, value)) {
+            __setValue: function(value) {
+                if (~_.indexOf(this.tempValue, value)) {
                     return;
                 }
 
-                this.value = this.value.concat(value);
-
-                var valueModels = this.__findModels(this.value) || null;
-                this.viewModel.get('button').set('value', valueModels);
-                this.viewModel.get('panel').set('value', valueModels);
-
-                this.__triggerChange();
+                this.tempValue = this.tempValue.concat(value);
+                this.__updateViewModel(this.tempValue);
             },
 
-            __unsetValue: function (value) {
-                if (!~_.indexOf(this.value, value)) {
+            __unsetValue: function(value) {
+                if (!~_.indexOf(this.tempValue, value)) {
                     return;
                 }
 
-                this.value = _.without(this.value, value);
-
-                var valueModels = this.__findModels(this.value) || null;
-                this.viewModel.get('button').set('value', valueModels);
-                this.viewModel.get('panel').set('value', valueModels);
-
-                this.__triggerChange();
+                this.tempValue = _.without(this.tempValue, value);
+                this.__updateViewModel(this.tempValue);
             },
 
-            onPanelOpen: function () {
+            __updateViewModel: function(values) {
+                var valueModels = this.__findModels(values) || null;
+                this.viewModel.get('panel').set('value', valueModels);
+            },
+
+            __applyValue: function() {
+                this.viewModel.get('button').set('value', this.__findModels(this.tempValue));
+                this.setValue(this.tempValue);
+                this.__triggerChange();
+                this.dropdownView.close();
+            },
+
+            onPanelOpen: function() {
+                var value = this.getValue();
+                this.tempValue = value === null ? [] : value;
+                this.__updateViewModel(this.tempValue);
+
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
