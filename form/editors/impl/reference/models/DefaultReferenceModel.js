@@ -30,7 +30,16 @@ define([
                 } else {
                     this.set('name', data.text);
                 }
+            },
 
+            urlRoot: 'api/ReferenceEditorDataSourceApi',
+
+            fetch: function (options) {
+                options = options || {};
+                options.data = options.data || {};
+                options.data.propertyId = options.propertyId;
+                options.data.displayAttribute = options.displayAttribute;
+                return Backbone.AssociatedModel.prototype.fetch.call(this, options);
             }
         });
     });

@@ -207,6 +207,10 @@ define([
             setEnabled: function (enabled) {
                 BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
                 this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
+            },
+
+            getDisplayAttribute: function() {
+                return this.controller.originalCollection.options.displayAttribute;
             }
         });
 
