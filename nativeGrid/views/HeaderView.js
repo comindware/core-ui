@@ -37,9 +37,19 @@ define(['../../list/views/GridHeaderView'],
                 });
             },
 
+            __setInitialWidth: function () {
+                var columnsL = this.ui.gridHeaderColumn.length,
+                    columnWidth = Math.floor(this.headerMinWidth / columnsL);
+
+                this.ui.gridHeaderColumn.each(function (i, el) {
+                    $(el).width(columnWidth);
+                });
+            },
+
             onShow: function () {
-                this.__handleResizeInternal();
                 this.headerMinWidth = this.$el.parent().width();
+                this.__setInitialWidth();
+                this.__handleResizeInternal();
             },
 
             __startDrag: function (e) {
@@ -47,9 +57,12 @@ define(['../../list/views/GridHeaderView'],
                 var $column = $dragger.parent();
 
                 this.updateDragContext($column, e.pageX);
+                this.dragContext.tableInitialWidth = $column.parent().width();
 
                 this.dragContext.$dragger = $dragger;
                 this.isPrevScroll = false;
+
+                this.nextWidth = $column.next().width();
 
                 $dragger.addClass('active');
                 this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
@@ -82,60 +95,67 @@ define(['../../list/views/GridHeaderView'],
                     var changes = {};
 
                     var newDraggerColumnWidth = Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta);
-                    delta = newDraggerColumnWidth - draggedColumn.initialWidth;
 
                     if (this.columnsFit === 'scroll' && this.headerMinWidth < ctx.tableInitialWidth + delta) {
+
                         if (!this.isPrevScroll) {
                             this.updateDragContext(draggedColumn.$el, e.pageX);
                             this.isPrevScroll = true;
-                            return false;
                         }
-                        var tableWidth = Math.max(this.headerMinWidth, this.headerMinWidth + delta);
-                        draggedColumn.$el.parent().width(tableWidth);
+
                         draggedColumn.$el.width(newDraggerColumnWidth);
                         this.columns[index].width = newDraggerColumnWidth;
+
+                        var fullWidth = 0;
+                        this.ui.gridHeaderColumn.each(function (i, el) {
+                            fullWidth += $(el).width();
+                        }.bind(this));
+
+                        draggedColumn.$el.parent().width(fullWidth);
+
+                        var absDelta = newDraggerColumnWidth - draggedColumn.initialWidth;
+
                         this.gridEventAggregator.trigger('singleColumnResize', this, {
                             index: index,
-                            delta: delta
+                            delta: absDelta,
+                            needUpdate: true
                         });
+
                     } else {
-                        if (this.isPrevScroll) {
+                        this.updateColumnAndNeighbourWidths(index, delta);
+                        if (this.isPrevScroll1) {
                             draggedColumn.$el.width(newDraggerColumnWidth);
                             draggedColumn.$el.parent().width(this.headerMinWidth);
                             this.updateDragContext(draggedColumn.$el, e.pageX);
-                            this.isPrevScroll = false;
+                            this.isPrevScroll1 = false;
 
                             return false;
                         }
-
-                        delta = newDraggerColumnWidth - draggedColumn.initialWidth;
-                        draggedColumn.$el.width(newDraggerColumnWidth);
-
-                        var newColumnWidthPc = newDraggerColumnWidth / ctx.fullWidth;
-                        this.columns[index].width = newDraggerColumnWidth;
-                        changes[index] = newColumnWidthPc;
-                        index++;
-
-                        var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth;
-
-                        _.each(ctx.affectedColumns, function (c) {
-                            var newColumnWidth = Math.max(c.initialWidth - delta * c.initialWidth / affectedColumnsWidth, this.constants.MIN_COLUMN_WIDTH);
-                            c.$el.width(newColumnWidth);
-
-                            var newColumnWidthPc = newColumnWidth / ctx.fullWidth;
-                            this.columns[index].width = newColumnWidth;
-                            changes[index] = newColumnWidthPc;
-                            index++;
-                        }, this);
-
-                        this.gridEventAggregator.trigger('columnsResize', this, {
-                            changes: changes,
-                            fullWidth: ctx.fullWidth
-                        });
                     }
                 }
 
                 return false;
+            },
+
+            updateColumnAndNeighbourWidths: function (index, delta) {
+                var $current = $(this.ui.gridHeaderColumn[index]),
+                    $next = $(this.ui.gridHeaderColumn[index + 1]);
+
+                if (this.dragContext.draggedColumn.initialWidth + delta < 20)
+                    return;
+
+                $current.width(this.dragContext.draggedColumn.initialWidth + delta);
+                $next.width(this.nextWidth - delta);
+
+                this.gridEventAggregator.trigger('singleColumnResize', this, {
+                    index: index,
+                    delta: delta
+                });
+
+                this.gridEventAggregator.trigger('singleColumnResize', this, {
+                    index: index + 1,
+                    delta: -delta
+                });
             },
 
             updateDragContext: function ($column, offset) {
@@ -158,13 +178,14 @@ define(['../../list/views/GridHeaderView'],
                     }, 0);
 
                 this.dragContext.tableInitialWidth = $column.parent().width();
+                this.gridEventAggregator.trigger('columnStartDrag');
+
                 this.dragContext.affectedColumns = affectedColumns;
                 this.dragContext.fullWidth = this.headerMinWidth;
                 this.dragContext.draggedColumn = draggedColumn;
                 this.dragContext.pageOffsetX = offset;
                 this.dragContext.unaffectedWidth = unaffectedWidth;
                 this.dragContext.maxColumnWidth = this.headerMinWidth - affectedColumns.length * this.constants.MIN_COLUMN_WIDTH - unaffectedWidth;
-                this.gridEventAggregator.trigger('columnStartDrag');
             },
 
             __handleResizeInternal: function () {
