@@ -16,10 +16,11 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
         'use strict';
 
         var defaultOptions = {
+            enableDelete: false
         };
 
         Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend({
-            initialize: function (options) {
+            initialize: function(options) {
                 options = options || {};
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -37,6 +38,14 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
                 });
 
                 this.listenTo(this.dateTimeModel, 'change:value', this.__change, this);
+            },
+
+            ui: {
+                deleteButton: '.js-clear-button'
+            },
+
+            events: {
+                'click @ui.deleteButton': '__onClear'
             },
 
             regions: {
@@ -76,6 +85,9 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
 
                 this.dateRegion.show(this.dateView);
                 this.timeRegion.show(this.timeView);
+                if (!this.options.enableDelete) {
+                    this.ui.deleteButton.hide();
+                }
             },
 
             __value: function (value, updateUi, triggerChange) {
@@ -97,6 +109,10 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
             __setReadonly: function (readonly) {
                 BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
                 this.dateTimeModel.set({readonly: this.getReadonly()});
+            },
+
+            __onClear: function() {
+                this.setValue(null);
             }
         });
 
