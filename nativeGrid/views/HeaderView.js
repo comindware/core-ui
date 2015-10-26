@@ -60,9 +60,6 @@ define(['../../list/views/GridHeaderView'],
                 this.dragContext.tableInitialWidth = $column.parent().width();
 
                 this.dragContext.$dragger = $dragger;
-                this.isPrevScroll = false;
-
-                this.nextWidth = $column.next().width();
 
                 $dragger.addClass('active');
                 this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
@@ -90,48 +87,9 @@ define(['../../list/views/GridHeaderView'],
                 var delta = e.pageX - ctx.pageOffsetX;
 
                 if (delta !== 0) {
-                    var draggedColumn = ctx.draggedColumn;
                     var index = ctx.draggedColumn.index;
-                    var changes = {};
 
-                    var newDraggerColumnWidth = Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta);
-
-                    if (this.columnsFit === 'scroll' && this.headerMinWidth < ctx.tableInitialWidth + delta) {
-
-                        if (!this.isPrevScroll) {
-                            this.updateDragContext(draggedColumn.$el, e.pageX);
-                            this.isPrevScroll = true;
-                        }
-
-                        draggedColumn.$el.width(newDraggerColumnWidth);
-                        this.columns[index].width = newDraggerColumnWidth;
-
-                        var fullWidth = 0;
-                        this.ui.gridHeaderColumn.each(function (i, el) {
-                            fullWidth += $(el).width();
-                        }.bind(this));
-
-                        draggedColumn.$el.parent().width(fullWidth);
-
-                        var absDelta = newDraggerColumnWidth - draggedColumn.initialWidth;
-
-                        this.gridEventAggregator.trigger('singleColumnResize', this, {
-                            index: index,
-                            delta: absDelta,
-                            needUpdate: true
-                        });
-
-                    } else {
-                        this.updateColumnAndNeighbourWidths(index, delta);
-                        if (this.isPrevScroll1) {
-                            draggedColumn.$el.width(newDraggerColumnWidth);
-                            draggedColumn.$el.parent().width(this.headerMinWidth);
-                            this.updateDragContext(draggedColumn.$el, e.pageX);
-                            this.isPrevScroll1 = false;
-
-                            return false;
-                        }
-                    }
+                    this.updateColumnAndNeighbourWidths(index, delta);
                 }
 
                 return false;
@@ -139,23 +97,20 @@ define(['../../list/views/GridHeaderView'],
 
             updateColumnAndNeighbourWidths: function (index, delta) {
                 var $current = $(this.ui.gridHeaderColumn[index]),
-                    $next = $(this.ui.gridHeaderColumn[index + 1]);
+                    newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
-                if (this.dragContext.draggedColumn.initialWidth + delta < 20)
+                if (this.dragContext.draggedColumn.initialWidth + delta < 20) {
                     return;
+                }
 
-                $current.width(this.dragContext.draggedColumn.initialWidth + delta);
-                $next.width(this.nextWidth - delta);
-
+                $current.width(newColumnWidth);
                 this.gridEventAggregator.trigger('singleColumnResize', this, {
                     index: index,
                     delta: delta
                 });
 
-                this.gridEventAggregator.trigger('singleColumnResize', this, {
-                    index: index + 1,
-                    delta: -delta
-                });
+                this.$el.width(this.dragContext.tableInitialWidth + delta);
+                this.columns[index].width = newColumnWidth;
             },
 
             updateDragContext: function ($column, offset) {
@@ -167,25 +122,12 @@ define(['../../list/views/GridHeaderView'],
                     index: $column.index()
                 };
 
-                var affectedColumns = _.chain(draggedColumn.$el.nextAll()).toArray().map(function (el) {
-                        return {
-                            $el: $(el),
-                            initialWidth: $(el).width()
-                        };
-                    }).value(),
-                    unaffectedWidth = _.reduce(draggedColumn.$el.prevAll(), function (m, v) {
-                        return m + $(v).width();
-                    }, 0);
-
                 this.dragContext.tableInitialWidth = $column.parent().width();
                 this.gridEventAggregator.trigger('columnStartDrag');
 
-                this.dragContext.affectedColumns = affectedColumns;
                 this.dragContext.fullWidth = this.headerMinWidth;
                 this.dragContext.draggedColumn = draggedColumn;
                 this.dragContext.pageOffsetX = offset;
-                this.dragContext.unaffectedWidth = unaffectedWidth;
-                this.dragContext.maxColumnWidth = this.headerMinWidth - affectedColumns.length * this.constants.MIN_COLUMN_WIDTH - unaffectedWidth;
             },
 
             __handleResizeInternal: function () {
@@ -201,15 +143,20 @@ define(['../../list/views/GridHeaderView'],
             },
 
             __updateColumnsWidth: function () {
-                var columns = this.columns;
-                this.ui.gridHeaderColumn.each(function (i, el)
-                {
+                var columns = this.columns,
+                    needUpdate = false,
+                    fullWidth = 0;
+                this.ui.gridHeaderColumn.each(function (i, el) {
                     var child = $(el);
                     var col = columns[i];
                     if (col.width) {
+                        needUpdate = true;
                         child.width(col.width);
+                        fullWidth += col.width;
                     }
                 });
+
+                needUpdate && this.$el.width(fullWidth);
             }
         });
 

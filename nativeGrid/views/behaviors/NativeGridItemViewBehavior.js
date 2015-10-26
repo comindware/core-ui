@@ -15,15 +15,13 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
     function (lib, utils, GridItemViewBehavior) {
         'use strict';
 
-        var constants = {
-          leftPadding: 20
-        };
-
         var NativeGridItemViewBehavior = GridItemViewBehavior.extend({
             initialize: function (options, view)
             {
                 GridItemViewBehavior.prototype.initialize.apply(this, arguments);
 
+                this.paddingLeft = view.options.paddingLeft;
+                this.paddingRight = view.options.paddingRight;
                 this.padding = options.padding;
                 this.listenTo(view.options.gridEventAggregator, 'columnStartDrag', this.__onColumnStartDrag);
                 this.listenTo(view.options.gridEventAggregator, 'columnStoptDrag', this.__onColumnStopDrag);
@@ -45,29 +43,29 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
 
             __setInitialWidth: function () {
                 var $cells = this.__getCellElements(),
-                    availableWidth = this.__getAvailableWidth() - constants.leftPadding,
-                    cellWidth = Math.floor(availableWidth / $cells.length) - this.padding;
+                    availableWidth = this.$el.parent().width() - this.paddingLeft - this.paddingRight,
+                    cellWidth = Math.floor(availableWidth / $cells.length),
+                    fullWidth = 0;
 
                 for (var i = 0; i < $cells.length; i++) {
                     var $cell = $($cells[i]);
-                    $cell.width(cellWidth);
+
+                    if (this.columns[i].width) {
+                        cellWidth = this.columns[i].width;
+                    }
+
+                    $cell.width(cellWidth - this.padding);
+                    this.columns[i].width = cellWidth;
+                    fullWidth += cellWidth;
                 }
+
+                fullWidth += this.paddingLeft + this.paddingRight;
+                this.$el.width(fullWidth);
+                this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             },
 
             onShow: function () {
                 this.__setInitialWidth();
-            },
-
-            __handleColumnsResize: function (sender, args) {
-                var availableWidth = args.fullWidth;
-                var cells = _.toArray(this.__getCellElements());
-                _.each(args.changes, function (v, k)
-                {
-                    var $cell = $(cells[k]);
-                    $cell.width(v * availableWidth - this.cellWidthDiff);
-                }, this);
-
-                this.view.options.gridEventAggregator.trigger('afterColumnsResize', args.fullWidth);
             },
 
             __onSingleColumnResize: function (sender, args) {
@@ -78,8 +76,12 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
 
                 var fullWidth = 0;
                 this.__getCellElements().each(function (i, el) {
-                    fullWidth += $(el).width() + 20;
+                    fullWidth += $(el).width() + this.padding;
                 }.bind(this));
+
+                fullWidth += this.paddingLeft + this.paddingRight;
+
+                this.$el.width(fullWidth);
 
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             }
