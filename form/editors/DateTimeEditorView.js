@@ -63,6 +63,7 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
 
             __change: function () {
                 this.__value(this.dateTimeModel.get('value'), true, true);
+                this.updateDelete();
             },
 
             setValue: function (value) {
@@ -85,8 +86,14 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
 
                 this.dateRegion.show(this.dateView);
                 this.timeRegion.show(this.timeView);
-                if (!this.options.enableDelete) {
+                this.updateDelete();
+            },
+
+            updateDelete: function() {
+                if (!this.options.enableDelete || !this.getValue()) {
                     this.ui.deleteButton.hide();
+                } else {
+                    this.ui.deleteButton.show();
                 }
             },
 
