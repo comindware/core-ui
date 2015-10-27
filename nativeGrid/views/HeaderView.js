@@ -11,9 +11,10 @@
 
 /* global define, require, Marionette, _, Handlebars, shared, $ */
 
-define(['../../list/views/GridHeaderView'],
-    function (GridHeaderView) {
+define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
+    function (GridHeaderView, template) {
         'use strict';
+
         var HeaderView = GridHeaderView.extend({
             initialize: function (options) {
                 GridHeaderView.prototype.initialize.apply(this, arguments);
@@ -21,6 +22,8 @@ define(['../../list/views/GridHeaderView'],
                 _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort');
                 $(window).resize(this.__handleResize);
             },
+
+            template: Handlebars.compile(template),
 
             onRender: function () {
                 var self = this;
