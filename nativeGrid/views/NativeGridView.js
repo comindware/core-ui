@@ -141,6 +141,11 @@ define(['module/lib',
                 this.collection.sort();
             },
 
+            setFitToView: function () {
+                this.listView.setFitToView();
+                this.headerView.setFitToView();
+            },
+
             showFilterPopout: function (options) {
                 var AnchoredButtonView = Marionette.ItemView.extend({
                     template: Handlebars.compile('<span class="js-anchor"></span>'),

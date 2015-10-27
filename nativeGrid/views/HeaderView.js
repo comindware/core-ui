@@ -37,9 +37,15 @@ define(['../../list/views/GridHeaderView'],
                 });
             },
 
-            __setInitialWidth: function () {
+            setFitToView: function () {
+                var fullWidth = this.$el.parent().width();
+                this.__setInitialWidth(fullWidth);
+                this.$el.width(fullWidth);
+            },
+
+            __setInitialWidth: function (fullWidth) {
                 var columnsL = this.ui.gridHeaderColumn.length,
-                    columnWidth = Math.floor(this.headerMinWidth / columnsL);
+                    columnWidth = Math.floor(fullWidth / columnsL);
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     $(el).width(columnWidth);
@@ -48,7 +54,7 @@ define(['../../list/views/GridHeaderView'],
 
             onShow: function () {
                 this.headerMinWidth = this.$el.parent().width();
-                this.__setInitialWidth();
+                this.__setInitialWidth(this.headerMinWidth);
                 this.__handleResizeInternal();
             },
 

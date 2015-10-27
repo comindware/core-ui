@@ -26,6 +26,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 this.listenTo(view.options.gridEventAggregator, 'columnStartDrag', this.__onColumnStartDrag);
                 this.listenTo(view.options.gridEventAggregator, 'columnStoptDrag', this.__onColumnStopDrag);
                 this.listenTo(view.options.gridEventAggregator, 'singleColumnResize', this.__onSingleColumnResize);
+                this.view.setFitToView = this.setFitToView.bind(this);
             },
 
             __onColumnStartDrag: function (sender, index) {
@@ -41,7 +42,15 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 delete this.draggedColumn;
             },
 
-            __setInitialWidth: function () {
+            onShow: function () {
+                this.__setInitialWidth(true);
+            },
+
+            setFitToView: function () {
+                this.__setInitialWidth();
+            },
+
+            __setInitialWidth: function (enableCustomWidth) {
                 var $cells = this.__getCellElements(),
                     availableWidth = this.$el.parent().width() - this.paddingLeft - this.paddingRight,
                     cellWidth = Math.floor(availableWidth / $cells.length),
@@ -50,7 +59,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 for (var i = 0; i < $cells.length; i++) {
                     var $cell = $($cells[i]);
 
-                    if (this.columns[i].width) {
+                    if (enableCustomWidth && this.columns[i].width) {
                         cellWidth = this.columns[i].width;
                     }
 
@@ -62,10 +71,6 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 fullWidth += this.paddingLeft + this.paddingRight;
                 this.$el.width(fullWidth);
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
-            },
-
-            onShow: function () {
-                this.__setInitialWidth();
             },
 
             __onSingleColumnResize: function (sender, args) {
