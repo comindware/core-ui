@@ -146,6 +146,7 @@ define(['../../list/views/GridHeaderView'],
                 var columns = this.columns,
                     needUpdate = false,
                     fullWidth = 0;
+
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     var child = $(el);
                     var col = columns[i];
