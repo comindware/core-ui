@@ -59,13 +59,23 @@ define(['core/meta'],
         };
 
         var durationComparator2Asc = function (a, b) {
-            // TODO: fix me!
-            return a - b;
+            if (a) {
+                a = moment.duration(a);
+            }
+            if (b) {
+                b = moment.duration(b);
+            }
+            return a ? (b ? a - b : 1) : (b ? -1 : 0);
         };
 
         var durationComparator2Desc = function (a, b) {
-            // TODO: fix me!
-            return b - a;
+            if (a) {
+                a = moment.duration(a);
+            }
+            if (b) {
+                b = moment.duration(b);
+            }
+            return b ? (a ? b - a : 1) : (a ? -1 : 0);
         };
 
         var booleanComparator2Asc = function (a, b) {
@@ -74,10 +84,22 @@ define(['core/meta'],
         };
 
         var dateComparator2Asc = function (a, b) {
+            if (a) {
+                a = moment(a);
+            }
+            if (b) {
+                b = moment(b);
+            }
             return a ? (b ? a - b : 1) : ( b ? -1 : 0);
         };
 
         var dateComparator2Desc = function (a, b) {
+            if (a) {
+                a = moment(a);
+            }
+            if (b) {
+                b = moment(b);
+            }
             return b ? (a ? b - a : 1) : (a ? -1 : 0);
         };
 
