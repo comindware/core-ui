@@ -97,7 +97,7 @@ define([
                         buttonViewOptions: {
                             model: this.fieldErrorModel
                         },
-                        popoutFlow: 'left',
+                        popoutFlow: 'right',
                         customAnchor: true
                     });
                     errorPopout.render();
@@ -117,7 +117,7 @@ define([
                         buttonViewOptions: {
                             model: this.fieldInfoModel
                         },
-                        popoutFlow: 'left',
+                        popoutFlow: 'right',
                         customAnchor: true
                     });
                     infoPopout.render();
