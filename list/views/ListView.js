@@ -346,7 +346,13 @@ define([
                 if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
                     minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
                 }
-                return Math.max(this.childHeight * computedViewportHeight, minHeight);
+
+                var outerBoxAdjustments = 0;
+                if (this.visibleCollectionView) {
+                    outerBoxAdjustments = this.visibleCollectionView.$el.outerHeight() % this.childHeight;
+                }
+
+                return Math.max(this.childHeight * computedViewportHeight + outerBoxAdjustments, minHeight);
             },
 
             __mousewheel: function (e) {
