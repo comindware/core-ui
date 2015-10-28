@@ -352,6 +352,9 @@ define([
                 if (this.state.viewportHeight === undefined) {
                     return;
                 }
+                if (this.collection.length <= this.state.viewportHeight) {
+                    return;
+                }
 
                 var delta = this.state.viewportHeight;
                 var newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
