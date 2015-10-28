@@ -36,10 +36,6 @@ define([
                     utils.helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
                 }
                 return childView;
-            },
-
-            updateHeight: function (h) {
-                this.$el.height(h);
             }
         });
 
@@ -98,13 +94,6 @@ define([
                 });
 
                 this.visibleCollectionRegion.show(this.visibleCollectionView);
-                this.__updateHeight();
-            },
-
-            __updateHeight: function () {
-                var h = this.getElementHeight();
-                this.$el.height(h);
-                this.visibleCollectionView && this.visibleCollectionView.updateHeight(h);
             },
 
             onRender: function () {

@@ -20,6 +20,8 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
             {
                 GridItemViewBehavior.prototype.initialize.apply(this, arguments);
 
+                this.paddingLeft = view.options.paddingLeft;
+                this.paddingRight = view.options.paddingRight;
                 this.padding = options.padding;
                 this.listenTo(view.options.gridEventAggregator, 'columnStartDrag', this.__onColumnStartDrag);
                 this.listenTo(view.options.gridEventAggregator, 'columnStoptDrag', this.__onColumnStopDrag);
@@ -39,56 +41,47 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 delete this.draggedColumn;
             },
 
-            onShow: function () {
-                var $cells = this.__getCellElements();
-                var cells = _.toArray($cells);
-                if (this.view.options.columnsFit === 'scroll') {
-                    var fullWidth = 0;
-                    var columnsWidth = [];
-                    this.cellWidthDiff = $cells.outerWidth() - $cells.width();
-                    _.each(this.columns, function (c, k) {
-                        var $cell = $(cells[k]),
-                            cellFullWidth = c.width ||$cell.outerWidth(),
-                            cellWidth = cellFullWidth - this.padding;
+            __setInitialWidth: function () {
+                var $cells = this.__getCellElements(),
+                    availableWidth = this.$el.parent().width() - this.paddingLeft - this.paddingRight,
+                    cellWidth = Math.floor(availableWidth / $cells.length),
+                    fullWidth = 0;
 
-                        columnsWidth.push(cellWidth);
-                        $cell.width(cellWidth);
-                        c.width = cellFullWidth;
-                        fullWidth += cellFullWidth;
-                    }, this);
-                    this.$el.width(fullWidth);
-                    this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
-                } else {
-                    this.cellWidthDiff = $cells.outerWidth() - $cells.width();
-                    var availableWidth = this.__getAvailableWidth();
+                for (var i = 0; i < $cells.length; i++) {
+                    var $cell = $($cells[i]);
 
-                    _.each(this.columns, function (c, k) {
-                        var $cell = $(cells[k]);
-                        if (c.width) {
-                            $cell.width(c.width * availableWidth - this.cellWidthDiff);
-                        }
-                    }, this);
+                    if (this.columns[i].width) {
+                        cellWidth = this.columns[i].width;
+                    }
+
+                    $cell.width(cellWidth - this.padding);
+                    this.columns[i].width = cellWidth;
+                    fullWidth += cellWidth;
                 }
+
+                fullWidth += this.paddingLeft + this.paddingRight;
+                this.$el.width(fullWidth);
+                this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             },
 
-            __handleColumnsResize: function (sender, args) {
-                var availableWidth = args.fullWidth;
-                var cells = _.toArray(this.__getCellElements());
-                _.each(args.changes, function (v, k)
-                {
-                    var $cell = $(cells[k]);
-                    $cell.width(v * availableWidth - this.cellWidthDiff);
-                }, this);
-
-                this.view.options.gridEventAggregator.trigger('afterColumnsResize', args.fullWidth);
+            onShow: function () {
+                this.__setInitialWidth();
             },
 
             __onSingleColumnResize: function (sender, args) {
                 var cells = _.toArray(this.__getCellElements()),
                     $cell = $(cells[args.index]);
 
-                var fullWidth = this.initialFullWidth + args.delta;
                 $cell.width(this.columnsWidth[args.index] + args.delta);
+
+                var fullWidth = 0;
+                this.__getCellElements().each(function (i, el) {
+                    fullWidth += $(el).width() + this.padding;
+                }.bind(this));
+
+                fullWidth += this.paddingLeft + this.paddingRight;
+
+                this.$el.width(fullWidth);
 
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             }
