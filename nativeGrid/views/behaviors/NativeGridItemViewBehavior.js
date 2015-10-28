@@ -50,25 +50,18 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 this.__setInitialWidth();
             },
 
-            __setInitialWidth: function (enableCustomWidth) {
+            __setInitialWidth: function () {
                 var $cells = this.__getCellElements(),
-                    availableWidth = this.$el.parent().width() - this.paddingLeft - this.paddingRight,
-                    cellWidth = Math.floor(availableWidth / $cells.length),
-                    fullWidth = 0;
+                    fullWidth = this.paddingLeft + this.paddingRight;
 
                 for (var i = 0; i < $cells.length; i++) {
-                    var $cell = $($cells[i]);
-
-                    if (enableCustomWidth && this.columns[i].width) {
+                    var $cell = $($cells[i]),
                         cellWidth = this.columns[i].width;
-                    }
 
                     $cell.width(cellWidth - this.padding);
-                    this.columns[i].width = cellWidth;
                     fullWidth += cellWidth;
                 }
 
-                fullWidth += this.paddingLeft + this.paddingRight;
                 this.$el.width(fullWidth);
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             },
@@ -87,7 +80,6 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 fullWidth += this.paddingLeft + this.paddingRight;
 
                 this.$el.width(fullWidth);
-
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             }
         });
