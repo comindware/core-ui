@@ -341,13 +341,14 @@ define([
                     return elementHeight;
                 }
 
-                var computedViewportHeight = Math.min(this.maxRows, this.collection.length);
-                var minHeight = 0;
+                var computedViewportHeight = Math.min(this.maxRows, this.collection.length),
+                    minHeight = 0,
+                    outerBoxAdjustments = 0;
+
                 if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
                     minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
                 }
 
-                var outerBoxAdjustments = 0;
                 if (this.visibleCollectionView) {
                     outerBoxAdjustments = this.visibleCollectionView.$el.outerHeight() % this.childHeight;
                 }
