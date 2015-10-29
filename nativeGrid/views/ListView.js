@@ -36,6 +36,12 @@ define([
                     utils.helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
                 }
                 return childView;
+            },
+
+            setFitToView: function () {
+                this.children.each(function (ch) {
+                    ch.setFitToView();
+                });
             }
         });
 
@@ -299,6 +305,10 @@ define([
 
             setWidth: function (fullWidth) {
                 this.$el.width(fullWidth);
+            },
+
+            setFitToView: function () {
+                this.visibleCollectionView.setFitToView();
             },
 
             __handleResize: function () {
