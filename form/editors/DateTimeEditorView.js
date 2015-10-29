@@ -119,7 +119,8 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
             },
 
             __onClear: function() {
-                this.setValue(null);
+                this.__value(null, true, true);
+                this.dateTimeModel.set('value', null);
             }
         });
 
