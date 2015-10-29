@@ -26,7 +26,7 @@ define([
         var classes = {
             disabled: 'l-field_disabled',
             readonly: 'l-field_readonly',
-            FOCUSED: 'dev-focused'
+            FOCUSED: 'l-field_focused'
         };
 
         var onFocus = function () {
