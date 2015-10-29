@@ -49,24 +49,25 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                     sumGap = 0;
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
-                    var columnWidth = Math.floor($(el).width() * availableWidth / viewWidth);
-                    if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
-                        sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
-                        columnWidth = this.constants.MIN_COLUMN_WIDTH;
-                    } else {
-                        sumGap += columnWidth - this.constants.MIN_COLUMN_WIDTH;
+                    if (availableWidth !== viewWidth) {
+                        var columnWidth = Math.floor($(el).width() * availableWidth / viewWidth);
+                        if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
+                            sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
+                            columnWidth = this.constants.MIN_COLUMN_WIDTH;
+                        } else {
+                            sumGap += columnWidth - this.constants.MIN_COLUMN_WIDTH;
+                        }
                     }
 
                     this.columns[i].width = columnWidth;
                 }.bind(this));
 
-                var usedDelta = 0;
-
                 this.ui.gridHeaderColumn.each(function (i, el) {
-                    if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
-                        var delta = Math.ceil((this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap);
-                        this.columns[i].width -= delta;
-                        usedDelta += delta;
+                    if (availableWidth !== viewWidth) {
+                        if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
+                            var delta = Math.ceil((this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap);
+                            this.columns[i].width -= delta;
+                        }
                     }
 
                     if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
