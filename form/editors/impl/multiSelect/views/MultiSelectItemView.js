@@ -26,7 +26,7 @@ define(
 
         return Marionette.ItemView.extend({
             className: function() {
-                return this.model.get('selected') ? classes.SELECTED : '';
+                return this.model.selected ? classes.SELECTED : '';
             },
 
             template: Handlebars.compile(template),
@@ -44,20 +44,22 @@ define(
             },
 
             modelEvents: {
-                'change:selected': '__setClass'
+                'select deselect': '__updateSelected'
             },
 
             __toggle: function() {
-                if (this.model.get('selected')) {
-                    this.model.set('selected', false);
+                if (this.model.selected) {
+                    this.model.selected = false;
+                    this.model.trigger('deselect', this.model);
                     this.$el.removeClass(classes.SELECTED);
                 } else {
-                    this.model.set('selected', true);
+                    this.model.selected = true;
+                    this.model.trigger('select', this.model);
                     this.$el.addClass(classes.SELECTED);
                 }
             },
 
-            __setClass: function() {
+            __updateSelected: function() {
                 this.el.className = this.className();
             }
         });

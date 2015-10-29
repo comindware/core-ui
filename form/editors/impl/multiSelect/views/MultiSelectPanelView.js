@@ -57,7 +57,8 @@ define(
                 var valueModels = this.model.get('value');
 
                 _.each(valueModels, function(valueModel) {
-                    valueModel.set('selected', true);
+                    valueModel.selected = true;
+                    valueModel.trigger('select', valueModel);
                 });
 
                 var displayList = list.factory.createDefaultList({
@@ -86,13 +87,19 @@ define(
 
             __selectAll: function(silent) {
                 this.model.get('collection').each(function(model) {
-                    model.set('selected', true, {silent: silent === true});
+                    model.selected = true;
+                    if (silent !== true) {
+                        model.trigger('select', model);
+                    }
                 });
             },
 
             __deselectAll: function(silent) {
                 this.model.get('collection').each(function(model) {
-                    model.set('selected', false, {silent: silent === true});
+                    model.selected = false;
+                    if (silent !== true) {
+                        model.trigger('deselect', model);
+                    }
                 });
             },
 

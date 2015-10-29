@@ -50,7 +50,7 @@ define(
                 this.listenTo(this.collection, 'add', this.__onCollectionChange);
                 this.listenTo(this.collection, 'remove', this.__onCollectionChange);
                 this.listenTo(this.collection, 'reset', this.__onCollectionChange);
-                this.listenTo(this.collection, 'change:selected', this.__onItemToggle);
+                this.listenTo(this.collection, 'select deselect', this.__onItemToggle);
 
                 this.viewModel = new Backbone.Model({
                     button: new Backbone.Model({
@@ -98,32 +98,55 @@ define(
             },
 
             __onCollectionChange: function() {
-                var values = this.getValue();
-                var valueModels = this.__findModels(values);
-
-                if (valueModels != null) {
-                    if (valueModels != this.viewModel.get('panel').get("value")) {
-                        this.viewModel.get('panel').set('value', valueModels);
-                    }
+                if (!this.collection.length) {
+                    this.setValue(null);
                     return;
                 }
 
-                if (this.collection.length === null) {
+                this.__trimValues();
+
+                var values = this.getValue();
+                var valueModels = this.__findModels(values);
+
+                if (valueModels && valueModels.length) {
+                    this.viewModel.get('panel').set('value', valueModels);
+                } else {
                     this.setValue(null);
                 }
             },
 
             __onItemToggle: function(itemModel) {
-                if (itemModel.get('selected')) {
+                if (itemModel.selected) {
                     this.__setValue(itemModel.id);
                 } else {
                     this.__unsetValue(itemModel.id);
                 }
             },
 
+            __trimValues: function() {
+                var values = this.getValue();
+                if (values === null) {
+                    return;
+                }
+
+                _.chain(values).
+                    reject(function(value) {
+                        return this.collection.get(value);
+                    }.bind(this)).
+                    every(function(rejectedValue) {
+                        values = _.without(values, rejectedValue);
+                    });
+
+                if (values.length) {
+                    this.setValue(values);
+                } else {
+                    this.setValue(null);
+                }
+            },
+
             __findModels: function(values) {
                 return this.collection ? this.collection.filter(function(model) {
-                    return ~_.indexOf(values, model.id);
+                    return _.contains(values, model.id);
                 }) : null;
             },
 
@@ -153,6 +176,7 @@ define(
             __applyValue: function() {
                 this.viewModel.get('button').set('value', this.__findModels(this.tempValue));
                 this.setValue(this.tempValue);
+                this.__trimValues();
                 this.__triggerChange();
                 this.dropdownView.close();
             },
