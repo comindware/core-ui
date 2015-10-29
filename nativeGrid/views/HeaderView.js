@@ -42,25 +42,56 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
 
             setFitToView: function () {
                 var availableWidth = this.$el.parent().width(),
-                    viewWidth = this.$el.width();
+                    viewWidth = this.$el.width(),
+                    columnsL = this.ui.gridHeaderColumn.length,
+                    fullWidth = 0,
+                    sumDelta = 0,
+                    sumGap = 0;
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     var columnWidth = Math.floor($(el).width() * availableWidth / viewWidth);
-                    $(el).width(columnWidth);
+                    if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
+                        sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
+                        columnWidth = this.constants.MIN_COLUMN_WIDTH;
+                    } else {
+                        sumGap += columnWidth - this.constants.MIN_COLUMN_WIDTH;
+                    }
+
                     this.columns[i].width = columnWidth;
                 }.bind(this));
 
-                this.$el.width(availableWidth);
+                var usedDelta = 0;
+
+                this.ui.gridHeaderColumn.each(function (i, el) {
+                    if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
+                        var delta = Math.ceil((this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap);
+                        this.columns[i].width -= delta;
+                        usedDelta += delta;
+                    }
+
+                    if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
+                        this.columns[i].width = availableWidth - fullWidth;
+                    }
+
+                    $(el).width(this.columns[i].width);
+                    fullWidth += this.columns[i].width;
+
+                }.bind(this));
+                this.$el.width(fullWidth);
             },
 
-            __setInitialWidth: function (fullWidth) {
+            __setInitialWidth: function (availableWidth) {
                 var columnsL = this.ui.gridHeaderColumn.length,
-                    columnWidth = Math.floor(fullWidth / columnsL),
+                    columnWidth = Math.floor(availableWidth / columnsL),
                     fullWidth = 0;
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     if (this.columns[i].width)
                         columnWidth = this.columns[i].width;
+
+                    if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
+                        this.columns[i].width = availableWidth - fullWidth;
+                    }
 
                     $(el).width(columnWidth);
                     this.columns[i].width = columnWidth;
