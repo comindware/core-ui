@@ -38,12 +38,14 @@ define(
 
             ui: {
                 selectAll: '.js-select-all',
-                apply: '.js-apply'
+                apply: '.js-apply',
+                reset: '.js-reset'
             },
 
             events: {
                 'click @ui.selectAll': '__selectAll',
-                'click @ui.apply': '__apply'
+                'click @ui.apply': '__apply',
+                'click @ui.reset': '__reset'
             },
 
             regions: {
@@ -52,15 +54,6 @@ define(
             },
 
             onShow: function() {
-                this.__deselectAll(true);
-
-                var valueModels = this.model.get('value');
-
-                _.each(valueModels, function(valueModel) {
-                    valueModel.selected = true;
-                    valueModel.trigger('select', valueModel);
-                });
-
                 var displayList = list.factory.createDefaultList({
                     collection: this.model.get('collection'),
                     listViewOptions: {
@@ -82,29 +75,18 @@ define(
 
             initialize: function(options) {
                 utils.helpers.ensureOption(options, 'model');
-                this.reqres = options.reqres;
             },
 
-            __selectAll: function(silent) {
-                this.model.get('collection').each(function(model) {
-                    model.selected = true;
-                    if (silent !== true) {
-                        model.trigger('select', model);
-                    }
-                });
-            },
-
-            __deselectAll: function(silent) {
-                this.model.get('collection').each(function(model) {
-                    model.selected = false;
-                    if (silent !== true) {
-                        model.trigger('deselect', model);
-                    }
-                });
+            __selectAll: function() {
+                this.options.parent.trigger('select:all');
             },
 
             __apply: function() {
-                this.reqres.request('apply');
+                this.options.parent.trigger('apply');
+            },
+
+            __reset: function() {
+                this.options.parent.trigger('reset');
             }
         });
     }

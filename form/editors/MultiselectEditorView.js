@@ -37,10 +37,6 @@ define(
                     _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
 
-                this.reqres = new Backbone.Wreqr.RequestResponse();
-                this.reqres.setHandler('panel:open', this.onPanelOpen, this);
-                this.reqres.setHandler('apply', this.__applyValue, this);
-
                 if (_.isArray(this.options.collection)) {
                     this.options.collection = new Backbone.Collection(this.options.collection);
                 }
@@ -50,7 +46,8 @@ define(
                 this.listenTo(this.collection, 'add', this.__onCollectionChange);
                 this.listenTo(this.collection, 'remove', this.__onCollectionChange);
                 this.listenTo(this.collection, 'reset', this.__onCollectionChange);
-                this.listenTo(this.collection, 'select deselect', this.__onItemToggle);
+                this.listenTo(this.collection, 'select', this.__onSelect);
+                this.listenTo(this.collection, 'deselect', this.__onDeselect);
 
                 this.viewModel = new Backbone.Model({
                     button: new Backbone.Model({
@@ -83,16 +80,19 @@ define(
                 this.dropdownView = dropdown.factory.createDropdown({
                     buttonView: MultiSelectButtonView,
                     buttonViewOptions: {
-                        model: this.viewModel.get('button'),
-                        reqres: this.reqres
+                        model: this.viewModel.get('button')
                     },
                     panelView: MultiSelectPanelView,
                     panelViewOptions: {
-                        model: this.viewModel.get('panel'),
-                        reqres: this.reqres
+                        model: this.viewModel.get('panel')
                     },
                     autoOpen: false
                 });
+
+                this.listenTo(this.dropdownView, 'panel:open', this.onPanelOpen);
+                this.listenTo(this.dropdownView, 'select:all', this.__selectAll);
+                this.listenTo(this.dropdownView, 'apply', this.__applyValue);
+                this.listenTo(this.dropdownView, 'reset', this.__resetValue);
 
                 this.dropdownRegion.show(this.dropdownView);
             },
@@ -115,12 +115,36 @@ define(
                 }
             },
 
-            __onItemToggle: function(itemModel) {
-                if (itemModel.selected) {
-                    this.__setValue(itemModel.id);
-                } else {
-                    this.__unsetValue(itemModel.id);
-                }
+            __onSelect: function(model) {
+                this.__select(model);
+                this.__updateViewModel();
+            },
+
+            __onDeselect: function(model) {
+                this.__deselect(model);
+                this.__updateViewModel();
+            },
+
+            __select: function(model) {
+                model.selected = true;
+                this.__setValue(model.id);
+            },
+
+            __deselect: function(model) {
+                model.selected = false;
+                this.__unsetValue(model.id);
+            },
+
+            __selectAll: function(silent) {
+                this.collection.each(function(model) {
+                    model.trigger('select', model);
+                }.bind(this));
+            },
+
+            __deselectAll: function(silent) {
+                this.collection.each(function(model) {
+                    model.trigger('deselect', model);
+                }.bind(this));
             },
 
             __trimValues: function() {
@@ -149,14 +173,13 @@ define(
                     return _.contains(values, model.id);
                 }) : null;
             },
-
+            
             __setValue: function(value) {
                 if (~_.indexOf(this.tempValue, value)) {
                     return;
                 }
 
                 this.tempValue = this.tempValue.concat(value);
-                this.__updateViewModel(this.tempValue);
             },
 
             __unsetValue: function(value) {
@@ -165,11 +188,10 @@ define(
                 }
 
                 this.tempValue = _.without(this.tempValue, value);
-                this.__updateViewModel(this.tempValue);
             },
-
-            __updateViewModel: function(values) {
-                var valueModels = this.__findModels(values) || null;
+            
+            __updateViewModel: function() {
+                var valueModels = this.__findModels(this.tempValue) || null;
                 this.viewModel.get('panel').set('value', valueModels);
             },
 
@@ -181,10 +203,20 @@ define(
                 this.dropdownView.close();
             },
 
-            onPanelOpen: function() {
+            __resetValue: function() {
                 var value = this.getValue();
                 this.tempValue = value === null ? [] : value;
-                this.__updateViewModel(this.tempValue);
+
+                this.__updateViewModel();
+                //// Убрать галочки
+                var valueModels = this.viewModel.get('panel').get('value');
+                _.each(valueModels, function(valueModel) {
+                    valueModel.trigger('select', valueModel);
+                });
+            },
+
+            onPanelOpen: function() {
+                this.__resetValue();
 
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();

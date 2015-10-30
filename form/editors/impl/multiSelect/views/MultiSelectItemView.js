@@ -49,13 +49,9 @@ define(
 
             __toggle: function() {
                 if (this.model.selected) {
-                    this.model.selected = false;
                     this.model.trigger('deselect', this.model);
-                    this.$el.removeClass(classes.SELECTED);
                 } else {
-                    this.model.selected = true;
                     this.model.trigger('select', this.model);
-                    this.$el.addClass(classes.SELECTED);
                 }
             },
 

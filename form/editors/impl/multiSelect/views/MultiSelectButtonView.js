@@ -12,8 +12,12 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define(
-    ['module/lib', 'text!../templates/multiSelectButton.html'],
-    function(lib, template) {
+    [
+        'module/lib',
+        'core/utils/utilsApi',
+        'text!../templates/multiSelectButton.html'
+    ],
+    function(lib, utils, template) {
         'use strict';
 
         return Marionette.ItemView.extend({
@@ -43,11 +47,11 @@ define(
             },
 
             initialize: function(options) {
-                this.reqres = options.reqres;
+                utils.helpers.ensureOption(options, 'model');
             },
 
             __click: function() {
-                this.reqres.request('panel:open');
+                this.options.parent.trigger('panel:open');
             }
         });
     }
