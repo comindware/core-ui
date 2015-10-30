@@ -43,7 +43,8 @@ define(['text!./templates/textAreaEditor.html',
             disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false,
-            textHeight: null
+            textHeight: null,
+            initialHeight: 2
         };
 
         Backbone.Form.editors.TextArea = BaseItemEditorView.extend({
@@ -58,7 +59,7 @@ define(['text!./templates/textAreaEditor.html',
             },
 
             focusElement: '.js-textarea',
-            className: 'l-textarea',
+            className: 'l-field l-field_textarea',
 
             ui: {
                 textarea: '.js-textarea'
@@ -88,6 +89,7 @@ define(['text!./templates/textAreaEditor.html',
                     this.keyListener.reset();
                 }
                 this.keyListener = new lib.keypress.Listener(this.ui.textarea[0]);
+                this.ui.textarea.attr('rows', this.options.initialHeight);
             },
 
             addKeyboardListener: function (key, callback) {
@@ -177,7 +179,7 @@ define(['text!./templates/textAreaEditor.html',
                     keyCode.LEFT,
                     keyCode.RIGHT,
                     keyCode.HOME,
-                    keyCode.END,
+                    keyCode.END
                 ].indexOf(e.keyCode) === -1) {
                     return;
                 }
