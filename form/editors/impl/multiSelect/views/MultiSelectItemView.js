@@ -21,12 +21,13 @@ define(
         'use strict';
 
         var classes = {
-            SELECTED: 'dev-multi-select-item_selected'
+            SELECTED: 'multiselect-i_selected',
+            BASE: 'multiselect-i'
         };
 
         return Marionette.ItemView.extend({
             className: function() {
-                return this.model.selected ? classes.SELECTED : '';
+                return this.model.selected ? classes.BASE + ' ' + classes.SELECTED : classes.BASE;
             },
 
             template: Handlebars.compile(template),
@@ -51,11 +52,9 @@ define(
                 if (this.model.selected) {
                     this.model.selected = false;
                     this.model.trigger('deselect', this.model);
-                    this.$el.removeClass(classes.SELECTED);
                 } else {
                     this.model.selected = true;
                     this.model.trigger('select', this.model);
-                    this.$el.addClass(classes.SELECTED);
                 }
             },
 
