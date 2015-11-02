@@ -123,12 +123,12 @@ define(['module/lib', 'core/utils/utilsApi'],
 
             __highlight: function (fragment)
             {
-                this.view.onHighlighted(fragment);
+                this.view.OnHighlighted(fragment);
             },
 
             __handleUnhighlighting: function ()
             {
-                this.view.onUnhighlighted();
+                this.view.OnUnhighlighted();
             },
 
             __handleSelection: function () {
