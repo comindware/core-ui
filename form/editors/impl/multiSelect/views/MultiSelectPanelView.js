@@ -22,19 +22,24 @@ define(
     function(lib, list, utils, template, MultiSelectItemView) {
         'use strict';
 
-        var config = {
-            CHILD_HEIGHT: 34,
-            MAX_HEIGHT: 410
-        };
-
-        return Marionette.LayoutView.extend({
+        return Marionette.CompositeView.extend({
             attributes: {
                 tabindex: 0
             },
 
-            className: 'dev-panel-view',
+            className: 'multiselect-panel',
 
             template: Handlebars.compile(template),
+            
+            childView: MultiSelectItemView,
+
+            childViewOptions: function() {
+                return {
+                    displayAttribute: this.getOption('displayAttribute')
+                };
+            },
+
+            childViewContainer: '.js-list',
 
             ui: {
                 selectAll: '.js-select-all',
@@ -48,45 +53,26 @@ define(
                 'click @ui.reset': '__reset'
             },
 
-            regions: {
-                listRegion: '.js-list-region',
-                scrollbarRegion: '.js-scrollbar-region'
-            },
-
             onShow: function() {
-                var displayList = list.factory.createDefaultList({
-                    collection: this.model.get('collection'),
-                    listViewOptions: {
-                        childView: MultiSelectItemView,
-                        childViewOptions: {
-                            displayAttribute: this.model.get('displayAttribute')
-                        },
-                        maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
-                        height: 'auto',
-                        childHeight: config.CHILD_HEIGHT
-                    }
-                });
-
-                this.listRegion.show(displayList.listView);
-                this.scrollbarRegion.show(displayList.scrollbarView);
-
                 this.$el.focus();
             },
 
             initialize: function(options) {
                 utils.helpers.ensureOption(options, 'model');
+                this.collection = this.model.get('collection');
             },
 
             __selectAll: function() {
-                this.options.parent.trigger('select:all');
+                this.trigger('select:all');
             },
 
             __apply: function() {
-                this.options.parent.trigger('apply');
+                this.trigger('apply');
             },
 
             __reset: function() {
-                this.options.parent.trigger('reset');
+                this.render();
+                this.trigger('reset');
             }
         });
     }

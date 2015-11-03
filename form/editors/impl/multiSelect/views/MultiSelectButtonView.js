@@ -39,7 +39,7 @@ define(
             },
 
             events: {
-                'click': '__click'
+                'click': '__onClick'
             },
 
             modelEvents: {
@@ -50,8 +50,8 @@ define(
                 utils.helpers.ensureOption(options, 'model');
             },
 
-            __click: function() {
-                this.options.parent.trigger('panel:open');
+            __onClick: function() {
+                this.trigger('open:panel');
             }
         });
     }
