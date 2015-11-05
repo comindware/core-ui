@@ -56,6 +56,7 @@ define(['module/lib',
                 this.rowView = this.options.rowView;
                 this.collection = this.options.collection;
                 this.columsFit = this.options.columsFit;
+                this.emptyView = this.options.emptyView;
                 options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
                 this.initializeViews();
@@ -88,7 +89,8 @@ define(['module/lib',
                 this.listView = new ListView({
                     childView: this.rowView,
                     collection: this.collection,
-                    childViewOptions: childViewOptions
+                    childViewOptions: childViewOptions,
+                    emptyView: this.emptyView
                 });
 
                 this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);

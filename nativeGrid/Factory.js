@@ -43,7 +43,8 @@ define([
                     columnsFit: options.columnsFit,
                     collection: collection,
                     onColumnSort: options.onColumnSort,
-                    rowView: options.rowView
+                    rowView: options.rowView,
+                    emptyView: options.emptyView
                 }, options.gridViewOptions);
 
                 return new NativeGridView(gridViewOptions);
