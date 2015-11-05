@@ -28,7 +28,7 @@ define(
             collection: null,
             displayAttribute: 'text',
             allowEmptyValue: true,
-            saveOnClose: true
+            explicitApply: false
         };
 
         Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend({
@@ -86,7 +86,8 @@ define(
                     panelView: MultiSelectPanelView,
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
-                        displayAttribute: this.options.displayAttribute
+                        displayAttribute: this.options.displayAttribute,
+                        explicitApply: this.options.explicitApply
                     },
                     autoOpen: false
                 });
@@ -97,7 +98,7 @@ define(
 
                 this.listenTo(this.dropdownView, 'panel:select:all', this.__selectAll);
                 this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
-                this.listenTo(this.dropdownView, 'panel:reset', this.__resetValue);
+                this.listenTo(this.dropdownView, 'panel:close', this.dropdownView.close.bind(this.dropdownView));
 
                 this.dropdownRegion.show(this.dropdownView);
             },
@@ -218,7 +219,7 @@ define(
             },
 
             onPanelClose: function() {
-                if (this.options.saveOnClose) {
+                if (!this.options.explicitApply) {
                     this.__applyValue();
                 }
 
