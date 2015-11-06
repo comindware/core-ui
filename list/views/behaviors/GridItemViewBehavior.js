@@ -34,7 +34,7 @@ define(['module/lib', 'core/utils/utilsApi'],
                 utils.helpers.ensureOption(options, 'padding');
 
                 this.padding = options.padding;
-                _.bindAll(this, '__handleColumnsResize');
+                _.bindAll(this, '__handleColumnsResize', '__handleResize');
                 this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
                 this.columns = view.options.columns;
 
@@ -44,6 +44,7 @@ define(['module/lib', 'core/utils/utilsApi'],
                     }
                     view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
                 });
+                $(window).resize(this.__handleResize);
             },
 
             modelEvents: {
@@ -75,16 +76,26 @@ define(['module/lib', 'core/utils/utilsApi'],
             },
 
             onShow: function () {
-                var $cells = this.__getCellElements();
+                this.__handleResizeInternal();
+            },
+
+            __handleResizeInternal: function () {
+                var $cells = this.__getCellElements(),
+                    availableWidth = this.__getAvailableWidth(),
+                    cells = _.toArray($cells),
+                    columnWidth = Math.floor(availableWidth / cells.length),
+                    fullWidth = this.padding;
+
                 this.cellWidthDiff = $cells.outerWidth() - $cells.width();
-                var availableWidth = this.__getAvailableWidth();
-                var cells = _.toArray($cells);
                 _.each(this.columns, function (c, k)
                 {
                     var $cell = $(cells[k]);
                     if (c.width) {
-                        $cell.width(c.width * availableWidth - this.cellWidthDiff);
+                        columnWidth = Math.floor(c.width * availableWidth);
                     }
+
+                    $cell.width(columnWidth - this.cellWidthDiff);
+                    fullWidth += columnWidth;
                 }, this);
             },
 
@@ -96,8 +107,7 @@ define(['module/lib', 'core/utils/utilsApi'],
                 return this.$el.find('.js-grid-cell');
             },
 
-            __handleColumnsResize: function (sender, args)
-            {
+            __handleColumnsResize: function (sender, args) {
                 var availableWidth = args.fullWidth;
                 var cells = _.toArray(this.__getCellElements());
                 _.each(args.changes, function (v, k)
@@ -137,6 +147,10 @@ define(['module/lib', 'core/utils/utilsApi'],
 
             __handleDeselection: function () {
                 this.$el.removeClass('selected');
+            },
+
+            __handleResize: function () {
+                this.__handleResizeInternal();
             }
         });
     });
