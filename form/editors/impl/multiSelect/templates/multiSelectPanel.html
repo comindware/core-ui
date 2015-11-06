@@ -3,6 +3,10 @@
 </div>
 <div class="js-list multiselect-panel__list"></div>
 <div class="multiselect-panel__btn-bottom">
-    <div class="js-reset link-grey">{{localize 'CORE.FORM.EDITORS.MULTISELECT.RESET'}}</div>
+{{#if explicitApply}}
+    <div class="js-cancel link-grey">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>
     <div class="js-apply btn btn_green">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>
+{{else}}
+    <div class="js-close btn btn_green">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>
+{{/if}}
 </div>

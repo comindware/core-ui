@@ -30,6 +30,12 @@ define(
             className: 'multiselect-panel',
 
             template: Handlebars.compile(template),
+
+            templateHelpers: function() {
+                return {
+                    explicitApply: this.getOption('explicitApply')
+                }
+            },
             
             childView: MultiSelectItemView,
 
@@ -44,13 +50,15 @@ define(
             ui: {
                 selectAll: '.js-select-all',
                 apply: '.js-apply',
-                reset: '.js-reset'
+                cancel: '.js-cancel',
+                close: '.js-close'
             },
 
             events: {
                 'click @ui.selectAll': '__selectAll',
                 'click @ui.apply': '__apply',
-                'click @ui.reset': '__reset'
+                'click @ui.cancel': '__close',
+                'click @ui.close': '__close'
             },
 
             onShow: function() {
@@ -70,9 +78,8 @@ define(
                 this.trigger('apply');
             },
 
-            __reset: function() {
-                this.render();
-                this.trigger('reset');
+            __close: function() {
+                this.trigger('close');
             }
         });
     }

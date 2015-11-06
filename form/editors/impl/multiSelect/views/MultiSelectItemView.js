@@ -22,7 +22,7 @@ define(
 
         var classes = {
             BASE: 'multiselect-i',
-            SELECTED: 'dev-multiselect-i_selected'
+            SELECTED: 'multiselect-i_selected'
         };
 
         return Marionette.ItemView.extend({
