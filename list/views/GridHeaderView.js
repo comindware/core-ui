@@ -191,16 +191,38 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                     this.columns[index].width = changes[index] = newColumnWidthPc;
                     index++;
 
-                    var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth;
+                    var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth,
+                        sumDelta = 0,
+                        sumGap = 0;
 
                     _.each(ctx.affectedColumns, function (c) {
-                        var newColumnWidth = Math.max(Math.floor(c.initialWidth - delta * c.initialWidth / affectedColumnsWidth), this.constants.MIN_COLUMN_WIDTH);
-                        c.$el.width(newColumnWidth);
+                        var newColumnWidth = Math.floor(c.initialWidth - delta * c.initialWidth / affectedColumnsWidth);
+                        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
+                            sumDelta += this.constants.MIN_COLUMN_WIDTH - newColumnWidth;
+                            newColumnWidth = this.constants.MIN_COLUMN_WIDTH;
+                        } else {
+                            sumGap += newColumnWidth - this.constants.MIN_COLUMN_WIDTH;
+                        }
 
                         var newColumnWidthPc = newColumnWidth / ctx.fullWidth;
+                        this.columns[index].absWidth = newColumnWidth;
                         this.columns[index].width = changes[index] = newColumnWidthPc;
                         index++;
                     }, this);
+
+                    index = ctx.draggedColumn.index + 1;
+                    _.each(ctx.affectedColumns, function (c) {
+                        if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
+                            var delta = Math.ceil((this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap);
+                            this.columns[index].absWidth -= delta;
+                            var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
+                            this.columns[index].width = changes[index] = newColumnWidthPc;
+                        }
+
+                        c.$el.width(this.columns[index].absWidth);
+                        index++;
+                    }, this);
+
                     this.gridEventAggregator.trigger('columnsResize', this, {
                         changes: changes,
                         fullWidth: ctx.fullWidth
