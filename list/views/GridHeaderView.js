@@ -123,27 +123,29 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                 return false;
             },
 
+            __getElementOuterWidth: function (el) {
+                return $(el)[0].getBoundingClientRect().width;
+            },
+
             __startDrag: function (e) {
                 var $dragger = $(e.target);
                 var $column = $dragger.parent();
-                this.$el.children().each(function (index, el) {
-                    $(el).width($(el).width());
-                });
+
                 var affectedColumns = _.chain($column.nextAll()).toArray().map(function (el) {
                     return {
                         $el: $(el),
-                        initialWidth: $(el).width()
+                        initialWidth: this.__getElementOuterWidth(el)
                     };
-                }).value();
+                }, this).value();
                 var draggedColumn = {
                     $el: $column,
-                    initialWidth: $column.width(),
+                    initialWidth: this.__getElementOuterWidth($column),
                     index: $column.index()
                 };
                 var unaffectedWidth = _.reduce($column.prevAll(), function (m, v) {
-                    return m + $(v).width();
-                }, 0);
-                var fullWidth = this.$el.parent().width();//this.$el.width();
+                    return m + this.__getElementOuterWidth(v);
+                }.bind(this), 0);
+                var fullWidth = this.__getFullWidth();
 
                 this.dragContext = {
                     pageOffsetX: e.pageX,
@@ -183,20 +185,23 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                     var index = ctx.draggedColumn.index;
                     var changes = {};
 
-                    var newDraggerColumnWidth = Math.min(ctx.maxColumnWidth, Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta));
-                    delta = newDraggerColumnWidth - draggedColumn.initialWidth;
-                    draggedColumn.$el.width(newDraggerColumnWidth);
+                    this.columns[index].absWidth = Math.min(ctx.maxColumnWidth, Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta));
+                    delta = this.columns[index].absWidth - draggedColumn.initialWidth;
+                    draggedColumn.$el.outerWidth(this.columns[index].absWidth);
 
-                    var newColumnWidthPc = newDraggerColumnWidth / ctx.fullWidth;
-                    this.columns[index].width = changes[index] = newColumnWidthPc;
-                    index++;
+                    var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
+                    this.columns[index].width = newColumnWidthPc;
+                    changes[index] = this.columns[index].absWidth;
+                        index++;
 
                     var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth,
                         sumDelta = 0,
                         sumGap = 0;
 
-                    _.each(ctx.affectedColumns, function (c) {
-                        var newColumnWidth = Math.floor(c.initialWidth - delta * c.initialWidth / affectedColumnsWidth);
+                    for (var i = 0;  i < ctx.affectedColumns.length; i++) {
+                        var c = ctx.affectedColumns[i],
+                            newColumnWidth = c.initialWidth - delta * c.initialWidth / affectedColumnsWidth;
+
                         if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
                             sumDelta += this.constants.MIN_COLUMN_WIDTH - newColumnWidth;
                             newColumnWidth = this.constants.MIN_COLUMN_WIDTH;
@@ -204,24 +209,34 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                             sumGap += newColumnWidth - this.constants.MIN_COLUMN_WIDTH;
                         }
 
-                        var newColumnWidthPc = newColumnWidth / ctx.fullWidth;
                         this.columns[index].absWidth = newColumnWidth;
-                        this.columns[index].width = changes[index] = newColumnWidthPc;
                         index++;
-                    }, this);
+                    }
 
+                    var fullSum = 0;
                     index = ctx.draggedColumn.index + 1;
-                    _.each(ctx.affectedColumns, function (c) {
+                    for (var i = 0; i < ctx.affectedColumns.length; i++) {
+                        var c = ctx.affectedColumns[i];
                         if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
-                            var delta = Math.ceil((this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap);
+                            var delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
                             this.columns[index].absWidth -= delta;
                             var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
                             this.columns[index].width = changes[index] = newColumnWidthPc;
                         }
 
-                        c.$el.width(this.columns[index].absWidth);
+                        fullSum += this.columns[index].absWidth;
+
+                        if (i === ctx.affectedColumns.length - 1) {
+                            var sumDelta = ctx.fullWidth - ctx.unaffectedWidth - this.columns[ctx.draggedColumn.index].absWidth - fullSum;
+                            this.columns[index].absWidth += sumDelta;
+                        }
+
+                        var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
+                        this.columns[index].width = newColumnWidthPc;
+                        c.$el.outerWidth(this.columns[index].absWidth);
+                        changes[index] = this.columns[index].absWidth;
                         index++;
-                    }, this);
+                    }
 
                     this.gridEventAggregator.trigger('columnsResize', this, {
                         changes: changes,
@@ -241,20 +256,23 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                 utils.helpers.setUniqueTimeout(this.__handleResizeInternal, this.__handleResizeInternal, 100);
             },
 
+            __getFullWidth: function () {
+                return this.$el.parent().width() - 1; //Magic cross browser pixel, don't remove it
+            },
+
             __handleResizeInternal: function () {
-                var fullWidth = this.$el.parent().width(),
-                    columns = this.columns,
-                    columnWidth = Math.floor(fullWidth / columns.length);
+                var fullWidth = this.__getFullWidth(),
+                    columnWidth = fullWidth / this.columns.length;
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     var child = $(el);
-                    var col = columns[i];
+                    var col = this.columns[i];
                     if (col.width) {
-                        child.width(Math.floor(col.width * fullWidth));
+                        child.outerWidth(col.width * fullWidth);
                     } else {
-                        child.width(columnWidth);
+                        child.outerWidth(columnWidth);
                     }
-                });
+                }.bind(this));
             }
         });
 

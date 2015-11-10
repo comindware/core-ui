@@ -83,24 +83,23 @@ define(['module/lib', 'core/utils/utilsApi'],
                 var $cells = this.__getCellElements(),
                     availableWidth = this.__getAvailableWidth(),
                     cells = _.toArray($cells),
-                    columnWidth = Math.floor(availableWidth / cells.length),
+                    columnWidth = availableWidth / cells.length,
                     fullWidth = this.padding;
 
-                this.cellWidthDiff = $cells.outerWidth() - $cells.width();
                 _.each(this.columns, function (c, k)
                 {
                     var $cell = $(cells[k]);
                     if (c.width) {
-                        columnWidth = Math.floor(c.width * availableWidth);
+                        columnWidth = c.width * availableWidth;
                     }
 
-                    $cell.width(columnWidth - this.cellWidthDiff);
+                    $cell.outerWidth(columnWidth);
                     fullWidth += columnWidth;
                 }, this);
             },
 
             __getAvailableWidth: function () {
-                return this.$el.width() - this.padding;
+                return this.$el.width() - this.padding - 1; //Magic cross browser pixel, don't remove it
             },
             
             __getCellElements: function () {
@@ -108,17 +107,14 @@ define(['module/lib', 'core/utils/utilsApi'],
             },
 
             __handleColumnsResize: function (sender, args) {
-                var availableWidth = args.fullWidth;
                 var cells = _.toArray(this.__getCellElements());
-                _.each(args.changes, function (v, k)
-                {
+                _.each(args.changes, function (newWidth, k) {
                     var $cell = $(cells[k]);
-                    $cell.width(v * availableWidth - this.cellWidthDiff);
+                    $cell.outerWidth(newWidth);
                 }, this);
             },
 
-            __handleClick: function (e)
-            {
+            __handleClick: function (e) {
                 var model = this.view.model;
                 var selectFn = model.collection.selectSmart || model.collection.select;
                 if (selectFn) {
