@@ -273,6 +273,12 @@ define([
                             validators = this.validators,
                             getValidator = this.getValidator;
 
+                        if (this.serverError) {
+                            if (this.serverError.hasOwnProperty('type')) {
+                                return this.serverError;
+                            }
+                        }
+
                         if (validators) {
                             //Run through validators until an error is found
                             _.every(validators, function(validator) {
