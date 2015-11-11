@@ -105,7 +105,6 @@ define([
                     position: 0
                 };
 
-                window.recordCollection = this.collection;
                 this.listenTo(this.collection, 'add remove reset', this.__handleResize, this);
                 this.visibleCollection = new SlidingWindowCollection(this.collection);
             },
@@ -358,6 +357,9 @@ define([
 
             __mousewheel: function (e) {
                 if (this.state.viewportHeight === undefined) {
+                    return;
+                }
+                if (this.collection.length <= this.state.viewportHeight) {
                     return;
                 }
 

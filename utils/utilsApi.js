@@ -17,7 +17,9 @@ define([
         './htmlHelpers',
         './dateHelpers',
         './cookieHelpers',
-        './keyCode'
+        './keyCode',
+        './handlebarsHelpers',
+        './jquery/selector.focusable'
     ],
     function (
         comparators,

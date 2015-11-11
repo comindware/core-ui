@@ -51,6 +51,7 @@ define([
                     this.__updateEditorState(this.editor.getReadonly(), enabled);
                 }.bind(this));
             },
+
             validate: function (options) {
                 options = options || {};
                 if (this.schema.validators) {
@@ -66,6 +67,7 @@ define([
                 }
                 return null;
             },
+
             setError: function (msg) {
                 if (this.editor.hasNestedForm) {
                     return;
@@ -75,12 +77,14 @@ define([
                     this.fieldErrorModel.set('text', msg);
                 }
             },
+
             clearError: function () {
                 this.$el.removeClass(this.errorClassName);
                 if (this.fieldErrorModel) {
                     this.fieldErrorModel.set('text', '');
                 }
             },
+
             render: function () {
                 Backbone.Form.Field.prototype.render.apply(this, arguments);
                 if (this.schema.validators) {

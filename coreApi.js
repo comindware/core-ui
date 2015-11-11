@@ -12,12 +12,15 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
+        'module/lib',
+
         './utils/utilsApi',
         './dropdown/dropdownApi',
         './meta',
         './list/listApi',
         './form/formApi',
         './serviceLocator',
+        './nativeGrid/nativeGridApi',
 
         './application/Module',
         './application/views/behaviors/ContentViewBehavior',
@@ -38,19 +41,28 @@ define([
         './models/behaviors/CollapsibleBehavior',
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
+
+        './views/behaviors/loading/views/LoadingView',
+
         './views/behaviors/LoadingBehavior',
+        './views/behaviors/BlurableBehavior',
+        './views/behaviors/PopupBehavior',
 
         './views/SearchBarView',
+        './views/SplitPanelView',
 
         './Bootstrapper'
     ],
     function (
+        lib,
+
         utilsApi,
         dropdownApi,
         meta,
         listApi,
         formApi,
         serviceLocator,
+        nativeGridApi,
 
         Module,
         ContentViewBehavior,
@@ -72,10 +84,15 @@ define([
         CollapsibleBehavior,
         HighlightableBehavior,
         SelectableBehavior,
-	
+	    
+        LoadingView,
+
         LoadingBehavior,
+        BlurableBehavior,
+        PopupBehavior,
 
         SearchBarView,
+        SplitPanelView,
 
         Bootstrapper
     ) {
@@ -141,9 +158,13 @@ define([
             },
             views: {
                 behaviors: {
-                    LoadingBehavior: LoadingBehavior
+                    LoadingBehavior: LoadingBehavior,
+                    BlurableBehavior: BlurableBehavior,
+                    PopupBehavior: PopupBehavior
                 },
-                SearchBarView: SearchBarView
+                LoadingView: LoadingView,
+                SearchBarView: SearchBarView,
+                SplitPanelView: SplitPanelView
             },
             /**
              * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
@@ -153,10 +174,18 @@ define([
             dropdown: dropdownApi,
             form: formApi,
             list: listApi,
+            nativeGrid: nativeGridApi,
             utils: utilsApi,
             meta: meta,
             serviceLocator: serviceLocator,
             bootstrapper: Bootstrapper
         };
+
+        if (_.isFunction(lib.initialize)) {
+            lib.initialize({
+                core: exports
+            });
+        }
+
         return exports;
     });

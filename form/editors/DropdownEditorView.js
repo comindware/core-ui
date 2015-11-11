@@ -29,7 +29,8 @@ define([
         var defaultOptions = {
             collection: null,
             displayAttribute: 'text',
-            allowEmptyValue: true
+            allowEmptyValue: true,
+            enableSearch: false
         };
 
         Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend({
@@ -50,6 +51,7 @@ define([
                 if (_.isArray(this.options.collection)) {
                     this.options.collection = new Backbone.Collection(this.options.collection);
                 }
+
                 this.collection = this.options.collection;
                 
                 // adding ListItem behavior to collection model
@@ -111,7 +113,8 @@ define([
                     panelView: DropdownPanelView,
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
-                        reqres: this.reqres
+                        reqres: this.reqres,
+                        enableSearch: this.options.enableSearch
                     },
                     autoOpen: false
                 });

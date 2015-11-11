@@ -99,13 +99,12 @@ define(['text!core/list/templates/grid.html',
                     height: options.height
                 });
 
-                this.listenTo(this.listView, 'childview:click', function (view, model) {
-                    this.trigger('childview:click', model);
-                });
+                this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
+                    if (_.string.startsWith(eventName, 'childview')) {
+                        this.trigger.apply(this, [eventName, view ].concat(eventArguments));
+                    }
+                }.bind(this));
 
-                this.listenTo(this.listView, 'childview:dblclick', function (view, model) {
-                    this.trigger('childview:dblclick', model);
-                });
                 this.listenTo(this.listView, 'positionChanged', function (sender, args) {
                     this.trigger('positionChanged', this, args);
                 }.bind(this));
