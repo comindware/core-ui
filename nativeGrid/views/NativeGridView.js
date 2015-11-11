@@ -50,7 +50,6 @@ define(['module/lib',
 
             initialize: function (options) {
                 utilsApi.helpers.ensureOption(options, 'collection');
-                utilsApi.helpers.ensureOption(options, 'columnsFit');
                 _.defaults(this.options, defaultOptions);
 
                 this.rowView = this.options.rowView;
@@ -68,7 +67,6 @@ define(['module/lib',
                     columns: this.options.columns,
                     gridColumnHeaderView: ColumnHeaderView,
                     gridEventAggregator: this,
-                    columnsFit: this.options.columnsFit
                 });
 
                 if (this.options.noColumnsView) {
@@ -81,7 +79,6 @@ define(['module/lib',
                 var childViewOptions = _.extend(this.options.gridViewOptions || {}, {
                     columns: this.options.columns,
                     gridEventAggregator: this,
-                    columnsFit: this.options.columnsFit,
                     paddingLeft: this.options.paddingLeft,
                     paddingRight: this.options.paddingRight
                 });

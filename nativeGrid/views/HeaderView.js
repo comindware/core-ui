@@ -18,7 +18,6 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
         var HeaderView = GridHeaderView.extend({
             initialize: function (options) {
                 GridHeaderView.prototype.initialize.apply(this, arguments);
-                this.columnsFit = options.columnsFit;
                 _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort');
                 $(window).resize(this.__handleResize);
             },
