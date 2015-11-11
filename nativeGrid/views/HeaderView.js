@@ -40,9 +40,13 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                 });
             },
 
+            __getAvailableWidth: function () {
+                return this.$el.parent().width() - 1;
+            },
+
             setFitToView: function () {
-                var availableWidth = this.$el.parent().width(),
-                    viewWidth = this.$el.width(),
+                var availableWidth = this.__getAvailableWidth(),
+                    viewWidth = this.__getTableWidth(),
                     columnsL = this.ui.gridHeaderColumn.length,
                     fullWidth = 0,
                     sumDelta = 0,
@@ -50,7 +54,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     if (availableWidth !== viewWidth) {
-                        var columnWidth = Math.floor($(el).width() * availableWidth / viewWidth);
+                        var columnWidth = $(el).outerWidth() * availableWidth / viewWidth;
                         if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
                             sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
                             columnWidth = this.constants.MIN_COLUMN_WIDTH;
@@ -74,7 +78,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                         this.columns[i].width = availableWidth - fullWidth;
                     }
 
-                    $(el).width(this.columns[i].width);
+                    $(el).outerWidth(this.columns[i].width);
                     fullWidth += this.columns[i].width;
 
                 }.bind(this));
@@ -94,7 +98,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                         this.columns[i].width = availableWidth - fullWidth;
                     }
 
-                    $(el).width(columnWidth);
+                    $(el).outerWidth(columnWidth);
                     this.columns[i].width = columnWidth;
                     fullWidth += columnWidth;
                 }.bind(this));
@@ -103,7 +107,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
             },
 
             onShow: function () {
-                this.headerMinWidth = this.$el.parent().width();
+                this.headerMinWidth = this.__getAvailableWidth();
                 this.__setInitialWidth(this.headerMinWidth);
                 this.__handleResizeInternal();
             },
@@ -113,7 +117,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                 var $column = $dragger.parent();
 
                 this.updateDragContext($column, e.pageX);
-                this.dragContext.tableInitialWidth = $column.parent().width();
+                this.dragContext.tableInitialWidth = this.__getTableWidth();
 
                 this.dragContext.$dragger = $dragger;
 
@@ -159,13 +163,13 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                     return;
                 }
 
-                $current.width(newColumnWidth);
+                $current.outerWidth(newColumnWidth);
                 this.gridEventAggregator.trigger('singleColumnResize', this, {
                     index: index,
                     delta: delta
                 });
 
-                this.$el.width(this.dragContext.tableInitialWidth + delta);
+                this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
                 this.columns[index].width = newColumnWidth;
             },
 
@@ -174,11 +178,11 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
 
                 var draggedColumn = {
                     $el: $column,
-                    initialWidth: $column.width(),
+                    initialWidth: $column.outerWidth(),
                     index: $column.index()
                 };
 
-                this.dragContext.tableInitialWidth = $column.parent().width();
+                this.dragContext.tableInitialWidth = this.__getTableWidth();
                 this.gridEventAggregator.trigger('columnStartDrag');
 
                 this.dragContext.fullWidth = this.headerMinWidth;
@@ -186,15 +190,18 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                 this.dragContext.pageOffsetX = offset;
             },
 
+            __getTableWidth: function () {
+                return this.$el.width() - 1;
+            },
+
             __handleResizeInternal: function () {
-                var fullWidth = this.$el.parent().width(),
-                    currentWidth = this.$el.width();
+                var fullWidth = this.__getAvailableWidth(),
+                    currentWidth = this.__getTableWidth();
 
                 if (fullWidth > currentWidth) {
                     this.$el.width(fullWidth);
                 }
                 this.headerMinWidth = fullWidth;
-
                 this.__updateColumnsWidth();
             },
 
@@ -208,7 +215,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                     var col = columns[i];
                     if (col.width) {
                         needUpdate = true;
-                        child.width(col.width);
+                        child.outerWidth(col.width);
                         fullWidth += col.width;
                     }
                 });
