@@ -44,6 +44,10 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                 return this.$el.parent().width() - 1;
             },
 
+            __getElementOuterWidth: function (el) {
+                return $(el)[0].getBoundingClientRect().width;
+            },
+
             setFitToView: function () {
                 var availableWidth = this.__getAvailableWidth(),
                     viewWidth = this.__getTableWidth(),
@@ -54,7 +58,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     if (availableWidth !== viewWidth) {
-                        var columnWidth = $(el).outerWidth() * availableWidth / viewWidth;
+                        var columnWidth = this.__getElementOuterWidth(el) * availableWidth / viewWidth;
                         if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
                             sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
                             columnWidth = this.constants.MIN_COLUMN_WIDTH;
@@ -69,7 +73,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                 this.ui.gridHeaderColumn.each(function (i, el) {
                     if (availableWidth !== viewWidth) {
                         if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
-                            var delta = Math.ceil((this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap);
+                            var delta = (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
                             this.columns[i].width -= delta;
                         }
                     }
@@ -82,12 +86,12 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                     fullWidth += this.columns[i].width;
 
                 }.bind(this));
-                this.$el.width(fullWidth);
+                this.$el.width(Math.ceil(fullWidth));
             },
 
             __setInitialWidth: function (availableWidth) {
                 var columnsL = this.ui.gridHeaderColumn.length,
-                    columnWidth = Math.floor(availableWidth / columnsL),
+                    columnWidth = availableWidth / columnsL,
                     fullWidth = 0;
 
                 this.ui.gridHeaderColumn.each(function (i, el) {
@@ -103,7 +107,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                     fullWidth += columnWidth;
                 }.bind(this));
 
-                this.$el.width(fullWidth);
+                this.$el.width(Math.ceil(fullWidth));
             },
 
             onShow: function () {
@@ -169,8 +173,12 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
                     delta: delta
                 });
 
-                this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
+                this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
                 this.columns[index].width = newColumnWidth;
+            },
+
+            __changeTableWidth: function (initialWidth, delta) {
+                this.$el.width(initialWidth + delta + 1);
             },
 
             updateDragContext: function ($column, offset) {
@@ -178,7 +186,7 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
 
                 var draggedColumn = {
                     $el: $column,
-                    initialWidth: $column.outerWidth(),
+                    initialWidth: this.__getElementOuterWidth($column),
                     index: $column.index()
                 };
 

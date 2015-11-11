@@ -33,7 +33,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 var cells = this.__getCellElements();
                 this.columnsWidth = [];
                 cells.each(function (i, el) {
-                    this.columnsWidth.push($(el).outerWidth());
+                    this.columnsWidth.push(this.__getElementOuterWidth(el));
                 }.bind(this));
                 this.initialFullWidth = this.$el.parent().width();
             },
@@ -66,6 +66,10 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             },
 
+            __getElementOuterWidth: function (el) {
+                return $(el)[0].getBoundingClientRect().width;
+            },
+
             __onSingleColumnResize: function (sender, args) {
                 var cells = _.toArray(this.__getCellElements()),
                     $cell = $(cells[args.index]);
@@ -74,7 +78,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
 
                 var fullWidth = 0;
                 this.__getCellElements().each(function (i, el) {
-                    fullWidth += $(el).outerWidth();
+                    fullWidth += this.__getElementOuterWidth(el);
                 }.bind(this));
 
                 fullWidth += this.paddingLeft + this.paddingRight;
