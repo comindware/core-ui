@@ -142,7 +142,7 @@ define(['module/lib',
 
             setFitToView: function () {
                 this.headerView.setFitToView();
-                this.listView.setFitToView();
+                this.collection.length > 0 && this.listView.setFitToView();
             },
 
             showFilterPopout: function (options) {
