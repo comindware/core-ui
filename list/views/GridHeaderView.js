@@ -17,8 +17,8 @@
 *
 * */
 
-define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/utilsApi'],
-    function (template, lib, utils) {
+define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/utilsApi', 'core/services/GlobalEventService'],
+    function (template, lib, utils, GlobalEventService) {
         'use strict';
         var GridHeaderView = Marionette.ItemView.extend({
             initialize: function (options) {
@@ -37,8 +37,8 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                 this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
                 this.columns = options.columns;
                 this.$document = $(document);
-                _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort');
-                $(window).resize(this.__handleResize);
+                _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', '__handleResize');
+                this.listenTo(GlobalEventService, 'resize', this.__handleResize);
             },
 
             template: Handlebars.compile(template),
@@ -80,10 +80,6 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
 
             onShow: function () {
                 this.__handleResizeInternal();
-            },
-
-            onDestroy: function () {
-                $(window).off('resize');
             },
 
             updateSorting: function () {
@@ -159,7 +155,6 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
 
                 $dragger.addClass('active');
                 this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
-                console.log('maxColumnWidth',  this.dragContext.maxColumnWidth)
             },
 
             __stopDrag: function () {
@@ -220,8 +215,6 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                         if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
                             var delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
                             this.columns[index].absWidth -= delta;
-                            var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
-                            this.columns[index].width = changes[index] = newColumnWidthPc;
                         }
 
                         fullSum += this.columns[index].absWidth;
@@ -238,10 +231,7 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                         index++;
                     }
 
-                    this.gridEventAggregator.trigger('columnsResize', this, {
-                        changes: changes,
-                        fullWidth: ctx.fullWidth
-                    });
+                    this.gridEventAggregator.trigger('columnsResize');
                 }
 
                 return false;
@@ -253,7 +243,8 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
             },
 
             __handleResize: function () {
-                utils.helpers.setUniqueTimeout(this.__handleResizeInternal, this.__handleResizeInternal, 100);
+                this.__handleResizeInternal();
+                this.gridEventAggregator.trigger('columnsResize');
             },
 
             __getFullWidth: function () {
@@ -268,9 +259,11 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
                     var child = $(el);
                     var col = this.columns[i];
                     if (col.width) {
-                        child.outerWidth(col.width * fullWidth);
+                        col.absWidth = col.width * fullWidth;
+                        child.outerWidth(col.absWidth);
                     } else {
-                        child.outerWidth(columnWidth);
+                        col.absWidth = columnWidth;
+                        child.outerWidth(col.absWidth);
                     }
                 }.bind(this));
             }

@@ -34,7 +34,7 @@ define(['module/lib', 'core/utils/utilsApi'],
                 utils.helpers.ensureOption(options, 'padding');
 
                 this.padding = options.padding;
-                _.bindAll(this, '__handleColumnsResize', '__handleResize');
+                _.bindAll(this, '__handleColumnsResize');
                 this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
                 this.columns = view.options.columns;
 
@@ -44,7 +44,6 @@ define(['module/lib', 'core/utils/utilsApi'],
                     }
                     view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
                 });
-                $(window).resize(this.__handleResize);
             },
 
             modelEvents: {
@@ -76,26 +75,7 @@ define(['module/lib', 'core/utils/utilsApi'],
             },
 
             onShow: function () {
-                this.__handleResizeInternal();
-            },
-
-            __handleResizeInternal: function () {
-                var $cells = this.__getCellElements(),
-                    availableWidth = this.__getAvailableWidth(),
-                    cells = _.toArray($cells),
-                    columnWidth = availableWidth / cells.length,
-                    fullWidth = this.padding;
-
-                _.each(this.columns, function (c, k)
-                {
-                    var $cell = $(cells[k]);
-                    if (c.width) {
-                        columnWidth = c.width * availableWidth;
-                    }
-
-                    $cell.outerWidth(columnWidth);
-                    fullWidth += columnWidth;
-                }, this);
+                this.__handleColumnsResize();
             },
 
             __getAvailableWidth: function () {
@@ -106,11 +86,11 @@ define(['module/lib', 'core/utils/utilsApi'],
                 return this.$el.find('.js-grid-cell');
             },
 
-            __handleColumnsResize: function (sender, args) {
+            __handleColumnsResize: function () {
                 var cells = _.toArray(this.__getCellElements());
-                _.each(args.changes, function (newWidth, k) {
+                _.each(this.columns, function (col, k) {
                     var $cell = $(cells[k]);
-                    $cell.outerWidth(newWidth);
+                    $cell.outerWidth(col.absWidth);
                 }, this);
             },
 
@@ -143,10 +123,6 @@ define(['module/lib', 'core/utils/utilsApi'],
 
             __handleDeselection: function () {
                 this.$el.removeClass('selected');
-            },
-
-            __handleResize: function () {
-                this.__handleResizeInternal();
             }
         });
     });

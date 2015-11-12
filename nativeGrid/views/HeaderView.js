@@ -11,15 +11,15 @@
 
 /* global define, require, Marionette, _, Handlebars, shared, $ */
 
-define(['../../list/views/GridHeaderView', 'text!../templates/header.html'],
-    function (GridHeaderView, template) {
+define(['../../list/views/GridHeaderView', 'text!../templates/header.html', 'core/services/GlobalEventService'],
+    function (GridHeaderView, template, GlobalEventService) {
         'use strict';
 
         var HeaderView = GridHeaderView.extend({
             initialize: function (options) {
                 GridHeaderView.prototype.initialize.apply(this, arguments);
                 _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort');
-                $(window).resize(this.__handleResize);
+                this.listenTo(GlobalEventService, 'resize', this.__handleResize);
             },
 
             template: Handlebars.compile(template),
