@@ -18,9 +18,10 @@ define([
         'core/application/views/ContentLoadingView',
         'module/moduleConfigs',
         'project/module/moduleConfigs',
-        'process/module/moduleConfigs'
+        'process/module/moduleConfigs',
+        './PromiseManagementService'
     ],
-    function (lib, utilsApi, ModuleProxy, ContentLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs) {
+    function (lib, utilsApi, ModuleProxy, ContentLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs, PromiseManagementService) {
         'use strict';
 
         // storing active url to get back to it while canceling module leave
@@ -68,6 +69,8 @@ define([
                         routingService.navigateToUrl(previousUrl, { replace: true, trigger: false });
                         return;
                     }
+                    //clear all promises of the previous module
+                    PromiseManagementService.clearPromiseQueue();
                     if (!loadingContext.loaded) {
                         activeModule.view.setModuleLoading(true);
                     }

@@ -15,7 +15,7 @@
 (function (global) {
     'use strict';
 
-    define([ 'module/lib', 'core/utils/utilsApi', 'ajaxMap' ], function (lib, utilsApi) {
+    define(['module/lib', 'core/utils/utilsApi', './PromiseManagementService', 'ajaxMap'], function (lib, utilsApi, PromiseManagementService) {
         var ajaxMap = global.ajaxMap;
 
         //noinspection JSUnusedGlobalSymbols
@@ -29,7 +29,9 @@
                     dataType: 'json',
                     contentType: 'application/json'
                 }, options || {});
-                return Promise.resolve($.ajax(config));
+                var promise = Promise.resolve($.ajax(config));
+                PromiseManagementService.addPromise(promise);
+                return promise;
             },
 
             getJsApiResponse: function (url, parameterNames, parameters, callback) {

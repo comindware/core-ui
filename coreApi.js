@@ -31,6 +31,7 @@ define([
         './services/LocalizationService',
         './services/AjaxService',
         './services/SecurityService',
+        './services/PromiseManagementService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -111,7 +112,8 @@ define([
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
-                SecurityService: SecurityService
+                SecurityService: SecurityService,
+                PromiseManagementService: PromiseManagementService
             },
             /**
              * Backbone-коллекции общего назначения
