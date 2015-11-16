@@ -107,7 +107,7 @@ define(['text!./templates/textAreaEditor.html',
                 this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
                 switch (this.options.size) {
                 case size.auto:
-                    this.ui.textarea.autosize({ append:'' });
+                    this.ui.textarea.autosize({ append: '' });
                     break;
                 }
             },

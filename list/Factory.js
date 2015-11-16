@@ -73,7 +73,7 @@ define([
                     collection: collection,
                     emptyView: EmptyGridView,
                     emptyViewOptions: {
-                        text: Localizer.get('PROCESS.COMMON.VIEW.GRID.EMPTY')
+                        text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
                     }
                 }, options.gridViewOptions);
                 var gridView = new GridView(gridViewOptions);
