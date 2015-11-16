@@ -65,6 +65,7 @@ define([
         LocalizationService,
         AjaxService,
         SecurityService,
+        PromiseManagementService,
 
         SlidingWindowCollection,
         VirtualCollection,

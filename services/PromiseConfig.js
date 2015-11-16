@@ -1,6 +1,6 @@
 ﻿define(['module/lib'], function () {
     Promise.config({
-        warnings: true,
+        warnings: false,
         longStackTraces: true,
         cancellation: true
     });

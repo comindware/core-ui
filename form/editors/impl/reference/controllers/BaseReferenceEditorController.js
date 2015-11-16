@@ -17,27 +17,25 @@ define([
         'core/utils/utilsApi',
         '../models/SearchMoreModel'
     ],
-    function (lib, list, utils, SearchMoreModel) {
+    function(lib, list, utils, SearchMoreModel) {
         'use strict';
 
         return Marionette.Controller.extend({
-            initialize: function (options) {
+            initialize: function(options) {
                 utils.helpers.ensureOption(options, 'collection');
 
                 this.originalCollection = options.collection;
                 this.collection = list.factory.createWrappedCollection(options.collection);
             },
 
-            fetch: function (options) {
+            fetch: function(options) {
                 options = options || {};
-                var deferred = $.Deferred();
-                var promise = deferred.promise();
 
                 var filterText = options.text ? options.text.trim().toUpperCase() : '';
                 if (filterText.indexOf(this.activeFilterText) && this.totalCount) {
                     // Client-side filter
                     if (filterText) {
-                        this.collection.filter(function (model) {
+                        this.collection.filter(function(model) {
                             if (model instanceof SearchMoreModel) {
                                 return true;
                             }
@@ -50,33 +48,21 @@ define([
                     } else {
                         this.collection.filter(null);
                     }
-                    deferred.resolve();
-                } else {
-                    // Server-side filter or new data request
-                    this.collection.filter(null);
-                    this.collection.fetch({
-                        data: {
-                            filter: filterText
-                        },
-                        success: function () {
-                            if (promise !== this.fetchPromise) {
-                                deferred.reject();
-                                return;
-                            }
-
-                            this.totalCount = this.collection.totalCount;
-                            this.activeFilterText = filterText;
-                            deferred.resolve();
-                            this.fetchPromise = null;
-                        }.bind(this)
-                    });
+                    return Promise.resolve();
                 }
+                // Server-side filter or new data request
+                this.collection.filter(null);
+                this.fetchPromise = this.collection.fetch({ data: { filter: filterText } }).bind(this)
+                    .then(function() {
+                        this.totalCount = this.collection.totalCount;
+                        this.activeFilterText = filterText;
+                    });
 
-                this.fetchPromise = promise;
+
                 return this.fetchPromise;
             },
 
-            navigate: function (model) {
+            navigate: function(model) {
                 utils.helpers.throwError('Not Implemented.', 'NotImplementedError');
             }
         });
