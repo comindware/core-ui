@@ -56,12 +56,12 @@ define(['./EventAggregator',
             EventAggregator: EventAggregator,
             /**
              * Фабрика списков
-             * @namespace
+             * @class
              * */
             factory: factory,
             /**
              * Фабрика ячеек
-             * @namespace
+             * @class
              * */
             cellFactory: cellFactory,
             /**
@@ -70,46 +70,44 @@ define(['./EventAggregator',
              * */
             views: {
                 /**
-                 * View для отображения пустого списка (нет строк)
-                 * @namespace
+                 * View используемый по умолчанию для отображения пустого списка (нет строк), передавать в {@link module:core.list.views.GridView GridView options.emptyView}
+                 * @class
                  * */
                 EmptyListView: EmptyListView,
                 /**
-                 * View для отображения списка без колонок
-                 * @namespace
+                 * View используемый по умолчанию для отображения списка без колонок, передавать в {@link module:core.list.views.GridView GridView options.noColumnsView}
+                 * @class
                  * */
                 EmptyGridView: EmptyGridView,
                 /**
-                 * View ячейки-заголовка (шапки) списка
-                 * @namespace
+                 * View используемый по умолчанию для отображения ячейки заголовка (шапки) списка, передавать в {@link module:core.list.views.GridView GridView options.gridColumnHeaderView}
+                 * @class
                  * */
                 GridColumnHeaderView: GridColumnHeaderView,
                 /**
-                 * View заголовка (шапки) списка
-                 * @namespace
+                 * View используемый для отображения заголовка (шапки) списка
+                 * @class
                  * */
                 GridHeaderView: GridHeaderView,
-                /**
-                 * View-контейнер для заголовка и контента
-                 * @namespace
-                 * */
+
                 GridView: GridView,
                 /**
                  * View контента списка
-                 * @namespace
-                 * */
+                 * @class
+                 * * */
                 ListView: ListView,
                 /**
-                 * View строки списка
-                 * @namespace
+                 * View используемый по умолчанию для отображения строки списка, передавать в {@link module:core.list.views.GridView GridView options.childView}
+                 * @class
                  * */
                 RowView: RowView,
                 /**
                  *
                  * View Scrollbar'а
-                 * @namespace
+                 * @class
                  * */
                 ScrollbarView: ScrollbarView,
+
                 behaviors: {
                     ListGroupViewBehavior: ListGroupViewBehavior,
                     ListItemViewBehavior: ListItemViewBehavior,
