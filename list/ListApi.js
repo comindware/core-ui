@@ -52,18 +52,63 @@ define(['./EventAggregator',
               cellFactory) {
         'use strict';
 
-        return {
+        return /** @lends module:core.list */ {
             EventAggregator: EventAggregator,
+            /**
+             * Фабрика списков
+             * @namespace
+             * */
             factory: factory,
+            /**
+             * Фабрика ячеек
+             * @namespace
+             * */
             cellFactory: cellFactory,
+            /**
+             * Views-списка
+             * @namespace
+             * */
             views: {
+                /**
+                 * View для отображения пустого списка (нет строк)
+                 * @namespace
+                 * */
                 EmptyListView: EmptyListView,
+                /**
+                 * View для отображения списка без колонок
+                 * @namespace
+                 * */
                 EmptyGridView: EmptyGridView,
+                /**
+                 * View ячейки-заголовка (шапки) списка
+                 * @namespace
+                 * */
                 GridColumnHeaderView: GridColumnHeaderView,
+                /**
+                 * View заголовка (шапки) списка
+                 * @namespace
+                 * */
                 GridHeaderView: GridHeaderView,
+                /**
+                 * View-контейнер для заголовка и контента
+                 * @namespace
+                 * */
                 GridView: GridView,
+                /**
+                 * View контента списка
+                 * @namespace
+                 * */
                 ListView: ListView,
+                /**
+                 * View строки списка
+                 * @namespace
+                 * */
                 RowView: RowView,
+                /**
+                 *
+                 * View Scrollbar'а
+                 * @namespace
+                 * */
                 ScrollbarView: ScrollbarView,
                 behaviors: {
                     ListGroupViewBehavior: ListGroupViewBehavior,
@@ -71,6 +116,10 @@ define(['./EventAggregator',
                     GridItemViewBehavior: GridItemViewBehavior
                 }
             },
+            /**
+             * Backbone-модели списка
+             * @namespace
+             * */
             models: {
                 LoadingRowModel:LoadingRowModel,
                 behaviors: {
