@@ -50,8 +50,7 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
                     this.ui.input.inputmask(_.extend({
                         mask: this.options.mask,
                         placeholder: this.options.maskPlaceholder,
-                        autoUnmask: true,
-                        insertMode: false
+                        autoUnmask: true
                     }, this.options.maskOptions || {}));
                 }
             },
