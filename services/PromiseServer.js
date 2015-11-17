@@ -1,10 +1,10 @@
-﻿define(['module/lib', './PromiseConfig'], function () {
+﻿define(['module/lib', './promise/Config'], function () {
     'use strict';
 
     var promiseQueue = {};
 
     return {
-        addPromise: function(promise) {
+        registerPromise: function (promise) {
             var promiseId = performance === undefined ? (new Date().getTime() + Math.random()) : performance.now();
             promiseQueue[promiseId] = promise;
 
@@ -21,7 +21,7 @@
             return promiseId;
         },
 
-        clearPromiseQueue: function() {
+        cancelAll: function () {
             _.each(promiseQueue, function(promise) {
                 promise.cancel();
             });

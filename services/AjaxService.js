@@ -15,7 +15,7 @@
 (function (global) {
     'use strict';
 
-    define(['module/lib', 'core/utils/utilsApi', './PromiseManagementService', 'ajaxMap'], function (lib, utilsApi, PromiseManagementService) {
+    define(['module/lib', 'core/utils/utilsApi', './PromiseServer', 'ajaxMap'], function (lib, utilsApi, PromiseServer) {
         var ajaxMap = global.ajaxMap;
 
         //noinspection JSUnusedGlobalSymbols
@@ -30,7 +30,7 @@
                     contentType: 'application/json'
                 }, options || {});
                 var promise = Promise.resolve($.ajax(config));
-                PromiseManagementService.addPromise(promise);
+                PromiseServer.registerPromise(promise);
                 return promise;
             },
 

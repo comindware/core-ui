@@ -19,9 +19,9 @@ define([
         'module/moduleConfigs',
         'project/module/moduleConfigs',
         'process/module/moduleConfigs',
-        './PromiseManagementService'
+        './PromiseServer'
     ],
-    function (lib, utilsApi, ModuleProxy, ContentLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs, PromiseManagementService) {
+    function (lib, utilsApi, ModuleProxy, ContentLoadingView, moduleConfigs, projectModuleConfigs, processModuleConfigs, PromiseServer) {
         'use strict';
 
         // storing active url to get back to it while canceling module leave
@@ -70,7 +70,7 @@ define([
                         return;
                     }
                     //clear all promises of the previous module
-                    PromiseManagementService.clearPromiseQueue();
+                    PromiseServer.cancelAll();
                     if (!loadingContext.loaded) {
                         activeModule.view.setModuleLoading(true);
                     }
