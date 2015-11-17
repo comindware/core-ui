@@ -1,28 +1,28 @@
 ﻿define(['module/lib', './PromiseConfig'], function () {
     'use strict';
 
-    var promiseQuque = {};
+    var promiseQueue = {};
 
     return {
         addPromise: function(promise) {
             var promiseId = performance === undefined ? (new Date().getTime() + Math.random()) : performance.now();
-            promiseQuque[promiseId] = promise;
+            promiseQueue[promiseId] = promise;
 
             promise.then(function() {
-                delete promiseQuque[promiseId];
+                delete promiseQueue[promiseId];
             }).catch(function (e) {
-                delete promiseQuque[promiseId];
+                delete promiseQueue[promiseId];
                 throw e;
             }).finally(function() {
                 if (promise.isCancelled()) {
-                    delete promiseQuque[promiseId];
+                    delete promiseQueue[promiseId];
                 }
             });
             return promiseId;
         },
 
         clearPromiseQueue: function() {
-            _.each(promiseQuque, function(promise) {
+            _.each(promiseQueue, function(promise) {
                 promise.cancel();
             });
         }
