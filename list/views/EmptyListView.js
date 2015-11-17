@@ -17,7 +17,18 @@ define(['text!core/list/templates/emptyList.html', 'module/lib', 'core/services/
 
         var defaultText = LocalizationService.get("CORE.GRID.EMPTYVIEW.EMPTY");
 
-        var EmptyListView = Marionette.ItemView.extend({
+        /**
+         * Some description for initializer
+         * @name EmptyListView
+         * @memberof module:core.list.views
+         * @class EmptyListView
+         * @constructor
+         * @description используемый по умолчанию для отображения пустого списка (нет строк), передавать в {@link module:core.list.views.GridView GridView options.emptyView}
+         * @extends Marionette.ItemView
+         * @param {Object} options Constructor options
+         * @param {string} [options.text=Список пуст] отображаемый текст
+         * */
+        var EmptyListView = Marionette.ItemView.extend( /** @lends module:core.list.views */ {
             initialize: function (options) {
                 this.model = new Backbone.Model({
                     text: (options && options.text) || defaultText

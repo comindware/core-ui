@@ -14,7 +14,19 @@
 define(['text!core/list/templates/gridcolumnheader.html', 'module/lib'],
     function (template) {
         'use strict';
-        var GridColumnHeaderView = Marionette.ItemView.extend({
+
+        /**
+         * Some description for initializer
+         * @name GridColumnHeaderView
+         * @memberof module:core.list.views
+         * @class GridColumnHeaderView
+         * @constructor
+         * @description View используемый по умолчанию для отображения ячейки заголовка (шапки) списка, передавать в {@link module:core.list.views.GridView GridView options.gridColumnHeaderView}
+         * @extends Marionette.ItemView
+         * @param {Object} options Constructor options
+         * @param {Array} options.columns массив колонок
+         * */
+        var GridColumnHeaderView = Marionette.ItemView.extend( /** @lends module:core.list.views */ {
             initialize: function (options) {
                 this.column = options.column;
             },

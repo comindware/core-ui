@@ -20,7 +20,21 @@
 define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/utilsApi', 'core/services/GlobalEventService'],
     function (template, lib, utils, GlobalEventService) {
         'use strict';
-        var GridHeaderView = Marionette.ItemView.extend({
+
+        /**
+         * Some description for initializer
+         * @name GridHeaderView
+         * @memberof module:core.list.views
+         * @class GridHeaderView
+         * @constructor
+         * @description View используемый для отображения заголовка (шапки) списка
+         * @extends Marionette.ItemView
+         * @param {Object} options Constructor options
+         * @param {Array} options.columns массив колонок
+         * @param {Object} options.gridEventAggregator ?
+         * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
+         * */
+        var GridHeaderView = Marionette.ItemView.extend( /** @lends module:core.list.views */ {
             initialize: function (options) {
                 if (!options.columns) {
                     throw new Error('You must provide columns definition ("columns" option)');
