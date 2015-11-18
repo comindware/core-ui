@@ -56,12 +56,12 @@ define(['./EventAggregator',
             EventAggregator: EventAggregator,
             /**
              * Фабрика списков
-             * @class
+             * @namespace
              * */
             factory: factory,
             /**
              * Фабрика ячеек
-             * @class
+             * @namespace
              * */
             cellFactory: cellFactory,
             /**

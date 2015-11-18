@@ -65,7 +65,7 @@ define([
             height: heightOptions.FIXED
         };
 
-        var ListView = Marionette.LayoutView.extend( /** @lends module:core.list.views */ {
+        var ListView = Marionette.LayoutView.extend({
             /**
              * Some description for initializer
              * @name ListView
@@ -76,7 +76,7 @@ define([
              * @extends Marionette.LayoutView
              * @param {Object} options Constructor options
              * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
-             * @param {Object} options.emptyViewOptions опции для emptyView
+             * @param {Object} [options.emptyViewOptions] опции для emptyView
              * @param {Backbone.View} options.childView view строки списка
              * @param {Backbone.View} options.childViewOptions опции для childView
              * @param {Number} options.childHeight высота строки списка (childView)

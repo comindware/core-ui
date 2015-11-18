@@ -20,7 +20,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
             paddingRight: 10
         };
 
-        return Marionette.ItemView.extend( /** @lends module:core.list.views */ {
+        return Marionette.ItemView.extend({
             /**
              * Some description for initializer
              * @name RowView

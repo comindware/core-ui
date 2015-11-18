@@ -15,7 +15,7 @@ define(['module/lib', 'text!core/list/templates/noColumns.html'],
     function (lib, template) {
         'use strict';
 
-        return Marionette.ItemView.extend( /** @lends module:core.list.views */ {
+        return Marionette.ItemView.extend({
             /**
              * Some description for initializer
              * @name NoColumnsView

@@ -25,7 +25,7 @@
 define(['text!core/list/templates/scrollbar.html', 'module/lib'],
     function (template) {
         'use strict';
-        var ScrollbarView = Marionette.ItemView.extend( /** @lends module:core.list.views */ {
+        var ScrollbarView = Marionette.ItemView.extend({
             /**
              * Some description for initializer
              * @name ScrollBarView

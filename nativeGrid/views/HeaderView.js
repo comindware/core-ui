@@ -15,6 +15,18 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html', 'cor
     function (GridHeaderView, template, GlobalEventService) {
         'use strict';
 
+        /**
+         * Some description for initializer
+         * @name HeaderView
+         * @memberof module:core.nativeGrid.views
+         * @class HeaderView
+         * @description View заголовка списка
+         * @extends module:core.list.views.GridHeaderView {@link module:core.list.views.GridHeaderView}
+         * @param {Object} options Constructor options
+         * @param {Array} options.columns массив колонок
+         * @param {Object} options.gridEventAggregator ?
+         * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
+         * */
         var HeaderView = GridHeaderView.extend({
             initialize: function (options) {
                 GridHeaderView.prototype.initialize.apply(this, arguments);

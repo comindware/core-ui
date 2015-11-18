@@ -183,7 +183,7 @@ define([
              * */
             list: listApi,
             /**
-             * Таблица с native-скроллом
+             * Список с native-скроллом
              * @namespace
              * */
             nativeGrid: nativeGridApi,

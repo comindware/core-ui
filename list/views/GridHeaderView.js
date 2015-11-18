@@ -34,7 +34,7 @@ define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/ut
          * @param {Object} options.gridEventAggregator ?
          * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
          * */
-        var GridHeaderView = Marionette.ItemView.extend( /** @lends module:core.list.views */ {
+        var GridHeaderView = Marionette.ItemView.extend({
             initialize: function (options) {
                 if (!options.columns) {
                     throw new Error('You must provide columns definition ("columns" option)');

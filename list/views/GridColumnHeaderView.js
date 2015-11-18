@@ -26,7 +26,7 @@ define(['text!core/list/templates/gridcolumnheader.html', 'module/lib'],
          * @param {Object} options Constructor options
          * @param {Array} options.columns массив колонок
          * */
-        var GridColumnHeaderView = Marionette.ItemView.extend( /** @lends module:core.list.views */ {
+        var GridColumnHeaderView = Marionette.ItemView.extend({
             initialize: function (options) {
                 this.column = options.column;
             },

@@ -28,7 +28,7 @@ define(['text!core/list/templates/emptyList.html', 'module/lib', 'core/services/
          * @param {Object} options Constructor options
          * @param {string} [options.text=Список пуст] отображаемый текст
          * */
-        var EmptyListView = Marionette.ItemView.extend( /** @lends module:core.list.views */ {
+        var EmptyListView = Marionette.ItemView.extend({
             initialize: function (options) {
                 this.model = new Backbone.Model({
                     text: (options && options.text) || defaultText

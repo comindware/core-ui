@@ -14,7 +14,7 @@
 define(['module/lib', 'text!../templates/loadingRow.html'],
     function (lib, template) {
         'use strict';
-        return Marionette.ItemView.extend( /** @lends module:core.list.views */ {
+        return Marionette.ItemView.extend({
             /**
              * Some description for initializer
              * @name LoadingRowView

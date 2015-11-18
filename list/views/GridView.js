@@ -39,7 +39,7 @@ define(['text!core/list/templates/grid.html',
             gridHeaderHeight: 51
         };
 
-        var GridView = Marionette.LayoutView.extend( /** @lends module:core.list.views */ {
+        var GridView = Marionette.LayoutView.extend({
             /**
              * Some description for initializer
              * @name GridView
@@ -52,13 +52,13 @@ define(['text!core/list/templates/grid.html',
              * @param {Array} options.columns массив колонок
              * @param {Backbone.View} options.gridColumnHeaderView View заголовка списка
              * @param {Backbone.View} options.noColumnsView View для отображения списка без колонок
-             * @param {Object} options.noColumnsViewOptions опции для noColumnsView
+             * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
              * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
-             * @param {Object} options.emptyViewOptions опции для emptyView
-             * @param {Backbone.View} options.childView view строки списка
-             * @param {Backbone.View} options.childViewOptions опции для childView
+             * @param {Object} [options.emptyViewOptions] опции для emptyView
+             * @param {Backbone.View} [options.childView] view строки списка
+             * @param {Backbone.View} [options.childViewOptions] опции для childView
              * @param {Number} options.childHeight высота строки списка (childView)
-             * @param {Backbone.View} options.loadingChildView view-лоадер, показывается при подгрузке строк
+             * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
              * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
              * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
              * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
