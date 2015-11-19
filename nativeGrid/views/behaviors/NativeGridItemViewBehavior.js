@@ -83,7 +83,8 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
 
                 fullWidth += this.paddingLeft + this.paddingRight;
 
-                this.$el.width(fullWidth);
+                fullWidth = Math.ceil(fullWidth);
+                this.$el.outerWidth(fullWidth);
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             }
         });
