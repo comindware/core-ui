@@ -40,14 +40,14 @@ define(['module/lib',
          * @description View используемый по умолчанию для отображения строки списка
          * @extends Marionette.LayoutView
          * @param {Object} options Constructor options
-         * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
          * @param {Backbone.Collection} options.collection коллекция строк списка
          * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
-         * @param {Function} [options.onColumnSort] метод, обрабатывющий событие сортировки колонок
          * @param {Backbone.View} [options.noColumnsView] View для отображения списка без колонок
          * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
+         * @param {Function} [options.onColumnSort] метод, обрабатывющий событие сортировки колонок
          * @param {Number} [options.paddingLeft=10] левый отступ
          * @param {Number} [options.paddingRight=20] правый отступ
+         * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
          * */
         return Marionette.LayoutView.extend({
             template: Handlebars.compile(template),

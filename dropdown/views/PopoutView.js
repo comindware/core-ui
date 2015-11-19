@@ -63,6 +63,25 @@ define([
         renderAfterClose: true
     };
 
+    /**
+     * Some description for initializer
+     * @name PopoutView
+     * @memberof module:core.dropdown.views
+     * @class PopoutView
+     * @constructor
+     * @description View-popout
+     * @extends Marionette.LayoutView
+     * @param {Object} options Constructor options
+     * @param {Boolean} [options.autoOpen=true] Показ popout'а по клику на кнопку
+     * @param {Backbone.View} options.buttonView View-кнопки
+     * @param {Object} [options.buttonViewOptions] Опции кнопки
+     * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь popout'а (с классом .js-anchor)
+     * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (auto/bottom)
+     * @param {Boolean} [options.fade=false] Fade-эффект
+     * @param {String} [options.popoutFlow=left] Горизонтальное расположение popout'а относительно якоря (left/right)
+     * @param {Backbone.View} options.panelView View-popout'а
+     * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а
+     * */
     return Marionette.LayoutView.extend({
         initialize: function (options) {
             _.defaults(this.options, defaultOptions);

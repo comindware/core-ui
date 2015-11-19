@@ -24,10 +24,10 @@ define(['../../list/views/RowView', './behaviors/NativeGridItemViewBehavior'],
          * @description View используемый по умолчанию для отображения строки списка
          * @extends module:core.list.views.RowView {@link module:core.list.views.RowView}
          * @param {Object} options Constructor options
-         * @param {Number} [options.paddingLeft=20] Левый отступ
-         * @param {Number} [options.paddingRight=10] Правый отступ
          * @param {Array} options.columns Массив колонк
          * @param {Object} options.gridEventAggregator ?
+         * @param {Number} [options.paddingLeft=20] Левый отступ
+         * @param {Number} [options.paddingRight=10] Правый отступ
          * */
         return RowView.extend({
             behaviors: {
