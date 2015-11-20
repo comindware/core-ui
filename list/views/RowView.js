@@ -20,21 +20,21 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
             paddingRight: 10
         };
 
+        /**
+         * Some description for initializer
+         * @name RowView
+         * @memberof module:core.list.views
+         * @class RowView
+         * @extends Marionette.ItemView
+         * @constructor
+         * @description View используемый по умолчанию для отображения строки списка
+         * @param {Object} options Constructor options
+         * @param {Array} options.columns Массив колонк
+         * @param {Object} options.gridEventAggregator ?
+         * @param {Number} [options.paddingLeft=20] Левый отступ
+         * @param {Number} [options.paddingRight=10] Правый отступ
+         * */
         return Marionette.ItemView.extend({
-            /**
-             * Some description for initializer
-             * @name RowView
-             * @memberof module:core.list.views
-             * @class RowView
-             * @extends Marionette.ItemView
-             * @constructor
-             * @description View используемый по умолчанию для отображения строки списка
-             * @param {Object} options Constructor options
-             * @param {Array} options.columns Массив колонк
-             * @param {Object} options.gridEventAggregator ?
-             * @param {Number} [options.paddingLeft=20] Левый отступ
-             * @param {Number} [options.paddingRight=10] Правый отступ
-             * */
             className: 'record-row grid-row',
 
             events: {

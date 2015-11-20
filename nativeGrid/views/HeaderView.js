@@ -23,9 +23,9 @@ define(['../../list/views/GridHeaderView', 'text!../templates/header.html', 'cor
          * @description View заголовка списка
          * @extends module:core.list.views.GridHeaderView {@link module:core.list.views.GridHeaderView}
          * @param {Object} options Constructor options
-         * @param {Array} options.columns массив колонок
+         * @param {Array} options.columns Массив колонок
          * @param {Object} options.gridEventAggregator ?
-         * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
+         * @param {Backbone.View} options.gridColumnHeaderView View Используемый для отображения заголовка (шапки) списка
          * */
         var HeaderView = GridHeaderView.extend({
             initialize: function (options) {

@@ -53,11 +53,11 @@ define([
          * @description View контента списка
          * @extends Marionette.LayoutView
          * @param {Object} options Constructor options
-         * @param {Backbone.View} options.childView view строки списка
+         * @param {Backbone.View} options.childView view Строки списка
          * @param {Function} [options.childViewSelector] ?
          * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
-         * @param {Object} [options.emptyViewOptions] опции для emptyView
-         * @param {Backbone.View} options.loadingChildView view-лоадер, показывается при подгрузке строк
+         * @param {Object} [options.emptyViewOptions] Опции для emptyView
+         * @param {Backbone.View} options.loadingChildView View-лоадер, показывается при подгрузке строк
          * */
         var ListView = Marionette.LayoutView.extend({
             initialize: function (options) {
