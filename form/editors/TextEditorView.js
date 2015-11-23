@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService'],
-    function (lib, template, BaseItemEditorView, LocalizationService) {
+define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService', 'core/utils/utilsApi'],
+    function (lib, template, BaseItemEditorView, LocalizationService, utilsApi) {
         'use strict';
 
         var changeMode = {
@@ -27,7 +27,10 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
             readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.READONLYPLACEHOLDER'),
             disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
-            readonly: false
+            readonly: false,
+            mask: null,
+            maskPlaceholder: '_',
+            maskOptions: {}
         };
 
         Backbone.Form.editors.Text = BaseItemEditorView.extend({
@@ -40,6 +43,16 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
                 }
 
                 this.placeholder = this.options.emptyPlaceholder;
+            },
+
+            onShow: function() {
+                if (this.options.mask) {
+                    this.ui.input.inputmask(_.extend({
+                        mask: this.options.mask,
+                        placeholder: this.options.maskPlaceholder,
+                        autoUnmask: true
+                    }, this.options.maskOptions || {}));
+                }
             },
 
             focusElement: '.js-input',

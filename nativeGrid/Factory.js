@@ -40,7 +40,6 @@ define([
                 var collection = createWrappedCollection(options.collection, {selectableBehavior: options.gridViewOptions.selectableBehavior});
 
                 var gridViewOptions = _.extend({
-                    columnsFit: options.columnsFit,
                     collection: collection,
                     onColumnSort: options.onColumnSort,
                     rowView: options.rowView,

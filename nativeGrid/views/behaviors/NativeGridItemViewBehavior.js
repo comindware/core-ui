@@ -33,7 +33,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 var cells = this.__getCellElements();
                 this.columnsWidth = [];
                 cells.each(function (i, el) {
-                    this.columnsWidth.push($(el).width());
+                    this.columnsWidth.push(this.__getElementOuterWidth(el));
                 }.bind(this));
                 this.initialFullWidth = this.$el.parent().width();
             },
@@ -58,7 +58,7 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                     var $cell = $($cells[i]),
                         cellWidth = this.columns[i].width;
 
-                    $cell.width(cellWidth - this.padding);
+                    $cell.outerWidth(cellWidth);
                     fullWidth += cellWidth;
                 }
 
@@ -66,20 +66,25 @@ define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/Grid
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             },
 
+            __getElementOuterWidth: function (el) {
+                return $(el)[0].getBoundingClientRect().width;
+            },
+
             __onSingleColumnResize: function (sender, args) {
                 var cells = _.toArray(this.__getCellElements()),
                     $cell = $(cells[args.index]);
 
-                $cell.width(this.columnsWidth[args.index] + args.delta);
+                $cell.outerWidth(this.columnsWidth[args.index] + args.delta);
 
                 var fullWidth = 0;
                 this.__getCellElements().each(function (i, el) {
-                    fullWidth += $(el).width() + this.padding;
+                    fullWidth += this.__getElementOuterWidth(el);
                 }.bind(this));
 
                 fullWidth += this.paddingLeft + this.paddingRight;
 
-                this.$el.width(fullWidth);
+                fullWidth = Math.ceil(fullWidth);
+                this.$el.outerWidth(fullWidth);
                 this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
             }
         });

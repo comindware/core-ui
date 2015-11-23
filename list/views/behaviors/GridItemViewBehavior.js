@@ -75,40 +75,26 @@ define(['module/lib', 'core/utils/utilsApi'],
             },
 
             onShow: function () {
-                var $cells = this.__getCellElements();
-                this.cellWidthDiff = $cells.outerWidth() - $cells.width();
-                var availableWidth = this.__getAvailableWidth();
-                var cells = _.toArray($cells);
-                _.each(this.columns, function (c, k)
-                {
-                    var $cell = $(cells[k]);
-                    if (c.width) {
-                        $cell.width(c.width * availableWidth - this.cellWidthDiff);
-                    }
-                }, this);
+                this.__handleColumnsResize();
             },
 
             __getAvailableWidth: function () {
-                return this.$el.width() - this.padding;
+                return this.$el.width() - this.padding - 1; //Magic cross browser pixel, don't remove it
             },
             
             __getCellElements: function () {
                 return this.$el.find('.js-grid-cell');
             },
 
-            __handleColumnsResize: function (sender, args)
-            {
-                var availableWidth = args.fullWidth;
+            __handleColumnsResize: function () {
                 var cells = _.toArray(this.__getCellElements());
-                _.each(args.changes, function (v, k)
-                {
+                _.each(this.columns, function (col, k) {
                     var $cell = $(cells[k]);
-                    $cell.width(v * availableWidth - this.cellWidthDiff);
+                    $cell.outerWidth(col.absWidth);
                 }, this);
             },
 
-            __handleClick: function (e)
-            {
+            __handleClick: function (e) {
                 var model = this.view.model;
                 var selectFn = model.collection.selectSmart || model.collection.select;
                 if (selectFn) {
