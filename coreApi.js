@@ -22,9 +22,6 @@ define([
         './serviceLocator',
         './nativeGrid/nativeGridApi',
 
-        './application/Module',
-        './application/views/behaviors/ContentViewBehavior',
-
         './services/RoutingService',
         './services/UrlService',
         './services/ModuleService',
@@ -64,9 +61,6 @@ define([
         serviceLocator,
         nativeGridApi,
 
-        Module,
-        ContentViewBehavior,
-
         RoutingService,
         UrlService,
         ModuleService,
@@ -104,18 +98,6 @@ define([
          * @exports core
          * */
         var exports = {
-            /**
-             * Базовые компонеты приложения: модуль, header views etc
-             * @namespace
-             * */
-            application: {
-                Module: Module,
-                views: {
-                    behaviors: {
-                        ContentViewBehavior: ContentViewBehavior
-                    }
-                }
-            },
             /**
              * Базовые сервисы системы
              * @namespace

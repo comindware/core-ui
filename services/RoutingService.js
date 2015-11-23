@@ -15,7 +15,7 @@ define([
         'module/lib',
         'core/utils/utilsApi',
         './routing/ModuleProxy',
-        'core/application/views/ContentLoadingView',
+        'shared/application/views/ContentLoadingView', // todo: move service
         'module/moduleConfigs',
         'project/module/moduleConfigs',
         'process/module/moduleConfigs'

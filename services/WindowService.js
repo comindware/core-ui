@@ -14,7 +14,7 @@
 define([
         'module/lib',
         'core/utils/utilsApi',
-        'core/application/views/FadingPanelView'
+        'core/views/FadingPanelView'
     ],
     function (lib, utilsApi, FadingPanelView) {
         'use strict';
