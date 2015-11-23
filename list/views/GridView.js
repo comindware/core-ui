@@ -48,6 +48,7 @@ define(['text!core/list/templates/grid.html',
          * @description View-контейнер для заголовка и контента
          * @extends Marionette.LayoutView
          * @param {Object} options Constructor options
+         * @param {Array} options.collection массив элементов списка
          * @param {Array} options.columns массив колонок
          * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
          * @param {Number} options.childHeight высота строки списка (childView)
@@ -64,7 +65,7 @@ define(['text!core/list/templates/grid.html',
          * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
          * */
         var GridView = Marionette.LayoutView.extend({
-             initialize: function (options, testOption) {
+             initialize: function (options) {
                 if (this.collection === undefined) {
                     throw 'You must provide a collection to display.';
                 }

@@ -16,33 +16,41 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
         'use strict';
 
         var factory = {
-            /*
-            * Create a common menu view.
-            *
-            * Example:
-            *
-            * options: {
-            *   text: 'Actions',
-            *   items: [
-            *       {
-            *           id: 'create',
-            *           name: 'Create',
-            *           tooltip: 'Create'
-            *       },
-            *       {
-            *           id: 'delete',
-            *           name: 'Delete',
-            *           tooltip: 'Create'
-            *       }
-            *   ]
-            * }
-            * */
+            /**
+             * @memberof module:core.dropdown.factory
+             * @method createMenu
+             * @description Метод для создания меню
+             * @param {Object} options Constructor options
+             * @param {Backbone.View} [options.buttonView] View меню
+             * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (up/bottom)
+             * @param {Boolean} [options.fade=false] Fade-эффект
+             * @param {String} [options.height=auto] (auto/bottom)
+             * @param {Array} options.items Элементы меню
+             * @param {String} [options.text] Текст кнопки
+             * @returns {Backbone.View} View Меню
+             * */
             createMenu: function (options) {
                 options = options || {};
                 options.buttonView = options.buttonView || DefaultButtonView;
                 return factory.createButtonMenu(options);
             },
 
+            /**
+             * @memberof module:core.dropdown.factory
+             * @method createButtonMenu
+             * @description Метод для создания меню
+             * @param {Object} options Constructor options
+             * @param {Backbone.View} options.buttonView View кнопки
+             * @param {Backbone.Model} [options.buttonModel] Модель кнопки
+             * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь popout'а (с классом .js-anchor)
+             * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (up/bottom)
+             * @param {Boolean} [options.fade=false] Fade-эффект
+             * @param {String} [options.height=auto] (auto/bottom)
+             * @param {Array} options.items Элементы меню
+             * @param {String} [options.popoutFlow=left] Горизонтальное расположение popout'а относительно якоря (left/right)
+             * @param {String} [options.text] Текст кнопки
+             * @returns {Backbone.View} View Меню
+             * */
             createButtonMenu: function(options) {
                 var collection = options.items;
                 if (!(collection instanceof Backbone.Collection)) {
@@ -76,6 +84,20 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
                 return factory.createPopout(popoutOptions);
             },
 
+            /**
+             * @memberof module:core.dropdown.factory
+             * @method createDialogPopout
+             * @description Метод для создания popout-диалога
+             * @param {Object} options Constructor options
+             * @param {Backbone.View} options.buttonView View меню
+             * @param {Backbone.Model} [options.buttonModel] Модель кнопки
+             * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь popout'а (с классом .js-anchor)
+             * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (up/bottom)
+             * @param {Array} options.items Элементы меню
+             * @param {String} [options.popoutFlow=left] Горизонтальное расположение popout'а относительно якоря (left/right)
+             * @param {String} [options.text] Текст кнопки
+             * @returns {Backbone.View} View Меню
+             * */
             createDialogPopout: function (options) {
                 var defaults = {
                     fade: true,
@@ -85,34 +107,38 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
                 return factory.createPopout(options);
             },
 
-            /*
-            * Create a popout with custom button and panel views
-            *
-            * Example:
-            *
-            * options: {
-            *   buttonView: MyButtonView,
-            *   buttomViewOptions: {
-            *     model: new Backbone.Model({
-            *       text: 'Click Me!'
-            *     })
-            *   },
-            *   panelView: MyPanelView,
-            *   panelViewOptions: {
-            *     collection: new Backbone.Collection([
-            *       {
-            *           id: 1,
-            *           name: Steve
-            *       }
-            *     ])
-            *   }
-            * }
-            *
-            * */
-            createPopout: function (options) {
+            /**
+             * @memberof module:core.dropdown.factory
+             * @method createPopout
+             * @description Метод для создания popout
+             * @param {Object} options Constructor options
+             * @param {Backbone.View} options.buttonView View меню
+             * @param {Backbone.Model} [options.buttonModel] Модель кнопки
+             * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь popout'а (с классом .js-anchor)
+             * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (up/bottom)
+             * @param {Boolean} [options.fade=false] Fade-эффект
+             * @param {String} [options.height=auto] (auto/bottom)
+             * @param {Array} options.items Элементы меню
+             * @param {String} [options.popoutFlow=left] Горизонтальное расположение popout'а относительно якоря (left/right)
+             * @param {String} [options.text] Текст кнопки
+             * @returns {Backbone.View} View Меню
+             * */
+             createPopout: function (options) {
                 return new PopoutView(options);
             },
 
+            /**
+             * @memberof module:core.dropdown.factory
+             * @method createDropdownList
+             * @description Метод для создания меню
+             * @param {Object} options Constructor options
+             * @param {Boolean} [options.autoOpen=true] Показ popout'а по клику на кнопку
+             * @param {Backbone.View} options.buttonView View-кнопки
+             * @param {Object} [options.buttonViewOptions] Опции кнопки
+             * @param {String} [options.panelPosition=down] Расположение dropdown'а (down/down-over/up/up-over)
+             * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а
+             * @returns {Backbone.View} View dropdown'а
+             * */
             createDropdownList: function (options) {
                 return new DropdownView({
                     buttonView: options.buttonView,
@@ -126,29 +152,17 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
                 });
             },
 
-            /*
-             * Create a dropdown with custom button and panel views
-             *
-             * Example:
-             *
-             * options: {
-             *   buttonView: MyButtonView,
-             *   buttomViewOptions: {
-             *     model: new Backbone.Model({
-             *       text: 'Default Input Content!'
-             *     })
-             *   },
-             *   panelView: MyPanelView,
-             *   panelViewOptions: {
-             *     collection: new Backbone.Collection([
-             *       {
-             *           id: 1,
-             *           name: Steve
-             *       }
-             *     ])
-             *   }
-             * }
-             *
+            /**
+             * @memberof module:core.dropdown.factory
+             * @method createDropdown
+             * @description Метод для создания меню
+             * @param {Object} options Constructor options
+             * @param {Boolean} [options.autoOpen=true] Показ popout'а по клику на кнопку
+             * @param {Backbone.View} options.buttonView View-кнопки
+             * @param {Object} [options.buttonViewOptions] Опции кнопки
+             * @param {String} [options.panelPosition=down] Расположение dropdown'а (down/down-over/up/up-over)
+             * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а
+             * @returns {Backbone.View} View dropdown'а
              * */
             createDropdown: function (options) {
                 return new DropdownView(options);

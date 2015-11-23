@@ -76,8 +76,9 @@ define([
      * @param {Backbone.View} options.buttonView View-кнопки
      * @param {Object} [options.buttonViewOptions] Опции кнопки
      * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь popout'а (с классом .js-anchor)
-     * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (auto/bottom)
+     * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (up/bottom)
      * @param {Boolean} [options.fade=false] Fade-эффект
+     * @param {String} [options.height=auto] (auto/bottom)
      * @param {String} [options.popoutFlow=left] Горизонтальное расположение popout'а относительно якоря (left/right)
      * @param {Backbone.View} options.panelView View-popout'а
      * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а

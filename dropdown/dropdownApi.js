@@ -46,6 +46,10 @@ define([
                 MenuPanelView: MenuPanelView,
                 DefaultButtonView: DefaultButtonView
             },
+            /**
+             * Factory
+             * @namespace
+             * */
             factory: factory
         };
     });

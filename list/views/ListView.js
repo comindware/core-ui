@@ -74,6 +74,7 @@ define([
          * @description View контента списка
          * @extends Marionette.LayoutView
          * @param {Object} options Constructor options
+         * @param {Array} options.collection массив элементов списка
          * @param {Number} options.childHeight высота строки списка (childView)
          * @param {Backbone.View} options.childView view строки списка
          * @param {Backbone.View} options.childViewOptions опции для childView

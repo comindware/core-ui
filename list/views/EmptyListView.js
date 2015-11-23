@@ -23,7 +23,7 @@ define(['text!core/list/templates/emptyList.html', 'module/lib', 'core/services/
          * @memberof module:core.list.views
          * @class EmptyListView
          * @constructor
-         * @description используемый по умолчанию для отображения пустого списка (нет строк), передавать в {@link module:core.list.views.GridView GridView options.emptyView}
+         * @description View используемый по умолчанию для отображения пустого списка (нет строк), передавать в {@link module:core.list.views.GridView GridView options.emptyView}
          * @extends Marionette.ItemView
          * @param {Object} options Constructor options
          * @param {string} [options.text=Список пуст] отображаемый текст
