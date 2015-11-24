@@ -30,8 +30,7 @@
                     contentType: 'application/json'
                 }, options || {});
                 var promise = Promise.resolve($.ajax(config));
-                PromiseServer.registerPromise(promise);
-                return promise;
+                return PromiseServer.registerPromise(promise);
             },
 
             getJsApiResponse: function (url, parameterNames, parameters, callback) {
