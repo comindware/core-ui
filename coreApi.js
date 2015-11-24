@@ -110,7 +110,8 @@ define([
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
-                SecurityService: SecurityService
+                SecurityService: SecurityService,
+                GlobalEventService: GlobalEventService
             },
             /**
              * Backbone-коллекции общего назначения
