@@ -23,7 +23,6 @@ define([
         './nativeGrid/nativeGridApi',
 
         './services/RoutingService',
-        './services/ModuleService',
         './services/MessageService',
         './services/WindowService',
         './services/GlobalEventService',
@@ -60,7 +59,6 @@ define([
         nativeGridApi,
 
         RoutingService,
-        ModuleService,
         MessageService,
         WindowService,
         GlobalEventService,
@@ -100,7 +98,6 @@ define([
              * */
             services: {
                 RoutingService: RoutingService,
-                ModuleService: ModuleService,
                 MessageService: MessageService,
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
