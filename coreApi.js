@@ -29,7 +29,6 @@ define([
         './services/GlobalEventService',
         './services/LocalizationService',
         './services/AjaxService',
-        './services/SecurityService',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -67,7 +66,6 @@ define([
         GlobalEventService,
         LocalizationService,
         AjaxService,
-        SecurityService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -107,7 +105,6 @@ define([
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
-                SecurityService: SecurityService,
                 GlobalEventService: GlobalEventService
             },
             /**
