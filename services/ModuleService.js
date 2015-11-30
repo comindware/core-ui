@@ -63,7 +63,10 @@ define([
             PROCESS_PROCESSMONITOR: 'module:process:processMonitor',
             PROCESS_DATADIAGRAM: 'module:process:dataDiagram',
 
-            SUPPORT_GLOBAL_FUNCTIONS: 'module:support:globalFunctions'
+            SUPPORT_GLOBAL_FUNCTIONS: 'module:support:globalFunctions',
+
+            SUPPORT_COMMUNICATION_ROUTES: 'module:support:routes',
+            SUPPORT_COMMUNICATION_CHANNELS: 'module:support:channels'
         };
 
         var messagesCache = {};
