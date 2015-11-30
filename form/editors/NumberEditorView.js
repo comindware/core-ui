@@ -90,7 +90,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                     this.__value(this.ui.input.val(), false, true, false);
                 },
                 'mousewheel @ui.input': function (event) {
-                    if (!this.getEnabled() || this.getReadonly() || !this.ui.input.is(':focus')) {
+                    if (!this.getEnabled() || this.getReadonly() || !this.hasFocus) {
                         return;
                     }
 
