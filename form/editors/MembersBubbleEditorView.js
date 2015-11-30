@@ -176,6 +176,10 @@ define([
                 }
             },
 
+            __value: function (value) {
+                this.setValue(value)
+            },
+
             __createViewModel: function () {
                 this.viewModel = new Backbone.Model();
 

@@ -113,6 +113,8 @@ define([
                             this.listenTo(this.model, 'change:' + this.key, this.updateValue);
                             this.listenTo(this.model, 'sync', this.updateValue);
                         }
+
+                        this.classes = classes;
                     },
 
                     updateValue: function () {
