@@ -139,6 +139,11 @@ define([
             }
         },
 
+        __value: function (value) {
+            this.setValue(value);
+            this.__triggerChange();
+        },
+
         __onTextChange: function () {
             this.value = this.dropdownView.button.getValue();
             this.__triggerChange();
