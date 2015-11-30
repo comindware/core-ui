@@ -21,9 +21,21 @@ define(['./Factory',
     function (factory, filterViewFactory, RowView, HeaderView, NativeGridView) {
         'use strict';
 
-        return {
+        return /** @lends module:core.nativeGrid */  {
+            /**
+             * Фабрика списков
+             * @namespace
+             * */
             factory: factory,
+            /**
+             * Фабрика фильтров
+             * @namespace
+             * */
             filterViewFactory: filterViewFactory,
+            /**
+             * Views-списка
+             * @namespace
+             * */
             views: {
                 RowView: RowView,
                 HeaderView: HeaderView,

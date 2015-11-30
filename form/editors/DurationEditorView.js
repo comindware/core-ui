@@ -70,6 +70,24 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
 
         var keyCode = utils.keyCode;
 
+        /**
+         * Some description for initializer
+         * @name DurationEditorView
+         * @memberof module:core.form.editors
+         * @class DurationEditorView
+         * @description Duration editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Number} [options.page=10] Шаг, с которым прибавляется/убывает значение по pageUp/pageDown
+         * @param {Number} [options.step=1] Шаг, с которым прибавляется/убывает значение по keyUp/keyDown
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Number} [options.workHours=8] Количество рабочих часов
+         * */
         Backbone.Form.editors.Duration = BaseItemEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {

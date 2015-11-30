@@ -18,6 +18,21 @@ define(['module/lib', 'text!./templates/dateEditor.html', './base/BaseLayoutEdit
         var defaultOptions = {
         };
 
+        /**
+         * Some description for initializer
+         * @name DateEditorView
+         * @memberof module:core.form.editors
+         * @class DateEditorView
+         * @description Date editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.Date = BaseLayoutEditorView.extend({
             initialize: function (options) {
                 options = options || {};

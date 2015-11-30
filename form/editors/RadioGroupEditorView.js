@@ -24,6 +24,21 @@ define([
             radioOptions: [{ id: '', displayText: '' }]
         };
 
+        /**
+         * Some description for initializer
+         * @name RadioGroupEditorView
+         * @memberof module:core.form.editors
+         * @class RadioGroupEditorView
+         * @description RadioGroup editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Array} options.radioOptions Массив значений
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.RadioGroup = EditorBaseCollectionView.extend({
             initialize: function (options) {
                 if (options.schema) {

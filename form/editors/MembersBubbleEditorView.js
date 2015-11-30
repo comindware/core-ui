@@ -47,6 +47,24 @@ define([
             canDeleteMember: true
         };
 
+        /**
+         * Some description for initializer
+         * @name MembersBubbleEditorView
+         * @memberof module:core.form.editors
+         * @class MembersBubbleEditorView
+         * @description MembersBubble editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
+         * @param {Boolean} [options.canDeleteMember=true] Определяет возможность удалять добавленных пользователей
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Array} [options.exclude] Массив id-пользователей, недоступных для выбора
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, доступных для выбора
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {
