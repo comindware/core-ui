@@ -14,6 +14,17 @@
 define(['text!../templates/defaultButton.html', 'module/lib'],
     function (template) {
         'use strict';
+
+        /**
+         * Some description for initializer
+         * @name DefaultButtonView
+         * @memberof module:core.dropdown.views
+         * @class DefaultButtonView
+         * @constructor
+         * @description DefaultButton
+         * @extends Marionette.ItemView
+         * @param {Object} options Constructor options
+         * */
         return Marionette.ItemView.extend({
             initialize: function (options) {
             },

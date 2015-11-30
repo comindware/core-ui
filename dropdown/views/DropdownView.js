@@ -36,6 +36,21 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
             panelPosition: panelPosition.DOWN
         };
 
+        /**
+         * Some description for initializer
+         * @name DropdownView
+         * @memberof module:core.dropdown.views
+         * @class DropdownView
+         * @constructor
+         * @description Dropdown
+         * @extends Marionette.LayoutView
+         * @param {Object} options Constructor options
+         * @param {Boolean} [options.autoOpen=true] Показ popout'а по клику на кнопку
+         * @param {Backbone.View} options.buttonView View-кнопки
+         * @param {Object} [options.buttonViewOptions] Опции кнопки
+         * @param {String} [options.panelPosition=down] Расположение dropdown'а (down/down-over/up/up-over)
+         * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а
+         * */
         return Marionette.LayoutView.extend({
             initialize: function (options) {
                 _.extend(this.options, _.clone(defaultOptions), options || {});

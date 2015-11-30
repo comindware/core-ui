@@ -24,6 +24,21 @@ define([
         'use strict';
 
         var factory = {
+            /**
+             * @memberof module:core.list.factory
+             * @method createDefaultList
+             * @description Метод для создания списка
+             * @param {Object} options Constructor options
+             * @param {Array} options.collection Массив элементов списка
+             * @param {Object} options.collectionOptions Опции коллекции
+             * @param {Object} options.listViewOptions Опции списка
+             * @param {Backbone.View} options.listViewOptions.childView View элемента списка
+             * @returns {Object}
+             * @returns {Backbone.View} scrollbarView Скроллбар
+             * @returns {Backbone.View} gridView View-списка
+             * @returns {Backbone.Collection} collection Коллекция элементов списка
+             * @returns eventAggregator
+             * */
             createDefaultList: function (options) {
                 utils.helpers.ensureOption(options, 'collection');
                 utils.helpers.ensureOption(options, 'listViewOptions');
@@ -57,6 +72,23 @@ define([
                 };
             },
 
+            /**
+             * @memberof module:core.list.factory
+             * @method createDefaultGrid
+             * @description Метод для создания grid'а
+             * @param {Object} options Constructor options
+             * @param {number} options.childHeight Высота строки
+             * @param {Backbone.View} options.childView View-строки списка
+             * @param {Array} options.collection Массив элементов списка
+             * @param {Object} options.collectionOptions Опции коллекции
+             * @param {Object} options.gridViewOptions Опции списка
+             * @param {Object} options.gridViewOptions.columns Колонки списка
+             * @returns {Object}
+             * @returns {Backbone.View} scrollbarView Скроллбар
+             * @returns {Backbone.View} gridView View-списка
+             * @returns {Backbone.Collection} collection Коллекция элементов списка
+             * @returns eventAggregator
+             * */
             createDefaultGrid: function (options) {
                 utils.helpers.ensureOption(options, 'collection');
                 utils.helpers.ensureOption(options, 'gridViewOptions.columns');
@@ -95,11 +127,15 @@ define([
                 };
             },
 
-            /*
-            * IN: backbone collection or javascript array
-            * OUT: VirtualCollection
-            *
-            * */
+            /**
+             * @memberof module:core.list.factory
+             * @method createWrappedCollection
+             * @description Метод для Backbone-коллекции элементов списка
+             * @param {Object} options Constructor options
+             * @param {Array} options.collection Массив элементов
+             * @returns {Object}
+             * @returns {Backbone.Collection} collection Коллекция элементов списка
+             * */
             createWrappedCollection: function (collection, options) {
                 if (!(collection instanceof VirtualCollection)) {
                     if (_.isArray(collection)) {

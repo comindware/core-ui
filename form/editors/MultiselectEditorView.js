@@ -31,6 +31,24 @@ define(
             explicitApply: false
         };
 
+        /**
+         * Some description for initializer
+         * @name MultiselectEditorView
+         * @memberof module:core.form.editors
+         * @class MultiselectEditorView
+         * @description Multiselect editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.allowEmptyValue=true] Разрешает отсутствие значения
+         * @param {Backbone.Collection/Array} options.collection Коллекция (массив) элементов
+         * @param {String} [options.displayAttribute=text] Ключ, по которому берется знаечение для отображения элементов списка
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.explicitApply=false] Явное применение выбранных значений
+         * @param {Boolean} [options.forceCommit=false] Определяет, обновлять ли значение независимо от ошибок валидации
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend({
             initialize: function(options) {
                 if (options.schema) {

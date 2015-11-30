@@ -14,6 +14,15 @@
 define(['module/lib'],
     function (lib) {
         'use strict';
+        /**
+         * Some description for initializer
+         * @name LoadingRowModel
+         * @memberof module:core.list.models
+         * @class LoadingRowModel
+         * @constructor
+         * @description Model строки списка
+         * @extends Backbone.Model
+         * */
         return Backbone.Model.extend({
             initialize: function () {
             },

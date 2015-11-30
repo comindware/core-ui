@@ -39,8 +39,33 @@ define(['text!core/list/templates/grid.html',
             gridHeaderHeight: 51
         };
 
+        /**
+         * Some description for initializer
+         * @name GridView
+         * @memberof module:core.list.views
+         * @class GridView
+         * @constructor
+         * @description View-контейнер для заголовка и контента
+         * @extends Marionette.LayoutView
+         * @param {Object} options Constructor options
+         * @param {Array} options.collection массив элементов списка
+         * @param {Array} options.columns массив колонок
+         * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+         * @param {Number} options.childHeight высота строки списка (childView)
+         * @param {Backbone.View} [options.childView] view строки списка
+         * @param {Backbone.View} [options.childViewOptions] опции для childView
+         * @param {Function} options.childViewSelector ?
+         * @param {Object} [options.emptyViewOptions] опции для emptyView
+         * @param {Backbone.View} options.gridColumnHeaderView View заголовка списка
+         * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
+         * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
+         * @param {Backbone.View} options.noColumnsView View для отображения списка без колонок
+         * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
+         * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
+         * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
+         * */
         var GridView = Marionette.LayoutView.extend({
-            initialize: function (options) {
+             initialize: function (options) {
                 if (this.collection === undefined) {
                     throw 'You must provide a collection to display.';
                 }
