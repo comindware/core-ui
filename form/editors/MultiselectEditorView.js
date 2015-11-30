@@ -208,6 +208,11 @@ define(
                 this.tempValue = _.without(this.tempValue, value);
             },
 
+            __value: function (value) {
+                this.tempValue = value;
+                this.__applyValue();
+            },
+
             __applyValue: function() {
                 this.setValue(this.tempValue);
                 this.__trimValues();

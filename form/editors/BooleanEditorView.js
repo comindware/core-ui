@@ -78,6 +78,10 @@ define(['text!./templates/booleanEditor.html', './base/BaseItemEditorView'],
                 this.__triggerChange();
             },
 
+            __value: function (value, triggerChange) {
+                this.__toggle();
+            },
+
             onRender: function () {
                 if (this.getValue()) {
                     this.$el.addClass('pr-checked');
