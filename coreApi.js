@@ -22,12 +22,14 @@ define([
         './serviceLocator',
         './nativeGrid/nativeGridApi',
 
-        './services/RoutingService',
+        './services/RoutingServiceBase',
         './services/MessageService',
         './services/WindowService',
         './services/GlobalEventService',
         './services/LocalizationService',
         './services/AjaxService',
+
+        './services/routing/ModuleProxy',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -58,12 +60,14 @@ define([
         serviceLocator,
         nativeGridApi,
 
-        RoutingService,
+        RoutingServiceBase,
         MessageService,
         WindowService,
         GlobalEventService,
         LocalizationService,
         AjaxService,
+
+        ModuleProxy,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -97,12 +101,15 @@ define([
              * @namespace
              * */
             services: {
-                RoutingService: RoutingService,
+                RoutingServiceBase: RoutingServiceBase,
                 MessageService: MessageService,
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
-                GlobalEventService: GlobalEventService
+                GlobalEventService: GlobalEventService,
+                routing: {
+                    ModuleProxy: ModuleProxy
+                }
             },
             /**
              * Backbone-коллекции общего назначения
