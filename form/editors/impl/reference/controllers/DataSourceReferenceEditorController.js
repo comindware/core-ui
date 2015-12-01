@@ -12,14 +12,21 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define(['./BaseReferenceEditorController',
-        'module/lib'
+        'module/lib',
+        'core/services/RoutingService',
+        'core/services/ModuleService'
     ],
-    function (BaseReferenceEditorController, lib) {
+    function (BaseReferenceEditorController, lib, RoutingService, ModuleService) {
         'use strict';
 
         return BaseReferenceEditorController.extend({
             navigate: function (model) {
-                return false;
+                var url = ModuleService.getModuleUrlByName('record', ModuleService.modules.PROCESS_RECORDTYPES_RECORDS, {
+                    recordTypeId: '2',
+                    recordId: model.get('id')
+                });
+
+                RoutingService.navigateToUrl(url);
             }
         });
     });
