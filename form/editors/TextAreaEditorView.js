@@ -47,6 +47,24 @@ define(['text!./templates/textAreaEditor.html',
             initialHeight: 2
         };
 
+        /**
+         * Some description for initializer
+         * @name TextAreaEditorView
+         * @memberof module:core.form.editors
+         * @class TextAreaEditorView
+         * @description TextArea editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {String} [options.controller] Текст placeholder'а
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Number} [options.initialHeight=2] Изначальное количство строк
+         * @param {String} [options.size=auto] Высота контрола: auto - контрол имеет высоту контента, fixed - фиксированную
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Number} [options.textHeight] Размер шрифта текста, определяет максимальный размер области ввода
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.TextArea = BaseItemEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {

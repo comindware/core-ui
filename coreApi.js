@@ -153,10 +153,30 @@ define([
              * @namespace
              * */
             dropdown: dropdownApi,
+            /**
+             * Форма и редакторы (editors).
+             * @namespace
+             * */
             form: formApi,
+            /**
+             * Списки
+             * @namespace
+             * */
             list: listApi,
+            /**
+             * Список с native-скроллом
+             * @namespace
+             * */
             nativeGrid: nativeGridApi,
+            /**
+             * Вспомогательные утилиты
+             * @namespace
+             * */
             utils: utilsApi,
+            /**
+             * Мета-информация
+             * @namespace
+             * */
             meta: meta,
             serviceLocator: serviceLocator,
             bootstrapper: Bootstrapper

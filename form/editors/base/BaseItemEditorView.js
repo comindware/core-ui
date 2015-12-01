@@ -18,5 +18,13 @@
 define(['module/lib', './MarionetteEditorPrototype'],
     function (lib, MarionetteEditorPrototype) {
         'use strict';
+        /**
+         * Some description for initializer
+         * @name BaseItemEditorView
+         * @memberof module:core.form.editors.base
+         * @class BaseItemEditorView
+         * @description Базовый класс для editor'ов
+         * @extends Marionette.ItemView
+         * */
         return Marionette.ItemView.extend(MarionetteEditorPrototype.create(Marionette.ItemView));
     });

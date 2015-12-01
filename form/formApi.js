@@ -105,14 +105,26 @@ define([
         ) {
 		'use strict';
 
-		return {
+		return /** @lends module:core.form*/  {
+            /**
+             * Форма
+             * @namespace
+             * */
             ExtendedForm: ExtendedForm,
             behaviors: {
                 BackboneFormBehavior: BackboneFormBehavior
             },
+            /**
+             * СommonField — обертка для редактора
+             * @namespace
+             * */
             fields: {
                 CommonField: CommonField
             },
+            /**
+             * Редакторы
+             * @namespace
+             * */
 			editors: {
                 impl: {
                     common: {
@@ -127,12 +139,20 @@ define([
                         }
                     }
                 },
+                /**
+                 * Базовые редакторы
+                 * @namespace
+                 * */
                 base: {
                     BaseItemEditorView: BaseItemEditorView,
                     BaseLayoutEditorView: BaseLayoutEditorView,
                     BaseCollectionEditorView: BaseCollectionEditorView,
                     BaseCompositeEditorView: BaseCompositeEditorView
                 },
+                /**
+                 * Reference-редакторы
+                 * @namespace
+                 * */
                 reference: {
                     controllers: {
                         DemoReferenceEditorController: DemoReferenceEditorController,

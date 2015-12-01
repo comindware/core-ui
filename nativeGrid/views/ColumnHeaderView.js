@@ -15,6 +15,18 @@ define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/G
     function (template, lib, GridColumnHeaderView) {
         'use strict';
 
+        /**
+         * Some description for initializer
+         * @name ColumnHeaderView
+         * @memberof module:core.nativeGrid.views
+         * @class ColumnHeaderView
+         * @constructor
+         * @description View для отображения ячейки заголовка (шапки) списка
+         * @extends module:core.list.views.GridColumnHeaderView {@link module:core.list.views.GridColumnHeaderView}
+         * @param {Object} options Constructor options
+         * @param {Array} options.columns Массив колонок
+         * @param {} options.gridEventAggregator ?
+         * */
         var ColumnHeaderView = GridColumnHeaderView.extend({
             initialize: function (options) {
                 GridColumnHeaderView.prototype.initialize.apply(this, arguments);

@@ -32,6 +32,23 @@ define(['module/lib',
             paddingRight: 10
         };
 
+        /**
+         * Some description for initializer
+         * @name NativeGridView
+         * @memberof module:core.nativeGrid.views
+         * @class NativeGridView
+         * @description View используемый по умолчанию для отображения строки списка
+         * @extends Marionette.LayoutView
+         * @param {Object} options Constructor options
+         * @param {Backbone.Collection} options.collection Коллекция строк списка
+         * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+         * @param {Backbone.View} [options.noColumnsView] View для отображения списка без колонок
+         * @param {Object} [options.noColumnsViewOptions] Опции для noColumnsView
+         * @param {Function} [options.onColumnSort] Метод, обрабатывющий событие сортировки колонок
+         * @param {Number} [options.paddingLeft=10] Левый отступ
+         * @param {Number} [options.paddingRight=20] Правый отступ
+         * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
+         * */
         return Marionette.LayoutView.extend({
             template: Handlebars.compile(template),
 
@@ -54,7 +71,6 @@ define(['module/lib',
 
                 this.rowView = this.options.rowView;
                 this.collection = this.options.collection;
-                this.columsFit = this.options.columsFit;
                 this.emptyView = this.options.emptyView;
                 options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
@@ -66,7 +82,7 @@ define(['module/lib',
                 this.headerView = new HeaderView({
                     columns: this.options.columns,
                     gridColumnHeaderView: ColumnHeaderView,
-                    gridEventAggregator: this,
+                    gridEventAggregator: this
                 });
 
                 if (this.options.noColumnsView) {

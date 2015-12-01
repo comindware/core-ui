@@ -19,6 +19,22 @@ define(['text!./templates/booleanEditor.html', './base/BaseItemEditorView'],
             displayText: ''
         };
 
+        /**
+         * Some description for initializer
+         * @name BooleanEditorView
+         * @memberof module:core.form.editors
+         * @class BooleanEditorView
+         * @description Boolean editor (checkbox)
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
+         * @param {String} [options.displayText] Отображаемый текст
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.Boolean = BaseItemEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {
@@ -60,6 +76,10 @@ define(['text!./templates/booleanEditor.html', './base/BaseItemEditorView'],
                 }
                 this.setValue(!this.getValue());
                 this.__triggerChange();
+            },
+
+            __value: function (value, triggerChange) {
+                this.__toggle();
             },
 
             onRender: function () {
