@@ -176,10 +176,7 @@ define([
             },
 
             onValueNavigate: function () {
-                if (!this.schema.showAsLink) {
-                    return;
-                }
-                this.controller.navigate(this.getValue());
+               return this.controller.navigate(this.getValue());
             },
 
             onSearchMore: function () {
