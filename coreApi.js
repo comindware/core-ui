@@ -30,6 +30,7 @@ define([
         './services/AjaxService',
 
         './services/routing/ModuleProxy',
+        './services/PromiseServer',
 
         './collections/SlidingWindowCollection',
         './collections/VirtualCollection',
@@ -68,6 +69,7 @@ define([
         AjaxService,
 
         ModuleProxy,
+        PromiseServer,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -107,6 +109,7 @@ define([
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
                 GlobalEventService: GlobalEventService,
+		        PromiseServer: PromiseServer,
                 routing: {
                     ModuleProxy: ModuleProxy
                 }

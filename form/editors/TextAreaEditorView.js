@@ -127,6 +127,9 @@ define(['text!./templates/textAreaEditor.html',
                 case size.auto:
                     this.ui.textarea.autosize({ append: '' });
                     break;
+                case size.fixed:
+                    this.ui.textarea.attr('rows', this.options.textHeight);
+                    break;
                 }
             },
 

@@ -113,9 +113,10 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                     this.__value(this.ui.input.val(), false, true, false);
                 },
                 'mousewheel @ui.input': function (event) {
-                    if (!this.getEnabled() || this.getReadonly()) {
+                    if (!this.getEnabled() || this.getReadonly() || !this.hasFocus) {
                         return;
                     }
+
                     this.__start();
                     this.__spin((event.deltaY > 0 ? 1 : -1) * this.options.step);
                     clearTimeout(this.mousewheelTimer);

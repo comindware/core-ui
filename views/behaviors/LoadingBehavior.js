@@ -34,7 +34,7 @@ define(['core/utils/helpers', './loading/views/LoadingView', 'core/services/Loca
                     } else {
                         this.view[this.options.region].reset();
                     }
-                } else if (_.isObject(visible)) {
+                } else if (visible instanceof Promise) {
                     this.setLoading(true);
                     Promise.resolve(visible).bind(this).then(function () {
                         //noinspection JSPotentiallyInvalidUsageOfThis
