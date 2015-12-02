@@ -35,7 +35,7 @@ define(['text!core/list/templates/grid.html',
         'use strict';
 
         var constants = {
-            gridRowHeight: 40,
+            gridRowHeight: 32,
             gridHeaderHeight: 51
         };
 
