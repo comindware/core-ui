@@ -52,10 +52,22 @@ define(['./EventAggregator',
               cellFactory) {
         'use strict';
 
-        return {
+        return /** @lends module:core.list */ {
             EventAggregator: EventAggregator,
+            /**
+             * Фабрика списков
+             * @namespace
+             * */
             factory: factory,
+            /**
+             * Фабрика ячеек
+             * @namespace
+             * */
             cellFactory: cellFactory,
+            /**
+             * Views-списка
+             * @namespace
+             * */
             views: {
                 EmptyListView: EmptyListView,
                 EmptyGridView: EmptyGridView,
@@ -65,12 +77,17 @@ define(['./EventAggregator',
                 ListView: ListView,
                 RowView: RowView,
                 ScrollbarView: ScrollbarView,
+
                 behaviors: {
                     ListGroupViewBehavior: ListGroupViewBehavior,
                     ListItemViewBehavior: ListItemViewBehavior,
                     GridItemViewBehavior: GridItemViewBehavior
                 }
             },
+            /**
+             * Backbone-модели списка
+             * @namespace
+             * */
             models: {
                 LoadingRowModel:LoadingRowModel,
                 behaviors: {

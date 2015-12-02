@@ -15,12 +15,26 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
     function (GridItemViewBehavior, GridItemBehavior) {
         'use strict';
 
-        return Marionette.ItemView.extend({
-            constants: {
-                paddingLeft: 20,
-                paddingRight: 10
-            },
+        var defaultOptions = {
+            paddingLeft: 20,
+            paddingRight: 10
+        };
 
+        /**
+         * Some description for initializer
+         * @name RowView
+         * @memberof module:core.list.views
+         * @class RowView
+         * @extends Marionette.ItemView
+         * @constructor
+         * @description View используемый по умолчанию для отображения строки списка
+         * @param {Object} options Constructor options
+         * @param {Array} options.columns Массив колонк
+         * @param {Object} options.gridEventAggregator ?
+         * @param {Number} [options.paddingLeft=20] Левый отступ
+         * @param {Number} [options.paddingRight=10] Правый отступ
+         * */
+        return Marionette.ItemView.extend({
             className: 'record-row grid-row',
 
             events: {
@@ -29,6 +43,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
             },
 
             initialize: function () {
+                _.defaults(this.options, defaultOptions);
                 _.extend(this.model, new GridItemBehavior(this));
             },
 
@@ -45,7 +60,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
 
             _renderTemplate: function () {
                 this.cellViews = [];
-                this.$el.append('<div class="padding js-padding" style="width: ' + this.constants.paddingLeft + 'px"></div>');
+                this.$el.append('<div class="padding js-padding" style="width: ' + this.options.paddingLeft + 'px"></div>');
                 _.each(this.options.columns, function (gridColumn) {
                     var id = gridColumn.id,
                         value;
@@ -70,7 +85,7 @@ define(['./behaviors/GridItemViewBehavior', '../models/behaviors/GridItemBehavio
                     cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
                     this.cellViews.push(cellView);
                 }, this);
-                this.$el.append('<div class="padding js-padding" style="width: ' + this.constants.paddingRight + 'px"></div>');
+                this.$el.append('<div class="padding js-padding" style="width: ' + this.options.paddingRight + 'px"></div>');
             },
 
             onHighlighted: function (fragment)

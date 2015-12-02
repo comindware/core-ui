@@ -38,6 +38,7 @@ define([
         './editors/TimeEditorView',
         './editors/DateTimeEditorView',
         './editors/MentionEditorView',
+        './editors/MultiSelectEditorView',
 
         './editors/impl/common/members/services/factory',
         './editors/impl/common/members/collections/MembersCollection',
@@ -84,6 +85,7 @@ define([
         TimeEditorView,
         DateTimeEditorView,
         MentionEditorView,
+        MultiSelectEditorView,
 
         editorsImplCommonMembersFactory,
         editorsImplCommonMembersCollection,
@@ -103,14 +105,26 @@ define([
         ) {
 		'use strict';
 
-		return {
+		return /** @lends module:core.form*/  {
+            /**
+             * Форма
+             * @namespace
+             * */
             ExtendedForm: ExtendedForm,
             behaviors: {
                 BackboneFormBehavior: BackboneFormBehavior
             },
+            /**
+             * СommonField — обертка для редактора
+             * @namespace
+             * */
             fields: {
                 CommonField: CommonField
             },
+            /**
+             * Редакторы
+             * @namespace
+             * */
 			editors: {
                 impl: {
                     common: {
@@ -125,12 +139,20 @@ define([
                         }
                     }
                 },
+                /**
+                 * Базовые редакторы
+                 * @namespace
+                 * */
                 base: {
                     BaseItemEditorView: BaseItemEditorView,
                     BaseLayoutEditorView: BaseLayoutEditorView,
                     BaseCollectionEditorView: BaseCollectionEditorView,
                     BaseCompositeEditorView: BaseCompositeEditorView
                 },
+                /**
+                 * Reference-редакторы
+                 * @namespace
+                 * */
                 reference: {
                     controllers: {
                         DemoReferenceEditorController: DemoReferenceEditorController,
@@ -167,7 +189,8 @@ define([
                 DateEditor: DateEditorView,
                 TimeEditor: TimeEditorView,
                 DateTimeEditor: DateTimeEditorView,
-                MentionEditor: MentionEditorView
+                MentionEditor: MentionEditorView,
+                MultiSelectEditor: MultiSelectEditorView
 			}
 		};
 	});

@@ -14,10 +14,11 @@
 define(['module/lib',
         'text!../templates/dropdownPanel.html',
         './DefaultDropdownListItemView',
+        '../collections/DropdownCollection',
         'core/list/listApi',
         'core/utils/utilsApi'
     ],
-    function (lib, template, DefaultDropdownListItemView, list, utils) {
+    function (lib, template, DefaultDropdownListItemView, DropdownCollection, list, utils) {
         'use strict';
 
         var config = {
@@ -41,9 +42,32 @@ define(['module/lib',
 
             template: Handlebars.compile(template),
 
+            events: {
+                'keyup @ui.input': 'onFilter',
+                'change @ui.input': 'onFilter',
+                'input @ui.input': 'onFilter'
+            },
+
+
+            ui: {
+                input: '.js-input'
+            },
+
             regions: {
                 listRegion: '.js-list-region',
                 scrollbarRegion: '.js-scrollbar-region'
+            },
+
+            templateHelpers: function () {
+                return {
+                    enableSearch: this.options.enableSearch
+                };
+            },
+
+            onRender: function () {
+                if (this.options.enableSearch) {
+                    this.$el.addClass('popup-allow_search');
+                }
             },
 
             onShow: function () {
@@ -56,11 +80,11 @@ define(['module/lib',
                             return (_.result(model.toJSON(), displayAttribute) || '').toString().toLowerCase();
                         };
                     }
+
                     if (collection.comparator) {
                         collection.sort();
                     }
-                    virtualCollection = list.factory.createWrappedCollection(collection, {
-                        selectableBehavior: 'single',
+                        virtualCollection = new DropdownCollection(collection, {
                         comparator: collection.comparator
                     });
                     this.model.set('virtualCollection', virtualCollection);
@@ -125,6 +149,35 @@ define(['module/lib',
                     var selectedModel = this.model.get('virtualCollection').selected;
                     this.reqres.request('value:set', selectedModel);
                 }
+            },
+
+            onFilter: function () {
+                var text = (this.ui.input.val() || '').trim();
+                if (this.activeText === text) {
+                    return;
+                }
+                utils.helpers.setUniqueTimeout(this.fetchDelayId, function () {
+                    this.activeText = text;
+                    var collection = this.model.get('virtualCollection');
+                    collection.deselect();
+
+                    text = text.toLocaleLowerCase();
+                    collection.unhighlight();
+                    if (text === '') {
+                        collection.filter(null);
+                    } else {
+                        collection.filter(function (model) {
+                            var itemText = (model.get(this.model.get('displayAttribute')) || '').toLocaleLowerCase();
+                            return itemText.indexOf(text) !== -1;
+                        }.bind(this));
+                        collection.highlight(text);
+                    }
+
+                    if (collection.length > 0) {
+                        var model = collection.at(0);
+                        model.select();
+                    }
+                }.bind(this), config.TEXT_FETCH_DELAY);
             }
         });
     });

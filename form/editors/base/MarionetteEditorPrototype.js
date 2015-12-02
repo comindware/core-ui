@@ -25,14 +25,17 @@ define([
 
         var classes = {
             disabled: 'l-field_disabled',
-            readonly: 'l-field_readonly'
+            readonly: 'l-field_readonly',
+            FOCUSED: 'l-field_focused'
         };
 
         var onFocus = function () {
+            this.$el.addClass(classes.FOCUSED);
             this.trigger('focus', this);
         };
 
         var onBlur = function () {
+            this.$el.removeClass(classes.FOCUSED);
             this.trigger('blur', this);
         };
 
@@ -99,8 +102,10 @@ define([
                             this.on('change', this.commit.bind(this, {}));
                         }
 
-                        this.enabled = schema.enabled = schema.enabled || options.enabled || (schema.enabled === undefined && options.enabled === undefined);
-                        this.readonly = schema.readonly = schema.readonly || options.readonly || (schema.readonly !== undefined && options.readonly !== undefined);
+                        this.enabled = schema.enabled = schema.enabled || options.enabled ||
+                                      (schema.enabled === undefined && options.enabled === undefined);
+                        this.readonly = schema.readonly = schema.readonly || options.readonly ||
+                                       (schema.readonly !== undefined && options.readonly !== undefined);
                         schema.forceCommit = options.forceCommit || schema.forceCommit;
 
                         viewClass.prototype.constructor.apply(this, arguments);
@@ -108,6 +113,8 @@ define([
                             this.listenTo(this.model, 'change:' + this.key, this.updateValue);
                             this.listenTo(this.model, 'sync', this.updateValue);
                         }
+
+                        this.classes = classes;
                     },
 
                     updateValue: function () {

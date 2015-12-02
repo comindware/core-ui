@@ -65,6 +65,27 @@ define([
             height: heightOptions.FIXED
         };
 
+        /**
+         * Some description for initializer
+         * @name ListView
+         * @memberof module:core.list.views
+         * @class ListView
+         * @constructor
+         * @description View контента списка
+         * @extends Marionette.LayoutView
+         * @param {Object} options Constructor options
+         * @param {Array} options.collection массив элементов списка
+         * @param {Number} options.childHeight высота строки списка (childView)
+         * @param {Backbone.View} options.childView view строки списка
+         * @param {Backbone.View} options.childViewOptions опции для childView
+         * @param {Function} options.childViewSelector ?
+         * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+         * @param {Object} [options.emptyViewOptions] опции для emptyView
+         * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
+         * @param {Backbone.View} options.loadingChildView view-лоадер, показывается при подгрузке строк
+         * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
+         * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
+         * */
         var ListView = Marionette.LayoutView.extend({
             initialize: function (options) {
                 if (this.collection === undefined) {
@@ -105,7 +126,6 @@ define([
                     position: 0
                 };
 
-                window.recordCollection = this.collection;
                 this.listenTo(this.collection, 'add remove reset', this.__handleResize, this);
                 this.visibleCollection = new SlidingWindowCollection(this.collection);
             },
@@ -358,6 +378,9 @@ define([
 
             __mousewheel: function (e) {
                 if (this.state.viewportHeight === undefined) {
+                    return;
+                }
+                if (this.collection.length <= this.state.viewportHeight) {
                     return;
                 }
 

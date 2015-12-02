@@ -43,9 +43,28 @@ define(['text!./templates/textAreaEditor.html',
             disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
             readonly: false,
-            textHeight: null
+            textHeight: null,
+            initialHeight: 2
         };
 
+        /**
+         * Some description for initializer
+         * @name TextAreaEditorView
+         * @memberof module:core.form.editors
+         * @class TextAreaEditorView
+         * @description TextArea editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {String} [options.controller] Текст placeholder'а
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Number} [options.initialHeight=2] Изначальное количство строк
+         * @param {String} [options.size=auto] Высота контрола: auto - контрол имеет высоту контента, fixed - фиксированную
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Number} [options.textHeight] Размер шрифта текста, определяет максимальный размер области ввода
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.TextArea = BaseItemEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {
@@ -58,7 +77,7 @@ define(['text!./templates/textAreaEditor.html',
             },
 
             focusElement: '.js-textarea',
-            className: 'l-textarea',
+            className: 'l-field l-field_textarea',
 
             ui: {
                 textarea: '.js-textarea'
@@ -88,6 +107,7 @@ define(['text!./templates/textAreaEditor.html',
                     this.keyListener.reset();
                 }
                 this.keyListener = new lib.keypress.Listener(this.ui.textarea[0]);
+                this.ui.textarea.attr('rows', this.options.initialHeight);
             },
 
             addKeyboardListener: function (key, callback) {
@@ -105,7 +125,7 @@ define(['text!./templates/textAreaEditor.html',
                 this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
                 switch (this.options.size) {
                 case size.auto:
-                    this.ui.textarea.autosize({ append:'' });
+                    this.ui.textarea.autosize({ append: '' });
                     break;
                 case size.fixed:
                     this.ui.textarea.attr('rows', this.options.textHeight);
@@ -180,7 +200,7 @@ define(['text!./templates/textAreaEditor.html',
                     keyCode.LEFT,
                     keyCode.RIGHT,
                     keyCode.HOME,
-                    keyCode.END,
+                    keyCode.END
                 ].indexOf(e.keyCode) === -1) {
                     return;
                 }

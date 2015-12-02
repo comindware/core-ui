@@ -14,7 +14,7 @@
 define([
         'module/lib',
         'core/utils/utilsApi',
-        'core/application/views/FadingPanelView'
+        'core/views/FadingPanelView'
     ],
     function (lib, utilsApi, FadingPanelView) {
         'use strict';
@@ -25,7 +25,7 @@ define([
             HIDDEN: 'hidden'
         };
 
-        return {
+        var windowService = {
             initialize: function (options) {
                 utilsApi.helpers.ensureOption(options, 'fadingRegion');
                 utilsApi.helpers.ensureOption(options, 'popupRegion');
@@ -37,6 +37,7 @@ define([
 
                 state.fadingPanelView = new FadingPanelView();
                 state.fadingRegion.show(state.fadingPanelView);
+                this.listenTo(state.fadingPanelView, 'click', this.__onFadingPanelClick);
             },
 
             showPopup: function (view, options) {
@@ -59,6 +60,17 @@ define([
             fadeOut: function () {
                 state.fadingPanelView.fadeOut();
                 state.ui.fadingRegion.addClass(classes.HIDDEN);
+                this.trigger('fadeOut');
+            },
+
+            __onFadingPanelClick: function (view, options) {
+                if (!options || options.fadeOut !== false) {
+                    this.fadeOut();
+                }
             }
         };
+
+        _.extend(windowService, Backbone.Events);
+
+        return windowService;
     });

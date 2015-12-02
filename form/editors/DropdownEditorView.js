@@ -29,9 +29,29 @@ define([
         var defaultOptions = {
             collection: null,
             displayAttribute: 'text',
-            allowEmptyValue: true
+            allowEmptyValue: true,
+            enableSearch: false
         };
 
+        /**
+         * Some description for initializer
+         * @name DropdownEditorView
+         * @memberof module:core.form.editors
+         * @class DropdownEditorView
+         * @description Drowpdown editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.allowEmptyValue=true] Разрешает отсутствие значения
+         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
+         * @param {Backbone.Collection/Array} options.collection Коллекция (массив) элементов
+         * @param {String} [options.displayAttribute=text] Ключ, по которому берется знаечение для отображения элементов списка
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.enableSearch=false] Определяет показ поиска по возможным значениям
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {
@@ -50,6 +70,7 @@ define([
                 if (_.isArray(this.options.collection)) {
                     this.options.collection = new Backbone.Collection(this.options.collection);
                 }
+
                 this.collection = this.options.collection;
                 
                 // adding ListItem behavior to collection model
@@ -111,7 +132,8 @@ define([
                     panelView: DropdownPanelView,
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
-                        reqres: this.reqres
+                        reqres: this.reqres,
+                        enableSearch: this.options.enableSearch
                     },
                     autoOpen: false
                 });

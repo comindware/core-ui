@@ -18,6 +18,7 @@
     define([ 'module/lib', 'localizationMap' ], function (lib) {
         var defaultLangCode = 'en';
         var langCode = global.langCode;
+        var isProductionEnv = global.compiled;
         var localizationMap = global['LANGMAP' + langCode.toUpperCase()];
 
         global.Localizer = {
@@ -29,20 +30,23 @@
                 }
                 var text = localizationMap[locId];
                 if (text === undefined) {
-                    //throw new Error('Failed to find localization constant ' + locId);
-                    return "<missing:" +  locId + ">";
+                    if (isProductionEnv) {
+                        throw new Error('Failed to find localization constant ' + locId);
+                    } else {
+                        console.error('Missing localization constant: ' + locId);
+                    }
+                    return '<missing:' +  locId + '>';
                 }
                 return text;
             },
 
-            getDefault: function(locId, defaultValue) {
+            tryGet: function(locId) {
                 if (!locId) {
                     throw new Error('Bad localization id: (locId = ' + locId + ')');
                 }
                 var text = localizationMap[locId];
                 if (text === undefined) {
-                    //throw new Error('Failed to find localization constant ' + locId);
-                    return defaultValue || "<missing:" +  locId + ">";
+                    return null;
                 }
                 return text;
             },

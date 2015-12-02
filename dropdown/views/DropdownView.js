@@ -36,6 +36,21 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
             panelPosition: panelPosition.DOWN
         };
 
+        /**
+         * Some description for initializer
+         * @name DropdownView
+         * @memberof module:core.dropdown.views
+         * @class DropdownView
+         * @constructor
+         * @description Dropdown
+         * @extends Marionette.LayoutView
+         * @param {Object} options Constructor options
+         * @param {Boolean} [options.autoOpen=true] Показ popout'а по клику на кнопку
+         * @param {Backbone.View} options.buttonView View-кнопки
+         * @param {Object} [options.buttonViewOptions] Опции кнопки
+         * @param {String} [options.panelPosition=down] Расположение dropdown'а (down/down-over/up/up-over)
+         * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а
+         * */
         return Marionette.LayoutView.extend({
             initialize: function (options) {
                 _.extend(this.options, _.clone(defaultOptions), options || {});
@@ -77,7 +92,6 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
 
                 this.currentPosition = this.options.panelPosition;
                 this.updatePositionClasses();
-
             },
 
             updatePositionClasses: function () {
@@ -162,6 +176,14 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                 if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
                     return;
                 }
+
+                // selecting focusable parent after closing is important to maintant nested dropdowns
+                // focused element MUST be changed BEFORE active element is hidden or destroyed (!)
+                var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
+                if (firstFocusableParent) {
+                    $(firstFocusableParent).focus();
+                }
+
                 var closeArgs = _.toArray(arguments);
                 this.ui.panel.hide({
                     duration: 0,
@@ -170,12 +192,7 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                         this.panelRegion.reset();
                         //noinspection JSValidateTypes
                         this.isOpen = false;
-                        // selecting focusable parent after closing is important to maintant nested dropdowns
-                        var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
-                        if (firstFocusableParent) {
-                            $(firstFocusableParent).focus();
-                        }
-                        
+
                         this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
                         if (this.options.renderAfterClose) {
                             this.render();

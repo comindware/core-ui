@@ -14,6 +14,17 @@
 define(['module/lib'],
     function () {
         'use strict';
+
+        /**
+         * Some description for initializer
+         * @name ListPanelView
+         * @memberof module:core.dropdown.views
+         * @class ListPanelView
+         * @constructor
+         * @description ListPanel
+         * @extends Marionette.CollectionView
+         * @param {Object} options Constructor options
+         * */
         return Marionette.CollectionView.extend({
             initialize: function (options) {
             },

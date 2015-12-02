@@ -171,6 +171,12 @@ define(['module/lib', 'core/services/LocalizationService'],
                 });
             },
 
+            assertArgumentNotFalsy: function (argumentValue, argumentName) {
+                if (!argumentValue) {
+                    this.throwError('Argument `' + argumentName + '` is falsy.', 'ArgumentFalsyError');
+                }
+            },
+
             throwError: function (message, name) {
                 var error = new Error(message);
                 error.name = name || 'Error';

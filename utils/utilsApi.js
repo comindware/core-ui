@@ -17,7 +17,9 @@ define([
         './htmlHelpers',
         './dateHelpers',
         './cookieHelpers',
-        './keyCode'
+        './keyCode',
+        './handlebarsHelpers',
+        './jquery/selector.focusable'
     ],
     function (
         comparators,
@@ -29,12 +31,37 @@ define([
     ) {
         'use strict';
 
-        return {
+
+        return /** @lends module:core.utils*/ {
+            /**
+             * Набор компораторов (могут использоваться в Backbone collections или в _.sortBy)
+             * @namespace
+             * */
             comparators: comparators,
+            /**
+             * Набор вспомогательных методов общего назначения
+             * @namespace
+             * */
             helpers: helpers,
+            /**
+             * Набор вспомогательных методов для манипуляций с html
+             * @namespace
+             * */
             htmlHelpers: htmlHelpers,
+            /**
+             * Набор вспомогательных методов для работы с датами и временем
+             * @namespace
+             * */
             dateHelpers: dateHelpers,
+            /**
+             * Набор вспомогательных методов для работы с cookie's
+             * @namespace
+             * */
             cookieHelpers: cookieHelpers,
+            /**
+             * Клавиатурные коды
+             * @namespace
+             * */
             keyCode: keyCode
         };
     });

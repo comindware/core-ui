@@ -14,6 +14,16 @@
 define(['module/lib', 'text!../templates/loadingRow.html'],
     function (lib, template) {
         'use strict';
+
+        /**
+         * Some description for initializer
+         * @name LoadingRowView
+         * @memberof module:core.list.views
+         * @class LoadingRowView
+         * @extends Marionette.ItemView
+         * @constructor
+         * @description View показывает loader при подгрузке контента
+         * */
         return Marionette.ItemView.extend({
             className: 'dev-loading-row',
             template: Handlebars.compile(template)

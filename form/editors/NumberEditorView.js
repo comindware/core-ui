@@ -53,6 +53,29 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
             keyCode.NUMPAD_SUBTRACT
         ];
 
+        /**
+         * Some description for initializer
+         * @name NumberEditorView
+         * @memberof module:core.form.editors
+         * @class NumberEditorView
+         * @description Number editor
+         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
+         * @param {Object} options Constructor
+         * @param {Object} [options.schema] Scheme
+         * @param {Boolean} [options.allowFloat=false] Разрешены ли к вводу дробные числа
+         * @param {String} [options.changeMode=blur] Определяет, в какой момент происходит обновления значения (keydown/blur)
+         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
+         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
+         * @param {Boolean(Function)} [options.incremental=true] Если задано true, то при событии mouswheel изменение значения будет происходить пропорционально скроллу.
+         * Если задана функция, то значение будет измененно на возвращаемое этой функцией значение
+         * @param {Number} [options.max] Максимальное возможное число
+         * @param {Number} [options.min=0] Минимальное возможное число
+         * @param {Number} [options.page=10] Шаг, с которым прибавляется/убывает значение по pageUp/pageDown
+         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
+         * @param {Boolean} [options.showButtons=true] Показывать ли кнопки увеличение/уменьшения значения
+         * @param {Number} [options.step=1] Шаг, с которым прибавляется/убывает значение по keyUp/keyDown
+         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * */
         Backbone.Form.editors.Number = BaseItemEditorView.extend({
             initialize: function (options) {
                 if (options.schema) {

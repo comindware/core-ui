@@ -12,25 +12,24 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
+        'module/lib',
+
         './utils/utilsApi',
         './dropdown/dropdownApi',
         './meta',
         './list/listApi',
         './form/formApi',
         './serviceLocator',
+        './nativeGrid/nativeGridApi',
 
-        './application/Module',
-        './application/views/behaviors/ContentViewBehavior',
-
-        './services/RoutingService',
-        './services/UrlService',
-        './services/ModuleService',
+        './services/RoutingServiceBase',
         './services/MessageService',
         './services/WindowService',
         './services/GlobalEventService',
         './services/LocalizationService',
         './services/AjaxService',
-        './services/SecurityService',
+
+        './services/routing/ModuleProxy',
         './services/PromiseServer',
 
         './collections/SlidingWindowCollection',
@@ -39,32 +38,37 @@ define([
         './models/behaviors/CollapsibleBehavior',
         './models/behaviors/HighlightableBehavior',
         './models/behaviors/SelectableBehavior',
+
+        './views/behaviors/loading/views/LoadingView',
+
         './views/behaviors/LoadingBehavior',
+        './views/behaviors/BlurableBehavior',
+        './views/behaviors/PopupBehavior',
 
         './views/SearchBarView',
+        './views/SplitPanelView',
 
         './Bootstrapper'
     ],
     function (
+        lib,
+
         utilsApi,
         dropdownApi,
         meta,
         listApi,
         formApi,
         serviceLocator,
+        nativeGridApi,
 
-        Module,
-        ContentViewBehavior,
-
-        RoutingService,
-        UrlService,
-        ModuleService,
+        RoutingServiceBase,
         MessageService,
         WindowService,
         GlobalEventService,
         LocalizationService,
         AjaxService,
-        SecurityService,
+
+        ModuleProxy,
         PromiseServer,
 
         SlidingWindowCollection,
@@ -74,10 +78,15 @@ define([
         CollapsibleBehavior,
         HighlightableBehavior,
         SelectableBehavior,
-	
+	    
+        LoadingView,
+
         LoadingBehavior,
+        BlurableBehavior,
+        PopupBehavior,
 
         SearchBarView,
+        SplitPanelView,
 
         Bootstrapper
     ) {
@@ -90,31 +99,20 @@ define([
          * */
         var exports = {
             /**
-             * Базовые компонеты приложения: модуль, header views etc
-             * @namespace
-             * */
-            application: {
-                Module: Module,
-                views: {
-                    behaviors: {
-                        ContentViewBehavior: ContentViewBehavior
-                    }
-                }
-            },
-            /**
              * Базовые сервисы системы
              * @namespace
              * */
             services: {
-                RoutingService: RoutingService,
-                UrlService: UrlService,
-                ModuleService: ModuleService,
+                RoutingServiceBase: RoutingServiceBase,
                 MessageService: MessageService,
                 WindowService: WindowService,
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
-                SecurityService: SecurityService,
-                PromiseServer: PromiseServer
+                GlobalEventService: GlobalEventService,
+		        PromiseServer: PromiseServer,
+                routing: {
+                    ModuleProxy: ModuleProxy
+                }
             },
             /**
              * Backbone-коллекции общего назначения
@@ -144,9 +142,13 @@ define([
             },
             views: {
                 behaviors: {
-                    LoadingBehavior: LoadingBehavior
+                    LoadingBehavior: LoadingBehavior,
+                    BlurableBehavior: BlurableBehavior,
+                    PopupBehavior: PopupBehavior
                 },
-                SearchBarView: SearchBarView
+                LoadingView: LoadingView,
+                SearchBarView: SearchBarView,
+                SplitPanelView: SplitPanelView
             },
             /**
              * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
@@ -154,12 +156,40 @@ define([
              * @namespace
              * */
             dropdown: dropdownApi,
+            /**
+             * Форма и редакторы (editors).
+             * @namespace
+             * */
             form: formApi,
+            /**
+             * Списки
+             * @namespace
+             * */
             list: listApi,
+            /**
+             * Список с native-скроллом
+             * @namespace
+             * */
+            nativeGrid: nativeGridApi,
+            /**
+             * Вспомогательные утилиты
+             * @namespace
+             * */
             utils: utilsApi,
+            /**
+             * Мета-информация
+             * @namespace
+             * */
             meta: meta,
             serviceLocator: serviceLocator,
             bootstrapper: Bootstrapper
         };
+
+        if (_.isFunction(lib.initialize)) {
+            lib.initialize({
+                core: exports
+            });
+        }
+
         return exports;
     });
