@@ -13,7 +13,7 @@
 
 define(['./BaseReferenceEditorController',
         'module/lib'
-    ],
+],
     function (BaseReferenceEditorController, lib) {
         'use strict';
 
