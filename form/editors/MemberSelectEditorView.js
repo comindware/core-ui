@@ -69,7 +69,7 @@ define([
          * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
          * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * */
         Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend({
             initialize: function (options) {

@@ -37,7 +37,7 @@ define([
          * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
          * @param {Array} options.radioOptions Массив значений
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * */
         Backbone.Form.editors.RadioGroup = EditorBaseCollectionView.extend({
             initialize: function (options) {

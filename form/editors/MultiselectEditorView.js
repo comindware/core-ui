@@ -47,7 +47,7 @@ define(
          * @param {Boolean} [options.explicitApply=false] Явное применение выбранных значений
          * @param {Boolean} [options.forceCommit=false] Определяет, обновлять ли значение независимо от ошибок валидации
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * */
         Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend({
             initialize: function(options) {

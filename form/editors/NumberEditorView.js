@@ -74,7 +74,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
          * @param {Boolean} [options.showButtons=true] Показывать ли кнопки увеличение/уменьшения значения
          * @param {Number} [options.step=1] Шаг, с которым прибавляется/убывает значение по keyUp/keyDown
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * */
         Backbone.Form.editors.Number = BaseItemEditorView.extend({
             initialize: function (options) {
