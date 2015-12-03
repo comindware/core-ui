@@ -192,7 +192,7 @@ define([
             },
 
             onValueNavigate: function () {
-                this.controller.navigate(this.getValue());
+               return this.controller.navigate(this.getValue());
             },
 
             onSearchMore: function () {
