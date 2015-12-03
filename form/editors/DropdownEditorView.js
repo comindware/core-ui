@@ -50,7 +50,7 @@ define([
          * @param {Boolean} [options.enableSearch=false] Определяет показ поиска по возможным значениям
          * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * */
         Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend({
             initialize: function (options) {

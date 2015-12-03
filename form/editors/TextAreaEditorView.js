@@ -63,7 +63,7 @@ define(['text!./templates/textAreaEditor.html',
          * @param {String} [options.size=auto] Высота контрола: auto - контрол имеет высоту контента, fixed - фиксированную
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
          * @param {Number} [options.textHeight] Размер шрифта текста, определяет максимальный размер области ввода
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * */
         Backbone.Form.editors.TextArea = BaseItemEditorView.extend({
             initialize: function (options) {

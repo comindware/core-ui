@@ -50,7 +50,7 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
          * @param {String} [options.maskOptions] Опции маски
          * @param {String} [options.maskPlaceholder=_] placeholder маски
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * */
         Backbone.Form.editors.Text = BaseItemEditorView.extend({
             initialize: function (options) {

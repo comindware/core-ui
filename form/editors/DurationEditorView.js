@@ -85,7 +85,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
          * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
          * @param {Number} [options.page=10] Шаг, с которым прибавляется/убывает значение по pageUp/pageDown
          * @param {Number} [options.step=1] Шаг, с которым прибавляется/убывает значение по keyUp/keyDown
-         * @param {Array(Function1,Function2,...)} [options.validators] Массив функций валидации
+         * @param {Function[]} [options.validators] Массив функций валидации
          * @param {Number} [options.workHours=8] Количество рабочих часов
          * */
         Backbone.Form.editors.Duration = BaseItemEditorView.extend({
