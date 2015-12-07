@@ -138,6 +138,16 @@ define([
             'click @ui.button': '__handleClick'
         },
 
+        /**
+         * Экземпляр button View, если View отрендерена. Иначе null.
+         * */
+        buttonView: null,
+
+        /**
+         * Экземпляр panel View, если панель открыта. Иначе null. Пересоздается при каждом открытии панели (!).
+         * */
+        panelView: null,
+
         onRender: function () {
             //noinspection JSValidateTypes
             this.isOpen = false;
@@ -145,6 +155,7 @@ define([
                 this.stopListening(this.button);
             }
             this.button = new this.options.buttonView(_.result(this.options, 'buttonViewOptions'));
+            this.buttonView = this.button;
             this.listenTo(this.button, 'all', function () {
                 var args = slice.call(arguments);
                 args[0] = 'button:' + args[0];

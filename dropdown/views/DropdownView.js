@@ -37,21 +37,40 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
         };
 
         /**
-         * Some description for initializer
          * @name DropdownView
          * @memberof module:core.dropdown.views
-         * @class DropdownView
+         * @class Составная View. Используется для отображения выпадающей панели. Реализует логику HTML-элемента SELECT:
+         * ширина панели привязана к ширине кнопки.
+         * <ul>
+         * <li>Button View - используется для отображения кнопки, по нажатии на которую всплывает панель.</li>
+         * <li>Panel View - используется при отображении выпадающей панели.</li>
+         * </ul>
+         * Ширина панели определяется CSS View панели, но не может быть меньше ширины кнопки. Высота панели определяется CSS View панели.
+         * Позиция панели регулируется опцией <code>panelPosition</code>.<br/>
+         * Возможные эвенты:<ul>
+         * <li><code>'open' (dropdownView)</code> - эвент возникает после открытия панели.</li>
+         * <li><code>'close' (dropdownView, ...)</code> - эвент возникает после закрытия панели. При программном закрытии через метод close,
+         * переданные в нее параметры передаются в это событие.</li>
+         * <li><code>'button:\*' </code> - все эвенты buttonView прокидываются в DropdownView с префиксом 'button:'.</li>
+         * <li><code>'panel:\*' </code> - все эвенты panelView прокидываются в DropdownView с префиксом 'panel:'.</li>
+         * </ul>
          * @constructor
-         * @description Dropdown
          * @extends Marionette.LayoutView
-         * @param {Object} options Constructor options
-         * @param {Boolean} [options.autoOpen=true] Показ popout'а по клику на кнопку
-         * @param {Backbone.View} options.buttonView View-кнопки
-         * @param {Object} [options.buttonViewOptions] Опции кнопки
-         * @param {String} [options.panelPosition=down] Расположение dropdown'а (down/down-over/up/up-over)
-         * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а
+         * @param {Object} options Объект опций.
+         * @param {Marionette.View} options.buttonView View для отображение кнопки.
+         * @param {(Object|Function)} [options.buttonViewOptions] Опции, передаваемые в buttonView при создании.
+         * @param {Marionette.View} options.panelView View для отображение панели. Создается заново при каждом открытии панели.
+         * @param {(Object|Function)} [options.panelViewOptions] Опции, передаваемые в panelView при создании.
+         * @param {Boolean} [options.autoOpen=true] Открывать панель автоматически при клике на buttonView.
+         * @param {String} [options.panelPosition='down'] Направление открытие панели. Варианты:
+         *       <ul><li><code>'down'</code> - панель выпадает вниз.</li>
+         *       <li><code>'down-over'</code> - панель выпадает вниз, но верхняя ее граница располагается на верхней границе кнопки и перекрывает ее.</li>
+         *       <li><code>'up'</code> - панель выпадает наверх.</li>
+         *       <li><code>'up-over'</code> - панель выпадает вверх, но нижняя ее граница располагается на нижней границе кнопки и перекрывает ее.</li></ul>
+         * @param {Boolean} [options.renderAfterClose=true] Автоматически вызывать render у buttonView при закрытии панели.
          * */
-        return Marionette.LayoutView.extend({
+
+        return Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
             initialize: function (options) {
                 _.extend(this.options, _.clone(defaultOptions), options || {});
                 utils.helpers.ensureOption(options, 'buttonView');
@@ -78,11 +97,22 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                 'blur @ui.panel': '__handleBlur'
             },
 
+            /**
+             * Экземпляр button View, если View отрендерена. Иначе null.
+             * */
+            buttonView: null,
+
+            /**
+             * Экземпляр panel View, если панель открыта. Иначе null. Пересоздается при каждом открытии панели (!).
+             * */
+            panelView: null,
+
             onRender: function () {
                 if (this.button) {
                     this.stopListening(this.button);
                 }
                 this.button = new this.options.buttonView(_.extend({ parent: this }, _.result(this.options, 'buttonViewOptions')));
+                this.buttonView = this.button;
                 this.listenTo(this.button, 'all', function() {
                     var args = Array.prototype.slice.call(arguments);
                     args[0] = 'button:' + args[0];
@@ -139,6 +169,9 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                 }
             },
 
+            /**
+             * Открыть выпадающую панель.
+             * */
             open: function () {
                 if (this.isOpen) {
                     return;
@@ -146,7 +179,7 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                 var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
                     parent: this
                 });
-                
+
                 this.$el.addClass(classes.OPEN);
                 this.ui.panel.css('display', 'block');
                 if (this.panelView) {
@@ -172,6 +205,10 @@ define(['text!../templates/dropdown.html', 'module/lib', 'core/utils/utilsApi'],
                 this.trigger('open', this);
             },
 
+            /**
+             * Закрыть выпадающую панель.
+             * @param {...*} arguments Агрументы, которые будут переданы в эвент <code>'close'</code>
+             * */
             close: function () {
                 if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
                     return;

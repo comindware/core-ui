@@ -26,7 +26,7 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
              * @description Метод служит для быстрого создания меню на базе {@link module:core.dropdown.views.PopoutView PopoutView}.
              *              В качестве <code>buttonView</code> и <code>panelView</code> (если они не заданы в опциях явно)
              *              используются предустановленные View для меню. Остальные опции PopoutView передаются 'as is'.
-             * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
+             * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}. Доступны дополнительные опции, приведенные ниже:
              * @param {Array} options.items Элементы списка меню. Могут быть переданы как простой массив объектов <code>{ id, name }</code>
              *                              или как Backbone.Collection.
              * @param {String} [options.text] Текст кнопки меню. Если не задан, требуется вручную установить опцию <code>buttonView</code>.

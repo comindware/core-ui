@@ -16,14 +16,14 @@ define(['./ListPanelView', './MenuItemView'],
         'use strict';
 
         /**
-         * Some description for initializer
          * @name MenuPanelView
          * @memberof module:core.dropdown.views
-         * @class MenuPanelView
+         * @class Одиночный элемент меню. Используется для создания стандартного меню фабричным методом
+         * {@link module:core.dropdown.factory createMenu}.
          * @constructor
-         * @description MenuPanel
-         * @extends module:core.dropdown.views.ListPanelView {@link module:core.dropdown.views.ListPanelView}
+         * @extends Marionette.ItemView
          * */
+
         return ListPanelView.extend({
             initialize: function (options) {
                 ListPanelView.prototype.initialize.apply(this, _.toArray(arguments));

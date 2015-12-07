@@ -16,15 +16,16 @@ define(['text!../templates/defaultButton.html', 'module/lib'],
         'use strict';
 
         /**
-         * Some description for initializer
          * @name DefaultButtonView
          * @memberof module:core.dropdown.views
-         * @class DefaultButtonView
+         * @class Тривиальная реализация button View. Отображает свойство <code>text</code> передаваемой ей модели.
+         * Используется в качестве buttonView в фабричном методе {@link module:core.dropdown.factory createMenu}.
          * @constructor
-         * @description DefaultButton
          * @extends Marionette.ItemView
-         * @param {Object} options Constructor options
+         * @param {Object} options Объект опций.
+         * @param {Backbone.Model} options.model Модель данных. Должна содержать атрибут <code>text</code>.
          * */
+
         return Marionette.ItemView.extend({
             initialize: function (options) {
             },

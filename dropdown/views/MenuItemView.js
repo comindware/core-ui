@@ -16,14 +16,14 @@ define(['text!../templates/menuItem.html', 'module/lib'],
         'use strict';
 
         /**
-         * Some description for initializer
          * @name MenuItemView
          * @memberof module:core.dropdown.views
-         * @class MenuItemView
+         * @class Одиночный элемент меню. Используется в связке с MenuPanelView для создания стандартного меню фабричным методом
+         * {@link module:core.dropdown.factory createMenu}.
          * @constructor
-         * @description MenuItem
          * @extends Marionette.ItemView
          * */
+
         return Marionette.ItemView.extend({
             initialize: function () {
             },

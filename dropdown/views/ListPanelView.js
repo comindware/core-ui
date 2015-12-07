@@ -16,14 +16,12 @@ define(['module/lib'],
         'use strict';
 
         /**
-         * Some description for initializer
          * @name ListPanelView
          * @memberof module:core.dropdown.views
-         * @class ListPanelView
+         * @class Базовая панель для отображения списка элементов. Может использоваться в panelView опции.
          * @constructor
-         * @description ListPanel
          * @extends Marionette.CollectionView
-         * @param {Object} options Constructor options
+         * @param {Object} options Объект опций.
          * */
         return Marionette.CollectionView.extend({
             initialize: function (options) {
