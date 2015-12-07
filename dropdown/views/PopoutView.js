@@ -64,26 +64,48 @@ define([
     };
 
     /**
-     * Some description for initializer
      * @name PopoutView
      * @memberof module:core.dropdown.views
-     * @class PopoutView
+     * @class Составная View. Используется для отображения выпадающей панели.
+     * Важное отличие от DropdownView: панель отрисовывается в виде бабла, в открытом виде к кнопке от бабла идет треугольник (как в комиксах).
+     * <ul>
+     * <li>Button View - используется для отображения кнопки, по нажатии на которую всплывает панель.</li>
+     * <li>Panel View - используется при отображении выпадающей панели.</li>
+     * </ul>
+     * Ширина панели не зависит от ширины кнопки и определяется CSS View панели. Высота панели определяется CSS View панели и опцией <code>height</code>.
+     * Позиция панели регулируется опциями <code>popoutFlow</code> и <code>direction</code>.<br/>
+     * Возможные эвенты:<ul>
+     * <li><code>'before:open' (popoutView)</code> - эвент возникает перед открытием панели.</li>
+     * <li><code>'open' (popoutView)</code> - эвент возникает после открытия панели.</li>
+     * <li><code>'before:close' (popoutView)</code> - эвент возникает перед закрытием панели.</li>
+     * <li><code>'close' (popoutView, ...)</code> - эвент возникает после закрытия панели. При программном закрытии через метод close,
+     * переданные в нее параметры передаются в это событие.</li>
+     * <li><code>'button:\*' </code> - все эвенты buttonView прокидываются в PopoutView с префиксом 'button:'.</li>
+     * <li><code>'panel:\*' </code> - все эвенты panelView прокидываются в PopoutView с префиксом 'panel:'.</li>
+     * </ul>
      * @constructor
-     * @description View-popout
      * @extends Marionette.LayoutView
-     * @param {Object} options Constructor options
-     * @param {Boolean} [options.autoOpen=true] Показ popout'а по клику на кнопку
-     * @param {Backbone.View} options.buttonView View-кнопки
-     * @param {Object} [options.buttonViewOptions] Опции кнопки
-     * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь popout'а (с классом .js-anchor)
-     * @param {String} [options.direction=down] Вертикальное расположение popout'а относительно якоря (up/bottom)
-     * @param {Boolean} [options.fade=false] Fade-эффект
-     * @param {String} [options.height=auto] (auto/bottom)
-     * @param {String} [options.popoutFlow=left] Горизонтальное расположение popout'а относительно якоря (left/right)
-     * @param {Backbone.View} options.panelView View-popout'а
-     * @param {Boolean} [options.renderAfterClose=true] Вызвать render после скрытия popout'а
+     * @param {Object} options Объект опций.
+     * @param {Marionette.View} options.buttonView View для отображение кнопки.
+     * @param {(Object|Function)} [options.buttonViewOptions] Опции, передаваемые в buttonView при создании.
+     * @param {Marionette.View} options.panelView View для отображение панели. Создается заново при каждом открытии панели.
+     * @param {(Object|Function)} [options.panelViewOptions] Опции, передаваемые в panelView при создании.
+     * @param {Boolean} [options.autoOpen=true] Открывать панель автоматически при клике на buttonView.
+     * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь для привязки треугольника бабла. Переданная
+     *                                               в buttonView View обязана реализовывать
+     *                                               @{link module:core.dropdown.views.behaviors.CustomAnchorBehavior CustomAnchorBehavior}.
+     * @param {String} [options.direction='down'] Направление открытие панели. Варианты: <code>'up'</code>, <code>'down'</code>.
+     * @param {Boolean} [options.fade=false] Затемнять ли остальную часть экрана при открытии панели.
+     * @param {String} [options.height='auto'] Способ определения высоты панели.
+     *                                       <ul><li><code>'auto'</code> - определяется через CSS панели.</li>
+     *                                       <li><code>'bottom'</code> - всегда привязана к нижней части экрана</li></ul>
+     * @param {String} [options.popoutFlow='left'] Определяет позицию панели по горизонтали.
+     *                                       <ul><li><code>'left'</code> - левая сторона панели привязана к левой стороне кнопки. Панель растет направо.</li>
+     *                                       <li><code>'right'</code> - правая сторона панели привязана к правой стороне кнопки. Панель растет налево.</li></ul>
+     * @param {Boolean} [options.renderAfterClose=true] Автоматически вызывать render у buttonView при закрытии панели.
      * */
-    return Marionette.LayoutView.extend({
+
+    return Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.PopoutView.prototype */ {
         initialize: function (options) {
             _.defaults(this.options, defaultOptions);
             utils.helpers.ensureOption(options, 'buttonView');
@@ -208,6 +230,9 @@ define([
             }
         },
 
+        /**
+         * Открыть выпадающую панель.
+         * */
         open: function () {
             if (this.isOpen) {
                 return;
@@ -268,6 +293,10 @@ define([
             }
         },
 
+        /**
+         * Закрыть выпадающую панель.
+         * @param {...*} arguments Агрументы, которые будут переданы в эвент <code>'close'</code>
+         * */
         close: function () {
             if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
                 return;

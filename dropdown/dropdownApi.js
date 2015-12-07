@@ -28,12 +28,12 @@ define([
 
         return /** @lends module:core.dropdown */ {
             /**
-             * Компоненты общего назначения для Backbone-коллекций.
+             * Dropdown/Popout View и стандартные View, которые могут быть установлены в качестве кнопок и панелей.
              * @namespace
              * */
             views: {
                 /**
-                 * Behavior-объекты общего назначения для Backbone-коллекций.
+                 * Marionette Behavior, которые требуются для работы ряда кастомных View при установке в dropdown контролы.
                  * @namespace
                  * */
                 behaviors: {

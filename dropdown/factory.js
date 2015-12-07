@@ -26,6 +26,7 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
              * @description Метод служит для быстрого создания меню на базе {@link module:core.dropdown.views.PopoutView PopoutView}.
              *              В качестве <code>buttonView</code> и <code>panelView</code> (если они не заданы в опциях явно)
              *              используются предустановленные View для меню. Остальные опции PopoutView передаются 'as is'.
+             * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
              * @param {Array} options.items Элементы списка меню. Могут быть переданы как простой массив объектов <code>{ id, name }</code>
              *                              или как Backbone.Collection.
              * @param {String} [options.text] Текст кнопки меню. Если не задан, требуется вручную установить опцию <code>buttonView</code>.
@@ -33,7 +34,6 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
              * */
             createMenu: function(options) {
                 options = options || {};
-                options.buttonView = options.buttonView || DefaultButtonView;
                 var collection = options.items;
                 if (!(collection instanceof Backbone.Collection)) {
                     collection = new Backbone.Collection(collection);
@@ -51,20 +51,16 @@ define(['./views/PopoutView', './views/ListPanelView', './views/MenuItemView', '
                     }
                 }
 
-                //noinspection JSUnresolvedVariable
-                var popoutOptions = {
-                    buttonView: options.buttonView,
+                return this.createPopout(_.extend({
+                    buttonView: DefaultButtonView,
                     buttonViewOptions: {
                         model: effectiveButtonModel
                     },
                     panelView: MenuPanelView,
                     panelViewOptions: {
                         collection: collection
-                    },
-                    customAnchor: options.customAnchor,
-                    popoutFlow: options.popoutFlow
-                };
-                return this.createPopout(popoutOptions);
+                    }
+                }, options));
             },
 
             /**

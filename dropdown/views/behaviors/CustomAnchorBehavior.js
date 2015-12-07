@@ -19,7 +19,22 @@ define([ 'module/lib' ],
             ANCHOR: 'dropdown__anchor'
         };
 
-        return Marionette.Behavior.extend({
+        /**
+         * Behavior требуется при использовании {@link module:core.dropdown.views.PopoutView PopoutView} в режиме <code>customAnchor: true</code>.
+         * Указанная в свойстве <code>buttonView</code> View должна иметь данный behavior, определяющий место привязки треугольника для бабла (якорь, anchor).
+         * @name CustomAnchorBehavior
+         * @memberof module:core.dropdown.views.behaviors
+         * @class Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
+         *        быть переданы как свойства behavior (см. документацию Marionette).
+         * @constructor
+         * @extends Marionette.Behavior
+         * @param {Object} options Объект опций
+         * @param {String} [options.anchor] jQuery-селектор для DOM-элемента, который используется в качестве якоря.
+         *                                  Если не указан, используется рутовый элемент View.
+         * @param {Marionette.View} view View на которую применен данных Behavior
+         * */
+
+        return Marionette.Behavior.extend(/** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */ {
             initialize: function (options, view) {
             },
 
