@@ -34,8 +34,9 @@ define(['./ListPanelView', './MenuItemView'],
             childView: MenuItemView,
 
             getChildView: function(model){
-                if (model.get('customView'))
+                if (model.get('customView')) {
                     return model.get('customView');
+                }
                 return MenuItemView;
             },
 
