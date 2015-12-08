@@ -20,11 +20,10 @@ define(['text!./templates/booleanEditor.html', './base/BaseItemEditorView'],
         };
 
         /**
-         * Some description for initializer
+         * Boolean editor (checkbox)
          * @name BooleanEditorView
          * @memberof module:core.form.editors
          * @class BooleanEditorView
-         * @description Boolean editor (checkbox)
          * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
          * @param {Object} options Constructor
          * @param {Object} [options.schema] Scheme

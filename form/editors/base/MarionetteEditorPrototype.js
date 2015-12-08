@@ -61,11 +61,48 @@ define([
             }
         };
 
+        /**
+         * @name BaseEditorView
+         * @memberof module:core.form.editors.base
+         * @class Базовый класс для всех эдиторов. Является модификацией класса Backbone.Form.Editor из библиотеки Backbone.Form.<br/>
+         * При реализации собственных эдиторов используйте один из следующих классов, наследующих этот:<ul>
+         * <li><code>BaseCollectionEditorView</code></li>
+         * <li><code>BaseCompositeEditorView</code></li>
+         * <li><code>BaseLayoutEditorView</code></li>
+         * <li><code>BaseItemEditorView</code></li></ul>
+         * Возможные эвенты:<ul>
+         * <li><code>'change' (thisEditorView)</code> - эвент возникает при изменении значения value внутри эдитора.
+         * При этом эвент не означает изменение значения в модели (!).</li>
+         * <li><code>'focus' (thisEditorView)</code> - эвент возникает при получении эдитором фокуса.</li>
+         * <li><code>'blur' (thisEditorView)</code> - эвент возникает при потере фокуса эдитором.</li>
+         * <li><code>'enabled' (enabled)</code> - эвент возникает при изменении флага enabled.</li>
+         * <li><code>'readonly' (readonly)</code> - эвент возникает при изменении флага readonly.</li>
+         * <li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - эвент возникает при записи данных в модель.</li>
+         * <li><code>'value:committed' (thisEditorView, model, key, value)</code> - эвент возникает при записи данных в модель.</li>
+         * </ul>
+         * @constructor
+         * @extends Marionette.View
+         * @param {Object} options Объект опций.
+         * @param {Boolean} [options.autocommit=false] Автоматически вызывать метод commit() при каждом изменении значения value.
+         * @param {Boolean} [options.forceCommit=false] Делать commit в модель даже в случае ошибок валидации (не рекомендуется).
+         * @param {Boolean} [options.enabled=true] Значение enabled, установленное по умолчанию (в дальнейшем возможно изменить через метод setEnabled).
+         * @param {Boolean} [options.readonly=false] Значение readonly, установленное по умолчанию (в дальнейшем возможно изменить через метод setReadonly).
+         * @param {Boolean} [options.model] Редактируемая модель. Используется только при создании в отвязке от формы, вместе с опцией <code>key</code>.
+         * @param {Boolean} [options.key] Редактируемый атрибут. Используется только при создании в отвязке от формы, вместе с опцией <code>model</code>.
+         * @param {Function[]} [options.validators] Массив функций-валидаторов с сигнатурой:
+         * <code>function(value, formValues) -> ({type, message}|undefined)</code>
+         * @param {Object} [options.schema] Используется для передачи опций в эдитор в случае его неявного создания через форму (Backbone.Form).
+         * Не использовать явно.
+         * */
+
         return {
             create: function(viewClass) {
-                return {
+                return /** @lends module:core.form.editors.base.BaseEditorView.prototype */ {
                     defaultValue: null,
 
+                    /**
+                     * Флаг, определяющий активен ли на эдиторе фокус в настоящее время.
+                     * */
                     hasFocus: false,
 
                     constructor: function (options) {
@@ -117,10 +154,17 @@ define([
                         this.classes = classes;
                     },
 
+                    /**
+                     * Ручное обновление значения эдитора значением this.model.get(this.key). Обычно вызывается автоматически по эвенту
+                     * <code>'change'</code> модели.
+                     * */
                     updateValue: function () {
                         this.setValue(this.getModelValue());
                     },
 
+                    /**
+                     * Получить текущее значение из модели.
+                     * */
                     getModelValue: function () {
                         return !this.model ? undefined : this.model.get(this.key);
                     },
@@ -137,13 +181,6 @@ define([
                         this.trigger.apply(this, [ 'change', this].concat(arguments));
                     },
 
-                    /**
-                     * Get the value for the form input 'name' attribute
-                     *
-                     * @return {String}
-                     *
-                     * @api private
-                     */
                     getName: function() {
                         var key = this.key || '';
 
@@ -152,20 +189,16 @@ define([
                     },
 
                     /**
-                     * Get editor value
-                     * Extend and override this method to reflect changes in the DOM
-                     *
-                     * @return {Mixed}
+                     * Получить внутреннее значение эдитора.
+                     * @return {*}
                      */
                     getValue: function() {
                         return this.value;
                     },
 
                     /**
-                     * Set editor value
-                     * Extend and override this method to reflect changes in the DOM
-                     *
-                     * @param {Mixed} value
+                     * Установить новое внутреннее значение эдитора.
+                     * @param {*} value Новое значение.
                      */
                     setValue: function(value) {
                         this.value = value;
@@ -176,11 +209,21 @@ define([
                         this.__setReadonly(readonly);
                     },
 
+                    /**
+                     * Установить новое значение флага enabled. В disabled состоянии эдитор невозможно редактировать,
+                     * а также невозможно скопировать его текущее значение (считается, что для пользователя оно не имеет смысла).
+                     * @param {Boolean} enabled Новое значение флага.
+                     */
                     setEnabled: function (enabled) {
                         var readonly = this.getReadonly();
                         this.setPermissions(enabled, readonly);
                     },
 
+                    /**
+                     * Установить новое значение флага readonly. В readonly состоянии эдитор невозможно редактировать,
+                     * но возможно выделить и скопировать его текущее значение в текстовом виде.
+                     * @param {Boolean} readonly Новое значение флага.
+                     */
                     setReadonly: function (readonly) {
                         var enabled = this.getEnabled();
                         this.setPermissions(enabled, readonly);
@@ -196,6 +239,9 @@ define([
                         }
                     },
 
+                    /**
+                     * Получить значение флага enabled
+                     */
                     getEnabled: function () {
                         return this.enabled;
                     },
@@ -210,13 +256,15 @@ define([
                         }
                     },
 
+                    /**
+                     * Получить значение флага readonly
+                     */
                     getReadonly: function () {
                         return this.readonly;
                     },
 
                     /**
-                     * Give the editor focus
-                     * Extend and override this method
+                     * Установить фокус на этот эдитор.
                      */
                     focus: function() {
                         if (this.hasFocus) {
@@ -226,8 +274,7 @@ define([
                     },
 
                     /**
-                     * Remove focus from the editor
-                     * Extend and override this method
+                     * Снять фокус с данного эдитора.
                      */
                     blur: function() {
                         if (!this.hasFocus) {
@@ -238,11 +285,9 @@ define([
 
                     /**
                      * Update the model with the current value
-                     *
-                     * @param {Object} [options]              Options to pass to model.set()
-                     * @param {Boolean} [options.validate]    Set to true to trigger built-in model validation
-                     *
-                     * @return {Mixed} error
+                     * @param {Object} [options] Options to pass to model.set()
+                     * @param {Boolean} [options.validate] Set to true to trigger built-in model validation
+                     * @return {Object|undefined} В случае ошибки, возвращает объект <code>{ type, message }</code>.
                      */
                     commit: function(options) {
                         options = options || {};
@@ -268,9 +313,8 @@ define([
                     },
 
                     /**
-                     * Check validity
-                     *
-                     * @return {Object|Undefined}
+                     * Check validity with built-in validator functions (initially passed into constructor options).
+                     * @return {Object|undefined} В случае ошибки, возвращает объект <code>{ type, message }</code>.
                      */
                     validate: function() {
                         var $el = this.$el,
@@ -292,11 +336,6 @@ define([
                         return error;
                     },
 
-                    /**
-                     * Set this.hasFocus, or call parent trigger()
-                     *
-                     * @param {String} event
-                     */
                     trigger: function(event) {
                         if (event === 'focus') {
                             this.hasFocus = true;
@@ -308,12 +347,6 @@ define([
                         return Marionette.ItemView.prototype.trigger.apply(this, arguments);
                     },
 
-                    /**
-                     * Returns a validation function based on the type defined in the schema
-                     *
-                     * @param {RegExp|String|Function} validator
-                     * @return {Function}
-                     */
                     getValidator: function(validator) {
                         var validators = Backbone.Form.validators;
 
