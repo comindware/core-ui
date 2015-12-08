@@ -56,20 +56,17 @@ define([
         });
 
         /**
-         * Some description for initializer
          * @name MemberSelectEditorView
          * @memberof module:core.form.editors
-         * @class MemberSelectEditorView
-         * @description MemberSelect editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Object} [options.controller] Нужен ли он?
-         * @param {Object} [options.dropdownOptions={ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }] Опции отображения выпадающего списка
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Редактор для выбора пользователя из списка доступных. Поддерживаемый тип данных: <code>String</code>
+         * (идентификатор пользователя). Например, <code>'account.1'</code>. Список доступных пользователей
+         * берется из <code>core.services.CacheService</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Number} [options.dropdownOptions=Object] Опции используемого PopoutView.
+         * Полезно для задания направления открытия и кастомизации кнопки. Значения по умолчанию:
+         * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
          * */
         Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend({
             initialize: function (options) {

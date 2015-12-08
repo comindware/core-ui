@@ -20,19 +20,13 @@ define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutE
         };
 
         /**
-         * Some description for initializer
          * @name DateTimeEditorView
          * @memberof module:core.form.editors
-         * @class DateTimeEditorView
-         * @description DateTime editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Редактор даты и времени. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
+         * (например, '2015-07-20T10:46:37Z').
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
          * */
         Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend({
             initialize: function(options) {

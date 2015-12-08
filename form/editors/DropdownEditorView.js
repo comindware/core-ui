@@ -34,23 +34,20 @@ define([
         };
 
         /**
-         * Some description for initializer
          * @name DropdownEditorView
          * @memberof module:core.form.editors
-         * @class DropdownEditorView
-         * @description Drowpdown editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.allowEmptyValue=true] Разрешает отсутствие значения
-         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
-         * @param {Backbone.Collection/Array} options.collection Коллекция (массив) элементов
-         * @param {String} [options.displayAttribute=text] Ключ, по которому берется знаечение для отображения элементов списка
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.enableSearch=false] Определяет показ поиска по возможным значениям
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Редактор для выбора значения из выпадающего списка. Тип данных редактируемого значения должен
+         * совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Boolean} [options.allowEmptyValue=true] Разрешить значение <code>null</code>.
+         * @param {Backbone.Collection|Array} options.collection Массив объектов <code>{ id, text }</code> или
+         * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
+         * текста из поля, отличного от <code>text</code>. В случае передачи Backbone.Collection, дальнейшее ее изменение
+         * отражается в выпадающем списке.
+         * @param {String} [options.displayAttribute=text] Имя атрибута, используемого для отображения текста.
+         * @param {Boolean} [options.enableSearch=false] Отображать строку поиска в выпадающей панели.
          * */
         Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend({
             initialize: function (options) {
@@ -143,11 +140,13 @@ define([
             __onCollectionChange: function () {
                 var value = this.getValue();
                 var valueModel = this.collection.findWhere({id: value});
-                if (valueModel != null) {
-                    if (valueModel != this.viewModel.get('button').get("value"))
+                if (valueModel !== null) {
+                    if (valueModel !== this.viewModel.get('button').get("value")) {
                         this.viewModel.get('button').set('value', valueModel);
-                    if (valueModel != this.viewModel.get('panel').get("value"))
+                    }
+                    if (valueModel !== this.viewModel.get('panel').get("value")) {
                         this.viewModel.get('panel').set('value', valueModel);
+                    }
 
                     return;
                 }

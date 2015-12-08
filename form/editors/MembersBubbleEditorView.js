@@ -42,28 +42,22 @@ define([
 
         var defaultOptions = {
             exclude: [],
-            selected: [],
             maxQuantitySelected: null,
             canDeleteMember: true
         };
 
         /**
-         * Some description for initializer
          * @name MembersBubbleEditorView
          * @memberof module:core.form.editors
-         * @class MembersBubbleEditorView
-         * @description MembersBubble editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
-         * @param {Boolean} [options.canDeleteMember=true] Определяет возможность удалять добавленных пользователей
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Array} [options.exclude] Массив id-пользователей, недоступных для выбора
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, доступных для выбора
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Редактор для выбора коллекции пользователей. Поддерживаемый тип данных: массив идентификаторов пользователей
+         * (<code>String[]</code>). Например, <code>[ 'account.1', 'account.2', 'account.3' ]</code>. Список доступных пользователей
+         * береться из <code>core.services.CacheService</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Boolean} [options.canDeleteMember=true] Возможно ли удалять добавленных пользователей.
+         * @param {String[]} [options.exclude] Массив идентификаторов пользователей, которые будут скрыты из списка доступных для выбора.
+         * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
          * */
         Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend({
             initialize: function (options) {

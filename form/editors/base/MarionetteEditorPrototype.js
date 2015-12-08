@@ -64,7 +64,8 @@ define([
         /**
          * @name BaseEditorView
          * @memberof module:core.form.editors.base
-         * @class Базовый класс для всех эдиторов. Является модификацией класса Backbone.Form.Editor из библиотеки Backbone.Form.<br/>
+         * @class Базовый класс для всех эдиторов. Является модификацией класса Backbone.Form.Editor из библиотеки
+         * [Backbone.Form](https://github.com/powmedia/backbone-forms).<br/>
          * При реализации собственных эдиторов используйте один из следующих классов, наследующих этот:<ul>
          * <li><code>BaseCollectionEditorView</code></li>
          * <li><code>BaseCompositeEditorView</code></li>
@@ -164,6 +165,7 @@ define([
 
                     /**
                      * Получить текущее значение из модели.
+                     * @return {*}
                      * */
                     getModelValue: function () {
                         return !this.model ? undefined : this.model.get(this.key);
@@ -241,6 +243,7 @@ define([
 
                     /**
                      * Получить значение флага enabled
+                     * @return {Boolean}
                      */
                     getEnabled: function () {
                         return this.enabled;
@@ -258,6 +261,7 @@ define([
 
                     /**
                      * Получить значение флага readonly
+                     * @return {Boolean}
                      */
                     getReadonly: function () {
                         return this.readonly;

@@ -56,37 +56,20 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
         }
 
         var defaultOptions = {
-            max: null,
-            min: 0,
-            step: 1,
-            page: 10,
-            incremental: true,
-            workHours: 8,
-            showDays: true,
-            showHours: true,
-            showMinutes: true,
-            showSeconds: true
+            workHours: 8
         };
 
         var keyCode = utils.keyCode;
 
         /**
-         * Some description for initializer
          * @name DurationEditorView
          * @memberof module:core.form.editors
-         * @class DurationEditorView
-         * @description Duration editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.autocommit=false] Автоматическое обновление значения
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Number} [options.page=10] Шаг, с которым прибавляется/убывает значение по pageUp/pageDown
-         * @param {Number} [options.step=1] Шаг, с которым прибавляется/убывает значение по keyUp/keyDown
-         * @param {Function[]} [options.validators] Массив функций валидации
-         * @param {Number} [options.workHours=8] Количество рабочих часов
+         * @class Редактор для выбора значения длительности. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
+         * (например, 'P4DT1H4M').
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Number} [options.workHours=8] Количество рабочих часов в сутках. Требуется для пересчета введенного значения.
          * */
         Backbone.Form.editors.Duration = BaseItemEditorView.extend({
             initialize: function (options) {
@@ -267,25 +250,25 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
                 var index = this.getSegmentIndex(position);
                 switch (event.keyCode) {
                 case keyCode.UP:
-                    if (this.setSegmentValue(index, defaultOptions.step)) {
+                    if (this.setSegmentValue(index, 1)) {
                         this.initSegmentStartEnd();
                         this.setCaretPos(focusedParts[index].end);
                     }
                     return false;
                 case keyCode.DOWN:
-                    if (this.setSegmentValue(index, -defaultOptions.step)) {
+                    if (this.setSegmentValue(index, -1)) {
                         this.initSegmentStartEnd();
                         this.setCaretPos(focusedParts[index].end);
                     }
                     return false;
                 case keyCode.PAGE_UP:
-                    if (this.setSegmentValue(index, defaultOptions.page)) {
+                    if (this.setSegmentValue(index, 10)) {
                         this.initSegmentStartEnd();
                         this.setCaretPos(focusedParts[index].end);
                     }
                     return false;
                 case keyCode.PAGE_DOWN:
-                    if (this.setSegmentValue(index, -defaultOptions.page)) {
+                    if (this.setSegmentValue(index, -10)) {
                         this.initSegmentStartEnd();
                         this.setCaretPos(focusedParts[index].end);
                     }
@@ -450,8 +433,8 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
                 v = v / 60 / 1000;
                 // replace zero w spaces
                 var minutes = this._currentDisplayValue ? this._currentDisplayValue.minutes : Math.floor(v % 60);
-                var hours = this._currentDisplayValue ? this._currentDisplayValue.hours : Math.floor(v / 60 % defaultOptions.workHours);
-                var days = this._currentDisplayValue ? this._currentDisplayValue.days : Math.floor(v / 60 / defaultOptions.workHours);
+                var hours = this._currentDisplayValue ? this._currentDisplayValue.hours : Math.floor(v / 60 % this.options.workHours);
+                var days = this._currentDisplayValue ? this._currentDisplayValue.days : Math.floor(v / 60 / this.options.workHours);
                 if (trimmed) {
                     var res = '';
                     if (days || (v !== null && !hours && !minutes)) {
