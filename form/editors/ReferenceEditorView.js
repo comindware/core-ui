@@ -43,22 +43,16 @@ define([
         };
 
         /**
-         * Some description for initializer
          * @name ReferenceEditorView
          * @memberof module:core.form.editors
-         * @class ReferenceEditorView
-         * @description Reference editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Backbone.Controller} options.controller Backbone.Controller
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Array} options.radioOptions Массив значений
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {BaseReferenceEditorController} options.controller Провайдер данных, наследник
+         * {@link module.core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
          * */
-        Backbone.Form.editors.Reference = BaseLayoutEditorView.extend({
+        Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));

@@ -68,7 +68,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
          * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
          * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
          * */
-        Backbone.Form.editors.Number = BaseItemEditorView.extend({
+        Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));

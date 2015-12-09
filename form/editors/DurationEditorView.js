@@ -71,7 +71,7 @@ define(['text!./templates/durationEditor.html', './base/BaseItemEditorView', 'mo
          * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
          * @param {Number} [options.workHours=8] Количество рабочих часов в сутках. Требуется для пересчета введенного значения.
          * */
-        Backbone.Form.editors.Duration = BaseItemEditorView.extend({
+        Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));

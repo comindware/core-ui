@@ -47,7 +47,7 @@ define(
          * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
          * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
          * */
-        Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend({
+        Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
             initialize: function(options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));

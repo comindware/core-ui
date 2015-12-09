@@ -27,7 +27,7 @@ define(['module/lib', 'text!./templates/dateEditor.html', './base/BaseLayoutEdit
          * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
          * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
          * */
-        Backbone.Form.editors.Date = BaseLayoutEditorView.extend({
+        Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
             initialize: function (options) {
                 options = options || {};
                 if (options.schema) {

@@ -23,7 +23,7 @@ define(['text!./templates/passwordEditor.html', './TextEditorView'],
          * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
          * {@link module:core.form.editors.TextEditorView TextEditorView}.
          * */
-        Backbone.Form.editors.Password = TextEditorView.extend({
+        Backbone.Form.editors.Password = TextEditorView.extend(/** @lends module:core.form.editors.PasswordEditorView.prototype */{
             template: Handlebars.compile(template)
         });
 

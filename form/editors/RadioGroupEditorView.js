@@ -35,7 +35,7 @@ define([
          * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
          * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText }</code>, описывающих радио-кнопки.
          * */
-        Backbone.Form.editors.RadioGroup = EditorBaseCollectionView.extend({
+        Backbone.Form.editors.RadioGroup = EditorBaseCollectionView.extend(/** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));

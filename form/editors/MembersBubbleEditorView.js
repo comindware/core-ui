@@ -59,7 +59,7 @@ define([
          * @param {String[]} [options.exclude] Массив идентификаторов пользователей, которые будут скрыты из списка доступных для выбора.
          * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
          * */
-        Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend({
+        Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));

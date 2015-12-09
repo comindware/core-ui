@@ -47,7 +47,7 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
          * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
          * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
          * */
-        Backbone.Form.editors.Text = BaseItemEditorView.extend({
+        Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
             initialize: function (options) {
                 options = options || {};
                 if (options.schema) {

@@ -20,6 +20,15 @@ define([
     function(lib, list, utils, SearchMoreModel) {
         'use strict';
 
+        /**
+         * @name BaseReferenceEditorController
+         * @memberof module:core.form.editors
+         * @class Провайдер данных, обеспечивающий их поступление в {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
+         * Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Backbone.Collection} options.collection asd.
+         * */
         return Marionette.Controller.extend({
             initialize: function(options) {
                 utils.helpers.ensureOption(options, 'collection');

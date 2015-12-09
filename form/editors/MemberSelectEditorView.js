@@ -68,7 +68,7 @@ define([
          * Полезно для задания направления открытия и кастомизации кнопки. Значения по умолчанию:
          * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
          * */
-        Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend({
+        Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
             initialize: function (options) {
                 var defOpts = _.cloneDeep(defaultOptions);
                 if (options.schema) {

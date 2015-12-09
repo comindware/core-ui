@@ -49,7 +49,7 @@ define(['text!./templates/textAreaEditor.html',
         /**
          * @name TextAreaEditorView
          * @memberof module:core.form.editors
-         * @class Однострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
+         * @class Многострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
          * @extends module:core.form.editors.base.BaseEditorView
          * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
          * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
@@ -70,7 +70,7 @@ define(['text!./templates/textAreaEditor.html',
          * При установленной опции <code>size: 'auto'</code>, определяет максимальную высоту эдитора (количество строк).
          * При установленной опции <code>size: 'fixed'</code>, определяет высоту эдитора (количество строк).
          * */
-        Backbone.Form.editors.TextArea = BaseItemEditorView.extend({
+        Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));

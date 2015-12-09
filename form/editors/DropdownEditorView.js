@@ -49,7 +49,7 @@ define([
          * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
          * @param {Boolean} [options.enableSearch=false] Отображать строку поиска в выпадающей панели.
          * */
-        Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend({
+        Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
             initialize: function (options) {
                 if (options.schema) {
                     _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
