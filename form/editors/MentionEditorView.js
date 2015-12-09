@@ -38,18 +38,15 @@ define([
     };
 
     /**
-     * Some description for initializer
      * @name MentionEditorView
      * @memberof module:core.form.editors
-     * @class MentionEditorView
-     * @description Mention editor
-     * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-     * @param {Object} options Constructor
-     * @param {Object} [options.schema] Scheme
-     * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-     * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-     * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-     * @param {Function[]} [options.validators] Массив функций валидации
+     * @class Текстовый редактор с возможностью упоминания пользователей (mentions). Поддерживаемый тип данных: <code>String</code>
+     * (простой многострочный текст). Например, <code>'Hello, @alex!'</code>. Список доступных пользователей
+     * берется из <code>core.services.CacheService</code>.
+     * @extends module:core.form.editors.base.BaseEditorView
+     * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+     * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+     * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
      * */
     Backbone.Form.editors.Mention = BaseLayoutEditorView.extend({
         initialize: function (options) {
@@ -223,6 +220,10 @@ define([
             this.__triggerChange();
         },
 
+        /**
+         * Получить список пользователей, упомянутых в тексте.
+         * @return {String[]} Список строковых идентификаторов пользователей, упомянутых в тексте.
+         * */
         getMentions: function () {
             var text = this.getValue();
             var regex = /(?:\s|^)@([a-z0-9_\.]+)/gi;

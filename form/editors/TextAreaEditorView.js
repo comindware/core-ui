@@ -42,28 +42,33 @@ define(['text!./templates/textAreaEditor.html',
             readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
             disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
-            readonly: false,
             textHeight: null,
             initialHeight: 2
         };
 
         /**
-         * Some description for initializer
          * @name TextAreaEditorView
          * @memberof module:core.form.editors
-         * @class TextAreaEditorView
-         * @description TextArea editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {String} [options.controller] Текст placeholder'а
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Number} [options.initialHeight=2] Изначальное количство строк
-         * @param {String} [options.size=auto] Высота контрола: auto - контрол имеет высоту контента, fixed - фиксированную
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Number} [options.textHeight] Размер шрифта текста, определяет максимальный размер области ввода
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Однострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
+         * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
+         *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
+         *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
+         * @param {String} [options.size='auto'] Определяет метод вычисления высоты эдитора:<ul>
+         *     <li><code>'auto'</code> - автоматически определяется контентом.</li>
+         *     <li><code>'fixed'</code> - высота фиксирована.</li></ul>
+         * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder для пустого текста.
+         * @param {String} [options.readonlyPlaceholder='Field is readonly'] Текст placeholder, отображаемый
+         * в случае если эдитор имеет флаг <code>readonly</code>.
+         * @param {String} [options.disablePlaceholder='Field is disabled'] Текст placeholder, отображаемый
+         * в случае если эдитор имеет флаг <code>enabled: false</code>.
+         * @param {Number} [options.initialHeight=2] Изначальная высота эдитора (количество строк).
+         * @param {Number} [options.textHeight=null]
+         * При установленной опции <code>size: 'auto'</code>, определяет максимальную высоту эдитора (количество строк).
+         * При установленной опции <code>size: 'fixed'</code>, определяет высоту эдитора (количество строк).
          * */
         Backbone.Form.editors.TextArea = BaseItemEditorView.extend({
             initialize: function (options) {
@@ -110,6 +115,14 @@ define(['text!./templates/textAreaEditor.html',
                 this.ui.textarea.attr('rows', this.options.initialHeight);
             },
 
+            /**
+             * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
+             * [Keypress](https://dmauro.github.io/Keypress/).
+             * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
+             * Полный список с названиями клавиш указан в исходном файле плагина:
+             * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
+             * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
+             * */
             addKeyboardListener: function (key, callback) {
                 if (!this.keyListener) {
                     utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
@@ -175,6 +188,10 @@ define(['text!./templates/textAreaEditor.html',
                 }
             },
 
+            /**
+             * Метод позволяет установить позицию курсора.
+             * @param {Number} position Новая позиция курсора.
+             * */
             setCaretPos: function (position) {
                 this.ui.textarea.caret(position, position);
             },
@@ -230,6 +247,9 @@ define(['text!./templates/textAreaEditor.html',
                 });
             },
 
+            /**
+             * Focuses the editor's input and selects all the text in it.
+             * */
             select: function () {
                 this.ui.textarea.select();
             }

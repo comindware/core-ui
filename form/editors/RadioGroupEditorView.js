@@ -25,19 +25,15 @@ define([
         };
 
         /**
-         * Some description for initializer
          * @name RadioGroupEditorView
          * @memberof module:core.form.editors
-         * @class RadioGroupEditorView
-         * @description RadioGroup editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Array} options.radioOptions Массив значений
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Радио-группа. Возможно выбрать одно значение из возможных
+         * (аналогично {@link module:core.form.editors.DropdownEditorView DropdownEditorView}). Тип данных редактируемого значения должен
+         * совпадать с типом данных поля <code>id</code> элементов массива <code>radioOptions</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText }</code>, описывающих радио-кнопки.
          * */
         Backbone.Form.editors.RadioGroup = EditorBaseCollectionView.extend({
             initialize: function (options) {
@@ -55,7 +51,7 @@ define([
             childView: RadioButtonView,
 
             collectionEvents: {
-              'select:one': '__onSelectChild'
+                'select:one': '__onSelectChild'
             },
 
             childViewOptions: function () {

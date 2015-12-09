@@ -16,18 +16,12 @@ define(['text!./templates/passwordEditor.html', './TextEditorView'],
         'use strict';
 
         /**
-         * Some description for initializer
          * @name PasswordEditorView
          * @memberof module:core.form.editors
-         * @class PasswordEditorView
-         * @description Password editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Текстовый редактор для ввода пароля. Поддерживаемый тип данных: <code>String</code>.
+         * @extends module:core.form.editors.TextEditorView
+         * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
+         * {@link module:core.form.editors.TextEditorView TextEditorView}.
          * */
         Backbone.Form.editors.Password = TextEditorView.extend({
             template: Handlebars.compile(template)

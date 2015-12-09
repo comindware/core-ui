@@ -32,22 +32,20 @@ define(
         };
 
         /**
-         * Some description for initializer
-         * @name MultiselectEditorView
+         * @name MultiSelectEditorView
          * @memberof module:core.form.editors
-         * @class MultiselectEditorView
-         * @description Multiselect editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.allowEmptyValue=true] Разрешает отсутствие значения
-         * @param {Backbone.Collection/Array} options.collection Коллекция (массив) элементов
-         * @param {String} [options.displayAttribute=text] Ключ, по которому берется знаечение для отображения элементов списка
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.explicitApply=false] Явное применение выбранных значений
-         * @param {Boolean} [options.forceCommit=false] Определяет, обновлять ли значение независимо от ошибок валидации
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Выпадающая панель с возможность выбора нескольких элементов. Поддерживаемый тип данных: массив объектов, <code>Object[]</code>.
+         * Тип объекта в массиве должен совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Boolean} [options.allowEmptyValue=true] Разрешить значение <code>null</code>.
+         * @param {Backbone.Collection|Array} options.collection Массив объектов <code>{ id, text }</code> или
+         * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
+         * текста из поля, отличного от <code>text</code>. В случае передачи Backbone.Collection, дальнейшее ее изменение
+         * отражается в выпадающем списке.
+         * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
+         * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
          * */
         Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend({
             initialize: function(options) {

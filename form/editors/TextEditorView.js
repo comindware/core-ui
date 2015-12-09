@@ -24,33 +24,28 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
         var defaultOptions = {
             changeMode: 'blur',
             emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-            readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.READONLYPLACEHOLDER'),
-            disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.DISABLEPLACEHOLDER'),
             maxLength: null,
-            readonly: false,
             mask: null,
             maskPlaceholder: '_',
             maskOptions: {}
         };
 
         /**
-         * Some description for initializer
          * @name TextEditorView
          * @memberof module:core.form.editors
-         * @class TextEditorView
-         * @description TextArea editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {String} [options.changeMode=blur] Определяет, в какой момент происходит обновления значения (keydown/blur/input)
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {String} [options.mask] Маска ввода
-         * @param {String} [options.maxLength] Максимальное количество символов
-         * @param {String} [options.maskOptions] Опции маски
-         * @param {String} [options.maskPlaceholder=_] placeholder маски
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Однострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
+         * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
+         *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
+         *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
+         * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
+         * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
+         * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
+         * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
+         * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
          * */
         Backbone.Form.editors.Text = BaseItemEditorView.extend({
             initialize: function (options) {
@@ -147,6 +142,14 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
                 this.keyListener = new lib.keypress.Listener(this.ui.input[0]);
             },
 
+            /**
+             * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
+             * [Keypress](https://dmauro.github.io/Keypress/).
+             * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
+             * Полный список с названиями клавиш указан в исходном файле плагина:
+             * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
+             * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
+             * */
             addKeyboardListener: function (key, callback) {
                 if (!this.keyListener) {
                     utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
@@ -170,6 +173,9 @@ define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditor
                 }
             },
 
+            /**
+             * Focuses the editor's input and selects all the text in it.
+             * */
             select: function () {
                 this.ui.input.select();
             },

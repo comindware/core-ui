@@ -20,16 +20,17 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
             blur: 'blur'
         };
 
+        var constants = {
+            STEP: 1,
+            PAGE: 10,
+            INCREMENTAL: true
+        };
+
         var defaultOptions = {
             max: null,
             min: 0,
-            step: 1,
-            page: 10,
-            incremental: true,
             allowFloat: false,
-            changeMode: changeMode.blur,
-            showButtons: true,
-            readonly: false
+            changeMode: changeMode.blur
         };
 
         var keyCode = utils.keyCode;
@@ -54,27 +55,18 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
         ];
 
         /**
-         * Some description for initializer
          * @name NumberEditorView
          * @memberof module:core.form.editors
-         * @class NumberEditorView
-         * @description Number editor
-         * @extends module:core.form.editors.base.BaseItemEditorView {@link module:core.form.editors.base.BaseItemEditorView}
-         * @param {Object} options Constructor
-         * @param {Object} [options.schema] Scheme
-         * @param {Boolean} [options.allowFloat=false] Разрешены ли к вводу дробные числа
-         * @param {String} [options.changeMode=blur] Определяет, в какой момент происходит обновления значения (keydown/blur)
-         * @param {Boolean} [options.enabled=true] Доступ к редактору разрешен
-         * @param {Boolean} [options.forceCommit=false] Обновлять значение независимо от ошибок валидации
-         * @param {Boolean(Function)} [options.incremental=true] Если задано true, то при событии mouswheel изменение значения будет происходить пропорционально скроллу.
-         * Если задана функция, то значение будет измененно на возвращаемое этой функцией значение
-         * @param {Number} [options.max] Максимальное возможное число
-         * @param {Number} [options.min=0] Минимальное возможное число
-         * @param {Number} [options.page=10] Шаг, с которым прибавляется/убывает значение по pageUp/pageDown
-         * @param {Boolean} [options.readonly=false] Редактор доступен только для просмотра
-         * @param {Boolean} [options.showButtons=true] Показывать ли кнопки увеличение/уменьшения значения
-         * @param {Number} [options.step=1] Шаг, с которым прибавляется/убывает значение по keyUp/keyDown
-         * @param {Function[]} [options.validators] Массив функций валидации
+         * @class Редактор числовых значений. Поддерживаемый тип данных: <code>Number</code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Boolean} [options.allowFloat=false] Если <code>true</code>, ко вводу допускаются значения с плавающей точкой.
+         * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
+         *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
+         *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
+         * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
+         * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
          * */
         Backbone.Form.editors.Number = BaseItemEditorView.extend({
             initialize: function (options) {
@@ -118,7 +110,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                     }
 
                     this.__start();
-                    this.__spin((event.deltaY > 0 ? 1 : -1) * this.options.step);
+                    this.__spin((event.deltaY > 0 ? 1 : -1) * constants.STEP);
                     clearTimeout(this.mousewheelTimer);
                     //noinspection JSCheckFunctionSignatures
                     this.mousewheelTimer = setTimeout(this.__stop, 100);
@@ -185,7 +177,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                     this.__repeat(40, steps);
                 }.bind(this), i);
 
-                this.__spin(steps * this.options.step);
+                this.__spin(steps * constants.STEP);
             },
 
             __keydown: function(event) {
@@ -200,10 +192,10 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                     this.__repeat(null, -1, event);
                     return false;
                 case keyCode.PAGE_UP:
-                    this.__repeat(null, options.page, event);
+                    this.__repeat(null, constants.PAGE, event);
                     return false;
                 case keyCode.PAGE_DOWN:
-                    this.__repeat(null, -options.page, event);
+                    this.__repeat(null, -constants.PAGE, event);
                     return false;
                 }
 
@@ -295,7 +287,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
             },
 
             __precision: function() {
-                var precision = this.__precisionOf(this.options.step);
+                var precision = this.__precisionOf(constants.STEP);
                 if (this.options.min !== null) {
                     precision = Math.max(precision, this.__precisionOf(this.options.min));
                 }
@@ -309,7 +301,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
             },
 
             __increment: function(i) {
-                var incremental = this.options.incremental;
+                var incremental = constants.INCREMENTAL;
                 if (incremental) {
                     return $.isFunction(incremental) ?
                         incremental(i) :
@@ -338,7 +330,7 @@ define(['text!./templates/numberEditor.html', './base/BaseItemEditorView', 'modu
                 base = options.min !== null ? options.min : 0;
                 aboveMin = value - base;
                 // - round to the nearest step
-                aboveMin = Math.round(aboveMin / options.step) * options.step;
+                aboveMin = Math.round(aboveMin / constants.STEP) * constants.STEP;
                 // - rounding is based on 0, so adjust back to our base
                 value = base + aboveMin;
 

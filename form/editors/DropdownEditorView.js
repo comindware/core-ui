@@ -46,7 +46,7 @@ define([
          * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
          * текста из поля, отличного от <code>text</code>. В случае передачи Backbone.Collection, дальнейшее ее изменение
          * отражается в выпадающем списке.
-         * @param {String} [options.displayAttribute=text] Имя атрибута, используемого для отображения текста.
+         * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
          * @param {Boolean} [options.enableSearch=false] Отображать строку поиска в выпадающей панели.
          * */
         Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend({
