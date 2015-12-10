@@ -83,6 +83,11 @@
                         error.errorData = result.errorData;
                         throw error;
                     }
+                    if (result.refresh) {
+                        _.defer(function() {
+                            window.location.reload();
+                        });
+                    }
                     return result.data;
                 }.bind(this));
             }
