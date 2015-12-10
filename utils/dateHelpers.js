@@ -160,7 +160,7 @@ define([
         }
     };
 
-    return {
+    return /** @lends module:core.utils.dateHelpers */ {
         dateToISOString: function (date) {
             return moment(date).toISOString();
         },

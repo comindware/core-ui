@@ -20,12 +20,12 @@ define([ 'module/lib' ],
         };
 
         /**
-         * Behavior требуется при использовании {@link module:core.dropdown.views.PopoutView PopoutView} в режиме <code>customAnchor: true</code>.
-         * Указанная в свойстве <code>buttonView</code> View должна иметь данный behavior, определяющий место привязки треугольника для бабла (якорь, anchor).
+         * Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
+         * быть переданы как свойства behavior (см. документацию Marionette).
          * @name CustomAnchorBehavior
          * @memberof module:core.dropdown.views.behaviors
-         * @class Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
-         *        быть переданы как свойства behavior (см. документацию Marionette).
+         * @class Behavior требуется при использовании {@link module:core.dropdown.views.PopoutView PopoutView} в режиме <code>customAnchor: true</code>.
+         * Указанная в свойстве <code>buttonView</code> View должна иметь данный behavior, определяющий место привязки треугольника для бабла (якорь, anchor).
          * @constructor
          * @extends Marionette.Behavior
          * @param {Object} options Объект опций

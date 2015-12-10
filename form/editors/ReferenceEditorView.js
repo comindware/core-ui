@@ -50,7 +50,7 @@ define([
          * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
          * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
          * @param {BaseReferenceEditorController} options.controller Провайдер данных, наследник
-         * {@link module.core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
+         * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
          * */
         Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
             initialize: function (options) {

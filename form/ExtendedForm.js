@@ -1,10 +1,28 @@
-/* global define, $, _, Backbone */
+/**
+ * Developer: Stepan Burguchev
+ * Date: 12/12/2014
+ * Copyright: 2009-2014 Comindware®
+ *       All Rights Reserved
+ *
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
+ *       The copyright notice above does not evidence any
+ *       actual or intended publication of such source code.
+ */
+
+/* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define(['./fields/CommonField'], function (CommonField) {
     "use strict";
 
+	/**
+	 * @name ExtendedForm
+	 * @memberof module:core.form
+	 * @class Расширенная версия формы [Backbone.Form](https://github.com/powmedia/backbone-forms).
+	 * @extends Backbone.Form
+	 * */
+
     //noinspection JSUnresolvedFunction,UnnecessaryLocalVariableJS
-    var ExtendedForm = Backbone.Form.extend({
+    var ExtendedForm = Backbone.Form.extend(/** @lends module:core.form.ExtendedForm.prototype */ {
         focusRequiredInput: function () {
             this.methodOptions.silent = true;
             var errors = this.validate();
@@ -32,11 +50,11 @@ define(['./fields/CommonField'], function (CommonField) {
 		name: 'form',
 
 		handleEditorEvent: function (event, editor, field) {
-		    var formEvent = this.name + ':' + event;
-		    if (event !== 'validated') {
-		        //Re-trigger editor events on the form
-		        this.trigger.call(this, formEvent, this, editor, Array.prototype.slice.call(arguments, 2));
-		    }
+			var formEvent = this.name + ':' + event;
+			if (event !== 'validated') {
+				//Re-trigger editor events on the form
+				this.trigger.call(this, formEvent, this, editor, Array.prototype.slice.call(arguments, 2));
+			}
 
 			//Trigger additional events
 			switch (event) {
@@ -44,8 +62,8 @@ define(['./fields/CommonField'], function (CommonField) {
                     this.state = editor.state;
                     break;
 				case 'change':
-				    this.trigger('change', this, editor);
-				    this.trigger(editor.key + ':change', this, editor);
+					this.trigger('change', this, editor);
+					this.trigger(editor.key + ':change', this, editor);
                     break;
 				case 'focus':
                     if (!this.hasFocus) {
@@ -87,9 +105,9 @@ define(['./fields/CommonField'], function (CommonField) {
 		},
 
 		onShow: function () {
-		    this.validate({
-		        silent: true
-		    });
+			this.validate({
+				silent: true
+			});
             _.each(this.fields || {}, function (v) {
                 if (v.editor.onShow) {
                     v.editor.onShow();
@@ -103,58 +121,58 @@ define(['./fields/CommonField'], function (CommonField) {
          * @return {Object}       Validation errors
          */
 		validate: function (options) {
-		    var self = this,
-                fields = this.fields,
-                model = this.model,
-                errors = {};
+			var self = this,
+				fields = this.fields,
+				model = this.model,
+				errors = {};
 
-		    options = options || {};
+			options = options || {};
 
-		    //Collect errors from schema validation
-		    _.each(fields, function (field) {
-		        var error = field.validate(options);
-		        if (error) {
-		            errors[field.key] = error;
-		        }
-		    });
+			//Collect errors from schema validation
+			_.each(fields, function (field) {
+				var error = field.validate(options);
+				if (error) {
+					errors[field.key] = error;
+				}
+			});
 
-		    //Get errors from default Backbone model validator
-		    if (!options.skipModelValidate && model && model.validate) {
-		        var modelErrors = model.validate(this.getValue());
+			//Get errors from default Backbone model validator
+			if (!options.skipModelValidate && model && model.validate) {
+				var modelErrors = model.validate(this.getValue());
 
-		        if (modelErrors) {
-		            var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+				if (modelErrors) {
+					var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
 
-		            //If errors are not in object form then just store on the error object
-		            if (!isDictionary) {
-		                errors._others = errors._others || [];
-		                errors._others.push(modelErrors);
-		            }
+					//If errors are not in object form then just store on the error object
+					if (!isDictionary) {
+						errors._others = errors._others || [];
+						errors._others.push(modelErrors);
+					}
 
-		            //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
-		            if (isDictionary) {
-		                _.each(modelErrors, function (val, key) {
-		                    //Set error on field if there isn't one already
-		                    if (fields[key] && !errors[key]) {
-		                        fields[key].setError(val);
-		                        errors[key] = val;
-		                    }
+					//Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
+					if (isDictionary) {
+						_.each(modelErrors, function (val, key) {
+							//Set error on field if there isn't one already
+							if (fields[key] && !errors[key]) {
+								fields[key].setError(val);
+								errors[key] = val;
+							}
 
-		                    else {
-		                        //Otherwise add to '_others' key
-		                        errors._others = errors._others || [];
-		                        var tmpErr = {};
-		                        tmpErr[key] = val;
-		                        errors._others.push(tmpErr);
-		                    }
-		                });
-		            }
-		        }
-		    }
+							else {
+								//Otherwise add to '_others' key
+								errors._others = errors._others || [];
+								var tmpErr = {};
+								tmpErr[key] = val;
+								errors._others.push(tmpErr);
+							}
+						});
+					}
+				}
+			}
 
-		    var result = _.isEmpty(errors) ? null : errors;
-		    this.trigger('form:validated', !result, result);
-            return result;
+			var result = _.isEmpty(errors) ? null : errors;
+			this.trigger('form:validated', !result, result);
+			return result;
 		},
 
 		validationDelay: 1000,

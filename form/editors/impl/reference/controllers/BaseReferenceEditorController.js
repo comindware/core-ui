@@ -22,14 +22,18 @@ define([
 
         /**
          * @name BaseReferenceEditorController
-         * @memberof module:core.form.editors
-         * @class Провайдер данных, обеспечивающий их поступление в {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
-         * Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.
-         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
-         * @param {Backbone.Collection} options.collection asd.
+         * @memberof module:core.form.editors.reference.controllers
+         * @class Провайдер данных для {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
+         * Запрос к данным осуществляется через переданную в опции (<code>options.collection</code>) Backbone-коллекцию.
+         * В различных сценариях автоматически выбирается использование клиентской или серверной валидации.
+         * @param {Object} options Объект опций.
+         * @param {Backbone.Collection} options.collection Backbone.Collection объектов с атрибутами <code>{ id, text }</code>.
+         * Коллекция должна реализовывать метод <code>fetch</code> с текстовой фильтрацией: <code>fetch({ data: { filter: 'myFilterText' } })</code>.
+         * Результатом выполнения метода <code>fetch</code> является заполненная данными коллекция и установленное свойство <code>collection.totalCount</code>,
+         * указывающее суммарное количество элементов, удовлетворяющих фильтру (может быть больше чем количество полученных).
          * */
-        return Marionette.Controller.extend({
+
+        return Marionette.Controller.extend( /** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
             initialize: function(options) {
                 utils.helpers.ensureOption(options, 'collection');
 
@@ -37,6 +41,12 @@ define([
                 this.collection = list.factory.createWrappedCollection(options.collection);
             },
 
+            /**
+             * Запрос на получение данных с указанными фильтрами.
+             * @param {Object} options Объект опций.
+             * @param {Object} options.text Активный текстовый фильтр.
+             * @return {Promise} объект-Promise, срабатывающий по окончанию загрузки.
+             * */
             fetch: function(options) {
                 options = options || {};
 
@@ -61,16 +71,25 @@ define([
                 }
                 // Server-side filter or new data request
                 this.collection.filter(null);
-                this.fetchPromise = this.collection.fetch({ data: { filter: filterText } }).bind(this)
+                this.fetchPromise = this.collection.fetch({ data: { filter: filterText } })
                     .then(function() {
                         this.totalCount = this.collection.totalCount;
                         this.activeFilterText = filterText;
-                    });
-
+                    }.bind(this));
 
                 return this.fetchPromise;
             },
 
+            /*
+            * Объект Backbone.Collection, используемый для чтения данных. Напрямую не модифицируется.
+            * */
+            collection: null,
+
+            /**
+             * Запрос на осуществление навигации по заданному объекту (к примеру, открытие карточки пользователя).
+             * Должен быть реализован в классе-наследнике.
+             * @param {Backbone.Model} model Модель объекта, на который требуется осуществить навигацию.
+             * */
             navigate: function(model) {
                 utils.helpers.throwError('Not Implemented.', 'NotImplementedError');
             }

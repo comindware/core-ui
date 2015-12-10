@@ -105,17 +105,17 @@ define([
         ) {
 		'use strict';
 
-		return /** @lends module:core.form*/  {
+		return /** @lends module:core.form */ {
+            ExtendedForm: ExtendedForm,
             /**
-             * Форма
+             * Объекты Marionette.Behaviour, упрощающие использования модуля форм.
              * @namespace
              * */
-            ExtendedForm: ExtendedForm,
             behaviors: {
                 BackboneFormBehavior: BackboneFormBehavior
             },
             /**
-             * СommonField — обертка для редактора
+             * Расширенная версия Backbone.Form.Field, поддерживающая ошибки валидации и текстовые подсказки.
              * @namespace
              * */
             fields: {
@@ -140,7 +140,7 @@ define([
                     }
                 },
                 /**
-                 * Базовые редакторы
+                 * Базовые классы для реализации редакторов.
                  * @namespace
                  * */
                 base: {
@@ -150,10 +150,14 @@ define([
                     BaseCompositeEditorView: BaseCompositeEditorView
                 },
                 /**
-                 * Reference-редакторы
+                 * Объекты для использования и кастомизации редактора ReferenceEditorView.
                  * @namespace
                  * */
                 reference: {
+                    /**
+                     * Базовая реализация дата-провайдеров для ReferenceEditorView.
+                     * @namespace
+                     * */
                     controllers: {
                         DemoReferenceEditorController: DemoReferenceEditorController,
                         BaseReferenceEditorController: BaseReferenceEditorController,

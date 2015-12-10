@@ -9,16 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require */
-
-/*
-* A set of useful comparators (that can be used in Backbone collections or _.sortBy) in the following naming convention:
-*
-* <dataType>Comparator<Arguments count: 1,2><Comparing direction: Asc, Desc>
-*
-* For example `stringComparator2Asc` means comparator function that takes 2 string objects and compares it in ascending order.
-*
-* */
+/* global define, require, moment */
 
 define(['core/meta'],
     function (meta) {
@@ -154,31 +145,179 @@ define(['core/meta'],
             return comparator;
         };
 
-        return {
+        return /** @lends module:core.utils.comparators */ {
+            /**
+             * @param {String} a Argument A.
+             * @return {String} An object to compare with simple operators (&gt;&lt;=).
+             * */
             stringComparator1: function (a) {
                 return a;
             },
+            /**
+             * @function
+             * @param {String} a Argument A.
+             * @param {String} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             stringComparator2Asc: stringComparator2Asc,
+            /**
+             * @function
+             * @param {String} a Argument A.
+             * @param {String} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             stringComparator2Desc: stringComparator2Desc,
+            /**
+             * Empty comparator.
+             * @function
+             * @return {Number} Always 0 (means equals).
+             * */
             emptyComparator: function () {
                 return 0;
             },
-            dateComparator2Asc: function (a, b)
-            {
-                return a - b;
-            },
-            dateComparator2Desc: function (a, b)
-            {
-                return b - a;
-            },
+            /**
+             * @function
+             * @param {Date|String|moment} a Argument A. Javascript <code>Date</code>, date string in ISO8691 or momentJS date.
+             * @param {Date|String|moment} b Argument B. Javascript <code>Date</code>, date string in ISO8691 or momentJS date.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
+            dateComparator2Asc: dateComparator2Asc,
+            /**
+             * @function
+             * @param {Date|String|moment} a Argument A. Javascript <code>Date</code>, date string in ISO8691 or momentJS date.
+             * @param {Date|String|moment} b Argument B. Javascript <code>Date</code>, date string in ISO8691 or momentJS date.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
+            dateComparator2Desc: dateComparator2Desc,
+            /**
+             * @function
+             * @param {Number} a Argument A.
+             * @param {Number} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             numberComparator2Asc: numberComparator2Asc,
+            /**
+             * @function
+             * @param {Number} a Argument A.
+             * @param {Number} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             numberComparator2Desc: numberComparator2Desc,
+            /**
+             * @function
+             * @param {String|Object} a Argument A. An ISO8601 duration string ('P1Y2M3DT4H5M6S'), a string separated by colons like '7.23:59:59.999'
+             * or MomentJS object like <code>{ seconds: 2, minutes: 2, hours: 2, days: 2, weeks: 2, months: 2, years: 2 }</code>.
+             * @param {String|Object} a Argument B. An ISO8601 duration string ('P1Y2M3DT4H5M6S'), a string separated by colons like '7.23:59:59.999'
+             * or MomentJS object like <code>{ seconds: 2, minutes: 2, hours: 2, days: 2, weeks: 2, months: 2, years: 2 }</code>.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             durationComparator2Asc: durationComparator2Asc,
+            /**
+             * @function
+             * @param {String|Object} a Argument A. An ISO8601 duration string ('P1Y2M3DT4H5M6S'), a string separated by colons like '7.23:59:59.999'
+             * or MomentJS object like <code>{ seconds: 2, minutes: 2, hours: 2, days: 2, weeks: 2, months: 2, years: 2 }</code>.
+             * @param {String|Object} a Argument B. An ISO8601 duration string ('P1Y2M3DT4H5M6S'), a string separated by colons like '7.23:59:59.999'
+             * or MomentJS object like <code>{ seconds: 2, minutes: 2, hours: 2, days: 2, weeks: 2, months: 2, years: 2 }</code>.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             durationComparator2Desc: durationComparator2Desc,
+            /**
+             * @function
+             * @param {Boolean} a Argument A.
+             * @param {Boolean} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             booleanComparator2Asc: booleanComparator2Asc,
+            /**
+             * @function
+             * @param {Boolean} a Argument A.
+             * @param {Boolean} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             booleanComparator2Desc: booleanComparator2Desc,
+            /**
+             * Method to compare objects by it's <code>name</code> property.
+             * @function
+             * @param {Object} a Argument A.
+             * @param {Object} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             referenceComparator2Asc: referenceComparator2Asc,
+            /**
+             * Method to compare objects by it's <code>name</code> property.
+             * @function
+             * @param {Object} a Argument A.
+             * @param {Object} b Argument B.
+             * @return {Number} Result as follows:
+             * <ul>
+             *     <li><code>-1</code> - if A &lt; B.</li>
+             *     <li><code>0</code> - if A == B.</li>
+             *     <li><code>1</code> - if A &gt; B.</li>
+             * </ul>
+             * */
             referenceComparator2Desc: referenceComparator2Desc,
+            /**
+             * Method returns comparator function based on type name.
+             * @function
+             * @param {String} dataType Data type as in <code>core.meta.objectPropertyTypes</code>.
+             * @param {String} sorting What sorting do we need? Options: <ul><li><code>'asc'</code></li><li><code>'desc'</code></li></ul>
+             * @return {Function} Comparator function.
+             * */
             getComparatorByDataType: getComparatorByDataType
         };
     });

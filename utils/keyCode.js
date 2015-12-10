@@ -15,7 +15,7 @@ define([],
     function () {
         'use strict';
 
-        return {
+        return /** @lends module:core.utils.keyCode */ {
             BACKSPACE: 8,
             COMMA: 188,
             DELETE: 46,

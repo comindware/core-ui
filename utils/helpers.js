@@ -19,14 +19,13 @@ define(['module/lib', 'core/services/LocalizationService'],
 
         var queueCache = {};
 
-        var helpers = {
-            /*
-            * Simple helper that calls setTimeout and clears the previously called one (if it was called before).
-            *
-            * Work as follows:
-            * 1. Check if setTimeout was called for SomeUniqueId key within the delay time
-            * 2. Call clearTimeout if true
-            * 3. Call setTimeout(callback, delay)
+        var helpers = /** @lends module:core.utils.helpers */ {
+            /**
+            * Метод вызывает функцию <code>callback()</code> по прошествии <code>delay</code> миллисекунд с момента
+            * последнего вызова этого метода с заданным <code>someUniqueId</code>.
+            * @param {String} someUniqueId Идентификатор вызова.
+            * @param {Function} callback Функция, которая должна быть вызвана по прошествии заданного интервала времени.
+            * @param {Number} delay Задержка вызова функции в миллисекундах.
             * */
             setUniqueTimeout: function (someUniqueId, callback, delay)
             {
@@ -43,15 +42,27 @@ define(['module/lib', 'core/services/LocalizationService'],
                 return handler;
             },
 
-            nextTick: function (callback, someUniqueId)
+            /**
+             * Метод вызывает функцию <code>callback()</code> по окончанию обработки активного события (аналогично setTimeout(fn, 10)).
+             * @param {Function} callback Функция, которая должна быть вызвана по окончанию обработки активного события.
+             * */
+            nextTick: function (callback)
             {
-                if (someUniqueId) {
-                    return helpers.setUniqueTimeout(someUniqueId, callback, 10);
-                } else {
-                    return setTimeout(callback, 10);
-                }
+                return setTimeout(callback, 10);
             },
 
+            /**
+             * Оборачивает переданную функцию-компаратор применяя ее на заданный атрибут объекта Backbone.Model.
+             * @example
+             * var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'text');
+             * var a = new Backbone.Model({ id: 1, text: '1' });
+             * var b = new Backbone.Model({ id: 2, text: '2' });
+             * // returns -1
+             * var result = referenceComparator(a, b);
+             * @param {Function} comparatorFn Функция, которая должна быть вызвана по окончанию обработки активного события.
+             * @param {String} propertyName Функция, которая должна быть вызвана по окончанию обработки активного события.
+             * @return {Function} Обернутая функция.
+             * */
             comparatorFor: function (comparatorFn, propertyName) {
                 if (comparatorFn.length === 1) {
                     return function (a) {
@@ -66,6 +77,11 @@ define(['module/lib', 'core/services/LocalizationService'],
                 }
             },
 
+            /**
+             * Принимает строку и создает объект LocalizedText <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
+             * @param {String} defaultText Текст, который будет установлен в каждое из свойств результирующего объекта.
+             * @return {Object} Объект <code>{ en, de, ru }</code>.
+             * */
             createLocalizedText: function (defaultText) {
                 return {
                     en: defaultText,
@@ -74,9 +90,16 @@ define(['module/lib', 'core/services/LocalizationService'],
                 };
             },
 
-            /*
-            * Javascript version of string.Format in .NET
-            * */
+            /**
+             * Javascript версия .NET метода <code>string.Format</code>.
+             * @example
+             * // returns 'Hello, Javascript!'
+             * core.utils.helpers.format('Hello, {0}!', 'Javascript');
+             * @param {String} text Форматируемая строка, содержащая плейсхолдеры в формате <code>{i}</code>.
+             * Где <code>i</code> - индекс подставляемого аргумента (начиная с нуля).
+             * @param {...*} arguments Агрументы, которые будут подставлены в плейсхолдеры.
+             * @return {String} Результирующая строка.
+             * */
             format: function(text) {
                 if (!_.isString(text)) {
                     return '';
@@ -88,12 +111,20 @@ define(['module/lib', 'core/services/LocalizationService'],
                 return text;
             },
 
-            /*
-            * Taking a number and array of strings, returns a valid plural form:
-            * getPluralForm(1, 'car,cars') -> 'car'
-            * getPluralForm(10, 'car,cars') -> 'cars'
-            * Works with complex cases and valid for all supported languages (en, de, ru)
-            * */
+            /**
+             * Taking a number and array of strings, returns a valid plural form.
+             * Works with complex cases and valid for all supported languages (en, de, ru).
+             * @function
+             * @example
+             * // returns 'car'
+             * core.utils.helpers.getPluralForm(1, 'car,cars');
+             * // returns 'cars'
+             * core.utils.helpers.getPluralForm(10, 'car,cars');
+             * @param {Number} n Число, для которого необходимо подобрать склонение.
+             * @param {String} texts Разделенные запятыми варианты фразы
+             * (для английского и немецкого - 2 фразы разделенные запятыми, для русского - 3 фразы разделенные запятыми).
+             * @return {String} Результирующая строка.
+             * */
             getPluralForm: (function (formula) {
                 var getIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
                 return function (n, texts) {
@@ -101,10 +132,20 @@ define(['module/lib', 'core/services/LocalizationService'],
                 };
             })(LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM')),
 
-            /*
-            * Puts operation into the fifo queue with specific Id and returns a promise that resolves on operation complete.
-            * The Operation must return promise object.
-            * */
+            /**
+             * Создает очередь из асинхронных операций. Поступающие операции выполняются последовательно.
+             * @example
+             * var save = form.save.bind(form);
+             * // Three sequential calls
+             * var promise1 = core.utils.helpers.enqueueOperation(save, 42);
+             * var promise2 = core.utils.helpers.enqueueOperation(save, 42);
+             * var promise3 = core.utils.helpers.enqueueOperation(save, 42);
+             * promise3.then(function () {
+             *     // Will be called only when all the 'save' operations has been fired and returned success.
+             * });
+             * @param {Function} operation функция, запускающая асинхронную операцию и возвращающая объект Promise.
+             * @param {String} queueId Строковый идентификатор цепочки операций.
+             * */
             enqueueOperation: function (operation, queueId) {
                 if (queueCache[queueId] && queueCache[queueId].isPending()) {
                     queueCache[queueId] = queueCache[queueId].then(function() {
@@ -116,13 +157,32 @@ define(['module/lib', 'core/services/LocalizationService'],
                 return queueCache[queueId];
             },
 
+            /**
+             * Последовательно применяет переданные в аргументах Behavior классы на заданный экземпляр объекта.
+             * Никак не связан с применением объектов Marionette.Behavior.
+             * @example
+             * core.utils.helpers.applyBehavior(this, core.models.behaviors.SelectableBehavior);
+             * @param {Object} target Объект, на который будут применены behaviors.
+             * @param {...Function} arguments 1 или более функций-конструкторов объектов Behavior.
+             * */
             applyBehavior: function (target) {
                 var behaviors = _.rest(arguments, 1);
                 _.each(behaviors, function (Behavior) {
                     _.extend(target, new Behavior(target));
                 });
             },
-            
+
+            /**
+             * Позволяет осуществить предварительную валидацию входных опций. Обычно применяется к конструкторе/инициалайзере объекта.
+             * Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingOptionError</code> в случае ошибки.
+             * @example
+             * // Checks that property options.model exists.
+             * core.utils.helpers.ensureOption(options, 'model');
+             * // Checks that property options.property1.subProperty exists.
+             * core.utils.helpers.ensureOption(options, 'property1.subProperty');
+             * @param {Object} options Проверяемый объект опций.
+             * @param {String} optionName Имя проверяемого свойства или разделенный точками путь к нему.
+             * */
             ensureOption: function (options, optionName) {
                 if (!options) {
                     helpers.throwError('The options object is required.', 'MissingOptionError');

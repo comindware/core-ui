@@ -78,7 +78,7 @@ define([
         CollapsibleBehavior,
         HighlightableBehavior,
         SelectableBehavior,
-	    
+
         LoadingView,
 
         LoadingBehavior,
@@ -109,7 +109,7 @@ define([
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
                 GlobalEventService: GlobalEventService,
-		        PromiseServer: PromiseServer,
+                PromiseServer: PromiseServer,
                 routing: {
                     ModuleProxy: ModuleProxy
                 }
@@ -157,7 +157,7 @@ define([
              * */
             dropdown: dropdownApi,
             /**
-             * Форма и редакторы (editors).
+             * Работа с данными: форма и редакторы. Базируется на библиотеке [Backbone.Form](https://github.com/powmedia/backbone-forms).
              * @namespace
              * */
             form: formApi,
@@ -172,7 +172,7 @@ define([
              * */
             nativeGrid: nativeGridApi,
             /**
-             * Вспомогательные утилиты
+             * Объединяет набор сервисов и справочников общего назначения.
              * @namespace
              * */
             utils: utilsApi,

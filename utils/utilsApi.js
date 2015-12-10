@@ -32,34 +32,37 @@ define([
         'use strict';
 
 
-        return /** @lends module:core.utils*/ {
+        return /** @lends module:core.utils */ {
             /**
-             * Набор компораторов (могут использоваться в Backbone collections или в _.sortBy)
+             * A set of useful comparators compatible with <code>_.sortBy()</code>.<br/><br/> The following naming convention is used:
+             * <code>&lt;dataType&gt;Comparator&lt;Arguments count: 1 or 2&gt;&lt;Comparing direction: 'Asc' or 'Desc'&gt;</code>.<br/><br/>
+             * For example: `stringComparator2Asc` means that comparator function takes 2 string objects and compares it in ascending order.<br/><br/>
+             * Can be used as <code>comparator</code> in Backbone.Collection.
              * @namespace
              * */
             comparators: comparators,
             /**
-             * Набор вспомогательных методов общего назначения
+             * Набор вспомогательных методов общего назначения.
              * @namespace
              * */
             helpers: helpers,
             /**
-             * Набор вспомогательных методов для манипуляций с html
+             * Набор вспомогательных методов для манипуляций с html.
              * @namespace
              * */
             htmlHelpers: htmlHelpers,
             /**
-             * Набор вспомогательных методов для работы с датами и временем
+             * Набор вспомогательных методов для работы с датами и временем.
              * @namespace
              * */
             dateHelpers: dateHelpers,
             /**
-             * Набор вспомогательных методов для работы с cookie's
+             * Набор вспомогательных методов для работы с cookies.
              * @namespace
              * */
             cookieHelpers: cookieHelpers,
             /**
-             * Клавиатурные коды
+             * Справочник констант с кодами клавиатуры.
              * @namespace
              * */
             keyCode: keyCode
