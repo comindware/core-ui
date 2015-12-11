@@ -15,7 +15,18 @@ define(['module/lib'],
     function () {
         'use strict';
 
-        var SlidingWindowCollection = Backbone.Collection.extend({
+        /**
+         * @name SlidingWindowCollection
+         * @memberof module:core.collections
+         * @class Коллекция-обертка, отображающая указанный интервал родительской Backbone-коллекции (скользящее окно).
+         * @constructor
+         * @extends Backbone.Collection
+         * @param {Object} options Объект опций.
+         * @param {Number} [options.position=0] Изначальное значении позиции окна.
+         * @param {Number} [options.windowSize=0] Изначальное значение размера окна (количество элементов).
+         * */
+
+        var SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.collections.SlidingWindowCollection.prototype */ {
             constructor: function (collection, options) //noinspection JSHint
             {
                 options = options || {};
@@ -109,6 +120,10 @@ define(['module/lib'],
                 this.parentCollection.sort(options);
             },
 
+            /**
+             * Обновить размер скользящего окна
+             * @param {Number} newWindowSize Новый размер скользящего окна
+             * */
             updateWindowSize: function (newWindowSize)
             {
                 if (this.state.windowSize !== newWindowSize) {
@@ -117,6 +132,10 @@ define(['module/lib'],
                 }
             },
 
+            /**
+             * Обновить позицию скользящего окна
+             * @param {Number} newPosition Новая позиция скользящего окна
+             * */
             updatePosition: function (newPosition)
             {
                 if (this.state.windowSize === undefined) {

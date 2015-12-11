@@ -115,12 +115,12 @@ define([
                 }
             },
             /**
-             * Backbone-коллекции общего назначения
+             * Backbone collections of general use.
              * @namespace
              * */
             collections: {
                 /**
-                 * Behavior-объекты общего назначения для Backbone-коллекций.
+                 * Backbone.Collection behaviors of general use.
                  * @namespace
                  * */
                 behaviors: {

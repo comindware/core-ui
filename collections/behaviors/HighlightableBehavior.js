@@ -15,10 +15,24 @@ define([ 'module/lib' ],
     function () {
         'use strict';
 
-        var HighlightableBehavior = function (model) {
+        /**
+         * Конструктор Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
+         * быть переданы как свойства behavior (см. документацию Marionette).
+         * @name HighlightableBehavior
+         * @memberof module:core.collection.behaviors
+         * @class Behavior требуется для подсветки текста в моделях коллекции. Стандартный сценарий использования:
+         * текстовый поиск с подсветкой найденных фрагментах в элементах списка.
+         * @constructor
+         * */
+
+        var HighlightableBehavior = function () {
         };
 
-        _.extend(HighlightableBehavior.prototype, {
+        _.extend(HighlightableBehavior.prototype, /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
+            /**
+             * Подсветить заданный текст во всех моделях.
+             * @param {String} text Текст, который необходимо подсветить.
+             * */
             highlight: function (text)
             {
                 this.parentCollection.each(function (record) {
@@ -28,6 +42,9 @@ define([ 'module/lib' ],
                 });
             },
 
+            /**
+             * Снять подсветку во всех моделях.
+             * */
             unhighlight: function ()
             {
                 this.parentCollection.each(function (record) {

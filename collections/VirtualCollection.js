@@ -79,7 +79,18 @@ define(['module/lib', '../models/behaviors/SelectableBehavior', 'core/utils/util
             groupingOptions.__normalized = true;
         }
 
-        var VirtualCollection = Backbone.Collection.extend({
+        /**
+         * @name VirtualCollection
+         * @memberof module:core.collections
+         * @class Коллекция-обертка, отображающая указанный интервал родительской Backbone-коллекции (скользящее окно).
+         * @constructor
+         * @extends Backbone.Collection
+         * @param {Object} options Объект опций.
+         * @param {Number} [options.position=0] Изначальное значении позиции окна.
+         * @param {Number} [options.windowSize=0] Изначальное значение размера окна (количество элементов).
+         * */
+
+        var VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collections.SlidingWindowCollection.prototype */ {
             constructor: function (collection, options) //noinspection JSHint
             {
                 options = options || {};

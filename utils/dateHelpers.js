@@ -161,10 +161,20 @@ define([
     };
 
     return /** @lends module:core.utils.dateHelpers */ {
+        /**
+         * Takes a date in the format that momentJS supports and converts it into a JavaScript <code>Date</code> object.
+         * @param {String|Date|Object} date Date string in ISO8601 format, JavaScript or momentJS date object.
+         * @return {Date} JavaScript <code>Date</code> object.
+         * */
         dateToISOString: function (date) {
             return moment(date).toISOString();
         },
 
+        /**
+         * Takes a date string in ISO8601 format and converts it into a JavaScript <code>Date</code> object.
+         * @param {String} dateIsoString Date in ISO8601 format.
+         * @return {Date} JavaScript <code>Date</code> object.
+         * */
         dateISOToDate: function (dateIsoString) {
             return moment(dateIsoString).toDate();
         },
