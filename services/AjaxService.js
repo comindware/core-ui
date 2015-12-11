@@ -83,6 +83,7 @@
                         error.errorData = result.errorData;
                         throw error;
                     }
+                    // TODO: remove this check!
                     if (result.refresh) {
                         _.defer(function() {
                             window.location.reload();
