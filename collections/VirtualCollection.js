@@ -82,15 +82,32 @@ define(['module/lib', '../models/behaviors/SelectableBehavior', 'core/utils/util
         /**
          * @name VirtualCollection
          * @memberof module:core.collections
-         * @class Коллекция-обертка, отображающая указанный интервал родительской Backbone-коллекции (скользящее окно).
+         * @class Коллекция-обертка, раширяющая родительскую Backbone-коллекцию функциями
+         * фильтрация, группировка (включая вложенную группировку и сворачивание групп), древовидное представление.<br/><br/>
+         * Используется в качестве модели данных для контролов виртуального списка и таблицы (<code>core.list</code>).<br/><br/>
+         * Оптимизировано для корректной работы с коллекцией до 100000 элементов.
          * @constructor
          * @extends Backbone.Collection
+         * @param {Backbone.Collection} collection Родительская Backbone-коллекция.
          * @param {Object} options Объект опций.
-         * @param {Number} [options.position=0] Изначальное значении позиции окна.
-         * @param {Number} [options.windowSize=0] Изначальное значение размера окна (количество элементов).
+         * @param {Boolean} [options.delayedAdd=true] Добавление новой модели в коллекцию требует пересчета внутреннего индекса.
+         * Из этого следует, что добавление множества моделей приводит к резкому снижению производительности.
+         * Данная опция позволяет отложить пересчет индекса до окончания активного события.
+         * @param {Function} options.comparator Функция-компаратор.
+         * @param {Object} options.grouping .
+         * @param {Object} options.filter .
+         * @param {Backbone.Model} options.model Если указано, будет использована как Backbone.Model при добавление новых объектов в формате JSON.
+         * По умолчанию используется модель родительской коллекции.
+         * @param {String} [options.selectableBehavior='single'] Позволяет расширить коллекцию объектом SelectableBehavior.
+         * Используемая модель также должна поддерживать SelectableBehavior.<br/>
+         * Возможные варианты:<ul>
+         *     <li><code>'none'</code> - не использовать selectable behavior.</li>
+         *     <li><code>'single'</code> - использовать SelectableBehavior.SingleSelect.</li>
+         *     <li><code>'multi'</code> - использовать SelectableBehavior.MultiSelect.</li>
+         * </ul>.
          * */
 
-        var VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collections.SlidingWindowCollection.prototype */ {
+        var VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collections.VirtualCollection.prototype */ {
             constructor: function (collection, options) //noinspection JSHint
             {
                 options = options || {};
