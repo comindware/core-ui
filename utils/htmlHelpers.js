@@ -20,12 +20,14 @@ define(['module/lib', 'core/serviceLocator'],
         'use strict';
 
         return /** @lends module:core.utils.htmlHelpers */ {
-            /*
-            * Highlights fragments within a text with <span class='highlight'><span>.
-            *
-            * If escape is true (or not provided), escapes the text with Handlebars.Utils.escapeExpression first.
-            *
-            * */
+            /**
+             * Highlights fragments within a text with &lt;span class='highlight'&gt;&lt;/span&gt;.
+             * @param {String} text Text to highlight.
+             * @param {String} fragment highlighted fragment.
+             * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
+             * the <code>text</code> before highlighting.
+             * @return {String} Highlighted text
+             * */
             highlightText: function (text, fragment, escape)
             {
                 if (!text) {
@@ -52,6 +54,13 @@ define(['module/lib', 'core/serviceLocator'],
                 return output;
             },
 
+            /**
+             * Highlights mentioned with `@` users in text with &lt;a href='...'&gt;&lt;/a&gt; tag.
+             * @param {String} text Text to highlight.
+             * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
+             * the <code>text</code> before highlighting.
+             * @return {String} Highlighted text
+             * */
             highlightMentions: function (text, escape)
             {
                 if (!text) {
@@ -81,6 +90,13 @@ define(['module/lib', 'core/serviceLocator'],
                 });
             },
 
+            /**
+             * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt; tag.
+             * @param {String} text Text to highlight.
+             * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
+             * the <code>text</code> before highlighting.
+             * @return {String} Highlighted text
+             * */
             highlightUrls: function (text, escape) {
                 if (!text) {
                     return '';
@@ -95,14 +111,19 @@ define(['module/lib', 'core/serviceLocator'],
                 });
             },
 
+            /**
+             * Checks if element is presented in visible DOM.
+             * @param {Object} el DOM-element to check.
+             * @return {Boolean} True if an element is presented in DOM.
+             * */
             isElementInDom: function (el) {
                 return document.body.contains(el);
             },
 
-            /*
-            * Assigns empty onselectstart and ondragstart events handlers to prevent selection on an element.
-            *
-            * */
+            /**
+             * Use CSS for the same effect. IE8 is not supported anymore.
+             * @deprecated
+             */
             forbidSelection: function (el)
             {
                 function stopAndPreventDefault(e) {
@@ -118,6 +139,10 @@ define(['module/lib', 'core/serviceLocator'],
                 el.ondragstart = stopAndPreventDefault;
             },
 
+            /**
+             * Use jQuery <code>.offset()</code>.
+             * @deprecated
+             */
             getDocumentPosition: function (el) {
                 if (el instanceof window.jQuery) {
                     el = el[0];

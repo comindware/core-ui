@@ -204,6 +204,15 @@ define(['module/lib', 'core/services/LocalizationService'],
                 }
             },
 
+            /**
+             * Позволяет осуществить предварительную валидацию свойств объекта.
+             * Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingPropertyError</code> в случае ошибки.
+             * @example
+             * // Checks that property this.view.moduleRegion exists.
+             * core.utils.helpers.ensureOption(this.view, 'moduleRegion');
+             * @param {Object} object Проверяемый объект.
+             * @param {String} propertyName Имя проверяемого свойства или разделенный точками путь к нему.
+             * */
             ensureProperty: function (object, propertyName) {
                 if (!object) {
                     helpers.throwError('The object is null.', 'NullObjectError');
@@ -225,44 +234,134 @@ define(['module/lib', 'core/services/LocalizationService'],
                 }
             },
 
+            /**
+             * Позволяет получить свойство объекта (или подобъекта) без ошибок в случае, если сам объект или его подобъекты не заданы.
+             * @example
+             * var foo = { a: {} };
+             * // returns undefined (doesn't throw an error)
+             * core.utils.helpers.getPropertyOrDefault(foo, 'a.b.c.d');
+             * @param {String} propertyPath Имя получаемого свойства или разделенный точками путь к нему.
+             * @param {Object} obj Объект, на который применяется путь.
+             * */
             getPropertyOrDefault: function (propertyPath, obj) {
                 return [obj].concat(propertyPath.split('.')).reduce(function(prev, curr) {
                     return prev === undefined ? undefined : prev[curr];
                 });
             },
 
+            /**
+             * Позволяет осуществить предварительную валидацию, что значение не равно <code>undefined, null, 0, '', false</code>.
+             * Кидает исключение <code>ArgumentFalsyError</code> в случае ошибки.
+             * @example
+             * core.utils.helpers.assertArgumentNotFalsy(argument1, 'argument1');
+             * @param {*} argumentValue Проверяемое значение.
+             * @param {String} argumentName Имя проверяемой переменной. Указывается тексте исключения.
+             * */
             assertArgumentNotFalsy: function (argumentValue, argumentName) {
                 if (!argumentValue) {
                     this.throwError('Argument `' + argumentName + '` is falsy.', 'ArgumentFalsyError');
                 }
             },
 
+            /**
+             * Упрощенный способ бросить объект-исключение.
+             * @example
+             * core.utils.helpers.throwError('Request is invalid.');
+             * @param {String} message Сообщение об ошибке.
+             * @param {String} [name='Error'] Имя исключения (поле Name объекта Error).
+             * */
             throwError: function (message, name) {
                 var error = new Error(message);
                 error.name = name || 'Error';
                 throw error;
             },
 
+            /**
+             * Бросает InvalidOperationError. Возникает внутри метода класса, когда объект находится в некорректном состоянии.
+             * @example
+             * // Inside of implementation of some Marionette.View.
+             * addKeyboardListener: function (key, callback) {
+             *     if (!this.keyListener) {
+             *         utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+             *     }
+             *     var keys = key.split(',');
+             *     _.each(keys, function (k) {
+             *         this.keyListener.simple_combo(k, callback);
+             *     }, this);
+             * },
+             * // ...
+             * @param {String} [message='Invalid operation'] Сообщение об ошибке.
+             * */
             throwInvalidOperationError: function (message) {
                 helpers.throwError(message || 'Invalid operation', 'InvalidOperationError');
             },
 
+            /**
+             * Throws FormatError. The exception should be thrown when the format of an argument is invalid, or when a is not well formed.
+             * @example
+             * function (url, parameterNames, parameters, callback) {
+             *     // Some code here ...
+             *     if (parameters.Length !== parameterNames.length) {
+             *         utilsApi.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
+             *     }
+             *     // Some code here ...
+             * @param {String} [message='Invalid format'] Сообщение об ошибке.
+             * */
             throwFormatError: function (message) {
                 helpers.throwError(message || 'Invalid format', 'FormatError');
             },
 
+            /**
+             * Throws ArgumentError. The exception should be thrown when one of the arguments provided to a method is not valid.
+             * Should be thrown only when one particular argument is invalid. If a combination of arguments is invalid use <code>FormatError</code>.
+             * @example
+             * function (url, parameterNames, parameters, callback) {
+             *     // Some code here ...
+             *     if (parameterNames.Length !== 2) {
+             *         utilsApi.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
+             *     }
+             *     // Some code here ...
+             * @param {String} [message='Invalid argument'] Сообщение об ошибке.
+             * */
             throwArgumentError: function (message) {
                 helpers.throwError(message || 'Invalid argument', 'ArgumentError');
             },
 
+            /**
+             * Throws NotSupportedError. The exception should be thrown when an invoked method is not supported.
+             * For example: some class doesn't support all the methods of the interface it implements.
+             * @example
+             * // Inside of implementation of some Stream class
+             * seek() {
+             *     // Some code here ...
+             *     utilsApi.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
+             *     // Some code here ...
+             * }
+             * @param {String} [message='The operation is not supported'] Сообщение об ошибке.
+             * */
             throwNotSupportedError: function (message) {
                 helpers.throwError(message || 'The operation is not supported', 'NotSupportedError');
             },
 
+            /**
+             * Throws NotImplementedError. The exception should be thrown when a requested method or operation is not implemented.
+             * For example: a base class could have abstract methods that throws such error.
+             * @example
+             * // Inside of implementation of some base controller class.
+             * navigate() {
+             *     utilsApi.helpers.throwNotImplementedError();
+             * }
+             * @param {String} [message='The operation is not implemented'] Сообщение об ошибке.
+             * */
             throwNotImplementedError: function (message) {
                 helpers.throwError(message || 'The operation is not implemented', 'NotImplementedError');
             },
 
+            /**
+             * Throws NotFoundError. The exception should be thrown when a requested object could not be found.
+             * For example: we looked up in the database and could find a person with requested id.
+             * @param {String} [message='Object not found'] Сообщение об ошибке.
+             * */
             throwNotFoundError: function (message) {
                 helpers.throwError(message || 'Object not found', 'NotFoundError');
             }
