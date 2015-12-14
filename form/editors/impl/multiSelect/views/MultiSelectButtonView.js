@@ -13,7 +13,7 @@
 
 define(
     [
-        'module/lib',
+        'core/libApi',
         'core/utils/utilsApi',
         'text!../templates/multiSelectButton.html'
     ],

@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars, _, $ */
 
-define(['module/lib', 'core/utils/utilsApi'],
+define(['core/libApi', 'core/utils/utilsApi'],
     function (lib, utils) {
         'use strict';
 

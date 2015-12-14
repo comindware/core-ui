@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'text!../templates/radioButton.html'],
+define(['core/libApi', 'text!../templates/radioButton.html'],
     function (utils, template) {
         'use strict';
 

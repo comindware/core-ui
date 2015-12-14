@@ -23,7 +23,7 @@
  */
 
 define([
-        'module/lib',
+        'core/libApi',
         'core/utils/utilsApi',
         'core/collections/SlidingWindowCollection',
         'text!core/list/templates/list.html'

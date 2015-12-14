@@ -11,7 +11,7 @@
 
 /* global define, require, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib'],
+define(['core/libApi'],
     function (lib) {
         'use strict';
         /**

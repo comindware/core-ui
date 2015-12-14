@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', './message/views/MessageView', './WindowService', './LocalizationService'],
+define(['core/libApi', './message/views/MessageView', './WindowService', './LocalizationService'],
     function (lib, MessageView, WindowService, LocalizationService) {
         'use strict';
 

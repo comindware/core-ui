@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars */
 
-define(['text!../templates/fadingPanel.html', 'module/lib'],
+define(['text!../templates/fadingPanel.html', 'core/libApi'],
     function (template) {
         'use strict';
 

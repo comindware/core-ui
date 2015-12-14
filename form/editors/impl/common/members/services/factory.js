@@ -13,7 +13,7 @@
 
 define([
     '../collections/MembersCollection',
-    'module/lib',
+    'core/libApi',
     'core/dropdown/dropdownApi',
     'core/utils/utilsApi',
     'core/serviceLocator',

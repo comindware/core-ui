@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'text!../templates/searchBar.html', 'core/services/LocalizationService'],
+define(['core/libApi', 'text!../templates/searchBar.html', 'core/services/LocalizationService'],
     function (utils, template, LocalizationService) {
         'use strict';
 

@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib',
+define(['core/libApi',
         'text!../templates/nativeGrid.html',
         './ListView',
         'core/nativeGrid/views/RowView',

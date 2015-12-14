@@ -32,7 +32,7 @@
     2. (!) Be sure that the text you set into html is escaped.
 */
 define([
-    'module/lib',
+    'core/libApi',
     'core/utils/utilsApi'
 ], function (lib, utilsApi) {
     'use strict';

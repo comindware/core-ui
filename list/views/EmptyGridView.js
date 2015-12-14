@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars, Backbone */
 
-define(['text!core/list/templates/emptyGrid.html', 'module/lib', 'core/services/LocalizationService'],
+define(['text!core/list/templates/emptyGrid.html', 'core/libApi', 'core/services/LocalizationService'],
     function (template, lib, LocalizationService) {
         'use strict';
 

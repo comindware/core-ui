@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars */
 
-define(['text!../templates/columnHeader.html', 'module/lib', '../../list/views/GridColumnHeaderView'],
+define(['text!../templates/columnHeader.html', 'core/libApi', '../../list/views/GridColumnHeaderView'],
     function (template, lib, GridColumnHeaderView) {
         'use strict';
 

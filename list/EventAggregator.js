@@ -39,7 +39,7 @@ define(['./views/EmptyListView',
         './views/behaviors/ListItemViewBehavior',
         './models/behaviors/ListGroupBehavior',
         './models/behaviors/ListItemBehavior',
-        'module/lib'
+        'core/libApi'
     ],
     function () {
         'use strict';

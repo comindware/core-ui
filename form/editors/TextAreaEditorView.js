@@ -14,7 +14,7 @@
 define(['text!./templates/textAreaEditor.html',
         './base/BaseItemEditorView',
         'core/services/LocalizationService',
-        'module/lib',
+        'core/libApi',
         'core/utils/keyCode',
         'core/utils/utilsApi' ],
     function (template,

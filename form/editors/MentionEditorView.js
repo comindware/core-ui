@@ -13,7 +13,7 @@
 
 define([
     'text!./templates/mentionEditor.html',
-    'module/lib',
+    'core/libApi',
     'core/dropdown/dropdownApi',
     'core/utils/utilsApi',
     'core/serviceLocator',

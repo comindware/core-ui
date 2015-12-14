@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!../templates/message.html', 'module/lib', '../../WindowService'],
+define(['text!../templates/message.html', 'core/libApi', '../../WindowService'],
     function (template, lib, WindowService, LocalizationService) {
         'use strict';
 

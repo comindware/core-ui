@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'text!../templates/loadingRow.html'],
+define(['core/libApi', 'text!../templates/loadingRow.html'],
     function (lib, template) {
         'use strict';
 

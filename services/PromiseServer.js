@@ -1,4 +1,4 @@
-﻿define(['module/lib', './promise/Config'], function() {
+﻿define(['core/libApi', './promise/Config'], function() {
     'use strict';
 
     var promiseQueue = [];

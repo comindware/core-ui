@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/list/listApi', 'text!../templates/time.html', './TimeInputView'],
+define(['core/libApi', 'core/utils/utilsApi', 'core/dropdown/dropdownApi', 'core/list/listApi', 'text!../templates/time.html', './TimeInputView'],
     function (lib, utils, dropdown, list, template, TimeInputView) {
         'use strict';
 

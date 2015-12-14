@@ -11,7 +11,7 @@
 
 /* global define, require, Backbone, _ */
 
-define([ 'module/lib' ],
+define([ 'core/libApi' ],
     function () {
         'use strict';
 

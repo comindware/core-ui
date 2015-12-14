@@ -16,7 +16,7 @@
 *
 * */
 
-define(['module/lib'],
+define(['core/libApi'],
     function () {
         'use strict';
 

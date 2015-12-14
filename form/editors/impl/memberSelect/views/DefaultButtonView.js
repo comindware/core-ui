@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define(['core/dropdown/dropdownApi',
-        'module/lib',
+        'core/libApi',
         'text!../templates/defaultButton.html'
     ],
     function (dropdown, lib, template) {

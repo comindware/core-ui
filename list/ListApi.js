@@ -30,7 +30,7 @@ define(['./EventAggregator',
 
         './factory',
         './CellViewFactory',
-        'module/lib'
+        'core/libApi'
     ],
     function (EventAggregator,
               EmptyListView,

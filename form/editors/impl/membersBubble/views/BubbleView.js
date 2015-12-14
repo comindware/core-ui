@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'text!../templates/bubble.html'],
+define(['core/libApi', 'text!../templates/bubble.html'],
     function (utils, template) {
         'use strict';
         return Marionette.ItemView.extend({

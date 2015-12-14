@@ -1,4 +1,4 @@
-﻿define(['module/lib'], function () {
+﻿define(['core/libApi'], function () {
     Promise.config({
         warnings: false,
         longStackTraces: true,

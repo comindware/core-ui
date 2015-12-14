@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib','text!./templates/dateTimeEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/DateView', './impl/dateTime/views/TimeView'],
+define(['core/libApi','text!./templates/dateTimeEditor.html', './base/BaseLayoutEditorView', './impl/dateTime/views/DateView', './impl/dateTime/views/TimeView'],
     function (lib, template, BaseLayoutEditorView, DateView, TimeView) {
         'use strict';
 

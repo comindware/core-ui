@@ -16,7 +16,7 @@ define(['./Factory',
         './views/RowView',
         './views/HeaderView',
         './views/NativeGridView',
-        'module/lib'
+        'core/libApi'
     ],
     function (factory, filterViewFactory, RowView, HeaderView, NativeGridView) {
         'use strict';

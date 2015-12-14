@@ -1,6 +1,6 @@
 ﻿/* global Marionette, define */
 
-define(['module/lib'], function() {
+define(['core/libApi'], function() {
     "use strict";
 
 	return Marionette.ItemView.extend({

@@ -23,7 +23,7 @@
  */
 
 define(['text!core/list/templates/grid.html',
-        'module/lib',
+        'core/libApi',
         'core/utils/utilsApi',
         'core/list/views/ListView',
         'core/list/views/RowView',

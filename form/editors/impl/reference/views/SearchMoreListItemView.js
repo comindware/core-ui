@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!../templates/searchMoreListItem.html', 'module/lib'],
+define(['text!../templates/searchMoreListItem.html', 'core/libApi'],
     function (template, lib) {
         'use strict';
         return Marionette.ItemView.extend({

@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-    'module/lib',
+    'core/libApi',
     './dateHelpers',
     './htmlHelpers'
 ], function (lib, dateHelpers, htmlHelpers) {

@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        'module/lib',
+        'core/libApi',
         './base/BaseCollectionEditorView',
         './impl/radioGroup/views/RadioButtonView',
         './impl/radioGroup/collections/RadioGroupCollection'

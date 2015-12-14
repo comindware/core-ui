@@ -13,7 +13,7 @@
 
 define([
     'text!../templates/pop.out.html',
-    'module/lib',
+    'core/libApi',
     'core/utils/utilsApi',
     'core/services/WindowService',
     'core/views/behaviors/BlurableBehavior'

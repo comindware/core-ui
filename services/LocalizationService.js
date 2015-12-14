@@ -15,7 +15,7 @@
 (function (global) {
     'use strict';
 
-    define([ 'module/lib', 'localizationMap' ], function (lib) {
+    define([ 'core/libApi', 'localizationMap' ], function (lib) {
         var defaultLangCode = 'en';
         var langCode = global.langCode;
         var isProductionEnv = global.compiled;

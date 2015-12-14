@@ -1,4 +1,4 @@
-﻿define(['module/lib'], function () {
+﻿define(['core/libApi'], function () {
     'use strict';
 
     var regExpOld = Backbone.Form.validators.regexp;

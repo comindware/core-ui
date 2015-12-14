@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        'module/lib',
+        'core/libApi',
         'core/list/listApi',
         'core/utils/utilsApi',
         'text!../templates/listItem.html'

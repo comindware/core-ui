@@ -11,7 +11,7 @@
 
 /* global define, require, Marionette, Handlebars, _, $ */
 
-define(['module/lib', 'core/utils/utilsApi', '../../../list/views/behaviors/GridItemViewBehavior'],
+define(['core/libApi', 'core/utils/utilsApi', '../../../list/views/behaviors/GridItemViewBehavior'],
     function (lib, utils, GridItemViewBehavior) {
         'use strict';
 

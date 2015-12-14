@@ -15,7 +15,7 @@
 (function (global) {
     'use strict';
 
-    define(['module/lib', 'core/utils/utilsApi', './PromiseServer', 'ajaxMap'], function (lib, utilsApi, PromiseServer) {
+    define(['core/libApi', 'core/utils/utilsApi', './PromiseServer', 'ajaxMap'], function (lib, utilsApi, PromiseServer) {
         var ajaxMap = global.ajaxMap;
 
         //noinspection JSUnusedGlobalSymbols

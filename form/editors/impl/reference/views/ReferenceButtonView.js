@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'text!../../reference/templates/referenceButton.html'],
+define(['core/libApi', 'text!../../reference/templates/referenceButton.html'],
     function (lib, template) {
         'use strict';
 

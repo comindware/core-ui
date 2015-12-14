@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!../templates/menuItem.html', 'module/lib'],
+define(['text!../templates/menuItem.html', 'core/libApi'],
     function (template) {
         'use strict';
 

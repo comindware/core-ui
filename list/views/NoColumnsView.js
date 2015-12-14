@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'text!core/list/templates/noColumns.html'],
+define(['core/libApi', 'text!core/list/templates/noColumns.html'],
     function (lib, template) {
         'use strict';
 

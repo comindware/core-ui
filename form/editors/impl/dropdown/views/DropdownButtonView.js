@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'text!../templates/dropdownButton.html'],
+define(['core/libApi', 'text!../templates/dropdownButton.html'],
     function (lib, template) {
         'use strict';
 

@@ -15,7 +15,7 @@
 * HtmlHelpers contains methods that somehow modify dom elements or generate html.
 *
 * */
-define(['module/lib', 'core/serviceLocator'],
+define(['core/libApi', 'core/serviceLocator'],
     function (lib, serviceLocator) {
         'use strict';
 

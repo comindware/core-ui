@@ -12,7 +12,7 @@
 /* global define, require, Marionette, _, Handlebars, classes, shared, $ */
 
 define([
-        'module/lib',
+        'core/libApi',
         'core/utils/utilsApi',
         'text!core/list/templates/list.html'
     ],

@@ -17,7 +17,7 @@
 *
 * */
 
-define(['text!core/list/templates/gridheader.html', 'module/lib', 'core/utils/utilsApi', 'core/services/GlobalEventService'],
+define(['text!core/list/templates/gridheader.html', 'core/libApi', 'core/utils/utilsApi', 'core/services/GlobalEventService'],
     function (template, lib, utils, GlobalEventService) {
         'use strict';
 

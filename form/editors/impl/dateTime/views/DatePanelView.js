@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'text!../templates/datePanel.html'],
+define(['core/libApi', 'core/utils/utilsApi', 'text!../templates/datePanel.html'],
     function (lib, utils, template) {
         'use strict';
 

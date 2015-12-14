@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService', 'core/utils/utilsApi'],
+define(['core/libApi', 'text!./templates/textEditor.html', './base/BaseItemEditorView', 'core/services/LocalizationService', 'core/utils/utilsApi'],
     function (lib, template, BaseItemEditorView, LocalizationService, utilsApi) {
         'use strict';
 

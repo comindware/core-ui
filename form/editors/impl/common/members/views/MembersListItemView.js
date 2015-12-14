@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'core/list/listApi', 'core/utils/utilsApi', 'text!../templates/listItem.html' ],
+define(['core/libApi', 'core/list/listApi', 'core/utils/utilsApi', 'text!../templates/listItem.html' ],
     function (lib, list, utils, template) {
         'use strict';
         return Marionette.ItemView.extend({

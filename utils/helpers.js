@@ -11,7 +11,7 @@
 
 /* global define, require, _, $ */
 
-define(['module/lib', 'core/services/LocalizationService'],
+define(['core/libApi', 'core/services/LocalizationService'],
     function (lib, LocalizationService) {
         'use strict';
 

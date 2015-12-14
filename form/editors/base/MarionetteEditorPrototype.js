@@ -18,7 +18,7 @@
 * */
 
 define([
-        'module/lib'
+        'core/libApi'
     ],
     function () {
         'use strict';

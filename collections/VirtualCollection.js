@@ -11,8 +11,8 @@
 
 /* global define, require, Backbone, _, shared */
 
-define(['module/lib', '../models/behaviors/SelectableBehavior', 'core/utils/utilsApi'],
-    function (system, SelectableBehavior, utils) {
+define(['core/libApi', '../models/behaviors/SelectableBehavior', 'core/utils/utilsApi'],
+    function (lib, SelectableBehavior, utils) {
         'use strict';
 
         var selectableBehavior = {

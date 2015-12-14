@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-    'module/lib',
+    'core/libApi',
     'text!./templates/CommonField.html',
     './models/FieldInfoModel',
     './views/InfoButtonView',

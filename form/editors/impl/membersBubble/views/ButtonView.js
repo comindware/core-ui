@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['module/lib', 'text!../templates/button.html', './BubbleView', './InputView', '../models/FakeInputModel'],
+define(['core/libApi', 'text!../templates/button.html', './BubbleView', './InputView', '../models/FakeInputModel'],
     function (utils, template, BubbleView, InputView, FakeInputModel) {
         'use strict';
 

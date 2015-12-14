@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/utils/utilsApi', 'text!../templates/input.html', 'core/services/LocalizationService'],
+define(['core/libApi', 'core/utils/utilsApi', 'text!../templates/input.html', 'core/services/LocalizationService'],
     function (lib, utils, template, LocalizationService) {
         'use strict';
 

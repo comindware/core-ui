@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define(['./BaseReferenceEditorController',
-        'module/lib'
+        'core/libApi'
 ],
     function (BaseReferenceEditorController, lib) {
         'use strict';

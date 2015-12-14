@@ -13,7 +13,7 @@
 
 define(
     [
-        'module/lib',
+        'core/libApi',
         'core/list/listApi',
         'core/dropdown/dropdownApi',
         'text!./templates/multiSelectEditor.html',

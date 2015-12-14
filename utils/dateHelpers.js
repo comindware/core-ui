@@ -12,7 +12,7 @@
 /* Useful and general methods for work with Date and Time put here*/
 
 define([
-    'module/lib'
+    'core/libApi'
 ], function (lib) {
     'use strict';
 

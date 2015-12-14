@@ -12,7 +12,7 @@
 /* global define, require, Backbone, Marionette, $, _ */
 
 define([
-        'module/lib',
+        'core/libApi',
         'core/utils/utilsApi',
         'core/collections/behaviors/HighlightableBehavior',
         'core/models/behaviors/SelectableBehavior',

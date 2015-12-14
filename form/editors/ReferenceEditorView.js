@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        'module/lib',
+        'core/libApi',
         'core/dropdown/dropdownApi',
         'text!./templates/referenceEditor.html',
         './base/BaseLayoutEditorView',

@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-    'module/lib',
+    'core/libApi',
     'text!../templates/splitPanel.html',
     'core/services/GlobalEventService'
 ], function (lib, template, GlobalEventService) {

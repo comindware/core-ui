@@ -1,6 +1,6 @@
 ﻿/* global define, Backbone */
 
-define(['module/lib'], function() {
+define(['core/libApi'], function() {
     "use strict";
 
 	return Backbone.Model.extend({

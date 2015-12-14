@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        'module/lib',
+        './libApi',
 
         './utils/utilsApi',
         './dropdown/dropdownApi',
@@ -98,6 +98,7 @@ define([
          * @exports core
          * */
         var exports = {
+            lib: lib,
             /**
              * Базовые сервисы системы
              * @namespace

@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib', 'core/services/LocalizationService'], function (lib, LocalizationService) {
+define(['core/libApi', 'core/services/LocalizationService'], function (lib, LocalizationService) {
     'use strict';
     
     Backbone.Form.validators.errMessages.phone = LocalizationService.get('CORE.FORM.VALIDATION.PHONE');

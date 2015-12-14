@@ -22,7 +22,7 @@
         viewportHeight change (when we resize content views attached to this scrollbar): updateViewportHeight(newViewportHeight)
 */
 
-define(['text!core/list/templates/scrollbar.html', 'module/lib'],
+define(['text!core/list/templates/scrollbar.html', 'core/libApi'],
     function (template) {
         'use strict';
 

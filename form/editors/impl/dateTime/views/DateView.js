@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['module/lib',
+define(['core/libApi',
         'core/utils/utilsApi',
         'text!../templates/date.html',
         '../../../../../dropdown/dropdownApi',
