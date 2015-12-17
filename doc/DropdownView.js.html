@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Comindware UI-Core API Source: dropdown/views/DropdownView.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Comindware UI-Core API</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collections.html">core.collections</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.behaviors.html">core.collections.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.html">core.dropdown</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.factory.html">core.dropdown.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.html">core.dropdown.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.html">core.dropdown.views.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.html">core.form</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.html">core.form.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.html">core.form.editors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.html">core.form.editors.reference</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.html">core.form.editors.reference.controllers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.fields.html">core.form.fields</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.html">core.list</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.cellFactory.html">core.list.cellFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.factory.html">core.list.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.html">core.list.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.html">core.list.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.meta.html">core.meta</a>
+						</li>
+						
+						<li>
+							<a href="module-core.models.html">core.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.html">core.nativeGrid</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.factory.html">core.nativeGrid.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.filterViewFactory.html">core.nativeGrid.filterViewFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.html">core.nativeGrid.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.services.html">core.services</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.html">core.utils</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.comparators.html">core.utils.comparators</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.cookieHelpers.html">core.utils.cookieHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.dateHelpers.html">core.utils.dateHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.helpers.html">core.utils.helpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.htmlHelpers.html">core.utils.htmlHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.keyCode.html">core.utils.keyCode</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.html">core</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collection.behaviors.HighlightableBehavior.html">core.collection.behaviors.HighlightableBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.SlidingWindowCollection.html">core.collections.SlidingWindowCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.VirtualCollection.html">core.collections.VirtualCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.CustomAnchorBehavior.html">core.dropdown.views.behaviors.CustomAnchorBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DefaultButtonView.html">core.dropdown.views.DefaultButtonView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DropdownView.html">core.dropdown.views.DropdownView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.ListPanelView.html">core.dropdown.views.ListPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuItemView.html">core.dropdown.views.MenuItemView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuPanelView.html">core.dropdown.views.MenuPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.PopoutView.html">core.dropdown.views.PopoutView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.BaseEditorView.html">core.form.editors.base.BaseEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.BooleanEditorView.html">core.form.editors.BooleanEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateEditorView.html">core.form.editors.DateEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateTimeEditorView.html">core.form.editors.DateTimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DropdownEditorView.html">core.form.editors.DropdownEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DurationEditorView.html">core.form.editors.DurationEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MembersBubbleEditorView.html">core.form.editors.MembersBubbleEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MemberSelectEditorView.html">core.form.editors.MemberSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MentionEditorView.html">core.form.editors.MentionEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MultiSelectEditorView.html">core.form.editors.MultiSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.NumberEditorView.html">core.form.editors.NumberEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.PasswordEditorView.html">core.form.editors.PasswordEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.RadioGroupEditorView.html">core.form.editors.RadioGroupEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.BaseReferenceEditorController.html">core.form.editors.reference.controllers.BaseReferenceEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.ReferenceEditorView.html">core.form.editors.ReferenceEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextAreaEditorView.html">core.form.editors.TextAreaEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextEditorView.html">core.form.editors.TextEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TimeEditorView.html">core.form.editors.TimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.ExtendedForm.html">core.form.ExtendedForm</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.LoadingRowModel.html">core.list.models.LoadingRowModel</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyGridView.html">core.list.views.EmptyGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyListView.html">core.list.views.EmptyListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridColumnHeaderView.html">core.list.views.GridColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridHeaderView.html">core.list.views.GridHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridView.html">core.list.views.GridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ListView.html">core.list.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.LoadingRowView.html">core.list.views.LoadingRowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.NoColumnsView.html">core.list.views.NoColumnsView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.RowView.html">core.list.views.RowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ScrollBarView.html">core.list.views.ScrollBarView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ColumnHeaderView.html">core.nativeGrid.views.ColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.HeaderView.html">core.nativeGrid.views.HeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ListView.html">core.nativeGrid.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.NativeGridView.html">core.nativeGrid.views.NativeGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.RowView.html">core.nativeGrid.views.RowView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: dropdown/views/DropdownView.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">/**
+ * Developer: Stepan Burguchev
+ * Date: 11/27/2014
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
+/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+
+define(['text!../templates/dropdown.html', 'core/libApi', 'core/utils/utilsApi'],
+    function (template, lib, utils) {
+        'use strict';
+
+        var classes = {
+            OPEN: 'open',
+            DROPDOWN_DOWN: 'dropdown__wrp_down',
+            DROPDOWN_WRP_OVER: 'dropdown__wrp_over',
+            DROPDOWN_UP: 'dropdown__wrp_up',
+            DROPDOWN_UP_OVER: 'dev-panel-up-over'
+        };
+
+        var panelPosition = {
+            DOWN: 'down',
+            DOWN_OVER: 'down-over',
+            UP: 'up',
+            UP_OVER: 'up-over'
+        };
+
+        var defaultOptions = {
+            autoOpen: true,
+            renderAfterClose: true,
+            panelPosition: panelPosition.DOWN
+        };
+
+        /**
+         * @name DropdownView
+         * @memberof module:core.dropdown.views
+         * @class Составная View. Используется для отображения выпадающей панели. Реализует логику HTML-элемента SELECT:
+         * ширина панели привязана к ширине кнопки.
+         * &lt;ul>
+         * &lt;li>Button View - используется для отображения кнопки, по нажатии на которую всплывает панель.&lt;/li>
+         * &lt;li>Panel View - используется при отображении выпадающей панели.&lt;/li>
+         * &lt;/ul>
+         * Ширина панели определяется CSS View панели, но не может быть меньше ширины кнопки. Высота панели определяется CSS View панели.
+         * Позиция панели регулируется опцией &lt;code>panelPosition&lt;/code>.&lt;br/>
+         * Возможные эвенты:&lt;ul>
+         * &lt;li>&lt;code>'open' (dropdownView)&lt;/code> - эвент возникает после открытия панели.&lt;/li>
+         * &lt;li>&lt;code>'close' (dropdownView, ...)&lt;/code> - эвент возникает после закрытия панели. При программном закрытии через метод close,
+         * переданные в нее параметры передаются в это событие.&lt;/li>
+         * &lt;li>&lt;code>'button:\*' &lt;/code> - все эвенты buttonView прокидываются в DropdownView с префиксом 'button:'.&lt;/li>
+         * &lt;li>&lt;code>'panel:\*' &lt;/code> - все эвенты panelView прокидываются в DropdownView с префиксом 'panel:'.&lt;/li>
+         * &lt;/ul>
+         * @constructor
+         * @extends Marionette.LayoutView
+         * @param {Object} options Объект опций.
+         * @param {Marionette.View} options.buttonView View для отображение кнопки.
+         * @param {(Object|Function)} [options.buttonViewOptions] Опции, передаваемые в buttonView при создании.
+         * @param {Marionette.View} options.panelView View для отображение панели. Создается заново при каждом открытии панели.
+         * @param {(Object|Function)} [options.panelViewOptions] Опции, передаваемые в panelView при создании.
+         * @param {Boolean} [options.autoOpen=true] Открывать панель автоматически при клике на buttonView.
+         * @param {String} [options.panelPosition='down'] Направление открытие панели. Варианты:
+         *       &lt;ul>&lt;li>&lt;code>'down'&lt;/code> - панель выпадает вниз.&lt;/li>
+         *       &lt;li>&lt;code>'down-over'&lt;/code> - панель выпадает вниз, но верхняя ее граница располагается на верхней границе кнопки и перекрывает ее.&lt;/li>
+         *       &lt;li>&lt;code>'up'&lt;/code> - панель выпадает наверх.&lt;/li>
+         *       &lt;li>&lt;code>'up-over'&lt;/code> - панель выпадает вверх, но нижняя ее граница располагается на нижней границе кнопки и перекрывает ее.&lt;/li>&lt;/ul>
+         * @param {Boolean} [options.renderAfterClose=true] Автоматически вызывать render у buttonView при закрытии панели.
+         * */
+
+        return Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
+            initialize: function (options) {
+                _.extend(this.options, _.clone(defaultOptions), options || {});
+                utils.helpers.ensureOption(options, 'buttonView');
+                utils.helpers.ensureOption(options, 'panelView');
+                _.bindAll(this, 'open', 'close', '__handleBlur');
+            },
+
+            template: Handlebars.compile(template),
+
+            className: 'dropdown',
+
+            regions: {
+                buttonRegion: '.js-button-region',
+                panelRegion: '.js-panel-region'
+            },
+
+            ui: {
+                button: '.js-button-region',
+                panel: '.js-panel-region'
+            },
+
+            events: {
+                'click @ui.button': '__handleClick',
+                'blur @ui.panel': '__handleBlur'
+            },
+
+            /**
+             * Экземпляр button View, если View отрендерена. Иначе null.
+             * */
+            buttonView: null,
+
+            /**
+             * Экземпляр panel View, если панель открыта. Иначе null. Пересоздается при каждом открытии панели (!).
+             * */
+            panelView: null,
+
+            onRender: function () {
+                if (this.button) {
+                    this.stopListening(this.button);
+                }
+                this.button = new this.options.buttonView(_.extend({ parent: this }, _.result(this.options, 'buttonViewOptions')));
+                this.buttonView = this.button;
+                this.listenTo(this.button, 'all', function() {
+                    var args = Array.prototype.slice.call(arguments);
+                    args[0] = 'button:' + args[0];
+                    this.triggerMethod.apply(this, args);
+                });
+                this.buttonRegion.show(this.button);
+
+                this.currentPosition = this.options.panelPosition;
+                this.updatePositionClasses();
+            },
+
+            updatePositionClasses: function () {
+                if (this.currentPosition === panelPosition.DOWN) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER)
+                        .removeClass(classes.DROPDOWN_UP)
+                        .removeClass(classes.DROPDOWN_UP_OVER);
+
+                    this.ui.panel.addClass(classes.DROPDOWN_DOWN);
+                } else if (this.currentPosition === panelPosition.DOWN_OVER) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_DOWN)
+                        .removeClass(classes.DROPDOWN_UP)
+                        .removeClass(classes.DROPDOWN_UP_OVER);
+
+                    this.ui.panel.addClass(classes.DROPDOWN_WRP_OVER);
+                } else if (this.currentPosition === panelPosition.UP) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER)
+                        .removeClass(classes.DROPDOWN_DOWN)
+                        .removeClass(classes.DROPDOWN_UP_OVER);
+
+                    this.ui.panel.addClass(classes.DROPDOWN_UP);
+                } else if (this.currentPosition === panelPosition.UP_OVER) {
+                    this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER)
+                        .removeClass(classes.DROPDOWN_UP)
+                        .removeClass(classes.DROPDOWN_DOWN);
+
+                    this.ui.panel.addClass(classes.DROPDOWN_UP_OVER);
+                }
+            },
+
+            correctPosition: function () {
+                var panelHeight = this.panelRegion.$el.height(),
+                    viewportHeight = window.innerHeight,
+                    panelTopOffset = $(this.buttonRegion.$el)[0].getBoundingClientRect().top;
+
+                if ((this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) &&
+                    panelTopOffset &lt; panelHeight) {
+                    this.currentPosition = this.currentPosition === panelPosition.UP ? panelPosition.DOWN : panelPosition.DOWN_OVER;
+                    this.updatePositionClasses();
+                } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) &&
+                            viewportHeight - panelTopOffset &lt; panelHeight ||
+                            (this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER)) {
+                    this.currentPosition = this.currentPosition === panelPosition.DOWN_OVER ? panelPosition.UP_OVER : panelPosition.UP;
+                    this.updatePositionClasses();
+                }
+            },
+
+            /**
+             * Открыть выпадающую панель.
+             * */
+            open: function () {
+                if (this.isOpen) {
+                    return;
+                }
+                var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+                    parent: this
+                });
+
+                this.$el.addClass(classes.OPEN);
+                this.ui.panel.css('display', 'block');
+                if (this.panelView) {
+                    this.stopListening(this.panelView);
+                }
+                this.panelView = new this.options.panelView(panelViewOptions);
+                this.listenTo(this.panelView, 'all', function() {
+                    var args = Array.prototype.slice.call(arguments);
+                    args[0] = 'panel:' + args[0];
+                    this.triggerMethod.apply(this, args);
+                });
+
+                this.panelRegion.show(this.panelView);
+                this.correctPosition();
+
+                if ($.contains(this.el, document.activeElement)) {
+                    $(document.activeElement).one('blur', this.__handleBlur);
+                } else {
+                    this.ui.panel.focus();
+                }
+                //noinspection JSValidateTypes
+                this.isOpen = true;
+                this.trigger('open', this);
+            },
+
+            /**
+             * Закрыть выпадающую панель.
+             * @param {...*} arguments Агрументы, которые будут переданы в эвент &lt;code>'close'&lt;/code>
+             * */
+            close: function () {
+                if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
+                    return;
+                }
+
+                // selecting focusable parent after closing is important to maintant nested dropdowns
+                // focused element MUST be changed BEFORE active element is hidden or destroyed (!)
+                var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
+                if (firstFocusableParent) {
+                    $(firstFocusableParent).focus();
+                }
+
+                var closeArgs = _.toArray(arguments);
+                this.ui.panel.hide({
+                    duration: 0,
+                    complete: function () {
+                        this.$el.removeClass(classes.OPEN);
+                        this.panelRegion.reset();
+                        //noinspection JSValidateTypes
+                        this.isOpen = false;
+
+                        this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
+                        if (this.options.renderAfterClose) {
+                            this.render();
+                        }
+                    }.bind(this)
+                });
+            },
+
+            __handleClick: function () {
+                if (this.options.autoOpen) {
+                    this.open();
+                }
+            },
+
+            __handleBlur: function () {
+                setTimeout(function () {
+                    if ($.contains(this.el, document.activeElement)) {
+                        $(document.activeElement).one('blur', this.__handleBlur);
+                    } else {
+                        this.close();
+                    }
+                }.bind(this), 15);
+            }
+        });
+    });
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Comindware Copyright © 2015
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
+		on Thu Dec 17th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

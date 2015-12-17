@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Comindware UI-Core API Source: form/editors/MultiselectEditorView.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Comindware UI-Core API</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collections.html">core.collections</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.behaviors.html">core.collections.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.html">core.dropdown</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.factory.html">core.dropdown.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.html">core.dropdown.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.html">core.dropdown.views.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.html">core.form</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.html">core.form.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.html">core.form.editors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.html">core.form.editors.reference</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.html">core.form.editors.reference.controllers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.fields.html">core.form.fields</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.html">core.list</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.cellFactory.html">core.list.cellFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.factory.html">core.list.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.html">core.list.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.html">core.list.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.meta.html">core.meta</a>
+						</li>
+						
+						<li>
+							<a href="module-core.models.html">core.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.html">core.nativeGrid</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.factory.html">core.nativeGrid.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.filterViewFactory.html">core.nativeGrid.filterViewFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.html">core.nativeGrid.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.services.html">core.services</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.html">core.utils</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.comparators.html">core.utils.comparators</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.cookieHelpers.html">core.utils.cookieHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.dateHelpers.html">core.utils.dateHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.helpers.html">core.utils.helpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.htmlHelpers.html">core.utils.htmlHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.keyCode.html">core.utils.keyCode</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.html">core</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collection.behaviors.HighlightableBehavior.html">core.collection.behaviors.HighlightableBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.SlidingWindowCollection.html">core.collections.SlidingWindowCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.VirtualCollection.html">core.collections.VirtualCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.CustomAnchorBehavior.html">core.dropdown.views.behaviors.CustomAnchorBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DefaultButtonView.html">core.dropdown.views.DefaultButtonView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DropdownView.html">core.dropdown.views.DropdownView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.ListPanelView.html">core.dropdown.views.ListPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuItemView.html">core.dropdown.views.MenuItemView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuPanelView.html">core.dropdown.views.MenuPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.PopoutView.html">core.dropdown.views.PopoutView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.BaseEditorView.html">core.form.editors.base.BaseEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.BooleanEditorView.html">core.form.editors.BooleanEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateEditorView.html">core.form.editors.DateEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateTimeEditorView.html">core.form.editors.DateTimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DropdownEditorView.html">core.form.editors.DropdownEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DurationEditorView.html">core.form.editors.DurationEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MembersBubbleEditorView.html">core.form.editors.MembersBubbleEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MemberSelectEditorView.html">core.form.editors.MemberSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MentionEditorView.html">core.form.editors.MentionEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MultiSelectEditorView.html">core.form.editors.MultiSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.NumberEditorView.html">core.form.editors.NumberEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.PasswordEditorView.html">core.form.editors.PasswordEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.RadioGroupEditorView.html">core.form.editors.RadioGroupEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.BaseReferenceEditorController.html">core.form.editors.reference.controllers.BaseReferenceEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.ReferenceEditorView.html">core.form.editors.ReferenceEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextAreaEditorView.html">core.form.editors.TextAreaEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextEditorView.html">core.form.editors.TextEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TimeEditorView.html">core.form.editors.TimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.ExtendedForm.html">core.form.ExtendedForm</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.LoadingRowModel.html">core.list.models.LoadingRowModel</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyGridView.html">core.list.views.EmptyGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyListView.html">core.list.views.EmptyListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridColumnHeaderView.html">core.list.views.GridColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridHeaderView.html">core.list.views.GridHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridView.html">core.list.views.GridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ListView.html">core.list.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.LoadingRowView.html">core.list.views.LoadingRowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.NoColumnsView.html">core.list.views.NoColumnsView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.RowView.html">core.list.views.RowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ScrollBarView.html">core.list.views.ScrollBarView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ColumnHeaderView.html">core.nativeGrid.views.ColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.HeaderView.html">core.nativeGrid.views.HeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ListView.html">core.nativeGrid.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.NativeGridView.html">core.nativeGrid.views.NativeGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.RowView.html">core.nativeGrid.views.RowView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: form/editors/MultiselectEditorView.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">/**
+ * Developer: Oleg Verevkin
+ * Date: 10/21/2015
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
+/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+
+define(
+    [
+        'core/libApi',
+        'core/list/listApi',
+        'core/dropdown/dropdownApi',
+        'text!./templates/multiSelectEditor.html',
+        './base/BaseLayoutEditorView',
+        './impl/multiSelect/views/MultiSelectPanelView',
+        './impl/multiSelect/views/MultiSelectButtonView'
+    ],
+    function(lib, list, dropdown, template, BaseLayoutEditorView, MultiSelectPanelView, MultiSelectButtonView) {
+        'use strict';
+
+        var defaultOptions = {
+            collection: null,
+            displayAttribute: 'text',
+            allowEmptyValue: true,
+            explicitApply: false
+        };
+
+        /**
+         * @name MultiSelectEditorView
+         * @memberof module:core.form.editors
+         * @class Выпадающая панель с возможность выбора нескольких элементов. Поддерживаемый тип данных: массив объектов, &lt;code>Object[]&lt;/code>.
+         * Тип объекта в массиве должен совпадать с типом данных поля &lt;code>id&lt;/code> элементов коллекции &lt;code>collection&lt;/code>.
+         * @extends module:core.form.editors.base.BaseEditorView
+         * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
+         * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+         * @param {Boolean} [options.allowEmptyValue=true] Разрешить значение &lt;code>null&lt;/code>.
+         * @param {Backbone.Collection|Array} options.collection Массив объектов &lt;code>{ id, text }&lt;/code> или
+         * Backbone коллекция моделей с такими атрибутами. Используйте свойство &lt;code>displayAttribute&lt;/code> для отображения
+         * текста из поля, отличного от &lt;code>text&lt;/code>. В случае передачи Backbone.Collection, дальнейшее ее изменение
+         * отражается в выпадающем списке.
+         * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
+         * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
+         * */
+        Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
+            initialize: function(options) {
+                if (options.schema) {
+                    _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
+                } else {
+                    _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+                }
+
+                if (_.isArray(this.options.collection)) {
+                    this.options.collection = new Backbone.Collection(this.options.collection);
+                }
+
+                this.collection = this.options.collection;
+                var collectionChangeHandler = _.throttle(this.__onCollectionChange, 100, {leading: false});
+
+                this.listenTo(this.collection, 'add', collectionChangeHandler);
+                this.listenTo(this.collection, 'remove', collectionChangeHandler);
+                this.listenTo(this.collection, 'reset', collectionChangeHandler);
+                this.listenTo(this.collection, 'select', this.__onSelect);
+                this.listenTo(this.collection, 'deselect', this.__onDeselect);
+
+                this.viewModel = new Backbone.Model({
+                    button: new Backbone.Model({
+                        collection: this.collection,
+                        value: this.__findModels(this.getValue())
+                    }),
+                    panel: new Backbone.Model({
+                        collection: this.collection
+                    })
+                });
+            },
+
+            focusElement: null,
+
+            attributes: {
+                tabindex: 0
+            },
+
+            regions: {
+                dropdownRegion: '.js-dropdown-region'
+            },
+
+            className: 'dev-multi-select',
+
+            template: Handlebars.compile(template),
+
+            onRender: function() {
+                this.dropdownView = dropdown.factory.createDropdown({
+                    buttonView: MultiSelectButtonView,
+                    buttonViewOptions: {
+                        model: this.viewModel.get('button')
+                    },
+                    panelView: MultiSelectPanelView,
+                    panelViewOptions: {
+                        model: this.viewModel.get('panel'),
+                        displayAttribute: this.options.displayAttribute,
+                        explicitApply: this.options.explicitApply
+                    },
+                    autoOpen: false
+                });
+
+                this.listenTo(this.dropdownView, 'close', this.onPanelClose);
+
+                this.listenTo(this.dropdownView, 'button:open:panel', this.onPanelOpen);
+
+                this.listenTo(this.dropdownView, 'panel:select:all', this.__selectAll);
+                this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
+                this.listenTo(this.dropdownView, 'panel:close', this.dropdownView.close.bind(this.dropdownView));
+
+                this.dropdownRegion.show(this.dropdownView);
+            },
+
+            __onCollectionChange: function() {
+                this.__trimValues();
+                this.__triggerChange();
+                this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
+                this.__resetValue();
+            },
+
+            __onSelect: function(model) {
+                this.__select(model);
+            },
+
+            __onDeselect: function(model) {
+                this.__deselect(model);
+
+                if (!this.options.allowEmptyValue) {
+                    var valueModels = this.__findModels(this.tempValue) || null;
+                    if (!(valueModels && valueModels.length)) {
+                        model.trigger('select', model);
+                    }
+                }
+            },
+
+            __select: function(model) {
+                model.selected = true;
+                this.__setValue(model.id);
+            },
+
+            __deselect: function(model) {
+                model.selected = false;
+                this.__unsetValue(model.id);
+            },
+
+            __selectAll: function() {
+                this.collection.each(function(model) {
+                    model.trigger('select', model);
+                }.bind(this));
+            },
+
+            __deselectAll: function() {
+                this.collection.each(function(model) {
+                    model.trigger('deselect', model);
+                }.bind(this));
+            },
+
+            __trimValues: function() {
+                var values = this.getValue();
+                if (values === null) {
+                    return;
+                }
+
+                _.chain(values).
+                    reject(function(value) {
+                        return this.collection.get(value);
+                    }.bind(this)).
+                    each(function(rejectedValue) {
+                        values = _.without(values, rejectedValue);
+                    });
+
+                if (values.length) {
+                    this.setValue(values);
+                } else {
+                    this.setValue(null);
+                }
+            },
+
+            __findModels: function(values) {
+                return this.collection ? this.collection.filter(function(model) {
+                    return _.contains(values, model.id);
+                }) : null;
+            },
+            
+            __setValue: function(value) {
+                if (_.contains(this.tempValue, value)) {
+                    return;
+                }
+
+                this.tempValue = this.tempValue.concat(value);
+            },
+
+            __unsetValue: function(value) {
+                if (!_.contains(this.tempValue, value)) {
+                    return;
+                }
+
+                this.tempValue = _.without(this.tempValue, value);
+            },
+
+            __value: function (value) {
+                this.tempValue = value;
+                this.__applyValue();
+            },
+
+            __applyValue: function() {
+                this.setValue(this.tempValue);
+                this.__trimValues();
+                this.__triggerChange();
+                this.dropdownView.close();
+            },
+
+            __resetValue: function() {
+                var value = this.getValue();
+                this.tempValue = value === null ? [] : value;
+
+                this.collection.each(function(model) {
+                    delete model.selected;
+                });
+                
+                var valueModels = this.__findModels(this.tempValue) || null;
+                _.each(valueModels, function(valueModel) {
+                    valueModel.trigger('select', valueModel);
+                });
+            },
+
+            onPanelOpen: function() {
+                if (this.getEnabled() && !this.getReadonly()) {
+                    this.dropdownView.open();
+                    this.__resetValue();
+                }
+            },
+
+            onPanelClose: function() {
+                if (!this.options.explicitApply) {
+                    this.__applyValue();
+                }
+
+                this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
+            }
+        });
+
+        return Backbone.Form.editors.MultiSelect;
+    }
+);
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Comindware Copyright © 2015
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
+		on Thu Dec 17th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

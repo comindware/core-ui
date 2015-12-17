@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Comindware UI-Core API Source: utils/helpers.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Comindware UI-Core API</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collections.html">core.collections</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.behaviors.html">core.collections.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.html">core.dropdown</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.factory.html">core.dropdown.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.html">core.dropdown.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.html">core.dropdown.views.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.html">core.form</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.html">core.form.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.html">core.form.editors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.html">core.form.editors.reference</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.html">core.form.editors.reference.controllers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.fields.html">core.form.fields</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.html">core.list</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.cellFactory.html">core.list.cellFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.factory.html">core.list.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.html">core.list.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.html">core.list.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.meta.html">core.meta</a>
+						</li>
+						
+						<li>
+							<a href="module-core.models.html">core.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.html">core.nativeGrid</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.factory.html">core.nativeGrid.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.filterViewFactory.html">core.nativeGrid.filterViewFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.html">core.nativeGrid.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.services.html">core.services</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.html">core.utils</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.comparators.html">core.utils.comparators</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.cookieHelpers.html">core.utils.cookieHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.dateHelpers.html">core.utils.dateHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.helpers.html">core.utils.helpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.htmlHelpers.html">core.utils.htmlHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.keyCode.html">core.utils.keyCode</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.html">core</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collection.behaviors.HighlightableBehavior.html">core.collection.behaviors.HighlightableBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.SlidingWindowCollection.html">core.collections.SlidingWindowCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.VirtualCollection.html">core.collections.VirtualCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.CustomAnchorBehavior.html">core.dropdown.views.behaviors.CustomAnchorBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DefaultButtonView.html">core.dropdown.views.DefaultButtonView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DropdownView.html">core.dropdown.views.DropdownView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.ListPanelView.html">core.dropdown.views.ListPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuItemView.html">core.dropdown.views.MenuItemView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuPanelView.html">core.dropdown.views.MenuPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.PopoutView.html">core.dropdown.views.PopoutView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.BaseEditorView.html">core.form.editors.base.BaseEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.BooleanEditorView.html">core.form.editors.BooleanEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateEditorView.html">core.form.editors.DateEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateTimeEditorView.html">core.form.editors.DateTimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DropdownEditorView.html">core.form.editors.DropdownEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DurationEditorView.html">core.form.editors.DurationEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MembersBubbleEditorView.html">core.form.editors.MembersBubbleEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MemberSelectEditorView.html">core.form.editors.MemberSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MentionEditorView.html">core.form.editors.MentionEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MultiSelectEditorView.html">core.form.editors.MultiSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.NumberEditorView.html">core.form.editors.NumberEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.PasswordEditorView.html">core.form.editors.PasswordEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.RadioGroupEditorView.html">core.form.editors.RadioGroupEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.BaseReferenceEditorController.html">core.form.editors.reference.controllers.BaseReferenceEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.ReferenceEditorView.html">core.form.editors.ReferenceEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextAreaEditorView.html">core.form.editors.TextAreaEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextEditorView.html">core.form.editors.TextEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TimeEditorView.html">core.form.editors.TimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.ExtendedForm.html">core.form.ExtendedForm</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.LoadingRowModel.html">core.list.models.LoadingRowModel</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyGridView.html">core.list.views.EmptyGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyListView.html">core.list.views.EmptyListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridColumnHeaderView.html">core.list.views.GridColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridHeaderView.html">core.list.views.GridHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridView.html">core.list.views.GridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ListView.html">core.list.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.LoadingRowView.html">core.list.views.LoadingRowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.NoColumnsView.html">core.list.views.NoColumnsView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.RowView.html">core.list.views.RowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ScrollBarView.html">core.list.views.ScrollBarView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ColumnHeaderView.html">core.nativeGrid.views.ColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.HeaderView.html">core.nativeGrid.views.HeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ListView.html">core.nativeGrid.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.NativeGridView.html">core.nativeGrid.views.NativeGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.RowView.html">core.nativeGrid.views.RowView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: utils/helpers.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">/**
+ * Developer: Stepan Burguchev
+ * Date: 8/21/2014
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
+/* global define, require, _, $ */
+
+define(['core/libApi', 'core/services/LocalizationService'],
+    function (lib, LocalizationService) {
+        'use strict';
+
+        var timeoutCache = {};
+
+        var queueCache = {};
+
+        var helpers = /** @lends module:core.utils.helpers */ {
+            /**
+            * Метод вызывает функцию &lt;code>callback()&lt;/code> по прошествии &lt;code>delay&lt;/code> миллисекунд с момента
+            * последнего вызова этого метода с заданным &lt;code>someUniqueId&lt;/code>.
+            * @param {String} someUniqueId Идентификатор вызова.
+            * @param {Function} callback Функция, которая должна быть вызвана по прошествии заданного интервала времени.
+            * @param {Number} delay Задержка вызова функции в миллисекундах.
+            * */
+            setUniqueTimeout: function (someUniqueId, callback, delay)
+            {
+                var timeoutId = timeoutCache[someUniqueId];
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+                var handler = setTimeout(function ()
+                {
+                    callback();
+                    delete timeoutCache[someUniqueId];
+                }, delay);
+                timeoutCache[someUniqueId] = handler;
+                return handler;
+            },
+
+            /**
+             * Метод вызывает функцию &lt;code>callback()&lt;/code> по окончанию обработки активного события (аналогично setTimeout(fn, 10)).
+             * @param {Function} callback Функция, которая должна быть вызвана по окончанию обработки активного события.
+             * */
+            nextTick: function (callback)
+            {
+                return setTimeout(callback, 10);
+            },
+
+            /**
+             * Оборачивает переданную функцию-компаратор применяя ее на заданный атрибут объекта Backbone.Model.
+             * @example
+             * var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'text');
+             * var a = new Backbone.Model({ id: 1, text: '1' });
+             * var b = new Backbone.Model({ id: 2, text: '2' });
+             * // returns -1
+             * var result = referenceComparator(a, b);
+             * @param {Function} comparatorFn Функция, которая должна быть вызвана по окончанию обработки активного события.
+             * @param {String} propertyName Функция, которая должна быть вызвана по окончанию обработки активного события.
+             * @return {Function} Обернутая функция.
+             * */
+            comparatorFor: function (comparatorFn, propertyName) {
+                if (comparatorFn.length === 1) {
+                    return function (a) {
+                        return comparatorFn(a.get(propertyName));
+                    };
+                } else if (comparatorFn.length === 2) {
+                    return function (a, b) {
+                        return comparatorFn(a.get(propertyName), b.get(propertyName));
+                    };
+                } else {
+                    throw new Error('Invalid arguments count in comparator function.');
+                }
+            },
+
+            /**
+             * Принимает строку и создает объект LocalizedText &lt;code>{ en: 'foo', de: 'foo', ru: 'foo' }&lt;/code>.
+             * @param {String} defaultText Текст, который будет установлен в каждое из свойств результирующего объекта.
+             * @return {Object} Объект &lt;code>{ en, de, ru }&lt;/code>.
+             * */
+            createLocalizedText: function (defaultText) {
+                return {
+                    en: defaultText,
+                    de: defaultText,
+                    ru: defaultText
+                };
+            },
+
+            /**
+             * Javascript версия .NET метода &lt;code>string.Format&lt;/code>.
+             * @example
+             * // returns 'Hello, Javascript!'
+             * core.utils.helpers.format('Hello, {0}!', 'Javascript');
+             * @param {String} text Форматируемая строка, содержащая плейсхолдеры в формате &lt;code>{i}&lt;/code>.
+             * Где &lt;code>i&lt;/code> - индекс подставляемого аргумента (начиная с нуля).
+             * @param {...*} arguments Агрументы, которые будут подставлены в плейсхолдеры.
+             * @return {String} Результирующая строка.
+             * */
+            format: function(text) {
+                if (!_.isString(text)) {
+                    return '';
+                }
+                for (var i = 1; i &lt; arguments.length; i++) {
+                    var regexp = new RegExp('\\{'+(i-1)+'\\}', 'gi');
+                    text = text.replace(regexp, arguments[i]);
+                }
+                return text;
+            },
+
+            /**
+             * Taking a number and array of strings, returns a valid plural form.
+             * Works with complex cases and valid for all supported languages (en, de, ru).
+             * @function
+             * @example
+             * // returns 'car'
+             * core.utils.helpers.getPluralForm(1, 'car,cars');
+             * // returns 'cars'
+             * core.utils.helpers.getPluralForm(10, 'car,cars');
+             * @param {Number} n Число, для которого необходимо подобрать склонение.
+             * @param {String} texts Разделенные запятыми варианты фразы
+             * (для английского и немецкого - 2 фразы разделенные запятыми, для русского - 3 фразы разделенные запятыми).
+             * @return {String} Результирующая строка.
+             * */
+            getPluralForm: (function (formula) {
+                var getIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
+                return function (n, texts) {
+                    return texts.split(',')[getIndex(n)];
+                };
+            })(LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM')),
+
+            /**
+             * Создает очередь из асинхронных операций. Поступающие операции выполняются последовательно.
+             * @example
+             * var save = form.save.bind(form);
+             * // Three sequential calls
+             * var promise1 = core.utils.helpers.enqueueOperation(save, 42);
+             * var promise2 = core.utils.helpers.enqueueOperation(save, 42);
+             * var promise3 = core.utils.helpers.enqueueOperation(save, 42);
+             * promise3.then(function () {
+             *     // Will be called only when all the 'save' operations has been fired and returned success.
+             * });
+             * @param {Function} operation функция, запускающая асинхронную операцию и возвращающая объект Promise.
+             * @param {String} queueId Строковый идентификатор цепочки операций.
+             * */
+            enqueueOperation: function (operation, queueId) {
+                if (queueCache[queueId] && queueCache[queueId].isPending()) {
+                    queueCache[queueId] = queueCache[queueId].then(function() {
+                        return _.isFunction(operation) ? operation() : operation;
+                    });
+                } else {
+                    queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
+                }
+                return queueCache[queueId];
+            },
+
+            /**
+             * Последовательно применяет переданные в аргументах Behavior классы на заданный экземпляр объекта.
+             * Никак не связан с применением объектов Marionette.Behavior.
+             * @example
+             * core.utils.helpers.applyBehavior(this, core.models.behaviors.SelectableBehavior);
+             * @param {Object} target Объект, на который будут применены behaviors.
+             * @param {...Function} arguments 1 или более функций-конструкторов объектов Behavior.
+             * */
+            applyBehavior: function (target) {
+                var behaviors = _.rest(arguments, 1);
+                _.each(behaviors, function (Behavior) {
+                    _.extend(target, new Behavior(target));
+                });
+            },
+
+            /**
+             * Позволяет осуществить предварительную валидацию входных опций. Обычно применяется к конструкторе/инициалайзере объекта.
+             * Поддерживает проверку свойств подобъектов. Кидает исключение &lt;code>MissingOptionError&lt;/code> в случае ошибки.
+             * @example
+             * // Checks that property options.model exists.
+             * core.utils.helpers.ensureOption(options, 'model');
+             * // Checks that property options.property1.subProperty exists.
+             * core.utils.helpers.ensureOption(options, 'property1.subProperty');
+             * @param {Object} options Проверяемый объект опций.
+             * @param {String} optionName Имя проверяемого свойства или разделенный точками путь к нему.
+             * */
+            ensureOption: function (options, optionName) {
+                if (!options) {
+                    helpers.throwError('The options object is required.', 'MissingOptionError');
+                }
+                if (optionName.indexOf('.') !== -1) {
+                    var selector = optionName.split('.');
+                    for (var i = 0, len = selector.length; i &lt; len; i++) {
+                        optionName = selector[i];
+                        if (options[optionName] === undefined) {
+                            optionName = _.take(selector, i + 1).join('.');
+                            helpers.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
+                        }
+                        options = options[optionName];
+                    }
+                } else {
+                    if (options[optionName] === undefined) {
+                        helpers.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
+                    }
+                }
+            },
+
+            /**
+             * Позволяет осуществить предварительную валидацию свойств объекта.
+             * Поддерживает проверку свойств подобъектов. Кидает исключение &lt;code>MissingPropertyError&lt;/code> в случае ошибки.
+             * @example
+             * // Checks that property this.view.moduleRegion exists.
+             * core.utils.helpers.ensureOption(this.view, 'moduleRegion');
+             * @param {Object} object Проверяемый объект.
+             * @param {String} propertyName Имя проверяемого свойства или разделенный точками путь к нему.
+             * */
+            ensureProperty: function (object, propertyName) {
+                if (!object) {
+                    helpers.throwError('The object is null.', 'NullObjectError');
+                }
+                if (propertyName.indexOf('.') !== -1) {
+                    var selector = propertyName.split('.');
+                    for (var i = 0, len = selector.length; i &lt; len; i++) {
+                        propertyName = selector[i];
+                        if (object[propertyName] === undefined) {
+                            propertyName = _.take(selector, i + 1).join('.');
+                            helpers.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
+                        }
+                        object = object[propertyName];
+                    }
+                } else {
+                    if (object[propertyName] === undefined) {
+                        helpers.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
+                    }
+                }
+            },
+
+            /**
+             * Позволяет получить свойство объекта (или подобъекта) без ошибок в случае, если сам объект или его подобъекты не заданы.
+             * @example
+             * var foo = { a: {} };
+             * // returns undefined (doesn't throw an error)
+             * core.utils.helpers.getPropertyOrDefault(foo, 'a.b.c.d');
+             * @param {String} propertyPath Имя получаемого свойства или разделенный точками путь к нему.
+             * @param {Object} obj Объект, на который применяется путь.
+             * */
+            getPropertyOrDefault: function (propertyPath, obj) {
+                return [obj].concat(propertyPath.split('.')).reduce(function(prev, curr) {
+                    return prev === undefined ? undefined : prev[curr];
+                });
+            },
+
+            /**
+             * Позволяет осуществить предварительную валидацию, что значение не равно &lt;code>undefined, null, 0, '', false&lt;/code>.
+             * Кидает исключение &lt;code>ArgumentFalsyError&lt;/code> в случае ошибки.
+             * @example
+             * core.utils.helpers.assertArgumentNotFalsy(argument1, 'argument1');
+             * @param {*} argumentValue Проверяемое значение.
+             * @param {String} argumentName Имя проверяемой переменной. Указывается тексте исключения.
+             * */
+            assertArgumentNotFalsy: function (argumentValue, argumentName) {
+                if (!argumentValue) {
+                    this.throwError('Argument `' + argumentName + '` is falsy.', 'ArgumentFalsyError');
+                }
+            },
+
+            /**
+             * Упрощенный способ бросить объект-исключение.
+             * @example
+             * core.utils.helpers.throwError('Request is invalid.');
+             * @param {String} message Сообщение об ошибке.
+             * @param {String} [name='Error'] Имя исключения (поле Name объекта Error).
+             * */
+            throwError: function (message, name) {
+                var error = new Error(message);
+                error.name = name || 'Error';
+                throw error;
+            },
+
+            /**
+             * Бросает InvalidOperationError. Возникает внутри метода класса, когда объект находится в некорректном состоянии.
+             * @example
+             * // Inside of implementation of some Marionette.View.
+             * addKeyboardListener: function (key, callback) {
+             *     if (!this.keyListener) {
+             *         utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+             *     }
+             *     var keys = key.split(',');
+             *     _.each(keys, function (k) {
+             *         this.keyListener.simple_combo(k, callback);
+             *     }, this);
+             * },
+             * // ...
+             * @param {String} [message='Invalid operation'] Сообщение об ошибке.
+             * */
+            throwInvalidOperationError: function (message) {
+                helpers.throwError(message || 'Invalid operation', 'InvalidOperationError');
+            },
+
+            /**
+             * Throws FormatError. The exception should be thrown when the format of an argument is invalid, or when a is not well formed.
+             * @example
+             * function (url, parameterNames, parameters, callback) {
+             *     // Some code here ...
+             *     if (parameters.Length !== parameterNames.length) {
+             *         utilsApi.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
+             *     }
+             *     // Some code here ...
+             * @param {String} [message='Invalid format'] Сообщение об ошибке.
+             * */
+            throwFormatError: function (message) {
+                helpers.throwError(message || 'Invalid format', 'FormatError');
+            },
+
+            /**
+             * Throws ArgumentError. The exception should be thrown when one of the arguments provided to a method is not valid.
+             * Should be thrown only when one particular argument is invalid. If a combination of arguments is invalid use &lt;code>FormatError&lt;/code>.
+             * @example
+             * function (url, parameterNames, parameters, callback) {
+             *     // Some code here ...
+             *     if (parameterNames.Length !== 2) {
+             *         utilsApi.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
+             *     }
+             *     // Some code here ...
+             * @param {String} [message='Invalid argument'] Сообщение об ошибке.
+             * */
+            throwArgumentError: function (message) {
+                helpers.throwError(message || 'Invalid argument', 'ArgumentError');
+            },
+
+            /**
+             * Throws NotSupportedError. The exception should be thrown when an invoked method is not supported.
+             * For example: some class doesn't support all the methods of the interface it implements.
+             * @example
+             * // Inside of implementation of some Stream class
+             * seek() {
+             *     // Some code here ...
+             *     utilsApi.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
+             *     // Some code here ...
+             * }
+             * @param {String} [message='The operation is not supported'] Сообщение об ошибке.
+             * */
+            throwNotSupportedError: function (message) {
+                helpers.throwError(message || 'The operation is not supported', 'NotSupportedError');
+            },
+
+            /**
+             * Throws NotImplementedError. The exception should be thrown when a requested method or operation is not implemented.
+             * For example: a base class could have abstract methods that throws such error.
+             * @example
+             * // Inside of implementation of some base controller class.
+             * navigate() {
+             *     utilsApi.helpers.throwNotImplementedError();
+             * }
+             * @param {String} [message='The operation is not implemented'] Сообщение об ошибке.
+             * */
+            throwNotImplementedError: function (message) {
+                helpers.throwError(message || 'The operation is not implemented', 'NotImplementedError');
+            },
+
+            /**
+             * Throws NotFoundError. The exception should be thrown when a requested object could not be found.
+             * For example: we looked up in the database and could find a person with requested id.
+             * @param {String} [message='Object not found'] Сообщение об ошибке.
+             * */
+            throwNotFoundError: function (message) {
+                helpers.throwError(message || 'Object not found', 'NotFoundError');
+            }
+        };
+
+        return helpers;
+    });
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Comindware Copyright © 2015
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
+		on Thu Dec 17th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

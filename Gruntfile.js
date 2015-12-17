@@ -13,8 +13,6 @@
     'use strict';
 
     module.exports = function (grunt) {
-        grunt.log.subhead('Loading configuration...');
-
         var _ = require('underscore');
         var fs = require('fs');
         var fse = require('fs-extra');
@@ -28,7 +26,7 @@
                         exclude: [],
                         findNestedDependencies: false,
                         name: "comindware/core",
-                        out: "./comindware/core.js",
+                        out: "./dist/core.js",
                         waitSeconds: 60,
                         wrapShim: true,
                         optimize: "none", // uglify2 or none
@@ -47,13 +45,29 @@
                         verbose: true
                     }
                 }
+            },
+            jsdoc : {
+                dist : {
+                    src: [
+                        'js/core/**/*.js'
+                    ],
+                    options: {
+                        destination: 'doc',
+                        template : 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
+                        configure : 'jsdoc.conf.json',
+                        recurse: true,
+                        verbose: true
+                    }
+                }
             }
         });
 
         grunt.loadNpmTasks('grunt-contrib-requirejs');
         grunt.loadNpmTasks('grunt-bower-task');
+        grunt.loadNpmTasks('grunt-jsdoc');
 
         grunt.registerTask('build:bundle', [ 'bower', 'requirejs' ]);
+        grunt.registerTask('doc', [ 'jsdoc' ]);
         grunt.registerTask('default', [ 'build:bundle' ]);
     };
 }());

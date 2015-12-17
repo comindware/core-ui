@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Comindware UI-Core API Source: list/views/GridHeaderView.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Comindware UI-Core API</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collections.html">core.collections</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.behaviors.html">core.collections.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.html">core.dropdown</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.factory.html">core.dropdown.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.html">core.dropdown.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.html">core.dropdown.views.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.html">core.form</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.html">core.form.behaviors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.html">core.form.editors</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.html">core.form.editors.reference</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.html">core.form.editors.reference.controllers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.fields.html">core.form.fields</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.html">core.list</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.cellFactory.html">core.list.cellFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.factory.html">core.list.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.html">core.list.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.html">core.list.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.meta.html">core.meta</a>
+						</li>
+						
+						<li>
+							<a href="module-core.models.html">core.models</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.html">core.nativeGrid</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.factory.html">core.nativeGrid.factory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.filterViewFactory.html">core.nativeGrid.filterViewFactory</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.html">core.nativeGrid.views</a>
+						</li>
+						
+						<li>
+							<a href="module-core.services.html">core.services</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.html">core.utils</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.comparators.html">core.utils.comparators</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.cookieHelpers.html">core.utils.cookieHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.dateHelpers.html">core.utils.dateHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.helpers.html">core.utils.helpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.htmlHelpers.html">core.utils.htmlHelpers</a>
+						</li>
+						
+						<li>
+							<a href="module-core.utils.keyCode.html">core.utils.keyCode</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.html">core</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-core.collection.behaviors.HighlightableBehavior.html">core.collection.behaviors.HighlightableBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.SlidingWindowCollection.html">core.collections.SlidingWindowCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.collections.VirtualCollection.html">core.collections.VirtualCollection</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.behaviors.CustomAnchorBehavior.html">core.dropdown.views.behaviors.CustomAnchorBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DefaultButtonView.html">core.dropdown.views.DefaultButtonView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.DropdownView.html">core.dropdown.views.DropdownView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.ListPanelView.html">core.dropdown.views.ListPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuItemView.html">core.dropdown.views.MenuItemView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.MenuPanelView.html">core.dropdown.views.MenuPanelView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.dropdown.views.PopoutView.html">core.dropdown.views.PopoutView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.base.BaseEditorView.html">core.form.editors.base.BaseEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.BooleanEditorView.html">core.form.editors.BooleanEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateEditorView.html">core.form.editors.DateEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DateTimeEditorView.html">core.form.editors.DateTimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DropdownEditorView.html">core.form.editors.DropdownEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.DurationEditorView.html">core.form.editors.DurationEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MembersBubbleEditorView.html">core.form.editors.MembersBubbleEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MemberSelectEditorView.html">core.form.editors.MemberSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MentionEditorView.html">core.form.editors.MentionEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.MultiSelectEditorView.html">core.form.editors.MultiSelectEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.NumberEditorView.html">core.form.editors.NumberEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.PasswordEditorView.html">core.form.editors.PasswordEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.RadioGroupEditorView.html">core.form.editors.RadioGroupEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.reference.controllers.BaseReferenceEditorController.html">core.form.editors.reference.controllers.BaseReferenceEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.ReferenceEditorView.html">core.form.editors.ReferenceEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextAreaEditorView.html">core.form.editors.TextAreaEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TextEditorView.html">core.form.editors.TextEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.TimeEditorView.html">core.form.editors.TimeEditorView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.ExtendedForm.html">core.form.ExtendedForm</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.models.LoadingRowModel.html">core.list.models.LoadingRowModel</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyGridView.html">core.list.views.EmptyGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.EmptyListView.html">core.list.views.EmptyListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridColumnHeaderView.html">core.list.views.GridColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridHeaderView.html">core.list.views.GridHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.GridView.html">core.list.views.GridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ListView.html">core.list.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.LoadingRowView.html">core.list.views.LoadingRowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.NoColumnsView.html">core.list.views.NoColumnsView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.RowView.html">core.list.views.RowView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.list.views.ScrollBarView.html">core.list.views.ScrollBarView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ColumnHeaderView.html">core.nativeGrid.views.ColumnHeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.HeaderView.html">core.nativeGrid.views.HeaderView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.ListView.html">core.nativeGrid.views.ListView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.NativeGridView.html">core.nativeGrid.views.NativeGridView</a>
+						</li>
+						
+						<li>
+							<a href="module-core.nativeGrid.views.RowView.html">core.nativeGrid.views.RowView</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+			<div class="span12">
+				
+				<div id="main">
+					
+
+
+		<h1 class="page-title">Source: list/views/GridHeaderView.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">/**
+ * Developer: Stepan Burguchev
+ * Date: 8/20/2014
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
+/* global define, require, Marionette, _, Handlebars, shared, $ */
+
+/*
+*
+* Fires: columnsResize(this, { changes: { 0: 0.5, 1: 0.5 } })
+*
+* */
+
+define(['text!core/list/templates/gridheader.html', 'core/libApi', 'core/utils/utilsApi', 'core/services/GlobalEventService'],
+    function (template, lib, utils, GlobalEventService) {
+        'use strict';
+
+        /**
+         * Some description for initializer
+         * @name GridHeaderView
+         * @memberof module:core.list.views
+         * @class GridHeaderView
+         * @constructor
+         * @description View используемый для отображения заголовка (шапки) списка
+         * @extends Marionette.ItemView
+         * @param {Object} options Constructor options
+         * @param {Array} options.columns массив колонок
+         * @param {Object} options.gridEventAggregator ?
+         * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
+         * */
+        var GridHeaderView = Marionette.ItemView.extend({
+            initialize: function (options) {
+                if (!options.columns) {
+                    throw new Error('You must provide columns definition ("columns" option)');
+                }
+                if (!options.gridEventAggregator) {
+                    throw new Error('You must provide grid event aggregator ("gridEventAggregator" option)');
+                }
+                if (!options.gridColumnHeaderView) {
+                    throw new Error('You must provide grid column header view ("gridColumnHeaderView" option)');
+                }
+
+                this.gridEventAggregator = options.gridEventAggregator;
+                this.gridColumnHeaderView = options.gridColumnHeaderView;
+                this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
+                this.columns = options.columns;
+                this.$document = $(document);
+                _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', '__handleResize');
+                this.listenTo(GlobalEventService, 'resize', this.__handleResize);
+            },
+
+            template: Handlebars.compile(template),
+
+            className: 'grid-header',
+
+            ui: {
+                gridHeaderColumn: '.grid-header-column',
+                gridHeaderColumnContent: '.grid-header-column-content-view'
+            },
+
+            events: {
+                'mousedown .grid-header-dragger': '__handleDraggerMousedown'
+            },
+
+            constants: {
+                MIN_COLUMN_WIDTH: 20
+            },
+
+            templateHelpers: function () {
+                return {
+                    columns: this.columns
+                };
+            },
+
+            onRender: function () {
+                var self = this;
+                this.ui.gridHeaderColumnContent.each(function (i, el) {
+                    var column = self.columns[i];
+                    var view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
+                        model: column.viewModel,
+                        column: column
+                    }));
+                    self.listenTo(view, 'columnSort', self.__handleColumnSort);
+                    var childEl = view.render().el;
+                    el.appendChild(childEl);
+                });
+            },
+
+            onShow: function () {
+                this.__handleResizeInternal();
+            },
+
+            updateSorting: function () {
+                this.render();
+                this.__handleResizeInternal();
+            },
+
+            __handleColumnSort: function (sender, args) {
+                var column = args.column;
+                var sorting = column.sorting;
+                var comparator;
+                _.each(this.columns, function (c) {
+                    c.sorting = null;
+                });
+                switch (sorting) {
+                    case 'asc':
+                        column.sorting = 'desc';
+                        comparator = column.sortDesc;
+                        break;
+                    case 'desc':
+                        column.sorting = 'asc';
+                        comparator = column.sortAsc;
+                        break;
+                    default:
+                        column.sorting = 'asc';
+                        comparator = column.sortAsc;
+                        break;
+                }
+                this.updateSorting();
+
+                this.trigger('onColumnSort', column, comparator);
+            },
+
+            __handleDraggerMousedown: function (e) {
+                this.__stopDrag();
+                this.__startDrag(e);
+                return false;
+            },
+
+            __getElementOuterWidth: function (el) {
+                return $(el)[0].getBoundingClientRect().width;
+            },
+
+            __startDrag: function (e) {
+                var $dragger = $(e.target);
+                var $column = $dragger.parent();
+
+                var affectedColumns = _.chain($column.nextAll()).toArray().map(function (el) {
+                    return {
+                        $el: $(el),
+                        initialWidth: this.__getElementOuterWidth(el)
+                    };
+                }, this).value();
+                var draggedColumn = {
+                    $el: $column,
+                    initialWidth: this.__getElementOuterWidth($column),
+                    index: $column.index()
+                };
+                var unaffectedWidth = _.reduce($column.prevAll(), function (m, v) {
+                    return m + this.__getElementOuterWidth(v);
+                }.bind(this), 0);
+                var fullWidth = this.__getFullWidth();
+
+                this.dragContext = {
+                    pageOffsetX: e.pageX,
+                    $dragger: $dragger,
+                    fullWidth: fullWidth,
+                    unaffectedWidth: unaffectedWidth,
+                    draggedColumn: draggedColumn,
+                    affectedColumns: affectedColumns,
+                    maxColumnWidth: fullWidth - affectedColumns.length * this.constants.MIN_COLUMN_WIDTH - unaffectedWidth
+                };
+
+                $dragger.addClass('active');
+                this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+            },
+
+            __stopDrag: function () {
+                if (!this.dragContext) {
+                    return;
+                }
+
+                this.dragContext.$dragger.removeClass('active');
+                this.dragContext = null;
+                this.$document.unbind('mousemove', this.__draggerMouseMove);
+                this.$document.unbind('mouseup', this.__draggerMouseUp);
+            },
+
+            __draggerMouseMove: function (e) {
+                if (!this.dragContext) {
+                    return;
+                }
+
+                var ctx = this.dragContext;
+                var delta = e.pageX - ctx.pageOffsetX;
+                if (delta !== 0) {
+                    var draggedColumn = ctx.draggedColumn;
+                    var index = ctx.draggedColumn.index;
+                    var changes = {};
+
+                    this.columns[index].absWidth = Math.min(ctx.maxColumnWidth, Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta));
+                    delta = this.columns[index].absWidth - draggedColumn.initialWidth;
+                    draggedColumn.$el.outerWidth(this.columns[index].absWidth);
+
+                    var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
+                    this.columns[index].width = newColumnWidthPc;
+                    changes[index] = this.columns[index].absWidth;
+                        index++;
+
+                    var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth,
+                        sumDelta = 0,
+                        sumGap = 0;
+
+                    for (var i = 0;  i &lt; ctx.affectedColumns.length; i++) {
+                        var c = ctx.affectedColumns[i],
+                            newColumnWidth = c.initialWidth - delta * c.initialWidth / affectedColumnsWidth;
+
+                        if (newColumnWidth &lt; this.constants.MIN_COLUMN_WIDTH) {
+                            sumDelta += this.constants.MIN_COLUMN_WIDTH - newColumnWidth;
+                            newColumnWidth = this.constants.MIN_COLUMN_WIDTH;
+                        } else {
+                            sumGap += newColumnWidth - this.constants.MIN_COLUMN_WIDTH;
+                        }
+
+                        this.columns[index].absWidth = newColumnWidth;
+                        index++;
+                    }
+
+                    var fullSum = 0;
+                    index = ctx.draggedColumn.index + 1;
+                    for (var i = 0; i &lt; ctx.affectedColumns.length; i++) {
+                        var c = ctx.affectedColumns[i];
+                        if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
+                            var delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
+                            this.columns[index].absWidth -= delta;
+                        }
+
+                        fullSum += this.columns[index].absWidth;
+
+                        if (i === ctx.affectedColumns.length - 1) {
+                            var sumDelta = ctx.fullWidth - ctx.unaffectedWidth - this.columns[ctx.draggedColumn.index].absWidth - fullSum;
+                            this.columns[index].absWidth += sumDelta;
+                        }
+
+                        var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
+                        this.columns[index].width = newColumnWidthPc;
+                        c.$el.outerWidth(this.columns[index].absWidth);
+                        changes[index] = this.columns[index].absWidth;
+                        index++;
+                    }
+
+                    this.gridEventAggregator.trigger('columnsResize');
+                }
+
+                return false;
+            },
+
+            __draggerMouseUp: function () {
+                this.__stopDrag();
+                return false;
+            },
+
+            __handleResize: function () {
+                this.__handleResizeInternal();
+                this.gridEventAggregator.trigger('columnsResize');
+            },
+
+            __getFullWidth: function () {
+                return this.$el.parent().width() - 1; //Magic cross browser pixel, don't remove it
+            },
+
+            __handleResizeInternal: function () {
+                var fullWidth = this.__getFullWidth(),
+                    columnWidth = fullWidth / this.columns.length;
+
+                this.ui.gridHeaderColumn.each(function (i, el) {
+                    var child = $(el);
+                    var col = this.columns[i];
+                    if (col.width) {
+                        col.absWidth = col.width * fullWidth;
+                        child.outerWidth(col.absWidth);
+                    } else {
+                        col.absWidth = columnWidth;
+                        child.outerWidth(col.absWidth);
+                    }
+                }.bind(this));
+            }
+        });
+
+        return GridHeaderView;
+    });
+</pre>
+	</article>
+</section>
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Comindware Copyright © 2015
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
+		on Thu Dec 17th 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>
