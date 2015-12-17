@@ -1,12 +1,9 @@
 /**
  * Developer: Kristina
  * Date: 24/12/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* Useful and general methods for work with Date and Time put here*/

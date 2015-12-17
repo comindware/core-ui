@@ -38395,12 +38395,9 @@ define("datetimePicker", ["jquery"], function() {
 /**
  * Developer: Stepan Burguchev
  * Date: 7/21/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Marionette, classes, Backbone, global */
@@ -38456,12 +38453,9 @@ define('core/libApi',[
 /**
  * Developer: Stepan Burguchev
  * Date: 2/3/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -38493,12 +38487,9 @@ define('core/meta',[],
 /**
  * Developer: Stepan Burguchev
  * Date: 9/4/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, moment */
@@ -38817,12 +38808,9 @@ define('core/utils/comparators',['core/meta'],
 /**
  * Developer: Stepan Burguchev
  * Date: 8/4/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -38882,12 +38870,9 @@ define('core/utils/comparators',['core/meta'],
 /**
  * Developer: Stepan Burguchev
  * Date: 8/21/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, _, $ */
@@ -39254,12 +39239,9 @@ define('core/utils/helpers',['core/libApi', 'core/services/LocalizationService']
 /**
  * Developer: Stepan Burguchev
  * Date: 5/25/2015
- * Copyright: 2009-2015 Comindware�
+ * Copyright: 2009-2016 Comindware�
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -39276,12 +39258,9 @@ define('core/serviceLocator',[],
 /**
  * Developer: Stepan Burguchev
  * Date: 8/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, _, Handlebars */
@@ -39442,12 +39421,9 @@ define('core/utils/htmlHelpers',['core/libApi', 'core/serviceLocator'],
 /**
  * Developer: Kristina
  * Date: 24/12/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* Useful and general methods for work with Date and Time put here*/
@@ -39735,12 +39711,9 @@ define('core/utils/dateHelpers',[
 /**
  * Developer: Stepan Burguchev
  * Date: 7/8/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -39821,12 +39794,9 @@ define('core/utils/cookieHelpers',[],
 /**
  * Developer: Stepan Burguchev
  * Date: 10/10/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require */
@@ -39871,12 +39841,9 @@ define('core/utils/keyCode',[],
 /**
  * Developer: Stepan Burguchev
  * Date: 9/1/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -39979,12 +39946,9 @@ define('core/utils/handlebarsHelpers',[
 /**
  * Developer: Stepan Burguchev
  * Date: 9/2/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -40032,12 +39996,9 @@ define('core/utils/jquery/selector.focusable',[
 /**
  * Developer: Stepan Burguchev
  * Date: 5/22/2015
- * Copyright: 2009-2015 Comindware�
+ * Copyright: 2009-2016 Comindware�
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -40501,12 +40462,9 @@ define('text!core/templates/fadingPanel.html',[],function () { return '';});
 /**
  * Developer: Stepan Burguchev
  * Date: 9/16/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars */
@@ -40548,12 +40506,9 @@ define('core/views/FadingPanelView',['text!../templates/fadingPanel.html', 'core
 /**
  * Developer: Stepan Burguchev
  * Date: 7/6/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -40625,12 +40580,9 @@ define('core/services/WindowService',[
 /**
  * Developer: Stepan Burguchev
  * Date: 9/7/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -40707,12 +40659,9 @@ define('core/views/behaviors/BlurableBehavior',[
 /**
  * Developer: Stepan Burguchev
  * Date: 11/26/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41064,12 +41013,9 @@ define('text!core/dropdown/templates/dropdown.html',[],function () { return '<di
 /**
  * Developer: Stepan Burguchev
  * Date: 11/27/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41322,12 +41268,9 @@ define('core/dropdown/views/DropdownView',['text!../templates/dropdown.html', 'c
 /**
  * Developer: Stepan Burguchev
  * Date: 11/26/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41359,12 +41302,9 @@ define('text!core/dropdown/templates/menuItem.html',[],function () { return '{{#
 /**
  * Developer: Stepan Burguchev
  * Date: 11/26/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41403,12 +41343,9 @@ define('core/dropdown/views/MenuItemView',['text!../templates/menuItem.html', 'c
 /**
  * Developer: Stepan Burguchev
  * Date: 11/27/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41460,12 +41397,9 @@ define('text!core/dropdown/templates/defaultButton.html',[],function () { return
 /**
  * Developer: Stepan Burguchev
  * Date: 11/27/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41502,12 +41436,9 @@ define('core/dropdown/views/DefaultButtonView',['text!../templates/defaultButton
 /**
  * Developer: Stepan Burguchev
  * Date: 12/1/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41554,12 +41485,9 @@ define('core/dropdown/views/behaviors/CustomAnchorBehavior',[ 'core/libApi' ],
 /**
  * Developer: Stepan Burguchev
  * Date: 11/26/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -41657,12 +41585,9 @@ define('core/dropdown/factory',['./views/PopoutView', './views/ListPanelView', '
 /**
  * Developer: Stepan Burguchev
  * Date: 10/13/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require */
@@ -41712,12 +41637,9 @@ define('text!core/list/templates/emptyList.html',[],function () { return '{{text
 /**
  * Developer: Stepan Burguchev
  * Date: 7/17/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars, Backbone */
@@ -41761,12 +41683,9 @@ define('text!core/list/templates/gridcolumnheader.html',[],function () { return 
 /**
  * Developer: Stepan Burguchev
  * Date: 8/22/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars */
@@ -41822,12 +41741,9 @@ define('text!core/list/templates/gridheader.html',[],function () { return '{{#ea
 /**
  * Developer: Stepan Burguchev
  * Date: 7/17/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -41861,12 +41777,9 @@ define('core/services/GlobalEventService',[
 /**
  * Developer: Stepan Burguchev
  * Date: 8/20/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, Handlebars, shared, $ */
@@ -42152,12 +42065,9 @@ define('text!core/list/templates/grid.html',[],function () { return '<div class=
 /**
  * Developer: Stepan Burguchev
  * Date: 7/18/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, _ */
@@ -42365,12 +42275,9 @@ define('text!core/list/templates/list.html',[],function () { return '<div class=
 /**
  * Developer: Stepan Burguchev
  * Date: 7/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, Handlebars, classes, shared, $ */
@@ -42761,12 +42668,9 @@ define('core/list/views/ListView',[
 /**
  * Developer: Stepan Burguchev
  * Date: 8/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars, _, $ */
@@ -42890,12 +42794,9 @@ define('core/list/views/behaviors/GridItemViewBehavior',['core/libApi', 'core/ut
 /**
  * Developer: Stepan Burguchev
  * Date: 8/19/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, _ */
@@ -43143,12 +43044,9 @@ define('core/models/behaviors/SelectableBehavior',['core/libApi'],
 /**
  * Developer: Stepan Burguchev
  * Date: 7/23/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, _ */
@@ -43192,12 +43090,9 @@ define('core/models/behaviors/HighlightableBehavior',[ 'core/libApi' ],
 /**
  * Developer: Stepan Burguchev
  * Date: 8/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, _, classes */
@@ -43219,12 +43114,9 @@ define('core/list/models/behaviors/GridItemBehavior',[
 /**
  * Developer: Grigory Kuznetsov
  * Date: 22.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -43336,12 +43228,9 @@ define('text!core/list/templates/noColumns.html',[],function () { return '{{loca
 /**
  * Developer: Grigory Kuznetsov
  * Date: 27.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -43371,12 +43260,9 @@ define('text!core/list/templates/loadingRow.html',[],function () { return '{{loc
 /**
  * Developer: Grigory Kuznetsov
  * Date: 27.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -43403,12 +43289,9 @@ define('core/list/views/LoadingRowView',['core/libApi', 'text!../templates/loadi
 /**
  * Developer: Stepan Burguchev
  * Date: 7/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, Handlebars, shared, classes */
@@ -43635,12 +43518,9 @@ define('text!core/list/templates/scrollbar.html',[],function () { return '<div c
 /**
  * Developer: Stepan Burguchev
  * Date: 7/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, Handlebars, $, jQuery */
@@ -43996,12 +43876,9 @@ define('core/list/views/ScrollbarView',['text!core/list/templates/scrollbar.html
 /**
  * Developer: Stepan Burguchev
  * Date: 8/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, _, Marionette */
@@ -44053,12 +43930,9 @@ define('core/list/views/behaviors/ListGroupViewBehavior',['core/libApi'],
 /**
  * Developer: Stepan Burguchev
  * Date: 8/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars */
@@ -44169,12 +44043,9 @@ define('core/list/views/behaviors/ListItemViewBehavior',[
 /**
  * Developer: Stepan Burguchev
  * Date: 7/23/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, _ */
@@ -44232,12 +44103,9 @@ define('core/models/behaviors/CollapsibleBehavior',[ 'core/libApi' ],
 /**
  * Developer: Stepan Burguchev
  * Date: 8/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, classes, _ */
@@ -44269,12 +44137,9 @@ define('core/list/models/behaviors/ListGroupBehavior',[
 /**
  * Developer: Stepan Burguchev
  * Date: 8/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, _, classes */
@@ -44295,12 +44160,9 @@ define('core/list/models/behaviors/ListItemBehavior',[
 /**
  * Developer: Stepan Burguchev
  * Date: 7/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, console */
@@ -44437,12 +44299,9 @@ define('text!core/list/templates/emptyGrid.html',[],function () { return '{{text
 /**
  * Developer: Stepan Burguchev
  * Date: 7/17/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars, Backbone */
@@ -44479,12 +44338,9 @@ define('core/list/views/EmptyGridView',['text!core/list/templates/emptyGrid.html
 /**
  * Developer: Grigory Kuznetsov
  * Date: 27.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _, Localizer */
@@ -44514,12 +44370,9 @@ define('core/list/models/LoadingRowModel',['core/libApi'],
 /**
  * Developer: Stepan Burguchev
  * Date: 7/18/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, _, shared */
@@ -44989,12 +44842,9 @@ define('core/collections/VirtualCollection',['core/libApi', '../models/behaviors
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -45143,12 +44993,9 @@ define('core/list/factory',[
 /**
  * Developer: Stepan Burguchev
  * Date: 2/3/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -45180,12 +45027,9 @@ define('core/Meta',[],
 /**
  * Developer: Grigory Kuznetsov
  * Date: 23.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -45404,12 +45248,9 @@ define('core/list/CellViewFactory',[
 /**
  * Developer: Stepan Burguchev
  * Date: 7/7/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, console */
@@ -45572,12 +45413,9 @@ define('core/form/fields/views/InfoMessageView',['core/libApi'], function() {
 /**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -45721,12 +45559,9 @@ define('core/form/fields/CommonField',[
 /**
  * Developer: Stepan Burguchev
  * Date: 12/12/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -45904,12 +45739,9 @@ define('core/form/ExtendedForm',['./fields/CommonField'], function (CommonField)
 /**
  * Developer: Stepan Burguchev
  * Date: 11/19/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -46091,12 +45923,9 @@ define('core/form/behaviors/BackboneFormBehavior',['../ExtendedForm'],
 /**
  * Developer: Stepan Burguchev
  * Date: 12/2/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -46483,12 +46312,9 @@ define('core/form/editors/base/MarionetteEditorPrototype',[
 /**
  * Developer: Stepan Burguchev
  * Date: 10/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -46506,12 +46332,9 @@ define('core/form/editors/base/BaseItemEditorView',['core/libApi', './Marionette
 /**
  * Developer: Stepan Burguchev
  * Date: 12/2/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -46529,12 +46352,9 @@ define('core/form/editors/base/BaseLayoutEditorView',['core/libApi', './Marionet
 /**
  * Developer: Stepan Burguchev
  * Date: 12/2/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -46552,12 +46372,9 @@ define('core/form/editors/base/BaseCollectionEditorView',['core/libApi', './Mari
 /**
  * Developer: Stepan Burguchev
  * Date: 12/2/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -46578,12 +46395,9 @@ define('text!core/form/editors/templates/booleanEditor.html',[],function () { re
 /**
  * Developer: Stepan Burguchev
  * Date: 10/13/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -46680,12 +46494,9 @@ define('text!core/form/editors/templates/numberEditor.html',[],function () { ret
 /**
  * Developer: Stepan Burguchev
  * Date: 10/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -47033,12 +46844,9 @@ define('text!core/form/editors/templates/textAreaEditor.html',[],function () { r
 /**
  * Developer: Stepan Burguchev
  * Date: 10/13/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -47296,12 +47104,9 @@ define('text!core/form/editors/templates/textEditor.html',[],function () { retur
 /**
  * Developer: Stepan Burguchev
  * Date: 10/13/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -47489,12 +47294,9 @@ define('text!core/form/editors/templates/passwordEditor.html',[],function () { r
 /**
  * Developer: Krasnovskiy Denis
  * Date: 08/27/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -47527,12 +47329,9 @@ define('text!core/form/editors/impl/reference/templates/referenceButton.html',[]
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -47619,12 +47418,9 @@ define('text!core/form/editors/impl/reference/templates/referenceListItem.html',
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -47674,12 +47470,9 @@ define('core/form/editors/impl/reference/views/ReferenceListItemView',[
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -47708,12 +47501,9 @@ define('text!core/form/editors/impl/reference/templates/searchMoreListItem.html'
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -47746,12 +47536,9 @@ define('text!core/form/editors/impl/reference/templates/loading.html',[],functio
 /**
  * Developer: Stepan Burguchev
  * Date: 11/18/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -47772,12 +47559,9 @@ define('core/form/editors/impl/reference/views/LoadingView',['text!../templates/
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -47960,12 +47744,9 @@ define('core/form/editors/impl/reference/views/ReferencePanelView',['core/libApi
 /**
  * Developer: Stepan Burguchev
  * Date: 7/23/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, _ */
@@ -48020,12 +47801,9 @@ define('core/collections/behaviors/HighlightableBehavior',[ 'core/libApi' ],
 /**
  * Developer: Stepan Burguchev
  * Date: 12/12/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -48056,12 +47834,9 @@ define('core/form/editors/impl/reference/models/DefaultReferenceModel',[
 /**
  * Developer: Stepan Burguchev
  * Date: 12/4/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -48113,12 +47888,9 @@ define('core/form/editors/impl/reference/collections/BaseReferenceCollection',[
 /**
  * Developer: Stepan Burguchev
  * Date: 10/13/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -48344,12 +48116,9 @@ define('text!core/form/editors/impl/memberSelect/templates/defaultButton.html',[
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 24.03.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -48446,12 +48215,9 @@ define('text!core/form/editors/impl/memberSelect/templates/listItem.html',[],fun
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -48517,12 +48283,9 @@ define('core/form/editors/impl/memberSelect/views/ListItemView',[
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -48662,12 +48425,9 @@ define('core/form/editors/impl/memberSelect/views/PanelView',['core/libApi',
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 16.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -48699,12 +48459,9 @@ define('core/form/editors/impl/common/members/models/MemberModel',[
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 05.12.2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -48755,12 +48512,9 @@ define('core/form/editors/impl/common/members/collections/MembersCollection',[
 /**
  * Developer: Stepan Burguchev
  * Date: 1/28/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -48988,12 +48742,9 @@ define('text!core/form/editors/impl/dropdown/templates/defaultDropdownListItem.h
 /**
  * Developer: Stepan Burguchev
  * Date: 1/16/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -49051,12 +48802,9 @@ define('core/form/editors/impl/dropdown/views/DefaultDropdownListItemView',[
 /**
  * Developer: Grigory Kuznetsov
  * Date: 22.09.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -49077,12 +48825,9 @@ define('core/form/editors/impl/dropdown/collections/DropdownCollection',['core/u
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -49264,12 +49009,9 @@ define('text!core/form/editors/impl/dropdown/templates/dropdownButton.html',[],f
 /**
  * Developer: Stepan Burguchev
  * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -49320,12 +49062,9 @@ define('core/form/editors/impl/dropdown/views/DropdownButtonView',['core/libApi'
 /**
  * Developer: Stepan Burguchev
  * Date: 1/16/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -49555,12 +49294,9 @@ define('text!core/form/editors/templates/membersBubbleEditor.html',[],function (
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 05.05.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -49585,12 +49321,9 @@ define('text!core/form/editors/impl/membersBubble/templates/bubble.html',[],func
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 21.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -49650,12 +49383,9 @@ define('text!core/form/editors/impl/membersBubble/templates/input.html',[],funct
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 21.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -49811,12 +49541,9 @@ define('core/form/editors/impl/membersBubble/views/InputView',['core/libApi', 'c
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 16.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -49911,12 +49638,9 @@ define('text!core/form/editors/impl/common/members/templates/listItem.html',[],f
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 16.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -49965,12 +49689,9 @@ define('text!core/form/editors/impl/common/members/templates/panel.html',[],func
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 20.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -50035,12 +49756,9 @@ define('core/form/editors/impl/common/members/views/MembersListView',['core/list
 /**
  * Developer: Stepan Burguchev
  * Date: 8/19/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -50097,12 +49815,9 @@ define('core/form/editors/impl/common/members/services/factory',[
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 15.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -50433,12 +50148,9 @@ define('text!core/form/editors/templates/durationEditor.html',[],function () { r
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 26.12.2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _, Localizer, Handlebars */
@@ -50905,12 +50617,9 @@ define('text!core/form/editors/impl/radioGroup/templates/radioButton.html',[],fu
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 04.03.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -50980,12 +50689,9 @@ define('core/form/editors/impl/radioGroup/views/RadioButtonView',['core/libApi',
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 04.03.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -51008,12 +50714,9 @@ define('core/form/editors/impl/radioGroup/models/RadioButtonModel',[
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 04.03.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -51038,12 +50741,9 @@ define('core/form/editors/impl/radioGroup/collections/RadioGroupCollection',[
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 04.03.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -51149,12 +50849,9 @@ define('text!core/form/editors/impl/dateTime/templates/datePanel.html',[],functi
 /**
  * Developer: Grigory Kuznetsov
  * Date: 10.09.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -51234,12 +50931,9 @@ define('text!core/form/editors/impl/dateTime/templates/dateInput.html',[],functi
 /**
  * Developer: Grigory Kuznetsov
  * Date: 10.09.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -51424,12 +51118,9 @@ define('core/form/editors/impl/dateTime/views/DateInputView',['core/libApi',
 /**
  * Developer: Grigory Kuznetsov
  * Date: 16.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -51485,12 +51176,9 @@ define('core/form/editors/impl/dateTime/views/DateView',['core/libApi',
 /**
  * Developer: Grigory Kuznetsov
  * Date: 07/15/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -51598,12 +51286,9 @@ define('text!core/form/editors/impl/dateTime/templates/timeInput.html',[],functi
 /**
  * Developer: Grigory Kuznetsov
  * Date: 16.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -51769,12 +51454,9 @@ define('core/form/editors/impl/dateTime/views/TimeInputView',['core/libApi', 'co
 /**
  * Developer: Grigory Kuznetsov
  * Date: 16.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -51876,12 +51558,9 @@ define('core/form/editors/impl/dateTime/views/TimeView',['core/libApi', 'core/ut
 /**
  * Developer: Grigory Kuznetsov
  * Date: 17.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -51983,12 +51662,9 @@ define('text!core/form/editors/templates/dateTimeEditor.html',[],function () { r
 /**
  * Developer: Grigory Kuznetsov
  * Date: 07/16/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -52124,12 +51800,9 @@ define('text!core/form/editors/templates/mentionEditor.html',[],function () { re
 /**
  * Developer: Stepan Burguchev
  * Date: 8/19/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -52404,12 +52077,9 @@ define('text!core/form/editors/impl/multiSelect/templates/multiSelectItem.html',
 /**
  * Developer: Oleg Verevkin
  * Date: 10/21/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -52472,12 +52142,9 @@ define(
 /**
  * Developer: Oleg Verevkin
  * Date: 10/21/2015
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -52562,12 +52229,9 @@ define('text!core/form/editors/impl/multiSelect/templates/multiSelectButton.html
 /**
  * Developer: Oleg Verevkin
  * Date: 10/21/2015
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -52621,12 +52285,9 @@ define(
 /**
  * Developer: Oleg Verevkin
  * Date: 10/21/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -52875,12 +52536,9 @@ define(
 /**
  * Developer: Stepan Burguchev
  * Date: 12/10/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -52966,12 +52624,9 @@ define('core/form/editors/impl/reference/controllers/DemoReferenceEditorControll
 /**
  * Developer: Stepan Burguchev
  * Date: 12/12/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -53064,12 +52719,9 @@ define('core/form/editors/impl/reference/controllers/BaseReferenceEditorControll
 /**
  * Developer: Stepan Burguchev
  * Date: 3/20/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -53090,12 +52742,9 @@ define('core/form/editors/impl/reference/controllers/DataSourceReferenceEditorCo
 /**
  * Developer: Stepan Burguchev
  * Date: 3/20/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Backbone, Marionette, $, _ */
@@ -53126,12 +52775,9 @@ define('core/form/editors/impl/reference/collections/DataSourceReferenceCollecti
 /**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -53167,12 +52813,9 @@ define('core/form/validators/RequiredValidator',['core/libApi', 'core/services/L
 /**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -53216,12 +52859,9 @@ define('core/form/validators/LengthValidator',['core/libApi', 'core/services/Loc
 /**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -53245,12 +52885,9 @@ define('core/form/validators/LettersValidator',['core/libApi', 'core/services/Lo
 /**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -53274,12 +52911,9 @@ define('core/form/validators/PasswordValidator',['core/libApi', 'core/services/L
 /**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -53303,12 +52937,9 @@ define('core/form/validators/PhoneValidator',['core/libApi', 'core/services/Loca
 /**
  * Developer: Stepan Burguchev
  * Date: 10/13/2014
- * Copyright: 2009-2014 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require */
@@ -53507,12 +53138,9 @@ define('text!core/nativeGrid/templates/nativeGrid.html',[],function () { return 
 /**
  * Developer: Grigory Kuznetsov
  * Date: 17.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, Handlebars, classes, shared, $ */
@@ -53855,12 +53483,9 @@ define('core/nativeGrid/views/ListView',[
 /**
  * Developer: Grigory Kuznetsov
  * Date: 17.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars, _, $ */
@@ -53949,12 +53574,9 @@ define('core/nativeGrid/views/behaviors/NativeGridItemViewBehavior',['core/libAp
 /**
  * Developer: Grigory Kuznetsov
  * Date: 22.07.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -53993,12 +53615,9 @@ define('text!core/nativeGrid/templates/header.html',[],function () { return '{{#
 /**
  * Developer: Grigory Kuznetsov
  * Date: 17.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, Handlebars, shared, $ */
@@ -54244,12 +53863,9 @@ define('text!core/nativeGrid/templates/columnHeader.html',[],function () { retur
 /**
  * Developer: Grigory Kuznetsov
  * Date: 17.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, Handlebars */
@@ -54336,12 +53952,9 @@ define('core/nativeGrid/views/ColumnHeaderView',['text!../templates/columnHeader
 /**
  * Developer: Grigory Kuznetsov
  * Date: 14.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -54539,12 +54152,9 @@ define('core/nativeGrid/views/NativeGridView',['core/libApi',
 /**
  * Developer: Grigory Kuznetsov
  * Date: 17.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -54614,12 +54224,9 @@ define('core/nativeGrid/Factory',[
 /**
  * Developer: Grigory Kuznetsov
  * Date: 18.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -54645,12 +54252,9 @@ define('core/nativeGrid/FilterViewFactory',[],
 /**
  * Developer: Grigory Kuznetsov
  * Date: 17.08.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Marionette, _, console */
@@ -54691,12 +54295,9 @@ define('core/nativeGrid/nativeGridApi',['./Factory',
 /**
  * Developer: Stepan Burguchev
  * Date: 8/27/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -54756,12 +54357,9 @@ define('text!core/services/message/templates/message.html',[],function () { retu
 /**
  * Developer: Stepan Burguchev
  * Date: 4/23/2015
- * Copyright: 2009-2015 Comindware�
+ * Copyright: 2009-2016 Comindware�
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -54803,12 +54401,9 @@ define('core/services/message/views/MessageView',['text!../templates/message.htm
 /**
  * Developer: Stepan Burguchev
  * Date: 4/23/2015
- * Copyright: 2009-2015 Comindware
+ * Copyright: 2009-2016 Comindware
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -54904,12 +54499,9 @@ define('core/services/PromiseServer',['core/libApi', './promise/Config'], functi
 /**
  * Developer: Stepan Burguchev
  * Date: 8/4/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -55035,12 +54627,9 @@ define('core/services/PromiseServer',['core/libApi', './promise/Config'], functi
 /**
  * Developer: Stepan Burguchev
  * Date: 6/30/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -55088,12 +54677,9 @@ define('text!core/views/behaviors/loading/templates/loading.html',[],function ()
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 29.06.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -55117,12 +54703,9 @@ define('core/views/behaviors/loading/views/LoadingView',['core/libApi', 'text!..
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 26.06.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Promise */
@@ -55169,12 +54752,9 @@ define('core/views/behaviors/LoadingBehavior',['core/utils/helpers', './loading/
 /**
  * Developer: Stepan Burguchev
  * Date: 1/15/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -55241,12 +54821,9 @@ define('text!core/templates/searchBar.html',[],function () { return '<div class=
 /**
  * Developer: Ksenia Kartvelishvili
  * Date: 19.03.2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -55311,12 +54888,9 @@ define('text!core/templates/splitPanel.html',[],function () { return '<div class
 /**
  * Developer: Stepan Burguchev
  * Date: 9/15/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -55467,12 +55041,9 @@ define('core/views/SplitPanelView',[
 /**
  * Developer: Stepan Burguchev
  * Date: 8/10/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
@@ -55525,12 +55096,9 @@ define('core/Bootstrapper',[
 /**
  * Developer: Stepan Burguchev
  * Date: 5/21/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
@@ -55722,12 +55290,9 @@ define('core/coreApi',[
 /**
  * Developer: Stepan Burguchev
  * Date: 5/21/2015
- * Copyright: 2009-2015 Comindware®
+ * Copyright: 2009-2016 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
