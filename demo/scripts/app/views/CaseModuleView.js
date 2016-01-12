@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Prism */
 
-define(['text!../templates/caseModule.html', 'module/lib', 'prism', 'require'],
-    function (template, lib, prism, require) {
+define(['text!../templates/caseModule.html', 'comindware/core', 'prism', 'require', 'markdown'],
+    function (template, core, prism, require) {
         'use strict';
 
         return Marionette.LayoutView.extend({

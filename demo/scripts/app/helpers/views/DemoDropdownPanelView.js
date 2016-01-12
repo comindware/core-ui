@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define([ 'module/lib', './DemoDropdownItemView' ], function (lib, DemoDropdownItemView) {
+define([ 'comindware/core', './DemoDropdownItemView' ], function (core, DemoDropdownItemView) {
     'use strict';
 
     return Marionette.CollectionView.extend({

@@ -12,7 +12,7 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-    'module/lib'
+    'comindware/core'
 ], function () {
     'use strict';
     return Marionette.ItemView.extend({
