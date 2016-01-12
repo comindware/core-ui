@@ -1,0 +1,8 @@
+{
+  "name": "demo",
+  "description": "Core UI demo page",
+  "author": "Comindware",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}

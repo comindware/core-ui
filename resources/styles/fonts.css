@@ -1,0 +1,51 @@
+﻿@font-face {
+    font-family: 'OpenSans';
+    src: url('/resources/fonts/opensans-light.eot');
+    src: url('/resources/fonts/opensans-light.eot?#iefix') format('embedded-opentype'),
+         url('/resources/fonts/opensans-light.woff') format('woff'),
+         url('/resources/fonts/opensans-light.ttf') format('truetype'),
+         url('/resources/fonts/opensans-light.svg#OpenSanslight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/resources/fonts/opensans-regular.eot');
+    src: url('/resources/fonts/opensans-regular.eot?#iefix') format('embedded-opentype'),
+         url('/resources/fonts/opensans-regular.woff') format('woff'),
+         url('/resources/fonts/opensans-regular.ttf') format('truetype'),
+         url('/resources/fonts/opensans-regular.svg#OpenSansregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/resources/fonts/opensans-italic.eot');
+    src: url('/resources/fonts/opensans-italic.eot?#iefix') format('embedded-opentype'),
+         url('/resources/fonts/opensans-italic.woff') format('woff'),
+         url('/resources/fonts/opensans-italic.ttf') format('truetype'),
+         url('/resources/fonts/opensans-italic.svg#OpenSansregular') format('svg');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/resources/fonts/opensans-semibold.eot');
+    src: url('/resources/fonts/opensans-semibold.eot?#iefix') format('embedded-opentype'),
+         url('/resources/fonts/opensans-semibold.woff') format('woff'),
+         url('/resources/fonts/opensans-semibold.ttf') format('truetype'),
+         url('/resources/fonts/opensans-semibold.svg#OpenSansmedium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/resources/fonts/opensans-bold.eot');
+    src: url('/resources/fonts/opensans-bold.eot?#iefix') format('embedded-opentype'),
+         url('/resources/fonts/opensans-bold.woff') format('woff'),
+         url('/resources/fonts/opensans-bold.ttf') format('truetype'),
+         url('/resources/fonts/opensans-bold.svg#OpenSansbold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+}

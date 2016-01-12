@@ -1,0 +1,160 @@
+
+/* Native Grid */
+
+.dev-native-grid {
+    width: 100%;
+    height: 100%;
+}
+
+.dev-native-grid .grid-header {
+    display: block;
+    position: relative;
+    height: inherit;
+    width: 100%;
+    overflow: hidden;
+}
+
+.dev-native-grid .grid-cell {
+    display: inline-block;
+    float: left;
+    padding-top: 9px;
+}
+
+.dev-native-grid .grid .visible-collection {
+    display: block;
+    width: 100%;
+    border-collapse: collapse;
+    height: 100%;
+}
+
+.dev-native-grid .grid-row {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+.dev-native-grid .grid-header-column {
+    float: left;
+    display: inline-block;
+    width: auto;
+    position: relative;
+}
+
+.dev-native-grid .record-row .padding {
+    display: inline-block;
+    float: left;
+    height: 1px;
+}
+
+.dev-native-grid .visible-collection {
+    display: block;
+    width: 100%;
+    border-collapse: collapse;
+    position: absolute;
+}
+
+.dev-native-grid .grid-cell {
+    white-space: nowrap;
+    display: inline-block;
+    box-sizing: border-box;
+    float: left;
+}
+
+.dev-native-grid-header {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    right: 0px;
+    height: 51px;
+    border-bottom: 1px solid #DFE4E8;
+    border-collapse: collapse;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.dev-native-grid-list {
+    position: absolute;
+    top: 51px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow-x: auto;
+}
+
+.dev-filter-popout {
+    width: 150px;
+    height: 60px;
+    background-color: #FFFFFF;
+    border: 1px solid #c2c2c2;
+    box-shadow: 0 0 8px rgba(0,0,0,.2);
+    z-index: 4;
+    position: fixed;
+    margin-left: -14px;
+    margin-top: 4px;
+}
+
+.dev-popout-region {
+    position: absolute;
+    z-index: 4;
+}
+
+/* /Native Grid */
+
+.dev-user-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Dropdown */
+.dropdown__wrp.dev-panel-up-over {
+    margin-top: 20px;
+}
+
+.popout__action-btn +
+.popout__wrp.dev-popout-flow-right,
+.popout__wrp.dev-popout-flow-right {
+    right: auto;
+}
+
+.popout__action-btn +
+.popout__wrp.dev-popout-flow-left,
+.popout__wrp.dev-popout-flow-left {
+    left: auto;
+}
+
+.dev-dropdown-editor__dropdown-view__panel-view__scrollbar-region {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 100%;
+}
+
+.dev-dropdown-editor__dropdown-view__panel-view__list-region {
+    height: 100%;
+    width: 100%;
+}
+
+.dev-dropdown-editor__dropdown-view__panel-view {
+    padding-right: 16px;
+    line-height: 30px;
+}
+
+.dev-dropdown-editor__dropdown-view__list-item-view {
+    height: 30px;
+    box-sizing: border-box;
+}
+
+/* /Dropdown */
+
+.dev-member-not-set {
+    display: none;
+}
+
+.pr-empty .dev-member-not-set {
+    display: inline;
+}
+
+.dev-scrollbar__hidden {
+    visibility: hidden;
+}

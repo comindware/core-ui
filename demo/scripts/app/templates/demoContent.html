@@ -1,0 +1,19 @@
+<div class="js-module-loading-region l-loader"></div>
+<div class="top-nav">
+    <a href="javascript:void(0);" tabindex="1" class="demo-nav-link js-navigation-button">
+        <svg version="1.2" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="26px" height="26px" viewBox="0 0 26 26" xml:space="preserve"><g><path fill-rule="evenodd" fill="" d="M4,7v2h18V7H4z M4,14h18v-2H4V14z M4,19h18v-2H4V19z"></path></g></svg>
+    </a>
+    <div class="demo-nav">
+        {{#each items}}
+            <a href="{{url}}" class="demo-nav__item demo-nav__item_{{id}}">{{displayName}}</a>
+        {{/each}}
+    </div>
+
+    <div class="js-profile-region top-nav__i top-nav__i_person"></div>
+    <div class="top-nav__i top-nav__i_comindware">
+        <a href="http://comindware.com" class="top-nav__link top-nav__link_logo">
+            Comindware
+        </a>
+    </div>
+</div>
+<div class="js-module-region content-region"></div>

@@ -1,0 +1,36 @@
+
+/*  ---------------- Stepan's Scroller -----------------*/
+.scrollbar-region{
+    position: absolute;
+    width: 10px;
+    right: 0;
+    bottom: 0;
+    top: 46px;
+}
+.scrollbar {
+    height: 100%;
+    background-color: #fcfcfc;
+    z-index: 1;
+}
+.dragger {
+    position: relative;
+    top: 0;
+    height: 10%;
+    background-color: #d9d7d7;
+    opacity: 0.3;
+}
+
+.scrollbar.hover {
+    background-color: #F0F0F0;
+}
+
+.scrollbar.hover .dragger {
+    background-color: #B9B9B9;
+    opacity: 1;
+}
+
+.scrollbar .dragger.active {
+    background-color: #A0A0A0;
+}
+
+/* End Stepan's Scroller */

@@ -1,0 +1,35 @@
+/* SplitPanelView */
+
+.dev-core__double-column-wrp {
+}
+
+.dev-core__tr-left-column {
+    width: 50%;
+    height: inherit;
+    float: left;
+    border: 0;
+    position: relative;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border-right: solid 1px #ced3d7;
+}
+
+.dev-core__resizer {
+    padding: 0 8px 0 0;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    cursor: e-resize;
+    top: 0;
+    height: 100%;
+    left: 49.8%;
+    width: 0;
+    position: absolute;
+    z-index: 5
+}
+
+.dev-core__tr-right-column {
+    width: 50%;
+    height: inherit;
+    float: right;
+    position: relative;
+}

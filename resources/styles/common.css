@@ -1,0 +1,212 @@
+/*-- Reset css --*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+*:focus {
+    outline: none;
+}
+
+/*-- //--*/
+
+html, body {
+    width: 100%;
+    min-width: 980px;
+    height: 100%;
+    overflow: hidden;
+}
+
+body.non-selectable {
+    min-width: 0px;
+}
+
+body, input, textarea, select, label {
+    font: normal 12px/1.4 'OpenSans', sans-serif;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+a {
+    color: #0575bd;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #009bfe;
+    text-decoration: underline;
+}
+
+/* native scroll */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    border-radius: 0;
+    background: rgba(0,0,0,0);
+    -webkit-transition: all 2.2s;
+    transition: background 2.2s;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: rgba(0,0,0,.1);
+    -webkit-box-shadow: none;
+}
+.wrp-scroll:hover ::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.2);
+}
+::-webkit-scrollbar-thumb:end {
+    background: rgba(0,0,0,.1);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0,0,0,.1);
+}
+
+/* message popup */
+
+.msg-popup {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 555;
+}
+.msg-popup:before {
+    content: '';
+    height: 100%;
+    width: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.msg-popup__content {
+    width: 650px;
+    max-width: 80%;
+    max-height: 80%;
+    min-height: 110px;
+    margin: auto;
+    padding: 20px 30px;
+    overflow: auto;
+    display: inline-block;
+    vertical-align: middle;
+    background: #fff;
+}
+.msg-popup__title {
+    font-size: 22px;
+    line-height: 1.2;
+    color: #384650;
+    font-weight: 300;
+    text-align: center;
+}
+.msg-popup__desc {
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.msg-popup__buttons {
+    text-align: right;
+}
+
+.msg-popup__button {
+    margin: 0 0 0 10px;
+    padding: 5px 25px;
+    display: inline-block;
+    font-size: 14px;
+    color: #0575bd;
+    outline: 0;
+    border: 1px solid #ced3d7;
+    background: #fff;
+    cursor: pointer;
+}
+.msg-popup__button:hover {
+    color:#009bfe;
+    border-color: #009bfe;
+}
+.msg-popup__button_default {
+    color: #fff;
+    border-color: #0575BD;
+    background: #0575BD;
+}
+.msg-popup__button_default:hover {
+    color: #fff;
+    background-color: #009bfe;
+}
+
+/*  common  */
+
+.l-popup {
+    height: 600px;
+    width: 700px;
+    max-width: 80%;
+    max-height: 80%;
+    min-height: 300px;
+    margin: auto;
+    /*margin: -350px 0 0 -350px;*/
+    padding: 20px 30px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /*top: 50%;
+    left: 50%;*/
+    background: #fff;
+    z-index: 555;
+}
