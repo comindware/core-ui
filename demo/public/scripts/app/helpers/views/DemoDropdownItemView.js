@@ -1,6 +1,6 @@
 /**
- * Developer: Alexander Makarov
- * Date: 14.07.2015
+ * Developer: Stepan Burguchev
+ * Date: 8/14/2015
  * Copyright: 2009-2015 Comindware®
  *       All Rights Reserved
  *
@@ -12,12 +12,14 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-    'text!../templates/navigation.html'
-], function (template) {
+    'comindware/core',
+    'text!../templates/demoDropdownItem.html'
+], function (core, template) {
     'use strict';
-    return Marionette.ItemView.extend({
-        className: "demo-nav-wrapper",
 
-        template: Handlebars.compile(template)
+    return Marionette.ItemView.extend({
+        template: Handlebars.compile(template),
+
+        className: 'dropdown-list__i'
     });
 });

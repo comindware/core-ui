@@ -1,6 +1,6 @@
 define([
 	'comindware/core',
-    './stubs/usersStub'
+    'ajax/users'
 ], function(core, usersStub) {
     'use strict';
 

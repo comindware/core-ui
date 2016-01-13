@@ -7,17 +7,18 @@ require.config({
 		// libraries
 		prism: 'lib/prism/prism',
 		markdown: 'lib/markdown-js/markdown',
-		'cmw.underscore': 'lib/cmw/underscore',
 
 		// generated files
-		localizationMap: 'stubs/localizationMap',
-		ajaxMap: 'stubs/ajaxMap',
+		localizationMap: 'localization/localizationMap.en',
+		ajaxMap: 'ajax/ajaxMap',
 
 		// demo page specific routing
 		demoPage: 'app/helpers',
 		text: 'comindware/core'
 	}
 });
+
+window.langCode = 'en';
 
 require([
         'comindware/core',

@@ -11,24 +11,17 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['text!../templates/group.html'],
-    function (template) {
+define([
+        'comindware/core',
+        'text!../templates/case.html'
+    ],
+    function (core, template) {
         'use strict';
-
-        var classes = {
-            selected: 'selected'
-        };
-
         return Marionette.ItemView.extend({
+            tagName:'li',
 
-            template: Handlebars.compile(template),
+            className:'demo-cases__li',
 
-            tagName: 'li',
-
-            onRender: function () {
-                this.$el.toggleClass(classes.selected, !!this.model.selected);
-            },
-
-            className: 'demo-groups__li'
+            template: Handlebars.compile(template)
         });
     });

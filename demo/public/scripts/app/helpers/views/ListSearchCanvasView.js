@@ -12,8 +12,9 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-    'text!../templates/listCanvas.html'
-], function (template) {
+    'comindware/core',
+    'text!../templates/listSearchCanvas.html'
+], function (core, template) {
     'use strict';
     return Marionette.LayoutView.extend({
         initialize: function () {
@@ -22,15 +23,17 @@ define([
         template: Handlebars.compile(template),
 
         regions: {
+            searchRegion: '.js-search-region',
             contentRegion: '.js-content-region',
             scrollbarRegion: '.js-scrollbar-region'
         },
 
-        className: 'dev-demo-core__list-canvas__view',
+        className: 'dev-demo-core__list-canvas__view_search',
 
         onShow: function () {
             this.contentRegion.show(this.options.content);
             this.scrollbarRegion.show(this.options.scrollbar);
+            this.searchRegion.show(this.options.search);
         }
     });
 });

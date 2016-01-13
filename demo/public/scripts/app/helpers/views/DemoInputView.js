@@ -12,13 +12,19 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-    'text!../templates/demoDropdownItem.html'
-], function (template) {
+    'comindware/core',
+    'text!../templates/demoInput.html'
+], function (core, template) {
     'use strict';
 
     return Marionette.ItemView.extend({
         template: Handlebars.compile(template),
 
-        className: 'dropdown-list__i'
+        onRender: function () {
+            this.$el.css({
+                'box-sizing': 'content-box',
+                padding: '5px 5px 0 5px'
+            });
+        }
     });
 });

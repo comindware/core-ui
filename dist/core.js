@@ -47324,7 +47324,7 @@ define('core/form/editors/PasswordEditorView',['text!./templates/passwordEditor.
 define('text!core/form/editors/templates/referenceEditor.html',[],function () { return '<div class="js-dropdown-region l-reference"></div>\n<!--<svg class="js-search-more-button fr-reference__search"><use xlink:href="#i-search"></use></svg>-->';});
 
 
-define('text!core/form/editors/impl/reference/templates/referenceButton.html',[],function () { return '<span class="js-text reference-field__txt btn-wrp">\r\n    {{#if text}}\r\n        {{text}}\r\n        <span class="js-clear-button btn-del btn-del_absolute"></span>\r\n    {{else}}\r\n        {{localize \'SUITEGENERAL.FORM.EDITORS.REFERENCE.NOTSET\'}}\r\n    {{/if}}\r\n</span>';});
+define('text!core/form/editors/impl/reference/templates/referenceButton.html',[],function () { return '<span class="js-text reference-field__txt btn-wrp">\r\n    {{#if text}}\r\n        {{text}}\r\n        <span class="js-clear-button btn-del btn-del_absolute"></span>\r\n    {{else}}\r\n        {{localize \'CORE.FORM.EDITORS.REFERENCE.NOTSET\'}}\r\n    {{/if}}\r\n</span>';});
 
 /**
  * Developer: Stepan Burguchev
@@ -47410,7 +47410,7 @@ define('core/form/editors/impl/reference/views/ReferenceButtonView',['core/libAp
     });
 
 
-define('text!core/form/editors/impl/reference/templates/referencePanel.html',[],function () { return '<div class="js-loading-region l-loader"></div>\r\n\r\n<div class="dd-list__filter dd-list__filter_reference">\r\n    {{#if text}}\r\n    <div class="dd-list__title btn-wrp-active">\r\n        {{text}}\r\n        <span class="js-clear btn-del btn-del_absolute"></span>\r\n    </div>\r\n    {{/if}}\r\n    <div class="list-search list-search_dd">\r\n        <input type="text" class="list-search__input js-input" placeholder="{{localize \'SUITEGENERAL.FORM.EDITORS.REFERENCE.SEARCH\'}}">\r\n    </div>\r\n</div>\r\n<div class="js-list-region dd-list__wrp"></div>\r\n<div class="js-scrollbar-region dd-list__scrollbar"></div>';});
+define('text!core/form/editors/impl/reference/templates/referencePanel.html',[],function () { return '<div class="js-loading-region l-loader"></div>\r\n\r\n<div class="dd-list__filter dd-list__filter_reference">\r\n    {{#if text}}\r\n    <div class="dd-list__title btn-wrp-active">\r\n        {{text}}\r\n        <span class="js-clear btn-del btn-del_absolute"></span>\r\n    </div>\r\n    {{/if}}\r\n    <div class="list-search list-search_dd">\r\n        <input type="text" class="list-search__input js-input" placeholder="{{localize \'CORE.FORM.EDITORS.REFERENCE.SEARCH\'}}">\r\n    </div>\r\n</div>\r\n<div class="js-list-region dd-list__wrp"></div>\r\n<div class="js-scrollbar-region dd-list__scrollbar"></div>';});
 
 
 define('text!core/form/editors/impl/reference/templates/referenceListItem.html',[],function () { return '{{text}}';});
@@ -47496,7 +47496,7 @@ define('core/form/editors/impl/reference/models/SearchMoreModel',[
     });
 
 
-define('text!core/form/editors/impl/reference/templates/searchMoreListItem.html',[],function () { return '{{localize \'SUITEGENERAL.FORM.EDITORS.REFERENCE.SEARCHMORE\'}}';});
+define('text!core/form/editors/impl/reference/templates/searchMoreListItem.html',[],function () { return '{{localize \'CORE.FORM.EDITORS.REFERENCE.SEARCHMORE\'}}';});
 
 /**
  * Developer: Stepan Burguchev
@@ -47531,7 +47531,7 @@ define('core/form/editors/impl/reference/views/SearchMoreListItemView',['text!..
     });
 
 
-define('text!core/form/editors/impl/reference/templates/loading.html',[],function () { return '<div class="loader">{{localize \'SUITEGENERAL.FORM.EDITORS.REFERENCE.LOADING\'}}</div>';});
+define('text!core/form/editors/impl/reference/templates/loading.html',[],function () { return '<div class="loader">{{localize \'CORE.FORM.EDITORS.REFERENCE.LOADING\'}}</div>';});
 
 /**
  * Developer: Stepan Burguchev
@@ -47638,7 +47638,7 @@ define('core/form/editors/impl/reference/views/ReferencePanelView',['core/libApi
                             reqres: this.reqres
                         },
                         emptyViewOptions: {
-                            text: LocalizationService.get('SUITEGENERAL.FORM.EDITORS.REFERENCE.NOITEMS')
+                            text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS')
                         },
                         childHeight: config.CHILD_HEIGHT
                     }
@@ -48111,7 +48111,7 @@ define('core/form/editors/ReferenceEditorView',[
 define('text!core/form/editors/templates/memberSelectEditor.html',[],function () { return '<div class="js-dropdown-region l-field-user"></div>';});
 
 
-define('text!core/form/editors/impl/memberSelect/templates/defaultButton.html',[],function () { return '<span class="js-anchor">\n    {{#with member}}\n      {{#if userpicUri}}\n       <span style="background-image: url({{userpicUri}});" class="js-avatar avatar-icon avatar-icon_field"></span>\n      {{else}}\n      <span class="avatar-icon avatar-icon_field">\n        {{abbreviation}}\n      </span>\n      {{/if}}\n    {{else}}\n    <span class="avatar-icon avatar-icon_field avatar-icon_assignee avatar-icon_field">\n    </span>\n    {{/with}}\n</span>\n<span class="js-text field-user__content">\n    {{#with member}}\n    {{fullName}}\n    {{else}}\n      <span class="dev-member-not-set">{{localize \'SUITEGENERAL.FORM.EDITORS.MEMBERSELECT.NOTSET\'}}</span>\n    {{/with}}\n    <span class="js-clear-button button-delete button-delete_absolute"></span>\n</span>';});
+define('text!core/form/editors/impl/memberSelect/templates/defaultButton.html',[],function () { return '<span class="js-anchor">\n    {{#with member}}\n      {{#if userpicUri}}\n       <span style="background-image: url({{userpicUri}});" class="js-avatar avatar-icon avatar-icon_field"></span>\n      {{else}}\n      <span class="avatar-icon avatar-icon_field">\n        {{abbreviation}}\n      </span>\n      {{/if}}\n    {{else}}\n    <span class="avatar-icon avatar-icon_field avatar-icon_assignee avatar-icon_field">\n    </span>\n    {{/with}}\n</span>\n<span class="js-text field-user__content">\n    {{#with member}}\n    {{fullName}}\n    {{else}}\n      <span class="dev-member-not-set">{{localize \'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET\'}}</span>\n    {{/with}}\n    <span class="js-clear-button button-delete button-delete_absolute"></span>\n</span>';});
 
 /**
  * Developer: Ksenia Kartvelishvili
@@ -48207,7 +48207,7 @@ define('core/form/editors/impl/memberSelect/views/DefaultButtonView',['core/drop
     });
 
 
-define('text!core/form/editors/impl/memberSelect/templates/panel.html',[],function () { return '<div class="js-loading-region l-loader"></div>\r\n<div class="dd-list__filter">\r\n    <div class="list-search list-search_dd">\r\n        <input type="text" class="list-search__input js-input" placeholder="{{localize \'SUITEGENERAL.FORM.EDITORS.MEMBERSELECT.SEARCHPLACEHOLDER\'}}">\r\n    </div>\r\n</div>\r\n<div class="js-list-region dd-list__wrp"></div>\r\n<div class="js-scrollbar-region dd-list__scrollbar"></div>';});
+define('text!core/form/editors/impl/memberSelect/templates/panel.html',[],function () { return '<div class="js-loading-region l-loader"></div>\r\n<div class="dd-list__filter">\r\n    <div class="list-search list-search_dd">\r\n        <input type="text" class="list-search__input js-input" placeholder="{{localize \'CORE.FORM.EDITORS.MEMBERSELECT.SEARCHPLACEHOLDER\'}}">\r\n    </div>\r\n</div>\r\n<div class="js-list-region dd-list__wrp"></div>\r\n<div class="js-scrollbar-region dd-list__scrollbar"></div>';});
 
 
 define('text!core/form/editors/impl/memberSelect/templates/listItem.html',[],function () { return '{{#if userpicUri}}\r\n    <span style="background-image: url({{userpicUri}});" class="avatar-icon avatar-icon_list"></span>\r\n{{else}}\r\n    <span class="avatar-icon avatar-icon_list">{{abbreviation}}</span>\r\n{{/if}}\r\n<span class="js-fullName">{{text}}</span>';});
@@ -48578,13 +48578,12 @@ define('core/form/editors/MemberSelectEditorView',[
          * */
         Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
             initialize: function (options) {
-                var defOpts = _.cloneDeep(defaultOptions);
                 if (options.schema) {
-                    _.extend(this.options, defOpts, _.pick(options.schema, _.keys(defOpts)));
+                    _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
                 } else {
-                    _.extend(this.options, defOpts, _.pick(options || {}, _.keys(defOpts)));
+                    _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
-                this.options.dropdownOptions = _.extend(defOpts.dropdownOptions, this.options.dropdownOptions);
+                _.defaults(this.options.dropdownOptions, defaultOptions.dropdownOptions);
 
                 this.controller = options.controller;
 
@@ -48626,7 +48625,7 @@ define('core/form/editors/MemberSelectEditorView',[
 
             onRender: function () {
                 // dropdown
-                var dropdownOptions = _.extendDeep({
+                var dropdownOptions = _.extend({
                     buttonViewOptions: {
                         model: this.viewModel.get('button'),
                         reqres: this.reqres
@@ -48638,6 +48637,9 @@ define('core/form/editors/MemberSelectEditorView',[
                     },
                     autoOpen: false
                 }, this.options.dropdownOptions);
+                if (this.options.dropdownOptions.buttonViewOptions) {
+                    _.extend(dropdownOptions.buttonViewOptions, this.options.dropdownOptions.buttonViewOptions);
+                }
                 this.dropdownView = dropdown.factory.createPopout(dropdownOptions);
                 this.dropdownRegion.show(this.dropdownView);
                 // hotkeys
@@ -49531,7 +49533,7 @@ define('core/form/editors/impl/membersBubble/views/InputView',['core/libApi', 'c
 
             __updateInputPlaceholder: function () {
                 var empty = this.model.get('empty');
-                var placeholder = empty ? LocalizationService.get('SUITEGENERAL.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
+                var placeholder = empty ? LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
                 this.__updateInputWidth(this.__calculateDesiredInputWidth(placeholder));
                 this.ui.input.attr({'placeholder': placeholder}).toggleClass(classes.EMPTY, empty);
             }

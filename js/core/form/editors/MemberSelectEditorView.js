@@ -67,13 +67,12 @@ define([
          * */
         Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
             initialize: function (options) {
-                var defOpts = _.cloneDeep(defaultOptions);
                 if (options.schema) {
-                    _.extend(this.options, defOpts, _.pick(options.schema, _.keys(defOpts)));
+                    _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
                 } else {
-                    _.extend(this.options, defOpts, _.pick(options || {}, _.keys(defOpts)));
+                    _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
                 }
-                this.options.dropdownOptions = _.extend(defOpts.dropdownOptions, this.options.dropdownOptions);
+                _.defaults(this.options.dropdownOptions, defaultOptions.dropdownOptions);
 
                 this.controller = options.controller;
 
@@ -115,7 +114,7 @@ define([
 
             onRender: function () {
                 // dropdown
-                var dropdownOptions = _.extendDeep({
+                var dropdownOptions = _.extend({
                     buttonViewOptions: {
                         model: this.viewModel.get('button'),
                         reqres: this.reqres
@@ -127,6 +126,9 @@ define([
                     },
                     autoOpen: false
                 }, this.options.dropdownOptions);
+                if (this.options.dropdownOptions.buttonViewOptions) {
+                    _.extend(dropdownOptions.buttonViewOptions, this.options.dropdownOptions.buttonViewOptions);
+                }
                 this.dropdownView = dropdown.factory.createPopout(dropdownOptions);
                 this.dropdownRegion.show(this.dropdownView);
                 // hotkeys

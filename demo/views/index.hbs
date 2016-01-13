@@ -17,12 +17,17 @@
 		<link rel="stylesheet" href="/core/resources/styles/splitPanel.css" />
 		<link rel="stylesheet" href="/core/resources/styles/fonts.css" />
 
+        <!-- Demo page styles -->
 		<link rel="stylesheet" href="/styles/demo.css" />
 		<link rel="stylesheet" href="/styles/master.css" />
 		<link rel="stylesheet" href="/styles/master-new.css" />
 		<link rel="stylesheet" href="/scripts/lib/prism/prism.css" />
 
-		<script data-main="/scripts/Init.js" src="/scripts/lib/requirejs/require.js"></script>
+        {{#if compiled}}
+            <script data-main="/scripts/Init.compiled.js" src="/scripts/lib/requirejs/require.js"></script>
+        {{else}}
+            <script data-main="/scripts/Init.js" src="/scripts/lib/requirejs/require.js"></script>
+        {{/if}}
 	</head>
 	<body>
 		<a href="#">Menu</a>

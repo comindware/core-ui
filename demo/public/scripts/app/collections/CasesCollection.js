@@ -11,7 +11,7 @@
 
 /* global define, require, Backbone, Marionette, $, _, Localizer */
 
-define([],
+define(['comindware/core'],
     function () {
         'use strict';
         return Backbone.Collection.extend({

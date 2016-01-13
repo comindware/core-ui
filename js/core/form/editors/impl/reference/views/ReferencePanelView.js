@@ -80,7 +80,7 @@ define(['core/libApi',
                             reqres: this.reqres
                         },
                         emptyViewOptions: {
-                            text: LocalizationService.get('SUITEGENERAL.FORM.EDITORS.REFERENCE.NOITEMS')
+                            text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS')
                         },
                         childHeight: config.CHILD_HEIGHT
                     }

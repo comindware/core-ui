@@ -11,8 +11,11 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define(['text!../templates/demoProfilePanel.html'],
-    function (template) {
+define([
+        'text!../templates/demoProfilePanel.html',
+        'comindware/core'
+    ],
+    function (template, core) {
         'use strict';
         return Marionette.ItemView.extend({
             className: 'nav-profile_test',

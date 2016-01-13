@@ -149,7 +149,7 @@ define(['core/libApi', 'core/utils/utilsApi', 'text!../templates/input.html', 'c
 
             __updateInputPlaceholder: function () {
                 var empty = this.model.get('empty');
-                var placeholder = empty ? LocalizationService.get('SUITEGENERAL.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
+                var placeholder = empty ? LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
                 this.__updateInputWidth(this.__calculateDesiredInputWidth(placeholder));
                 this.ui.input.attr({'placeholder': placeholder}).toggleClass(classes.EMPTY, empty);
             }
