@@ -25,7 +25,8 @@ define(['core/libApi',
 
         return Marionette.Controller.extend({
             initialize:function(){
-                this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]),{ delayedAdd:false });
+                this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]),
+                    { delayedAdd:false });
             },
 
             fetch:function(options){
@@ -91,13 +92,10 @@ define(['core/libApi',
 
                this.collection.add(model);
                this.collection.select(model);
-
-
             },
 
             navigate: function (model) {
                 utils.helpers.throwError('Not Implemented.', 'NotImplementedError');
             }
         });
-
     });
