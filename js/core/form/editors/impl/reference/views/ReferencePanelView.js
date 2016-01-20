@@ -42,14 +42,6 @@ define(['core/libApi',
 
             template: Handlebars.compile(template),
 
-            childEvents:{
-                'add:new:item':'__onAddNew'
-            },
-
-            __onAddNew:function(){
-              debugger;
-            },
-
             templateHelpers: function () {
                 var value = this.model.get('value');
                 return {

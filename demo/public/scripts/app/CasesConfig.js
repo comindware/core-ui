@@ -42,8 +42,8 @@ define([
     './cases/editors/ReferenceEditor/default',
     'text!./cases/editors/ReferenceEditor/default.js',
 
-    './cases/editors/ReferenceEditor/ReferenceEditorWithAddNewButton',
-    'text!./cases/editors/ReferenceEditor/ReferenceEditorWithAddNewButton.js',
+    './cases/editors/ReferenceEditorWithAddNewButton',
+    'text!./cases/editors/ReferenceEditorWithAddNewButton.js',
 
     './cases/editors/RadioGroupEditor/default',
     'text!./cases/editors/RadioGroupEditor/default.js',
@@ -236,12 +236,12 @@ define([
                             {
                                 id: 'default',
                                 displayName: 'Default'
-                            },
-                            {
-                                id: 'ReferenceEditorWithAddNewButton',
-                                displayName: 'Reference Editor "Add new"'
                             }
                         ]
+                    },
+                    {
+                        id: 'ReferenceEditorWithAddNewButton',
+                        displayName: 'Reference Editor "Add new"'
                     },
                     {
                         id: 'TextAreaEditor',

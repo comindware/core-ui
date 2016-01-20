@@ -442,7 +442,7 @@
 }
 
 .pr-reference-editor:not(.pr-empty) .dd-list_reference {
-    padding-top: 60px;
+    padding-top: 65px;
 }
 .pr-reference-editor:not(.pr-empty) .reference-dropdown .dd-list_reference {
     padding-top: 0;
