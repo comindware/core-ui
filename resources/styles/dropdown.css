@@ -442,7 +442,7 @@
 }
 
 .pr-reference-editor:not(.pr-empty) .dd-list_reference {
-    padding-top: 60px;
+    padding-top: 65px;
 }
 .pr-reference-editor:not(.pr-empty) .reference-dropdown .dd-list_reference {
     padding-top: 0;
@@ -481,6 +481,11 @@
 .pr-reference-editor:not(.pr-empty) .dd-list__filter_reference {
     height: 60px;
 }
+
+.dd-list_reference-button{
+    padding-bottom: 40px;
+}
+
 .dd-list__title {
     max-width: 90%;
     padding: 5px 30px 5px 5px;
@@ -511,6 +516,11 @@
 .dd-list__wrp {
     height: 100%;
 }
+
+.dd-list__wrp_button{
+    overflow: hidden;
+}
+
 .dd-list__scrollbar {
     width: 12px;
     position: absolute;
@@ -521,6 +531,11 @@
 .dd-list__scrollbar_reference{
     top:0
 }
+
+.dd-list__scrollbar_button{
+    bottom:40px;
+}
+
 /* /dd-list */
 
 /* list search */
@@ -624,3 +639,51 @@
     opacity: 1;
 }
 /* /search */
+
+.new-reference-btn{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #dee3e8;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.new-reference-btn .add-new-reference-button{
+    max-width: 100%;
+    padding: 0 0 0 20px;
+    color: #0575bd;
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.new-reference-btn:hover div{
+    color: #009bfe;
+}
+
+.new-reference-btn .add-new-reference-button:before {
+    content: '+';
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    color: #0575bd;
+    font-size: 23px;
+    line-height: 16px;
+    font-weight: 500;
+    border:1px solid #0575bd;
+    border-radius: 50%;
+    position: absolute;
+    top: 12px;
+    left: 0;
+}
+.new-reference-btn:hover .add-new-reference-button:before {
+    color: #009bfe;
+    border-color: #009bfe;
+}

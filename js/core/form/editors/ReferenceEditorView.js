@@ -36,7 +36,8 @@ define([
         };
 
         var defaultOptions = {
-            'controller': null
+            'controller': null,
+            'showAddNewButton': false
         };
 
         /**
@@ -63,6 +64,8 @@ define([
 
                 this.value = this.__adjustValue(this.value);
 
+                this.showAddNewButton = this.options.showAddNewButton;
+
 
                 this.reqres.setHandler('panel:open', this.onPanelOpen, this);
                 this.reqres.setHandler('value:clear', this.onValueClear, this);
@@ -70,6 +73,7 @@ define([
                 this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
                 this.reqres.setHandler('search:more', this.onSearchMore, this);
                 this.reqres.setHandler('filter:text', this.onFilterText, this);
+                this.reqres.setHandler('add:new:item',this.onAddNewItem, this );
 
                 this.viewModel = new Backbone.Model({
                     button: new Backbone.Model({
@@ -123,7 +127,8 @@ define([
                     panelView: ReferencePanelView,
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
-                        reqres: this.reqres
+                        reqres: this.reqres,
+                        showAddNewButton: this.showAddNewButton
                     },
                     panelPosition: 'down-over',
                     autoOpen: false
@@ -204,6 +209,10 @@ define([
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
+            },
+
+            onAddNewItem:function(){
+                this.controller.addNewItem();
             },
 
             setReadonly: function (readonly) {
