@@ -16,9 +16,11 @@ define(['core/libApi',
         '../models/SearchMoreModel',
         './SearchMoreListItemView',
         './LoadingView',
-        'core/services/LocalizationService'
+        'core/services/LocalizationService',
+        './AddNewButtonView'
     ],
-    function (lib, list, utils, template, ReferenceListItemView, SearchMoreModel, SearchMoreListItemView, LoadingView, LocalizationService) {
+    function (lib, list, utils, template, ReferenceListItemView, SearchMoreModel, SearchMoreListItemView, LoadingView,
+              LocalizationService, AddNewButtonView) {
         'use strict';
 
         var config = {
@@ -32,7 +34,7 @@ define(['core/libApi',
                 utils.helpers.ensureOption(options, 'reqres');
 
                 this.reqres = options.reqres;
-
+                this.showAddNewButton = this.options.showAddNewButton;
                 this.fetchDelayId = _.uniqueId('fetch-delay-id-');
             },
 
@@ -40,10 +42,19 @@ define(['core/libApi',
 
             template: Handlebars.compile(template),
 
+            childEvents:{
+                'add:new:item':'__onAddNew'
+            },
+
+            __onAddNew:function(){
+              debugger;
+            },
+
             templateHelpers: function () {
                 var value = this.model.get('value');
                 return {
-                    text: (value && (value.get('text') || '#' + value.id)) || ''
+                    text: (value && (value.get('text') || '#' + value.id)) || '',
+                    showAddNewButton: this.showAddNewButton
                 };
             },
 
@@ -62,7 +73,8 @@ define(['core/libApi',
             regions: {
                 listRegion: '.js-list-region',
                 scrollbarRegion: '.js-scrollbar-region',
-                loadingRegion: '.js-loading-region'
+                loadingRegion: '.js-loading-region',
+                addNewButtonRegion: '.js-add-new-button-region'
             },
 
             onRender: function () {
@@ -88,6 +100,12 @@ define(['core/libApi',
 
                 this.listView = result.listView;
                 this.eventAggregator = result.eventAggregator;
+
+                if(this.showAddNewButton) {
+                    this.$el.addClass('dd-list_reference-button');
+                    var addNewButton = new AddNewButtonView({reqres: this.reqres});
+                    this.addNewButtonRegion.show(addNewButton);
+                }
 
                 this.listRegion.show(result.listView);
                 this.scrollbarRegion.show(result.scrollbarView);

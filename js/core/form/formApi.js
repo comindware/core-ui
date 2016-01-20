@@ -41,6 +41,7 @@ define([
         './editors/impl/common/members/collections/MembersCollection',
         './editors/impl/common/members/models/MemberModel',
         './editors/impl/reference/controllers/DemoReferenceEditorController',
+        './editors/impl/reference/controllers/DemoReferenceEditorWithAddNewButtonController',
         './editors/impl/reference/controllers/DataSourceReferenceEditorController',
         './editors/impl/reference/controllers/BaseReferenceEditorController',
         './editors/impl/reference/collections/DataSourceReferenceCollection',
@@ -88,6 +89,7 @@ define([
         editorsImplCommonMembersCollection,
         editorsImplCommonMemberModel,
         DemoReferenceEditorController,
+        DemoReferenceEditorWithAddNewButtonController,
         DataSourceReferenceEditorController,
         BaseReferenceEditorController,
         DataSourceReferenceCollection,
@@ -158,7 +160,8 @@ define([
                     controllers: {
                         DemoReferenceEditorController: DemoReferenceEditorController,
                         BaseReferenceEditorController: BaseReferenceEditorController,
-                        DataSourceReferenceEditorController: DataSourceReferenceEditorController
+                        DataSourceReferenceEditorController: DataSourceReferenceEditorController,
+                        DemoReferenceEditorWithAddNewButtonController: DemoReferenceEditorWithAddNewButtonController
                     },
                     collections: {
                         BaseReferenceCollection: BaseReferenceCollection,
