@@ -45,13 +45,13 @@ define([
                 return this.model.get('fullName') || this.model.get('username');
             },
 
-            OnHighlighted: function (fragment)
+            onHighlighted: function (fragment)
             {
                 var text = utils.htmlHelpers.highlightText(this.__getText(), fragment);
                 this.ui.fullName.html(text);
             },
 
-            OnUnhighlighted: function ()
+            onUnhighlighted: function ()
             {
                 this.ui.fullName.text(this.__getText());
             },
