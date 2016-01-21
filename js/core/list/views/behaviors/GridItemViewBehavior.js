@@ -106,12 +106,12 @@ define(['core/libApi', 'core/utils/utilsApi'],
 
             __highlight: function (fragment)
             {
-                this.view.OnHighlighted(fragment);
+                this.view.onHighlighted(fragment);
             },
 
             __handleUnhighlighting: function ()
             {
-                this.view.OnUnhighlighted();
+                this.view.onUnhighlighted();
             },
 
             __handleSelection: function () {
