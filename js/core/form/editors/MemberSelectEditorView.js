@@ -115,10 +115,7 @@ define([
             onRender: function () {
                 // dropdown
                 var dropdownOptions = _.extend({
-                    buttonViewOptions: {
-                        model: this.viewModel.get('button'),
-                        reqres: this.reqres
-                    },
+                    buttonViewOptions: {},
                     panelView: PanelView,
                     panelViewOptions: {
                         model: this.viewModel.get('panel'),
@@ -126,9 +123,10 @@ define([
                     },
                     autoOpen: false
                 }, this.options.dropdownOptions);
-                if (this.options.dropdownOptions.buttonViewOptions) {
-                    _.extend(dropdownOptions.buttonViewOptions, this.options.dropdownOptions.buttonViewOptions);
-                }
+                _.extend(dropdownOptions.buttonViewOptions, {
+                    model: this.viewModel.get('button'),
+                    reqres: this.reqres
+                });
                 this.dropdownView = dropdown.factory.createPopout(dropdownOptions);
                 this.dropdownRegion.show(this.dropdownView);
                 // hotkeys
