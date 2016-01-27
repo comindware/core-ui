@@ -59,9 +59,24 @@
                         verbose: true
                     }
                 }
+            },
+            babel: {
+                options: {
+                    sourceMap: true
+                },
+                dist: {
+                    files: [{
+                        "expand": true,
+                        "cwd": "js/core/babel/",
+                        "src": ["**/*.js"],
+                        "dest": "build/",
+                        "ext": ".js"
+                    }]
+                }
             }
         });
 
+        grunt.loadNpmTasks('grunt-babel');
         grunt.loadNpmTasks('grunt-contrib-requirejs');
         grunt.loadNpmTasks('grunt-bower-task');
         grunt.loadNpmTasks('grunt-jsdoc');

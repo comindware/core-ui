@@ -30,7 +30,13 @@
 //FORM
 //==================================================================================================
 
-var Form = Backbone.View.extend({
+  var templateSettings = {
+    evaluate: /<%([\s\S]+?)%>/g,
+    interpolate: /<%=([\s\S]+?)%>/g,
+    escape: /<%-([\s\S]+?)%>/g
+  };
+
+  var Form = Backbone.View.extend({
 
   events: {
     'submit': function(event) {
@@ -469,13 +475,9 @@ var Form = Backbone.View.extend({
   //STATICS
   template: _.template('\
     <form data-fieldsets></form>\
-  ', null, this.templateSettings),
+  ', null, templateSettings),
 
-  templateSettings: {
-    evaluate: /<%([\s\S]+?)%>/g, 
-    interpolate: /<%=([\s\S]+?)%>/g, 
-    escape: /<%-([\s\S]+?)%>/g
-  },
+  templateSettings: templateSettings,
 
   editors: {}
 

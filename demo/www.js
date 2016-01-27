@@ -18,6 +18,7 @@ app.use('/scripts/comindware', express.static('../dist'));
 app.use('/scripts/core/js/comindware', express.static('../js/comindware'));
 app.use('/scripts/core/js/core', express.static('../js/core'));
 app.use('/scripts/core/js/lib', express.static('../js/lib'));
+app.use('/webpack', express.static('../build/webpack'));
 
 app.get('/', function (req, res) {
     var compiled = req.query.compiled !== undefined;

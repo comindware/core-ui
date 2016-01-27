@@ -21,7 +21,6 @@ module.exports = {
         'backbone.babysitter': 'lib/backbone.babysitter/backbone.babysitter',
         'backbone.associations': 'lib/backbone.associations/backbone-associations',
         'backbone.forms': 'lib/backbone.forms/backbone-forms',
-        'backbone.radio': 'lib/backbone.radio/backbone.radio',
 
         marionette: 'lib/backbone.marionette/backbone.marionette',
 
@@ -30,7 +29,6 @@ module.exports = {
         'jquery.inputmask': 'lib/jquery.inputmask/jquery.inputmask.bundle',
         'jquery.caret': 'lib/jquery.caret/index',
         'jquery.autosize': 'lib/jquery.autosize/jquery.autosize',
-        'jquery.jstorage': 'lib/jStorage/jstorage',
 
         domReady: 'lib/requirejs/domReady',
         text: 'lib/requirejs/text',
@@ -59,7 +57,6 @@ module.exports = {
         'keypress': [],
 
         'jquery': [],
-        'jquery.jstorage': ['jquery'],
         'jquery.caret': ['jquery'],
         'jquery.mousewheel': ['jquery'],
         'jquery.inputmask': ['jquery'],
@@ -71,7 +68,6 @@ module.exports = {
         },
         'backbone.associations': ['backbone'],
         'backbone.forms': ['backbone'],
-        'backbone.radio': ['backbone'],
 
         marionette: {
             deps: ['backbone'],

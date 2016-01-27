@@ -30,7 +30,6 @@ require.config({
         'backbone.babysitter': 'core/js/lib/backbone.babysitter/backbone.babysitter',
         'backbone.associations': 'core/js/lib/backbone.associations/backbone-associations',
         'backbone.forms': 'core/js/lib/backbone.forms/backbone-forms',
-        'backbone.radio': 'core/js/lib/backbone.radio/backbone.radio',
 
         marionette: 'core/js/lib/backbone.marionette/backbone.marionette',
 
@@ -39,7 +38,6 @@ require.config({
         'jquery.inputmask': 'core/js/lib/jquery.inputmask/jquery.inputmask.bundle',
         'jquery.caret': 'core/js/lib/jquery.caret/index',
         'jquery.autosize': 'core/js/lib/jquery.autosize/jquery.autosize',
-        'jquery.jstorage': 'core/js/lib/jStorage/jstorage',
 
         domReady: 'core/js/lib/requirejs/domReady',
         text: 'core/js/lib/requirejs/text',
@@ -77,7 +75,6 @@ require.config({
         },
         'backbone.associations': ['backbone'],
         'backbone.forms': ['backbone'],
-        'backbone.radio': ['backbone'],
 
         marionette: {
             deps: ['backbone'],
