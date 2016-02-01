@@ -17,3 +17,9 @@ import * as test2 from './directory1/test2';
 import * as lib from '../libApi';
 
 export var answer = test2.answer();
+export default function(foobar1) {
+    debugger;
+}
+export function dataFoo(foobar2) {
+    debugger;
+}

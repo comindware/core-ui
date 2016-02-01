@@ -94,14 +94,14 @@ require.config({
 window.langCode = 'en';
 
 require([
-        'comindware/core',
+        'webpack/bundle'/*,
         'Application',
         'AppRouter',
-        'AppController'
+        'AppController'*/
     ],
     function(core, Application, AppRouter, AppController) {
     'use strict';
-
+debugger;
     Application.appRouter = new AppRouter({
         controller: new AppController()
     });

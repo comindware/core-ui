@@ -29,13 +29,34 @@ import 'jquery-autosize';
 import * as keypress from 'keypress';
 import 'bootstrap-datetime-picker';
 
-debugger;
 _.string = _.str = underscoreString;
 Backbone.Associations = Backbone.Backbone.Associations;
+Backbone.Associations.EVENTS_NC = true;
 
+$.browser = {
+    msie: (/msie|trident/i).test(navigator.userAgent)
+};
 
+var root = typeof global !== 'undefined' ? global : window;
+//root.Handlebars = Handlebars;
+
+/*
+return {
+    keypress: keypress,
+    moment: moment
+};*/
+
+export default function (defaultData) {
+    debugger;
+}
+
+export function each(obj, iterator, foo) {
+    debugger;
+}
+
+/*
 define([
-    /*'keypress',
+    /!*'keypress',
     'moment',
     'handlebars',
     'bluebird',
@@ -58,8 +79,8 @@ define([
 
     'moment.en',
     'moment.ru',
-    'moment.de'*/
-], function (keypress, moment, Handlebars, Promise, _, underscoreString) {
+    'moment.de'*!/
+], function (Handlebars) {
     'use strict';
 	
 	$.browser = {
@@ -78,4 +99,4 @@ define([
 		keypress: keypress,
         moment: moment
 	};
-});
+});*/

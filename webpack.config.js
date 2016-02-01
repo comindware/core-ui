@@ -16,7 +16,9 @@ module.exports = {
     devtool: 'source-map',
     output: {
         path: __dirname + '/build/webpack',
-        filename: "bundle.js"
+        filename: "bundle.js",
+        library: 'core',
+        libraryTarget: 'umd'
     },
     module: {
         loaders: [
