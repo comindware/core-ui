@@ -12,11 +12,11 @@
 var path = require('path');
 
 module.exports = {
-    entry: "./js/core/babel/test.js",
+    entry: "./js/core/coreApi.js",
     devtool: 'source-map',
     output: {
-        path: __dirname + '/build/webpack',
-        filename: "bundle.js",
+        path: __dirname + '/dist',
+        filename: "core.js",
         library: 'core',
         libraryTarget: 'umd'
     },
@@ -82,6 +82,10 @@ module.exports = {
             {
                 test: /moment\.js/,
                 loader: 'expose?moment'
+            },
+            {
+                test: /handlebars\.js/,
+                loader: 'expose?Handlebars'
             }
         ]
     },
@@ -90,7 +94,8 @@ module.exports = {
         alias: {
             "jquery.caret": 'js/lib/jquery.caret/index',
             "backbone.forms": 'js/lib/backbone.forms/backbone-forms',
-            "keypress": 'js/lib/Keypress/keypress-2.1.0.min'
+            "keypress": 'js/lib/Keypress/keypress-2.1.0.min',
+            "handlebars": 'handlebars/dist/handlebars'
         }
     }
 };

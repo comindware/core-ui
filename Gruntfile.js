@@ -18,6 +18,9 @@
         var fse = require('fs-extra');
         var config = require('./js/core/Config.js');
 
+        var ESDoc = require('esdoc/out/src/ESDoc.js');
+        var publisher = require('esdoc/out/src/Publisher/publish.js');
+
         grunt.initConfig({
             requirejs: {
                 core: {
@@ -50,33 +53,19 @@
                 dist : {
                     src: [
                         'js/core/**/*.js'
+                        //'dist/core.js'
                     ],
                     options: {
                         destination: 'doc',
-                        template : 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
+                        template : 'node_modules/ink-docstrap/template',
                         configure : 'jsdoc.conf.json',
                         recurse: true,
                         verbose: true
                     }
                 }
-            },
-            babel: {
-                options: {
-                    sourceMap: true
-                },
-                dist: {
-                    files: [{
-                        "expand": true,
-                        "cwd": "js/core/babel/",
-                        "src": ["**/*.js"],
-                        "dest": "build/",
-                        "ext": ".js"
-                    }]
-                }
             }
         });
 
-        grunt.loadNpmTasks('grunt-babel');
         grunt.loadNpmTasks('grunt-contrib-requirejs');
         grunt.loadNpmTasks('grunt-bower-task');
         grunt.loadNpmTasks('grunt-jsdoc');
@@ -84,5 +73,14 @@
         grunt.registerTask('build:bundle', [ 'bower', 'requirejs' ]);
         grunt.registerTask('doc', [ 'jsdoc' ]);
         grunt.registerTask('default', [ 'build:bundle' ]);
+
+        grunt.registerTask('esdoc', function () {
+            console.log('esdoc start...');
+            var esdocConfig = {
+                source: './js/core',
+                destination: './esdoc'
+            };
+            ESDoc.generate(esdocConfig, publisher);
+        });
     };
 }());

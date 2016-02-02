@@ -94,7 +94,7 @@ require.config({
 window.langCode = 'en';
 
 require([
-        'webpack/bundle'/*,
+        'dist/core'/*,
         'Application',
         'AppRouter',
         'AppController'*/

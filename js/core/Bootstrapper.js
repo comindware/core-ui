@@ -8,6 +8,10 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
+"use strict";
+
+import './Meta';
+
 define([
     './utils/utilsApi',
     './serviceLocator',
@@ -16,6 +20,8 @@ define([
     './services/LocalizationService'
 ], function (utilsApi, serviceLocator, AjaxService, MessageService, LocalizationService) {
     'use strict';
+
+    var foo = () => 2;
 
     return {
         initialize: function (options) {

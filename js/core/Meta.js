@@ -6,28 +6,23 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+'use strict';
 
-define([],
-    function () {
-        'use strict';
+export var objectPropertyTypes = {
+    STRING: 'String',
+    BOOLEAN: 'Boolean',
+    DATETIME: 'DateTime',
+    DURATION: 'Duration',
+    DECIMAL: 'Decimal',
+    INTEGER: 'Integer',
+    DOUBLE: 'Double',
+    ACCOUNT: 'Account',
+    DOCUMENT: 'Document',
+    INSTANCE: 'Instance',
+    COLLECTION: 'Collection',
+    ENUM: 'Enum'
+};
 
-        var objectPropertyTypes = {
-            STRING: 'String',
-            BOOLEAN: 'Boolean',
-            DATETIME: 'DateTime',
-            DURATION: 'Duration',
-            DECIMAL: 'Decimal',
-            INTEGER: 'Integer',
-            DOUBLE: 'Double',
-            ACCOUNT: 'Account',
-            DOCUMENT: 'Document',
-            INSTANCE: 'Instance',
-            COLLECTION: 'Collection',
-            ENUM: 'Enum'
-        };
-
-        return {
-            objectPropertyTypes: objectPropertyTypes
-        };
-    });
+export default {
+    objectPropertyTypes: objectPropertyTypes
+};

@@ -8,10 +8,19 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
+"use strict";
+
+import libApi, { keypress } from './libApi';
+
+debugger;
+var z = libApi;
+var s = keypress;
+z.foo();
+s.foo();
 define([
         './libApi',
 
-        './utils/utilsApi',
+        /*'./utils/utilsApi',
         './dropdown/dropdownApi',
         './meta',
         './list/listApi',
@@ -45,7 +54,7 @@ define([
         './views/SearchBarView',
         './views/SplitPanelView',
 
-        './Bootstrapper'
+        './Bootstrapper'*/
     ],
     function (
         lib,
