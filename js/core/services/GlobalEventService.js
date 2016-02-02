@@ -6,30 +6,26 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define([
-    'core/libApi'
-], function () {
-    'use strict';
+import '../libApi';
 
-    var $window = $(window);
+var $window = $(window);
 
-    var GlobalEventsService = Marionette.Object.extend({
-        initialize: function () {
-            _.bindAll(this, '__onResize');
-            
-            $window.resize(this.__onResize);
-        },
+var GlobalEventsService = Marionette.Object.extend({
+    initialize: function () {
+        _.bindAll(this, '__onResize');
 
-        onDestroy: function () {
-            $window.off('resize');
-        },
+        $window.resize(this.__onResize);
+    },
 
-        __onResize: function (e) {
-            this.trigger('resize', e);
-        }
-    });
+    onDestroy: function () {
+        $window.off('resize');
+    },
 
-    return new GlobalEventsService();
+    __onResize: function (e) {
+        this.trigger('resize', e);
+    }
 });
+
+export default new GlobalEventsService();

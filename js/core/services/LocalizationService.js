@@ -6,56 +6,59 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-//noinspection ThisExpressionReferencesGlobalObjectJS
-(function (global) {
-    'use strict';
+import '../libApi';
+import { helpers } from '../utils/utilsApi';
 
-    define([ 'core/libApi', 'localizationMap' ], function (lib) {
-        var defaultLangCode = 'en';
-        var langCode = global.langCode;
-        var isProductionEnv = global.compiled;
-        var localizationMap = global['LANGMAP' + langCode.toUpperCase()];
+let global = this; // jshint ignore:line
+let defaultLangCode = 'en';
 
-        global.Localizer = {
-            langCode: langCode,
+global.Localizer = {
+    initialize: function (options) {
+        helpers.ensureOption(options, 'langCode');
+        helpers.ensureOption(options, 'localizationMap');
+        helpers.ensureOption(options, 'warningAsError');
 
-            get: function (locId) {
-                if (!locId) {
-                    throw new Error('Bad localization id: (locId = ' + locId + ')');
-                }
-                var text = localizationMap[locId];
-                if (text === undefined) {
-                    if (isProductionEnv) {
-                        throw new Error('Failed to find localization constant ' + locId);
-                    } else {
-                        console.error('Missing localization constant: ' + locId);
-                    }
-                    return '<missing:' +  locId + '>';
-                }
-                return text;
-            },
+        this.langCode = options.langCode;
+        this.localizationMap = options.localizationMap;
+        this.warningAsError = options.warningAsError;
+    },
 
-            tryGet: function(locId) {
-                if (!locId) {
-                    throw new Error('Bad localization id: (locId = ' + locId + ')');
-                }
-                var text = localizationMap[locId];
-                if (text === undefined) {
-                    return null;
-                }
-                return text;
-            },
-
-            resolveLocalizedText: function (localizedText) {
-                if (!localizedText) {
-                    return '';
-                }
-
-                return localizedText[langCode] || localizedText[defaultLangCode] || '';
+    get: function (locId) {
+        if (!locId) {
+            throw new Error('Bad localization id: (locId = ' + locId + ')');
+        }
+        var text = this.localizationMap[locId];
+        if (text === undefined) {
+            if (this.warningAsError) {
+                throw new Error('Failed to find localization constant ' + locId);
+            } else {
+                console.error('Missing localization constant: ' + locId);
             }
-        };
-        return global.Localizer;
-    });
-}(this));
+            return '<missing:' +  locId + '>';
+        }
+        return text;
+    },
+
+    tryGet: function(locId) {
+        if (!locId) {
+            throw new Error('Bad localization id: (locId = ' + locId + ')');
+        }
+        var text = this.localizationMap[locId];
+        if (text === undefined) {
+            return null;
+        }
+        return text;
+    },
+
+    resolveLocalizedText: function (localizedText) {
+        if (!localizedText) {
+            return '';
+        }
+
+        return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
+    }
+};
+
+export default global.Localizer;

@@ -11,6 +11,16 @@
 "use strict";
 
 import libApi, { keypress } from './libApi';
+import utilsApi from './utils/utilsApi';
+
+import LoadingView from './views/behaviors/loading/views/LoadingView';
+import LoadingBehavior from './views/behaviors/LoadingBehavior';
+import BlurableBehavior from './views/behaviors/BlurableBehavior';
+import PopupBehavior from './views/behaviors/PopupBehavior';
+import SearchBarView from './views/SearchBarView';
+import SplitPanelView from './views/SplitPanelView';
+import FadingPanelView from './views/FadingPanelView';
+
 
 debugger;
 var z = libApi;
@@ -18,9 +28,7 @@ var s = keypress;
 z.foo();
 s.foo();
 define([
-        './libApi',
-
-        /*'./utils/utilsApi',
+        /*
         './dropdown/dropdownApi',
         './meta',
         './list/listApi',
@@ -46,11 +54,9 @@ define([
         './models/behaviors/SelectableBehavior',
 
         './views/behaviors/loading/views/LoadingView',
-
         './views/behaviors/LoadingBehavior',
         './views/behaviors/BlurableBehavior',
         './views/behaviors/PopupBehavior',
-
         './views/SearchBarView',
         './views/SplitPanelView',
 
@@ -75,7 +81,7 @@ define([
         AjaxService,
 
         ModuleProxy,
-        PromiseServer,
+        PromiseService,
 
         SlidingWindowCollection,
         VirtualCollection,
@@ -116,7 +122,7 @@ define([
                 LocalizationService: LocalizationService,
                 AjaxService: AjaxService,
                 GlobalEventService: GlobalEventService,
-                PromiseServer: PromiseServer,
+                PromiseService: PromiseService,
                 routing: {
                     ModuleProxy: ModuleProxy
                 }

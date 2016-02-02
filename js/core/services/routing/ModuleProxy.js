@@ -6,41 +6,36 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define([
-        'core/libApi',
-        'core/utils/utilsApi'
-    ],
-    function (lib, utilsApi) {
-        'use strict';
+import '../../libApi';
+import { helpers } from '../../utils/utilsApi';
 
-        return Marionette.Controller.extend({
-            initialize: function (options) {
-                utilsApi.helpers.ensureOption(options, 'config');
+export default Marionette.Controller.extend({
+    initialize: function (options) {
+        helpers.ensureOption(options, 'config');
 
-                _.bindAll(this, '__callbackProxy');
-                _.each(options.config.routes, function (callbackName) {
-                    this[callbackName] = function () {
-                        this.__callbackProxy(callbackName, _.toArray(arguments));
-                    };
-                }, this);
-            },
+        _.bindAll(this, '__callbackProxy');
+        _.each(options.config.routes, function (callbackName) {
+            this[callbackName] = function () {
+                this.__callbackProxy(callbackName, _.toArray(arguments));
+            };
+        }, this);
+    },
 
-            __callbackProxy: function (callbackName, routingArgs) {
-                this.trigger('module:loading', callbackName, routingArgs, this.options.config);
-                this.__loadModule().then(function (Module) {
-                    this.trigger('module:loaded', callbackName, routingArgs, this.options.config, Module);
-                }.bind(this));
-            },
+    __callbackProxy: function (callbackName, routingArgs) {
+        this.trigger('module:loading', callbackName, routingArgs, this.options.config);
+        this.__loadModule().then(function (Module) {
+            this.trigger('module:loaded', callbackName, routingArgs, this.options.config, Module);
+        }.bind(this));
+    },
 
-            __loadModule: function () {
-                var path = this.options.config.module;
-                return new Promise(function (resolve) {
-                    require([ path ], function (Module) {
-                        resolve(Module);
-                    });
-                });
-            }
+    __loadModule: function () {
+        var path = this.options.config.module;
+        return new Promise(function (resolve) {
+            require([ path ], function (Module) {
+                resolve(Module);
+            });
         });
-    });
+    }
+});

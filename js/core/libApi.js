@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Marionette, classes, Backbone, global */
-
 "use strict";
 
 import * as moment_ from 'moment';

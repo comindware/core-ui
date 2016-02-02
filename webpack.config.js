@@ -90,7 +90,10 @@ module.exports = {
         ]
     },
     resolve: {
-        root: path.resolve(__dirname),
+        root: [
+            path.resolve(__dirname),
+            path.resolve(__dirname + '/js/core')
+        ],
         alias: {
             "jquery.caret": 'js/lib/jquery.caret/index',
             "backbone.forms": 'js/lib/backbone.forms/backbone-forms',

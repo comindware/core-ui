@@ -6,60 +6,54 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        './BlurableBehavior',
-        'core/services/WindowService'
-    ],
+import BlurableBehavior from './BlurableBehavior';
+import WindowService from '../../services/WindowService';
 
-    function (BlurableBehavior, WindowService) {
-        'use strict';
+var defaultOptions = {
+    selector: null,
+    allowNestedFocus: true,
+    onBlur: null
+};
 
-        var defaultOptions = {
-            selector: null,
-            allowNestedFocus: true,
-            onBlur: null
-        };
+export default Marionette.Behavior.extend({
+    initialize: function (options, view) {
+        _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 
-        return Marionette.Behavior.extend({
-            initialize: function (options, view) {
-                _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+        view.close = this.close.bind(this);
+    },
 
-                view.close = this.close.bind(this);
-            },
+    behaviors: {
+        BlurableBehavior: {
+            behaviorClass: BlurableBehavior,
+            onBlur: 'close'
+        }
+    },
 
-            behaviors: {
-                BlurableBehavior: {
-                    behaviorClass: BlurableBehavior,
-                    onBlur: 'close'
-                }
-            },
+    onRender: function () {
+        this.__getFocusableEl().addClass('l-popup');
+    },
 
-            onRender: function () {
-                this.__getFocusableEl().addClass('l-popup');
-            },
+    onShow: function () {
+        this.__getFocusableEl().focus();
+    },
 
-            onShow: function () {
-                this.__getFocusableEl().focus();
-            },
+    __getFocusableEl: function () {
+        if (this.options.selector) {
+            return this.$(this.options.selector);
+        } else {
+            return this.$el;
+        }
+    },
 
-            __getFocusableEl: function () {
-                if (this.options.selector) {
-                    return this.$(this.options.selector);
-                } else {
-                    return this.$el;
-                }
-            },
-
-            close: function (result) {
-                if (result) {
-                    this.view.trigger('accept', result);
-                } else {
-                    this.view.trigger('reject');
-                }
-                this.view.trigger('close');
-                WindowService.closePopup();
-            }
-        });
-    });
+    close: function (result) {
+        if (result) {
+            this.view.trigger('accept', result);
+        } else {
+            this.view.trigger('reject');
+        }
+        this.view.trigger('close');
+        WindowService.closePopup();
+    }
+});

@@ -6,38 +6,36 @@
  * Published under the MIT license
  */
 
-/* global define, require, Marionette, Handlebars */
+"use strict";
 
-define(['text!../templates/fadingPanel.html', 'core/libApi'],
-    function (template) {
-        'use strict';
+import '../libApi';
+import template from '../templates/fadingPanel.hbs';
 
-        return Marionette.ItemView.extend({
-            initialize: function () {
-            },
+export default Marionette.ItemView.extend({
+    initialize: function () {
+    },
 
-            template: Handlebars.compile(template),
+    template: Handlebars.compile(template),
 
-            className: 'fadingPanel',
+    className: 'fadingPanel',
 
-            events: {
-                'click': '__onClick'
-            },
+    events: {
+        'click': '__onClick'
+    },
 
-            fadeIn: function (options)
-            {
-                this.activeOptions = options || null;
-                this.$el.addClass('fadingPanel_open');
-            },
+    fadeIn: function (options)
+    {
+        this.activeOptions = options || null;
+        this.$el.addClass('fadingPanel_open');
+    },
 
-            fadeOut: function ()
-            {
-                this.activeOptions = null;
-                this.$el.removeClass('fadingPanel_open');
-            },
+    fadeOut: function ()
+    {
+        this.activeOptions = null;
+        this.$el.removeClass('fadingPanel_open');
+    },
 
-            __onClick: function () {
-                this.trigger('click', this, this.activeOptions);
-            }
-        });
-    });
+    __onClick: function () {
+        this.trigger('click', this, this.activeOptions);
+    }
+});

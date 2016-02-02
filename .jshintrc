@@ -90,7 +90,6 @@
   // Custom Globals
   "globals"       : {
     "Backbone": false, // false = readonly
-    "moment": false,
     "Marionette": false,
     "$": false,
     "_": false,
