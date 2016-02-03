@@ -6,28 +6,20 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/list/listApi',
-        'core/utils/utilsApi'
-    ],
-    function (
-        list,
-        utils
-    ) {
-        'use strict';
+import { helpers } from '../../../../../../utils/utilsApi';
+import list from '../../../../../../list/listApi';
 
-        return Backbone.Model.extend({
-            initialize: function () {
-                utils.helpers.applyBehavior(this, list.models.behaviors.ListItemBehavior);
-            },
+export default Backbone.Model.extend({
+    initialize: function () {
+        helpers.applyBehavior(this, list.models.behaviors.ListItemBehavior);
+    },
 
-            matchText: function (text) {
-                var name = this.get('name');
-                var userName = this.get('userName');
-                return (name && name.toLowerCase().indexOf(text) !== -1) ||
-                       (userName && userName.toLowerCase().indexOf(text) !== -1);
-            }
-        });
-    });
+    matchText: function (text) {
+        var name = this.get('name');
+        var userName = this.get('userName');
+        return (name && name.toLowerCase().indexOf(text) !== -1) ||
+               (userName && userName.toLowerCase().indexOf(text) !== -1);
+    }
+});
