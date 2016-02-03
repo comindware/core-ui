@@ -6,37 +6,33 @@
  * Published under the MIT license
  */
 
-/* global define, require, Marionette, _, console */
+"use strict";
 
-define(['./Factory',
-        './FilterViewFactory',
-        './views/RowView',
-        './views/HeaderView',
-        './views/NativeGridView',
-        'core/libApi'
-    ],
-    function (factory, filterViewFactory, RowView, HeaderView, NativeGridView) {
-        'use strict';
+import '../libApi';
+import factory from './Factory';
+import filterViewFactory from './FilterViewFactory';
+import RowView from './views/RowView';
+import HeaderView from './views/HeaderView';
+import NativeGridView from './views/NativeGridView';
 
-        return /** @lends module:core.nativeGrid */  {
-            /**
-             * Фабрика списков
-             * @namespace
-             * */
-            factory: factory,
-            /**
-             * Фабрика фильтров
-             * @namespace
-             * */
-            filterViewFactory: filterViewFactory,
-            /**
-             * Views-списка
-             * @namespace
-             * */
-            views: {
-                RowView: RowView,
-                HeaderView: HeaderView,
-                NativeGridView: NativeGridView
-            }
-        };
-    });
+export default /** @lends module:core.nativeGrid */  {
+    /**
+     * Фабрика списков
+     * @namespace
+     * */
+    factory: factory,
+    /**
+     * Фабрика фильтров
+     * @namespace
+     * */
+    filterViewFactory: filterViewFactory,
+    /**
+     * Views-списка
+     * @namespace
+     * */
+    views: {
+        RowView: RowView,
+        HeaderView: HeaderView,
+        NativeGridView: NativeGridView
+    }
+};

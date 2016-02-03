@@ -14,6 +14,7 @@ import libApi from './libApi';
 import utilsApi from './utils/utilsApi';
 import dropdownApi from './dropdown/dropdownApi';
 import listApi from './list/listApi';
+import nativeGridApi from './nativeGrid/nativeGridApi';
 
 import meta from './Meta';
 import serviceLocator from './serviceLocator';
@@ -122,7 +123,7 @@ var api = {
      * Список с native-скроллом
      * @namespace
      * */
-    nativeGrid: null/*nativeGridApi*/,
+    nativeGrid: nativeGridApi,
     /**
      * Объединяет набор сервисов и справочников общего назначения.
      * @namespace
@@ -138,9 +139,3 @@ var api = {
 };
 
 export default api;
-
-
-        /*
-        './form/formApi',
-        './nativeGrid/nativeGridApi',
-*/

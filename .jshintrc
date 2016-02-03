@@ -95,7 +95,6 @@
     "_": false,
     "require": false,
     "define": false,
-    "Handlebars": false,
     "Promise": false,
     // Comindware globals
     "Localizer": false

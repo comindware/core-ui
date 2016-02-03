@@ -13,7 +13,7 @@ import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
 import 'bluebird';
-import 'handlebars';
+import * as Handlebars_ from 'handlebars';
 import * as _ from 'underscore';
 import * as underscoreString from 'underscore.string';
 import * as Backbone from 'backbone';
@@ -39,8 +39,10 @@ $.browser = {
 
 var api = {
     keypress: keypress_,
-    moment: moment_
+    moment: moment_,
+    Handlebars: Handlebars_
 };
 export var keypress = api.keypress;
 export var moment = api.moment;
+export var Handlebars = api.Handlebars;
 export default api;

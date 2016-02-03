@@ -6,83 +6,81 @@
  * Published under the MIT license
  */
 
-/* global define, require, Marionette, Handlebars */
+"use strict";
 
-define(['text!../templates/columnHeader.html', 'core/libApi', '../../list/views/GridColumnHeaderView'],
-    function (template, lib, GridColumnHeaderView) {
-        'use strict';
+import template from '../templates/columnHeader.hbs';
+import '../../libApi';
+import GridColumnHeaderView from '../../list/views/GridColumnHeaderView';
 
-        /**
-         * Some description for initializer
-         * @name ColumnHeaderView
-         * @memberof module:core.nativeGrid.views
-         * @class ColumnHeaderView
-         * @constructor
-         * @description View для отображения ячейки заголовка (шапки) списка
-         * @extends module:core.list.views.GridColumnHeaderView {@link module:core.list.views.GridColumnHeaderView}
-         * @param {Object} options Constructor options
-         * @param {Array} options.columns Массив колонок
-         * @param {} options.gridEventAggregator ?
-         * */
-        var ColumnHeaderView = GridColumnHeaderView.extend({
-            initialize: function (options) {
-                GridColumnHeaderView.prototype.initialize.apply(this, arguments);
+/**
+ * @name ColumnHeaderView
+ * @memberof module:core.nativeGrid.views
+ * @class ColumnHeaderView
+ * @constructor
+ * @description View для отображения ячейки заголовка (шапки) списка
+ * @extends module:core.list.views.GridColumnHeaderView {@link module:core.list.views.GridColumnHeaderView}
+ * @param {Object} options Constructor options
+ * @param {Array} options.columns Массив колонок
+ * @param {} options.gridEventAggregator ?
+ * */
+let ColumnHeaderView = GridColumnHeaderView.extend({
+    initialize: function (options) {
+        GridColumnHeaderView.prototype.initialize.apply(this, arguments);
 
-                if (this.column.filterView) {
-                    this.filterView = this.column.filterView;
-                    this.listenTo(this.model, 'change:hasFilter', this.__resolveFilterClass, this);
-                }
-                this.gridEventAggregator = options.gridEventAggregator;
-            },
+        if (this.column.filterView) {
+            this.filterView = this.column.filterView;
+            this.listenTo(this.model, 'change:hasFilter', this.__resolveFilterClass, this);
+        }
+        this.gridEventAggregator = options.gridEventAggregator;
+    },
 
-            template: Handlebars.compile(template),
+    template: template,
 
-            ui: {
-                cellContent: '.js-cell-content',
-                filterBtn: '.js-filter-btn'
-            },
+    ui: {
+        cellContent: '.js-cell-content',
+        filterBtn: '.js-filter-btn'
+    },
 
-            events: {
-                'click @ui.cellContent': '__handleSorting',
-                'click @ui.filterBtn': 'showFilterPopout'
-            },
+    events: {
+        'click @ui.cellContent': '__handleSorting',
+        'click @ui.filterBtn': 'showFilterPopout'
+    },
 
-            __resolveFilterClass: function () {
-                if (!this.column.filterView) {
-                    return;
-                }
+    __resolveFilterClass: function () {
+        if (!this.column.filterView) {
+            return;
+        }
 
-                var hasFilter = this.model.get('hasFilter');
+        var hasFilter = this.model.get('hasFilter');
 
-                if (hasFilter) {
-                    this.$el.addClass('has-filter');
-                } else {
-                    this.$el.removeClass('has-filter');
-                }
-            },
+        if (hasFilter) {
+            this.$el.addClass('has-filter');
+        } else {
+            this.$el.removeClass('has-filter');
+        }
+    },
 
-            showFilterPopout: function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                this.gridEventAggregator.trigger('showFilterView', {
-                    columnHeader: this,
-                    filterView: this.filterView,
-                    position: $(event.currentTarget).offset()
-                });
-            },
-
-            templateHelpers: function () {
-                return {
-                    sortingAsc: this.column.sorting === 'asc',
-                    sortingDesc: this.column.sorting === 'desc',
-                    filterView: this.filterView !== undefined
-                };
-            },
-
-            onRender: function () {
-                this.__resolveFilterClass();
-            }
+    showFilterPopout: function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.gridEventAggregator.trigger('showFilterView', {
+            columnHeader: this,
+            filterView: this.filterView,
+            position: $(event.currentTarget).offset()
         });
+    },
 
-        return ColumnHeaderView;
-    });
+    templateHelpers: function () {
+        return {
+            sortingAsc: this.column.sorting === 'asc',
+            sortingDesc: this.column.sorting === 'desc',
+            filterView: this.filterView !== undefined
+        };
+    },
+
+    onRender: function () {
+        this.__resolveFilterClass();
+    }
+});
+
+export default ColumnHeaderView;
