@@ -15,6 +15,7 @@ import utilsApi from './utils/utilsApi';
 import dropdownApi from './dropdown/dropdownApi';
 import listApi from './list/listApi';
 import nativeGridApi from './nativeGrid/nativeGridApi';
+import formApi from './form/formApi';
 
 import meta from './Meta';
 import serviceLocator from './serviceLocator';
@@ -113,7 +114,7 @@ var api = {
      * Работа с данными: форма и редакторы. Базируется на библиотеке [Backbone.Form](https://github.com/powmedia/backbone-forms).
      * @namespace
      * */
-    form: null/*formApi*/,
+    form: formApi,
     /**
      * Списки
      * @namespace

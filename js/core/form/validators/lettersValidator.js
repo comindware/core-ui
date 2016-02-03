@@ -6,20 +6,21 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi', 'core/services/LocalizationService'], function (lib, LocalizationService) {
-    'use strict';
+import '../../libApi';
+import LocalizationService from '../../services/LocalizationService';
 
-    Backbone.Form.validators.errMessages.letters = LocalizationService.get('CORE.FORM.VALIDATION.LETTERS');
+Backbone.Form.validators.errMessages.letters = LocalizationService.get('CORE.FORM.VALIDATION.LETTERS');
 
-    Backbone.Form.validators.letters = function (options) {
-        options = _.extend({
-            type: 'letters',
-            message: Backbone.Form.validators.errMessages.letters,
-            regexp: lib.XRegExp('^[\\p{L}-]+$')
-        }, options);
+Backbone.Form.validators.letters = function (options) {
+    options = _.extend({
+        type: 'letters',
+        message: Backbone.Form.validators.errMessages.letters,
+        regexp: lib.XRegExp('^[\\p{L}-]+$')
+    }, options);
 
-        return Backbone.Form.validators.regexp(options);
-    };
-});
+    return Backbone.Form.validators.regexp(options);
+};
+
+export default Backbone.Form.validators.letters;

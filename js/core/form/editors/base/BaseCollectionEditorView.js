@@ -12,8 +12,9 @@
  * This class is fully compatible with Backbone.Form.editors.Base and should be used to create Marionette-based editors for Backbone.Form
  * */
 
-define(['core/libApi', './MarionetteEditorPrototype'],
-    function (lib, MarionetteEditorPrototype) {
-        'use strict';
-        return Marionette.CollectionView.extend(MarionetteEditorPrototype.create(Marionette.CollectionView));
-    });
+"use strict";
+
+import '../../../libApi';
+import MarionetteEditorPrototype from './MarionetteEditorPrototype';
+
+export default Marionette.CollectionView.extend(MarionetteEditorPrototype.create(Marionette.CollectionView));
