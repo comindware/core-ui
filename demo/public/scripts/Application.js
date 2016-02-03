@@ -1,6 +1,8 @@
 define([
 	'comindware/core',
-    'ajax/users'
+    'ajax/users',
+    'localizationMap',
+    'ajaxMap'
 ], function(core, usersStub) {
     'use strict';
 
@@ -24,8 +26,17 @@ define([
             ui: Application.ui
         });
 
+        debugger;
         core.bootstrapper.initialize({
-            cacheService: usersStub
+            cacheService: usersStub,
+            ajaxService: {
+                ajaxMap: window.ajaxMap
+            },
+            localizationService: {
+                langCode: window.langCode,
+                localizationMap: window['LANGMAP' + window.langCode.toUpperCase()],
+                warningAsError: window.compiled
+            }
         });
     });
 

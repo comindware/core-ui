@@ -12,19 +12,19 @@ import '../libApi';
 import template from '../templates/splitPanel.hbs';
 import GlobalEventService from '../services/GlobalEventService';
 
-var config = {
+let config = {
     smallSize: 550,
     largeSize: 700,
     throttleDelay: 200
 };
 
-var classes = {
+let classes = {
     smallPanelSize: "size-small",
     largePanelSize: "size-large",
     middlePanelSize: "size-middle"
 };
 
-var defaultOptions = {
+let defaultOptions = {
     panel1Min: 20,
     panel2Min: 20
 };

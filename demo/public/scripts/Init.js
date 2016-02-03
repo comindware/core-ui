@@ -16,7 +16,7 @@ require.config({
 		demoPage: 'app/helpers',
 
         // core paths
-        comindware: 'core/js/comindware',
+        comindware: 'dist',
         core: 'core/js/core',
 
         underscore: 'core/js/lib/underscore/underscore',
@@ -92,12 +92,13 @@ require.config({
 });
 
 window.langCode = 'en';
+window.compiled = false;
 
 require([
-        'dist/core'/*,
+        'comindware/core',
         'Application',
         'AppRouter',
-        'AppController'*/
+        'AppController'
     ],
     function(core, Application, AppRouter, AppController) {
     'use strict';

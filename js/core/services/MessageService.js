@@ -13,7 +13,7 @@ import MessageView from './message/views/MessageView';
 import WindowService from './WindowService';
 import LocalizationService from './LocalizationService';
 
-var iconIds = {
+let iconIds = {
     NONE: 'none',
     QUESTION: 'question',
     ERROR: 'error'

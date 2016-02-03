@@ -10,9 +10,9 @@
 
 import '../libApi';
 
-var $window = $(window);
+let $window = $(window);
 
-var GlobalEventsService = Marionette.Object.extend({
+let GlobalEventsService = Marionette.Object.extend({
     initialize: function () {
         _.bindAll(this, '__onResize');
 

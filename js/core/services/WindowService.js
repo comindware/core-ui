@@ -12,16 +12,17 @@ import '../libApi';
 import { helpers } from '../utils/utilsApi';
 import FadingPanelView from '../views/FadingPanelView';
 
-var state = {};
+let state = {};
 
-var classes = {
+let classes = {
     HIDDEN: 'hidden'
 };
 
-var windowService = {
+let windowService = {
     initialize: function (options) {
         helpers.ensureOption(options, 'fadingRegion');
         helpers.ensureOption(options, 'popupRegion');
+        helpers.ensureOption(options, 'ui');
 
         state.options = options;
         state.fadingRegion = options.fadingRegion;

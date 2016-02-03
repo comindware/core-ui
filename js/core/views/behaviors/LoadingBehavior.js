@@ -10,7 +10,7 @@
 
 import { helpers } from '../../utils/utilsApi';
 import LocalizationService from '../../services/LocalizationService';
-import LoadingView from './loading/views/LoadingView';
+import LoadingView from '../../views/LoadingView';
 
 export default Marionette.Behavior.extend({
     initialize: function (options, view) {

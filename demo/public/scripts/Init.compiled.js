@@ -19,6 +19,7 @@ require.config({
 });
 
 window.langCode = 'en';
+window.compiled = true;
 
 require([
         'comindware/core',

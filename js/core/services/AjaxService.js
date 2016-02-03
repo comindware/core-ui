@@ -42,7 +42,7 @@ let extendAjaxService = function (ajaxService, ajaxMap) {
     });
 };
 
-var AjaxServicePrototype = {
+let AjaxServicePrototype = {
     initialize: function (options) {
         helpers.ensureOption(options, 'ajaxMap');
         extendAjaxService(this, options.ajaxMap);
@@ -122,7 +122,7 @@ var AjaxServicePrototype = {
     }
 };
 
-let global = this; // jshint ignore:line
+let global = window;
 let AjaxService = Marionette.Object.extend(AjaxServicePrototype);
 global.Ajax = new AjaxService();
 

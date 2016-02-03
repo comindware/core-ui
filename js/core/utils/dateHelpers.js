@@ -12,12 +12,12 @@
 
 import moment from '../libApi';
 
-var defaultOptions = {
+let defaultOptions = {
     ms: 60 * 1000,
     workHours: 8
 };
 
-var dateTimeFormats = {
+let dateTimeFormats = {
     en: {
         shortDate: {general: 'MM/D/YYYY' /* 6/15/2009 */},
         sateISO: {general: 'YYYY-MM-DD'  /* 2005-08-09 */},

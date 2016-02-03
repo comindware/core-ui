@@ -11,7 +11,7 @@
 import '../libApi';
 import './promise/Config';
 
-var promiseQueue = [];
+let promiseQueue = [];
 
 export default {
     registerPromise: function(promise) {

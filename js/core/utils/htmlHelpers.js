@@ -9,7 +9,7 @@
 "use strict";
 
 import '../libApi';
-import serviceLocator from 'core/serviceLocator';
+import serviceLocator from '../serviceLocator';
 
 /*
 * HtmlHelpers contains methods that somehow modify dom elements or generate html.

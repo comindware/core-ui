@@ -11,9 +11,9 @@
 import '../libApi';
 
 // storing active url to get back to it while canceling module leave
-var previousUrl;
-var activeUrl;
-var originalCheckUrl = Backbone.history.checkUrl;
+let previousUrl;
+let activeUrl;
+let originalCheckUrl = Backbone.history.checkUrl;
 Backbone.history.checkUrl = function(e) {
     previousUrl = activeUrl;
     activeUrl = window.location.hash;

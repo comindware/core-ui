@@ -11,9 +11,9 @@
 import '../libApi';
 import LocalizationService from '../services/LocalizationService';
 
-var timeoutCache = {};
+let timeoutCache = {};
 
-var queueCache = {};
+let queueCache = {};
 
 export default /** @lends module:core.utils.helpers */ {
     /**

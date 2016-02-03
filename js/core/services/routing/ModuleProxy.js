@@ -31,11 +31,11 @@ export default Marionette.Controller.extend({
     },
 
     __loadModule: function () {
-        var path = this.options.config.module;
+        /*var path = this.options.config.module;
         return new Promise(function (resolve) {
             require([ path ], function (Module) {
                 resolve(Module);
             });
-        });
+        });*/
     }
 });

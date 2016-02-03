@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../../libApi';
+import '../libApi';
 import template from '../templates/loading.hbs';
 
 export default Marionette.ItemView.extend({
@@ -18,7 +18,7 @@ export default Marionette.ItemView.extend({
         };
     },
 
-    template: Handlebars.compile(template),
+    template: template,
 
     className: 'l-loader'
 });

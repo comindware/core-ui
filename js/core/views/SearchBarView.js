@@ -12,7 +12,7 @@ import '../libApi';
 import template from '../templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 
-var defaultOptions = {
+let defaultOptions = {
     placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
     delay: 300
 };

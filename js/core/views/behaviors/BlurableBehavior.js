@@ -11,7 +11,7 @@
 import '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 
-var defaultOptions = {
+let defaultOptions = {
     selector: null,
     allowNestedFocus: true,
     onBlur: null

@@ -11,7 +11,7 @@
 import BlurableBehavior from './BlurableBehavior';
 import WindowService from '../../services/WindowService';
 
-var defaultOptions = {
+let defaultOptions = {
     selector: null,
     allowNestedFocus: true,
     onBlur: null

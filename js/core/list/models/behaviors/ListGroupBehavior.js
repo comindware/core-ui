@@ -6,28 +6,23 @@
  * Published under the MIT license
  */
 
-/* global define, require, classes, _ */
+"use strict";
 
-define([
-        'core/models/behaviors/CollapsibleBehavior',
-        'core/libApi'
-    ],
-    function (CollapsibleBehavior) {
-        'use strict';
+import { helpers } from '../../../utils/utilsApi';
+import CollapsibleBehavior from '../../../models/behaviors/CollapsibleBehavior';
 
-        var ListGroupBehavior = function (model) {
-            _.extend(this, new CollapsibleBehavior(model));
-        };
+let ListGroupBehavior = function (model) {
+    _.extend(this, new CollapsibleBehavior(model));
+};
 
-        _.extend(ListGroupBehavior.prototype, {
-            deselect: function ()
-            {
-            },
+_.extend(ListGroupBehavior.prototype, {
+    deselect: function ()
+    {
+    },
 
-            select: function ()
-            {
-            }
-        });
+    select: function ()
+    {
+    }
+});
 
-        return ListGroupBehavior;
-    });
+export default ListGroupBehavior;

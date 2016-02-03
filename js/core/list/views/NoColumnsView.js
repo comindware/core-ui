@@ -6,23 +6,21 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi', 'text!core/list/templates/noColumns.html'],
-    function (lib, template) {
-        'use strict';
+import '../../libApi';
+import template from '../templates/noColumns.hbs';
 
-        /**
-         * Some description for initializer
-         * @name NoColumnsView
-         * @memberof module:core.list.views
-         * @class NoColumnsView
-         * @extends Marionette.ItemView
-         * @constructor
-         * @description View используемый по умолчанию для отображения списка без колонок
-         * */
-        return Marionette.ItemView.extend({
-            className: 'dev-no-columns-view',
-            template: Handlebars.compile(template)
-        });
-    });
+/**
+ * Some description for initializer
+ * @name NoColumnsView
+ * @memberof module:core.list.views
+ * @class NoColumnsView
+ * @extends Marionette.ItemView
+ * @constructor
+ * @description View используемый по умолчанию для отображения списка без колонок
+ * */
+export default Marionette.ItemView.extend({
+    className: 'dev-no-columns-view',
+    template: template
+});

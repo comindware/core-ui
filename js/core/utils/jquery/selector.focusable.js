@@ -8,7 +8,7 @@
 
 'use strict';
 
-import '../libApi';
+import '../../libApi';
 
 (function($) {
     function visible(element) {

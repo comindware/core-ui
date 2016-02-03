@@ -15,7 +15,7 @@ export default Marionette.ItemView.extend({
     initialize: function () {
     },
 
-    template: Handlebars.compile(template),
+    template: template,
 
     className: 'fadingPanel',
 

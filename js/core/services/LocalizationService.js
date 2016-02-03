@@ -11,7 +11,7 @@
 import '../libApi';
 import { helpers } from '../utils/utilsApi';
 
-let global = this; // jshint ignore:line
+let global = window;
 let defaultLangCode = 'en';
 
 global.Localizer = {
