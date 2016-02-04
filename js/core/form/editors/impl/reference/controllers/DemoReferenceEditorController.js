@@ -6,82 +6,77 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/libApi',
-        'core/list/listApi',
-        'core/utils/utilsApi',
-        '../models/SearchMoreModel',
-        '../models/DefaultReferenceModel'
-    ],
-    function (lib, list, utils, SearchMoreModel, DefaultReferenceModel) {
-        'use strict';
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import list from '../../../../../list/listApi';
+import SearchMoreModel from '../models/SearchMoreModel';
+import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
-        var config = {
-            DEFAULT_COUNT: 200
+const config = {
+    DEFAULT_COUNT: 200
+};
+
+let createDemoData = function () {
+    return _.times(1000, function (i) {
+        var id = 'task.' + (i + 1);
+        return {
+            id: id,
+            text: 'Test Reference ' + (i + 1)
         };
-
-        var createDemoData = function () {
-            return _.times(1000, function (i) {
-                var id = 'task.' + (i + 1);
-                return {
-                    id: id,
-                    text: 'Test Reference ' + (i + 1)
-                };
-            });
-        };
-
-        var DemoReferenceCollections = Backbone.Collection.extend({
-            model: DefaultReferenceModel
-        });
-
-        return Marionette.Controller.extend({
-            initialize: function (options) {
-                this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]));
-            },
-
-            fetch: function (options) {
-                options = options || {};
-                var deferred = $.Deferred();
-                var promise = deferred.promise();
-                setTimeout(function () {
-                    if (promise !== this.fetchPromise) {
-                        deferred.reject();
-                        return;
-                    }
-
-                    this.collection.reset(createDemoData());
-                    if (options.text) {
-                        var filterText = options.text.trim().toUpperCase();
-                        if (filterText) {
-                            this.collection.filter(function (model) {
-                                if (model instanceof SearchMoreModel) {
-                                    return true;
-                                }
-                                var text = model.get('text');
-                                if (!text) {
-                                    return false;
-                                }
-                                return text.toUpperCase().indexOf(filterText) !== -1;
-                            });
-                        } else {
-                            this.collection.filter(null);
-                        }
-                    } else {
-                        this.collection.filter(null);
-                    }
-
-                    this.totalCount = 123123;
-                    deferred.resolve();
-                    this.fetchPromise = null;
-                }.bind(this), 1000);
-                this.fetchPromise = promise;
-                return this.fetchPromise;
-            },
-
-            navigate: function (model) {
-                utils.helpers.throwError('Not Implemented.', 'NotImplementedError');
-            }
-        });
     });
+};
+
+let DemoReferenceCollections = Backbone.Collection.extend({
+    model: DefaultReferenceModel
+});
+
+export default Marionette.Controller.extend({
+    initialize: function (options) {
+        this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]));
+    },
+
+    fetch: function (options) {
+        options = options || {};
+        var deferred = $.Deferred();
+        var promise = deferred.promise();
+        setTimeout(function () {
+            if (promise !== this.fetchPromise) {
+                deferred.reject();
+                return;
+            }
+
+            this.collection.reset(createDemoData());
+            if (options.text) {
+                var filterText = options.text.trim().toUpperCase();
+                if (filterText) {
+                    this.collection.filter(function (model) {
+                        if (model instanceof SearchMoreModel) {
+                            return true;
+                        }
+                        var text = model.get('text');
+                        if (!text) {
+                            return false;
+                        }
+                        return text.toUpperCase().indexOf(filterText) !== -1;
+                    });
+                } else {
+                    this.collection.filter(null);
+                }
+            } else {
+                this.collection.filter(null);
+            }
+
+            this.totalCount = 123123;
+            deferred.resolve();
+            this.fetchPromise = null;
+        }.bind(this), 1000);
+        this.fetchPromise = promise;
+        return this.fetchPromise;
+    },
+
+    navigate: function (model) {
+        helpers.throwError('Not Implemented.', 'NotImplementedError');
+    }
+});

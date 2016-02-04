@@ -22,7 +22,7 @@ const classes = {
     DISABLED: 'disabled'
 };
 
-return Backbone.Form.Field.extend({
+export default Backbone.Form.Field.extend({
     initialize: function (options) {
         Backbone.Form.Field.prototype.initialize.apply(this, arguments);
         this.debounceValidate = _.debounce(function () {

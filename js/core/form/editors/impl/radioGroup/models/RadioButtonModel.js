@@ -6,19 +6,14 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/libApi',
-        'core/utils/utilsApi',
-        'core/models/behaviors/SelectableBehavior'
-    ],
-    function (lib, utils, SelectableBehavior) {
-        'use strict';
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
 
-        return Backbone.Model.extend({
-            initialize: function () {
-                utils.helpers.applyBehavior(this, SelectableBehavior.Selectable);
-            }
-        });
-    });
+export default Backbone.Model.extend({
+    initialize: function () {
+        helpers.applyBehavior(this, SelectableBehavior.Selectable);
+    }
+});

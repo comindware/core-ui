@@ -6,162 +6,162 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi', 'core/utils/utilsApi', 'text!../templates/timeInput.html', 'core/services/LocalizationService'],
-    function (lib, utils, template, LocalizationService) {
-        'use strict';
-        return Marionette.ItemView.extend({
+import { moment } from '../../../../../libApi';
+import { dateHelpers } from '../../../../../utils/utilsApi';
+import template from '../templates/timeInput.hbs';
+import LocalizationService from '../../../../../services/LocalizationService';
 
-            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'),
-            readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.READONLYPLACEHOLDER'),
-            disabledPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.DISABLEDPLACEHOLDER'),
+export default Marionette.ItemView.extend({
+    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'),
+    readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.READONLYPLACEHOLDER'),
+    disabledPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.DISABLEDPLACEHOLDER'),
 
-            initialize: function (options) {
-                this.reqres = options.reqres;
-                this.timeEditFormat = utils.dateHelpers.getTimeEditFormat();
-            },
+    initialize: function (options) {
+        this.reqres = options.reqres;
+        this.timeEditFormat = dateHelpers.getTimeEditFormat();
+    },
 
-            template: Handlebars.compile(template),
+    template: template,
 
-            ui: {
-                'input': '.js-time-input',
-                'clearButton': '.js-time-remove'
-            },
+    ui: {
+        'input': '.js-time-input',
+        'clearButton': '.js-time-remove'
+    },
 
-            className: 'dev-time-input-view',
+    className: 'dev-time-input-view',
 
-            events: {
-                'click': '__onClick',
-                'click @ui.clearButton': '__onClear',
-                'change @ui.input': '__onInputChange',
-                'blur @ui.input': '__onBlur'
-            },
+    events: {
+        'click': '__onClick',
+        'click @ui.clearButton': '__onClear',
+        'change @ui.input': '__onInputChange',
+        'blur @ui.input': '__onBlur'
+    },
 
-            modelEvents: {
-                'change:value': '__onValueChange',
-                'change:readonly': '__onEnabledChange',
-                'change:enabled': '__onEnabledChange'
-            },
+    modelEvents: {
+        'change:value': '__onValueChange',
+        'change:readonly': '__onEnabledChange',
+        'change:enabled': '__onEnabledChange'
+    },
 
-            __onClear: function (e) {
-                e.preventDefault();
-                e.stopPropagation();
+    __onClear: function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-                this.model.set({value: null});
-            },
+        this.model.set({value: null});
+    },
 
-            __onInputChange: function () {
-                this.model.set({value: this.getParsedInputValue()});
-                this.reqres.request('panel:close');
-            },
+    __onInputChange: function () {
+        this.model.set({value: this.getParsedInputValue()});
+        this.reqres.request('panel:close');
+    },
 
-            getParsedInputValue: function () {
-                var val = this.ui.input.val();
+    getParsedInputValue: function () {
+        var val = this.ui.input.val();
 
-                if (val === '') {
-                    return null;
-                }
+        if (val === '') {
+            return null;
+        }
 
-                var format = this.timeEditFormat,
-                    currentValue = this.model.get('value'),
-                    parsedVal = lib.moment(val, format, true),
-                    parsedDate;
+        var format = this.timeEditFormat,
+            currentValue = this.model.get('value'),
+            parsedVal = moment(val, format, true),
+            parsedDate;
 
-                if (parsedVal.isValid()) {
-                    parsedDate = new Date(lib.moment(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()));
-                } else if (currentValue !== '' && currentValue !== null) {
-                    parsedDate = new Date(currentValue);
-                } else {
-                    parsedDate = null;
-                }
+        if (parsedVal.isValid()) {
+            parsedDate = new Date(moment(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()));
+        } else if (currentValue !== '' && currentValue !== null) {
+            parsedDate = new Date(currentValue);
+        } else {
+            parsedDate = null;
+        }
 
-                return parsedDate;
-            },
+        return parsedDate;
+    },
 
-            __onEnabledChange: function () {
-                this.setPlaceholder();
-                this.setInputPermissions();
-            },
+    __onEnabledChange: function () {
+        this.setPlaceholder();
+        this.setInputPermissions();
+    },
 
-            setInputPermissions: function () {
-                var enabled = this.model.get('enabled'),
-                    readonly = this.model.get('readonly');
+    setInputPermissions: function () {
+        var enabled = this.model.get('enabled'),
+            readonly = this.model.get('readonly');
 
-                if (!enabled) {
-                    this.ui.input.prop('disabled', true);
-                } else {
-                    this.ui.input.prop('disabled', false);
-                }
+        if (!enabled) {
+            this.ui.input.prop('disabled', true);
+        } else {
+            this.ui.input.prop('disabled', false);
+        }
 
-                if (readonly) {
-                    this.ui.input.prop('readonly', true);
-                } else {
-                    this.ui.input.prop('readonly', false);
-                }
+        if (readonly) {
+            this.ui.input.prop('readonly', true);
+        } else {
+            this.ui.input.prop('readonly', false);
+        }
 
-                if (!enabled || readonly) {
-                    this.ui.clearButton.hide();
-                } else {
-                    this.ui.clearButton.show();
-                }
-            },
+        if (!enabled || readonly) {
+            this.ui.clearButton.hide();
+        } else {
+            this.ui.clearButton.show();
+        }
+    },
 
-            __onValueChange: function () {
-                this.setPlaceholder();
-                this.ui.input.val(this.getDisplayValue());
-            },
+    __onValueChange: function () {
+        this.setPlaceholder();
+        this.ui.input.val(this.getDisplayValue());
+    },
 
-            onRender: function () {
-                this.setPlaceholder();
-                this.setInputPermissions();
+    onRender: function () {
+        this.setPlaceholder();
+        this.setInputPermissions();
 
-                this.ui.input.val(this.getDisplayValue());
-            },
+        this.ui.input.val(this.getDisplayValue());
+    },
 
-            getDisplayValue: function () {
-                var val = this.model.get('value'),
-                    formattedVal;
+    getDisplayValue: function () {
+        var val = this.model.get('value'),
+            formattedVal;
 
-                if (val === null || val === '') {
-                    formattedVal = '';
-                } else {
-                    formattedVal = utils.dateHelpers.getDisplayTime(lib.moment(val));
-                }
+        if (val === null || val === '') {
+            formattedVal = '';
+        } else {
+            formattedVal = dateHelpers.getDisplayTime(moment(val));
+        }
 
-                return formattedVal;
-            },
+        return formattedVal;
+    },
 
-            setPlaceholder: function () {
-                if (!this.model.get('enabled') || this.model.get('readonly')) {
-                    this.placeholder = '';
-                } else {
-                    this.placeholder = this.emptyPlaceholder;
-                }
+    setPlaceholder: function () {
+        if (!this.model.get('enabled') || this.model.get('readonly')) {
+            this.placeholder = '';
+        } else {
+            this.placeholder = this.emptyPlaceholder;
+        }
 
-                this.ui.input.prop('placeholder', this.placeholder);
-            },
+        this.ui.input.prop('placeholder', this.placeholder);
+    },
 
-            showEditFormattedTime: function () {
-                var val = this.model.get('value'),
-                    format = this.timeEditFormat,
-                    editFormattedDate = val ? lib.moment(new Date(val)).format(format) : '';
+    showEditFormattedTime: function () {
+        var val = this.model.get('value'),
+            format = this.timeEditFormat,
+            editFormattedDate = val ? moment(new Date(val)).format(format) : '';
 
-                this.ui.input.val(editFormattedDate);
-            },
+        this.ui.input.val(editFormattedDate);
+    },
 
-            __onBlur: function () {
-                this.isEditing = false;
-            },
+    __onBlur: function () {
+        this.isEditing = false;
+    },
 
-            __onClick: function () {
-                if (this.isEditing || !this.model.get('enabled') || this.model.get('readonly')) {
-                    return;
-                }
-                
-                this.showEditFormattedTime();
-                this.reqres.request('panel:open');
-                this.isEditing = true;
-            }
-        });
-    });
+    __onClick: function () {
+        if (this.isEditing || !this.model.get('enabled') || this.model.get('readonly')) {
+            return;
+        }
+
+        this.showEditFormattedTime();
+        this.reqres.request('panel:open');
+        this.isEditing = true;
+    }
+});

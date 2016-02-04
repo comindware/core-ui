@@ -9,24 +9,28 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi','core/list/listApi','text!../templates/addNewButton.html'],
-    function (lib,list,template) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize:function(options){
-                this.reqres = options.reqres;
-            },
-            template: Handlebars.compile(template),
-            events:{
-                'click':'__onClick'
-            },
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import template from '../templates/addNewButton.hbs';
+import list from '../../../../../list/listApi';
 
-            className:'add-new-reference-button',
+export default Marionette.ItemView.extend({
+    initialize: function(options) {
+        helpers.ensureOption(options, 'reqres');
+        this.reqres = options.reqres;
+    },
 
-            __onClick:function(){
-                this.reqres.request('add:new:item');
-            }
-        });
-    });
+    template: template,
+
+    events:{
+        'click': '__onClick'
+    },
+
+    className: 'add-new-reference-button',
+
+    __onClick: function() {
+        this.reqres.request('add:new:item');
+    }
+});

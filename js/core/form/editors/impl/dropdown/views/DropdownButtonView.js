@@ -6,47 +6,45 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['core/libApi', 'text!../templates/dropdownButton.html'],
-    function (lib, template) {
-        'use strict';
+import '../../../../../libApi';
+import template from '../templates/dropdownButton.hbs';
 
-        var classes = {
+const classes = {
+};
+
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+        this.reqres = options.reqres;
+    },
+
+    className: 'field field_dropdown',
+
+    template: template,
+
+    templateHelpers: function () {
+        var value = this.model.get('value');
+        var displayAttribute = this.model.get('displayAttribute');
+        return {
+            hasValue: Boolean(value),
+            text: value ? _.result(value.toJSON(), displayAttribute) : null
         };
+    },
 
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.reqres = options.reqres;
-            },
+    ui: {
+        text: '.js-text'
+    },
 
-            className: 'field field_dropdown',
+    events: {
+        'click': '__click'
+    },
 
-            template: Handlebars.compile(template),
+    modelEvents: {
+        'change:value': 'render'
+    },
 
-            templateHelpers: function () {
-                var value = this.model.get('value');
-                var displayAttribute = this.model.get('displayAttribute');
-                return {
-                    hasValue: Boolean(value),
-                    text: value ? _.result(value.toJSON(), displayAttribute) : null
-                };
-            },
-
-            ui: {
-                text: '.js-text'
-            },
-
-            events: {
-                'click': '__click'
-            },
-
-            modelEvents: {
-                'change:value': 'render'
-            },
-
-            __click: function () {
-                this.reqres.request('panel:open');
-            }
-        });
-    });
+    __click: function () {
+        this.reqres.request('panel:open');
+    }
+});

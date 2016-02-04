@@ -6,17 +6,16 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['text!../templates/loading.html', 'core/libApi'],
-    function (template, lib) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize: function () {
-            },
+import '../../../../../libApi';
+import template from '../templates/loading.hbs';
 
-            className: 'l-loader',
+export default Marionette.ItemView.extend({
+    initialize: function () {
+    },
 
-            template: Handlebars.compile(template)
-        });
-    });
+    className: 'l-loader',
+
+    template: template
+});

@@ -6,17 +6,13 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['./BaseReferenceEditorController',
-        'core/libApi'
-],
-    function (BaseReferenceEditorController, lib) {
-        'use strict';
+import '../../../../../libApi';
+import BaseReferenceEditorController from './BaseReferenceEditorController';
 
-        return BaseReferenceEditorController.extend({
-            navigate: function (model) {
-                return false;
-            }
-        });
-    });
+export default BaseReferenceEditorController.extend({
+    navigate: function (model) {
+        return false;
+    }
+});

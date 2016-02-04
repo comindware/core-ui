@@ -12,7 +12,7 @@ import { helpers } from '../../../../../../utils/utilsApi';
 import '../../../../../../libApi';
 import list from '../../../../../../list/listApi';
 import template from '../templates/panel.hbs';
-import ListItemView from './ListItemView';
+import ListItemView from './MembersListItemView';
 
 let config = {
     CHILD_HEIGHT: 34

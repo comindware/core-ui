@@ -6,17 +6,15 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/utils/utilsApi',
-        'core/collections/VirtualCollection',
-        'core/collections/behaviors/HighlightableBehavior'],
-    function (utils, VirtualCollection, HighlightableBehavior) {
-        'use strict';
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import VirtualCollection from '../../../../../collections/VirtualCollection';
+import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 
-        return VirtualCollection.extend({
-            initialize: function () {
-                utils.helpers.applyBehavior(this, HighlightableBehavior);
-            }
-        });
-    });
+export default VirtualCollection.extend({
+    initialize: function () {
+        helpers.applyBehavior(this, HighlightableBehavior);
+    }
+});

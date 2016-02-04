@@ -6,15 +6,12 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['core/libApi'],
-    function () {
-        'use strict';
-        return Backbone.Model.extend({
+import '../../../../../libApi';
 
-            updateEmpty: function () {
-                this.set('empty', this.collection.models.length == 1);
-            }
-        });
-    });
+export default Backbone.Model.extend({
+    updateEmpty: function () {
+        this.set('empty', this.collection.models.length === 1);
+    }
+});

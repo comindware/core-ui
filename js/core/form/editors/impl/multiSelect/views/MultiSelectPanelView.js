@@ -6,78 +6,71 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(
-    [
-        'core/libApi',
-        'core/list/listApi',
-        'core/utils/utilsApi',
-        'text!../templates/multiSelectPanel.html',
-        './MultiSelectItemView'
-    ],
-    function(lib, list, utils, template, MultiSelectItemView) {
-        'use strict';
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import list from '../../../../../list/listApi';
+import template from '../templates/multiSelectPanel.hbs';
+import MultiSelectItemView from './MultiSelectItemView';
 
-        return Marionette.CompositeView.extend({
-            attributes: {
-                tabindex: 0
-            },
+export default Marionette.CompositeView.extend({
+    attributes: {
+        tabindex: 0
+    },
 
-            className: 'multiselect-panel',
+    className: 'multiselect-panel',
 
-            template: Handlebars.compile(template),
+    template: template,
 
-            templateHelpers: function() {
-                return {
-                    explicitApply: this.getOption('explicitApply')
-                }
-            },
-            
-            childView: MultiSelectItemView,
+    templateHelpers: function() {
+        return {
+            explicitApply: this.getOption('explicitApply')
+        };
+    },
 
-            childViewOptions: function() {
-                return {
-                    displayAttribute: this.getOption('displayAttribute')
-                };
-            },
+    childView: MultiSelectItemView,
 
-            childViewContainer: '.js-list',
+    childViewOptions: function() {
+        return {
+            displayAttribute: this.getOption('displayAttribute')
+        };
+    },
 
-            ui: {
-                selectAll: '.js-select-all',
-                apply: '.js-apply',
-                cancel: '.js-cancel',
-                close: '.js-close'
-            },
+    childViewContainer: '.js-list',
 
-            events: {
-                'click @ui.selectAll': '__selectAll',
-                'click @ui.apply': '__apply',
-                'click @ui.cancel': '__close',
-                'click @ui.close': '__close'
-            },
+    ui: {
+        selectAll: '.js-select-all',
+        apply: '.js-apply',
+        cancel: '.js-cancel',
+        close: '.js-close'
+    },
 
-            onShow: function() {
-                this.$el.focus();
-            },
+    events: {
+        'click @ui.selectAll': '__selectAll',
+        'click @ui.apply': '__apply',
+        'click @ui.cancel': '__close',
+        'click @ui.close': '__close'
+    },
 
-            initialize: function(options) {
-                utils.helpers.ensureOption(options, 'model');
-                this.collection = this.model.get('collection');
-            },
+    onShow: function() {
+        this.$el.focus();
+    },
 
-            __selectAll: function() {
-                this.trigger('select:all');
-            },
+    initialize: function(options) {
+        helpers.ensureOption(options, 'model');
+        this.collection = this.model.get('collection');
+    },
 
-            __apply: function() {
-                this.trigger('apply');
-            },
+    __selectAll: function() {
+        this.trigger('select:all');
+    },
 
-            __close: function() {
-                this.trigger('close');
-            }
-        });
+    __apply: function() {
+        this.trigger('apply');
+    },
+
+    __close: function() {
+        this.trigger('close');
     }
-);
+});

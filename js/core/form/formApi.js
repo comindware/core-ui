@@ -14,7 +14,7 @@ import BaseItemEditorView from './editors/base/BaseItemEditorView';
 import BaseLayoutEditorView from './editors/base/BaseLayoutEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
 import BaseCompositeEditorView from './editors/base/BaseCompositeEditorView';
-import ExtendedForm from './ExtendedForm';
+import ExtendedForm_ from './ExtendedForm';
 import BooleanEditorView from './editors/BooleanEditorView';
 import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
@@ -53,7 +53,7 @@ import PasswordValidator from './validators/PasswordValidator';
 import PhoneValidator from './validators/PhoneValidator';
 
 var api = /** @lends module:core.form */ {
-    ExtendedForm: ExtendedForm,
+    ExtendedForm: ExtendedForm_,
     /**
      * Объекты Marionette.Behaviour, упрощающие использования модуля форм.
      * @namespace

@@ -6,21 +6,17 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/libApi',
-        'core/utils/utilsApi',
-        'core/models/behaviors/SelectableBehavior',
-        '../models/RadioButtonModel'],
-    function (lib, utils, SelectableBehavior, RadioButtonModel) {
-        'use strict';
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
+import RadioButtonModel from '../models/RadioButtonModel';
 
-        return Backbone.Collection.extend({
-            initialize: function () {
-                utils.helpers.applyBehavior(this, SelectableBehavior.SingleSelect);
-            },
+export default Backbone.Collection.extend({
+    initialize: function () {
+        helpers.applyBehavior(this, SelectableBehavior.SingleSelect);
+    },
 
-            model: RadioButtonModel
-        });
-    });
+    model: RadioButtonModel
+});
