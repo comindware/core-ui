@@ -10,7 +10,7 @@
 
 "use strict";
 
-import moment from '../libApi';
+import { moment } from '../libApi';
 
 let defaultOptions = {
     ms: 60 * 1000,

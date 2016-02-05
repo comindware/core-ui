@@ -27,7 +27,7 @@ let GridColumnHeaderView = Marionette.ItemView.extend({
         this.column = options.column;
     },
 
-    template: Handlebars.compile(template),
+    template: template,
     className: 'grid-header-column-content',
 
     events: {

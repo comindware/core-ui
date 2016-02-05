@@ -27,7 +27,7 @@ export default Marionette.ItemView.extend({
         'click @ui.buttons': '__onSelect'
     },
 
-    template: Handlebars.compile(template),
+    template: template,
 
     close: function (result) {
         WindowService.closePopup();

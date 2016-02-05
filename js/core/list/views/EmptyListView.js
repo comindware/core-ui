@@ -12,8 +12,6 @@ import '../../libApi';
 import template from '../templates/emptyGrid.hbs';
 import LocalizationService from '../../services/LocalizationService';
 
-let defaultText = LocalizationService.get("CORE.GRID.EMPTYVIEW.EMPTY");
-
 /**
  * Some description for initializer
  * @name EmptyListView
@@ -28,7 +26,7 @@ let defaultText = LocalizationService.get("CORE.GRID.EMPTYVIEW.EMPTY");
 let EmptyListView = Marionette.ItemView.extend({
     initialize: function (options) {
         this.model = new Backbone.Model({
-            text: (options && options.text) || defaultText
+            text: (options && options.text) || LocalizationService.get("CORE.GRID.EMPTYVIEW.EMPTY")
         });
     },
 

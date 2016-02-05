@@ -20,14 +20,7 @@ define([
     };
 
     Application.addInitializer(function() {
-        core.services.WindowService.initialize({
-            fadingRegion: Application.fadingRegion,
-            popupRegion: Application.popupRegion,
-            ui: Application.ui
-        });
-
-        debugger;
-        core.bootstrapper.initialize({
+        core.initialize({
             cacheService: usersStub,
             ajaxService: {
                 ajaxMap: window.ajaxMap
@@ -36,6 +29,11 @@ define([
                 langCode: window.langCode,
                 localizationMap: window['LANGMAP' + window.langCode.toUpperCase()],
                 warningAsError: window.compiled
+            },
+            windowService: {
+                fadingRegion: Application.fadingRegion,
+                popupRegion: Application.popupRegion,
+                ui: Application.ui
             }
         });
     });

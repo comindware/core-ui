@@ -15,6 +15,8 @@ let timeoutCache = {};
 
 let queueCache = {};
 
+let getPluralFormIndex = null;
+
 export default /** @lends module:core.utils.helpers */ {
     /**
     * Метод вызывает функцию <code>callback()</code> по прошествии <code>delay</code> миллисекунд с момента
@@ -121,12 +123,13 @@ export default /** @lends module:core.utils.helpers */ {
      * (для английского и немецкого - 2 фразы разделенные запятыми, для русского - 3 фразы разделенные запятыми).
      * @return {String} Результирующая строка.
      * */
-    getPluralForm: (function (formula) {
-        var getIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
-        return function (n, texts) {
-            return texts.split(',')[getIndex(n)];
-        };
-    })(LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM')),
+    getPluralForm: function (n, texts) {
+        if (!getPluralFormIndex) {
+            var formula = LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM');
+            getPluralFormIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
+        }
+        return texts.split(',')[getPluralFormIndex(n)];
+    },
 
     /**
      * Создает очередь из асинхронных операций. Поступающие операции выполняются последовательно.

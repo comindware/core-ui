@@ -83,7 +83,7 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
 
     className: 'dev-multi-select',
 
-    template: Handlebars.compile(template),
+    template: template,
 
     onRender: function() {
         this.dropdownView = dropdown.factory.createDropdown({

@@ -20,13 +20,15 @@ const changeMode = {
     input: 'input'
 };
 
-const defaultOptions = {
-    changeMode: 'blur',
-    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-    maxLength: null,
-    mask: null,
-    maskPlaceholder: '_',
-    maskOptions: {}
+const defaultOptions = function () {
+    return {
+        changeMode: 'blur',
+            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+        maxLength: null,
+        mask: null,
+        maskPlaceholder: '_',
+        maskOptions: {}
+    };
 };
 
 /**
@@ -49,10 +51,11 @@ const defaultOptions = {
 Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize: function (options) {
         options = options || {};
+        var defaults = defaultOptions();
         if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
+            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
         } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
         }
 
         this.placeholder = this.options.emptyPlaceholder;

@@ -30,7 +30,7 @@ export default {
         //noinspection JSUnresolvedVariable
         LocalizationService.initialize(options.localizationService);
         //noinspection JSUnresolvedVariable
-        AjaxService.initialize(options.ajaxService);
+        AjaxService.load(options.ajaxService);
 
         AjaxService.on('jsApi:error', function () {
             MessageService.error(

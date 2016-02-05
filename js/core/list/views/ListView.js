@@ -133,7 +133,7 @@ let ListView = Marionette.LayoutView.extend({
     },
 
     className: 'list',
-    template: Handlebars.compile(template),
+    template: template,
 
     onDestroy: function () {
         this.$window.off('resize', this.__handleResize);

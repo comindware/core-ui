@@ -107,7 +107,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         _.bindAll(this, 'open', 'close', '__handleWindowResize');
     },
 
-    template: Handlebars.compile(template),
+    template: template,
 
     behaviors: {
         BlurableBehavior: {

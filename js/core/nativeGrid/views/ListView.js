@@ -9,7 +9,7 @@
 "use strict";
 
 import template from '../../list/templates/list.hbs';
-import '../../libApi';
+import { keypress } from '../../libApi';
 import { helpers, htmlHelpers } from '../../utils/utilsApi';
 import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -84,7 +84,7 @@ let ListView = Marionette.LayoutView.extend({
     },
 
     className: 'list',
-    template: Handlebars.compile(template),
+    template: template,
 
     onShow: function () {
         this.state.visibleHeight = this.$el.parent().height();
@@ -284,7 +284,7 @@ let ListView = Marionette.LayoutView.extend({
         if (this.keyListener) {
             this.keyListener.reset();
         }
-        this.keyListener = new lib.keypress.Listener(this.el);
+        this.keyListener = new keypress.Listener(this.el);
         _.each(this.keyboardShortcuts, function (value, key) //noinspection JSHint
         {
             if (typeof value === 'object') {

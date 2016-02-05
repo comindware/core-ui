@@ -105,7 +105,7 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
 
     className: 'dropdown-view',
 
-    template: Handlebars.compile(template),
+    template: template,
 
     setValue: function (value) {
         this.__value(value, false);

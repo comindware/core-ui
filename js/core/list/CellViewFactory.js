@@ -10,6 +10,7 @@
 
 import { objectPropertyTypes } from '../Meta';
 import { helpers } from '../utils/utilsApi';
+import { Handlebars } from '../libApi';
 
 let factory = {
     getCellViewByDataType: function(type) {

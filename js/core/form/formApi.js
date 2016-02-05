@@ -48,7 +48,6 @@ import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonV
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import RequiredValidator from './validators/RequiredValidator';
 import LengthValidator from './validators/LengthValidator';
-import LettersValidator from './validators/LettersValidator';
 import PasswordValidator from './validators/PasswordValidator';
 import PhoneValidator from './validators/PhoneValidator';
 

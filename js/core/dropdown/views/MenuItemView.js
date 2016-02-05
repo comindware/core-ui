@@ -28,7 +28,7 @@ export default Marionette.ItemView.extend({
 
     className: 'popout-menu__i',
 
-    template: Handlebars.compile(template),
+    template: template,
 
     events: {
         'click': function () {

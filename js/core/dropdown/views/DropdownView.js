@@ -75,7 +75,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         _.bindAll(this, 'open', 'close', '__handleBlur');
     },
 
-    template: Handlebars.compile(template),
+    template: template,
 
     className: 'dropdown',
 

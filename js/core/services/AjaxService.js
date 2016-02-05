@@ -43,7 +43,7 @@ let extendAjaxService = function (ajaxService, ajaxMap) {
 };
 
 let AjaxServicePrototype = {
-    initialize: function (options) {
+    load: function (options) {
         helpers.ensureOption(options, 'ajaxMap');
         extendAjaxService(this, options.ajaxMap);
     },

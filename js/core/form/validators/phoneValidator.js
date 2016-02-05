@@ -11,12 +11,10 @@
 import '../../libApi';
 import LocalizationService from '../../services/LocalizationService';
     
-Backbone.Form.validators.errMessages.phone = LocalizationService.get('CORE.FORM.VALIDATION.PHONE');
-
 Backbone.Form.validators.phone = function (options) {
     options = _.extend({
         type: 'phone',
-        message: Backbone.Form.validators.errMessages.phone,
+        message: LocalizationService.get('CORE.FORM.VALIDATION.PHONE'),
         regexp: /^\+?[0-9]+[0-9\-().\s]{7,}$/
     }, options);
 

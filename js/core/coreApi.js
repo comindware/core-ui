@@ -17,8 +17,8 @@ import listApi from './list/listApi';
 import nativeGridApi from './nativeGrid/nativeGridApi';
 import formApi from './form/formApi';
 
-import meta from './Meta';
-import serviceLocator from './serviceLocator';
+import meta_ from './Meta';
+import serviceLocator_ from './serviceLocator';
 import bootstrapper from './Bootstrapper';
 
 import LoadingView from './views/LoadingView';
@@ -134,9 +134,20 @@ var api = {
      * Мета-информация
      * @namespace
      * */
-    meta: meta,
-    serviceLocator: serviceLocator,
+    meta: meta_,
     initialize: bootstrapper.initialize.bind(bootstrapper)
 };
 
 export default api;
+export var lib = api.lib;
+export var services = api.services;
+export var collections = api.collections;
+export var models = api.models;
+export var views = api.views;
+export var dropdown = api.dropdown;
+export var form = api.form;
+export var list = api.list;
+export var nativeGrid = api.nativeGrid;
+export var utils = api.utils;
+export var meta = api.meta;
+export var initialize = api.initialize;

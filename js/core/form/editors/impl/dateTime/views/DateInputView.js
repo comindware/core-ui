@@ -14,16 +14,12 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/dateInput.hbs';
 import dropdownApi from '../../../../../dropdown/dropdownApi';
 
-const defaultOptions = {
-    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER')
-};
-
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize: function () {
         this.editDateFormat = dateHelpers.getDateEditFormat();
     },
 
-    template: Handlebars.compile(template),
+    template: template,
 
     behaviors: {
         CustomAnchorBehavior: {
@@ -150,7 +146,7 @@ export default Marionette.ItemView.extend({
         if (!this.model.get('enabled') || this.model.get('readonly')) {
             this.placeholder = '';
         } else {
-            this.placeholder = defaultOptions.emptyPlaceholder;
+            this.placeholder = LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER');
         }
 
         this.ui.dateInput.prop('placeholder', this.placeholder);

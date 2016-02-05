@@ -91,7 +91,7 @@ Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends modu
 
     className: 'users-list',
 
-    template: Handlebars.compile(template),
+    template: template,
 
     setValue: function (value) {
         this.__value(_.isArray(value) ? (value.length ? value[0] : null) : value, false);

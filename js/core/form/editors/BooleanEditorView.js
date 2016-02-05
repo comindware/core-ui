@@ -51,7 +51,7 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
         'tabindex': '0'
     },
 
-    template: Handlebars.compile(template),
+    template: template,
 
     templateHelpers: function () {
         return {

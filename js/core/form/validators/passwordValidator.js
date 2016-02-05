@@ -11,12 +11,10 @@
 import '../../libApi';
 import LocalizationService from '../../services/LocalizationService';
 
-Backbone.Form.validators.errMessages.password = LocalizationService.get('CORE.FORM.VALIDATION.PASSWORD');
-
 Backbone.Form.validators.password = function(options) {
     options = _.extend({
         type: 'length',
-        message: Backbone.Form.validators.errMessages.password,
+        message: LocalizationService.get('CORE.FORM.VALIDATION.PASSWORD'),
         min: 8
     }, options);
 

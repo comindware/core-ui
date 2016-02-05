@@ -241,7 +241,7 @@ define([
                     },
                     {
                         id: 'ReferenceEditorWithAddNewButton',
-                        displayName: 'Reference Editor "Add new"'
+                        displayName: 'Reference Editor (Add new button)'
                     },
                     {
                         id: 'TextAreaEditor',

@@ -9,7 +9,7 @@
 "use strict";
 
 import { moment } from '../../libApi';
-import template from './templates/dateEditor.hbs';
+import template from './templates/dateTimeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 import TimeView from './impl/dateTime/views/TimeView';

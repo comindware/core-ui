@@ -14,8 +14,8 @@ import template from '../templates/grid.hbs';
 import ListView from './ListView';
 import RowView from './RowView';
 import GridHeaderView from './GridHeaderView';
-import NoColumnsView from './NoColumnsView';
-import LoadingRowView from './LoadingRowView';
+import NoColumnsDefaultView from './NoColumnsView';
+import LoadingChildView from './LoadingRowView';
 
 /*
     Public interface:

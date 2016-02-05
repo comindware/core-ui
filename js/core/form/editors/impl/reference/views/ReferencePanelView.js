@@ -36,7 +36,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'dd-list dd-list_reference',
 
-    template: Handlebars.compile(template),
+    template: template,
 
     templateHelpers: function () {
         var value = this.model.get('value');

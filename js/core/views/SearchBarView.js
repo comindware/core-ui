@@ -12,14 +12,16 @@ import '../libApi';
 import template from '../templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 
-let defaultOptions = {
-    placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
-    delay: 300
+let defaultOptions = () => {
+    return {
+        placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
+        delay: 300
+    };
 };
 
 export default Marionette.ItemView.extend({
     initialize: function (options) {
-        _.extend(this.options, defaultOptions, options || {});
+        _.extend(this.options, defaultOptions(), options || {});
         this.model = new Backbone.Model({
             placeholder: this.options.placeholder
         });

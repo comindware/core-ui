@@ -9,16 +9,13 @@
 "use strict";
 
 import { moment } from '../../../../../libApi';
-import { dateHelpers } from '../../../../../utils/utilsApi';
+import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import template from '../templates/timeInput.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 
 export default Marionette.ItemView.extend({
-    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'),
-    readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.READONLYPLACEHOLDER'),
-    disabledPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TIME.DISABLEDPLACEHOLDER'),
-
     initialize: function (options) {
+        helpers.ensureOption(options, 'reqres');
         this.reqres = options.reqres;
         this.timeEditFormat = dateHelpers.getTimeEditFormat();
     },
@@ -137,7 +134,7 @@ export default Marionette.ItemView.extend({
         if (!this.model.get('enabled') || this.model.get('readonly')) {
             this.placeholder = '';
         } else {
-            this.placeholder = this.emptyPlaceholder;
+            this.placeholder = LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER');
         }
 
         this.ui.input.prop('placeholder', this.placeholder);

@@ -52,7 +52,7 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
 
     className: 'l-field l-field_time',
 
-    template: Handlebars.compile(template),
+    template: template,
 
     templateHelpers: function () {
         return this.options;

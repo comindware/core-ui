@@ -11,12 +11,10 @@
 import '../../libApi';
 import LocalizationService from '../../services/LocalizationService';
 
-Backbone.Form.validators.errMessages.length = LocalizationService.get('CORE.FORM.VALIDATION.LENGTH');
-
 Backbone.Form.validators.length = function(options) {
     options = _.extend({
         type: 'length',
-        message: Backbone.Form.validators.errMessages.length
+        message: LocalizationService.get('CORE.FORM.VALIDATION.LENGTH')
     }, options);
 
     return function length(value) {

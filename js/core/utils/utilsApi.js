@@ -14,7 +14,7 @@ import htmlHelpers_ from './htmlHelpers';
 import dateHelpers_ from './dateHelpers';
 import cookieHelpers_ from './cookieHelpers';
 import keyCode_ from './keyCode';
-import './handlebarsHelpers';
+import './handlebars/all';
 import './jquery/selector.focusable';
 
 export var comparators = comparators_;

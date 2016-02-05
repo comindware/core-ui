@@ -11,12 +11,10 @@
 import '../../libApi';
 import LocalizationService from '../../services/LocalizationService';
 
-Backbone.Form.validators.errMessages.required = LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED');
-
 Backbone.Form.validators.required = function (options) {
     options = _.extend({
         type: 'required',
-        message: this.errMessages.required
+        message: LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED')
     }, options);
 
     return function required(value) {

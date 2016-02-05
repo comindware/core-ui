@@ -102,7 +102,7 @@ require([
     ],
     function(core, Application, AppRouter, AppController) {
     'use strict';
-debugger;
+
     Application.appRouter = new AppRouter({
         controller: new AppController()
     });

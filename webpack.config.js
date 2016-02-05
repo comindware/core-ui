@@ -33,7 +33,7 @@ module.exports = {
             },
             {
                 test: /\.hbs$/,
-                loader: "handlebars-loader"
+                loader: "handlebars-loader?helperDirs[]=" + __dirname + "/js/core/utils/handlebars"
             },
             {
                 test: /\.css$/,
@@ -74,6 +74,10 @@ module.exports = {
             {
                 test: /backbone\.marionette\.js/,
                 loader: 'expose?Marionette'
+            },
+            {
+                test: /backbone\.js/,
+                loader: 'expose?Backbone'
             },
             {
                 test: /backbone.forms\.js/,

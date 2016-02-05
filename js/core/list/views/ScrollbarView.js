@@ -50,7 +50,7 @@ let ScrollbarView = Marionette.ItemView.extend({
     },
 
     className: 'scrollbar',
-    template: Handlebars.compile(template),
+    template: template,
     model: null,
     state: null,
     dragContext: null,
