@@ -6,181 +6,173 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi',
-        'core/utils/utilsApi',
-        'core/services/LocalizationService',
-        'text!../templates/dateInput.html',
-        '../../../../../dropdown/dropdownApi'
-    ],
-    function (lib, utils, LocalizationService, template, dropdownApi) {
-        'use strict';
+import { moment } from '../../../../../libApi';
+import { dateHelpers } from '../../../../../utils/utilsApi';
+import LocalizationService from '../../../../../services/LocalizationService';
+import template from '../templates/dateInput.hbs';
+import dropdownApi from '../../../../../dropdown/dropdownApi';
 
-        var defaultOptions = {
-            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER')
-        };
+export default Marionette.ItemView.extend({
+    initialize: function () {
+        this.editDateFormat = dateHelpers.getDateEditFormat();
+    },
 
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.editDateFormat = utils.dateHelpers.getDateEditFormat();
-            },
+    template: template,
 
-            template: Handlebars.compile(template),
+    behaviors: {
+        CustomAnchorBehavior: {
+            behaviorClass: dropdownApi.views.behaviors.CustomAnchorBehavior,
+            anchor: '.js-anchor'
+        }
+    },
 
-            behaviors: {
-                CustomAnchorBehavior: {
-                    behaviorClass: dropdownApi.views.behaviors.CustomAnchorBehavior,
-                    anchor: '.js-anchor'
-                }
-            },
+    className: 'date-view',
 
-            className: 'date-view',
+    ui: {
+        clearButton: '.js-date-remove',
+        dateInput: '.js-date-input'
+    },
 
-            ui: {
-                clearButton: '.js-date-remove',
-                dateInput: '.js-date-input'
-            },
+    modelEvents: {
+        'change:value': '__onValueChanged',
+        'change:readonly': '__onEnabledChange',
+        'change:enabled': '__onEnabledChange'
+    },
 
-            modelEvents: {
-                'change:value': '__onValueChanged',
-                'change:readonly': '__onEnabledChange',
-                'change:enabled': '__onEnabledChange'
-            },
+    __onValueChanged: function () {
+        this.updateDisplayValue();
+    },
 
-            __onValueChanged: function () {
-                this.updateDisplayValue();
-            },
+    events: {
+        'click @ui.dateInput': '__handleClick',
+        'change @ui.dateInput': '__change',
+        'click @ui.clearButton': '__onClear',
+        'blur @ui.dateInput': '__onBlur'
+    },
 
-            events: {
-                'click @ui.dateInput': '__handleClick',
-                'change @ui.dateInput': '__change',
-                'click @ui.clearButton': '__onClear',
-                'blur @ui.dateInput': '__onBlur'
-            },
+    __onEnabledChange: function () {
+        this.setPlaceholder();
+        this.setInputPermissions();
+    },
 
-            __onEnabledChange: function () {
-                this.setPlaceholder();
-                this.setInputPermissions();
-            },
+    __onBlur: function () {
+        this.isEditing = false;
+    },
 
-            __onBlur: function () {
-                this.isEditing = false;
-            },
+    setInputPermissions: function () {
+        var enabled = this.model.get('enabled'),
+            readonly = this.model.get('readonly');
 
-            setInputPermissions: function () {
-                var enabled = this.model.get('enabled'),
-                    readonly = this.model.get('readonly');
+        if (!enabled) {
+            this.ui.dateInput.prop('disabled', true);
+        } else {
+            this.ui.dateInput.prop('disabled', false);
+        }
 
-                if (!enabled) {
-                    this.ui.dateInput.prop('disabled', true);
-                } else {
-                    this.ui.dateInput.prop('disabled', false);
-                }
+        if (readonly) {
+            this.ui.dateInput.prop('readonly', true);
+        } else {
+            this.ui.dateInput.prop('readonly', false);
+        }
 
-                if (readonly) {
-                    this.ui.dateInput.prop('readonly', true);
-                } else {
-                    this.ui.dateInput.prop('readonly', false);
-                }
+        if (!enabled || readonly) {
+            this.ui.clearButton.hide();
+        } else {
+            this.ui.clearButton.show();
+        }
+    },
 
-                if (!enabled || readonly) {
-                    this.ui.clearButton.hide();
-                } else {
-                    this.ui.clearButton.show();
-                }
-            },
+    __onClear: function (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-            __onClear: function (e) {
-                e.preventDefault();
-                e.stopPropagation();
+        this.model.set({value: null});
+    },
 
-                this.model.set({value: null});
-            },
+    __change: function () {
+        this.updateValue(this.getParsedInputValue());
+    },
 
-            __change: function () {
-                this.updateValue(this.getParsedInputValue());
-            },
+    __handleClick: function () {
+        if (this.isEditing || !this.model.get('enabled') || this.model.get('readonly')) {
+            return;
+        }
 
-            __handleClick: function () {
-                if (this.isEditing || !this.model.get('enabled') || this.model.get('readonly')) {
-                    return;
-                }
+        this.showEditFormattedDate();
+        this.isEditing = true;
+        this.trigger('open');
+    },
 
-                this.showEditFormattedDate();
-                this.isEditing = true;
-                this.trigger('open');
-            },
+    showEditFormattedDate: function () {
+        var val = this.model.get('value'),
+            format = this.editDateFormat,
+            editFormattedDate = val ? moment(new Date(val)).format(format) : '';
 
-            showEditFormattedDate: function () {
-                var val = this.model.get('value'),
-                    format = this.editDateFormat,
-                    editFormattedDate = val ? lib.moment(new Date(val)).format(format) : '';
+        this.ui.dateInput.val(editFormattedDate);
+    },
 
-                this.ui.dateInput.val(editFormattedDate);
-            },
+    getParsedInputValue: function () {
+        var val = this.ui.dateInput.val();
 
-            getParsedInputValue: function () {
-                var val = this.ui.dateInput.val();
+        if (val === '') {
+            return null;
+        }
 
-                if (val === '') {
-                    return null;
-                }
+        var format = this.editDateFormat,
+            currentValue = this.model.get('value'),
+            parsedVal = moment(val, format, true),
+            parsedDate;
 
-                var format = this.editDateFormat,
-                    currentValue = this.model.get('value'),
-                    parsedVal = lib.moment(val, format, true),
-                    parsedDate;
+        if (parsedVal.isValid()) {
+            parsedDate = new Date(parsedVal);
+        } else if (currentValue !== '' && currentValue !== null) {
+            parsedDate = new Date(currentValue);
+        } else {
+            parsedDate = null;
+        }
 
-                if (parsedVal.isValid()) {
-                    parsedDate = new Date(parsedVal);
-                } else if (currentValue !== '' && currentValue !== null) {
-                    parsedDate = new Date(currentValue);
-                } else {
-                    parsedDate = null;
-                }
+        return parsedDate;
+    },
 
-                return parsedDate;
-            },
+    onRender: function () {
+        this.setPlaceholder();
+        this.setInputPermissions();
+        this.updateDisplayValue();
+    },
 
-            onRender: function () {
-                this.setPlaceholder();
-                this.setInputPermissions();
-                this.updateDisplayValue();
-            },
+    setPlaceholder: function () {
+        if (!this.model.get('enabled') || this.model.get('readonly')) {
+            this.placeholder = '';
+        } else {
+            this.placeholder = LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER');
+        }
 
-            setPlaceholder: function () {
-                if (!this.model.get('enabled') || this.model.get('readonly')) {
-                    this.placeholder = '';
-                } else {
-                    this.placeholder = defaultOptions.emptyPlaceholder;
-                }
+        this.ui.dateInput.prop('placeholder', this.placeholder);
+    },
 
-                this.ui.dateInput.prop('placeholder', this.placeholder);
-            },
+    updateDisplayValue: function () {
+        this.ui.dateInput.val(this.getFormattedDisplayValue());
+    },
 
-            updateDisplayValue: function () {
-                this.ui.dateInput.val(this.getFormattedDisplayValue());
-            },
+    getFormattedDisplayValue: function () {
+        return dateHelpers.getDisplayDate(this.model.get('value'));
+    },
 
-            getFormattedDisplayValue: function () {
-                return utils.dateHelpers.getDisplayDate(this.model.get('value'));
-            },
+    updateValue: function (date) {
+        var oldVal = this.model.get('value'),
+            newVal = '';
 
-            updateValue: function (date) {
-                var oldVal = this.model.get('value'),
-                    newVal = '';
+        if (date === null || date === '') {
+            newVal = null;
+        } else if (oldVal) {
+            var momentDate = moment(date);
+            newVal = new Date(moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()));
+        } else {
+            newVal = date;
+        }
 
-                if (date === null || date === '') {
-                    newVal = null;
-                } else if (oldVal) {
-                    var momentDate = lib.moment(date);
-                    newVal = new Date(lib.moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()));
-                } else {
-                    newVal = date;
-                }
-
-                this.model.set({value: newVal});
-            }
-        });
-    });
+        this.model.set({value: newVal});
+    }
+});

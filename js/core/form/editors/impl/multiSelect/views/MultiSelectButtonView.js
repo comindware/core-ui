@@ -6,50 +6,43 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(
-    [
-        'core/libApi',
-        'core/utils/utilsApi',
-        'text!../templates/multiSelectButton.html'
-    ],
-    function(lib, utils, template) {
-        'use strict';
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import template from '../templates/multiSelectButton.hbs';
 
-        return Marionette.ItemView.extend({
-            className: 'field field_dropdown',
+export default Marionette.ItemView.extend({
+    className: 'field field_dropdown',
 
-            template: Handlebars.compile(template),
+    template: template,
 
-            templateHelpers: function() {
-                var value = this.model.get('value'),
-                    collection = this.model.get('collection');
-                
-                return {
-                    displayValue: value && value.length ?
-                        value.length == collection.length ?
-                            Localizer.get('CORE.FORM.EDITORS.MULTISELECT.EVERYTHINGSELECTED') :
-                            Localizer.get('CORE.FORM.EDITORS.MULTISELECT.ANYTHINGSELECTED') :
-                        Localizer.get('CORE.FORM.EDITORS.MULTISELECT.NOTHINGSELECTED')
-                };
-            },
+    templateHelpers: function() {
+        var value = this.model.get('value'),
+            collection = this.model.get('collection');
 
-            events: {
-                'click': '__onClick'
-            },
+        return {
+            displayValue: value && value.length ?
+                value.length == collection.length ?
+                    Localizer.get('CORE.FORM.EDITORS.MULTISELECT.EVERYTHINGSELECTED') :
+                    Localizer.get('CORE.FORM.EDITORS.MULTISELECT.ANYTHINGSELECTED') :
+                Localizer.get('CORE.FORM.EDITORS.MULTISELECT.NOTHINGSELECTED')
+        };
+    },
 
-            modelEvents: {
-                'change:value': 'render'
-            },
+    events: {
+        'click': '__onClick'
+    },
 
-            initialize: function(options) {
-                utils.helpers.ensureOption(options, 'model');
-            },
+    modelEvents: {
+        'change:value': 'render'
+    },
 
-            __onClick: function() {
-                this.trigger('open:panel');
-            }
-        });
+    initialize: function(options) {
+        helpers.ensureOption(options, 'model');
+    },
+
+    __onClick: function() {
+        this.trigger('open:panel');
     }
-);
+});

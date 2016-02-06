@@ -6,49 +6,36 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define([
-    './utils/utilsApi',
-    './serviceLocator',
-    './services/AjaxService',
-    './services/MessageService',
-    './services/LocalizationService'
-], function (utilsApi, serviceLocator, AjaxService, MessageService, LocalizationService) {
-    'use strict';
+import { helpers } from './utils/utilsApi';
+import serviceLocator from './serviceLocator';
+import AjaxService from './services/AjaxService';
+import MessageService from './services/MessageService';
+import WindowService from './services/WindowService';
+import LocalizationService from './services/LocalizationService';
 
-    return {
-        initialize: function (options) {
-            utilsApi.helpers.ensureOption(options, 'cacheService');
+export default {
+    initialize: function (options) {
+        helpers.ensureOption(options, 'cacheService');
+        helpers.ensureOption(options, 'localizationService');
+        helpers.ensureOption(options, 'ajaxService');
+        helpers.ensureOption(options, 'windowService');
 
-            serviceLocator.cacheService = options.cacheService;
+        //noinspection JSUnresolvedVariable
+        WindowService.initialize(options.windowService);
 
-            AjaxService.on('jsApi:error', function () {
-                /*
-                 var exceptionCode = (data && data.exceptionCode.toUpperCase()) + '';
-                 var exceptionVars = [].concat((data && data.extraData) || []);
+        serviceLocator.cacheService = options.cacheService;
 
-                 var localizedError = window.Localizer.get('PROJECT.COMMON.ERRORS.' + exceptionCode);
-                 if (typeof localizeError === 'undefined')
-                 localizedError = window.Localizer.get('PROJECT.COMMON.ERRORS.' + exceptionCode.replace('COMINDWARE.PLATFORM.CORE.', '').replace('COMINDWARE.TRACKER.CORE.', '')) || localize('DEFAULT') || exceptionCode;
+        //noinspection JSUnresolvedVariable
+        LocalizationService.initialize(options.localizationService);
+        //noinspection JSUnresolvedVariable
+        AjaxService.load(options.ajaxService);
 
-                 var errorText = localizedError;
-                 var text = errorText.replace(/\[title:[^\]]+\]/g, ''),
-                 title = errorText.replace(/\[title:([^\]]+)\].*!/g, '$1');
-
-                 if (exceptionCode === 'COMINDWARE.PLATFORM.CORE.UNIQUEPROPERTYCHECKEXCEPTION') {
-                 exceptionVars.push('#' + exceptionVars[0]);
-                 }
-                 text = _.reduce(exceptionVars, function(fullText, text, i) {
-                 return fullText.replace('{' + i + '}', text);
-                 }, text);
-
-                 Ajax._dialog.set(title, text).open();
-                * */
-                MessageService.error(
-                    LocalizationService.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'),
-                    LocalizationService.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
-            });
-        }
-    };
-});
+        AjaxService.on('jsApi:error', function () {
+            MessageService.error(
+                LocalizationService.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'),
+                LocalizationService.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
+        });
+    }
+};

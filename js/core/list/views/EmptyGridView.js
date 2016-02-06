@@ -6,33 +6,31 @@
  * Published under the MIT license
  */
 
-/* global define, require, Marionette, Handlebars, Backbone */
+"use strict";
 
-define(['text!core/list/templates/emptyGrid.html', 'core/libApi', 'core/services/LocalizationService'],
-    function (template, lib, LocalizationService) {
-        'use strict';
+import '../../libApi';
+import template from '../templates/emptyGrid.hbs';
+import LocalizationService from '../../services/LocalizationService';
 
-        var defaultText = LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY');
+/**
+ * Some description for initializer
+ * @name EmptyGridView
+ * @memberof module:core.list.views
+ * @class EmptyGridView
+ * @constructor
+ * @description View для отображения списка без колонок
+ * @extends Marionette.ItemView
+ * @param {Object} options Constructor options
+ * @param {string} [options.text=Список пуст] отображаемый текст
+ * */
 
-        /**
-         * Some description for initializer
-         * @name EmptyGridView
-         * @memberof module:core.list.views
-         * @class EmptyGridView
-         * @constructor
-         * @description View для отображения списка без колонок
-         * @extends Marionette.ItemView
-         * @param {Object} options Constructor options
-         * @param {string} [options.text=Список пуст] отображаемый текст
-         * */
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.model = new Backbone.Model({
-                    text: options.text || defaultText
-                });
-            },
-
-            template: Handlebars.compile(template),
-            className: 'empty-view'
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+        this.model = new Backbone.Model({
+            text: options.text || LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY')
         });
-    });
+    },
+
+    template: template,
+    className: 'empty-view'
+});

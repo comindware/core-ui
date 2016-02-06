@@ -6,52 +6,42 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Marionette, classes, Backbone, global */
+"use strict";
 
-define([
-	'keypress',
-    'moment',
-    'handlebars',
-    'bluebird',
-    'underscore',
-    'underscore.string',
+import moment_ from 'moment';
+import 'moment/locale/ru';
+import 'moment/locale/en-gb';
+import 'moment/locale/de';
+import 'bluebird';
+import * as Handlebars_ from 'handlebars';
+import 'underscore';
+import * as underscoreString from 'underscore.string';
+import 'backbone';
+import 'backbone-associations';
+import 'backbone.forms';
+import 'backbone.marionette';
+import 'jquery';
+import 'jquery.inputmask/dist/jquery.inputmask.bundle';
+import 'jquery.caret';
+import 'jquery-mousewheel';
+import 'jquery-autosize';
+import * as keypress_ from 'keypress';
+import 'bootstrap-datetime-picker';
 
-    'backbone',
-    'backbone.radio',
-    'backbone.associations',
-    'backbone.forms',
+_.string = _.str = underscoreString;
 
-    'marionette',
+Backbone.Associations.EVENTS_NC = true;
 
-    'jquery',
-    'jquery.mousewheel',
-    'jquery.inputmask',
-    'jquery.caret',
-    'jquery.jstorage',
-    'jquery.autosize',
+$.browser = {
+    msie: (/msie|trident/i).test(navigator.userAgent)
+};
 
-    'datetimePicker',
-
-    'moment.en',
-    'moment.ru',
-    'moment.de'
-], function (keypress, moment, Handlebars, Promise, _, underscoreString) {
-    'use strict';
-	
-	$.browser = {
-        msie: (/msie|trident/i).test(navigator.userAgent)
-    };
-	
-    var root = typeof global !== 'undefined' ? global : window;
-    root.Handlebars = Handlebars;
-    root.Promise = Promise;
-    root.moment = moment;
-    _.string = _.str = underscoreString;
-
-    Backbone.Associations.EVENTS_NC = true;
-
-    return {
-		keypress: keypress,
-        moment: moment
-	};
-});
+var api = {
+    keypress: keypress_,
+    moment: moment_,
+    Handlebars: Handlebars_
+};
+export var keypress = api.keypress;
+export var moment = api.moment;
+export var Handlebars = api.Handlebars;
+export default api;

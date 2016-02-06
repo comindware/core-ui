@@ -6,25 +6,22 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['core/libApi'],
-    function () {
-        'use strict';
+import '../../libApi';
 
-        /**
-         * @name ListPanelView
-         * @memberof module:core.dropdown.views
-         * @class Базовая панель для отображения списка элементов. Может использоваться в panelView опции.
-         * @constructor
-         * @extends Marionette.CollectionView
-         * @param {Object} options Объект опций.
-         * */
-        return Marionette.CollectionView.extend({
-            initialize: function (options) {
-            },
+/**
+ * @name ListPanelView
+ * @memberof module:core.dropdown.views
+ * @class Базовая панель для отображения списка элементов. Может использоваться в panelView опции.
+ * @constructor
+ * @extends Marionette.CollectionView
+ * @param {Object} options Объект опций.
+ * */
 
-            tagName: 'ul'
-        });
-    });
+export default Marionette.CollectionView.extend({
+    initialize: function (options) {
+    },
 
+    tagName: 'ul'
+});

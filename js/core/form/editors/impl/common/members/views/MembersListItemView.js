@@ -6,42 +6,43 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['core/libApi', 'core/list/listApi', 'core/utils/utilsApi', 'text!../templates/listItem.html' ],
-    function (lib, list, utils, template) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-            },
+import { htmlHelpers } from '../../../../../../utils/utilsApi';
+import '../../../../../../libApi';
+import list from '../../../../../../list/listApi';
+import template from '../templates/listItem.hbs';
 
-            template: Handlebars.compile(template),
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+    },
 
-            ui: {
-                name: '.js-name'
-            },
+    template: template,
 
-            behaviors: {
-                ListItemViewBehavior: {
-                    behaviorClass: list.views.behaviors.ListItemViewBehavior
-                }
-            },
+    ui: {
+        name: '.js-name'
+    },
 
-            events: {
-                'click': '__select'
-            },
+    behaviors: {
+        ListItemViewBehavior: {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior
+        }
+    },
 
-            __select: function () {
-                this.trigger('member:select', this.model);
-            },
+    events: {
+        'click': '__select'
+    },
 
-            onHighlighted: function (fragment) {
-                var text = utils.htmlHelpers.highlightText(this.model.get('name'), fragment);
-                this.ui.name.html(text);
-            },
+    __select: function () {
+        this.trigger('member:select', this.model);
+    },
 
-            onUnhighlighted: function () {
-                this.ui.name.text(this.model.get('name'));
-            }
-        });
-    });
+    onHighlighted: function (fragment) {
+        var text = htmlHelpers.highlightText(this.model.get('name'), fragment);
+        this.ui.name.html(text);
+    },
+
+    onUnhighlighted: function () {
+        this.ui.name.text(this.model.get('name'));
+    }
+});

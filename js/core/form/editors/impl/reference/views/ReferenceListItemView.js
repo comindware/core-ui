@@ -6,46 +6,38 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/libApi',
-        'core/list/listApi',
-        'text!../templates/referenceListItem.html'
-    ],
-    function (
-        lib,
-        list,
-        template
-    ) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.reqres = options.reqres;
-            },
+import '../../../../../libApi';
+import template from '../templates/referenceListItem.hbs';
+import list from '../../../../../list/listApi';
 
-            behaviors: {
-                ListItemViewBehavior: {
-                    behaviorClass: list.views.behaviors.ListItemViewBehavior
-                }
-            },
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+        this.reqres = options.reqres;
+    },
 
-            className: 'dd-list__i',
+    behaviors: {
+        ListItemViewBehavior: {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior
+        }
+    },
 
-            template: Handlebars.compile(template),
+    className: 'dd-list__i',
 
-            templateHelpers: function () {
-                return {
-                    text: this.model.get('text') || '#' + this.model.id
-                };
-            },
+    template: template,
 
-            events: {
-                'click': '__select'
-            },
+    templateHelpers: function () {
+        return {
+            text: this.model.get('text') || '#' + this.model.id
+        };
+    },
 
-            __select: function () {
-                this.reqres.request('value:set', this.model);
-            }
-        });
-    });
+    events: {
+        'click': '__select'
+    },
+
+    __select: function () {
+        this.reqres.request('value:set', this.model);
+    }
+});

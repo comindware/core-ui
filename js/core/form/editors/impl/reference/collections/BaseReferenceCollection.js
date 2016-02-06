@@ -6,48 +6,43 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/libApi',
-        'core/utils/utilsApi',
-        'core/collections/behaviors/HighlightableBehavior',
-        'core/models/behaviors/SelectableBehavior',
-        '../models/DefaultReferenceModel'
-    ],
-    function (lib, utils, HighlightableBehavior, SelectableBehavior, DefaultReferenceModel) {
-        'use strict';
+import '../../../../../libApi';
+import { helpers } from '../../../../../utils/utilsApi';
+import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
+import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
+import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
-        var defaultOptions = {
-            DEFAULT_COUNT: 200
-        };
+const defaultOptions = {
+    DEFAULT_COUNT: 200
+};
 
-        return Backbone.Collection.extend({
-            constructor: function () {
-                Backbone.Collection.prototype.constructor.apply(this, arguments);
-                _.extend(this, new HighlightableBehavior(this));
-                _.extend(this, new SelectableBehavior.SingleSelect(this));
-            },
-            
-            fetch: function (options) {
-                utils.helpers.ensureOption(options, 'data.filter');
-                if (options.data.count === undefined) {
-                    options.data.count = defaultOptions.DEFAULT_COUNT;
-                }
-                if (options.reset === undefined) {
-                    options.reset = true;
-                }
-                return Backbone.Collection.prototype.fetch.call(this, options);
-            },
+export default Backbone.Collection.extend({
+    constructor: function () {
+        Backbone.Collection.prototype.constructor.apply(this, arguments);
+        _.extend(this, new HighlightableBehavior(this));
+        _.extend(this, new SelectableBehavior.SingleSelect(this));
+    },
 
-            parse: function (response, options)
-            {
-                this.totalCount = response.totalCount;
-                return Backbone.Collection.prototype.parse.call(this, response.options, options);
-            },
+    fetch: function (options) {
+        helpers.ensureOption(options, 'data.filter');
+        if (options.data.count === undefined) {
+            options.data.count = defaultOptions.DEFAULT_COUNT;
+        }
+        if (options.reset === undefined) {
+            options.reset = true;
+        }
+        return Backbone.Collection.prototype.fetch.call(this, options);
+    },
 
-            model: DefaultReferenceModel,
+    parse: function (response, options)
+    {
+        this.totalCount = response.totalCount;
+        return Backbone.Collection.prototype.parse.call(this, response.options, options);
+    },
 
-            url: null
-        });
-    });
+    model: DefaultReferenceModel,
+
+    url: null
+});

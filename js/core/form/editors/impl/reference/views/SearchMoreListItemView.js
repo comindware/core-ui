@@ -6,26 +6,25 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['text!../templates/searchMoreListItem.html', 'core/libApi'],
-    function (template, lib) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.reqres = options.reqres;
-            },
+import '../../../../../libApi';
+import template from '../templates/searchMoreListItem.hbs';
 
-            className: 'dev-reference-editor__dropdown-view__search-more-list-item-view',
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+        this.reqres = options.reqres;
+    },
 
-            template: Handlebars.compile(template),
+    className: 'dev-reference-editor__dropdown-view__search-more-list-item-view',
 
-            events: {
-                'click': '__searchMore'
-            },
+    template: template,
 
-            __searchMore: function () {
-                this.reqres.request('search:more');
-            }
-        });
-    });
+    events: {
+        'click': '__searchMore'
+    },
+
+    __searchMore: function () {
+        this.reqres.request('search:more');
+    }
+});

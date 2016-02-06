@@ -6,53 +6,52 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['core/libApi', 'text!../templates/bubble.html'],
-    function (utils, template) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.reqres = options.reqres;
-            },
+import '../../../../../libApi';
+import template from '../templates/bubble.hbs';
 
-            template: Handlebars.compile(template),
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+        this.reqres = options.reqres;
+    },
 
-            templateHelpers: function () {
-                return {
-                    enabled: this.options.enabled
-                };
-            },
+    template: template,
 
-            tagName: 'li',
+    templateHelpers: function () {
+        return {
+            enabled: this.options.enabled
+        };
+    },
 
-            className: 'bubbles__i',
+    tagName: 'li',
 
-            events: {
-                'click .js-bubble-delete': '__delete'
-            },
+    className: 'bubbles__i',
 
-            ui: {
-                clearButton: '.js-bubble-delete'
-            },
+    events: {
+        'click .js-bubble-delete': '__delete'
+    },
 
-            __delete: function(e) {
-                e.stopPropagation();
-                e.preventDefault();
-                this.reqres.request('bubble:delete', this.model);
-            },
+    ui: {
+        clearButton: '.js-bubble-delete'
+    },
 
-            updateEnabled: function (enabled) {
-                this.options.enabled = enabled;
-                if (enabled) {
-                    this.ui.clearButton.show();
-                } else {
-                    this.ui.clearButton.hide();
-                }
-            },
+    __delete: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        this.reqres.request('bubble:delete', this.model);
+    },
 
-            onRender: function () {
-                this.updateEnabled(this.options.enabled);
-            }
-        });
-    });
+    updateEnabled: function (enabled) {
+        this.options.enabled = enabled;
+        if (enabled) {
+            this.ui.clearButton.show();
+        } else {
+            this.ui.clearButton.hide();
+        }
+    },
+
+    onRender: function () {
+        this.updateEnabled(this.options.enabled);
+    }
+});

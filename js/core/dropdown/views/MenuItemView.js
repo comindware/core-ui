@@ -6,35 +6,33 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['text!../templates/menuItem.html', 'core/libApi'],
-    function (template) {
-        'use strict';
+import '../../libApi';
+import template from '../templates/menuItem.hbs';
 
-        /**
-         * @name MenuItemView
-         * @memberof module:core.dropdown.views
-         * @class Одиночный элемент меню. Используется в связке с MenuPanelView для создания стандартного меню фабричным методом
-         * {@link module:core.dropdown.factory createMenu}.
-         * @constructor
-         * @extends Marionette.ItemView
-         * */
+/**
+ * @name MenuItemView
+ * @memberof module:core.dropdown.views
+ * @class Одиночный элемент меню. Используется в связке с MenuPanelView для создания стандартного меню фабричным методом
+ * {@link module:core.dropdown.factory createMenu}.
+ * @constructor
+ * @extends Marionette.ItemView
+ * */
 
-        return Marionette.ItemView.extend({
-            initialize: function () {
-            },
+export default Marionette.ItemView.extend({
+    initialize: function () {
+    },
 
-            tagName: 'li',
+    tagName: 'li',
 
-            className: 'popout-menu__i',
+    className: 'popout-menu__i',
 
-            template: Handlebars.compile(template),
+    template: template,
 
-            events: {
-                'click': function () {
-                    this.trigger('execute', this.model);
-                }
-            }
-        });
-    });
+    events: {
+        'click': function () {
+            this.trigger('execute', this.model);
+        }
+    }
+});

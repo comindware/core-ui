@@ -1,43 +1,43 @@
 /**
  * Developer: Stepan Burguchev
  * Date: 4/23/2015
- * Copyright: 2009-2016 Comindware�
+ * Copyright: 2009-2016 Comindware
  *       All Rights Reserved
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['text!../templates/message.html', 'core/libApi', '../../WindowService'],
-    function (template, lib, WindowService, LocalizationService) {
-        'use strict';
+import '../../../libApi';
+import template from '../templates/message.hbs';
+import WindowService from '../../WindowService';
+import LocalizationService from '../../LocalizationService';
 
-        return Marionette.ItemView.extend({
-            initialize: function () {
-            },
+export default Marionette.ItemView.extend({
+    initialize: function () {
+    },
 
-            className: 'msg-popup',
+    className: 'msg-popup',
 
-            ui: {
-                buttons: '.js-buttons'
-            },
+    ui: {
+        buttons: '.js-buttons'
+    },
 
-            events: {
-                'click @ui.buttons': '__onSelect'
-            },
+    events: {
+        'click @ui.buttons': '__onSelect'
+    },
 
-            template: Handlebars.compile(template),
+    template: template,
 
-            close: function (result) {
-                WindowService.closePopup();
-                this.trigger('close', result);
-            },
+    close: function (result) {
+        WindowService.closePopup();
+        this.trigger('close', result);
+    },
 
-            __onSelect: function (e) {
-                var index = this.ui.buttons.index(e.target);
-                var buttonModel = this.model.get('buttons')[index];
-                var result = buttonModel.id;
-                this.close(result);
-            }
-        });
-    });
+    __onSelect: function (e) {
+        var index = this.ui.buttons.index(e.target);
+        var buttonModel = this.model.get('buttons')[index];
+        var result = buttonModel.id;
+        this.close(result);
+    }
+});

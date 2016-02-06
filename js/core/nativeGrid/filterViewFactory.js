@@ -6,22 +6,15 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define([],
-    function () {
-        'use strict';
+import { Handlebars } from '../libApi';
 
-        return {
-            getFilterViewByType: function (type) {
-                var PanelView =  Marionette.ItemView.extend({
-                    template: Handlebars.compile('<div class="innerDiv">PopoutView</div>'),
-                    className: 'dev-filter-popout'
-                });
-
-                return PanelView;
-            }
-        };
-
+export default {
+    getFilterViewByType: function (type) {
+        return Marionette.ItemView.extend({
+            template: Handlebars.compile('<div class="innerDiv">PopoutView</div>'),
+            className: 'dev-filter-popout'
+        });
     }
-);
+};

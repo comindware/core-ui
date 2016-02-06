@@ -6,32 +6,30 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['../../list/views/RowView', './behaviors/NativeGridItemViewBehavior'],
-    function (RowView, NativeGridItemViewBehavior) {
-        'use strict';
+import RowView from '../../list/views/RowView';
+import NativeGridItemViewBehavior from './behaviors/NativeGridItemViewBehavior';
 
-        /**
-         * Some description for initializer
-         * @name RowView
-         * @memberof module:core.nativeGrid.views
-         * @class RowView
-         * @constructor
-         * @description View используемый по умолчанию для отображения строки списка
-         * @extends module:core.list.views.RowView {@link module:core.list.views.RowView}
-         * @param {Object} options Constructor options
-         * @param {Array} options.columns Массив колонк
-         * @param {Object} options.gridEventAggregator ?
-         * @param {Number} [options.paddingLeft=20] Левый отступ
-         * @param {Number} [options.paddingRight=10] Правый отступ
-         * */
-        return RowView.extend({
-            behaviors: {
-                NativeGridItemViewBehavior: {
-                    behaviorClass: NativeGridItemViewBehavior,
-                    padding: 15
-                }
-            }
-        });
-    });
+/**
+ * Some description for initializer
+ * @name RowView
+ * @memberof module:core.nativeGrid.views
+ * @class RowView
+ * @constructor
+ * @description View используемый по умолчанию для отображения строки списка
+ * @extends module:core.list.views.RowView {@link module:core.list.views.RowView}
+ * @param {Object} options Constructor options
+ * @param {Array} options.columns Массив колонк
+ * @param {Object} options.gridEventAggregator ?
+ * @param {Number} [options.paddingLeft=20] Левый отступ
+ * @param {Number} [options.paddingRight=10] Правый отступ
+ * */
+export default RowView.extend({
+    behaviors: {
+        NativeGridItemViewBehavior: {
+            behaviorClass: NativeGridItemViewBehavior,
+            padding: 15
+        }
+    }
+});

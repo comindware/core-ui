@@ -6,33 +6,31 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(['text!../templates/defaultButton.html', 'core/libApi'],
-    function (template) {
-        'use strict';
+import '../../libApi';
+import template from '../templates/defaultButton.hbs';
 
-        /**
-         * @name DefaultButtonView
-         * @memberof module:core.dropdown.views
-         * @class Тривиальная реализация button View. Отображает свойство <code>text</code> передаваемой ей модели.
-         * Используется в качестве buttonView в фабричном методе {@link module:core.dropdown.factory createMenu}.
-         * @constructor
-         * @extends Marionette.ItemView
-         * @param {Object} options Объект опций.
-         * @param {Backbone.Model} options.model Модель данных. Должна содержать атрибут <code>text</code>.
-         * */
+/**
+ * @name DefaultButtonView
+ * @memberof module:core.dropdown.views
+ * @class Тривиальная реализация button View. Отображает свойство <code>text</code> передаваемой ей модели.
+ * Используется в качестве buttonView в фабричном методе {@link module:core.dropdown.factory createMenu}.
+ * @constructor
+ * @extends Marionette.ItemView
+ * @param {Object} options Объект опций.
+ * @param {Backbone.Model} options.model Модель данных. Должна содержать атрибут <code>text</code>.
+ * */
 
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-            },
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+    },
 
-            tagName: 'span',
+    tagName: 'span',
 
-            template: Handlebars.compile(template),
+    template: template,
 
-            modelEvents: {
-                'change': 'render'
-            }
-        });
-    });
+    modelEvents: {
+        'change': 'render'
+    }
+});

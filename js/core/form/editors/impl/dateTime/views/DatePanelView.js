@@ -6,73 +6,71 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi', 'core/utils/utilsApi', 'text!../templates/datePanel.html'],
-    function (lib, utils, template) {
-        'use strict';
+import { moment } from '../../../../../libApi';
+import { dateHelpers } from '../../../../../utils/utilsApi';
+import template from '../templates/datePanel.hbs';
 
-        var defaultOptions = {
-            pickerFormat: 'YYYY-MM-DD'
+const defaultOptions = {
+    pickerFormat: 'YYYY-MM-DD'
+};
+
+export default Marionette.ItemView.extend({
+    template: template,
+
+    initialize: function (options) {
+        this.pickerOptions = {
+            minView: 2,
+            format: this.options.pickerFormat,
+            todayBtn: true,
+            weekStart: dateHelpers.getWeekStartDay(),
+            language: window.langCode
         };
+    },
 
-        return Marionette.ItemView.extend({
-            template: Handlebars.compile(template),
+    className: 'datepicker_panel',
 
-            initialize: function (options) {
-                this.pickerOptions = {
-                    minView: 2,
-                    format: this.options.pickerFormat,
-                    todayBtn: true,
-                    weekStart: utils.dateHelpers.getWeekStartDay(),
-                    language: window.langCode
-                };
-            },
+    modelEvents: {
+        'change:value': 'updatePickerDate'
+    },
 
-            className: 'datepicker_panel',
+    ui: {
+        pickerInput: '.js-datetimepicker'
+    },
 
-            modelEvents: {
-                'change:value': 'updatePickerDate'
-            },
+    updatePickerDate: function () {
+        var val = this.model.get('value'),
+            format = defaultOptions.pickerFormat,
+            pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment(new Date()).format(format);
 
-            ui: {
-                pickerInput: '.js-datetimepicker'
-            },
+        this.ui.pickerInput.attr('data-date', pickerFormattedDate);
+        this.ui.pickerInput.datetimepicker('update');
+    },
 
-            updatePickerDate: function () {
-                var val = this.model.get('value'),
-                    format = defaultOptions.pickerFormat,
-                    pickerFormattedDate = val ? lib.moment(new Date(val)).format(format) : lib.moment(new Date()).format(format);
+    updateValue: function (date) {
+        var oldVal = this.model.get('value'),
+            newVal = '';
 
-                this.ui.pickerInput.attr('data-date', pickerFormattedDate);
-                this.ui.pickerInput.datetimepicker('update');
-            },
+        if (date === null || date === '') {
+            newVal = null;
+        } else if (oldVal) {
+            var momentDate = moment(date);
+            newVal = moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toString();
+        } else {
+            newVal = date;
+        }
 
-            updateValue: function (date) {
-                var oldVal = this.model.get('value'),
-                    newVal = '';
+        this.model.set({value: newVal});
+    },
 
-                if (date === null || date === '') {
-                    newVal = null;
-                } else if (oldVal) {
-                    var momentDate = lib.moment(date);
-                    newVal = lib.moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toString();
-                } else {
-                    newVal = date;
-                }
-
-                this.model.set({value: newVal});
-            },
-
-            onShow: function () {
-                this.ui.pickerInput.datetimepicker(this.pickerOptions)
-                    .on('changeDate', function (e) {
-                        var newValue = new Date(e.date.setMinutes(e.date.getMinutes() + e.date.getTimezoneOffset()));
-                        this.updateValue(newValue);
-                        this.trigger('close');
-                    }.bind(this));
-                this.updatePickerDate();
-            }
-        });
-
-    });
+    onShow: function () {
+        this.ui.pickerInput.datetimepicker(this.pickerOptions)
+            .on('changeDate', function (e) {
+                var newValue = new Date(e.date.setMinutes(e.date.getMinutes() + e.date.getTimezoneOffset()));
+                this.updateValue(newValue);
+                this.trigger('close');
+            }.bind(this));
+        this.updatePickerDate();
+    }
+});

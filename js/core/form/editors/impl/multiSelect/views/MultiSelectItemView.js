@@ -6,59 +6,51 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define(
-    [
-        'core/list/listApi',
-        'core/utils/utilsApi',
-        'text!../templates/multiSelectItem.html'
-    ],
-    function(list, utils, template) {
-        'use strict';
+import list from '../../../../../list/listApi';
+import template from '../templates/multiSelectItem.hbs';
 
-        var classes = {
-            BASE: 'multiselect-i',
-            SELECTED: 'multiselect-i_selected'
+var classes = {
+    BASE: 'multiselect-i',
+    SELECTED: 'multiselect-i_selected'
+};
+
+export default Marionette.ItemView.extend({
+    className: classes.BASE,
+
+    template: template,
+
+    templateHelpers: function() {
+        var displayAttribute = this.getOption('displayAttribute');
+
+        return {
+            text: _.result(this.model.toJSON(), displayAttribute)
         };
+    },
 
-        return Marionette.ItemView.extend({
-            className: classes.BASE,
+    events: {
+        'click': '__toggle'
+    },
 
-            template: Handlebars.compile(template),
+    modelEvents: {
+        'select': '__markSelected',
+        'deselect': '__markDeselected'
+    },
 
-            templateHelpers: function() {
-                var displayAttribute = this.getOption('displayAttribute');
+    __toggle: function() {
+        if (this.model.selected) {
+            this.model.trigger('deselect', this.model);
+        } else {
+            this.model.trigger('select', this.model);
+        }
+    },
 
-                return {
-                    text: _.result(this.model.toJSON(), displayAttribute)
-                };
-            },
+    __markSelected: function() {
+        this.$el.addClass(classes.SELECTED);
+    },
 
-            events: {
-                'click': '__toggle'
-            },
-
-            modelEvents: {
-                'select': '__markSelected',
-                'deselect': '__markDeselected'
-            },
-
-            __toggle: function() {
-                if (this.model.selected) {
-                    this.model.trigger('deselect', this.model);
-                } else {
-                    this.model.trigger('select', this.model);
-                }
-            },
-
-            __markSelected: function() {
-                this.$el.addClass(classes.SELECTED);
-            },
-
-            __markDeselected: function() {
-                this.$el.removeClass(classes.SELECTED);
-            }
-        });
+    __markDeselected: function() {
+        this.$el.removeClass(classes.SELECTED);
     }
-);
+});

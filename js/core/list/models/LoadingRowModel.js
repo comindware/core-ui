@@ -6,26 +6,24 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi'],
-    function (lib) {
-        'use strict';
-        /**
-         * Some description for initializer
-         * @name LoadingRowModel
-         * @memberof module:core.list.models
-         * @class LoadingRowModel
-         * @constructor
-         * @description Model строки списка
-         * @extends Backbone.Model
-         * */
-        return Backbone.Model.extend({
-            initialize: function () {
-            },
+import '../../libApi';
 
-            defaults: {
-                isLoadingRowModel: true
-            }
-        });
-    });
+/**
+ * Some description for initializer
+ * @name LoadingRowModel
+ * @memberof module:core.list.models
+ * @class LoadingRowModel
+ * @constructor
+ * @description Model строки списка
+ * @extends Backbone.Model
+ * */
+export default Backbone.Model.extend({
+    initialize: function () {
+    },
+
+    defaults: {
+        isLoadingRowModel: true
+    }
+});

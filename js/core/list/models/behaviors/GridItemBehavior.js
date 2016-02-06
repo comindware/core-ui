@@ -6,18 +6,13 @@
  * Published under the MIT license
  */
 
-/* global define, require, _, classes */
+"use strict";
 
-define([
-        'core/utils/utilsApi',
-        'core/models/behaviors/SelectableBehavior',
-        'core/models/behaviors/HighlightableBehavior'
-    ],
-    function (utils, SelectableBehavior, HighlightableBehavior) {
-        'use strict';
+import { helpers } from '../../../utils/utilsApi';
+import SelectableBehavior from '../../../models/behaviors/SelectableBehavior';
+import HighlightableBehavior from '../../../models/behaviors/HighlightableBehavior';
 
-        return function (model) {
-            _.extend(this, new SelectableBehavior.Selectable(model));
-            _.extend(this, new HighlightableBehavior(model));
-        };
-    });
+export default function (model) {
+    _.extend(this, new SelectableBehavior.Selectable(model));
+    _.extend(this, new HighlightableBehavior(model));
+}

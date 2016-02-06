@@ -1,13 +1,19 @@
-﻿/* global define, Backbone */
+﻿/**
+ * Developer: Stepan Burguchev
+ * Date: 1/26/2015
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
 
-define(['core/libApi'], function() {
-    "use strict";
+"use strict";
 
-	return Backbone.Model.extend({
-		defaults:
-		{
-			text: '',
-			error: false
-		}
-	});
+import '../../../libApi';
+
+export default Backbone.Model.extend({
+	defaults:
+	{
+		text: '',
+		error: false
+	}
 });

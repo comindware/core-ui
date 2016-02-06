@@ -6,22 +6,15 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/list/listApi'
-    ],
-    function (
-        list
-    ) {
-        'use strict';
+import list from '../../../../../list/listApi';
 
-        return Backbone.Model.extend({
-            initialize: function () {
-                _.extend(this, new list.models.behaviors.ListItemBehavior(this));
-            },
+export default Backbone.Model.extend({
+    initialize: function () {
+        _.extend(this, new list.models.behaviors.ListItemBehavior(this));
+    },
 
-            defaults: {
-            }
-        });
-    });
+    defaults: {
+    }
+});

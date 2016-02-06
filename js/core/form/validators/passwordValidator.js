@@ -6,20 +6,19 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi', 'core/services/LocalizationService'], function(lib, LocalizationService) {
-    'use strict';
+import '../../libApi';
+import LocalizationService from '../../services/LocalizationService';
 
-    Backbone.Form.validators.errMessages.password = LocalizationService.get('CORE.FORM.VALIDATION.PASSWORD');
+Backbone.Form.validators.password = function(options) {
+    options = _.extend({
+        type: 'length',
+        message: LocalizationService.get('CORE.FORM.VALIDATION.PASSWORD'),
+        min: 8
+    }, options);
 
-    Backbone.Form.validators.password = function(options) {
-        options = _.extend({
-            type: 'length',
-            message: Backbone.Form.validators.errMessages.password,
-            min: 8
-        }, options);
+    return Backbone.Form.validators.length(options);
+};
 
-        return Backbone.Form.validators.length(options);
-    };
-});
+export default Backbone.Form.validators.password;

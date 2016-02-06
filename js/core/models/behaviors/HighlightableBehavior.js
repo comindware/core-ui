@@ -6,40 +6,37 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, _ */
+"use strict";
 
-define([ 'core/libApi' ],
-    function () {
-        'use strict';
+import '../../libApi';
 
-        var HighlightableBehavior = function (model) {
-        };
+let HighlightableBehavior = function () {
+};
 
-        _.extend(HighlightableBehavior.prototype, {
-            highlight: function (text)
-            {
-                if (this.highlighted) {
-                    return;
-                }
+_.extend(HighlightableBehavior.prototype, {
+    highlight: function (text)
+    {
+        if (this.highlighted) {
+            return;
+        }
 
-                this.highlighted = true;
-                this.highlightedFragment = text;
-                this.trigger("highlighted", this, {
-                    text: text
-                });
-            },
-
-            unhighlight: function ()
-            {
-                if (!this.highlighted) {
-                    return;
-                }
-
-                this.highlighted = false;
-                this.highlightedFragment = undefined;
-                this.trigger("unhighlighted", this);
-            }
+        this.highlighted = true;
+        this.highlightedFragment = text;
+        this.trigger("highlighted", this, {
+            text: text
         });
+    },
 
-        return HighlightableBehavior;
-    });
+    unhighlight: function ()
+    {
+        if (!this.highlighted) {
+            return;
+        }
+
+        this.highlighted = false;
+        this.highlightedFragment = undefined;
+        this.trigger("unhighlighted", this);
+    }
+});
+
+export default HighlightableBehavior;

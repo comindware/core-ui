@@ -6,62 +6,58 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/libApi',
-        'core/list/listApi',
-        'core/utils/utilsApi',
-        'text!../templates/listItem.html'
-    ],
-    function (lib, list, utils, template) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.reqres = options.reqres;
-            },
+import '../../../../../libApi';
+import { htmlHelpers } from '../../../../../utils/utilsApi';
+import template from '../templates/listItem.hbs';
+import list from '../../../../../list/listApi';
 
-            behaviors: {
-                ListItemViewBehavior: {
-                    behaviorClass: list.views.behaviors.ListItemViewBehavior
-                }
-            },
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+        this.reqres = options.reqres;
+    },
 
-            className: 'dd-list__i',
+    behaviors: {
+        ListItemViewBehavior: {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior
+        }
+    },
 
-            template: Handlebars.compile(template),
+    className: 'dd-list__i',
 
-            ui: {
-                fullName: '.js-fullName'
-            },
+    template: template,
 
-            templateHelpers: function () {
-                return {
-                    text: this.__getText()
-                };
-            },
+    ui: {
+        fullName: '.js-fullName'
+    },
 
-            __getText: function () {
-                return this.model.get('fullName') || this.model.get('username');
-            },
+    templateHelpers: function () {
+        return {
+            text: this.__getText()
+        };
+    },
 
-            onHighlighted: function (fragment)
-            {
-                var text = utils.htmlHelpers.highlightText(this.__getText(), fragment);
-                this.ui.fullName.html(text);
-            },
+    __getText: function () {
+        return this.model.get('fullName') || this.model.get('username');
+    },
 
-            onUnhighlighted: function ()
-            {
-                this.ui.fullName.text(this.__getText());
-            },
+    onHighlighted: function (fragment)
+    {
+        var text = htmlHelpers.highlightText(this.__getText(), fragment);
+        this.ui.fullName.html(text);
+    },
 
-            events: {
-                'click': '__select'
-            },
+    onUnhighlighted: function ()
+    {
+        this.ui.fullName.text(this.__getText());
+    },
 
-            __select: function () {
-                this.reqres.request('value:set', this.model.id);
-            }
-        });
-    });
+    events: {
+        'click': '__select'
+    },
+
+    __select: function () {
+        this.reqres.request('value:set', this.model.id);
+    }
+});

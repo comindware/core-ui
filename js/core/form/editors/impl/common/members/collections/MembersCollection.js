@@ -6,47 +6,42 @@
  * Published under the MIT license
  */
 
-/* global define, require, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/utils/utilsApi',
-        'core/collections/VirtualCollection',
-        'core/collections/behaviors/HighlightableBehavior',
-        '../models/MemberModel'
-    ],
-    function (utils, VirtualCollection, HighlightableBehavior, MemberModel) {
-        'use strict';
+import { helpers, comparators } from '../../../../../../utils/utilsApi';
+import VirtualCollection from '../../../../../../collections/VirtualCollection';
+import HighlightableBehavior from '../../../../../../collections/behaviors/HighlightableBehavior';
+import MemberModel from '../models/MemberModel';
 
-        return VirtualCollection.extend({
-            initialize: function () {
-                utils.helpers.applyBehavior(this, HighlightableBehavior);
-            },
+export default VirtualCollection.extend({
+    initialize: function () {
+        helpers.applyBehavior(this, HighlightableBehavior);
+    },
 
-            model: MemberModel,
+    model: MemberModel,
 
-            comparator: utils.helpers.comparatorFor(utils.comparators.stringComparator2Asc, 'name'),
+    comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name'),
 
-            applyTextFilter: function (text) {
-                this.deselect();
-                this.unhighlight();
+    applyTextFilter: function (text) {
+        this.deselect();
+        this.unhighlight();
 
-                if(!text) {
-                    this.filter(null);
-                    this.selectFirst();
-                    return;
-                }
-                text = text.toLowerCase();
-                this.filter(function (model) {
-                    return model.matchText(text);
-                });
-                this.highlight(text);
-                this.selectFirst();
-            },
-
-            selectFirst: function () {
-                if (this.length > 0) {
-                    this.at(0).select();
-                }
-            }
+        if(!text) {
+            this.filter(null);
+            this.selectFirst();
+            return;
+        }
+        text = text.toLowerCase();
+        this.filter(function (model) {
+            return model.matchText(text);
         });
-    });
+        this.highlight(text);
+        this.selectFirst();
+    },
+
+    selectFirst: function () {
+        if (this.length > 0) {
+            this.at(0).select();
+        }
+    }
+});

@@ -6,54 +6,51 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+"use strict";
 
-define([
-        'core/list/listApi',
-        'core/utils/utilsApi',
-        'text!../templates/defaultDropdownListItem.html'
-    ],
-    function (list, utils, template) {
-        'use strict';
-        return Marionette.ItemView.extend({
-            initialize: function (options) {
-                this.reqres = options.reqres;
-            },
+import '../../../../../libApi';
+import { htmlHelpers } from '../../../../../utils/utilsApi';
+import list from '../../../../../list/listApi';
+import template from '../templates/defaultDropdownListItem.hbs';
 
-            behaviors: {
-                ListItemViewBehavior: {
-                    behaviorClass: list.views.behaviors.ListItemViewBehavior
-                }
-            },
+export default Marionette.ItemView.extend({
+    initialize: function (options) {
+        this.reqres = options.reqres;
+    },
 
-            className: 'dd-list__i',
+    behaviors: {
+        ListItemViewBehavior: {
+            behaviorClass: list.views.behaviors.ListItemViewBehavior
+        }
+    },
 
-            template: Handlebars.compile(template),
+    className: 'dd-list__i',
 
-            templateHelpers: function () {
-                var model = this.model.toJSON();
-                var displayAttribute = this.options.displayAttribute;
-                return {
-                    text: _.result(model, displayAttribute)
-                };
-            },
+    template: template,
 
-            events: {
-                'click': '__select'
-            },
+    templateHelpers: function () {
+        var model = this.model.toJSON();
+        var displayAttribute = this.options.displayAttribute;
+        return {
+            text: _.result(model, displayAttribute)
+        };
+    },
 
-            onHighlighted: function (fragment) {
-                var text = utils.htmlHelpers.highlightText(this.model.get(this.options.displayAttribute), fragment);
-                this.$el.html(text);
-            },
+    events: {
+        'click': '__select'
+    },
 
-            onUnhighlighted: function () {
-                this.$el.html(this.model.get(this.options.displayAttribute));
-            },
+    onHighlighted: function (fragment) {
+        var text = htmlHelpers.highlightText(this.model.get(this.options.displayAttribute), fragment);
+        this.$el.html(text);
+    },
 
-            __select: function () {
-                this.reqres.request('value:set', this.model);
-                return false;
-            }
-        });
-    });
+    onUnhighlighted: function () {
+        this.$el.html(this.model.get(this.options.displayAttribute));
+    },
+
+    __select: function () {
+        this.reqres.request('value:set', this.model);
+        return false;
+    }
+});

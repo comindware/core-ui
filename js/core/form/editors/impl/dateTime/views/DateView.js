@@ -6,52 +6,47 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+"use strict";
 
-define(['core/libApi',
-        'core/utils/utilsApi',
-        'text!../templates/date.html',
-        '../../../../../dropdown/dropdownApi',
-        './DatePanelView',
-        './DateInputView'
-    ],
-    function (lib, utils, template, dropdownApi, PanelView, InputView) {
-        'use strict';
+import '../../../../../libApi';
+import template from '../templates/date.hbs';
+import dropdownApi from '../../../../../dropdown/dropdownApi';
+import PanelView from './DatePanelView';
+import InputView from './DateInputView';
 
-        return Marionette.LayoutView.extend({
-            template: Handlebars.compile(template),
+export default Marionette.LayoutView.extend({
+    template: template,
 
-            className: 'date-view',
+    className: 'date-view',
 
-            regions: {
-                popoutRegion: '.js-popout-region'
+    regions: {
+        popoutRegion: '.js-popout-region'
+    },
+
+    onShow: function () {
+        this.pickerPopout = dropdownApi.factory.createPopout({
+            buttonView: InputView,
+            buttonViewOptions: {
+                model: this.model
             },
-
-            onShow: function () {
-                this.pickerPopout = dropdownApi.factory.createPopout({
-                    buttonView: InputView,
-                    buttonViewOptions: {
-                        model: this.model
-                    },
-                    panelView: PanelView,
-                    panelViewOptions: {
-                        model: this.model
-                    },
-                    customAnchor: true,
-                    autoOpen: false
-                });
-                this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
-                this.listenTo(this.pickerPopout, 'panel:close', this.__close, this);
-
-                this.popoutRegion.show(this.pickerPopout);
+            panelView: PanelView,
+            panelViewOptions: {
+                model: this.model
             },
-
-            __close: function () {
-                this.pickerPopout.close();
-            },
-
-            __open: function () {
-                this.pickerPopout.open();
-            }
+            customAnchor: true,
+            autoOpen: false
         });
-    });
+        this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
+        this.listenTo(this.pickerPopout, 'panel:close', this.__close, this);
+
+        this.popoutRegion.show(this.pickerPopout);
+    },
+
+    __close: function () {
+        this.pickerPopout.close();
+    },
+
+    __open: function () {
+        this.pickerPopout.open();
+    }
+});

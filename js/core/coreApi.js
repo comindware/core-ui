@@ -8,186 +8,146 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define([
-        './libApi',
+"use strict";
 
-        './utils/utilsApi',
-        './dropdown/dropdownApi',
-        './meta',
-        './list/listApi',
-        './form/formApi',
-        './serviceLocator',
-        './nativeGrid/nativeGridApi',
+import libApi from './libApi';
+import utilsApi from './utils/utilsApi';
+import dropdownApi from './dropdown/dropdownApi';
+import listApi from './list/listApi';
+import nativeGridApi from './nativeGrid/nativeGridApi';
+import formApi from './form/formApi';
 
-        './services/RoutingServiceBase',
-        './services/MessageService',
-        './services/WindowService',
-        './services/GlobalEventService',
-        './services/LocalizationService',
-        './services/AjaxService',
+import meta_ from './Meta';
+import serviceLocator_ from './serviceLocator';
+import bootstrapper from './Bootstrapper';
 
-        './services/routing/ModuleProxy',
-        './services/PromiseServer',
+import LoadingView from './views/LoadingView';
+import LoadingBehavior from './views/behaviors/LoadingBehavior';
+import BlurableBehavior from './views/behaviors/BlurableBehavior';
+import PopupBehavior from './views/behaviors/PopupBehavior';
+import SearchBarView from './views/SearchBarView';
+import SplitPanelView from './views/SplitPanelView';
+import FadingPanelView from './views/FadingPanelView';
 
-        './collections/SlidingWindowCollection',
-        './collections/VirtualCollection',
-        './collections/behaviors/HighlightableBehavior',
-        './models/behaviors/CollapsibleBehavior',
-        './models/behaviors/HighlightableBehavior',
-        './models/behaviors/SelectableBehavior',
+import RoutingServiceBase from './services/RoutingServiceBase';
+import MessageService from './services/MessageService';
+import WindowService from './services/WindowService';
+import GlobalEventService from './services/GlobalEventService';
+import LocalizationService from './services/LocalizationService';
+import AjaxService from './services/AjaxService';
+import PromiseService from './services/PromiseService';
 
-        './views/behaviors/loading/views/LoadingView',
+import ModuleProxy from './services/routing/ModuleProxy';
 
-        './views/behaviors/LoadingBehavior',
-        './views/behaviors/BlurableBehavior',
-        './views/behaviors/PopupBehavior',
+import SlidingWindowCollection from './collections/SlidingWindowCollection';
+import VirtualCollection from './collections/VirtualCollection';
+import CollectionHighlightableBehavior from './collections/behaviors/HighlightableBehavior';
+import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
+import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
+import SelectableBehavior from './models/behaviors/SelectableBehavior';
 
-        './views/SearchBarView',
-        './views/SplitPanelView',
-
-        './Bootstrapper'
-    ],
-    function (
-        lib,
-
-        utilsApi,
-        dropdownApi,
-        meta,
-        listApi,
-        formApi,
-        serviceLocator,
-        nativeGridApi,
-
-        RoutingServiceBase,
-        MessageService,
-        WindowService,
-        GlobalEventService,
-        LocalizationService,
-        AjaxService,
-
-        ModuleProxy,
-        PromiseServer,
-
-        SlidingWindowCollection,
-        VirtualCollection,
-        CollectionHighlightableBehavior,
-
-        CollapsibleBehavior,
-        HighlightableBehavior,
-        SelectableBehavior,
-
-        LoadingView,
-
-        LoadingBehavior,
-        BlurableBehavior,
-        PopupBehavior,
-
-        SearchBarView,
-        SplitPanelView,
-
-        Bootstrapper
-    ) {
-        'use strict';
-
-        //noinspection UnnecessaryLocalVariableJS
-        /**
-         * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
-         * @exports core
-         * */
-        var exports = {
-            lib: lib,
-            /**
-             * Базовые сервисы системы
-             * @namespace
-             * */
-            services: {
-                RoutingServiceBase: RoutingServiceBase,
-                MessageService: MessageService,
-                WindowService: WindowService,
-                LocalizationService: LocalizationService,
-                AjaxService: AjaxService,
-                GlobalEventService: GlobalEventService,
-                PromiseServer: PromiseServer,
-                routing: {
-                    ModuleProxy: ModuleProxy
-                }
-            },
-            /**
-             * Backbone collections of general use.
-             * @namespace
-             * */
-            collections: {
-                /**
-                 * Backbone.Collection behaviors of general use.
-                 * @namespace
-                 * */
-                behaviors: {
-                    HighlightableBehavior: CollectionHighlightableBehavior
-                },
-                SlidingWindowCollection: SlidingWindowCollection,
-                VirtualCollection: VirtualCollection
-            },
-            /**
-             * Backbone-модели общего назначения
-             * @namespace
-             * */
-            models: {
-                behaviors: {
-                    CollapsibleBehavior: CollapsibleBehavior,
-                    HighlightableBehavior: HighlightableBehavior,
-                    SelectableBehavior: SelectableBehavior
-                }
-            },
-            views: {
-                behaviors: {
-                    LoadingBehavior: LoadingBehavior,
-                    BlurableBehavior: BlurableBehavior,
-                    PopupBehavior: PopupBehavior
-                },
-                LoadingView: LoadingView,
-                SearchBarView: SearchBarView,
-                SplitPanelView: SplitPanelView
-            },
-            /**
-             * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
-             * Не подпадающий под концепцию этих компонентов дизайн выпадающих элементов должен быть пересмотрен.
-             * @namespace
-             * */
-            dropdown: dropdownApi,
-            /**
-             * Работа с данными: форма и редакторы. Базируется на библиотеке [Backbone.Form](https://github.com/powmedia/backbone-forms).
-             * @namespace
-             * */
-            form: formApi,
-            /**
-             * Списки
-             * @namespace
-             * */
-            list: listApi,
-            /**
-             * Список с native-скроллом
-             * @namespace
-             * */
-            nativeGrid: nativeGridApi,
-            /**
-             * Объединяет набор сервисов и справочников общего назначения.
-             * @namespace
-             * */
-            utils: utilsApi,
-            /**
-             * Мета-информация
-             * @namespace
-             * */
-            meta: meta,
-            serviceLocator: serviceLocator,
-            bootstrapper: Bootstrapper
-        };
-
-        if (_.isFunction(lib.initialize)) {
-            lib.initialize({
-                core: exports
-            });
+/**
+ * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
+ * @exports core
+ * */
+var api = {
+    lib: libApi,
+    /**
+     * Базовые сервисы системы
+     * @namespace
+     * */
+    services: {
+        RoutingServiceBase: RoutingServiceBase,
+        MessageService: MessageService,
+        WindowService: WindowService,
+        LocalizationService: LocalizationService,
+        AjaxService: AjaxService,
+        GlobalEventService: GlobalEventService,
+        PromiseService: PromiseService,
+        routing: {
+            ModuleProxy: ModuleProxy
         }
+    },
+    /**
+     * Backbone collections of general use.
+     * @namespace
+     * */
+    collections: {
+        /**
+         * Backbone.Collection behaviors of general use.
+         * @namespace
+         * */
+        behaviors: {
+            HighlightableBehavior: CollectionHighlightableBehavior
+        },
+        SlidingWindowCollection: SlidingWindowCollection,
+        VirtualCollection: VirtualCollection
+    },
+    /**
+     * Backbone-модели общего назначения
+     * @namespace
+     * */
+    models: {
+        behaviors: {
+            CollapsibleBehavior: CollapsibleBehavior,
+            HighlightableBehavior: HighlightableBehavior,
+            SelectableBehavior: SelectableBehavior
+        }
+    },
+    views: {
+        behaviors: {
+            LoadingBehavior: LoadingBehavior,
+            BlurableBehavior: BlurableBehavior,
+            PopupBehavior: PopupBehavior
+        },
+        LoadingView: LoadingView,
+        SearchBarView: SearchBarView,
+        SplitPanelView: SplitPanelView
+    },
+    /**
+     * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
+     * Не подпадающий под концепцию этих компонентов дизайн выпадающих элементов должен быть пересмотрен.
+     * @namespace
+     * */
+    dropdown: dropdownApi,
+    /**
+     * Работа с данными: форма и редакторы. Базируется на библиотеке [Backbone.Form](https://github.com/powmedia/backbone-forms).
+     * @namespace
+     * */
+    form: formApi,
+    /**
+     * Списки
+     * @namespace
+     * */
+    list: listApi,
+    /**
+     * Список с native-скроллом
+     * @namespace
+     * */
+    nativeGrid: nativeGridApi,
+    /**
+     * Объединяет набор сервисов и справочников общего назначения.
+     * @namespace
+     * */
+    utils: utilsApi,
+    /**
+     * Мета-информация
+     * @namespace
+     * */
+    meta: meta_,
+    initialize: bootstrapper.initialize.bind(bootstrapper)
+};
 
-        return exports;
-    });
+export default api;
+export var lib = api.lib;
+export var services = api.services;
+export var collections = api.collections;
+export var models = api.models;
+export var views = api.views;
+export var dropdown = api.dropdown;
+export var form = api.form;
+export var list = api.list;
+export var nativeGrid = api.nativeGrid;
+export var utils = api.utils;
+export var meta = api.meta;
+export var initialize = api.initialize;
