@@ -1,6 +1,6 @@
 language: node_js
 node_js:
   - "4.1"
-#before_script:
-#  - npm install -g gulp
-#script: gulp
+before_install: npm install -g gulp-cli
+install: npm install
+script: gulp production
