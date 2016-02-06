@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/comindware/core-ui.svg)](https://travis-ci.org/comindware/core-ui)
 # core-ui
 
 Comindware Core UI is a set of components based on Marionette/Backbone framework and some other third-party libraries.
