@@ -12,11 +12,13 @@
 var path = require('path');
 
 module.exports = {
+    cache: true,
     entry: "./js/core/coreApi.js",
     devtool: 'source-map',
+    debug: true,
     output: {
         path: __dirname + '/dist',
-        filename: "core.js",
+        filename: "core.bundle.js",
         library: 'core',
         libraryTarget: 'umd'
     },

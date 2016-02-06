@@ -1,16 +1,40 @@
 {
-  "name": "comindware.core-ui",
+  "name": "comindware.core.ui",
   "version": "1.0.0",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/mit-license"
-    }
+  "license": "MIT",
+  "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperatly need while creating Marionette-based single-page applications.",
+  "homepage": "http://comindware.github.io/core-ui/",
+  "keywords": [
+    "comindware",
+    "backbone",
+    "plugin",
+    "marionette",
+    "composite",
+    "architecture",
+    "single",
+    "page",
+    "app",
+    "client",
+    "browser"
   ],
+  "scripts": {
+    "build": "gulp production",
+    "dev": "gulp dev"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/comindware/core-ui.git"
+    "url": "https://github.com/comindware/core-ui.git"
   },
+  "author": {
+    "name": "Stepan Burguchev",
+    "url": "https://github.com/xSkara"
+  },
+  "maintainers": [
+    {
+      "name": "sburg",
+      "email": "me@sburg.net"
+    }
+  ],
   "devDependencies": {
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
@@ -35,6 +59,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
     "gulp-jsdoc": "^0.1.5",
+    "gulp-util": "^3.0.7",
     "handlebars": "^4.0.5",
     "handlebars-loader": "^1.1.4",
     "html-loader": "^0.4.0",
