@@ -55417,7 +55417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	__webpack_require__(1);
@@ -55440,15 +55440,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * */
 	
 	exports.default = Marionette.ItemView.extend({
-	    initialize: function initialize(options) {},
+	  initialize: function initialize(options) {},
 	
-	    tagName: 'span',
+	  tagName: 'span',
 	
-	    template: _defaultButton2.default,
+	  template: _defaultButton2.default,
 	
-	    modelEvents: {
-	        'change': 'render'
-	    }
+	  modelEvents: {
+	    'change': 'render'
+	  }
 	});
 
 /***/ },
@@ -55659,7 +55659,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	__webpack_require__(1);
@@ -55739,49 +55739,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = /** @lends module:core.list */{
-	  EventAggregator: _EventAggregator2.default,
-	  /**
-	   * Фабрика списков
-	   * @namespace
-	   * */
-	  factory: _factory2.default,
-	  /**
-	   * Фабрика ячеек
-	   * @namespace
-	   * */
-	  cellFactory: _CellViewFactory2.default,
-	  /**
-	   * Views-списка
-	   * @namespace
-	   * */
-	  views: {
-	    EmptyListView: _EmptyListView2.default,
-	    EmptyGridView: _EmptyGridView2.default,
-	    GridColumnHeaderView: _GridColumnHeaderView2.default,
-	    GridHeaderView: _GridHeaderView2.default,
-	    GridView: _GridView2.default,
-	    ListView: _ListView2.default,
-	    RowView: _RowView2.default,
-	    ScrollbarView: _ScrollbarView2.default,
+	    EventAggregator: _EventAggregator2.default,
+	    /**
+	     * Фабрика списков
+	     * @namespace
+	     * */
+	    factory: _factory2.default,
+	    /**
+	     * Фабрика ячеек
+	     * @namespace
+	     * */
+	    cellFactory: _CellViewFactory2.default,
+	    /**
+	     * Views-списка
+	     * @namespace
+	     * */
+	    views: {
+	        EmptyListView: _EmptyListView2.default,
+	        EmptyGridView: _EmptyGridView2.default,
+	        GridColumnHeaderView: _GridColumnHeaderView2.default,
+	        GridHeaderView: _GridHeaderView2.default,
+	        GridView: _GridView2.default,
+	        ListView: _ListView2.default,
+	        RowView: _RowView2.default,
+	        ScrollbarView: _ScrollbarView2.default,
 	
-	    behaviors: {
-	      ListGroupViewBehavior: _ListGroupViewBehavior2.default,
-	      ListItemViewBehavior: _ListItemViewBehavior2.default,
-	      GridItemViewBehavior: _GridItemViewBehavior2.default
+	        behaviors: {
+	            ListGroupViewBehavior: _ListGroupViewBehavior2.default,
+	            ListItemViewBehavior: _ListItemViewBehavior2.default,
+	            GridItemViewBehavior: _GridItemViewBehavior2.default
+	        }
+	    },
+	    /**
+	     * Backbone-модели списка
+	     * @namespace
+	     * */
+	    models: {
+	        LoadingRowModel: _LoadingRowModel2.default,
+	        behaviors: {
+	            ListGroupBehavior: _ListGroupBehavior2.default,
+	            ListItemBehavior: _ListItemBehavior2.default,
+	            GridItemBehavior: _GridItemBehavior2.default
+	        }
 	    }
-	  },
-	  /**
-	   * Backbone-модели списка
-	   * @namespace
-	   * */
-	  models: {
-	    LoadingRowModel: _LoadingRowModel2.default,
-	    behaviors: {
-	      ListGroupBehavior: _ListGroupBehavior2.default,
-	      ListItemBehavior: _ListItemBehavior2.default,
-	      GridItemBehavior: _GridItemBehavior2.default
-	    }
-	  }
 	};
 
 /***/ },
@@ -64289,7 +64289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	__webpack_require__(1);
@@ -64301,11 +64301,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = Marionette.ItemView.extend({
-	    initialize: function initialize() {},
+	  initialize: function initialize() {},
 	
-	    className: 'l-loader',
+	  className: 'l-loader',
 	
-	    template: _loading2.default
+	  template: _loading2.default
 	});
 
 /***/ },
@@ -70294,7 +70294,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	        value: true
+	    value: true
 	});
 	
 	var _utilsApi = __webpack_require__(196);
@@ -70322,26 +70322,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
-	        initialize: function initialize(options) {
-	                _utilsApi.helpers.ensureOption(options, 'cacheService');
-	                _utilsApi.helpers.ensureOption(options, 'localizationService');
-	                _utilsApi.helpers.ensureOption(options, 'ajaxService');
-	                _utilsApi.helpers.ensureOption(options, 'windowService');
+	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'cacheService');
+	        _utilsApi.helpers.ensureOption(options, 'localizationService');
+	        _utilsApi.helpers.ensureOption(options, 'ajaxService');
+	        _utilsApi.helpers.ensureOption(options, 'windowService');
 	
-	                //noinspection JSUnresolvedVariable
-	                _WindowService2.default.initialize(options.windowService);
+	        //noinspection JSUnresolvedVariable
+	        _WindowService2.default.initialize(options.windowService);
 	
-	                _serviceLocator2.default.cacheService = options.cacheService;
+	        _serviceLocator2.default.cacheService = options.cacheService;
 	
-	                //noinspection JSUnresolvedVariable
-	                _LocalizationService2.default.initialize(options.localizationService);
-	                //noinspection JSUnresolvedVariable
-	                _AjaxService2.default.load(options.ajaxService);
+	        //noinspection JSUnresolvedVariable
+	        _LocalizationService2.default.initialize(options.localizationService);
+	        //noinspection JSUnresolvedVariable
+	        _AjaxService2.default.load(options.ajaxService);
 	
-	                _AjaxService2.default.on('jsApi:error', function () {
-	                        _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
-	                });
-	        }
+	        _AjaxService2.default.on('jsApi:error', function () {
+	            _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
+	        });
+	    }
 	};
 
 /***/ },
