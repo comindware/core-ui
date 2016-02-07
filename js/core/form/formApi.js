@@ -46,10 +46,10 @@ import SearchMoreListItemView from './editors/impl/reference/views/SearchMoreLis
 import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
-import RequiredValidator from './validators/RequiredValidator';
-import LengthValidator from './validators/LengthValidator';
-import PasswordValidator from './validators/PasswordValidator';
-import PhoneValidator from './validators/PhoneValidator';
+import './validators/requiredValidator';
+import './validators/lengthValidator';
+import './validators/passwordValidator';
+import './validators/phoneValidator';
 
 var api = /** @lends module:core.form */ {
     ExtendedForm: ExtendedForm_,

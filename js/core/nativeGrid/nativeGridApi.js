@@ -9,8 +9,8 @@
 "use strict";
 
 import '../libApi';
-import factory from './Factory';
-import filterViewFactory from './FilterViewFactory';
+import factory from './factory';
+import filterViewFactory from './filterViewFactory';
 import RowView from './views/RowView';
 import HeaderView from './views/HeaderView';
 import NativeGridView from './views/NativeGridView';
