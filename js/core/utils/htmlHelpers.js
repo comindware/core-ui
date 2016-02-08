@@ -11,16 +11,12 @@
 import '../libApi';
 import serviceLocator from '../serviceLocator';
 
-/*
-* HtmlHelpers contains methods that somehow modify dom elements or generate html.
-* */
-
 export default /** @lends module:core.utils.htmlHelpers */ {
     /**
      * Highlights fragments within a text with &lt;span class='highlight'&gt;&lt;/span&gt;.
      * @param {String} text Text to highlight.
      * @param {String} fragment highlighted fragment.
-     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
+     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied to
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
@@ -51,9 +47,9 @@ export default /** @lends module:core.utils.htmlHelpers */ {
     },
 
     /**
-     * Highlights mentioned with `@` users in text with &lt;a href='...'&gt;&lt;/a&gt; tag.
+     * Highlights mentions within a text with &lt;a href='...'&gt;&lt;/a&gt;.
      * @param {String} text Text to highlight.
-     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
+     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied to
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
@@ -87,7 +83,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
     },
 
     /**
-     * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt; tag.
+     * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt;.
      * @param {String} text Text to highlight.
      * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
      * the <code>text</code> before highlighting.

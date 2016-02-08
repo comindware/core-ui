@@ -19,12 +19,13 @@ let getPluralFormIndex = null;
 
 export default /** @lends module:core.utils.helpers */ {
     /**
-    * Метод вызывает функцию <code>callback()</code> по прошествии <code>delay</code> миллисекунд с момента
-    * последнего вызова этого метода с заданным <code>someUniqueId</code>.
-    * @param {String} someUniqueId Идентификатор вызова.
-    * @param {Function} callback Функция, которая должна быть вызвана по прошествии заданного интервала времени.
-    * @param {Number} delay Задержка вызова функции в миллисекундах.
-    * */
+     * Deprecated. Use <code>_.debounce()</code> instead. Defers invoking the function until after `delay` milliseconds
+     * have elapsed since the last time it was invoked.
+     * @param {String} someUniqueId Function identifier.
+     * @param {Function} callback The function tobe called after delay.
+     * @param {Number} delay Callback delay in milliseconds.
+     * @deprecated
+     * */
     setUniqueTimeout: function (someUniqueId, callback, delay)
     {
         var timeoutId = timeoutCache[someUniqueId];
@@ -41,8 +42,9 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Метод вызывает функцию <code>callback()</code> по окончанию обработки активного события (аналогично setTimeout(fn, 10)).
-     * @param {Function} callback Функция, которая должна быть вызвана по окончанию обработки активного события.
+     * Deprecated. Use <code>_.defer()</code> instead. Defers invoking the function until the current call stack has cleared.
+     * @param {Function} callback Callback to be called when the current call stack has cleared.
+     * @deprecated
      * */
     nextTick: function (callback)
     {
@@ -50,16 +52,17 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Оборачивает переданную функцию-компаратор применяя ее на заданный атрибут объекта Backbone.Model.
+     * Creates and returns a new function that maps the passed comparator onto the specified attribute of Backbone.Model.
+     * Look at the example for details.
      * @example
      * var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'text');
-     * var a = new Backbone.Model({ id: 1, text: '1' });
-     * var b = new Backbone.Model({ id: 2, text: '2' });
+     * var a = new Backbone.Model({ id: 2, text: '1' });
+     * var b = new Backbone.Model({ id: 1, text: '2' });
      * // returns -1
      * var result = referenceComparator(a, b);
-     * @param {Function} comparatorFn Функция, которая должна быть вызвана по окончанию обработки активного события.
-     * @param {String} propertyName Функция, которая должна быть вызвана по окончанию обработки активного события.
-     * @return {Function} Обернутая функция.
+     * @param {Function} comparatorFn Wrapped comparator function. 1 or 2 arguments.
+     * @param {String} propertyName Attribute of a Backbone.Model to which the function is mapped.
+     * @return {Function} Result function.
      * */
     comparatorFor: function (comparatorFn, propertyName) {
         if (comparatorFn.length === 1) {
@@ -76,9 +79,10 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Принимает строку и создает объект LocalizedText <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
-     * @param {String} defaultText Текст, который будет установлен в каждое из свойств результирующего объекта.
-     * @return {Object} Объект <code>{ en, de, ru }</code>.
+     * Accepts string and duplicates it into every field of LocalizedText object.
+     * The LocalizedText  looks like this: <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
+     * @param {String} defaultText A text that is set into each field of the resulting LocalizedText object.
+     * @return {Object} LocalizedText object like <code>{ en, de, ru }</code>.
      * */
     createLocalizedText: function (defaultText) {
         return {
@@ -89,14 +93,14 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Javascript версия .NET метода <code>string.Format</code>.
+     * Javascript version of the Microsoft .NET framework method <code>string.Format</code>.
      * @example
      * // returns 'Hello, Javascript!'
      * core.utils.helpers.format('Hello, {0}!', 'Javascript');
-     * @param {String} text Форматируемая строка, содержащая плейсхолдеры в формате <code>{i}</code>.
-     * Где <code>i</code> - индекс подставляемого аргумента (начиная с нуля).
-     * @param {...*} arguments Агрументы, которые будут подставлены в плейсхолдеры.
-     * @return {String} Результирующая строка.
+     * @param {String} text Formatted text that contains placeholders like <code>{i}</code>.
+     * Where <code>i</code> - index of the inserted argument (starts from zero).
+     * @param {...*} arguments Arguments that will replace the placeholders in text.
+     * @return {String} Resulting string.
      * */
     format: function(text) {
         if (!_.isString(text)) {
@@ -110,18 +114,19 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Taking a number and array of strings, returns a valid plural form.
-     * Works with complex cases and valid for all supported languages (en, de, ru).
+     * Takes a number and array of strings and then returns a valid plural form.
+     * Works with complex cases and valid for all supported languages (by default for en, de and ru).
+     * The core algorithm is located in localization text `CORE.SERVICES.LOCALIZATION.PLURALFORM`.
      * @function
      * @example
      * // returns 'car'
      * core.utils.helpers.getPluralForm(1, 'car,cars');
      * // returns 'cars'
      * core.utils.helpers.getPluralForm(10, 'car,cars');
-     * @param {Number} n Число, для которого необходимо подобрать склонение.
-     * @param {String} texts Разделенные запятыми варианты фразы
-     * (для английского и немецкого - 2 фразы разделенные запятыми, для русского - 3 фразы разделенные запятыми).
-     * @return {String} Результирующая строка.
+     * @param {Number} n A number which requires a correct work form.
+     * @param {String} texts Comma separated string of word forms.
+     * (2 word forms for en and de, 3 word forms for ru).
+     * @return {String} Resulting string.
      * */
     getPluralForm: function (n, texts) {
         if (!getPluralFormIndex) {
@@ -132,7 +137,8 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Создает очередь из асинхронных операций. Поступающие операции выполняются последовательно.
+     * Creates a queue of asynchronous operations.
+     * New operation function is executed only after the previous function with the same id has executed.
      * @example
      * var save = form.save.bind(form);
      * // Three sequential calls
@@ -142,8 +148,8 @@ export default /** @lends module:core.utils.helpers */ {
      * promise3.then(function () {
      *     // Will be called only when all the 'save' operations has been fired and returned success.
      * });
-     * @param {Function} operation функция, запускающая асинхронную операцию и возвращающая объект Promise.
-     * @param {String} queueId Строковый идентификатор цепочки операций.
+     * @param {Function} operation A function that triggers asynchronous operation and returns a Promise object.
+     * @param {String} queueId String identifier of operations queue.
      * */
     enqueueOperation: function (operation, queueId) {
         if (queueCache[queueId] && queueCache[queueId].isPending()) {
@@ -157,12 +163,12 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Последовательно применяет переданные в аргументах Behavior классы на заданный экземпляр объекта.
-     * Никак не связан с применением объектов Marionette.Behavior.
+     * Sequentially applies passed Behavior objects on to the given instance.
+     * The method has nothing to do with Marionette.Behavior.
      * @example
      * core.utils.helpers.applyBehavior(this, core.models.behaviors.SelectableBehavior);
-     * @param {Object} target Объект, на который будут применены behaviors.
-     * @param {...Function} arguments 1 или более функций-конструкторов объектов Behavior.
+     * @param {Object} target Target instance that is getting behaviors applied.
+     * @param {...Function} arguments 1 or more Behavior objects (constructor functions).
      * */
     applyBehavior: function (target) {
         var behaviors = _.rest(arguments, 1);
@@ -172,15 +178,16 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Позволяет осуществить предварительную валидацию входных опций. Обычно применяется к конструкторе/инициалайзере объекта.
-     * Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingOptionError</code> в случае ошибки.
+     * Allows to perform validation of input options. The method is usually used in constructor or initializer methods.
+     * Allows to check both direct and nested properties of the options object.
+     * Throws <code>MissingOptionError</code> if the attribute is undefined.
      * @example
      * // Checks that property options.model exists.
      * core.utils.helpers.ensureOption(options, 'model');
      * // Checks that property options.property1.subProperty exists.
      * core.utils.helpers.ensureOption(options, 'property1.subProperty');
-     * @param {Object} options Проверяемый объект опций.
-     * @param {String} optionName Имя проверяемого свойства или разделенный точками путь к нему.
+     * @param {Object} options Options object to check.
+     * @param {String} optionName Property name or dot-separated property path.
      * */
     ensureOption: function (options, optionName) {
         if (!options) {
@@ -204,13 +211,13 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Позволяет осуществить предварительную валидацию свойств объекта.
-     * Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingPropertyError</code> в случае ошибки.
+     * Allows to perform validation of property in an object. Allows to check both direct and nested properties of the object.
+     * Throws <code>MissingOptionError</code> if the attribute is undefined.
      * @example
      * // Checks that property this.view.moduleRegion exists.
      * core.utils.helpers.ensureOption(this.view, 'moduleRegion');
-     * @param {Object} object Проверяемый объект.
-     * @param {String} propertyName Имя проверяемого свойства или разделенный точками путь к нему.
+     * @param {Object} object An object to check.
+     * @param {String} propertyName Property name or dot-separated property path.
      * */
     ensureProperty: function (object, propertyName) {
         if (!object) {
@@ -234,13 +241,14 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Позволяет получить свойство объекта (или подобъекта) без ошибок в случае, если сам объект или его подобъекты не заданы.
+     * Allows to retrieve a property (or subproperty) of an object. Does not throw any error if one of the properties along the way are missing.
+     * Doesn't throw if the object itself is undefined.
      * @example
      * var foo = { a: {} };
      * // returns undefined (doesn't throw an error)
      * core.utils.helpers.getPropertyOrDefault(foo, 'a.b.c.d');
-     * @param {String} propertyPath Имя получаемого свойства или разделенный точками путь к нему.
-     * @param {Object} obj Объект, на который применяется путь.
+     * @param {String} propertyPath propertyName Property name or dot-separated property path.
+     * @param {Object} obj An object to get the property from.
      * */
     getPropertyOrDefault: function (propertyPath, obj) {
         return [obj].concat(propertyPath.split('.')).reduce(function(prev, curr) {
@@ -249,12 +257,13 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Позволяет осуществить предварительную валидацию, что значение не равно <code>undefined, null, 0, '', false</code>.
-     * Кидает исключение <code>ArgumentFalsyError</code> в случае ошибки.
+     * Pre-validation helper that allows to check that function argument is not falsy.
+     * Falsy value means that the value is one of the following: <code>undefined, null, 0, '', false</code>.
+     * Throws <code>ArgumentFalsyError</code> if validation is failed.
      * @example
      * core.utils.helpers.assertArgumentNotFalsy(argument1, 'argument1');
-     * @param {*} argumentValue Проверяемое значение.
-     * @param {String} argumentName Имя проверяемой переменной. Указывается тексте исключения.
+     * @param {*} argumentValue Value to check.
+     * @param {String} argumentName Name of the checked argument. Needs to specify in the exception text.
      * */
     assertArgumentNotFalsy: function (argumentValue, argumentName) {
         if (!argumentValue) {
@@ -263,11 +272,11 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Упрощенный способ бросить объект-исключение.
+     * Simplified way to throw an error. Throws an Error object with the specified name and message.
      * @example
      * core.utils.helpers.throwError('Request is invalid.');
-     * @param {String} message Сообщение об ошибке.
-     * @param {String} [name='Error'] Имя исключения (поле Name объекта Error).
+     * @param {String} message Error message.
+     * @param {String} [name='Error'] Error name (`name` attribute of Error object).
      * */
     throwError: function (message, name) {
         var error = new Error(message);
@@ -276,7 +285,7 @@ export default /** @lends module:core.utils.helpers */ {
     },
 
     /**
-     * Бросает InvalidOperationError. Возникает внутри метода класса, когда объект находится в некорректном состоянии.
+     * Throws InvalidOperationError. The exception should be thrown when a class is in invalid state to call the checked method.
      * @example
      * // Inside of implementation of some Marionette.View.
      * addKeyboardListener: function (key, callback) {
@@ -289,7 +298,7 @@ export default /** @lends module:core.utils.helpers */ {
      *     }, this);
      * },
      * // ...
-     * @param {String} [message='Invalid operation'] Сообщение об ошибке.
+     * @param {String} [message='Invalid operation'] Error message.
      * */
     throwInvalidOperationError: function (message) {
         this.throwError(message || 'Invalid operation', 'InvalidOperationError');
@@ -304,7 +313,7 @@ export default /** @lends module:core.utils.helpers */ {
      *         utilsApi.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
      *     }
      *     // Some code here ...
-     * @param {String} [message='Invalid format'] Сообщение об ошибке.
+     * @param {String} [message='Invalid format'] Error message.
      * */
     throwFormatError: function (message) {
         this.throwError(message || 'Invalid format', 'FormatError');
@@ -320,7 +329,7 @@ export default /** @lends module:core.utils.helpers */ {
      *         utilsApi.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
      *     }
      *     // Some code here ...
-     * @param {String} [message='Invalid argument'] Сообщение об ошибке.
+     * @param {String} [message='Invalid argument'] Error message.
      * */
     throwArgumentError: function (message) {
         this.throwError(message || 'Invalid argument', 'ArgumentError');
@@ -336,7 +345,7 @@ export default /** @lends module:core.utils.helpers */ {
      *     utilsApi.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
      *     // Some code here ...
      * }
-     * @param {String} [message='The operation is not supported'] Сообщение об ошибке.
+     * @param {String} [message='The operation is not supported'] Error message.
      * */
     throwNotSupportedError: function (message) {
         this.throwError(message || 'The operation is not supported', 'NotSupportedError');
@@ -350,7 +359,7 @@ export default /** @lends module:core.utils.helpers */ {
      * navigate() {
      *     utilsApi.this.throwNotImplementedError();
      * }
-     * @param {String} [message='The operation is not implemented'] Сообщение об ошибке.
+     * @param {String} [message='The operation is not implemented'] Error message.
      * */
     throwNotImplementedError: function (message) {
         this.throwError(message || 'The operation is not implemented', 'NotImplementedError');
@@ -359,7 +368,7 @@ export default /** @lends module:core.utils.helpers */ {
     /**
      * Throws NotFoundError. The exception should be thrown when a requested object could not be found.
      * For example: we looked up in the database and could find a person with requested id.
-     * @param {String} [message='Object not found'] Сообщение об ошибке.
+     * @param {String} [message='Object not found'] Error message.
      * */
     throwNotFoundError: function (message) {
         this.throwError(message || 'Object not found', 'NotFoundError');

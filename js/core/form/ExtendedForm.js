@@ -13,7 +13,7 @@ import CommonField from './fields/CommonField';
 /**
  * @name ExtendedForm
  * @memberof module:core.form
- * @class Расширенная версия формы [Backbone.Form](https://github.com/powmedia/backbone-forms).
+ * @class [Backbone.Form](https://github.com/powmedia/backbone-forms) extended with some additional features.
  * @extends Backbone.Form
  * */
 
