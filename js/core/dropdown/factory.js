@@ -16,7 +16,8 @@ import MenuPanelView from './views/MenuPanelView';
 import DropdownView from './views/DropdownView';
 
 /**
- * Фабрика контролов с выпадающими панелями
+ * The factory covers common use cases of Popout/Dropdown views.
+ * You can create a simple menu (and other stuff like this) in one click without lots of manual work.
  * @namespace factory
  * @memberof module:core.dropdown
  * */

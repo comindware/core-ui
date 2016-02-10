@@ -53,7 +53,7 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
 var api = {
     lib: libApi,
     /**
-     * Базовые сервисы системы
+     * Services of general use the UI is built on.
      * @namespace
      * */
     services: {
@@ -74,7 +74,7 @@ var api = {
      * */
     collections: {
         /**
-         * Backbone.Collection behaviors of general use.
+         * Backbone collection behaviors of general use.
          * @namespace
          * */
         behaviors: {
@@ -84,7 +84,7 @@ var api = {
         VirtualCollection: VirtualCollection
     },
     /**
-     * Backbone-модели общего назначения
+     * Backbone models of general use.
      * @namespace
      * */
     models: {
@@ -105,33 +105,32 @@ var api = {
         SplitPanelView: SplitPanelView
     },
     /**
-     * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
-     * Не подпадающий под концепцию этих компонентов дизайн выпадающих элементов должен быть пересмотрен.
+     * Dropdown components of general use. It may be used in menus, dropdown lists and more complex cases like displaying some fancy about-me panel.
      * @namespace
      * */
     dropdown: dropdownApi,
     /**
-     * Работа с данными: форма и редакторы. Базируется на библиотеке [Backbone.Form](https://github.com/powmedia/backbone-forms).
+     * A large set of editors and related classes built on top of [Backbone.Form](https://github.com/powmedia/backbone-forms) library.
      * @namespace
      * */
     form: formApi,
     /**
-     * Списки
+     * List and Grid components with data virtualization.
      * @namespace
      * */
     list: listApi,
     /**
-     * Список с native-скроллом
+     * List and Grid components without data virtualization.
      * @namespace
      * */
     nativeGrid: nativeGridApi,
     /**
-     * Объединяет набор сервисов и справочников общего назначения.
+     * Combines useful helper classes, functions and constants.
      * @namespace
      * */
     utils: utilsApi,
     /**
-     * Мета-информация
+     * Constants used inside the library.
      * @namespace
      * */
     meta: meta_,

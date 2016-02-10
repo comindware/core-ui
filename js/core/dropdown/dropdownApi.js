@@ -19,12 +19,12 @@ import factory from './factory';
 
 export default /** @lends module:core.dropdown */ {
     /**
-     * Dropdown/Popout View и стандартные View, которые могут быть установлены в качестве кнопок и панелей.
+     * DropdownView, PopoutView and panel/button views useful in common cases.
      * @namespace
      * */
     views: {
         /**
-         * Marionette Behavior, которые требуются для работы ряда кастомных View при установке в dropdown контролы.
+         * Marionette Behavior which are required on panel/button views when some config options are enabled.
          * @namespace
          * */
         behaviors: {

@@ -14,12 +14,13 @@ import template from '../templates/defaultButton.hbs';
 /**
  * @name DefaultButtonView
  * @memberof module:core.dropdown.views
- * @class Тривиальная реализация button View. Отображает свойство <code>text</code> передаваемой ей модели.
- * Используется в качестве buttonView в фабричном методе {@link module:core.dropdown.factory createMenu}.
+ * @class Trivial implementation of a button View that displays plain text without any styles.
+ * The <code>text</code> attribute of the passed model is displayed.
+ * Factory method {@link module:core.dropdown.factory createMenu} uses this view to display menu button.
  * @constructor
  * @extends Marionette.ItemView
- * @param {Object} options Объект опций.
- * @param {Backbone.Model} options.model Модель данных. Должна содержать атрибут <code>text</code>.
+ * @param {Object} options Options object.
+ * @param {Backbone.Model} options.model Data model. Must contain <code>text</code> attribute.
  * */
 
 export default Marionette.ItemView.extend({
