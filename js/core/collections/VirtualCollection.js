@@ -296,6 +296,11 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this.trigger('sync', collection, resp, options);
     },
 
+    __onAddDelayed: _.debounce(function (options) {
+        this.__rebuildIndex();
+        this.trigger('reset', this, options);
+    }, 10),
+
     __onAdd: function (model, collection, options) {
         if (options.at !== undefined) {
             // Updating index
@@ -329,11 +334,7 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         }
 
         if (options.delayed !== false && this.options.delayedAdd) {
-            helpers.nextTick(function ()
-            {
-                this.__rebuildIndex();
-                this.trigger('reset', this, options);
-            }.bind(this), this.syncRoot);
+            this.__onAddDelayed(options);
         } else {
             this.__rebuildIndex();
             this.trigger('reset', this, options);
