@@ -15,18 +15,19 @@ let classes = {
 };
 
 /**
- * Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
- * быть переданы как свойства behavior (см. документацию Marionette).
+ * Marionette.Behavior constructor shall never be called manually.
+ * The options described here should be passed as behavior options (look into Marionette documentation for details).
  * @name CustomAnchorBehavior
  * @memberof module:core.dropdown.views.behaviors
- * @class Behavior требуется при использовании {@link module:core.dropdown.views.PopoutView PopoutView} в режиме <code>customAnchor: true</code>.
- * Указанная в свойстве <code>buttonView</code> View должна иметь данный behavior, определяющий место привязки треугольника для бабла (якорь, anchor).
+ * @class The behavior must be applied to a button View if {@link module:core.dropdown.views.PopoutView PopoutView}
+ * has option <code>customAnchor: true</code>. The button view should be passed into <code>buttonView</code> option of a PopoutView.
+ * The behavior defines the place where the speech bubble triangle (we call it anchor) should be placed.
  * @constructor
  * @extends Marionette.Behavior
- * @param {Object} options Объект опций
- * @param {String} [options.anchor] jQuery-селектор для DOM-элемента, который используется в качестве якоря.
- *                                  Если не указан, используется рутовый элемент View.
- * @param {Marionette.View} view View на которую применен данных Behavior
+ * @param {Object} options Options object.
+ * @param {String} [options.anchor] jQuery-selector pointing to the DOM-element that should be used as an anchor.
+ *                                  If omitted, root view element ($el) is used.
+ * @param {Marionette.View} view A view the behavior is applied to.
  * */
 
 export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */ {

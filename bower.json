@@ -8,7 +8,7 @@
   "moduleType": [
     "amd"
   ],
-  "license": "Proprietary",
+  "license": "MIT",
   "homepage": "https://www.comindware.com/",
   "dependencies": {
     "Keypress": "2.1.0",

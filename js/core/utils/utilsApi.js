@@ -34,27 +34,27 @@ export default /** @lends module:core.utils */ {
      * */
     comparators: comparators,
     /**
-     * Набор вспомогательных методов общего назначения.
+     * Useful methods used across the library.
      * @namespace
      * */
     helpers: helpers,
     /**
-     * Набор вспомогательных методов для манипуляций с html.
+     * Useful methods to generate HTML and manipulate DOM-elements.
      * @namespace
      * */
     htmlHelpers: htmlHelpers,
     /**
-     * Набор вспомогательных методов для работы с датами и временем.
+     * Date formatters and related methods.
      * @namespace
      * */
     dateHelpers: dateHelpers,
     /**
-     * Набор вспомогательных методов для работы с cookies.
+     * Methods to manipulate cookies data.
      * @namespace
      * */
     cookieHelpers: cookieHelpers,
     /**
-     * Справочник констант с кодами клавиатуры.
+     * Enumeration of key codes used in keyboard events.
      * @namespace
      * */
     keyCode: keyCode
