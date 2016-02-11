@@ -16,14 +16,16 @@ import SearchMoreModel from '../models/SearchMoreModel';
 /**
  * @name BaseReferenceEditorController
  * @memberof module:core.form.editors.reference.controllers
- * @class Провайдер данных для {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
- * Запрос к данным осуществляется через переданную в опции (<code>options.collection</code>) Backbone-коллекцию.
- * В различных сценариях автоматически выбирается использование клиентской или серверной валидации.
- * @param {Object} options Объект опций.
- * @param {Backbone.Collection} options.collection Backbone.Collection объектов с атрибутами <code>{ id, text }</code>.
- * Коллекция должна реализовывать метод <code>fetch</code> с текстовой фильтрацией: <code>fetch({ data: { filter: 'myFilterText' } })</code>.
- * Результатом выполнения метода <code>fetch</code> является заполненная данными коллекция и установленное свойство <code>collection.totalCount</code>,
- * указывающее суммарное количество элементов, удовлетворяющих фильтру (может быть больше чем количество полученных).
+ * @class Base data provider class for {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
+ * Data request is performed by fetching Backbone.Collection passed via <code>options.collection</code> option.
+ * Various scenarios are covered and server request is made only if it is required.
+ * @param {Object} options Options object.
+ * @param {Backbone.Collection} options.collection Backbone.Collection of objects. The objects must have <code>id</code> and <code>text</code> attributes.
+ * The collection must implement <code>fetch()</code> method that supports text filtration.
+ * For example, the call <code>collection.fetch({ data: { filter: 'myFilterText' } })</code> must
+ * fetch the objects which contains 'myFilterText' in it's text attribute.
+ * Besides that, the <code>collection.totalCount</code> attribute must be updated during the fetch and contain
+ * the total count of object with the applied filter on server.
  * */
 
 export default Marionette.Controller.extend( /** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
@@ -35,10 +37,10 @@ export default Marionette.Controller.extend( /** @lends module:core.form.editors
     },
 
     /**
-     * Запрос на получение данных с указанными фильтрами.
-     * @param {Object} options Объект опций.
-     * @param {Object} options.text Активный текстовый фильтр.
-     * @return {Promise} объект-Promise, срабатывающий по окончанию загрузки.
+     * Requests data with a text filter applied.
+     * @param {Object} options Options object.
+     * @param {Object} options.text Text filter filter to apply or <code>null</code>.
+     * @return {Promise} Promise object that resolves when the data is ready.
      * */
     fetch: function(options) {
         options = options || {};
@@ -74,14 +76,14 @@ export default Marionette.Controller.extend( /** @lends module:core.form.editors
     },
 
     /*
-    * Объект Backbone.Collection, используемый для чтения данных. Напрямую не модифицируется.
+    * Backbone.Collection that should be used to read data. The data should not be fetched from this object directly.
+    * Use the controller's <code>fetch()</code> method instead.
     * */
     collection: null,
 
     /**
-     * Запрос на осуществление навигации по заданному объекту (к примеру, открытие карточки пользователя).
-     * Должен быть реализован в классе-наследнике.
-     * @param {Backbone.Model} model Модель объекта, на который требуется осуществить навигацию.
+     * Handles a navigation request to an object. The method is abstract.
+     * @param {Backbone.Model} model Data model that describes the object to navigate to.
      * */
     navigate: function(model) {
         helpers.throwError('Not Implemented.', 'NotImplementedError');

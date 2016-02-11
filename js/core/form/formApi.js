@@ -54,21 +54,21 @@ import './validators/phoneValidator';
 var api = /** @lends module:core.form */ {
     ExtendedForm: ExtendedForm_,
     /**
-     * Объекты Marionette.Behaviour, упрощающие использования модуля форм.
+     * Marionette.Behavior classes useful with Backbone.Form.
      * @namespace
      * */
     behaviors: {
         BackboneFormBehavior: BackboneFormBehavior
     },
     /**
-     * Расширенная версия Backbone.Form.Field, поддерживающая ошибки валидации и текстовые подсказки.
+     * Extended version of Backbone.Form.Field which is able to display validation errors and information tooltips.
      * @namespace
      * */
     fields: {
         CommonField: CommonField
     },
     /**
-     * Редакторы
+     * A lot of editors
      * @namespace
      * */
     editors: {
@@ -86,7 +86,7 @@ var api = /** @lends module:core.form */ {
             }
         },
         /**
-         * Базовые классы для реализации редакторов.
+         * Base classes for implementing editors on various Marionette Views.
          * @namespace
          * */
         base: {
@@ -96,12 +96,12 @@ var api = /** @lends module:core.form */ {
             BaseCompositeEditorView: BaseCompositeEditorView
         },
         /**
-         * Объекты для использования и кастомизации редактора ReferenceEditorView.
+         * Reference editor data providers and internal implementation.
          * @namespace
          * */
         reference: {
             /**
-             * Базовая реализация дата-провайдеров для ReferenceEditorView.
+             * Base implementation of data providers for ReferenceEditorView.
              * @namespace
              * */
             controllers: {

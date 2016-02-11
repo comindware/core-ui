@@ -112,8 +112,7 @@ export default Backbone.Form.extend(/** @lends module:core.form.ExtendedForm.pro
 
     /**
      * Validate the data
-     *
-     * @return {Object}       Validation errors
+     * @return {Object} Validation errors
      */
     validate: function (options) {
         var self = this,
