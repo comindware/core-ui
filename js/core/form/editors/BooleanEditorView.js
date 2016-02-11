@@ -18,11 +18,10 @@ const defaultOptions = {
 /**
  * @name BooleanEditorView
  * @memberof module:core.form.editors
- * @class Простой Checkbox эдитор. Поддерживаемый тип данных: <code>Boolean</code>.
+ * @class A simple Checkbox editor. Supported data type: <code>Boolean</code>.
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
- * @param {String} [options.displayText] Текст справа от чек-бокса. Клик по тексту вызывает триггер чек-бокса.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+ * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
  * */
 Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
     initialize: function (options) {

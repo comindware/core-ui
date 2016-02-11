@@ -21,11 +21,11 @@ const defaultOptions = {
 /**
  * @name DateTimeEditorView
  * @memberof module:core.form.editors
- * @class Редактор даты и времени. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
- * (например, '2015-07-20T10:46:37Z').
+ * @class Combined date and time editor. Supported data type: <code>String</code> in ISO8601 format
+ * (for example, '2015-07-20T10:46:37Z').
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. Doesn't have it's own options.
+ * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * */
 Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize: function(options) {

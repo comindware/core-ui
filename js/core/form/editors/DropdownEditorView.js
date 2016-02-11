@@ -29,7 +29,7 @@ const defaultOptions = {
 /**
  * @name DropdownEditorView
  * @memberof module:core.form.editors
- * @class Редактор для выбора значения из выпадающего списка. Тип данных редактируемого значения должен
+ * @class Dropdown editor that allows to select a value from a list. Тип данных редактируемого значения должен
  * совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
@@ -39,8 +39,8 @@ const defaultOptions = {
  * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
  * текста из поля, отличного от <code>text</code>. В случае передачи Backbone.Collection, дальнейшее ее изменение
  * отражается в выпадающем списке.
- * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
- * @param {Boolean} [options.enableSearch=false] Отображать строку поиска в выпадающей панели.
+ * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
+ * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
  * */
 Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
     initialize: function (options) {

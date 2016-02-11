@@ -19,11 +19,11 @@ const defaultOptions = {
 /**
  * @name DateEditorView
  * @memberof module:core.form.editors
- * @class Редактор даты: дропдаун с календарем. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
- * (например, '2015-07-20T00:00:00Z').
+ * @class Calendar editor. The calendar opens in dropdown panel. Supported data type: <code>String</code> in ISO8601 format
+ * (for example, '2015-07-20T00:00:00Z').
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. Doesn't have it's own options.
+ * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * */
 Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
     initialize: function (options) {
