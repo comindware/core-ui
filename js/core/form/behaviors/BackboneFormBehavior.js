@@ -93,27 +93,30 @@ let MariotizedExtendedForm = ExtendedForm.extend({
 });
 
 /**
- * Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
- * быть переданы как свойства behavior (см. документацию Marionette).
+ * Marionette.Behavior constructor shall never be called manually.
+ * The options described here should be passed as behavior options (look into Marionette documentation for details).
  * @name BackboneFormBehavior
  * @memberof module:core.form.behaviors
- * @class Данный Behavior является удобным средством для превращения любого Marionette.View в форму Backbone.Form.
- * Возможные события:<ul>
- *     <li><code>'form:render' (form)</code> - закончена отрисовка формы во View.</li>
+ * @class This behavior turns any Marionette.View into Backbone.Form. To do this Backbone.Form scans this.$el at the moment
+ * defined by <code>options.renderStrategy</code> and puts field and editors defined in <code>options.schema</code> into
+ * DOM-elements with corresponding Backbone.Form data-attributes.
+ * It's important to note that Backbone.Form will scan the whole this.$el including nested regions that might lead to unexpected behavior.
+ * Possible events:<ul>
+ *     <li><code>'form:render' (form)</code> - the form has rendered and available via <code>form</code> property of the view.</li>
  * </ul>
  * @constructor
  * @extends Marionette.Behavior
- * @param {Object} options Объект опций
- * @param {Object|Function} options.schema Схема Backbone.Form в [стандартном формате](https://github.com/powmedia/backbone-forms).
- * @param {Object|Function} [options.model] Модель, которую необходимо привязать к данной форме. По умолчанию используется <code>this.model</code>.
- * @param {String} [options.renderStrategy='show'] Определяет момент, когда осуществляется отрисовка эдиторов во View. Варианты:<ul>
- *     <li><code>'render'</code> - В методе onRender.</li>
- *     <li><code>'show'</code> - В методе onShow.</li>
- *     <li><code>'manual'</code> - Метод отрисовки (<code>renderForm()</code>) должен быть вызван вручную.</li>
+ * @param {Object} options Options object.
+ * @param {Object|Function} options.schema Backbone.Form schema as it's listed in [docs](https://github.com/powmedia/backbone-forms).
+ * @param {Object|Function} [options.model] Backbone.Model that the form binds it's editors to. <code>this.model</code> is used by default.
+ * @param {String} [options.renderStrategy='show'] Defines a moment when the form is applied to the view. May be one of:<ul>
+ *     <li><code>'render'</code> - On view's 'render' event.</li>
+ *     <li><code>'show'</code> - On view's 'show' event.</li>
+ *     <li><code>'manual'</code> - Form render method (<code>renderForm()</code>) must be called manually.</li>
  *     </ul>
- * @param {Backbone.Form.Field} [options.field] Backbone.Form.Field, который необходимо использовать при отображении редакторов в этой форме.
- * По умолчанию используется <code>core.form.fields.CommonField</code>.
- * @param {Marionette.View} view View на которую применен данных Behavior
+ * @param {Backbone.Form.Field} [options.field] Backbone.Form.Field that will be used to render fields of the form.
+ * The field <code>core.form.fields.CommonField</code> is used by default.
+ * @param {Marionette.View} view A view the behavior is applied to.
  * */
 
 export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.BackboneFormBehavior.prototype */{
