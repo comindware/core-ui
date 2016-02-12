@@ -200,7 +200,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var api = {
 	  lib: _libApi2.default,
 	  /**
-	   * Базовые сервисы системы
+	   * Services of general use the UI is built on.
 	   * @namespace
 	   * */
 	  services: {
@@ -221,7 +221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * */
 	  collections: {
 	    /**
-	     * Backbone.Collection behaviors of general use.
+	     * Backbone collection behaviors of general use.
 	     * @namespace
 	     * */
 	    behaviors: {
@@ -231,7 +231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    VirtualCollection: _VirtualCollection2.default
 	  },
 	  /**
-	   * Backbone-модели общего назначения
+	   * Backbone models of general use.
 	   * @namespace
 	   * */
 	  models: {
@@ -252,33 +252,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    SplitPanelView: _SplitPanelView2.default
 	  },
 	  /**
-	   * Dropdown-компоненты. Должны использоваться для любой логики выпадающих меню, панелей и подобного.
-	   * Не подпадающий под концепцию этих компонентов дизайн выпадающих элементов должен быть пересмотрен.
+	   * Dropdown components of general use. It may be used in menus, dropdown lists and more complex cases like displaying some fancy about-me panel.
 	   * @namespace
 	   * */
 	  dropdown: _dropdownApi2.default,
 	  /**
-	   * Работа с данными: форма и редакторы. Базируется на библиотеке [Backbone.Form](https://github.com/powmedia/backbone-forms).
+	   * A large set of editors and related classes built on top of [Backbone.Form](https://github.com/powmedia/backbone-forms) library.
 	   * @namespace
 	   * */
 	  form: _formApi2.default,
 	  /**
-	   * Списки
+	   * List and Grid components with data virtualization.
 	   * @namespace
 	   * */
 	  list: _listApi2.default,
 	  /**
-	   * Список с native-скроллом
+	   * List and Grid components without data virtualization.
 	   * @namespace
 	   * */
 	  nativeGrid: _nativeGridApi2.default,
 	  /**
-	   * Объединяет набор сервисов и справочников общего назначения.
+	   * Combines useful helper classes, functions and constants.
 	   * @namespace
 	   * */
 	  utils: _utilsApi2.default,
 	  /**
-	   * Мета-информация
+	   * Constants used inside the library.
 	   * @namespace
 	   * */
 	  meta: _Meta2.default,
@@ -51266,27 +51265,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * */
 	  comparators: comparators,
 	  /**
-	   * Набор вспомогательных методов общего назначения.
+	   * Useful methods used across the library.
 	   * @namespace
 	   * */
 	  helpers: helpers,
 	  /**
-	   * Набор вспомогательных методов для манипуляций с html.
+	   * Useful methods to generate HTML and manipulate DOM-elements.
 	   * @namespace
 	   * */
 	  htmlHelpers: htmlHelpers,
 	  /**
-	   * Набор вспомогательных методов для работы с датами и временем.
+	   * Date formatters and related methods.
 	   * @namespace
 	   * */
 	  dateHelpers: dateHelpers,
 	  /**
-	   * Набор вспомогательных методов для работы с cookies.
+	   * Methods to manipulate cookies data.
 	   * @namespace
 	   * */
 	  cookieHelpers: cookieHelpers,
 	  /**
-	   * Справочник констант с кодами клавиатуры.
+	   * Enumeration of key codes used in keyboard events.
 	   * @namespace
 	   * */
 	  keyCode: keyCode
@@ -51699,12 +51698,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = /** @lends module:core.utils.helpers */{
 	    /**
-	    * Метод вызывает функцию <code>callback()</code> по прошествии <code>delay</code> миллисекунд с момента
-	    * последнего вызова этого метода с заданным <code>someUniqueId</code>.
-	    * @param {String} someUniqueId Идентификатор вызова.
-	    * @param {Function} callback Функция, которая должна быть вызвана по прошествии заданного интервала времени.
-	    * @param {Number} delay Задержка вызова функции в миллисекундах.
-	    * */
+	     * Deprecated. Use <code>_.debounce()</code> instead. Defers invoking the function until after `delay` milliseconds
+	     * have elapsed since the last time it was invoked.
+	     * @param {String} someUniqueId Function identifier.
+	     * @param {Function} callback The function tobe called after delay.
+	     * @param {Number} delay Callback delay in milliseconds.
+	     * @deprecated
+	     * */
 	    setUniqueTimeout: function setUniqueTimeout(someUniqueId, callback, delay) {
 	        var timeoutId = timeoutCache[someUniqueId];
 	        if (timeoutId) {
@@ -51719,24 +51719,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Метод вызывает функцию <code>callback()</code> по окончанию обработки активного события (аналогично setTimeout(fn, 10)).
-	     * @param {Function} callback Функция, которая должна быть вызвана по окончанию обработки активного события.
+	     * Deprecated. Use <code>_.defer()</code> instead. Defers invoking the function until the current call stack has cleared.
+	     * @param {Function} callback Callback to be called when the current call stack has cleared.
+	     * @deprecated
 	     * */
 	    nextTick: function nextTick(callback) {
 	        return setTimeout(callback, 10);
 	    },
 	
 	    /**
-	     * Оборачивает переданную функцию-компаратор применяя ее на заданный атрибут объекта Backbone.Model.
+	     * Creates and returns a new function that maps the passed comparator onto the specified attribute of Backbone.Model.
+	     * Look at the example for details.
 	     * @example
 	     * var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'text');
-	     * var a = new Backbone.Model({ id: 1, text: '1' });
-	     * var b = new Backbone.Model({ id: 2, text: '2' });
+	     * var a = new Backbone.Model({ id: 2, text: '1' });
+	     * var b = new Backbone.Model({ id: 1, text: '2' });
 	     * // returns -1
 	     * var result = referenceComparator(a, b);
-	     * @param {Function} comparatorFn Функция, которая должна быть вызвана по окончанию обработки активного события.
-	     * @param {String} propertyName Функция, которая должна быть вызвана по окончанию обработки активного события.
-	     * @return {Function} Обернутая функция.
+	     * @param {Function} comparatorFn Wrapped comparator function. 1 or 2 arguments.
+	     * @param {String} propertyName Attribute of a Backbone.Model to which the function is mapped.
+	     * @return {Function} Result function.
 	     * */
 	    comparatorFor: function comparatorFor(comparatorFn, propertyName) {
 	        if (comparatorFn.length === 1) {
@@ -51753,9 +51755,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Принимает строку и создает объект LocalizedText <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
-	     * @param {String} defaultText Текст, который будет установлен в каждое из свойств результирующего объекта.
-	     * @return {Object} Объект <code>{ en, de, ru }</code>.
+	     * Accepts string and duplicates it into every field of LocalizedText object.
+	     * The LocalizedText  looks like this: <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
+	     * @param {String} defaultText A text that is set into each field of the resulting LocalizedText object.
+	     * @return {Object} LocalizedText object like <code>{ en, de, ru }</code>.
 	     * */
 	    createLocalizedText: function createLocalizedText(defaultText) {
 	        return {
@@ -51766,14 +51769,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Javascript версия .NET метода <code>string.Format</code>.
+	     * Javascript version of the Microsoft .NET framework method <code>string.Format</code>.
 	     * @example
 	     * // returns 'Hello, Javascript!'
 	     * core.utils.helpers.format('Hello, {0}!', 'Javascript');
-	     * @param {String} text Форматируемая строка, содержащая плейсхолдеры в формате <code>{i}</code>.
-	     * Где <code>i</code> - индекс подставляемого аргумента (начиная с нуля).
-	     * @param {...*} arguments Агрументы, которые будут подставлены в плейсхолдеры.
-	     * @return {String} Результирующая строка.
+	     * @param {String} text Formatted text that contains placeholders like <code>{i}</code>.
+	     * Where <code>i</code> - index of the inserted argument (starts from zero).
+	     * @param {...*} arguments Arguments that will replace the placeholders in text.
+	     * @return {String} Resulting string.
 	     * */
 	    format: function format(text) {
 	        if (!_.isString(text)) {
@@ -51787,18 +51790,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Taking a number and array of strings, returns a valid plural form.
-	     * Works with complex cases and valid for all supported languages (en, de, ru).
+	     * Takes a number and array of strings and then returns a valid plural form.
+	     * Works with complex cases and valid for all supported languages (by default for en, de and ru).
+	     * The core algorithm is located in localization text `CORE.SERVICES.LOCALIZATION.PLURALFORM`.
 	     * @function
 	     * @example
 	     * // returns 'car'
 	     * core.utils.helpers.getPluralForm(1, 'car,cars');
 	     * // returns 'cars'
 	     * core.utils.helpers.getPluralForm(10, 'car,cars');
-	     * @param {Number} n Число, для которого необходимо подобрать склонение.
-	     * @param {String} texts Разделенные запятыми варианты фразы
-	     * (для английского и немецкого - 2 фразы разделенные запятыми, для русского - 3 фразы разделенные запятыми).
-	     * @return {String} Результирующая строка.
+	     * @param {Number} n A number which requires a correct work form.
+	     * @param {String} texts Comma separated string of word forms.
+	     * (2 word forms for en and de, 3 word forms for ru).
+	     * @return {String} Resulting string.
 	     * */
 	    getPluralForm: function getPluralForm(n, texts) {
 	        if (!getPluralFormIndex) {
@@ -51809,7 +51813,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Создает очередь из асинхронных операций. Поступающие операции выполняются последовательно.
+	     * Creates a queue of asynchronous operations.
+	     * New operation function is executed only after the previous function with the same id has executed.
 	     * @example
 	     * var save = form.save.bind(form);
 	     * // Three sequential calls
@@ -51819,8 +51824,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * promise3.then(function () {
 	     *     // Will be called only when all the 'save' operations has been fired and returned success.
 	     * });
-	     * @param {Function} operation функция, запускающая асинхронную операцию и возвращающая объект Promise.
-	     * @param {String} queueId Строковый идентификатор цепочки операций.
+	     * @param {Function} operation A function that triggers asynchronous operation and returns a Promise object.
+	     * @param {String} queueId String identifier of operations queue.
 	     * */
 	    enqueueOperation: function enqueueOperation(operation, queueId) {
 	        if (queueCache[queueId] && queueCache[queueId].isPending()) {
@@ -51834,12 +51839,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Последовательно применяет переданные в аргументах Behavior классы на заданный экземпляр объекта.
-	     * Никак не связан с применением объектов Marionette.Behavior.
+	     * Sequentially applies passed Behavior objects on to the given instance.
+	     * The method has nothing to do with Marionette.Behavior.
 	     * @example
 	     * core.utils.helpers.applyBehavior(this, core.models.behaviors.SelectableBehavior);
-	     * @param {Object} target Объект, на который будут применены behaviors.
-	     * @param {...Function} arguments 1 или более функций-конструкторов объектов Behavior.
+	     * @param {Object} target Target instance that is getting behaviors applied.
+	     * @param {...Function} arguments 1 or more Behavior objects (constructor functions).
 	     * */
 	    applyBehavior: function applyBehavior(target) {
 	        var behaviors = _.rest(arguments, 1);
@@ -51849,15 +51854,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Позволяет осуществить предварительную валидацию входных опций. Обычно применяется к конструкторе/инициалайзере объекта.
-	     * Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingOptionError</code> в случае ошибки.
+	     * Allows to perform validation of input options. The method is usually used in constructor or initializer methods.
+	     * Allows to check both direct and nested properties of the options object.
+	     * Throws <code>MissingOptionError</code> if the attribute is undefined.
 	     * @example
 	     * // Checks that property options.model exists.
 	     * core.utils.helpers.ensureOption(options, 'model');
 	     * // Checks that property options.property1.subProperty exists.
 	     * core.utils.helpers.ensureOption(options, 'property1.subProperty');
-	     * @param {Object} options Проверяемый объект опций.
-	     * @param {String} optionName Имя проверяемого свойства или разделенный точками путь к нему.
+	     * @param {Object} options Options object to check.
+	     * @param {String} optionName Property name or dot-separated property path.
 	     * */
 	    ensureOption: function ensureOption(options, optionName) {
 	        if (!options) {
@@ -51881,13 +51887,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Позволяет осуществить предварительную валидацию свойств объекта.
-	     * Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingPropertyError</code> в случае ошибки.
+	     * Allows to perform validation of property in an object. Allows to check both direct and nested properties of the object.
+	     * Throws <code>MissingOptionError</code> if the attribute is undefined.
 	     * @example
 	     * // Checks that property this.view.moduleRegion exists.
 	     * core.utils.helpers.ensureOption(this.view, 'moduleRegion');
-	     * @param {Object} object Проверяемый объект.
-	     * @param {String} propertyName Имя проверяемого свойства или разделенный точками путь к нему.
+	     * @param {Object} object An object to check.
+	     * @param {String} propertyName Property name or dot-separated property path.
 	     * */
 	    ensureProperty: function ensureProperty(object, propertyName) {
 	        if (!object) {
@@ -51911,13 +51917,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Позволяет получить свойство объекта (или подобъекта) без ошибок в случае, если сам объект или его подобъекты не заданы.
+	     * Allows to retrieve a property (or subproperty) of an object. Does not throw any error if one of the properties along the way are missing.
+	     * Doesn't throw if the object itself is undefined.
 	     * @example
 	     * var foo = { a: {} };
 	     * // returns undefined (doesn't throw an error)
 	     * core.utils.helpers.getPropertyOrDefault(foo, 'a.b.c.d');
-	     * @param {String} propertyPath Имя получаемого свойства или разделенный точками путь к нему.
-	     * @param {Object} obj Объект, на который применяется путь.
+	     * @param {String} propertyPath propertyName Property name or dot-separated property path.
+	     * @param {Object} obj An object to get the property from.
 	     * */
 	    getPropertyOrDefault: function getPropertyOrDefault(propertyPath, obj) {
 	        return [obj].concat(propertyPath.split('.')).reduce(function (prev, curr) {
@@ -51926,12 +51933,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Позволяет осуществить предварительную валидацию, что значение не равно <code>undefined, null, 0, '', false</code>.
-	     * Кидает исключение <code>ArgumentFalsyError</code> в случае ошибки.
+	     * Pre-validation helper that allows to check that function argument is not falsy.
+	     * Falsy value means that the value is one of the following: <code>undefined, null, 0, '', false</code>.
+	     * Throws <code>ArgumentFalsyError</code> if validation is failed.
 	     * @example
 	     * core.utils.helpers.assertArgumentNotFalsy(argument1, 'argument1');
-	     * @param {*} argumentValue Проверяемое значение.
-	     * @param {String} argumentName Имя проверяемой переменной. Указывается тексте исключения.
+	     * @param {*} argumentValue Value to check.
+	     * @param {String} argumentName Name of the checked argument. Needs to specify in the exception text.
 	     * */
 	    assertArgumentNotFalsy: function assertArgumentNotFalsy(argumentValue, argumentName) {
 	        if (!argumentValue) {
@@ -51940,11 +51948,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Упрощенный способ бросить объект-исключение.
+	     * Simplified way to throw an error. Throws an Error object with the specified name and message.
 	     * @example
 	     * core.utils.helpers.throwError('Request is invalid.');
-	     * @param {String} message Сообщение об ошибке.
-	     * @param {String} [name='Error'] Имя исключения (поле Name объекта Error).
+	     * @param {String} message Error message.
+	     * @param {String} [name='Error'] Error name (`name` attribute of Error object).
 	     * */
 	    throwError: function throwError(message, name) {
 	        var error = new Error(message);
@@ -51953,7 +51961,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Бросает InvalidOperationError. Возникает внутри метода класса, когда объект находится в некорректном состоянии.
+	     * Throws InvalidOperationError. The exception should be thrown when a class is in invalid state to call the checked method.
 	     * @example
 	     * // Inside of implementation of some Marionette.View.
 	     * addKeyboardListener: function (key, callback) {
@@ -51966,7 +51974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *     }, this);
 	     * },
 	     * // ...
-	     * @param {String} [message='Invalid operation'] Сообщение об ошибке.
+	     * @param {String} [message='Invalid operation'] Error message.
 	     * */
 	    throwInvalidOperationError: function throwInvalidOperationError(message) {
 	        this.throwError(message || 'Invalid operation', 'InvalidOperationError');
@@ -51981,7 +51989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *         utilsApi.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
 	     *     }
 	     *     // Some code here ...
-	     * @param {String} [message='Invalid format'] Сообщение об ошибке.
+	     * @param {String} [message='Invalid format'] Error message.
 	     * */
 	    throwFormatError: function throwFormatError(message) {
 	        this.throwError(message || 'Invalid format', 'FormatError');
@@ -51997,7 +52005,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *         utilsApi.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
 	     *     }
 	     *     // Some code here ...
-	     * @param {String} [message='Invalid argument'] Сообщение об ошибке.
+	     * @param {String} [message='Invalid argument'] Error message.
 	     * */
 	    throwArgumentError: function throwArgumentError(message) {
 	        this.throwError(message || 'Invalid argument', 'ArgumentError');
@@ -52013,7 +52021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *     utilsApi.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
 	     *     // Some code here ...
 	     * }
-	     * @param {String} [message='The operation is not supported'] Сообщение об ошибке.
+	     * @param {String} [message='The operation is not supported'] Error message.
 	     * */
 	    throwNotSupportedError: function throwNotSupportedError(message) {
 	        this.throwError(message || 'The operation is not supported', 'NotSupportedError');
@@ -52027,7 +52035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * navigate() {
 	     *     utilsApi.this.throwNotImplementedError();
 	     * }
-	     * @param {String} [message='The operation is not implemented'] Сообщение об ошибке.
+	     * @param {String} [message='The operation is not implemented'] Error message.
 	     * */
 	    throwNotImplementedError: function throwNotImplementedError(message) {
 	        this.throwError(message || 'The operation is not implemented', 'NotImplementedError');
@@ -52036,7 +52044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Throws NotFoundError. The exception should be thrown when a requested object could not be found.
 	     * For example: we looked up in the database and could find a person with requested id.
-	     * @param {String} [message='Object not found'] Сообщение об ошибке.
+	     * @param {String} [message='Object not found'] Error message.
 	     * */
 	    throwNotFoundError: function throwNotFoundError(message) {
 	        this.throwError(message || 'Object not found', 'NotFoundError');
@@ -52143,16 +52151,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	/*
-	* HtmlHelpers contains methods that somehow modify dom elements or generate html.
-	* */
-	
 	exports.default = /** @lends module:core.utils.htmlHelpers */{
 	    /**
 	     * Highlights fragments within a text with &lt;span class='highlight'&gt;&lt;/span&gt;.
 	     * @param {String} text Text to highlight.
 	     * @param {String} fragment highlighted fragment.
-	     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
+	     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied to
 	     * the <code>text</code> before highlighting.
 	     * @return {String} Highlighted text
 	     * */
@@ -52182,9 +52186,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Highlights mentioned with `@` users in text with &lt;a href='...'&gt;&lt;/a&gt; tag.
+	     * Highlights mentions within a text with &lt;a href='...'&gt;&lt;/a&gt;.
 	     * @param {String} text Text to highlight.
-	     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
+	     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied to
 	     * the <code>text</code> before highlighting.
 	     * @return {String} Highlighted text
 	     * */
@@ -52217,7 +52221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt; tag.
+	     * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt;.
 	     * @param {String} text Text to highlight.
 	     * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
 	     * the <code>text</code> before highlighting.
@@ -53166,12 +53170,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = /** @lends module:core.dropdown */{
 	  /**
-	   * Dropdown/Popout View и стандартные View, которые могут быть установлены в качестве кнопок и панелей.
+	   * DropdownView, PopoutView and panel/button views useful in common cases.
 	   * @namespace
 	   * */
 	  views: {
 	    /**
-	     * Marionette Behavior, которые требуются для работы ряда кастомных View при установке в dropdown контролы.
+	     * Marionette Behavior which are required on panel/button views when some config options are enabled.
 	     * @namespace
 	     * */
 	    behaviors: {
@@ -53269,43 +53273,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name PopoutView
 	 * @memberof module:core.dropdown.views
-	 * @class Составная View. Используется для отображения выпадающей панели.
-	 * Важное отличие от DropdownView: панель отрисовывается в виде бабла, в открытом виде к кнопке от бабла идет треугольник (как в комиксах).
+	 * @class Composite View that may be to display a dropdown panel as a speech bubble. Unlike {@link module:core.dropdown.views.DropdownView DropdownView},
+	 * the panel is displayed in speech bubble and has a triangle like in comics.
+	 * A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.
 	 * <ul>
-	 * <li>Button View - используется для отображения кнопки, по нажатии на которую всплывает панель.</li>
-	 * <li>Panel View - используется при отображении выпадающей панели.</li>
+	 * <li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
+	 * <li>Panel View is used to display a panel that drops down.</li>
 	 * </ul>
-	 * Ширина панели не зависит от ширины кнопки и определяется CSS View панели. Высота панели определяется CSS View панели и опцией <code>height</code>.
-	 * Позиция панели регулируется опциями <code>popoutFlow</code> и <code>direction</code>.<br/>
-	 * Возможные эвенты:<ul>
-	 * <li><code>'before:open' (popoutView)</code> - эвент возникает перед открытием панели.</li>
-	 * <li><code>'open' (popoutView)</code> - эвент возникает после открытия панели.</li>
-	 * <li><code>'before:close' (popoutView)</code> - эвент возникает перед закрытием панели.</li>
-	 * <li><code>'close' (popoutView, ...)</code> - эвент возникает после закрытия панели. При программном закрытии через метод close,
-	 * переданные в нее параметры передаются в это событие.</li>
-	 * <li><code>'button:\*' </code> - все эвенты buttonView прокидываются в PopoutView с префиксом 'button:'.</li>
-	 * <li><code>'panel:\*' </code> - все эвенты panelView прокидываются в PopoutView с префиксом 'panel:'.</li>
+	 * Panel width is fully determined by its layout and the <code>popoutFlow</code> option.
+	 * Panel height is determined by its layout and the <code>height</code> option.
+	 * A place where the panel appears depends on the <code>direction</code> and <code>popoutFlow</code> options.<br/>
+	 * Possible events:<ul>
+	 * <li><code>'before:open' (popoutView)</code> - fires before the panel has opened.</li>
+	 * <li><code>'open' (popoutView)</code> - fires after the panel has opened.</li>
+	 * <li><code>'before:close' (popoutView)</code> - fires before the panel has closed.</li>
+	 * <li><code>'close' (popoutView, ...)</code> - fires after the panel has closed.
+	 * If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li>
+	 * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
+	 * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
 	 * </ul>
 	 * @constructor
 	 * @extends Marionette.LayoutView
-	 * @param {Object} options Объект опций.
-	 * @param {Marionette.View} options.buttonView View для отображение кнопки.
-	 * @param {(Object|Function)} [options.buttonViewOptions] Опции, передаваемые в buttonView при создании.
-	 * @param {Marionette.View} options.panelView View для отображение панели. Создается заново при каждом открытии панели.
-	 * @param {(Object|Function)} [options.panelViewOptions] Опции, передаваемые в panelView при создании.
-	 * @param {Boolean} [options.autoOpen=true] Открывать панель автоматически при клике на buttonView.
-	 * @param {Boolean} [options.customAnchor=false] Использовать кастомный якорь для привязки треугольника бабла. Переданная
-	 *                                               в buttonView View обязана реализовывать
+	 * @param {Object} options Options object.
+	 * @param {Marionette.View} options.buttonView View class for displaying the button.
+	 * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
+	 * @param {Marionette.View} options.panelView View class for displaying the panel. The view is created every time the panel is triggered to open.
+	 * @param {(Object|Function)} [options.panelViewOptions] Options passed into the view on its creation.
+	 * @param {Boolean} [options.autoOpen=true] Whether click on the button should trigger the panel to open.
+	 * @param {Boolean} [options.customAnchor=false] Whether to attach the speech bubble triangle (anchor) to a custom element in <code>buttonView</code>.
+	 *                                               The View passed into the <code>buttonView</code> option must implement
 	 *                                               @{link module:core.dropdown.views.behaviors.CustomAnchorBehavior CustomAnchorBehavior}.
-	 * @param {String} [options.direction='down'] Направление открытие панели. Варианты: <code>'up'</code>, <code>'down'</code>.
-	 * @param {Boolean} [options.fade=false] Затемнять ли остальную часть экрана при открытии панели.
-	 * @param {String} [options.height='auto'] Способ определения высоты панели.
-	 *                                       <ul><li><code>'auto'</code> - определяется через CSS панели.</li>
-	 *                                       <li><code>'bottom'</code> - всегда привязана к нижней части экрана</li></ul>
-	 * @param {String} [options.popoutFlow='left'] Определяет позицию панели по горизонтали.
-	 *                                       <ul><li><code>'left'</code> - левая сторона панели привязана к левой стороне кнопки. Панель растет направо.</li>
-	 *                                       <li><code>'right'</code> - правая сторона панели привязана к правой стороне кнопки. Панель растет налево.</li></ul>
-	 * @param {Boolean} [options.renderAfterClose=true] Автоматически вызывать render у buttonView при закрытии панели.
+	 * @param {String} [options.direction='down'] Opening direction. Can be either: <code>'up'</code>, <code>'down'</code>.
+	 * @param {Boolean} [options.fade=false] Whether to dim the background when the panel is open.
+	 * @param {String} [options.height='auto'] A way of determining the panel height.
+	 *                                       <ul><li><code>'auto'</code> - is determined by panel's layout only.</li>
+	 *                                       <li><code>'bottom'</code> - the bottom border is fixed to the bottom of the window.</li></ul>
+	 * @param {String} [options.popoutFlow='left'] Panel's horizontal position.
+	 *                                       <ul><li><code>'left'</code> - The left border of the panel is attached to the left border of the button.
+	 *                                       The panel grows to the right.</li>
+	 *                                       <li><code>'right'</code> - The right border of the panel is attached to the right border of the button.
+	 *                                       The panel grows to the left.</li></ul>
+	 * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
 	 * */
 	
 	exports.default = Marionette.LayoutView.extend( /** @lends module:core.dropdown.views.PopoutView.prototype */{
@@ -53342,12 +53350,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Экземпляр button View, если View отрендерена. Иначе null.
+	     * Contains an instance of <code>options.buttonView</code> if the popout is rendered, <code>null</code> otherwise.
 	     * */
 	    buttonView: null,
 	
 	    /**
-	     * Экземпляр panel View, если панель открыта. Иначе null. Пересоздается при каждом открытии панели (!).
+	     * Contains an instance of <code>options.panelView</code> if the popout is open, <code>null</code> otherwise.
+	     * The view is created every time (!) the panel is triggered to open.
 	     * */
 	    panelView: null,
 	
@@ -53445,7 +53454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Открыть выпадающую панель.
+	     * Opens the dropdown panel.
 	     * */
 	    open: function open() {
 	        if (this.isOpen) {
@@ -53506,8 +53515,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Закрыть выпадающую панель.
-	     * @param {...*} arguments Агрументы, которые будут переданы в эвент <code>'close'</code>
+	     * Closes the dropdown panel.
+	     * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
 	     * */
 	    close: function close() {
 	        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
@@ -55014,35 +55023,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name DropdownView
 	 * @memberof module:core.dropdown.views
-	 * @class Составная View. Используется для отображения выпадающей панели. Реализует логику HTML-элемента SELECT:
-	 * ширина панели привязана к ширине кнопки.
+	 * @class Composite View that implements dropdown logic similar to SELECT HTML-element.
+	 * Unlike {@link module:core.dropdown.views.PopoutView PopoutView}, a panel doesn't have a speech bubble triangle and
+	 * it's min-width is always determined and equal to the width of a button view.
+	 *
+	 * A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.
 	 * <ul>
-	 * <li>Button View - используется для отображения кнопки, по нажатии на которую всплывает панель.</li>
-	 * <li>Panel View - используется при отображении выпадающей панели.</li>
+	 * <li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
+	 * <li>Panel View is used to display a panel that drops down.</li>
 	 * </ul>
-	 * Ширина панели определяется CSS View панели, но не может быть меньше ширины кнопки. Высота панели определяется CSS View панели.
-	 * Позиция панели регулируется опцией <code>panelPosition</code>.<br/>
-	 * Возможные эвенты:<ul>
-	 * <li><code>'open' (dropdownView)</code> - эвент возникает после открытия панели.</li>
-	 * <li><code>'close' (dropdownView, ...)</code> - эвент возникает после закрытия панели. При программном закрытии через метод close,
-	 * переданные в нее параметры передаются в это событие.</li>
-	 * <li><code>'button:\*' </code> - все эвенты buttonView прокидываются в DropdownView с префиксом 'button:'.</li>
-	 * <li><code>'panel:\*' </code> - все эвенты panelView прокидываются в DropdownView с префиксом 'panel:'.</li>
+	 *
+	 * Panel width is determined by its layout but it cannot be less than the button's width. Panel height is fully determined by its layout.
+	 * A place where the panel appears depends on the <code>panelPosition</code> option.<br/>
+	 * Possible events:<ul>
+	 * <li><code>'open' (dropdownView)</code> - fires after the panel has opened.</li>
+	 * <li><code>'close' (dropdownView, ...)</code> - fires after the panel has closed.
+	 * If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li>
+	 * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
+	 * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
 	 * </ul>
 	 * @constructor
 	 * @extends Marionette.LayoutView
-	 * @param {Object} options Объект опций.
-	 * @param {Marionette.View} options.buttonView View для отображение кнопки.
-	 * @param {(Object|Function)} [options.buttonViewOptions] Опции, передаваемые в buttonView при создании.
-	 * @param {Marionette.View} options.panelView View для отображение панели. Создается заново при каждом открытии панели.
-	 * @param {(Object|Function)} [options.panelViewOptions] Опции, передаваемые в panelView при создании.
-	 * @param {Boolean} [options.autoOpen=true] Открывать панель автоматически при клике на buttonView.
-	 * @param {String} [options.panelPosition='down'] Направление открытие панели. Варианты:
-	 *       <ul><li><code>'down'</code> - панель выпадает вниз.</li>
-	 *       <li><code>'down-over'</code> - панель выпадает вниз, но верхняя ее граница располагается на верхней границе кнопки и перекрывает ее.</li>
-	 *       <li><code>'up'</code> - панель выпадает наверх.</li>
-	 *       <li><code>'up-over'</code> - панель выпадает вверх, но нижняя ее граница располагается на нижней границе кнопки и перекрывает ее.</li></ul>
-	 * @param {Boolean} [options.renderAfterClose=true] Автоматически вызывать render у buttonView при закрытии панели.
+	 * @param {Object} options Options object.
+	 * @param {Marionette.View} options.buttonView View class for displaying the button.
+	 * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
+	 * @param {Marionette.View} options.panelView View class for displaying the panel. The view is created every time the panel is triggered to open.
+	 * @param {(Object|Function)} [options.panelViewOptions] Options passed into the view on its creation.
+	 * @param {Boolean} [options.autoOpen=true] Whether click on the button should trigger the panel to open.
+	 * @param {String} [options.panelPosition='down'] Opening direction:
+	 *       <ul><li><code>'down'</code> - opens down.</li>
+	 *       <li><code>'down-over'</code> - opens down and the panel is located above the button overlapping it.</li>
+	 *       <li><code>'up'</code> - opens up.</li>
+	 *       <li><code>'up-over'</code> - opens up and the panel is located above the button overlapping it.</li></ul>
+	 * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
 	 * */
 	
 	exports.default = Marionette.LayoutView.extend( /** @lends module:core.dropdown.views.DropdownView.prototype */{
@@ -55073,12 +55086,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Экземпляр button View, если View отрендерена. Иначе null.
+	     * Contains an instance of <code>options.buttonView</code> if the dropdown is rendered, <code>null</code> otherwise.
 	     * */
 	    buttonView: null,
 	
 	    /**
-	     * Экземпляр panel View, если панель открыта. Иначе null. Пересоздается при каждом открытии панели (!).
+	     * Contains an instance of <code>options.panelView</code> if the dropdown is open, <code>null</code> otherwise.
+	     * The view is created every time (!) the panel is triggered to open.
 	     * */
 	    panelView: null,
 	
@@ -55134,7 +55148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Открыть выпадающую панель.
+	     * Opens the dropdown panel.
 	     * */
 	    open: function open() {
 	        if (this.isOpen) {
@@ -55170,8 +55184,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Закрыть выпадающую панель.
-	     * @param {...*} arguments Агрументы, которые будут переданы в эвент <code>'close'</code>
+	     * Closes the dropdown panel.
+	     * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
 	     * */
 	    close: function close() {
 	        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
@@ -55251,14 +55265,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name ListPanelView
 	 * @memberof module:core.dropdown.views
-	 * @class Базовая панель для отображения списка элементов. Может использоваться в panelView опции.
+	 * @class Primitive view that can be used as a <code>panelView</code> to display a list of elements.
 	 * @constructor
 	 * @extends Marionette.CollectionView
-	 * @param {Object} options Объект опций.
+	 * @param {Object} options Options object.
 	 * */
 	
 	exports.default = Marionette.CollectionView.extend({
-	  initialize: function initialize(options) {},
+	  initialize: function initialize() {},
 	
 	  tagName: 'ul'
 	});
@@ -55292,7 +55306,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name MenuItemView
 	 * @memberof module:core.dropdown.views
-	 * @class Одиночный элемент меню. Используется в связке с MenuPanelView для создания стандартного меню фабричным методом
+	 * @class Single menu item used by MenuPanelView to display a list of menu items.
+	 * Factory method {@link module:core.dropdown.factory createMenu} uses it indirectly.
 	 * {@link module:core.dropdown.factory createMenu}.
 	 * @constructor
 	 * @extends Marionette.ItemView
@@ -55371,9 +55386,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @name MenuPanelView
 	 * @memberof module:core.dropdown.views
 	 * @class Одиночный элемент меню. Используется для создания стандартного меню фабричным методом
+	 * @class List view used to display a list of menu items.
+	 * Factory method {@link module:core.dropdown.factory createMenu} uses it to create a menu.
 	 * {@link module:core.dropdown.factory createMenu}.
 	 * @constructor
-	 * @extends Marionette.ItemView
+	 * @extends module:core.dropdown.views.ListPanelView
 	 * */
 	
 	exports.default = _ListPanelView2.default.extend({
@@ -55417,7 +55434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	__webpack_require__(1);
@@ -55431,24 +55448,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name DefaultButtonView
 	 * @memberof module:core.dropdown.views
-	 * @class Тривиальная реализация button View. Отображает свойство <code>text</code> передаваемой ей модели.
-	 * Используется в качестве buttonView в фабричном методе {@link module:core.dropdown.factory createMenu}.
+	 * @class Trivial implementation of a button View that displays plain text without any styles.
+	 * The <code>text</code> attribute of the passed model is displayed.
+	 * Factory method {@link module:core.dropdown.factory createMenu} uses this view to display menu button.
 	 * @constructor
 	 * @extends Marionette.ItemView
-	 * @param {Object} options Объект опций.
-	 * @param {Backbone.Model} options.model Модель данных. Должна содержать атрибут <code>text</code>.
+	 * @param {Object} options Options object.
+	 * @param {Backbone.Model} options.model Data model. Must contain <code>text</code> attribute.
 	 * */
 	
 	exports.default = Marionette.ItemView.extend({
-	  initialize: function initialize(options) {},
+	    initialize: function initialize(options) {},
 	
-	  tagName: 'span',
+	    tagName: 'span',
 	
-	  template: _defaultButton2.default,
+	    template: _defaultButton2.default,
 	
-	  modelEvents: {
-	    'change': 'render'
-	  }
+	    modelEvents: {
+	        'change': 'render'
+	    }
 	});
 
 /***/ },
@@ -55487,18 +55505,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	/**
-	 * Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
-	 * быть переданы как свойства behavior (см. документацию Marionette).
+	 * Marionette.Behavior constructor shall never be called manually.
+	 * The options described here should be passed as behavior options (look into Marionette documentation for details).
 	 * @name CustomAnchorBehavior
 	 * @memberof module:core.dropdown.views.behaviors
-	 * @class Behavior требуется при использовании {@link module:core.dropdown.views.PopoutView PopoutView} в режиме <code>customAnchor: true</code>.
-	 * Указанная в свойстве <code>buttonView</code> View должна иметь данный behavior, определяющий место привязки треугольника для бабла (якорь, anchor).
+	 * @class The behavior must be applied to a button View if {@link module:core.dropdown.views.PopoutView PopoutView}
+	 * has option <code>customAnchor: true</code>. The button view should be passed into <code>buttonView</code> option of a PopoutView.
+	 * The behavior defines the place where the speech bubble triangle (we call it anchor) should be placed.
 	 * @constructor
 	 * @extends Marionette.Behavior
-	 * @param {Object} options Объект опций
-	 * @param {String} [options.anchor] jQuery-селектор для DOM-элемента, который используется в качестве якоря.
-	 *                                  Если не указан, используется рутовый элемент View.
-	 * @param {Marionette.View} view View на которую применен данных Behavior
+	 * @param {Object} options Options object.
+	 * @param {String} [options.anchor] jQuery-selector pointing to the DOM-element that should be used as an anchor.
+	 *                                  If omitted, root view element ($el) is used.
+	 * @param {Marionette.View} view A view the behavior is applied to.
 	 * */
 	
 	exports.default = Marionette.Behavior.extend( /** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */{
@@ -55560,7 +55579,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
-	 * Фабрика контролов с выпадающими панелями
+	 * The factory covers common use cases of Popout/Dropdown views.
+	 * You can create a simple menu (and other stuff like this) in one click without lots of manual work.
 	 * @namespace factory
 	 * @memberof module:core.dropdown
 	 * */
@@ -55659,7 +55679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	__webpack_require__(1);
@@ -55739,49 +55759,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = /** @lends module:core.list */{
-	    EventAggregator: _EventAggregator2.default,
-	    /**
-	     * Фабрика списков
-	     * @namespace
-	     * */
-	    factory: _factory2.default,
-	    /**
-	     * Фабрика ячеек
-	     * @namespace
-	     * */
-	    cellFactory: _CellViewFactory2.default,
-	    /**
-	     * Views-списка
-	     * @namespace
-	     * */
-	    views: {
-	        EmptyListView: _EmptyListView2.default,
-	        EmptyGridView: _EmptyGridView2.default,
-	        GridColumnHeaderView: _GridColumnHeaderView2.default,
-	        GridHeaderView: _GridHeaderView2.default,
-	        GridView: _GridView2.default,
-	        ListView: _ListView2.default,
-	        RowView: _RowView2.default,
-	        ScrollbarView: _ScrollbarView2.default,
+	  EventAggregator: _EventAggregator2.default,
+	  /**
+	   * Фабрика списков
+	   * @namespace
+	   * */
+	  factory: _factory2.default,
+	  /**
+	   * Фабрика ячеек
+	   * @namespace
+	   * */
+	  cellFactory: _CellViewFactory2.default,
+	  /**
+	   * Views-списка
+	   * @namespace
+	   * */
+	  views: {
+	    EmptyListView: _EmptyListView2.default,
+	    EmptyGridView: _EmptyGridView2.default,
+	    GridColumnHeaderView: _GridColumnHeaderView2.default,
+	    GridHeaderView: _GridHeaderView2.default,
+	    GridView: _GridView2.default,
+	    ListView: _ListView2.default,
+	    RowView: _RowView2.default,
+	    ScrollbarView: _ScrollbarView2.default,
 	
-	        behaviors: {
-	            ListGroupViewBehavior: _ListGroupViewBehavior2.default,
-	            ListItemViewBehavior: _ListItemViewBehavior2.default,
-	            GridItemViewBehavior: _GridItemViewBehavior2.default
-	        }
-	    },
-	    /**
-	     * Backbone-модели списка
-	     * @namespace
-	     * */
-	    models: {
-	        LoadingRowModel: _LoadingRowModel2.default,
-	        behaviors: {
-	            ListGroupBehavior: _ListGroupBehavior2.default,
-	            ListItemBehavior: _ListItemBehavior2.default,
-	            GridItemBehavior: _GridItemBehavior2.default
-	        }
+	    behaviors: {
+	      ListGroupViewBehavior: _ListGroupViewBehavior2.default,
+	      ListItemViewBehavior: _ListItemViewBehavior2.default,
+	      GridItemViewBehavior: _GridItemViewBehavior2.default
 	    }
+	  },
+	  /**
+	   * Backbone-модели списка
+	   * @namespace
+	   * */
+	  models: {
+	    LoadingRowModel: _LoadingRowModel2.default,
+	    behaviors: {
+	      ListGroupBehavior: _ListGroupBehavior2.default,
+	      ListItemBehavior: _ListItemBehavior2.default,
+	      GridItemBehavior: _GridItemBehavior2.default
+	    }
+	  }
 	};
 
 /***/ },
@@ -56108,9 +56128,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
 	  return container.escapeExpression(((helper = (helper = helpers.displayText || (depth0 != null ? depth0.displayText : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"displayText","hash":{},"data":data}) : helper)))
-	    + "\n"
+	    + "\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.sortingAsc : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\n"
+	    + "\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.sortingDesc : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 	},"useData":true});
 
@@ -56421,11 +56441,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 	
-	  return "    <div class=\"grid-header-column\">\n        <div class=\"grid-header-column-content-view\"></div>\n"
+	  return "    <div class=\"grid-header-column\">\r\n        <div class=\"grid-header-column-content-view\"></div>\r\n"
 	    + ((stack1 = helpers.unless.call(depth0 != null ? depth0 : {},(data && data.last),{"name":"unless","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "    </div>\n";
+	    + "    </div>\r\n";
 	},"2":function(container,depth0,helpers,partials,data) {
-	    return "            <div class=\"grid-header-dragger\"></div>\n";
+	    return "            <div class=\"grid-header-dragger\"></div>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 	
@@ -56726,7 +56746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"grid-header-view\"></div>\n<div class=\"grid-content-view\"></div>\n<div class=\"js-nocolumns-view-region\"></div>";
+	    return "<div class=\"grid-header-view\"></div>\r\n<div class=\"grid-content-view\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -56743,11 +56763,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _libApi = __webpack_require__(1);
 	
@@ -58586,7 +58606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	__webpack_require__(1);
@@ -58601,11 +58621,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @extends Backbone.Model
 	 * */
 	exports.default = Backbone.Model.extend({
-	  initialize: function initialize() {},
+	    initialize: function initialize() {},
 	
-	  defaults: {
-	    isLoadingRowModel: true
-	  }
+	    defaults: {
+	        isLoadingRowModel: true
+	    }
 	});
 
 /***/ },
@@ -59220,6 +59240,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.trigger('sync', collection, resp, options);
 	    },
 	
+	    __onAddDelayed: _.debounce(function (options) {
+	        this.__rebuildIndex();
+	        this.trigger('reset', this, options);
+	    }, 10),
+	
 	    __onAdd: function __onAdd(model, collection, options) {
 	        if (options.at !== undefined) {
 	            // Updating index
@@ -59253,10 +59278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	
 	        if (options.delayed !== false && this.options.delayedAdd) {
-	            _utilsApi.helpers.nextTick(function () {
-	                this.__rebuildIndex();
-	                this.trigger('reset', this, options);
-	            }.bind(this), this.syncRoot);
+	            this.__onAddDelayed(options);
 	        } else {
 	            this.__rebuildIndex();
 	            this.trigger('reset', this, options);
@@ -59620,13 +59642,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _Factory = __webpack_require__(289);
+	var _factory = __webpack_require__(289);
 	
-	var _Factory2 = _interopRequireDefault(_Factory);
+	var _factory2 = _interopRequireDefault(_factory);
 	
-	var _FilterViewFactory = __webpack_require__(299);
+	var _filterViewFactory = __webpack_require__(299);
 	
-	var _FilterViewFactory2 = _interopRequireDefault(_FilterViewFactory);
+	var _filterViewFactory2 = _interopRequireDefault(_filterViewFactory);
 	
 	var _RowView = __webpack_require__(293);
 	
@@ -59647,12 +59669,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * Фабрика списков
 	   * @namespace
 	   * */
-	  factory: _Factory2.default,
+	  factory: _factory2.default,
 	  /**
 	   * Фабрика фильтров
 	   * @namespace
 	   * */
-	  filterViewFactory: _FilterViewFactory2.default,
+	  filterViewFactory: _filterViewFactory2.default,
 	  /**
 	   * Views-списка
 	   * @namespace
@@ -59985,7 +60007,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-popout-region dev-popout-region\"></div>\n<div class=\"js-native-grid-header-region dev-native-grid-header\"></div>\n<div class=\"js-native-grid-list-region dev-native-grid-list\"></div>\n<div class=\"js-nocolumns-view-region\"></div>\n";
+	    return "<div class=\"js-popout-region dev-popout-region\"></div>\r\n<div class=\"js-native-grid-header-region dev-native-grid-header\"></div>\r\n<div class=\"js-native-grid-list-region dev-native-grid-list\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>\r\n";
 	},"useData":true});
 
 /***/ },
@@ -60002,11 +60024,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _list = __webpack_require__(266);
 	
@@ -60895,13 +60917,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
 	  return ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.filterView : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\n<div class=\"js-cell-content\" style=\"display: inline\">\n    "
+	    + "\r\n<div class=\"js-cell-content\" style=\"display: inline\">\r\n    "
 	    + container.escapeExpression(((helper = (helper = helpers.displayText || (depth0 != null ? depth0.displayText : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"displayText","hash":{},"data":data}) : helper)))
-	    + "\n    "
+	    + "\r\n    "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.sortingAsc : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\n    "
+	    + "\r\n    "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.sortingDesc : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\n</div>\n";
+	    + "\r\n</div>\r\n";
 	},"useData":true});
 
 /***/ },
@@ -61104,42 +61126,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ReferencePanelView2 = _interopRequireDefault(_ReferencePanelView);
 	
-	var _RequiredValidator = __webpack_require__(413);
+	__webpack_require__(413);
 	
-	var _RequiredValidator2 = _interopRequireDefault(_RequiredValidator);
+	__webpack_require__(414);
 	
-	var _LengthValidator = __webpack_require__(414);
+	__webpack_require__(415);
 	
-	var _LengthValidator2 = _interopRequireDefault(_LengthValidator);
-	
-	var _PasswordValidator = __webpack_require__(415);
-	
-	var _PasswordValidator2 = _interopRequireDefault(_PasswordValidator);
-	
-	var _PhoneValidator = __webpack_require__(416);
-	
-	var _PhoneValidator2 = _interopRequireDefault(_PhoneValidator);
+	__webpack_require__(416);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var api = /** @lends module:core.form */{
 	    ExtendedForm: _ExtendedForm2.default,
 	    /**
-	     * Объекты Marionette.Behaviour, упрощающие использования модуля форм.
+	     * Marionette.Behavior classes useful with Backbone.Form.
 	     * @namespace
 	     * */
 	    behaviors: {
 	        BackboneFormBehavior: _BackboneFormBehavior2.default
 	    },
 	    /**
-	     * Расширенная версия Backbone.Form.Field, поддерживающая ошибки валидации и текстовые подсказки.
+	     * Extended version of Backbone.Form.Field which is able to display validation errors and information tooltips.
 	     * @namespace
 	     * */
 	    fields: {
 	        CommonField: _CommonField2.default
 	    },
 	    /**
-	     * Редакторы
+	     * A lot of editors
 	     * @namespace
 	     * */
 	    editors: {
@@ -61157,7 +61171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 	        /**
-	         * Базовые классы для реализации редакторов.
+	         * Base classes for implementing editors on various Marionette Views.
 	         * @namespace
 	         * */
 	        base: {
@@ -61167,12 +61181,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            BaseCompositeEditorView: _BaseCompositeEditorView2.default
 	        },
 	        /**
-	         * Объекты для использования и кастомизации редактора ReferenceEditorView.
+	         * Reference editor data providers and internal implementation.
 	         * @namespace
 	         * */
 	        reference: {
 	            /**
-	             * Базовая реализация дата-провайдеров для ReferenceEditorView.
+	             * Base implementation of data providers for ReferenceEditorView.
 	             * @namespace
 	             * */
 	            controllers: {
@@ -61325,27 +61339,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	
 	/**
-	 * Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
-	 * быть переданы как свойства behavior (см. документацию Marionette).
+	 * Marionette.Behavior constructor shall never be called manually.
+	 * The options described here should be passed as behavior options (look into Marionette documentation for details).
 	 * @name BackboneFormBehavior
 	 * @memberof module:core.form.behaviors
-	 * @class Данный Behavior является удобным средством для превращения любого Marionette.View в форму Backbone.Form.
-	 * Возможные события:<ul>
-	 *     <li><code>'form:render' (form)</code> - закончена отрисовка формы во View.</li>
+	 * @class This behavior turns any Marionette.View into Backbone.Form. To do this Backbone.Form scans this.$el at the moment
+	 * defined by <code>options.renderStrategy</code> and puts field and editors defined in <code>options.schema</code> into
+	 * DOM-elements with corresponding Backbone.Form data-attributes.
+	 * It's important to note that Backbone.Form will scan the whole this.$el including nested regions that might lead to unexpected behavior.
+	 * Possible events:<ul>
+	 *     <li><code>'form:render' (form)</code> - the form has rendered and available via <code>form</code> property of the view.</li>
 	 * </ul>
 	 * @constructor
 	 * @extends Marionette.Behavior
-	 * @param {Object} options Объект опций
-	 * @param {Object|Function} options.schema Схема Backbone.Form в [стандартном формате](https://github.com/powmedia/backbone-forms).
-	 * @param {Object|Function} [options.model] Модель, которую необходимо привязать к данной форме. По умолчанию используется <code>this.model</code>.
-	 * @param {String} [options.renderStrategy='show'] Определяет момент, когда осуществляется отрисовка эдиторов во View. Варианты:<ul>
-	 *     <li><code>'render'</code> - В методе onRender.</li>
-	 *     <li><code>'show'</code> - В методе onShow.</li>
-	 *     <li><code>'manual'</code> - Метод отрисовки (<code>renderForm()</code>) должен быть вызван вручную.</li>
+	 * @param {Object} options Options object.
+	 * @param {Object|Function} options.schema Backbone.Form schema as it's listed in [docs](https://github.com/powmedia/backbone-forms).
+	 * @param {Object|Function} [options.model] Backbone.Model that the form binds it's editors to. <code>this.model</code> is used by default.
+	 * @param {String} [options.renderStrategy='show'] Defines a moment when the form is applied to the view. May be one of:<ul>
+	 *     <li><code>'render'</code> - On view's 'render' event.</li>
+	 *     <li><code>'show'</code> - On view's 'show' event.</li>
+	 *     <li><code>'manual'</code> - Form render method (<code>renderForm()</code>) must be called manually.</li>
 	 *     </ul>
-	 * @param {Backbone.Form.Field} [options.field] Backbone.Form.Field, который необходимо использовать при отображении редакторов в этой форме.
-	 * По умолчанию используется <code>core.form.fields.CommonField</code>.
-	 * @param {Marionette.View} view View на которую применен данных Behavior
+	 * @param {Backbone.Form.Field} [options.field] Backbone.Form.Field that will be used to render fields of the form.
+	 * The field <code>core.form.fields.CommonField</code> is used by default.
+	 * @param {Marionette.View} view A view the behavior is applied to.
 	 * */
 	
 	exports.default = Marionette.Behavior.extend( /** @lends module:core.form.behaviors.BackboneFormBehavior.prototype */{
@@ -61438,7 +61455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name ExtendedForm
 	 * @memberof module:core.form
-	 * @class Расширенная версия формы [Backbone.Form](https://github.com/powmedia/backbone-forms).
+	 * @class [Backbone.Form](https://github.com/powmedia/backbone-forms) extended with some additional features.
 	 * @extends Backbone.Form
 	 * */
 	
@@ -61532,8 +61549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    /**
 	     * Validate the data
-	     *
-	     * @return {Object}       Validation errors
+	     * @return {Object} Validation errors
 	     */
 	    validate: function validate(options) {
 	        var self = this,
@@ -61768,9 +61784,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
 	
-	  return "<div class=\"l-field-view\">\n    <div class=\"h3-field\">\n        <span class=\"js-field-error h3-field__error\"></span>\n        <span class=\"h3-field__txt\">"
+	  return "<div class=\"l-field-view\">\r\n    <div class=\"h3-field\">\r\n        <span class=\"js-field-error h3-field__error\"></span>\r\n        <span class=\"h3-field__txt\">"
 	    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
-	    + "</span>\n        <span class=\"js-field-info h3-field__info\"></span>\n    </div>\n    <div data-editor class=\"field-view\"></div>\n</div>";
+	    + "</span>\r\n        <span class=\"js-field-info h3-field__info\"></span>\r\n    </div>\r\n    <div data-editor class=\"field-view\"></div>\r\n</div>";
 	},"useData":true});
 
 /***/ },
@@ -62009,35 +62025,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name BaseEditorView
 	 * @memberof module:core.form.editors.base
-	 * @class Базовый класс для всех эдиторов. Является модификацией класса Backbone.Form.Editor из библиотеки
-	 * [Backbone.Form](https://github.com/powmedia/backbone-forms).<br/>
-	 * При реализации собственных эдиторов используйте один из следующих классов, наследующих этот:<ul>
+	 * @class Base class for all editors that use Marionette.View. The class is a reworked version of Backbone.Form.Editor from
+	 * [Backbone.Form](https://github.com/powmedia/backbone-forms) library.<br/>
+	 * While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul>
 	 * <li><code>BaseCollectionEditorView</code></li>
 	 * <li><code>BaseCompositeEditorView</code></li>
 	 * <li><code>BaseLayoutEditorView</code></li>
 	 * <li><code>BaseItemEditorView</code></li></ul>
-	 * Возможные эвенты:<ul>
-	 * <li><code>'change' (thisEditorView)</code> - эвент возникает при изменении значения value внутри эдитора.
-	 * При этом эвент не означает изменение значения в модели (!).</li>
-	 * <li><code>'focus' (thisEditorView)</code> - эвент возникает при получении эдитором фокуса.</li>
-	 * <li><code>'blur' (thisEditorView)</code> - эвент возникает при потере фокуса эдитором.</li>
-	 * <li><code>'enabled' (enabled)</code> - эвент возникает при изменении флага enabled.</li>
-	 * <li><code>'readonly' (readonly)</code> - эвент возникает при изменении флага readonly.</li>
-	 * <li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - эвент возникает при записи данных в модель.</li>
-	 * <li><code>'value:committed' (thisEditorView, model, key, value)</code> - эвент возникает при записи данных в модель.</li>
+	 * Possible events:<ul>
+	 * <li><code>'change' (thisEditorView)</code> - fires when the value inside the editor is changed.
+	 * This event doesn't imply any change in model (!).</li>
+	 * <li><code>'focus' (thisEditorView)</code> - fire when the editor gets the focus.</li>
+	 * <li><code>'blur' (thisEditorView)</code> - fire when the editor loses the focus.</li>
+	 * <li><code>'enabled' (enabled)</code> - fires when the property <code>enabled</code> is changed.</li>
+	 * <li><code>'readonly' (readonly)</code> - fires when the property <code>readonly</code> is changed.</li>
+	 * <li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - fires when the value is committed into the model.</li>
+	 * <li><code>'value:committed' (thisEditorView, model, key, value)</code> - fires when the value is committed into the model.</li>
 	 * </ul>
 	 * @constructor
 	 * @extends Marionette.View
-	 * @param {Object} options Объект опций.
-	 * @param {Boolean} [options.autocommit=false] Автоматически вызывать метод commit() при каждом изменении значения value.
-	 * @param {Boolean} [options.forceCommit=false] Делать commit в модель даже в случае ошибок валидации (не рекомендуется).
-	 * @param {Boolean} [options.enabled=true] Значение enabled, установленное по умолчанию (в дальнейшем возможно изменить через метод setEnabled).
-	 * @param {Boolean} [options.readonly=false] Значение readonly, установленное по умолчанию (в дальнейшем возможно изменить через метод setReadonly).
-	 * @param {Boolean} [options.model] Редактируемая модель. Используется только при создании в отвязке от формы, вместе с опцией <code>key</code>.
-	 * @param {Boolean} [options.key] Редактируемый атрибут. Используется только при создании в отвязке от формы, вместе с опцией <code>model</code>.
-	 * @param {Function[]} [options.validators] Массив функций-валидаторов с сигнатурой:
+	 * @param {Object} options Options object.
+	 * @param {Boolean} [options.autocommit=false] Indicates whether to call <code>commit()</code> method on the value change.
+	 * @param {Boolean} [options.forceCommit=false] Indicated whether to commit the value into the model if editors validation has failed (not recommended).
+	 * @param {Boolean} [options.enabled=true] The initial value of <code>enabled</code> flag. Can be changed later on by calling <code>setEnabled()</code> method.
+	 * @param {Boolean} [options.readonly=false] The initial value of <code>readonly</code> flag.
+	 *                                           Can be changed later on by calling <code>setReadonly()</code> method.
+	 * @param {Boolean} [options.model] A model which contains an attributes edited by this editor.
+	 *                                  Can only be used if the editor is created standalone (without a form).
+	*                                   Must be used together with  <code>key</code> options.
+	 * @param {Boolean} [options.key] The name of an attribute in <code>options.model</code> edited by this editor.
+	 *                                Can only be used if the editor is created standalone (without a form).
+	 *                                Must be used together with  <code>model</code> options.
+	 * @param {Function[]} [options.validators] An array of validator function which look like the following:
 	 * <code>function(value, formValues) -> ({type, message}|undefined)</code>
-	 * @param {Object} [options.schema] Используется для передачи опций в эдитор в случае его неявного создания через форму (Backbone.Form).
+	 * @param {Object} [options.schema] When created implicitly by form, all the editor options are passed through this option.
 	 * Не использовать явно.
 	 * */
 	
@@ -62047,7 +62068,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                defaultValue: null,
 	
 	                /**
-	                 * Флаг, определяющий активен ли на эдиторе фокус в настоящее время.
+	                 * Indicates whether the editor has focus.
 	                 * */
 	                hasFocus: false,
 	
@@ -62098,15 +62119,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Ручное обновление значения эдитора значением this.model.get(this.key). Обычно вызывается автоматически по эвенту
-	                 * <code>'change'</code> модели.
+	                 * Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
+	                 * Shouldn't be called normally. The method is called internally on model's <code>change</code> event.
 	                 * */
 	                updateValue: function updateValue() {
 	                    this.setValue(this.getModelValue());
 	                },
 	
 	                /**
-	                 * Получить текущее значение из модели.
+	                 * Retrieves actual value of the bound attribute from the model.
 	                 * @return {*}
 	                 * */
 	                getModelValue: function getModelValue() {
@@ -62133,7 +62154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Получить внутреннее значение эдитора.
+	                 * Returns internal editor's value.
 	                 * @return {*}
 	                 */
 	                getValue: function getValue() {
@@ -62141,8 +62162,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Установить новое внутреннее значение эдитора.
-	                 * @param {*} value Новое значение.
+	                 * Sets new internal editor's value.
+	                 * @param {*} value The new value.
 	                 */
 	                setValue: function setValue(value) {
 	                    this.value = value;
@@ -62154,9 +62175,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Установить новое значение флага enabled. В disabled состоянии эдитор невозможно редактировать,
-	                 * а также невозможно скопировать его текущее значение (считается, что для пользователя оно не имеет смысла).
-	                 * @param {Boolean} enabled Новое значение флага.
+	                 * Sets a new value of <code>enabled</code> flag. While disabled, the editor's value cannot be changed or copied by the user.
+	                 * It's implied that the value doesn't make sense.
+	                 * @param {Boolean} enabled New flag value.
 	                 */
 	                setEnabled: function setEnabled(enabled) {
 	                    var readonly = this.getReadonly();
@@ -62164,9 +62185,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Установить новое значение флага readonly. В readonly состоянии эдитор невозможно редактировать,
-	                 * но возможно выделить и скопировать его текущее значение в текстовом виде.
-	                 * @param {Boolean} readonly Новое значение флага.
+	                 * Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.
+	                 * @param {Boolean} readonly New flag value.
 	                 */
 	                setReadonly: function setReadonly(readonly) {
 	                    var enabled = this.getEnabled();
@@ -62184,7 +62204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Получить значение флага enabled
+	                 * Returns the value of `enabled` flag.
 	                 * @return {Boolean}
 	                 */
 	                getEnabled: function getEnabled() {
@@ -62202,7 +62222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Получить значение флага readonly
+	                 * Returns the value of `readonly` flag.
 	                 * @return {Boolean}
 	                 */
 	                getReadonly: function getReadonly() {
@@ -62210,7 +62230,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Установить фокус на этот эдитор.
+	                 * Sets the focus onto this editor.
 	                 */
 	                focus: function focus() {
 	                    if (this.hasFocus) {
@@ -62220,7 +62240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Снять фокус с данного эдитора.
+	                 * Clears the focus.
 	                 */
 	                blur: function blur() {
 	                    if (!this.hasFocus) {
@@ -62230,10 +62250,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                /**
-	                 * Update the model with the current value
-	                 * @param {Object} [options] Options to pass to model.set()
-	                 * @param {Boolean} [options.validate] Set to true to trigger built-in model validation
-	                 * @return {Object|undefined} В случае ошибки, возвращает объект <code>{ type, message }</code>.
+	                 * Update the model with the internal editor's value.
+	                 * @param {Object} [options] Options to pass to model.set().
+	                 * @param {Boolean} [options.validate] Set to true to trigger built-in model validation.
+	                 * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails
+	                 * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
 	                 */
 	                commit: function commit(options) {
 	                    options = options || {};
@@ -62260,7 +62281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                /**
 	                 * Check validity with built-in validator functions (initially passed into constructor options).
-	                 * @return {Object|undefined} В случае ошибки, возвращает объект <code>{ type, message }</code>.
+	                 * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
 	                 */
 	                validate: function validate() {
 	                    var $el = this.$el,
@@ -62468,11 +62489,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name BooleanEditorView
 	 * @memberof module:core.form.editors
-	 * @class Простой Checkbox эдитор. Поддерживаемый тип данных: <code>Boolean</code>.
+	 * @class A simple Checkbox editor. Supported data type: <code>Boolean</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
-	 * @param {String} [options.displayText] Текст справа от чек-бокса. Клик по тексту вызывает триггер чек-бокса.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
 	 * */
 	Backbone.Form.editors.Boolean = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.BooleanEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -62905,7 +62925,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<input class=\"field field_number js-input\" type=\"text\">\n<div class=\"number-button number-button_up js-spinner-up js-spinner-button\"></div>\n<div class=\"number-button number-button_down js-spinner-down js-spinner-button\"></div>\n";
+	    return "<input class=\"field field_number js-input\" type=\"text\">\r\n<div class=\"number-button number-button_up js-spinner-up js-spinner-button\"></div>\r\n<div class=\"number-button number-button_down js-spinner-down js-spinner-button\"></div>\r\n";
 	},"useData":true});
 
 /***/ },
@@ -63483,9 +63503,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<input type=\"Password\"\n       class=\"field js-input\"\n       placeholder=\""
+	  return "<input type=\"Password\"\r\n       class=\"field js-input\"\r\n       placeholder=\""
 	    + container.escapeExpression(((helper = (helper = helpers.placeholder || (depth0 != null ? depth0.placeholder : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"placeholder","hash":{},"data":data}) : helper)))
-	    + "\"\n       "
+	    + "\"\r\n       "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.maxLength : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
 	    + ">";
 	},"useData":true});
@@ -63589,7 +63609,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            button: new Backbone.Model({
 	                value: this.getValue(),
 	                state: 'view',
-	                enabled: this.getEnabled() && !this.getReadonly()
+	                enabled: this.getEnabled(),
+	                readonly: this.getReadonly()
+	
 	            }),
 	            panel: new Backbone.Model({
 	                value: this.getValue(),
@@ -63727,12 +63749,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    setReadonly: function setReadonly(readonly) {
 	        _BaseLayoutEditorView2.default.prototype.__setReadonly.call(this, readonly);
-	        this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
+	        this.viewModel.get('button').set('readonly', this.getReadonly());
 	    },
 	
 	    setEnabled: function setEnabled(enabled) {
 	        _BaseLayoutEditorView2.default.prototype.__setEnabled.call(this, enabled);
-	        this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
+	        this.viewModel.get('button').set('enabled', this.getEnabled());
 	    }
 	});
 	
@@ -63744,7 +63766,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-dropdown-region l-reference\"></div>\n<!--<svg class=\"js-search-more-button fr-reference__search\"><use xlink:href=\"#i-search\"></use></svg>-->";
+	    return "<div class=\"js-dropdown-region l-reference\"></div>\r\n<!--<svg class=\"js-search-more-button fr-reference__search\"><use xlink:href=\"#i-search\"></use></svg>-->";
 	},"useData":true});
 
 /***/ },
@@ -63774,7 +63796,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var classes = {
-	    EMPTY: 'pr-empty'
+	    EMPTY: 'pr-empty',
+	    ARROW_BUTTON: 'pr-arrow-right'
 	};
 	
 	exports.default = Marionette.ItemView.extend({
@@ -63817,23 +63840,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    modelEvents: {
 	        'change:value': 'render',
-	        'change:enabled': 'updateEnabled'
+	        'change:enabled': 'updateView',
+	        'change:readonly': 'updateView'
 	    },
 	
 	    __click: function __click() {
 	        this.reqres.request('panel:open');
 	    },
 	
-	    updateEnabled: function updateEnabled() {
-	        if (this.model.get('enabled')) {
+	    updateView: function updateView() {
+	        if (this.model.get('enabled') && !this.model.get('readonly')) {
+	            this.$el.addClass(classes.ARROW_BUTTON);
 	            this.ui.clearButton.show();
-	        } else {
+	        } else if (this.model.get('readonly')) {
+	            this.$el.removeClass(classes.ARROW_BUTTON);
+	            this.ui.clearButton.hide();
+	        } else if (!this.model.get('enabled')) {
+	            this.$el.addClass(classes.ARROW_BUTTON);
 	            this.ui.clearButton.hide();
 	        }
 	    },
 	
 	    onRender: function onRender() {
-	        this.updateEnabled();
+	        this.updateView();
 	        if (!this.model.get('value')) {
 	            this.$el.addClass(classes.EMPTY);
 	        }
@@ -64092,29 +64121,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return "dd-list__filter_button";
 	},"3":function(container,depth0,helpers,partials,data) {
-	    return "    <div class=\"dd-list__title btn-wrp-active\">\n        "
+	    return "    <div class=\"dd-list__title btn-wrp-active\">\r\n        "
 	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.text : depth0), depth0))
-	    + "\n        <span class=\"js-clear btn-del btn-del_absolute\"></span>\n    </div>\n";
+	    + "\r\n        <span class=\"js-clear btn-del btn-del_absolute\"></span>\r\n    </div>\r\n";
 	},"5":function(container,depth0,helpers,partials,data) {
 	    return "dd-list__wrp_button";
 	},"7":function(container,depth0,helpers,partials,data) {
 	    return "dd-list__scrollbar_button";
 	},"9":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"new-reference-btn js-add-new-button-region\"></div>\n";
+	    return "<div class=\"new-reference-btn js-add-new-button-region\"></div>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<div class=\"js-loading-region l-loader\"></div>\n\n<div class=\"dd-list__filter dd-list__filter_reference "
+	  return "<div class=\"js-loading-region l-loader\"></div>\r\n\r\n<div class=\"dd-list__filter dd-list__filter_reference "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.showAddNewButton : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\">\n"
+	    + "\">\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.text : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "    <div class=\"list-search list-search_dd\">\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\""
+	    + "    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\""
 	    + container.escapeExpression(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.REFERENCE.SEARCH",{"name":"localize","hash":{},"data":data}))
-	    + "\">\n    </div>\n</div>\n<div class=\"js-list-region dd-list__wrp "
+	    + "\">\r\n    </div>\r\n</div>\r\n<div class=\"js-list-region dd-list__wrp "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.showAddNewButton : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\"></div>\n<div class=\"js-scrollbar-region dd-list__scrollbar "
+	    + "\"></div>\r\n<div class=\"js-scrollbar-region dd-list__scrollbar "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.showAddNewButton : depth0),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "\"></div>\n"
+	    + "\"></div>\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.showAddNewButton : depth0),{"name":"if","hash":{},"fn":container.program(9, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 	},"useData":true});
 
@@ -64289,7 +64318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	__webpack_require__(1);
@@ -64301,11 +64330,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = Marionette.ItemView.extend({
-	  initialize: function initialize() {},
+	    initialize: function initialize() {},
 	
-	  className: 'l-loader',
+	    className: 'l-loader',
 	
-	  template: _loading2.default
+	    template: _loading2.default
 	});
 
 /***/ },
@@ -64908,29 +64937,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"2":function(container,depth0,helpers,partials,data) {
 	    return "       <span style=\"background-image: url("
 	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.userpicUri : depth0), depth0))
-	    + ");\" class=\"js-avatar avatar-icon avatar-icon_field\"></span>\n";
+	    + ");\" class=\"js-avatar avatar-icon avatar-icon_field\"></span>\r\n";
 	},"4":function(container,depth0,helpers,partials,data) {
-	    return "      <span class=\"avatar-icon avatar-icon_field\">\n        "
+	    return "      <span class=\"avatar-icon avatar-icon_field\">\r\n        "
 	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.abbreviation : depth0), depth0))
-	    + "\n      </span>\n";
+	    + "\r\n      </span>\r\n";
 	},"6":function(container,depth0,helpers,partials,data) {
-	    return "    <span class=\"avatar-icon avatar-icon_field avatar-icon_assignee avatar-icon_field\">\n    </span>\n";
+	    return "    <span class=\"avatar-icon avatar-icon_field avatar-icon_assignee avatar-icon_field\">\r\n    </span>\r\n";
 	},"8":function(container,depth0,helpers,partials,data) {
 	    return "    "
 	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.fullName : depth0), depth0))
-	    + "\n";
+	    + "\r\n";
 	},"10":function(container,depth0,helpers,partials,data) {
 	    return "      <span class=\"dev-member-not-set\">"
 	    + container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MEMBERSELECT.NOTSET",{"name":"localize","hash":{},"data":data}))
-	    + "</span>\n";
+	    + "</span>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<span class=\"js-anchor\">\n"
+	  return "<span class=\"js-anchor\">\r\n"
 	    + ((stack1 = helpers["with"].call(alias1,(depth0 != null ? depth0.member : depth0),{"name":"with","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(6, data, 0),"data":data})) != null ? stack1 : "")
-	    + "</span>\n<span class=\"js-text field-user__content\">\n"
+	    + "</span>\r\n<span class=\"js-text field-user__content\">\r\n"
 	    + ((stack1 = helpers["with"].call(alias1,(depth0 != null ? depth0.member : depth0),{"name":"with","hash":{},"fn":container.program(8, data, 0),"inverse":container.program(10, data, 0),"data":data})) != null ? stack1 : "")
-	    + "    <span class=\"js-clear-button button-delete button-delete_absolute\"></span>\n</span>";
+	    + "    <span class=\"js-clear-button button-delete button-delete_absolute\"></span>\r\n</span>";
 	},"useData":true});
 
 /***/ },
@@ -65371,7 +65400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name DropdownEditorView
 	 * @memberof module:core.form.editors
-	 * @class Редактор для выбора значения из выпадающего списка. Тип данных редактируемого значения должен
+	 * @class Dropdown editor that allows to select a value from a list. Тип данных редактируемого значения должен
 	 * совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
@@ -65381,8 +65410,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
 	 * текста из поля, отличного от <code>text</code>. В случае передачи Backbone.Collection, дальнейшее ее изменение
 	 * отражается в выпадающем списке.
-	 * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
-	 * @param {Boolean} [options.enableSearch=false] Отображать строку поиска в выпадающей панели.
+	 * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
+	 * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
 	 * */
 	Backbone.Form.editors.Dropdown = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DropdownEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -65777,14 +65806,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"dd-list__filter\">\n    <div class=\"list-search list-search_dd\">\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\""
+	    return "<div class=\"dd-list__filter\">\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\""
 	    + container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DROPDOWN.SEARCH",{"name":"localize","hash":{},"data":data}))
-	    + "\">\n    </div>\n</div>\n";
+	    + "\">\r\n    </div>\r\n</div>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 	
 	  return ((stack1 = helpers.blockHelperMissing.call(depth0,container.lambda((depth0 != null ? depth0.enableSearch : depth0), depth0),{"name":"enableSearch","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "<div class=\"js-list-region dev-dropdown-editor__dropdown-view__panel-view__list-region\"></div>\n<div class=\"js-scrollbar-region dev-dropdown-editor__dropdown-view__panel-view__scrollbar-region\"></div>";
+	    + "<div class=\"js-list-region dev-dropdown-editor__dropdown-view__panel-view__list-region\"></div>\r\n<div class=\"js-scrollbar-region dev-dropdown-editor__dropdown-view__panel-view__scrollbar-region\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -66581,16 +66610,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return "    <a href=\""
 	    + container.escapeExpression(((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"link","hash":{},"data":data}) : helper)))
-	    + "\" class=\"bubbles__link\">\n";
+	    + "\" class=\"bubbles__link\">\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
-	    return "    </a>\n";
+	    return "    </a>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
 	  return ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.link : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
 	    + "    "
 	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-	    + "\n"
+	    + "\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.link : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
 	    + "<div class=\"js-bubble-delete button-delete button-delete_absolute\"></div>";
 	},"useData":true});
@@ -66942,7 +66971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-list-region\"></div>\n<div class=\"js-scrollbar-region\"></div>";
+	    return "<div class=\"js-list-region\"></div>\r\n<div class=\"js-scrollbar-region\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -67020,7 +67049,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return "    <img src=\""
 	    + container.escapeExpression(((helper = (helper = helpers.avatarUri || (depth0 != null ? depth0.avatarUri : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"avatarUri","hash":{},"data":data}) : helper)))
-	    + "\" alt=\"\" class=\"dev-user-icon avatar-icon avatar-icon_list\">\n";
+	    + "\" alt=\"\" class=\"dev-user-icon avatar-icon avatar-icon_list\">\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 	
@@ -67030,15 +67059,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return "    <div class=\"avatar-icon avatar-icon_list\">"
 	    + container.escapeExpression(((helper = (helper = helpers.abbreviation || (depth0 != null ? depth0.abbreviation : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"abbreviation","hash":{},"data":data}) : helper)))
-	    + "</div>\n";
+	    + "</div>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<div class=\"js-menu-select-item menu-bselect__item\">\n"
+	  return "<div class=\"js-menu-select-item menu-bselect__item\">\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.avatarUri : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
 	    + "    <span class=\"js-name\">"
 	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-	    + "</span>\n</div>";
+	    + "</span>\r\n</div>";
 	},"useData":true});
 
 /***/ },
@@ -67532,7 +67561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<input class=\"js-input field field_duration\" placeholder=\""
 	    + container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DURATION.NOTSET",{"name":"localize","hash":{},"data":data}))
-	    + "\">\n<div class=\"js-duration-remove button-delete button-delete_duration\"></div>";
+	    + "\">\r\n<div class=\"js-duration-remove button-delete button-delete_duration\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -67857,11 +67886,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name DateEditorView
 	 * @memberof module:core.form.editors
-	 * @class Редактор даты: дропдаун с календарем. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
-	 * (например, '2015-07-20T00:00:00Z').
+	 * @class Calendar editor. The calendar opens in dropdown panel. Supported data type: <code>String</code> in ISO8601 format
+	 * (for example, '2015-07-20T00:00:00Z').
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. Doesn't have it's own options.
+	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * */
 	Backbone.Form.editors.Date = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -68839,11 +68868,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name DateTimeEditorView
 	 * @memberof module:core.form.editors
-	 * @class Редактор даты и времени. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
-	 * (например, '2015-07-20T10:46:37Z').
+	 * @class Combined date and time editor. Supported data type: <code>String</code> in ISO8601 format
+	 * (for example, '2015-07-20T10:46:37Z').
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. Doesn't have it's own options.
+	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * */
 	Backbone.Form.editors.DateTime = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateTimeEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -68958,7 +68987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-date-region\" style=\"display: inline-block\"></div>\n<div class=\"js-time-region\" style=\"display: inline-block\"></div>\n<span class=\"js-clear-button button-delete button-delete_absolute dev-button-delete-timeeditor\" style=\"display: inline;\"></span>";
+	    return "<div class=\"js-date-region\" style=\"display: inline-block\"></div>\r\n<div class=\"js-time-region\" style=\"display: inline-block\"></div>\r\n<span class=\"js-clear-button button-delete button-delete_absolute dev-button-delete-timeeditor\" style=\"display: inline;\"></span>";
 	},"useData":true});
 
 /***/ },
@@ -69641,19 +69670,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return "    <div class=\"js-cancel link-grey\">"
 	    + alias2(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.CANCEL",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n    <div class=\"js-apply btn btn_green\">"
+	    + "</div>\r\n    <div class=\"js-apply btn btn_green\">"
 	    + alias2(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.APPLY",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n";
+	    + "</div>\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
 	    return "    <div class=\"js-close btn btn_green\">"
 	    + container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MULTISELECT.CLOSE",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n";
+	    + "</div>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<div class=\"multiselect-panel__btn-top\">\n    <div class=\"js-select-all link-green\">"
+	  return "<div class=\"multiselect-panel__btn-top\">\r\n    <div class=\"js-select-all link-green\">"
 	    + container.escapeExpression(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.SELECTALL",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n</div>\n<div class=\"js-list multiselect-panel__list\"></div>\n<div class=\"multiselect-panel__btn-bottom\">\n"
+	    + "</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn-bottom\">\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.explicitApply : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
 	    + "</div>";
 	},"useData":true});
@@ -69981,14 +70010,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name BaseReferenceEditorController
 	 * @memberof module:core.form.editors.reference.controllers
-	 * @class Провайдер данных для {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
-	 * Запрос к данным осуществляется через переданную в опции (<code>options.collection</code>) Backbone-коллекцию.
-	 * В различных сценариях автоматически выбирается использование клиентской или серверной валидации.
-	 * @param {Object} options Объект опций.
-	 * @param {Backbone.Collection} options.collection Backbone.Collection объектов с атрибутами <code>{ id, text }</code>.
-	 * Коллекция должна реализовывать метод <code>fetch</code> с текстовой фильтрацией: <code>fetch({ data: { filter: 'myFilterText' } })</code>.
-	 * Результатом выполнения метода <code>fetch</code> является заполненная данными коллекция и установленное свойство <code>collection.totalCount</code>,
-	 * указывающее суммарное количество элементов, удовлетворяющих фильтру (может быть больше чем количество полученных).
+	 * @class Base data provider class for {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
+	 * Data request is performed by fetching Backbone.Collection passed via <code>options.collection</code> option.
+	 * Various scenarios are covered and server request is made only if it is required.
+	 * @param {Object} options Options object.
+	 * @param {Backbone.Collection} options.collection Backbone.Collection of objects. The objects must have <code>id</code> and <code>text</code> attributes.
+	 * The collection must implement <code>fetch()</code> method that supports text filtration.
+	 * For example, the call <code>collection.fetch({ data: { filter: 'myFilterText' } })</code> must
+	 * fetch the objects which contains 'myFilterText' in it's text attribute.
+	 * Besides that, the <code>collection.totalCount</code> attribute must be updated during the fetch and contain
+	 * the total count of object with the applied filter on server.
 	 * */
 	
 	exports.default = Marionette.Controller.extend( /** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */{
@@ -70000,10 +70031,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /**
-	     * Запрос на получение данных с указанными фильтрами.
-	     * @param {Object} options Объект опций.
-	     * @param {Object} options.text Активный текстовый фильтр.
-	     * @return {Promise} объект-Promise, срабатывающий по окончанию загрузки.
+	     * Requests data with a text filter applied.
+	     * @param {Object} options Options object.
+	     * @param {Object} options.text Text filter filter to apply or <code>null</code>.
+	     * @return {Promise} Promise object that resolves when the data is ready.
 	     * */
 	    fetch: function fetch(options) {
 	        options = options || {};
@@ -70038,14 +70069,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    /*
-	    * Объект Backbone.Collection, используемый для чтения данных. Напрямую не модифицируется.
+	    * Backbone.Collection that should be used to read data. The data should not be fetched from this object directly.
+	    * Use the controller's <code>fetch()</code> method instead.
 	    * */
 	    collection: null,
 	
 	    /**
-	     * Запрос на осуществление навигации по заданному объекту (к примеру, открытие карточки пользователя).
-	     * Должен быть реализован в классе-наследнике.
-	     * @param {Backbone.Model} model Модель объекта, на который требуется осуществить навигацию.
+	     * Handles a navigation request to an object. The method is abstract.
+	     * @param {Backbone.Model} model Data model that describes the object to navigate to.
 	     * */
 	    navigate: function navigate(model) {
 	        _utilsApi.helpers.throwError('Not Implemented.', 'NotImplementedError');
@@ -70294,7 +70325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	        value: true
 	});
 	
 	var _utilsApi = __webpack_require__(196);
@@ -70322,26 +70353,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
-	    initialize: function initialize(options) {
-	        _utilsApi.helpers.ensureOption(options, 'cacheService');
-	        _utilsApi.helpers.ensureOption(options, 'localizationService');
-	        _utilsApi.helpers.ensureOption(options, 'ajaxService');
-	        _utilsApi.helpers.ensureOption(options, 'windowService');
+	        initialize: function initialize(options) {
+	                _utilsApi.helpers.ensureOption(options, 'cacheService');
+	                _utilsApi.helpers.ensureOption(options, 'localizationService');
+	                _utilsApi.helpers.ensureOption(options, 'ajaxService');
+	                _utilsApi.helpers.ensureOption(options, 'windowService');
 	
-	        //noinspection JSUnresolvedVariable
-	        _WindowService2.default.initialize(options.windowService);
+	                //noinspection JSUnresolvedVariable
+	                _WindowService2.default.initialize(options.windowService);
 	
-	        _serviceLocator2.default.cacheService = options.cacheService;
+	                _serviceLocator2.default.cacheService = options.cacheService;
 	
-	        //noinspection JSUnresolvedVariable
-	        _LocalizationService2.default.initialize(options.localizationService);
-	        //noinspection JSUnresolvedVariable
-	        _AjaxService2.default.load(options.ajaxService);
+	                //noinspection JSUnresolvedVariable
+	                _LocalizationService2.default.initialize(options.localizationService);
+	                //noinspection JSUnresolvedVariable
+	                _AjaxService2.default.load(options.ajaxService);
 	
-	        _AjaxService2.default.on('jsApi:error', function () {
-	            _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
-	        });
-	    }
+	                _AjaxService2.default.on('jsApi:error', function () {
+	                        _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
+	                });
+	        }
 	};
 
 /***/ },
@@ -70990,9 +71021,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper;
 	
-	  return "<div class=\"tr-search tr-search_mselect\" id=\"searchInput\">\n    <input class=\"tr-search__input js-search-input\" name=\"searchName\" placeholder=\""
+	  return "<div class=\"tr-search tr-search_mselect\" id=\"searchInput\">\r\n    <input class=\"tr-search__input js-search-input\" name=\"searchName\" placeholder=\""
 	    + ((stack1 = ((helper = (helper = helpers.placeholder || (depth0 != null ? depth0.placeholder : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"placeholder","hash":{},"data":data}) : helper))) != null ? stack1 : "")
-	    + "\">\n    <div class=\"js-search-clear tr-search__clear\"></div>\n</div>";
+	    + "\">\r\n    <div class=\"js-search-clear tr-search__clear\"></div>\r\n</div>";
 	},"useData":true});
 
 /***/ },
