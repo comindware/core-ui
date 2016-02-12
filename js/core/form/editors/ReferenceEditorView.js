@@ -65,7 +65,9 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
             button: new Backbone.Model({
                 value: this.getValue(),
                 state: 'view',
-                enabled: this.getEnabled() && !this.getReadonly()
+                enabled: this.getEnabled(),
+                readonly: this.getReadonly()
+
             }),
             panel: new Backbone.Model({
                 value: this.getValue(),
@@ -203,12 +205,12 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
 
     setReadonly: function (readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
-        this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
+        this.viewModel.get('button').set('readonly', this.getReadonly());
     },
 
     setEnabled: function (enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
-        this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
+        this.viewModel.get('button').set('enabled', this.getEnabled());
     }
 });
 

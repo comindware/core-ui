@@ -12,7 +12,8 @@ import '../../../../../libApi';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {
-    EMPTY: 'pr-empty'
+    EMPTY: 'pr-empty',
+    ARROW_BUTTON: 'pr-arrow-right'
 };
 
 export default Marionette.ItemView.extend({
@@ -55,7 +56,8 @@ export default Marionette.ItemView.extend({
 
     modelEvents: {
         'change:value': 'render',
-        'change:enabled': 'updateEnabled'
+        'change:enabled': 'updateView',
+        'change:readonly': 'updateView'
     },
 
     __click: function () {
@@ -63,16 +65,21 @@ export default Marionette.ItemView.extend({
     },
 
 
-    updateEnabled: function () {
-        if (this.model.get('enabled')) {
+    updateView: function () {
+        if (this.model.get('enabled') && !this.model.get('readonly')) {
+            this.$el.addClass(classes.ARROW_BUTTON);
             this.ui.clearButton.show();
-        } else {
+        } else if(this.model.get('readonly')){
+            this.$el.removeClass(classes.ARROW_BUTTON);
+            this.ui.clearButton.hide();
+        } else if (!this.model.get('enabled')){
+            this.$el.addClass(classes.ARROW_BUTTON);
             this.ui.clearButton.hide();
         }
     },
 
     onRender: function () {
-        this.updateEnabled();
+        this.updateView();
         if (!this.model.get('value')) {
             this.$el.addClass(classes.EMPTY);
         }
