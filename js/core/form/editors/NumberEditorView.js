@@ -40,6 +40,7 @@ const allowedKeys = [
     keyCode.NUMPAD_ENTER,
     keyCode.NUMPAD_DECIMAL,
     keyCode.PERIOD,
+    keyCode.COMMA,
     keyCode.HOME,
     keyCode.END,
     keyCode.RIGHT,
@@ -47,7 +48,8 @@ const allowedKeys = [
     keyCode.UP,
     keyCode.DOWN,
     keyCode.SUBTRACT,
-    keyCode.NUMPAD_SUBTRACT
+    keyCode.NUMPAD_SUBTRACT,
+    keyCode.SLASH
 ];
 
 /**
@@ -95,6 +97,8 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
             }
             if (this.options.changeMode === changeMode.keydown) {
                 this.__value(this.ui.input.val(), true, true, false);
+            } else {
+            	this.__value(this.ui.input.val(), true, false, false);
             }
         },
         'change @ui.input': function () {
@@ -272,6 +276,7 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
 
     __parse: function (val) {
         if (typeof val === "string" && val !== "") {
+        	val = val.replace(',', '.');
             val = Number(val);
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;

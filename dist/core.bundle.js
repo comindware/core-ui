@@ -52748,7 +52748,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    UP: 38,
 	    CTRL: 17,
 	    ALT: 18,
-	    SUBTRACT: 189
+	    SUBTRACT: 189,
+	    SLASH: 191
 	};
 
 /***/ },
@@ -62625,7 +62626,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    changeMode: changeMode.blur
 	};
 	
-	var allowedKeys = [_utilsApi.keyCode.DELETE, _utilsApi.keyCode.BACKSPACE, _utilsApi.keyCode.TAB, _utilsApi.keyCode.ESCAPE, _utilsApi.keyCode.ENTER, _utilsApi.keyCode.NUMPAD_ENTER, _utilsApi.keyCode.NUMPAD_DECIMAL, _utilsApi.keyCode.PERIOD, _utilsApi.keyCode.HOME, _utilsApi.keyCode.END, _utilsApi.keyCode.RIGHT, _utilsApi.keyCode.LEFT, _utilsApi.keyCode.UP, _utilsApi.keyCode.DOWN, _utilsApi.keyCode.SUBTRACT, _utilsApi.keyCode.NUMPAD_SUBTRACT];
+	var allowedKeys = [_utilsApi.keyCode.DELETE, _utilsApi.keyCode.BACKSPACE, _utilsApi.keyCode.TAB, _utilsApi.keyCode.ESCAPE, _utilsApi.keyCode.ENTER, _utilsApi.keyCode.NUMPAD_ENTER, _utilsApi.keyCode.NUMPAD_DECIMAL, _utilsApi.keyCode.PERIOD, _utilsApi.keyCode.COMMA, _utilsApi.keyCode.HOME, _utilsApi.keyCode.END, _utilsApi.keyCode.RIGHT, _utilsApi.keyCode.LEFT, _utilsApi.keyCode.UP, _utilsApi.keyCode.DOWN, _utilsApi.keyCode.SUBTRACT, _utilsApi.keyCode.NUMPAD_SUBTRACT, _utilsApi.keyCode.SLASH];
 	
 	/**
 	 * @name NumberEditorView
@@ -62672,6 +62673,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            if (this.options.changeMode === changeMode.keydown) {
 	                this.__value(this.ui.input.val(), true, true, false);
+	            } else {
+	                this.__value(this.ui.input.val(), true, false, false);
 	            }
 	        },
 	        'change @ui.input': function changeUiInput() {
@@ -62849,6 +62852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __parse: function __parse(val) {
 	        if (typeof val === "string" && val !== "") {
+	            val = val.replace(',', '.');
 	            val = Number(val);
 	            if (val === Number.POSITIVE_INFINITY) {
 	                val = Number.MAX_VALUE;
