@@ -40,15 +40,22 @@ const allowedKeys = [
     keyCode.NUMPAD_ENTER,
     keyCode.NUMPAD_DECIMAL,
     keyCode.PERIOD,
+    keyCode.COMMA,
     keyCode.HOME,
     keyCode.END,
     keyCode.RIGHT,
     keyCode.LEFT,
     keyCode.UP,
     keyCode.DOWN,
+    keyCode.E,
+    keyCode.ADD,
     keyCode.SUBTRACT,
-    keyCode.NUMPAD_SUBTRACT
+    keyCode.NUMPAD_ADD,
+    keyCode.NUMPAD_SUBTRACT,
+    keyCode.SLASH
 ];
+
+const ALLOWED_CHARS = '0123456789+-.,Ee';
 
 /**
  * @name NumberEditorView
@@ -89,12 +96,15 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
 
     events: {
         'keydown @ui.input': '__keydown',
+        'keypress @ui.input': '__keypress',
         'keyup @ui.input': function (event) {
             if ([keyCode.UP, keyCode.DOWN, keyCode.PAGE_UP, keyCode.PAGE_DOWN].indexOf(event.keyCode) !== -1) {
                 this.__stop();
             }
             if (this.options.changeMode === changeMode.keydown) {
                 this.__value(this.ui.input.val(), true, true, false);
+            } else {
+            	this.__value(this.ui.input.val(), true, false, false);
             }
         },
         'change @ui.input': function () {
@@ -198,17 +208,14 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
         if (event.ctrlKey === true || allowedKeys.indexOf(event.keyCode) !== -1) {
             return true;
         }
-
-        var charValue = null;
-        if (event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) {
-            charValue = event.keyCode - keyCode.NUM_0;
-        } else if (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) {
-            charValue = event.keyCode - keyCode.NUMPAD_0;
-        }
-        var valid = charValue !== null;
-        if (!valid) {
-            return false;
-        }
+    },
+    
+    __keypress(event) {
+    	if (event.which == null) { // IE
+    		return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.keyCode));
+    	} else {
+    		return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
+    	}
     },
 
     __start: function() {
@@ -272,6 +279,7 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
 
     __parse: function (val) {
         if (typeof val === "string" && val !== "") {
+        	val = val.replace(',', '.');
             val = Number(val);
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;
