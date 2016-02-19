@@ -103,15 +103,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
 	
-	var _Bootstrapper = __webpack_require__(417);
+	var _Bootstrapper = __webpack_require__(420);
 	
 	var _Bootstrapper2 = _interopRequireDefault(_Bootstrapper);
 	
-	var _LoadingView = __webpack_require__(424);
+	var _LoadingView = __webpack_require__(427);
 	
 	var _LoadingView2 = _interopRequireDefault(_LoadingView);
 	
-	var _LoadingBehavior = __webpack_require__(426);
+	var _LoadingBehavior = __webpack_require__(429);
 	
 	var _LoadingBehavior2 = _interopRequireDefault(_LoadingBehavior);
 	
@@ -119,15 +119,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
 	
-	var _PopupBehavior = __webpack_require__(427);
+	var _PopupBehavior = __webpack_require__(430);
 	
 	var _PopupBehavior2 = _interopRequireDefault(_PopupBehavior);
 	
-	var _SearchBarView = __webpack_require__(428);
+	var _SearchBarView = __webpack_require__(431);
 	
 	var _SearchBarView2 = _interopRequireDefault(_SearchBarView);
 	
-	var _SplitPanelView = __webpack_require__(430);
+	var _SplitPanelView = __webpack_require__(433);
 	
 	var _SplitPanelView2 = _interopRequireDefault(_SplitPanelView);
 	
@@ -135,11 +135,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _FadingPanelView2 = _interopRequireDefault(_FadingPanelView);
 	
-	var _RoutingServiceBase = __webpack_require__(432);
+	var _RoutingServiceBase = __webpack_require__(435);
 	
 	var _RoutingServiceBase2 = _interopRequireDefault(_RoutingServiceBase);
 	
-	var _MessageService = __webpack_require__(421);
+	var _MessageService = __webpack_require__(424);
 	
 	var _MessageService2 = _interopRequireDefault(_MessageService);
 	
@@ -155,15 +155,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
-	var _AjaxService = __webpack_require__(418);
+	var _AjaxService = __webpack_require__(421);
 	
 	var _AjaxService2 = _interopRequireDefault(_AjaxService);
 	
-	var _PromiseService = __webpack_require__(419);
+	var _PromiseService = __webpack_require__(422);
 	
 	var _PromiseService2 = _interopRequireDefault(_PromiseService);
 	
-	var _ModuleProxy = __webpack_require__(433);
+	var _ModuleProxy = __webpack_require__(436);
 	
 	var _ModuleProxy2 = _interopRequireDefault(_ModuleProxy);
 	
@@ -61069,6 +61069,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MultiSelectEditorView2 = _interopRequireDefault(_MultiSelectEditorView);
 	
+	var _AvatarEditorView = __webpack_require__(409);
+	
+	var _AvatarEditorView2 = _interopRequireDefault(_AvatarEditorView);
+	
 	var _factory = __webpack_require__(371);
 	
 	var _factory2 = _interopRequireDefault(_factory);
@@ -61081,19 +61085,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MemberModel2 = _interopRequireDefault(_MemberModel);
 	
-	var _DemoReferenceEditorController = __webpack_require__(409);
+	var _DemoAvatarEditorController = __webpack_require__(411);
+	
+	var _DemoAvatarEditorController2 = _interopRequireDefault(_DemoAvatarEditorController);
+	
+	var _DemoReferenceEditorController = __webpack_require__(412);
 	
 	var _DemoReferenceEditorController2 = _interopRequireDefault(_DemoReferenceEditorController);
 	
-	var _DataSourceReferenceEditorController = __webpack_require__(410);
+	var _DataSourceReferenceEditorController = __webpack_require__(413);
 	
 	var _DataSourceReferenceEditorController2 = _interopRequireDefault(_DataSourceReferenceEditorController);
 	
-	var _BaseReferenceEditorController = __webpack_require__(411);
+	var _BaseReferenceEditorController = __webpack_require__(414);
 	
 	var _BaseReferenceEditorController2 = _interopRequireDefault(_BaseReferenceEditorController);
 	
-	var _DataSourceReferenceCollection = __webpack_require__(412);
+	var _DataSourceReferenceCollection = __webpack_require__(415);
 	
 	var _DataSourceReferenceCollection2 = _interopRequireDefault(_DataSourceReferenceCollection);
 	
@@ -61129,13 +61137,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ReferencePanelView2 = _interopRequireDefault(_ReferencePanelView);
 	
-	__webpack_require__(413);
-	
-	__webpack_require__(414);
-	
-	__webpack_require__(415);
-	
 	__webpack_require__(416);
+	
+	__webpack_require__(417);
+	
+	__webpack_require__(418);
+	
+	__webpack_require__(419);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -61184,6 +61192,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            BaseCompositeEditorView: _BaseCompositeEditorView2.default
 	        },
 	        /**
+	         * Avatar editor data providers and internal implementation.
+	         * @namespace
+	         * */
+	        avatar: {
+	            controllers: {
+	                DemoAvatarEditorController: _DemoAvatarEditorController2.default
+	            }
+	        },
+	        /**
 	         * Reference editor data providers and internal implementation.
 	         * @namespace
 	         * */
@@ -61228,7 +61245,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        TimeEditor: _TimeEditorView2.default,
 	        DateTimeEditor: _DateTimeEditorView2.default,
 	        MentionEditor: _MentionEditorView2.default,
-	        MultiSelectEditor: _MultiSelectEditorView2.default
+	        MultiSelectEditor: _MultiSelectEditorView2.default,
+	        AvatarEditor: _AvatarEditorView2.default
 	    }
 	};
 	exports.default = api;
@@ -69853,6 +69871,242 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Developer: Oleg Verevkin
+	 * Date: 02/19/2016
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _utilsApi = __webpack_require__(196);
+	
+	var _BaseItemEditorView = __webpack_require__(310);
+	
+	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
+	
+	var _avatarEditor = __webpack_require__(410);
+	
+	var _avatarEditor2 = _interopRequireDefault(_avatarEditor);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var defaultOptions = {
+	    autoUpload: false,
+	    refreshPreviewAfterUpload: false
+	};
+	
+	Backbone.Form.editors.Avatar = _BaseItemEditorView2.default.extend({
+	    className: 'dev-avatar-editor',
+	
+	    attributes: {
+	        tabindex: 0
+	    },
+	
+	    focusElement: null,
+	
+	    template: _avatarEditor2.default,
+	
+	    ui: {
+	        initials: '.js-initials',
+	        tooltip: '.js-tooltip'
+	    },
+	
+	    events: {
+	        click: '__attach'
+	    },
+	
+	    initialize: function initialize(options) {
+	        if (options.schema) {
+	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
+	        } else {
+	            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+	        }
+	
+	        _utilsApi.helpers.ensureOption(options, 'controller');
+	        this.controller = this.getOption('controller');
+	
+	        this.__previewURL = null;
+	        this.__initFileInput();
+	    },
+	    onRender: function onRender() {
+	        var _this = this;
+	
+	        if (this.getValue()) {
+	            this.__preview(this.controller.getImage(this.getValue()));
+	        } else if (this.getOption('fullName')) {
+	            this.ui.initials.append(this.__getInitials(this.getOption('fullName')));
+	            this.ui.initials.show();
+	        } else {
+	            this.__preview(this.controller.getImage());
+	        }
+	
+	        this.ui.tooltip.hide();
+	
+	        this.$el.hover(function () {
+	            _this.ui.tooltip.show();
+	        }, function () {
+	            _this.ui.tooltip.hide();
+	        });
+	    },
+	    onBeforeDestroy: function onBeforeDestroy() {
+	        if (this.__previewURL) {
+	            URL.revokeObjectURL(this.__previewURL);
+	        }
+	    },
+	    upload: function upload() {
+	        var _this2 = this;
+	
+	        if (this.fileInput.files[0]) {
+	            return this.controller.upload(this.fileInput.files[0]).then(function (data) {
+	                _this2.setValue(data.value);
+	                _this2.__triggerChange();
+	                _this2.__initFileInput();
+	
+	                if (_this2.getOption('refreshPreviewAfterUpload')) {
+	                    _this2.__preview(_this2.controller.getImage(_this2.getValue()));
+	                }
+	            });
+	        }
+	    },
+	    __initFileInput: function __initFileInput() {
+	        var _this3 = this;
+	
+	        this.fileInput = document.createElement('input');
+	        this.fileInput.type = 'file';
+	        this.fileInput.accept = 'image/*';
+	        this.fileInput.style.display = 'none';
+	
+	        this.fileInput.oninput = this.fileInput.onchange = function () {
+	            if (!(_this3.fileInput.files && _this3.fileInput.files.length)) {
+	                return;
+	            }
+	
+	            _this3.__preview(_this3.fileInput.files[0]);
+	
+	            if (_this3.getOption('autoUpload')) {
+	                _this3.upload();
+	            }
+	        };
+	    },
+	    __getInitials: function __getInitials(fullName) {
+	        var words = fullName.split(' ');
+	
+	        switch (words.length) {
+	            case 0:
+	                return null;
+	            case 1:
+	                if (words[0] === '') {
+	                    return null;
+	                }
+	                return fullName.substr(0, 3).toUpperCase();
+	            case 2:
+	                return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+	            default:
+	                return (words[0].charAt(0) + words[1].charAt(0) + words[2].charAt(0)).toUpperCase();
+	        }
+	    },
+	    __attach: function __attach() {
+	        document.body.appendChild(this.fileInput);
+	        this.fileInput.click();
+	        document.body.removeChild(this.fileInput);
+	    },
+	    __preview: function __preview(image) {
+	        this.ui.initials.hide();
+	
+	        if (this.__previewURL) {
+	            URL.revokeObjectURL(this.__previewURL);
+	        }
+	
+	        var previewURL = undefined;
+	
+	        if (_.isString(image)) {
+	            // URL
+	            previewURL = image;
+	        } else if (_.isObject(image) && {}.toString.call(image).slice(8, -1) === 'File') {
+	            // file
+	            previewURL = this.__previewURL = URL.createObjectURL(image);
+	        }
+	
+	        this.$el.css('background-image', 'url("' + previewURL + '")');
+	    }
+	});
+	
+	exports.default = Backbone.Form.editors.Avatar;
+
+/***/ },
+/* 410 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Handlebars = __webpack_require__(224);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    return "<div class=\"js-initials dev-avatar-editor__initials\"></div>\r\n<div class=\"js-tooltip\">Change avatar</div>";
+	},"useData":true});
+
+/***/ },
+/* 411 */
+/***/ function(module, exports) {
+
+	/**
+	 * Developer: Oleg Verevkin
+	 * Date: 02/19/2016
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var defaultOptions = {
+	    defaultURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIAQMAAABvIyEEAAAABlBMVEUAAABTU1OoaSf/AAAAAXRSTlMAQObYZgAAAENJREFUeF7tzbEJACEQRNGBLeAasBCza2lLEGx0CxFGG9hBMDDxRy/72O9FMnIFapGylsu1fgoBdkXfUHLrQgdfrlJN1BdYBjQQm3UAAAAASUVORK5CYII='
+	};
+	
+	exports.default = Marionette.Object.extend({
+	    initialize: function initialize(options) {
+	        this.options = _.defaults(options, defaultOptions);
+	    },
+	    upload: function upload(file) {
+	        // Demo request       
+	        var form = new FormData();
+	        form.append('file', file);
+	
+	        this.__uploadOperation = Ajax.sendFormData('/dev/null', form).catch(function () {
+	            console.warn('This promise is just an example to show how to send file');
+	        });
+	
+	        return Promise.delay(3000, {
+	            value: '14167968'
+	            //value: file // file may also be used as upload result
+	        });
+	    },
+	    getImage: function getImage(value) {
+	        if (_.isUndefined(value)) {
+	            return this.getOption('defaultURL');
+	        }
+	
+	        if (_.isString(value)) {
+	            return 'https://avatars.githubusercontent.com/u/' + value;
+	        }
+	
+	        if (_.isObject(value) && {}.toString.call(value).slice(8, -1) === 'File') {
+	            return value;
+	        }
+	    }
+	});
+
+/***/ },
+/* 412 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Developer: Stepan Burguchev
 	 * Date: 12/10/2014
 	 * Copyright: 2009-2016 Comindware®
@@ -69952,7 +70206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 410 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -69971,7 +70225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _BaseReferenceEditorController = __webpack_require__(411);
+	var _BaseReferenceEditorController = __webpack_require__(414);
 	
 	var _BaseReferenceEditorController2 = _interopRequireDefault(_BaseReferenceEditorController);
 	
@@ -69984,7 +70238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 411 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70092,7 +70346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 412 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70134,7 +70388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 413 */
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70185,7 +70439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Backbone.Form.validators.required;
 
 /***/ },
-/* 414 */
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70243,7 +70497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Backbone.Form.validators.length;
 
 /***/ },
-/* 415 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70281,7 +70535,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Backbone.Form.validators.password;
 
 /***/ },
-/* 416 */
+/* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70319,7 +70573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Backbone.Form.validators.phone;
 
 /***/ },
-/* 417 */
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70342,11 +70596,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
 	
-	var _AjaxService = __webpack_require__(418);
+	var _AjaxService = __webpack_require__(421);
 	
 	var _AjaxService2 = _interopRequireDefault(_AjaxService);
 	
-	var _MessageService = __webpack_require__(421);
+	var _MessageService = __webpack_require__(424);
 	
 	var _MessageService2 = _interopRequireDefault(_MessageService);
 	
@@ -70384,7 +70638,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 418 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70405,7 +70659,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(196);
 	
-	var _PromiseService = __webpack_require__(419);
+	var _PromiseService = __webpack_require__(422);
 	
 	var _PromiseService2 = _interopRequireDefault(_PromiseService);
 	
@@ -70516,7 +70770,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = global.Ajax;
 
 /***/ },
-/* 419 */
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70535,7 +70789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	__webpack_require__(420);
+	__webpack_require__(423);
 	
 	var promiseQueue = [];
 	
@@ -70556,7 +70810,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 420 */
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70578,7 +70832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 421 */
+/* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70597,7 +70851,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _MessageView = __webpack_require__(422);
+	var _MessageView = __webpack_require__(425);
 	
 	var _MessageView2 = _interopRequireDefault(_MessageView);
 	
@@ -70662,7 +70916,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 422 */
+/* 425 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70681,7 +70935,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _message = __webpack_require__(423);
+	var _message = __webpack_require__(426);
 	
 	var _message2 = _interopRequireDefault(_message);
 	
@@ -70724,7 +70978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 423 */
+/* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(224);
@@ -70751,7 +71005,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 424 */
+/* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70770,7 +71024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _loading = __webpack_require__(425);
+	var _loading = __webpack_require__(428);
 	
 	var _loading2 = _interopRequireDefault(_loading);
 	
@@ -70789,7 +71043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 425 */
+/* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(224);
@@ -70802,7 +71056,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 426 */
+/* 429 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70825,7 +71079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
-	var _LoadingView = __webpack_require__(424);
+	var _LoadingView = __webpack_require__(427);
 	
 	var _LoadingView2 = _interopRequireDefault(_LoadingView);
 	
@@ -70866,7 +71120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 427 */
+/* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70941,7 +71195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 428 */
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -70960,7 +71214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _searchBar = __webpack_require__(429);
+	var _searchBar = __webpack_require__(432);
 	
 	var _searchBar2 = _interopRequireDefault(_searchBar);
 	
@@ -71022,7 +71276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 429 */
+/* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(224);
@@ -71035,7 +71289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 430 */
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -71054,7 +71308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _splitPanel = __webpack_require__(431);
+	var _splitPanel = __webpack_require__(434);
 	
 	var _splitPanel2 = _interopRequireDefault(_splitPanel);
 	
@@ -71197,7 +71451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 431 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars = __webpack_require__(224);
@@ -71206,7 +71460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 432 */
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -71269,7 +71523,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 433 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
