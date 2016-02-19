@@ -158,3 +158,23 @@
 .dev-scrollbar__hidden {
     visibility: hidden;
 }
+
+/* Avatar */
+
+.dev-avatar-editor {
+    height: 100px;
+    width: 100px;
+    border: solid 1px #AAA;
+    border-radius: 50px;
+    overflow: hidden;
+    padding: 25px;
+    background-repeat: no-repeat;
+}
+
+.dev-avatar-editor__initials {
+    font-size: 24pt;
+    font-weight: bold;
+    color: #AAA;
+}
+
+/* /Avatar */

@@ -62,6 +62,9 @@ define([
 
     './cases/editors/MaskedTextEditor',
     'text!./cases/editors/MaskedTextEditor.js',
+    
+    './cases/editors/AvatarEditor',
+    'text!./cases/editors/AvatarEditor.js',
 
     './cases/editors/PasswordEditor',
     'text!./cases/editors/PasswordEditor.js',
@@ -204,6 +207,10 @@ define([
                     {
                         id: 'MultiSelectEditor',
                         displayName: 'MultiSelect Editor'
+                    },
+                    {
+                        id: 'AvatarEditor',
+                        displayName: 'Avatar Editor'
                     },
                     {
                         id: 'NumberEditor',
