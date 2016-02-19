@@ -8,12 +8,13 @@
 
 "use strict";
 
-var gulp = require('gulp');
-var gutil = require("gulp-util");
-var webpack = require("webpack");
-var webpackConfig = require("./webpack.config.js");
-var babel = require('gulp-babel');
-var jsdoc = require('gulp-jsdoc');
+var gulp = require('gulp'),
+    gutil = require("gulp-util"),
+    webpack = require("webpack"),
+    webpackConfig = require("./webpack.config.js"),
+    babel = require('gulp-babel'),
+    jsdoc = require('gulp-jsdoc'),
+    exec = require('child_process').exec;
 
 gulp.task('jsdoc', function() {
     return gulp.src('./js/core/**/*.js')
@@ -103,4 +104,27 @@ gulp.task("dev", ["webpack:build:debug"], function() {
 // The production task builds optimized and regular bundles and generates jsdoc documentation
 gulp.task('production', [ 'jsdoc', 'webpack:build:debug', 'webpack:build:release' ]);
 
-gulp.task('default', [ 'dev' ]);
+gulp.task('default', ['dev']);
+
+gulp.task('localize:watcher', function(){
+    gulp.watch('localization/*', ['localize']);
+});
+
+gulp.task('localize', function (cb) {
+    var localizationDestination = 'demo/public/scripts/localization/localization.js',
+        localizationSource = 'localization/localization.n35',
+        localizationResources = 'http://comindware.com/text#core',
+        localizerBin = 'Localization.Export.exe';
+
+    var localizationCommand = localizerBin +
+        ' --export js --source "' + localizationSource + 
+        '" --destination "' + localizationDestination +
+        '" -r ' + localizationResources +
+        ' --languages en ru de';
+
+        exec(localizationCommand, function (err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+            cb(err);
+        });
+});
