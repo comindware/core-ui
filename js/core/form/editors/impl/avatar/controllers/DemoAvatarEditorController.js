@@ -8,15 +8,9 @@
 
 'use strict';
 
-const defaultOptions = {
-    defaultURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIAQMAAABvIyEEAAAABlBMVEUAAABTU1OoaSf/AAAAAXRSTlMAQObYZgAAAENJREFUeF7tzbEJACEQRNGBLeAasBCza2lLEGx0CxFGG9hBMDDxRy/72O9FMnIFapGylsu1fgoBdkXfUHLrQgdfrlJN1BdYBjQQm3UAAAAASUVORK5CYII='
-};
+import BaseAvatarEditorController from './BaseAvatarEditorController'
 
-export default Marionette.Object.extend({
-    initialize(options) {
-        this.options = _.defaults(options, defaultOptions);
-    },
-    
+export default BaseAvatarEditorController.extend({
     upload(file) {
         // Demo request        
         var form = new FormData();
@@ -26,7 +20,7 @@ export default Marionette.Object.extend({
             console.warn('This promise is just an example to show how to send file');
         });
         
-        return Promise.delay(3000, {
+        return Promise.delay(1000, {
             value: '14167968'
             //value: file // file may also be used as upload result
         });

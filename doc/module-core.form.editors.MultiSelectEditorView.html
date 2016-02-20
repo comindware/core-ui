@@ -64,6 +64,14 @@
 						</li>
 						
 						<li>
+							<a href="module-core.form.editors.avatar.html">core.form.editors.avatar</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.html">core.form.editors.avatar.controllers</a>
+						</li>
+						
+						<li>
 							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
 						</li>
 						
@@ -221,6 +229,14 @@
 						
 						<li>
 							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.BaseAvatarEditorController.html">core.form.editors.avatar.controllers.BaseAvatarEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.AvatarEditorView.html">core.form.editors.AvatarEditorView</a>
 						</li>
 						
 						<li>
@@ -731,7 +747,7 @@ Backbone коллекция моделей с такими атрибутами.
 <dd>
     
     <div class="description">
-        <p>Флаг, определяющий активен ли на эдиторе фокус в настоящее время.</p>
+        <p>Indicates whether the editor has focus.</p>
     </div>
     
 
@@ -798,7 +814,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Снять фокус с данного эдитора.</p>
+        <p>Clears the focus.</p>
     </div>
     
 
@@ -873,7 +889,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Update the model with the current value</p>
+        <p>Update the model with the internal editor's value.</p>
     </div>
     
 
@@ -935,7 +951,7 @@ Backbone коллекция моделей с такими атрибутами.
 
             
 
-            <td class="description last"><p>Options to pass to model.set()</p>
+            <td class="description last"><p>Options to pass to model.set().</p>
                 <h6>Properties</h6>
                 
 
@@ -989,7 +1005,7 @@ Backbone коллекция моделей с такими атрибутами.
 
             
 
-            <td class="description last"><p>Set to true to trigger built-in model validation</p></td>
+            <td class="description last"><p>Set to true to trigger built-in model validation.</p></td>
         </tr>
 
 	
@@ -1059,7 +1075,8 @@ Backbone коллекция моделей с такими атрибутами.
     
             
 <div class="param-desc">
-    <p>В случае ошибки, возвращает объект <code>{ type, message }</code>.</p>
+    <p>Returns an error object <code>{ type, message }</code> if validation fails
+and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.</p>
 </div>
 
 
@@ -1096,7 +1113,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Установить фокус на этот эдитор.</p>
+        <p>Sets the focus onto this editor.</p>
     </div>
     
 
@@ -1171,7 +1188,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Получить значение флага enabled</p>
+        <p>Returns the value of <code>enabled</code> flag.</p>
     </div>
     
 
@@ -1265,7 +1282,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Получить текущее значение из модели.</p>
+        <p>Retrieves actual value of the bound attribute from the model.</p>
     </div>
     
 
@@ -1359,7 +1376,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Получить значение флага readonly</p>
+        <p>Returns the value of <code>readonly</code> flag.</p>
     </div>
     
 
@@ -1453,7 +1470,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Получить внутреннее значение эдитора.</p>
+        <p>Returns internal editor's value.</p>
     </div>
     
 
@@ -1547,8 +1564,8 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Установить новое значение флага enabled. В disabled состоянии эдитор невозможно редактировать,
-а также невозможно скопировать его текущее значение (считается, что для пользователя оно не имеет смысла).</p>
+        <p>Sets a new value of <code>enabled</code> flag. While disabled, the editor's value cannot be changed or copied by the user.
+It's implied that the value doesn't make sense.</p>
     </div>
     
 
@@ -1598,7 +1615,7 @@ Backbone коллекция моделей с такими атрибутами.
 
             
 
-            <td class="description last"><p>Новое значение флага.</p></td>
+            <td class="description last"><p>New flag value.</p></td>
         </tr>
 
 	
@@ -1672,8 +1689,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Установить новое значение флага readonly. В readonly состоянии эдитор невозможно редактировать,
-но возможно выделить и скопировать его текущее значение в текстовом виде.</p>
+        <p>Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.</p>
     </div>
     
 
@@ -1723,7 +1739,7 @@ Backbone коллекция моделей с такими атрибутами.
 
             
 
-            <td class="description last"><p>Новое значение флага.</p></td>
+            <td class="description last"><p>New flag value.</p></td>
         </tr>
 
 	
@@ -1797,7 +1813,7 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Установить новое внутреннее значение эдитора.</p>
+        <p>Sets new internal editor's value.</p>
     </div>
     
 
@@ -1847,7 +1863,7 @@ Backbone коллекция моделей с такими атрибутами.
 
             
 
-            <td class="description last"><p>Новое значение.</p></td>
+            <td class="description last"><p>The new value.</p></td>
         </tr>
 
 	
@@ -1921,8 +1937,8 @@ Backbone коллекция моделей с такими атрибутами.
     
     
     <div class="description">
-        <p>Ручное обновление значения эдитора значением this.model.get(this.key). Обычно вызывается автоматически по эвенту
-<code>'change'</code> модели.</p>
+        <p>Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
+Shouldn't be called normally. The method is called internally on model's <code>change</code> event.</p>
     </div>
     
 
@@ -2061,7 +2077,7 @@ Backbone коллекция моделей с такими атрибутами.
     
             
 <div class="param-desc">
-    <p>В случае ошибки, возвращает объект <code>{ type, message }</code>.</p>
+    <p>Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.</p>
 </div>
 
 
@@ -2113,7 +2129,7 @@ Backbone коллекция моделей с такими атрибутами.
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun Feb 7th 2016 using the <a
+		on Sat Feb 20th 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

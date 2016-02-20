@@ -64,6 +64,14 @@
 						</li>
 						
 						<li>
+							<a href="module-core.form.editors.avatar.html">core.form.editors.avatar</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.html">core.form.editors.avatar.controllers</a>
+						</li>
+						
+						<li>
 							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
 						</li>
 						
@@ -221,6 +229,14 @@
 						
 						<li>
 							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.BaseAvatarEditorController.html">core.form.editors.avatar.controllers.BaseAvatarEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.AvatarEditorView.html">core.form.editors.AvatarEditorView</a>
 						</li>
 						
 						<li>
@@ -390,21 +406,24 @@
     DropdownView
     </h2>
     
-        <div class="class-description"><p>Составная View. Используется для отображения выпадающей панели. Реализует логику HTML-элемента SELECT:
-ширина панели привязана к ширине кнопки.</p>
+        <div class="class-description"><p>Composite View that implements dropdown logic similar to SELECT HTML-element.
+Unlike <a href="module-core.dropdown.views.PopoutView.html">PopoutView</a>, a panel doesn't have a speech bubble triangle and
+it's min-width is always determined and equal to the width of a button view.</p>
+<p>A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.</p>
 <ul>
-<li>Button View - используется для отображения кнопки, по нажатии на которую всплывает панель.</li>
-<li>Panel View - используется при отображении выпадающей панели.</li>
+<li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
+<li>Panel View is used to display a panel that drops down.</li>
 </ul>
-Ширина панели определяется CSS View панели, но не может быть меньше ширины кнопки. Высота панели определяется CSS View панели.
-Позиция панели регулируется опцией <code>panelPosition</code>.<br/>
-Возможные эвенты:<ul>
-<li><code>'open' (dropdownView)</code> - эвент возникает после открытия панели.</li>
-<li><code>'close' (dropdownView, ...)</code> - эвент возникает после закрытия панели. При программном закрытии через метод close,
-переданные в нее параметры передаются в это событие.</li>
-<li><code>'button:*' </code> - все эвенты buttonView прокидываются в DropdownView с префиксом 'button:'.</li>
-<li><code>'panel:*' </code> - все эвенты panelView прокидываются в DropdownView с префиксом 'panel:'.</li>
-</ul></div>
+
+<p>Panel width is determined by its layout but it cannot be less than the button's width. Panel height is fully determined by its layout.
+A place where the panel appears depends on the <code>panelPosition</code> option.<br/>
+Possible events:<ul></p>
+<p><li><code>'open' (dropdownView)</code> - fires after the panel has opened.</li></p>
+<p><li><code>'close' (dropdownView, ...)</code> - fires after the panel has closed.
+If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li></p>
+<p><li><code>'button:*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li></p>
+<p><li><code>'panel:*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
+</ul></p></div>
     
 </header>
 
@@ -469,7 +488,7 @@
 
             
 
-            <td class="description last"><p>Объект опций.</p>
+            <td class="description last"><p>Options object.</p>
                 <h6>Properties</h6>
                 
 
@@ -527,7 +546,7 @@
                 </td>
             
 
-            <td class="description last"><p>View для отображение кнопки.</p></td>
+            <td class="description last"><p>View class for displaying the button.</p></td>
         </tr>
 
 	
@@ -567,7 +586,7 @@
                 </td>
             
 
-            <td class="description last"><p>Опции, передаваемые в buttonView при создании.</p></td>
+            <td class="description last"><p>Options passed into the view on its creation.</p></td>
         </tr>
 
 	
@@ -602,7 +621,7 @@
                 </td>
             
 
-            <td class="description last"><p>View для отображение панели. Создается заново при каждом открытии панели.</p></td>
+            <td class="description last"><p>View class for displaying the panel. The view is created every time the panel is triggered to open.</p></td>
         </tr>
 
 	
@@ -642,7 +661,7 @@
                 </td>
             
 
-            <td class="description last"><p>Опции, передаваемые в panelView при создании.</p></td>
+            <td class="description last"><p>Options passed into the view on its creation.</p></td>
         </tr>
 
 	
@@ -681,7 +700,7 @@
                 </td>
             
 
-            <td class="description last"><p>Открывать панель автоматически при клике на buttonView.</p></td>
+            <td class="description last"><p>Whether click on the button should trigger the panel to open.</p></td>
         </tr>
 
 	
@@ -720,11 +739,11 @@
                 </td>
             
 
-            <td class="description last"><p>Направление открытие панели. Варианты:
-      <ul><li><code>'down'</code> - панель выпадает вниз.</li>
-      <li><code>'down-over'</code> - панель выпадает вниз, но верхняя ее граница располагается на верхней границе кнопки и перекрывает ее.</li>
-      <li><code>'up'</code> - панель выпадает наверх.</li>
-      <li><code>'up-over'</code> - панель выпадает вверх, но нижняя ее граница располагается на нижней границе кнопки и перекрывает ее.</li></ul></p></td>
+            <td class="description last"><p>Opening direction:
+      <ul><li><code>'down'</code> - opens down.</li>
+      <li><code>'down-over'</code> - opens down and the panel is located above the button overlapping it.</li>
+      <li><code>'up'</code> - opens up.</li>
+      <li><code>'up-over'</code> - opens up and the panel is located above the button overlapping it.</li></ul></p></td>
         </tr>
 
 	
@@ -763,7 +782,7 @@
                 </td>
             
 
-            <td class="description last"><p>Автоматически вызывать render у buttonView при закрытии панели.</p></td>
+            <td class="description last"><p>Whether to trigger button render when the panel has closed.</p></td>
         </tr>
 
 	
@@ -856,7 +875,7 @@
 <dd>
     
     <div class="description">
-        <p>Экземпляр button View, если View отрендерена. Иначе null.</p>
+        <p>Contains an instance of <code>options.buttonView</code> if the dropdown is rendered, <code>null</code> otherwise.</p>
     </div>
     
 
@@ -907,7 +926,8 @@
 <dd>
     
     <div class="description">
-        <p>Экземпляр panel View, если панель открыта. Иначе null. Пересоздается при каждом открытии панели (!).</p>
+        <p>Contains an instance of <code>options.panelView</code> if the dropdown is open, <code>null</code> otherwise.
+The view is created every time (!) the panel is triggered to open.</p>
     </div>
     
 
@@ -965,7 +985,7 @@
     
     
     <div class="description">
-        <p>Закрыть выпадающую панель.</p>
+        <p>Closes the dropdown panel.</p>
     </div>
     
 
@@ -1027,7 +1047,7 @@
 
             
 
-            <td class="description last"><p>Агрументы, которые будут переданы в эвент <code>'close'</code></p></td>
+            <td class="description last"><p>Arguments transferred into the <code>'close'</code> event.</p></td>
         </tr>
 
 	
@@ -1092,7 +1112,7 @@
     
     
     <div class="description">
-        <p>Открыть выпадающую панель.</p>
+        <p>Opens the dropdown panel.</p>
     </div>
     
 
@@ -1173,7 +1193,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun Feb 7th 2016 using the <a
+		on Sat Feb 20th 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
