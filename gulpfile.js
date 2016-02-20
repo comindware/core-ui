@@ -112,7 +112,7 @@ gulp.task('localize:watcher', function(){
 
 gulp.task('localize', function (cb) {
     var localizationDestination = 'demo/public/scripts/localization/localization.js',
-        localizationSource = 'localization/localization.n35',
+        localizationSource = 'localization/localization.n3',
         localizationResources = 'http://comindware.com/text#core',
         localizerBin = 'Localization.Export.exe';
 

@@ -9,7 +9,6 @@
 @prefix l10n: <http://comindware.com/ontology/l10n#>.
 @using <localization.de.n3>.
 @using <localization.ru.n3>.
-@using <localization.deleted.n3>.
 @using <localization.meta.n3>.
 
 
