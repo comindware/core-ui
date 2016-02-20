@@ -90,7 +90,7 @@
 
 <http://comindware.com/text/core/formats/datetime#daysFull> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag"; l10n:originalData "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"].
 
-<http://comindware.com/text/core/formats/datetime#daysShort> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "So.,Mo.,Di.,Mi.,Do.,Fr.,Sa."; l10n:originalData "Sun,Mon,Tue,Wed,Thu,Fri,Sat"].
+<http://comindware.com/text/core/formats/datetime#daysShort> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Вс,Пн,Вт,Ср,Чт,Пт,Сб"; l10n:originalData "Sun,Mon,Tue,Wed,Thu,Fri,Sat"].
 
 <http://comindware.com/text/core/formats/datetime#months> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember"; l10n:originalData "January,February,March,April,May,June,July,August,September,October,November,December"].
 
