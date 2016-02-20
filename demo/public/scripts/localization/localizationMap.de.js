@@ -91,7 +91,7 @@ var LANGMAPDE = {
     "CORE.FORMATS" : "formats",
     "CORE.FORMATS.DATETIME" : "datetime",
     "CORE.FORMATS.DATETIME.DAYSFULL" : "Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag",
-    "CORE.FORMATS.DATETIME.DAYSSHORT" : "Вс,Пн,Вт,Ср,Чт,Пт,Сб",
+    "CORE.FORMATS.DATETIME.DAYSSHORT" : "So.,Mo.,Di.,Mi.,Do.,Fr.,Sa.",
     "CORE.FORMATS.DATETIME.MERIDIEM" : "AM,PM",
     "CORE.FORMATS.DATETIME.MONTHS" : "Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember",
     "CORE.FORMATS.DATETIME.MONTHSSHORT" : "Jan,Feb,Mrz,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez",

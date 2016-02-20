@@ -91,7 +91,7 @@ var LANGMAPRU = {
     "CORE.FORMATS" : "formats",
     "CORE.FORMATS.DATETIME" : "datetime",
     "CORE.FORMATS.DATETIME.DAYSFULL" : "Воскресенье,Понедельник,Вторник,Среда,Четверг,Пятница,Суббота",
-    "CORE.FORMATS.DATETIME.DAYSSHORT" : "So.,Mo.,Di.,Mi.,Do.,Fr.,Sa.",
+    "CORE.FORMATS.DATETIME.DAYSSHORT" : "Вс,Пн,Вт,Ср,Чт,Пт,Сб ",
     "CORE.FORMATS.DATETIME.MERIDIEM" : "AM,PM",
     "CORE.FORMATS.DATETIME.MONTHS" : "Январь,Февраль,Март,Апрель,Май,Июнь,Июль,Август,Сентябрь,Октябрь,Ноябрь,Декабрь",
     "CORE.FORMATS.DATETIME.MONTHSSHORT" : "Янв,Февр,Март,Апр,Май,Июнь,Июль,Авг,Сент,Окт,Нояб,Дек",
