@@ -64,6 +64,14 @@
 						</li>
 						
 						<li>
+							<a href="module-core.form.editors.avatar.html">core.form.editors.avatar</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.html">core.form.editors.avatar.controllers</a>
+						</li>
+						
+						<li>
 							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
 						</li>
 						
@@ -221,6 +229,14 @@
 						
 						<li>
 							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.BaseAvatarEditorController.html">core.form.editors.avatar.controllers.BaseAvatarEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.AvatarEditorView.html">core.form.editors.AvatarEditorView</a>
 						</li>
 						
 						<li>
@@ -390,9 +406,12 @@
     BackboneFormBehavior
     </h2>
     
-        <div class="class-description"><p>Данный Behavior является удобным средством для превращения любого Marionette.View в форму Backbone.Form.
-Возможные события:<ul>
-    <li><code>'form:render' (form)</code> - закончена отрисовка формы во View.</li>
+        <div class="class-description"><p>This behavior turns any Marionette.View into Backbone.Form. To do this Backbone.Form scans this.$el at the moment
+defined by <code>options.renderStrategy</code> and puts field and editors defined in <code>options.schema</code> into
+DOM-elements with corresponding Backbone.Form data-attributes.
+It's important to note that Backbone.Form will scan the whole this.$el including nested regions that might lead to unexpected behavior.
+Possible events:<ul>
+    <li><code>'form:render' (form)</code> - the form has rendered and available via <code>form</code> property of the view.</li>
 </ul></p></div>
     
 </header>
@@ -412,8 +431,8 @@
     
     
     <div class="description">
-        <p>Конструктор Marionette.Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
-быть переданы как свойства behavior (см. документацию Marionette).</p>
+        <p>Marionette.Behavior constructor shall never be called manually.
+The options described here should be passed as behavior options (look into Marionette documentation for details).</p>
     </div>
     
 
@@ -463,7 +482,7 @@
 
             
 
-            <td class="description last"><p>Объект опций</p>
+            <td class="description last"><p>Options object.</p>
                 <h6>Properties</h6>
                 
 
@@ -524,7 +543,7 @@
                 </td>
             
 
-            <td class="description last"><p>Схема Backbone.Form в <a href="https://github.com/powmedia/backbone-forms">стандартном формате</a>.</p></td>
+            <td class="description last"><p>Backbone.Form schema as it's listed in <a href="https://github.com/powmedia/backbone-forms">docs</a>.</p></td>
         </tr>
 
 	
@@ -564,7 +583,7 @@
                 </td>
             
 
-            <td class="description last"><p>Модель, которую необходимо привязать к данной форме. По умолчанию используется <code>this.model</code>.</p></td>
+            <td class="description last"><p>Backbone.Model that the form binds it's editors to. <code>this.model</code> is used by default.</p></td>
         </tr>
 
 	
@@ -603,10 +622,10 @@
                 </td>
             
 
-            <td class="description last"><p>Определяет момент, когда осуществляется отрисовка эдиторов во View. Варианты:<ul>
-    <li><code>'render'</code> - В методе onRender.</li>
-    <li><code>'show'</code> - В методе onShow.</li>
-    <li><code>'manual'</code> - Метод отрисовки (<code>renderForm()</code>) должен быть вызван вручную.</li>
+            <td class="description last"><p>Defines a moment when the form is applied to the view. May be one of:<ul>
+    <li><code>'render'</code> - On view's 'render' event.</li>
+    <li><code>'show'</code> - On view's 'show' event.</li>
+    <li><code>'manual'</code> - Form render method (<code>renderForm()</code>) must be called manually.</li>
     </ul></p></td>
         </tr>
 
@@ -644,8 +663,8 @@
                 </td>
             
 
-            <td class="description last"><p>Backbone.Form.Field, который необходимо использовать при отображении редакторов в этой форме.
-По умолчанию используется <code>core.form.fields.CommonField</code>.</p></td>
+            <td class="description last"><p>Backbone.Form.Field that will be used to render fields of the form.
+The field <code>core.form.fields.CommonField</code> is used by default.</p></td>
         </tr>
 
 	
@@ -675,7 +694,7 @@
 
             
 
-            <td class="description last"><p>View на которую применен данных Behavior</p></td>
+            <td class="description last"><p>A view the behavior is applied to.</p></td>
         </tr>
 
 	
@@ -775,7 +794,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun Feb 7th 2016 using the <a
+		on Sat Feb 20th 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Comindware UI-Core API Class: HeaderView</title>
+	<title>Comindware UI-Core API Class: BaseAvatarEditorController</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -396,15 +396,18 @@
 					
 
 
-	<h1 class="page-title">Class: HeaderView</h1>
+	<h1 class="page-title">Class: BaseAvatarEditorController</h1>
 <section>
 
 <header>
     <h2>
-        <span class="ancestors"><a href="module-core.html">core</a><a href="module-core.nativeGrid.html">.nativeGrid</a><a href="module-core.nativeGrid.views.html">.views</a>.</span>
+        <span class="ancestors"><a href="module-core.html">core</a><a href="module-core.form.html">.form</a><a href="module-core.form.editors.html">.editors</a><a href="module-core.form.editors.avatar.html">.avatar</a><a href="module-core.form.editors.avatar.controllers.html">.controllers</a>.</span>
     
-    HeaderView
+    BaseAvatarEditorController
     </h2>
+    
+        <div class="class-description"><p>Base data provider class for <a href="module-core.form.editors.AvatarEditorView.html">AvatarEditorView</a>.
+Methods <code>upload</code> and <code>getImage</code> must be implemented by subclasses.</p></div>
     
 </header>
 
@@ -415,16 +418,12 @@
     
         
 <dt>
-    <h4 class="name" id="HeaderView"><span class="type-signature"></span>new HeaderView<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="BaseAvatarEditorController"><span class="type-signature"></span>new BaseAvatarEditorController<span class="signature">(options)</span><span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
-    
-    <div class="description">
-        <p>View заголовка списка</p>
-    </div>
     
 
     
@@ -473,7 +472,7 @@
 
             
 
-            <td class="description last"><p>Constructor options</p>
+            <td class="description last"><p>Options object.</p>
                 <h6>Properties</h6>
                 
 
@@ -499,13 +498,13 @@
 
         <tr>
             
-                <td class="name"><code>columns</code></td>
+                <td class="name"><code>defaultURL</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array</span>
+<span class="param-type">string</span>
 
 
             
@@ -515,53 +514,7 @@
 
             
 
-            <td class="description last"><p>Массив колонок</p></td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>gridEventAggregator</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Object.html">Object</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>?</p></td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name"><code>gridColumnHeaderView</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Backbone.View</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>View Используемый для отображения заголовка (шапки) списка</p></td>
+            <td class="description last"><p>Default image URL to display when neither image value for <code>getImage</code> method nor full name for <a href="module-core.form.editors.AvatarEditorView.html">AvatarEditorView</a> provided.</p></td>
         </tr>
 
 	
@@ -625,12 +578,6 @@
     
     </div>
 
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        <ul>
-            <li><a href="module-core.list.views.GridHeaderView.html">module:core.list.views.GridHeaderView</a></li>
-        </ul>
     
 
     

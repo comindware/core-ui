@@ -25,7 +25,7 @@ define(
                     autocommit: true,
                     model: model,
                     key: 'avatar',
-                    //fullName: model.get('fullName'),
+                    fullName: model.get('fullName'),
                     autoUpload: true, // or use method 'upload' instead
                     refreshPreviewAfterUpload: true,
                     controller: new core.form.editors.avatar.controllers.DemoAvatarEditorController({
