@@ -31,9 +31,12 @@ import TimeEditorView from './editors/TimeEditorView';
 import DateTimeEditorView from './editors/DateTimeEditorView';
 import MentionEditorView from './editors/MentionEditorView';
 import MultiSelectEditorView from './editors/MultiSelectEditorView';
+import AvatarEditorView from './editors/AvatarEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/common/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/common/members/collections/MembersCollection';
 import editorsImplCommonMemberModel from './editors/impl/common/members/models/MemberModel';
+import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
+import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
 import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
 import DataSourceReferenceEditorController from './editors/impl/reference/controllers/DataSourceReferenceEditorController';
 import BaseReferenceEditorController from './editors/impl/reference/controllers/BaseReferenceEditorController';
@@ -96,6 +99,20 @@ var api = /** @lends module:core.form */ {
             BaseCompositeEditorView: BaseCompositeEditorView
         },
         /**
+         * Avatar editor data providers and internal implementation.
+         * @namespace
+         * */
+        avatar: {
+            /**
+             * Base implementation of data providers for AvatarEditorView.
+             * @namespace
+             * */
+            controllers: {
+                BaseAvatarEditorController: BaseAvatarEditorController,
+                DemoAvatarEditorController: DemoAvatarEditorController
+            }
+        },
+        /**
          * Reference editor data providers and internal implementation.
          * @namespace
          * */
@@ -140,7 +157,8 @@ var api = /** @lends module:core.form */ {
         TimeEditor: TimeEditorView,
         DateTimeEditor: DateTimeEditorView,
         MentionEditor: MentionEditorView,
-        MultiSelectEditor: MultiSelectEditorView
+        MultiSelectEditor: MultiSelectEditorView,
+        AvatarEditor: AvatarEditorView
     }
 };
 export default api;

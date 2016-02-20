@@ -64,6 +64,14 @@
 						</li>
 						
 						<li>
+							<a href="module-core.form.editors.avatar.html">core.form.editors.avatar</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.html">core.form.editors.avatar.controllers</a>
+						</li>
+						
+						<li>
 							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
 						</li>
 						
@@ -221,6 +229,14 @@
 						
 						<li>
 							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.BaseAvatarEditorController.html">core.form.editors.avatar.controllers.BaseAvatarEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.AvatarEditorView.html">core.form.editors.AvatarEditorView</a>
 						</li>
 						
 						<li>
@@ -390,22 +406,24 @@
     PopoutView
     </h2>
     
-        <div class="class-description"><p>Составная View. Используется для отображения выпадающей панели.
-Важное отличие от DropdownView: панель отрисовывается в виде бабла, в открытом виде к кнопке от бабла идет треугольник (как в комиксах).</p>
+        <div class="class-description"><p>Composite View that may be to display a dropdown panel as a speech bubble. Unlike <a href="module-core.dropdown.views.DropdownView.html">DropdownView</a>,
+the panel is displayed in speech bubble and has a triangle like in comics.
+A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.</p>
 <ul>
-<li>Button View - используется для отображения кнопки, по нажатии на которую всплывает панель.</li>
-<li>Panel View - используется при отображении выпадающей панели.</li>
+<li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
+<li>Panel View is used to display a panel that drops down.</li>
 </ul>
-Ширина панели не зависит от ширины кнопки и определяется CSS View панели. Высота панели определяется CSS View панели и опцией <code>height</code>.
-Позиция панели регулируется опциями <code>popoutFlow</code> и <code>direction</code>.<br/>
-Возможные эвенты:<ul>
-<li><code>'before:open' (popoutView)</code> - эвент возникает перед открытием панели.</li>
-<li><code>'open' (popoutView)</code> - эвент возникает после открытия панели.</li>
-<li><code>'before:close' (popoutView)</code> - эвент возникает перед закрытием панели.</li>
-<li><code>'close' (popoutView, ...)</code> - эвент возникает после закрытия панели. При программном закрытии через метод close,
-переданные в нее параметры передаются в это событие.</li>
-<li><code>'button:*' </code> - все эвенты buttonView прокидываются в PopoutView с префиксом 'button:'.</li>
-<li><code>'panel:*' </code> - все эвенты panelView прокидываются в PopoutView с префиксом 'panel:'.</li>
+Panel width is fully determined by its layout and the <code>popoutFlow</code> option.
+Panel height is determined by its layout and the <code>height</code> option.
+A place where the panel appears depends on the <code>direction</code> and <code>popoutFlow</code> options.<br/>
+Possible events:<ul>
+<li><code>'before:open' (popoutView)</code> - fires before the panel has opened.</li>
+<li><code>'open' (popoutView)</code> - fires after the panel has opened.</li>
+<li><code>'before:close' (popoutView)</code> - fires before the panel has closed.</li>
+<li><code>'close' (popoutView, ...)</code> - fires after the panel has closed.
+If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li>
+<li><code>'button:*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
+<li><code>'panel:*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
 </ul></div>
     
 </header>
@@ -471,7 +489,7 @@
 
             
 
-            <td class="description last"><p>Объект опций.</p>
+            <td class="description last"><p>Options object.</p>
                 <h6>Properties</h6>
                 
 
@@ -529,7 +547,7 @@
                 </td>
             
 
-            <td class="description last"><p>View для отображение кнопки.</p></td>
+            <td class="description last"><p>View class for displaying the button.</p></td>
         </tr>
 
 	
@@ -569,7 +587,7 @@
                 </td>
             
 
-            <td class="description last"><p>Опции, передаваемые в buttonView при создании.</p></td>
+            <td class="description last"><p>Options passed into the view on its creation.</p></td>
         </tr>
 
 	
@@ -604,7 +622,7 @@
                 </td>
             
 
-            <td class="description last"><p>View для отображение панели. Создается заново при каждом открытии панели.</p></td>
+            <td class="description last"><p>View class for displaying the panel. The view is created every time the panel is triggered to open.</p></td>
         </tr>
 
 	
@@ -644,7 +662,7 @@
                 </td>
             
 
-            <td class="description last"><p>Опции, передаваемые в panelView при создании.</p></td>
+            <td class="description last"><p>Options passed into the view on its creation.</p></td>
         </tr>
 
 	
@@ -683,7 +701,7 @@
                 </td>
             
 
-            <td class="description last"><p>Открывать панель автоматически при клике на buttonView.</p></td>
+            <td class="description last"><p>Whether click on the button should trigger the panel to open.</p></td>
         </tr>
 
 	
@@ -722,8 +740,8 @@
                 </td>
             
 
-            <td class="description last"><p>Использовать кастомный якорь для привязки треугольника бабла. Переданная
-                                              в buttonView View обязана реализовывать</p></td>
+            <td class="description last"><p>Whether to attach the speech bubble triangle (anchor) to a custom element in <code>buttonView</code>.
+                                              The View passed into the <code>buttonView</code> option must implement</p></td>
         </tr>
 
 	
@@ -762,7 +780,7 @@
                 </td>
             
 
-            <td class="description last"><p>Направление открытие панели. Варианты: <code>'up'</code>, <code>'down'</code>.</p></td>
+            <td class="description last"><p>Opening direction. Can be either: <code>'up'</code>, <code>'down'</code>.</p></td>
         </tr>
 
 	
@@ -801,7 +819,7 @@
                 </td>
             
 
-            <td class="description last"><p>Затемнять ли остальную часть экрана при открытии панели.</p></td>
+            <td class="description last"><p>Whether to dim the background when the panel is open.</p></td>
         </tr>
 
 	
@@ -840,9 +858,9 @@
                 </td>
             
 
-            <td class="description last"><p>Способ определения высоты панели.
-                                      <ul><li><code>'auto'</code> - определяется через CSS панели.</li>
-                                      <li><code>'bottom'</code> - всегда привязана к нижней части экрана</li></ul></p></td>
+            <td class="description last"><p>A way of determining the panel height.
+                                      <ul><li><code>'auto'</code> - is determined by panel's layout only.</li>
+                                      <li><code>'bottom'</code> - the bottom border is fixed to the bottom of the window.</li></ul></p></td>
         </tr>
 
 	
@@ -881,9 +899,11 @@
                 </td>
             
 
-            <td class="description last"><p>Определяет позицию панели по горизонтали.
-                                      <ul><li><code>'left'</code> - левая сторона панели привязана к левой стороне кнопки. Панель растет направо.</li>
-                                      <li><code>'right'</code> - правая сторона панели привязана к правой стороне кнопки. Панель растет налево.</li></ul></p></td>
+            <td class="description last"><p>Panel's horizontal position.
+                                      <ul><li><code>'left'</code> - The left border of the panel is attached to the left border of the button.
+                                      The panel grows to the right.</li>
+                                      <li><code>'right'</code> - The right border of the panel is attached to the right border of the button.
+                                      The panel grows to the left.</li></ul></p></td>
         </tr>
 
 	
@@ -922,7 +942,7 @@
                 </td>
             
 
-            <td class="description last"><p>Автоматически вызывать render у buttonView при закрытии панели.</p></td>
+            <td class="description last"><p>Whether to trigger button render when the panel has closed.</p></td>
         </tr>
 
 	
@@ -1015,7 +1035,7 @@
 <dd>
     
     <div class="description">
-        <p>Экземпляр button View, если View отрендерена. Иначе null.</p>
+        <p>Contains an instance of <code>options.buttonView</code> if the popout is rendered, <code>null</code> otherwise.</p>
     </div>
     
 
@@ -1066,7 +1086,8 @@
 <dd>
     
     <div class="description">
-        <p>Экземпляр panel View, если панель открыта. Иначе null. Пересоздается при каждом открытии панели (!).</p>
+        <p>Contains an instance of <code>options.panelView</code> if the popout is open, <code>null</code> otherwise.
+The view is created every time (!) the panel is triggered to open.</p>
     </div>
     
 
@@ -1124,7 +1145,7 @@
     
     
     <div class="description">
-        <p>Закрыть выпадающую панель.</p>
+        <p>Closes the dropdown panel.</p>
     </div>
     
 
@@ -1186,7 +1207,7 @@
 
             
 
-            <td class="description last"><p>Агрументы, которые будут переданы в эвент <code>'close'</code></p></td>
+            <td class="description last"><p>Arguments transferred into the <code>'close'</code> event.</p></td>
         </tr>
 
 	
@@ -1251,7 +1272,7 @@
     
     
     <div class="description">
-        <p>Открыть выпадающую панель.</p>
+        <p>Opens the dropdown panel.</p>
     </div>
     
 
@@ -1332,7 +1353,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun Feb 7th 2016 using the <a
+		on Sat Feb 20th 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
