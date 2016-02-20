@@ -96,8 +96,6 @@
 
 <http://comindware.com/text/core/formats/datetime#monthsShort> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Jan,Feb,Mrz,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez"; l10n:originalData "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"].
 
-<http://comindware.com/text/core/formats/datetime#today> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Heute"; l10n:originalData "Today"].
-
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#no> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#yes> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].

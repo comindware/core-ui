@@ -9,7 +9,6 @@
 @prefix l10n: <http://comindware.com/ontology/l10n#>.
 @using <localization.de.n3>.
 @using <localization.ru.n3>.
-@using <localization.deleted.n3>.
 @using <localization.meta.n3>.
 
 
@@ -185,17 +184,17 @@
 
 <http://comindware.com/text/core/formats#datetime> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-07-20T06:43:05.5608951Z"; l10n:modificationDate "2015-07-20T06:43:05.5608951Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "datetime"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/formats/datetime#daysFull> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy "Denis Krasnovsky"; l10n:creationDate "2015-07-20T06:43:50.3648951Z"; l10n:modificationDate "2016-02-20T11:12:29.3022404Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/formats/datetime#daysFull> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-07-20T06:43:50.3648951Z"; l10n:modificationDate "2015-07-20T06:43:50.3648951Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/formats/datetime#daysShort> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy "Denis Krasnovsky"; l10n:creationDate "2015-07-20T06:43:59.8858951Z"; l10n:modificationDate "2016-02-20T11:13:26.0352404Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Sun,Mon,Tue,Wed,Thu,Fri,Sat"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/formats/datetime#daysShort> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-07-20T06:43:59.8858951Z"; l10n:modificationDate "2015-07-20T06:43:59.8858951Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Sun,Mon,Tue,Wed,Thu,Fri,Sat"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/formats/datetime#meridiem> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-07-20T06:46:25.7002591Z"; l10n:modificationDate "2015-07-20T06:46:25.7002591Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "AM,PM"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/formats/datetime#months> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy "Denis Krasnovsky"; l10n:creationDate "2015-07-20T06:44:29.5608951Z"; l10n:modificationDate "2016-02-20T11:14:01.8722404Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "January,February,March,April,May,June,July,August,September,October,November,December"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/formats/datetime#months> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-07-20T06:44:29.5608951Z"; l10n:modificationDate "2015-07-20T06:44:29.5608951Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "January,February,March,April,May,June,July,August,September,October,November,December"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/formats/datetime#monthsShort> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy "Denis Krasnovsky"; l10n:creationDate "2015-07-20T06:44:43.6318951Z"; l10n:modificationDate "2016-02-20T11:14:32.9982404Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/formats/datetime#monthsShort> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy ""; l10n:creationDate "2015-07-20T06:44:43.6318951Z"; l10n:modificationDate "2015-07-20T06:44:43.6318951Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "{0}"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
-<http://comindware.com/text/core/formats/datetime#today> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy "Denis Krasnovsky"; l10n:creationDate "2015-07-20T06:46:15.0491941Z"; l10n:modificationDate "2016-02-20T11:15:03.9002404Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Today"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+<http://comindware.com/text/core/formats/datetime#today> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy ""; l10n:modifiedBy "Denis Krasnovsky"; l10n:creationDate "2015-07-20T06:46:15.0491941Z"; l10n:modificationDate "2016-02-17T14:22:53.5815732Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "{0}"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/grid#cellViewFactory> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Stepan Burguchev"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-08-25T12:43:51.8709260Z"; l10n:modificationDate "2015-08-25T12:43:51.8709260Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
