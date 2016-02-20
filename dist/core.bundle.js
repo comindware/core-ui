@@ -52748,7 +52748,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    UP: 38,
 	    CTRL: 17,
 	    ALT: 18,
-	    SUBTRACT: 189
+	    ADD: 187,
+	    SUBTRACT: 189,
+	    SLASH: 191,
+	    E: 69
 	};
 
 /***/ },
@@ -62625,7 +62628,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    changeMode: changeMode.blur
 	};
 	
-	var allowedKeys = [_utilsApi.keyCode.DELETE, _utilsApi.keyCode.BACKSPACE, _utilsApi.keyCode.TAB, _utilsApi.keyCode.ESCAPE, _utilsApi.keyCode.ENTER, _utilsApi.keyCode.NUMPAD_ENTER, _utilsApi.keyCode.NUMPAD_DECIMAL, _utilsApi.keyCode.PERIOD, _utilsApi.keyCode.HOME, _utilsApi.keyCode.END, _utilsApi.keyCode.RIGHT, _utilsApi.keyCode.LEFT, _utilsApi.keyCode.UP, _utilsApi.keyCode.DOWN, _utilsApi.keyCode.SUBTRACT, _utilsApi.keyCode.NUMPAD_SUBTRACT];
+	var allowedKeys = [_utilsApi.keyCode.DELETE, _utilsApi.keyCode.BACKSPACE, _utilsApi.keyCode.TAB, _utilsApi.keyCode.ESCAPE, _utilsApi.keyCode.ENTER, _utilsApi.keyCode.NUMPAD_ENTER, _utilsApi.keyCode.NUMPAD_DECIMAL, _utilsApi.keyCode.PERIOD, _utilsApi.keyCode.COMMA, _utilsApi.keyCode.HOME, _utilsApi.keyCode.END, _utilsApi.keyCode.RIGHT, _utilsApi.keyCode.LEFT, _utilsApi.keyCode.UP, _utilsApi.keyCode.DOWN, _utilsApi.keyCode.E, _utilsApi.keyCode.ADD, _utilsApi.keyCode.SUBTRACT, _utilsApi.keyCode.NUMPAD_ADD, _utilsApi.keyCode.NUMPAD_SUBTRACT, _utilsApi.keyCode.SLASH];
+	
+	var ALLOWED_CHARS = '0123456789+-.,Ee';
 	
 	/**
 	 * @name NumberEditorView
@@ -62666,12 +62671,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    events: {
 	        'keydown @ui.input': '__keydown',
+	        'keypress @ui.input': '__keypress',
 	        'keyup @ui.input': function keyupUiInput(event) {
 	            if ([_utilsApi.keyCode.UP, _utilsApi.keyCode.DOWN, _utilsApi.keyCode.PAGE_UP, _utilsApi.keyCode.PAGE_DOWN].indexOf(event.keyCode) !== -1) {
 	                this.__stop();
 	            }
 	            if (this.options.changeMode === changeMode.keydown) {
 	                this.__value(this.ui.input.val(), true, true, false);
+	            } else {
+	                this.__value(this.ui.input.val(), true, false, false);
 	            }
 	        },
 	        'change @ui.input': function changeUiInput() {
@@ -62775,18 +62783,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (event.ctrlKey === true || allowedKeys.indexOf(event.keyCode) !== -1) {
 	            return true;
 	        }
+	    },
 	
-	        var charValue = null;
-	        if (event.keyCode >= _utilsApi.keyCode.NUM_0 && event.keyCode <= _utilsApi.keyCode.NUM_9) {
-	            charValue = event.keyCode - _utilsApi.keyCode.NUM_0;
-	        } else if (event.keyCode >= _utilsApi.keyCode.NUMPAD_0 && event.keyCode <= _utilsApi.keyCode.NUMPAD_9) {
-	            charValue = event.keyCode - _utilsApi.keyCode.NUMPAD_0;
-	        }
-	        var valid = charValue !== null;
-	        if (!valid) {
-	            return false;
+	    __keypress: function __keypress(event) {
+	        if (event.which == null) {
+	            // IE
+	            return !! ~ALLOWED_CHARS.indexOf(String.fromCharCode(event.keyCode));
+	        } else {
+	            return !! ~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
 	        }
 	    },
+	
 	
 	    __start: function __start() {
 	        if (!this.counter) {
@@ -62849,6 +62856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __parse: function __parse(val) {
 	        if (typeof val === "string" && val !== "") {
+	            val = val.replace(',', '.');
 	            val = Number(val);
 	            if (val === Number.POSITIVE_INFINITY) {
 	                val = Number.MAX_VALUE;

@@ -37,5 +37,8 @@ export default /** @lends module:core.utils.keyCode */ {
     UP: 38,
     CTRL: 17,
     ALT: 18,
-    SUBTRACT: 189
+    ADD: 187,
+    SUBTRACT: 189,
+    SLASH: 191,
+    E: 69
 };
