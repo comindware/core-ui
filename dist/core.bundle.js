@@ -64443,7 +64443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "Add new item";
+	    return container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.ADDNEW",{"name":"localize","hash":{},"data":data}));
 	},"useData":true});
 
 /***/ },
