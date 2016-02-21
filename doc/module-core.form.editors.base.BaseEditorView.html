@@ -64,6 +64,14 @@
 						</li>
 						
 						<li>
+							<a href="module-core.form.editors.avatar.html">core.form.editors.avatar</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.html">core.form.editors.avatar.controllers</a>
+						</li>
+						
+						<li>
 							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
 						</li>
 						
@@ -221,6 +229,14 @@
 						
 						<li>
 							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.BaseAvatarEditorController.html">core.form.editors.avatar.controllers.BaseAvatarEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.AvatarEditorView.html">core.form.editors.AvatarEditorView</a>
 						</li>
 						
 						<li>
@@ -390,22 +406,22 @@
     BaseEditorView
     </h2>
     
-        <div class="class-description"><p>Базовый класс для всех эдиторов. Является модификацией класса Backbone.Form.Editor из библиотеки
-<a href="https://github.com/powmedia/backbone-forms">Backbone.Form</a>.<br/>
-При реализации собственных эдиторов используйте один из следующих классов, наследующих этот:<ul></p>
+        <div class="class-description"><p>Base class for all editors that use Marionette.View. The class is a reworked version of Backbone.Form.Editor from
+<a href="https://github.com/powmedia/backbone-forms">Backbone.Form</a> library.<br/>
+While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul></p>
 <p><li><code>BaseCollectionEditorView</code></li></p>
 <p><li><code>BaseCompositeEditorView</code></li></p>
 <p><li><code>BaseLayoutEditorView</code></li></p>
 <p><li><code>BaseItemEditorView</code></li></ul>
-Возможные эвенты:<ul></p>
-<p><li><code>'change' (thisEditorView)</code> - эвент возникает при изменении значения value внутри эдитора.
-При этом эвент не означает изменение значения в модели (!).</li></p>
-<p><li><code>'focus' (thisEditorView)</code> - эвент возникает при получении эдитором фокуса.</li></p>
-<p><li><code>'blur' (thisEditorView)</code> - эвент возникает при потере фокуса эдитором.</li></p>
-<p><li><code>'enabled' (enabled)</code> - эвент возникает при изменении флага enabled.</li></p>
-<p><li><code>'readonly' (readonly)</code> - эвент возникает при изменении флага readonly.</li></p>
-<p><li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - эвент возникает при записи данных в модель.</li></p>
-<p><li><code>'value:committed' (thisEditorView, model, key, value)</code> - эвент возникает при записи данных в модель.</li>
+Possible events:<ul></p>
+<p><li><code>'change' (thisEditorView)</code> - fires when the value inside the editor is changed.
+This event doesn't imply any change in model (!).</li></p>
+<p><li><code>'focus' (thisEditorView)</code> - fire when the editor gets the focus.</li></p>
+<p><li><code>'blur' (thisEditorView)</code> - fire when the editor loses the focus.</li></p>
+<p><li><code>'enabled' (enabled)</code> - fires when the property <code>enabled</code> is changed.</li></p>
+<p><li><code>'readonly' (readonly)</code> - fires when the property <code>readonly</code> is changed.</li></p>
+<p><li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - fires when the value is committed into the model.</li></p>
+<p><li><code>'value:committed' (thisEditorView, model, key, value)</code> - fires when the value is committed into the model.</li>
 </ul></p></div>
     
 </header>
@@ -471,7 +487,7 @@
 
             
 
-            <td class="description last"><p>Объект опций.</p>
+            <td class="description last"><p>Options object.</p>
                 <h6>Properties</h6>
                 
 
@@ -533,7 +549,7 @@
                 </td>
             
 
-            <td class="description last"><p>Автоматически вызывать метод commit() при каждом изменении значения value.</p></td>
+            <td class="description last"><p>Indicates whether to call <code>commit()</code> method on the value change.</p></td>
         </tr>
 
 	
@@ -572,7 +588,7 @@
                 </td>
             
 
-            <td class="description last"><p>Делать commit в модель даже в случае ошибок валидации (не рекомендуется).</p></td>
+            <td class="description last"><p>Indicated whether to commit the value into the model if editors validation has failed (not recommended).</p></td>
         </tr>
 
 	
@@ -611,7 +627,7 @@
                 </td>
             
 
-            <td class="description last"><p>Значение enabled, установленное по умолчанию (в дальнейшем возможно изменить через метод setEnabled).</p></td>
+            <td class="description last"><p>The initial value of <code>enabled</code> flag. Can be changed later on by calling <code>setEnabled()</code> method.</p></td>
         </tr>
 
 	
@@ -650,7 +666,8 @@
                 </td>
             
 
-            <td class="description last"><p>Значение readonly, установленное по умолчанию (в дальнейшем возможно изменить через метод setReadonly).</p></td>
+            <td class="description last"><p>The initial value of <code>readonly</code> flag.
+                                          Can be changed later on by calling <code>setReadonly()</code> method.</p></td>
         </tr>
 
 	
@@ -687,7 +704,9 @@
                 </td>
             
 
-            <td class="description last"><p>Редактируемая модель. Используется только при создании в отвязке от формы, вместе с опцией <code>key</code>.</p></td>
+            <td class="description last"><p>A model which contains an attributes edited by this editor.
+                                 Can only be used if the editor is created standalone (without a form).
+                                  Must be used together with  <code>key</code> options.</p></td>
         </tr>
 
 	
@@ -724,7 +743,9 @@
                 </td>
             
 
-            <td class="description last"><p>Редактируемый атрибут. Используется только при создании в отвязке от формы, вместе с опцией <code>model</code>.</p></td>
+            <td class="description last"><p>The name of an attribute in <code>options.model</code> edited by this editor.
+                               Can only be used if the editor is created standalone (without a form).
+                               Must be used together with  <code>model</code> options.</p></td>
         </tr>
 
 	
@@ -761,7 +782,7 @@
                 </td>
             
 
-            <td class="description last"><p>Массив функций-валидаторов с сигнатурой:
+            <td class="description last"><p>An array of validator function which look like the following:
 <code>function(value, formValues) -&gt; ({type, message}|undefined)</code></p></td>
         </tr>
 
@@ -799,7 +820,7 @@
                 </td>
             
 
-            <td class="description last"><p>Используется для передачи опций в эдитор в случае его неявного создания через форму (Backbone.Form).
+            <td class="description last"><p>When created implicitly by form, all the editor options are passed through this option.
 Не использовать явно.</p></td>
         </tr>
 
@@ -893,7 +914,7 @@
 <dd>
     
     <div class="description">
-        <p>Флаг, определяющий активен ли на эдиторе фокус в настоящее время.</p>
+        <p>Indicates whether the editor has focus.</p>
     </div>
     
 
@@ -951,7 +972,7 @@
     
     
     <div class="description">
-        <p>Снять фокус с данного эдитора.</p>
+        <p>Clears the focus.</p>
     </div>
     
 
@@ -1017,7 +1038,7 @@
     
     
     <div class="description">
-        <p>Update the model with the current value</p>
+        <p>Update the model with the internal editor's value.</p>
     </div>
     
 
@@ -1079,7 +1100,7 @@
 
             
 
-            <td class="description last"><p>Options to pass to model.set()</p>
+            <td class="description last"><p>Options to pass to model.set().</p>
                 <h6>Properties</h6>
                 
 
@@ -1133,7 +1154,7 @@
 
             
 
-            <td class="description last"><p>Set to true to trigger built-in model validation</p></td>
+            <td class="description last"><p>Set to true to trigger built-in model validation.</p></td>
         </tr>
 
 	
@@ -1194,7 +1215,8 @@
     
             
 <div class="param-desc">
-    <p>В случае ошибки, возвращает объект <code>{ type, message }</code>.</p>
+    <p>Returns an error object <code>{ type, message }</code> if validation fails
+and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.</p>
 </div>
 
 
@@ -1231,7 +1253,7 @@
     
     
     <div class="description">
-        <p>Установить фокус на этот эдитор.</p>
+        <p>Sets the focus onto this editor.</p>
     </div>
     
 
@@ -1297,7 +1319,7 @@
     
     
     <div class="description">
-        <p>Получить значение флага enabled</p>
+        <p>Returns the value of <code>enabled</code> flag.</p>
     </div>
     
 
@@ -1382,7 +1404,7 @@
     
     
     <div class="description">
-        <p>Получить текущее значение из модели.</p>
+        <p>Retrieves actual value of the bound attribute from the model.</p>
     </div>
     
 
@@ -1467,7 +1489,7 @@
     
     
     <div class="description">
-        <p>Получить значение флага readonly</p>
+        <p>Returns the value of <code>readonly</code> flag.</p>
     </div>
     
 
@@ -1552,7 +1574,7 @@
     
     
     <div class="description">
-        <p>Получить внутреннее значение эдитора.</p>
+        <p>Returns internal editor's value.</p>
     </div>
     
 
@@ -1637,8 +1659,8 @@
     
     
     <div class="description">
-        <p>Установить новое значение флага enabled. В disabled состоянии эдитор невозможно редактировать,
-а также невозможно скопировать его текущее значение (считается, что для пользователя оно не имеет смысла).</p>
+        <p>Sets a new value of <code>enabled</code> flag. While disabled, the editor's value cannot be changed or copied by the user.
+It's implied that the value doesn't make sense.</p>
     </div>
     
 
@@ -1688,7 +1710,7 @@
 
             
 
-            <td class="description last"><p>Новое значение флага.</p></td>
+            <td class="description last"><p>New flag value.</p></td>
         </tr>
 
 	
@@ -1753,8 +1775,7 @@
     
     
     <div class="description">
-        <p>Установить новое значение флага readonly. В readonly состоянии эдитор невозможно редактировать,
-но возможно выделить и скопировать его текущее значение в текстовом виде.</p>
+        <p>Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.</p>
     </div>
     
 
@@ -1804,7 +1825,7 @@
 
             
 
-            <td class="description last"><p>Новое значение флага.</p></td>
+            <td class="description last"><p>New flag value.</p></td>
         </tr>
 
 	
@@ -1869,7 +1890,7 @@
     
     
     <div class="description">
-        <p>Установить новое внутреннее значение эдитора.</p>
+        <p>Sets new internal editor's value.</p>
     </div>
     
 
@@ -1919,7 +1940,7 @@
 
             
 
-            <td class="description last"><p>Новое значение.</p></td>
+            <td class="description last"><p>The new value.</p></td>
         </tr>
 
 	
@@ -1984,8 +2005,8 @@
     
     
     <div class="description">
-        <p>Ручное обновление значения эдитора значением this.model.get(this.key). Обычно вызывается автоматически по эвенту
-<code>'change'</code> модели.</p>
+        <p>Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
+Shouldn't be called normally. The method is called internally on model's <code>change</code> event.</p>
     </div>
     
 
@@ -2106,7 +2127,7 @@
     
             
 <div class="param-desc">
-    <p>В случае ошибки, возвращает объект <code>{ type, message }</code>.</p>
+    <p>Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.</p>
 </div>
 
 
@@ -2158,7 +2179,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun Feb 7th 2016 using the <a
+		on Sat Feb 20th 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

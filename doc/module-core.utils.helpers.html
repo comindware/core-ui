@@ -64,6 +64,14 @@
 						</li>
 						
 						<li>
+							<a href="module-core.form.editors.avatar.html">core.form.editors.avatar</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.html">core.form.editors.avatar.controllers</a>
+						</li>
+						
+						<li>
 							<a href="module-core.form.editors.base.html">core.form.editors.base</a>
 						</li>
 						
@@ -221,6 +229,14 @@
 						
 						<li>
 							<a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.avatar.controllers.BaseAvatarEditorController.html">core.form.editors.avatar.controllers.BaseAvatarEditorController</a>
+						</li>
+						
+						<li>
+							<a href="module-core.form.editors.AvatarEditorView.html">core.form.editors.AvatarEditorView</a>
 						</li>
 						
 						<li>
@@ -398,7 +414,7 @@
 
     
         
-            <div class="description"><p>Набор вспомогательных методов общего назначения.</p></div>
+            <div class="description"><p>Useful methods used across the library.</p></div>
         
 
         
@@ -463,8 +479,8 @@
     
     
     <div class="description">
-        <p>Последовательно применяет переданные в аргументах Behavior классы на заданный экземпляр объекта.
-Никак не связан с применением объектов Marionette.Behavior.</p>
+        <p>Sequentially applies passed Behavior objects on to the given instance.
+The method has nothing to do with Marionette.Behavior.</p>
     </div>
     
 
@@ -524,7 +540,7 @@
 
             
 
-            <td class="description last"><p>Объект, на который будут применены behaviors.</p></td>
+            <td class="description last"><p>Target instance that is getting behaviors applied.</p></td>
         </tr>
 
 	
@@ -557,7 +573,7 @@
 
             
 
-            <td class="description last"><p>1 или более функций-конструкторов объектов Behavior.</p></td>
+            <td class="description last"><p>1 or more Behavior objects (constructor functions).</p></td>
         </tr>
 
 	
@@ -628,8 +644,9 @@
     
     
     <div class="description">
-        <p>Позволяет осуществить предварительную валидацию, что значение не равно <code>undefined, null, 0, '', false</code>.
-Кидает исключение <code>ArgumentFalsyError</code> в случае ошибки.</p>
+        <p>Pre-validation helper that allows to check that function argument is not falsy.
+Falsy value means that the value is one of the following: <code>undefined, null, 0, '', false</code>.
+Throws <code>ArgumentFalsyError</code> if validation is failed.</p>
     </div>
     
 
@@ -679,7 +696,7 @@
 
             
 
-            <td class="description last"><p>Проверяемое значение.</p></td>
+            <td class="description last"><p>Value to check.</p></td>
         </tr>
 
 	
@@ -702,7 +719,7 @@
 
             
 
-            <td class="description last"><p>Имя проверяемой переменной. Указывается тексте исключения.</p></td>
+            <td class="description last"><p>Name of the checked argument. Needs to specify in the exception text.</p></td>
         </tr>
 
 	
@@ -773,7 +790,8 @@
     
     
     <div class="description">
-        <p>Оборачивает переданную функцию-компаратор применяя ее на заданный атрибут объекта Backbone.Model.</p>
+        <p>Creates and returns a new function that maps the passed comparator onto the specified attribute of Backbone.Model.
+Look at the example for details.</p>
     </div>
     
 
@@ -823,7 +841,7 @@
 
             
 
-            <td class="description last"><p>Функция, которая должна быть вызвана по окончанию обработки активного события.</p></td>
+            <td class="description last"><p>Wrapped comparator function. 1 or 2 arguments.</p></td>
         </tr>
 
 	
@@ -846,7 +864,7 @@
 
             
 
-            <td class="description last"><p>Функция, которая должна быть вызвана по окончанию обработки активного события.</p></td>
+            <td class="description last"><p>Attribute of a Backbone.Model to which the function is mapped.</p></td>
         </tr>
 
 	
@@ -900,7 +918,7 @@
     
             
 <div class="param-desc">
-    <p>Обернутая функция.</p>
+    <p>Result function.</p>
 </div>
 
 
@@ -923,11 +941,7 @@
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, &#x27;text&#x27;);
-var a = new Backbone.Model({ id: 1, text: &#x27;1&#x27; });
-var b = new Backbone.Model({ id: 2, text: &#x27;2&#x27; });
-&#x2F;&#x2F; returns -1
-var result = referenceComparator(a, b);</pre>
+    <pre class="sunlight-highlight-javascript">var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, &#x27;text&#x27;);var a = new Backbone.Model({ id: 2, text: &#x27;1&#x27; });var b = new Backbone.Model({ id: 1, text: &#x27;2&#x27; });&#x2F;&#x2F; returns -1var result = referenceComparator(a, b);</pre>
 
 
     
@@ -944,7 +958,8 @@ var result = referenceComparator(a, b);</pre>
     
     
     <div class="description">
-        <p>Принимает строку и создает объект LocalizedText <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.</p>
+        <p>Accepts string and duplicates it into every field of LocalizedText object.
+The LocalizedText  looks like this: <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.</p>
     </div>
     
 
@@ -994,7 +1009,7 @@ var result = referenceComparator(a, b);</pre>
 
             
 
-            <td class="description last"><p>Текст, который будет установлен в каждое из свойств результирующего объекта.</p></td>
+            <td class="description last"><p>A text that is set into each field of the resulting LocalizedText object.</p></td>
         </tr>
 
 	
@@ -1048,7 +1063,7 @@ var result = referenceComparator(a, b);</pre>
     
             
 <div class="param-desc">
-    <p>Объект <code>{ en, de, ru }</code>.</p>
+    <p>LocalizedText object like <code>{ en, de, ru }</code>.</p>
 </div>
 
 
@@ -1082,7 +1097,8 @@ var result = referenceComparator(a, b);</pre>
     
     
     <div class="description">
-        <p>Создает очередь из асинхронных операций. Поступающие операции выполняются последовательно.</p>
+        <p>Creates a queue of asynchronous operations.
+New operation function is executed only after the previous function with the same id has executed.</p>
     </div>
     
 
@@ -1132,7 +1148,7 @@ var result = referenceComparator(a, b);</pre>
 
             
 
-            <td class="description last"><p>функция, запускающая асинхронную операцию и возвращающая объект Promise.</p></td>
+            <td class="description last"><p>A function that triggers asynchronous operation and returns a Promise object.</p></td>
         </tr>
 
 	
@@ -1155,7 +1171,7 @@ var result = referenceComparator(a, b);</pre>
 
             
 
-            <td class="description last"><p>Строковый идентификатор цепочки операций.</p></td>
+            <td class="description last"><p>String identifier of operations queue.</p></td>
         </tr>
 
 	
@@ -1209,14 +1225,7 @@ var result = referenceComparator(a, b);</pre>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">var save = form.save.bind(form);
-&#x2F;&#x2F; Three sequential calls
-var promise1 = core.utils.helpers.enqueueOperation(save, 42);
-var promise2 = core.utils.helpers.enqueueOperation(save, 42);
-var promise3 = core.utils.helpers.enqueueOperation(save, 42);
-promise3.then(function () {
-    &#x2F;&#x2F; Will be called only when all the &#x27;save&#x27; operations has been fired and returned success.
-});</pre>
+    <pre class="sunlight-highlight-javascript">var save = form.save.bind(form);&#x2F;&#x2F; Three sequential callsvar promise1 = core.utils.helpers.enqueueOperation(save, 42);var promise2 = core.utils.helpers.enqueueOperation(save, 42);var promise3 = core.utils.helpers.enqueueOperation(save, 42);promise3.then(function () {    &#x2F;&#x2F; Will be called only when all the &#x27;save&#x27; operations has been fired and returned success.});</pre>
 
 
     
@@ -1233,8 +1242,9 @@ promise3.then(function () {
     
     
     <div class="description">
-        <p>Позволяет осуществить предварительную валидацию входных опций. Обычно применяется к конструкторе/инициалайзере объекта.
-Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingOptionError</code> в случае ошибки.</p>
+        <p>Allows to perform validation of input options. The method is usually used in constructor or initializer methods.
+Allows to check both direct and nested properties of the options object.
+Throws <code>MissingOptionError</code> if the attribute is undefined.</p>
     </div>
     
 
@@ -1284,7 +1294,7 @@ promise3.then(function () {
 
             
 
-            <td class="description last"><p>Проверяемый объект опций.</p></td>
+            <td class="description last"><p>Options object to check.</p></td>
         </tr>
 
 	
@@ -1307,7 +1317,7 @@ promise3.then(function () {
 
             
 
-            <td class="description last"><p>Имя проверяемого свойства или разделенный точками путь к нему.</p></td>
+            <td class="description last"><p>Property name or dot-separated property path.</p></td>
         </tr>
 
 	
@@ -1361,10 +1371,7 @@ promise3.then(function () {
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Checks that property options.model exists.
-core.utils.helpers.ensureOption(options, &#x27;model&#x27;);
-&#x2F;&#x2F; Checks that property options.property1.subProperty exists.
-core.utils.helpers.ensureOption(options, &#x27;property1.subProperty&#x27;);</pre>
+    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Checks that property options.model exists.core.utils.helpers.ensureOption(options, &#x27;model&#x27;);&#x2F;&#x2F; Checks that property options.property1.subProperty exists.core.utils.helpers.ensureOption(options, &#x27;property1.subProperty&#x27;);</pre>
 
 
     
@@ -1381,8 +1388,8 @@ core.utils.helpers.ensureOption(options, &#x27;property1.subProperty&#x27;);</pr
     
     
     <div class="description">
-        <p>Позволяет осуществить предварительную валидацию свойств объекта.
-Поддерживает проверку свойств подобъектов. Кидает исключение <code>MissingPropertyError</code> в случае ошибки.</p>
+        <p>Allows to perform validation of property in an object. Allows to check both direct and nested properties of the object.
+Throws <code>MissingOptionError</code> if the attribute is undefined.</p>
     </div>
     
 
@@ -1432,7 +1439,7 @@ core.utils.helpers.ensureOption(options, &#x27;property1.subProperty&#x27;);</pr
 
             
 
-            <td class="description last"><p>Проверяемый объект.</p></td>
+            <td class="description last"><p>An object to check.</p></td>
         </tr>
 
 	
@@ -1455,7 +1462,7 @@ core.utils.helpers.ensureOption(options, &#x27;property1.subProperty&#x27;);</pr
 
             
 
-            <td class="description last"><p>Имя проверяемого свойства или разделенный точками путь к нему.</p></td>
+            <td class="description last"><p>Property name or dot-separated property path.</p></td>
         </tr>
 
 	
@@ -1509,8 +1516,7 @@ core.utils.helpers.ensureOption(options, &#x27;property1.subProperty&#x27;);</pr
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Checks that property this.view.moduleRegion exists.
-core.utils.helpers.ensureOption(this.view, &#x27;moduleRegion&#x27;);</pre>
+    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Checks that property this.view.moduleRegion exists.core.utils.helpers.ensureOption(this.view, &#x27;moduleRegion&#x27;);</pre>
 
 
     
@@ -1527,7 +1533,7 @@ core.utils.helpers.ensureOption(this.view, &#x27;moduleRegion&#x27;);</pre>
     
     
     <div class="description">
-        <p>Javascript версия .NET метода <code>string.Format</code>.</p>
+        <p>Javascript version of the Microsoft .NET framework method <code>string.Format</code>.</p>
     </div>
     
 
@@ -1587,8 +1593,8 @@ core.utils.helpers.ensureOption(this.view, &#x27;moduleRegion&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Форматируемая строка, содержащая плейсхолдеры в формате <code>{i}</code>.
-Где <code>i</code> - индекс подставляемого аргумента (начиная с нуля).</p></td>
+            <td class="description last"><p>Formatted text that contains placeholders like <code>{i}</code>.
+Where <code>i</code> - index of the inserted argument (starts from zero).</p></td>
         </tr>
 
 	
@@ -1621,7 +1627,7 @@ core.utils.helpers.ensureOption(this.view, &#x27;moduleRegion&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Агрументы, которые будут подставлены в плейсхолдеры.</p></td>
+            <td class="description last"><p>Arguments that will replace the placeholders in text.</p></td>
         </tr>
 
 	
@@ -1675,7 +1681,7 @@ core.utils.helpers.ensureOption(this.view, &#x27;moduleRegion&#x27;);</pre>
     
             
 <div class="param-desc">
-    <p>Результирующая строка.</p>
+    <p>Resulting string.</p>
 </div>
 
 
@@ -1698,8 +1704,7 @@ core.utils.helpers.ensureOption(this.view, &#x27;moduleRegion&#x27;);</pre>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; returns &#x27;Hello, Javascript!&#x27;
-core.utils.helpers.format(&#x27;Hello, {0}!&#x27;, &#x27;Javascript&#x27;);</pre>
+    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; returns &#x27;Hello, Javascript!&#x27;core.utils.helpers.format(&#x27;Hello, {0}!&#x27;, &#x27;Javascript&#x27;);</pre>
 
 
     
@@ -1716,8 +1721,9 @@ core.utils.helpers.format(&#x27;Hello, {0}!&#x27;, &#x27;Javascript&#x27;);</pre
     
     
     <div class="description">
-        <p>Taking a number and array of strings, returns a valid plural form.
-Works with complex cases and valid for all supported languages (en, de, ru).</p>
+        <p>Takes a number and array of strings and then returns a valid plural form.
+Works with complex cases and valid for all supported languages (by default for en, de and ru).
+The core algorithm is located in localization text <code>CORE.SERVICES.LOCALIZATION.PLURALFORM</code>.</p>
     </div>
     
 
@@ -1767,7 +1773,7 @@ Works with complex cases and valid for all supported languages (en, de, ru).</p>
 
             
 
-            <td class="description last"><p>Число, для которого необходимо подобрать склонение.</p></td>
+            <td class="description last"><p>A number which requires a correct work form.</p></td>
         </tr>
 
 	
@@ -1790,8 +1796,8 @@ Works with complex cases and valid for all supported languages (en, de, ru).</p>
 
             
 
-            <td class="description last"><p>Разделенные запятыми варианты фразы
-(для английского и немецкого - 2 фразы разделенные запятыми, для русского - 3 фразы разделенные запятыми).</p></td>
+            <td class="description last"><p>Comma separated string of word forms.
+(2 word forms for en and de, 3 word forms for ru).</p></td>
         </tr>
 
 	
@@ -1845,7 +1851,7 @@ Works with complex cases and valid for all supported languages (en, de, ru).</p>
     
             
 <div class="param-desc">
-    <p>Результирующая строка.</p>
+    <p>Resulting string.</p>
 </div>
 
 
@@ -1868,10 +1874,7 @@ Works with complex cases and valid for all supported languages (en, de, ru).</p>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; returns &#x27;car&#x27;
-core.utils.helpers.getPluralForm(1, &#x27;car,cars&#x27;);
-&#x2F;&#x2F; returns &#x27;cars&#x27;
-core.utils.helpers.getPluralForm(10, &#x27;car,cars&#x27;);</pre>
+    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; returns &#x27;car&#x27;core.utils.helpers.getPluralForm(1, &#x27;car,cars&#x27;);&#x2F;&#x2F; returns &#x27;cars&#x27;core.utils.helpers.getPluralForm(10, &#x27;car,cars&#x27;);</pre>
 
 
     
@@ -1888,7 +1891,8 @@ core.utils.helpers.getPluralForm(10, &#x27;car,cars&#x27;);</pre>
     
     
     <div class="description">
-        <p>Позволяет получить свойство объекта (или подобъекта) без ошибок в случае, если сам объект или его подобъекты не заданы.</p>
+        <p>Allows to retrieve a property (or subproperty) of an object. Does not throw any error if one of the properties along the way are missing.
+Doesn't throw if the object itself is undefined.</p>
     </div>
     
 
@@ -1938,7 +1942,7 @@ core.utils.helpers.getPluralForm(10, &#x27;car,cars&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Имя получаемого свойства или разделенный точками путь к нему.</p></td>
+            <td class="description last"><p>propertyName Property name or dot-separated property path.</p></td>
         </tr>
 
 	
@@ -1961,7 +1965,7 @@ core.utils.helpers.getPluralForm(10, &#x27;car,cars&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Объект, на который применяется путь.</p></td>
+            <td class="description last"><p>An object to get the property from.</p></td>
         </tr>
 
 	
@@ -2015,9 +2019,7 @@ core.utils.helpers.getPluralForm(10, &#x27;car,cars&#x27;);</pre>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">var foo = { a: {} };
-&#x2F;&#x2F; returns undefined (doesn&#x27;t throw an error)
-core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
+    <pre class="sunlight-highlight-javascript">var foo = { a: {} };&#x2F;&#x2F; returns undefined (doesn&#x27;t throw an error)core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
 
 
     
@@ -2034,7 +2036,7 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
     
     
     <div class="description">
-        <p>Метод вызывает функцию <code>callback()</code> по окончанию обработки активного события (аналогично setTimeout(fn, 10)).</p>
+        <p>Deprecated. Use <code>_.defer()</code> instead. Defers invoking the function until the current call stack has cleared.</p>
     </div>
     
 
@@ -2084,7 +2086,7 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Функция, которая должна быть вызвана по окончанию обработки активного события.</p></td>
+            <td class="description last"><p>Callback to be called when the current call stack has cleared.</p></td>
         </tr>
 
 	
@@ -2103,6 +2105,15 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
 
 	
 
+	
+	<dt class="important tag-deprecated">Deprecated:</dt>
+	
+	<dd class="yes-def tag-deprecated">
+		<ul class="dummy">
+			<li>Yes</li>
+		</ul>
+	</dd>
+	
 	
 
 	
@@ -2149,8 +2160,8 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
     
     
     <div class="description">
-        <p>Метод вызывает функцию <code>callback()</code> по прошествии <code>delay</code> миллисекунд с момента
-последнего вызова этого метода с заданным <code>someUniqueId</code>.</p>
+        <p>Deprecated. Use <code>_.debounce()</code> instead. Defers invoking the function until after <code>delay</code> milliseconds
+have elapsed since the last time it was invoked.</p>
     </div>
     
 
@@ -2200,7 +2211,7 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Идентификатор вызова.</p></td>
+            <td class="description last"><p>Function identifier.</p></td>
         </tr>
 
 	
@@ -2223,7 +2234,7 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Функция, которая должна быть вызвана по прошествии заданного интервала времени.</p></td>
+            <td class="description last"><p>The function tobe called after delay.</p></td>
         </tr>
 
 	
@@ -2246,7 +2257,7 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
 
             
 
-            <td class="description last"><p>Задержка вызова функции в миллисекундах.</p></td>
+            <td class="description last"><p>Callback delay in milliseconds.</p></td>
         </tr>
 
 	
@@ -2265,6 +2276,15 @@ core.utils.helpers.getPropertyOrDefault(foo, &#x27;a.b.c.d&#x27;);</pre>
 
 	
 
+	
+	<dt class="important tag-deprecated">Deprecated:</dt>
+	
+	<dd class="yes-def tag-deprecated">
+		<ul class="dummy">
+			<li>Yes</li>
+		</ul>
+	</dd>
+	
 	
 
 	
@@ -2382,7 +2402,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
                 </td>
             
 
-            <td class="description last"><p>Сообщение об ошибке.</p></td>
+            <td class="description last"><p>Error message.</p></td>
         </tr>
 
 	
@@ -2436,12 +2456,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">function (url, parameterNames, parameters, callback) {
-    &#x2F;&#x2F; Some code here ...
-    if (parameterNames.Length !== 2) {
-        utilsApi.helpers.throwArgumentError(&#x27;The array `parameterNames` should contain exactly 2 elements.&#x27;);
-    }
-    &#x2F;&#x2F; Some code here ...</pre>
+    <pre class="sunlight-highlight-javascript">function (url, parameterNames, parameters, callback) {    &#x2F;&#x2F; Some code here ...    if (parameterNames.Length !== 2) {        utilsApi.helpers.throwArgumentError(&#x27;The array `parameterNames` should contain exactly 2 elements.&#x27;);    }    &#x2F;&#x2F; Some code here ...</pre>
 
 
     
@@ -2458,7 +2473,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
     
     
     <div class="description">
-        <p>Упрощенный способ бросить объект-исключение.</p>
+        <p>Simplified way to throw an error. Throws an Error object with the specified name and message.</p>
     </div>
     
 
@@ -2524,7 +2539,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
                 </td>
             
 
-            <td class="description last"><p>Сообщение об ошибке.</p></td>
+            <td class="description last"><p>Error message.</p></td>
         </tr>
 
 	
@@ -2563,7 +2578,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
                 </td>
             
 
-            <td class="description last"><p>Имя исключения (поле Name объекта Error).</p></td>
+            <td class="description last"><p>Error name (<code>name</code> attribute of Error object).</p></td>
         </tr>
 
 	
@@ -2704,7 +2719,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
                 </td>
             
 
-            <td class="description last"><p>Сообщение об ошибке.</p></td>
+            <td class="description last"><p>Error message.</p></td>
         </tr>
 
 	
@@ -2758,12 +2773,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">function (url, parameterNames, parameters, callback) {
-    &#x2F;&#x2F; Some code here ...
-    if (parameters.Length !== parameterNames.length) {
-        utilsApi.helpers.throwFormatError(&#x27;The arrays `parameters` and `parameterNames` should have identical length.&#x27;);
-    }
-    &#x2F;&#x2F; Some code here ...</pre>
+    <pre class="sunlight-highlight-javascript">function (url, parameterNames, parameters, callback) {    &#x2F;&#x2F; Some code here ...    if (parameters.Length !== parameterNames.length) {        utilsApi.helpers.throwFormatError(&#x27;The arrays `parameters` and `parameterNames` should have identical length.&#x27;);    }    &#x2F;&#x2F; Some code here ...</pre>
 
 
     
@@ -2780,7 +2790,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
     
     
     <div class="description">
-        <p>Бросает InvalidOperationError. Возникает внутри метода класса, когда объект находится в некорректном состоянии.</p>
+        <p>Throws InvalidOperationError. The exception should be thrown when a class is in invalid state to call the checked method.</p>
     </div>
     
 
@@ -2850,7 +2860,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
                 </td>
             
 
-            <td class="description last"><p>Сообщение об ошибке.</p></td>
+            <td class="description last"><p>Error message.</p></td>
         </tr>
 
 	
@@ -2904,17 +2914,7 @@ Should be thrown only when one particular argument is invalid. If a combination 
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Inside of implementation of some Marionette.View.
-addKeyboardListener: function (key, callback) {
-    if (!this.keyListener) {
-        utilsApi.helpers.throwInvalidOperationError(&#x27;You must apply keyboard listener after \&#x27;render\&#x27; event has happened.&#x27;);
-    }
-    var keys = key.split(&#x27;,&#x27;);
-    _.each(keys, function (k) {
-        this.keyListener.simple_combo(k, callback);
-    }, this);
-},
-&#x2F;&#x2F; ...</pre>
+    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Inside of implementation of some Marionette.View.addKeyboardListener: function (key, callback) {    if (!this.keyListener) {        utilsApi.helpers.throwInvalidOperationError(&#x27;You must apply keyboard listener after \&#x27;render\&#x27; event has happened.&#x27;);    }    var keys = key.split(&#x27;,&#x27;);    _.each(keys, function (k) {        this.keyListener.simple_combo(k, callback);    }, this);},&#x2F;&#x2F; ...</pre>
 
 
     
@@ -3002,7 +3002,7 @@ For example: we looked up in the database and could find a person with requested
                 </td>
             
 
-            <td class="description last"><p>Сообщение об ошибке.</p></td>
+            <td class="description last"><p>Error message.</p></td>
         </tr>
 
 	
@@ -3138,7 +3138,7 @@ For example: a base class could have abstract methods that throws such error.</p
                 </td>
             
 
-            <td class="description last"><p>Сообщение об ошибке.</p></td>
+            <td class="description last"><p>Error message.</p></td>
         </tr>
 
 	
@@ -3192,10 +3192,7 @@ For example: a base class could have abstract methods that throws such error.</p
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Inside of implementation of some base controller class.
-navigate() {
-    utilsApi.this.throwNotImplementedError();
-}</pre>
+    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Inside of implementation of some base controller class.navigate() {    utilsApi.this.throwNotImplementedError();}</pre>
 
 
     
@@ -3283,7 +3280,7 @@ For example: some class doesn't support all the methods of the interface it impl
                 </td>
             
 
-            <td class="description last"><p>Сообщение об ошибке.</p></td>
+            <td class="description last"><p>Error message.</p></td>
         </tr>
 
 	
@@ -3337,12 +3334,7 @@ For example: some class doesn't support all the methods of the interface it impl
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Inside of implementation of some Stream class
-seek() {
-    &#x2F;&#x2F; Some code here ...
-    utilsApi.helpers.throwNotSupportedError(&#x27;The network stream doesn&#x27;t support `seek`.&#x27;);
-    &#x2F;&#x2F; Some code here ...
-}</pre>
+    <pre class="sunlight-highlight-javascript">&#x2F;&#x2F; Inside of implementation of some Stream classseek() {    &#x2F;&#x2F; Some code here ...    utilsApi.helpers.throwNotSupportedError(&#x27;The network stream doesn&#x27;t support `seek`.&#x27;);    &#x2F;&#x2F; Some code here ...}</pre>
 
 
     
@@ -3374,7 +3366,7 @@ seek() {
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sun Feb 7th 2016 using the <a
+		on Sat Feb 20th 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
