@@ -20,6 +20,8 @@ var LANGMAPEN = {
     "CORE.DEMO.CASES.OTHER.LOCALIZATIONSERVICE.DAYSPLURAL" : "day,days",
     "CORE.FORM" : "form",
     "CORE.FORM.EDITORS" : "editors",
+    "CORE.FORM.EDITORS.AVATAR" : "",
+    "CORE.FORM.EDITORS.AVATAR.CHANGE" : "Change avatar",
     "CORE.FORM.EDITORS.BUBBLESELECT" : "bubbleSelect",
     "CORE.FORM.EDITORS.BUBBLESELECT.NOTSET" : "Enter a name...",
     "CORE.FORM.EDITORS.COLLECTION" : "collection",

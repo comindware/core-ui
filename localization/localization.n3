@@ -49,6 +49,8 @@
 
 <http://comindware.com/text/core/form#validation> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2014-03-05T07:43:09.2212920Z"; l10n:modificationDate "2015-08-25T12:47:39.2846339Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
 
+<http://comindware.com/text/core/form/editors#avatar> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Oleg Verevkin"; l10n:modifiedBy "Oleg Verevkin"; l10n:creationDate "2016-02-24T15:13:07.8359144Z"; l10n:modificationDate "2016-02-24T15:13:07.8359144Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data ""].
+
 <http://comindware.com/text/core/form/editors#bubbleSelect> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy "Ksenia Kartvelishvili"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-05-06T14:59:54.3493379Z"; l10n:modificationDate "2016-01-13T11:30:51.4448623Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "bubbleSelect"].
 
 <http://comindware.com/text/core/form/editors#collection> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-30T07:50:52.9669462Z"; l10n:modificationDate "2015-09-03T15:21:01.3350996Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "collection"].
@@ -76,6 +78,8 @@
 <http://comindware.com/text/core/form/editors#textEditor> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-14T06:48:01.1003857Z"; l10n:modificationDate "2015-07-30T12:59:32.2577797Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "textEditor"].
 
 <http://comindware.com/text/core/form/editors#time> a l10n:Resource; l10n:descr ""; l10n:isLocalizable false; l10n:createdBy ""; l10n:modifiedBy "Alexey Prykin"; l10n:creationDate "2015-07-20T09:03:54.6770417Z"; l10n:modificationDate "2015-07-31T11:53:29.8063851Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "time"].
+
+<http://comindware.com/text/core/form/editors/avatar#change> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Oleg Verevkin"; l10n:modifiedBy "Oleg Verevkin"; l10n:creationDate "2016-02-24T15:13:59.1410444Z"; l10n:modificationDate "2016-02-24T15:13:59.1410444Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Change avatar"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/form/editors/bubbleSelect#notSet> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:exportToJs true; l10n:createdBy "Nikita Sushkov"; l10n:modifiedBy "Stepan Burguchev"; l10n:creationDate "2015-04-03T08:30:22.5126374Z"; l10n:modificationDate "2016-01-13T11:30:51.4448623Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Enter a name..."].
 

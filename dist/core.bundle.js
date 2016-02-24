@@ -69926,7 +69926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
 	 */
 	Backbone.Form.editors.Avatar = _BaseItemEditorView2.default.extend({
-	    className: 'dev-avatar-editor',
+	    className: 'user-avatar-wrp',
 	
 	    attributes: {
 	        tabindex: 0
@@ -69937,6 +69937,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _avatarEditor2.default,
 	
 	    ui: {
+	        image: '.js-image',
 	        remove: '.js-remove',
 	        initials: '.js-initials',
 	        tooltip: '.js-tooltip'
@@ -69979,7 +69980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        this.$el.hover(function () {
 	            _this.ui.tooltip.show();
-	            if (_this.getOption('removable') && _this.$el.css('background-image') !== 'none') {
+	            if (_this.getOption('removable') && _this.ui.image.css('background-image') !== 'none') {
 	                _this.ui.remove.show();
 	            }
 	        }, function () {
@@ -70059,7 +70060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.__triggerChange();
 	
 	        URL.revokeObjectURL(this.__previewURL);
-	        this.$el.css('background-image', 'none');
+	        this.ui.image.css('background-image', 'none');
 	        this.ui.remove.hide();
 	        this.ui.initials.show();
 	
@@ -70080,7 +70081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            previewURL = this.__previewURL = URL.createObjectURL(image);
 	        }
 	
-	        this.$el.css('background-image', 'url("' + previewURL + '")');
+	        this.ui.image.css('background-image', 'url("' + previewURL + '")');
 	    }
 	});
 	
@@ -70092,7 +70093,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-remove\">X</div>\r\n<div class=\"js-initials dev-avatar-editor__initials\"></div>\r\n<div class=\"js-tooltip\">Change avatar</div>";
+	    return "<div class=\"js-remove user-avatar-editor__empty\">X</div>\r\n<div class=\"js-image user-avatar-editor\">\r\n    <div class=\"js-initials user-avatar-editor__txt\"></div>\r\n    <div class=\"js-tooltip user-avatar-editor__btn\"><span class=\"user-avatar-editor-btn\">"
+	    + container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.AVATAR.CHANGE",{"name":"localize","hash":{},"data":data}))
+	    + "</span></div>\r\n</div>";
 	},"useData":true});
 
 /***/ },

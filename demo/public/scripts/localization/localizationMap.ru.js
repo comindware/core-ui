@@ -20,6 +20,8 @@ var LANGMAPRU = {
     "CORE.DEMO.CASES.OTHER.LOCALIZATIONSERVICE.DAYSPLURAL" : "день,дня,дней",
     "CORE.FORM" : "form",
     "CORE.FORM.EDITORS" : "editors",
+    "CORE.FORM.EDITORS.AVATAR" : "",
+    "CORE.FORM.EDITORS.AVATAR.CHANGE" : "Change avatar",
     "CORE.FORM.EDITORS.BUBBLESELECT" : "bubbleSelect",
     "CORE.FORM.EDITORS.BUBBLESELECT.NOTSET" : "Введите имя...",
     "CORE.FORM.EDITORS.COLLECTION" : "collection",

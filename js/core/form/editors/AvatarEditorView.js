@@ -33,8 +33,8 @@ const defaultOptions = {
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
 Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
-    className: 'dev-avatar-editor',
-
+    className: 'user-avatar-wrp',
+    
     attributes: {
         tabindex: 0
     },
@@ -44,6 +44,7 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
     template: template,
     
     ui: {
+        image: '.js-image',
         remove: '.js-remove',
         initials: '.js-initials',
         tooltip: '.js-tooltip'
@@ -86,7 +87,7 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
         this.$el.hover(
             () => {
                 this.ui.tooltip.show();
-                if (this.getOption('removable') && this.$el.css('background-image') !== 'none') {
+                if (this.getOption('removable') && this.ui.image.css('background-image') !== 'none') {
                     this.ui.remove.show();
                 }
             },
@@ -170,7 +171,7 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
         this.__triggerChange();
         
         URL.revokeObjectURL(this.__previewURL);
-        this.$el.css('background-image', 'none');
+        this.ui.image.css('background-image', 'none');
         this.ui.remove.hide();
         this.ui.initials.show();
         
@@ -190,7 +191,7 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
             previewURL = this.__previewURL = URL.createObjectURL(image);
         }
         
-        this.$el.css('background-image', `url("${previewURL}")`);
+        this.ui.image.css('background-image', `url("${previewURL}")`);
     }
 });
 
