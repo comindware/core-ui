@@ -33,7 +33,7 @@ const defaultOptions = {
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
 Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
-    className: 'dev-avatar-editor',
+    className: 'user-avatar-editor',
 
     attributes: {
         tabindex: 0

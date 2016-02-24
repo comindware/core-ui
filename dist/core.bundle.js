@@ -69926,7 +69926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
 	 */
 	Backbone.Form.editors.Avatar = _BaseItemEditorView2.default.extend({
-	    className: 'dev-avatar-editor',
+	    className: 'user-avatar-editor',
 	
 	    attributes: {
 	        tabindex: 0
@@ -70092,7 +70092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-remove\">X</div>\r\n<div class=\"js-initials dev-avatar-editor__initials\"></div>\r\n<div class=\"js-tooltip\">Change avatar</div>";
+	    return "<div class=\"js-remove user-avatar-editor__empty\">X</div>\r\n<div class=\"js-initials user-avatar-editor__txt\"></div>\r\n<div class=\"js-tooltip user-avatar-editor__btn\"><span class=\"user-avatar-editor-btn\">Change avatar</span></div>";
 	},"useData":true});
 
 /***/ },
