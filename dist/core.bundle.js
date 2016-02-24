@@ -70093,7 +70093,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(224);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-remove user-avatar-editor__empty\">X</div>\r\n<div class=\"js-image user-avatar-editor\">\r\n    <div class=\"js-initials user-avatar-editor__txt\"></div>\r\n    <div class=\"js-tooltip user-avatar-editor__btn\"><span class=\"user-avatar-editor-btn\">Change avatar</span></div>\r\n</div>";
+	    return "<div class=\"js-remove user-avatar-editor__empty\">X</div>\r\n<div class=\"js-image user-avatar-editor\">\r\n    <div class=\"js-initials user-avatar-editor__txt\"></div>\r\n    <div class=\"js-tooltip user-avatar-editor__btn\"><span class=\"user-avatar-editor-btn\">"
+	    + container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.AVATAR.CHANGE",{"name":"localize","hash":{},"data":data}))
+	    + "</span></div>\r\n</div>";
 	},"useData":true});
 
 /***/ },
