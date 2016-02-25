@@ -56766,11 +56766,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _libApi = __webpack_require__(1);
 	
@@ -60027,11 +60027,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _list = __webpack_require__(266);
 	
@@ -62820,7 +62820,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return !! ~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
 	        }
 	    },
-	
 	
 	    __start: function __start() {
 	        if (!this.counter) {
@@ -70140,7 +70139,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.options = _.defaults(options, this.defaultOptions);
 	  },
 	
-	
 	  /**
 	   * Uploads file to server or processes it any other way.
 	   * @param {File} file - File to be processed (uploaded to server).
@@ -70150,7 +70148,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  upload: function upload(file) {
 	    _utilsApi.helpers.throwError('Not Implemented', 'NotImplementedError');
 	  },
-	
 	
 	  /**
 	   * Converts incoming value to valid Image URL to be displayed in {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
