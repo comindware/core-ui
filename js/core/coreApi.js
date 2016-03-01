@@ -37,8 +37,6 @@ import LocalizationService from './services/LocalizationService';
 import AjaxService from './services/AjaxService';
 import PromiseService from './services/PromiseService';
 
-import ModuleProxy from './services/routing/ModuleProxy';
-
 import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
 import CollectionHighlightableBehavior from './collections/behaviors/HighlightableBehavior';
@@ -63,10 +61,7 @@ var api = {
         LocalizationService: LocalizationService,
         AjaxService: AjaxService,
         GlobalEventService: GlobalEventService,
-        PromiseService: PromiseService,
-        routing: {
-            ModuleProxy: ModuleProxy
-        }
+        PromiseService: PromiseService
     },
     /**
      * Backbone collections of general use.

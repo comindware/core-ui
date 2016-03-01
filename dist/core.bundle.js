@@ -163,10 +163,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _PromiseService2 = _interopRequireDefault(_PromiseService);
 	
-	var _ModuleProxy = __webpack_require__(437);
-	
-	var _ModuleProxy2 = _interopRequireDefault(_ModuleProxy);
-	
 	var _SlidingWindowCollection = __webpack_require__(267);
 	
 	var _SlidingWindowCollection2 = _interopRequireDefault(_SlidingWindowCollection);
@@ -210,10 +206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    LocalizationService: _LocalizationService2.default,
 	    AjaxService: _AjaxService2.default,
 	    GlobalEventService: _GlobalEventService2.default,
-	    PromiseService: _PromiseService2.default,
-	    routing: {
-	      ModuleProxy: _ModuleProxy2.default
-	    }
+	    PromiseService: _PromiseService2.default
 	  },
 	  /**
 	   * Backbone collections of general use.
@@ -51314,10 +51307,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _libApi2 = _interopRequireDefault(_libApi);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	var stringComparator2Asc = exports.stringComparator2Asc = function stringComparator2Asc(a, b) {
 	    if (a) {
 	        if (b) {
@@ -51354,20 +51343,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var durationComparator2Asc = exports.durationComparator2Asc = function durationComparator2Asc(a, b) {
 	    if (a) {
-	        a = _libApi2.default.duration(a);
+	        a = _libApi.moment.duration(a);
 	    }
 	    if (b) {
-	        b = _libApi2.default.duration(b);
+	        b = _libApi.moment.duration(b);
 	    }
 	    return a ? b ? a - b : 1 : b ? -1 : 0;
 	};
 	
 	var durationComparator2Desc = exports.durationComparator2Desc = function durationComparator2Desc(a, b) {
 	    if (a) {
-	        a = _libApi2.default.duration(a);
+	        a = _libApi.moment.duration(a);
 	    }
 	    if (b) {
-	        b = _libApi2.default.duration(b);
+	        b = _libApi.moment.duration(b);
 	    }
 	    return b ? a ? b - a : 1 : a ? -1 : 0;
 	};
@@ -51379,20 +51368,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var dateComparator2Asc = exports.dateComparator2Asc = function dateComparator2Asc(a, b) {
 	    if (a) {
-	        a = (0, _libApi2.default)(a);
+	        a = (0, _libApi.moment)(a);
 	    }
 	    if (b) {
-	        b = (0, _libApi2.default)(b);
+	        b = (0, _libApi.moment)(b);
 	    }
 	    return a ? b ? a - b : 1 : b ? -1 : 0;
 	};
 	
 	var dateComparator2Desc = exports.dateComparator2Desc = function dateComparator2Desc(a, b) {
 	    if (a) {
-	        a = (0, _libApi2.default)(a);
+	        a = (0, _libApi.moment)(a);
 	    }
 	    if (b) {
-	        b = (0, _libApi2.default)(b);
+	        b = (0, _libApi.moment)(b);
 	    }
 	    return b ? a ? b - a : 1 : a ? -1 : 0;
 	};
@@ -56766,11 +56755,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _libApi = __webpack_require__(1);
 	
@@ -60027,11 +60016,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _list = __webpack_require__(266);
 	
@@ -62820,6 +62809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return !! ~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
 	        }
 	    },
+	
 	
 	    __start: function __start() {
 	        if (!this.counter) {
@@ -70139,6 +70129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.options = _.defaults(options, this.defaultOptions);
 	  },
 	
+	
 	  /**
 	   * Uploads file to server or processes it any other way.
 	   * @param {File} file - File to be processed (uploaded to server).
@@ -70148,6 +70139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  upload: function upload(file) {
 	    _utilsApi.helpers.throwError('Not Implemented', 'NotImplementedError');
 	  },
+	
 	
 	  /**
 	   * Converts incoming value to valid Image URL to be displayed in {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
@@ -71632,57 +71624,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.navigateToUrl(activeUrl);
 	    }
 	};
-
-/***/ },
-/* 437 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 6/30/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(196);
-	
-	exports.default = Marionette.Controller.extend({
-	    initialize: function initialize(options) {
-	        _utilsApi.helpers.ensureOption(options, 'config');
-	
-	        _.bindAll(this, '__callbackProxy');
-	        _.each(options.config.routes, function (callbackName) {
-	            this[callbackName] = function () {
-	                this.__callbackProxy(callbackName, _.toArray(arguments));
-	            };
-	        }, this);
-	    },
-	
-	    __callbackProxy: function __callbackProxy(callbackName, routingArgs) {
-	        this.trigger('module:loading', callbackName, routingArgs, this.options.config);
-	        this.__loadModule().then(function (Module) {
-	            this.trigger('module:loaded', callbackName, routingArgs, this.options.config, Module);
-	        }.bind(this));
-	    },
-	
-	    __loadModule: function __loadModule() {
-	        /*var path = this.options.config.module;
-	        return new Promise(function (resolve) {
-	            require([ path ], function (Module) {
-	                resolve(Module);
-	            });
-	        });*/
-	    }
-	});
 
 /***/ }
 /******/ ])
