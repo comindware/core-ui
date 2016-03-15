@@ -122,23 +122,7 @@
     left: auto;
 }
 
-.dev-dropdown-editor__dropdown-view__panel-view__scrollbar-region {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 16px;
-    height: 100%;
-}
 
-.dev-dropdown-editor__dropdown-view__panel-view__list-region {
-    height: 100%;
-    width: 100%;
-}
-
-.dev-dropdown-editor__dropdown-view__panel-view {
-    padding-right: 16px;
-    line-height: 30px;
-}
 
 .dev-dropdown-editor__dropdown-view__list-item-view {
     height: 30px;

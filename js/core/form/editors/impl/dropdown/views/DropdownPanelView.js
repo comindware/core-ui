@@ -32,7 +32,7 @@ export default Marionette.LayoutView.extend({
         tabindex: 0
     },
 
-    className: 'dev-dropdown-editor__dropdown-view__panel-view',
+    className: 'dropdown-panel-view',
 
     template: template,
 
@@ -60,7 +60,7 @@ export default Marionette.LayoutView.extend({
 
     onRender: function () {
         if (this.options.enableSearch) {
-            this.$el.addClass('popup-allow_search');
+            this.$el.addClass('dropdown-panel-view_search');
         }
     },
 
