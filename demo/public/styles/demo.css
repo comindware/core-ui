@@ -331,9 +331,7 @@
     width: 100%;
 }
 
-.multiselect-i_selected::after {
-    content: ' V';
-}
+
 
 /* demo */
 

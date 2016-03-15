@@ -65709,7 +65709,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        if (this.options.enableSearch) {
-	            this.$el.addClass('popup-allow_search');
+	            this.$el.addClass('popup-allow_search 111');
 	        }
 	    },
 	
@@ -69418,7 +69418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dropdownRegion: '.js-dropdown-region'
 	    },
 	
-	    className: 'dev-multi-select',
+	    className: 'multiselect-wrp',
 	
 	    template: _multiSelectEditor2.default,
 	
@@ -69691,9 +69691,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var alias1=depth0 != null ? depth0 : {}, alias2=container.escapeExpression;
 	
-	  return "    <div class=\"js-cancel link-grey\">"
+	  return "    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel \">"
 	    + alias2(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.CANCEL",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\r\n    <div class=\"js-apply btn btn_green\">"
+	    + "</div>\r\n    <div class=\"js-apply multiselect-panel-btn multiselect-panel-btn_apply \">"
 	    + alias2(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.APPLY",{"name":"localize","hash":{},"data":data}))
 	    + "</div>\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
@@ -69703,9 +69703,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<div class=\"multiselect-panel__btn-top\">\r\n    <div class=\"js-select-all link-green\">"
+	  return "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\r\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall \">"
 	    + container.escapeExpression(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.SELECTALL",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn-bottom\">\r\n"
+	    + "</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.explicitApply : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
 	    + "</div>";
 	},"useData":true});

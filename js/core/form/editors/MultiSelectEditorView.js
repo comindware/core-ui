@@ -81,7 +81,7 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         dropdownRegion: '.js-dropdown-region'
     },
 
-    className: 'dev-multi-select',
+    className: 'multiselect-wrp',
 
     template: template,
 

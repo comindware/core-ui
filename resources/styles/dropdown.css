@@ -687,3 +687,115 @@
     color: #009bfe;
     border-color: #009bfe;
 }
+
+
+.multiselect-wrp .dropdown__wrp{
+    width: auto;
+    left: -4px;
+    right: -4px;
+    top: 14px;
+}
+
+.multiselect-panel{
+    min-width: 160px;
+    max-width: 100%;
+    height: 305px;
+    padding: 40px 0;
+    position: relative;
+}
+.multiselect-panel__list{
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.multiselect-panel__btn{
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    line-height: 40px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+    position: absolute;
+    background-color: #fff;
+}
+.multiselect-panel__btn_top{
+    top: 0;
+    border-bottom: 1px solid #dee3e8;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.multiselect-panel__btn_bottom {
+    bottom: 0;
+    border-top: 1px solid #dee3e8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.multiselect-panel-btn {
+    display: inline-block;
+    color: #0575bd;
+    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.multiselect-panel-btn:hover {
+    color: #009bfe;
+}
+.multiselect-panel-btn_cancel {
+   float: right;
+}
+
+
+
+.multiselect-i {
+    height: 34px;
+    padding: 0 34px 0 10px;
+    line-height: 34px;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    color: #43525d;
+    overflow: hidden;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    position: relative;
+}
+
+.multiselect-i:hover {
+    background: #f5f5f5;
+}
+
+.multiselect-i:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    overflow: hidden;
+    display: block;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    border: solid 1px #838c92;
+    opacity: .4;
+    border-radius: 50%;
+}
+
+.multiselect-i_selected {
+    font-weight: 500;
+    color:#000;
+}
+.multiselect-i_selected:after {
+    opacity: 1;
+    background: no-repeat 50% 50% url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEBJREFUeNpiVO+7yUAk+A8imEhRDASMTKQohtnwH0kQr2KYBkY0SZyKkf2ArgmrYnRPMxJSjC2UGPEpBgGAAAMAVUUMnvjkXPcAAAAASUVORK5CYII=);
+}
