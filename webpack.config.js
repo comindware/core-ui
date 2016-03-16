@@ -10,15 +10,19 @@
 
 "use strict";
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     cache: true,
-    entry: "./js/core/coreApi.js",
+    entry: {
+        core: "./js/core/coreApi.js",
+        styles: "./resources/styles/styles.js"
+    },
     devtool: 'source-map',
     debug: true,
     output: {
         path: __dirname + '/dist',
-        filename: "core.bundle.js",
+        filename: "[name].bundle.js",
         library: 'core',
         libraryTarget: 'umd'
     },
@@ -39,7 +43,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style!css"
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
             },
             {
                 test: /\.html$/,
@@ -95,6 +99,11 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new ExtractTextPlugin('styles.bundle.css', {
+            allChunks: true
+        })
+    ],
     resolve: {
         root: [
             path.resolve(__dirname),
