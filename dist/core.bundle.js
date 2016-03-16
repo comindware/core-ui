@@ -65683,7 +65683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        tabindex: 0
 	    },
 	
-	    className: 'dev-dropdown-editor__dropdown-view__panel-view',
+	    className: 'dropdown-panel-view',
 	
 	    template: _dropdownPanel2.default,
 	
@@ -65710,7 +65710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        if (this.options.enableSearch) {
-	            this.$el.addClass('popup-allow_search');
+	            this.$el.addClass('dropdown-panel-view_search');
 	        }
 	    },
 	
@@ -65837,7 +65837,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var stack1;
 	
 	  return ((stack1 = helpers.blockHelperMissing.call(depth0,container.lambda((depth0 != null ? depth0.enableSearch : depth0), depth0),{"name":"enableSearch","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "<div class=\"js-list-region dev-dropdown-editor__dropdown-view__panel-view__list-region\"></div>\r\n<div class=\"js-scrollbar-region dev-dropdown-editor__dropdown-view__panel-view__scrollbar-region\"></div>";
+	    + "<div class=\"js-list-region dropdown-panel-view__list-region\"></div>\r\n<div class=\"js-scrollbar-region dropdown-panel-view__scrollbar-region\"></div>";
 	},"useData":true});
 
 /***/ },
