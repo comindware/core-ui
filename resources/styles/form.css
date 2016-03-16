@@ -301,7 +301,7 @@
     -moz-user-select: none;
     user-select: none
 }
-.l-field_disabled .textarea::-webkit-input-placeholder {color:#737373; text-overflow:ellipsis; -webkit-user-select: none}}
+.l-field_disabled .textarea::-webkit-input-placeholder {color:#737373; text-overflow:ellipsis; -webkit-user-select: none}
 .l-field_disabled .textarea::-moz-placeholder {color:#737373; -moz-text-overflow:ellipsis; -moz-user-select: none}
 .l-field_disabled .textarea:-ms-input-placeholder {color:#737373; text-overflow:ellipsis; -ms-user-select: none}
 .l-field_disabled .textarea[placeholder] {color:#737373; text-overflow:ellipsis; user-select: none}

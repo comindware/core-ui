@@ -56755,11 +56755,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _libApi = __webpack_require__(1);
 	
@@ -60016,11 +60016,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
 	var _list = __webpack_require__(266);
 	
@@ -62809,6 +62809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return !! ~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
 	        }
 	    },
+	
 	
 	    __start: function __start() {
 	        if (!this.counter) {
@@ -65682,7 +65683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        tabindex: 0
 	    },
 	
-	    className: 'dev-dropdown-editor__dropdown-view__panel-view',
+	    className: 'dropdown-panel-view',
 	
 	    template: _dropdownPanel2.default,
 	
@@ -65709,7 +65710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        if (this.options.enableSearch) {
-	            this.$el.addClass('popup-allow_search');
+	            this.$el.addClass('dropdown-panel-view_search');
 	        }
 	    },
 	
@@ -65836,7 +65837,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var stack1;
 	
 	  return ((stack1 = helpers.blockHelperMissing.call(depth0,container.lambda((depth0 != null ? depth0.enableSearch : depth0), depth0),{"name":"enableSearch","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "<div class=\"js-list-region dev-dropdown-editor__dropdown-view__panel-view__list-region\"></div>\r\n<div class=\"js-scrollbar-region dev-dropdown-editor__dropdown-view__panel-view__scrollbar-region\"></div>";
+	    + "<div class=\"js-list-region dropdown-panel-view__list-region\"></div>\r\n<div class=\"js-scrollbar-region dropdown-panel-view__scrollbar-region\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -69693,19 +69694,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return "    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">"
 	    + alias2(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.CANCEL",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">"
+	    + "</div>\r\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">"
 	    + alias2(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.APPLY",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n";
+	    + "</div>\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
 	    return "    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">"
 	    + container.escapeExpression(__webpack_require__(210).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MULTISELECT.CLOSE",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n";
+	    + "</div>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">"
+	  return "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\r\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">"
 	    + container.escapeExpression(__webpack_require__(210).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.SELECTALL",{"name":"localize","hash":{},"data":data}))
-	    + "</div>\n</div>\n<div class=\"js-list multiselect-panel__list\"></div>\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\n"
+	    + "</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.explicitApply : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
 	    + "</div>";
 	},"useData":true});
@@ -70128,6 +70129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.options = _.defaults(options, this.defaultOptions);
 	  },
 	
+	
 	  /**
 	   * Uploads file to server or processes it any other way.
 	   * @param {File} file - File to be processed (uploaded to server).
@@ -70137,6 +70139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  upload: function upload(file) {
 	    _utilsApi.helpers.throwError('Not Implemented', 'NotImplementedError');
 	  },
+	
 	
 	  /**
 	   * Converts incoming value to valid Image URL to be displayed in {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.

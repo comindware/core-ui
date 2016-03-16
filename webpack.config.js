@@ -10,10 +10,12 @@
 
 "use strict";
 var path = require('path');
+var autoprefixer = require('autoprefixer');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     cache: true,
-    entry: "./js/core/coreApi.js",
+    entry: './js/core/coreApi.js',
     devtool: 'source-map',
     debug: true,
     output: {
@@ -39,7 +41,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style!css"
+                loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader'].join('!'))
+            },
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'].join('!'))
             },
             {
                 test: /\.html$/,
@@ -95,6 +101,19 @@ module.exports = {
             }
         ]
     },
+    sassLoader: {
+        includePaths: [
+            path.resolve(__dirname, "./resources/styles")
+        ]
+    },
+    postcss: [
+        autoprefixer({
+            browsers: ['last 2 versions']
+        })
+    ],
+    plugins: [
+        new ExtractTextPlugin('styles.bundle.css')
+    ],
     resolve: {
         root: [
             path.resolve(__dirname),
