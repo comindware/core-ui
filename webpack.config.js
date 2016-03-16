@@ -10,19 +10,17 @@
 
 "use strict";
 var path = require('path');
+var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     cache: true,
-    entry: {
-        core: "./js/core/coreApi.js",
-        styles: "./resources/styles/styles.js"
-    },
+    entry: './js/core/coreApi.js',
     devtool: 'source-map',
     debug: true,
     output: {
         path: __dirname + '/dist',
-        filename: "[name].bundle.js",
+        filename: "core.bundle.js",
         library: 'core',
         libraryTarget: 'umd'
     },
@@ -43,7 +41,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+                loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader'].join('!'))
+            },
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'].join('!'))
             },
             {
                 test: /\.html$/,
@@ -99,10 +101,18 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new ExtractTextPlugin('styles.bundle.css', {
-            allChunks: true
+    sassLoader: {
+        includePaths: [
+            path.resolve(__dirname, "./resources/styles")
+        ]
+    },
+    postcss: [
+        autoprefixer({
+            browsers: ['last 2 versions']
         })
+    ],
+    plugins: [
+        new ExtractTextPlugin('styles.bundle.css')
     ],
     resolve: {
         root: [

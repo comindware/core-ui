@@ -66,6 +66,7 @@
     "webpack": "^1.12.12"
   },
   "dependencies": {
+    "autoprefixer": "^6.3.3",
     "babel-plugin-transform-runtime": "^6.4.3",
     "backbone": "1.1.2",
     "backbone-associations": "0.6.2",
@@ -78,6 +79,7 @@
     "jquery-mousewheel": "3.1.13",
     "jquery.inputmask": "3.2.3",
     "moment": "2.11.1",
+    "postcss-loader": "^0.8.2",
     "underscore": "1.6.0",
     "underscore.string": "3.2.0"
   }
