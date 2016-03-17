@@ -57,13 +57,13 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
     
     initialize(options) {
         if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
+            Object.assign(this.options, defaultOptions, options.schema);
         } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+            Object.assign(this.options, defaultOptions, options);
         }
         
-        helpers.ensureOption(options, 'controller');
-        this.controller = this.getOption('controller');        
+        helpers.ensureOption(this.options, 'controller');
+        this.controller = this.getOption('controller');
         
         this.__removed = false;
         this.__previewURL = null;
