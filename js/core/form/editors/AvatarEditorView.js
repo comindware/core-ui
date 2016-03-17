@@ -13,9 +13,11 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/avatarEditor.hbs';
 
 const defaultOptions = {
+    fullName: null,
     removable: true,
     autoUpload: false,
-    refreshPreviewAfterUpload: false
+    refreshPreviewAfterUpload: false,
+    controller: null
 };
 
 /**
@@ -62,7 +64,7 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
         
-        helpers.ensureOption(options, 'controller');
+        helpers.ensureOption(this.options, 'controller');
         this.controller = this.getOption('controller');        
         
         this.__removed = false;
