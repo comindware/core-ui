@@ -406,23 +406,7 @@
     BaseEditorView
     </h2>
     
-        <div class="class-description"><p>Base class for all editors that use Marionette.View. The class is a reworked version of Backbone.Form.Editor from
-<a href="https://github.com/powmedia/backbone-forms">Backbone.Form</a> library.<br/>
-While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul></p>
-<p><li><code>BaseCollectionEditorView</code></li></p>
-<p><li><code>BaseCompositeEditorView</code></li></p>
-<p><li><code>BaseLayoutEditorView</code></li></p>
-<p><li><code>BaseItemEditorView</code></li></ul>
-Possible events:<ul></p>
-<p><li><code>'change' (thisEditorView)</code> - fires when the value inside the editor is changed.
-This event doesn't imply any change in model (!).</li></p>
-<p><li><code>'focus' (thisEditorView)</code> - fire when the editor gets the focus.</li></p>
-<p><li><code>'blur' (thisEditorView)</code> - fire when the editor loses the focus.</li></p>
-<p><li><code>'enabled' (enabled)</code> - fires when the property <code>enabled</code> is changed.</li></p>
-<p><li><code>'readonly' (readonly)</code> - fires when the property <code>readonly</code> is changed.</li></p>
-<p><li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - fires when the value is committed into the model.</li></p>
-<p><li><code>'value:committed' (thisEditorView, model, key, value)</code> - fires when the value is committed into the model.</li>
-</ul></p></div>
+        <div class="class-description">Base class for all editors that use Marionette.View. The class is a reworked version of Backbone.Form.Editor from[Backbone.Form](https://github.com/powmedia/backbone-forms) library.<br/>While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul><li><code>BaseCollectionEditorView</code></li><li><code>BaseCompositeEditorView</code></li><li><code>BaseLayoutEditorView</code></li><li><code>BaseItemEditorView</code></li></ul>Possible events:<ul><li><code>'change' (thisEditorView)</code> - fires when the value inside the editor is changed.This event doesn't imply any change in model (!).</li><li><code>'focus' (thisEditorView)</code> - fire when the editor gets the focus.</li><li><code>'blur' (thisEditorView)</code> - fire when the editor loses the focus.</li><li><code>'enabled' (enabled)</code> - fires when the property <code>enabled</code> is changed.</li><li><code>'readonly' (readonly)</code> - fires when the property <code>readonly</code> is changed.</li><li><code>'&lt;key&gt;:committed' (thisEditorView, model, value)</code> - fires when the value is committed into the model.</li><li><code>'value:committed' (thisEditorView, model, key, value)</code> - fires when the value is committed into the model.</li></ul></div>
     
 </header>
 
@@ -487,7 +471,7 @@ This event doesn't imply any change in model (!).</li></p>
 
             
 
-            <td class="description last"><p>Options object.</p>
+            <td class="description last">Options object.
                 <h6>Properties</h6>
                 
 
@@ -549,7 +533,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>Indicates whether to call <code>commit()</code> method on the value change.</p></td>
+            <td class="description last">Indicates whether to call <code>commit()</code> method on the value change.</td>
         </tr>
 
 	
@@ -588,7 +572,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>Indicated whether to commit the value into the model if editors validation has failed (not recommended).</p></td>
+            <td class="description last">Indicated whether to commit the value into the model if editors validation has failed (not recommended).</td>
         </tr>
 
 	
@@ -627,7 +611,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>The initial value of <code>enabled</code> flag. Can be changed later on by calling <code>setEnabled()</code> method.</p></td>
+            <td class="description last">The initial value of <code>enabled</code> flag. Can be changed later on by calling <code>setEnabled()</code> method.</td>
         </tr>
 
 	
@@ -666,8 +650,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>The initial value of <code>readonly</code> flag.
-                                          Can be changed later on by calling <code>setReadonly()</code> method.</p></td>
+            <td class="description last">The initial value of <code>readonly</code> flag.                                          Can be changed later on by calling <code>setReadonly()</code> method.</td>
         </tr>
 
 	
@@ -704,9 +687,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>A model which contains an attributes edited by this editor.
-                                 Can only be used if the editor is created standalone (without a form).
-                                  Must be used together with  <code>key</code> options.</p></td>
+            <td class="description last">A model which contains an attributes edited by this editor.                                 Can only be used if the editor is created standalone (without a form).                                  Must be used together with  <code>key</code> options.</td>
         </tr>
 
 	
@@ -743,9 +724,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>The name of an attribute in <code>options.model</code> edited by this editor.
-                               Can only be used if the editor is created standalone (without a form).
-                               Must be used together with  <code>model</code> options.</p></td>
+            <td class="description last">The name of an attribute in <code>options.model</code> edited by this editor.                               Can only be used if the editor is created standalone (without a form).                               Must be used together with  <code>model</code> options.</td>
         </tr>
 
 	
@@ -782,8 +761,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>An array of validator function which look like the following:
-<code>function(value, formValues) -&gt; ({type, message}|undefined)</code></p></td>
+            <td class="description last">An array of validator function which look like the following:<code>function(value, formValues) -> ({type, message}|undefined)</code></td>
         </tr>
 
 	
@@ -820,8 +798,7 @@ This event doesn't imply any change in model (!).</li></p>
                 </td>
             
 
-            <td class="description last"><p>When created implicitly by form, all the editor options are passed through this option.
-Не использовать явно.</p></td>
+            <td class="description last">When created implicitly by form, all the editor options are passed through this option.Не использовать явно.</td>
         </tr>
 
 	
@@ -914,7 +891,7 @@ This event doesn't imply any change in model (!).</li></p>
 <dd>
     
     <div class="description">
-        <p>Indicates whether the editor has focus.</p>
+        Indicates whether the editor has focus.
     </div>
     
 
@@ -972,7 +949,7 @@ This event doesn't imply any change in model (!).</li></p>
     
     
     <div class="description">
-        <p>Clears the focus.</p>
+        Clears the focus.
     </div>
     
 
@@ -1038,7 +1015,7 @@ This event doesn't imply any change in model (!).</li></p>
     
     
     <div class="description">
-        <p>Update the model with the internal editor's value.</p>
+        Update the model with the internal editor's value.
     </div>
     
 
@@ -1100,7 +1077,7 @@ This event doesn't imply any change in model (!).</li></p>
 
             
 
-            <td class="description last"><p>Options to pass to model.set().</p>
+            <td class="description last">Options to pass to model.set().
                 <h6>Properties</h6>
                 
 
@@ -1154,7 +1131,7 @@ This event doesn't imply any change in model (!).</li></p>
 
             
 
-            <td class="description last"><p>Set to true to trigger built-in model validation.</p></td>
+            <td class="description last">Set to true to trigger built-in model validation.</td>
         </tr>
 
 	
@@ -1215,8 +1192,7 @@ This event doesn't imply any change in model (!).</li></p>
     
             
 <div class="param-desc">
-    <p>Returns an error object <code>{ type, message }</code> if validation fails
-and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.</p>
+    Returns an error object <code>{ type, message }</code> if validation failsand <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
 </div>
 
 
@@ -1253,7 +1229,7 @@ and <code>options.forceCommit</code> is turned off. <code>undefined</code> other
     
     
     <div class="description">
-        <p>Sets the focus onto this editor.</p>
+        Sets the focus onto this editor.
     </div>
     
 
@@ -1319,7 +1295,7 @@ and <code>options.forceCommit</code> is turned off. <code>undefined</code> other
     
     
     <div class="description">
-        <p>Returns the value of <code>enabled</code> flag.</p>
+        Returns the value of `enabled` flag.
     </div>
     
 
@@ -1404,7 +1380,7 @@ and <code>options.forceCommit</code> is turned off. <code>undefined</code> other
     
     
     <div class="description">
-        <p>Retrieves actual value of the bound attribute from the model.</p>
+        Retrieves actual value of the bound attribute from the model.
     </div>
     
 
@@ -1489,7 +1465,7 @@ and <code>options.forceCommit</code> is turned off. <code>undefined</code> other
     
     
     <div class="description">
-        <p>Returns the value of <code>readonly</code> flag.</p>
+        Returns the value of `readonly` flag.
     </div>
     
 
@@ -1574,7 +1550,7 @@ and <code>options.forceCommit</code> is turned off. <code>undefined</code> other
     
     
     <div class="description">
-        <p>Returns internal editor's value.</p>
+        Returns internal editor's value.
     </div>
     
 
@@ -1659,8 +1635,7 @@ and <code>options.forceCommit</code> is turned off. <code>undefined</code> other
     
     
     <div class="description">
-        <p>Sets a new value of <code>enabled</code> flag. While disabled, the editor's value cannot be changed or copied by the user.
-It's implied that the value doesn't make sense.</p>
+        Sets a new value of <code>enabled</code> flag. While disabled, the editor's value cannot be changed or copied by the user.It's implied that the value doesn't make sense.
     </div>
     
 
@@ -1710,7 +1685,7 @@ It's implied that the value doesn't make sense.</p>
 
             
 
-            <td class="description last"><p>New flag value.</p></td>
+            <td class="description last">New flag value.</td>
         </tr>
 
 	
@@ -1775,7 +1750,7 @@ It's implied that the value doesn't make sense.</p>
     
     
     <div class="description">
-        <p>Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.</p>
+        Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.
     </div>
     
 
@@ -1825,7 +1800,7 @@ It's implied that the value doesn't make sense.</p>
 
             
 
-            <td class="description last"><p>New flag value.</p></td>
+            <td class="description last">New flag value.</td>
         </tr>
 
 	
@@ -1890,7 +1865,7 @@ It's implied that the value doesn't make sense.</p>
     
     
     <div class="description">
-        <p>Sets new internal editor's value.</p>
+        Sets new internal editor's value.
     </div>
     
 
@@ -1940,7 +1915,7 @@ It's implied that the value doesn't make sense.</p>
 
             
 
-            <td class="description last"><p>The new value.</p></td>
+            <td class="description last">The new value.</td>
         </tr>
 
 	
@@ -2005,8 +1980,7 @@ It's implied that the value doesn't make sense.</p>
     
     
     <div class="description">
-        <p>Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
-Shouldn't be called normally. The method is called internally on model's <code>change</code> event.</p>
+        Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.Shouldn't be called normally. The method is called internally on model's <code>change</code> event.
     </div>
     
 
@@ -2072,7 +2046,7 @@ Shouldn't be called normally. The method is called internally on model's <code>c
     
     
     <div class="description">
-        <p>Check validity with built-in validator functions (initially passed into constructor options).</p>
+        Check validity with built-in validator functions (initially passed into constructor options).
     </div>
     
 
@@ -2127,7 +2101,7 @@ Shouldn't be called normally. The method is called internally on model's <code>c
     
             
 <div class="param-desc">
-    <p>Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.</p>
+    Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
 </div>
 
 
@@ -2179,7 +2153,7 @@ Shouldn't be called normally. The method is called internally on model's <code>c
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Tue Mar 15th 2016 using the <a
+		on Tue Mar 22nd 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

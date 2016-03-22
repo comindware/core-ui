@@ -406,24 +406,7 @@
     DropdownView
     </h2>
     
-        <div class="class-description"><p>Composite View that implements dropdown logic similar to SELECT HTML-element.
-Unlike <a href="module-core.dropdown.views.PopoutView.html">PopoutView</a>, a panel doesn't have a speech bubble triangle and
-it's min-width is always determined and equal to the width of a button view.</p>
-<p>A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.</p>
-<ul>
-<li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
-<li>Panel View is used to display a panel that drops down.</li>
-</ul>
-
-<p>Panel width is determined by its layout but it cannot be less than the button's width. Panel height is fully determined by its layout.
-A place where the panel appears depends on the <code>panelPosition</code> option.<br/>
-Possible events:<ul></p>
-<p><li><code>'open' (dropdownView)</code> - fires after the panel has opened.</li></p>
-<p><li><code>'close' (dropdownView, ...)</code> - fires after the panel has closed.
-If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li></p>
-<p><li><code>'button:*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li></p>
-<p><li><code>'panel:*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
-</ul></p></div>
+        <div class="class-description">Composite View that implements dropdown logic similar to SELECT HTML-element.Unlike <a href="module-core.dropdown.views.PopoutView.html">PopoutView</a>, a panel doesn't have a speech bubble triangle andit's min-width is always determined and equal to the width of a button view.A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.<ul><li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li><li>Panel View is used to display a panel that drops down.</li></ul>Panel width is determined by its layout but it cannot be less than the button's width. Panel height is fully determined by its layout.A place where the panel appears depends on the <code>panelPosition</code> option.<br/>Possible events:<ul><li><code>'open' (dropdownView)</code> - fires after the panel has opened.</li><li><code>'close' (dropdownView, ...)</code> - fires after the panel has closed.If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li><li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li><li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li></ul></div>
     
 </header>
 
@@ -488,7 +471,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
 
             
 
-            <td class="description last"><p>Options object.</p>
+            <td class="description last">Options object.
                 <h6>Properties</h6>
                 
 
@@ -546,7 +529,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
                 </td>
             
 
-            <td class="description last"><p>View class for displaying the button.</p></td>
+            <td class="description last">View class for displaying the button.</td>
         </tr>
 
 	
@@ -586,7 +569,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
                 </td>
             
 
-            <td class="description last"><p>Options passed into the view on its creation.</p></td>
+            <td class="description last">Options passed into the view on its creation.</td>
         </tr>
 
 	
@@ -621,7 +604,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
                 </td>
             
 
-            <td class="description last"><p>View class for displaying the panel. The view is created every time the panel is triggered to open.</p></td>
+            <td class="description last">View class for displaying the panel. The view is created every time the panel is triggered to open.</td>
         </tr>
 
 	
@@ -661,7 +644,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
                 </td>
             
 
-            <td class="description last"><p>Options passed into the view on its creation.</p></td>
+            <td class="description last">Options passed into the view on its creation.</td>
         </tr>
 
 	
@@ -700,7 +683,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
                 </td>
             
 
-            <td class="description last"><p>Whether click on the button should trigger the panel to open.</p></td>
+            <td class="description last">Whether click on the button should trigger the panel to open.</td>
         </tr>
 
 	
@@ -739,11 +722,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
                 </td>
             
 
-            <td class="description last"><p>Opening direction:
-      <ul><li><code>'down'</code> - opens down.</li>
-      <li><code>'down-over'</code> - opens down and the panel is located above the button overlapping it.</li>
-      <li><code>'up'</code> - opens up.</li>
-      <li><code>'up-over'</code> - opens up and the panel is located above the button overlapping it.</li></ul></p></td>
+            <td class="description last">Opening direction:      <ul><li><code>'down'</code> - opens down.</li>      <li><code>'down-over'</code> - opens down and the panel is located above the button overlapping it.</li>      <li><code>'up'</code> - opens up.</li>      <li><code>'up-over'</code> - opens up and the panel is located above the button overlapping it.</li></ul></td>
         </tr>
 
 	
@@ -782,7 +761,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
                 </td>
             
 
-            <td class="description last"><p>Whether to trigger button render when the panel has closed.</p></td>
+            <td class="description last">Whether to trigger button render when the panel has closed.</td>
         </tr>
 
 	
@@ -875,7 +854,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
 <dd>
     
     <div class="description">
-        <p>Contains an instance of <code>options.buttonView</code> if the dropdown is rendered, <code>null</code> otherwise.</p>
+        Contains an instance of <code>options.buttonView</code> if the dropdown is rendered, <code>null</code> otherwise.
     </div>
     
 
@@ -926,8 +905,7 @@ If the panel was closed via <code>close(...)</code> method, the arguments of thi
 <dd>
     
     <div class="description">
-        <p>Contains an instance of <code>options.panelView</code> if the dropdown is open, <code>null</code> otherwise.
-The view is created every time (!) the panel is triggered to open.</p>
+        Contains an instance of <code>options.panelView</code> if the dropdown is open, <code>null</code> otherwise.The view is created every time (!) the panel is triggered to open.
     </div>
     
 
@@ -985,7 +963,7 @@ The view is created every time (!) the panel is triggered to open.</p>
     
     
     <div class="description">
-        <p>Closes the dropdown panel.</p>
+        Closes the dropdown panel.
     </div>
     
 
@@ -1047,7 +1025,7 @@ The view is created every time (!) the panel is triggered to open.</p>
 
             
 
-            <td class="description last"><p>Arguments transferred into the <code>'close'</code> event.</p></td>
+            <td class="description last">Arguments transferred into the <code>'close'</code> event.</td>
         </tr>
 
 	
@@ -1112,7 +1090,7 @@ The view is created every time (!) the panel is triggered to open.</p>
     
     
     <div class="description">
-        <p>Opens the dropdown panel.</p>
+        Opens the dropdown panel.
     </div>
     
 
@@ -1193,7 +1171,7 @@ The view is created every time (!) the panel is triggered to open.</p>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Tue Mar 15th 2016 using the <a
+		on Tue Mar 22nd 2016 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>

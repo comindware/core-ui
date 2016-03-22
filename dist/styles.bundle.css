@@ -10,8 +10,6 @@
 .datetimepicker {
 	padding: 4px;
 	margin-top: 1px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 	direction: ltr;
 }
@@ -144,8 +142,6 @@
 	text-align: center;
 	width: 20px;
 	height: 20px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 	border: none;
 }
@@ -187,11 +183,6 @@
 .datetimepicker table tr td.today.disabled,
 .datetimepicker table tr td.today.disabled:hover {
 	background-color: #fde19a;
-	background-image: -moz-linear-gradient(top, #fdd49a, #fdf59a);
-	background-image: -ms-linear-gradient(top, #fdd49a, #fdf59a);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fdd49a), to(#fdf59a));
-	background-image: -webkit-linear-gradient(top, #fdd49a, #fdf59a);
-	background-image: -o-linear-gradient(top, #fdd49a, #fdf59a);
 	background-image: linear-gradient(top, #fdd49a, #fdf59a);
 	background-repeat: repeat-x;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdd49a', endColorstr='#fdf59a', GradientType=0);
@@ -239,11 +230,6 @@
 .datetimepicker table tr td.active.disabled,
 .datetimepicker table tr td.active.disabled:hover {
 	background-color: #006dcc;
-	background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -ms-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
-	background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -o-linear-gradient(top, #0088cc, #0044cc);
 	background-image: linear-gradient(top, #0088cc, #0044cc);
 	background-repeat: repeat-x;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088cc', endColorstr='#0044cc', GradientType=0);
@@ -296,8 +282,6 @@
 	float: left;
 	margin: 1%;
 	cursor: pointer;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
 
@@ -338,11 +322,6 @@
 .datetimepicker table tr td span.active.disabled,
 .datetimepicker table tr td span.active.disabled:hover {
 	background-color: #006dcc;
-	background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -ms-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
-	background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
-	background-image: -o-linear-gradient(top, #0088cc, #0044cc);
 	background-image: linear-gradient(top, #0088cc, #0044cc);
 	background-repeat: repeat-x;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088cc', endColorstr='#0044cc', GradientType=0);
@@ -490,7 +469,6 @@ body, input, textarea, select, label {
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -517,7 +495,6 @@ a:hover {
     -webkit-box-shadow: none;
     border-radius: 0;
     background: rgba(0,0,0,0);
-    -webkit-transition: all 2.2s;
     transition: background 2.2s;
 }
 ::-webkit-scrollbar-thumb {
@@ -737,11 +714,7 @@ a:hover {
     border-radius: 50%;
     border: solid 1px #fff;
     background: #fff no-repeat 50% 50%;
-    -webkit-box-shadow: 0px 0px 0px 1px #cacaca;
     box-shadow: 0px 0px 0px 1px #cacaca;
-
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
     box-sizing: content-box;
 }
 
@@ -818,7 +791,6 @@ a:hover {
     font-weight: 500;
     background-color: transparent;
     border: 0;
-    -webkit-box-shadow: 0px 0px 0px 1px #fff;
     box-shadow: 0px 0px 0px 1px #fff;
 }
 
@@ -839,7 +811,6 @@ a:hover {
 
 .avatar-icon_activity:hover {
     color: #a4abb0;
-    -webkit-box-shadow: 0px 0px 0px 1px #a4abb0;
     box-shadow: 0px 0px 0px 1px #a4abb0;
 }
 
@@ -874,7 +845,6 @@ a:hover {
     left: 0;
     top: 29px;
     border: 0;
-    -webkit-box-shadow: none;
     box-shadow: none;
 }
 
@@ -945,8 +915,6 @@ a:hover {
     padding: 8px 0;
     display: none;
     position: relative;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     border-bottom: solid 1px #ced3d7;
     background: #fff;
@@ -990,7 +958,6 @@ a:hover {
     color: #bcc6cf;
     cursor: text;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1074,11 +1041,17 @@ a:hover {
 /* Empty View */
 .empty-view {
     position: absolute;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     width: 100%;
     height: 100%;
-    align-items: center;
-    justify-content: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     font-size: 18px;
     font-weight: 300;
     color: #70787F;
@@ -1128,12 +1101,9 @@ a:hover {
     text-align: center;
     border: solid 2px #fff;
     border-radius: 50%;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     background: #fff no-repeat 50% 50%;
     background-size: cover;
-    -webkit-box-shadow: 0 0 0 1px #d2dbe2;
     box-shadow: 0 0 0 1px #d2dbe2;
 }
 
@@ -1516,7 +1486,6 @@ a:hover {
     font-size: 12px;
     background: #fff;
     border: 1px solid #c2c2c2;
-    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: absolute;
     left: 0;
@@ -1585,8 +1554,6 @@ a:hover {
     max-width: 300px;
     padding: 1px;
     font-size: 12px;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     display: none;
     text-align: left;
@@ -1605,8 +1572,6 @@ a:hover {
     text-overflow: ellipsis;
     overflow: hidden;
     cursor: pointer;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 .dropdown-menu__i:hover {
@@ -1639,8 +1604,6 @@ a:hover {
     bottom: 0;
     left: 0;
     border-top: solid 1px #dee3e8;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -1658,8 +1621,6 @@ a:hover {
     max-height: 310px;
     padding: 1px;
     overflow: hidden;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 .dropdown-list_textleft{
@@ -1672,12 +1633,9 @@ a:hover {
     font-size: 13px;
     font-weight: normal;
     color: #43525d;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -1708,12 +1666,9 @@ a:hover {
     padding: 0 5px;
     display: inline-block;
     vertical-align: top;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }
@@ -1809,7 +1764,6 @@ a:hover {
     color: #43525d;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -1856,8 +1810,6 @@ a:hover {
     padding: 0 0 0 25px;
     font-size: 13px;
     color: #333;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 0;
     outline: 0;
@@ -1895,8 +1847,6 @@ a:hover {
     margin: 0 20px;
     display: block;
     position: relative;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     overflow: hidden;
     background: #fff;
@@ -1950,11 +1900,8 @@ a:hover {
     left: 30px !important;
     color: #bcc6cf;
     cursor: text;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2116,7 +2063,6 @@ a:hover {
     color: #43525d;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -2248,7 +2194,6 @@ a:hover {
     color: #182026;
     cursor: default;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2394,7 +2339,6 @@ a:hover {
     padding: 0;
     display: inline-block;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2515,12 +2459,13 @@ a:hover {
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .field::-webkit-input-placeholder {color:#737373; text-overflow:ellipsis; -webkit-user-select: none}
 .l-field_disabled .field::-moz-placeholder {color:#737373; -moz-text-overflow:ellipsis; -moz-user-select: none}
 .l-field_disabled .field:-ms-input-placeholder {color:#737373; text-overflow:ellipsis; -ms-user-select: none}
-.l-field_disabled .field[placeholder] {color:#737373; text-overflow:ellipsis; user-select: none}
+.l-field_disabled .field[placeholder] {color:#737373; text-overflow:ellipsis; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
 
 .l-field_disabled .textarea,
 .textarea:disabled {
@@ -2530,12 +2475,13 @@ a:hover {
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .textarea::-webkit-input-placeholder {color:#737373; text-overflow:ellipsis; -webkit-user-select: none}
 .l-field_disabled .textarea::-moz-placeholder {color:#737373; -moz-text-overflow:ellipsis; -moz-user-select: none}
 .l-field_disabled .textarea:-ms-input-placeholder {color:#737373; text-overflow:ellipsis; -ms-user-select: none}
-.l-field_disabled .textarea[placeholder] {color:#737373; text-overflow:ellipsis; user-select: none}
+.l-field_disabled .textarea[placeholder] {color:#737373; text-overflow:ellipsis; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
 
 .l-field_disabled .checkbox-text,
 .l-field_disabled .radiobutton-text{
@@ -2543,7 +2489,8 @@ a:hover {
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .checkbox{
     border-color: #737373;
@@ -2551,14 +2498,16 @@ a:hover {
     opacity: .6;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .radiobutton{
     cursor: default;
     opacity: .6;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .pr-checked .radiobutton:after {
     background: #737373;
@@ -2569,20 +2518,23 @@ a:hover {
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .reference-field.pr-arrow-right.btn-wrp{
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .pr-arrow-right::after{
     opacity: .6;
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 
 .l-field_disabled .field_dropdown:after{
@@ -2590,7 +2542,8 @@ a:hover {
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 
 .l-field_disabled .avatar-icon,
@@ -2600,7 +2553,8 @@ a:hover {
     cursor: default;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 
 .l-field_disabled .bubbles__form{
@@ -2612,7 +2566,8 @@ a:hover {
     border-color: #737373;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 .l-field_disabled .bubbles__link,
 .l-field_disabled .bubbles__link:hover{
@@ -2622,7 +2577,8 @@ a:hover {
     text-decoration: none;
     -webkit-user-select: none;
     -moz-user-select: none;
-    user-select: none
+    -ms-user-select: none;
+        user-select: none
 }
 
 
@@ -3443,7 +3399,6 @@ input[type="checkbox"].checkbox {
     line-height: 15px;
     border: 1px solid transparent;
     font-size: 11px;
-    -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
 
@@ -3526,7 +3481,6 @@ input[type="checkbox"].checkbox {
     color: #43525d;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -3549,7 +3503,6 @@ input[type="checkbox"].checkbox {
     position: relative;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -3772,8 +3725,6 @@ input[type="checkbox"].checkbox {
 }
 
 .popout__up.popout__action:after{
-    -moz-transform: scaleY(-1);
-    -o-transform: scaleY(-1);
     -webkit-transform: scaleY(-1);
     transform: scaleY(-1);
     margin: -8px 0 0 4px;
@@ -3934,7 +3885,6 @@ input[type="checkbox"].checkbox {
     top: 33px;
     background: #fff;
     border: 1px solid #c2c2c2;
-    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     z-index: 4;
 }
@@ -3955,8 +3905,6 @@ input[type="checkbox"].checkbox {
     padding: 1px;
     font-size: 12px;
     overflow-y: auto;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     display: none;
     text-align: left;
@@ -3972,8 +3920,6 @@ input[type="checkbox"].checkbox {
     text-overflow: ellipsis;
     overflow: hidden;
     cursor: pointer;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 .popout-menu__i:hover {
@@ -4027,14 +3973,12 @@ input[type="checkbox"].checkbox {
     float: left;
     border: 0;
     position: relative;
-    -webkit-box-shadow: none !important;
     box-shadow: none !important;
     border-right: solid 1px #ced3d7;
 }
 
 .dev-core__resizer {
     padding: 0 8px 0 0;
-    -moz-box-sizing: content-box;
     box-sizing: content-box;
     cursor: e-resize;
     top: 0;

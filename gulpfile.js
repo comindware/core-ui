@@ -22,13 +22,7 @@ gulp.task('jsdoc', function() {
             presets: ["es2015"],
             plugins: ["transform-es2015-modules-commonjs"]
         }))
-        .pipe(jsdoc.parser({
-            plugins: ["plugins/markdown"],
-            "markdown": {
-                "parser": "gfm",
-                "hardwrap": true
-            }
-        }))
+        .pipe(jsdoc.parser({}))
         .pipe(jsdoc.generator('./doc', {
             "path": "ink-docstrap",
             "dateFormat": "ddd MMM Do YYYY",
