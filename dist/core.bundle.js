@@ -70128,8 +70128,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.ui.remove.hide();
 	
 	        this.$el.hover(function () {
-	            _this.ui.tooltip.show();
-	            if (_this.getOption('removable') && _this.ui.image.css('background-image') !== 'none') {
+	            if (_this.getEnabled() && !_this.getReadonly()) {
+	                _this.ui.tooltip.show();
+	            }
+	
+	            if (_this.getEnabled() && !_this.getReadonly() && _this.getOption('removable') && _this.ui.image.css('background-image') !== 'none') {
 	                _this.ui.remove.show();
 	            }
 	        }, function () {
@@ -70200,20 +70203,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	    __attach: function __attach() {
-	        document.body.appendChild(this.fileInput);
-	        this.fileInput.click();
-	        document.body.removeChild(this.fileInput);
+	        if (this.getEnabled() && !this.getReadonly()) {
+	            document.body.appendChild(this.fileInput);
+	            this.fileInput.click();
+	            document.body.removeChild(this.fileInput);
+	        }
 	    },
 	    __remove: function __remove() {
-	        this.setValue(null);
-	        this.__triggerChange();
+	        if (this.getEnabled() && !this.getReadonly()) {
+	            this.setValue(null);
+	            this.__triggerChange();
 	
-	        URL.revokeObjectURL(this.__previewURL);
-	        this.ui.image.css('background-image', 'none');
-	        this.ui.remove.hide();
-	        this.ui.initials.show();
+	            URL.revokeObjectURL(this.__previewURL);
+	            this.ui.image.css('background-image', 'none');
+	            this.ui.remove.hide();
+	            this.ui.initials.show();
 	
-	        this.__removed = true;
+	            this.__removed = true;
+	        }
 	
 	        return false;
 	    },
