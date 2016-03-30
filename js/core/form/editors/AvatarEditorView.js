@@ -86,8 +86,11 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
         
         this.$el.hover(
             () => {
-                this.ui.tooltip.show();
-                if (this.getOption('removable') && this.ui.image.css('background-image') !== 'none') {
+                if (this.getEnabled() && !this.getReadonly()) {
+                    this.ui.tooltip.show();
+                }
+                
+                if (this.getEnabled() && !this.getReadonly() && this.getOption('removable') && this.ui.image.css('background-image') !== 'none') {
                     this.ui.remove.show();
                 }
             },
@@ -161,21 +164,25 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
     },
     
     __attach() {
-        document.body.appendChild(this.fileInput);
-        this.fileInput.click();
-        document.body.removeChild(this.fileInput);
+        if (this.getEnabled() && !this.getReadonly()) {
+            document.body.appendChild(this.fileInput);
+            this.fileInput.click();
+            document.body.removeChild(this.fileInput);
+        }
     },
     
     __remove() {
-        this.setValue(null);
-        this.__triggerChange();
-        
-        URL.revokeObjectURL(this.__previewURL);
-        this.ui.image.css('background-image', 'none');
-        this.ui.remove.hide();
-        this.ui.initials.show();
-        
-        this.__removed = true;
+        if (this.getEnabled() && !this.getReadonly()) {
+            this.setValue(null);
+            this.__triggerChange();
+
+            URL.revokeObjectURL(this.__previewURL);
+            this.ui.image.css('background-image', 'none');
+            this.ui.remove.hide();
+            this.ui.initials.show();
+
+            this.__removed = true;
+        }
         
         return false;
     },
