@@ -67,8 +67,7 @@ export default Marionette.ItemView.extend({
     onShow: function () {
         this.ui.pickerInput.datetimepicker(this.pickerOptions)
             .on('changeDate', function (e) {
-                var newValue = new Date(e.date.setMinutes(e.date.getMinutes() + e.date.getTimezoneOffset()));
-                this.updateValue(newValue);
+                this.updateValue(e.date);
                 this.trigger('close');
             }.bind(this));
         this.updatePickerDate();
