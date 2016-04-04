@@ -67,7 +67,7 @@ export default Marionette.ItemView.extend({
             parsedDate;
 
         if (parsedVal.isValid()) {
-            parsedDate = new Date(moment(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()));
+            parsedDate = new Date(moment(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0));
         } else if (currentValue !== '' && currentValue !== null) {
             parsedDate = new Date(currentValue);
         } else {
