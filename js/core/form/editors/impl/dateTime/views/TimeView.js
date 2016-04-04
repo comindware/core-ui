@@ -84,7 +84,7 @@ export default Marionette.LayoutView.extend({
             newVal = null;
         } else if (oldVal) {
             var momentTime = moment(time);
-            newVal = new Date(moment(oldVal).hour(momentTime.hour()).minute(momentTime.minute()));
+            newVal = new Date(moment(oldVal).hour(momentTime.hour()).minute(momentTime.minute()).second(0).millisecond(0));
         } else {
             newVal = time;
         }
