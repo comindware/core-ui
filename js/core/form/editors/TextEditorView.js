@@ -23,13 +23,11 @@ const changeMode = {
 const defaultOptions = function () {
     return {
         changeMode: 'blur',
-        emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
         maxLength: null,
         mask: null,
         maskPlaceholder: '_',
-        maskOptions: {},
-        escape: true,
-        handlebarsSafeString: false
+        maskOptions: {}
     };
 };
 
@@ -49,11 +47,6 @@ const defaultOptions = function () {
  * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
  * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
- * @param {boolean} [options.escape=true] - Если установлено в <code>true</code>, редактор записывает экранированное значение текстового поля (для предотвращения XSS).
- * @param {boolean} [options.handlebarsSafeString=false] - Если установлено в <code>true</code>, редактор записывает экранированное значение текстового поля,
- * обернутое в объект класса <code>Handlebars.SafeString</code>. Это позволяет корректно выводить экранированное значение в двойных фигурных скобках шаблонов <code>Handlebars</code>,
- * но может приводить к ошибкам при использовании значения без явного, вызовом <code>toString()</code>, или неявного приведения его к строке.
- * Опция <code>handlebarsSafeString</code> имеет действие только при включенной опции <code>escape</code>.
  * */
 Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize: function (options) {
@@ -142,7 +135,7 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
     },
 
     onRender: function () {
-        this.ui.input.val(this.__unescape(this.getValue()) || '');
+        this.ui.input.val(this.getValue() || '');
 
         // Keyboard shortcuts listener
         if (this.keyListener) {
@@ -173,23 +166,13 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
         if (this.value === value) {
             return;
         }
-        this.value = this.getOption('escape') ?
-            (this.getOption('handlebarsSafeString') ?
-                new Handlebars.SafeString(Handlebars.escapeExpression(value)) :
-                Handlebars.escapeExpression(value)) :
-            value;
+        this.value = value;
         if (updateUi) {
-            this.ui.input.val(this.__unescape(value));
+            this.ui.input.val(value);
         }
         if (triggerChange) {
             this.__triggerChange();
         }
-    },
-    
-    __unescape(value) { // XSS safe unescaping
-        let textarea = document.createElement('textarea');
-        textarea.innerHTML = value;
-        return textarea.textContent;
     },
 
     /**
