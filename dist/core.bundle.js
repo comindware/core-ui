@@ -52982,9 +52982,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return '';
 	    }
 	    if (!fragment) {
-	        return text;
+	        return new Handlebars.SafeString(Handlebars.escapeExpression(text));
 	    }
-	    return _utilsApi.htmlHelpers.highlightText(text, fragment, true);
+	    return new Handlebars.SafeString(_utilsApi.htmlHelpers.highlightText(text, fragment, true));
 	};
 
 /***/ },
@@ -59584,11 +59584,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    getTextCellView: function getTextCellView() {
-	        return factory.__getSimpleView('{{{highlightFragment value highlightedFragment}}}');
+	        return factory.__getSimpleView('{{highlightFragment value highlightedFragment}}');
 	    },
 	
 	    getReferenceCellView: function getReferenceCellView() {
-	        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{{highlightFragment value.name highlightedFragment}}}{{/if}}{{/if}}');
+	        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}');
 	    },
 	
 	    getUserCellView: function getUserCellView() {
@@ -68314,8 +68314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onShow: function onShow() {
 	        this.ui.pickerInput.datetimepicker(this.pickerOptions).on('changeDate', function (e) {
-	            var newValue = new Date(e.date.setMinutes(e.date.getMinutes() + e.date.getTimezoneOffset()));
-	            this.updateValue(newValue);
+	            this.updateValue(e.date);
 	            this.trigger('close');
 	        }.bind(this));
 	        this.updatePickerDate();
@@ -68779,7 +68778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            newVal = null;
 	        } else if (oldVal) {
 	            var momentTime = (0, _libApi.moment)(time);
-	            newVal = new Date((0, _libApi.moment)(oldVal).hour(momentTime.hour()).minute(momentTime.minute()));
+	            newVal = new Date((0, _libApi.moment)(oldVal).hour(momentTime.hour()).minute(momentTime.minute()).second(0).millisecond(0));
 	        } else {
 	            newVal = time;
 	        }
@@ -68885,7 +68884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            parsedDate;
 	
 	        if (parsedVal.isValid()) {
-	            parsedDate = new Date((0, _libApi.moment)(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()));
+	            parsedDate = new Date((0, _libApi.moment)(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0));
 	        } else if (currentValue !== '' && currentValue !== null) {
 	            parsedDate = new Date(currentValue);
 	        } else {
