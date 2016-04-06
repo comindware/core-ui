@@ -55,11 +55,11 @@ let factory = {
     },
 
     getTextCellView: function () {
-        return factory.__getSimpleView('{{{highlightFragment value highlightedFragment}}}');
+        return factory.__getSimpleView('{{highlightFragment value highlightedFragment}}');
     },
 
     getReferenceCellView: function () {
-        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{{highlightFragment value.name highlightedFragment}}}{{/if}}{{/if}}');
+        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}');
     },
 
     getUserCellView: function () {

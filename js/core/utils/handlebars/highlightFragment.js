@@ -17,7 +17,7 @@ module.exports = function(text, fragment) {
         return '';
     }
     if (!fragment) {
-        return text;
+        return new Handlebars.SafeString(Handlebars.escapeExpression(text));
     }
-    return htmlHelpers.highlightText(text, fragment, true);
+    return new Handlebars.SafeString(htmlHelpers.highlightText(text, fragment, true));
 };
