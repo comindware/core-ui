@@ -47,7 +47,7 @@ export default Marionette.LayoutView.extend({
             }
         }
 
-        this.dropdownView = dropdown.factory.createDropdown({
+        this.popoutView = dropdown.factory.createPopout({
             buttonView: TimeInputView,
             buttonViewOptions: {reqres: this.reqres, model: this.model},
             panelView: Marionette.CollectionView.extend({
@@ -70,10 +70,11 @@ export default Marionette.LayoutView.extend({
                 })
             }),
             autoOpen: false,
-            panelPosition: 'down'
+            customAnchor: true,
+            direction: 'down'
         });
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.dropdownRegion.show(this.popoutView);
     },
 
     __onTimeSelected: function (time) {
@@ -90,16 +91,16 @@ export default Marionette.LayoutView.extend({
         }
 
         this.model.set('value', newVal);
-        this.dropdownView.close();
+        this.popoutView.close();
     },
 
     __onPanelOpen: function () {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
-            this.dropdownView.open();
+            this.popoutView.open();
         }
     },
 
     __onPanelClose: function () {
-        this.dropdownView.close();
+        this.popoutView.close();
     }
 });

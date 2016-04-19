@@ -12,6 +12,7 @@ import { moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import template from '../templates/timeInput.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
+import dropdownApi from '../../../../../dropdown/dropdownApi';
 
 export default Marionette.ItemView.extend({
     initialize: function (options) {
@@ -21,6 +22,13 @@ export default Marionette.ItemView.extend({
     },
 
     template: template,
+
+    behaviors: {
+        CustomAnchorBehavior: {
+            behaviorClass: dropdownApi.views.behaviors.CustomAnchorBehavior,
+            anchor: '.js-anchor'
+        }
+    },
 
     ui: {
         'input': '.js-time-input',

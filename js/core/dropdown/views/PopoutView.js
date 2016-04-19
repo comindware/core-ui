@@ -27,7 +27,6 @@ const classes = {
 };
 
 const config = {
-    BOTTOM_HEIGHT_OFFSET: 20,
     TRIANGLE_WIDTH: 16,
     PANEL_OFFSET: 8
 };
@@ -287,17 +286,21 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     correctDirection: function () {
         var panelHeight = this.panelRegion.$el.height(),
             viewportHeight = window.innerHeight,
-            panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top;
+            panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top,
+            anchor = this.options.customAnchor ? this.button.$el.find('.js-anchor') : this.ui.button;
 
-        if (this.currentDirection === popoutDirection.UP && panelTopOffset < panelHeight) {
+        if (this.currentDirection === popoutDirection.DOWN || panelTopOffset < panelHeight) {
             this.currentDirection = popoutDirection.DOWN;
+            this.panelRegion.$el.offset({
+                top: anchor.offset().top + anchor.height()
+            });
             this.updateDirectionClasses();
-        } else if (this.currentDirection === popoutDirection.DOWN &&
-                   viewportHeight - panelTopOffset < panelHeight &&
-                   panelHeight < panelTopOffset ) {
+        }
+        
+        if (this.currentDirection === popoutDirection.UP || viewportHeight - panelTopOffset < panelHeight && panelHeight < panelTopOffset) {
             this.currentDirection = popoutDirection.UP;
-            this.panelRegion.$el.css({
-                top: -(panelHeight + config.BOTTOM_HEIGHT_OFFSET)
+            this.panelRegion.$el.offset({
+                top: anchor.offset().top - this.panelRegion.$el.height()
             });
             this.updateDirectionClasses();
         }
@@ -345,7 +348,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
     __handleWindowResize: function () {
         var outlineDiff = (this.panelView.$el.outerHeight() - this.panelView.$el.height());
-        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff - config.BOTTOM_HEIGHT_OFFSET;
+        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff -
+            (this.options.customAnchor ? this.button.$el.find('.js-anchor').height() : this.ui.button.height());
         this.panelView.$el.height(panelHeight);
     }
 });
