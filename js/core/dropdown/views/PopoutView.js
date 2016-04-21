@@ -179,24 +179,23 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     updatePanelFlow: function () {
-        var rect = {},
-            leftPos = 0,
+        var leftPos = 0,
             rightPos = 0,
             triangleWidth = config.TRIANGLE_WIDTH,
             panelOffset = config.PANEL_OFFSET,
             isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
 
-        if (this.options.customAnchor) {
-            rect = this.button.$el.find('.js-anchor')[0].getBoundingClientRect();
+        if (this.options.customAnchor && this.button.$anchor) {
+            let anchor = this.button.$anchor;
             if (isFlowRight) {
-                rightPos = this.button.$el.width() - rect.width + rect.width / 2 - triangleWidth / 2 - panelOffset;
+                rightPos = this.button.$el.width() - anchor.width + anchor.width / 2 - triangleWidth / 2 - panelOffset;
             } else {
-                leftPos = rect.width / 2 - triangleWidth / 2 - panelOffset;
+                leftPos = anchor.width / 2 - triangleWidth / 2 - panelOffset;
             }
         } else {
-            rect = this.ui.button[0].getBoundingClientRect();
+            let button = this.ui.button;
             if (isFlowRight) {
-                leftPos = rect.width - triangleWidth - panelOffset;
+                leftPos = button.width - triangleWidth - panelOffset;
             } else {
                 rightPos = -panelOffset;
             }
@@ -287,7 +286,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         var panelHeight = this.panelRegion.$el.height(),
             viewportHeight = window.innerHeight,
             panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top,
-            anchor = this.options.customAnchor ? this.button.$el.find('.js-anchor') : this.ui.button;
+            anchor = this.options.customAnchor && this.button.$anchor ? this.button.$anchor : this.ui.button;
 
         if (this.currentDirection === popoutDirection.DOWN || panelTopOffset < panelHeight) {
             this.currentDirection = popoutDirection.DOWN;
@@ -349,7 +348,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     __handleWindowResize: function () {
         var outlineDiff = (this.panelView.$el.outerHeight() - this.panelView.$el.height());
         var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff -
-            (this.options.customAnchor ? this.button.$el.find('.js-anchor').height() : this.ui.button.height());
+            (this.options.customAnchor && this.button.$anchor ? this.button.$anchor.height() : this.ui.button.height());
         this.panelView.$el.height(panelHeight);
     }
 });

@@ -42,5 +42,6 @@ export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.
             $el = this.$el;
         }
         $el.addClass(classes.ANCHOR);
+        this.view.$anchor = $el;
     }
 });
