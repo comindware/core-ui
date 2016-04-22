@@ -22,8 +22,8 @@ const defaultOptions = {
  * @class Редактор времени. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
  * (например, '2015-07-20T10:46:37Z').
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. Doesn't have it's own options.
+ * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * */
 Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
     initialize: function (options) {

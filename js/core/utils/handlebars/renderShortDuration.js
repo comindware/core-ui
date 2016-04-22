@@ -21,12 +21,11 @@ module.exports = function (duration) {
         return '';
     }
     var durationValue = dateHelpers.durationISOToObject(duration);
-    var totalValue = dateHelpers.objToTimestampTakingWorkHours({
+    var o = {
         days: durationValue[0],
         hours: durationValue[1],
         minutes: durationValue[2]
-    });
-    var o = dateHelpers.timestampToObjTakingWorkHours(totalValue);
+    };
     var result = '';
     if (o.days) {
         result += o.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS') + ' ';

@@ -29,8 +29,7 @@ const defaultOptions = {
  * (простой многострочный текст). Например, <code>'Hello, @alex!'</code>. Список доступных пользователей
  * берется из <code>core.services.CacheService</code>.
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
 Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{

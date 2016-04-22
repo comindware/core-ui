@@ -31,8 +31,7 @@ const defaultOptions = {
  * @memberof module:core.form.editors
  * @class Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {BaseReferenceEditorController} options.controller Провайдер данных, наследник
  * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
  * */

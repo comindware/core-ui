@@ -36,8 +36,7 @@ const defaultOptions = function () {
  * @memberof module:core.form.editors
  * @class Однострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
  * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>

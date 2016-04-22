@@ -29,8 +29,7 @@ const defaultOptions = {
  * @class Выпадающая панель с возможность выбора нескольких элементов. Поддерживаемый тип данных: массив объектов, <code>Object[]</code>.
  * Тип объекта в массиве должен совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] Разрешить значение <code>null</code>.
  * @param {Backbone.Collection|Array} options.collection Массив объектов <code>{ id, text }</code> или
  * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения

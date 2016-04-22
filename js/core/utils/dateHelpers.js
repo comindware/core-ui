@@ -12,11 +12,6 @@
 
 import { moment } from '../libApi';
 
-let defaultOptions = {
-    ms: 60 * 1000,
-    workHours: 8
-};
-
 let dateTimeFormats = {
     en: {
         shortDate: {general: 'MM/D/YYYY' /* 6/15/2009 */},
@@ -175,10 +170,10 @@ export default /** @lends module:core.utils.dateHelpers */ {
 
     durationISOToObject: function (duration) {
         if (!duration) {
-            return [0, 0, 0];
+            return [ 0, 0, 0 ];
         }
         var mDuration = moment.duration(duration);
-        return [mDuration._days, mDuration.hours(), mDuration.minutes()]; //don't use moment.days() cause it's returns (duration._days % 30)
+        return [ mDuration._days, mDuration.hours(), mDuration.minutes() ]; //don't use moment.days() cause it's returns (duration._days % 30)
     },
 
     durationToISOString: function (duration) {
@@ -198,23 +193,6 @@ export default /** @lends module:core.utils.dateHelpers */ {
         }
 
         return mDuration.toIsoString();
-    },
-
-    timestampToObjTakingWorkHours: function (value) {
-        if (value === null) {
-            return value;
-        }
-        var v = value || 0;
-        v = v / defaultOptions.ms;
-        return {
-            days: Math.floor(v / 60 / defaultOptions.workHours),
-            hours: Math.floor((v / 60) % defaultOptions.workHours),
-            minutes: Math.floor(v % 60)
-        };
-    },
-
-    objToTimestampTakingWorkHours: function (object) {
-        return object ? (object.days * 60 * defaultOptions.workHours + object.hours * 60 + object.minutes) * defaultOptions.ms : object === 0 ? 0 : null;
     },
 
     getWeekStartDay: function () {

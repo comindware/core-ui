@@ -58,18 +58,18 @@ let createFocusableParts = function () {
 };
 
 const defaultOptions = {
-    workHours: 8
+    workHours: 24
 };
 
 /**
  * @name DurationEditorView
  * @memberof module:core.form.editors
- * @class Редактор для выбора значения длительности. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
- * (например, 'P4DT1H4M').
+ * @class Inline duration editor. Supported data type: <code>String</code> in ISO8601 format (for example: 'P4DT1H4M').
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
- * @param {Number} [options.workHours=8] Количество рабочих часов в сутках. Требуется для пересчета введенного значения.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+ * @param {Number} [options.workHours=24] The amount of work hours a day.
+ * The edited value is converted into the actual value of days and hours according to this constant.
+ * The logic is disabled by default: a day is considered as 24 hours.
  * */
 Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
     initialize: function (options) {
@@ -392,7 +392,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         } else {
             obj = val;
         }
-        this._setCurrentDisplayValue(dateHelpers.objToTimestampTakingWorkHours(obj));
+        this._setCurrentDisplayValue(this.__objectToTimestampTakingWorkHours(obj));
         var newValue = dateHelpers.durationToISOString(this._currentDisplayValue);
         if (newValue !== this.value) {
             this.__value(newValue, true);
@@ -402,7 +402,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     _setCurrentDisplayValue: function (value) {
-        this._currentDisplayValue = dateHelpers.timestampToObjTakingWorkHours(value);
+        this._currentDisplayValue = this.__timestampToObjectTakingWorkHours(value);
     },
 
     refresh: function(){
@@ -424,7 +424,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
 
     _parseServerValue: function (value) {
         var durationValue = dateHelpers.durationISOToObject(value);
-        var totalValue = dateHelpers.objToTimestampTakingWorkHours({
+        var totalValue = this.__objectToTimestampTakingWorkHours({
             days: durationValue[0],
             hours: durationValue[1],
             minutes: durationValue[2]
@@ -468,6 +468,23 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     setValue: function(value) {
         this.__value(value, false);
         this.setDisplayValue(value);
+    },
+
+    __timestampToObjectTakingWorkHours: function (value) {
+        if (value === null) {
+            return value;
+        }
+        var v = value || 0;
+        v = v / 60 / 1000;
+        return {
+            days: Math.floor(v / 60 / this.options.workHours),
+            hours: Math.floor((v / 60) % this.options.workHours),
+            minutes: Math.floor(v % 60)
+        };
+    },
+
+    __objectToTimestampTakingWorkHours: function (object) {
+        return object ? (object.days * 60 * this.options.workHours + object.hours * 60 + object.minutes) * 60 * 1000 : object === 0 ? 0 : null;
     }
 });
 
