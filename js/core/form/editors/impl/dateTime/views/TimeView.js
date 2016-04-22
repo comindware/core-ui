@@ -70,7 +70,7 @@ export default Marionette.LayoutView.extend({
                 })
             }),
             autoOpen: false,
-            panelPosition: 'up'
+            panelPosition: 'down'
         });
 
         this.dropdownRegion.show(this.dropdownView);

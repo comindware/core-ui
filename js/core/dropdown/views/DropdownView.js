@@ -155,19 +155,51 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     correctPosition: function () {
-        var panelHeight = this.panelRegion.$el.height(),
+        let buttonHeight = this.buttonRegion.$el.height(),
+            panelHeight = this.panelRegion.$el.height(),
             viewportHeight = window.innerHeight,
-            panelTopOffset = $(this.buttonRegion.$el)[0].getBoundingClientRect().top;
+            buttonTopOffset = this.buttonRegion.$el.offset().top,
+            buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
 
-        if ((this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) &&
-            panelTopOffset < panelHeight) {
-            this.currentPosition = this.currentPosition === panelPosition.UP ? panelPosition.DOWN : panelPosition.DOWN_OVER;
-            this.updatePositionClasses();
-        } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) &&
-                    viewportHeight - panelTopOffset < panelHeight ||
-                    (this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER)) {
-            this.currentPosition = this.currentPosition === panelPosition.DOWN_OVER ? panelPosition.UP_OVER : panelPosition.UP;
-            this.updatePositionClasses();
+        if (this.currentPosition === panelPosition.UP && buttonTopOffset < panelHeight) {
+            this.currentPosition = panelPosition.DOWN;
+        }
+        
+        if (this.currentPosition === panelPosition.UP_OVER && buttonTopOffset + buttonHeight < panelHeight) {
+            this.currentPosition = panelPosition.DOWN_OVER;
+        }
+        
+        if (this.currentPosition === panelPosition.DOWN && buttonBottomOffset < panelHeight) {
+            this.currentPosition = panelPosition.UP;
+        }
+            
+        if (this.currentPosition === panelPosition.DOWN_OVER && buttonBottomOffset + buttonHeight < panelHeight) {
+            this.currentPosition = panelPosition.UP_OVER;
+        }
+        
+        this.updatePositionClasses();
+        
+        switch (this.currentPosition) {
+            case panelPosition.UP:
+                this.panelRegion.$el.offset({
+                    top: buttonTopOffset - panelHeight
+                });
+                break;
+            case panelPosition.UP_OVER:
+                this.panelRegion.$el.offset({
+                    top: buttonTopOffset + buttonHeight - panelHeight
+                });
+                break;
+            case panelPosition.DOWN:
+                this.panelRegion.$el.offset({
+                    top: buttonTopOffset + buttonHeight
+                });
+                break;
+            case panelPosition.DOWN_OVER:
+                this.panelRegion.$el.offset({
+                    top: buttonTopOffset
+                });
+                break;
         }
     },
 

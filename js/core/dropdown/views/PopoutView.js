@@ -283,23 +283,25 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     correctDirection: function () {
-        var panelHeight = this.panelRegion.$el.height(),
+        let button = this.options.customAnchor && this.button.$anchor ? this.button.$anchor : this.ui.button,
+            buttonHeight = button.height(),
+            panelHeight = this.panelRegion.$el.height(),
             viewportHeight = window.innerHeight,
-            panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top,
-            anchor = this.options.customAnchor && this.button.$anchor ? this.button.$anchor : this.ui.button;
-
-        if (this.currentDirection === popoutDirection.DOWN || panelTopOffset < panelHeight) {
-            this.currentDirection = popoutDirection.DOWN;
+            buttonTopOffset = button.offset().top,
+            buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
+        
+        if (this.currentDirection === popoutDirection.UP || buttonBottomOffset < panelHeight) {
+            this.currentDirection = popoutDirection.UP;
             this.panelRegion.$el.offset({
-                top: anchor.offset().top + anchor.height()
+                top: buttonTopOffset - panelHeight
             });
             this.updateDirectionClasses();
         }
         
-        if (this.currentDirection === popoutDirection.UP || viewportHeight - panelTopOffset < panelHeight && panelHeight < panelTopOffset) {
-            this.currentDirection = popoutDirection.UP;
+        if (this.currentDirection === popoutDirection.DOWN || buttonTopOffset < panelHeight) {
+            this.currentDirection = popoutDirection.DOWN;
             this.panelRegion.$el.offset({
-                top: anchor.offset().top - this.panelRegion.$el.height()
+                top: buttonTopOffset + buttonHeight
             });
             this.updateDirectionClasses();
         }
