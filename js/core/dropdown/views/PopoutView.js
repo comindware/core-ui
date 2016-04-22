@@ -178,40 +178,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.updateDirectionClasses();
     },
 
-    updatePanelFlow: function () {
-        var leftPos = 0,
-            rightPos = 0,
-            triangleWidth = config.TRIANGLE_WIDTH,
-            panelOffset = config.PANEL_OFFSET,
-            isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
-
-        if (this.options.customAnchor && this.button.$anchor) {
-            let anchor = this.button.$anchor;
-            if (isFlowRight) {
-                rightPos = this.button.$el.width() - anchor.width + anchor.width / 2 - triangleWidth / 2 - panelOffset;
-            } else {
-                leftPos = anchor.width / 2 - triangleWidth / 2 - panelOffset;
-            }
-        } else {
-            let button = this.ui.button;
-            if (isFlowRight) {
-                leftPos = button.width - triangleWidth - panelOffset;
-            } else {
-                rightPos = -panelOffset;
-            }
-        }
-
-        if (isFlowRight) {
-            this.panelRegion.$el.css({
-                left: leftPos
-            });
-        } else {
-            this.panelRegion.$el.css({
-                right: rightPos
-            });
-        }
-    },
-
     updateDirectionClasses: function () {
         if (this.currentDirection === popoutDirection.UP) {
             this.ui.button.addClass(classes.DIRECTION_UP);
@@ -273,7 +239,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
                     this.__handleWindowResize();
                 }
                 this.correctDirection();
-                this.updatePanelFlow();
                 this.focus();
                 //noinspection JSValidateTypes
                 this.isOpen = true;
