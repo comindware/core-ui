@@ -32,8 +32,7 @@ const defaultOptions = {
  * (<code>String[]</code>). Например, <code>[ 'account.1', 'account.2', 'account.3' ]</code>. Список доступных пользователей
  * береться из <code>core.services.CacheService</code>.
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.canDeleteMember=true] Возможно ли удалять добавленных пользователей.
  * @param {String[]} [options.exclude] Массив идентификаторов пользователей, которые будут скрыты из списка доступных для выбора.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.

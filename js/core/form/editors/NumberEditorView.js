@@ -62,8 +62,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @memberof module:core.form.editors
  * @class Редактор числовых значений. Поддерживаемый тип данных: <code>Number</code>.
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
- * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+ * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowFloat=false] Если <code>true</code>, ко вводу допускаются значения с плавающей точкой.
  * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>

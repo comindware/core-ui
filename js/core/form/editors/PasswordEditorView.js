@@ -16,8 +16,8 @@ import template from './templates/passwordEditor.hbs';
  * @memberof module:core.form.editors
  * @class Текстовый редактор для ввода пароля. Поддерживаемый тип данных: <code>String</code>.
  * @extends module:core.form.editors.TextEditorView
- * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
- * {@link module:core.form.editors.TextEditorView TextEditorView}.
+ * @param {Object} options Options object. Doesn't have it's own options.
+ * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * */
 Backbone.Form.editors.Password = TextEditorView.extend(/** @lends module:core.form.editors.PasswordEditorView.prototype */{
     template: template
