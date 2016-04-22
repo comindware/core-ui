@@ -26,11 +26,6 @@ const classes = {
     DEFAULT_ANCHOR: 'popout__action'
 };
 
-const config = {
-    TRIANGLE_WIDTH: 16,
-    PANEL_OFFSET: 8
-};
-
 const popoutFlow = {
     LEFT: 'left',
     RIGHT: 'right'
@@ -178,6 +173,27 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.updateDirectionClasses();
     },
 
+    updatePanelFlow: function () {
+        let offset = 0,
+            isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
+
+        if (this.options.customAnchor && this.button.$anchor) {
+            let anchor = this.button.$anchor;
+            offset = isFlowRight ?
+                anchor.offset().left + anchor.width() / 2 :
+                anchor.offset().left + anchor.width() / 2 - this.panelRegion.$el.width();
+        } else {
+            let button = this.ui.button;
+            offset = isFlowRight ?
+                button.offset().left :
+                button.offset().left + button.width() - this.panelRegion.$el.width();
+        }
+        
+        this.panelRegion.$el.offset({
+            left: offset
+        });
+    },
+
     updateDirectionClasses: function () {
         if (this.currentDirection === popoutDirection.UP) {
             this.ui.button.addClass(classes.DIRECTION_UP);
@@ -239,6 +255,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
                     this.__handleWindowResize();
                 }
                 this.correctDirection();
+                this.updatePanelFlow();
                 this.focus();
                 //noinspection JSValidateTypes
                 this.isOpen = true;
