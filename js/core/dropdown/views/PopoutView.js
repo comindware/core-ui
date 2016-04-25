@@ -181,16 +181,9 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.options.customAnchor && this.button.$anchor) {
             let anchor = this.button.$anchor;
             if (isFlowRight) {
-                rightPos = this.button.$el.width() - anchor.width() + anchor.width() / 2;
+                leftPos = anchor.offset().left - this.ui.button.offset().left;
             } else {
-                leftPos = anchor.width() / 2;
-            }
-        } else {
-            let button = this.ui.button;
-            if (isFlowRight) {
-                leftPos = button.width();
-            } else {
-                rightPos = 0;
+                rightPos = (this.ui.button.offset().left + this.ui.button.width()) - (anchor.offset().left + anchor.width())
             }
         }
 
