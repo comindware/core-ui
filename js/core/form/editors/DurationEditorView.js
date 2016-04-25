@@ -14,51 +14,43 @@ import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 
-let createFocusableParts = function () {
-    let ws = ' ';
-    let spaces = [
-        '',
-        ws,
-        ws + ws,
-        ws + ws + ws,
-        ws + ws + ws + ws
-    ];
-    let focusableParts = [
-        {
+const focusablePartId  = {
+    DAYS: 'days',
+    HOURS: 'hours',
+    MINUTES: 'minutes'
+};
+
+let createFocusableParts = function (options) {
+    let result = [];
+    if (options.allowDays) {
+        result.push({
+            id: focusablePartId.DAYS,
             text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
-            separator: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS.SEPARATORCHAR'),
             maxLength: 4
-        },
-        {
-            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
-            prefix: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS.PREFIX'),
-            separator: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS.SEPARATORCHAR'),
-            maxLength: 4
-        },
-        {
-            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
-            prefix: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES.PREFIX'),
-            maxLength: 4
-        }
-    ];
-    let format = function (v, full) {
-        var val = !v ? (v === 0 ? '0' : '' ) : '' + v;
-        if (val.length < this.length) {
-            val = spaces[this.length - val.length] + val;
-        }
-        else if (val.length > this.length) {
-            val = val.substring(val.length - this.length, this.length);
-        }
-        return (this.prefix || '') + (full ? val + this.text : val);
-    };
-    for (let i = 0; i < focusableParts.length; i++) {
-        focusableParts[i].format = format;
+        });
     }
-    return focusableParts;
+    if (options.allowHours) {
+        result.push({
+            id: focusablePartId.HOURS,
+            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
+            maxLength: 4
+        });
+    }
+    if (options.allowMinutes) {
+        result.push({
+            id: focusablePartId.MINUTES,
+            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
+            maxLength: 4
+        });
+    }
+    return result;
 };
 
 const defaultOptions = {
-    workHours: 24
+    workHours: 24,
+    allowDays: true,
+    allowHours: true,
+    allowMinutes: true
 };
 
 /**
@@ -79,12 +71,15 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
 
-        this.focusableParts = createFocusableParts();
+        this.focusableParts = createFocusableParts(this.options);
         this.display = {};
-        this.focusedPart = 0;
         if (this.value === undefined) {
             this.value = null;
         }
+
+        /*this.state = new Backbone.Model({
+            mode: 'save'
+        });*/
 
         this.currentState = 'save';
     },
@@ -189,30 +184,43 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     getSegmentIndex: function (pos) {
+        // returns the index of the segment where we are at
         var i, segmentIndex;
-        segmentIndex = 2;
+        segmentIndex = this.focusableParts.length - 1;
         this.initSegmentStartEnd();
         for (i = 0; i < this.focusableParts.length; i++) {
             var focusablePart1 = this.focusableParts[i];
             var focusablePart2 = this.focusableParts[i + 1];
-            if (pos >= focusablePart1.start && pos <= focusablePart1.end) {
+            if (focusablePart1.start <= pos && pos <= focusablePart1.end) {
+                // the position is within the first segment
                 segmentIndex = i;
                 break;
             }
-            if (pos > focusablePart1.end && pos < (focusablePart2 && focusablePart2.start)) {
-                if (focusablePart2 && focusablePart2.prefix && pos < (focusablePart2.start - focusablePart2.prefix.length)) {
-                    segmentIndex = i;
-                } else {
-                    segmentIndex = i + 1;
+            if (focusablePart2) {
+                if (focusablePart1.end < pos && pos < focusablePart2.start) {
+                    const whitespaceLength = 1;
+                    if (pos < (focusablePart2.start - whitespaceLength)) {
+                        // the position is at '1 <here>d 2 h' >> first fragment
+                        segmentIndex = i;
+                    } else {
+                        // the position is at '1 d<here> 2 h' >> second fragment
+                        segmentIndex = i + 1;
+                    }
+                    break;
                 }
-                break;
             }
         }
         return segmentIndex;
     },
 
     getSegmentValue: function (index) {
-        var result = /(\S*)\s\S*\s(\S*)\s\S*\s(\S*)/g.exec(this.ui.input.val());
+        let segments = [];
+        for (let i = 0; i < this.focusableParts.length; i++) {
+            // matches '123 d' segment
+            segments.push('(\\S*)\\s+\\S*');
+        }
+        let regexStr = `^\\s*${segments.join('\\s+')}$`;
+        let result = new RegExp(regexStr, 'g').exec(this.ui.input.val());
         return index !== undefined ? result[index + 1] : result.slice(1, this.focusableParts.length + 1);
     },
 
@@ -230,7 +238,6 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         this.ui.input.val(str.substr(0, this.focusableParts[index].start) + val + str.substr(this.focusableParts[index].end));
         return true;
     },
-
 
     atSegmentEnd: function (position) {
         var index = this.getSegmentIndex(position);
@@ -372,8 +379,10 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         var start = 0;
         for (var i = 0; i < this.focusableParts.length; i++) {
             var focusablePart = this.focusableParts[i];
-            focusablePart.separatorCode = focusablePart.separator && focusablePart.separator.charCodeAt(0);
-            start += (focusablePart.prefix && focusablePart.prefix.length) || 0;
+            if (i > 0) {
+                // counting whitespace before the value of the segment
+                start++;
+            }
             focusablePart.start = start;
             focusablePart.end = focusablePart.start + values[i].length;
             start = focusablePart.end + focusablePart.text.length;
@@ -381,23 +390,27 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     applyDisplayValue: function (clear) {
-        var obj;
-        var val = clear ? null : this.getSegmentValue();
-        if (val) {
-            obj = {
-                days: parseInt(val[0]),
-                hours: parseInt(val[1]),
-                minutes: parseInt(val[2])
-            };
+        let obj;
+        if (clear) {
+            obj = null;
         } else {
-            obj = val;
+            let values = this.getSegmentValue();
+            obj = {
+                days: 0,
+                hours: 0,
+                minutes: 0
+            };
+            this.focusableParts.forEach((seg, i) => {
+                obj[seg.id] = Number(values[i]);
+            });
         }
+
         this._setCurrentDisplayValue(this.__objectToTimestampTakingWorkHours(obj));
         var newValue = dateHelpers.durationToISOString(this._currentDisplayValue);
         if (newValue !== this.value) {
             this.__value(newValue, true);
         }
-        this.display.shortValue = this.formatValue(true);
+        this.display.shortValue = this.__createInputString(false);
         this.refresh();
     },
 
@@ -405,7 +418,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         this._currentDisplayValue = this.__timestampToObjectTakingWorkHours(value);
     },
 
-    refresh: function(){
+    refresh: function () {
         switch(this.currentState) {
             case 'edit':
                 this.ui.input.val(this.display.value);
@@ -422,6 +435,47 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         }
     },
 
+    __createInputString: function (editable) {
+        let isNull = this._currentDisplayValue === null;
+        let minutes = !isNull ? this._currentDisplayValue.minutes : 0;
+        let hours = !isNull ? this._currentDisplayValue.hours : 0;
+        let days = !isNull ? this._currentDisplayValue.days : 0;
+        let data = {
+            [focusablePartId.DAYS]: days,
+            [focusablePartId.HOURS]: hours,
+            [focusablePartId.MINUTES]: minutes
+        };
+
+        if (!editable) {
+            if (isNull) {
+                // null value is rendered as empty text
+                return '';
+            }
+            let filledSegments = this.focusableParts.filter(x => Boolean(data[x.id]));
+            if (filledSegments.length > 0) {
+                // returns string like '0d 4h 32m'
+                return filledSegments.reduce((p, seg) => p + `${data[seg.id]}${seg.text} `, '').trim();
+            } else {
+                // returns string like '0d'
+                return `0${this.focusableParts[0].text}`;
+            }
+        } else {
+            // always returns string with all editable segments like '0 d 5 h 2 m'
+            return this.focusableParts.map(seg => {
+                let val = data[seg.id];
+                let valStr = _.isNumber(val) ? String(val) : '';
+                return valStr + seg.text;
+            }).join(' ');
+        }
+    },
+
+    setDisplayValue: function (value) {
+        this._parseServerValue(value);
+        this.display.value = this.__createInputString(true);
+        this.display.shortValue = this.__createInputString(false);
+        this.refresh();
+    },
+
     _parseServerValue: function (value) {
         var durationValue = dateHelpers.durationISOToObject(value);
         var totalValue = this.__objectToTimestampTakingWorkHours({
@@ -430,39 +484,6 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
             minutes: durationValue[2]
         });
         this._setCurrentDisplayValue(totalValue);
-    },
-
-    formatValue: function (trimmed, v) {
-        if (!this._currentDisplayValue && (v === null || v === undefined)) {
-            return trimmed ? '' : this.focusableParts[0].format(0, true) + this.focusableParts[1].format(0, true) + this.focusableParts[2].format(0, true);
-        }
-        v = v || 0;
-        v = v / 60 / 1000;
-        // replace zero w spaces
-        var minutes = this._currentDisplayValue ? this._currentDisplayValue.minutes : Math.floor(v % 60);
-        var hours = this._currentDisplayValue ? this._currentDisplayValue.hours : Math.floor(v / 60 % this.options.workHours);
-        var days = this._currentDisplayValue ? this._currentDisplayValue.days : Math.floor(v / 60 / this.options.workHours);
-        if (trimmed) {
-            var res = '';
-            if (days || (v !== null && !hours && !minutes)) {
-                res += days + this.focusableParts[0].text;
-            }
-            if (hours) {
-                res += (res ? this.focusableParts[1].prefix : '') + hours + this.focusableParts[1].text;
-            }
-            if (minutes) {
-                res += (res ? this.focusableParts[2].prefix : '') + minutes + this.focusableParts[2].text;
-            }
-            return res;
-        }
-        return this.focusableParts[0].format(days, true) + this.focusableParts[1].format(hours, true) + this.focusableParts[2].format(minutes, true);
-    },
-
-    setDisplayValue: function (value) {
-        this._parseServerValue(value);
-        this.display.value = this.formatValue();
-        this.display.shortValue = this.formatValue(true);
-        this.refresh();
     },
 
     setValue: function(value) {

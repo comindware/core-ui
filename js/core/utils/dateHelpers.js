@@ -192,7 +192,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
             mDuration.add(duration.minutes, 'm');
         }
 
-        return mDuration.toIsoString();
+        return mDuration.toISOString();
     },
 
     getWeekStartDay: function () {

@@ -40,13 +40,13 @@
 
 <http://comindware.com/text/core/form/editors/duration/workDuration/days#separatorChar> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "d"; l10n:isBeingTranslated true; l10n:originalData "d"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration/hours#prefix> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " "; l10n:isBeingTranslated true; l10n:originalData " "].
+<http://comindware.com/text/core/form/editors/duration/workDuration/hours#prefix> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " "; l10n:originalData " "].
 
 <http://comindware.com/text/core/form/editors/duration/workDuration/hours#separatorChar> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "h"; l10n:isBeingTranslated true; l10n:originalData "h"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration/minutes#prefix> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " "; l10n:isBeingTranslated true; l10n:originalData " "].
+<http://comindware.com/text/core/form/editors/duration/workDuration/minutes#prefix> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " "; l10n:originalData " "].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration/seconds#prefix> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " "; l10n:isBeingTranslated true; l10n:originalData " "].
+<http://comindware.com/text/core/form/editors/duration/workDuration/seconds#prefix> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data " "; l10n:originalData " "].
 
 <http://comindware.com/text/core/form/editors/memberSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht spezifiziert"; l10n:originalData "Not set"].
 

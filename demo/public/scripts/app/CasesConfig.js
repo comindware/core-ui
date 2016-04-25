@@ -33,8 +33,11 @@ define([
     './cases/editors/DateTimeEditor',
     'text!./cases/editors/DateTimeEditor.js',
 
-    './cases/editors/DurationEditor/default',
-    'text!./cases/editors/DurationEditor/default.js',
+    './cases/editors/DurationEditor',
+    'text!./cases/editors/DurationEditor.js',
+
+    './cases/editors/DurationEditorWithPartialDisplay',
+    'text!./cases/editors/DurationEditorWithPartialDisplay.js',
 
     './cases/editors/DropdownEditor/default',
     'text!./cases/editors/DropdownEditor/default.js',
@@ -168,13 +171,11 @@ define([
                     },
                     {
                         id: 'DurationEditor',
-                        displayName: 'Duration Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
+                        displayName: 'Duration Editor'
+                    },
+                    {
+                        id: 'DurationEditorWithPartialDisplay',
+                        displayName: 'Duration Editor (partial display)'
                     },
                     {
                         id: 'MaskedTextEditor',
