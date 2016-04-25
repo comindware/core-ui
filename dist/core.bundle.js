@@ -52425,11 +52425,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(25);
 	
-	var defaultOptions = {
-	    ms: 60 * 1000,
-	    workHours: 8
-	};
-	
 	var dateTimeFormats = {
 	    en: {
 	        shortDate: { general: 'MM/D/YYYY' /* 6/15/2009 */ },
@@ -52611,23 +52606,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	
 	        return mDuration.toIsoString();
-	    },
-	
-	    timestampToObjTakingWorkHours: function timestampToObjTakingWorkHours(value) {
-	        if (value === null) {
-	            return value;
-	        }
-	        var v = value || 0;
-	        v = v / defaultOptions.ms;
-	        return {
-	            days: Math.floor(v / 60 / defaultOptions.workHours),
-	            hours: Math.floor(v / 60 % defaultOptions.workHours),
-	            minutes: Math.floor(v % 60)
-	        };
-	    },
-	
-	    objToTimestampTakingWorkHours: function objToTimestampTakingWorkHours(object) {
-	        return object ? (object.days * 60 * defaultOptions.workHours + object.hours * 60 + object.minutes) * defaultOptions.ms : object === 0 ? 0 : null;
 	    },
 	
 	    getWeekStartDay: function getWeekStartDay() {
@@ -53141,12 +53119,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return '';
 	    }
 	    var durationValue = _utilsApi.dateHelpers.durationISOToObject(duration);
-	    var totalValue = _utilsApi.dateHelpers.objToTimestampTakingWorkHours({
+	    var o = {
 	        days: durationValue[0],
 	        hours: durationValue[1],
 	        minutes: durationValue[2]
-	    });
-	    var o = _utilsApi.dateHelpers.timestampToObjTakingWorkHours(totalValue);
+	    };
 	    var result = '';
 	    if (o.days) {
 	        result += o.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS') + ' ';
@@ -62773,8 +62750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @memberof module:core.form.editors
 	 * @class Редактор числовых значений. Поддерживаемый тип данных: <code>Number</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Boolean} [options.allowFloat=false] Если <code>true</code>, ко вводу допускаются значения с плавающей точкой.
 	 * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
 	 *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
@@ -63137,8 +63113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @memberof module:core.form.editors
 	 * @class Многострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
 	 * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
 	 *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
@@ -63419,8 +63394,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @memberof module:core.form.editors
 	 * @class Однострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
 	 * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
 	 *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
@@ -63627,8 +63601,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @memberof module:core.form.editors
 	 * @class Текстовый редактор для ввода пароля. Поддерживаемый тип данных: <code>String</code>.
 	 * @extends module:core.form.editors.TextEditorView
-	 * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.TextEditorView TextEditorView}.
+	 * @param {Object} options Options object. Doesn't have it's own options.
+	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * */
 	Backbone.Form.editors.Password = _TextEditorView2.default.extend( /** @lends module:core.form.editors.PasswordEditorView.prototype */{
 	  template: _passwordEditor2.default
@@ -63724,8 +63698,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @memberof module:core.form.editors
 	 * @class Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {BaseReferenceEditorController} options.controller Провайдер данных, наследник
 	 * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
 	 * */
@@ -64809,8 +64782,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * (идентификатор пользователя). Например, <code>'account.1'</code>. Список доступных пользователей
 	 * берется из <code>core.services.CacheService</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Number} [options.dropdownOptions=Object] Опции используемого PopoutView.
 	 * Полезно для задания направления открытия и кастомизации кнопки. Значения по умолчанию:
 	 * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
@@ -65562,8 +65534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @class Dropdown editor that allows to select a value from a list. Тип данных редактируемого значения должен
 	 * совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Boolean} [options.allowEmptyValue=true] Разрешить значение <code>null</code>.
 	 * @param {Backbone.Collection|Array} options.collection Массив объектов <code>{ id, text }</code> или
 	 * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
@@ -66257,8 +66228,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * (<code>String[]</code>). Например, <code>[ 'account.1', 'account.2', 'account.3' ]</code>. Список доступных пользователей
 	 * береться из <code>core.services.CacheService</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Boolean} [options.canDeleteMember=true] Возможно ли удалять добавленных пользователей.
 	 * @param {String[]} [options.exclude] Массив идентификаторов пользователей, которые будут скрыты из списка доступных для выбора.
 	 * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
@@ -67308,18 +67278,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	var defaultOptions = {
-	    workHours: 8
+	    workHours: 24
 	};
 	
 	/**
 	 * @name DurationEditorView
 	 * @memberof module:core.form.editors
-	 * @class Редактор для выбора значения длительности. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
-	 * (например, 'P4DT1H4M').
+	 * @class Inline duration editor. Supported data type: <code>String</code> in ISO8601 format (for example: 'P4DT1H4M').
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
-	 * @param {Number} [options.workHours=8] Количество рабочих часов в сутках. Требуется для пересчета введенного значения.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {Number} [options.workHours=24] The amount of work hours a day.
+	 * The edited value is converted into the actual value of days and hours according to this constant.
+	 * The logic is disabled by default: a day is considered as 24 hours.
 	 * */
 	Backbone.Form.editors.Duration = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.DurationEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -67641,7 +67611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            obj = val;
 	        }
-	        this._setCurrentDisplayValue(_utilsApi.dateHelpers.objToTimestampTakingWorkHours(obj));
+	        this._setCurrentDisplayValue(this.__objectToTimestampTakingWorkHours(obj));
 	        var newValue = _utilsApi.dateHelpers.durationToISOString(this._currentDisplayValue);
 	        if (newValue !== this.value) {
 	            this.__value(newValue, true);
@@ -67651,7 +67621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    _setCurrentDisplayValue: function _setCurrentDisplayValue(value) {
-	        this._currentDisplayValue = _utilsApi.dateHelpers.timestampToObjTakingWorkHours(value);
+	        this._currentDisplayValue = this.__timestampToObjectTakingWorkHours(value);
 	    },
 	
 	    refresh: function refresh() {
@@ -67673,7 +67643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    _parseServerValue: function _parseServerValue(value) {
 	        var durationValue = _utilsApi.dateHelpers.durationISOToObject(value);
-	        var totalValue = _utilsApi.dateHelpers.objToTimestampTakingWorkHours({
+	        var totalValue = this.__objectToTimestampTakingWorkHours({
 	            days: durationValue[0],
 	            hours: durationValue[1],
 	            minutes: durationValue[2]
@@ -67717,6 +67687,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    setValue: function setValue(value) {
 	        this.__value(value, false);
 	        this.setDisplayValue(value);
+	    },
+	
+	    __timestampToObjectTakingWorkHours: function __timestampToObjectTakingWorkHours(value) {
+	        if (value === null) {
+	            return value;
+	        }
+	        var v = value || 0;
+	        v = v / 60 / 1000;
+	        return {
+	            days: Math.floor(v / 60 / this.options.workHours),
+	            hours: Math.floor(v / 60 % this.options.workHours),
+	            minutes: Math.floor(v % 60)
+	        };
+	    },
+	
+	    __objectToTimestampTakingWorkHours: function __objectToTimestampTakingWorkHours(object) {
+	        return object ? (object.days * 60 * this.options.workHours + object.hours * 60 + object.minutes) * 60 * 1000 : object === 0 ? 0 : null;
 	    }
 	});
 	
@@ -67779,8 +67766,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * (аналогично {@link module:core.form.editors.DropdownEditorView DropdownEditorView}). Тип данных редактируемого значения должен
 	 * совпадать с типом данных поля <code>id</code> элементов массива <code>radioOptions</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText }</code>, описывающих радио-кнопки.
 	 * */
 	Backbone.Form.editors.RadioGroup = _BaseCollectionEditorView2.default.extend( /** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
@@ -68582,8 +68568,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @class Редактор времени. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
 	 * (например, '2015-07-20T10:46:37Z').
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Собственных опций нет. Поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. Doesn't have it's own options.
+	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * */
 	Backbone.Form.editors.Time = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.TimeEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -69231,8 +69217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * (простой многострочный текст). Например, <code>'Hello, @alex!'</code>. Список доступных пользователей
 	 * берется из <code>core.services.CacheService</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
 	 * */
 	Backbone.Form.editors.Mention = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MentionEditorView.prototype */{
@@ -69522,8 +69507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @class Выпадающая панель с возможность выбора нескольких элементов. Поддерживаемый тип данных: массив объектов, <code>Object[]</code>.
 	 * Тип объекта в массиве должен совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Объект опций. Также поддерживаются все опции базового класса
-	 * {@link module:core.form.editors.base.BaseEditorView BaseEditorView}.
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Boolean} [options.allowEmptyValue=true] Разрешить значение <code>null</code>.
 	 * @param {Backbone.Collection|Array} options.collection Массив объектов <code>{ id, text }</code> или
 	 * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
