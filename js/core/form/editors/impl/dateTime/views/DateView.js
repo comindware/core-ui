@@ -34,7 +34,8 @@ export default Marionette.LayoutView.extend({
                 model: this.model
             },
             customAnchor: true,
-            autoOpen: false
+            autoOpen: false,
+            direction: 'down'
         });
         this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
         this.listenTo(this.pickerPopout, 'panel:close', this.__close, this);
