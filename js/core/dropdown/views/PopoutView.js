@@ -174,24 +174,35 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     updatePanelFlow: function () {
-        let offset = 0,
+        var leftPos = 0,
+            rightPos = 0,
             isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
 
         if (this.options.customAnchor && this.button.$anchor) {
             let anchor = this.button.$anchor;
-            offset = isFlowRight ?
-                anchor.offset().left + anchor.width() / 2 :
-                anchor.offset().left + anchor.width() / 2 - this.panelRegion.$el.width();
+            if (isFlowRight) {
+                rightPos = this.button.$el.width() - anchor.width() + anchor.width() / 2;
+            } else {
+                leftPos = anchor.width() / 2;
+            }
         } else {
             let button = this.ui.button;
-            offset = isFlowRight ?
-                button.offset().left :
-                button.offset().left + button.width() - this.panelRegion.$el.width();
+            if (isFlowRight) {
+                leftPos = button.width();
+            } else {
+                rightPos = 0;
+            }
         }
-        
-        this.panelRegion.$el.offset({
-            left: offset
-        });
+
+        if (isFlowRight) {
+            this.panelRegion.$el.css({
+                left: leftPos
+            });
+        } else {
+            this.panelRegion.$el.css({
+                right: rightPos
+            });
+        }
     },
 
     updateDirectionClasses: function () {
