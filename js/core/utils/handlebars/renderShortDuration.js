@@ -20,12 +20,7 @@ module.exports = function (duration) {
     if (!duration) {
         return '';
     }
-    var durationValue = dateHelpers.durationISOToObject(duration);
-    var o = {
-        days: durationValue[0],
-        hours: durationValue[1],
-        minutes: durationValue[2]
-    };
+    let o = dateHelpers.durationISOToObject(duration);
     var result = '';
     if (o.days) {
         result += o.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS') + ' ';
