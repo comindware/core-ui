@@ -170,29 +170,15 @@ export default /** @lends module:core.utils.dateHelpers */ {
 
     durationISOToObject: function (duration) {
         if (!duration) {
-            return [ 0, 0, 0 ];
+            return null;
         }
-        var mDuration = moment.duration(duration);
-        return [ mDuration._days, mDuration.hours(), mDuration.minutes() ]; //don't use moment.days() cause it's returns (duration._days % 30)
-    },
-
-    durationToISOString: function (duration) {
-        if (duration === null) {
-            return duration;
-        }
-        var mDuration = moment.duration();
-
-        if (duration.days) {
-            mDuration.add(duration.days, 'd');
-        }
-        if (duration.hours) {
-            mDuration.add(duration.hours, 'h');
-        }
-        if (duration.minutes) {
-            mDuration.add(duration.minutes, 'm');
-        }
-
-        return mDuration.toISOString();
+        let val = moment.duration(duration);
+        return {
+            // we don't use moment.days() here because it returns only up to 30 days
+            days: Math.floor(val.asDays()),
+            hours: val.hours(),
+            minutes: val.minutes()
+        };
     },
 
     getWeekStartDay: function () {

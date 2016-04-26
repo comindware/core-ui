@@ -8,8 +8,8 @@
 
 "use strict";
 
-import '../../libApi';
-import { keyCode, dateHelpers } from '../../utils/utilsApi';
+import { moment } from '../../libApi';
+import { keyCode, dateHelpers, helpers } from '../../utils/utilsApi';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
@@ -26,31 +26,44 @@ let createFocusableParts = function (options) {
         result.push({
             id: focusablePartId.DAYS,
             text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
-            maxLength: 4
+            maxLength: 4,
+            milliseconds: 1000 * 60 * 60 * options.hoursPerDay
         });
     }
     if (options.allowHours) {
         result.push({
             id: focusablePartId.HOURS,
             text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
-            maxLength: 4
+            maxLength: 4,
+            milliseconds: 1000 * 60 * 60
         });
     }
     if (options.allowMinutes) {
         result.push({
             id: focusablePartId.MINUTES,
             text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
-            maxLength: 4
+            maxLength: 4,
+            milliseconds: 1000 * 60
         });
     }
     return result;
 };
 
 const defaultOptions = {
-    workHours: 24,
+    hoursPerDay: 24,
     allowDays: true,
     allowHours: true,
     allowMinutes: true
+};
+
+const classes = {
+    FOCUSED: 'pr-focused',
+    EMPTY: 'pr-empty'
+};
+
+const stateModes = {
+    EDIT: 'edit',
+    VIEW: 'view'
 };
 
 /**
@@ -59,9 +72,11 @@ const defaultOptions = {
  * @class Inline duration editor. Supported data type: <code>String</code> in ISO8601 format (for example: 'P4DT1H4M').
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
- * @param {Number} [options.workHours=24] The amount of work hours a day.
- * The edited value is converted into the actual value of days and hours according to this constant.
+ * @param {Number} [options.hoursPerDay=24] The amount of hours per day. The intended use case is counting work days taking work hours into account.
  * The logic is disabled by default: a day is considered as 24 hours.
+ * @param {Boolean} [options.allowDays=true] Whether to display the day segment. At least one segment must be displayed.
+ * @param {Boolean} [options.allowHours=true] Whether to display the hour segment. At least one segment must be displayed.
+ * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
  * */
 Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
     initialize: function (options) {
@@ -72,16 +87,11 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         }
 
         this.focusableParts = createFocusableParts(this.options);
-        this.display = {};
-        if (this.value === undefined) {
-            this.value = null;
-        }
 
-        /*this.state = new Backbone.Model({
-            mode: 'save'
-        });*/
-
-        this.currentState = 'save';
+        this.state = {
+            mode: stateModes.VIEW,
+            displayValue: dateHelpers.durationISOToObject(this.value)
+        };
     },
 
     template: template,
@@ -95,11 +105,6 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         remove: '.js-duration-remove'
     },
 
-    css: {
-        focused: 'pr-focused',
-        empty: 'pr-empty'
-    },
-
     regions: {
         durationRegion: 'js-duration'
     },
@@ -110,10 +115,6 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         'click @ui.input': '__focus',
         'blur @ui.input': '__blur',
         'keydown @ui.input': '__keydown'
-    },
-
-    onRender: function () {
-        this.setDisplayValue(this.value);
     },
 
     setPermissions: function (enabled, readonly) {
@@ -138,28 +139,45 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     __clear: function () {
-        this.currentState = 'save';
-        this.applyDisplayValue(true);
+        this.__updateState({
+            mode: stateModes.VIEW,
+            displayValue: null
+        });
+        this.__value(null, true);
     },
 
     __focus: function () {
         if (this.readonly) {
             return;
         }
-        if(this.currentState !== 'edit') {
-            this.currentState = 'edit';
-            this.setDisplayValue(this.value);
-        }
+        this.__updateState({
+            mode: stateModes.EDIT
+        });
         var pos = this.fixCaretPos(this.getCaretPos());
         this.setCaretPos(pos);
     },
 
     __blur: function () {
-        if (this.currentState === 'save') {
+        if (this.state.mode === stateModes.VIEW) {
             return;
         }
-        this.currentState = 'save';
-        this.applyDisplayValue();
+
+        let values = this.getSegmentValue();
+        let newValueObject = {
+            days: 0,
+            hours: 0,
+            minutes: 0
+        };
+        this.focusableParts.forEach((seg, i) => {
+            newValueObject[seg.id] = Number(values[i]);
+        });
+
+        this.__updateState({
+            mode: stateModes.VIEW,
+            displayValue: newValueObject
+        });
+        var newValue = moment.duration(this.state.displayValue).toISOString();
+        this.__value(newValue, true);
     },
 
     getCaretPos: function () {
@@ -250,7 +268,9 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     __value: function (value, triggerChange) {
-        triggerChange = triggerChange && value !== this.value;
+        if (value === this.value) {
+            return;
+        }
         this.value = value;
         if (triggerChange) {
             this.__triggerChange();
@@ -333,9 +353,10 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
             }
             break;
         case keyCode.ESCAPE:
-            this.currentState = 'save';
             this.ui.input.blur();
-            this.refresh();
+            this.__updateState({
+                mode: stateModes.VIEW
+            });
             return false;
         case keyCode.ENTER:
             this.__blur();
@@ -389,57 +410,14 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         }
     },
 
-    applyDisplayValue: function (clear) {
-        let obj;
-        if (clear) {
-            obj = null;
-        } else {
-            let values = this.getSegmentValue();
-            obj = {
-                days: 0,
-                hours: 0,
-                minutes: 0
-            };
-            this.focusableParts.forEach((seg, i) => {
-                obj[seg.id] = Number(values[i]);
-            });
-        }
+    __createInputString: function (value, editable) {
+        // The methods creates a string which reflects current mode (view/edit) and value.
+        // The string is set into UI in __updateState
 
-        this._setCurrentDisplayValue(this.__objectToTimestampTakingWorkHours(obj));
-        var newValue = dateHelpers.durationToISOString(this._currentDisplayValue);
-        if (newValue !== this.value) {
-            this.__value(newValue, true);
-        }
-        this.display.shortValue = this.__createInputString(false);
-        this.refresh();
-    },
-
-    _setCurrentDisplayValue: function (value) {
-        this._currentDisplayValue = this.__timestampToObjectTakingWorkHours(value);
-    },
-
-    refresh: function () {
-        switch(this.currentState) {
-            case 'edit':
-                this.ui.input.val(this.display.value);
-                this.$el.addClass(this.css.focused);
-                break;
-            case 'save':
-                this.ui.input.val(this.value ? this.display.shortValue : '');
-                this.$el.removeClass(this.css.focused);
-        }
-        if (this.value && this.value !== 'P') {
-            this.$el.removeClass(this.css.empty);
-        } else {
-            this.$el.addClass(this.css.empty);
-        }
-    },
-
-    __createInputString: function (editable) {
-        let isNull = this._currentDisplayValue === null;
-        let minutes = !isNull ? this._currentDisplayValue.minutes : 0;
-        let hours = !isNull ? this._currentDisplayValue.hours : 0;
-        let days = !isNull ? this._currentDisplayValue.days : 0;
+        let isNull = value === null;
+        let minutes = !isNull ? value.minutes : 0;
+        let hours = !isNull ? value.hours : 0;
+        let days = !isNull ? value.days : 0;
         let data = {
             [focusablePartId.DAYS]: days,
             [focusablePartId.HOURS]: hours,
@@ -469,43 +447,60 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         }
     },
 
-    setDisplayValue: function (value) {
-        this._parseServerValue(value);
-        this.display.value = this.__createInputString(true);
-        this.display.shortValue = this.__createInputString(false);
-        this.refresh();
-    },
+    __normalizeDuration: function (value) {
+        // Data normalization:
+        // Object like this: { days: 2, hours: 3, minutes: 133 }
+        // Is converted into this: { days: 2, hours: 5, minutes: 13 }
+        // But if hours segment is disallowed, it will look like this: { days: 2, hours: 0, minutes: 313 } // 313 = 133 + 3*60
 
-    _parseServerValue: function (value) {
-        var durationValue = dateHelpers.durationISOToObject(value);
-        var totalValue = this.__objectToTimestampTakingWorkHours({
-            days: durationValue[0],
-            hours: durationValue[1],
-            minutes: durationValue[2]
+        if (value === null) {
+            return null;
+        }
+        let totalMilliseconds = moment.duration(value).asMilliseconds();
+        let result = {
+            days: 0,
+            hours: 0,
+            minutes: 0
+        };
+        this.focusableParts.forEach(seg => {
+            result[seg.id] = Math.floor(totalMilliseconds / seg.milliseconds);
+            totalMilliseconds = totalMilliseconds % seg.milliseconds;
         });
-        this._setCurrentDisplayValue(totalValue);
+        return result;
     },
 
     setValue: function(value) {
         this.__value(value, false);
-        this.setDisplayValue(value);
+        this.__updateState({
+            mode: stateModes.VIEW,
+            displayValue: dateHelpers.durationISOToObject(value)
+        });
     },
 
-    __timestampToObjectTakingWorkHours: function (value) {
-        if (value === null) {
-            return value;
+    __updateState: function (newState) {
+        // updates inner state variables
+        // updates UI
+
+        if (!newState.mode ||
+            (newState.mode === stateModes.EDIT && newState.displayValue !== undefined)) {
+            helpers.throwInvalidOperationError('The operation is inconsistent or isn\'t supported by this logic.');
         }
-        var v = value || 0;
-        v = v / 60 / 1000;
-        return {
-            days: Math.floor(v / 60 / this.options.workHours),
-            hours: Math.floor((v / 60) % this.options.workHours),
-            minutes: Math.floor(v % 60)
-        };
-    },
 
-    __objectToTimestampTakingWorkHours: function (object) {
-        return object ? (object.days * 60 * this.options.workHours + object.hours * 60 + object.minutes) * 60 * 1000 : object === 0 ? 0 : null;
+        if (this.state.mode === newState.mode && newState.mode === stateModes.EDIT) {
+            return;
+        }
+
+        this.state.mode = newState.mode;
+        if (newState.displayValue !== undefined) {
+            this.state.displayValue = newState.displayValue;
+        }
+
+        let normalizedDisplayValue = this.__normalizeDuration(this.state.displayValue);
+        var inEditMode = this.state.mode === stateModes.EDIT;
+        let val = this.__createInputString(normalizedDisplayValue, inEditMode);
+        this.ui.input.val(val);
+        this.$el.toggleClass(classes.FOCUSED, inEditMode);
+        this.$el.toggleClass(classes.EMPTY, this.state.displayValue === null);
     }
 });
 
