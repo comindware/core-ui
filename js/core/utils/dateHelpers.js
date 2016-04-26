@@ -177,7 +177,8 @@ export default /** @lends module:core.utils.dateHelpers */ {
             // we don't use moment.days() here because it returns only up to 30 days
             days: Math.floor(val.asDays()),
             hours: val.hours(),
-            minutes: val.minutes()
+            minutes: val.minutes(),
+            seconds: val.seconds()
         };
     },
 

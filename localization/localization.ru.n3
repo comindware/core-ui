@@ -34,7 +34,7 @@
 
 <http://comindware.com/text/core/form/editors/duration/workDuration#minutes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data " м"; l10n:originalData " m"].
 
-<http://comindware.com/text/core/form/editors/duration/workDuration#seconds> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "с"; l10n:originalData " s"].
+<http://comindware.com/text/core/form/editors/duration/workDuration#seconds> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data " с"; l10n:originalData " s"].
 
 <http://comindware.com/text/core/form/editors/duration/workDuration/days#separatorChar> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "д"; l10n:originalData "d"].
 

@@ -52590,7 +52590,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // we don't use moment.days() here because it returns only up to 30 days
 	            days: Math.floor(val.asDays()),
 	            hours: val.hours(),
-	            minutes: val.minutes()
+	            minutes: val.minutes(),
+	            seconds: val.seconds()
 	        };
 	    },
 	
@@ -67259,7 +67260,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var focusablePartId = {
 	    DAYS: 'days',
 	    HOURS: 'hours',
-	    MINUTES: 'minutes'
+	    MINUTES: 'minutes',
+	    SECONDS: 'seconds'
 	};
 	
 	var createFocusableParts = function createFocusableParts(options) {
@@ -67288,6 +67290,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            milliseconds: 1000 * 60
 	        });
 	    }
+	    if (options.allowSeconds) {
+	        result.push({
+	            id: focusablePartId.SECONDS,
+	            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS'),
+	            maxLength: 4,
+	            milliseconds: 1000
+	        });
+	    }
 	    return result;
 	};
 	
@@ -67295,7 +67305,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hoursPerDay: 24,
 	    allowDays: true,
 	    allowHours: true,
-	    allowMinutes: true
+	    allowMinutes: true,
+	    allowSeconds: true
 	};
 	
 	var classes = {
@@ -67319,6 +67330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Boolean} [options.allowDays=true] Whether to display the day segment. At least one segment must be displayed.
 	 * @param {Boolean} [options.allowHours=true] Whether to display the hour segment. At least one segment must be displayed.
 	 * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
+	 * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
 	 * */
 	Backbone.Form.editors.Duration = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.DurationEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -67408,7 +67420,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var newValueObject = {
 	            days: 0,
 	            hours: 0,
-	            minutes: 0
+	            minutes: 0,
+	            seconds: 0
 	        };
 	        this.focusableParts.forEach(function (seg, i) {
 	            newValueObject[seg.id] = Number(values[i]);
@@ -67659,10 +67672,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // The string is set into UI in __updateState
 	
 	        var isNull = value === null;
+	        var seconds = !isNull ? value.seconds : 0;
 	        var minutes = !isNull ? value.minutes : 0;
 	        var hours = !isNull ? value.hours : 0;
 	        var days = !isNull ? value.days : 0;
-	        var data = (_data = {}, _defineProperty(_data, focusablePartId.DAYS, days), _defineProperty(_data, focusablePartId.HOURS, hours), _defineProperty(_data, focusablePartId.MINUTES, minutes), _data);
+	        var data = (_data = {}, _defineProperty(_data, focusablePartId.DAYS, days), _defineProperty(_data, focusablePartId.HOURS, hours), _defineProperty(_data, focusablePartId.MINUTES, minutes), _defineProperty(_data, focusablePartId.SECONDS, seconds), _data);
 	
 	        if (!editable) {
 	            if (isNull) {
@@ -67693,9 +67707,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __normalizeDuration: function __normalizeDuration(value) {
 	        // Data normalization:
-	        // Object like this: { days: 2, hours: 3, minutes: 133 }
-	        // Is converted into this: { days: 2, hours: 5, minutes: 13 }
-	        // But if hours segment is disallowed, it will look like this: { days: 2, hours: 0, minutes: 313 } // 313 = 133 + 3*60
+	        // Object like this: { days: 2, hours: 3, minutes: 133, seconds: 0 }
+	        // Is converted into this: { days: 2, hours: 5, minutes: 13, seconds: 0 }
+	        // But if hours segment is disallowed, it will look like this: { days: 2, hours: 0, minutes: 313, seconds: 0 } // 313 = 133 + 3*60
 	
 	        if (value === null) {
 	            return null;
@@ -67704,7 +67718,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var result = {
 	            days: 0,
 	            hours: 0,
-	            minutes: 0
+	            minutes: 0,
+	            seconds: 0
 	        };
 	        this.focusableParts.forEach(function (seg) {
 	            result[seg.id] = Math.floor(totalMilliseconds / seg.milliseconds);
