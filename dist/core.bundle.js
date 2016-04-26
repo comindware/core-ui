@@ -52583,29 +52583,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    durationISOToObject: function durationISOToObject(duration) {
 	        if (!duration) {
-	            return [0, 0, 0];
+	            return null;
 	        }
-	        var mDuration = _libApi.moment.duration(duration);
-	        return [mDuration._days, mDuration.hours(), mDuration.minutes()]; //don't use moment.days() cause it's returns (duration._days % 30)
-	    },
-	
-	    durationToISOString: function durationToISOString(duration) {
-	        if (duration === null) {
-	            return duration;
-	        }
-	        var mDuration = _libApi.moment.duration();
-	
-	        if (duration.days) {
-	            mDuration.add(duration.days, 'd');
-	        }
-	        if (duration.hours) {
-	            mDuration.add(duration.hours, 'h');
-	        }
-	        if (duration.minutes) {
-	            mDuration.add(duration.minutes, 'm');
-	        }
-	
-	        return mDuration.toIsoString();
+	        var val = _libApi.moment.duration(duration);
+	        return {
+	            // we don't use moment.days() here because it returns only up to 30 days
+	            days: Math.floor(val.asDays()),
+	            hours: val.hours(),
+	            minutes: val.minutes()
+	        };
 	    },
 	
 	    getWeekStartDay: function getWeekStartDay() {
@@ -53118,12 +53104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (!duration) {
 	        return '';
 	    }
-	    var durationValue = _utilsApi.dateHelpers.durationISOToObject(duration);
-	    var o = {
-	        days: durationValue[0],
-	        hours: durationValue[1],
-	        minutes: durationValue[2]
-	    };
+	    var o = _utilsApi.dateHelpers.durationISOToObject(duration);
 	    var result = '';
 	    if (o.days) {
 	        result += o.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS') + ' ';
@@ -53309,12 +53290,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    DEFAULT_ANCHOR: 'popout__action'
 	};
 	
-	var config = {
-	    BOTTOM_HEIGHT_OFFSET: 20,
-	    TRIANGLE_WIDTH: 16,
-	    PANEL_OFFSET: 8
-	};
-	
 	var popoutFlow = {
 	    LEFT: 'left',
 	    RIGHT: 'right'
@@ -53463,26 +53438,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    updatePanelFlow: function updatePanelFlow() {
-	        var rect = {},
-	            leftPos = 0,
+	        var leftPos = 0,
 	            rightPos = 0,
-	            triangleWidth = config.TRIANGLE_WIDTH,
-	            panelOffset = config.PANEL_OFFSET,
 	            isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
 	
-	        if (this.options.customAnchor) {
-	            rect = this.button.$el.find('.js-anchor')[0].getBoundingClientRect();
+	        if (this.options.customAnchor && this.button.$anchor) {
+	            var anchor = this.button.$anchor;
 	            if (isFlowRight) {
-	                rightPos = this.button.$el.width() - rect.width + rect.width / 2 - triangleWidth / 2 - panelOffset;
+	                leftPos = anchor.offset().left - this.ui.button.offset().left;
 	            } else {
-	                leftPos = rect.width / 2 - triangleWidth / 2 - panelOffset;
-	            }
-	        } else {
-	            rect = this.ui.button[0].getBoundingClientRect();
-	            if (isFlowRight) {
-	                leftPos = rect.width - triangleWidth - panelOffset;
-	            } else {
-	                rightPos = -panelOffset;
+	                rightPos = this.ui.button.offset().left + this.ui.button.width() - (anchor.offset().left + anchor.width());
 	            }
 	        }
 	
@@ -53568,17 +53533,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    correctDirection: function correctDirection() {
-	        var panelHeight = this.panelRegion.$el.height(),
+	        var button = this.options.customAnchor && this.button.$anchor ? this.button.$anchor : this.ui.button,
+	            buttonHeight = button.height(),
+	            panelHeight = this.panelRegion.$el.height(),
 	            viewportHeight = window.innerHeight,
-	            panelTopOffset = $(this.panelRegion.$el)[0].getBoundingClientRect().top;
+	            buttonTopOffset = button.offset().top,
+	            buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
 	
-	        if (this.currentDirection === popoutDirection.UP && panelTopOffset < panelHeight) {
-	            this.currentDirection = popoutDirection.DOWN;
-	            this.updateDirectionClasses();
-	        } else if (this.currentDirection === popoutDirection.DOWN && viewportHeight - panelTopOffset < panelHeight && panelHeight < panelTopOffset) {
+	        if (this.currentDirection === popoutDirection.UP || buttonBottomOffset < panelHeight) {
 	            this.currentDirection = popoutDirection.UP;
-	            this.panelRegion.$el.css({
-	                top: -(panelHeight + config.BOTTOM_HEIGHT_OFFSET)
+	            this.panelRegion.$el.offset({
+	                top: buttonTopOffset - panelHeight
+	            });
+	            this.updateDirectionClasses();
+	        }
+	
+	        if (this.currentDirection === popoutDirection.DOWN || buttonTopOffset < panelHeight) {
+	            this.currentDirection = popoutDirection.DOWN;
+	            this.panelRegion.$el.offset({
+	                top: buttonTopOffset + buttonHeight
 	            });
 	            this.updateDirectionClasses();
 	        }
@@ -53626,7 +53599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __handleWindowResize: function __handleWindowResize() {
 	        var outlineDiff = this.panelView.$el.outerHeight() - this.panelView.$el.height();
-	        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff - config.BOTTOM_HEIGHT_OFFSET;
+	        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff - (this.options.customAnchor && this.button.$anchor ? this.button.$anchor.height() : this.ui.button.height());
 	        this.panelView.$el.height(panelHeight);
 	    }
 	});
@@ -55205,16 +55178,51 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    correctPosition: function correctPosition() {
-	        var panelHeight = this.panelRegion.$el.height(),
+	        var buttonHeight = this.buttonRegion.$el.height(),
+	            panelHeight = this.panelRegion.$el.height(),
 	            viewportHeight = window.innerHeight,
-	            panelTopOffset = $(this.buttonRegion.$el)[0].getBoundingClientRect().top;
+	            buttonTopOffset = this.buttonRegion.$el.offset().top,
+	            buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
 	
-	        if ((this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) && panelTopOffset < panelHeight) {
-	            this.currentPosition = this.currentPosition === panelPosition.UP ? panelPosition.DOWN : panelPosition.DOWN_OVER;
-	            this.updatePositionClasses();
-	        } else if ((this.currentPosition === panelPosition.DOWN || this.currentPosition === panelPosition.DOWN_OVER) && viewportHeight - panelTopOffset < panelHeight || this.currentPosition === panelPosition.UP || this.currentPosition === panelPosition.UP_OVER) {
-	            this.currentPosition = this.currentPosition === panelPosition.DOWN_OVER ? panelPosition.UP_OVER : panelPosition.UP;
-	            this.updatePositionClasses();
+	        if (this.currentPosition === panelPosition.UP && buttonTopOffset < panelHeight) {
+	            this.currentPosition = panelPosition.DOWN;
+	        }
+	
+	        if (this.currentPosition === panelPosition.UP_OVER && buttonTopOffset + buttonHeight < panelHeight) {
+	            this.currentPosition = panelPosition.DOWN_OVER;
+	        }
+	
+	        if (this.currentPosition === panelPosition.DOWN && buttonBottomOffset < panelHeight) {
+	            this.currentPosition = panelPosition.UP;
+	        }
+	
+	        if (this.currentPosition === panelPosition.DOWN_OVER && buttonBottomOffset + buttonHeight < panelHeight) {
+	            this.currentPosition = panelPosition.UP_OVER;
+	        }
+	
+	        this.updatePositionClasses();
+	
+	        switch (this.currentPosition) {
+	            case panelPosition.UP:
+	                this.panelRegion.$el.offset({
+	                    top: buttonTopOffset - panelHeight
+	                });
+	                break;
+	            case panelPosition.UP_OVER:
+	                this.panelRegion.$el.offset({
+	                    top: buttonTopOffset + buttonHeight - panelHeight
+	                });
+	                break;
+	            case panelPosition.DOWN:
+	                this.panelRegion.$el.offset({
+	                    top: buttonTopOffset + buttonHeight
+	                });
+	                break;
+	            case panelPosition.DOWN_OVER:
+	                this.panelRegion.$el.offset({
+	                    top: buttonTopOffset
+	                });
+	                break;
 	        }
 	    },
 	
@@ -55605,6 +55613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            $el = this.$el;
 	        }
 	        $el.addClass(classes.ANCHOR);
+	        this.view.$anchor = $el;
 	    }
 	});
 
@@ -65535,7 +65544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * совпадать с типом данных поля <code>id</code> элементов коллекции <code>collection</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Boolean} [options.allowEmptyValue=true] Разрешить значение <code>null</code>.
+	 * @param {Boolean} [options.allowEmptyValue=true] Whether to allow <code>null</code> value to be set.
 	 * @param {Backbone.Collection|Array} options.collection Массив объектов <code>{ id, text }</code> или
 	 * Backbone коллекция моделей с такими атрибутами. Используйте свойство <code>displayAttribute</code> для отображения
 	 * текста из поля, отличного от <code>text</code>. В случае передачи Backbone.Collection, дальнейшее ее изменение
@@ -67227,7 +67236,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	__webpack_require__(25);
+	var _libApi = __webpack_require__(25);
 	
 	var _utilsApi = __webpack_require__(220);
 	
@@ -67245,40 +67254,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var createFocusableParts = function createFocusableParts() {
-	    var ws = ' ';
-	    var spaces = ['', ws, ws + ws, ws + ws + ws, ws + ws + ws + ws];
-	    var focusableParts = [{
-	        text: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
-	        separator: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS.SEPARATORCHAR'),
-	        maxLength: 4
-	    }, {
-	        text: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
-	        prefix: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS.PREFIX'),
-	        separator: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS.SEPARATORCHAR'),
-	        maxLength: 4
-	    }, {
-	        text: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
-	        prefix: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES.PREFIX'),
-	        maxLength: 4
-	    }];
-	    var format = function format(v, full) {
-	        var val = !v ? v === 0 ? '0' : '' : '' + v;
-	        if (val.length < this.length) {
-	            val = spaces[this.length - val.length] + val;
-	        } else if (val.length > this.length) {
-	            val = val.substring(val.length - this.length, this.length);
-	        }
-	        return (this.prefix || '') + (full ? val + this.text : val);
-	    };
-	    for (var i = 0; i < focusableParts.length; i++) {
-	        focusableParts[i].format = format;
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var focusablePartId = {
+	    DAYS: 'days',
+	    HOURS: 'hours',
+	    MINUTES: 'minutes'
+	};
+	
+	var createFocusableParts = function createFocusableParts(options) {
+	    var result = [];
+	    if (options.allowDays) {
+	        result.push({
+	            id: focusablePartId.DAYS,
+	            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
+	            maxLength: 4,
+	            milliseconds: 1000 * 60 * 60 * options.hoursPerDay
+	        });
 	    }
-	    return focusableParts;
+	    if (options.allowHours) {
+	        result.push({
+	            id: focusablePartId.HOURS,
+	            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
+	            maxLength: 4,
+	            milliseconds: 1000 * 60 * 60
+	        });
+	    }
+	    if (options.allowMinutes) {
+	        result.push({
+	            id: focusablePartId.MINUTES,
+	            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
+	            maxLength: 4,
+	            milliseconds: 1000 * 60
+	        });
+	    }
+	    return result;
 	};
 	
 	var defaultOptions = {
-	    workHours: 24
+	    hoursPerDay: 24,
+	    allowDays: true,
+	    allowHours: true,
+	    allowMinutes: true
+	};
+	
+	var classes = {
+	    FOCUSED: 'pr-focused',
+	    EMPTY: 'pr-empty'
+	};
+	
+	var stateModes = {
+	    EDIT: 'edit',
+	    VIEW: 'view'
 	};
 	
 	/**
@@ -67287,9 +67314,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @class Inline duration editor. Supported data type: <code>String</code> in ISO8601 format (for example: 'P4DT1H4M').
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Number} [options.workHours=24] The amount of work hours a day.
-	 * The edited value is converted into the actual value of days and hours according to this constant.
+	 * @param {Number} [options.hoursPerDay=24] The amount of hours per day. The intended use case is counting work days taking work hours into account.
 	 * The logic is disabled by default: a day is considered as 24 hours.
+	 * @param {Boolean} [options.allowDays=true] Whether to display the day segment. At least one segment must be displayed.
+	 * @param {Boolean} [options.allowHours=true] Whether to display the hour segment. At least one segment must be displayed.
+	 * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
 	 * */
 	Backbone.Form.editors.Duration = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.DurationEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -67299,14 +67328,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 	        }
 	
-	        this.focusableParts = createFocusableParts();
-	        this.display = {};
-	        this.focusedPart = 0;
-	        if (this.value === undefined) {
-	            this.value = null;
-	        }
+	        this.focusableParts = createFocusableParts(this.options);
 	
-	        this.currentState = 'save';
+	        this.state = {
+	            mode: stateModes.VIEW,
+	            displayValue: _utilsApi.dateHelpers.durationISOToObject(this.value)
+	        };
 	    },
 	
 	    template: _durationEditor2.default,
@@ -67320,11 +67347,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        remove: '.js-duration-remove'
 	    },
 	
-	    css: {
-	        focused: 'pr-focused',
-	        empty: 'pr-empty'
-	    },
-	
 	    regions: {
 	        durationRegion: 'js-duration'
 	    },
@@ -67335,10 +67357,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'click @ui.input': '__focus',
 	        'blur @ui.input': '__blur',
 	        'keydown @ui.input': '__keydown'
-	    },
-	
-	    onRender: function onRender() {
-	        this.setDisplayValue(this.value);
 	    },
 	
 	    setPermissions: function setPermissions(enabled, readonly) {
@@ -67363,28 +67381,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __clear: function __clear() {
-	        this.currentState = 'save';
-	        this.applyDisplayValue(true);
+	        this.__updateState({
+	            mode: stateModes.VIEW,
+	            displayValue: null
+	        });
+	        this.__value(null, true);
 	    },
 	
 	    __focus: function __focus() {
 	        if (this.readonly) {
 	            return;
 	        }
-	        if (this.currentState !== 'edit') {
-	            this.currentState = 'edit';
-	            this.setDisplayValue(this.value);
-	        }
+	        this.__updateState({
+	            mode: stateModes.EDIT
+	        });
 	        var pos = this.fixCaretPos(this.getCaretPos());
 	        this.setCaretPos(pos);
 	    },
 	
 	    __blur: function __blur() {
-	        if (this.currentState === 'save') {
+	        if (this.state.mode === stateModes.VIEW) {
 	            return;
 	        }
-	        this.currentState = 'save';
-	        this.applyDisplayValue();
+	
+	        var values = this.getSegmentValue();
+	        var newValueObject = {
+	            days: 0,
+	            hours: 0,
+	            minutes: 0
+	        };
+	        this.focusableParts.forEach(function (seg, i) {
+	            newValueObject[seg.id] = Number(values[i]);
+	        });
+	
+	        this.__updateState({
+	            mode: stateModes.VIEW,
+	            displayValue: newValueObject
+	        });
+	        var newValue = _libApi.moment.duration(this.state.displayValue).toISOString();
+	        this.__value(newValue, true);
 	    },
 	
 	    getCaretPos: function getCaretPos() {
@@ -67409,30 +67444,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    getSegmentIndex: function getSegmentIndex(pos) {
+	        // returns the index of the segment where we are at
 	        var i, segmentIndex;
-	        segmentIndex = 2;
+	        segmentIndex = this.focusableParts.length - 1;
 	        this.initSegmentStartEnd();
 	        for (i = 0; i < this.focusableParts.length; i++) {
 	            var focusablePart1 = this.focusableParts[i];
 	            var focusablePart2 = this.focusableParts[i + 1];
-	            if (pos >= focusablePart1.start && pos <= focusablePart1.end) {
+	            if (focusablePart1.start <= pos && pos <= focusablePart1.end) {
+	                // the position is within the first segment
 	                segmentIndex = i;
 	                break;
 	            }
-	            if (pos > focusablePart1.end && pos < (focusablePart2 && focusablePart2.start)) {
-	                if (focusablePart2 && focusablePart2.prefix && pos < focusablePart2.start - focusablePart2.prefix.length) {
-	                    segmentIndex = i;
-	                } else {
-	                    segmentIndex = i + 1;
+	            if (focusablePart2) {
+	                if (focusablePart1.end < pos && pos < focusablePart2.start) {
+	                    var whitespaceLength = 1;
+	                    if (pos < focusablePart2.start - whitespaceLength) {
+	                        // the position is at '1 <here>d 2 h' >> first fragment
+	                        segmentIndex = i;
+	                    } else {
+	                        // the position is at '1 d<here> 2 h' >> second fragment
+	                        segmentIndex = i + 1;
+	                    }
+	                    break;
 	                }
-	                break;
 	            }
 	        }
 	        return segmentIndex;
 	    },
 	
 	    getSegmentValue: function getSegmentValue(index) {
-	        var result = /(\S*)\s\S*\s(\S*)\s\S*\s(\S*)/g.exec(this.ui.input.val());
+	        var segments = [];
+	        for (var i = 0; i < this.focusableParts.length; i++) {
+	            // matches '123 d' segment
+	            segments.push('(\\S*)\\s+\\S*');
+	        }
+	        var regexStr = '^\\s*' + segments.join('\\s+') + '$';
+	        var result = new RegExp(regexStr, 'g').exec(this.ui.input.val());
 	        return index !== undefined ? result[index + 1] : result.slice(1, this.focusableParts.length + 1);
 	    },
 	
@@ -67462,7 +67510,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __value: function __value(value, triggerChange) {
-	        triggerChange = triggerChange && value !== this.value;
+	        if (value === this.value) {
+	            return;
+	        }
 	        this.value = value;
 	        if (triggerChange) {
 	            this.__triggerChange();
@@ -67545,9 +67595,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                break;
 	            case _utilsApi.keyCode.ESCAPE:
-	                this.currentState = 'save';
 	                this.ui.input.blur();
-	                this.refresh();
+	                this.__updateState({
+	                    mode: stateModes.VIEW
+	                });
 	                return false;
 	            case _utilsApi.keyCode.ENTER:
 	                this.__blur();
@@ -67591,119 +67642,108 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var start = 0;
 	        for (var i = 0; i < this.focusableParts.length; i++) {
 	            var focusablePart = this.focusableParts[i];
-	            focusablePart.separatorCode = focusablePart.separator && focusablePart.separator.charCodeAt(0);
-	            start += focusablePart.prefix && focusablePart.prefix.length || 0;
+	            if (i > 0) {
+	                // counting whitespace before the value of the segment
+	                start++;
+	            }
 	            focusablePart.start = start;
 	            focusablePart.end = focusablePart.start + values[i].length;
 	            start = focusablePart.end + focusablePart.text.length;
 	        }
 	    },
 	
-	    applyDisplayValue: function applyDisplayValue(clear) {
-	        var obj;
-	        var val = clear ? null : this.getSegmentValue();
-	        if (val) {
-	            obj = {
-	                days: parseInt(val[0]),
-	                hours: parseInt(val[1]),
-	                minutes: parseInt(val[2])
-	            };
+	    __createInputString: function __createInputString(value, editable) {
+	        var _data;
+	
+	        // The methods creates a string which reflects current mode (view/edit) and value.
+	        // The string is set into UI in __updateState
+	
+	        var isNull = value === null;
+	        var minutes = !isNull ? value.minutes : 0;
+	        var hours = !isNull ? value.hours : 0;
+	        var days = !isNull ? value.days : 0;
+	        var data = (_data = {}, _defineProperty(_data, focusablePartId.DAYS, days), _defineProperty(_data, focusablePartId.HOURS, hours), _defineProperty(_data, focusablePartId.MINUTES, minutes), _data);
+	
+	        if (!editable) {
+	            if (isNull) {
+	                // null value is rendered as empty text
+	                return '';
+	            }
+	            var filledSegments = this.focusableParts.filter(function (x) {
+	                return Boolean(data[x.id]);
+	            });
+	            if (filledSegments.length > 0) {
+	                // returns string like '0d 4h 32m'
+	                return filledSegments.reduce(function (p, seg) {
+	                    return p + ('' + data[seg.id] + seg.text + ' ');
+	                }, '').trim();
+	            } else {
+	                // returns string like '0d'
+	                return '0' + this.focusableParts[0].text;
+	            }
 	        } else {
-	            obj = val;
-	        }
-	        this._setCurrentDisplayValue(this.__objectToTimestampTakingWorkHours(obj));
-	        var newValue = _utilsApi.dateHelpers.durationToISOString(this._currentDisplayValue);
-	        if (newValue !== this.value) {
-	            this.__value(newValue, true);
-	        }
-	        this.display.shortValue = this.formatValue(true);
-	        this.refresh();
-	    },
-	
-	    _setCurrentDisplayValue: function _setCurrentDisplayValue(value) {
-	        this._currentDisplayValue = this.__timestampToObjectTakingWorkHours(value);
-	    },
-	
-	    refresh: function refresh() {
-	        switch (this.currentState) {
-	            case 'edit':
-	                this.ui.input.val(this.display.value);
-	                this.$el.addClass(this.css.focused);
-	                break;
-	            case 'save':
-	                this.ui.input.val(this.value ? this.display.shortValue : '');
-	                this.$el.removeClass(this.css.focused);
-	        }
-	        if (this.value && this.value !== 'P') {
-	            this.$el.removeClass(this.css.empty);
-	        } else {
-	            this.$el.addClass(this.css.empty);
+	            // always returns string with all editable segments like '0 d 5 h 2 m'
+	            return this.focusableParts.map(function (seg) {
+	                var val = data[seg.id];
+	                var valStr = _.isNumber(val) ? String(val) : '';
+	                return valStr + seg.text;
+	            }).join(' ');
 	        }
 	    },
 	
-	    _parseServerValue: function _parseServerValue(value) {
-	        var durationValue = _utilsApi.dateHelpers.durationISOToObject(value);
-	        var totalValue = this.__objectToTimestampTakingWorkHours({
-	            days: durationValue[0],
-	            hours: durationValue[1],
-	            minutes: durationValue[2]
+	    __normalizeDuration: function __normalizeDuration(value) {
+	        // Data normalization:
+	        // Object like this: { days: 2, hours: 3, minutes: 133 }
+	        // Is converted into this: { days: 2, hours: 5, minutes: 13 }
+	        // But if hours segment is disallowed, it will look like this: { days: 2, hours: 0, minutes: 313 } // 313 = 133 + 3*60
+	
+	        if (value === null) {
+	            return null;
+	        }
+	        var totalMilliseconds = _libApi.moment.duration(value).asMilliseconds();
+	        var result = {
+	            days: 0,
+	            hours: 0,
+	            minutes: 0
+	        };
+	        this.focusableParts.forEach(function (seg) {
+	            result[seg.id] = Math.floor(totalMilliseconds / seg.milliseconds);
+	            totalMilliseconds = totalMilliseconds % seg.milliseconds;
 	        });
-	        this._setCurrentDisplayValue(totalValue);
-	    },
-	
-	    formatValue: function formatValue(trimmed, v) {
-	        if (!this._currentDisplayValue && (v === null || v === undefined)) {
-	            return trimmed ? '' : this.focusableParts[0].format(0, true) + this.focusableParts[1].format(0, true) + this.focusableParts[2].format(0, true);
-	        }
-	        v = v || 0;
-	        v = v / 60 / 1000;
-	        // replace zero w spaces
-	        var minutes = this._currentDisplayValue ? this._currentDisplayValue.minutes : Math.floor(v % 60);
-	        var hours = this._currentDisplayValue ? this._currentDisplayValue.hours : Math.floor(v / 60 % this.options.workHours);
-	        var days = this._currentDisplayValue ? this._currentDisplayValue.days : Math.floor(v / 60 / this.options.workHours);
-	        if (trimmed) {
-	            var res = '';
-	            if (days || v !== null && !hours && !minutes) {
-	                res += days + this.focusableParts[0].text;
-	            }
-	            if (hours) {
-	                res += (res ? this.focusableParts[1].prefix : '') + hours + this.focusableParts[1].text;
-	            }
-	            if (minutes) {
-	                res += (res ? this.focusableParts[2].prefix : '') + minutes + this.focusableParts[2].text;
-	            }
-	            return res;
-	        }
-	        return this.focusableParts[0].format(days, true) + this.focusableParts[1].format(hours, true) + this.focusableParts[2].format(minutes, true);
-	    },
-	
-	    setDisplayValue: function setDisplayValue(value) {
-	        this._parseServerValue(value);
-	        this.display.value = this.formatValue();
-	        this.display.shortValue = this.formatValue(true);
-	        this.refresh();
+	        return result;
 	    },
 	
 	    setValue: function setValue(value) {
 	        this.__value(value, false);
-	        this.setDisplayValue(value);
+	        this.__updateState({
+	            mode: stateModes.VIEW,
+	            displayValue: _utilsApi.dateHelpers.durationISOToObject(value)
+	        });
 	    },
 	
-	    __timestampToObjectTakingWorkHours: function __timestampToObjectTakingWorkHours(value) {
-	        if (value === null) {
-	            return value;
+	    __updateState: function __updateState(newState) {
+	        // updates inner state variables
+	        // updates UI
+	
+	        if (!newState.mode || newState.mode === stateModes.EDIT && newState.displayValue !== undefined) {
+	            _utilsApi.helpers.throwInvalidOperationError('The operation is inconsistent or isn\'t supported by this logic.');
 	        }
-	        var v = value || 0;
-	        v = v / 60 / 1000;
-	        return {
-	            days: Math.floor(v / 60 / this.options.workHours),
-	            hours: Math.floor(v / 60 % this.options.workHours),
-	            minutes: Math.floor(v % 60)
-	        };
-	    },
 	
-	    __objectToTimestampTakingWorkHours: function __objectToTimestampTakingWorkHours(object) {
-	        return object ? (object.days * 60 * this.options.workHours + object.hours * 60 + object.minutes) * 60 * 1000 : object === 0 ? 0 : null;
+	        if (this.state.mode === newState.mode && newState.mode === stateModes.EDIT) {
+	            return;
+	        }
+	
+	        this.state.mode = newState.mode;
+	        if (newState.displayValue !== undefined) {
+	            this.state.displayValue = newState.displayValue;
+	        }
+	
+	        var normalizedDisplayValue = this.__normalizeDuration(this.state.displayValue);
+	        var inEditMode = this.state.mode === stateModes.EDIT;
+	        var val = this.__createInputString(normalizedDisplayValue, inEditMode);
+	        this.ui.input.val(val);
+	        this.$el.toggleClass(classes.FOCUSED, inEditMode);
+	        this.$el.toggleClass(classes.EMPTY, this.state.displayValue === null);
 	    }
 	});
 	
@@ -68191,7 +68231,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                model: this.model
 	            },
 	            customAnchor: true,
-	            autoOpen: false
+	            autoOpen: false,
+	            direction: 'down'
 	        });
 	        this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
 	        this.listenTo(this.pickerPopout, 'panel:close', this.__close, this);
