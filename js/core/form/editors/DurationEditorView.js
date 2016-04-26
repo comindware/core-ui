@@ -17,7 +17,8 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 const focusablePartId  = {
     DAYS: 'days',
     HOURS: 'hours',
-    MINUTES: 'minutes'
+    MINUTES: 'minutes',
+    SECONDS: 'seconds'
 };
 
 let createFocusableParts = function (options) {
@@ -46,6 +47,14 @@ let createFocusableParts = function (options) {
             milliseconds: 1000 * 60
         });
     }
+    if (options.allowSeconds) {
+        result.push({
+            id: focusablePartId.SECONDS,
+            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS'),
+            maxLength: 4,
+            milliseconds: 1000
+        });
+    }
     return result;
 };
 
@@ -53,7 +62,8 @@ const defaultOptions = {
     hoursPerDay: 24,
     allowDays: true,
     allowHours: true,
-    allowMinutes: true
+    allowMinutes: true,
+    allowSeconds: true
 };
 
 const classes = {
@@ -77,6 +87,7 @@ const stateModes = {
  * @param {Boolean} [options.allowDays=true] Whether to display the day segment. At least one segment must be displayed.
  * @param {Boolean} [options.allowHours=true] Whether to display the hour segment. At least one segment must be displayed.
  * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
+ * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
  * */
 Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
     initialize: function (options) {
@@ -166,7 +177,8 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         let newValueObject = {
             days: 0,
             hours: 0,
-            minutes: 0
+            minutes: 0,
+            seconds: 0
         };
         this.focusableParts.forEach((seg, i) => {
             newValueObject[seg.id] = Number(values[i]);
@@ -415,13 +427,15 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         // The string is set into UI in __updateState
 
         let isNull = value === null;
+        let seconds = !isNull ? value.seconds : 0;
         let minutes = !isNull ? value.minutes : 0;
         let hours = !isNull ? value.hours : 0;
         let days = !isNull ? value.days : 0;
         let data = {
             [focusablePartId.DAYS]: days,
             [focusablePartId.HOURS]: hours,
-            [focusablePartId.MINUTES]: minutes
+            [focusablePartId.MINUTES]: minutes,
+            [focusablePartId.SECONDS]: seconds
         };
 
         if (!editable) {
@@ -449,9 +463,9 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
 
     __normalizeDuration: function (value) {
         // Data normalization:
-        // Object like this: { days: 2, hours: 3, minutes: 133 }
-        // Is converted into this: { days: 2, hours: 5, minutes: 13 }
-        // But if hours segment is disallowed, it will look like this: { days: 2, hours: 0, minutes: 313 } // 313 = 133 + 3*60
+        // Object like this: { days: 2, hours: 3, minutes: 133, seconds: 0 }
+        // Is converted into this: { days: 2, hours: 5, minutes: 13, seconds: 0 }
+        // But if hours segment is disallowed, it will look like this: { days: 2, hours: 0, minutes: 313, seconds: 0 } // 313 = 133 + 3*60
 
         if (value === null) {
             return null;
@@ -460,7 +474,8 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         let result = {
             days: 0,
             hours: 0,
-            minutes: 0
+            minutes: 0,
+            seconds: 0
         };
         this.focusableParts.forEach(seg => {
             result[seg.id] = Math.floor(totalMilliseconds / seg.milliseconds);
