@@ -85,11 +85,13 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
 
     onRender: function () {
         this.dateView = new DateView({
-            model: this.dateTimeModel
+            model: this.dateTimeModel,
+            timezoneOffset: 180 // minutes
         });
 
         this.timeView = new TimeView({
-            model: this.dateTimeModel
+            model: this.dateTimeModel,
+            timezoneOffset: 180 // minutes
         });
 
         this.dateRegion.show(this.dateView);

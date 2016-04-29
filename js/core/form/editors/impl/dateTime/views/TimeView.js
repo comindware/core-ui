@@ -17,6 +17,8 @@ import template from '../templates/time.hbs';
 
 export default Marionette.LayoutView.extend({
     initialize: function () {
+        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
+        
         this.reqres = new Backbone.Wreqr.RequestResponse();
         this.reqres.setHandler('time:selected', this.__onTimeSelected, this);
         this.reqres.setHandler('panel:open', this.__onPanelOpen, this);
@@ -37,7 +39,7 @@ export default Marionette.LayoutView.extend({
         for (var h = 0; h < 24; h++) {
             for (var m = 0; m < 60; m+=15) {
                 var val = {hours: h, minutes: m},
-                    time = moment(val),
+                    time = moment.utc(val),
                     formattedTime = dateHelpers.getDisplayTime(time);
 
                 timeArray.push({
@@ -49,7 +51,11 @@ export default Marionette.LayoutView.extend({
 
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: TimeInputView,
-            buttonViewOptions: {reqres: this.reqres, model: this.model},
+            buttonViewOptions: {
+                reqres: this.reqres,
+                model: this.model,
+                timezoneOffset: this.timezoneOffset
+            },
             panelView: Marionette.CollectionView.extend({
                 reqres: this.reqres,
                 collection: new Backbone.Collection(timeArray),
@@ -64,7 +70,7 @@ export default Marionette.LayoutView.extend({
                     },
                     __handleClick: function () {
                         //noinspection JSPotentiallyInvalidUsageOfThis
-                        this.reqres.request('time:selected', new Date(this.model.get('time')));
+                        this.reqres.request('time:selected', this.model.get('time'));
                     },
                     template: Handlebars.compile('{{this.formattedTime}}')
                 })
@@ -83,10 +89,10 @@ export default Marionette.LayoutView.extend({
         if (time === null || time === '') {
             newVal = null;
         } else if (oldVal) {
-            var momentTime = moment(time);
-            newVal = new Date(moment(oldVal).hour(momentTime.hour()).minute(momentTime.minute()).second(0).millisecond(0));
+            newVal = moment.utc(oldVal).utcOffset(this.timezoneOffset).hour(time.hour()).minute(time.minute()).second(0).millisecond(0).toISOString();
         } else {
-            newVal = time;
+            time = time.clone();
+            newVal = time.minute(time.minute() - this.timezoneOffset).toISOString();
         }
 
         this.model.set('value', newVal);

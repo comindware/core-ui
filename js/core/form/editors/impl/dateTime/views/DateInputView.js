@@ -9,13 +9,14 @@
 "use strict";
 
 import { moment } from '../../../../../libApi';
-import { dateHelpers } from '../../../../../utils/utilsApi';
+import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/dateInput.hbs';
 import dropdownApi from '../../../../../dropdown/dropdownApi';
 
 export default Marionette.ItemView.extend({
-    initialize: function () {
+    initialize: function (options) {
+        helpers.ensureOption(options, 'timezoneOffset');
         this.editDateFormat = dateHelpers.getDateEditFormat();
     },
 
@@ -46,7 +47,7 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click @ui.dateInput': '__handleClick',
+        'mousedown @ui.dateInput': '__handleClick',
         'change @ui.dateInput': '__change',
         'click @ui.clearButton': '__onClear',
         'blur @ui.dateInput': '__onBlur'
@@ -92,7 +93,13 @@ export default Marionette.ItemView.extend({
     },
 
     __change: function () {
-        this.updateValue(this.getParsedInputValue());
+        let parsedInputValue = this.getParsedInputValue();
+        if (parsedInputValue != null) {
+            this.updateValue(parsedInputValue);
+            this.oldEditFormattedDate = this.ui.dateInput.val();
+        } else {
+            this.updateDisplayValue();
+        }
     },
 
     __handleClick: function () {
@@ -108,9 +115,10 @@ export default Marionette.ItemView.extend({
     showEditFormattedDate: function () {
         var val = this.model.get('value'),
             format = this.editDateFormat,
-            editFormattedDate = val ? moment(new Date(val)).format(format) : '';
+            editFormattedDate = val ? moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
 
         this.ui.dateInput.val(editFormattedDate);
+        this.oldEditFormattedDate = editFormattedDate;
     },
 
     getParsedInputValue: function () {
@@ -122,13 +130,11 @@ export default Marionette.ItemView.extend({
 
         var format = this.editDateFormat,
             currentValue = this.model.get('value'),
-            parsedVal = moment(val, format, true),
+            parsedVal = moment.utc(val, format, true),
             parsedDate;
 
         if (parsedVal.isValid()) {
-            parsedDate = new Date(parsedVal);
-        } else if (currentValue !== '' && currentValue !== null) {
-            parsedDate = new Date(currentValue);
+            parsedDate = parsedVal.toDate();
         } else {
             parsedDate = null;
         }
@@ -157,20 +163,26 @@ export default Marionette.ItemView.extend({
     },
 
     getFormattedDisplayValue: function () {
-        return dateHelpers.getDisplayDate(this.model.get('value'));
+        return this.model.get('value') == null ? '' : dateHelpers.getDisplayDate(moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
     },
 
     updateValue: function (date) {
         var oldVal = this.model.get('value'),
-            newVal = '';
+            newVal = null;
 
         if (date === null || date === '') {
             newVal = null;
         } else if (oldVal) {
-            var momentDate = moment(date);
-            newVal = new Date(moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()));
+            let momentOldVal = moment.utc(oldVal);
+            let momentOldEditFormattedDate = moment.utc(this.oldEditFormattedDate, this.editDateFormat);
+            let diff = moment.utc(date).diff(momentOldEditFormattedDate, 'days');
+            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();
         } else {
-            newVal = date;
+            newVal = moment.utc({
+                year: date.getUTCFullYear(),
+                month: date.getUTCMonth(),
+                date: date.getUTCDate()
+            }).minute(-this.getOption('timezoneOffset')).toISOString();
         }
 
         this.model.set({value: newVal});

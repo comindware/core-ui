@@ -15,6 +15,10 @@ import PanelView from './DatePanelView';
 import InputView from './DateInputView';
 
 export default Marionette.LayoutView.extend({
+    initialize: function () {
+        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
+    },
+
     template: template,
 
     className: 'date-view',
@@ -27,11 +31,13 @@ export default Marionette.LayoutView.extend({
         this.pickerPopout = dropdownApi.factory.createPopout({
             buttonView: InputView,
             buttonViewOptions: {
-                model: this.model
+                model: this.model,
+                timezoneOffset: this.timezoneOffset
             },
             panelView: PanelView,
             panelViewOptions: {
-                model: this.model
+                model: this.model,
+                timezoneOffset: this.timezoneOffset
             },
             customAnchor: true,
             autoOpen: false,
