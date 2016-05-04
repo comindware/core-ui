@@ -44,7 +44,7 @@ export default Marionette.LayoutView.extend({
             direction: 'down'
         });
         this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
-        this.listenTo(this.pickerPopout, 'panel:close', this.__close, this);
+        this.listenTo(this.pickerPopout, 'button:close panel:close', this.__close, this);
 
         this.popoutRegion.show(this.pickerPopout);
     },

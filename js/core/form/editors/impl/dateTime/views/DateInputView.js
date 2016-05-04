@@ -100,6 +100,7 @@ export default Marionette.ItemView.extend({
         } else {
             this.updateDisplayValue();
         }
+        this.trigger('close');
     },
 
     __handleClick: function () {
