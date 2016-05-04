@@ -56,11 +56,16 @@ export default Marionette.ItemView.extend({
 
         if (date === null || date === '') {
             newVal = null;
-        } else if (oldVal) {
+        } else if (oldVal && this.getOption('preserveTime')) {
             let momentOldVal = moment.utc(oldVal);
-            let momentOldPickerDate = moment(this.ui.pickerInput.attr('data-date'), defaultOptions.pickerFormat);
-            let diff = moment(date).diff(momentOldPickerDate, 'days');
-            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();
+            let momentOldDisplayedDate = moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
+            momentOldDisplayedDate = moment({
+                year: momentOldDisplayedDate.year(),
+                month: momentOldDisplayedDate.month(),
+                date: momentOldDisplayedDate.date()
+            });
+            let diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');               // Figure out number of days between displayed old date and entered new date
+            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();    // and apply it to stored old date to prevent transition-through-the-day bugs
         } else {
             newVal = moment.utc({
                 year: date.getFullYear(),

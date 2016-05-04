@@ -25,8 +25,10 @@ const defaultOptions = {
  * @class Combined date and time editor. Supported data type: <code>String</code> in ISO8601 format
  * (for example, '2015-07-20T10:46:37Z').
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Options object. Doesn't have it's own options.
+ * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+ * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
+ * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser (system) local timezone offset.
  * */
 Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize: function(options) {
@@ -87,7 +89,8 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
     onRender: function () {
         this.dateView = new DateView({
             model: this.dateTimeModel,
-            timezoneOffset: this.options.timezoneOffset
+            timezoneOffset: this.options.timezoneOffset,
+            preserveTime: true
         });
 
         this.timeView = new TimeView({

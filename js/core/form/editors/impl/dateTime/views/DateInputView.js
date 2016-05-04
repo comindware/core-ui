@@ -96,7 +96,6 @@ export default Marionette.ItemView.extend({
         let parsedInputValue = this.getParsedInputValue();
         if (parsedInputValue != null) {
             this.updateValue(parsedInputValue);
-            this.oldEditFormattedDate = this.ui.dateInput.val();
         } else {
             this.updateDisplayValue();
         }
@@ -119,7 +118,6 @@ export default Marionette.ItemView.extend({
             editFormattedDate = val ? moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
 
         this.ui.dateInput.val(editFormattedDate);
-        this.oldEditFormattedDate = editFormattedDate;
     },
 
     getParsedInputValue: function () {
@@ -173,11 +171,16 @@ export default Marionette.ItemView.extend({
 
         if (date === null || date === '') {
             newVal = null;
-        } else if (oldVal) {
+        } else if (oldVal && this.getOption('preserveTime')) {
             let momentOldVal = moment.utc(oldVal);
-            let momentOldEditFormattedDate = moment.utc(this.oldEditFormattedDate, this.editDateFormat);
-            let diff = moment.utc(date).diff(momentOldEditFormattedDate, 'days');
-            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();
+            let momentOldDisplayedDate = moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
+            momentOldDisplayedDate = moment.utc({
+                year: momentOldDisplayedDate.year(),
+                month: momentOldDisplayedDate.month(),
+                date: momentOldDisplayedDate.date()
+            });
+            let diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');               // Figure out number of days between displayed old date and entered new date
+            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();    // and apply it to stored old date to prevent transition-through-the-day bugs
         } else {
             newVal = moment.utc({
                 year: date.getUTCFullYear(),
