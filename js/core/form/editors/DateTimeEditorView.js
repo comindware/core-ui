@@ -16,7 +16,7 @@ import TimeView from './impl/dateTime/views/TimeView';
 
 const defaultOptions = {
     enableDelete: false,
-    timezoneOffset: 180 // minutes
+    timezoneOffset: -new Date().getTimezoneOffset()
 };
 
 /**
