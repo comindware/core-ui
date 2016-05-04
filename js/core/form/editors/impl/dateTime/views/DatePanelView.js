@@ -9,7 +9,7 @@
 "use strict";
 
 import { moment } from '../../../../../libApi';
-import { dateHelpers } from '../../../../../utils/utilsApi';
+import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import template from '../templates/datePanel.hbs';
 
 const defaultOptions = {
@@ -20,6 +20,8 @@ export default Marionette.ItemView.extend({
     template: template,
 
     initialize: function (options) {
+        helpers.ensureOption(options, 'timezoneOffset');
+        
         this.pickerOptions = {
             minView: 2,
             format: this.options.pickerFormat,
@@ -42,7 +44,7 @@ export default Marionette.ItemView.extend({
     updatePickerDate: function () {
         var val = this.model.get('value'),
             format = defaultOptions.pickerFormat,
-            pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment(new Date()).format(format);
+            pickerFormattedDate = val ? moment.utc(new Date(val)).utcOffset(this.getOption('timezoneOffset')).format(format) : moment.utc({}).format(format);
 
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
         this.ui.pickerInput.datetimepicker('update');
@@ -50,15 +52,26 @@ export default Marionette.ItemView.extend({
 
     updateValue: function (date) {
         var oldVal = this.model.get('value'),
-            newVal = '';
+            newVal = null;
 
         if (date === null || date === '') {
             newVal = null;
-        } else if (oldVal) {
-            var momentDate = moment(date);
-            newVal = moment(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toString();
+        } else if (oldVal && this.getOption('preserveTime')) {
+            let momentOldVal = moment.utc(oldVal);
+            let momentOldDisplayedDate = moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
+            momentOldDisplayedDate = moment({
+                year: momentOldDisplayedDate.year(),
+                month: momentOldDisplayedDate.month(),
+                date: momentOldDisplayedDate.date()
+            });
+            let diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');               // Figure out number of days between displayed old date and entered new date
+            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();    // and apply it to stored old date to prevent transition-through-the-day bugs
         } else {
-            newVal = date;
+            newVal = moment.utc({
+                year: date.getFullYear(),
+                month: date.getMonth(),
+                date: date.getDate()
+            }).minute(-this.getOption('timezoneOffset')).toISOString();
         }
 
         this.model.set({value: newVal});

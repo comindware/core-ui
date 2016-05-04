@@ -15,6 +15,11 @@ import PanelView from './DatePanelView';
 import InputView from './DateInputView';
 
 export default Marionette.LayoutView.extend({
+    initialize: function () {
+        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
+        this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
+    },
+
     template: template,
 
     className: 'date-view',
@@ -27,18 +32,22 @@ export default Marionette.LayoutView.extend({
         this.pickerPopout = dropdownApi.factory.createPopout({
             buttonView: InputView,
             buttonViewOptions: {
-                model: this.model
+                model: this.model,
+                timezoneOffset: this.timezoneOffset,
+                preserveTime: this.preserveTime
             },
             panelView: PanelView,
             panelViewOptions: {
-                model: this.model
+                model: this.model,
+                timezoneOffset: this.timezoneOffset,
+                preserveTime: this.preserveTime
             },
             customAnchor: true,
             autoOpen: false,
             direction: 'down'
         });
         this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
-        this.listenTo(this.pickerPopout, 'panel:close', this.__close, this);
+        this.listenTo(this.pickerPopout, 'button:close panel:close', this.__close, this);
 
         this.popoutRegion.show(this.pickerPopout);
     },
