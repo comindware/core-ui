@@ -54,9 +54,9 @@ export default Marionette.ItemView.extend({
         this.model.set({value: this.getParsedInputValue()});
         
         if (this.isEditing) {
-            this.ui.input.val(this.getDisplayValue());
-        } else {
             this.showEditFormattedTime();
+        } else {
+            this.ui.input.val(this.getDisplayValue());
         }
         
         this.reqres.request('panel:close');
