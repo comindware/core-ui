@@ -84,7 +84,7 @@ export default Marionette.LayoutView.extend({
 
     __onTimeSelected: function (time) {
         var oldVal = this.model.get('value'),
-            newVal = '';
+            newVal = null;
 
         if (time === null || time === '') {
             newVal = null;
