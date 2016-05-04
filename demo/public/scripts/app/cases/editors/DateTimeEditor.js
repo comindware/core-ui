@@ -10,7 +10,8 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 model: model,
                 key: 'dateTimeValue',
                 autocommit: true,
-                enableDelete: true
+                enableDelete: true,
+                timezoneOffset: -60 // minutes
             }),
             presentation: "'{{dateTimeValue}}'"
         });

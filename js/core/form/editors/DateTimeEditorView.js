@@ -15,7 +15,8 @@ import DateView from './impl/dateTime/views/DateView';
 import TimeView from './impl/dateTime/views/TimeView';
 
 const defaultOptions = {
-    enableDelete: false
+    enableDelete: false,
+    timezoneOffset: 180 // minutes
 };
 
 /**
@@ -86,12 +87,12 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
     onRender: function () {
         this.dateView = new DateView({
             model: this.dateTimeModel,
-            timezoneOffset: 180 // minutes
+            timezoneOffset: this.options.timezoneOffset
         });
 
         this.timeView = new TimeView({
             model: this.dateTimeModel,
-            timezoneOffset: 180 // minutes
+            timezoneOffset: this.options.timezoneOffset
         });
 
         this.dateRegion.show(this.dateView);
