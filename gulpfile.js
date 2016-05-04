@@ -92,7 +92,7 @@ gulp.task("webpack:build:debug", function(callback) {
 
 // The development task builds webpack and starts watcher
 gulp.task("dev", ["webpack:build:debug"], function() {
-    gulp.watch([ 'js/core/**/*' ], [ 'webpack:build:debug' ]);
+    gulp.watch([ 'js/core/**/*', 'resources/**/*' ], [ 'webpack:build:debug' ]);
 });
 
 // The production task builds optimized and regular bundles and generates jsdoc documentation
