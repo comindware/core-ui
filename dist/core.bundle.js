@@ -68227,6 +68227,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = Marionette.LayoutView.extend({
+	    initialize: function initialize() {
+	        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
+	        this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
+	    },
+	
 	    template: _date2.default,
 	
 	    className: 'date-view',
@@ -68239,18 +68244,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.pickerPopout = _dropdownApi2.default.factory.createPopout({
 	            buttonView: _DateInputView2.default,
 	            buttonViewOptions: {
-	                model: this.model
+	                model: this.model,
+	                timezoneOffset: this.timezoneOffset,
+	                preserveTime: this.preserveTime
 	            },
 	            panelView: _DatePanelView2.default,
 	            panelViewOptions: {
-	                model: this.model
+	                model: this.model,
+	                timezoneOffset: this.timezoneOffset,
+	                preserveTime: this.preserveTime
 	            },
 	            customAnchor: true,
 	            autoOpen: false,
 	            direction: 'down'
 	        });
 	        this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
-	        this.listenTo(this.pickerPopout, 'panel:close', this.__close, this);
+	        this.listenTo(this.pickerPopout, 'button:close panel:close', this.__close, this);
 	
 	        this.popoutRegion.show(this.pickerPopout);
 	    },
@@ -68310,6 +68319,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _datePanel2.default,
 	
 	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'timezoneOffset');
+	
 	        this.pickerOptions = {
 	            minView: 2,
 	            format: this.options.pickerFormat,
@@ -68332,7 +68343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    updatePickerDate: function updatePickerDate() {
 	        var val = this.model.get('value'),
 	            format = defaultOptions.pickerFormat,
-	            pickerFormattedDate = val ? (0, _libApi.moment)(new Date(val)).format(format) : (0, _libApi.moment)(new Date()).format(format);
+	            pickerFormattedDate = val ? _libApi.moment.utc(new Date(val)).utcOffset(this.getOption('timezoneOffset')).format(format) : _libApi.moment.utc({}).format(format);
 	
 	        this.ui.pickerInput.attr('data-date', pickerFormattedDate);
 	        this.ui.pickerInput.datetimepicker('update');
@@ -68340,16 +68351,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    updateValue: function updateValue(date) {
 	        var oldVal = this.model.get('value'),
-	            newVal = '';
+	            newVal = null;
 	
 	        if (date === null || date === '') {
 	            newVal = null;
-	        } else if (oldVal) {
-	            var momentDate = (0, _libApi.moment)(date);
-	            newVal = (0, _libApi.moment)(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()).toString();
+	        } else if (oldVal && this.getOption('preserveTime')) {
+	            var momentOldVal = _libApi.moment.utc(oldVal);
+	            var momentOldDisplayedDate = _libApi.moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
+	            momentOldDisplayedDate = (0, _libApi.moment)({
+	                year: momentOldDisplayedDate.year(),
+	                month: momentOldDisplayedDate.month(),
+	                date: momentOldDisplayedDate.date()
+	            });
+	            var diff = _libApi.moment.utc(date).diff(momentOldDisplayedDate, 'days'); // Figure out number of days between displayed old date and entered new date
+	            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString(); // and apply it to stored old date to prevent transition-through-the-day bugs
 	        } else {
-	            newVal = date;
-	        }
+	                newVal = _libApi.moment.utc({
+	                    year: date.getFullYear(),
+	                    month: date.getMonth(),
+	                    date: date.getDate()
+	                }).minute(-this.getOption('timezoneOffset')).toISOString();
+	            }
 	
 	        this.model.set({ value: newVal });
 	    },
@@ -68410,7 +68432,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = Marionette.ItemView.extend({
-	    initialize: function initialize() {
+	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'timezoneOffset');
 	        this.editDateFormat = _utilsApi.dateHelpers.getDateEditFormat();
 	    },
 	
@@ -68441,7 +68464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    events: {
-	        'click @ui.dateInput': '__handleClick',
+	        'mousedown @ui.dateInput': '__handleClick',
 	        'change @ui.dateInput': '__change',
 	        'click @ui.clearButton': '__onClear',
 	        'blur @ui.dateInput': '__onBlur'
@@ -68487,7 +68510,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __change: function __change() {
-	        this.updateValue(this.getParsedInputValue());
+	        var parsedInputValue = this.getParsedInputValue();
+	        if (parsedInputValue != null) {
+	            this.updateValue(parsedInputValue);
+	        } else {
+	            this.updateDisplayValue();
+	        }
+	        this.trigger('close');
 	    },
 	
 	    __handleClick: function __handleClick() {
@@ -68503,7 +68532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    showEditFormattedDate: function showEditFormattedDate() {
 	        var val = this.model.get('value'),
 	            format = this.editDateFormat,
-	            editFormattedDate = val ? (0, _libApi.moment)(new Date(val)).format(format) : '';
+	            editFormattedDate = val ? _libApi.moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
 	
 	        this.ui.dateInput.val(editFormattedDate);
 	    },
@@ -68517,13 +68546,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        var format = this.editDateFormat,
 	            currentValue = this.model.get('value'),
-	            parsedVal = (0, _libApi.moment)(val, format, true),
+	            parsedVal = _libApi.moment.utc(val, format, true),
 	            parsedDate;
 	
 	        if (parsedVal.isValid()) {
-	            parsedDate = new Date(parsedVal);
-	        } else if (currentValue !== '' && currentValue !== null) {
-	            parsedDate = new Date(currentValue);
+	            parsedDate = parsedVal.toDate();
 	        } else {
 	            parsedDate = null;
 	        }
@@ -68552,21 +68579,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    getFormattedDisplayValue: function getFormattedDisplayValue() {
-	        return _utilsApi.dateHelpers.getDisplayDate(this.model.get('value'));
+	        return this.model.get('value') == null ? '' : _utilsApi.dateHelpers.getDisplayDate(_libApi.moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
 	    },
 	
 	    updateValue: function updateValue(date) {
 	        var oldVal = this.model.get('value'),
-	            newVal = '';
+	            newVal = null;
 	
 	        if (date === null || date === '') {
 	            newVal = null;
-	        } else if (oldVal) {
-	            var momentDate = (0, _libApi.moment)(date);
-	            newVal = new Date((0, _libApi.moment)(oldVal).year(momentDate.year()).month(momentDate.month()).date(momentDate.date()));
+	        } else if (oldVal && this.getOption('preserveTime')) {
+	            var momentOldVal = _libApi.moment.utc(oldVal);
+	            var momentOldDisplayedDate = _libApi.moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
+	            momentOldDisplayedDate = _libApi.moment.utc({
+	                year: momentOldDisplayedDate.year(),
+	                month: momentOldDisplayedDate.month(),
+	                date: momentOldDisplayedDate.date()
+	            });
+	            var diff = _libApi.moment.utc(date).diff(momentOldDisplayedDate, 'days'); // Figure out number of days between displayed old date and entered new date
+	            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString(); // and apply it to stored old date to prevent transition-through-the-day bugs
 	        } else {
-	            newVal = date;
-	        }
+	                newVal = _libApi.moment.utc({
+	                    year: date.getUTCFullYear(),
+	                    month: date.getUTCMonth(),
+	                    date: date.getUTCDate()
+	                }).minute(-this.getOption('timezoneOffset')).toISOString();
+	            }
 	
 	        this.model.set({ value: newVal });
 	    }
@@ -68753,6 +68791,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = Marionette.LayoutView.extend({
 	    initialize: function initialize() {
+	        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
+	
 	        this.reqres = new Backbone.Wreqr.RequestResponse();
 	        this.reqres.setHandler('time:selected', this.__onTimeSelected, this);
 	        this.reqres.setHandler('panel:open', this.__onPanelOpen, this);
@@ -68773,7 +68813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        for (var h = 0; h < 24; h++) {
 	            for (var m = 0; m < 60; m += 15) {
 	                var val = { hours: h, minutes: m },
-	                    time = (0, _libApi.moment)(val),
+	                    time = _libApi.moment.utc(val),
 	                    formattedTime = _utilsApi.dateHelpers.getDisplayTime(time);
 	
 	                timeArray.push({
@@ -68785,7 +68825,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        this.dropdownView = _dropdownApi2.default.factory.createDropdown({
 	            buttonView: _TimeInputView2.default,
-	            buttonViewOptions: { reqres: this.reqres, model: this.model },
+	            buttonViewOptions: {
+	                reqres: this.reqres,
+	                model: this.model,
+	                timezoneOffset: this.timezoneOffset
+	            },
 	            panelView: Marionette.CollectionView.extend({
 	                reqres: this.reqres,
 	                collection: new Backbone.Collection(timeArray),
@@ -68800,7 +68844,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    },
 	                    __handleClick: function __handleClick() {
 	                        //noinspection JSPotentiallyInvalidUsageOfThis
-	                        this.reqres.request('time:selected', new Date(this.model.get('time')));
+	                        this.reqres.request('time:selected', this.model.get('time'));
 	                    },
 	                    template: Handlebars.compile('{{this.formattedTime}}')
 	                })
@@ -68814,15 +68858,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __onTimeSelected: function __onTimeSelected(time) {
 	        var oldVal = this.model.get('value'),
-	            newVal = '';
+	            newVal = null;
 	
 	        if (time === null || time === '') {
 	            newVal = null;
 	        } else if (oldVal) {
-	            var momentTime = (0, _libApi.moment)(time);
-	            newVal = new Date((0, _libApi.moment)(oldVal).hour(momentTime.hour()).minute(momentTime.minute()).second(0).millisecond(0));
+	            newVal = _libApi.moment.utc(oldVal).utcOffset(this.timezoneOffset).hour(time.hour()).minute(time.minute()).second(0).millisecond(0).toISOString();
 	        } else {
-	            newVal = time;
+	            time = time.clone();
+	            newVal = time.minute(time.minute() - this.timezoneOffset).toISOString();
 	        }
 	
 	        this.model.set('value', newVal);
@@ -68874,6 +68918,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = Marionette.ItemView.extend({
 	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'timezoneOffset');
 	        _utilsApi.helpers.ensureOption(options, 'reqres');
 	        this.reqres = options.reqres;
 	        this.timeEditFormat = _utilsApi.dateHelpers.getTimeEditFormat();
@@ -68889,7 +68934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    className: 'dev-time-input-view',
 	
 	    events: {
-	        'click': '__onClick',
+	        'mousedown': '__onClick',
 	        'click @ui.clearButton': '__onClear',
 	        'change @ui.input': '__onInputChange',
 	        'blur @ui.input': '__onBlur'
@@ -68910,6 +68955,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __onInputChange: function __onInputChange() {
 	        this.model.set({ value: this.getParsedInputValue() });
+	
+	        if (this.isEditing) {
+	            this.showEditFormattedTime();
+	        } else {
+	            this.ui.input.val(this.getDisplayValue());
+	        }
+	
 	        this.reqres.request('panel:close');
 	    },
 	
@@ -68922,13 +68974,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        var format = this.timeEditFormat,
 	            currentValue = this.model.get('value'),
-	            parsedVal = (0, _libApi.moment)(val, format, true),
+	            parsedVal = _libApi.moment.utc(val, format, true),
 	            parsedDate;
 	
 	        if (parsedVal.isValid()) {
-	            parsedDate = new Date((0, _libApi.moment)(currentValue).hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0));
+	            parsedDate = currentValue ? _libApi.moment.utc(currentValue).utcOffset(this.getOption('timezoneOffset')).hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0).toISOString() : _libApi.moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).toISOString();
 	        } else if (currentValue !== '' && currentValue !== null) {
-	            parsedDate = new Date(currentValue);
+	            parsedDate = currentValue;
 	        } else {
 	            parsedDate = null;
 	        }
@@ -68983,7 +69035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (val === null || val === '') {
 	            formattedVal = '';
 	        } else {
-	            formattedVal = _utilsApi.dateHelpers.getDisplayTime((0, _libApi.moment)(val));
+	            formattedVal = _utilsApi.dateHelpers.getDisplayTime(_libApi.moment.utc(val).utcOffset(this.getOption('timezoneOffset')));
 	        }
 	
 	        return formattedVal;
@@ -69002,7 +69054,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    showEditFormattedTime: function showEditFormattedTime() {
 	        var val = this.model.get('value'),
 	            format = this.timeEditFormat,
-	            editFormattedDate = val ? (0, _libApi.moment)(new Date(val)).format(format) : '';
+	            editFormattedDate = val ? _libApi.moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
 	
 	        this.ui.input.val(editFormattedDate);
 	    },
@@ -69081,7 +69133,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var defaultOptions = {
-	    enableDelete: false
+	    enableDelete: false,
+	    timezoneOffset: -new Date().getTimezoneOffset()
 	};
 	
 	/**
@@ -69090,8 +69143,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @class Combined date and time editor. Supported data type: <code>String</code> in ISO8601 format
 	 * (for example, '2015-07-20T10:46:37Z').
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Options object. Doesn't have it's own options.
+	 * @param {Object} options Options object.
 	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
+	 * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser (system) local timezone offset.
 	 * */
 	Backbone.Form.editors.DateTime = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateTimeEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -69151,11 +69206,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        this.dateView = new _DateView2.default({
-	            model: this.dateTimeModel
+	            model: this.dateTimeModel,
+	            timezoneOffset: this.options.timezoneOffset,
+	            preserveTime: true
 	        });
 	
 	        this.timeView = new _TimeView2.default({
-	            model: this.dateTimeModel
+	            model: this.dateTimeModel,
+	            timezoneOffset: this.options.timezoneOffset
 	        });
 	
 	        this.dateRegion.show(this.dateView);
