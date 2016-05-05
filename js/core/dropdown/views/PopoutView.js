@@ -22,8 +22,9 @@ const classes = {
     DIRECTION_DOWN: 'popout__down',
     FLOW_LEFT: 'dev-popout-flow-left',
     FLOW_RIGHT: 'dev-popout-flow-right',
-    CUSTOM_ANCHOR: 'popout__action-btn',
-    DEFAULT_ANCHOR: 'popout__action'
+    CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
+    DEFAULT_ANCHOR_BUTTON: 'popout__action',
+    DEFAULT_ANCHOR: 'dev-default-anchor'
 };
 
 const popoutFlow = {
@@ -156,6 +157,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         });
         this.buttonRegion.show(this.button);
 
+        if (!this.options.customAnchor) {
+            this.buttonRegion.$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
+        }
+
         if (this.options.popoutFlow === popoutFlow.LEFT) {
             this.ui.panel.addClass(classes.FLOW_LEFT);
             this.ui.panel.removeClass(classes.FLOW_RIGHT);
@@ -164,9 +169,9 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.ui.panel.removeClass(classes.FLOW_LEFT);
         }
         if (this.options.customAnchor) {
-            this.ui.button.addClass(classes.CUSTOM_ANCHOR);
+            this.ui.button.addClass(classes.CUSTOM_ANCHOR_BUTTON);
         } else {
-            this.ui.button.addClass(classes.DEFAULT_ANCHOR);
+            this.ui.button.addClass(classes.DEFAULT_ANCHOR_BUTTON);
         }
 
         this.currentDirection = this.options.direction;
@@ -174,26 +179,27 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     updatePanelFlow: function () {
-        var leftPos = 0,
+        let leftPos = 0,
             rightPos = 0,
-            isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
+            isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT,
+            anchor = this.ui.button;
 
         if (this.options.customAnchor && this.button.$anchor) {
-            let anchor = this.button.$anchor;
-            if (isFlowRight) {
-                leftPos = anchor.offset().left - this.ui.button.offset().left;
-            } else {
-                rightPos = (this.ui.button.offset().left + this.ui.button.width()) - (anchor.offset().left + anchor.width())
+            anchor = this.button.$anchor;
+        } else {
+            let defaultAnchor = this.ui.button.find('.js-default-anchor');
+            if (defaultAnchor && defaultAnchor.length) {
+                anchor = defaultAnchor;
             }
         }
 
         if (isFlowRight) {
             this.panelRegion.$el.css({
-                left: leftPos
+                left: anchor.offset().left - this.ui.button.offset().left
             });
         } else {
             this.panelRegion.$el.css({
-                right: rightPos
+                right: (this.ui.button.offset().left + this.ui.button.width()) - (anchor.offset().left + anchor.width())
             });
         }
     },
@@ -254,12 +260,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             duration: 0,
             complete: function () {
                 this.panelRegion.show(this.panelView);
+                this.correctDirection();
+                this.updatePanelFlow();
                 if (this.options.height === height.BOTTOM) {
                     $(window).on('resize', this.__handleWindowResize);
                     this.__handleWindowResize();
                 }
-                this.correctDirection();
-                this.updatePanelFlow();
                 this.focus();
                 //noinspection JSValidateTypes
                 this.isOpen = true;
@@ -269,25 +275,35 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     correctDirection: function () {
-        let button = this.options.customAnchor && this.button.$anchor ? this.button.$anchor : this.ui.button,
-            buttonHeight = button.height(),
+        let anchor = this.ui.button;
+
+        if (this.options.customAnchor && this.button.$anchor) {
+            anchor = this.button.$anchor;
+        } else {
+            let defaultAnchor = this.ui.button.find('.js-default-anchor');
+            if (defaultAnchor && defaultAnchor.length) {
+                anchor = defaultAnchor;
+            }
+        }
+        
+        let anchorHeight = anchor.height(),
             panelHeight = this.panelRegion.$el.height(),
             viewportHeight = window.innerHeight,
-            buttonTopOffset = button.offset().top,
-            buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
+            anchorTopOffset = anchor.offset().top,
+            anchorBottomOffset = viewportHeight - anchorTopOffset - anchorHeight;
         
-        if (this.currentDirection === popoutDirection.UP || buttonBottomOffset < panelHeight) {
+        if (this.currentDirection === popoutDirection.UP || anchorBottomOffset < panelHeight) {
             this.currentDirection = popoutDirection.UP;
             this.panelRegion.$el.offset({
-                top: buttonTopOffset - panelHeight
+                top: anchorTopOffset - panelHeight
             });
             this.updateDirectionClasses();
         }
         
-        if (this.currentDirection === popoutDirection.DOWN || buttonTopOffset < panelHeight) {
+        if (this.currentDirection === popoutDirection.DOWN || anchorTopOffset < panelHeight) {
             this.currentDirection = popoutDirection.DOWN;
             this.panelRegion.$el.offset({
-                top: buttonTopOffset + buttonHeight
+                top: anchorTopOffset + anchorHeight
             });
             this.updateDirectionClasses();
         }
@@ -335,8 +351,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
     __handleWindowResize: function () {
         var outlineDiff = (this.panelView.$el.outerHeight() - this.panelView.$el.height());
-        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff -
-            (this.options.customAnchor && this.button.$anchor ? this.button.$anchor.height() : this.ui.button.height());
+        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff;
         this.panelView.$el.height(panelHeight);
     }
 });
