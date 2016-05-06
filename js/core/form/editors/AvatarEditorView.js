@@ -71,7 +71,7 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
     },
     
     onRender() {
-        this.ui.initials.append(this.__getInitials(this.getOption('fullName')));
+        this.ui.initials.append(this.__getInitials(this.getOption('fullName') || ''));
         
         if (this.getValue()) {
             this.__preview(this.controller.getImage(this.getValue()));
@@ -155,11 +155,9 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
                 if (words[0] === '') {
                     return null;
                 }
-                return fullName.substr(0, 3).toUpperCase();
-            case 2:
-                return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+                return fullName.substr(0, 2).toUpperCase();
             default:
-                return (words[0].charAt(0) + words[1].charAt(0) + words[2].charAt(0)).toUpperCase();
+                return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
         }
     },
     
