@@ -27,6 +27,7 @@ const defaultOptions = {
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+ * @param {Boolean} options.enableDelete - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
  * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser (system) local timezone offset.
  * */
