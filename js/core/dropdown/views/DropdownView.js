@@ -181,23 +181,23 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         
         switch (this.currentPosition) {
             case panelPosition.UP:
-                this.panelRegion.$el.offset({
-                    top: buttonTopOffset - panelHeight
+                this.panelRegion.$el.css({
+                    top: -panelHeight
                 });
                 break;
             case panelPosition.UP_OVER:
-                this.panelRegion.$el.offset({
-                    top: buttonTopOffset + buttonHeight - panelHeight
+                this.panelRegion.$el.css({
+                    top: buttonHeight - panelHeight
                 });
                 break;
             case panelPosition.DOWN:
-                this.panelRegion.$el.offset({
-                    top: buttonTopOffset + buttonHeight
+                this.panelRegion.$el.css({
+                    top: buttonHeight
                 });
                 break;
             case panelPosition.DOWN_OVER:
-                this.panelRegion.$el.offset({
-                    top: buttonTopOffset
+                this.panelRegion.$el.css({
+                    top: 0
                 });
                 break;
         }

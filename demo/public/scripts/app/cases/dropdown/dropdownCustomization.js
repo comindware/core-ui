@@ -36,7 +36,6 @@ define([
             className: 'dropdown-list',
             onRender: function () {
                 this.$el.css({
-                    'max-height': '200px',
                     'overflow-y': 'auto'
                 });
             }
