@@ -53559,16 +53559,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        if (this.currentDirection === popoutDirection.UP || anchorBottomOffset < panelHeight) {
 	            this.currentDirection = popoutDirection.UP;
-	            this.panelRegion.$el.offset({
-	                top: anchorTopOffset - panelHeight
+	            this.panelRegion.$el.css({
+	                top: -panelHeight
 	            });
 	            this.updateDirectionClasses();
 	        }
 	
 	        if (this.currentDirection === popoutDirection.DOWN || anchorTopOffset < panelHeight) {
 	            this.currentDirection = popoutDirection.DOWN;
-	            this.panelRegion.$el.offset({
-	                top: anchorTopOffset + anchorHeight
+	            this.panelRegion.$el.css({
+	                top: anchorHeight
 	            });
 	            this.updateDirectionClasses();
 	        }
@@ -55221,23 +55221,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        switch (this.currentPosition) {
 	            case panelPosition.UP:
-	                this.panelRegion.$el.offset({
-	                    top: buttonTopOffset - panelHeight
+	                this.panelRegion.$el.css({
+	                    top: -panelHeight
 	                });
 	                break;
 	            case panelPosition.UP_OVER:
-	                this.panelRegion.$el.offset({
-	                    top: buttonTopOffset + buttonHeight - panelHeight
+	                this.panelRegion.$el.css({
+	                    top: buttonHeight - panelHeight
 	                });
 	                break;
 	            case panelPosition.DOWN:
-	                this.panelRegion.$el.offset({
-	                    top: buttonTopOffset + buttonHeight
+	                this.panelRegion.$el.css({
+	                    top: buttonHeight
 	                });
 	                break;
 	            case panelPosition.DOWN_OVER:
-	                this.panelRegion.$el.offset({
-	                    top: buttonTopOffset
+	                this.panelRegion.$el.css({
+	                    top: 0
 	                });
 	                break;
 	        }
@@ -69161,6 +69161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object.
 	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {Boolean} options.enableDelete - Whether to display a delete button that sets the value to <code>null</code>.
 	 * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
 	 * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser (system) local timezone offset.
 	 * */
