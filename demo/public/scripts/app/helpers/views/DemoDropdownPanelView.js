@@ -21,7 +21,6 @@ define([ 'comindware/core', './DemoDropdownItemView' ], function (core, DemoDrop
 
         onRender: function () {
             this.$el.css({
-                'max-height': '200px',
                 'overflow-y': 'auto'
             });
         }

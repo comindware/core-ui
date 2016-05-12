@@ -294,16 +294,16 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         
         if (this.currentDirection === popoutDirection.UP || anchorBottomOffset < panelHeight) {
             this.currentDirection = popoutDirection.UP;
-            this.panelRegion.$el.offset({
-                top: anchorTopOffset - panelHeight
+            this.panelRegion.$el.css({
+                top: -panelHeight
             });
             this.updateDirectionClasses();
         }
         
         if (this.currentDirection === popoutDirection.DOWN || anchorTopOffset < panelHeight) {
             this.currentDirection = popoutDirection.DOWN;
-            this.panelRegion.$el.offset({
-                top: anchorTopOffset + anchorHeight
+            this.panelRegion.$el.css({
+                top: anchorHeight
             });
             this.updateDirectionClasses();
         }
