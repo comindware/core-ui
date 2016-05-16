@@ -1,6 +1,7 @@
 /* dropdown */
 .dropdown {
     position: relative;
+    height: inherit;
 }
 
 .dropdown__action {
@@ -70,7 +71,7 @@
     margin-left: -7px;
     display: none;
     position: absolute;
-    top: 26px;
+    bottom: -10px;
     left: 50%;
     border: 0;
     background: no-repeat 0 100% url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAKCAQAAAAu0KdMAAAArUlEQVQY02NggABGBiYGZgYWIGQGshgZkABIipWBY1fVrhoGDiALSRoixb0+9eS/U/82FjBwM7DBpKFSCwKO/fry/9v/E39WJgOlobpBUlwz3A5/+/QfBL78P/prUShUGugEzk7jg2/e/IeBT/8Pf5vlwcAFlGbgLFffd//5f2Tw7v/BTxNtgNJx8nuvP/qPDl7/P/i605hh95Hb/7GB5//3PWK4/v/ff+zg8X8An0aTj+nOW2IAAAAASUVORK5CYII=);
@@ -159,9 +160,13 @@
 }
 
 
+.dropdown__button{
+    height: inherit;
+}
+
 .dropdown__wrp {
     width: 100%;
-    margin: 10px 0 0;
+    margin: 9px 0 0;
     font-size: 12px;
     background: #fff;
     border: 1px solid #c2c2c2;
@@ -187,8 +192,8 @@
 }
 .dropdown-view .dropdown__wrp {
     width: auto;
-    left: -4px;
-    right: -4px;
+    left: 0;
+    right: 0;
     top: 14px;
 }
 .dropdown__wrp_up {
@@ -686,14 +691,6 @@
 .new-reference-btn:hover .add-new-reference-button:before {
     color: #009bfe;
     border-color: #009bfe;
-}
-
-
-.multiselect-wrp .dropdown__wrp{
-    width: auto;
-    left: -4px;
-    right: -4px;
-    top: 14px;
 }
 
 .multiselect-panel{

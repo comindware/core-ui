@@ -197,6 +197,10 @@
     z-index: 4;
 }
 
+.popout__wrp.popout__down{
+    margin-top: 9px;
+}
+
 .popout__wrp_right {
     left: auto;
     right: -10px;

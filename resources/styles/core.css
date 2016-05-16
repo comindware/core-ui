@@ -28,58 +28,7 @@
 }
 /* btn-del */
 
-/* bubbles */
-.bubbles {
-    width: 100%;
-    overflow: hidden;
-    outline: solid 1px #e7ebee;
-    outline-offset: 1px;
-    padding: 1px 3px;
-}
-.open .bubbles {
-    outline-color: #2f98e4;
-}
 
-.bubbles__i {
-    max-width: 100%;
-    margin: 1px 4px 1px 0;
-    padding: 0 18px 0 10px;
-    line-height: 17px;
-    display: inline-block;
-    vertical-align: top;
-    font-size: 12px;
-    position: relative;
-    border: solid 1px #6fb9e7;
-    border-radius: 2px;
-    background: #e0f1f9;
-}
-.bubbles__link {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    display: block;
-    line-height: inherit;
-    text-decoration: none;
-    color: #000;
-}
-.bubbles__link:hover {
-    color: #0a5486;
-}
-.bubbles__form {
-    width: 200px;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    line-height: 21px;
-    display: inline-block;
-    vertical-align: top;
-}
-.bubbles__input {
-    width: 100%;
-    border: 0;
-}
-
-/* /bubbles */
 
 .button-delete_absolute {
     content: '';
