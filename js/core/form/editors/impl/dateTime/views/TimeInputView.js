@@ -28,7 +28,7 @@ export default Marionette.ItemView.extend({
         'clearButton': '.js-time-remove'
     },
 
-    className: 'dev-time-input-view',
+    className: 'time-input-view',
 
     events: {
         'mousedown': '__onClick',
