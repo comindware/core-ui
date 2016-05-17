@@ -11,7 +11,7 @@
 import '../../../libApi';
 
 let classes = {
-    ANCHOR: 'dropdown__anchor'
+    ANCHOR: 'anchor anchor_inline'
 };
 
 /**

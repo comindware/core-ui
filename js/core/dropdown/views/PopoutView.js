@@ -24,7 +24,7 @@ const classes = {
     FLOW_RIGHT: 'dev-popout-flow-right',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
-    DEFAULT_ANCHOR: 'dev-default-anchor'
+    DEFAULT_ANCHOR: 'anchor'
 };
 
 const popoutFlow = {
