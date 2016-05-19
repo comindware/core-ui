@@ -13,14 +13,12 @@ import dropdown from '../../../../../dropdown/dropdownApi';
 import template from '../templates/defaultButton.hbs';
 
 const classes = {
-    EMPTY_EL: 'pr-empty'
 };
 
 export default Marionette.ItemView.extend({
     initialize: function (options) {
         this.enabled = options.enabled;
         this.reqres = options.reqres;
-        this.emptyElClass = options.emptyElClass || classes.EMPTY_EL;
         this.options.template = options.template ? Handlebars.compile(options.template) : template;
     },
 
@@ -81,8 +79,5 @@ export default Marionette.ItemView.extend({
 
     onRender: function () {
         this.updateEnabled();
-        if (!this.model.get('member')) {
-            this.$el.addClass(classes.EMPTY_EL);
-        }
     }
 });

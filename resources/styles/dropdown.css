@@ -446,10 +446,10 @@
     position: relative;
 }
 
-.pr-reference-editor:not(.pr-empty) .dd-list_reference {
+.pr-reference-editor:not(.l-field_empty) .dd-list_reference {
     padding-top: 65px;
 }
-.pr-reference-editor:not(.pr-empty) .reference-dropdown .dd-list_reference {
+.pr-reference-editor:not(.l-field_empty) .reference-dropdown .dd-list_reference {
     padding-top: 0;
 }
 
@@ -483,7 +483,7 @@
     top: 0;
 }
 
-.pr-reference-editor:not(.pr-empty) .dd-list__filter_reference {
+.pr-reference-editor:not(.l-field_empty) .dd-list__filter_reference {
     height: 60px;
 }
 

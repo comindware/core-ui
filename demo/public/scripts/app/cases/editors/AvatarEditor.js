@@ -22,9 +22,9 @@ define(
 
             return new EditorCanvasView({
                 editor: new core.form.editors.AvatarEditor({
-                    autocommit: true,
                     model: model,
                     key: 'avatar',
+                    autocommit: true,
                     fullName: model.get('fullName'),
                     autoUpload: true, // or use method 'upload' instead
                     refreshPreviewAfterUpload: true,

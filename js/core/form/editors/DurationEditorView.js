@@ -67,8 +67,7 @@ const defaultOptions = {
 };
 
 const classes = {
-    FOCUSED: 'pr-focused',
-    EMPTY: 'pr-empty'
+    FOCUSED: 'pr-focused'
 };
 
 const stateModes = {
@@ -515,7 +514,6 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         let val = this.__createInputString(normalizedDisplayValue, inEditMode);
         this.ui.input.val(val);
         this.$el.toggleClass(classes.FOCUSED, inEditMode);
-        this.$el.toggleClass(classes.EMPTY, this.state.displayValue === null);
     }
 });
 
