@@ -18,8 +18,11 @@ import InfoMessageView from './views/InfoMessageView';
 const classes = {
     REQUIRED: 'required',
     READONLY: 'readonly',
-    HIDDEN: 'fr-hidden',
     DISABLED: 'disabled'
+};
+
+const ui = {
+    errorText: '.js-error-text'
 };
 
 export default Backbone.Form.Field.extend({
@@ -67,41 +70,16 @@ export default Backbone.Form.Field.extend({
             return;
         }
         this.$el.addClass(this.errorClassName);
-        if (this.fieldErrorModel) {
-            this.fieldErrorModel.set('text', msg);
-        }
+        this.$(ui.errorText).text(msg);
     },
 
     clearError: function () {
         this.$el.removeClass(this.errorClassName);
-        if (this.fieldErrorModel) {
-            this.fieldErrorModel.set('text', '');
-        }
+        this.$(ui.errorText).text('');
     },
 
     render: function () {
         Backbone.Form.Field.prototype.render.apply(this, arguments);
-        if (this.schema.validators) {
-            this.fieldErrorModel = new FieldInfoModel({
-                text: '',
-                error: true
-            });
-            var errorPopout = dropdown.factory.createPopout({
-                panelView: InfoMessageView,
-                panelViewOptions: {
-                    model: this.fieldErrorModel
-                },
-                buttonView: InfoButtonView,
-                buttonViewOptions: {
-                    model: this.fieldErrorModel
-                },
-                popoutFlow: 'right',
-                customAnchor: true
-            });
-            errorPopout.render();
-            this.$('.js-field-error').append(errorPopout.$el);
-            errorPopout.onRender();
-        }
         if (this.schema.helpText) {
             this.fieldInfoModel = new FieldInfoModel({
                 text: this.schema.helpText
@@ -124,9 +102,6 @@ export default Backbone.Form.Field.extend({
         }
         if (this.schema.required) {
             this.$el.addClass(classes.REQUIRED);
-        }
-        if (this.schema.hidden) {
-            this.$el.addClass(classes.HIDDEN);
         }
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
         return this;

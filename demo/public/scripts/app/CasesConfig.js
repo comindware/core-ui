@@ -75,6 +75,9 @@ define([
     './cases/editors/Form',
     'text!./cases/editors/Form.js',
 
+    './cases/editors/FormValidation',
+    'text!./cases/editors/FormValidation.js',
+
     './cases/dropdown/actionMenu',
     'text!./cases/dropdown/actionMenu.js',
 
@@ -278,6 +281,10 @@ define([
                     {
                         id: 'Form',
                         displayName: 'Form'
+                    },
+                    {
+                        id: 'FormValidation',
+                        displayName: 'Form Validation (all editors)'
                     }
                 ]
             },
