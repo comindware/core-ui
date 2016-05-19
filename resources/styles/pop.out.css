@@ -66,7 +66,7 @@
     background: transparent;
 }
 
-.anchor_date{
+.anchor_date, .popout__up .anchor_date{
     position: absolute;
     right: 0;
     top: 7px;

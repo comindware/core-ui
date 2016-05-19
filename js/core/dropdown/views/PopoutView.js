@@ -295,7 +295,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.currentDirection === popoutDirection.UP || anchorBottomOffset < panelHeight) {
             this.currentDirection = popoutDirection.UP;
             this.panelRegion.$el.css({
-                top: -panelHeight
+                top: (parseInt(anchor.css('top')) || 0) - panelHeight
             });
             this.updateDirectionClasses();
         }
@@ -303,7 +303,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.currentDirection === popoutDirection.DOWN || anchorTopOffset < panelHeight) {
             this.currentDirection = popoutDirection.DOWN;
             this.panelRegion.$el.css({
-                top: anchorHeight
+                top: (parseInt(anchor.css('top')) || 0) + anchorHeight
             });
             this.updateDirectionClasses();
         }
