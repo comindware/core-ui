@@ -23,16 +23,6 @@
     white-space: nowrap;
 }
 
-.pr-focused {
-    
-}
-.pr-empty {
-    
-}
-.pr-disabled {
-    
-}
-
 .pr-arrow::after {
     content: '';
     width: 1px;
@@ -510,7 +500,7 @@
 .pr-focused .button-delete {
     visibility: visible;
 }
-.pr-empty .button-delete {
+.l-field_empty .button-delete {
     visibility: hidden !important;
 }
 /* /field */
@@ -942,7 +932,7 @@ input[type="checkbox"].checkbox {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.pr-empty .reference-field__txt {
+.l-field_empty .reference-field__txt {
     color: #b5bdc4;
 }
 .pr-disabled .reference-field__txt {
@@ -1170,7 +1160,7 @@ input[type="checkbox"].checkbox {
     transition: visibility .1s;
 }
 
-.pr-empty .button-delete {
+.l-field_empty .button-delete {
     display: none;
 }
 

@@ -12,7 +12,6 @@ import '../../../../../libApi';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {
-    EMPTY: 'pr-empty',
     ARROW_BUTTON: 'pr-arrow-right'
 };
 
@@ -64,7 +63,6 @@ export default Marionette.ItemView.extend({
         this.reqres.request('panel:open');
     },
 
-
     updateView: function () {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.$el.addClass(classes.ARROW_BUTTON);
@@ -80,8 +78,5 @@ export default Marionette.ItemView.extend({
 
     onRender: function () {
         this.updateView();
-        if (!this.model.get('value')) {
-            this.$el.addClass(classes.EMPTY);
-        }
     }
 });
