@@ -21,7 +21,8 @@ import '../../../libApi';
 const classes = {
     disabled: 'l-field_disabled',
     readonly: 'l-field_readonly',
-    FOCUSED: 'l-field_focused'
+    FOCUSED: 'l-field_focused',
+    EMPTY: 'l-field_empty'
 };
 
 let onFocus = function () {
@@ -54,6 +55,14 @@ let onRender = function () {
         this.$el.on('focus', onFocus.bind(this));
         this.$el.on('blur', onBlur.bind(this));
     }
+    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
+};
+
+let onChange = function () {
+    if (this.schema.autocommit) {
+        this.commit({});
+    }
+    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
 };
 
 /**
@@ -134,11 +143,9 @@ export default {
                 this.validators = options.validators || schema.validators;
 
                 this.on('render', onRender.bind(this));
+                this.on('change', onChange.bind(this));
 
                 schema.autocommit = schema.autocommit || options.autocommit;
-                if (schema.autocommit) {
-                    this.on('change', this.commit.bind(this, {}));
-                }
 
                 this.enabled = schema.enabled = schema.enabled || options.enabled ||
                               (schema.enabled === undefined && options.enabled === undefined);
@@ -314,6 +321,10 @@ export default {
                 }
                 this.trigger(this.key + ':committed', this, this.model, this.getValue());
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
+            },
+
+            isEmpty: function () {
+                return !this.getValue();
             },
 
             /**

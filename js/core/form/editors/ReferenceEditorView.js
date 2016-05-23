@@ -134,7 +134,6 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
                 }
             }.bind(this));
         }, this);
-        this.$el.toggleClass('pr-empty', _.isEmpty(this.value));
     },
 
     __adjustValue: function (value) {
@@ -163,6 +162,11 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
+    isEmpty: function () {
+        let value = this.getValue();
+        return !value || _.isEmpty(value);
+    },
+
     onValueClear: function () {
         this.__value(null, true);
     },
@@ -170,7 +174,6 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
     onValueSet: function (model) {
         this.__value(model, true);
         this.dropdownView.close();
-        this.$el.toggleClass('pr-empty', _.isEmpty(this.value));
         this.$el.focus();
     },
 

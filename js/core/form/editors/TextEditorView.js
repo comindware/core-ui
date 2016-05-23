@@ -23,7 +23,7 @@ const changeMode = {
 const defaultOptions = function () {
     return {
         changeMode: 'blur',
-            emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+        emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
         maxLength: null,
         mask: null,
         maskPlaceholder: '_',
