@@ -258,24 +258,30 @@ let GridHeaderView = Marionette.ItemView.extend({
     },
 
     __getFullWidth: function () {
-        return this.$el.parent().width() - 1; //Magic cross browser pixel, don't remove it
+        return this.$el.parent().width() - 2; // Magic cross browser pixels, don't remove them
     },
 
     __handleResizeInternal: function () {
         var fullWidth = this.__getFullWidth(),
-            columnWidth = fullWidth / this.columns.length;
+            columnWidth = fullWidth / this.columns.length,
+            sumWidth = 0;
 
-        this.ui.gridHeaderColumn.each(function (i, el) {
+        this.ui.gridHeaderColumn.not(':first').each(function (i, el) {
             var child = $(el);
-            var col = this.columns[i];
+            var col = this.columns[i + 1];
             if (col.width) {
-                col.absWidth = col.width * fullWidth;
-                child.outerWidth(col.absWidth);
+                col.absWidth = Math.floor(col.width * fullWidth);
             } else {
-                col.absWidth = columnWidth;
-                child.outerWidth(col.absWidth);
+                col.absWidth = Math.floor(columnWidth);
             }
+            child.outerWidth(col.absWidth);
+            sumWidth += col.absWidth;
         }.bind(this));
+        
+        if (this.columns.length) {
+            this.columns[0].absWidth = Math.floor(fullWidth - sumWidth);
+            this.ui.gridHeaderColumn.first().outerWidth(this.columns[0].absWidth);
+        }
     }
 });
 
