@@ -258,24 +258,33 @@ let GridHeaderView = Marionette.ItemView.extend({
     },
 
     __getFullWidth: function () {
-        return this.$el.parent().width() - 1; //Magic cross browser pixel, don't remove it
+        return this.$el.parent().width() - 2; // Magic cross browser pixels, don't remove them
     },
 
     __handleResizeInternal: function () {
-        var fullWidth = this.__getFullWidth(),
-            columnWidth = fullWidth / this.columns.length;
+        var fullWidth = this.__getFullWidth(), // Grid header's full width
+            columnWidth = fullWidth / this.columns.length, // Default column width
+            sumWidth = 0; // Columns' sum width
 
-        this.ui.gridHeaderColumn.each(function (i, el) {
+        // Iterate all but first columns counting their sum width
+        this.ui.gridHeaderColumn.not(':first').each(function (i, el) {
             var child = $(el);
-            var col = this.columns[i];
-            if (col.width) {
-                col.absWidth = col.width * fullWidth;
-                child.outerWidth(col.absWidth);
+            var col = this.columns[i + 1];
+            if (col.width) { // If column has it's custom width
+                col.absWidth = Math.floor(col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
             } else {
-                col.absWidth = columnWidth;
-                child.outerWidth(col.absWidth);
+                col.absWidth = Math.floor(columnWidth); // Otherwise take default column width (rounding it down)
             }
+            child.outerWidth(col.absWidth); // Set absolute column width
+            sumWidth += col.absWidth; // And add it to columns' sum width
         }.bind(this));
+        
+        // Take remaining (or only) first column to calculate it's absolute width as difference between grid header's full width and
+        // other columns' sum width. This logic is necessary because other columns' widths may have been rounded down during calculations
+        if (this.columns.length) {
+            this.columns[0].absWidth = Math.floor(fullWidth - sumWidth); // Calculate remainig (or only) first column's absolute width
+            this.ui.gridHeaderColumn.first().outerWidth(this.columns[0].absWidth); // And set it
+        }
     }
 });
 
