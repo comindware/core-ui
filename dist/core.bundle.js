@@ -53289,7 +53289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    FLOW_RIGHT: 'dev-popout-flow-right',
 	    CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
 	    DEFAULT_ANCHOR_BUTTON: 'popout__action',
-	    DEFAULT_ANCHOR: 'dev-default-anchor'
+	    DEFAULT_ANCHOR: 'anchor'
 	};
 	
 	var popoutFlow = {
@@ -53555,12 +53555,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            panelHeight = this.panelRegion.$el.height(),
 	            viewportHeight = window.innerHeight,
 	            anchorTopOffset = anchor.offset().top,
-	            anchorBottomOffset = viewportHeight - anchorTopOffset - anchorHeight;
+	            anchorBottomOffset = viewportHeight - anchorTopOffset - anchorHeight,
+	            anchorButtonOffset = anchor.offset().top - this.ui.button.offset().top;
 	
 	        if (this.currentDirection === popoutDirection.UP || anchorBottomOffset < panelHeight) {
 	            this.currentDirection = popoutDirection.UP;
 	            this.panelRegion.$el.css({
-	                top: -panelHeight
+	                top: anchorButtonOffset - panelHeight
 	            });
 	            this.updateDirectionClasses();
 	        }
@@ -53568,7 +53569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.currentDirection === popoutDirection.DOWN || anchorTopOffset < panelHeight) {
 	            this.currentDirection = popoutDirection.DOWN;
 	            this.panelRegion.$el.css({
-	                top: anchorHeight
+	                top: anchorButtonOffset + anchorHeight
 	            });
 	            this.updateDirectionClasses();
 	        }
@@ -53854,7 +53855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Handlebars = __webpack_require__(248);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-button-region\"></div>\r\n<div class=\"popout__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>";
+	    return "<div class=\"dropdown__button js-button-region\"></div>\r\n<div class=\"popout__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -55336,7 +55337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Handlebars = __webpack_require__(248);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-button-region\"></div>\r\n<div class=\"dropdown__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>\r\n";
+	    return "<div class=\"dropdown__button js-button-region\"></div>\r\n<div class=\"dropdown__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>\r\n";
 	},"useData":true});
 
 /***/ },
@@ -55600,7 +55601,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(25);
 	
 	var classes = {
-	    ANCHOR: 'dropdown__anchor'
+	    ANCHOR: 'anchor anchor_inline'
 	};
 	
 	/**
@@ -56301,8 +56302,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
 	        this.columns = options.columns;
 	        this.$document = $(document);
-	        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', '__handleResize');
-	        this.listenTo(_GlobalEventService2.default, 'resize', this.__handleResize);
+	        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
+	        this.listenTo(_GlobalEventService2.default, 'resize', this.handleResize);
 	    },
 	
 	    template: _gridheader2.default,
@@ -56474,23 +56475,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            var fullSum = 0;
 	            index = ctx.draggedColumn.index + 1;
-	            for (var i = 0; i < ctx.affectedColumns.length; i++) {
-	                var c = ctx.affectedColumns[i];
+	            for (var _i = 0; _i < ctx.affectedColumns.length; _i++) {
+	                var _c = ctx.affectedColumns[_i];
 	                if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
-	                    var delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-	                    this.columns[index].absWidth -= delta;
+	                    var _delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
+	                    this.columns[index].absWidth -= _delta;
 	                }
 	
 	                fullSum += this.columns[index].absWidth;
 	
-	                if (i === ctx.affectedColumns.length - 1) {
+	                if (_i === ctx.affectedColumns.length - 1) {
 	                    var sumDelta = ctx.fullWidth - ctx.unaffectedWidth - this.columns[ctx.draggedColumn.index].absWidth - fullSum;
 	                    this.columns[index].absWidth += sumDelta;
 	                }
 	
 	                var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
 	                this.columns[index].width = newColumnWidthPc;
-	                c.$el.outerWidth(this.columns[index].absWidth);
+	                _c.$el.outerWidth(this.columns[index].absWidth);
 	                changes[index] = this.columns[index].absWidth;
 	                index++;
 	            }
@@ -56506,30 +56507,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return false;
 	    },
 	
-	    __handleResize: function __handleResize() {
+	    handleResize: function handleResize() {
 	        this.__handleResizeInternal();
 	        this.gridEventAggregator.trigger('columnsResize');
 	    },
 	
 	    __getFullWidth: function __getFullWidth() {
-	        return this.$el.parent().width() - 1; //Magic cross browser pixel, don't remove it
+	        return this.$el.parent().width() - 2; // Magic cross browser pixels, don't remove them
 	    },
 	
 	    __handleResizeInternal: function __handleResizeInternal() {
 	        var fullWidth = this.__getFullWidth(),
-	            columnWidth = fullWidth / this.columns.length;
+	            // Grid header's full width
+	        columnWidth = fullWidth / this.columns.length,
+	            // Default column width
+	        sumWidth = 0; // Columns' sum width
 	
-	        this.ui.gridHeaderColumn.each(function (i, el) {
+	        // Iterate all but first columns counting their sum width
+	        this.ui.gridHeaderColumn.not(':first').each(function (i, el) {
 	            var child = $(el);
-	            var col = this.columns[i];
+	            var col = this.columns[i + 1];
 	            if (col.width) {
-	                col.absWidth = col.width * fullWidth;
-	                child.outerWidth(col.absWidth);
+	                // If column has it's custom width
+	                col.absWidth = Math.floor(col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
 	            } else {
-	                col.absWidth = columnWidth;
-	                child.outerWidth(col.absWidth);
-	            }
+	                    col.absWidth = Math.floor(columnWidth); // Otherwise take default column width (rounding it down)
+	                }
+	            child.outerWidth(col.absWidth); // Set absolute column width
+	            sumWidth += col.absWidth; // And add it to columns' sum width
 	        }.bind(this));
+	
+	        // Take remaining (or only) first column to calculate it's absolute width as difference between grid header's full width and
+	        // other columns' sum width. This logic is necessary because other columns' widths may have been rounded down during calculations
+	        if (this.columns.length) {
+	            this.columns[0].absWidth = Math.floor(fullWidth - sumWidth); // Calculate remainig (or only) first column's absolute width
+	            this.ui.gridHeaderColumn.first().outerWidth(this.columns[0].absWidth); // And set it
+	        }
 	    }
 	});
 	
@@ -56838,6 +56851,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        this.onColumnSort(column, this.collection.comparator);
 	        this.headerView.updateSorting();
+	    },
+	
+	    handleResize: function handleResize() {
+	        this.headerView.handleResize();
 	    }
 	});
 	
@@ -61792,8 +61809,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var classes = {
 	    REQUIRED: 'required',
 	    READONLY: 'readonly',
-	    HIDDEN: 'fr-hidden',
 	    DISABLED: 'disabled'
+	};
+	
+	var ui = {
+	    errorText: '.js-error-text'
 	};
 	
 	exports.default = Backbone.Form.Field.extend({
@@ -61841,41 +61861,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 	        this.$el.addClass(this.errorClassName);
-	        if (this.fieldErrorModel) {
-	            this.fieldErrorModel.set('text', msg);
-	        }
+	        this.$(ui.errorText).text(msg);
 	    },
 	
 	    clearError: function clearError() {
 	        this.$el.removeClass(this.errorClassName);
-	        if (this.fieldErrorModel) {
-	            this.fieldErrorModel.set('text', '');
-	        }
+	        this.$(ui.errorText).text('');
 	    },
 	
 	    render: function render() {
 	        Backbone.Form.Field.prototype.render.apply(this, arguments);
-	        if (this.schema.validators) {
-	            this.fieldErrorModel = new _FieldInfoModel2.default({
-	                text: '',
-	                error: true
-	            });
-	            var errorPopout = _dropdownApi2.default.factory.createPopout({
-	                panelView: _InfoMessageView2.default,
-	                panelViewOptions: {
-	                    model: this.fieldErrorModel
-	                },
-	                buttonView: _InfoButtonView2.default,
-	                buttonViewOptions: {
-	                    model: this.fieldErrorModel
-	                },
-	                popoutFlow: 'right',
-	                customAnchor: true
-	            });
-	            errorPopout.render();
-	            this.$('.js-field-error').append(errorPopout.$el);
-	            errorPopout.onRender();
-	        }
 	        if (this.schema.helpText) {
 	            this.fieldInfoModel = new _FieldInfoModel2.default({
 	                text: this.schema.helpText
@@ -61898,9 +61893,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        if (this.schema.required) {
 	            this.$el.addClass(classes.REQUIRED);
-	        }
-	        if (this.schema.hidden) {
-	            this.$el.addClass(classes.HIDDEN);
 	        }
 	        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
 	        return this;
@@ -61925,7 +61917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return "<div class=\"l-field-view\">\r\n    <div class=\"h3-field\">\r\n        <span class=\"js-field-error h3-field__error\"></span>\r\n        <span class=\"h3-field__txt\">"
 	    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
-	    + "</span>\r\n        <span class=\"js-field-info h3-field__info\"></span>\r\n    </div>\r\n    <div data-editor class=\"field-view\"></div>\r\n</div>";
+	    + "</span>\r\n        <span class=\"js-field-info h3-field__info\"></span>\r\n    </div>\r\n    <div data-editor class=\"field-view\"></div>\r\n    <div class=\"js-error-text\"></div>\r\n</div>";
 	},"useData":true});
 
 /***/ },
@@ -62128,7 +62120,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var classes = {
 	    disabled: 'l-field_disabled',
 	    readonly: 'l-field_readonly',
-	    FOCUSED: 'l-field_focused'
+	    FOCUSED: 'l-field_focused',
+	    EMPTY: 'l-field_empty'
 	};
 	
 	var onFocus = function onFocus() {
@@ -62161,6 +62154,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.$el.on('focus', onFocus.bind(this));
 	        this.$el.on('blur', onBlur.bind(this));
 	    }
+	    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
+	};
+	
+	var onChange = function onChange() {
+	    if (this.schema.autocommit) {
+	        this.commit({});
+	    }
+	    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
 	};
 	
 	/**
@@ -62240,11 +62241,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this.validators = options.validators || schema.validators;
 	
 	                    this.on('render', onRender.bind(this));
+	                    this.on('change', onChange.bind(this));
 	
 	                    schema.autocommit = schema.autocommit || options.autocommit;
-	                    if (schema.autocommit) {
-	                        this.on('change', this.commit.bind(this, {}));
-	                    }
 	
 	                    this.enabled = schema.enabled = schema.enabled || options.enabled || schema.enabled === undefined && options.enabled === undefined;
 	                    this.readonly = schema.readonly = schema.readonly || options.readonly || schema.readonly !== undefined && options.readonly !== undefined;
@@ -62418,6 +62417,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                    this.trigger(this.key + ':committed', this, this.model, this.getValue());
 	                    this.trigger('value:committed', this, this.model, this.key, this.getValue());
+	                },
+	
+	                isEmpty: function isEmpty() {
+	                    return !this.getValue();
 	                },
 	
 	                /**
@@ -63826,7 +63829,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }.bind(this));
 	        }, this);
-	        this.$el.toggleClass('pr-empty', _.isEmpty(this.value));
 	    },
 	
 	    __adjustValue: function __adjustValue(value) {
@@ -63855,6 +63857,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
+	    isEmpty: function isEmpty() {
+	        var value = this.getValue();
+	        return !value || _.isEmpty(value);
+	    },
+	
 	    onValueClear: function onValueClear() {
 	        this.__value(null, true);
 	    },
@@ -63862,7 +63869,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onValueSet: function onValueSet(model) {
 	        this.__value(model, true);
 	        this.dropdownView.close();
-	        this.$el.toggleClass('pr-empty', _.isEmpty(this.value));
 	        this.$el.focus();
 	    },
 	
@@ -63944,7 +63950,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var classes = {
-	    EMPTY: 'pr-empty',
 	    ARROW_BUTTON: 'pr-arrow-right'
 	};
 	
@@ -64011,9 +64016,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        this.updateView();
-	        if (!this.model.get('value')) {
-	            this.$el.addClass(classes.EMPTY);
-	        }
 	    }
 	});
 
@@ -65004,15 +65006,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var classes = {
-	    EMPTY_EL: 'pr-empty'
-	};
+	var classes = {};
 	
 	exports.default = Marionette.ItemView.extend({
 	    initialize: function initialize(options) {
 	        this.enabled = options.enabled;
 	        this.reqres = options.reqres;
-	        this.emptyElClass = options.emptyElClass || classes.EMPTY_EL;
 	        this.options.template = options.template ? _libApi.Handlebars.compile(options.template) : _defaultButton2.default;
 	    },
 	
@@ -65073,9 +65072,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        this.updateEnabled();
-	        if (!this.model.get('member')) {
-	            this.$el.addClass(classes.EMPTY_EL);
-	        }
 	    }
 	});
 
@@ -67326,8 +67322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	var classes = {
-	    FOCUSED: 'pr-focused',
-	    EMPTY: 'pr-empty'
+	    FOCUSED: 'pr-focused'
 	};
 	
 	var stateModes = {
@@ -67774,7 +67769,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var val = this.__createInputString(normalizedDisplayValue, inEditMode);
 	        this.ui.input.val(val);
 	        this.$el.toggleClass(classes.FOCUSED, inEditMode);
-	        this.$el.toggleClass(classes.EMPTY, this.state.displayValue === null);
 	    }
 	});
 	
@@ -68201,7 +68195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Handlebars = __webpack_require__(248);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-date-region\"></div>";
+	    return "<div class=\"field_date-wrp js-date-region\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -68633,7 +68627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Handlebars = __webpack_require__(248);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<input class=\"js-date-input field field_date\" type=\"text\" placeholder=\"\"><div style=\"position: relative; right: 20px;\" class=\"js-anchor\"></div><div class=\"js-date-remove button-delete button-delete_date\"></div>";
+	    return "<input class=\"js-date-input field field_date\" type=\"text\" placeholder=\"\"><div class=\"js-anchor anchor_date\"></div><div class=\"js-date-remove button-delete button-delete_date\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -68762,7 +68756,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Handlebars = __webpack_require__(248);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-time-region\"></div>";
+	    return "<div class=\"field_time-wrp js-time-region\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -68947,7 +68941,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'clearButton': '.js-time-remove'
 	    },
 	
-	    className: 'dev-time-input-view',
+	    className: 'time-input-view',
 	
 	    events: {
 	        'mousedown': '__onClick',
@@ -69282,7 +69276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Handlebars = __webpack_require__(248);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-date-region\" style=\"display: inline-block\"></div>\r\n<div class=\"js-time-region\" style=\"display: inline-block\"></div>\r\n<span class=\"js-clear-button button-delete button-delete_absolute dev-button-delete-timeeditor\" style=\"display: inline;\"></span>";
+	    return "<div class=\"date-time__i js-date-region\" style=\"display: inline-block\"></div>\r\n<div class=\"date-time__i js-time-region\" style=\"display: inline-block\"></div>\r\n<span class=\"js-clear-button button-delete button-delete_absolute dev-button-delete-timeeditor\" style=\"display: inline;\"></span>";
 	},"useData":true});
 
 /***/ },
