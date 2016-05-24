@@ -53650,7 +53650,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var state = {};
+	var self = {};
 	
 	var classes = {
 	    HIDDEN: 'hidden'
@@ -53662,36 +53662,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _utilsApi.helpers.ensureOption(options, 'popupRegion');
 	        _utilsApi.helpers.ensureOption(options, 'ui');
 	
-	        state.options = options;
-	        state.fadingRegion = options.fadingRegion;
-	        state.popupRegion = options.popupRegion;
-	        state.ui = options.ui;
+	        self.options = options;
+	        self.fadingRegion = options.fadingRegion;
+	        self.popupRegion = options.popupRegion;
+	        self.ui = options.ui;
 	
-	        state.fadingPanelView = new _FadingPanelView2.default();
-	        state.fadingRegion.show(state.fadingPanelView);
-	        this.listenTo(state.fadingPanelView, 'click', this.__onFadingPanelClick);
+	        self.fadingPanelView = new _FadingPanelView2.default();
+	        self.fadingRegion.show(self.fadingPanelView);
+	        this.listenTo(self.fadingPanelView, 'click', this.__onFadingPanelClick);
 	    },
 	
 	    showPopup: function showPopup(view, options) {
-	        this.fadeIn(options);
-	        state.ui.popupRegion.removeClass(classes.HIDDEN);
-	        state.popupRegion.show(view);
+	        this.fadeIn({
+	            fadeOut: false
+	        });
+	        self.ui.popupRegion.removeClass(classes.HIDDEN);
+	        self.popupRegion.show(view);
 	    },
 	
 	    closePopup: function closePopup() {
 	        this.fadeOut();
-	        state.popupRegion.reset();
-	        state.ui.popupRegion.addClass(classes.HIDDEN);
+	        self.popupRegion.reset();
+	        self.ui.popupRegion.addClass(classes.HIDDEN);
 	    },
 	
 	    fadeIn: function fadeIn(options) {
-	        state.ui.fadingRegion.removeClass(classes.HIDDEN);
-	        state.fadingPanelView.fadeIn(options);
+	        self.ui.fadingRegion.removeClass(classes.HIDDEN);
+	        self.fadingPanelView.fadeIn(options);
 	    },
 	
 	    fadeOut: function fadeOut() {
-	        state.fadingPanelView.fadeOut();
-	        state.ui.fadingRegion.addClass(classes.HIDDEN);
+	        self.fadingPanelView.fadeOut();
+	        self.ui.fadingRegion.addClass(classes.HIDDEN);
 	        this.trigger('fadeOut');
 	    },
 	
