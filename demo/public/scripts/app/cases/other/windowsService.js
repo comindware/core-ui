@@ -34,7 +34,7 @@ define(['comindware/core'],
                     'click @ui.btnTest': '__showPopup'
                 },
 
-            //Declare show popup method
+                //Declare show popup method
                 __showPopup: function () {
                     var popupView = new PopupView();
                     core.services.WindowService.showPopup(popupView);
@@ -42,5 +42,5 @@ define(['comindware/core'],
             });
 
             return new View();
-        }
+        };
     });
