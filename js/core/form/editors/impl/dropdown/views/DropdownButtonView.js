@@ -19,7 +19,7 @@ export default Marionette.ItemView.extend({
         this.reqres = options.reqres;
     },
 
-    className: 'field field_dropdown',
+    className: 'input input_dropdown',
 
     template: template,
 

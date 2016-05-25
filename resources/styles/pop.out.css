@@ -68,38 +68,14 @@
 
 .anchor_date, .popout__up .anchor_date{
     position: absolute;
-    right: 0;
-    top: 7px;
-    width: 17px;
-    height: 15px;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 14px;
 }
-
- /*
-.popout__action:after {
-    content: '';
-    width: 16px;
-    height: 10px;
-    margin: 12px 0 0 4px;
-    display: inline-block;
-    vertical-align: top;
-    background: no-repeat 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAWCAMAAADHE10VAAAAnFBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeXl53d3eJiYmRkZGYmJiampqgoKCioqKpqamvr6+xsbG6urq6urq7u7u9vb2+vr6+vr7BwcHBwcHBwcHDw8PFxcXGxsbIyMjJycnKysoFdb3X19fb29vi4uLj4+Pn5+fr6+vs7Ozu7u7y8vL09PT29vb+/v7///9GxgrYAAAAJnRSTlMAAAECAwQFBggJCgsfJzM8RkhQVWNlcHp8xNff4uvs8vb6+vz+/pCl4IcAAAB8SURBVHjaxclZEoIwEIThCSEREsV933BfUEHn/ndz0kXJEfyf+qsmJZ1RWKCCGioIrPszpUjHxsQ6kgnZZDpLbDDkx8fTxLfE0GBfvQ8jH35tXS8vmavdUEwmzTZPlsq87yylnWXB6LXtOmovblz3WGc0v/KvYkWXDzfdv33GEM42jtoXAAAAAElFTkSuQmCC);
-}
-
-.popout__up.popout__action:after{
-    -moz-transform: scaleY(-1);
-    -o-transform: scaleY(-1);
-    -webkit-transform: scaleY(-1);
-    transform: scaleY(-1);
-    margin: -8px 0 0 4px;
-}
-
-.open .popout__action:after {
-    height: 22px;
-}
-*/
 
 .popout__action-btn {
-    line-height: 26px;
+    line-height: 30px;
     white-space: nowrap;
     cursor: pointer;
 }

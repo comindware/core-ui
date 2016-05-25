@@ -50,7 +50,7 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
         dateRegion: '.js-date-region'
     },
 
-    className: 'l-field l-field_date',
+    className: 'editor editor_date',
 
     template: template,
 

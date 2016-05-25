@@ -73,7 +73,7 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     focusElement: '.js-textarea',
-    className: 'l-field l-field_textarea',
+    className: 'editor editor_textarea',
 
     ui: {
         textarea: '.js-textarea'

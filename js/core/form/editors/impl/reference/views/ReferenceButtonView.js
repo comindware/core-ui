@@ -12,7 +12,7 @@ import '../../../../../libApi';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {
-    ARROW_BUTTON: 'pr-arrow-right'
+    ARROW_BUTTON: 'input_dropdown'
 };
 
 export default Marionette.ItemView.extend({
@@ -20,7 +20,7 @@ export default Marionette.ItemView.extend({
         this.reqres = options.reqres;
     },
 
-    className: 'reference-field pr-arrow-right btn-wrp',
+    className: 'input',
 
     template: template,
 
