@@ -36,7 +36,6 @@ import bootstrapper from './Bootstrapper';
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import BlurableBehavior from './views/behaviors/BlurableBehavior';
-import PopupBehavior from './views/behaviors/PopupBehavior';
 import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
 import FadingPanelView from './views/FadingPanelView';
@@ -104,8 +103,7 @@ var api = {
     views: {
         behaviors: {
             LoadingBehavior: LoadingBehavior,
-            BlurableBehavior: BlurableBehavior,
-            PopupBehavior: PopupBehavior
+            BlurableBehavior: BlurableBehavior
         },
         LoadingView: LoadingView,
         SearchBarView: SearchBarView,
