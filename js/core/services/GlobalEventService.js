@@ -14,13 +14,19 @@ let $window = $(window);
 
 let GlobalEventsService = Marionette.Object.extend({
     initialize: function () {
-        _.bindAll(this, '__onResize');
+        _.bindAll(this, '__onResize', '__onWindowClickCaptured');
 
-        $window.resize(this.__onResize);
+        $window.on('resize', this.__onResize);
+        window.addEventListener('click', this.__onWindowClickCaptured, true);
     },
 
     onDestroy: function () {
         $window.off('resize');
+        window.removeEventListener('click', this.__onWindowClickCaptured, true);
+    },
+
+    __onWindowClickCaptured: function (e) {
+        this.trigger('windowClickCaptured', e.target, e);
     },
 
     __onResize: function (e) {

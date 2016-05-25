@@ -56,7 +56,6 @@ let windowService = {
     fadeOut: function () {
         self.fadingPanelView.fadeOut();
         self.ui.fadingRegion.addClass(classes.HIDDEN);
-        this.trigger('fadeOut');
     },
 
     __onFadingPanelClick: function (view, options) {
