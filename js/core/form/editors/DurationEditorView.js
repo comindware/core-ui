@@ -108,7 +108,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
 
     focusElement: '.js-input',
 
-    className: 'js-duration l-field l-field_duration',
+    className: 'js-duration editor editor_duration',
 
     ui: {
         input: '.js-input',

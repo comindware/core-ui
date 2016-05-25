@@ -94,7 +94,7 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         dropdownRegion: '.js-dropdown-region'
     },
 
-    className: 'pr-reference-editor',
+    className: 'editor editor_reference',
 
     template: template,
 
