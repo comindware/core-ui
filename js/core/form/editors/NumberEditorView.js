@@ -84,7 +84,7 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
 
     focusElement: '.js-input',
 
-    className: 'l-field l-field_number',
+    className: 'editor editor_number',
 
     ui: {
         input: '.js-input',

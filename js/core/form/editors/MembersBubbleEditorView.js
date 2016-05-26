@@ -65,6 +65,8 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
 
     template: template,
 
+    className: 'editor editor_bubble',
+
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },

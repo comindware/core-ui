@@ -19,10 +19,10 @@
 import '../../../libApi';
 
 const classes = {
-    disabled: 'l-field_disabled',
-    readonly: 'l-field_readonly',
-    FOCUSED: 'l-field_focused',
-    EMPTY: 'l-field_empty'
+    disabled: 'editor_disabled',
+    readonly: 'editor_readonly',
+    FOCUSED: 'editor_focused',
+    EMPTY: 'editor_empty'
 };
 
 let onFocus = function () {

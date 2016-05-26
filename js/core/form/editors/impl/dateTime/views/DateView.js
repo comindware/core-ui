@@ -29,7 +29,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow: function () {
-        this.pickerPopout = dropdownApi.factory.createPopout({
+        this.pickerPopout = dropdownApi.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {
                 model: this.model,
@@ -42,9 +42,8 @@ export default Marionette.LayoutView.extend({
                 timezoneOffset: this.timezoneOffset,
                 preserveTime: this.preserveTime
             },
-            customAnchor: true,
             autoOpen: false,
-            direction: 'down'
+            panelPosition: 'down'
         });
         this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
         this.listenTo(this.pickerPopout, 'button:close panel:close', this.__close, this);

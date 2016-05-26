@@ -15,7 +15,7 @@ export default Marionette.ItemView.extend({
 
     template: template,
 
-    className: 'l-radiobutton',
+    className: 'editor editor_radiobutton',
 
     focusElement: null,
 
@@ -33,7 +33,7 @@ export default Marionette.ItemView.extend({
     },
 
     classes: {
-        checked: 'pr-checked'
+        checked: 'editor_checked'
     },
 
     modelEvents: {
