@@ -14,6 +14,7 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 
 const defaultOptions = {
+    allowEmptyValue: true
 };
 
 /**
@@ -22,8 +23,9 @@ const defaultOptions = {
  * @class Calendar editor. The calendar opens in dropdown panel. Supported data type: <code>String</code> in ISO8601 format
  * (for example, '2015-07-20T00:00:00Z').
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Options object. Doesn't have it's own options.
+ * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+ * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * */
 Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
     initialize: function (options) {
@@ -54,12 +56,30 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
 
     template: template,
 
-    templateHelpers: function () {
-        return this.options;
+    ui: {
+        clearButton: '.js-clear-button'
+    },
+
+    events: {
+        'click @ui.clearButton': '__onClear'
     },
 
     __change: function () {
         this.__value(this.dateModel.get('value'), true, true);
+        this.__updateClearButton();
+    },
+
+    __onClear: function () {
+        this.__value(null, true, true);
+        this.dateModel.set('value', null);
+    },
+
+    __updateClearButton: function() {
+        if (!this.options.allowEmptyValue || !this.getValue()) {
+            this.ui.clearButton.hide();
+        } else {
+            this.ui.clearButton.show();
+        }
     },
 
     setValue: function (value) {
@@ -69,6 +89,7 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
 
     onRender: function () {
         this.dateRegion.show(this.dateView);
+        this.__updateClearButton();
     },
 
     getValue: function () {

@@ -14,6 +14,7 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
 
 const defaultOptions = {
+    allowEmptyValue: true
 };
 
 /**
@@ -22,8 +23,9 @@ const defaultOptions = {
  * @class Редактор времени. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
  * (например, '2015-07-20T10:46:37Z').
  * @extends module:core.form.editors.base.BaseEditorView
- * @param {Object} options Options object. Doesn't have it's own options.
+ * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+ * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * */
 Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
     initialize: function (options) {
@@ -54,12 +56,30 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
 
     template: template,
 
-    templateHelpers: function () {
-        return this.options;
+    ui: {
+        clearButton: '.js-clear-button'
+    },
+
+    events: {
+        'click @ui.clearButton': '__onClear'
     },
 
     __change: function () {
         this.__value(this.timeModel.get('value'), true, true);
+        this.__updateClearButton();
+    },
+
+    __onClear: function () {
+        this.__value(null, true, true);
+        this.timeModel.set('value', null);
+    },
+
+    __updateClearButton: function() {
+        if (!this.options.allowEmptyValue || !this.getValue()) {
+            this.ui.clearButton.hide();
+        } else {
+            this.ui.clearButton.show();
+        }
     },
 
     setValue: function (value) {
@@ -69,6 +89,7 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
 
     onRender: function () {
         this.timeRegion.show(this.timeView);
+        this.__updateClearButton();
     },
 
     __value: function (value, updateUi, triggerChange) {

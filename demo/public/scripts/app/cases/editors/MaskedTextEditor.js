@@ -17,7 +17,7 @@
                     insertMode: false
                 }
             }),
-            presentation: '\'{{textValue}}\''
+            presentation: "{{#isNull textValue}}null{{else}}'{{textValue}}'{{/isNull}}"
         });
     };
 });

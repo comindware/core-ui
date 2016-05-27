@@ -12,7 +12,6 @@ import template from './templates/mentionEditor.hbs';
 import '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import '../../utils/utilsApi';
-import serviceLocator from '../../serviceLocator';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import membersFactory from './impl/common/members/services/factory';
 import TextAreaEditorView from './TextAreaEditorView';
@@ -61,7 +60,7 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
         dropdownRegion: '.js-dropdown-region'
     },
 
-    onRender: function () {
+    onShow: function () {
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
@@ -82,9 +81,8 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
             autoOpen: false,
             renderAfterClose: false
         });
-        this.dropdownRegion.show(this.dropdownView);
 
-        this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
+        this.dropdownRegion.show(this.dropdownView);
         this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
         this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
         this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
@@ -94,6 +92,10 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
         _.each(this.keyboardShortcuts, function (v, k) {
             this.dropdownView.button.addKeyboardListener(k, v.bind(this));
         }, this);
+
+        // We discarded it during render phase, so we do it now.
+        this.setPermissions(this.enabled, this.readonly);
+        this.setValue(this.value);
     },
 
     keyboardShortcuts: {
@@ -229,8 +231,12 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
     },
 
     setValue: function (value) {
-        this.dropdownView.button.setValue(value);
-        this.value = this.dropdownView.button.getValue();
+        if (this.dropdownView) {
+            this.dropdownView.button.setValue(value);
+            this.value = this.dropdownView.button.getValue();
+        } else {
+            this.value = value;
+        }
     },
 
     __sendPanelCommand: function (command, options) {
@@ -241,12 +247,16 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
 
     __setEnabled: function (enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
-        this.dropdownView.button.setEnabled(enabled);
+        if (this.dropdownView) {
+            this.dropdownView.button.setEnabled(enabled);
+        }
     },
 
     __setReadonly: function (readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
-        this.dropdownView.button.setReadonly(readonly);
+        if (this.dropdownView) {
+            this.dropdownView.button.setReadonly(readonly);
+        }
     }
 });
 

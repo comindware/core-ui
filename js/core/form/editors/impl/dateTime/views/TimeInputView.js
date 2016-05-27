@@ -24,15 +24,13 @@ export default Marionette.ItemView.extend({
     template: template,
 
     ui: {
-        'input': '.js-time-input',
-        'clearButton': '.js-time-remove'
+        'input': '.js-time-input'
     },
 
     className: 'time-input-view',
 
     events: {
         'mousedown': '__onClick',
-        'click @ui.clearButton': '__onClear',
         'change @ui.input': '__onInputChange',
         'blur @ui.input': '__onBlur'
     },
@@ -41,13 +39,6 @@ export default Marionette.ItemView.extend({
         'change:value': '__onValueChange',
         'change:readonly': '__onEnabledChange',
         'change:enabled': '__onEnabledChange'
-    },
-
-    __onClear: function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        this.model.set({value: null});
     },
 
     __onInputChange: function () {
@@ -106,12 +97,6 @@ export default Marionette.ItemView.extend({
             this.ui.input.prop('readonly', true);
         } else {
             this.ui.input.prop('readonly', false);
-        }
-
-        if (!enabled || readonly) {
-            this.ui.clearButton.hide();
-        } else {
-            this.ui.clearButton.show();
         }
     },
 
