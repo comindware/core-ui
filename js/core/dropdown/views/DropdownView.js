@@ -123,10 +123,14 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
         this.currentPosition = this.options.panelPosition;
         this.updatePositionClasses();
+        if (this.isShown) {
+            this.buttonRegion.show(this.button);
+        }
     },
 
     onShow: function () {
         this.buttonRegion.show(this.button);
+        this.isShown = true;
     },
 
     updatePositionClasses: function () {
@@ -269,7 +273,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
                 this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
                 if (this.options.renderAfterClose) {
-                    this.render();
+                    this.button.render();
                 }
             }.bind(this)
         });
