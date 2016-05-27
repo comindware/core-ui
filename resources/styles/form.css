@@ -2,7 +2,8 @@
 
 
 .form-group {
-    padding: 0 0 20px;
+    padding: 0 0 25px;
+    position: relative;
 }
 
 
@@ -652,6 +653,33 @@ input[type="checkbox"].checkbox {
 
 
 /*-------------// End Form Editor // -------------*/
+
+
+
+/*------------------ Form Erorr ------------------*/
+.form-error{
+    font-size: 11px;
+    color: #BA0C08;
+    font-weight: 500;
+    max-width: 100%;
+    padding: 0;
+    display: inline-block;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    left:0;
+    opacity: 0;
+    bottom:15px;
+    transition: all .3s;
+}
+.error .form-error{
+    opacity: 1;
+    bottom:8px;
+}
+/*-------------// End Form Erorr // -------------*/
+
 
 
 /* Avatar editor */
