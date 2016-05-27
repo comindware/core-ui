@@ -91,12 +91,14 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
         this.dateView = new DateView({
             model: this.dateTimeModel,
             timezoneOffset: this.options.timezoneOffset,
-            preserveTime: true
+            preserveTime: true,
+            allowEmptyValue: this.options.allowEmptyValue
         });
 
         this.timeView = new TimeView({
             model: this.dateTimeModel,
-            timezoneOffset: this.options.timezoneOffset
+            timezoneOffset: this.options.timezoneOffset,
+            allowEmptyValue: this.options.allowEmptyValue
         });
 
         this.dateRegion.show(this.dateView);
@@ -136,6 +138,7 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
     __onClear: function() {
         this.__value(null, true, true);
         this.dateTimeModel.set('value', null);
+        return false;
     }
 });
 

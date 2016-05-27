@@ -18,6 +18,7 @@ export default Marionette.LayoutView.extend({
     initialize: function () {
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
+        this.allowEmptyValue = this.getOption('allowEmptyValue');
     },
 
     template: template,
@@ -34,19 +35,23 @@ export default Marionette.LayoutView.extend({
             buttonViewOptions: {
                 model: this.model,
                 timezoneOffset: this.timezoneOffset,
-                preserveTime: this.preserveTime
+                preserveTime: this.preserveTime,
+                allowEmptyValue: this.allowEmptyValue
             },
             panelView: PanelView,
             panelViewOptions: {
                 model: this.model,
                 timezoneOffset: this.timezoneOffset,
-                preserveTime: this.preserveTime
+                preserveTime: this.preserveTime,
+                allowEmptyValue: this.allowEmptyValue
             },
             autoOpen: false,
             panelPosition: 'down'
         });
         this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
         this.listenTo(this.pickerPopout, 'button:close panel:close', this.__close, this);
+        this.listenTo(this.pickerPopout, 'button:focus', () => this.trigger('focus'));
+        this.listenTo(this.pickerPopout, 'button:blur', () => this.trigger('blur'));
 
         this.popoutRegion.show(this.pickerPopout);
     },
@@ -57,5 +62,13 @@ export default Marionette.LayoutView.extend({
 
     __open: function () {
         this.pickerPopout.open();
+    },
+
+    focus: function () {
+        this.pickerPopout.focus();
+    },
+
+    blur: function () {
+        this.pickerPopout.blur();
     }
 });

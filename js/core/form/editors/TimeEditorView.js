@@ -44,7 +44,8 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
         this.listenTo(this.timeModel, 'change:value', this.__change, this);
 
         this.timeView = new TimeView({
-            model: this.timeModel
+            model: this.timeModel,
+            allowEmptyValue: this.options.allowEmptyValue
         });
     },
 
@@ -72,6 +73,7 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
     __onClear: function () {
         this.__value(null, true, true);
         this.timeModel.set('value', null);
+        return false;
     },
 
     __updateClearButton: function() {

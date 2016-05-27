@@ -8,17 +8,17 @@
 
 "use strict";
 
-import { moment } from '../../../../../libApi';
+import { moment, Handlebars } from '../../../../../libApi';
 import { dateHelpers } from '../../../../../utils/utilsApi';
 import dropdown from '../../../../../dropdown/dropdownApi';
-import list from '../../../../../list/listApi';
 import TimeInputView from './TimeInputView';
 import template from '../templates/time.hbs';
 
 export default Marionette.LayoutView.extend({
     initialize: function () {
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
-        
+        this.allowEmptyValue = this.getOption('allowEmptyValue');
+
         this.reqres = new Backbone.Wreqr.RequestResponse();
         this.reqres.setHandler('time:selected', this.__onTimeSelected, this);
         this.reqres.setHandler('panel:open', this.__onPanelOpen, this);
@@ -54,7 +54,8 @@ export default Marionette.LayoutView.extend({
             buttonViewOptions: {
                 reqres: this.reqres,
                 model: this.model,
-                timezoneOffset: this.timezoneOffset
+                timezoneOffset: this.timezoneOffset,
+                allowEmptyValue: this.allowEmptyValue
             },
             panelView: Marionette.CollectionView.extend({
                 reqres: this.reqres,
@@ -78,6 +79,8 @@ export default Marionette.LayoutView.extend({
             autoOpen: false,
             panelPosition: 'down'
         });
+        this.listenTo(this.dropdownView, 'button:focus', () => this.trigger('focus'));
+        this.listenTo(this.dropdownView, 'button:blur', () => this.trigger('blur'));
 
         this.dropdownRegion.show(this.dropdownView);
     },
@@ -107,5 +110,13 @@ export default Marionette.LayoutView.extend({
 
     __onPanelClose: function () {
         this.dropdownView.close();
+    },
+
+    focus: function () {
+        this.dropdownView.focus();
+    },
+
+    blur: function () {
+        this.dropdownView.blur();
     }
 });

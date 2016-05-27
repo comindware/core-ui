@@ -17,6 +17,7 @@ export default Marionette.ItemView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'reqres');
+        helpers.ensureOption(options, 'allowEmptyValue');
         this.reqres = options.reqres;
         this.timeEditFormat = dateHelpers.getTimeEditFormat();
     },
@@ -32,6 +33,7 @@ export default Marionette.ItemView.extend({
     events: {
         'mousedown': '__onClick',
         'change @ui.input': '__onInputChange',
+        'focus @ui.input': '__onFocus',
         'blur @ui.input': '__onBlur'
     },
 
@@ -42,37 +44,46 @@ export default Marionette.ItemView.extend({
     },
 
     __onInputChange: function () {
-        this.model.set({value: this.getParsedInputValue()});
-        
-        if (this.isEditing) {
-            this.showEditFormattedTime();
-        } else {
-            this.ui.input.val(this.getDisplayValue());
-        }
-        
+        let parsedValue = this.getParsedInputValue();
+        this.model.set('value', parsedValue);
+
+        this.__updateDisplayValue();
         this.reqres.request('panel:close');
     },
 
     getParsedInputValue: function () {
-        var val = this.ui.input.val();
+        let val = this.ui.input.val();
+        let currentValue = this.model.get('value');
 
         if (val === '') {
-            return null;
+            if (this.options.allowEmptyValue) {
+                return null;
+            } else {
+                return currentValue;
+            }
         }
 
-        var format = this.timeEditFormat,
-            currentValue = this.model.get('value'),
+        let format = this.timeEditFormat,
             parsedVal = moment.utc(val, format, true),
             parsedDate;
 
         if (parsedVal.isValid()) {
-            parsedDate = currentValue ?
-                moment.utc(currentValue).utcOffset(this.getOption('timezoneOffset')).hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0).toISOString() :
-                moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).toISOString();
+            if (currentValue) {
+                // Take previously selected date and new time
+                parsedDate = moment.utc(currentValue).utcOffset(this.getOption('timezoneOffset'))
+                    .hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0).toISOString();
+            } else {
+                // Take current date and newly selected time
+                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).toISOString();
+            }
         } else if (currentValue !== '' && currentValue !== null) {
             parsedDate = currentValue;
         } else {
-            parsedDate = null;
+            if (this.options.allowEmptyValue) {
+                parsedDate = null;
+            } else {
+                parsedDate = currentValue;
+            }
         }
 
         return parsedDate;
@@ -102,27 +113,28 @@ export default Marionette.ItemView.extend({
 
     __onValueChange: function () {
         this.setPlaceholder();
-        this.ui.input.val(this.getDisplayValue());
+        this.__updateDisplayValue();
     },
 
     onRender: function () {
         this.setPlaceholder();
         this.setInputPermissions();
-
-        this.ui.input.val(this.getDisplayValue());
+        this.__updateDisplayValue();
     },
 
-    getDisplayValue: function () {
-        var val = this.model.get('value'),
-            formattedVal;
+    __updateDisplayValue: function () {
+        let value = this.model.get('value'),
+            formattedValue;
 
-        if (val === null || val === '') {
-            formattedVal = '';
+        if (value === null || value === '') {
+            formattedValue = '';
         } else {
-            formattedVal = dateHelpers.getDisplayTime(moment.utc(val).utcOffset(this.getOption('timezoneOffset')));
+            formattedValue = dateHelpers.getDisplayTime(moment.utc(value).utcOffset(this.getOption('timezoneOffset')));
         }
 
-        return formattedVal;
+        this.ui.input.val(formattedValue);
+        this.ui.input.blur();
+        this.__onBlur();
     },
 
     setPlaceholder: function () {
@@ -143,8 +155,16 @@ export default Marionette.ItemView.extend({
         this.ui.input.val(editFormattedDate);
     },
 
+    __onFocus: function () {
+        this.trigger('focus');
+    },
+
     __onBlur: function () {
+        if (!this.isEditing) {
+            return;
+        }
         this.isEditing = false;
+        this.trigger('blur');
     },
 
     __onClick: function () {
@@ -155,5 +175,15 @@ export default Marionette.ItemView.extend({
         this.showEditFormattedTime();
         this.reqres.request('panel:open');
         this.isEditing = true;
+    },
+
+    focus: function () {
+        this.__onClick();
+        this.ui.input.focus();
+    },
+
+    blur: function () {
+        this.ui.input.blur();
+        this.__onBlur();
     }
 });
