@@ -8,7 +8,6 @@
 
 "use strict";
 
-import '../../../../../libApi';
 import template from '../templates/date.hbs';
 import dropdownApi from '../../../../../dropdown/dropdownApi';
 import PanelView from './DatePanelView';
@@ -30,7 +29,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow: function () {
-        this.pickerPopout = dropdownApi.factory.createDropdown({
+        this.calendarDropdownView = dropdownApi.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {
                 model: this.model,
@@ -45,30 +44,41 @@ export default Marionette.LayoutView.extend({
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.allowEmptyValue
             },
-            autoOpen: false,
-            panelPosition: 'down'
+            renderAfterClose: false,
+            autoOpen: false
         });
-        this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
-        this.listenTo(this.pickerPopout, 'button:close panel:close', this.__close, this);
-        this.listenTo(this.pickerPopout, 'button:focus', () => this.trigger('focus'));
-        this.listenTo(this.pickerPopout, 'button:blur', () => this.trigger('blur'));
+        this.listenTo(this.calendarDropdownView, 'before:close', this.__onBeforeClose, this);
+        this.listenTo(this.calendarDropdownView, 'open', this.__onOpen, this);
 
-        this.popoutRegion.show(this.pickerPopout);
+        this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
+        this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
+
+        this.popoutRegion.show(this.calendarDropdownView);
     },
 
-    __close: function () {
-        this.pickerPopout.close();
+    __onBeforeClose: function () {
+        this.calendarDropdownView.button.endEditing();
+        this.trigger('blur');
     },
 
-    __open: function () {
-        this.pickerPopout.open();
+    __onOpen: function () {
+        this.calendarDropdownView.button.startEditing();
+        this.trigger('focus');
+    },
+
+    __onPanelSelect: function () {
+        this.calendarDropdownView.close();
+    },
+
+    __onButtonCalendarOpen: function () {
+        this.calendarDropdownView.open();
     },
 
     focus: function () {
-        this.pickerPopout.focus();
+        this.calendarDropdownView.open();
     },
 
     blur: function () {
-        this.pickerPopout.blur();
+        this.calendarDropdownView.close();
     }
 });

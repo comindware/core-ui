@@ -157,6 +157,7 @@ export default Marionette.ItemView.extend({
 
     __onFocus: function () {
         this.trigger('focus');
+        this.__onClick();
     },
 
     __onBlur: function () {
