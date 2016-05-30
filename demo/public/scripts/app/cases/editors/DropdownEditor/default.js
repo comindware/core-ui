@@ -20,8 +20,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 collection: new Backbone.Collection(possibleItems),
                 enableSearch: true
             }),
-            presentation: "{{dropdownValue}}",
-            canvasWidth: '250px'
+            presentation: "{{dropdownValue}}"
         });
     };
 });

@@ -17,9 +17,17 @@ define([
     ],
     function (template, core) {
         'use strict';
-        return Marionette.ItemView.extend({
+        return Marionette.LayoutView.extend({
             className: 'nav-profile_test',
 
-            template: Handlebars.compile(template)
+            regions: {
+                dateEditorRegion: '.js-date-editor-region'
+            },
+
+            template: Handlebars.compile(template),
+
+            onShow: function () {
+                this.dateEditorRegion.show(new core.form.editors.DateTimeEditor());
+            }
         });
     });

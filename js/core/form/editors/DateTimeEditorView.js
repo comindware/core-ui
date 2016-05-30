@@ -15,7 +15,7 @@ import DateView from './impl/dateTime/views/DateView';
 import TimeView from './impl/dateTime/views/TimeView';
 
 const defaultOptions = {
-    enableDelete: false,
+    allowEmptyValue: true,
     timezoneOffset: -new Date().getTimezoneOffset()
 };
 
@@ -27,9 +27,9 @@ const defaultOptions = {
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
- * @param {Boolean} options.enableDelete - Whether to display a delete button that sets the value to <code>null</code>.
+ * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
- * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser (system) local timezone offset.
+ * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
  * */
 Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize: function(options) {
@@ -53,11 +53,11 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
     },
 
     ui: {
-        deleteButton: '.js-clear-button'
+        clearButton: '.js-clear-button'
     },
 
     events: {
-        'click @ui.deleteButton': '__onClear'
+        'click @ui.clearButton': '__onClear'
     },
 
     regions: {
@@ -65,7 +65,7 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
         timeRegion: '.js-time-region'
     },
 
-    className: 'l-field date-time',
+    className: 'editor editor_date-time',
 
     template: template,
 
@@ -75,7 +75,7 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
 
     __change: function () {
         this.__value(this.dateTimeModel.get('value'), true, true);
-        this.updateDelete();
+        this.__updateClearButton();
     },
 
     setValue: function (value) {
@@ -101,14 +101,14 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
 
         this.dateRegion.show(this.dateView);
         this.timeRegion.show(this.timeView);
-        this.updateDelete();
+        this.__updateClearButton();
     },
 
-    updateDelete: function() {
-        if (!this.options.enableDelete || !this.getValue()) {
-            this.ui.deleteButton.hide();
+    __updateClearButton: function() {
+        if (!this.options.allowEmptyValue || !this.getValue()) {
+            this.ui.clearButton.hide();
         } else {
-            this.ui.deleteButton.show();
+            this.ui.clearButton.show();
         }
     },
 

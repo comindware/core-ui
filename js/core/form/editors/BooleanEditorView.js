@@ -44,7 +44,7 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
         'click @ui.displayText': '__toggle'
     },
 
-    className: 'l-checkbox',
+    className: 'editor editor_checkbox',
 
     attributes: {
         'tabindex': '0'
@@ -72,7 +72,7 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
 
     onRender: function () {
         if (this.getValue()) {
-            this.$el.addClass('pr-checked');
+            this.$el.addClass('editor_checked');
         }
     },
 
@@ -82,9 +82,9 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
         }
         this.value = value;
         if (this.value) {
-            this.$el.addClass('pr-checked');
+            this.$el.addClass('editor_checked');
         } else {
-            this.$el.removeClass('pr-checked');
+            this.$el.removeClass('editor_checked');
         }
     }
 });

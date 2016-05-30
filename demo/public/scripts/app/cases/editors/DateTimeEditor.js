@@ -13,7 +13,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 enableDelete: true,
                 timezoneOffset: -60 // minutes
             }),
-            presentation: "'{{dateTimeValue}}'"
+            presentation: "{{#isNull dateTimeValue}}null{{else}}'{{dateTimeValue}}'{{/isNull}}"
         });
     };
 });

@@ -32,7 +32,6 @@ export default Marionette.ItemView.extend({
     className: 'date-view',
 
     ui: {
-        clearButton: '.js-date-remove',
         dateInput: '.js-date-input'
     },
 
@@ -49,7 +48,6 @@ export default Marionette.ItemView.extend({
     events: {
         'mousedown @ui.dateInput': '__handleClick',
         'change @ui.dateInput': '__change',
-        'click @ui.clearButton': '__onClear',
         'blur @ui.dateInput': '__onBlur'
     },
 
@@ -77,25 +75,14 @@ export default Marionette.ItemView.extend({
         } else {
             this.ui.dateInput.prop('readonly', false);
         }
-
-        if (!enabled || readonly) {
-            this.ui.clearButton.hide();
-        } else {
-            this.ui.clearButton.show();
-        }
-    },
-
-    __onClear: function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        this.model.set({value: null});
     },
 
     __change: function () {
         let parsedInputValue = this.getParsedInputValue();
-        if (parsedInputValue != null) {
-            this.updateValue(parsedInputValue);
+        if (parsedInputValue === null) {
+            this.updateValue(null);
+        } else if (parsedInputValue.isValid()) {
+            this.updateValue(parsedInputValue.toDate());
         } else {
             this.updateDisplayValue();
         }
@@ -121,15 +108,19 @@ export default Marionette.ItemView.extend({
     },
 
     getParsedInputValue: function () {
-        var val = this.ui.dateInput.val();
+        let value = this.ui.dateInput.val();
+        if (value === '') {
+            return null;
+        }
+        return moment.utc(value, format, true);
 
-        if (val === '') {
+
+        if (value === '') {
             return null;
         }
 
         var format = this.editDateFormat,
-            currentValue = this.model.get('value'),
-            parsedVal = moment.utc(val, format, true),
+            parsedVal = moment.utc(value, format, true),
             parsedDate;
 
         if (parsedVal.isValid()) {

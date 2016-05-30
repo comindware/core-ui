@@ -101,11 +101,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi2 = _interopRequireDefault(_utilsApi);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -137,13 +137,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LoadingBehavior2 = _interopRequireDefault(_LoadingBehavior);
 	
-	var _BlurableBehavior = __webpack_require__(246);
+	var _BlurableBehavior = __webpack_require__(455);
 	
 	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
-	
-	var _PopupBehavior = __webpack_require__(455);
-	
-	var _PopupBehavior2 = _interopRequireDefault(_PopupBehavior);
 	
 	var _SearchBarView = __webpack_require__(456);
 	
@@ -153,7 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _SplitPanelView2 = _interopRequireDefault(_SplitPanelView);
 	
-	var _FadingPanelView = __webpack_require__(244);
+	var _FadingPanelView = __webpack_require__(245);
 	
 	var _FadingPanelView2 = _interopRequireDefault(_FadingPanelView);
 	
@@ -165,11 +161,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MessageService2 = _interopRequireDefault(_MessageService);
 	
-	var _WindowService = __webpack_require__(243);
+	var _WindowService = __webpack_require__(244);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
-	var _GlobalEventService = __webpack_require__(286);
+	var _GlobalEventService = __webpack_require__(247);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -259,8 +255,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  views: {
 	    behaviors: {
 	      LoadingBehavior: _LoadingBehavior2.default,
-	      BlurableBehavior: _BlurableBehavior2.default,
-	      PopupBehavior: _PopupBehavior2.default
+	      BlurableBehavior: _BlurableBehavior2.default
 	    },
 	    LoadingView: _LoadingView2.default,
 	    SearchBarView: _SearchBarView2.default,
@@ -51338,7 +51333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(230);
 	
-	__webpack_require__(240);
+	__webpack_require__(241);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -52833,31 +52828,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _equal2 = _interopRequireDefault(_equal);
 	
-	var _highlightFragment = __webpack_require__(233);
+	var _isNull = __webpack_require__(233);
+	
+	var _isNull2 = _interopRequireDefault(_isNull);
+	
+	var _highlightFragment = __webpack_require__(234);
 	
 	var _highlightFragment2 = _interopRequireDefault(_highlightFragment);
 	
-	var _localize = __webpack_require__(234);
+	var _localize = __webpack_require__(235);
 	
 	var _localize2 = _interopRequireDefault(_localize);
 	
-	var _localizedText = __webpack_require__(235);
+	var _localizedText = __webpack_require__(236);
 	
 	var _localizedText2 = _interopRequireDefault(_localizedText);
 	
-	var _renderAsHtml = __webpack_require__(236);
+	var _renderAsHtml = __webpack_require__(237);
 	
 	var _renderAsHtml2 = _interopRequireDefault(_renderAsHtml);
 	
-	var _renderFullDate = __webpack_require__(237);
+	var _renderFullDate = __webpack_require__(238);
 	
 	var _renderFullDate2 = _interopRequireDefault(_renderFullDate);
 	
-	var _renderFullDateTime = __webpack_require__(238);
+	var _renderFullDateTime = __webpack_require__(239);
 	
 	var _renderFullDateTime2 = _interopRequireDefault(_renderFullDateTime);
 	
-	var _renderShortDuration = __webpack_require__(239);
+	var _renderShortDuration = __webpack_require__(240);
 	
 	var _renderShortDuration2 = _interopRequireDefault(_renderShortDuration);
 	
@@ -52865,6 +52864,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	_libApi.Handlebars.registerHelper("debug", _debug2.default);
 	_libApi.Handlebars.registerHelper("equal", _equal2.default);
+	_libApi.Handlebars.registerHelper("isNull", _isNull2.default);
 	_libApi.Handlebars.registerHelper("highlightFragment", _highlightFragment2.default);
 	_libApi.Handlebars.registerHelper("localize", _localize2.default);
 	_libApi.Handlebars.registerHelper("localizedText", _localizedText2.default);
@@ -52940,6 +52940,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
+	__webpack_require__(25);
+	
+	module.exports = function (a, options) {
+	    if (_.isNull(a)) {
+	        return options.fn(this);
+	    } else {
+	        return options.inverse(this);
+	    }
+	};
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 9/1/2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	/* global module */
+	
+	"use strict";
+	
 	var _utilsApi = __webpack_require__(220);
 	
 	module.exports = function (text, fragment) {
@@ -52953,7 +52979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -52979,7 +53005,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53005,7 +53031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53035,7 +53061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53057,7 +53083,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53079,7 +53105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53120,7 +53146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53169,7 +53195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(jQuery);
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53186,35 +53212,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _PopoutView = __webpack_require__(242);
+	var _PopoutView = __webpack_require__(243);
 	
 	var _PopoutView2 = _interopRequireDefault(_PopoutView);
 	
-	var _DropdownView = __webpack_require__(267);
+	var _DropdownView = __webpack_require__(268);
 	
 	var _DropdownView2 = _interopRequireDefault(_DropdownView);
 	
-	var _ListPanelView = __webpack_require__(269);
+	var _ListPanelView = __webpack_require__(270);
 	
 	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
 	
-	var _MenuItemView = __webpack_require__(270);
+	var _MenuItemView = __webpack_require__(271);
 	
 	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
 	
-	var _MenuPanelView = __webpack_require__(272);
+	var _MenuPanelView = __webpack_require__(273);
 	
 	var _MenuPanelView2 = _interopRequireDefault(_MenuPanelView);
 	
-	var _DefaultButtonView = __webpack_require__(273);
+	var _DefaultButtonView = __webpack_require__(274);
 	
 	var _DefaultButtonView2 = _interopRequireDefault(_DefaultButtonView);
 	
-	var _CustomAnchorBehavior = __webpack_require__(275);
+	var _CustomAnchorBehavior = __webpack_require__(276);
 	
 	var _CustomAnchorBehavior2 = _interopRequireDefault(_CustomAnchorBehavior);
 	
-	var _factory = __webpack_require__(276);
+	var _factory = __webpack_require__(277);
 	
 	var _factory2 = _interopRequireDefault(_factory);
 	
@@ -53244,7 +53270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53265,15 +53291,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _WindowService = __webpack_require__(243);
+	var _WindowService = __webpack_require__(244);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
-	var _BlurableBehavior = __webpack_require__(246);
+	var _GlobalEventService = __webpack_require__(247);
 	
-	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
+	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
-	var _popout = __webpack_require__(247);
+	var _popout = __webpack_require__(248);
 	
 	var _popout2 = _interopRequireDefault(_popout);
 	
@@ -53289,7 +53315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    FLOW_RIGHT: 'dev-popout-flow-right',
 	    CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
 	    DEFAULT_ANCHOR_BUTTON: 'popout__action',
-	    DEFAULT_ANCHOR: 'dev-default-anchor'
+	    DEFAULT_ANCHOR: 'anchor'
 	};
 	
 	var popoutFlow = {
@@ -53369,16 +53395,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _utilsApi.helpers.ensureOption(options, 'buttonView');
 	        _utilsApi.helpers.ensureOption(options, 'panelView');
 	        _.bindAll(this, 'open', 'close', '__handleWindowResize');
+	        this.listenTo(_GlobalEventService2.default, 'windowClickCaptured', this.__onWindowClickCaptured);
 	    },
 	
 	    template: _popout2.default,
-	
-	    behaviors: {
-	        BlurableBehavior: {
-	            behaviorClass: _BlurableBehavior2.default,
-	            onBlur: 'close'
-	        }
-	    },
 	
 	    className: 'popout',
 	
@@ -53531,7 +53551,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    $(window).on('resize', this.__handleWindowResize);
 	                    this.__handleWindowResize();
 	                }
-	                this.focus();
 	                //noinspection JSValidateTypes
 	                this.isOpen = true;
 	                this.trigger('open', this);
@@ -53555,12 +53574,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            panelHeight = this.panelRegion.$el.height(),
 	            viewportHeight = window.innerHeight,
 	            anchorTopOffset = anchor.offset().top,
-	            anchorBottomOffset = viewportHeight - anchorTopOffset - anchorHeight;
+	            anchorBottomOffset = viewportHeight - anchorTopOffset - anchorHeight,
+	            anchorButtonOffset = anchor.offset().top - this.ui.button.offset().top;
 	
 	        if (this.currentDirection === popoutDirection.UP || anchorBottomOffset < panelHeight) {
 	            this.currentDirection = popoutDirection.UP;
 	            this.panelRegion.$el.css({
-	                top: -panelHeight
+	                top: anchorButtonOffset - panelHeight
 	            });
 	            this.updateDirectionClasses();
 	        }
@@ -53568,7 +53588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.currentDirection === popoutDirection.DOWN || anchorTopOffset < panelHeight) {
 	            this.currentDirection = popoutDirection.DOWN;
 	            this.panelRegion.$el.css({
-	                top: anchorHeight
+	                top: anchorButtonOffset + anchorHeight
 	            });
 	            this.updateDirectionClasses();
 	        }
@@ -53588,13 +53608,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        if (this.options.height === height.BOTTOM) {
 	            $(window).off('resize', this.__handleWindowResize);
-	        }
-	
-	        // selecting focusable parent after closing is important to maintant nested dropdowns
-	        // focused element MUST be changed BEFORE active element is hidden or destroyed (!)
-	        var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
-	        if (firstFocusableParent) {
-	            $(firstFocusableParent).focus();
 	        }
 	
 	        var closeArgs = _.toArray(arguments);
@@ -53618,11 +53631,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var outlineDiff = this.panelView.$el.outerHeight() - this.panelView.$el.height();
 	        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff;
 	        this.panelView.$el.height(panelHeight);
+	    },
+	
+	    __onWindowClickCaptured: function __onWindowClickCaptured(target) {
+	        // Window object captured a click. We possibly need to close the popup.
+	        if (this.isOpen && !(this.el === target || $.contains(this.el, target))) {
+	            this.close();
+	        }
 	    }
 	});
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53643,13 +53663,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _FadingPanelView = __webpack_require__(244);
+	var _FadingPanelView = __webpack_require__(245);
 	
 	var _FadingPanelView2 = _interopRequireDefault(_FadingPanelView);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var state = {};
+	var self = {};
 	
 	var classes = {
 	    HIDDEN: 'hidden'
@@ -53661,37 +53681,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _utilsApi.helpers.ensureOption(options, 'popupRegion');
 	        _utilsApi.helpers.ensureOption(options, 'ui');
 	
-	        state.options = options;
-	        state.fadingRegion = options.fadingRegion;
-	        state.popupRegion = options.popupRegion;
-	        state.ui = options.ui;
+	        self.options = options;
+	        self.fadingRegion = options.fadingRegion;
+	        self.popupRegion = options.popupRegion;
+	        self.ui = options.ui;
 	
-	        state.fadingPanelView = new _FadingPanelView2.default();
-	        state.fadingRegion.show(state.fadingPanelView);
-	        this.listenTo(state.fadingPanelView, 'click', this.__onFadingPanelClick);
+	        self.fadingPanelView = new _FadingPanelView2.default();
+	        self.fadingRegion.show(self.fadingPanelView);
+	        this.listenTo(self.fadingPanelView, 'click', this.__onFadingPanelClick);
 	    },
 	
 	    showPopup: function showPopup(view, options) {
-	        this.fadeIn(options);
-	        state.ui.popupRegion.removeClass(classes.HIDDEN);
-	        state.popupRegion.show(view);
+	        this.fadeIn({
+	            fadeOut: false
+	        });
+	        self.ui.popupRegion.removeClass(classes.HIDDEN);
+	        self.popupRegion.show(view);
 	    },
 	
 	    closePopup: function closePopup() {
 	        this.fadeOut();
-	        state.popupRegion.reset();
-	        state.ui.popupRegion.addClass(classes.HIDDEN);
+	        self.popupRegion.reset();
+	        self.ui.popupRegion.addClass(classes.HIDDEN);
 	    },
 	
 	    fadeIn: function fadeIn(options) {
-	        state.ui.fadingRegion.removeClass(classes.HIDDEN);
-	        state.fadingPanelView.fadeIn(options);
+	        self.ui.fadingRegion.removeClass(classes.HIDDEN);
+	        self.fadingPanelView.fadeIn(options);
 	    },
 	
 	    fadeOut: function fadeOut() {
-	        state.fadingPanelView.fadeOut();
-	        state.ui.fadingRegion.addClass(classes.HIDDEN);
-	        this.trigger('fadeOut');
+	        self.fadingPanelView.fadeOut();
+	        self.ui.fadingRegion.addClass(classes.HIDDEN);
 	    },
 	
 	    __onFadingPanelClick: function __onFadingPanelClick(view, options) {
@@ -53706,7 +53727,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = windowService;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -53725,7 +53746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _fadingPanel = __webpack_require__(245);
+	var _fadingPanel = __webpack_require__(246);
 	
 	var _fadingPanel2 = _interopRequireDefault(_fadingPanel);
 	
@@ -53758,18 +53779,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports) {
 
 	module.exports = function(){return "";};
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Developer: Stepan Burguchev
-	 * Date: 9/7/2015
+	 * Date: 7/17/2015
 	 * Copyright: 2009-2016 Comindware®
 	 *       All Rights Reserved
 	 * Published under the MIT license
@@ -53783,91 +53804,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _utilsApi = __webpack_require__(220);
+	var $window = $(window);
 	
-	var defaultOptions = {
-	    selector: null,
-	    allowNestedFocus: true,
-	    onBlur: null
-	};
+	var GlobalEventsService = Marionette.Object.extend({
+	    initialize: function initialize() {
+	        _.bindAll(this, '__onResize', '__onWindowClickCaptured');
 	
-	exports.default = Marionette.Behavior.extend({
-	    initialize: function initialize(options, view) {
-	        _utilsApi.helpers.ensureOption(options, 'onBlur');
-	
-	        _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-	
-	        _.bindAll(this, '__onBlur');
-	
-	        view.focus = this.__focus.bind(this);
+	        $window.on('resize', this.__onResize);
+	        window.addEventListener('click', this.__onWindowClickCaptured, true);
 	    },
 	
-	    modelEvents: {},
-	
-	    events: function events() {
-	        var eventsMap = {};
-	        var key = 'blur';
-	        if (this.options.selector) {
-	            key += ' ' + this.options.selector;
-	        }
-	        eventsMap[key] = '__onBlur';
-	        return eventsMap;
+	    onDestroy: function onDestroy() {
+	        $window.off('resize');
+	        window.removeEventListener('click', this.__onWindowClickCaptured, true);
 	    },
 	
-	    onRender: function onRender() {
-	        this.__getFocusableEl().attr('tabindex', 0);
+	    __onWindowClickCaptured: function __onWindowClickCaptured(e) {
+	        this.trigger('windowClickCaptured', e.target, e);
 	    },
 	
-	    __getFocusableEl: function __getFocusableEl() {
-	        if (this.options.selector) {
-	            return this.$(this.options.selector);
-	        } else {
-	            return this.$el;
-	        }
-	    },
-	
-	    __focus: function __focus() {
-	        this.__getFocusableEl().focus();
-	    },
-	
-	    __onBlur: function __onBlur() {
-	        var $focusableEl = this.__getFocusableEl();
-	        _.defer(function () {
-	            if ($focusableEl[0] === document.activeElement || $focusableEl.find(document.activeElement).length > 0) {
-	                $(document.activeElement).one('blur', this.__onBlur);
-	            } else {
-	                var callback = this.options.onBlur;
-	                if (_.isString(callback)) {
-	                    this.view[callback].call(this.view);
-	                } else {
-	                    callback.call(this.view);
-	                }
-	            }
-	        }.bind(this));
+	    __onResize: function __onResize(e) {
+	        this.trigger('resize', e);
 	    }
 	});
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Handlebars = __webpack_require__(248);
-	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
-	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-button-region\"></div>\r\n<div class=\"popout__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>";
-	},"useData":true});
+	
+	exports.default = new GlobalEventsService();
 
 /***/ },
 /* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// Create a simple path alias to allow browserify to resolve
-	// the runtime on a supported path.
-	module.exports = __webpack_require__(249)['default'];
-
+	var Handlebars = __webpack_require__(249);
+	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    return "<div class=\"dropdown__button js-button-region\"></div>\r\n<div class=\"popout__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>";
+	},"useData":true});
 
 /***/ },
 /* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Create a simple path alias to allow browserify to resolve
+	// the runtime on a supported path.
+	module.exports = __webpack_require__(250)['default'];
+
+
+/***/ },
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53881,30 +53864,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 	
-	var _handlebarsBase = __webpack_require__(250);
+	var _handlebarsBase = __webpack_require__(251);
 	
 	var base = _interopRequireWildcard(_handlebarsBase);
 	
 	// Each of these augment the Handlebars object. No need to setup here.
 	// (This is done to easily share code between commonjs and browse envs)
 	
-	var _handlebarsSafeString = __webpack_require__(264);
+	var _handlebarsSafeString = __webpack_require__(265);
 	
 	var _handlebarsSafeString2 = _interopRequireDefault(_handlebarsSafeString);
 	
-	var _handlebarsException = __webpack_require__(252);
+	var _handlebarsException = __webpack_require__(253);
 	
 	var _handlebarsException2 = _interopRequireDefault(_handlebarsException);
 	
-	var _handlebarsUtils = __webpack_require__(251);
+	var _handlebarsUtils = __webpack_require__(252);
 	
 	var Utils = _interopRequireWildcard(_handlebarsUtils);
 	
-	var _handlebarsRuntime = __webpack_require__(265);
+	var _handlebarsRuntime = __webpack_require__(266);
 	
 	var runtime = _interopRequireWildcard(_handlebarsRuntime);
 	
-	var _handlebarsNoConflict = __webpack_require__(266);
+	var _handlebarsNoConflict = __webpack_require__(267);
 	
 	var _handlebarsNoConflict2 = _interopRequireDefault(_handlebarsNoConflict);
 	
@@ -53939,7 +53922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53950,17 +53933,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
-	var _exception = __webpack_require__(252);
+	var _exception = __webpack_require__(253);
 	
 	var _exception2 = _interopRequireDefault(_exception);
 	
-	var _helpers = __webpack_require__(253);
+	var _helpers = __webpack_require__(254);
 	
-	var _decorators = __webpack_require__(261);
+	var _decorators = __webpack_require__(262);
 	
-	var _logger = __webpack_require__(263);
+	var _logger = __webpack_require__(264);
 	
 	var _logger2 = _interopRequireDefault(_logger);
 	
@@ -54049,7 +54032,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -54179,7 +54162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -54225,7 +54208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54236,31 +54219,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _helpersBlockHelperMissing = __webpack_require__(254);
+	var _helpersBlockHelperMissing = __webpack_require__(255);
 	
 	var _helpersBlockHelperMissing2 = _interopRequireDefault(_helpersBlockHelperMissing);
 	
-	var _helpersEach = __webpack_require__(255);
+	var _helpersEach = __webpack_require__(256);
 	
 	var _helpersEach2 = _interopRequireDefault(_helpersEach);
 	
-	var _helpersHelperMissing = __webpack_require__(256);
+	var _helpersHelperMissing = __webpack_require__(257);
 	
 	var _helpersHelperMissing2 = _interopRequireDefault(_helpersHelperMissing);
 	
-	var _helpersIf = __webpack_require__(257);
+	var _helpersIf = __webpack_require__(258);
 	
 	var _helpersIf2 = _interopRequireDefault(_helpersIf);
 	
-	var _helpersLog = __webpack_require__(258);
+	var _helpersLog = __webpack_require__(259);
 	
 	var _helpersLog2 = _interopRequireDefault(_helpersLog);
 	
-	var _helpersLookup = __webpack_require__(259);
+	var _helpersLookup = __webpack_require__(260);
 	
 	var _helpersLookup2 = _interopRequireDefault(_helpersLookup);
 	
-	var _helpersWith = __webpack_require__(260);
+	var _helpersWith = __webpack_require__(261);
 	
 	var _helpersWith2 = _interopRequireDefault(_helpersWith);
 	
@@ -54277,14 +54260,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('blockHelperMissing', function (context, options) {
@@ -54322,7 +54305,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54332,9 +54315,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
-	var _exception = __webpack_require__(252);
+	var _exception = __webpack_require__(253);
 	
 	var _exception2 = _interopRequireDefault(_exception);
 	
@@ -54422,7 +54405,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54432,7 +54415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _exception = __webpack_require__(252);
+	var _exception = __webpack_require__(253);
 	
 	var _exception2 = _interopRequireDefault(_exception);
 	
@@ -54453,14 +54436,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('if', function (conditional, options) {
@@ -54488,7 +54471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -54520,7 +54503,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -54538,14 +54521,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('with', function (context, options) {
@@ -54577,7 +54560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54588,7 +54571,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _decoratorsInline = __webpack_require__(262);
+	var _decoratorsInline = __webpack_require__(263);
 	
 	var _decoratorsInline2 = _interopRequireDefault(_decoratorsInline);
 	
@@ -54599,14 +54582,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
 	exports['default'] = function (instance) {
 	  instance.registerDecorator('inline', function (fn, props, container, options) {
@@ -54634,14 +54617,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	exports.__esModule = true;
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
 	var logger = {
 	  methodMap: ['debug', 'info', 'warn', 'error'],
@@ -54687,7 +54670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports) {
 
 	// Build out our basic SafeString type
@@ -54708,7 +54691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54728,15 +54711,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 	
-	var _utils = __webpack_require__(251);
+	var _utils = __webpack_require__(252);
 	
 	var Utils = _interopRequireWildcard(_utils);
 	
-	var _exception = __webpack_require__(252);
+	var _exception = __webpack_require__(253);
 	
 	var _exception2 = _interopRequireDefault(_exception);
 	
-	var _base = __webpack_require__(250);
+	var _base = __webpack_require__(251);
 	
 	function checkRevision(compilerInfo) {
 	  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
@@ -55006,7 +54989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
@@ -55033,7 +55016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55054,7 +55037,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _dropdown = __webpack_require__(268);
+	var _dropdown = __webpack_require__(269);
 	
 	var _dropdown2 = _interopRequireDefault(_dropdown);
 	
@@ -55168,10 +55151,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	            args[0] = 'button:' + args[0];
 	            this.triggerMethod.apply(this, args);
 	        });
-	        this.buttonRegion.show(this.button);
 	
 	        this.currentPosition = this.options.panelPosition;
 	        this.updatePositionClasses();
+	        if (this.isShown) {
+	            this.buttonRegion.show(this.button);
+	        }
+	    },
+	
+	    onShow: function onShow() {
+	        this.buttonRegion.show(this.button);
+	        this.isShown = true;
 	    },
 	
 	    updatePositionClasses: function updatePositionClasses() {
@@ -55306,7 +55296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                this.trigger.apply(this, ['close', this].concat(closeArgs));
 	                if (this.options.renderAfterClose) {
-	                    this.render();
+	                    this.button.render();
 	                }
 	            }.bind(this)
 	        });
@@ -55330,17 +55320,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-button-region\"></div>\r\n<div class=\"dropdown__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>\r\n";
+	    return "<div class=\"dropdown__button js-button-region\"></div>\r\n<div class=\"dropdown__wrp js-panel-region\" tabindex=\"0\" style=\"display: none\"></div>\r\n";
 	},"useData":true});
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55375,7 +55365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55394,7 +55384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _menuItem = __webpack_require__(271);
+	var _menuItem = __webpack_require__(272);
 	
 	var _menuItem2 = _interopRequireDefault(_menuItem);
 	
@@ -55427,10 +55417,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
@@ -55453,7 +55443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55470,11 +55460,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _ListPanelView = __webpack_require__(269);
+	var _ListPanelView = __webpack_require__(270);
 	
 	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
 	
-	var _MenuItemView = __webpack_require__(270);
+	var _MenuItemView = __webpack_require__(271);
 	
 	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
 	
@@ -55518,7 +55508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55537,7 +55527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _defaultButton = __webpack_require__(274);
+	var _defaultButton = __webpack_require__(275);
 	
 	var _defaultButton2 = _interopRequireDefault(_defaultButton);
 	
@@ -55568,10 +55558,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -55580,7 +55570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55600,7 +55590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(25);
 	
 	var classes = {
-	    ANCHOR: 'dropdown__anchor'
+	    ANCHOR: 'anchor anchor_inline'
 	};
 	
 	/**
@@ -55635,7 +55625,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55652,27 +55642,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _PopoutView = __webpack_require__(242);
+	var _PopoutView = __webpack_require__(243);
 	
 	var _PopoutView2 = _interopRequireDefault(_PopoutView);
 	
-	var _ListPanelView = __webpack_require__(269);
+	var _ListPanelView = __webpack_require__(270);
 	
 	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
 	
-	var _MenuItemView = __webpack_require__(270);
+	var _MenuItemView = __webpack_require__(271);
 	
 	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
 	
-	var _DefaultButtonView = __webpack_require__(273);
+	var _DefaultButtonView = __webpack_require__(274);
 	
 	var _DefaultButtonView2 = _interopRequireDefault(_DefaultButtonView);
 	
-	var _MenuPanelView = __webpack_require__(272);
+	var _MenuPanelView = __webpack_require__(273);
 	
 	var _MenuPanelView2 = _interopRequireDefault(_MenuPanelView);
 	
-	var _DropdownView = __webpack_require__(267);
+	var _DropdownView = __webpack_require__(268);
 	
 	var _DropdownView2 = _interopRequireDefault(_DropdownView);
 	
@@ -55765,7 +55755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -55784,23 +55774,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _EventAggregator = __webpack_require__(278);
+	var _EventAggregator = __webpack_require__(279);
 	
 	var _EventAggregator2 = _interopRequireDefault(_EventAggregator);
 	
-	var _EmptyListView = __webpack_require__(279);
+	var _EmptyListView = __webpack_require__(280);
 	
 	var _EmptyListView2 = _interopRequireDefault(_EmptyListView);
 	
-	var _EmptyGridView = __webpack_require__(281);
+	var _EmptyGridView = __webpack_require__(282);
 	
 	var _EmptyGridView2 = _interopRequireDefault(_EmptyGridView);
 	
-	var _GridColumnHeaderView = __webpack_require__(282);
+	var _GridColumnHeaderView = __webpack_require__(283);
 	
 	var _GridColumnHeaderView2 = _interopRequireDefault(_GridColumnHeaderView);
 	
-	var _GridHeaderView = __webpack_require__(284);
+	var _GridHeaderView = __webpack_require__(285);
 	
 	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
 	
@@ -55905,7 +55895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -56032,7 +56022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -56051,7 +56041,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _emptyGrid = __webpack_require__(280);
+	var _emptyGrid = __webpack_require__(281);
 	
 	var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
 	
@@ -56087,10 +56077,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = EmptyListView;
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -56099,7 +56089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -56118,7 +56108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _emptyGrid = __webpack_require__(280);
+	var _emptyGrid = __webpack_require__(281);
 	
 	var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
 	
@@ -56152,7 +56142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -56171,7 +56161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _gridcolumnheader = __webpack_require__(283);
+	var _gridcolumnheader = __webpack_require__(284);
 	
 	var _gridcolumnheader2 = _interopRequireDefault(_gridcolumnheader);
 	
@@ -56217,10 +56207,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GridColumnHeaderView;
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return " <span class=\"sort_down\"></span>";
@@ -56237,7 +56227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"useData":true});
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -56256,11 +56246,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _gridheader = __webpack_require__(285);
+	var _gridheader = __webpack_require__(286);
 	
 	var _gridheader2 = _interopRequireDefault(_gridheader);
 	
-	var _GlobalEventService = __webpack_require__(286);
+	var _GlobalEventService = __webpack_require__(247);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -56301,8 +56291,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
 	        this.columns = options.columns;
 	        this.$document = $(document);
-	        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', '__handleResize');
-	        this.listenTo(_GlobalEventService2.default, 'resize', this.__handleResize);
+	        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
+	        this.listenTo(_GlobalEventService2.default, 'resize', this.handleResize);
 	    },
 	
 	    template: _gridheader2.default,
@@ -56474,23 +56464,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            var fullSum = 0;
 	            index = ctx.draggedColumn.index + 1;
-	            for (var i = 0; i < ctx.affectedColumns.length; i++) {
-	                var c = ctx.affectedColumns[i];
+	            for (var _i = 0; _i < ctx.affectedColumns.length; _i++) {
+	                var _c = ctx.affectedColumns[_i];
 	                if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
-	                    var delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-	                    this.columns[index].absWidth -= delta;
+	                    var _delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
+	                    this.columns[index].absWidth -= _delta;
 	                }
 	
 	                fullSum += this.columns[index].absWidth;
 	
-	                if (i === ctx.affectedColumns.length - 1) {
+	                if (_i === ctx.affectedColumns.length - 1) {
 	                    var sumDelta = ctx.fullWidth - ctx.unaffectedWidth - this.columns[ctx.draggedColumn.index].absWidth - fullSum;
 	                    this.columns[index].absWidth += sumDelta;
 	                }
 	
 	                var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
 	                this.columns[index].width = newColumnWidthPc;
-	                c.$el.outerWidth(this.columns[index].absWidth);
+	                _c.$el.outerWidth(this.columns[index].absWidth);
 	                changes[index] = this.columns[index].absWidth;
 	                index++;
 	            }
@@ -56506,40 +56496,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return false;
 	    },
 	
-	    __handleResize: function __handleResize() {
+	    handleResize: function handleResize() {
 	        this.__handleResizeInternal();
 	        this.gridEventAggregator.trigger('columnsResize');
 	    },
 	
 	    __getFullWidth: function __getFullWidth() {
-	        return this.$el.parent().width() - 1; //Magic cross browser pixel, don't remove it
+	        return this.$el.parent().width() - 2; // Magic cross browser pixels, don't remove them
 	    },
 	
 	    __handleResizeInternal: function __handleResizeInternal() {
 	        var fullWidth = this.__getFullWidth(),
-	            columnWidth = fullWidth / this.columns.length;
+	            // Grid header's full width
+	        columnWidth = fullWidth / this.columns.length,
+	            // Default column width
+	        sumWidth = 0; // Columns' sum width
 	
-	        this.ui.gridHeaderColumn.each(function (i, el) {
+	        // Iterate all but first columns counting their sum width
+	        this.ui.gridHeaderColumn.not(':first').each(function (i, el) {
 	            var child = $(el);
-	            var col = this.columns[i];
+	            var col = this.columns[i + 1];
 	            if (col.width) {
-	                col.absWidth = col.width * fullWidth;
-	                child.outerWidth(col.absWidth);
+	                // If column has it's custom width
+	                col.absWidth = Math.floor(col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
 	            } else {
-	                col.absWidth = columnWidth;
-	                child.outerWidth(col.absWidth);
-	            }
+	                    col.absWidth = Math.floor(columnWidth); // Otherwise take default column width (rounding it down)
+	                }
+	            child.outerWidth(col.absWidth); // Set absolute column width
+	            sumWidth += col.absWidth; // And add it to columns' sum width
 	        }.bind(this));
+	
+	        // Take remaining (or only) first column to calculate it's absolute width as difference between grid header's full width and
+	        // other columns' sum width. This logic is necessary because other columns' widths may have been rounded down during calculations
+	        if (this.columns.length) {
+	            this.columns[0].absWidth = Math.floor(fullWidth - sumWidth); // Calculate remainig (or only) first column's absolute width
+	            this.ui.gridHeaderColumn.first().outerWidth(this.columns[0].absWidth); // And set it
+	        }
 	    }
 	});
 	
 	exports.default = GridHeaderView;
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
@@ -56554,46 +56556,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 	},"useData":true});
-
-/***/ },
-/* 286 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/17/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(25);
-	
-	var $window = $(window);
-	
-	var GlobalEventsService = Marionette.Object.extend({
-	    initialize: function initialize() {
-	        _.bindAll(this, '__onResize');
-	
-	        $window.resize(this.__onResize);
-	    },
-	
-	    onDestroy: function onDestroy() {
-	        $window.off('resize');
-	    },
-	
-	    __onResize: function __onResize(e) {
-	        this.trigger('resize', e);
-	    }
-	});
-	
-	exports.default = new GlobalEventsService();
 
 /***/ },
 /* 287 */
@@ -56629,7 +56591,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _RowView2 = _interopRequireDefault(_RowView);
 	
-	var _GridHeaderView = __webpack_require__(284);
+	var _GridHeaderView = __webpack_require__(285);
 	
 	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
 	
@@ -56838,6 +56800,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        this.onColumnSort(column, this.collection.comparator);
 	        this.headerView.updateSorting();
+	    },
+	
+	    handleResize: function handleResize() {
+	        this.headerView.handleResize();
 	    }
 	});
 	
@@ -56847,7 +56813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"grid-header-view\"></div>\r\n<div class=\"grid-content-view\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>";
@@ -57252,7 +57218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"visible-collection-view\" tabindex=\"0\"></div>";
@@ -58105,10 +58071,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN",{"name":"localize","hash":{},"data":data}));
+	    return container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN",{"name":"localize","hash":{},"data":data}));
 	},"useData":true});
 
 /***/ },
@@ -58156,10 +58122,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.GRID.LOADINGROW.LOADING",{"name":"localize","hash":{},"data":data}));
+	    return container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.GRID.LOADINGROW.LOADING",{"name":"localize","hash":{},"data":data}));
 	},"useData":true});
 
 /***/ },
@@ -58527,7 +58493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"dragger\"></div>";
@@ -58902,15 +58868,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ScrollbarView2 = _interopRequireDefault(_ScrollbarView);
 	
-	var _EmptyListView = __webpack_require__(279);
+	var _EmptyListView = __webpack_require__(280);
 	
 	var _EmptyListView2 = _interopRequireDefault(_EmptyListView);
 	
-	var _EmptyGridView = __webpack_require__(281);
+	var _EmptyGridView = __webpack_require__(282);
 	
 	var _EmptyGridView2 = _interopRequireDefault(_EmptyGridView);
 	
-	var _EventAggregator = __webpack_require__(278);
+	var _EventAggregator = __webpack_require__(279);
 	
 	var _EventAggregator2 = _interopRequireDefault(_EventAggregator);
 	
@@ -58918,7 +58884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GridView2 = _interopRequireDefault(_GridView);
 	
-	var _GridColumnHeaderView = __webpack_require__(282);
+	var _GridColumnHeaderView = __webpack_require__(283);
 	
 	var _GridColumnHeaderView2 = _interopRequireDefault(_GridColumnHeaderView);
 	
@@ -59921,11 +59887,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
 	
-	var _factory = __webpack_require__(276);
+	var _factory = __webpack_require__(277);
 	
 	var _factory2 = _interopRequireDefault(_factory);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -60113,7 +60079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-popout-region dev-popout-region\"></div>\r\n<div class=\"js-native-grid-header-region dev-native-grid-header\"></div>\r\n<div class=\"js-native-grid-list-region dev-native-grid-list\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>\r\n";
@@ -60147,11 +60113,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _GridHeaderView = __webpack_require__(284);
+	var _GridHeaderView = __webpack_require__(285);
 	
 	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
 	
-	var _GlobalEventService = __webpack_require__(286);
+	var _GlobalEventService = __webpack_require__(247);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -60658,11 +60624,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _GridHeaderView = __webpack_require__(284);
+	var _GridHeaderView = __webpack_require__(285);
 	
 	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
 	
-	var _GlobalEventService = __webpack_require__(286);
+	var _GlobalEventService = __webpack_require__(247);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -60899,7 +60865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"grid-header-column\">\r\n    <div class=\"grid-header-column-content-view\"></div>\r\n    <div class=\"grid-header-dragger\"></div>\r\n</div>\r\n";
@@ -60933,7 +60899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _GridColumnHeaderView = __webpack_require__(282);
+	var _GridColumnHeaderView = __webpack_require__(283);
 	
 	var _GridColumnHeaderView2 = _interopRequireDefault(_GridColumnHeaderView);
 	
@@ -61016,7 +60982,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return "<span class=\"js-filter-btn filter-sort-btn\"></span>";
@@ -61771,7 +61737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -61792,8 +61758,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var classes = {
 	    REQUIRED: 'required',
 	    READONLY: 'readonly',
-	    HIDDEN: 'fr-hidden',
 	    DISABLED: 'disabled'
+	};
+	
+	var ui = {
+	    errorText: '.js-error-text'
 	};
 	
 	exports.default = Backbone.Form.Field.extend({
@@ -61841,41 +61810,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 	        this.$el.addClass(this.errorClassName);
-	        if (this.fieldErrorModel) {
-	            this.fieldErrorModel.set('text', msg);
-	        }
+	        this.$(ui.errorText).text(msg);
 	    },
 	
 	    clearError: function clearError() {
 	        this.$el.removeClass(this.errorClassName);
-	        if (this.fieldErrorModel) {
-	            this.fieldErrorModel.set('text', '');
-	        }
+	        this.$(ui.errorText).text('');
 	    },
 	
 	    render: function render() {
 	        Backbone.Form.Field.prototype.render.apply(this, arguments);
-	        if (this.schema.validators) {
-	            this.fieldErrorModel = new _FieldInfoModel2.default({
-	                text: '',
-	                error: true
-	            });
-	            var errorPopout = _dropdownApi2.default.factory.createPopout({
-	                panelView: _InfoMessageView2.default,
-	                panelViewOptions: {
-	                    model: this.fieldErrorModel
-	                },
-	                buttonView: _InfoButtonView2.default,
-	                buttonViewOptions: {
-	                    model: this.fieldErrorModel
-	                },
-	                popoutFlow: 'right',
-	                customAnchor: true
-	            });
-	            errorPopout.render();
-	            this.$('.js-field-error').append(errorPopout.$el);
-	            errorPopout.onRender();
-	        }
 	        if (this.schema.helpText) {
 	            this.fieldInfoModel = new _FieldInfoModel2.default({
 	                text: this.schema.helpText
@@ -61899,9 +61843,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.schema.required) {
 	            this.$el.addClass(classes.REQUIRED);
 	        }
-	        if (this.schema.hidden) {
-	            this.$el.addClass(classes.HIDDEN);
-	        }
 	        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
 	        return this;
 	    },
@@ -61918,14 +61859,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
 	
-	  return "<div class=\"l-field-view\">\r\n    <div class=\"h3-field\">\r\n        <span class=\"js-field-error h3-field__error\"></span>\r\n        <span class=\"h3-field__txt\">"
+	  return "<div class=\"form-group\">\r\n    <div class=\"form-label\">\r\n        <span class=\"js-field-error form-label__error\"></span>\r\n        <span class=\"form-label__txt\">"
 	    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"title","hash":{},"data":data}) : helper)))
-	    + "</span>\r\n        <span class=\"js-field-info h3-field__info\"></span>\r\n    </div>\r\n    <div data-editor class=\"field-view\"></div>\r\n</div>";
+	    + "</span>\r\n        <span class=\"js-field-info form-label__info\"></span>\r\n    </div>\r\n    <div data-editor class=\"form-editor\"></div>\r\n    <div class=\"js-error-text form-error\"></div>\r\n</div>";
 	},"useData":true});
 
 /***/ },
@@ -61983,7 +61924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -62009,7 +61950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<span class=\"js-anchor\">(?)</span>";
@@ -62019,7 +61960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<span class=\"js-anchor dropdown__anchor_error\"></span>";
@@ -62126,9 +62067,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(25);
 	
 	var classes = {
-	    disabled: 'l-field_disabled',
-	    readonly: 'l-field_readonly',
-	    FOCUSED: 'l-field_focused'
+	    disabled: 'editor_disabled',
+	    readonly: 'editor_readonly',
+	    FOCUSED: 'editor_focused',
+	    EMPTY: 'editor_empty'
 	};
 	
 	var onFocus = function onFocus() {
@@ -62161,6 +62103,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.$el.on('focus', onFocus.bind(this));
 	        this.$el.on('blur', onBlur.bind(this));
 	    }
+	    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
+	};
+	
+	var onChange = function onChange() {
+	    if (this.schema.autocommit) {
+	        this.commit({});
+	    }
+	    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
 	};
 	
 	/**
@@ -62240,11 +62190,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this.validators = options.validators || schema.validators;
 	
 	                    this.on('render', onRender.bind(this));
+	                    this.on('change', onChange.bind(this));
 	
 	                    schema.autocommit = schema.autocommit || options.autocommit;
-	                    if (schema.autocommit) {
-	                        this.on('change', this.commit.bind(this, {}));
-	                    }
 	
 	                    this.enabled = schema.enabled = schema.enabled || options.enabled || schema.enabled === undefined && options.enabled === undefined;
 	                    this.readonly = schema.readonly = schema.readonly || options.readonly || schema.readonly !== undefined && options.readonly !== undefined;
@@ -62418,6 +62366,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                    this.trigger(this.key + ':committed', this, this.model, this.getValue());
 	                    this.trigger('value:committed', this, this.model, this.key, this.getValue());
+	                },
+	
+	                isEmpty: function isEmpty() {
+	                    return !this.getValue();
 	                },
 	
 	                /**
@@ -62656,7 +62608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'click @ui.displayText': '__toggle'
 	    },
 	
-	    className: 'l-checkbox',
+	    className: 'editor editor_checkbox',
 	
 	    attributes: {
 	        'tabindex': '0'
@@ -62684,7 +62636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        if (this.getValue()) {
-	            this.$el.addClass('pr-checked');
+	            this.$el.addClass('editor_checked');
 	        }
 	    },
 	
@@ -62694,9 +62646,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        this.value = value;
 	        if (this.value) {
-	            this.$el.addClass('pr-checked');
+	            this.$el.addClass('editor_checked');
 	        } else {
-	            this.$el.removeClass('pr-checked');
+	            this.$el.removeClass('editor_checked');
 	        }
 	    }
 	});
@@ -62707,7 +62659,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -62798,7 +62750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    focusElement: '.js-input',
 	
-	    className: 'l-field l-field_number',
+	    className: 'editor editor_number',
 	
 	    ui: {
 	        input: '.js-input',
@@ -63069,10 +63021,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<input class=\"field field_number js-input\" type=\"text\">\r\n<div class=\"number-button number-button_up js-spinner-up js-spinner-button\"></div>\r\n<div class=\"number-button number-button_down js-spinner-down js-spinner-button\"></div>\r\n";
+	    return "<input class=\"input input_number js-input\" type=\"text\">\r\n<div class=\"number-btn number-btn_up js-spinner-up js-spinner-button\"></div>\r\n<div class=\"number-btn number-btn_down js-spinner-down js-spinner-button\"></div>\r\n";
 	},"useData":true});
 
 /***/ },
@@ -63170,7 +63122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    focusElement: '.js-textarea',
-	    className: 'l-field l-field_textarea',
+	    className: 'editor editor_textarea',
 	
 	    ui: {
 	        textarea: '.js-textarea'
@@ -63226,6 +63178,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
 	        switch (this.options.size) {
 	            case size.auto:
+	                if (!_utilsApi.htmlHelpers.isElementInDom(this.el)) {
+	                    _utilsApi.helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
+	                }
 	                this.ui.textarea.autosize({ append: '' });
 	                break;
 	            case size.fixed:
@@ -63344,7 +63299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -63460,7 +63415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        input: '.js-input'
 	    },
 	
-	    className: 'l-field',
+	    className: 'editor',
 	
 	    template: _textEditor2.default,
 	
@@ -63576,7 +63531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -63587,7 +63542,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<input type=\"text\"\r\n       class=\"field js-input\"\r\n       placeholder=\""
+	  return "<input type=\"text\"\r\n       class=\"input js-input\"\r\n       placeholder=\""
 	    + container.escapeExpression(((helper = (helper = helpers.placeholder || (depth0 != null ? depth0.placeholder : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"placeholder","hash":{},"data":data}) : helper)))
 	    + "\"\r\n       "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.maxLength : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -63640,7 +63595,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -63651,7 +63606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
-	  return "<input type=\"Password\"\r\n       class=\"field js-input\"\r\n       placeholder=\""
+	  return "<input type=\"Password\"\r\n       class=\"input js-input\"\r\n       placeholder=\""
 	    + container.escapeExpression(((helper = (helper = helpers.placeholder || (depth0 != null ? depth0.placeholder : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"placeholder","hash":{},"data":data}) : helper)))
 	    + "\"\r\n       "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.maxLength : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -63678,7 +63633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(25);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -63786,7 +63741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dropdownRegion: '.js-dropdown-region'
 	    },
 	
-	    className: 'pr-reference-editor',
+	    className: 'editor editor_reference',
 	
 	    template: _referenceEditor2.default,
 	
@@ -63826,7 +63781,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }.bind(this));
 	        }, this);
-	        this.$el.toggleClass('pr-empty', _.isEmpty(this.value));
 	    },
 	
 	    __adjustValue: function __adjustValue(value) {
@@ -63855,6 +63809,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
+	    isEmpty: function isEmpty() {
+	        var value = this.getValue();
+	        return !value || _.isEmpty(value);
+	    },
+	
 	    onValueClear: function onValueClear() {
 	        this.__value(null, true);
 	    },
@@ -63862,7 +63821,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onValueSet: function onValueSet(model) {
 	        this.__value(model, true);
 	        this.dropdownView.close();
-	        this.$el.toggleClass('pr-empty', _.isEmpty(this.value));
 	        this.$el.focus();
 	    },
 	
@@ -63911,10 +63869,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-dropdown-region l-reference\"></div>\r\n<!--<svg class=\"js-search-more-button fr-reference__search\"><use xlink:href=\"#i-search\"></use></svg>-->";
+	    return "<div class=\"js-dropdown-region dropdown-reference\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -63944,8 +63902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var classes = {
-	    EMPTY: 'pr-empty',
-	    ARROW_BUTTON: 'pr-arrow-right'
+	    ARROW_BUTTON: 'input_dropdown'
 	};
 	
 	exports.default = Marionette.ItemView.extend({
@@ -63953,7 +63910,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.reqres = options.reqres;
 	    },
 	
-	    className: 'reference-field pr-arrow-right btn-wrp',
+	    className: 'input',
 	
 	    template: _referenceButton2.default,
 	
@@ -64011,9 +63968,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        this.updateView();
-	        if (!this.model.get('value')) {
-	            this.$el.addClass(classes.EMPTY);
-	        }
 	    }
 	});
 
@@ -64021,7 +63975,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return "        "
@@ -64029,7 +63983,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    + "\r\n        <span class=\"js-clear-button btn-del btn-del_absolute\"></span>\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
 	    return "        "
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.NOTSET",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.NOTSET",{"name":"localize","hash":{},"data":data}))
 	    + "\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
@@ -64061,7 +64015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -64266,7 +64220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return "dd-list__filter_button";
@@ -64288,7 +64242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    + "\">\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.text : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
 	    + "    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\""
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(alias1,"CORE.FORM.EDITORS.REFERENCE.SEARCH",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(alias1,"CORE.FORM.EDITORS.REFERENCE.SEARCH",{"name":"localize","hash":{},"data":data}))
 	    + "\">\r\n    </div>\r\n</div>\r\n<div class=\"js-list-region dd-list__wrp "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.showAddNewButton : depth0),{"name":"if","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
 	    + "\"></div>\r\n<div class=\"js-scrollbar-region dd-list__scrollbar "
@@ -64321,7 +64275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _referenceListItem2 = _interopRequireDefault(_referenceListItem);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -64361,7 +64315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -64387,7 +64341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -64449,10 +64403,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.SEARCHMORE",{"name":"localize","hash":{},"data":data}));
+	    return container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.SEARCHMORE",{"name":"localize","hash":{},"data":data}));
 	},"useData":true});
 
 /***/ },
@@ -64493,11 +64447,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"loader\">"
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.LOADING",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.LOADING",{"name":"localize","hash":{},"data":data}))
 	    + "</div>";
 	},"useData":true});
 
@@ -64530,7 +64484,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _addNewButton2 = _interopRequireDefault(_addNewButton);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -64559,10 +64513,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.ADDNEW",{"name":"localize","hash":{},"data":data}));
+	    return container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.REFERENCE.ADDNEW",{"name":"localize","hash":{},"data":data}));
 	},"useData":true});
 
 /***/ },
@@ -64710,7 +64664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -64751,7 +64705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -64968,10 +64922,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-dropdown-region l-field-user\"></div>";
+	    return "<div class=\"js-dropdown-region editor editor_user\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -64994,7 +64948,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(25);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -65004,15 +64958,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var classes = {
-	    EMPTY_EL: 'pr-empty'
-	};
+	var classes = {};
 	
 	exports.default = Marionette.ItemView.extend({
 	    initialize: function initialize(options) {
 	        this.enabled = options.enabled;
 	        this.reqres = options.reqres;
-	        this.emptyElClass = options.emptyElClass || classes.EMPTY_EL;
 	        this.options.template = options.template ? _libApi.Handlebars.compile(options.template) : _defaultButton2.default;
 	    },
 	
@@ -65073,9 +65024,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        this.updateEnabled();
-	        if (!this.model.get('member')) {
-	            this.$el.addClass(classes.EMPTY_EL);
-	        }
 	    }
 	});
 
@@ -65083,7 +65031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
@@ -65105,7 +65053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    + "\r\n";
 	},"10":function(container,depth0,helpers,partials,data) {
 	    return "      <span class=\"dev-member-not-set\">"
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MEMBERSELECT.NOTSET",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MEMBERSELECT.NOTSET",{"name":"localize","hash":{},"data":data}))
 	    + "</span>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, alias1=depth0 != null ? depth0 : {};
@@ -65137,11 +65085,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(25);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -65280,11 +65228,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-loading-region l-loader\"></div>\r\n<div class=\"dd-list__filter\">\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\""
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MEMBERSELECT.SEARCHPLACEHOLDER",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MEMBERSELECT.SEARCHPLACEHOLDER",{"name":"localize","hash":{},"data":data}))
 	    + "\">\r\n    </div>\r\n</div>\r\n<div class=\"js-list-region dd-list__wrp\"></div>\r\n<div class=\"js-scrollbar-region dd-list__scrollbar\"></div>";
 	},"useData":true});
 
@@ -65314,7 +65262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _listItem2 = _interopRequireDefault(_listItem);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -65371,7 +65319,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -65414,7 +65362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -65519,11 +65467,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(25);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -65753,10 +65701,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-dropdown-region l-field #######\"></div>";
+	    return "<div class=\"js-dropdown-region editor #######\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -65791,7 +65739,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _DropdownCollection2 = _interopRequireDefault(_DropdownCollection);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -65961,11 +65909,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"dd-list__filter\">\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\""
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DROPDOWN.SEARCH",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DROPDOWN.SEARCH",{"name":"localize","hash":{},"data":data}))
 	    + "\">\r\n    </div>\r\n</div>\r\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
@@ -65996,7 +65944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -66052,7 +66000,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -66131,7 +66079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.reqres = options.reqres;
 	    },
 	
-	    className: 'field field_dropdown',
+	    className: 'input input_dropdown',
 	
 	    template: _dropdownButton2.default,
 	
@@ -66165,7 +66113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
@@ -66176,11 +66124,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"4":function(container,depth0,helpers,partials,data) {
 	    return "&nbsp";
 	},"6":function(container,depth0,helpers,partials,data) {
-	    return container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DROPDOWN.NOTSET",{"name":"localize","hash":{},"data":data}));
+	    return container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DROPDOWN.NOTSET",{"name":"localize","hash":{},"data":data}));
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 	
-	  return "<span class=\"js-text\">"
+	  return "<span class=\"js-text dropdown-text\">"
 	    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.hasValue : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(6, data, 0),"data":data})) != null ? stack1 : "")
 	    + "</span>";
 	},"useData":true});
@@ -66205,7 +66153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -66286,6 +66234,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    template: _membersBubbleEditor2.default,
+	
+	    className: 'editor editor_bubble',
 	
 	    regions: {
 	        dropdownRegion: '.js-dropdown-region'
@@ -66529,10 +66479,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-dropdown-region l-user_bubble\"></div>";
+	    return "<div class=\"js-dropdown-region dropdown-bubble\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -66684,7 +66634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 390 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<ul class=\"dev-bubble-list\"></ul>";
@@ -66765,7 +66715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -66783,7 +66733,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
 	    + "\r\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.link : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + "<div class=\"js-bubble-delete button-delete button-delete_absolute\"></div>";
+	    + "<div class=\"js-bubble-delete btn-remove btn-remove_absolute btn-remove_bubble\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -66963,7 +66913,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<input type=\"text\" class=\"js-input bubbles__input\" autocomplete=\"off\">";
@@ -66999,7 +66949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(220);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -67062,7 +67012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -67132,7 +67082,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-list-region\"></div>\r\n<div class=\"js-scrollbar-region\"></div>";
@@ -67160,7 +67110,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -67207,7 +67157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -67326,8 +67276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	var classes = {
-	    FOCUSED: 'pr-focused',
-	    EMPTY: 'pr-empty'
+	    FOCUSED: 'pr-focused'
 	};
 	
 	var stateModes = {
@@ -67368,7 +67317,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    focusElement: '.js-input',
 	
-	    className: 'js-duration l-field l-field_duration',
+	    className: 'js-duration editor editor_duration',
 	
 	    ui: {
 	        input: '.js-input',
@@ -67774,7 +67723,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var val = this.__createInputString(normalizedDisplayValue, inEditMode);
 	        this.ui.input.val(val);
 	        this.$el.toggleClass(classes.FOCUSED, inEditMode);
-	        this.$el.toggleClass(classes.EMPTY, this.state.displayValue === null);
 	    }
 	});
 	
@@ -67784,12 +67732,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<input class=\"js-input field field_duration\" placeholder=\""
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DURATION.NOTSET",{"name":"localize","hash":{},"data":data}))
-	    + "\">\r\n<div class=\"js-duration-remove button-delete button-delete_duration\"></div>";
+	    return "<input class=\"js-input input input_duration\" placeholder=\""
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.DURATION.NOTSET",{"name":"localize","hash":{},"data":data}))
+	    + "\">\r\n<div class=\"js-duration-remove btn-remove btn-remove_absolute\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -67934,7 +67882,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    template: _radioButton2.default,
 	
-	    className: 'l-radiobutton',
+	    className: 'editor editor_radiobutton',
 	
 	    focusElement: null,
 	
@@ -67952,7 +67900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    classes: {
-	        checked: 'pr-checked'
+	        checked: 'editor_checked'
 	    },
 	
 	    modelEvents: {
@@ -67991,7 +67939,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -68109,7 +68057,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var defaultOptions = {};
+	var defaultOptions = {
+	    allowEmptyValue: true
+	};
 	
 	/**
 	 * @name DateEditorView
@@ -68117,8 +68067,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @class Calendar editor. The calendar opens in dropdown panel. Supported data type: <code>String</code> in ISO8601 format
 	 * (for example, '2015-07-20T00:00:00Z').
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Options object. Doesn't have it's own options.
+	 * @param {Object} options Options object.
 	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
 	 * */
 	Backbone.Form.editors.Date = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -68145,16 +68096,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dateRegion: '.js-date-region'
 	    },
 	
-	    className: 'l-field l-field_date',
+	    className: 'editor editor_date',
 	
 	    template: _dateEditor2.default,
 	
-	    templateHelpers: function templateHelpers() {
-	        return this.options;
+	    ui: {
+	        clearButton: '.js-clear-button'
+	    },
+	
+	    events: {
+	        'click @ui.clearButton': '__onClear'
 	    },
 	
 	    __change: function __change() {
 	        this.__value(this.dateModel.get('value'), true, true);
+	        this.__updateClearButton();
+	    },
+	
+	    __onClear: function __onClear() {
+	        this.__value(null, true, true);
+	        this.dateModel.set('value', null);
+	    },
+	
+	    __updateClearButton: function __updateClearButton() {
+	        if (!this.options.allowEmptyValue || !this.getValue()) {
+	            this.ui.clearButton.hide();
+	        } else {
+	            this.ui.clearButton.show();
+	        }
 	    },
 	
 	    setValue: function setValue(value) {
@@ -68164,6 +68133,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        this.dateRegion.show(this.dateView);
+	        this.__updateClearButton();
 	    },
 	
 	    getValue: function getValue() {
@@ -68198,10 +68168,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-date-region\"></div>";
+	    return "<div class=\"date-wrp js-date-region\"></div>\r\n<div class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_date\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -68228,7 +68198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _date2 = _interopRequireDefault(_date);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -68257,7 +68227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    onShow: function onShow() {
-	        this.pickerPopout = _dropdownApi2.default.factory.createPopout({
+	        this.pickerPopout = _dropdownApi2.default.factory.createDropdown({
 	            buttonView: _DateInputView2.default,
 	            buttonViewOptions: {
 	                model: this.model,
@@ -68270,9 +68240,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                timezoneOffset: this.timezoneOffset,
 	                preserveTime: this.preserveTime
 	            },
-	            customAnchor: true,
 	            autoOpen: false,
-	            direction: 'down'
+	            panelPosition: 'down'
 	        });
 	        this.listenTo(this.pickerPopout, 'button:open', this.__open, this);
 	        this.listenTo(this.pickerPopout, 'button:close panel:close', this.__close, this);
@@ -68293,7 +68262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-popout-region\"></div>";
@@ -68405,7 +68374,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-datetimepicker\"></div>";
@@ -68441,7 +68410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _dateInput2 = _interopRequireDefault(_dateInput);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -68465,7 +68434,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    className: 'date-view',
 	
 	    ui: {
-	        clearButton: '.js-date-remove',
 	        dateInput: '.js-date-input'
 	    },
 	
@@ -68482,7 +68450,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    events: {
 	        'mousedown @ui.dateInput': '__handleClick',
 	        'change @ui.dateInput': '__change',
-	        'click @ui.clearButton': '__onClear',
 	        'blur @ui.dateInput': '__onBlur'
 	    },
 	
@@ -68510,25 +68477,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            this.ui.dateInput.prop('readonly', false);
 	        }
-	
-	        if (!enabled || readonly) {
-	            this.ui.clearButton.hide();
-	        } else {
-	            this.ui.clearButton.show();
-	        }
-	    },
-	
-	    __onClear: function __onClear(e) {
-	        e.preventDefault();
-	        e.stopPropagation();
-	
-	        this.model.set({ value: null });
 	    },
 	
 	    __change: function __change() {
 	        var parsedInputValue = this.getParsedInputValue();
-	        if (parsedInputValue != null) {
-	            this.updateValue(parsedInputValue);
+	        if (parsedInputValue === null) {
+	            this.updateValue(null);
+	        } else if (parsedInputValue.isValid()) {
+	            this.updateValue(parsedInputValue.toDate());
 	        } else {
 	            this.updateDisplayValue();
 	        }
@@ -68554,15 +68510,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    getParsedInputValue: function getParsedInputValue() {
-	        var val = this.ui.dateInput.val();
+	        var value = this.ui.dateInput.val();
+	        if (value === '') {
+	            return null;
+	        }
+	        return _libApi.moment.utc(value, format, true);
 	
-	        if (val === '') {
+	        if (value === '') {
 	            return null;
 	        }
 	
 	        var format = this.editDateFormat,
-	            currentValue = this.model.get('value'),
-	            parsedVal = _libApi.moment.utc(val, format, true),
+	            parsedVal = _libApi.moment.utc(value, format, true),
 	            parsedDate;
 	
 	        if (parsedVal.isValid()) {
@@ -68630,10 +68589,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<input class=\"js-date-input field field_date\" type=\"text\" placeholder=\"\"><div style=\"position: relative; right: 20px;\" class=\"js-anchor\"></div><div class=\"js-date-remove button-delete button-delete_date\"></div>";
+	    return "<input class=\"js-date-input input input_date\" type=\"text\" placeholder=\"\">\r\n<div class=\"js-anchor anchor_date\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -68670,7 +68629,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var defaultOptions = {};
+	var defaultOptions = {
+	    allowEmptyValue: true
+	};
 	
 	/**
 	 * @name TimeEditorView
@@ -68678,8 +68639,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @class Редактор времени. Поддерживаемый тип данных: <code>String</code> в формате ISO8601
 	 * (например, '2015-07-20T10:46:37Z').
 	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Options object. Doesn't have it's own options.
+	 * @param {Object} options Options object.
 	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
 	 * */
 	Backbone.Form.editors.Time = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.TimeEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -68706,16 +68668,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	        timeRegion: '.js-time-region'
 	    },
 	
-	    className: 'l-field l-field_time',
+	    className: 'editor editor_time',
 	
 	    template: _timeEditor2.default,
 	
-	    templateHelpers: function templateHelpers() {
-	        return this.options;
+	    ui: {
+	        clearButton: '.js-clear-button'
+	    },
+	
+	    events: {
+	        'click @ui.clearButton': '__onClear'
 	    },
 	
 	    __change: function __change() {
 	        this.__value(this.timeModel.get('value'), true, true);
+	        this.__updateClearButton();
+	    },
+	
+	    __onClear: function __onClear() {
+	        this.__value(null, true, true);
+	        this.timeModel.set('value', null);
+	    },
+	
+	    __updateClearButton: function __updateClearButton() {
+	        if (!this.options.allowEmptyValue || !this.getValue()) {
+	            this.ui.clearButton.hide();
+	        } else {
+	            this.ui.clearButton.show();
+	        }
 	    },
 	
 	    setValue: function setValue(value) {
@@ -68725,6 +68705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onRender: function onRender() {
 	        this.timeRegion.show(this.timeView);
+	        this.__updateClearButton();
 	    },
 	
 	    __value: function __value(value, updateUi, triggerChange) {
@@ -68759,10 +68740,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-time-region\"></div>";
+	    return "<div class=\"time-wrp js-time-region\"></div>\r\n<div class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_time\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -68787,11 +68768,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -68943,15 +68924,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _timeInput2.default,
 	
 	    ui: {
-	        'input': '.js-time-input',
-	        'clearButton': '.js-time-remove'
+	        'input': '.js-time-input'
 	    },
 	
-	    className: 'dev-time-input-view',
+	    className: 'time-input-view',
 	
 	    events: {
 	        'mousedown': '__onClick',
-	        'click @ui.clearButton': '__onClear',
 	        'change @ui.input': '__onInputChange',
 	        'blur @ui.input': '__onBlur'
 	    },
@@ -68960,13 +68939,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'change:value': '__onValueChange',
 	        'change:readonly': '__onEnabledChange',
 	        'change:enabled': '__onEnabledChange'
-	    },
-	
-	    __onClear: function __onClear(e) {
-	        e.preventDefault();
-	        e.stopPropagation();
-	
-	        this.model.set({ value: null });
 	    },
 	
 	    __onInputChange: function __onInputChange() {
@@ -69023,12 +68995,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.ui.input.prop('readonly', true);
 	        } else {
 	            this.ui.input.prop('readonly', false);
-	        }
-	
-	        if (!enabled || readonly) {
-	            this.ui.clearButton.hide();
-	        } else {
-	            this.ui.clearButton.show();
 	        }
 	    },
 	
@@ -69094,20 +69060,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<input class=\"js-time-input field field_time\"><div class=\"js-time-remove button-delete button-delete_time\"></div>";
+	    return "<input class=\"js-time-input input input_time\">";
 	},"useData":true});
 
 /***/ },
 /* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-dropdown-region\" ></div>";
+	    return "<div class=\"js-dropdown-region\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -69149,7 +69115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var defaultOptions = {
-	    enableDelete: false,
+	    allowEmptyValue: true,
 	    timezoneOffset: -new Date().getTimezoneOffset()
 	};
 	
@@ -69161,9 +69127,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object.
 	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Boolean} options.enableDelete - Whether to display a delete button that sets the value to <code>null</code>.
+	 * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
 	 * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
-	 * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser (system) local timezone offset.
+	 * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
 	 * */
 	Backbone.Form.editors.DateTime = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateTimeEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -69187,11 +69153,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    ui: {
-	        deleteButton: '.js-clear-button'
+	        clearButton: '.js-clear-button'
 	    },
 	
 	    events: {
-	        'click @ui.deleteButton': '__onClear'
+	        'click @ui.clearButton': '__onClear'
 	    },
 	
 	    regions: {
@@ -69199,7 +69165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        timeRegion: '.js-time-region'
 	    },
 	
-	    className: 'l-field date-time',
+	    className: 'editor editor_date-time',
 	
 	    template: _dateTimeEditor2.default,
 	
@@ -69209,7 +69175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __change: function __change() {
 	        this.__value(this.dateTimeModel.get('value'), true, true);
-	        this.updateDelete();
+	        this.__updateClearButton();
 	    },
 	
 	    setValue: function setValue(value) {
@@ -69235,14 +69201,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        this.dateRegion.show(this.dateView);
 	        this.timeRegion.show(this.timeView);
-	        this.updateDelete();
+	        this.__updateClearButton();
 	    },
 	
-	    updateDelete: function updateDelete() {
-	        if (!this.options.enableDelete || !this.getValue()) {
-	            this.ui.deleteButton.hide();
+	    __updateClearButton: function __updateClearButton() {
+	        if (!this.options.allowEmptyValue || !this.getValue()) {
+	            this.ui.clearButton.hide();
 	        } else {
-	            this.ui.deleteButton.show();
+	            this.ui.clearButton.show();
 	        }
 	    },
 	
@@ -69279,10 +69245,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-date-region\" style=\"display: inline-block\"></div>\r\n<div class=\"js-time-region\" style=\"display: inline-block\"></div>\r\n<span class=\"js-clear-button button-delete button-delete_absolute dev-button-delete-timeeditor\" style=\"display: inline;\"></span>";
+	    return "<div class=\"date-time js-date-region\"></div>\r\n<div class=\"date-time js-time-region\"></div>\r\n<span class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_date-time\"></span>";
 	},"useData":true});
 
 /***/ },
@@ -69309,15 +69275,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
 	__webpack_require__(220);
-	
-	var _serviceLocator = __webpack_require__(226);
-	
-	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
 	
 	var _BaseLayoutEditorView = __webpack_require__(336);
 	
@@ -69380,7 +69342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dropdownRegion: '.js-dropdown-region'
 	    },
 	
-	    onRender: function onRender() {
+	    onShow: function onShow() {
 	        if (this.dropdownView) {
 	            this.stopListening(this.dropdownView);
 	        }
@@ -69401,9 +69363,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            autoOpen: false,
 	            renderAfterClose: false
 	        });
-	        this.dropdownRegion.show(this.dropdownView);
 	
-	        this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
+	        this.dropdownRegion.show(this.dropdownView);
 	        this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
 	        this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
 	        this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
@@ -69413,6 +69374,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _.each(this.keyboardShortcuts, function (v, k) {
 	            this.dropdownView.button.addKeyboardListener(k, v.bind(this));
 	        }, this);
+	
+	        // We discarded it during render phase, so we do it now.
+	        this.setPermissions(this.enabled, this.readonly);
+	        this.setValue(this.value);
 	    },
 	
 	    keyboardShortcuts: {
@@ -69546,8 +69511,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    setValue: function setValue(value) {
-	        this.dropdownView.button.setValue(value);
-	        this.value = this.dropdownView.button.getValue();
+	        if (this.dropdownView) {
+	            this.dropdownView.button.setValue(value);
+	            this.value = this.dropdownView.button.getValue();
+	        } else {
+	            this.value = value;
+	        }
 	    },
 	
 	    __sendPanelCommand: function __sendPanelCommand(command, options) {
@@ -69558,12 +69527,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __setEnabled: function __setEnabled(enabled) {
 	        _BaseLayoutEditorView2.default.prototype.__setEnabled.call(this, enabled);
-	        this.dropdownView.button.setEnabled(enabled);
+	        if (this.dropdownView) {
+	            this.dropdownView.button.setEnabled(enabled);
+	        }
 	    },
 	
 	    __setReadonly: function __setReadonly(readonly) {
 	        _BaseLayoutEditorView2.default.prototype.__setReadonly.call(this, readonly);
-	        this.dropdownView.button.setReadonly(readonly);
+	        if (this.dropdownView) {
+	            this.dropdownView.button.setReadonly(readonly);
+	        }
 	    }
 	});
 	
@@ -69573,7 +69546,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-dropdown-region dev-mention-editor__dropdown-region\"></div>";
@@ -69599,11 +69572,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(25);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _dropdownApi = __webpack_require__(241);
+	var _dropdownApi = __webpack_require__(242);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -69852,10 +69825,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    return "<div class=\"js-dropdown-region l-field\"></div>";
+	    return "<div class=\"js-dropdown-region editor\"></div>";
 	},"useData":true});
 
 /***/ },
@@ -69880,7 +69853,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -69959,25 +69932,25 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var alias1=depth0 != null ? depth0 : {}, alias2=container.escapeExpression;
 	
 	  return "    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">"
-	    + alias2(__default(__webpack_require__(234)).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.CANCEL",{"name":"localize","hash":{},"data":data}))
+	    + alias2(__default(__webpack_require__(235)).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.CANCEL",{"name":"localize","hash":{},"data":data}))
 	    + "</div>\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">"
-	    + alias2(__default(__webpack_require__(234)).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.APPLY",{"name":"localize","hash":{},"data":data}))
+	    + alias2(__default(__webpack_require__(235)).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.APPLY",{"name":"localize","hash":{},"data":data}))
 	    + "</div>\n";
 	},"3":function(container,depth0,helpers,partials,data) {
 	    return "    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">"
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MULTISELECT.CLOSE",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.MULTISELECT.CLOSE",{"name":"localize","hash":{},"data":data}))
 	    + "</div>\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, alias1=depth0 != null ? depth0 : {};
 	
 	  return "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">"
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.SELECTALL",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(alias1,"CORE.FORM.EDITORS.MULTISELECT.SELECTALL",{"name":"localize","hash":{},"data":data}))
 	    + "</div>\n</div>\n<div class=\"js-list multiselect-panel__list\"></div>\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\n"
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.explicitApply : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
 	    + "</div>";
@@ -70001,7 +69974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -70059,7 +70032,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -70096,7 +70069,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = Marionette.ItemView.extend({
-	    className: 'field field_dropdown',
+	    className: 'input input_dropdown',
 	
 	    template: _multiSelectButton2.default,
 	
@@ -70130,7 +70103,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -70359,11 +70332,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-remove user-avatar-editor__empty\">X</div>\r\n<div class=\"js-image user-avatar-editor\">\r\n    <div class=\"js-initials user-avatar-editor__txt\"></div>\r\n    <div class=\"js-tooltip user-avatar-editor__btn\"><span class=\"user-avatar-editor-btn\">"
-	    + container.escapeExpression(__default(__webpack_require__(234)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.AVATAR.CHANGE",{"name":"localize","hash":{},"data":data}))
+	    + container.escapeExpression(__default(__webpack_require__(235)).call(depth0 != null ? depth0 : {},"CORE.FORM.EDITORS.AVATAR.CHANGE",{"name":"localize","hash":{},"data":data}))
 	    + "</span></div>\r\n</div>";
 	},"useData":true});
 
@@ -70507,7 +70480,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -70642,7 +70615,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(220);
 	
-	var _listApi = __webpack_require__(277);
+	var _listApi = __webpack_require__(278);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -70987,7 +70960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MessageService2 = _interopRequireDefault(_MessageService);
 	
-	var _WindowService = __webpack_require__(243);
+	var _WindowService = __webpack_require__(244);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
@@ -71238,7 +71211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MessageView2 = _interopRequireDefault(_MessageView);
 	
-	var _WindowService = __webpack_require__(243);
+	var _WindowService = __webpack_require__(244);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
@@ -71322,7 +71295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _message2 = _interopRequireDefault(_message);
 	
-	var _WindowService = __webpack_require__(243);
+	var _WindowService = __webpack_require__(244);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
@@ -71364,7 +71337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
@@ -71430,7 +71403,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -71510,7 +71483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Developer: Stepan Burguchev
-	 * Date: 1/15/2015
+	 * Date: 9/7/2015
 	 * Copyright: 2009-2016 Comindware®
 	 *       All Rights Reserved
 	 * Published under the MIT license
@@ -71522,15 +71495,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _BlurableBehavior = __webpack_require__(246);
+	__webpack_require__(25);
 	
-	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
-	
-	var _WindowService = __webpack_require__(243);
-	
-	var _WindowService2 = _interopRequireDefault(_WindowService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _utilsApi = __webpack_require__(220);
 	
 	var defaultOptions = {
 	    selector: null,
@@ -71540,24 +71507,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = Marionette.Behavior.extend({
 	    initialize: function initialize(options, view) {
+	        _utilsApi.helpers.ensureOption(options, 'onBlur');
+	
 	        _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 	
-	        view.close = this.close.bind(this);
+	        _.bindAll(this, '__onBlur');
+	
+	        view.focus = this.__focus.bind(this);
 	    },
 	
-	    behaviors: {
-	        BlurableBehavior: {
-	            behaviorClass: _BlurableBehavior2.default,
-	            onBlur: 'close'
+	    modelEvents: {},
+	
+	    events: function events() {
+	        var eventsMap = {};
+	        var key = 'blur';
+	        if (this.options.selector) {
+	            key += ' ' + this.options.selector;
 	        }
+	        eventsMap[key] = '__onBlur';
+	        return eventsMap;
 	    },
 	
 	    onRender: function onRender() {
-	        this.__getFocusableEl().addClass('l-popup');
-	    },
-	
-	    onShow: function onShow() {
-	        this.__getFocusableEl().focus();
+	        this.__getFocusableEl().attr('tabindex', 0);
 	    },
 	
 	    __getFocusableEl: function __getFocusableEl() {
@@ -71568,14 +71540,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    close: function close(result) {
-	        if (result) {
-	            this.view.trigger('accept', result);
-	        } else {
-	            this.view.trigger('reject');
-	        }
-	        this.view.trigger('close');
-	        _WindowService2.default.closePopup();
+	    __focus: function __focus() {
+	        this.__getFocusableEl().focus();
+	    },
+	
+	    __onBlur: function __onBlur() {
+	        var $focusableEl = this.__getFocusableEl();
+	        _.defer(function () {
+	            if ($focusableEl[0] === document.activeElement || $focusableEl.find(document.activeElement).length > 0) {
+	                $(document.activeElement).one('blur', this.__onBlur);
+	            } else {
+	                var callback = this.options.onBlur;
+	                if (_.isString(callback)) {
+	                    this.view[callback].call(this.view);
+	                } else {
+	                    callback.call(this.view);
+	                }
+	            }
+	        }.bind(this));
 	    }
 	});
 
@@ -71664,7 +71646,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper;
@@ -71698,7 +71680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _splitPanel2 = _interopRequireDefault(_splitPanel);
 	
-	var _GlobalEventService = __webpack_require__(286);
+	var _GlobalEventService = __webpack_require__(247);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -71840,7 +71822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(248);
+	var Handlebars = __webpack_require__(249);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    return "<div class=\"js-panel1 dev-core__tr-left-column\"></div>\r\n<div class=\"js-resizer dev-core__resizer\"></div>\r\n<div class=\"js-panel2 dev-core__tr-right-column\"></div>";

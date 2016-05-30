@@ -76,7 +76,7 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
         input: '.js-input'
     },
 
-    className: 'l-field',
+    className: 'editor',
 
     template: template,
 

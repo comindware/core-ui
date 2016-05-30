@@ -11,7 +11,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 key: 'durationValue',
                 autocommit: true
             }),
-            presentation: '\'{{durationValue}}\''
+            presentation: "{{#isNull durationValue}}null{{else}}'{{durationValue}}'{{/isNull}}"
         });
     };
 });

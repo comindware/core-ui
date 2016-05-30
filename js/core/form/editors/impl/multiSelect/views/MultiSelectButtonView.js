@@ -13,7 +13,7 @@ import { helpers } from '../../../../../utils/utilsApi';
 import template from '../templates/multiSelectButton.hbs';
 
 export default Marionette.ItemView.extend({
-    className: 'field field_dropdown',
+    className: 'input input_dropdown',
 
     template: template,
 

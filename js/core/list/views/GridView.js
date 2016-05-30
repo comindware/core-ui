@@ -215,6 +215,10 @@ let GridView = Marionette.LayoutView.extend({
         }
         this.onColumnSort(column, this.collection.comparator);
         this.headerView.updateSorting();
+    },
+
+    handleResize: function () {
+        this.headerView.handleResize();
     }
 });
 

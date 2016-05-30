@@ -11,7 +11,7 @@
 import '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import WindowService from '../../services/WindowService';
-import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
+import GlobalEventService from '../../services/GlobalEventService';
 import template from '../templates/popout.hbs';
 
 const slice = Array.prototype.slice;
@@ -104,16 +104,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
         _.bindAll(this, 'open', 'close', '__handleWindowResize');
+        this.listenTo(GlobalEventService, 'windowClickCaptured', this.__onWindowClickCaptured);
     },
 
     template: template,
-
-    behaviors: {
-        BlurableBehavior: {
-            behaviorClass: BlurableBehavior,
-            onBlur: 'close'
-        }
-    },
 
     className: 'popout',
 
@@ -266,7 +260,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
                     $(window).on('resize', this.__handleWindowResize);
                     this.__handleWindowResize();
                 }
-                this.focus();
                 //noinspection JSValidateTypes
                 this.isOpen = true;
                 this.trigger('open', this);
@@ -326,13 +319,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             $(window).off('resize', this.__handleWindowResize);
         }
 
-        // selecting focusable parent after closing is important to maintant nested dropdowns
-        // focused element MUST be changed BEFORE active element is hidden or destroyed (!)
-        var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
-        if (firstFocusableParent) {
-            $(firstFocusableParent).focus();
-        }
-
         var closeArgs = _.toArray(arguments);
         this.ui.panel.hide({
             duration: 0,
@@ -354,5 +340,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         var outlineDiff = (this.panelView.$el.outerHeight() - this.panelView.$el.height());
         var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff;
         this.panelView.$el.height(panelHeight);
+    },
+
+    __onWindowClickCaptured: function (target) {
+        // Window object captured a click. We possibly need to close the popup.
+        if (this.isOpen && !(this.el === target || $.contains(this.el, target))) {
+            this.close();
+        }
     }
 });

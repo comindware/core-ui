@@ -12,7 +12,7 @@ import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import { keypress } from '../../libApi';
-import { keyCode, helpers } from '../../utils/utilsApi';
+import { keyCode, helpers, htmlHelpers } from '../../utils/utilsApi';
 
 const changeMode = {
     blur: 'blur',
@@ -73,7 +73,7 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     focusElement: '.js-textarea',
-    className: 'l-field l-field_textarea',
+    className: 'editor editor_textarea',
 
     ui: {
         textarea: '.js-textarea'
@@ -129,6 +129,9 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
         this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
         switch (this.options.size) {
         case size.auto:
+            if (!htmlHelpers.isElementInDom(this.el)) {
+                helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
+            }
             this.ui.textarea.autosize({ append: '' });
             break;
         case size.fixed:
