@@ -96,10 +96,6 @@ let GridHeaderView = Marionette.ItemView.extend({
         this.render();
         this.__handleResizeInternal();
     },
-    
-    resizeColumns () {
-        this.__handleResize();
-    },
 
     __handleColumnSort: function (sender, args) {
         var column = args.column;
