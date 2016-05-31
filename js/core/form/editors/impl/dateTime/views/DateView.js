@@ -50,6 +50,7 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.calendarDropdownView, 'before:close', this.__onBeforeClose, this);
         this.listenTo(this.calendarDropdownView, 'open', this.__onOpen, this);
 
+        this.listenTo(this.calendarDropdownView, 'button:focus', this.__onButtonFocus, this);
         this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
 
@@ -71,6 +72,10 @@ export default Marionette.LayoutView.extend({
     },
 
     __onButtonCalendarOpen: function () {
+        this.calendarDropdownView.open();
+    },
+
+    __onButtonFocus: function () {
         this.calendarDropdownView.open();
     },
 

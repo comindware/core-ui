@@ -49,6 +49,7 @@ gulp.task("webpack:build:release", function(callback) {
     myConfig.output = Object.create(myConfig.output);
     myConfig.output.filename = 'core.bundle.min.js';
     myConfig.debug = false;
+    myConfig.devtool = 'source-map';
     //noinspection JSUnresolvedFunction
     myConfig.plugins = (myConfig.plugins || []).concat(
         new webpack.DefinePlugin({

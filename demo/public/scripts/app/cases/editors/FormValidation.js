@@ -54,7 +54,6 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                 behaviors: {
                     BackboneFormBehavior: {
                         behaviorClass: core.form.behaviors.BackboneFormBehavior,
-                        renderStrategy: 'render',
                         schema: function () {
                             return {
                                 boolean: {

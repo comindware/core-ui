@@ -12,7 +12,6 @@ import { moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/dateInput.hbs';
-import dropdownApi from '../../../../../dropdown/dropdownApi';
 
 export default Marionette.ItemView.extend({
     initialize: function (options) {
@@ -36,7 +35,8 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click': '__onClick'
+        'click': '__onClick',
+        'focus @ui.dateInput': '__onFocus'
     },
 
     startEditing: function () {
@@ -142,5 +142,9 @@ export default Marionette.ItemView.extend({
         }
 
         this.model.set({value: newVal});
+    },
+
+    __onFocus: function () {
+        this.trigger('focus');
     }
 });

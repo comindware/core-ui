@@ -9,9 +9,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
             editor: new core.form.editors.DateTimeEditor({
                 model: model,
                 key: 'dateTimeValue',
-                autocommit: true,
-                enableDelete: true,
-                timezoneOffset: -60 // minutes
+                autocommit: true
             }),
             presentation: "{{#isNull dateTimeValue}}null{{else}}'{{dateTimeValue}}'{{/isNull}}"
         });

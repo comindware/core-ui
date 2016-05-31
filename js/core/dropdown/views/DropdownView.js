@@ -260,10 +260,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
         this.trigger('before:close', this);
 
-        // Selection of $el is important to keep the parent popout open.
-        // $el MUST be focused BEFORE active element is hidden or destroyed (!)
-        this.$el.focus();
-
         var closeArgs = _.toArray(arguments);
         this.ui.panel.hide();
         this.$el.removeClass(classes.OPEN);

@@ -16,7 +16,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     cache: true,
     entry: './js/core/coreApi.js',
-    devtool: 'source-map',
+    devtool: 'eval',
     debug: true,
     output: {
         path: __dirname + '/dist',
