@@ -23,6 +23,10 @@ export default Marionette.ItemView.extend({
 
     template: template,
 
+    attributes: {
+        tabindex: 0
+    },
+
     templateHelpers: function () {
         var value = this.model.get('value');
         var displayAttribute = this.model.get('displayAttribute');
@@ -37,7 +41,8 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click': '__click'
+        'click': '__click',
+        'focus': '__onFocus'
     },
 
     modelEvents: {
@@ -46,5 +51,9 @@ export default Marionette.ItemView.extend({
 
     __click: function () {
         this.reqres.request('panel:open');
+    },
+
+    __onFocus: function () {
+        this.trigger('focus');
     }
 });

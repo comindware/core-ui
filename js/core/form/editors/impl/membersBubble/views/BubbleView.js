@@ -29,7 +29,8 @@ export default Marionette.ItemView.extend({
     className: 'bubbles__i',
 
     events: {
-        'click .js-bubble-delete': '__delete'
+        'click .js-bubble-delete': '__delete',
+        'click .js-bubble-link': '__linkClick'
     },
 
     ui: {
@@ -37,9 +38,13 @@ export default Marionette.ItemView.extend({
     },
 
     __delete: function(e) {
-        e.stopPropagation();
-        e.preventDefault();
         this.reqres.request('bubble:delete', this.model);
+        return false;
+    },
+
+    __linkClick: function () {
+        window.location = this.model.get('link');
+        return false;
     },
 
     updateEnabled: function (enabled) {

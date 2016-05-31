@@ -70,10 +70,6 @@ export default Marionette.CollectionView.extend({
 
     tagName: 'ul',
 
-    attributes: {
-        tabindex: 0
-    },
-
     childViewOptions: function () {
         return {
             reqres: this.reqres,
