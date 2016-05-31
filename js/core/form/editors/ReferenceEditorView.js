@@ -52,7 +52,7 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         this.showAddNewButton = this.options.showAddNewButton;
 
 
-        this.reqres.setHandler('panel:open', this.onPanelOpen, this);
+        this.reqres.setHandler('panel:open', this.onPanelOpenRequest, this);
         this.reqres.setHandler('value:clear', this.onValueClear, this);
         this.reqres.setHandler('value:set', this.onValueSet, this);
         this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
@@ -120,6 +120,8 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
             panelPosition: 'down-over',
             autoOpen: false
         });
+        this.listenTo(this.dropdownView, 'open', this.onFocus);
+        this.listenTo(this.dropdownView, 'close', this.onBlur);
         this.dropdownRegion.show(this.dropdownView);
 
         // hotkeys
@@ -195,7 +197,7 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         return deferred.promise();
     },
 
-    onPanelOpen: function () {
+    onPanelOpenRequest: function () {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
@@ -213,6 +215,14 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
     setEnabled: function (enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.viewModel.get('button').set('enabled', this.getEnabled());
+    },
+
+    focus: function () {
+        this.dropdownView.open();
+    },
+
+    blur: function () {
+        this.dropdownView.close();
     }
 });
 

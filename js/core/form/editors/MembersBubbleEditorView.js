@@ -91,6 +91,7 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         });
         this.dropdownRegion.show(this.dropdownView);
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
+        this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
     },
 
@@ -136,10 +137,15 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
     __onDropdownOpen: function () {
         this.viewModel.get('available').selectFirst();
         this.__focusButton();
+        this.onFocus();
+    },
+
+    __onDropdownClose: function () {
+        this.onBlur();
     },
 
     __onButtonClick: function () {
-        if (this.__canAddMember() && !this.dropdownView.isOpen) {
+        if (this.__canAddMember()) {
             this.dropdownView.open();
         }
     },
@@ -300,6 +306,18 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
+    },
+
+    focusElement: null,
+
+    focus: function () {
+        if (this.__canAddMember()) {
+            this.dropdownView.open();
+        }
+    },
+
+    blur: function () {
+        this.dropdownView.close();
     }
 });
 
