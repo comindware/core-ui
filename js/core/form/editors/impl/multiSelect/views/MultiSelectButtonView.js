@@ -18,20 +18,28 @@ export default Marionette.ItemView.extend({
     template: template,
 
     templateHelpers: function() {
-        var value = this.model.get('value'),
+        let items = this.model.get('value'),
+            empty = !items || !items.length,
             collection = this.model.get('collection');
 
+        let displayValue;
+        if (empty) {
+            displayValue = Localizer.get('CORE.FORM.EDITORS.MULTISELECT.NOTHINGSELECTED');
+        } else {
+            displayValue = items.map(x => x.get(this.options.displayAttribute)).join(', ');
+        }
         return {
-            displayValue: value && value.length ?
-                value.length == collection.length ?
-                    Localizer.get('CORE.FORM.EDITORS.MULTISELECT.EVERYTHINGSELECTED') :
-                    Localizer.get('CORE.FORM.EDITORS.MULTISELECT.ANYTHINGSELECTED') :
-                Localizer.get('CORE.FORM.EDITORS.MULTISELECT.NOTHINGSELECTED')
+            displayValue: displayValue
         };
     },
 
+    attributes: {
+        tabindex: 0
+    },
+
     events: {
-        'click': '__onClick'
+        'click': '__onClick',
+        'focus': '__onFocus'
     },
 
     modelEvents: {
@@ -44,5 +52,9 @@ export default Marionette.ItemView.extend({
 
     __onClick: function() {
         this.trigger('open:panel');
+    },
+
+    __onFocus: function () {
+        this.trigger('focus');
     }
 });

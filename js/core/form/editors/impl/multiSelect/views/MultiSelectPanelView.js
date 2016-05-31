@@ -15,10 +15,6 @@ import template from '../templates/multiSelectPanel.hbs';
 import MultiSelectItemView from './MultiSelectItemView';
 
 export default Marionette.CompositeView.extend({
-    attributes: {
-        tabindex: 0
-    },
-
     className: 'multiselect-panel',
 
     template: template,

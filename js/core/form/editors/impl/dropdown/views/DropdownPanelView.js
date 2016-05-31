@@ -28,10 +28,6 @@ export default Marionette.LayoutView.extend({
         this.reqres = options.reqres;
     },
 
-    attributes: {
-        tabindex: 0
-    },
-
     className: 'dropdown-panel-view',
 
     template: template,

@@ -63,10 +63,7 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
 
             // 4. Show created view
             return new CanvasView({
-                view: new View(),
-                canvas: {
-                    height: '300px'
-                }
+                view: new View()
             });
         };
     });
