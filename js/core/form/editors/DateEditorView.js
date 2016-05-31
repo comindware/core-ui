@@ -121,6 +121,8 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
         this.dateModel.set({readonly: this.getReadonly()});
     },
 
+    focusElement: null,
+
     /**
      * Sets the focus onto this editor.
      */

@@ -150,10 +150,6 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         }
     },
 
-    __value: function (value) {
-        this.setValue(value)
-    },
-
     __createViewModel: function () {
         this.viewModel = new Backbone.Model();
 
@@ -304,7 +300,6 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
-
     }
 });
 

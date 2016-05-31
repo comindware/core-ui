@@ -145,14 +145,7 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
         return false;
     },
 
-    onFocus: function () {
-        console.log('focus', document.activeElement);
-    },
-
-    onBlur: function () {
-        console.log('blur', document.activeElement);
-
-    },
+    focusElement: null,
 
     /**
      * Sets the focus onto this editor.

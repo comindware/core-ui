@@ -121,6 +121,8 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
         this.timeModel.set({readonly: this.getReadonly()});
     },
 
+    focusElement: null,
+
     /**
      * Sets the focus onto this editor.
      */
