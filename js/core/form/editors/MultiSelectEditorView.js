@@ -9,7 +9,6 @@
 "use strict";
 
 import '../../libApi';
-import list from '../../list/listApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/multiSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -72,10 +71,6 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
 
     focusElement: null,
 
-    attributes: {
-        tabindex: 0
-    },
-
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },
@@ -88,7 +83,8 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: MultiSelectButtonView,
             buttonViewOptions: {
-                model: this.viewModel.get('button')
+                model: this.viewModel.get('button'),
+                displayAttribute: this.options.displayAttribute
             },
             panelView: MultiSelectPanelView,
             panelViewOptions: {
@@ -103,6 +99,7 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         this.listenTo(this.dropdownView, 'open', this.onPanelOpen);
 
         this.listenTo(this.dropdownView, 'button:open:panel', this.onPanelOpenRequest);
+        this.listenTo(this.dropdownView, 'button:focus', this.onPanelOpenRequest);
 
         this.listenTo(this.dropdownView, 'panel:select:all', this.__selectAll);
         this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
