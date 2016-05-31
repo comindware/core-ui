@@ -105,7 +105,26 @@ define(function() {
             return usersArray;
         },
         ListUsers: function() {
-            return usersArray;
+            return usersArray.map(user => ({
+                authenticationMethod: user.AuthenticationMethod,
+                creationDate: user.CreationDate,
+                creator: user.Creator,
+                fullName: user.FullName,
+                id: user.Id,
+                isActive: user.IsActive,
+                isSystemAdministrator: user.IsSystemAdministrator,
+                language: user.Language,
+                lastLoginDate: user.LastLoginDate,
+                lastWriteDate: user.LastWriteDate,
+                email: user.email,
+                presentedOnOrgChart: user.PresentedOnOrgChart,
+                taskContainer: user.TaskContainer,
+                username: user.Username,
+                abbreviation: user.abbreviation,
+                licensed: user.licensed,
+                userpicLargeUri: user.userpicLargeUri,
+                userpicUri: user.userpicUri
+            }));
         }
     };
 });

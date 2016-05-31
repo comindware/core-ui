@@ -58,8 +58,6 @@ Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends modu
         }
         _.defaults(this.options.dropdownOptions, defaultOptions.dropdownOptions);
 
-        this.controller = options.controller;
-
         this.reqres = new Backbone.Wreqr.RequestResponse();
         this.reqres.setHandler('value:clear', this.onValueClear, this);
         this.reqres.setHandler('value:set', this.onValueSet, this);

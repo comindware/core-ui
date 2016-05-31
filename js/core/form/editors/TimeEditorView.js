@@ -44,8 +44,11 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
         this.listenTo(this.timeModel, 'change:value', this.__change, this);
 
         this.timeView = new TimeView({
-            model: this.timeModel
+            model: this.timeModel,
+            allowEmptyValue: this.options.allowEmptyValue
         });
+        this.listenTo(this.timeView, 'focus', this.onFocus);
+        this.listenTo(this.timeView, 'blur', this.onBlur);
     },
 
     regions: {
@@ -72,6 +75,7 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
     __onClear: function () {
         this.__value(null, true, true);
         this.timeModel.set('value', null);
+        return false;
     },
 
     __updateClearButton: function() {
@@ -115,6 +119,28 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
     __setReadonly: function (readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.timeModel.set({readonly: this.getReadonly()});
+    },
+
+    focusElement: null,
+
+    /**
+     * Sets the focus onto this editor.
+     */
+    focus: function() {
+        if (this.hasFocus) {
+            return;
+        }
+        this.timeView.focus();
+    },
+
+    /**
+     * Clears the focus.
+     */
+    blur: function() {
+        if (!this.hasFocus) {
+            return;
+        }
+        this.timeView.blur();
     }
 });
 

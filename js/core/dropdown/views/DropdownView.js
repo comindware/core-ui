@@ -11,6 +11,7 @@
 import '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import template from '../templates/dropdown.hbs';
+import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
 
 const classes = {
     OPEN: 'open',
@@ -76,7 +77,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         _.extend(this.options, _.clone(defaultOptions), options || {});
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
-        _.bindAll(this, 'open', 'close', '__handleBlur');
+        _.bindAll(this, 'open', 'close');
     },
 
     template: template,
@@ -94,8 +95,14 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     events: {
-        'click @ui.button': '__handleClick',
-        'blur @ui.panel': '__handleBlur'
+        'click @ui.button': '__handleClick'
+    },
+
+    behaviors: {
+        BlurableBehavior: {
+            behaviorClass: BlurableBehavior,
+            onBlur: 'close'
+        }
     },
 
     /**
@@ -217,12 +224,13 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.isOpen) {
             return;
         }
+        this.trigger('before:open', this);
+
         var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
             parent: this
         });
-
         this.$el.addClass(classes.OPEN);
-        this.ui.panel.css('display', 'block');
+        this.ui.panel.show();
         if (this.panelView) {
             this.stopListening(this.panelView);
         }
@@ -236,11 +244,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.panelRegion.show(this.panelView);
         this.correctPosition();
 
-        if ($.contains(this.el, document.activeElement)) {
-            $(document.activeElement).one('blur', this.__handleBlur);
-        } else {
-            this.ui.panel.focus();
-        }
+        this.focus();
         //noinspection JSValidateTypes
         this.isOpen = true;
         this.trigger('open', this);
@@ -254,44 +258,24 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
             return;
         }
-
-        // selecting focusable parent after closing is important to maintant nested dropdowns
-        // focused element MUST be changed BEFORE active element is hidden or destroyed (!)
-        var firstFocusableParent = this.ui.panel.parents().filter(':focusable')[0];
-        if (firstFocusableParent) {
-            $(firstFocusableParent).focus();
-        }
+        this.trigger('before:close', this);
 
         var closeArgs = _.toArray(arguments);
-        this.ui.panel.hide({
-            duration: 0,
-            complete: function () {
-                this.$el.removeClass(classes.OPEN);
-                this.panelRegion.reset();
-                //noinspection JSValidateTypes
-                this.isOpen = false;
+        this.ui.panel.hide();
+        this.$el.removeClass(classes.OPEN);
+        this.panelRegion.reset();
+        //noinspection JSValidateTypes
+        this.isOpen = false;
 
-                this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
-                if (this.options.renderAfterClose) {
-                    this.button.render();
-                }
-            }.bind(this)
-        });
+        this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
+        if (this.options.renderAfterClose) {
+            this.button.render();
+        }
     },
 
     __handleClick: function () {
         if (this.options.autoOpen) {
             this.open();
         }
-    },
-
-    __handleBlur: function () {
-        setTimeout(function () {
-            if ($.contains(this.el, document.activeElement)) {
-                $(document.activeElement).one('blur', this.__handleBlur);
-            } else {
-                this.close();
-            }
-        }.bind(this), 15);
     }
 });

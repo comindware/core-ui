@@ -8,21 +8,16 @@
 
 "use strict";
 
-import { moment } from '../../../../../libApi';
+import { moment, Handlebars } from '../../../../../libApi';
 import { dateHelpers } from '../../../../../utils/utilsApi';
 import dropdown from '../../../../../dropdown/dropdownApi';
-import list from '../../../../../list/listApi';
 import TimeInputView from './TimeInputView';
 import template from '../templates/time.hbs';
 
 export default Marionette.LayoutView.extend({
     initialize: function () {
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
-        
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.reqres.setHandler('time:selected', this.__onTimeSelected, this);
-        this.reqres.setHandler('panel:open', this.__onPanelOpen, this);
-        this.reqres.setHandler('panel:close', this.__onPanelClose, this);
+        this.allowEmptyValue = this.getOption('allowEmptyValue');
     },
 
     className: 'time-view',
@@ -52,37 +47,52 @@ export default Marionette.LayoutView.extend({
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: TimeInputView,
             buttonViewOptions: {
-                reqres: this.reqres,
                 model: this.model,
-                timezoneOffset: this.timezoneOffset
+                timezoneOffset: this.timezoneOffset,
+                allowEmptyValue: this.allowEmptyValue
             },
             panelView: Marionette.CollectionView.extend({
-                reqres: this.reqres,
                 collection: new Backbone.Collection(timeArray),
                 tagName: 'ul',
                 className: 'time-dropdown',
+                childEvents: {
+                    'select': function (view, time) { this.trigger('select', time); }
+                },
                 childView: Marionette.ItemView.extend({
                     tagName: 'li',
                     className: 'time-dropdown__i',
-                    reqres: this.reqres,
                     events: {
-                        'click': '__handleClick'
+                        'click': function () {
+                            this.trigger('select', this.model.get('time'));
+                        }
                     },
-                    __handleClick: function () {
-                        //noinspection JSPotentiallyInvalidUsageOfThis
-                        this.reqres.request('time:selected', this.model.get('time'));
-                    },
-                    template: Handlebars.compile('{{this.formattedTime}}')
+                    template: Handlebars.compile('{{formattedTime}}')
                 })
             }),
-            autoOpen: false,
-            panelPosition: 'down'
+            renderAfterClose: false,
+            autoOpen: false
         });
+        this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
+        this.listenTo(this.dropdownView, 'open', this.__onOpen, this);
+
+        this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus, this);
+        this.listenTo(this.dropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
+        this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
 
         this.dropdownRegion.show(this.dropdownView);
     },
 
-    __onTimeSelected: function (time) {
+    __onBeforeClose: function () {
+        this.dropdownView.button.endEditing();
+        this.trigger('blur');
+    },
+
+    __onOpen: function () {
+        this.dropdownView.button.startEditing();
+        this.trigger('focus');
+    },
+
+    __onPanelSelect: function (time) {
         var oldVal = this.model.get('value'),
             newVal = null;
 
@@ -96,16 +106,23 @@ export default Marionette.LayoutView.extend({
         }
 
         this.model.set('value', newVal);
+
         this.dropdownView.close();
     },
 
-    __onPanelOpen: function () {
-        if (this.model.get('enabled') && !this.model.get('readonly')) {
-            this.dropdownView.open();
-        }
+    __onButtonCalendarOpen: function () {
+        this.dropdownView.open();
     },
 
-    __onPanelClose: function () {
+    __onButtonFocus: function () {
+        this.dropdownView.open();
+    },
+
+    focus: function () {
+        this.dropdownView.open();
+    },
+
+    blur: function () {
         this.dropdownView.close();
     }
 });

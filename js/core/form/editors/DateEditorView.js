@@ -44,8 +44,11 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
         this.listenTo(this.dateModel, 'change:value', this.__change, this);
 
         this.dateView = new DateView({
-            model: this.dateModel
+            model: this.dateModel,
+            allowEmptyValue: this.options.allowEmptyValue
         });
+        this.listenTo(this.dateView, 'focus', this.onFocus);
+        this.listenTo(this.dateView, 'blur', this.onBlur);
     },
 
     regions: {
@@ -72,6 +75,7 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
     __onClear: function () {
         this.__value(null, true, true);
         this.dateModel.set('value', null);
+        return false;
     },
 
     __updateClearButton: function() {
@@ -115,6 +119,28 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
     __setReadonly: function (readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.dateModel.set({readonly: this.getReadonly()});
+    },
+
+    focusElement: null,
+
+    /**
+     * Sets the focus onto this editor.
+     */
+    focus: function() {
+        if (this.hasFocus) {
+            return;
+        }
+        this.dateView.focus();
+    },
+
+    /**
+     * Clears the focus.
+     */
+    blur: function() {
+        if (!this.hasFocus) {
+            return;
+        }
+        this.dateView.blur();
     }
 });
 

@@ -11,7 +11,7 @@
 import '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import WindowService from '../../services/WindowService';
-import GlobalEventService from '../../services/GlobalEventService';
+import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
 import template from '../templates/popout.hbs';
 
 const slice = Array.prototype.slice;
@@ -104,10 +104,16 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
         _.bindAll(this, 'open', 'close', '__handleWindowResize');
-        this.listenTo(GlobalEventService, 'windowClickCaptured', this.__onWindowClickCaptured);
     },
 
     template: template,
+
+    behaviors: {
+        BlurableBehavior: {
+            behaviorClass: BlurableBehavior,
+            onBlur: 'close'
+        }
+    },
 
     className: 'popout',
 
@@ -173,9 +179,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     updatePanelFlow: function () {
-        let leftPos = 0,
-            rightPos = 0,
-            isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT,
+        let isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT,
             anchor = this.ui.button;
 
         if (this.options.customAnchor && this.button.$anchor) {
@@ -249,22 +253,18 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.options.fade) {
             WindowService.fadeIn();
         }
-        this.ui.panel.css('display', 'block');
-        this.ui.panel.show({
-            duration: 0,
-            complete: function () {
-                this.panelRegion.show(this.panelView);
-                this.correctDirection();
-                this.updatePanelFlow();
-                if (this.options.height === height.BOTTOM) {
-                    $(window).on('resize', this.__handleWindowResize);
-                    this.__handleWindowResize();
-                }
-                //noinspection JSValidateTypes
-                this.isOpen = true;
-                this.trigger('open', this);
-            }.bind(this)
-        });
+        this.ui.panel.show();
+        this.panelRegion.show(this.panelView);
+        this.correctDirection();
+        this.updatePanelFlow();
+        if (this.options.height === height.BOTTOM) {
+            $(window).on('resize', this.__handleWindowResize);
+            this.__handleWindowResize();
+        }
+        this.focus();
+        //noinspection JSValidateTypes
+        this.isOpen = true;
+        this.trigger('open', this);
     },
 
     correctDirection: function () {
@@ -320,32 +320,21 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
 
         var closeArgs = _.toArray(arguments);
-        this.ui.panel.hide({
-            duration: 0,
-            complete: function () {
-                this.$el.removeClass(classes.OPEN);
-                this.panelRegion.reset();
-                //noinspection JSValidateTypes
-                this.isOpen = false;
+        this.ui.panel.hide();
+        this.$el.removeClass(classes.OPEN);
+        this.panelRegion.reset();
+        //noinspection JSValidateTypes
+        this.isOpen = false;
 
-                this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
-                if (this.options.renderAfterClose) {
-                    this.render();
-                }
-            }.bind(this)
-        });
+        this.trigger.apply(this, [ 'close', this ].concat(closeArgs));
+        if (this.options.renderAfterClose) {
+            this.render();
+        }
     },
 
     __handleWindowResize: function () {
         var outlineDiff = (this.panelView.$el.outerHeight() - this.panelView.$el.height());
         var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff;
         this.panelView.$el.height(panelHeight);
-    },
-
-    __onWindowClickCaptured: function (target) {
-        // Window object captured a click. We possibly need to close the popup.
-        if (this.isOpen && !(this.el === target || $.contains(this.el, target))) {
-            this.close();
-        }
     }
 });

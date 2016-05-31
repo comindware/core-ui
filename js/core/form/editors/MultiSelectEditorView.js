@@ -100,12 +100,13 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         });
 
         this.listenTo(this.dropdownView, 'close', this.onPanelClose);
+        this.listenTo(this.dropdownView, 'open', this.onPanelOpen);
 
-        this.listenTo(this.dropdownView, 'button:open:panel', this.onPanelOpen);
+        this.listenTo(this.dropdownView, 'button:open:panel', this.onPanelOpenRequest);
 
         this.listenTo(this.dropdownView, 'panel:select:all', this.__selectAll);
         this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
-        this.listenTo(this.dropdownView, 'panel:close', this.dropdownView.close.bind(this.dropdownView));
+        this.listenTo(this.dropdownView, 'panel:close', () => this.dropdownView.close());
 
         this.dropdownRegion.show(this.dropdownView);
     },
@@ -223,11 +224,15 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         });
     },
 
-    onPanelOpen: function() {
+    onPanelOpenRequest: function() {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
             this.__resetValue();
         }
+    },
+
+    onPanelOpen: function () {
+        this.onFocus();
     },
 
     onPanelClose: function() {
@@ -236,6 +241,15 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         }
 
         this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
+        this.onBlur();
+    },
+
+    focus: function () {
+        this.onPanelOpenRequest();
+    },
+
+    blur: function () {
+        this.dropdownView.close();
     }
 });
 

@@ -25,16 +25,6 @@ const classes = {
     EMPTY: 'editor_empty'
 };
 
-let onFocus = function () {
-    this.$el.addClass(classes.FOCUSED);
-    this.trigger('focus', this);
-};
-
-let onBlur = function () {
-    this.$el.removeClass(classes.FOCUSED);
-    this.trigger('blur', this);
-};
-
 let onRender = function () {
     this.$el.attr('id', this.id);
     this.$el.attr('name', this.getName());
@@ -49,11 +39,11 @@ let onRender = function () {
     }
     this.setValue(this.value, true);
     if (this.focusElement) {
-        this.$el.on('focus', this.focusElement, onFocus.bind(this));
-        this.$el.on('blur', this.focusElement, onBlur.bind(this));
-    } else {
-        this.$el.on('focus', onFocus.bind(this));
-        this.$el.on('blur', onBlur.bind(this));
+        this.$el.on('focus', this.focusElement, this.onFocus);
+        this.$el.on('blur', this.focusElement, this.onBlur);
+    } else if (this.focusElement !== null) {
+        this.$el.on('focus', this.onFocus);
+        this.$el.on('blur', this.onBlur);
     }
     this.$el.toggleClass(classes.EMPTY, this.isEmpty());
 };
@@ -117,6 +107,8 @@ export default {
 
             constructor: function (options) {
                 options = options || {};
+
+                _.bindAll(this, 'onFocus', 'onBlur');
 
                 //Set initial value
                 if (options.model) {
@@ -395,6 +387,16 @@ export default {
 
                 //Unknown validator type
                 throw new Error('Invalid validator: ' + validator);
+            },
+
+            onFocus: function () {
+                this.$el.addClass(classes.FOCUSED);
+                this.trigger('focus', this);
+            },
+
+            onBlur: function () {
+                this.$el.removeClass(classes.FOCUSED);
+                this.trigger('blur', this);
             }
         };
     }

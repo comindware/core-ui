@@ -33,7 +33,7 @@ define(['text!../templates/moduleView.html', './GroupsListView', './CasesListVie
                 caseModule: '.js-case-module-region'
             },
 
-            onRender: function () {
+            onShow: function () {
                 var availableGroups = this.getAvailableGroups(),
                     availableCases = this.getAvailableCases(availableGroups),
                     activeCase = this.getActiveCase(availableCases);

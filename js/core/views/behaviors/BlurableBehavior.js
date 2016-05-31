@@ -28,20 +28,18 @@ export default Marionette.Behavior.extend({
         view.focus = this.__focus.bind(this);
     },
 
-    modelEvents: {},
-
     events: function () {
-        var eventsMap = {};
         var key = 'blur';
         if (this.options.selector) {
             key += ' ' + this.options.selector;
         }
-        eventsMap[key] = '__onBlur';
-        return eventsMap;
+        return {
+            [key]: '__onBlur'
+        };
     },
 
     onRender: function () {
-        this.__getFocusableEl().attr('tabindex', 0);
+        this.__getFocusableEl().attr('tabindex', -1);
     },
 
     __getFocusableEl: function () {
@@ -53,15 +51,24 @@ export default Marionette.Behavior.extend({
     },
 
     __focus: function () {
-        this.__getFocusableEl().focus();
+        // If the focused element is nested into our focusable element, we simply bind to it. Otherwise, we focus the focusable element.
+        var $focusableEl = this.__getFocusableEl();
+        let activeElementIsNested = $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
+        if (!activeElementIsNested) {
+            $focusableEl.focus();
+        } else {
+            $(document.activeElement).one('blur', this.__onBlur);
+        }
     },
 
     __onBlur: function () {
         var $focusableEl = this.__getFocusableEl();
         _.defer(function () {
-            if ($focusableEl[0] === document.activeElement || $focusableEl.find(document.activeElement).length > 0) {
+            let activeElementIsNested = $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
+            if (activeElementIsNested) {
                 $(document.activeElement).one('blur', this.__onBlur);
             } else {
+                // Call the provided onBlur function
                 var callback = this.options.onBlur;
                 if (_.isString(callback)) {
                     this.view[callback].call(this.view);

@@ -91,13 +91,19 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
         this.dateView = new DateView({
             model: this.dateTimeModel,
             timezoneOffset: this.options.timezoneOffset,
-            preserveTime: true
+            preserveTime: true,
+            allowEmptyValue: this.options.allowEmptyValue
         });
+        this.listenTo(this.dateView, 'focus', this.onFocus);
+        this.listenTo(this.dateView, 'blur', this.onBlur);
 
         this.timeView = new TimeView({
             model: this.dateTimeModel,
-            timezoneOffset: this.options.timezoneOffset
+            timezoneOffset: this.options.timezoneOffset,
+            allowEmptyValue: this.options.allowEmptyValue
         });
+        this.listenTo(this.timeView, 'focus', this.onFocus);
+        this.listenTo(this.timeView, 'blur', this.onBlur);
 
         this.dateRegion.show(this.dateView);
         this.timeRegion.show(this.timeView);
@@ -136,6 +142,30 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
     __onClear: function() {
         this.__value(null, true, true);
         this.dateTimeModel.set('value', null);
+        return false;
+    },
+
+    focusElement: null,
+
+    /**
+     * Sets the focus onto this editor.
+     */
+    focus: function() {
+        if (this.hasFocus) {
+            return;
+        }
+        this.dateView.focus();
+    },
+
+    /**
+     * Clears the focus.
+     */
+    blur: function() {
+        if (!this.hasFocus) {
+            return;
+        }
+        this.dateView.blur();
+        this.timeView.blur();
     }
 });
 
