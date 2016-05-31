@@ -126,6 +126,8 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
             },
             autoOpen: false
         });
+        this.listenTo(this.dropdownView, 'open', this.onFocus);
+        this.listenTo(this.dropdownView, 'close', this.onBlur);
         this.dropdownRegion.show(this.dropdownView);
     },
 
@@ -216,6 +218,14 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
+    },
+
+    focus: function () {
+        this.dropdownView.open();
+    },
+
+    blur: function () {
+        this.dropdownView.close();
     }
 });
 
