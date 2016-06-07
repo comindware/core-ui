@@ -27,7 +27,7 @@ export default {
                 name: (model.Text || model.Username),
                 userName: model.Username,
                 abbreviation: model.abbreviation,
-                avatarUrl: model.userpicUrl,
+                avatarUri: model.userpicUri,
                 link: model.link
             });
         });
