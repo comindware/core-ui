@@ -27,8 +27,8 @@ import GlobalEventService from '../../services/GlobalEventService';
 let HeaderView = GridHeaderView.extend({
     initialize: function (options) {
         GridHeaderView.prototype.initialize.apply(this, arguments);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResize', '__handleResizeInternal', '__handleColumnSort');
-        this.listenTo(GlobalEventService, 'resize', this.__handleResize);
+        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
+        this.listenTo(GlobalEventService, 'resize', this.__handleResizeInternal);
     },
 
     template: template,

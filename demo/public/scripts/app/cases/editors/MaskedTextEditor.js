@@ -2,7 +2,7 @@
     'use strict';
     return function() {
         var model = new Backbone.Model({
-            textValue: 'FAX17'
+            textValue: 'FAX7'
         });
 
         return new EditorCanvasView({
@@ -11,11 +11,8 @@
                 key: 'textValue',
                 changeMode: 'keydown',
                 autocommit: true,
-                mask: 'aaa*: +9(999)999-9999',
-                maskPlaceholder: '.',
-                maskOptions: {
-                    insertMode: false
-                }
+                mask: 'aa*: +9(999)999-9999',
+                maskPlaceholder: '_'
             }),
             presentation: "{{#isNull textValue}}null{{else}}'{{textValue}}'{{/isNull}}"
         });
