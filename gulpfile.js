@@ -11,7 +11,7 @@
 var gulp = require('gulp'),
     gutil = require("gulp-util"),
     webpack = require("webpack"),
-    webpackConfig = require("./webpack.config.js"),
+    webpackConfigFactory = require("./webpack.config.js"),
     babel = require('gulp-babel'),
     jsdoc = require('gulp-jsdoc'),
     exec = require('child_process').exec;
@@ -45,7 +45,9 @@ gulp.task('jsdoc', function() {
 
 gulp.task("webpack:build:release", function(callback) {
     // modify some webpack config options
-    var myConfig = Object.create(webpackConfig);
+    var myConfig = webpackConfigFactory.build({
+        env: 'production'
+    });
     myConfig.output = Object.create(myConfig.output);
     myConfig.output.filename = 'core.bundle.min.js';
     myConfig.debug = false;
@@ -75,7 +77,9 @@ gulp.task("webpack:build:release", function(callback) {
     });
 });
 
-var myDevConfig = Object.create(webpackConfig);
+var myDevConfig = webpackConfigFactory.build({
+    env: 'development'
+});
 var devCompiler = webpack(myDevConfig);
 
 gulp.task("webpack:build:debug", function(callback) {

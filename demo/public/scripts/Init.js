@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 require.config({
-	baseUrl: '/scripts/',
+	baseUrl: 'scripts/',
 	waitSeconds: 60,
 	paths: {
 		// libraries
