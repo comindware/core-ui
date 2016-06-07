@@ -11,6 +11,7 @@ define([
     Application.addRegions({
         fadingRegion: '.js-fading-region',
         popupRegion: '.js-popup-region',
+        headerRegion: '.js-header-region',
         contentRegion: '.js-content-region'
     });
 

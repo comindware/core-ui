@@ -1,6 +1,6 @@
 /**
  * Developer: Alexander Makarov
- * Date: 08.07.2015
+ * Date: 14.07.2015
  * Copyright: 2009-2015 Comindware®
  *       All Rights Reserved
  *
@@ -11,18 +11,14 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define(['text!../templates/casesList.html', './CaseView'],
-    function (template, CaseView) {
-        'use strict';
-        return Marionette.CompositeView.extend({
-
-            template: Handlebars.compile(template),
-
-            ui: {},
-
-            childView: CaseView,
-
-            childViewContainer: '.js-cases-container'
-        });
+define([
+    'comindware/core',
+    'text!../templates/indexPage.html'
+], function (core, template) {
+    'use strict';
+    return Marionette.ItemView.extend({
+        className: "demo-welcome",
+        
+        template: Handlebars.compile(template)
     });
-
+});

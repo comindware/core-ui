@@ -11,7 +11,7 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Prism */
 
-define(['text!../templates/caseModule.html', 'comindware/core', 'prism', 'require', 'markdown'],
+define(['text!../templates/content.html', 'comindware/core', 'prism', 'require', 'markdown'],
     function (template, core, prism, require) {
         'use strict';
 

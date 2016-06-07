@@ -13,7 +13,7 @@
 
 define([
         'comindware/core',
-        'text!../templates/group.html'
+        'text!../templates/groupItem.html'
     ],
     function (core, template) {
         'use strict';
