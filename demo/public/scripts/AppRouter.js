@@ -6,7 +6,7 @@ define([
     return Marionette.AppRouter.extend({
         appRoutes: {
             '': 'index',
-            'demo/core/:sectionId/:groupId/:caseId': 'showCase'
+            'demo/:sectionId/:groupId/:caseId': 'showCase'
         }
     });
 });

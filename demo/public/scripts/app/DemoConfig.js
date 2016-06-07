@@ -12,17 +12,17 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-    './cases/editors/TextEditor/default',
-    'text!./cases/editors/TextEditor/default.js',
+    './cases/editors/TextEditor',
+    'text!./cases/editors/TextEditor.js',
 
-    './cases/editors/TextAreaEditor/default',
-    'text!./cases/editors/TextAreaEditor/default.js',
+    './cases/editors/TextAreaEditor',
+    'text!./cases/editors/TextAreaEditor.js',
 
-    './cases/editors/BooleanEditor/default',
-    'text!./cases/editors/BooleanEditor/default.js',
+    './cases/editors/BooleanEditor',
+    'text!./cases/editors/BooleanEditor.js',
 
-    './cases/editors/NumberEditor/default',
-    'text!./cases/editors/NumberEditor/default.js',
+    './cases/editors/NumberEditor',
+    'text!./cases/editors/NumberEditor.js',
 
     './cases/editors/DateEditor',
     'text!./cases/editors/DateEditor.js',
@@ -39,23 +39,23 @@ define([
     './cases/editors/DurationEditorWithPartialDisplay',
     'text!./cases/editors/DurationEditorWithPartialDisplay.js',
 
-    './cases/editors/DropdownEditor/default',
-    'text!./cases/editors/DropdownEditor/default.js',
+    './cases/editors/DropdownEditor',
+    'text!./cases/editors/DropdownEditor.js',
 
-    './cases/editors/ReferenceEditor/default',
-    'text!./cases/editors/ReferenceEditor/default.js',
+    './cases/editors/ReferenceEditor',
+    'text!./cases/editors/ReferenceEditor.js',
 
     './cases/editors/ReferenceEditorWithAddNewButton',
     'text!./cases/editors/ReferenceEditorWithAddNewButton.js',
 
-    './cases/editors/RadioGroupEditor/default',
-    'text!./cases/editors/RadioGroupEditor/default.js',
+    './cases/editors/RadioGroupEditor',
+    'text!./cases/editors/RadioGroupEditor.js',
 
-    './cases/editors/MemberSelectEditor/default',
-    'text!./cases/editors/MemberSelectEditor/default.js',
+    './cases/editors/MemberSelectEditor',
+    'text!./cases/editors/MemberSelectEditor.js',
 
-    './cases/editors/MembersBubbleEditor/default',
-    'text!./cases/editors/MembersBubbleEditor/default.js',
+    './cases/editors/MembersBubbleEditor',
+    'text!./cases/editors/MembersBubbleEditor.js',
 
     './cases/editors/MentionEditor',
     'text!./cases/editors/MentionEditor.js',
@@ -144,15 +144,20 @@ define([
                 displayName: 'Editors',
                 groups: [
                     {
+                        id: 'TextEditor',
+                        displayName: 'Text Editor'
+                    },
+                    {
+                        id: 'TextAreaEditor',
+                        displayName: 'Text Area Editor'
+                    },
+                    {
+                        id: 'NumberEditor',
+                        displayName: 'Number Editor'
+                    },
+                    {
                         id: 'BooleanEditor',
-                        displayName: 'Boolean Editor',
-                        description: 'test',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
+                        displayName: 'Boolean Editor'
                     },
                     {
                         id: 'DateEditor',
@@ -163,120 +168,60 @@ define([
                         displayName: 'DateTime Editor'
                     },
                     {
-                        id: 'DropdownEditor',
-                        displayName: 'Dropdown Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
+                        id: 'TimeEditor',
+                        displayName: 'Time Editor'
                     },
                     {
                         id: 'DurationEditor',
                         displayName: 'Duration Editor'
                     },
                     {
-                        id: 'DurationEditorWithPartialDisplay',
-                        displayName: 'Duration Editor (partial display)'
-                    },
-                    {
-                        id: 'MaskedTextEditor',
-                        displayName: 'Masked Text Editor'
-                    },
-                    {
-                        id: 'MemberSelectEditor',
-                        displayName: 'Member Select Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
-                    },
-                    {
-                        id: 'MembersBubbleEditor',
-                        displayName: 'Members Bubble Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
-                    },
-                    {
-                        id: 'MentionEditor',
-                        displayName: 'Mention Editor'
+                        id: 'DropdownEditor',
+                        displayName: 'Dropdown Editor'
                     },
                     {
                         id: 'MultiSelectEditor',
                         displayName: 'MultiSelect Editor'
                     },
                     {
-                        id: 'AvatarEditor',
-                        displayName: 'Avatar Editor'
-                    },
-                    {
-                        id: 'NumberEditor',
-                        displayName: 'Number Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
+                        id: 'RadioGroupEditor',
+                        displayName: 'Radio Group Editor'
                     },
                     {
                         id: 'PasswordEditor',
                         displayName: 'Password Editor'
                     },
                     {
-                        id: 'RadioGroupEditor',
-                        displayName: 'Radio Group Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
+                        id: 'MemberSelectEditor',
+                        displayName: 'Member Select Editor'
+                    },
+                    {
+                        id: 'MembersBubbleEditor',
+                        displayName: 'Members Bubble Editor'
+                    },
+                    {
+                        id: 'MentionEditor',
+                        displayName: 'Mention Editor'
                     },
                     {
                         id: 'ReferenceEditor',
-                        displayName: 'Reference Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
+                        displayName: 'Reference Editor'
+                    },
+                    {
+                        id: 'MaskedTextEditor',
+                        displayName: 'Masked Text Editor'
+                    },
+                    {
+                        id: 'AvatarEditor',
+                        displayName: 'Avatar Editor'
+                    },
+                    {
+                        id: 'DurationEditorWithPartialDisplay',
+                        displayName: 'Duration Editor (partial display)'
                     },
                     {
                         id: 'ReferenceEditorWithAddNewButton',
                         displayName: 'Reference Editor (Add new button)'
-                    },
-                    {
-                        id: 'TextAreaEditor',
-                        displayName: 'Text Area Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
-                    },
-                    {
-                        id: 'TextEditor',
-                        displayName: 'Text Editor',
-                        cases: [
-                            {
-                                id: 'default',
-                                displayName: 'Default'
-                            }
-                        ]
-                    },
-                    {
-                        id: 'TimeEditor',
-                        displayName: 'Time Editor'
                     },
                     {
                         id: 'Form',

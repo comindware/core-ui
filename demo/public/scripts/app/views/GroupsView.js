@@ -11,17 +11,15 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define([
-        'comindware/core',
-        'text!../templates/case.html'
-    ],
-    function (core, template) {
+define([ './GroupItemView' ],
+    function (GroupItemView) {
         'use strict';
-        return Marionette.ItemView.extend({
-            tagName:'li',
+        return Marionette.CollectionView.extend({
+            tagName: 'ul',
 
-            className:'demo-cases__li',
+            className: 'demo-groups__ul',
 
-            template: Handlebars.compile(template)
+            childView: GroupItemView
         });
     });
+
