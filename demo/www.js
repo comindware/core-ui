@@ -7,13 +7,7 @@ var PORT = 9999;
 
 console.log('Comindware UI components demo page.');
 
-// Overriding static content paths
-app.use(express.static('public'));
-
-app.get('/', function (req, res) {
-    res.render('index', {
-    });
-});
+app.use(express.static('public/assets'));
 
 var server = app.listen(PORT);
 console.log('Server is listening on port ' + PORT);
