@@ -57,7 +57,7 @@ module.exports = {
                 loaders: [
                     {
                         test: /\.jsx?$/,
-                        exclude: /(node_modules|bower_components|core\.bundle|prism\.js|markdown\.js)/,
+                        exclude: /(node_modules|bower_components|core\.bundle|cases|prism\.js|markdown\.js)/,
                         loader: 'babel-loader',
                         query: {
                             cacheDirectory: true,

@@ -13,10 +13,11 @@
 
 "use strict";
 
-var req = require.context("../cases", true);
+var requireCode = require.context("babel!../cases", true);
+var requireText = require.context("raw!../cases", true);
 
-define(['text!../templates/content.html', 'comindware/core', 'prism', 'markdown', 'require'],
-    function (template, core, Prism, markdown, require) {
+define(['text!../templates/content.html', 'comindware/core', 'prism', 'markdown'],
+    function (template, core, Prism, markdown) {
         return Marionette.LayoutView.extend({
             initialize: function (options) {
             },
@@ -46,24 +47,19 @@ define(['text!../templates/content.html', 'comindware/core', 'prism', 'markdown'
             },
 
             onShow: function() {
-                var path;
+                let path;
                 if (this.model.id) {
                     path = this.model.get('sectionId') +'/' + this.model.get('groupId') + '/' + this.model.id;
                 } else {
                     path = this.model.get('sectionId') +'/' + this.model.get('groupId');
                 }
-                var caseScriptPath = './' + path + '.js';
-                var caseScript = './' + path;
 
-                var csp = req(caseScriptPath);
-debugger;
+                let code = requireCode('./' + path);
+                let text = requireText('./' + path);
 
-                req(caseScriptPath, function(caseSourceText, caseFactory) {
-
-                    this.model.set('sourceCode', caseSourceText);
-                    var representationView = caseFactory();
-                    this.caseRepresentationRegion.show(representationView);
-                }.bind(this));
+                this.model.set('sourceCode', text);
+                var representationView = code();
+                this.caseRepresentationRegion.show(representationView);
             }
         });
     });
