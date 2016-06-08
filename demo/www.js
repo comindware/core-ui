@@ -9,16 +9,9 @@ console.log('Comindware UI components demo page.');
 
 // Overriding static content paths
 app.use(express.static('public'));
-app.use('/core/resources', express.static('../resources'));
-app.use('/resources/fonts', express.static('../resources/fonts'));
-app.use('/resources/images', express.static('../resources/images'));
-app.use('/resources/shared/img', express.static('../resources/images'));
-app.use('/scripts/dist', express.static('../dist'));
 
 app.get('/', function (req, res) {
-    var compiled = req.query.compiled !== undefined;
     res.render('index', {
-        compiled: compiled
     });
 });
 

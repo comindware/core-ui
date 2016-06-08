@@ -49,7 +49,6 @@ module.exports = {
             debug: true,
             output: {
                 path: pathResolver.client(),
-                publicPath: '/',
                 filename: '[name].js',
                 sourceMapFilename: '[file].map'
             },
