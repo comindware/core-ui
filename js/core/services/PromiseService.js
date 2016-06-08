@@ -9,7 +9,6 @@
 "use strict";
 
 import '../libApi';
-import './promise/Config';
 
 let promiseQueue = [];
 

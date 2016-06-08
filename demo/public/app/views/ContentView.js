@@ -11,10 +11,12 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Prism */
 
-define(['text!../templates/content.html', 'comindware/core', 'prism', 'require', 'markdown'],
-    function (template, core, prism, require) {
-        'use strict';
+"use strict";
 
+var req = require.context("../cases", true);
+
+define(['text!../templates/content.html', 'comindware/core', 'prism', 'markdown', 'require'],
+    function (template, core, Prism, markdown, require) {
         return Marionette.LayoutView.extend({
             initialize: function (options) {
             },
@@ -50,10 +52,14 @@ define(['text!../templates/content.html', 'comindware/core', 'prism', 'require',
                 } else {
                     path = this.model.get('sectionId') +'/' + this.model.get('groupId');
                 }
-                var caseScriptPath = 'text!../cases/' + path + '.js';
-                var caseScript = '../cases/' + path;
+                var caseScriptPath = './' + path + '.js';
+                var caseScript = './' + path;
 
-                require([ caseScriptPath, caseScript ], function(caseSourceText, caseFactory) {
+                var csp = req(caseScriptPath);
+debugger;
+
+                req(caseScriptPath, function(caseSourceText, caseFactory) {
+
                     this.model.set('sourceCode', caseSourceText);
                     var representationView = caseFactory();
                     this.caseRepresentationRegion.show(representationView);

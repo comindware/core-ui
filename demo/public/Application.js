@@ -3,7 +3,7 @@ define([
     'ajax/users',
     'localizationMap',
     'ajaxMap'
-], function(core, usersStub) {
+], function(core, usersStub, localizationMap) {
     'use strict';
 
     var Application = new Marionette.Application();
@@ -21,15 +21,18 @@ define([
     };
 
     Application.addInitializer(function() {
+        let isProduction = process.env.NODE_ENV === 'production';
+        let langCode = 'en';
+
         core.initialize({
             cacheService: usersStub,
             ajaxService: {
                 ajaxMap: window.ajaxMap
             },
             localizationService: {
-                langCode: window.langCode,
-                localizationMap: window['LANGMAP' + window.langCode.toUpperCase()],
-                warningAsError: window.compiled
+                langCode: langCode,
+                localizationMap: localizationMap,
+                warningAsError: isProduction
             },
             windowService: {
                 fadingRegion: Application.fadingRegion,

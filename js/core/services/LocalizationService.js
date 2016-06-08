@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../libApi';
+import { moment } from '../libApi';
 import { helpers } from '../utils/utilsApi';
 
 let global = window;
@@ -23,6 +23,8 @@ global.Localizer = {
         this.langCode = options.langCode;
         this.localizationMap = options.localizationMap;
         this.warningAsError = options.warningAsError;
+
+        moment.locale(this.langCode);
     },
 
     get: function (locId) {

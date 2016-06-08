@@ -11,6 +11,7 @@
 "use strict";
 
 import { moment } from '../libApi';
+import LocalizationService from '../services/LocalizationService';
 
 let dateTimeFormats = {
     en: {
@@ -185,7 +186,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
     getWeekStartDay: function () {
         var startDay = 0;
 
-        switch (window.langCode) {
+        switch (LocalizationService.langCode) {
         case 'ru':
         case 'de':
             startDay = 1;
@@ -199,7 +200,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getRelativeDate: function (val) {
-        var lang = window.langCode,
+        var lang = LocalizationService.langCode,
             now = moment(),
             daysFromNow = now.diff(val, 'days');
 
@@ -212,39 +213,39 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getDisplayDate: function (val) {
-        var lang = window.langCode,
+        var lang = LocalizationService.langCode,
             format = dateTimeFormats[lang].condensedDate.general;
 
         return val ? moment(val).locale(lang).format(format) : '';
     },
 
     getDisplayTime: function (time) {
-        var lang = window.langCode,
+        var lang = LocalizationService.langCode,
             format = dateTimeFormats[lang].fullDateShortTime.time;
 
         return time.locale(lang).format(format);
     },
 
     getTimeEditFormat: function () {
-        return dateTimeFormats[window.langCode].generalDateShortTime.time;
+        return dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
     getDateEditFormat: function () {
-        return dateTimeFormats[window.langCode].generalDateShortTime.date;
+        return dateTimeFormats[LocalizationService.langCode].generalDateShortTime.date;
     },
 
     dateToDateTimeString: function(date, formatName) {
-        var lang = window.langCode;
+        var lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].general);
     },
 
     dateToDateString: function (date, formatName) {
-        var lang = window.langCode;
+        var lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].date);
     },
 
     dateToTimeString: function (date, formatName) {
-        var lang = window.langCode;
+        var lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].time);
     }
 };

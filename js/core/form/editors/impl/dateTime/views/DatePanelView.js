@@ -11,6 +11,7 @@
 import { moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import template from '../templates/datePanel.hbs';
+import LocalizationService from '../../../../../services/LocalizationService';
 
 const defaultOptions = {
     pickerFormat: 'YYYY-MM-DD'
@@ -27,7 +28,7 @@ export default Marionette.ItemView.extend({
             format: this.options.pickerFormat,
             todayBtn: true,
             weekStart: dateHelpers.getWeekStartDay(),
-            language: window.langCode
+            language: LocalizationService.langCode
         };
     },
 

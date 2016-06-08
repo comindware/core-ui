@@ -50,19 +50,6 @@ gulp.task("webpack:build:release", function(callback) {
     });
     myConfig.output = Object.create(myConfig.output);
     myConfig.output.filename = 'core.bundle.min.js';
-    myConfig.debug = false;
-    myConfig.devtool = 'source-map';
-    //noinspection JSUnresolvedFunction
-    myConfig.plugins = (myConfig.plugins || []).concat(
-        new webpack.DefinePlugin({
-            "process.env": {
-                // This has effect on the react lib size
-                "NODE_ENV": JSON.stringify("production")
-            }
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin()
-    );
 
     // run webpack
     webpack(myConfig, function(err, stats) {

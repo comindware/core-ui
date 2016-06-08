@@ -12,7 +12,7 @@ import moment_ from 'moment';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
-import 'bluebird';
+import Bluebird from 'bluebird';
 import * as Handlebars_ from 'handlebars';
 import 'underscore';
 import * as underscoreString from 'underscore.string';
@@ -27,6 +27,15 @@ import 'jquery-mousewheel';
 import 'jquery-autosize';
 import * as keypress_ from 'keypress';
 import 'bootstrap-datetime-picker';
+
+// Replacing ES6 promise with bluebird
+require('babel-runtime/core-js/promise').default = Bluebird;
+
+Promise.config({
+    warnings: false,
+    longStackTraces: true,
+    cancellation: true
+});
 
 _.string = _.str = underscoreString;
 

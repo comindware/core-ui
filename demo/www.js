@@ -5,11 +5,7 @@ var express = require('express');
 var app = express();
 var PORT = 9999;
 
-console.log('Comindware UI components demo page. Use options /?compiled (like http://localhost:9999/?compiled) to run with bundled version.');
-
-//noinspection JSUnresolvedVariable,JSHint
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+console.log('Comindware UI components demo page.');
 
 // Overriding static content paths
 app.use(express.static('public'));
