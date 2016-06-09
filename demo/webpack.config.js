@@ -177,12 +177,6 @@ module.exports = {
             webpackConfig.debug = false;
             webpackConfig.devtool = false;
 
-            let babelLoader = _.find(webpackConfig.module.loaders, { loader: 'babel-loader' });
-            babelLoader.query.plugins.push(
-                'transform-react-remove-prop-types',
-                'transform-react-constant-elements'
-            );
-
             //noinspection JSUnresolvedFunction
             webpackConfig.plugins.push(
                 new webpack.DefinePlugin({
