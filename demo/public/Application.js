@@ -4,8 +4,8 @@ define([
     'localizationMapEn',
     'localizationMapDe',
     'localizationMapRu',
-    'ajaxMap'
-], function(core, usersStub, localizationMapEn, localizationMapDe, localizationMapRu) {
+    './ajaxMap.json'
+], function(core, usersStub, localizationMapEn, localizationMapDe, localizationMapRu, ajaxMap) {
     'use strict';
 
     var Application = new Marionette.Application();
@@ -31,7 +31,7 @@ define([
         core.initialize({
             cacheService: usersStub,
             ajaxService: {
-                ajaxMap: window.ajaxMap
+                ajaxMap: ajaxMap
             },
             localizationService: {
                 langCode: langCode,
