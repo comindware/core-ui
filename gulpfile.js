@@ -14,7 +14,20 @@ const webpack = require("webpack");
 const webpackConfigFactory = require("./webpack.config.js");
 const babel = require('gulp-babel');
 const jsdoc = require('gulp-jsdoc');
+const path = require('path');
 const exec = require('child_process').exec;
+const fs = require('fs');
+const del = require('del');
+const mkdirp = require('mkdirp');
+
+const config = {
+    assetsDir: path.resolve(`${__dirname}/public/assets`)
+};
+
+gulp.task('clear', function () {
+    del.sync([`${config.assetsDir}/**`]);
+    mkdirp.sync(config.assetsDir);
+});
 
 gulp.task('jsdoc', function() {
     return gulp.src('./js/core/**/*.js')
@@ -47,13 +60,15 @@ gulp.task('localization', function (cb) {
     let localizerBin = 'Localization.Export.exe';
     let localizationResources = 'http://comindware.com/text#core';
     let localizationSource = 'localization/localization.n3';
-    let localizationDestination = 'demo/public/localization/localization.js';
+    let localizationDestination = 'dist/localization/temp/localization.js';
 
     let localizationCommand = localizerBin +
         ' --export js --source "' + localizationSource +
         '" --destination "' + localizationDestination +
         '" -r ' + localizationResources +
         ' --languages en ru de';
+
+    mkdirp.sync('dist/localization/temp');
 
     exec(localizationCommand, function (err, stdout, stderr) {
         if (err) {
@@ -62,6 +77,17 @@ gulp.task('localization', function (cb) {
         }
         console.log(stdout);
         console.log(stderr);
+
+        fs.readdirSync('dist/localization/temp').forEach(fileName => {
+            let langCode = fileName.substr(16, 2);
+            let fileContent = fs.readFileSync(`dist/localization/temp/${fileName}`, 'utf8');
+            // We call Function because the fileContent still isn't a valid JSON.
+            fileContent = 'return ' + fileContent.substring(fileContent.indexOf('var LANGMAP') + 16);
+            let data = (new Function(fileContent))(); // jshint ignore:line
+            fs.writeFileSync(`dist/localization/localization.${langCode}.json`, JSON.stringify(data), 'utf8');
+        });
+        del.sync(['dist/localization/temp/**']);
+
         cb(err);
     });
 });
@@ -111,6 +137,6 @@ gulp.task("start", ["webpack:build:debug"], function() {
 });
 
 // The production task builds optimized and regular bundles and generates jsdoc documentation
-gulp.task('deploy', [ 'jsdoc', 'webpack:build:debug', 'webpack:build:release' ]);
+gulp.task('deploy', [ 'clear', 'jsdoc', 'webpack:build:debug', 'webpack:build:release' ]);
 
 gulp.task('default', ['start']);

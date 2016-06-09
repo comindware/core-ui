@@ -1,9 +1,11 @@
 define([
 	'comindware/core',
     'ajax/users',
-    'localizationMap',
+    'localizationMapEn',
+    'localizationMapDe',
+    'localizationMapRu',
     'ajaxMap'
-], function(core, usersStub, localizationMap) {
+], function(core, usersStub, localizationMapEn, localizationMapDe, localizationMapRu) {
     'use strict';
 
     var Application = new Marionette.Application();
@@ -21,8 +23,10 @@ define([
     };
 
     Application.addInitializer(function() {
-        let isProduction = process.env.NODE_ENV === 'production';
-        let langCode = 'en';
+        let isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
+
+        let langCode = window.navigator.language.substring(0, 2).toLowerCase();
+        let localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
 
         core.initialize({
             cacheService: usersStub,
