@@ -23,7 +23,7 @@ const pathResolver = {
     },
     source: function () {
         //noinspection Eslint
-        return path.resolve.apply(path.resolve, [__dirname, 'js/core'].concat(_.toArray(arguments)));
+        return path.resolve.apply(path.resolve, [__dirname, 'src'].concat(_.toArray(arguments)));
     },
     thisDir: function () {
         return path.resolve(__dirname);
@@ -44,7 +44,7 @@ module.exports = {
 
         let webpackConfig = {
             cache: true,
-            entry: './js/core/coreApi.js',
+            entry: pathResolver.source('coreApi.js'),
             devtool: 'source-map',
             debug: true,
             output: {
@@ -181,9 +181,9 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    "jquery.caret": 'js/lib/jquery.caret/index',
-                    "backbone.forms": 'js/lib/backbone.forms/backbone-forms',
-                    "keypress": 'js/lib/Keypress/keypress-2.1.0.min',
+                    "jquery.caret": pathResolver.source('lib/jquery.caret/index'),
+                    "backbone.forms": pathResolver.source('lib/backbone.forms/backbone-forms'),
+                    "keypress": pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
                     "handlebars": 'handlebars/dist/handlebars'
                 }
             }

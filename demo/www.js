@@ -9,5 +9,5 @@ console.log('Comindware UI components demo page.');
 
 app.use(express.static('public/assets'));
 
-var server = app.listen(PORT);
+app.listen(PORT);
 console.log('Server is listening on port ' + PORT);
