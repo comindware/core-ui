@@ -3,7 +3,7 @@ node_js:
 - '4.1'
 before_install: npm install -g gulp-cli
 install: npm install
-script: gulp production
+script: gulp deploy
 deploy:
   provider: npm
   email: me@sburg.net
