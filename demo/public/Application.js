@@ -25,7 +25,7 @@ define([
     Application.addInitializer(function() {
         let isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
 
-        let langCode = window.navigator.language.substring(0, 2).toLowerCase();
+        let langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
         let localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
 
         core.initialize({
