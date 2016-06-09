@@ -121,10 +121,6 @@ module.exports = {
                     {
                         test: /\.(png|jpg)$/,
                         loader: `url?limit=${GRAPHICS_LIMIT}`
-                    },
-                    {
-                        test: /localizationMap/,
-                        loader: 'exports?LANGMAPEN'
                     }
                 ]
             },
@@ -161,7 +157,9 @@ module.exports = {
                     'comindware/core': `${__dirname}/../dist/core.bundle.js`,
                     prism: `${__dirname}/public/lib/prism/prism.js`,
                     markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
-                    localizationMap: `${__dirname}/public/localization/localizationMap.en.js`,
+                    localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,
+                    localizationMapDe: `${__dirname}/../dist/localization/localization.de.json`,
+                    localizationMapRu: `${__dirname}/../dist/localization/localization.ru.json`,
                     ajaxMap: `${__dirname}/public/ajax/ajaxMap.js`
                 }
             },
