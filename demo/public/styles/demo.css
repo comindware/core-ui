@@ -51,6 +51,7 @@
 }
 
 .demo-nav__i > a {
+    display: block;
     padding: 0 50px;
     font-size: 13px;
     line-height: inherit;

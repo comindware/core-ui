@@ -8,13 +8,13 @@
 
 "use strict";
 
-var gulp = require('gulp'),
-    gutil = require("gulp-util"),
-    webpack = require("webpack"),
-    webpackConfigFactory = require("./webpack.config.js"),
-    babel = require('gulp-babel'),
-    jsdoc = require('gulp-jsdoc'),
-    exec = require('child_process').exec;
+const gulp = require('gulp');
+const gutil = require("gulp-util");
+const webpack = require("webpack");
+const webpackConfigFactory = require("./webpack.config.js");
+const babel = require('gulp-babel');
+const jsdoc = require('gulp-jsdoc');
+const exec = require('child_process').exec;
 
 gulp.task('jsdoc', function() {
     return gulp.src('./js/core/**/*.js')
@@ -43,6 +43,29 @@ gulp.task('jsdoc', function() {
         }));
 });
 
+gulp.task('localization', function (cb) {
+    let localizerBin = 'Localization.Export.exe';
+    let localizationResources = 'http://comindware.com/text#core';
+    let localizationSource = 'localization/localization.n3';
+    let localizationDestination = 'demo/public/localization/localization.js';
+
+    let localizationCommand = localizerBin +
+        ' --export js --source "' + localizationSource +
+        '" --destination "' + localizationDestination +
+        '" -r ' + localizationResources +
+        ' --languages en ru de';
+
+    exec(localizationCommand, function (err, stdout, stderr) {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
 gulp.task("webpack:build:release", function(callback) {
     // modify some webpack config options
     var myConfig = webpackConfigFactory.build({
@@ -50,24 +73,10 @@ gulp.task("webpack:build:release", function(callback) {
     });
     myConfig.output = Object.create(myConfig.output);
     myConfig.output.filename = 'core.bundle.min.js';
-    myConfig.debug = false;
-    myConfig.devtool = 'source-map';
-    //noinspection JSUnresolvedFunction
-    myConfig.plugins = (myConfig.plugins || []).concat(
-        new webpack.DefinePlugin({
-            "process.env": {
-                // This has effect on the react lib size
-                "NODE_ENV": JSON.stringify("production")
-            }
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin()
-    );
 
     // run webpack
     webpack(myConfig, function(err, stats) {
         if(err) {
-            //noinspection JSUnresolvedFunction
             throw new gutil.PluginError("webpack:build", err);
         }
         gutil.log("[webpack:build]", stats.toString({
@@ -96,34 +105,12 @@ gulp.task("webpack:build:debug", function(callback) {
 });
 
 // The development task builds webpack and starts watcher
-gulp.task("dev", ["webpack:build:debug"], function() {
+gulp.task("start", ["webpack:build:debug"], function() {
     gulp.watch([ 'js/core/**/*', 'resources/**/*' ], [ 'webpack:build:debug' ]);
+    gulp.watch('localization/*', [ 'localization' ]);
 });
 
 // The production task builds optimized and regular bundles and generates jsdoc documentation
-gulp.task('production', [ 'jsdoc', 'webpack:build:debug', 'webpack:build:release' ]);
+gulp.task('deploy', [ 'jsdoc', 'webpack:build:debug', 'webpack:build:release' ]);
 
-gulp.task('default', ['dev']);
-
-gulp.task('localize:watcher', function(){
-    gulp.watch('localization/*', ['localize']);
-});
-
-gulp.task('localize', function (cb) {
-    var localizationDestination = 'demo/public/scripts/localization/localization.js',
-        localizationSource = 'localization/localization.n3',
-        localizationResources = 'http://comindware.com/text#core',
-        localizerBin = 'Localization.Export.exe';
-
-    var localizationCommand = localizerBin +
-        ' --export js --source "' + localizationSource + 
-        '" --destination "' + localizationDestination +
-        '" -r ' + localizationResources +
-        ' --languages en ru de';
-
-        exec(localizationCommand, function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
-            cb(err);
-        });
-});
+gulp.task('default', ['start']);

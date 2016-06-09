@@ -9,9 +9,29 @@
 /* global module, __dirname */
 
 "use strict";
-var path = require('path');
-var autoprefixer = require('autoprefixer');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const webpack = require('webpack');
+const path = require('path');
+const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const _ = require('lodash');
+
+const pathResolver = {
+    client: function () {
+        //noinspection Eslint
+        return path.resolve.apply(path.resolve, [__dirname, 'dist'].concat(_.toArray(arguments)));
+    },
+    source: function () {
+        //noinspection Eslint
+        return path.resolve.apply(path.resolve, [__dirname, 'src'].concat(_.toArray(arguments)));
+    },
+    thisDir: function () {
+        return path.resolve(__dirname);
+    },
+    stylesDir: function () {
+        return path.resolve(__dirname, "./resources/styles");
+    }
+};
 
 module.exports = {
     build: function (options) {
@@ -22,13 +42,13 @@ module.exports = {
         const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
         const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
-        return {
+        let webpackConfig = {
             cache: true,
-            entry: './js/core/coreApi.js',
-            devtool: 'eval',
+            entry: pathResolver.source('coreApi.js'),
+            devtool: 'source-map',
             debug: true,
             output: {
-                path: __dirname + '/dist',
+                path: pathResolver.client(),
                 filename: "core.bundle.js",
                 library: 'core',
                 libraryTarget: 'umd'
@@ -38,15 +58,18 @@ module.exports = {
                     {
                         test: /\.jsx?$/,
                         exclude: /(node_modules|bower_components)/,
-                        loader: 'babel',
+                        loader: 'babel-loader',
                         query: {
-                            presets: ["es2015"],
-                            plugins: ["transform-es2015-modules-commonjs"]
+                            presets: ['es2015'],
+                            cacheDirectory: true,
+                            plugins: [
+                                'transform-runtime'
+                            ]
                         }
                     },
                     {
                         test: /\.hbs$/,
-                        loader: "handlebars-loader?helperDirs[]=" + __dirname + "/js/core/utils/handlebars"
+                        loader: `handlebars-loader?helperDirs[]=${pathResolver.source('utils/handlebars')}`
                     },
                     {
                         test: /\.css$/,
@@ -89,10 +112,6 @@ module.exports = {
                         loader: `url?limit=${GRAPHICS_LIMIT}`
                     },
 
-                    {
-                        test: /bluebird/,
-                        loader: 'expose?Promise'
-                    },
                     {
                         test: /underscore\.js/,
                         loader: 'expose?_'
@@ -141,7 +160,7 @@ module.exports = {
             },
             sassLoader: {
                 includePaths: [
-                    path.resolve(__dirname, "./resources/styles")
+                    pathResolver.stylesDir()
                 ]
             },
             postcss: [
@@ -150,20 +169,54 @@ module.exports = {
                 })
             ],
             plugins: [
-                new ExtractTextPlugin('styles.bundle.css')
+                new webpack.DefinePlugin({
+                    'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
+                    __DEV__: DEVELOPMENT
+                }),
+                (PRODUCTION ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
             ],
             resolve: {
                 root: [
-                    path.resolve(__dirname),
-                    path.resolve(__dirname + '/js/core')
+                    pathResolver.thisDir(),
+                    pathResolver.source()
                 ],
                 alias: {
-                    "jquery.caret": 'js/lib/jquery.caret/index',
-                    "backbone.forms": 'js/lib/backbone.forms/backbone-forms',
-                    "keypress": 'js/lib/Keypress/keypress-2.1.0.min',
+                    "jquery.caret": pathResolver.source('lib/jquery.caret/index'),
+                    "backbone.forms": pathResolver.source('lib/backbone.forms/backbone-forms'),
+                    "keypress": pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
                     "handlebars": 'handlebars/dist/handlebars'
                 }
             }
         };
+
+        if (PRODUCTION) {
+            webpackConfig.output.filename = 'core.bundle.min.js';
+
+            webpackConfig.cache = false;
+            webpackConfig.debug = false;
+            webpackConfig.devtool = 'source-map';
+
+            let babelLoader = _.find(webpackConfig.module.loaders, { loader: 'babel-loader' });
+            babelLoader.query.plugins.push(
+                'transform-react-remove-prop-types',
+                'transform-react-constant-elements'
+            );
+
+            //noinspection JSUnresolvedFunction
+            webpackConfig.plugins.push(
+                new ExtractTextPlugin('[name].css'),
+                new webpack.optimize.OccurrenceOrderPlugin(),
+                new webpack.optimize.DedupePlugin(),
+                new webpack.optimize.UglifyJsPlugin({
+                    compress: {
+                        unused: true,
+                        dead_code: true,
+                        warnings: false
+                    }
+                })
+            );
+        }
+
+        return webpackConfig;
     }
 };
