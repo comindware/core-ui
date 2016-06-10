@@ -3,11 +3,13 @@ define([
     'demoPage/views/CanvasView',
     'demoPage/views/DemoDropdownPanelView',
     'demoPage/views/DemoInputView',
-    'demoPage/demoDataProvider'
-], function (core, CanvasView, DemoDropdownPanelView, DemoInputView, demoDataProvider) {
+    'demoPage/dataProvider'
+], function (core, CanvasView, DemoDropdownPanelView, DemoInputView, dataProvider) {
     'use strict';
     return function () {
-        var collection = demoDataProvider.createIdFullNameCollection();
+        var collection = new Backbone.Collection(core.services.UserService.listUsers(), {
+            comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'name')
+        });
 
         /*
           Possible panelPosition values:

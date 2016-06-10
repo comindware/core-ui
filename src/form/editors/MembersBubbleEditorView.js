@@ -29,7 +29,7 @@ const defaultOptions = {
  * @name MembersBubbleEditorView
  * @memberof module:core.form.editors
  * @class Редактор для выбора коллекции пользователей. Поддерживаемый тип данных: массив идентификаторов пользователей
- * (<code>String[]</code>). Например, <code>[ 'account.1', 'account.2', 'account.3' ]</code>. Список доступных пользователей
+ * (<code>String[]</code>). Например, <code>[ 'user.1', 'user.2', 'user.3' ]</code>. Список доступных пользователей
  * береться из <code>core.services.CacheService</code>.
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.

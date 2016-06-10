@@ -8,8 +8,8 @@
 
 "use strict";
 
-import '../libApi';
-import serviceLocator from '../serviceLocator';
+import { Handlebars } from 'libApi';
+import UserService from 'services/UserService';
 
 export default /** @lends module:core.utils.htmlHelpers */ {
     /**
@@ -62,20 +62,18 @@ export default /** @lends module:core.utils.htmlHelpers */ {
             text = Handlebars.Utils.escapeExpression(text);
         }
 
-        var membersByUserName = _.reduce(serviceLocator.cacheService.GetUsers(), function (memo, value) {
-            if (value.Username) {
-                //noinspection JSUnresolvedVariable
-                memo[value.Username] = value;
+        var membersByUserName = _.reduce(UserService.listUsers(), function (memo, user) {
+            if (user.userName) {
+                memo[user.userName] = user;
             }
             return memo;
         }, {});
         var regex = /(\s|^)@([a-z0-9_\.]+)/gi;
 
         return text.replace(regex, function(fragment, whitespace, userName) {
-            var member = membersByUserName[userName];
-            if (member) {
-                //noinspection JSUnresolvedVariable
-                return whitespace + '<a href="' + member.link + '" title="' + (member.FullName || '') + '">@' + member.Username + '</a>';
+            var user = membersByUserName[userName];
+            if (user) {
+                return whitespace + '<a href="' + user.url + '" title="' + user.name + '">@' + user.userName + '</a>';
             } else {
                 return fragment;
             }

@@ -30,7 +30,6 @@ import nativeGridApi from './nativeGrid/nativeGridApi';
 import formApi from './form/formApi';
 
 import meta_ from './Meta';
-import serviceLocator_ from './serviceLocator';
 import bootstrapper from './Bootstrapper';
 
 import LoadingView from './views/LoadingView';
@@ -47,6 +46,7 @@ import GlobalEventService from './services/GlobalEventService';
 import LocalizationService from './services/LocalizationService';
 import AjaxService from './services/AjaxService';
 import PromiseService from './services/PromiseService';
+import UserService from './services/UserService';
 
 import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
@@ -72,7 +72,8 @@ var api = {
         LocalizationService: LocalizationService,
         AjaxService: AjaxService,
         GlobalEventService: GlobalEventService,
-        PromiseService: PromiseService
+        PromiseService: PromiseService,
+        UserService: UserService
     },
     /**
      * Backbone collections of general use.

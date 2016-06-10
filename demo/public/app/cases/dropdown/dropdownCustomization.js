@@ -3,24 +3,9 @@ define([
 ], function (core, CanvasView, DemoProfilePanelView) {
     'use strict';
     return function () {
-        var collection = new Backbone.Collection(_.map(
-            [
-                'Alexander Drozd',
-                'Alexandra Bitirim',
-                'Alexander Egorov',
-                'Alexandra Sindyaeva',
-                'Alexey Prykin',
-                'Anastasia Nagaeva',
-                'Anatoly Belaychuk',
-                'Alexander Pankov',
-                'Alexey Prykin',
-                'Anatoly Belaychuk'
-            ], function (fullName, i) {
-                return {
-                    id: i,
-                    fullName: fullName
-                };
-            }));
+        var collection = new Backbone.Collection(core.services.UserService.listUsers(), {
+            comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'name')
+        });
 
         /* В реальном коде ОБЯЗАТЕЛЬНО следуйте правилу "одна View - один файл", не объявляйте их инлайном. */
 
