@@ -1,11 +1,11 @@
 define([
 	'comindware/core',
-    'ajax/users',
     'localizationMapEn',
     'localizationMapDe',
     'localizationMapRu',
-    './ajaxMap.json'
-], function(core, usersStub, localizationMapEn, localizationMapDe, localizationMapRu, ajaxMap) {
+    './ajaxMap.json',
+    'demoPage/dataProvider'
+], function(core, localizationMapEn, localizationMapDe, localizationMapRu, ajaxMap, dataProvider) {
     'use strict';
 
     var Application = new Marionette.Application();
@@ -29,7 +29,6 @@ define([
         let localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
 
         core.initialize({
-            cacheService: usersStub,
             ajaxService: {
                 ajaxMap: ajaxMap
             },
@@ -42,6 +41,9 @@ define([
                 fadingRegion: Application.fadingRegion,
                 popupRegion: Application.popupRegion,
                 ui: Application.ui
+            },
+            userService: {
+                dataProvider: dataProvider
             }
         });
     });

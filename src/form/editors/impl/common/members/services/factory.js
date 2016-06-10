@@ -10,30 +10,14 @@
 
 import MembersCollection from '../collections/MembersCollection';
 import MembersListView from '../views/MembersListView';
-import '../../../../../../libApi';
-import '../../../../../../utils/utilsApi';
-import dropdown from '../../../../../../dropdown/dropdownApi';
-import serviceLocator from '../../../../../../serviceLocator';
+import UserService from 'services/UserService';
+import 'libApi';
+import 'utils/utilsApi';
 
 export default {
     createMembersCollection: function () {
-        var users = serviceLocator.cacheService.GetUsers();
-        var members = [];
-
-        _.each(users, function(model) {
-            //noinspection JSUnresolvedVariable
-            members.push({
-                id: model.Id,
-                name: (model.Text || model.Username),
-                userName: model.Username,
-                abbreviation: model.abbreviation,
-                avatarUri: model.userpicUri,
-                link: model.link
-            });
-        });
-
         var membersCollection = new MembersCollection();
-        membersCollection.reset(members);
+        membersCollection.reset(UserService.listUsers());
         return membersCollection;
     },
 

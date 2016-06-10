@@ -30,7 +30,7 @@ gulp.task('clear', function () {
 });
 
 gulp.task('jsdoc', function() {
-    return gulp.src('./js/core/**/*.js')
+    return gulp.src('./src/**/*.js')
         .pipe(babel({
             presets: ["es2015"],
             plugins: ["transform-es2015-modules-commonjs"]
@@ -132,7 +132,7 @@ gulp.task("webpack:build:debug", function(callback) {
 
 // The development task builds webpack and starts watcher
 gulp.task("start", ["webpack:build:debug"], function() {
-    gulp.watch([ 'js/core/**/*', 'resources/**/*' ], [ 'webpack:build:debug' ]);
+    gulp.watch([ 'src/**/*', 'resources/**/*' ], [ 'webpack:build:debug' ]);
     gulp.watch('localization/*', [ 'localization' ]);
 });
 

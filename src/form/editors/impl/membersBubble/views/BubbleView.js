@@ -43,7 +43,7 @@ export default Marionette.ItemView.extend({
     },
 
     __linkClick: function () {
-        window.location = this.model.get('link');
+        window.location = this.model.get('url');
         return false;
     },
 

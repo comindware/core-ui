@@ -2,7 +2,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
     'use strict';
     return function () {
         var model = new Backbone.Model({
-            membersValue: [ 'account.1' ]
+            membersValue: [ 'user.1' ]
         });
 
         return new EditorCanvasView({

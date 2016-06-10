@@ -9,27 +9,22 @@
 "use strict";
 
 import { helpers } from './utils/utilsApi';
-import serviceLocator from './serviceLocator';
 import AjaxService from './services/AjaxService';
 import MessageService from './services/MessageService';
+import UserService from './services/UserService';
 import WindowService from './services/WindowService';
 import LocalizationService from './services/LocalizationService';
 
 export default {
     initialize: function (options) {
-        helpers.ensureOption(options, 'cacheService');
         helpers.ensureOption(options, 'localizationService');
         helpers.ensureOption(options, 'ajaxService');
         helpers.ensureOption(options, 'windowService');
+        helpers.ensureOption(options, 'userService');
 
-        //noinspection JSUnresolvedVariable
+        UserService.initialize(options.userService);
         WindowService.initialize(options.windowService);
-
-        serviceLocator.cacheService = options.cacheService;
-
-        //noinspection JSUnresolvedVariable
         LocalizationService.initialize(options.localizationService);
-        //noinspection JSUnresolvedVariable
         AjaxService.load(options.ajaxService);
 
         AjaxService.on('jsApi:error', function () {

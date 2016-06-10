@@ -13,7 +13,7 @@ import { helpers, comparators } from '../../utils/utilsApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/memberSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import serviceLocator from '../../serviceLocator';
+import UserService from 'services/UserService';
 import DefaultButtonView from './impl/memberSelect/views/DefaultButtonView';
 import PanelView from './impl/memberSelect/views/PanelView';
 import MemberModel from './impl/common/members/models/MemberModel';
@@ -41,7 +41,7 @@ const ButtonModel = Backbone.AssociatedModel.extend({
  * @name MemberSelectEditorView
  * @memberof module:core.form.editors
  * @class Редактор для выбора пользователя из списка доступных. Поддерживаемый тип данных: <code>String</code>
- * (идентификатор пользователя). Например, <code>'account.1'</code>. Список доступных пользователей
+ * (идентификатор пользователя). Например, <code>'user.1'</code>. Список доступных пользователей
  * берется из <code>core.services.CacheService</code>.
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
@@ -157,7 +157,7 @@ Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends modu
             this.collection.filter(null);
         } else {
             this.collection.filter(function (model) {
-                var fullName = (model.get('fullName') || '').toLocaleLowerCase();
+                var fullName = (model.get('name') || '').toLocaleLowerCase();
                 return fullName.indexOf(text) !== -1;
             });
             this.collection.highlight(text);
@@ -173,11 +173,11 @@ Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends modu
     },
 
     __initCollection: function() {
-        var users = serviceLocator.cacheService.ListUsers();
+        var users = UserService.listUsers();
         this.collection = new MembersCollection(new Backbone.Collection(users, {
             model: MemberModel
         }), {
-            comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'fullName')
+            comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name')
         });
         this.viewModel.get('button').set('member', this.__findModel(this.getValue()));
         this.viewModel.get('panel').set('collection', this.collection);
