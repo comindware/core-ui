@@ -45,7 +45,7 @@ module.exports = {
         let webpackConfig = {
             cache: true,
             entry: pathResolver.source('coreApi.js'),
-            devtool: 'source-map',
+            devtool: TEST ? 'inline-source-map' : 'source-map',
             debug: true,
             output: {
                 path: pathResolver.client(),
@@ -171,7 +171,7 @@ module.exports = {
             plugins: [
                 new webpack.DefinePlugin({
                     'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                    __DEV__: DEVELOPMENT
+                    __DEV__: !PRODUCTION
                 }),
                 (PRODUCTION ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
             ],
