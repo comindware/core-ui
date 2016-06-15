@@ -12,7 +12,7 @@ import moment_ from 'moment';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
-import Bluebird from 'bluebird';
+import Bluebird_ from 'bluebird';
 import * as Handlebars_ from 'handlebars';
 import 'underscore';
 import * as underscoreString from 'underscore.string';
@@ -29,7 +29,7 @@ import * as keypress_ from 'keypress';
 import 'bootstrap-datetime-picker';
 
 // Replacing ES6 promise with bluebird
-require('babel-runtime/core-js/promise').default = Bluebird;
+require('babel-runtime/core-js/promise').default = Bluebird_;
 
 Promise.config({
     warnings: false,
@@ -48,9 +48,11 @@ $.browser = {
 var api = {
     keypress: keypress_,
     moment: moment_,
-    Handlebars: Handlebars_
+    Handlebars: Handlebars_,
+    Bluebird: Bluebird_
 };
 export var keypress = api.keypress;
 export var moment = api.moment;
 export var Handlebars = api.Handlebars;
+export var Bluebird = api.Bluebird;
 export default api;

@@ -420,7 +420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Handlebars = exports.moment = exports.keypress = undefined;
+	exports.Bluebird = exports.Handlebars = exports.moment = exports.keypress = undefined;
 	
 	var _promise = __webpack_require__(41);
 	
@@ -498,11 +498,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var api = {
 	    keypress: keypress_,
 	    moment: _moment2.default,
-	    Handlebars: Handlebars_
+	    Handlebars: Handlebars_,
+	    Bluebird: _bluebird2.default
 	};
 	var keypress = exports.keypress = api.keypress;
 	var moment = exports.moment = api.moment;
 	var Handlebars = exports.Handlebars = api.Handlebars;
+	var Bluebird = exports.Bluebird = api.Bluebird;
 	exports.default = api;
 
 /***/ },
