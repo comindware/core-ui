@@ -1,9 +1,11 @@
 language: node_js
 node_js:
-- '4.1'
+  - '4.1'
 before_install: npm install -g gulp-cli
 install: npm install
-script: gulp deploy
+script:
+  - gulp deploy
+  - gulp test
 deploy:
   provider: npm
   email: me@sburg.net
