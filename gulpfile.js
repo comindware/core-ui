@@ -164,6 +164,6 @@ gulp.task("start", ["webpack:build:debug"], function() {
 });
 
 // The production task builds optimized and regular bundles and generates jsdoc documentation
-gulp.task('deploy', [ 'clear', 'jsdoc', 'webpack:build:debug', 'webpack:build:release' ]);
+gulp.task('deploy', [ 'clear', 'jsdoc', 'localization', 'webpack:build:debug', 'webpack:build:release' ]);
 
 gulp.task('default', ['start']);
