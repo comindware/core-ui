@@ -89,6 +89,8 @@
 
   // Custom Globals
   "globals"       : {
+    "expect": false,
+    "jasmine": false,
     "Backbone": false, // false = readonly
     "Marionette": false,
     "$": false,

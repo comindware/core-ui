@@ -6,6 +6,18 @@
  * Published under the MIT license
  */
 
+/*
+* Usage
+*
+* gulp start - builds a development version of the library, then starts watchers.
+* gulp deploy - updates dist and doc directories with the latest artifacts. Builds both development & production versions of the library.
+* gulp test - performs single run of tests using Karma.
+* gulp test:watch - starts Karma in watcher mode, debug through http://localhost:9876.
+*
+* default task: gulp start
+*
+* */
+
 "use strict";
 
 const gulp = require('gulp');
@@ -19,6 +31,7 @@ const exec = require('child_process').exec;
 const fs = require('fs');
 const del = require('del');
 const mkdirp = require('mkdirp');
+const karma = require('karma');
 
 const config = {
     assetsDir: path.resolve(`${__dirname}/public/assets`)
@@ -27,6 +40,19 @@ const config = {
 gulp.task('clear', function () {
     del.sync([`${config.assetsDir}/**`]);
     mkdirp.sync(config.assetsDir);
+});
+
+gulp.task('test', function (done) {
+    new karma.Server({
+        configFile: `${__dirname}/karma.conf.js`,
+        singleRun: true
+    }, done).start();
+});
+
+gulp.task('test:watch', function (done) {
+    new karma.Server({
+        configFile: `${__dirname}/karma.conf.js`
+    }, done).start();
 });
 
 gulp.task('jsdoc', function() {
@@ -57,6 +83,9 @@ gulp.task('jsdoc', function() {
 });
 
 gulp.task('localization', function (cb) {
+    // ###
+    // This task requires Comindware Localization Tool installed in PATH.
+    // ###
     let localizerBin = 'Localization.Export.exe';
     let localizationResources = 'http://comindware.com/text#core';
     let localizationSource = 'localization/localization.n3';
@@ -97,8 +126,6 @@ gulp.task("webpack:build:release", function(callback) {
     var myConfig = webpackConfigFactory.build({
         env: 'production'
     });
-    myConfig.output = Object.create(myConfig.output);
-    myConfig.output.filename = 'core.bundle.min.js';
 
     // run webpack
     webpack(myConfig, function(err, stats) {

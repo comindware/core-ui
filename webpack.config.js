@@ -44,15 +44,8 @@ module.exports = {
 
         let webpackConfig = {
             cache: true,
-            entry: pathResolver.source('coreApi.js'),
-            devtool: 'source-map',
+            devtool: TEST ? 'inline-source-map' : 'source-map',
             debug: true,
-            output: {
-                path: pathResolver.client(),
-                filename: "core.bundle.js",
-                library: 'core',
-                libraryTarget: 'umd'
-            },
             module: {
                 loaders: [
                     {
@@ -171,7 +164,7 @@ module.exports = {
             plugins: [
                 new webpack.DefinePlugin({
                     'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                    __DEV__: DEVELOPMENT
+                    __DEV__: !PRODUCTION
                 }),
                 (PRODUCTION ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
             ],
@@ -188,6 +181,21 @@ module.exports = {
                 }
             }
         };
+
+        /*if (TEST) {
+            webpackConfig.resolve.root.push() = pathResolver.source('coreApi');
+            webpackConfig.resolve.alias.coreApi = pathResolver.source('coreApi');
+        }*/
+
+        if (!TEST) {
+            webpackConfig.entry = pathResolver.source('coreApi.js');
+            webpackConfig.output = {
+                path: pathResolver.client(),
+                filename: "core.bundle.js",
+                library: 'core',
+                libraryTarget: 'umd'
+            };
+        }
 
         if (PRODUCTION) {
             webpackConfig.output.filename = 'core.bundle.min.js';
