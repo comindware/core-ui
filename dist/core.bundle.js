@@ -121,10 +121,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Meta2 = _interopRequireDefault(_Meta);
 	
-	var _serviceLocator = __webpack_require__(325);
-	
-	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
-	
 	var _Bootstrapper = __webpack_require__(555);
 	
 	var _Bootstrapper2 = _interopRequireDefault(_Bootstrapper);
@@ -181,6 +177,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _PromiseService2 = _interopRequireDefault(_PromiseService);
 	
+	var _UserService = __webpack_require__(325);
+	
+	var _UserService2 = _interopRequireDefault(_UserService);
+	
 	var _SlidingWindowCollection = __webpack_require__(395);
 	
 	var _SlidingWindowCollection2 = _interopRequireDefault(_SlidingWindowCollection);
@@ -224,7 +224,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    LocalizationService: _LocalizationService2.default,
 	    AjaxService: _AjaxService2.default,
 	    GlobalEventService: _GlobalEventService2.default,
-	    PromiseService: _PromiseService2.default
+	    PromiseService: _PromiseService2.default,
+	    UserService: _UserService2.default
 	  },
 	  /**
 	   * Backbone collections of general use.
@@ -20104,6 +20105,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	// shim for using process in browser
 	
 	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -20128,7 +20154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -20145,7 +20171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -20157,7 +20183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 	
@@ -54252,11 +54278,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	__webpack_require__(40);
+	var _libApi = __webpack_require__(40);
 	
-	var _serviceLocator = __webpack_require__(325);
+	var _UserService = __webpack_require__(325);
 	
-	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
+	var _UserService2 = _interopRequireDefault(_UserService);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -54274,7 +54300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return '';
 	        }
 	        if (escape || escape === undefined) {
-	            text = Handlebars.Utils.escapeExpression(text);
+	            text = _libApi.Handlebars.Utils.escapeExpression(text);
 	        }
 	
 	        var lowerText = text.toLowerCase();
@@ -54306,23 +54332,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return '';
 	        }
 	        if (escape || escape === undefined) {
-	            text = Handlebars.Utils.escapeExpression(text);
+	            text = _libApi.Handlebars.Utils.escapeExpression(text);
 	        }
 	
-	        var membersByUserName = _.reduce(_serviceLocator2.default.cacheService.GetUsers(), function (memo, value) {
-	            if (value.Username) {
-	                //noinspection JSUnresolvedVariable
-	                memo[value.Username] = value;
+	        var membersByUserName = _.reduce(_UserService2.default.listUsers(), function (memo, user) {
+	            if (user.userName) {
+	                memo[user.userName] = user;
 	            }
 	            return memo;
 	        }, {});
 	        var regex = /(\s|^)@([a-z0-9_\.]+)/gi;
 	
 	        return text.replace(regex, function (fragment, whitespace, userName) {
-	            var member = membersByUserName[userName];
-	            if (member) {
-	                //noinspection JSUnresolvedVariable
-	                return whitespace + '<a href="' + member.link + '" title="' + (member.FullName || '') + '">@' + member.Username + '</a>';
+	            var user = membersByUserName[userName];
+	            if (user) {
+	                return whitespace + '<a href="' + user.url + '" title="' + user.name + '">@' + user.userName + '</a>';
 	            } else {
 	                return fragment;
 	            }
@@ -54341,7 +54365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return '';
 	        }
 	        if (escape || escape === undefined) {
-	            text = Handlebars.Utils.escapeExpression(text);
+	            text = _libApi.Handlebars.Utils.escapeExpression(text);
 	        }
 	
 	        var regex = /(?:ht|f)tp(?:s?):\/\/[^\s]*/gi;
@@ -54403,12 +54427,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 325 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Developer: Stepan Burguchev
-	 * Date: 5/25/2015
-	 * Copyright: 2009-2016 Comindware
+	 * Date: 6/10/2016
+	 * Copyright: 2009-2016 Comindware®
 	 *       All Rights Reserved
 	 * Published under the MIT license
 	 */
@@ -54416,10 +54440,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
+	
+	var _helpers = __webpack_require__(322);
+	
+	var _helpers2 = _interopRequireDefault(_helpers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var dataProvider = void 0;
+	
+	/**
+	 * @name UserService
+	 * @memberof module:core.services
+	 * @class User service provides access to information about loaded users (synchronously).
+	 * @constructor
+	 * @param {Object} options Options object.
+	 * @param {Object} options.dataProvider A data provider object that must contain method <code>listUsers()</code>.
+	 * The method returns an array of objects of the following signature: <code>{ id, name, userName, abbreviation, avatarUrl, url }</code>.
+	 * For example: <code>{ id: 'user.1', name: 'Jack Crook', userName: 'jcrook', abbreviation: 'JC', avatarUrl: '/avatars?id=user.1', url: '#People/1' }</code>
+	 * */
+	
 	exports.default = {
-	  cacheService: null
+	    initialize: function initialize(options) {
+	        _helpers2.default.ensureOption(options, 'dataProvider');
+	
+	        dataProvider = options.dataProvider;
+	    },
+	
+	    listUsers: function listUsers() {
+	        return dataProvider.listUsers();
+	    }
 	};
 
 /***/ },
@@ -66893,9 +66945,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _serviceLocator = __webpack_require__(325);
+	var _UserService = __webpack_require__(325);
 	
-	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
+	var _UserService2 = _interopRequireDefault(_UserService);
 	
 	var _DefaultButtonView = __webpack_require__(473);
 	
@@ -66935,7 +66987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @name MemberSelectEditorView
 	 * @memberof module:core.form.editors
 	 * @class Редактор для выбора пользователя из списка доступных. Поддерживаемый тип данных: <code>String</code>
-	 * (идентификатор пользователя). Например, <code>'account.1'</code>. Список доступных пользователей
+	 * (идентификатор пользователя). Например, <code>'user.1'</code>. Список доступных пользователей
 	 * берется из <code>core.services.CacheService</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
@@ -67049,7 +67101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.collection.filter(null);
 	        } else {
 	            this.collection.filter(function (model) {
-	                var fullName = (model.get('fullName') || '').toLocaleLowerCase();
+	                var fullName = (model.get('name') || '').toLocaleLowerCase();
 	                return fullName.indexOf(text) !== -1;
 	            });
 	            this.collection.highlight(text);
@@ -67065,11 +67117,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __initCollection: function __initCollection() {
-	        var users = _serviceLocator2.default.cacheService.ListUsers();
+	        var users = _UserService2.default.listUsers();
 	        this.collection = new _MembersCollection2.default(new Backbone.Collection(users, {
 	            model: _MemberModel2.default
 	        }), {
-	            comparator: _utilsApi.helpers.comparatorFor(_utilsApi.comparators.stringComparator2Asc, 'fullName')
+	            comparator: _utilsApi.helpers.comparatorFor(_utilsApi.comparators.stringComparator2Asc, 'name')
 	        });
 	        this.viewModel.get('button').set('member', this.__findModel(this.getValue()));
 	        this.viewModel.get('panel').set('collection', this.collection);
@@ -67210,10 +67262,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var stack1;
 	
-	  return ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.userpicUri : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "");
+	  return ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.avatarUrl : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "");
 	},"2":function(container,depth0,helpers,partials,data) {
 	    return "       <span style=\"background-image: url("
-	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.userpicUri : depth0), depth0))
+	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.avatarUrl : depth0), depth0))
 	    + ");\" class=\"js-avatar avatar-icon avatar-icon_field\"></span>\r\n";
 	},"4":function(container,depth0,helpers,partials,data) {
 	    return "      <span class=\"avatar-icon avatar-icon_field\">\r\n        "
@@ -67223,7 +67275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return "    <span class=\"avatar-icon avatar-icon_field avatar-icon_assignee avatar-icon_field\">\r\n    </span>\r\n";
 	},"8":function(container,depth0,helpers,partials,data) {
 	    return "    "
-	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.fullName : depth0), depth0))
+	    + container.escapeExpression(container.lambda((depth0 != null ? depth0.name : depth0), depth0))
 	    + "\r\n";
 	},"10":function(container,depth0,helpers,partials,data) {
 	    return "      <span class=\"dev-member-not-set\">"
@@ -67499,7 +67551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var helper;
 	
 	  return "    <span style=\"background-image: url("
-	    + container.escapeExpression(((helper = (helper = helpers.userpicUri || (depth0 != null ? depth0.userpicUri : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"userpicUri","hash":{},"data":data}) : helper)))
+	    + container.escapeExpression(((helper = (helper = helpers.avatarUrl || (depth0 != null ? depth0.avatarUrl : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"avatarUrl","hash":{},"data":data}) : helper)))
 	    + ");\" class=\"avatar-icon avatar-icon_list\"></span>\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
 	    var helper;
@@ -67510,9 +67562,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
-	  return ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.userpicUri : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
+	  return ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.avatarUrl : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
 	    + "<span class=\"js-fullName\">"
-	    + container.escapeExpression(((helper = (helper = helpers.text || (depth0 != null ? depth0.text : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"text","hash":{},"data":data}) : helper)))
+	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
 	    + "</span>";
 	},"useData":true});
 
@@ -68393,7 +68445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @name MembersBubbleEditorView
 	 * @memberof module:core.form.editors
 	 * @class Редактор для выбора коллекции пользователей. Поддерживаемый тип данных: массив идентификаторов пользователей
-	 * (<code>String[]</code>). Например, <code>[ 'account.1', 'account.2', 'account.3' ]</code>. Список доступных пользователей
+	 * (<code>String[]</code>). Например, <code>[ 'user.1', 'user.2', 'user.3' ]</code>. Список доступных пользователей
 	 * береться из <code>core.services.CacheService</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
@@ -68918,7 +68970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __linkClick: function __linkClick() {
-	        window.location = this.model.get('link');
+	        window.location = this.model.get('url');
 	        return false;
 	    },
 	
@@ -68949,11 +69001,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
-	  return ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.link : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+	  return ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.url : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
 	    + "    "
 	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
 	    + "\r\n"
-	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.link : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.url : depth0),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
 	    + "<div class=\"js-bubble-delete btn-remove btn-remove_absolute btn-remove_bubble\"></div>";
 	},"useData":true});
 
@@ -69166,39 +69218,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MembersListView2 = _interopRequireDefault(_MembersListView);
 	
+	var _UserService = __webpack_require__(325);
+	
+	var _UserService2 = _interopRequireDefault(_UserService);
+	
 	__webpack_require__(40);
 	
 	__webpack_require__(319);
-	
-	var _dropdownApi = __webpack_require__(341);
-	
-	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
-	
-	var _serviceLocator = __webpack_require__(325);
-	
-	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
 	    createMembersCollection: function createMembersCollection() {
-	        var users = _serviceLocator2.default.cacheService.GetUsers();
-	        var members = [];
-	
-	        _.each(users, function (model) {
-	            //noinspection JSUnresolvedVariable
-	            members.push({
-	                id: model.Id,
-	                name: model.Text || model.Username,
-	                userName: model.Username,
-	                abbreviation: model.abbreviation,
-	                avatarUri: model.userpicUri,
-	                link: model.link
-	            });
-	        });
-	
 	        var membersCollection = new _MembersCollection2.default();
-	        membersCollection.reset(members);
+	        membersCollection.reset(_UserService2.default.listUsers());
 	        return membersCollection;
 	    },
 	
@@ -69384,7 +69417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var helper;
 	
 	  return "    <img src=\""
-	    + container.escapeExpression(((helper = (helper = helpers.avatarUri || (depth0 != null ? depth0.avatarUri : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"avatarUri","hash":{},"data":data}) : helper)))
+	    + container.escapeExpression(((helper = (helper = helpers.avatarUrl || (depth0 != null ? depth0.avatarUrl : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"avatarUrl","hash":{},"data":data}) : helper)))
 	    + "\" alt=\"\" class=\"dev-user-icon avatar-icon avatar-icon_list\">\r\n";
 	},"3":function(container,depth0,helpers,partials,data) {
 	    var stack1;
@@ -69400,7 +69433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
 	
 	  return "<div class=\"js-menu-select-item menu-bselect__item\">\r\n"
-	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.avatarUri : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
+	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.avatarUrl : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
 	    + "    <span class=\"js-name\">"
 	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
 	    + "</span>\r\n</div>";
@@ -73354,14 +73387,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	        value: true
+	    value: true
 	});
 	
 	var _utilsApi = __webpack_require__(319);
-	
-	var _serviceLocator = __webpack_require__(325);
-	
-	var _serviceLocator2 = _interopRequireDefault(_serviceLocator);
 	
 	var _AjaxService = __webpack_require__(556);
 	
@@ -73370,6 +73399,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _MessageService = __webpack_require__(558);
 	
 	var _MessageService2 = _interopRequireDefault(_MessageService);
+	
+	var _UserService = __webpack_require__(325);
+	
+	var _UserService2 = _interopRequireDefault(_UserService);
 	
 	var _WindowService = __webpack_require__(343);
 	
@@ -73382,26 +73415,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
-	        initialize: function initialize(options) {
-	                _utilsApi.helpers.ensureOption(options, 'cacheService');
-	                _utilsApi.helpers.ensureOption(options, 'localizationService');
-	                _utilsApi.helpers.ensureOption(options, 'ajaxService');
-	                _utilsApi.helpers.ensureOption(options, 'windowService');
+	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'localizationService');
+	        _utilsApi.helpers.ensureOption(options, 'ajaxService');
+	        _utilsApi.helpers.ensureOption(options, 'windowService');
+	        _utilsApi.helpers.ensureOption(options, 'userService');
 	
-	                //noinspection JSUnresolvedVariable
-	                _WindowService2.default.initialize(options.windowService);
+	        _UserService2.default.initialize(options.userService);
+	        _WindowService2.default.initialize(options.windowService);
+	        _LocalizationService2.default.initialize(options.localizationService);
+	        _AjaxService2.default.load(options.ajaxService);
 	
-	                _serviceLocator2.default.cacheService = options.cacheService;
-	
-	                //noinspection JSUnresolvedVariable
-	                _LocalizationService2.default.initialize(options.localizationService);
-	                //noinspection JSUnresolvedVariable
-	                _AjaxService2.default.load(options.ajaxService);
-	
-	                _AjaxService2.default.on('jsApi:error', function () {
-	                        _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
-	                });
-	        }
+	        _AjaxService2.default.on('jsApi:error', function () {
+	            _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
+	        });
+	    }
 	};
 
 /***/ },

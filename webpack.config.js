@@ -206,7 +206,6 @@ module.exports = {
 
             //noinspection JSUnresolvedFunction
             webpackConfig.plugins.push(
-                new ExtractTextPlugin('[name].css'),
                 new webpack.optimize.OccurrenceOrderPlugin(),
                 new webpack.optimize.DedupePlugin(),
                 new webpack.optimize.UglifyJsPlugin({
