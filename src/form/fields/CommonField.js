@@ -31,7 +31,7 @@ export default Backbone.Form.Field.extend({
         this.debounceValidate = _.debounce(function () {
             this.validate();
             this.editor.trigger('validated', this);
-        }.bind(this), this.form.validationDelay);
+        }.bind(this), this.form && this.form.validationDelay || 100);
         if (this.schema.autoValidate) {
             this.editor.on('change', function () {
                 this.debounceValidate();
