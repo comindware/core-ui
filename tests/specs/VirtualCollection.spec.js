@@ -9,68 +9,12 @@
 "use strict";
 
 import Chance from 'chance';
-import chai from 'chai';
 import core from 'coreApi';
+import { expectCollectionsToBeEqual, expectToHaveSameMembers } from '../helpers';
+import { TaskModel, UserModel, addChanceMixins } from '../testData';
 
 let chance = new Chance();
-
-var VirtualCollection = core.collections.VirtualCollection;
-var SlidingWindowCollection = core.collections.SlidingWindowCollection;
-
-var UserModel = Backbone.Model.extend({});
-var TaskModel = Backbone.Model.extend({
-    initialize: function () {
-        _.extend(this, new core.list.models.behaviors.ListItemBehavior(this));
-    }
-});
-
-chai.assert.sameSequence = function (actual, expected)
-{
-    expect(actual.length).toBe(expected.length);
-    for (var i = 0, len = actual.length; i < len; i++) {
-        var actualItemValue = actual.at ? actual.at(i) : actual[i];
-        var expectedItemValue = expected.at ? expected.at(i) : expected[i];
-        //noinspection JSHint
-        if (actualItemValue != expectedItemValue) {
-            // Assertion failed. Fire breakpoint to solve the problem.
-            console.log('i =', i);
-            actualItemValue && actualItemValue.toJSON && console.log('actual:', actualItemValue.toJSON());
-            expectedItemValue && expectedItemValue.toJSON && console.log('expected:', expectedItemValue.toJSON());
-        }
-        chai.assert.equal(actualItemValue, expectedItemValue, 'The elements of array at ' + i + ' are equal');
-    }
-};
-
-chai.assert.sameBackboneSequence = function (actual, expected)
-{
-    //noinspection JSUnresolvedVariable
-    chai.expect(actual).to.have.length(expected.length);
-    for (var i = 0, len = actual.length; i < len; i++) {
-        chai.assert.equal(actual.at(i), expected.at(i), 'The elements of array at ' + i + ' are equal');
-    }
-};
-
-chance.mixin({
-    'user': function (predefinedAttributes) {
-        return new UserModel({
-            id: (predefinedAttributes && predefinedAttributes.id) || _.uniqueId(),
-            name: (predefinedAttributes && predefinedAttributes.name) || chance.name()
-        });
-    }
-});
-
-var users = _.times(10, function () { return chance.user(); });
-
-var titles = _.times(100, function () { return chance.sentence({ min: 4, max: 10 }); });
-chance.mixin({
-    'task': function (predefinedAttributes) {
-        return {
-            id: (predefinedAttributes && predefinedAttributes.id) || _.uniqueId(),
-            title: (predefinedAttributes && predefinedAttributes.title) || titles[chance.integer({min: 0, max: titles.length - 1})],
-            assignee: (predefinedAttributes && predefinedAttributes.assignee) || users[chance.integer({ min: 0, max: users.length - 1 })]
-        };
-    }
-});
+let repository = addChanceMixins(chance);
 
 describe('Virtual Collection', function () {
     var assigneeGrouping = {
@@ -97,7 +41,7 @@ describe('Virtual Collection', function () {
             _.extend(options, originalCollectionOptions);
         }
         originalCollection = new Backbone.Collection(list, options);
-        virtualCollection = new VirtualCollection(originalCollection, virtualCollectionOptions);
+        virtualCollection = new core.collections.VirtualCollection(originalCollection, virtualCollectionOptions);
         return virtualCollection;
     }
 
@@ -109,7 +53,7 @@ describe('Virtual Collection', function () {
             var count = 3;
             var rootTasks = _.times(count, function (n) {
                 return new TaskModel(chance.task({
-                    assignee: users[n % 2],
+                    assignee: repository.users[n % 2],
                     title: String(count - n)
                 }));
             });
@@ -129,7 +73,7 @@ describe('Virtual Collection', function () {
             });
 
             // Verify outcome: all levels of the tree should be sorted now.
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(2),
                 originalCollection.at(0),
@@ -149,7 +93,7 @@ describe('Virtual Collection', function () {
                 return chance.task();
             }));
 
-            chai.assert.sameBackboneSequence(virtualCollection, originalCollection);
+            expectCollectionsToBeEqual(virtualCollection, originalCollection);
         });
     });
 
@@ -158,12 +102,12 @@ describe('Virtual Collection', function () {
         it('should group by iterator', function ()
         {
             createFixture(_.times(4, function (n) {
-                return chance.task({ assignee: users[n % 2] });
+                return chance.task({ assignee: repository.users[n % 2] });
             }), {
                 grouping: [ assigneeGrouping ]
             });
 
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(0),
                 originalCollection.at(2),
@@ -197,8 +141,8 @@ describe('Virtual Collection', function () {
                 ]
             });
 
-            chai.assert.equal(virtualCollection.at(0).id, user2.id, 'Ben goes first');
-            chai.assert.equal(virtualCollection.at(3).id, user1.id, 'Then goes Ken');
+            expect(virtualCollection.at(0).id).toEqual(user2.id, 'Ben goes first');
+            expect(virtualCollection.at(3).id).toEqual(user1.id, 'Then goes Ken');
         });
 
         it('should sort items within a group with comparator function', function ()
@@ -207,7 +151,7 @@ describe('Virtual Collection', function () {
             createFixture(_.times(count, function (n) {
                 return chance.task({
                     title: 'synthetic title ' + count--,
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ],
@@ -216,7 +160,7 @@ describe('Virtual Collection', function () {
                 }
             });
 
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(2),
                 originalCollection.at(0),
@@ -247,7 +191,7 @@ describe('Virtual Collection', function () {
                 ]
             });
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(1),
                 fixture.at(2),
@@ -274,7 +218,7 @@ describe('Virtual Collection', function () {
                 ]
             });
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(1),
                 fixture.at(2),
@@ -299,14 +243,14 @@ describe('Virtual Collection', function () {
                 ]
             });
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(1),
                 fixture.at(2),
                 originalCollection.at(0)
             ]);
-            chai.assert.equal(fixture.at(0).get('displayText'), originalCollection.at(1).get('title'));
-            chai.assert.equal(fixture.at(0).get('groupingModel'), true);
+            expect(fixture.at(0).get('displayText')).toEqual(originalCollection.at(1).get('title'));
+            expect(fixture.at(0).get('groupingModel')).toEqual(true);
         });
 
         it('should be able to omit modelFactory and comparator', function ()
@@ -324,14 +268,14 @@ describe('Virtual Collection', function () {
                 ]
             });
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(1),
                 fixture.at(2),
                 originalCollection.at(0)
             ]);
-            chai.assert.equal(fixture.at(0).get('displayText'), originalCollection.at(1).get('title'));
-            chai.assert.equal(fixture.at(0).get('groupingModel'), true);
+            expect(fixture.at(0).get('displayText')).toEqual(originalCollection.at(1).get('title'));
+            expect(fixture.at(0).get('groupingModel')).toEqual(true);
         });
 
         it('should compute affected attributes from field based options', function ()
@@ -351,7 +295,7 @@ describe('Virtual Collection', function () {
 
             originalCollection.at(0).set('title', 'synthetic title 0');
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(0),
                 fixture.at(2),
@@ -367,7 +311,7 @@ describe('Virtual Collection', function () {
             var count = 4;
             var fixture = createFixture(_.times(count, function (n) {
                 return chance.task({
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ]
@@ -379,9 +323,9 @@ describe('Virtual Collection', function () {
             fixture.on('add', addCallback);
             fixture.on('remove', removeCallback);
 
-            originalCollection.at(0).set('assignee', users[1]);
+            originalCollection.at(0).set('assignee', repository.users[1]);
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 virtualCollection.at(0),
                 originalCollection.at(2),
                 virtualCollection.at(2),
@@ -400,7 +344,7 @@ describe('Virtual Collection', function () {
             var fixture = createFixture(_.times(count, function (n) {
                 return chance.task({
                     title: 'synthetic title ' + count--,
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ],
@@ -417,7 +361,7 @@ describe('Virtual Collection', function () {
 
             originalCollection.at(0).set('title', 'synthetic title 0');
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(0),
                 originalCollection.at(2),
@@ -438,12 +382,12 @@ describe('Virtual Collection', function () {
             // Fixture setup
             createFixture(_.times(4, function (n) {
                 return chance.task({
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ]
             });
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(0),
                 originalCollection.at(2),
@@ -455,12 +399,12 @@ describe('Virtual Collection', function () {
             // Exercise system
             originalCollection.reset(_.times(4, function (n) {
                 return chance.task({
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }));
 
             // Verify outcome
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(0),
                 originalCollection.at(2),
@@ -480,13 +424,13 @@ describe('Virtual Collection', function () {
             var i = count;
             createFixture(_.times(count, function (n) {
                 return chance.task({
-                    assignee: users[n % 2],
+                    assignee: repository.users[n % 2],
                     title: 'some title ' + i--
                 });
             }), {
                 grouping: [ assigneeGrouping ]
             });
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(0),
                 originalCollection.at(2),
@@ -502,7 +446,7 @@ describe('Virtual Collection', function () {
             originalCollection.sort();
 
             // Verify outcome
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(1),
                 originalCollection.at(3),
@@ -521,17 +465,17 @@ describe('Virtual Collection', function () {
             var count = 4;
             createFixture(_.times(count, function (n) {
                 return chance.task({
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ],
                 filter: function (model) {
-                    return model.get('assignee') === users[1];
+                    return model.get('assignee') === repository.users[1];
                 }
             });
 
             // Verify outcome
-            chai.assert.sameSequence(virtualCollection, [
+            expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
                 originalCollection.at(1),
                 originalCollection.at(3)
@@ -552,7 +496,7 @@ describe('Virtual Collection', function () {
             var expectedModel = originalCollection.at(0);
             var actualModel = virtualCollection.get(expectedModel.id);
 
-            chai.assert.equal(expectedModel, actualModel);
+            expect(expectedModel).toEqual(actualModel);
         });
     });
 
@@ -572,7 +516,7 @@ describe('Virtual Collection', function () {
 
             originalCollection.remove(originalCollection.at(1));
 
-            chai.assert.sameMembers(fixture.models, originalCollection.models);
+            expectToHaveSameMembers(fixture.models, originalCollection.models);
             expect(resetCallback).toHaveBeenCalledTimes(1);
             expect(addCallback).not.toHaveBeenCalled();
             expect(removeCallback).not.toHaveBeenCalled();
@@ -582,7 +526,7 @@ describe('Virtual Collection', function () {
         {
             var fixture = createFixture(_.times(3, function (n) {
                 return chance.task({
-                    assignee: users[n]
+                    assignee: repository.users[n]
                 });
             }), {
                 grouping: [ assigneeGrouping ]
@@ -590,7 +534,7 @@ describe('Virtual Collection', function () {
 
             originalCollection.remove(originalCollection.at(1));
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(0),
                 fixture.at(2),
@@ -602,7 +546,7 @@ describe('Virtual Collection', function () {
         {
             var fixture = createFixture(_.times(4, function (n) {
                 return chance.task({
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ]
@@ -610,7 +554,7 @@ describe('Virtual Collection', function () {
 
             originalCollection.remove(originalCollection.at(1));
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(0),
                 originalCollection.at(1),
@@ -637,7 +581,7 @@ describe('Virtual Collection', function () {
 
             originalCollection.add(newTask);
 
-            chai.assert.sameMembers(fixture.models, originalCollection.models);
+            expectToHaveSameMembers(fixture.models, originalCollection.models);
             expect(resetCallback).toHaveBeenCalledTimes(1);
             expect(addCallback).not.toHaveBeenCalled();
             expect(removeCallback).not.toHaveBeenCalled();
@@ -647,17 +591,17 @@ describe('Virtual Collection', function () {
         {
             var fixture = createFixture(_.times(2, function (n) {
                 return chance.task({
-                    assignee: users[n]
+                    assignee: repository.users[n]
                 });
             }), {
                 grouping: [ assigneeGrouping ],
                 delayedAdd: false
             });
-            var newTask = chance.task({ assignee: users[2] });
+            var newTask = chance.task({ assignee: repository.users[2] });
 
             originalCollection.add(newTask);
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(0),
                 fixture.at(2),
@@ -673,7 +617,7 @@ describe('Virtual Collection', function () {
             var fixture = createFixture(_.times(count, function (n) {
                 return chance.task({
                     title: 'synthetic title ' + count--,
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ],
@@ -683,10 +627,10 @@ describe('Virtual Collection', function () {
                 delayedAdd: false
             });
 
-            var newTask = new Backbone.Model(chance.task({ assignee: users[0], title: "synthetic title 0" }));
+            var newTask = new Backbone.Model(chance.task({ assignee: repository.users[0], title: "synthetic title 0" }));
             fixture.add(newTask, { at: 6 });
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(2),
                 originalCollection.at(0),
@@ -703,7 +647,7 @@ describe('Virtual Collection', function () {
             var fixture = createFixture(_.times(count, function (n) {
                 return chance.task({
                     title: 'synthetic title ' + count--,
-                    assignee: users[n % 2]
+                    assignee: repository.users[n % 2]
                 });
             }), {
                 grouping: [ assigneeGrouping ],
@@ -713,11 +657,11 @@ describe('Virtual Collection', function () {
                 delayedAdd: false
             });
 
-            var newTask = new Backbone.Model(chance.task({ assignee: users[0], title: "synthetic title 0" }));
+            var newTask = new Backbone.Model(chance.task({ assignee: repository.users[0], title: "synthetic title 0" }));
             fixture.add(newTask, { at: 6 });
             fixture.__rebuildModels();
 
-            chai.assert.sameSequence(fixture, [
+            expectCollectionsToBeEqual(fixture, [
                 fixture.at(0),
                 originalCollection.at(2),
                 originalCollection.at(0),
@@ -726,166 +670,6 @@ describe('Virtual Collection', function () {
                 originalCollection.at(1),
                 newTask
             ]);
-        });
-    });
-});
-
-describe('SlidingWindow Collection', function ()
-{
-    var originalCollection;
-    var windowCollection;
-
-    function createFixture(options, list) {
-        if (!list) {
-            list = _.times(10, function () {
-                return chance.task();
-            });
-        }
-
-        originalCollection = new Backbone.Collection(list);
-        windowCollection = new SlidingWindowCollection(originalCollection, options);
-        return windowCollection;
-    }
-
-    describe('When initializing', function ()
-    {
-        it('should have position 0 and default window size', function ()
-        {
-            var fixture = createFixture();
-
-            chai.assert.equal(fixture.length, 0);
-            chai.assert.equal(fixture.models.length, 0);
-        });
-    });
-
-    describe('When setting window size', function ()
-    {
-        it('should have correct element count', function ()
-        {
-            var fixture = createFixture();
-
-            fixture.updateWindowSize(3);
-
-            chai.assert.sameSequence(fixture, originalCollection.first(3));
-        });
-    });
-
-    describe('When setting position', function ()
-    {
-        it('should have correct elements offset', function ()
-        {
-            var fixture = createFixture();
-
-            fixture.updateWindowSize(3);
-            fixture.updatePosition(3);
-
-            chai.assert.sameSequence(fixture, originalCollection.chain().rest(3).first(3).value());
-        });
-    });
-
-    describe('When dramatically changing position', function ()
-    {
-        it('should trigger reset', function ()
-        {
-            var fixture = createFixture({ windowSize: 3 });
-            var resetCallback = jasmine.createSpy('resetCallback');
-            var addCallback = jasmine.createSpy('addCallback');
-            var removeCallback = jasmine.createSpy('removeCallback');
-            fixture.on('reset', resetCallback);
-            fixture.on('add', addCallback);
-            fixture.on('remove', removeCallback);
-
-            fixture.updatePosition(6);
-
-            chai.assert.sameSequence(fixture, originalCollection.chain().rest(6).first(3).value());
-            expect(resetCallback).toHaveBeenCalledTimes(1);
-            expect(addCallback).not.toHaveBeenCalled();
-            expect(removeCallback).not.toHaveBeenCalled();
-        });
-    });
-
-    describe('When slightly changing position', function ()
-    {
-        it('should trigger add/remove going +1', function ()
-        {
-            var fixture = createFixture({ windowSize: 3 });
-            var resetCallback = jasmine.createSpy('resetCallback');
-            var addCallback = jasmine.createSpy('addCallback');
-            var removeCallback = jasmine.createSpy('removeCallback');
-            fixture.on('reset', resetCallback);
-            fixture.on('add', addCallback);
-            fixture.on('remove', removeCallback);
-
-            fixture.updatePosition(1);
-
-            chai.assert.sameSequence(fixture, originalCollection.chain().rest(1).first(3).value());
-            expect(resetCallback).not.toHaveBeenCalled();
-            expect(addCallback).toHaveBeenCalledTimes(1);
-            expect(removeCallback).toHaveBeenCalledTimes(1);
-        });
-
-        it('should trigger add/remove going -1', function ()
-        {
-            var fixture = createFixture({ position: 2, windowSize: 3 });
-            var resetCallback = jasmine.createSpy('resetCallback');
-            var addCallback = jasmine.createSpy('addCallback');
-            var removeCallback = jasmine.createSpy('removeCallback');
-            fixture.on('reset', resetCallback);
-            fixture.on('add', addCallback);
-            fixture.on('remove', removeCallback);
-
-            fixture.updatePosition(1);
-
-            chai.assert.sameSequence(fixture, originalCollection.chain().rest(1).first(3).value());
-            expect(resetCallback).not.toHaveBeenCalled();
-            expect(addCallback).toHaveBeenCalledTimes(1);
-            expect(removeCallback).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    describe('When window cannot be filled complete', function ()
-    {
-        it('should trim window if window size is too big', function ()
-        {
-            var fixture = createFixture({ windowSize: 8 });
-
-            fixture.updateWindowSize(11);
-
-            chai.assert.sameSequence(fixture, originalCollection);
-            chai.assert.equal(fixture.state.position, 0);
-        });
-
-        it('should return back to normal after window trimming', function ()
-        {
-            var fixture = createFixture({ windowSize: 8 });
-
-            fixture.updateWindowSize(15);
-            fixture.updateWindowSize(3);
-
-            chai.assert.sameSequence(fixture, originalCollection.chain().rest(0).first(3).value());
-            chai.assert.equal(fixture.state.position, 0);
-        });
-    });
-
-    describe('When near the top border', function ()
-    {
-        it('should trim window if there are no items ahead', function ()
-        {
-            var fixture = createFixture({ windowSize: 3 });
-
-            fixture.updatePosition(8);
-
-            chai.assert.sameSequence(fixture, originalCollection.chain().rest(8).first(2).value());
-        });
-
-        it('should return back to normal after window trimming', function ()
-        {
-            var fixture = createFixture({ windowSize: 3 });
-
-            fixture.updatePosition(8);
-            fixture.updatePosition(3);
-
-            chai.assert.sameSequence(fixture, originalCollection.chain().rest(3).first(3).value());
         });
     });
 });
