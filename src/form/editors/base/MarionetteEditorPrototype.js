@@ -45,14 +45,14 @@ let onRender = function () {
         this.$el.on('focus', this.onFocus);
         this.$el.on('blur', this.onBlur);
     }
-    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
+    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
 };
 
 let onChange = function () {
     if (this.schema.autocommit) {
         this.commit({});
     }
-    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
+    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
 };
 
 /**
@@ -315,7 +315,7 @@ export default {
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
             },
 
-            isEmpty: function () {
+            isEmptyValue: function () {
                 return !this.getValue();
             },
 

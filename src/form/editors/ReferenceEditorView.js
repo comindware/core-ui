@@ -164,7 +164,7 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
-    isEmpty: function () {
+    isEmptyValue: function () {
         let value = this.getValue();
         return !value || _.isEmpty(value);
     },
