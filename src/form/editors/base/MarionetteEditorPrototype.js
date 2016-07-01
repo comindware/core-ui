@@ -49,8 +49,8 @@ let onRender = function () {
 };
 
 let onChange = function () {
-    if (this.schema.autocommit) {
-        this.commit({});
+    if (this.model && this.schema.autocommit) {
+        this.commit();
     }
     this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
 };
@@ -269,20 +269,16 @@ export default {
              * Sets the focus onto this editor.
              */
             focus: function() {
-                if (this.hasFocus) {
-                    return;
-                }
                 this.__getFocusElement().focus();
+                this.hasFocus = true;
             },
 
             /**
              * Clears the focus.
              */
             blur: function() {
-                if (!this.hasFocus) {
-                    return;
-                }
                 this.__getFocusElement().blur();
+                this.hasFocus = false;
             },
 
             /**
@@ -299,7 +295,7 @@ export default {
                     return error;
                 }
 
-                this.listenTo(this.model, 'invalid', function(model, e) {
+                this.listenToOnce(this.model, 'invalid', function(model, e) {
                     error = e;
                 });
 
