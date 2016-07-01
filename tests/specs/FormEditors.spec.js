@@ -100,7 +100,7 @@ describe('Editors', function ()
             expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
         });
 
-        it('should have inner value matched with initial value', function ()
+        it('should have `value` matched with initial value', function ()
         {
             // arrange
             let model = new Backbone.Model({
@@ -121,7 +121,7 @@ describe('Editors', function ()
             expect(value).toEqual(expected);
         });
 
-        it('should have inner value matched with initial value (w/o data binding).', function ()
+        it('should have `value` matched with initial value (w/o data binding).', function ()
         {
             // arrange
             let expected = 'text';
@@ -186,7 +186,7 @@ describe('Editors', function ()
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should update value on model change', function ()
+        it('should update `value` on model change', function ()
         {
             // arrange
             let onChangeCallback = jasmine.createSpy('onChangeCallback');
