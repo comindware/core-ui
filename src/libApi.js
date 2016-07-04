@@ -20,7 +20,7 @@ import 'backbone';
 import 'backbone-associations';
 import 'backbone.forms';
 import 'backbone.marionette';
-import 'jquery';
+import $_ from 'jquery';
 import 'jquery.inputmask/dist/jquery.inputmask.bundle';
 import 'jquery.caret';
 import 'jquery-mousewheel';
@@ -41,7 +41,7 @@ _.string = _.str = underscoreString;
 
 Backbone.Associations.EVENTS_NC = true;
 
-$.browser = {
+$_.browser = {
     msie: (/msie|trident/i).test(navigator.userAgent)
 };
 
@@ -49,10 +49,12 @@ var api = {
     keypress: keypress_,
     moment: moment_,
     Handlebars: Handlebars_,
-    Bluebird: Bluebird_
+    Bluebird: Bluebird_,
+    $: $_
 };
 export var keypress = api.keypress;
 export var moment = api.moment;
 export var Handlebars = api.Handlebars;
 export var Bluebird = api.Bluebird;
+export var $ = api.$;
 export default api;

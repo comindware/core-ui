@@ -45,3 +45,33 @@ export function addChanceMixins (chance) {
         users
     };
 }
+
+export var dataProvider = {
+    listUsers: function () {
+        let names = [
+            'Kerry Torres',
+            'Terry Ross',
+            'Natasha Becker',
+            'Doyle Ball',
+            'Teresa Wilkins',
+            'Maggie Bowen',
+            'Patricia Silva',
+            'Carol Crawford',
+            'Lillie Thomas',
+            'Alfred Allison',
+            'Nichole Tran'
+        ];
+        return names.map((name, i) => {
+            let id = 'user.' + (i+1);
+            let nameSplit = name.split(' ');
+            return {
+                id: id,
+                name: name,
+                userName: (nameSplit[0][0] + nameSplit[1]).toLowerCase(),
+                abbreviation: nameSplit[0][0] + nameSplit[1][0],
+                avatarUrl: '/avatars?id=' + id,
+                url: '#People/' + (i+1)
+            };
+        });
+    }
+};

@@ -104,6 +104,10 @@ module.exports = {
                         test: /\.(png|jpg)$/,
                         loader: `url?limit=${GRAPHICS_LIMIT}`
                     },
+                    {
+                        test: /\.json$/,
+                        loader: 'json'
+                    },
 
                     {
                         test: /underscore\.js/,
@@ -182,10 +186,9 @@ module.exports = {
             }
         };
 
-        /*if (TEST) {
-            webpackConfig.resolve.root.push() = pathResolver.source('coreApi');
-            webpackConfig.resolve.alias.coreApi = pathResolver.source('coreApi');
-        }*/
+        if (TEST) {
+            webpackConfig.resolve.alias.localizationMap = `${__dirname}/dist/localization/localization.en.json`;
+        }
 
         if (!TEST) {
             webpackConfig.entry = pathResolver.source('coreApi.js');

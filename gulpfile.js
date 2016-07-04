@@ -25,7 +25,6 @@ const gutil = require("gulp-util");
 const webpack = require("webpack");
 const webpackConfigFactory = require("./webpack.config.js");
 const babel = require('gulp-babel');
-const jsdoc = require('gulp-jsdoc');
 const path = require('path');
 const exec = require('child_process').exec;
 const fs = require('fs');
@@ -56,6 +55,7 @@ gulp.task('test:watch', function (done) {
 });
 
 gulp.task('jsdoc', function() {
+    const jsdoc = require('gulp-jsdoc');
     return gulp.src('./src/**/*.js')
         .pipe(babel({
             presets: ["es2015"],

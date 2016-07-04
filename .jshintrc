@@ -93,6 +93,7 @@
     "exports": false,
     "expect": false,
     "jasmine": false,
+    "setFixtures": false,
     "Backbone": false,
     // false = readonly
     "Marionette": false,
