@@ -420,7 +420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Bluebird = exports.Handlebars = exports.moment = exports.keypress = undefined;
+	exports.$ = exports.Bluebird = exports.Handlebars = exports.moment = exports.keypress = undefined;
 	
 	var _promise = __webpack_require__(41);
 	
@@ -458,7 +458,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(292);
 	
-	__webpack_require__(287);
+	var _jquery = __webpack_require__(287);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
 	
 	__webpack_require__(296);
 	
@@ -491,7 +493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Backbone.Associations.EVENTS_NC = true;
 	
-	$.browser = {
+	_jquery2.default.browser = {
 	    msie: /msie|trident/i.test(navigator.userAgent)
 	};
 	
@@ -499,12 +501,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    keypress: keypress_,
 	    moment: _moment2.default,
 	    Handlebars: Handlebars_,
-	    Bluebird: _bluebird2.default
+	    Bluebird: _bluebird2.default,
+	    $: _jquery2.default
 	};
 	var keypress = exports.keypress = api.keypress;
 	var moment = exports.moment = api.moment;
 	var Handlebars = exports.Handlebars = api.Handlebars;
 	var Bluebird = exports.Bluebird = api.Bluebird;
+	var $ = exports.$ = api.$;
 	exports.default = api;
 
 /***/ },
@@ -42874,8 +42878,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            html = this._getOptionsHtml(newOptions);
 	            //Or any object
 	          } else {
-	              html = this._objectToHtml(options);
-	            }
+	            html = this._objectToHtml(options);
+	          }
 	
 	      return html;
 	    },
@@ -50176,9 +50180,9 @@ return /******/ (function(modules) { // webpackBootstrap
 					}
 					// End of Modification
 				} else {
-						var s = t.selectionStart,
-						    e = t.selectionEnd;
-					}
+					var s = t.selectionStart,
+					    e = t.selectionEnd;
+				}
 				var te = t.value.substring(s, e);
 				return { start: s, end: e, text: te, replace: function replace(st) {
 						return t.value.substring(0, s) + st + t.value.substring(e, t.value[len]);
@@ -58682,8 +58686,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // If column has it's custom width
 	                col.absWidth = Math.floor(col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
 	            } else {
-	                    col.absWidth = Math.floor(columnWidth); // Otherwise take default column width (rounding it down)
-	                }
+	                col.absWidth = Math.floor(columnWidth); // Otherwise take default column width (rounding it down)
+	            }
 	            child.outerWidth(col.absWidth); // Set absolute column width
 	            sumWidth += col.absWidth; // And add it to columns' sum width
 	        }.bind(this));
@@ -63989,7 +63993,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.debounceValidate = _.debounce(function () {
 	            this.validate();
 	            this.editor.trigger('validated', this);
-	        }.bind(this), this.form.validationDelay);
+	        }.bind(this), this.form && this.form.validationDelay || 100);
 	        if (this.schema.autoValidate) {
 	            this.editor.on('change', function () {
 	                this.debounceValidate();
@@ -64311,14 +64315,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.$el.on('focus', this.onFocus);
 	        this.$el.on('blur', this.onBlur);
 	    }
-	    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
+	    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
 	};
 	
 	var onChange = function onChange() {
-	    if (this.schema.autocommit) {
-	        this.commit({});
+	    if (this.model && this.schema.autocommit) {
+	        this.commit();
 	    }
-	    this.$el.toggleClass(classes.EMPTY, this.isEmpty());
+	    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
 	};
 	
 	/**
@@ -64532,20 +64536,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                 * Sets the focus onto this editor.
 	                 */
 	                focus: function focus() {
-	                    if (this.hasFocus) {
-	                        return;
-	                    }
 	                    this.__getFocusElement().focus();
+	                    this.hasFocus = true;
 	                },
 	
 	                /**
 	                 * Clears the focus.
 	                 */
 	                blur: function blur() {
-	                    if (!this.hasFocus) {
-	                        return;
-	                    }
 	                    this.__getFocusElement().blur();
+	                    this.hasFocus = false;
 	                },
 	
 	                /**
@@ -64562,7 +64562,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        return error;
 	                    }
 	
-	                    this.listenTo(this.model, 'invalid', function (model, e) {
+	                    this.listenToOnce(this.model, 'invalid', function (model, e) {
 	                        error = e;
 	                    });
 	
@@ -64578,7 +64578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this.trigger('value:committed', this, this.model, this.key, this.getValue());
 	                },
 	
-	                isEmpty: function isEmpty() {
+	                isEmptyValue: function isEmptyValue() {
 	                    return !this.getValue();
 	                },
 	
@@ -65098,9 +65098,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    __keypress: function __keypress(event) {
 	        if (event.which == null) {
 	            // IE
-	            return !! ~ALLOWED_CHARS.indexOf(String.fromCharCode(event.keyCode));
+	            return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.keyCode));
 	        } else {
-	            return !! ~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
+	            return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
 	        }
 	    },
 	
@@ -66031,7 +66031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    isEmpty: function isEmpty() {
+	    isEmptyValue: function isEmptyValue() {
 	        var value = this.getValue();
 	        return !value || _.isEmpty(value);
 	    },
@@ -70666,12 +70666,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var diff = _libApi.moment.utc(date).diff(momentOldDisplayedDate, 'days'); // Figure out number of days between displayed old date and entered new date
 	            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString(); // and apply it to stored old date to prevent transition-through-the-day bugs
 	        } else {
-	                newVal = _libApi.moment.utc({
-	                    year: date.getFullYear(),
-	                    month: date.getMonth(),
-	                    date: date.getDate()
-	                }).minute(-this.getOption('timezoneOffset')).toISOString();
-	            }
+	            newVal = _libApi.moment.utc({
+	                year: date.getFullYear(),
+	                month: date.getMonth(),
+	                date: date.getDate()
+	            }).minute(-this.getOption('timezoneOffset')).toISOString();
+	        }
 	
 	        this.model.set({ value: newVal });
 	    },
