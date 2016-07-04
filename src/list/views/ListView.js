@@ -154,7 +154,6 @@ let ListView = Marionette.LayoutView.extend({
         });
 
         this.visibleCollectionRegion.show(this.visibleCollectionView);
-        this.__handleResizeInternal();
     },
 
     onRender: function () {
