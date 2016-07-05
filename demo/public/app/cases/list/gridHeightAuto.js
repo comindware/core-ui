@@ -59,9 +59,9 @@ define([
         var bundle = core.list.factory.createDefaultGrid({
             gridViewOptions: {
                 height: 'auto',
-                maxRows: 6,
+                maxRows: 7,
                 columns: columns,
-                childHeight: 40,
+                childHeight: 32,
                 useDefaultRowView: true
             },
             collection: collection

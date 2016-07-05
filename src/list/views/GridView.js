@@ -164,12 +164,19 @@ let GridView = Marionette.LayoutView.extend({
     template: template,
 
     onShow: function () {
+        let elementWidth = this.$el.width();
         if (this.options.columns.length === 0) {
             var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
         }
         this.headerRegion.show(this.headerView);
         this.contentViewRegion.show(this.listView);
+        let updatedElementWidth = this.$el.width();
+        if (elementWidth !== updatedElementWidth) {
+            // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
+            this.headerView.handleResize();
+            this.listView.handleResize();
+        }
     },
 
     onRender: function () {
