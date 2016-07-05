@@ -12,6 +12,7 @@ import { keypress } from '../../libApi';
 import { helpers, htmlHelpers } from '../../utils/utilsApi';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
+import GlobalEventsService from '../../services/GlobalEventService';
 
 /*
     Public interface:
@@ -91,11 +92,6 @@ let ListView = Marionette.LayoutView.extend({
                 'outer height for childView view (in pixels).');
         }
 
-        _.bindAll(this, '__handleResize');
-
-        this.$window = $(window);
-        this.$window.on('resize', this.__handleResize);
-
         this.__createReqres();
 
         this.childViewOptions = _.extend(options.childViewOptions || {}, {
@@ -107,7 +103,6 @@ let ListView = Marionette.LayoutView.extend({
         options.childView && (this.childView = options.childView); // jshint ignore:line
         options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
-        this.handleResizeUniqueId = _.uniqueId();
         this.maxRows = options.maxRows;
         this.height = options.height;
 
@@ -120,7 +115,11 @@ let ListView = Marionette.LayoutView.extend({
             position: 0
         };
 
-        this.listenTo(this.collection, 'add remove reset', this.__handleResize, this);
+        _.bindAll(this, 'handleResize');
+        let debouncedHandleResize = _.debounce(this.handleResize, 100);
+        this.listenTo(GlobalEventsService, 'resize', debouncedHandleResize);
+        this.listenTo(this.collection, 'add remove reset', debouncedHandleResize);
+
         this.visibleCollection = new SlidingWindowCollection(this.collection);
     },
 
@@ -135,13 +134,9 @@ let ListView = Marionette.LayoutView.extend({
     className: 'list',
     template: template,
 
-    onDestroy: function () {
-        this.$window.off('resize', this.__handleResize);
-    },
-
     onShow: function () {
         // Updating viewportHeight and rendering subviews
-        this.__handleResizeInternal();
+        this.handleResize();
         this.visibleCollectionView = new VisibleCollectionView({
             childView: this.childView,
             childViewSelector: this.childViewSelector,
@@ -154,7 +149,7 @@ let ListView = Marionette.LayoutView.extend({
         });
 
         this.visibleCollectionRegion.show(this.visibleCollectionView);
-        this.__handleResizeInternal();
+        this.handleResize();
     },
 
     onRender: function () {
@@ -310,12 +305,8 @@ let ListView = Marionette.LayoutView.extend({
         return newPosition;
     },
 
-    __handleResize: function () {
-        helpers.setUniqueTimeout(this.handleResizeUniqueId, this.__handleResizeInternal.bind(this), 100);
-    },
-
     // Updates state.viewportHeight and visibleCollection.state.windowSize.
-    __handleResizeInternal: function () {
+    handleResize: function () {
         var oldViewportHeight = this.state.viewportHeight;
         var elementHeight = this.$el.height();
 
