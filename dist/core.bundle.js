@@ -58969,12 +58969,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _grid2.default,
 	
 	    onShow: function onShow() {
+	        var elementWidth = this.$el.width();
 	        if (this.options.columns.length === 0) {
 	            var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
 	            this.noColumnsViewRegion.show(noColumnsView);
 	        }
 	        this.headerRegion.show(this.headerView);
 	        this.contentViewRegion.show(this.listView);
+	        var updatedElementWidth = this.$el.width();
+	        if (elementWidth !== updatedElementWidth) {
+	            // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
+	            this.headerView.handleResize();
+	            this.listView.handleResize();
+	        }
 	    },
 	
 	    onRender: function onRender() {
@@ -59071,6 +59078,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _SlidingWindowCollection2 = _interopRequireDefault(_SlidingWindowCollection);
 	
+	var _GlobalEventService = __webpack_require__(390);
+	
+	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/*
@@ -59149,11 +59160,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _utilsApi.helpers.throwInvalidOperationError('ListView: you must specify a \'childHeight\' option - ' + 'outer height for childView view (in pixels).');
 	        }
 	
-	        _.bindAll(this, '__handleResize');
-	
-	        this.$window = $(window);
-	        this.$window.on('resize', this.__handleResize);
-	
 	        this.__createReqres();
 	
 	        this.childViewOptions = _.extend(options.childViewOptions || {}, {
@@ -59165,7 +59171,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        options.childView && (this.childView = options.childView); // jshint ignore:line
 	        options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
 	        options.loadingChildView && (this.loadingChildView = options.loadingChildView); // jshint ignore:line
-	        this.handleResizeUniqueId = _.uniqueId();
 	        this.maxRows = options.maxRows;
 	        this.height = options.height;
 	
@@ -59178,7 +59183,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            position: 0
 	        };
 	
-	        this.listenTo(this.collection, 'add remove reset', this.__handleResize, this);
+	        _.bindAll(this, 'handleResize');
+	        var debouncedHandleResize = _.debounce(this.handleResize, 100);
+	        this.listenTo(_GlobalEventService2.default, 'resize', debouncedHandleResize);
+	        this.listenTo(this.collection, 'add remove reset', debouncedHandleResize);
+	
 	        this.visibleCollection = new _SlidingWindowCollection2.default(this.collection);
 	    },
 	
@@ -59193,13 +59202,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    className: 'list',
 	    template: _list2.default,
 	
-	    onDestroy: function onDestroy() {
-	        this.$window.off('resize', this.__handleResize);
-	    },
-	
 	    onShow: function onShow() {
 	        // Updating viewportHeight and rendering subviews
-	        this.__handleResizeInternal();
+	        this.handleResize();
 	        this.visibleCollectionView = new VisibleCollectionView({
 	            childView: this.childView,
 	            childViewSelector: this.childViewSelector,
@@ -59212,7 +59217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	
 	        this.visibleCollectionRegion.show(this.visibleCollectionView);
-	        this.__handleResizeInternal();
+	        this.handleResize();
 	    },
 	
 	    onRender: function onRender() {
@@ -59360,12 +59365,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return newPosition;
 	    },
 	
-	    __handleResize: function __handleResize() {
-	        _utilsApi.helpers.setUniqueTimeout(this.handleResizeUniqueId, this.__handleResizeInternal.bind(this), 100);
-	    },
-	
 	    // Updates state.viewportHeight and visibleCollection.state.windowSize.
-	    __handleResizeInternal: function __handleResizeInternal() {
+	    handleResize: function handleResize() {
 	        var oldViewportHeight = this.state.viewportHeight;
 	        var elementHeight = this.$el.height();
 	
