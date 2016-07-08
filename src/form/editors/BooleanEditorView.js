@@ -15,6 +15,10 @@ const defaultOptions = {
     displayText: ''
 };
 
+const classes = {
+    CHECKED: 'editor_checked'
+};
+
 /**
  * @name BooleanEditorView
  * @memberof module:core.form.editors
@@ -66,13 +70,9 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
         this.__triggerChange();
     },
 
-    __value: function (value, triggerChange) {
-        this.__toggle();
-    },
-
     onRender: function () {
         if (this.getValue()) {
-            this.$el.addClass('editor_checked');
+            this.$el.addClass(classes.CHECKED);
         }
     },
 
@@ -82,11 +82,17 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
         }
         this.value = value;
         if (this.value) {
-            this.$el.addClass('editor_checked');
+            this.$el.addClass(classes.CHECKED);
         } else {
-            this.$el.removeClass('editor_checked');
+            this.$el.removeClass(classes.CHECKED);
         }
+    },
+
+    isEmptyValue: function () {
+        return !_.isBoolean(this.getValue());
     }
+}, {
+    classes
 });
 
 export default Backbone.Form.editors.Boolean;

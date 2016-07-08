@@ -10,13 +10,13 @@
 
 import Chance from 'chance';
 import core from 'coreApi';
-import { expectCollectionsToBeEqual } from '../helpers';
-import { addChanceMixins } from '../testData';
+import { expectCollectionsToBeEqual } from '../utils/helpers';
+import { addChanceMixins } from '../utils/testData';
 
 let chance = new Chance();
 addChanceMixins(chance);
 
-describe('SlidingWindow Collection', function ()
+describe('SlidingWindowCollection', function ()
 {
     beforeEach(function () {
         this.tasks = _.times(10, function () {

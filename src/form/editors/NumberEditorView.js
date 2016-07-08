@@ -209,12 +209,9 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
         }
     },
     
-    __keypress(event) {
-    	if (event.which == null) { // IE
-    		return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.keyCode));
-    	} else {
-    		return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
-    	}
+    __keypress: function(event) {
+        let code = event.which == null /* check for IE */ ? event.keyCode : event.charCode;
+        return ALLOWED_CHARS.indexOf(String.fromCharCode(code)) !== -1;
     },
 
     __start: function() {
@@ -345,6 +342,10 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
 
     setValue: function(value) {
         this.__value(value, false, false, false);
+    },
+
+    isEmptyValue: function () {
+        return !_.isNumber(this.getValue());
     }
 });
 

@@ -10,13 +10,13 @@
 
 import Chance from 'chance';
 import core from 'coreApi';
-import { expectCollectionsToBeEqual, expectToHaveSameMembers } from '../helpers';
-import { TaskModel, addChanceMixins } from '../testData';
+import { expectCollectionsToBeEqual, expectToHaveSameMembers } from '../utils/helpers';
+import { TaskModel, addChanceMixins } from '../utils/testData';
 
 let chance = new Chance();
 let repository = addChanceMixins(chance);
 
-describe('Virtual Collection', function () {
+describe('VirtualCollection', function () {
     var assigneeGrouping = {
         modelFactory: function (model) {
             return model.get('assignee');

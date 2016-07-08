@@ -81,7 +81,7 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
 
     events: {
         'change': '__change',
-        'input': '__input',
+        'input @ui.textarea': '__input',
         'keyup @ui.textarea': '__keyup'
     },
 
