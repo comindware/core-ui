@@ -8,64 +8,26 @@
 
 "use strict";
 
-import Chance from 'chance';
 import core from 'coreApi';
-import { dataProvider } from '../testData';
-import localizationMap from 'localizationMap';
+import { initializeCore } from '../utils/helpers';
 import 'jasmine-jquery';
 
-let chance = new Chance();
-let $ = core.lib.$; // jshint ignore:line
-
-describe('Editors', function ()
-{
+describe('Editors', function () {
     beforeEach(function () {
-        setFixtures('<div id="rootRegion"></div><div id="fadingRegion"></div><div id="popupRegion"></div>');
-        let regionManager = new Marionette.RegionManager();
-        regionManager.addRegions({
-            rootRegion: '#rootRegion',
-            fadingRegion: '#fadingRegion',
-            popupRegion: '#popupRegion'
-        });
-
-        this.rootRegion = regionManager.get('rootRegion');
-
-        core.initialize({
-            ajaxService: {
-                ajaxMap: []
-            },
-            localizationService: {
-                langCode: 'en',
-                localizationMap: localizationMap,
-                warningAsError: true
-            },
-            windowService: {
-                fadingRegion: regionManager.get('fadingRegion'),
-                popupRegion: regionManager.get('popupRegion'),
-                ui: {
-                    fadingRegion: $('#fadingRegion'),
-                    popupRegion: $('#popupRegion')
-                }
-            },
-            userService: {
-                dataProvider: dataProvider
-            }
-        });
+        this.rootRegion = initializeCore();
     });
 
-    describe('TextEditorView', function ()
-    {
-        let findInput = function (view) {
-            return view.$('input');
+    describe('BooleanEditorView', function () {
+        let findButton = function (view) {
+            return view.$('.js-toggle-button');
         };
 
-        it('should get focus when focus() is called', function ()
-        {
+        it('should get focus when focus() is called', function () {
             // arrange
             let model = new Backbone.Model({
-                data: 'text'
+                data: false
             });
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -75,17 +37,16 @@ describe('Editors', function ()
             view.focus();
 
             // assert
-            expect(findInput(view)).toBeFocused();
+            expect(view.$el).toBeFocused();
             expect(view.hasFocus).toEqual(true, 'Must have focus.');
         });
 
-        it('should lose focus when blur() is called', function ()
-        {
+        it('should lose focus when blur() is called', function () {
             // arrange
             let model = new Backbone.Model({
-                data: 'text'
+                data: false
             });
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -96,17 +57,16 @@ describe('Editors', function ()
             view.blur();
 
             // assert
-            expect(findInput(view)).not.toBeFocused();
+            expect(view.$el).not.toBeFocused();
             expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
         });
 
-        it('should have `value` matched with initial value', function ()
-        {
+        it('should have `value` matched with initial value', function () {
             // arrange
             let model = new Backbone.Model({
-                data: 'text'
+                data: true
             });
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -117,15 +77,14 @@ describe('Editors', function ()
 
             // assert
             let expected = model.get('data');
-            expect(findInput(view).val()).toEqual(expected);
+            expect(view.$el).toHaveClass(core.form.editors.BooleanEditor.classes.CHECKED);
             expect(value).toEqual(expected);
         });
 
-        it('should have `value` matched with initial value (w/o data binding).', function ()
-        {
+        it('should have `value` matched with initial value (w/o data binding).', function () {
             // arrange
-            let expected = 'text';
-            let view = new core.form.editors.TextEditor({
+            let expected = true;
+            let view = new core.form.editors.BooleanEditor({
                 value: expected
             });
             this.rootRegion.show(view);
@@ -134,19 +93,18 @@ describe('Editors', function ()
             let value = view.getValue();
 
             // assert
-            expect(findInput(view).val()).toEqual(expected);
+            expect(view.$el).toHaveClass(core.form.editors.BooleanEditor.classes.CHECKED);
             expect(value).toEqual(expected);
         });
 
-        it('should update `value` and send `change` on user change.', function ()
-        {
+        it('should update `value` and send `change` on user change.', function () {
             // arrange
-            let expected = 'text 2';
+            let expected = true;
             let model = new Backbone.Model({
-                data: 'text'
+                data: false
             });
             let onChangeCallback = jasmine.createSpy('onChangeCallback');
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -155,45 +113,39 @@ describe('Editors', function ()
 
             // act
             view.focus();
-            let input = findInput(view);
-            input.val(expected);
-            input.change();
+            findButton(view).click();
 
             // assert
             expect(view.getValue()).toEqual(expected);
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should update `value` and send `change` on user change (w/o data binding).', function ()
-        {
+        it('should update `value` and send `change` on user change (w/o data binding).', function () {
             // arrange
-            let expected = 'text 2';
+            let expected = true;
             let onChangeCallback = jasmine.createSpy('onChangeCallback');
-            let view = new core.form.editors.TextEditor({
-                value: 'text'
+            let view = new core.form.editors.BooleanEditor({
+                value: false
             });
             this.rootRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
             view.focus();
-            let input = findInput(view);
-            input.val(expected);
-            input.change();
+            findButton(view).click();
 
             // assert
             expect(view.getValue()).toEqual(expected);
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should update `value` on model change', function ()
-        {
+        it('should update `value` on model change', function () {
             // arrange
             let onChangeCallback = jasmine.createSpy('onChangeCallback');
             let model = new Backbone.Model({
-                data: 'text'
+                data: false
             });
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -201,26 +153,25 @@ describe('Editors', function ()
             view.on('change', onChangeCallback);
 
             // act
-            model.set('data', 'text 2');
+            model.set('data', true);
             let value = view.getValue();
 
             // assert
             let expected = model.get('data');
-            expect(findInput(view).val()).toEqual(expected);
+            expect(view.$el).toHaveClass(core.form.editors.BooleanEditor.classes.CHECKED);
             expect(value).toEqual(expected);
             expect(onChangeCallback).not.toHaveBeenCalled();
         });
 
-        it('should not commit if `autocommit: false`', function ()
-        {
+        it('should not commit if `autocommit: false`', function () {
             // arrange
-            let expected = 'text';
+            let expected = false;
             let model = new Backbone.Model({
                 data: expected
             });
             let onChangeCallback = jasmine.createSpy('onChangeCallback');
             let onCommitCallback = jasmine.createSpy('onCommitCallback');
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -230,9 +181,7 @@ describe('Editors', function ()
 
             // act
             view.focus();
-            let input = findInput(view);
-            input.val('text 2');
-            input.change();
+            findButton(view).click();
 
             // assert
             expect(model.get('data')).toEqual(expected);
@@ -240,16 +189,15 @@ describe('Editors', function ()
             expect(onCommitCallback).not.toHaveBeenCalled();
         });
 
-        it('should commit if `autocommit: true`', function ()
-        {
+        it('should commit if `autocommit: true`', function () {
             // arrange
-            let expected = 'text 2';
+            let expected = true;
             let model = new Backbone.Model({
-                data: 'text'
+                data: false
             });
             let onChangeCallback = jasmine.createSpy('onChangeCallback');
             let onCommitCallback = jasmine.createSpy('onCommitCallback');
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data',
                 autocommit: true
@@ -260,9 +208,7 @@ describe('Editors', function ()
 
             // act
             view.focus();
-            let input = findInput(view);
-            input.val(expected);
-            input.change();
+            findButton(view).click();
 
             // assert
             expect(model.get('data')).toEqual(expected);
@@ -270,13 +216,12 @@ describe('Editors', function ()
             expect(onCommitCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should have `isEmptyValue() === true` if null or empty string', function ()
-        {
+        it('should have `isEmptyValue() === true` if null', function () {
             // arrange
             let model = new Backbone.Model({
                 data: null
             });
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -284,21 +229,17 @@ describe('Editors', function ()
 
             // act
             let isEmpty = view.isEmptyValue();
-            view.setValue('');
-            let isEmptyIfEmptyString = view.isEmptyValue();
 
             // assert
             expect(isEmpty).toEqual(true);
-            expect(isEmptyIfEmptyString).toEqual(true);
         });
 
-        it('should have `isEmptyValue() === false` if has text', function ()
-        {
+        it('should have `isEmptyValue() === false` if has value including `false`', function () {
             // arrange
             let model = new Backbone.Model({
-                data: 'text'
+                data: true
             });
-            let view = new core.form.editors.TextEditor({
+            let view = new core.form.editors.BooleanEditor({
                 model: model,
                 key: 'data'
             });
@@ -306,34 +247,12 @@ describe('Editors', function ()
 
             // act
             let isEmpty = view.isEmptyValue();
+            view.setValue(false);
+            let isEmptyIfFalse = view.isEmptyValue();
 
             // assert
             expect(isEmpty).toEqual(false);
-        });
-
-        it('should update `value` when typing if `changemode: \'keydown\'`', function ()
-        {
-            // arrange
-            let onChangeCallback = jasmine.createSpy('onChangeCallback');
-            let model = new Backbone.Model({
-                data: 'text'
-            });
-            let view = new core.form.editors.TextEditor({
-                model: model,
-                key: 'data',
-                changeMode: 'keydown'
-            });
-            this.rootRegion.show(view);
-            view.on('change', onChangeCallback);
-
-            // act
-            view.focus();
-            let input = findInput(view);
-            input.val('text2');
-            input.keyup();
-
-            // assert
-            expect(onChangeCallback).toHaveBeenCalledTimes(1);
+            expect(isEmptyIfFalse).toEqual(false);
         });
     });
 });

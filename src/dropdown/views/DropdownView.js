@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { $ } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import template from '../templates/dropdown.hbs';
 import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
