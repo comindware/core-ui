@@ -70574,6 +70574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    blur: function blur() {
 	        this.calendarDropdownView.close();
+	        this.trigger('blur');
 	    }
 	});
 
@@ -70870,6 +70871,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    focus: function focus() {
 	        this.ui.dateInput.focus();
+	        this.trigger('focus');
+	        if (this.model.get('enabled') && !this.model.get('readonly')) {
+	            this.trigger('calendar:open');
+	        }
 	    }
 	});
 
@@ -71210,6 +71215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    blur: function blur() {
 	        this.dropdownView.close();
+	        this.trigger('blur');
 	    }
 	});
 
@@ -71383,6 +71389,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    focus: function focus() {
 	        this.ui.input.focus();
+	        this.trigger('focus');
+	        if (this.model.get('enabled') && !this.model.get('readonly')) {
+	            this.trigger('calendar:open');
+	        }
 	    }
 	});
 
