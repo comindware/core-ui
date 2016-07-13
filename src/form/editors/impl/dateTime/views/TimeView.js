@@ -115,11 +115,13 @@ export default Marionette.LayoutView.extend({
     },
 
     __onButtonFocus: function () {
-        this.dropdownView.open();
+        if (this.model.get('enabled') && !this.model.get('readonly')) {
+            this.dropdownView.open();
+        }
     },
 
     focus: function () {
-        this.dropdownView.open();
+        this.dropdownView.button.focus();
     },
 
     blur: function () {

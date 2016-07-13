@@ -150,5 +150,9 @@ export default Marionette.ItemView.extend({
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.trigger('calendar:open');
         }
+    },
+
+    focus: function () {
+        this.ui.input.focus();
     }
 });

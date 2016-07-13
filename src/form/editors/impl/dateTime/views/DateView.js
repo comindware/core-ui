@@ -76,11 +76,13 @@ export default Marionette.LayoutView.extend({
     },
 
     __onButtonFocus: function () {
-        this.calendarDropdownView.open();
+        if (this.model.get('enabled') && !this.model.get('readonly')) {
+            this.calendarDropdownView.open();
+        }
     },
 
     focus: function () {
-        this.calendarDropdownView.open();
+        this.calendarDropdownView.button.focus();
     },
 
     blur: function () {
