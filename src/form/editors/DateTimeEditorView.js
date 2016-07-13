@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment } from '../../libApi';
+import { moment, $ } from '../../libApi';
 import template from './templates/dateTimeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
@@ -166,6 +166,17 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
         }
         this.dateView.blur();
         this.timeView.blur();
+    },
+
+    onFocus: function () {
+        BaseLayoutEditorView.prototype.onFocus.call(this);
+    },
+
+    onBlur: function () {
+        if ($.contains(this.el, document.activeElement)) {
+            return;
+        }
+        BaseLayoutEditorView.prototype.onBlur.call(this);
     }
 });
 

@@ -146,5 +146,9 @@ export default Marionette.ItemView.extend({
 
     __onFocus: function () {
         this.trigger('focus');
+    },
+
+    focus: function () {
+        this.ui.dateInput.focus();
     }
 });
