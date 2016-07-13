@@ -8,6 +8,7 @@
 
 "use strict";
 
+import { $ } from '../../../../../libApi';
 import template from '../templates/date.hbs';
 import dropdownApi from '../../../../../dropdown/dropdownApi';
 import PanelView from './DatePanelView';
@@ -87,6 +88,9 @@ export default Marionette.LayoutView.extend({
 
     blur: function () {
         this.calendarDropdownView.close();
-        this.trigger('blur');
+    },
+
+    hasFocus: function () {
+        return $.contains(this.el, document.activeElement);
     }
 });

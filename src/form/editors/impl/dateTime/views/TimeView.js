@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment, Handlebars } from '../../../../../libApi';
+import { moment, Handlebars, $ } from '../../../../../libApi';
 import { dateHelpers } from '../../../../../utils/utilsApi';
 import dropdown from '../../../../../dropdown/dropdownApi';
 import TimeInputView from './TimeInputView';
@@ -126,6 +126,9 @@ export default Marionette.LayoutView.extend({
 
     blur: function () {
         this.dropdownView.close();
-        this.trigger('blur');
+    },
+
+    hasFocus: function () {
+        return $.contains(this.el, document.activeElement);
     }
 });
