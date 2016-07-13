@@ -71,6 +71,7 @@ describe('Editors', function () {
 
             // assert
             expect(findDateInput(view)).toBeFocused(); // Closing dropdown doesn't clear activeDocument to keep dropdown nesting
+            expect(view.dateView.calendarDropdownView.isOpen).toEqual(false, 'Dropdown mustn\'t be open.');
             expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
         });
 

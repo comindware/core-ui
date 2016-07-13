@@ -126,5 +126,6 @@ export default Marionette.LayoutView.extend({
 
     blur: function () {
         this.dropdownView.close();
+        this.trigger('blur');
     }
 });

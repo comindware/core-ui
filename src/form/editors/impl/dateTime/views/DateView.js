@@ -87,5 +87,6 @@ export default Marionette.LayoutView.extend({
 
     blur: function () {
         this.calendarDropdownView.close();
+        this.trigger('blur');
     }
 });
