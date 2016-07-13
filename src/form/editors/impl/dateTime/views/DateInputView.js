@@ -150,5 +150,9 @@ export default Marionette.ItemView.extend({
 
     focus: function () {
         this.ui.dateInput.focus();
+        this.trigger('focus');
+        if (this.model.get('enabled') && !this.model.get('readonly')) {
+            this.trigger('calendar:open');
+        }
     }
 });

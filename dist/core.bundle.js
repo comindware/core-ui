@@ -55883,7 +55883,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
-	__webpack_require__(40);
+	var _libApi = __webpack_require__(40);
 	
 	var _utilsApi = __webpack_require__(319);
 	
@@ -55929,20 +55929,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    __focus: function __focus() {
 	        // If the focused element is nested into our focusable element, we simply bind to it. Otherwise, we focus the focusable element.
 	        var $focusableEl = this.__getFocusableEl();
-	        var activeElementIsNested = $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
+	        var activeElementIsNested = $focusableEl[0] === document.activeElement || _libApi.$.contains($focusableEl[0], document.activeElement);
 	        if (!activeElementIsNested) {
 	            $focusableEl.focus();
 	        } else {
-	            $(document.activeElement).one('blur', this.__onBlur);
+	            (0, _libApi.$)(document.activeElement).one('blur', this.__onBlur);
 	        }
 	    },
 	
 	    __onBlur: function __onBlur() {
 	        var $focusableEl = this.__getFocusableEl();
 	        _.defer(function () {
-	            var activeElementIsNested = $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
+	            var activeElementIsNested = $focusableEl[0] === document.activeElement || _libApi.$.contains($focusableEl[0], document.activeElement);
 	            if (activeElementIsNested) {
-	                $(document.activeElement).one('blur', this.__onBlur);
+	                (0, _libApi.$)(document.activeElement).one('blur', this.__onBlur);
 	            } else {
 	                // Call the provided onBlur function
 	                var callback = this.options.onBlur;
@@ -57212,7 +57212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	__webpack_require__(40);
+	var _libApi = __webpack_require__(40);
 	
 	var _utilsApi = __webpack_require__(319);
 	
@@ -57460,7 +57460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
 	     * */
 	    close: function close() {
-	        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
+	        if (!this.isOpen || !_libApi.$.contains(document.documentElement, this.el)) {
 	            return;
 	        }
 	        this.trigger('before:close', this);
@@ -64800,6 +64800,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    displayText: ''
 	};
 	
+	var classes = {
+	    CHECKED: 'editor_checked'
+	};
+	
 	/**
 	 * @name BooleanEditorView
 	 * @memberof module:core.form.editors
@@ -64851,13 +64855,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.__triggerChange();
 	    },
 	
-	    __value: function __value(value, triggerChange) {
-	        this.__toggle();
-	    },
-	
 	    onRender: function onRender() {
 	        if (this.getValue()) {
-	            this.$el.addClass('editor_checked');
+	            this.$el.addClass(classes.CHECKED);
 	        }
 	    },
 	
@@ -64867,11 +64867,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        this.value = value;
 	        if (this.value) {
-	            this.$el.addClass('editor_checked');
+	            this.$el.addClass(classes.CHECKED);
 	        } else {
-	            this.$el.removeClass('editor_checked');
+	            this.$el.removeClass(classes.CHECKED);
 	        }
+	    },
+	
+	    isEmptyValue: function isEmptyValue() {
+	        return !_.isBoolean(this.getValue());
 	    }
+	}, {
+	    classes: classes
 	});
 	
 	exports.default = Backbone.Form.editors.Boolean;
@@ -65097,14 +65103,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __keypress: function __keypress(event) {
-	        if (event.which == null) {
-	            // IE
-	            return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.keyCode));
-	        } else {
-	            return !!~ALLOWED_CHARS.indexOf(String.fromCharCode(event.charCode));
-	        }
+	        var code = event.which == null /* check for IE */ ? event.keyCode : event.charCode;
+	        return ALLOWED_CHARS.indexOf(String.fromCharCode(code)) !== -1;
 	    },
-	
 	
 	    __start: function __start() {
 	        if (!this.counter) {
@@ -65233,6 +65234,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    setValue: function setValue(value) {
 	        this.__value(value, false, false, false);
+	    },
+	
+	    isEmptyValue: function isEmptyValue() {
+	        return !_.isNumber(this.getValue());
 	    }
 	});
 	
@@ -65351,7 +65356,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    events: {
 	        'change': '__change',
-	        'input': '__input',
+	        'input @ui.textarea': '__input',
 	        'keyup @ui.textarea': '__keyup'
 	    },
 	
@@ -65535,7 +65540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    + container.escapeExpression(((helper = (helper = helpers.placeholder || (depth0 != null ? depth0.placeholder : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"placeholder","hash":{},"data":data}) : helper)))
 	    + "\"\r\n          "
 	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.maxLength : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-	    + " ></textarea>\r\n\r\n";
+	    + "\r\n></textarea>";
 	},"useData":true});
 
 /***/ },
@@ -70558,11 +70563,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __onButtonFocus: function __onButtonFocus() {
-	        this.calendarDropdownView.open();
+	        if (this.model.get('enabled') && !this.model.get('readonly')) {
+	            this.calendarDropdownView.open();
+	        }
 	    },
 	
 	    focus: function focus() {
-	        this.calendarDropdownView.open();
+	        this.calendarDropdownView.button.focus();
 	    },
 	
 	    blur: function blur() {
@@ -70859,6 +70866,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __onFocus: function __onFocus() {
 	        this.trigger('focus');
+	    },
+	
+	    focus: function focus() {
+	        this.ui.dateInput.focus();
 	    }
 	});
 
@@ -71188,11 +71199,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __onButtonFocus: function __onButtonFocus() {
-	        this.dropdownView.open();
+	        if (this.model.get('enabled') && !this.model.get('readonly')) {
+	            this.dropdownView.open();
+	        }
 	    },
 	
 	    focus: function focus() {
-	        this.dropdownView.open();
+	        this.dropdownView.button.focus();
 	    },
 	
 	    blur: function blur() {
@@ -71366,6 +71379,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.model.get('enabled') && !this.model.get('readonly')) {
 	            this.trigger('calendar:open');
 	        }
+	    },
+	
+	    focus: function focus() {
+	        this.ui.input.focus();
 	    }
 	});
 
@@ -71579,6 +71596,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        this.dateView.blur();
 	        this.timeView.blur();
+	    },
+	
+	    onFocus: function onFocus() {
+	        _BaseLayoutEditorView2.default.prototype.onFocus.call(this);
+	    },
+	
+	    onBlur: function onBlur() {
+	        if (_libApi.$.contains(this.el, document.activeElement)) {
+	            return;
+	        }
+	        _BaseLayoutEditorView2.default.prototype.onBlur.call(this);
 	    }
 	});
 	
