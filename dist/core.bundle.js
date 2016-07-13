@@ -70482,6 +70482,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
+	var _libApi = __webpack_require__(40);
+	
 	var _date = __webpack_require__(516);
 	
 	var _date2 = _interopRequireDefault(_date);
@@ -70574,7 +70576,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    blur: function blur() {
 	        this.calendarDropdownView.close();
-	        this.trigger('blur');
+	    },
+	
+	    hasFocus: function hasFocus() {
+	        return _libApi.$.contains(this.el, document.activeElement);
 	    }
 	});
 
@@ -71215,7 +71220,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    blur: function blur() {
 	        this.dropdownView.close();
-	        this.trigger('blur');
+	    },
+	
+	    hasFocus: function hasFocus() {
+	        return _libApi.$.contains(this.el, document.activeElement);
 	    }
 	});
 
@@ -71535,7 +71543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            allowEmptyValue: this.options.allowEmptyValue
 	        });
 	        this.listenTo(this.dateView, 'focus', this.onFocus);
-	        this.listenTo(this.dateView, 'blur', this.onBlur);
+	        this.listenTo(this.dateView, 'blur', this.onDateBlur);
 	
 	        this.timeView = new _TimeView2.default({
 	            model: this.dateTimeModel,
@@ -71543,7 +71551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            allowEmptyValue: this.options.allowEmptyValue
 	        });
 	        this.listenTo(this.timeView, 'focus', this.onFocus);
-	        this.listenTo(this.timeView, 'blur', this.onBlur);
+	        this.listenTo(this.timeView, 'blur', this.onTimeBlur);
 	
 	        this.dateRegion.show(this.dateView);
 	        this.timeRegion.show(this.timeView);
@@ -71612,11 +71620,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _BaseLayoutEditorView2.default.prototype.onFocus.call(this);
 	    },
 	
-	    onBlur: function onBlur() {
-	        if (_libApi.$.contains(this.el, document.activeElement)) {
+	    onDateBlur: function onDateBlur() {
+	        if (this.timeView.hasFocus()) {
 	            return;
 	        }
-	        _BaseLayoutEditorView2.default.prototype.onBlur.call(this);
+	        this.onBlur();
+	    },
+	
+	    onTimeBlur: function onTimeBlur() {
+	        if (this.dateView.hasFocus()) {
+	            return;
+	        }
+	        this.onBlur();
 	    }
 	});
 	
