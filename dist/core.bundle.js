@@ -420,7 +420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.$ = exports.Bluebird = exports.Handlebars = exports.moment = exports.keypress = undefined;
+	exports.Marionette = exports.Backbone = exports._ = exports.$ = exports.Bluebird = exports.Handlebars = exports.moment = exports.keypress = undefined;
 	
 	var _promise = __webpack_require__(41);
 	
@@ -450,13 +450,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var underscoreString = _interopRequireWildcard(_underscore);
 	
-	__webpack_require__(285);
+	var _backbone = __webpack_require__(285);
 	
 	__webpack_require__(290);
 	
 	__webpack_require__(291);
 	
-	__webpack_require__(292);
+	var _backbone2 = __webpack_require__(292);
+	
+	var Marionette_ = _interopRequireWildcard(_backbone2);
 	
 	var _jquery = __webpack_require__(287);
 	
@@ -489,9 +491,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    cancellation: true
 	});
 	
-	_.string = _.str = underscoreString;
+	window._.string = window._.str = underscoreString;
 	
-	Backbone.Associations.EVENTS_NC = true;
+	_backbone.Backbone.Associations.EVENTS_NC = true;
 	
 	_jquery2.default.browser = {
 	    msie: /msie|trident/i.test(navigator.userAgent)
@@ -502,13 +504,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    moment: _moment2.default,
 	    Handlebars: Handlebars_,
 	    Bluebird: _bluebird2.default,
-	    $: _jquery2.default
+	    $: _jquery2.default,
+	    _: window._,
+	    Backbone: _backbone.Backbone,
+	    Marionette: Marionette_
 	};
 	var keypress = exports.keypress = api.keypress;
 	var moment = exports.moment = api.moment;
 	var Handlebars = exports.Handlebars = api.Handlebars;
 	var Bluebird = exports.Bluebird = api.Bluebird;
 	var $ = exports.$ = api.$;
+	var _ = exports._ = window._;
+	var Backbone = exports.Backbone = _backbone.Backbone;
+	var Marionette = exports.Marionette = Marionette_;
 	exports.default = api;
 
 /***/ },
