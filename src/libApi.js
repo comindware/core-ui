@@ -16,10 +16,10 @@ import Bluebird_ from 'bluebird';
 import * as Handlebars_ from 'handlebars';
 import 'underscore';
 import * as underscoreString from 'underscore.string';
-import 'backbone';
+import { Backbone as Backbone_ } from 'backbone';
 import 'backbone-associations';
 import 'backbone.forms';
-import 'backbone.marionette';
+import * as Marionette_ from 'backbone.marionette';
 import $_ from 'jquery';
 import 'jquery.inputmask/dist/jquery.inputmask.bundle';
 import 'jquery.caret';
@@ -37,9 +37,9 @@ Promise.config({
     cancellation: true
 });
 
-_.string = _.str = underscoreString;
+window._.string = window._.str = underscoreString;
 
-Backbone.Associations.EVENTS_NC = true;
+Backbone_.Associations.EVENTS_NC = true;
 
 $_.browser = {
     msie: (/msie|trident/i).test(navigator.userAgent)
@@ -50,11 +50,17 @@ var api = {
     moment: moment_,
     Handlebars: Handlebars_,
     Bluebird: Bluebird_,
-    $: $_
+    $: $_,
+    _: window._,
+    Backbone: Backbone_,
+    Marionette: Marionette_
 };
 export var keypress = api.keypress;
 export var moment = api.moment;
 export var Handlebars = api.Handlebars;
 export var Bluebird = api.Bluebird;
 export var $ = api.$;
+export var _ = window._;
+export var Backbone = Backbone_;
+export var Marionette = Marionette_;
 export default api;
