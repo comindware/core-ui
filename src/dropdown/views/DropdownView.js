@@ -174,21 +174,21 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             viewportHeight = window.innerHeight,
             buttonTopOffset = this.buttonRegion.$el.offset().top,
             buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
-
+        
+        if (this.currentPosition === panelPosition.DOWN && buttonBottomOffset < panelHeight) {
+            this.currentPosition = panelPosition.UP;
+        }
+        
+        if (this.currentPosition === panelPosition.DOWN_OVER && buttonBottomOffset + buttonHeight < panelHeight) {
+            this.currentPosition = panelPosition.UP_OVER;
+        }
+        
         if (this.currentPosition === panelPosition.UP && buttonTopOffset < panelHeight) {
             this.currentPosition = panelPosition.DOWN;
         }
         
         if (this.currentPosition === panelPosition.UP_OVER && buttonTopOffset + buttonHeight < panelHeight) {
             this.currentPosition = panelPosition.DOWN_OVER;
-        }
-        
-        if (this.currentPosition === panelPosition.DOWN && buttonBottomOffset < panelHeight) {
-            this.currentPosition = panelPosition.UP;
-        }
-            
-        if (this.currentPosition === panelPosition.DOWN_OVER && buttonBottomOffset + buttonHeight < panelHeight) {
-            this.currentPosition = panelPosition.UP_OVER;
         }
         
         this.updatePositionClasses();
