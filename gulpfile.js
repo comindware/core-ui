@@ -63,17 +63,22 @@ gulp.task('jsdoc', function() {
         }))
         .pipe(jsdoc.parser({}))
         .pipe(jsdoc.generator('./doc', {
-            "path": "ink-docstrap",
-            "dateFormat": "ddd MMM Do YYYY",
+            "path": `${__dirname}/node_modules/ink-docstrap/template`,
+            "includeDate": false,
             "systemName": "Comindware UI-Core API",
             "footer": "",
-            "copyright": "Comindware Copyright © 2015",
+            "copyright": "Comindware Copyright © 2016",
             "navType": "vertical",
             "theme": "cerulean",
             "linenums": true,
             "collapseSymbols": false,
             "inverseNav": true,
-            "highlightTutorialCode": true
+            "highlightTutorialCode": true,
+            "plugins": ["plugins/markdown"],
+            "markdown": {
+                "parser": "gfm",
+                "hardwrap": true
+            }
         }, {
             "outputSourceFiles": true,
             "outputSourcePath": true,

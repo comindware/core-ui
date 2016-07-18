@@ -57388,20 +57388,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	            buttonTopOffset = this.buttonRegion.$el.offset().top,
 	            buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
 	
-	        if (this.currentPosition === panelPosition.UP && buttonTopOffset < panelHeight) {
-	            this.currentPosition = panelPosition.DOWN;
-	        }
-	
-	        if (this.currentPosition === panelPosition.UP_OVER && buttonTopOffset + buttonHeight < panelHeight) {
-	            this.currentPosition = panelPosition.DOWN_OVER;
-	        }
-	
 	        if (this.currentPosition === panelPosition.DOWN && buttonBottomOffset < panelHeight) {
 	            this.currentPosition = panelPosition.UP;
 	        }
 	
 	        if (this.currentPosition === panelPosition.DOWN_OVER && buttonBottomOffset + buttonHeight < panelHeight) {
 	            this.currentPosition = panelPosition.UP_OVER;
+	        }
+	
+	        if (this.currentPosition === panelPosition.UP && buttonTopOffset < panelHeight) {
+	            this.currentPosition = panelPosition.DOWN;
+	        }
+	
+	        if (this.currentPosition === panelPosition.UP_OVER && buttonTopOffset + buttonHeight < panelHeight) {
+	            this.currentPosition = panelPosition.DOWN_OVER;
 	        }
 	
 	        this.updatePositionClasses();
@@ -73456,6 +73456,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(319);
 	
+	var _libApi = __webpack_require__(40);
+	
 	var _AjaxService = __webpack_require__(556);
 	
 	var _AjaxService2 = _interopRequireDefault(_AjaxService);
@@ -73478,6 +73480,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var initializeThirdParties = function initializeThirdParties() {
+	    _libApi.$.fn.datetimepicker.dates[_LocalizationService2.default.langCode] = {
+	        days: _LocalizationService2.default.get('CORE.FORMATS.DATETIME.DAYSFULL').split(','), //["Sunday", "Monday", ... ]
+	        daysShort: _LocalizationService2.default.get('CORE.FORMATS.DATETIME.DAYSSHORT').split(','), //["Sun", "Mon", ... ],
+	        daysMin: _LocalizationService2.default.get('CORE.FORMATS.DATETIME.DAYSSHORT').split(','),
+	        months: _LocalizationService2.default.get('CORE.FORMATS.DATETIME.MONTHS').split(','), //["January", "February", ... ]
+	        monthsShort: _LocalizationService2.default.get('CORE.FORMATS.DATETIME.MONTHSSHORT').split(','), //["Jan", "Feb", ... ]
+	        today: _LocalizationService2.default.get('CORE.FORMATS.DATETIME.TODAY'),
+	        meridiem: _LocalizationService2.default.get('CORE.FORMATS.DATETIME.MERIDIEM').split(',')
+	    };
+	};
+	
 	exports.default = {
 	    initialize: function initialize(options) {
 	        _utilsApi.helpers.ensureOption(options, 'localizationService');
@@ -73493,6 +73507,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _AjaxService2.default.on('jsApi:error', function () {
 	            _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
 	        });
+	
+	        initializeThirdParties();
 	    }
 	};
 
