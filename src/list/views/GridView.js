@@ -170,7 +170,6 @@ let GridView = Marionette.LayoutView.extend({
         }
         this.headerRegion.show(this.headerView);
         this.contentViewRegion.show(this.listView);
-        this.handleResize();
     },
 
     onRender: function () {
