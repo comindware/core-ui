@@ -5,7 +5,9 @@ before_install: npm install -g gulp-cli
 install: npm install
 script:
   - gulp deploy
-  - gulp test
+  - gulp test:coverage
+after_script:
+  - node ./node_modules/coveralls/bin/coveralls.js < ./reports/report-lconv.info
 deploy:
   provider: npm
   email: me@sburg.net

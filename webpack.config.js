@@ -26,7 +26,7 @@ const pathResolver = {
         return path.resolve.apply(path.resolve, [__dirname, 'src'].concat(_.toArray(arguments)));
     },
     thisDir: function () {
-        return path.resolve(__dirname);
+        return path.resolve.apply(path.resolve, [__dirname].concat(_.toArray(arguments)));
     },
     stylesDir: function () {
         return path.resolve(__dirname, "./resources/styles");
@@ -37,7 +37,8 @@ module.exports = {
     build: function (options) {
         const DEVELOPMENT = options.env === 'development';
         const PRODUCTION = options.env === 'production';
-        const TEST = options.env === 'test';
+        const TEST_COVERAGE = options.env === 'test-coverage';
+        const TEST = options.env === 'test' || TEST_COVERAGE;
 
         const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
         const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
@@ -50,7 +51,7 @@ module.exports = {
                 loaders: [
                     {
                         test: /\.jsx?$/,
-                        exclude: /(node_modules|bower_components)/,
+                        exclude: /(node_modules|bower_components|src\/lib\/)/,
                         loader: 'babel-loader',
                         query: {
                             presets: ['es2015'],
@@ -188,6 +189,21 @@ module.exports = {
 
         if (TEST) {
             webpackConfig.resolve.alias.localizationMap = `${__dirname}/dist/localization/localization.en.json`;
+        }
+
+        if (TEST_COVERAGE) {
+            webpackConfig.module.postLoaders = [
+                {
+                    test: /\.jsx?$/,
+                    exclude: [
+                        pathResolver.thisDir('tests'),
+                        pathResolver.thisDir('node_modules'),
+                        pathResolver.thisDir('bower_components'),
+                        pathResolver.thisDir('src/lib')
+                    ],
+                    loader: 'istanbul-instrumenter'
+                }
+            ];
         }
 
         if (!TEST) {
