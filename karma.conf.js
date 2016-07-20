@@ -11,7 +11,9 @@
 const webpackConfigFactory = require("./webpack.config.js");
 
 module.exports = function (config) {
-    config.set({
+    let TEST_COVERAGE = config.coverage === true;
+
+    let result = {
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
@@ -78,5 +80,26 @@ module.exports = function (config) {
         webpackMiddleware: {
             noInfo: true
         }
-    });
+    };
+
+    if (TEST_COVERAGE) {
+        result.plugins.push('karma-coverage');
+
+        result.reporters.push('coverage');
+
+        result.coverageReporter = {
+            dir : 'reports/',
+            reporters: [
+                { type: 'html', subdir: 'report-html' },
+                { type: 'lcov', subdir: 'report-lcov' },
+                { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
+            ]
+        };
+
+        result.webpack = webpackConfigFactory.build({
+            env: 'test-coverage'
+        });
+    }
+
+    config.set(result);
 };

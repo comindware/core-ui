@@ -48,6 +48,14 @@ gulp.task('test', function (done) {
     }, done).start();
 });
 
+gulp.task('test:coverage', function (done) {
+    new karma.Server({
+        configFile: `${__dirname}/karma.conf.js`,
+        singleRun: true,
+        coverage: true
+    }, done).start();
+});
+
 gulp.task('test:watch', function (done) {
     new karma.Server({
         configFile: `${__dirname}/karma.conf.js`
