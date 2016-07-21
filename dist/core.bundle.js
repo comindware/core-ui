@@ -67782,6 +67782,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    focusElement: null,
 	
+	    attributes: {
+	        tabindex: -1
+	    },
+	
 	    regions: {
 	        dropdownRegion: '.js-dropdown-region'
 	    },
@@ -67895,8 +67899,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    onValueSet: function onValueSet(o) {
 	        this.__value(o.id, true);
-	        this.dropdownView.close();
 	        this.$el.focus();
+	        this.dropdownView.close();
 	    },
 	
 	    __onButtonFocus: function __onButtonFocus() {
