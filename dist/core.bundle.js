@@ -64048,6 +64048,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this;
 	    },
 	
+	    setRequired: function setRequired(required) {
+	        this.$el.toggleClass(classes.REQUIRED, required);
+	    },
+	
 	    __updateEditorState: function __updateEditorState(readonly, enabled) {
 	        this.$el.toggleClass(classes.READONLY, readonly);
 	        this.$el.toggleClass(classes.DISABLED, readonly || !enabled);
