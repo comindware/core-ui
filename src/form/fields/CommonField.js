@@ -107,6 +107,10 @@ export default Backbone.Form.Field.extend({
         return this;
     },
 
+    setRequired: function (required) {
+        this.$el.toggleClass(classes.REQUIRED, required);
+    },
+
     __updateEditorState: function (readonly, enabled) {
         this.$el.toggleClass(classes.READONLY, readonly);
         this.$el.toggleClass(classes.DISABLED, readonly || !enabled);
