@@ -94,6 +94,10 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
 
     focusElement: null,
 
+    attributes: {
+        tabindex: -1
+    },
+
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },
@@ -207,8 +211,8 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
 
     onValueSet: function (o) {
         this.__value(o.id, true);
-        this.dropdownView.close();
         this.$el.focus();
+        this.dropdownView.close();
     },
 
     __onButtonFocus: function () {
