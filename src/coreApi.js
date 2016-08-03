@@ -15,9 +15,8 @@ import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
 import '../resources/styles/form.css';
 import '../resources/styles/dropdown.css';
-import '../resources/styles/pop.out.css';
+import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
-import '../resources/styles/scrollbar.css';
 
 import libApi from './libApi';
 import utilsApi from './utils/utilsApi';

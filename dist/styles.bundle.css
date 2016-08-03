@@ -746,17 +746,14 @@ a:hover {
 /* Empty View */
 .empty-view {
     position: absolute;
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     width: 100%;
     height: 100%;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-justify-content: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: center;
+        justify-content: center;
     font-size: 18px;
     font-weight: 300;
     color: #70787F;
@@ -955,28 +952,22 @@ a:hover {
 .double-panels{
     width: 100%;
     height: 100%;
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-            flex-wrap: nowrap;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -webkit-align-items: stretch;
-        -ms-flex-align: stretch;
-            align-items: stretch;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -ms-flex-pack: justify;
+        justify-content: space-between;
+    -ms-flex-align: stretch;
+        align-items: stretch;
     position: relative;
 }
 
 .double-panels__panel{
-    -webkit-flex: 1 1 auto;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
 }
 
 .double-panels__resizer{
@@ -1553,18 +1544,14 @@ input[type="checkbox"].checkbox {
     min-height: 30px;
     overflow: hidden;
     padding: 0;
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
+    -ms-flex-pack: start;
+        justify-content: flex-start;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     border-bottom:1px solid #182026;
 }
 
@@ -1593,9 +1580,8 @@ input[type="checkbox"].checkbox {
     border: solid 1px #6fb9e7;
     border-radius: 2px;
     background: #e0f1f9;
-    -webkit-flex: 0 0 auto;
-        -ms-flex: 0 0 auto;
-            flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
 }
 
 .editor_disabled .bubbles__i,
@@ -1626,9 +1612,8 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles__form {
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
+    -ms-flex-positive: 1;
+        flex-grow: 1;
     max-width: 100%;
     margin: 0;
     padding: 0;
@@ -2208,41 +2193,32 @@ input[type="checkbox"].checkbox {
     max-width: 100%;
     padding: 0;
     position: relative;
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -ms-flex-direction: column;
+        flex-direction: column;
 }
 
 .dd-list__filter {
     opacity: 1;
-    -webkit-flex: 0 0 auto;
-        -ms-flex: 0 0 auto;
-            flex: 0 0 auto
+    -ms-flex: 0 0 auto;
+        flex: 0 0 auto
 }
 
 .dd-list__list {
     position: relative;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-    display: -webkit-flex;
+    -ms-flex-positive: 1;
+        flex-grow: 1;
     display: -ms-flexbox;
     display: flex;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    -webkit-align-items: stretch;
-        -ms-flex-align: stretch;
-            align-items: stretch;
-    -webkit-align-content: stretch;
-        -ms-flex-line-pack: stretch;
-            align-content: stretch;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-pack: start;
+        justify-content: flex-start;
+    -ms-flex-align: stretch;
+        align-items: stretch;
+    -ms-flex-line-pack: stretch;
+        align-content: stretch;
 }
 
 .dd-list__list_reference {
@@ -2265,9 +2241,8 @@ input[type="checkbox"].checkbox {
 
 .dd-list__wrp {
     height: 100%;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
+    -ms-flex-positive: 1;
+        flex-grow: 1;
 }
 
 .dd-list__scrollbar {
@@ -2321,18 +2296,14 @@ input[type="checkbox"].checkbox {
     border-top: 1px solid #dee3e8;
     background-color: #fff;
     cursor: pointer;
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-justify-content: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-align-content: center;
-        -ms-flex-line-pack: center;
-            align-content: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
 }
 
 .reference-btn{
@@ -2987,6 +2958,7 @@ input[type="checkbox"].checkbox {
     background: #fff;
     z-index: 555;
 }/* List/Grid CSS */
+
 .list-item {
     height: 34px;
     padding: 0 5px;
@@ -3280,7 +3252,8 @@ input[type="checkbox"].checkbox {
     margin-top: 4px;
 }
 
-/*  ---------------- Stepan's Scroller -----------------*/
+/* Scrollbar */
+
 .scrollbar-region{
     position: absolute;
     width: 10px;
@@ -3316,5 +3289,4 @@ input[type="checkbox"].checkbox {
     background-color: #A0A0A0;
 }
 
-/* End Stepan's Scroller */
 /*# sourceMappingURL=styles.bundle.css.map*/
