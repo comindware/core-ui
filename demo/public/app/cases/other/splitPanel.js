@@ -5,13 +5,13 @@ define([ 'comindware/core', 'demoPage/views/CanvasView' ], function (core, Canva
         // Important layout note: SplitPanelView expect that region element has computed size != 0.
 
         var Panel1View = Marionette.ItemView.extend({
-            template: Handlebars.compile('<div>Panel 1</div>'),
-            className: 'demo-cases__other__split-panel__panel'
+            template: Handlebars.compile('Panel 1'),
+            className: 'demo-split-panel demo-split-panel_left'
         });
 
         var Panel2View = Marionette.ItemView.extend({
-            template: Handlebars.compile('<div>Panel 2</div>'),
-            className: 'demo-cases__other__split-panel__panel'
+            template: Handlebars.compile('Panel 2'),
+            className: 'demo-split-panel demo-split-panel_right'
         });
 
         var MySplitPanel = core.views.SplitPanelView.extend({

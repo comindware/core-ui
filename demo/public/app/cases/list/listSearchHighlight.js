@@ -36,7 +36,7 @@ define([
         // - you MUST implement ListItemViewBehavior
         // - [NEW] you MUST implement onHighlighted/onUnhighlighted methods to support text highlighting while searching
         var ListItemView = Marionette.ItemView.extend({
-            template: Handlebars.compile('<div class="js-menu-select-item menu-bselect__item"><span class="js-title">{{title}}</span></div>'),
+            template: Handlebars.compile('<div class="dd-list__i"><span class="js-title">{{title}}</span></div>'),
 
             ui: {
                 title: '.js-title'

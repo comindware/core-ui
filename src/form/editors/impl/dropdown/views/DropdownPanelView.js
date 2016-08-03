@@ -28,7 +28,7 @@ export default Marionette.LayoutView.extend({
         this.reqres = options.reqres;
     },
 
-    className: 'dropdown-panel-view',
+    className: 'dd-list',
 
     template: template,
 
@@ -56,7 +56,7 @@ export default Marionette.LayoutView.extend({
 
     onRender: function () {
         if (this.options.enableSearch) {
-            this.$el.addClass('dropdown-panel-view_search');
+            this.$el.addClass('dd-list_search');
         }
     },
 

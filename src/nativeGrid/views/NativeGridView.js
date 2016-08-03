@@ -57,7 +57,7 @@ export default Marionette.LayoutView.extend({
         headerRegion: '.js-native-grid-header-region'
     },
 
-    className: 'dev-native-grid',
+    className: 'native-grid',
 
     initialize: function (options) {
         helpers.ensureOption(options, 'collection');

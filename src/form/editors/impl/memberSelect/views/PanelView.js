@@ -69,7 +69,9 @@ export default Marionette.LayoutView.extend({
                 childViewOptions: {
                     reqres: this.reqres
                 },
-                childHeight: config.CHILD_HEIGHT
+                childHeight: config.CHILD_HEIGHT,
+                height: 'auto',
+                maxRows: 10
             }
         });
 

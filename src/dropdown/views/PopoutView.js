@@ -20,8 +20,8 @@ const classes = {
     OPEN: 'open',
     DIRECTION_UP: 'popout__up',
     DIRECTION_DOWN: 'popout__down',
-    FLOW_LEFT: 'dev-popout-flow-left',
-    FLOW_RIGHT: 'dev-popout-flow-right',
+    FLOW_LEFT: 'popout__left',
+    FLOW_RIGHT: 'popout__right',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
     DEFAULT_ANCHOR: 'anchor'

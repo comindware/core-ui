@@ -12,8 +12,6 @@ import 'babel-polyfill';
 
 import '../../dist/styles.bundle.css';
 import 'styles/demo.css';
-import 'styles/master.css';
-import 'styles/master-new.css';
 import 'lib/prism/prism.css';
 
 import Application from './Application';

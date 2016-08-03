@@ -29,7 +29,7 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    className: 'field-user btn-wrp',
+    className: 'popout-field-user',
 
     ui: {
         text: '.js-text',
