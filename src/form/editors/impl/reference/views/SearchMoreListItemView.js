@@ -16,7 +16,7 @@ export default Marionette.ItemView.extend({
         this.reqres = options.reqres;
     },
 
-    className: 'dev-reference-editor__dropdown-view__search-more-list-item-view',
+    className: 'reference-btn-more',
 
     template: template,
 

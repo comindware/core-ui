@@ -28,7 +28,7 @@ define([
             scrollbarRegion: '.js-scrollbar-region'
         },
 
-        className: 'dev-demo-core__list-canvas__view_search',
+        className: 'demo-list-canvas__view_search',
 
         onShow: function () {
             this.contentRegion.show(this.options.content);

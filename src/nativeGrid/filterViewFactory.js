@@ -14,7 +14,7 @@ export default {
     getFilterViewByType: function (type) {
         return Marionette.ItemView.extend({
             template: Handlebars.compile('<div class="innerDiv">PopoutView</div>'),
-            className: 'dev-filter-popout'
+            className: 'native-filter-popout'
         });
     }
 };

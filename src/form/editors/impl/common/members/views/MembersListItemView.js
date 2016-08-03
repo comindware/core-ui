@@ -23,6 +23,8 @@ export default Marionette.ItemView.extend({
         name: '.js-name'
     },
 
+    className: 'dd-list__i',
+
     behaviors: {
         ListItemViewBehavior: {
             behaviorClass: list.views.behaviors.ListItemViewBehavior

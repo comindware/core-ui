@@ -25,7 +25,7 @@ export default Marionette.LayoutView.extend({
 
     template: template,
 
-    className: 'dev-members-container',
+    className: 'dd-list',
 
     regions: {
         listRegion: '.js-list-region',

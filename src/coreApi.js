@@ -11,16 +11,13 @@
 "use strict";
 
 import '../resources/styles/bootstrap-datetimepicker.css';
-import '../resources/styles/common.css';
-import '../resources/styles/core.css';
-import '../resources/styles/dev.css';
-import '../resources/styles/dropdown.css';
 import '../resources/styles/fonts.css';
+import '../resources/styles/common.css';
 import '../resources/styles/form.css';
-import '../resources/styles/list.css';
+import '../resources/styles/dropdown.css';
 import '../resources/styles/pop.out.css';
+import '../resources/styles/list.css';
 import '../resources/styles/scrollbar.css';
-import '../resources/styles/splitPanel.css';
 
 import libApi from './libApi';
 import utilsApi from './utils/utilsApi';

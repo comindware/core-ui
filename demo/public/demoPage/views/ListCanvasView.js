@@ -27,7 +27,7 @@ define([
             scrollbarRegion: '.js-scrollbar-region'
         },
 
-        className: 'dev-demo-core__list-canvas__view',
+        className: 'demo-list-canvas__view',
 
         onShow: function () {
             this.contentRegion.show(this.options.content);

@@ -41,7 +41,7 @@ export default Marionette.LayoutView.extend({
 
         this.listenTo(GlobalEventService, 'resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
         this.on('render', function () {
-            this.$el.addClass('dev-core__double-column-wrp');
+            this.$el.addClass('double-panels');
         }.bind(this));
         this.on('show', function () {
             this.__handleWindowResize();

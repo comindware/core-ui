@@ -28,7 +28,7 @@ export default Marionette.ItemView.extend({
         'click': '__onClick'
     },
 
-    className: 'add-new-reference-button',
+    className: 'reference-btn',
 
     __onClick: function() {
         this.reqres.request('add:new:item');
