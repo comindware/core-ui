@@ -1,9 +1,13 @@
 language: node_js
 node_js:
-- '4.1'
+  - '4.1'
 before_install: npm install -g gulp-cli
 install: npm install
-script: gulp production
+script:
+  - gulp deploy
+  - gulp test:coverage
+after_script:
+  - node ./node_modules/coveralls/bin/coveralls.js -v < ./reports/report-lcov/lcov.info
 deploy:
   provider: npm
   email: me@sburg.net

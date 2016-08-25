@@ -1,0 +1,22 @@
+<span class="js-anchor">
+    {{#with member}}
+      {{#if avatarUrl}}
+       <span style="background-image: url({{avatarUrl}});" class="js-avatar member-icon"></span>
+      {{else}}
+      <span class="member-icon member-icon_abr">
+        {{abbreviation}}
+      </span>
+      {{/if}}
+    {{else}}
+    <span class="member-icon member-icon_empty">
+    </span>
+    {{/with}}
+</span>
+<span class="js-text member-text">
+    {{#with member}}
+    {{name}}
+    {{else}}
+      <span class="member-text__empty">{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>
+    {{/with}}
+    <span class="js-clear-button btn-remove btn-remove_absolute"></span>
+</span>

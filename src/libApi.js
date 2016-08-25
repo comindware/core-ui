@@ -1,0 +1,66 @@
+﻿/**
+ * Developer: Stepan Burguchev
+ * Date: 7/21/2014
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
+"use strict";
+
+import moment_ from 'moment';
+import 'moment/locale/ru';
+import 'moment/locale/en-gb';
+import 'moment/locale/de';
+import Bluebird_ from 'bluebird';
+import * as Handlebars_ from 'handlebars';
+import 'underscore';
+import * as underscoreString from 'underscore.string';
+import { Backbone as Backbone_ } from 'backbone';
+import 'backbone-associations';
+import 'backbone.forms';
+import * as Marionette_ from 'backbone.marionette';
+import $_ from 'jquery';
+import 'jquery.inputmask/dist/jquery.inputmask.bundle';
+import 'jquery.caret';
+import 'jquery-mousewheel';
+import 'jquery-autosize';
+import * as keypress_ from 'keypress';
+import 'bootstrap-datetime-picker';
+
+// Replacing ES6 promise with bluebird
+require('babel-runtime/core-js/promise').default = Bluebird_;
+
+Promise.config({
+    warnings: false,
+    longStackTraces: true,
+    cancellation: true
+});
+
+window._.string = window._.str = underscoreString;
+
+Backbone_.Associations.EVENTS_NC = true;
+
+$_.browser = {
+    msie: (/msie|trident/i).test(navigator.userAgent)
+};
+
+var api = {
+    keypress: keypress_,
+    moment: moment_,
+    Handlebars: Handlebars_,
+    Bluebird: Bluebird_,
+    $: $_,
+    _: window._,
+    Backbone: Backbone_,
+    Marionette: Marionette_
+};
+export var keypress = api.keypress;
+export var moment = api.moment;
+export var Handlebars = api.Handlebars;
+export var Bluebird = api.Bluebird;
+export var $ = api.$;
+export var _ = window._;
+export var Backbone = Backbone_;
+export var Marionette = Marionette_;
+export default api;

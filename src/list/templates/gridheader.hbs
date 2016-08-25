@@ -1,0 +1,8 @@
+{{#each columns}}
+    <div class="grid-header-column">
+        <div class="grid-header-column-content-view"></div>
+        {{#unless @last}}
+            <div class="grid-header-dragger"></div>
+        {{/unless}}
+    </div>
+{{/each}}

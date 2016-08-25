@@ -89,14 +89,18 @@
 
   // Custom Globals
   "globals"       : {
-    "Backbone": false, // false = readonly
+    "module": false,
+    "exports": false,
+    "expect": false,
+    "jasmine": false,
+    "setFixtures": false,
+    "Backbone": false,
+    // false = readonly
     "Marionette": false,
     "$": false,
     "_": false,
     "require": false,
     "define": false,
-    "Promise": false,
-    // Comindware globals
-    "Localizer": false
-  }        // additional predefined global variables
+    "Promise": false
+  }
 }

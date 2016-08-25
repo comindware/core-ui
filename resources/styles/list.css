@@ -1,4 +1,5 @@
 /* List/Grid CSS */
+
 .list-item {
     height: 34px;
     padding: 0 5px;
@@ -200,4 +201,132 @@
 
 .has-filter .filter-sort-btn{
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDowRUI1NjNGQjY2QzQxMUU1QjhGNzk4MkUwRTRFQTFCRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDowRUI1NjNGQzY2QzQxMUU1QjhGNzk4MkUwRTRFQTFCRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjBFQjU2M0Y5NjZDNDExRTVCOEY3OTgyRTBFNEVBMUJFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjBFQjU2M0ZBNjZDNDExRTVCOEY3OTgyRTBFNEVBMUJFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+JtOrVwAAANlJREFUeNpieajKgAxEgLgIiH2AWA0qdgOINwHxJCB+A1PIiKQxGIjnAjE/A3bwCYiTgHgtiMOEpGk1Hk0gwAdVEwyzURRI34FKEANANquCbMxF0+QIMhANO6DZXADS6IdmYj0WWxrQ+D4gjRpogg5oNtij8UFAnQmHP+rx2AYCv5ig8cSAxVZsbBi4xwSNXAYibEYGW0HRIQZk3MYSHQ04nAmPjlfQFPGfQEgyQNWA1L6CBQ4oGYUB8Wc8zgbJhcKSHCOORO4LCnJQ6AHxLZCfgHgiciIHCDAA3jQr+fWlIaEAAAAASUVORK5CYII=');
+}
+
+
+/* Native Grid */
+
+.native-grid {
+    width: 100%;
+    height: 100%;
+   position: relative;
+}
+
+.native-grid__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 51px;
+    border-bottom: 1px solid #DFE4E8;
+    border-collapse: collapse;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.native-grid__header .grid-header {
+    display: block;
+    position: relative;
+    height: inherit;
+    width: 100%;
+    overflow: hidden;
+}
+
+.native-grid__header .grid-header-column {
+    float: left;
+    display: inline-block;
+    width: auto;
+    position: relative;
+}
+
+
+.native-grid__list {
+    position: absolute;
+    top: 51px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow-x: auto;
+}
+
+.native-grid__list .visible-collection {
+    display: block;
+    width: 100%;
+    border-collapse: collapse;
+    position: absolute;
+}
+
+.native-grid__list .grid-row {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+
+.native-grid__list .grid-cell {
+    white-space: nowrap;
+    display: inline-block;
+    box-sizing: border-box;
+    float: left;
+}
+
+
+.native-grid__list .padding {
+    display: inline-block;
+    float: left;
+    height: 1px;
+}
+
+
+.native-grid__popout {
+    position: absolute;
+    z-index: 4;
+}
+.native-filter-popout {
+    width: 150px;
+    height: 60px;
+    background-color: #FFFFFF;
+    border: 1px solid #c2c2c2;
+    box-shadow: 0 0 8px rgba(0,0,0,.2);
+    z-index: 4;
+    position: fixed;
+    margin-left: -14px;
+    margin-top: 4px;
+}
+
+/* Scrollbar */
+
+.scrollbar-region{
+    position: absolute;
+    width: 10px;
+    right: 0;
+    bottom: 0;
+    top: 46px;
+}
+.scrollbar {
+    height: 100%;
+    background-color: #fcfcfc;
+    z-index: 1;
+    position: absolute;
+    width: 12px;
+}
+.dragger {
+    position: relative;
+    top: 0;
+    height: 10%;
+    background-color: #d9d7d7;
+    opacity: 0.3;
+}
+
+.scrollbar.hover {
+    background-color: #F0F0F0;
+}
+
+.scrollbar.hover .dragger {
+    background-color: #B9B9B9;
+    opacity: 1;
+}
+
+.scrollbar .dragger.active {
+    background-color: #A0A0A0;
 }

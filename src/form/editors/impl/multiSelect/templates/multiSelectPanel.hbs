@@ -1,0 +1,12 @@
+<div class="multiselect-panel__btn multiselect-panel__btn_top">
+    <div class="js-select-all multiselect-panel-btn multiselect-panel-btn_selectall">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>
+</div>
+<div class="js-list multiselect-panel__list"></div>
+<div class="multiselect-panel__btn multiselect-panel__btn_bottom">
+{{#if explicitApply}}
+    <div class="js-cancel multiselect-panel-btn multiselect-panel-btn_cancel">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>
+    <div class="js-apply btn multiselect-panel-btn multiselect-panel-btn_apply">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>
+{{else}}
+    <div class="js-close btn multiselect-panel-btn multiselect-panel-btn_cancel">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>
+{{/if}}
+</div>
