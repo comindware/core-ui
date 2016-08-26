@@ -40,12 +40,6 @@ export default {
         LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
 
-        AjaxService.on('jsApi:error', function () {
-            MessageService.error(
-                LocalizationService.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'),
-                LocalizationService.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
-        });
-
         initializeThirdParties();
     }
 };
