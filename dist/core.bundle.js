@@ -73445,10 +73445,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _LocalizationService2.default.initialize(options.localizationService);
 	        _AjaxService2.default.load(options.ajaxService);
 	
-	        _AjaxService2.default.on('jsApi:error', function () {
-	            _MessageService2.default.error(_LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.DESCRIPTION'), _LocalizationService2.default.get('CORE.BOOTSTRAPPER.ERRORS.DEFAULT.TITLE'));
-	        });
-	
 	        initializeThirdParties();
 	    }
 	};
