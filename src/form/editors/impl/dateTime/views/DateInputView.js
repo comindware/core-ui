@@ -17,6 +17,7 @@ export default Marionette.ItemView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'allowEmptyValue');
+        helpers.ensureOption(options, 'displayDateFormat');
         this.editDateFormat = dateHelpers.getDateEditFormat();
     },
 
@@ -111,7 +112,7 @@ export default Marionette.ItemView.extend({
     updateDisplayValue: function () {
         let formattedDisplayValue = this.model.get('value') === null ?
             '' :
-            dateHelpers.getDisplayDate(moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
+            dateHelpers.getDisplayDate(moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')), this.options.displayDateFormat);
         this.ui.dateInput.val(formattedDisplayValue);
     },
 

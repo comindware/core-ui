@@ -14,7 +14,8 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 
 const defaultOptions = {
-    allowEmptyValue: true
+    allowEmptyValue: true,
+    displayDateFormat: null
 };
 
 /**
@@ -45,7 +46,8 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
 
         this.dateView = new DateView({
             model: this.dateModel,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            displayDateFormat: this.options.displayDateFormat
         });
         this.listenTo(this.dateView, 'focus', this.onFocus);
         this.listenTo(this.dateView, 'blur', this.onBlur);
