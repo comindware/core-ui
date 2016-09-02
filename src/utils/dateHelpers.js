@@ -212,16 +212,16 @@ export default /** @lends module:core.utils.dateHelpers */ {
         }
     },
 
-    getDisplayDate: function (val, format) {
-        var lang = LocalizationService.langCode;
-        format = format || dateTimeFormats[lang].condensedDate.general;
+    getDisplayDate: function (val) {
+        var lang = LocalizationService.langCode,
+            format = dateTimeFormats[lang].condensedDate.general;
 
         return val ? moment(val).locale(lang).format(format) : '';
     },
 
-    getDisplayTime: function (time, format) {
-        var lang = LocalizationService.langCode;
-        format = format || dateTimeFormats[lang].fullDateShortTime.time;
+    getDisplayTime: function (time) {
+        var lang = LocalizationService.langCode,
+            format = dateTimeFormats[lang].fullDateShortTime.time;
 
         return time.locale(lang).format(format);
     },

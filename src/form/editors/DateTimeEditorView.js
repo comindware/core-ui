@@ -16,7 +16,8 @@ import TimeView from './impl/dateTime/views/TimeView';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    timezoneOffset: -new Date().getTimezoneOffset()
+    timezoneOffset: -new Date().getTimezoneOffset(),
+    dateDisplayFormat: null
 };
 
 /**

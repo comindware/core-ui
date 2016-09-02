@@ -19,7 +19,7 @@ export default Marionette.LayoutView.extend({
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
         this.allowEmptyValue = this.getOption('allowEmptyValue');
-        this.displayDateFormat = this.getOption('displayDateFormat');
+        this.dateDisplayFormat = this.getOption('dateDisplayFormat');
     },
 
     template: template,
@@ -38,7 +38,7 @@ export default Marionette.LayoutView.extend({
                 timezoneOffset: this.timezoneOffset,
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.allowEmptyValue,
-                displayDateFormat: this.displayDateFormat
+                dateDisplayFormat: this.dateDisplayFormat
             },
             panelView: PanelView,
             panelViewOptions: {
