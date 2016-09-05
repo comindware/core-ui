@@ -17,7 +17,8 @@ import TimeView from './impl/dateTime/views/TimeView';
 const defaultOptions = {
     allowEmptyValue: true,
     timezoneOffset: -new Date().getTimezoneOffset(),
-    dateDisplayFormat: null
+    dateDisplayFormat: null,
+    timeDisplayFormat: null
 };
 
 /**
@@ -31,6 +32,8 @@ const defaultOptions = {
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
  * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
+ * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
+ * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * */
 Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize: function(options) {
@@ -93,7 +96,8 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
             model: this.dateTimeModel,
             timezoneOffset: this.options.timezoneOffset,
             preserveTime: true,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            dateDisplayFormat: this.options.dateDisplayFormat
         });
         this.listenTo(this.dateView, 'focus', this.onFocus);
         this.listenTo(this.dateView, 'blur', this.onDateBlur);
@@ -101,7 +105,8 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
         this.timeView = new TimeView({
             model: this.dateTimeModel,
             timezoneOffset: this.options.timezoneOffset,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            timeDisplayFormat: this.options.timeDisplayFormat
         });
         this.listenTo(this.timeView, 'focus', this.onFocus);
         this.listenTo(this.timeView, 'blur', this.onTimeBlur);

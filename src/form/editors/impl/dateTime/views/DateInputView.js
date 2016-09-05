@@ -110,11 +110,17 @@ export default Marionette.ItemView.extend({
     },
 
     updateDisplayValue: function () {
-        let formattedDisplayValue = this.model.get('value') === null ?
-            '' :
-            this.options.dateDisplayFormat ?
-                moment(this.model.get('value')).locale(LocalizationService.langCode).format(this.options.dateDisplayFormat) :
-                dateHelpers.getDisplayDate(moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
+        let value = this.model.get('value');
+        let formattedDisplayValue;
+        if (value === null) {
+            formattedDisplayValue = '';
+        } else {
+            if (this.options.dateDisplayFormat) {
+                formattedDisplayValue = moment(this.model.get('value')).locale(LocalizationService.langCode).format(this.options.dateDisplayFormat)
+            } else {
+                formattedDisplayValue = dateHelpers.getDisplayDate(moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
+            }
+        }
         this.ui.dateInput.val(formattedDisplayValue);
     },
 

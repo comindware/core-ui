@@ -14,7 +14,8 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
 
 const defaultOptions = {
-    allowEmptyValue: true
+    allowEmptyValue: true,
+    timeDisplayFormat: null
 };
 
 /**
@@ -26,6 +27,7 @@ const defaultOptions = {
  * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
+ * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * */
 Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
     initialize: function (options) {
@@ -45,7 +47,8 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
 
         this.timeView = new TimeView({
             model: this.timeModel,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            timeDisplayFormat: this.options.timeDisplayFormat
         });
         this.listenTo(this.timeView, 'focus', this.onFocus);
         this.listenTo(this.timeView, 'blur', this.onBlur);
