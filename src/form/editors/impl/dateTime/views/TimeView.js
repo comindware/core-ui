@@ -18,6 +18,7 @@ export default Marionette.LayoutView.extend({
     initialize: function () {
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.allowEmptyValue = this.getOption('allowEmptyValue');
+        this.timeDisplayFormat = this.getOption('timeDisplayFormat');
     },
 
     className: 'time-view',
@@ -49,7 +50,8 @@ export default Marionette.LayoutView.extend({
             buttonViewOptions: {
                 model: this.model,
                 timezoneOffset: this.timezoneOffset,
-                allowEmptyValue: this.allowEmptyValue
+                allowEmptyValue: this.allowEmptyValue,
+                timeDisplayFormat: this.timeDisplayFormat
             },
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(timeArray),
