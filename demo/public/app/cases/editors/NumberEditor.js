@@ -13,7 +13,8 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 autocommit: true,
                 min: null,
                 max: null,
-                allowFloat: true
+                allowFloat: true,
+                format: null
             }),
             presentation: '{{numberValue}}'
         });

@@ -27,6 +27,7 @@ import 'jquery-mousewheel';
 import 'jquery-autosize';
 import * as keypress_ from 'keypress';
 import 'bootstrap-datetime-picker';
+import numeral_ from 'numeral';
 
 // Replacing ES6 promise with bluebird
 require('babel-runtime/core-js/promise').default = Bluebird_;
@@ -53,7 +54,8 @@ var api = {
     $: $_,
     _: window._,
     Backbone: Backbone_,
-    Marionette: Marionette_
+    Marionette: Marionette_,
+    numeral: numeral_
 };
 export var keypress = api.keypress;
 export var moment = api.moment;
@@ -63,4 +65,5 @@ export var $ = api.$;
 export var _ = window._;
 export var Backbone = Backbone_;
 export var Marionette = Marionette_;
+export var numeral = api.numeral;
 export default api;

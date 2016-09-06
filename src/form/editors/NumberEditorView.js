@@ -12,6 +12,7 @@ import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import '../../libApi';
 import { keyCode } from '../../utils/utilsApi';
+import { numeral } from '../../libApi';
 
 const changeMode = {
     keydown: 'keydown',
@@ -28,7 +29,8 @@ const defaultOptions = {
     max: null,
     min: 0,
     allowFloat: false,
-    changeMode: changeMode.blur
+    changeMode: changeMode.blur,
+    format: null
 };
 
 const allowedKeys = [
@@ -69,6 +71,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
+ * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * */
 Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
     initialize: function (options) {
@@ -249,13 +252,18 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
         if (value === this.value && !force) {
             return;
         }
-        var parsed;
+        var parsed,
+            formattedValue = null;
         if (value !== "" && value !== null) {
             parsed = this.__parse(value);
             if (parsed !== null) {
                 value = this.__adjustRange(parsed);
                 if (!this.options.allowFloat) {
                     value = Math.floor(value);
+                }
+                if (this.options.format) {
+                    formattedValue = numeral(value).format(this.options.format);
+                    value = numeral().unformat(formattedValue);
                 }
             } else {
                 return;
@@ -266,7 +274,11 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
 
         this.value = value;
         if (!suppressRender) {
-            this.ui.input.val(value);
+            if (formattedValue) {
+                this.ui.input.val(formattedValue);
+            } else {
+                this.ui.input.val(value);
+            }
         }
         if (triggerChange) {
             this.__triggerChange();
@@ -275,8 +287,10 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
 
     __parse: function (val) {
         if (typeof val === "string" && val !== "") {
-        	val = val.replace(',', '.');
-            val = Number(val);
+            if (numeral.languageData().delimiters.decimal !== '.') {
+                val = val.replace('.', numeral.languageData().delimiters.decimal);
+            }
+            val = numeral().unformat(val);
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;
             } else if (val === Number.NEGATIVE_INFINITY) {
