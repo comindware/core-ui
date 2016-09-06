@@ -14,7 +14,8 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 
 const defaultOptions = {
-    allowEmptyValue: true
+    allowEmptyValue: true,
+    dateDisplayFormat: null
 };
 
 /**
@@ -26,6 +27,7 @@ const defaultOptions = {
  * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
+ * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * */
 Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
     initialize: function (options) {
@@ -45,7 +47,8 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
 
         this.dateView = new DateView({
             model: this.dateModel,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            dateDisplayFormat: this.options.dateDisplayFormat
         });
         this.listenTo(this.dateView, 'focus', this.onFocus);
         this.listenTo(this.dateView, 'blur', this.onBlur);
