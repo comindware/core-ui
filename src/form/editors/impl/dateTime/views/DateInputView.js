@@ -17,7 +17,6 @@ export default Marionette.ItemView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'allowEmptyValue');
-        helpers.ensureOption(options, 'dateDisplayFormat');
         this.editDateFormat = dateHelpers.getDateEditFormat();
     },
 
