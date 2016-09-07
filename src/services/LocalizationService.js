@@ -8,8 +8,15 @@
 
 "use strict";
 
-import { moment } from '../libApi';
+import { moment, numeral } from '../libApi';
 import { helpers } from '../utils/utilsApi';
+import numeralRu from 'numeral/languages/ru';
+import numeralEn from 'numeral/languages/en-gb';
+import numeralDe from 'numeral/languages/de';
+
+numeral.language('en', numeralEn);
+numeral.language('de', numeralDe);
+numeral.language('ru', numeralRu);
 
 let global = window;
 let defaultLangCode = 'en';
@@ -25,6 +32,7 @@ global.Localizer = {
         this.warningAsError = options.warningAsError;
 
         moment.locale(this.langCode);
+        numeral.language(this.langCode);
     },
 
     get: function (locId) {
