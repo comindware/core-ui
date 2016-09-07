@@ -9,8 +9,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
             editor: new core.form.editors.DateEditor({
                 model: model,
                 key: 'dateValue',
-                autocommit: true,
-                dateDisplayFormat: null
+                autocommit: true
             }),
             presentation: "{{#isNull dateValue}}null{{else}}'{{dateValue}}'{{/isNull}}"
         });
