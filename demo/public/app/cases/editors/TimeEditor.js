@@ -9,8 +9,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
             editor: new core.form.editors.TimeEditor({
                 model: model,
                 key: 'timeValue',
-                autocommit: true,
-                timeDisplayFormat: null
+                autocommit: true
             }),
             presentation: "{{#isNull timeValue}}null{{else}}'{{timeValue}}'{{/isNull}}"
         });
