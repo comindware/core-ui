@@ -40,7 +40,6 @@ import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAv
 import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
 import DataSourceReferenceEditorController from './editors/impl/reference/controllers/DataSourceReferenceEditorController';
 import BaseReferenceEditorController from './editors/impl/reference/controllers/BaseReferenceEditorController';
-import DataSourceReferenceCollection from './editors/impl/reference/collections/DataSourceReferenceCollection';
 import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
 import SearchMoreModel from './editors/impl/reference/models/SearchMoreModel';
@@ -127,8 +126,7 @@ var api = /** @lends module:core.form */ {
                 DataSourceReferenceEditorController: DataSourceReferenceEditorController
             },
             collections: {
-                BaseReferenceCollection: BaseReferenceCollection,
-                DataSourceReferenceCollection: DataSourceReferenceCollection
+                BaseReferenceCollection: BaseReferenceCollection
             },
             models: {
                 DefaultReferenceModel: DefaultReferenceModel,
