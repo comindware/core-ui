@@ -66,7 +66,9 @@ export default Marionette.LayoutView.extend({
         this.$el.find('.' + className).remove();
 
         this.popupNumber--;
-        this.__fadePopup(false, this.popupNumber);
+        if (this.popupNumber >= 0) {
+            this.__fadePopup(false, this.popupNumber);
+        }
     },
 
     fadeIn: function (options) {
