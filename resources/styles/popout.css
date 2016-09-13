@@ -375,3 +375,23 @@
     background: #fff;
     z-index: 555;
 }
+
+.fadingPanel {
+    background-color: #023f67;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+}
+
+.fadingPanel_open {
+    opacity: .5;
+    display: block;
+}
+
+.dev-popout-fade div {
+    z-index: 99
+}
