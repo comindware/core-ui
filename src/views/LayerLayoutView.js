@@ -15,7 +15,7 @@ import template from '../templates/layerLayout.hbs';
 let classes = {
     HIDDEN: 'hidden',
     POPUP_REGION: 'js-popup-region-',
-    POPUP_FADE: 'dev-popout-fade'
+    POPUP_FADE: 'popup-fade'
 };
 
 export default Marionette.LayoutView.extend({
