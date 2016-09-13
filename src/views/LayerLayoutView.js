@@ -14,12 +14,13 @@ import template from '../templates/layerLayout.hbs';
 
 let classes = {
     HIDDEN: 'hidden',
-    POPUP_REGION: 'js-popup-region-'
+    POPUP_REGION: 'js-popup-region-',
+    POPUP_FADE: 'dev-popout-fade'
 };
 
 export default Marionette.LayoutView.extend({
     initialize: function () {
-        this.popupNumber = 0;
+        this.popupNumber = -1;
     },
 
     template: template,
@@ -39,29 +40,33 @@ export default Marionette.LayoutView.extend({
     },
 
     showPopup: function (view) {
-        if (this.popupNumber === 0) {
+        if (this.popupNumber < 0) {
             this.fadeIn({
                 fadeOut: false
             });
+        } else {
+            this.__fadePopup(true, this.popupNumber);
         }
+        this.popupNumber++;
         var className = classes.POPUP_REGION + this.popupNumber;
         this.$el.append($('<div></div>').addClass(className));
         this.addRegion(className, '.' + className);
         this.getRegion(className).show(view);
-        this.popupNumber++;
     },
 
     closePopup: function () {
-        if (this.popupNumber <= 0) {
+        if (this.popupNumber < 0) {
             return;
         }
-        this.popupNumber--;
         if (this.popupNumber === 0) {
             this.fadeOut();
         }
         var className = classes.POPUP_REGION + this.popupNumber;
         this.removeRegion(className);
         this.$el.find('.' + className).remove();
+
+        this.popupNumber--;
+        this.__fadePopup(false, this.popupNumber);
     },
 
     fadeIn: function (options) {
@@ -78,5 +83,9 @@ export default Marionette.LayoutView.extend({
         if (!options || options.fadeOut !== false) {
             this.fadeOut();
         }
+    },
+    
+    __fadePopup: function (fadeIn, popupNumber) {
+        this.$el.find('.' + classes.POPUP_REGION + popupNumber).toggleClass(classes.POPUP_FADE, fadeIn);
     }
 });

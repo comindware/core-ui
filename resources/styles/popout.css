@@ -391,3 +391,7 @@
     opacity: .5;
     display: block;
 }
+
+.dev-popout-fade div {
+    z-index: 99
+}
