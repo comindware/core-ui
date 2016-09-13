@@ -392,6 +392,6 @@
     display: block;
 }
 
-.dev-popout-fade div {
+.popup-fade div {
     z-index: 99
 }
