@@ -2973,6 +2973,10 @@ input[type="checkbox"].checkbox {
 .fadingPanel_open {
     opacity: .5;
     display: block;
+}
+
+.popup-fade div {
+    z-index: 99
 }/* List/Grid CSS */
 
 .list-item {
