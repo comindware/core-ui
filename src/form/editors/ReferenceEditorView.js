@@ -15,7 +15,6 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './impl/reference/views/ReferencePanelView';
 import BaseReferenceCollection from './impl/reference/collections/BaseReferenceCollection';
-import SearchMoreModel from './impl/reference/models/SearchMoreModel';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 
 const classes = {
@@ -23,7 +22,9 @@ const classes = {
 
 const defaultOptions = {
     'controller': null,
-    'showAddNewButton': false
+    'showAddNewButton': false,
+    'buttonView': ReferenceButtonView,
+    'panelView': ReferencePanelView
 };
 
 /**
@@ -56,7 +57,6 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         this.reqres.setHandler('value:clear', this.onValueClear, this);
         this.reqres.setHandler('value:set', this.onValueSet, this);
         this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-        this.reqres.setHandler('search:more', this.onSearchMore, this);
         this.reqres.setHandler('filter:text', this.onFilterText, this);
         this.reqres.setHandler('add:new:item',this.onAddNewItem, this );
 
@@ -82,14 +82,6 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         tabindex: 0
     },
 
-    ui: {
-        searchMore: '.js-search-more-button'
-    },
-
-    events: {
-        'click @ui.searchMore': '__searchMore'
-    },
-
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },
@@ -106,12 +98,12 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
     onRender: function () {
         // dropdown
         this.dropdownView = dropdown.factory.createDropdown({
-            buttonView: ReferenceButtonView,
+            buttonView: this.options.buttonView,
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
                 reqres: this.reqres
             },
-            panelView: ReferencePanelView,
+            panelView: this.options.panelView,
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
@@ -181,11 +173,6 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
 
     onValueNavigate: function () {
        return this.controller.navigate(this.getValue());
-    },
-
-    onSearchMore: function () {
-        // TODO: Not implemented in Release 1
-        this.dropdownView.close();
     },
 
     onFilterText: function (options) {

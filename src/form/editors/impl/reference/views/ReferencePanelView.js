@@ -14,8 +14,6 @@ import list from '../../../../../list/listApi';
 import template from '../templates/referencePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 import ReferenceListItemView from './ReferenceListItemView';
-import SearchMoreModel from '../models/SearchMoreModel';
-import SearchMoreListItemView from './SearchMoreListItemView';
 import LoadingView from './LoadingView';
 import AddNewButtonView from './AddNewButtonView';
 
@@ -73,9 +71,7 @@ export default Marionette.LayoutView.extend({
         var result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
-                childViewSelector: function (model) {
-                    return model instanceof SearchMoreModel ? SearchMoreListItemView : ReferenceListItemView;
-                },
+                childViewSelector: ReferenceListItemView,
                 childViewOptions: {
                     reqres: this.reqres
                 },
@@ -155,21 +151,7 @@ export default Marionette.LayoutView.extend({
                     model.select();
                     this.eventAggregator.scrollTo(model);
                 }
-                var totalCount = this.model.get('totalCount');
-                var searchModel = collection.find(function (m) {
-                    return m instanceof SearchMoreModel;
-                });
-                if (searchModel) {
-                    collection.remove(searchModel);
-                }
-                if (collection.length < totalCount) {
-                    searchModel = new SearchMoreModel({
-                        totalCount: this.model.get('totalCount')
-                    });
-                    collection.add(searchModel, {
-                        delayed: false
-                    });
-                }
+
                 this.__setLoading(false);
             }.bind(this));
         }.bind(this), config.TEXT_FETCH_DELAY);

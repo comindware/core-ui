@@ -42,9 +42,7 @@ import DataSourceReferenceEditorController from './editors/impl/reference/contro
 import BaseReferenceEditorController from './editors/impl/reference/controllers/BaseReferenceEditorController';
 import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
-import SearchMoreModel from './editors/impl/reference/models/SearchMoreModel';
 import ReferenceListItemView from './editors/impl/reference/views/ReferenceListItemView';
-import SearchMoreListItemView from './editors/impl/reference/views/SearchMoreListItemView';
 import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
@@ -129,12 +127,10 @@ var api = /** @lends module:core.form */ {
                 BaseReferenceCollection: BaseReferenceCollection
             },
             models: {
-                DefaultReferenceModel: DefaultReferenceModel,
-                SearchMoreModel: SearchMoreModel
+                DefaultReferenceModel: DefaultReferenceModel
             },
             views: {
                 ReferenceListItemView: ReferenceListItemView,
-                SearchMoreListItemView: SearchMoreListItemView,
                 LoadingView: LoadingView,
                 ReferenceButtonView: ReferenceButtonView,
                 ReferencePanelView: ReferencePanelView
