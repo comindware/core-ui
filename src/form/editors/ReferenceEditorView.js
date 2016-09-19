@@ -24,7 +24,7 @@ const defaultOptions = {
     'controller': null,
     'showAddNewButton': false,
     'buttonView': ReferenceButtonView,
-    'panelView': ReferencePanelView
+    'listItemView': null
 };
 
 /**
@@ -103,11 +103,12 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
                 model: this.viewModel.get('button'),
                 reqres: this.reqres
             },
-            panelView: this.options.panelView,
+            panelView: ReferencePanelView,
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
-                showAddNewButton: this.showAddNewButton
+                showAddNewButton: this.showAddNewButton,
+                listItemView: this.options.listItemView
             },
             panelPosition: 'down-over',
             autoOpen: false
