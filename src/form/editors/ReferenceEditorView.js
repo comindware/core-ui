@@ -15,6 +15,8 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './impl/reference/views/ReferencePanelView';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
+import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
+
 
 const classes = {
 };
@@ -22,16 +24,20 @@ const classes = {
 const defaultOptions = {
     'controller': null,
     'showAddNewButton': false,
-    'buttonView': ReferenceButtonView
+    'buttonView': ReferenceButtonView,
+    'listItemView': ReferenceListItemView
 };
 
 /**
  * @name ReferenceEditorView
  * @memberof module:core.form.editors
- * @class Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.
+ * @class Editor to select object in the format <code>{ id, text }</code>, using async fetch for 'options collection'.
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
- * @param {BaseReferenceEditorController} options.controller Провайдер данных, наследник
+ * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance.
+ * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
+ * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
+ * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
  * */
 Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
@@ -43,13 +49,9 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         }
 
         this.reqres = new Backbone.Wreqr.RequestResponse();
-
         this.controller = this.options.controller;
-
         this.value = this.__adjustValue(this.value);
-
         this.showAddNewButton = this.options.showAddNewButton;
-
 
         this.reqres.setHandler('panel:open', this.onPanelOpenRequest, this);
         this.reqres.setHandler('value:clear', this.onValueClear, this);

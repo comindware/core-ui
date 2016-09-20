@@ -13,7 +13,6 @@ import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
 import template from '../templates/referencePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
-import ReferenceListItemView from './ReferenceListItemView';
 import LoadingView from './LoadingView';
 import AddNewButtonView from './AddNewButtonView';
 
@@ -71,7 +70,7 @@ export default Marionette.LayoutView.extend({
         var result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
-                childViewSelector:() => { return this.options.listItemView || ReferenceListItemView; },
+                childView: this.options.listItemView,
                 childViewOptions: {
                     reqres: this.reqres
                 },
