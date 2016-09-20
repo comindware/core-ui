@@ -14,26 +14,31 @@ import template from './templates/referenceEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './impl/reference/views/ReferencePanelView';
-import BaseReferenceCollection from './impl/reference/collections/BaseReferenceCollection';
-import SearchMoreModel from './impl/reference/models/SearchMoreModel';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
+import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
+
 
 const classes = {
 };
 
 const defaultOptions = {
     'controller': null,
-    'showAddNewButton': false
+    'showAddNewButton': false,
+    'buttonView': ReferenceButtonView,
+    'listItemView': ReferenceListItemView
 };
 
 /**
  * @name ReferenceEditorView
  * @memberof module:core.form.editors
- * @class Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.
+ * @class Editor to select object in the format <code>{ id, text }</code>, using async fetch for 'options collection'.
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
- * @param {BaseReferenceEditorController} options.controller Провайдер данных, наследник
+ * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance
  * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
+ * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
+ * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
+ * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * */
 Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize: function (options) {
@@ -44,19 +49,14 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         }
 
         this.reqres = new Backbone.Wreqr.RequestResponse();
-
         this.controller = this.options.controller;
-
         this.value = this.__adjustValue(this.value);
-
         this.showAddNewButton = this.options.showAddNewButton;
-
 
         this.reqres.setHandler('panel:open', this.onPanelOpenRequest, this);
         this.reqres.setHandler('value:clear', this.onValueClear, this);
         this.reqres.setHandler('value:set', this.onValueSet, this);
         this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-        this.reqres.setHandler('search:more', this.onSearchMore, this);
         this.reqres.setHandler('filter:text', this.onFilterText, this);
         this.reqres.setHandler('add:new:item',this.onAddNewItem, this );
 
@@ -82,14 +82,6 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         tabindex: 0
     },
 
-    ui: {
-        searchMore: '.js-search-more-button'
-    },
-
-    events: {
-        'click @ui.searchMore': '__searchMore'
-    },
-
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },
@@ -106,7 +98,7 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
     onRender: function () {
         // dropdown
         this.dropdownView = dropdown.factory.createDropdown({
-            buttonView: ReferenceButtonView,
+            buttonView: this.options.buttonView,
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
                 reqres: this.reqres
@@ -115,7 +107,8 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
-                showAddNewButton: this.showAddNewButton
+                showAddNewButton: this.showAddNewButton,
+                listItemView: this.options.listItemView
             },
             panelPosition: 'down-over',
             autoOpen: false
@@ -181,11 +174,6 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
 
     onValueNavigate: function () {
        return this.controller.navigate(this.getValue());
-    },
-
-    onSearchMore: function () {
-        // TODO: Not implemented in Release 1
-        this.dropdownView.close();
     },
 
     onFilterText: function (options) {

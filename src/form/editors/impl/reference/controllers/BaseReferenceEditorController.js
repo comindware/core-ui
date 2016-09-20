@@ -11,7 +11,6 @@
 import '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
-import SearchMoreModel from '../models/SearchMoreModel';
 
 /**
  * @name BaseReferenceEditorController
@@ -50,9 +49,6 @@ export default Marionette.Controller.extend( /** @lends module:core.form.editors
             // Client-side filter
             if (filterText) {
                 this.collection.filter(function(model) {
-                    if (model instanceof SearchMoreModel) {
-                        return true;
-                    }
                     var text = model.get('text');
                     if (!text) {
                         return false;
