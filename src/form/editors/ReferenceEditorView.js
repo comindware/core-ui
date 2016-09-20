@@ -34,11 +34,11 @@ const defaultOptions = {
  * @class Editor to select object in the format <code>{ id, text }</code>, using async fetch for 'options collection'.
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
- * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance.
+ * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance
+ * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
  * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
- * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
  * */
 Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize: function (options) {
