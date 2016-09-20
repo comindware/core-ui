@@ -13,7 +13,6 @@ import FadingPanelView from '../views/FadingPanelView';
 import template from '../templates/layerLayout.hbs';
 
 let classes = {
-    HIDDEN: 'hidden',
     POPUP_REGION: 'js-popup-region-',
     POPUP_FADE: 'popup-fade'
 };
@@ -21,6 +20,7 @@ let classes = {
 export default Marionette.LayoutView.extend({
     initialize: function () {
         this.popupNumber = -1;
+        this.faded = false;
     },
 
     template: template,
@@ -72,13 +72,13 @@ export default Marionette.LayoutView.extend({
     },
 
     fadeIn: function (options) {
-        this.ui.fadingPopupRegion.removeClass(classes.HIDDEN);
         this.fadingPanelView.fadeIn(options);
+        this.faded = true;
     },
 
     fadeOut: function () {
         this.fadingPanelView.fadeOut();
-        this.ui.fadingPopupRegion.addClass(classes.HIDDEN);
+        this.faded = false;
     },
 
     __onFadingPanelClick: function (view, options) {
