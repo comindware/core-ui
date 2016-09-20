@@ -14,7 +14,6 @@ import template from './templates/referenceEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './impl/reference/views/ReferencePanelView';
-import BaseReferenceCollection from './impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 
 const classes = {
@@ -23,8 +22,7 @@ const classes = {
 const defaultOptions = {
     'controller': null,
     'showAddNewButton': false,
-    'buttonView': ReferenceButtonView,
-    'listItemView': null
+    'buttonView': ReferenceButtonView
 };
 
 /**

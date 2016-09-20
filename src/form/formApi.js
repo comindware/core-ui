@@ -43,8 +43,10 @@ import BaseReferenceEditorController from './editors/impl/reference/controllers/
 import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
 import ReferenceListItemView from './editors/impl/reference/views/ReferenceListItemView';
+import UserReferenceListItemView from './editors/impl/reference/views/UserReferenceListItemView';
 import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
+import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
@@ -133,7 +135,9 @@ var api = /** @lends module:core.form */ {
                 ReferenceListItemView: ReferenceListItemView,
                 LoadingView: LoadingView,
                 ReferenceButtonView: ReferenceButtonView,
-                ReferencePanelView: ReferencePanelView
+                ReferencePanelView: ReferencePanelView,
+                UserReferenceButtonView,
+                UserReferenceListItemView
             }
         },
         BooleanEditor: BooleanEditorView,

@@ -71,7 +71,7 @@ export default Marionette.LayoutView.extend({
         var result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
-                childViewSelector: ReferenceListItemView,
+                childViewSelector:() => { return this.options.listItemView || ReferenceListItemView; },
                 childViewOptions: {
                     reqres: this.reqres
                 },
