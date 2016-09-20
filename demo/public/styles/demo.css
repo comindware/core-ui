@@ -1,5 +1,9 @@
 /* General */
 
+.hidden, .Hidden {
+    display: none !important;
+}
+
 .header-container {
     position: absolute;
     width: 100%;
