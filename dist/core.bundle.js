@@ -64892,6 +64892,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }.bind(this));
 	    },
 	
+	    /**
+	     * Create the default field title (label text) from the key name.
+	     * (Converts 'camelCase' to 'Camel Case')
+	     *
+	     * @return {String}
+	     */
+	    createTitle: function createTitle() {
+	        var str = this.key;
+	        if (!str) {
+	            return '';
+	        }
+	
+	        //Add spaces
+	        str = str.replace(/([A-Z])/g, ' $1');
+	
+	        //Uppercase first character
+	        str = str.replace(/^./, function (str) {
+	            return str.toUpperCase();
+	        });
+	
+	        return str;
+	    },
+	
 	    validate: function validate(options) {
 	        options = options || {};
 	        if (this.schema.validators) {
