@@ -1,6 +1,6 @@
-import BaseReferenceListItemView from './ReferenceListItemView';
+import ReferenceListItemView from './ReferenceListItemView';
 import template from '../templates/userReferenceListItem.hbs';
 
-export default BaseReferenceListItemView.extend({
+export default ReferenceListItemView.extend({
     template: template
 });

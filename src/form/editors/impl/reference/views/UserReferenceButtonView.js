@@ -1,10 +1,19 @@
-import BaseReferenceButtonView from './ReferenceButtonView';
+import ReferenceButtonView from './ReferenceButtonView';
 import template from '../templates/userReferenceButton.hbs';
 
-export default BaseReferenceButtonView.extend({
+export default ReferenceButtonView.extend({
     template: template,
 
     className: 'popout-field-user',
+
+    templateHelpers: function () {
+        var value = this.model.get('value');
+        return {
+            text: (value && (value.get('text') || '#' + value.id)) || '',
+            avatarUrl: value && value.get('avatarUrl'),
+            abbreviation: value && value.get('abbreviation')
+        };
+    },
 
     updateView: function () {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
