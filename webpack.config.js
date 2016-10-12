@@ -207,7 +207,7 @@ module.exports = {
         }
 
         if (!TEST) {
-            webpackConfig.entry = pathResolver.source('coreApi.js');
+            webpackConfig.entry = [ 'babel-polyfill', pathResolver.source('coreApi.js') ];
             webpackConfig.output = {
                 path: pathResolver.client(),
                 filename: "core.bundle.js",

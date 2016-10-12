@@ -15,9 +15,8 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
 
 const changeMode = {
-    blur: 'change',
-    keydown: 'keydown',
-    input: 'input'
+    blur: 'blur',
+    keydown: 'keydown'
 };
 
 const defaultOptions = function () {
@@ -86,8 +85,7 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
 
     events: {
         'keyup @ui.input': '__keyup',
-        'change @ui.input': '__change',
-        'input @ui.input': '__change'
+        'change @ui.input': '__change'
     },
 
     __keyup: function () {
