@@ -41,7 +41,6 @@ module.exports = {
             entry: {
                 app: ['./public/index'],
                 vendor: [
-                    'babel-polyfill',
                     'comindware/core'
                 ]
             },
@@ -53,6 +52,12 @@ module.exports = {
                 sourceMapFilename: '[file].map'
             },
             module: {
+                preLoaders: [
+                    {
+                        test: /core\.bundle\.min\.js$/,
+                        loader: "source-map"
+                    }
+                ],
                 loaders: [
                     {
                         test: /\.jsx?$/,
@@ -154,7 +159,7 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    'comindware/core': `${__dirname}/../dist/core.bundle.js`,
+                    'comindware/core': `${__dirname}/../dist/core.bundle.min.js`,
                     prism: `${__dirname}/public/lib/prism/prism.js`,
                     markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                     localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,
