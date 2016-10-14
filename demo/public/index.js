@@ -8,8 +8,6 @@
 
 "use strict";
 
-import 'babel-polyfill';
-
 import '../../dist/styles.bundle.css';
 import 'styles/demo.css';
 import 'lib/prism/prism.css';
