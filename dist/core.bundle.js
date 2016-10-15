@@ -100,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.numeral = exports.Marionette = exports.Backbone = exports._ = exports.$ = exports.Bluebird = exports.Handlebars = exports.moment = exports.keypress = undefined;
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -165,7 +165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// Replacing ES6 promise with bluebird
-	__webpack_require__(32).default = _bluebird2.default;
+	__webpack_require__(37).default = _bluebird2.default;
 	
 	_promise2.default.config({
 	    warnings: true,
@@ -495,7 +495,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 12 */
 [824, 8],
 /* 13 */
-[843, 5, 227, 36, 12],
+[843, 5, 227, 35, 12],
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -803,7 +803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 25 */
 7,
 /* 26 */
-[845, 82, 47, 24, 36, 18, 227, 12],
+[845, 82, 47, 24, 35, 18, 227, 12],
 /* 27 */
 [848, 18, 16, 147],
 /* 28 */
@@ -873,19 +873,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(465), __esModule: true };
-
-/***/ },
-/* 33 */
 /***/ function(module, exports) {
 
 	var core = module.exports = {version: '2.4.0'};
 	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 0 -> Array#forEach
@@ -934,7 +928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
@@ -949,9 +943,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 36 */
+/* 35 */
 [861, 9],
-/* 37 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -967,8 +961,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(465), __esModule: true };
+
+/***/ },
 /* 38 */
-33,
+32,
 /* 39 */
 [823, 20],
 /* 40 */
@@ -1046,7 +1046,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    , toInteger           = __webpack_require__(48)
 	    , toLength            = __webpack_require__(15)
 	    , toIndex             = __webpack_require__(62)
-	    , toPrimitive         = __webpack_require__(36)
+	    , toPrimitive         = __webpack_require__(35)
 	    , has                 = __webpack_require__(18)
 	    , same                = __webpack_require__(240)
 	    , classof             = __webpack_require__(80)
@@ -1059,7 +1059,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    , getIterFn           = __webpack_require__(156)
 	    , uid                 = __webpack_require__(63)
 	    , wks                 = __webpack_require__(11)
-	    , createArrayMethod   = __webpack_require__(34)
+	    , createArrayMethod   = __webpack_require__(33)
 	    , createArrayIncludes = __webpack_require__(95)
 	    , speciesConstructor  = __webpack_require__(148)
 	    , ArrayIterators      = __webpack_require__(157)
@@ -2646,7 +2646,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var global    = __webpack_require__(25)
-	  , core      = __webpack_require__(33)
+	  , core      = __webpack_require__(32)
 	  , ctx       = __webpack_require__(89)
 	  , hide      = __webpack_require__(53)
 	  , PROTOTYPE = 'prototype';
@@ -5162,7 +5162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 129 */
 [861, 77],
 /* 130 */
-[862, 25, 33, 90, 131, 45],
+[862, 25, 32, 90, 131, 45],
 /* 131 */
 [863, 19],
 /* 132 */
@@ -7507,10 +7507,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
-	
-	var _promise2 = _interopRequireDefault(_promise);
-	
 	var _textAreaEditor = __webpack_require__(736);
 	
 	var _textAreaEditor2 = _interopRequireDefault(_textAreaEditor);
@@ -7583,17 +7579,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
 	        }
-	
-	        new _promise2.default(function (resolve) {
-	            setTimeout(function () {
-	                return resolve();
-	            }, 500);
-	        }).then(function () {
-	            debugger;
-	
-	            var a = {};
-	            a.asd.asd = 2;
-	        });
 	
 	        this.placeholder = this.options.emptyPlaceholder;
 	    },
@@ -8402,7 +8387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -10444,7 +10429,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -10585,7 +10570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -10711,7 +10696,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -11551,7 +11536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  , isObject          = __webpack_require__(9)
 	  , anInstance        = __webpack_require__(55)
 	  , forOf             = __webpack_require__(67)
-	  , createArrayMethod = __webpack_require__(34)
+	  , createArrayMethod = __webpack_require__(33)
 	  , $has              = __webpack_require__(18)
 	  , arrayFind         = createArrayMethod(5)
 	  , arrayFindIndex    = createArrayMethod(6)
@@ -11818,7 +11803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var each         = __webpack_require__(34)(0)
+	var each         = __webpack_require__(33)(0)
 	  , redefine     = __webpack_require__(22)
 	  , meta         = __webpack_require__(46)
 	  , assign       = __webpack_require__(232)
@@ -20547,7 +20532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	var decap = __webpack_require__(344);
 	
 	module.exports = function camelize(str, decapitalize) {
@@ -20567,7 +20552,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	
 	module.exports = function dasherize(str) {
 	  return trim(str).replace(/([A-Z])/g, '-$1').replace(/[-_\s]+/g, '-').toLowerCase();
@@ -20806,7 +20791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	
 	module.exports = function underscored(str) {
 	  return trim(str).replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
@@ -23964,7 +23949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -27638,7 +27623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -34240,7 +34225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(32);
+	var _promise = __webpack_require__(37);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -40584,7 +40569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 */
 	/**
-	 * bluebird build version 3.0.5
+	 * bluebird build version 3.4.6
 	 * Features enabled: core, race, call_get, generators, map, nodeify, promisify, props, reduce, settle, some, using, timers, filter, any, each
 	*/
 	!function(e){if(true)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Promise=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
@@ -40619,6 +40604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var util = _dereq_("./util");
 	
 	function Async() {
+	    this._customScheduler = false;
 	    this._isTickUsed = false;
 	    this._lateQueue = new Queue(16);
 	    this._normalQueue = new Queue(16);
@@ -40628,9 +40614,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.drainQueues = function () {
 	        self._drainQueues();
 	    };
-	    this._schedule =
-	        schedule.isStatic ? schedule(this.drainQueues) : schedule;
+	    this._schedule = schedule;
 	}
+	
+	Async.prototype.setScheduler = function(fn) {
+	    var prev = this._schedule;
+	    this._schedule = fn;
+	    this._customScheduler = true;
+	    return prev;
+	};
+	
+	Async.prototype.hasCustomScheduler = function() {
+	    return this._customScheduler;
+	};
+	
+	Async.prototype.enableTrampoline = function() {
+	    this._trampolineEnabled = true;
+	};
 	
 	Async.prototype.disableTrampolineIfNecessary = function() {
 	    if (util.hasDevTools) {
@@ -40645,7 +40645,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Async.prototype.fatalError = function(e, isNode) {
 	    if (isNode) {
-	        process.stderr.write("Fatal " + (e instanceof Error ? e.stack : e));
+	        process.stderr.write("Fatal " + (e instanceof Error ? e.stack : e) +
+	            "\n");
 	        process.exit(2);
 	    } else {
 	        this.throwLater(e);
@@ -40690,9 +40691,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Async.prototype.invoke = AsyncInvoke;
 	    Async.prototype.settlePromises = AsyncSettlePromises;
 	} else {
-	    if (schedule.isStatic) {
-	        schedule = function(fn) { setTimeout(fn, 0); };
-	    }
 	    Async.prototype.invokeLater = function (fn, receiver, arg) {
 	        if (this._trampolineEnabled) {
 	            AsyncInvokeLater.call(this, fn, receiver, arg);
@@ -40985,7 +40983,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var promise = this;
 	    var child = promise;
-	    while (promise.isCancellable()) {
+	    while (promise._isCancellable()) {
 	        if (!promise._cancelBy(child)) {
 	            if (child._isFollowing()) {
 	                child._followee().cancel();
@@ -40996,7 +40994,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	
 	        var parent = promise._cancellationParent;
-	        if (parent == null || !parent.isCancellable()) {
+	        if (parent == null || !parent._isCancellable()) {
 	            if (promise._isFollowing()) {
 	                promise._followee().cancel();
 	            } else {
@@ -41005,6 +41003,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            break;
 	        } else {
 	            if (promise._isFollowing()) promise._followee().cancel();
+	            promise._setWillBeCancelled();
 	            child = promise;
 	            promise = parent;
 	        }
@@ -41042,8 +41041,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	Promise.prototype._cancel = function() {
-	    if (!this.isCancellable()) return;
-	
+	    if (!this._isCancellable()) return;
 	    this._setCancelled();
 	    async.invoke(this._cancelPromises, this, undefined);
 	};
@@ -41054,6 +41052,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Promise.prototype._unsetOnCancel = function() {
 	    this._onCancelField = undefined;
+	};
+	
+	Promise.prototype._isCancellable = function() {
+	    return this.isPending() && !this._isCancelled();
 	};
 	
 	Promise.prototype.isCancellable = function() {
@@ -41087,7 +41089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	Promise.prototype._invokeInternalOnCancel = function() {
-	    if (this.isCancellable()) {
+	    if (this._isCancellable()) {
 	        this._doInvokeOnCancel(this._onCancel(), true);
 	        this._unsetOnCancel();
 	    }
@@ -41187,7 +41189,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	Context.CapturedTrace = null;
 	Context.create = createContext;
+	Context.deactivateLongStackTraces = function() {};
 	Context.activateLongStackTraces = function() {
+	    var Promise_pushContext = Promise.prototype._pushContext;
+	    var Promise_popContext = Promise.prototype._popContext;
+	    var Promise_PeekContext = Promise._peekContext;
+	    var Promise_peekContext = Promise.prototype._peekContext;
+	    var Promise_promiseCreated = Promise.prototype._promiseCreated;
+	    Context.deactivateLongStackTraces = function() {
+	        Promise.prototype._pushContext = Promise_pushContext;
+	        Promise.prototype._popContext = Promise_popContext;
+	        Promise._peekContext = Promise_PeekContext;
+	        Promise.prototype._peekContext = Promise_peekContext;
+	        Promise.prototype._promiseCreated = Promise_promiseCreated;
+	        longStackTraces = false;
+	    };
 	    longStackTraces = true;
 	    Promise.prototype._pushContext = Context.prototype._pushContext;
 	    Promise.prototype._popContext = Context.prototype._popContext;
@@ -41212,6 +41228,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var possiblyUnhandledRejection;
 	var bluebirdFramePattern =
 	    /[\\\/]bluebird[\\\/]js[\\\/](release|debug|instrumented)/;
+	var nodeFramePattern = /\((?:timers\.js):\d+:\d+\)/;
+	var parseLinePattern = /[\/<\(](.+?):(\d+):(\d+)\)?\s*$/;
 	var stackFramePattern = null;
 	var formatStack = null;
 	var indentStackFrames = false;
@@ -41220,19 +41238,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        (true ||
 	                         util.env("BLUEBIRD_DEBUG") ||
 	                         util.env("NODE_ENV") === "development"));
+	
 	var warnings = !!(util.env("BLUEBIRD_WARNINGS") != 0 &&
 	    (debugging || util.env("BLUEBIRD_WARNINGS")));
+	
 	var longStackTraces = !!(util.env("BLUEBIRD_LONG_STACK_TRACES") != 0 &&
 	    (debugging || util.env("BLUEBIRD_LONG_STACK_TRACES")));
+	
+	var wForgottenReturn = util.env("BLUEBIRD_W_FORGOTTEN_RETURN") != 0 &&
+	    (warnings || !!util.env("BLUEBIRD_W_FORGOTTEN_RETURN"));
 	
 	Promise.prototype.suppressUnhandledRejections = function() {
 	    var target = this._target();
 	    target._bitField = ((target._bitField & (~1048576)) |
-	                      2097152);
+	                      524288);
 	};
 	
 	Promise.prototype._ensurePossibleRejectionHandled = function () {
-	    if ((this._bitField & 2097152) !== 0) return;
+	    if ((this._bitField & 524288) !== 0) return;
 	    this._setRejectionIsUnhandled();
 	    async.invokeLater(this._notifyUnhandledRejection, this, undefined);
 	};
@@ -41240,6 +41263,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	Promise.prototype._notifyUnhandledRejectionIsHandled = function () {
 	    fireRejectionEvent("rejectionHandled",
 	                                  unhandledRejectionHandled, undefined, this);
+	};
+	
+	Promise.prototype._setReturnedNonUndefined = function() {
+	    this._bitField = this._bitField | 268435456;
+	};
+	
+	Promise.prototype._returnedNonUndefined = function() {
+	    return (this._bitField & 268435456) !== 0;
 	};
 	
 	Promise.prototype._notifyUnhandledRejection = function () {
@@ -41286,23 +41317,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	Promise.onPossiblyUnhandledRejection = function (fn) {
 	    var domain = getDomain();
 	    possiblyUnhandledRejection =
-	        typeof fn === "function" ? (domain === null ? fn : domain.bind(fn))
+	        typeof fn === "function" ? (domain === null ?
+	                                            fn : util.domainBind(domain, fn))
 	                                 : undefined;
 	};
 	
 	Promise.onUnhandledRejectionHandled = function (fn) {
 	    var domain = getDomain();
 	    unhandledRejectionHandled =
-	        typeof fn === "function" ? (domain === null ? fn : domain.bind(fn))
+	        typeof fn === "function" ? (domain === null ?
+	                                            fn : util.domainBind(domain, fn))
 	                                 : undefined;
 	};
 	
+	var disableLongStackTraces = function() {};
 	Promise.longStackTraces = function () {
 	    if (async.haveItemsQueued() && !config.longStackTraces) {
 	        throw new Error("cannot enable long stack traces after promises have been created\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
 	    }
 	    if (!config.longStackTraces && longStackTracesIsSupported()) {
+	        var Promise_captureStackTrace = Promise.prototype._captureStackTrace;
+	        var Promise_attachExtraTrace = Promise.prototype._attachExtraTrace;
 	        config.longStackTraces = true;
+	        disableLongStackTraces = function() {
+	            if (async.haveItemsQueued() && !config.longStackTraces) {
+	                throw new Error("cannot enable long stack traces after promises have been created\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
+	            }
+	            Promise.prototype._captureStackTrace = Promise_captureStackTrace;
+	            Promise.prototype._attachExtraTrace = Promise_attachExtraTrace;
+	            Context.deactivateLongStackTraces();
+	            async.enableTrampoline();
+	            config.longStackTraces = false;
+	        };
 	        Promise.prototype._captureStackTrace = longStackTracesCaptureStackTrace;
 	        Promise.prototype._attachExtraTrace = longStackTracesAttachExtraTrace;
 	        Context.activateLongStackTraces();
@@ -41314,13 +41360,128 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return config.longStackTraces && longStackTracesIsSupported();
 	};
 	
+	var fireDomEvent = (function() {
+	    try {
+	        if (typeof CustomEvent === "function") {
+	            var event = new CustomEvent("CustomEvent");
+	            util.global.dispatchEvent(event);
+	            return function(name, event) {
+	                var domEvent = new CustomEvent(name.toLowerCase(), {
+	                    detail: event,
+	                    cancelable: true
+	                });
+	                return !util.global.dispatchEvent(domEvent);
+	            };
+	        } else if (typeof Event === "function") {
+	            var event = new Event("CustomEvent");
+	            util.global.dispatchEvent(event);
+	            return function(name, event) {
+	                var domEvent = new Event(name.toLowerCase(), {
+	                    cancelable: true
+	                });
+	                domEvent.detail = event;
+	                return !util.global.dispatchEvent(domEvent);
+	            };
+	        } else {
+	            var event = document.createEvent("CustomEvent");
+	            event.initCustomEvent("testingtheevent", false, true, {});
+	            util.global.dispatchEvent(event);
+	            return function(name, event) {
+	                var domEvent = document.createEvent("CustomEvent");
+	                domEvent.initCustomEvent(name.toLowerCase(), false, true,
+	                    event);
+	                return !util.global.dispatchEvent(domEvent);
+	            };
+	        }
+	    } catch (e) {}
+	    return function() {
+	        return false;
+	    };
+	})();
+	
+	var fireGlobalEvent = (function() {
+	    if (util.isNode) {
+	        return function() {
+	            return process.emit.apply(process, arguments);
+	        };
+	    } else {
+	        if (!util.global) {
+	            return function() {
+	                return false;
+	            };
+	        }
+	        return function(name) {
+	            var methodName = "on" + name.toLowerCase();
+	            var method = util.global[methodName];
+	            if (!method) return false;
+	            method.apply(util.global, [].slice.call(arguments, 1));
+	            return true;
+	        };
+	    }
+	})();
+	
+	function generatePromiseLifecycleEventObject(name, promise) {
+	    return {promise: promise};
+	}
+	
+	var eventToObjectGenerator = {
+	    promiseCreated: generatePromiseLifecycleEventObject,
+	    promiseFulfilled: generatePromiseLifecycleEventObject,
+	    promiseRejected: generatePromiseLifecycleEventObject,
+	    promiseResolved: generatePromiseLifecycleEventObject,
+	    promiseCancelled: generatePromiseLifecycleEventObject,
+	    promiseChained: function(name, promise, child) {
+	        return {promise: promise, child: child};
+	    },
+	    warning: function(name, warning) {
+	        return {warning: warning};
+	    },
+	    unhandledRejection: function (name, reason, promise) {
+	        return {reason: reason, promise: promise};
+	    },
+	    rejectionHandled: generatePromiseLifecycleEventObject
+	};
+	
+	var activeFireEvent = function (name) {
+	    var globalEventFired = false;
+	    try {
+	        globalEventFired = fireGlobalEvent.apply(null, arguments);
+	    } catch (e) {
+	        async.throwLater(e);
+	        globalEventFired = true;
+	    }
+	
+	    var domEventFired = false;
+	    try {
+	        domEventFired = fireDomEvent(name,
+	                    eventToObjectGenerator[name].apply(null, arguments));
+	    } catch (e) {
+	        async.throwLater(e);
+	        domEventFired = true;
+	    }
+	
+	    return domEventFired || globalEventFired;
+	};
+	
 	Promise.config = function(opts) {
 	    opts = Object(opts);
-	    if ("longStackTraces" in opts && opts.longStackTraces) {
-	        Promise.longStackTraces();
+	    if ("longStackTraces" in opts) {
+	        if (opts.longStackTraces) {
+	            Promise.longStackTraces();
+	        } else if (!opts.longStackTraces && Promise.hasLongStackTraces()) {
+	            disableLongStackTraces();
+	        }
 	    }
 	    if ("warnings" in opts) {
-	        config.warnings = !!opts.warnings;
+	        var warningsOption = opts.warnings;
+	        config.warnings = !!warningsOption;
+	        wForgottenReturn = config.warnings;
+	
+	        if (util.isObject(warningsOption)) {
+	            if ("wForgottenReturn" in warningsOption) {
+	                wForgottenReturn = !!warningsOption.wForgottenReturn;
+	            }
+	        }
 	    }
 	    if ("cancellation" in opts && opts.cancellation && !config.cancellation) {
 	        if (async.haveItemsQueued()) {
@@ -41338,8 +41499,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        propagateFromFunction = cancellationPropagateFrom;
 	        config.cancellation = true;
 	    }
+	    if ("monitoring" in opts) {
+	        if (opts.monitoring && !config.monitoring) {
+	            config.monitoring = true;
+	            Promise.prototype._fireEvent = activeFireEvent;
+	        } else if (!opts.monitoring && config.monitoring) {
+	            config.monitoring = false;
+	            Promise.prototype._fireEvent = defaultFireEvent;
+	        }
+	    }
 	};
 	
+	function defaultFireEvent() { return false; }
+	
+	Promise.prototype._fireEvent = defaultFireEvent;
 	Promise.prototype._execute = function(executor, resolve, reject) {
 	    try {
 	        executor(resolve, reject);
@@ -41376,7 +41549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function cancellationAttachCancellationCallback(onCancel) {
-	    if (!this.isCancellable()) return this;
+	    if (!this._isCancellable()) return this;
 	
 	    var previousOnCancel = this._onCancel();
 	    if (previousOnCancel !== undefined) {
@@ -41459,13 +41632,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}
 	
-	function checkForgottenReturns(returnValue, promiseCreated, name, promise) {
-	    if (returnValue === undefined &&
-	        promiseCreated !== null &&
-	        config.longStackTraces &&
-	        config.warnings) {
+	function checkForgottenReturns(returnValue, promiseCreated, name, promise,
+	                               parent) {
+	    if (returnValue === undefined && promiseCreated !== null &&
+	        wForgottenReturn) {
+	        if (parent !== undefined && parent._returnedNonUndefined()) return;
+	        if ((promise._bitField & 65535) === 0) return;
+	
+	        if (name) name = name + " ";
+	        var handlerLine = "";
+	        var creatorLine = "";
+	        if (promiseCreated._trace) {
+	            var traceLines = promiseCreated._trace.stack.split("\n");
+	            var stack = cleanStack(traceLines);
+	            for (var i = stack.length - 1; i >= 0; --i) {
+	                var line = stack[i];
+	                if (!nodeFramePattern.test(line)) {
+	                    var lineMatches = line.match(parseLinePattern);
+	                    if (lineMatches) {
+	                        handlerLine  = "at " + lineMatches[1] +
+	                            ":" + lineMatches[2] + ":" + lineMatches[3] + " ";
+	                    }
+	                    break;
+	                }
+	            }
+	
+	            if (stack.length > 0) {
+	                var firstUserLine = stack[0];
+	                for (var i = 0; i < traceLines.length; ++i) {
+	
+	                    if (traceLines[i] === firstUserLine) {
+	                        if (i > 0) {
+	                            creatorLine = "\n" + traceLines[i - 1];
+	                        }
+	                        break;
+	                    }
+	                }
+	
+	            }
+	        }
 	        var msg = "a promise was created in a " + name +
-	            " handler but was not returned from it";
+	            "handler " + handlerLine + "but was not returned from it, " +
+	            "see http://goo.gl/rRqMUw" +
+	            creatorLine;
 	        promise._warn(msg, true, promiseCreated);
 	    }
 	}
@@ -41489,7 +41698,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var parsed = parseStackAndMessage(warning);
 	        warning.stack = parsed.message + "\n" + parsed.stack.join("\n");
 	    }
-	    formatAndLogError(warning, "", true);
+	
+	    if (!activeFireEvent("warning", warning)) {
+	        formatAndLogError(warning, "", true);
+	    }
 	}
 	
 	function reconstructStack(message, stacks) {
@@ -41616,30 +41828,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        async.throwLater(e);
 	    }
 	
-	    var globalEventFired = false;
-	    try {
-	        globalEventFired = fireGlobalEvent(name, reason, promise);
-	    } catch (e) {
-	        globalEventFired = true;
-	        async.throwLater(e);
-	    }
-	
-	    var domEventFired = false;
-	    if (fireDomEvent) {
-	        try {
-	            domEventFired = fireDomEvent(name.toLowerCase(), {
-	                reason: reason,
-	                promise: promise
-	            });
-	        } catch (e) {
-	            domEventFired = true;
-	            async.throwLater(e);
+	    if (name === "unhandledRejection") {
+	        if (!activeFireEvent(name, reason, promise) && !localEventFired) {
+	            formatAndLogError(reason, "Unhandled rejection ");
 	        }
-	    }
-	
-	    if (!globalEventFired && !localEventFired && !domEventFired &&
-	        name === "unhandledRejection") {
-	        formatAndLogError(reason, "Unhandled rejection ");
+	    } else {
+	        activeFireEvent(name, promise);
 	    }
 	}
 	
@@ -41884,70 +42078,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	})([]);
 	
-	var fireDomEvent;
-	var fireGlobalEvent = (function() {
-	    if (util.isNode) {
-	        return function(name, reason, promise) {
-	            if (name === "rejectionHandled") {
-	                return process.emit(name, promise);
-	            } else {
-	                return process.emit(name, reason, promise);
-	            }
-	        };
-	    } else {
-	        var customEventWorks = false;
-	        var anyEventWorks = true;
-	        try {
-	            var ev = new self.CustomEvent("test");
-	            customEventWorks = ev instanceof CustomEvent;
-	        } catch (e) {}
-	        if (!customEventWorks) {
-	            try {
-	                var event = document.createEvent("CustomEvent");
-	                event.initCustomEvent("testingtheevent", false, true, {});
-	                self.dispatchEvent(event);
-	            } catch (e) {
-	                anyEventWorks = false;
-	            }
-	        }
-	        if (anyEventWorks) {
-	            fireDomEvent = function(type, detail) {
-	                var event;
-	                if (customEventWorks) {
-	                    event = new self.CustomEvent(type, {
-	                        detail: detail,
-	                        bubbles: false,
-	                        cancelable: true
-	                    });
-	                } else if (self.dispatchEvent) {
-	                    event = document.createEvent("CustomEvent");
-	                    event.initCustomEvent(type, false, true, detail);
-	                }
-	
-	                return event ? !self.dispatchEvent(event) : false;
-	            };
-	        }
-	
-	        var toWindowMethodNameMap = {};
-	        toWindowMethodNameMap["unhandledRejection"] = ("on" +
-	            "unhandledRejection").toLowerCase();
-	        toWindowMethodNameMap["rejectionHandled"] = ("on" +
-	            "rejectionHandled").toLowerCase();
-	
-	        return function(name, reason, promise) {
-	            var methodName = toWindowMethodNameMap[name];
-	            var method = self[methodName];
-	            if (!method) return false;
-	            if (name === "rejectionHandled") {
-	                method.call(self, promise);
-	            } else {
-	                method.call(self, reason, promise);
-	            }
-	            return true;
-	        };
-	    }
-	})();
-	
 	if (typeof console !== "undefined" && typeof console.warn !== "undefined") {
 	    printWarning = function (message) {
 	        console.warn(message);
@@ -41968,7 +42098,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var config = {
 	    warnings: warnings,
 	    longStackTraces: false,
-	    cancellation: false
+	    cancellation: false,
+	    monitoring: false
 	};
 	
 	if (longStackTraces) Promise.longStackTraces();
@@ -41983,6 +42114,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    cancellation: function() {
 	        return config.cancellation;
 	    },
+	    monitoring: function() {
+	        return config.monitoring;
+	    },
 	    propagateFromFunction: function() {
 	        return propagateFromFunction;
 	    },
@@ -41993,7 +42127,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    setBounds: setBounds,
 	    warn: warn,
 	    deprecated: deprecated,
-	    CapturedTrace: CapturedTrace
+	    CapturedTrace: CapturedTrace,
+	    fireDomEvent: fireDomEvent,
+	    fireGlobalEvent: fireGlobalEvent
 	};
 	};
 	
@@ -42060,8 +42196,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	Promise.prototype.each = function (fn) {
-	    return this.mapSeries(fn)
-	            ._then(promiseAllThis, undefined, undefined, this, undefined);
+	    return PromiseReduce(this, fn, INTERNAL, 0)
+	              ._then(promiseAllThis, undefined, undefined, this, undefined);
 	};
 	
 	Promise.prototype.mapSeries = function (fn) {
@@ -42069,12 +42205,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	Promise.each = function (promises, fn) {
-	    return PromiseMapSeries(promises, fn)
-	            ._then(promiseAllThis, undefined, undefined, promises, undefined);
+	    return PromiseReduce(promises, fn, INTERNAL, 0)
+	              ._then(promiseAllThis, undefined, undefined, promises, undefined);
 	};
 	
 	Promise.mapSeries = PromiseMapSeries;
 	};
+	
 	
 	},{}],12:[function(_dereq_,module,exports){
 	"use strict";
@@ -42175,7 +42312,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        RejectionError: OperationalError,
 	        AggregateError: AggregateError
 	    });
-	    notEnumerableProp(Error, "__BluebirdErrorTypes__", errorTypes);
+	    es5.defineProperty(Error, "__BluebirdErrorTypes__", {
+	        value: errorTypes,
+	        writable: false,
+	        enumerable: false,
+	        configurable: false
+	    });
 	}
 	
 	module.exports = {
@@ -42292,6 +42434,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CancellationError = Promise.CancellationError;
 	var errorObj = util.errorObj;
 	
+	function PassThroughHandlerContext(promise, type, handler) {
+	    this.promise = promise;
+	    this.type = type;
+	    this.handler = handler;
+	    this.called = false;
+	    this.cancelPromise = null;
+	}
+	
+	PassThroughHandlerContext.prototype.isFinallyHandler = function() {
+	    return this.type === 0;
+	};
+	
 	function FinallyHandlerCancelReaction(finallyHandler) {
 	    this.finallyHandler = finallyHandler;
 	}
@@ -42327,14 +42481,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    if (!this.called) {
 	        this.called = true;
-	        var ret = this.type === 0
+	        var ret = this.isFinallyHandler()
 	            ? handler.call(promise._boundValue())
 	            : handler.call(promise._boundValue(), reasonOrValue);
 	        if (ret !== undefined) {
+	            promise._setReturnedNonUndefined();
 	            var maybePromise = tryConvertToPromise(ret, promise);
 	            if (maybePromise instanceof Promise) {
 	                if (this.cancelPromise != null) {
-	                    if (maybePromise.isCancelled()) {
+	                    if (maybePromise._isCancelled()) {
 	                        var reason =
 	                            new CancellationError("late cancellation observer");
 	                        promise._attachExtraTrace(reason);
@@ -42363,13 +42518,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Promise.prototype._passThrough = function(handler, type, success, fail) {
 	    if (typeof handler !== "function") return this.then();
-	    return this._then(success, fail, undefined, {
-	        promise: this,
-	        handler: handler,
-	        called: false,
-	        cancelPromise: null,
-	        type: type
-	    }, undefined);
+	    return this._then(success,
+	                      fail,
+	                      undefined,
+	                      new PassThroughHandlerContext(this, type, handler),
+	                      undefined);
 	};
 	
 	Promise.prototype.lastly =
@@ -42384,7 +42537,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return this._passThrough(handler, 1, finallyHandler);
 	};
 	
-	return finallyHandler;
+	return PassThroughHandlerContext;
 	};
 	
 	},{"./util":36}],16:[function(_dereq_,module,exports){
@@ -42420,9 +42573,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function PromiseSpawn(generatorFunction, receiver, yieldHandler, stack) {
-	    var promise = this._promise = new Promise(INTERNAL);
-	    promise._captureStackTrace();
-	    promise._setOnCancel(this);
+	    if (debug.cancellation()) {
+	        var internal = new Promise(INTERNAL);
+	        var _finallyPromise = this._finallyPromise = new Promise(INTERNAL);
+	        this._promise = internal.lastly(function() {
+	            return _finallyPromise;
+	        });
+	        internal._captureStackTrace();
+	        internal._setOnCancel(this);
+	    } else {
+	        var promise = this._promise = new Promise(INTERNAL);
+	        promise._captureStackTrace();
+	    }
 	    this._stack = stack;
 	    this._generatorFunction = generatorFunction;
 	    this._receiver = receiver;
@@ -42431,15 +42593,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ? [yieldHandler].concat(yieldHandlers)
 	        : yieldHandlers;
 	    this._yieldedPromise = null;
+	    this._cancellationPhase = false;
 	}
 	util.inherits(PromiseSpawn, Proxyable);
 	
 	PromiseSpawn.prototype._isResolved = function() {
-	    return this.promise === null;
+	    return this._promise === null;
 	};
 	
 	PromiseSpawn.prototype._cleanup = function() {
 	    this._promise = this._generator = null;
+	    if (debug.cancellation() && this._finallyPromise !== null) {
+	        this._finallyPromise._fulfill();
+	        this._finallyPromise = null;
+	    }
 	};
 	
 	PromiseSpawn.prototype._promiseCancelled = function() {
@@ -42456,22 +42623,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        result = tryCatch(this._generator["throw"]).call(this._generator,
 	                                                         reason);
 	        this._promise._popContext();
-	        if (result === errorObj && result.e === reason) {
-	            result = null;
-	        }
 	    } else {
 	        this._promise._pushContext();
 	        result = tryCatch(this._generator["return"]).call(this._generator,
 	                                                          undefined);
 	        this._promise._popContext();
 	    }
-	    var promise = this._promise;
-	    this._cleanup();
-	    if (result === errorObj) {
-	        promise._rejectCallback(result.e, false);
-	    } else {
-	        promise.cancel();
-	    }
+	    this._cancellationPhase = true;
+	    this._yieldedPromise = null;
+	    this._continue(result);
 	};
 	
 	PromiseSpawn.prototype._promiseFulfilled = function(value) {
@@ -42515,13 +42675,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var promise = this._promise;
 	    if (result === errorObj) {
 	        this._cleanup();
-	        return promise._rejectCallback(result.e, false);
+	        if (this._cancellationPhase) {
+	            return promise.cancel();
+	        } else {
+	            return promise._rejectCallback(result.e, false);
+	        }
 	    }
 	
 	    var value = result.value;
 	    if (result.done === true) {
 	        this._cleanup();
-	        return promise._resolveCallback(value);
+	        if (this._cancellationPhase) {
+	            return promise.cancel();
+	        } else {
+	            return promise._resolveCallback(value);
+	        }
 	    } else {
 	        var maybePromise = tryConvertToPromise(value, this._promise);
 	        if (!(maybePromise instanceof Promise)) {
@@ -42547,9 +42715,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._yieldedPromise = maybePromise;
 	            maybePromise._proxy(this, null);
 	        } else if (((bitField & 33554432) !== 0)) {
-	            this._promiseFulfilled(maybePromise._value());
+	            Promise._async.invoke(
+	                this._promiseFulfilled, this, maybePromise._value()
+	            );
 	        } else if (((bitField & 16777216) !== 0)) {
-	            this._promiseRejected(maybePromise._reason());
+	            Promise._async.invoke(
+	                this._promiseRejected, this, maybePromise._reason()
+	            );
 	        } else {
 	            this._promiseCancelled();
 	        }
@@ -42596,7 +42768,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	},{"./errors":12,"./util":36}],17:[function(_dereq_,module,exports){
 	"use strict";
 	module.exports =
-	function(Promise, PromiseArray, tryConvertToPromise, INTERNAL) {
+	function(Promise, PromiseArray, tryConvertToPromise, INTERNAL, async,
+	         getDomain) {
 	var util = _dereq_("./util");
 	var canEvaluate = util.canEvaluate;
 	var tryCatch = util.tryCatch;
@@ -42638,25 +42811,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var name = "Holder$" + total;
 	
 	
-	        var code = "return function(tryCatch, errorObj, Promise) {           \n\
+	        var code = "return function(tryCatch, errorObj, Promise, async) {    \n\
 	            'use strict';                                                    \n\
 	            function [TheName](fn) {                                         \n\
 	                [TheProperties]                                              \n\
 	                this.fn = fn;                                                \n\
+	                this.asyncNeeded = true;                                     \n\
 	                this.now = 0;                                                \n\
 	            }                                                                \n\
+	                                                                             \n\
+	            [TheName].prototype._callFunction = function(promise) {          \n\
+	                promise._pushContext();                                      \n\
+	                var ret = tryCatch(this.fn)([ThePassedArguments]);           \n\
+	                promise._popContext();                                       \n\
+	                if (ret === errorObj) {                                      \n\
+	                    promise._rejectCallback(ret.e, false);                   \n\
+	                } else {                                                     \n\
+	                    promise._resolveCallback(ret);                           \n\
+	                }                                                            \n\
+	            };                                                               \n\
+	                                                                             \n\
 	            [TheName].prototype.checkFulfillment = function(promise) {       \n\
 	                var now = ++this.now;                                        \n\
 	                if (now === [TheTotal]) {                                    \n\
-	                    promise._pushContext();                                  \n\
-	                    var callback = this.fn;                                  \n\
-	                    var ret = tryCatch(callback)([ThePassedArguments]);      \n\
-	                    promise._popContext();                                   \n\
-	                    if (ret === errorObj) {                                  \n\
-	                        promise._rejectCallback(ret.e, false);               \n\
+	                    if (this.asyncNeeded) {                                  \n\
+	                        async.invoke(this._callFunction, this, promise);     \n\
 	                    } else {                                                 \n\
-	                        promise._resolveCallback(ret);                       \n\
+	                        this._callFunction(promise);                         \n\
 	                    }                                                        \n\
+	                                                                             \n\
 	                }                                                            \n\
 	            };                                                               \n\
 	                                                                             \n\
@@ -42665,7 +42848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            };                                                               \n\
 	                                                                             \n\
 	            return [TheName];                                                \n\
-	        }(tryCatch, errorObj, Promise);                                      \n\
+	        }(tryCatch, errorObj, Promise, async);                               \n\
 	        ";
 	
 	        code = code.replace(/\[TheName\]/g, name)
@@ -42674,8 +42857,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .replace(/\[TheProperties\]/g, assignment)
 	            .replace(/\[CancellationCode\]/g, cancellationCode);
 	
-	        return new Function("tryCatch", "errorObj", "Promise", code)
-	                           (tryCatch, errorObj, Promise);
+	        return new Function("tryCatch", "errorObj", "Promise", "async", code)
+	                           (tryCatch, errorObj, Promise, async);
 	    };
 	
 	    var holderClasses = [];
@@ -42716,6 +42899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            maybePromise._then(callbacks[i], reject,
 	                                               undefined, ret, holder);
 	                            promiseSetters[i](maybePromise, holder);
+	                            holder.asyncNeeded = false;
 	                        } else if (((bitField & 33554432) !== 0)) {
 	                            callbacks[i].call(ret,
 	                                              maybePromise._value(), holder);
@@ -42728,7 +42912,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        callbacks[i].call(ret, maybePromise, holder);
 	                    }
 	                }
+	
 	                if (!ret._isFateSealed()) {
+	                    if (holder.asyncNeeded) {
+	                        var domain = getDomain();
+	                        if (domain !== null) {
+	                            holder.fn = util.domainBind(domain, holder.fn);
+	                        }
+	                    }
 	                    ret._setAsyncGuaranteed();
 	                    ret._setOnCancel(holder);
 	                }
@@ -42756,22 +42947,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	var util = _dereq_("./util");
 	var tryCatch = util.tryCatch;
 	var errorObj = util.errorObj;
-	var EMPTY_ARRAY = [];
+	var async = Promise._async;
 	
 	function MappingPromiseArray(promises, fn, limit, _filter) {
 	    this.constructor$(promises);
 	    this._promise._captureStackTrace();
 	    var domain = getDomain();
-	    this._callback = domain === null ? fn : domain.bind(fn);
+	    this._callback = domain === null ? fn : util.domainBind(domain, fn);
 	    this._preservedValues = _filter === INTERNAL
 	        ? new Array(this.length())
 	        : null;
 	    this._limit = limit;
 	    this._inFlight = 0;
-	    this._queue = limit >= 1 ? [] : EMPTY_ARRAY;
-	    this._init$(undefined, -2);
+	    this._queue = [];
+	    async.invoke(this._asyncInit, this, undefined);
 	}
 	util.inherits(MappingPromiseArray, PromiseArray);
+	
+	MappingPromiseArray.prototype._asyncInit = function() {
+	    this._init$(undefined, -2);
+	};
 	
 	MappingPromiseArray.prototype._init = function () {};
 	
@@ -42878,9 +43073,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (typeof fn !== "function") {
 	        return apiRejection("expecting a function but got " + util.classString(fn));
 	    }
-	    var limit = typeof options === "object" && options !== null
-	        ? options.concurrency
-	        : 0;
+	
+	    var limit = 0;
+	    if (options !== undefined) {
+	        if (typeof options === "object" && options !== null) {
+	            if (typeof options.concurrency !== "number") {
+	                return Promise.reject(
+	                    new TypeError("'concurrency' must be a number but it is " +
+	                                    util.classString(options.concurrency)));
+	            }
+	            limit = options.concurrency;
+	        } else {
+	            return Promise.reject(new TypeError(
+	                            "options argument must be an object but it is " +
+	                             util.classString(options)));
+	        }
+	    }
 	    limit = typeof limit === "number" &&
 	        isFinite(limit) && limit >= 1 ? limit : 0;
 	    return new MappingPromiseArray(promises, fn, limit, _filter).promise();
@@ -43121,7 +43329,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var createContext = Context.create;
 	var debug = _dereq_("./debuggability")(Promise, Context);
 	var CapturedTrace = debug.CapturedTrace;
-	var finallyHandler = _dereq_("./finally")(Promise, tryConvertToPromise);
+	var PassThroughHandlerContext =
+	    _dereq_("./finally")(Promise, tryConvertToPromise);
 	var catchFilter = _dereq_("./catch_filter")(NEXT_FILTER);
 	var nodebackForPromise = _dereq_("./nodeback");
 	var errorObj = util.errorObj;
@@ -43146,6 +43355,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._resolveFromExecutor(executor);
 	    }
 	    this._promiseCreated();
+	    this._fireEvent("promiseCreated", this);
 	}
 	
 	Promise.prototype.toString = function () {
@@ -43162,7 +43372,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (util.isObject(item)) {
 	                catchInstances[j++] = item;
 	            } else {
-	                return apiRejection("expecting an object but got " + util.classString(item));
+	                return apiRejection("expecting an object but got " +
+	                    "A catch statement predicate " + util.classString(item));
 	            }
 	        }
 	        catchInstances.length = j;
@@ -43232,12 +43443,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return this.caught(util.originatesFromRejection, fn);
 	};
 	
+	Promise.getNewLibraryCopy = module.exports;
+	
 	Promise.is = function (val) {
 	    return val instanceof Promise;
 	};
 	
 	Promise.fromNode = Promise.fromCallback = function(fn) {
 	    var ret = new Promise(INTERNAL);
+	    ret._captureStackTrace();
 	    var multiArgs = arguments.length > 1 ? !!Object(arguments[1]).multiArgs
 	                                         : false;
 	    var result = tryCatch(fn)(nodebackForPromise(ret, multiArgs));
@@ -43256,6 +43470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var ret = tryConvertToPromise(obj);
 	    if (!(ret instanceof Promise)) {
 	        ret = new Promise(INTERNAL);
+	        ret._captureStackTrace();
 	        ret._setFulfilled();
 	        ret._rejectionHandler0 = obj;
 	    }
@@ -43275,9 +43490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (typeof fn !== "function") {
 	        throw new TypeError("expecting a function but got " + util.classString(fn));
 	    }
-	    var prev = async._schedule;
-	    async._schedule = fn;
-	    return prev;
+	    return async.setScheduler(fn);
 	};
 	
 	Promise.prototype._then = function (
@@ -43302,6 +43515,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                receiver = target === this ? undefined : this._boundTo;
 	            }
 	        }
+	        this._fireEvent("promiseChained", this, promise);
 	    }
 	
 	    var domain = getDomain();
@@ -43323,7 +43537,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        async.invoke(settler, target, {
 	            handler: domain === null ? handler
-	                : (typeof handler === "function" && domain.bind(handler)),
+	                : (typeof handler === "function" &&
+	                    util.domainBind(domain, handler)),
 	            promise: promise,
 	            receiver: receiver,
 	            value: value
@@ -43354,14 +43569,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Promise.prototype._setFulfilled = function () {
 	    this._bitField = this._bitField | 33554432;
+	    this._fireEvent("promiseFulfilled", this);
 	};
 	
 	Promise.prototype._setRejected = function () {
 	    this._bitField = this._bitField | 16777216;
+	    this._fireEvent("promiseRejected", this);
 	};
 	
 	Promise.prototype._setFollowing = function () {
 	    this._bitField = this._bitField | 67108864;
+	    this._fireEvent("promiseResolved", this);
 	};
 	
 	Promise.prototype._setIsFinal = function () {
@@ -43378,9 +43596,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Promise.prototype._setCancelled = function() {
 	    this._bitField = this._bitField | 65536;
+	    this._fireEvent("promiseCancelled", this);
+	};
+	
+	Promise.prototype._setWillBeCancelled = function() {
+	    this._bitField = this._bitField | 8388608;
 	};
 	
 	Promise.prototype._setAsyncGuaranteed = function() {
+	    if (async.hasCustomScheduler()) return;
 	    this._bitField = this._bitField | 134217728;
 	};
 	
@@ -43450,11 +43674,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._receiver0 = receiver;
 	        if (typeof fulfill === "function") {
 	            this._fulfillmentHandler0 =
-	                domain === null ? fulfill : domain.bind(fulfill);
+	                domain === null ? fulfill : util.domainBind(domain, fulfill);
 	        }
 	        if (typeof reject === "function") {
 	            this._rejectionHandler0 =
-	                domain === null ? reject : domain.bind(reject);
+	                domain === null ? reject : util.domainBind(domain, reject);
 	        }
 	    } else {
 	        var base = index * 4 - 4;
@@ -43462,11 +43686,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this[base + 3] = receiver;
 	        if (typeof fulfill === "function") {
 	            this[base + 0] =
-	                domain === null ? fulfill : domain.bind(fulfill);
+	                domain === null ? fulfill : util.domainBind(domain, fulfill);
 	        }
 	        if (typeof reject === "function") {
 	            this[base + 1] =
-	                domain === null ? reject : domain.bind(reject);
+	                domain === null ? reject : util.domainBind(domain, reject);
 	        }
 	    }
 	    this._setLength(index + 1);
@@ -43487,6 +43711,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (shouldBind) this._propagateFrom(maybePromise, 2);
 	
 	    var promise = maybePromise._target();
+	
+	    if (promise === this) {
+	        this._reject(makeSelfResolutionError());
+	        return;
+	    }
+	
 	    var bitField = promise._bitField;
 	    if (((bitField & 50397184) === 0)) {
 	        var len = this._length();
@@ -43563,11 +43793,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    if (x === NEXT_FILTER) {
 	        promise._reject(value);
-	    } else if (x === errorObj || x === promise) {
-	        var err = x === promise ? makeSelfResolutionError() : x.e;
-	        promise._rejectCallback(err, false);
+	    } else if (x === errorObj) {
+	        promise._rejectCallback(x.e, false);
 	    } else {
-	        debug.checkForgottenReturns(x, promiseCreated, "",  promise);
+	        debug.checkForgottenReturns(x, promiseCreated, "",  promise, this);
 	        promise._resolveCallback(x);
 	    }
 	};
@@ -43593,7 +43822,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (((bitField & 65536) !== 0)) {
 	        if (isPromise) promise._invokeInternalOnCancel();
 	
-	        if (handler === finallyHandler) {
+	        if (receiver instanceof PassThroughHandlerContext &&
+	            receiver.isFinallyHandler()) {
 	            receiver.cancelPromise = promise;
 	            if (tryCatch(handler).call(receiver, value) === errorObj) {
 	                promise._reject(errorObj.e);
@@ -43699,11 +43929,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    if ((bitField & 65535) > 0) {
-	        if (((bitField & 134217728) !== 0)) {
-	            this._settlePromises();
-	        } else {
-	            async.settlePromises(this);
-	        }
+	        async.settlePromises(this);
 	    } else {
 	        this._ensurePossibleRejectionHandled();
 	    }
@@ -43781,23 +44007,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	_dereq_("./direct_resolve")(Promise);
 	_dereq_("./synchronous_inspection")(Promise);
 	_dereq_("./join")(
-	    Promise, PromiseArray, tryConvertToPromise, INTERNAL, debug);
+	    Promise, PromiseArray, tryConvertToPromise, INTERNAL, async, getDomain);
 	Promise.Promise = Promise;
+	Promise.version = "3.4.6";
 	_dereq_('./map.js')(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
+	_dereq_('./call_get.js')(Promise);
 	_dereq_('./using.js')(Promise, apiRejection, tryConvertToPromise, createContext, INTERNAL, debug);
-	_dereq_('./timers.js')(Promise, INTERNAL);
+	_dereq_('./timers.js')(Promise, INTERNAL, debug);
 	_dereq_('./generators.js')(Promise, apiRejection, INTERNAL, tryConvertToPromise, Proxyable, debug);
 	_dereq_('./nodeify.js')(Promise);
-	_dereq_('./call_get.js')(Promise);
+	_dereq_('./promisify.js')(Promise, INTERNAL);
 	_dereq_('./props.js')(Promise, PromiseArray, tryConvertToPromise, apiRejection);
 	_dereq_('./race.js')(Promise, INTERNAL, tryConvertToPromise, apiRejection);
 	_dereq_('./reduce.js')(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
 	_dereq_('./settle.js')(Promise, PromiseArray, debug);
 	_dereq_('./some.js')(Promise, PromiseArray, apiRejection);
-	_dereq_('./promisify.js')(Promise, INTERNAL);
-	_dereq_('./any.js')(Promise);
-	_dereq_('./each.js')(Promise, INTERNAL);
 	_dereq_('./filter.js')(Promise, INTERNAL);
+	_dereq_('./each.js')(Promise, INTERNAL);
+	_dereq_('./any.js')(Promise);
 	                                                         
 	    util.toFastProperties(Promise);                                          
 	    util.toFastProperties(Promise.prototype);                                
@@ -43952,7 +44179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	PromiseArray.prototype._cancel = function() {
-	    if (this._isResolved() || !this._promise.isCancellable()) return;
+	    if (this._isResolved() || !this._promise._isCancellable()) return;
 	    this._values = null;
 	    this._promise._cancel();
 	};
@@ -44603,27 +44830,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	function ReductionPromiseArray(promises, fn, initialValue, _each) {
 	    this.constructor$(promises);
 	    var domain = getDomain();
-	    this._fn = domain === null ? fn : domain.bind(fn);
+	    this._fn = domain === null ? fn : util.domainBind(domain, fn);
 	    if (initialValue !== undefined) {
 	        initialValue = Promise.resolve(initialValue);
 	        initialValue._attachCancellationCallback(this);
 	    }
 	    this._initialValue = initialValue;
 	    this._currentCancellable = null;
-	    this._eachValues = _each === INTERNAL ? [] : undefined;
+	    if(_each === INTERNAL) {
+	        this._eachValues = Array(this._length);
+	    } else if (_each === 0) {
+	        this._eachValues = null;
+	    } else {
+	        this._eachValues = undefined;
+	    }
 	    this._promise._captureStackTrace();
 	    this._init$(undefined, -5);
 	}
 	util.inherits(ReductionPromiseArray, PromiseArray);
 	
 	ReductionPromiseArray.prototype._gotAccum = function(accum) {
-	    if (this._eachValues !== undefined && accum !== INTERNAL) {
+	    if (this._eachValues !== undefined && 
+	        this._eachValues !== null && 
+	        accum !== INTERNAL) {
 	        this._eachValues.push(accum);
 	    }
 	};
 	
 	ReductionPromiseArray.prototype._eachComplete = function(value) {
-	    this._eachValues.push(value);
+	    if (this._eachValues !== null) {
+	        this._eachValues.push(value);
+	    }
 	    return this._eachValues;
 	};
 	
@@ -44759,23 +44996,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	var noAsyncScheduler = function() {
 	    throw new Error("No async scheduler available\u000a\u000a    See http://goo.gl/MqrFmX\u000a");
 	};
+	var NativePromise = util.getNativePromise();
 	if (util.isNode && typeof MutationObserver === "undefined") {
 	    var GlobalSetImmediate = global.setImmediate;
 	    var ProcessNextTick = process.nextTick;
 	    schedule = util.isRecentNode
 	                ? function(fn) { GlobalSetImmediate.call(global, fn); }
 	                : function(fn) { ProcessNextTick.call(process, fn); };
+	} else if (typeof NativePromise === "function" &&
+	           typeof NativePromise.resolve === "function") {
+	    var nativePromise = NativePromise.resolve();
+	    schedule = function(fn) {
+	        nativePromise.then(fn);
+	    };
 	} else if ((typeof MutationObserver !== "undefined") &&
 	          !(typeof window !== "undefined" &&
 	            window.navigator &&
-	            window.navigator.standalone)) {
-	    schedule = function(fn) {
+	            (window.navigator.standalone || window.cordova))) {
+	    schedule = (function() {
 	        var div = document.createElement("div");
-	        var observer = new MutationObserver(fn);
-	        observer.observe(div, {attributes: true});
-	        return function() { div.classList.toggle("foo"); };
-	    };
-	    schedule.isStatic = true;
+	        var opts = {attributes: true};
+	        var toggleScheduled = false;
+	        var div2 = document.createElement("div");
+	        var o2 = new MutationObserver(function() {
+	            div.classList.toggle("foo");
+	            toggleScheduled = false;
+	        });
+	        o2.observe(div2, opts);
+	
+	        var scheduleToggle = function() {
+	            if (toggleScheduled) return;
+	                toggleScheduled = true;
+	                div2.classList.toggle("foo");
+	            };
+	
+	            return function schedule(fn) {
+	            var o = new MutationObserver(function() {
+	                o.disconnect();
+	                fn();
+	            });
+	            o.observe(div, opts);
+	            scheduleToggle();
+	        };
+	    })();
 	} else if (typeof setImmediate !== "undefined") {
 	    schedule = function (fn) {
 	        setImmediate(fn);
@@ -45035,13 +45298,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return (this._bitField & 50331648) !== 0;
 	};
 	
-	PromiseInspection.prototype.isCancelled =
-	Promise.prototype._isCancelled = function() {
+	PromiseInspection.prototype.isCancelled = function() {
+	    return (this._bitField & 8454144) !== 0;
+	};
+	
+	Promise.prototype.__isCancelled = function() {
 	    return (this._bitField & 65536) === 65536;
 	};
 	
+	Promise.prototype._isCancelled = function() {
+	    return this._target().__isCancelled();
+	};
+	
 	Promise.prototype.isCancelled = function() {
-	    return this._target()._isCancelled();
+	    return (this._target()._bitField & 8454144) !== 0;
 	};
 	
 	Promise.prototype.isPending = function() {
@@ -45131,7 +45401,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var hasProp = {}.hasOwnProperty;
 	function isAnyBluebirdPromise(obj) {
-	    return hasProp.call(obj, "_promise0");
+	    try {
+	        return hasProp.call(obj, "_promise0");
+	    } catch (e) {
+	        return false;
+	    }
 	}
 	
 	function doThenable(x, then, context) {
@@ -45168,12 +45442,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	},{"./util":36}],34:[function(_dereq_,module,exports){
 	"use strict";
-	module.exports = function(Promise, INTERNAL) {
+	module.exports = function(Promise, INTERNAL, debug) {
 	var util = _dereq_("./util");
 	var TimeoutError = Promise.TimeoutError;
 	
-	var afterTimeout = function (promise, message) {
-	    if (!promise.isPending()) return;
+	function HandleWrapper(handle)  {
+	    this.handle = handle;
+	}
+	
+	HandleWrapper.prototype._resultCancelled = function() {
+	    clearTimeout(this.handle);
+	};
+	
+	var afterValue = function(value) { return delay(+this).thenReturn(value); };
+	var delay = Promise.delay = function (ms, value) {
+	    var ret;
+	    var handle;
+	    if (value !== undefined) {
+	        ret = Promise.resolve(value)
+	                ._then(afterValue, null, null, ms, undefined);
+	        if (debug.cancellation() && value instanceof Promise) {
+	            ret._setOnCancel(value);
+	        }
+	    } else {
+	        ret = new Promise(INTERNAL);
+	        handle = setTimeout(function() { ret._fulfill(); }, +ms);
+	        if (debug.cancellation()) {
+	            ret._setOnCancel(new HandleWrapper(handle));
+	        }
+	        ret._captureStackTrace();
+	    }
+	    ret._setAsyncGuaranteed();
+	    return ret;
+	};
+	
+	Promise.prototype.delay = function (ms) {
+	    return delay(ms, this);
+	};
+	
+	var afterTimeout = function (promise, message, parent) {
 	    var err;
 	    if (typeof message !== "string") {
 	        if (message instanceof Error) {
@@ -45187,47 +45494,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	    util.markAsOriginatingFromRejection(err);
 	    promise._attachExtraTrace(err);
 	    promise._reject(err);
-	};
 	
-	var afterValue = function(value) { return delay(+this).thenReturn(value); };
-	var delay = Promise.delay = function (ms, value) {
-	    var ret;
-	    if (value !== undefined) {
-	        ret = Promise.resolve(value)
-	                ._then(afterValue, null, null, ms, undefined);
-	    } else {
-	        ret = new Promise(INTERNAL);
-	        setTimeout(function() { ret._fulfill(); }, +ms);
+	    if (parent != null) {
+	        parent.cancel();
 	    }
-	    ret._setAsyncGuaranteed();
-	    return ret;
-	};
-	
-	Promise.prototype.delay = function (ms) {
-	    return delay(ms, this);
 	};
 	
 	function successClear(value) {
-	    var handle = this;
-	    if (handle instanceof Number) handle = +handle;
-	    clearTimeout(handle);
+	    clearTimeout(this.handle);
 	    return value;
 	}
 	
 	function failureClear(reason) {
-	    var handle = this;
-	    if (handle instanceof Number) handle = +handle;
-	    clearTimeout(handle);
+	    clearTimeout(this.handle);
 	    throw reason;
 	}
 	
 	Promise.prototype.timeout = function (ms, message) {
 	    ms = +ms;
-	    var ret = this.then();
-	    var handle = setTimeout(function timeoutTimeout() {
-	        afterTimeout(ret, message);
-	    }, ms);
-	    return ret._then(successClear, failureClear, undefined, handle, undefined);
+	    var ret, parent;
+	
+	    var handleWrapper = new HandleWrapper(setTimeout(function timeoutTimeout() {
+	        if (ret.isPending()) {
+	            afterTimeout(ret, message, parent);
+	        }
+	    }, ms));
+	
+	    if (debug.cancellation()) {
+	        parent = this.then();
+	        ret = parent._then(successClear, failureClear,
+	                            undefined, handleWrapper, undefined);
+	        ret._setOnCancel(handleWrapper);
+	    } else {
+	        ret = this._then(successClear, failureClear,
+	                            undefined, handleWrapper, undefined);
+	    }
+	
+	    return ret;
 	};
 	
 	};
@@ -45241,6 +45544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var inherits = _dereq_("./util").inherits;
 	    var errorObj = util.errorObj;
 	    var tryCatch = util.tryCatch;
+	    var NULL = {};
 	
 	    function thrower(e) {
 	        setTimeout(function(){throw e;}, 0);
@@ -45301,14 +45605,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.promise().isFulfilled()) {
 	            return this.promise().value();
 	        }
-	        return null;
+	        return NULL;
 	    };
 	
 	    Disposer.prototype.tryDispose = function(inspection) {
 	        var resource = this.resource();
 	        var context = this._context;
 	        if (context !== undefined) context._pushContext();
-	        var ret = resource !== null
+	        var ret = resource !== NULL
 	            ? this.doDispose(resource, inspection) : null;
 	        if (context !== undefined) context._popContext();
 	        this._promise._unsetDisposable();
@@ -45466,6 +45770,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var errorObj = {e: {}};
 	var tryCatchTarget;
+	var globalObject = typeof self !== "undefined" ? self :
+	    typeof window !== "undefined" ? window :
+	    typeof global !== "undefined" ? global :
+	    this !== undefined ? this : null;
+	
 	function tryCatcher() {
 	    try {
 	        var target = tryCatchTarget;
@@ -45679,6 +45988,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}
 	
+	function isError(obj) {
+	    return obj !== null &&
+	           typeof obj === "object" &&
+	           typeof obj.message === "string" &&
+	           typeof obj.name === "string";
+	}
+	
 	function markAsOriginatingFromRejection(e) {
 	    try {
 	        notEnumerableProp(e, "isOperational", true);
@@ -45693,7 +46009,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function canAttachTrace(obj) {
-	    return obj instanceof Error && es5.propertyIsWritable(obj, "stack");
+	    return isError(obj) && es5.propertyIsWritable(obj, "stack");
 	}
 	
 	var ensureErrorObject = (function() {
@@ -45764,6 +46080,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return isNode ? process.env[key] : def;
 	}
 	
+	function getNativePromise() {
+	    if (typeof Promise === "function") {
+	        try {
+	            var promise = new Promise(function(){});
+	            if ({}.toString.call(promise) === "[object Promise]") {
+	                return Promise;
+	            }
+	        } catch (e) {}
+	    }
+	}
+	
+	function domainBind(self, cb) {
+	    return self.bind(cb);
+	}
+	
 	var ret = {
 	    isClass: isClass,
 	    isIdentifier: isIdentifier,
@@ -45775,6 +46106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    notEnumerableProp: notEnumerableProp,
 	    isPrimitive: isPrimitive,
 	    isObject: isObject,
+	    isError: isError,
 	    canEvaluate: canEvaluate,
 	    errorObj: errorObj,
 	    tryCatch: tryCatch,
@@ -45793,7 +46125,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    hasDevTools: typeof chrome !== "undefined" && chrome &&
 	                 typeof chrome.loadTimes === "function",
 	    isNode: isNode,
-	    env: env
+	    env: env,
+	    global: globalObject,
+	    getNativePromise: getNativePromise,
+	    domainBind: domainBind
 	};
 	ret.isRecentNode = ret.isNode && (function() {
 	    var version = process.versions.node.split(".").map(Number);
@@ -45820,7 +46155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core  = __webpack_require__(33)
+	var core  = __webpack_require__(32)
 	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
 	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
 	  return $JSON.stringify.apply($JSON, arguments);
@@ -45831,14 +46166,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(495);
-	module.exports = __webpack_require__(33).Object.assign;
+	module.exports = __webpack_require__(32).Object.assign;
 
 /***/ },
 /* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(496);
-	var $Object = __webpack_require__(33).Object;
+	var $Object = __webpack_require__(32).Object;
 	module.exports = function defineProperty(it, key, desc){
 	  return $Object.defineProperty(it, key, desc);
 	};
@@ -45851,7 +46186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(217);
 	__webpack_require__(218);
 	__webpack_require__(497);
-	module.exports = __webpack_require__(33).Promise;
+	module.exports = __webpack_require__(32).Promise;
 
 /***/ },
 /* 466 */
@@ -45861,7 +46196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(216);
 	__webpack_require__(499);
 	__webpack_require__(500);
-	module.exports = __webpack_require__(33).Symbol;
+	module.exports = __webpack_require__(32).Symbol;
 
 /***/ },
 /* 467 */
@@ -45933,7 +46268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var global      = __webpack_require__(25)
-	  , core        = __webpack_require__(33)
+	  , core        = __webpack_require__(32)
 	  , dP          = __webpack_require__(45)
 	  , DESCRIPTORS = __webpack_require__(44)
 	  , SPECIES     = __webpack_require__(19)('species');
@@ -45954,7 +46289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 492 */
 [857, 128],
 /* 493 */
-[865, 204, 19, 78, 33],
+[865, 204, 19, 78, 32],
 /* 494 */
 [866, 468, 479, 78, 54, 208],
 /* 495 */
@@ -45962,7 +46297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 496 */
 [868, 75, 44, 45],
 /* 497 */
-[869, 90, 25, 89, 204, 75, 77, 121, 469, 472, 490, 213, 482, 19, 488, 93, 489, 33, 478],
+[869, 90, 25, 89, 204, 75, 77, 121, 469, 472, 490, 213, 482, 19, 488, 93, 489, 32, 478],
 /* 498 */
 [871, 25, 52, 44, 75, 212, 481, 76, 127, 93, 94, 19, 131, 130, 480, 471, 475, 51, 54, 129, 92, 209, 486, 485, 45, 79, 210, 91, 125, 90, 53],
 /* 499 */
@@ -46006,7 +46341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var anObject    = __webpack_require__(5)
-	  , toPrimitive = __webpack_require__(36)
+	  , toPrimitive = __webpack_require__(35)
 	  , NUMBER      = 'number';
 	
 	module.exports = function(hint){
@@ -46093,7 +46428,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $every  = __webpack_require__(34)(4);
+	  , $every  = __webpack_require__(33)(4);
 	
 	$export($export.P + $export.F * !__webpack_require__(30)([].every, true), 'Array', {
 	  // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
@@ -46119,7 +46454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $filter = __webpack_require__(34)(2);
+	  , $filter = __webpack_require__(33)(2);
 	
 	$export($export.P + $export.F * !__webpack_require__(30)([].filter, true), 'Array', {
 	  // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
@@ -46135,7 +46470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	// 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 	var $export = __webpack_require__(2)
-	  , $find   = __webpack_require__(34)(6)
+	  , $find   = __webpack_require__(33)(6)
 	  , KEY     = 'findIndex'
 	  , forced  = true;
 	// Shouldn't skip holes
@@ -46154,7 +46489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	// 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 	var $export = __webpack_require__(2)
-	  , $find   = __webpack_require__(34)(5)
+	  , $find   = __webpack_require__(33)(5)
 	  , KEY     = 'find'
 	  , forced  = true;
 	// Shouldn't skip holes
@@ -46172,7 +46507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var $export  = __webpack_require__(2)
-	  , $forEach = __webpack_require__(34)(0)
+	  , $forEach = __webpack_require__(33)(0)
 	  , STRICT   = __webpack_require__(30)([].forEach, true);
 	
 	$export($export.P + $export.F * !STRICT, 'Array', {
@@ -46304,7 +46639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $map    = __webpack_require__(34)(1);
+	  , $map    = __webpack_require__(33)(1);
 	
 	$export($export.P + $export.F * !__webpack_require__(30)([].map, true), 'Array', {
 	  // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
@@ -46406,7 +46741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $some   = __webpack_require__(34)(3);
+	  , $some   = __webpack_require__(33)(3);
 	
 	$export($export.P + $export.F * !__webpack_require__(30)([].some, true), 'Array', {
 	  // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
@@ -46498,7 +46833,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	var $export     = __webpack_require__(2)
 	  , toObject    = __webpack_require__(16)
-	  , toPrimitive = __webpack_require__(36);
+	  , toPrimitive = __webpack_require__(35);
 	
 	$export($export.P + $export.F * __webpack_require__(8)(function(){
 	  return new Date(NaN).toJSON() !== null || Date.prototype.toJSON.call({toISOString: function(){ return 1; }}) !== 1;
@@ -46882,7 +47217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  , has               = __webpack_require__(18)
 	  , cof               = __webpack_require__(28)
 	  , inheritIfRequired = __webpack_require__(138)
-	  , toPrimitive       = __webpack_require__(36)
+	  , toPrimitive       = __webpack_require__(35)
 	  , fails             = __webpack_require__(8)
 	  , gOPN              = __webpack_require__(58).f
 	  , gOPD              = __webpack_require__(26).f
@@ -47212,7 +47547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var isObject = __webpack_require__(9)
 	  , meta     = __webpack_require__(46).onFreeze;
 	
-	__webpack_require__(35)('freeze', function($freeze){
+	__webpack_require__(34)('freeze', function($freeze){
 	  return function freeze(it){
 	    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
 	  };
@@ -47226,7 +47561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var toIObject                 = __webpack_require__(24)
 	  , $getOwnPropertyDescriptor = __webpack_require__(26).f;
 	
-	__webpack_require__(35)('getOwnPropertyDescriptor', function(){
+	__webpack_require__(34)('getOwnPropertyDescriptor', function(){
 	  return function getOwnPropertyDescriptor(it, key){
 	    return $getOwnPropertyDescriptor(toIObject(it), key);
 	  };
@@ -47237,7 +47572,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.7 Object.getOwnPropertyNames(O)
-	__webpack_require__(35)('getOwnPropertyNames', function(){
+	__webpack_require__(34)('getOwnPropertyNames', function(){
 	  return __webpack_require__(234).f;
 	});
 
@@ -47249,7 +47584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var toObject        = __webpack_require__(16)
 	  , $getPrototypeOf = __webpack_require__(27);
 	
-	__webpack_require__(35)('getPrototypeOf', function(){
+	__webpack_require__(34)('getPrototypeOf', function(){
 	  return function getPrototypeOf(it){
 	    return $getPrototypeOf(toObject(it));
 	  };
@@ -47262,7 +47597,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// 19.1.2.11 Object.isExtensible(O)
 	var isObject = __webpack_require__(9);
 	
-	__webpack_require__(35)('isExtensible', function($isExtensible){
+	__webpack_require__(34)('isExtensible', function($isExtensible){
 	  return function isExtensible(it){
 	    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
 	  };
@@ -47275,7 +47610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// 19.1.2.12 Object.isFrozen(O)
 	var isObject = __webpack_require__(9);
 	
-	__webpack_require__(35)('isFrozen', function($isFrozen){
+	__webpack_require__(34)('isFrozen', function($isFrozen){
 	  return function isFrozen(it){
 	    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
 	  };
@@ -47288,7 +47623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// 19.1.2.13 Object.isSealed(O)
 	var isObject = __webpack_require__(9);
 	
-	__webpack_require__(35)('isSealed', function($isSealed){
+	__webpack_require__(34)('isSealed', function($isSealed){
 	  return function isSealed(it){
 	    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
 	  };
@@ -47310,7 +47645,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var toObject = __webpack_require__(16)
 	  , $keys    = __webpack_require__(59);
 	
-	__webpack_require__(35)('keys', function(){
+	__webpack_require__(34)('keys', function(){
 	  return function keys(it){
 	    return $keys(toObject(it));
 	  };
@@ -47324,7 +47659,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var isObject = __webpack_require__(9)
 	  , meta     = __webpack_require__(46).onFreeze;
 	
-	__webpack_require__(35)('preventExtensions', function($preventExtensions){
+	__webpack_require__(34)('preventExtensions', function($preventExtensions){
 	  return function preventExtensions(it){
 	    return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
 	  };
@@ -47338,7 +47673,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var isObject = __webpack_require__(9)
 	  , meta     = __webpack_require__(46).onFreeze;
 	
-	__webpack_require__(35)('seal', function($seal){
+	__webpack_require__(34)('seal', function($seal){
 	  return function seal(it){
 	    return $seal && isObject(it) ? $seal(meta(it)) : it;
 	  };
@@ -47468,7 +47803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var dP          = __webpack_require__(13)
 	  , $export     = __webpack_require__(2)
 	  , anObject    = __webpack_require__(5)
-	  , toPrimitive = __webpack_require__(36);
+	  , toPrimitive = __webpack_require__(35);
 	
 	// MS Edge has broken Reflect.defineProperty - throwing instead of returning false
 	$export($export.S + $export.F * __webpack_require__(8)(function(){
@@ -48218,7 +48553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 629 */
-[871, 7, 18, 12, 2, 22, 46, 8, 104, 69, 63, 11, 242, 155, 505, 504, 140, 5, 24, 36, 47, 57, 234, 26, 13, 59, 58, 82, 103, 56, 21],
+[871, 7, 18, 12, 2, 22, 46, 8, 104, 69, 63, 11, 242, 155, 505, 504, 140, 5, 24, 35, 47, 57, 234, 26, 13, 59, 58, 82, 103, 56, 21],
 /* 630 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -48595,7 +48930,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	var $export                  = __webpack_require__(2)
 	  , toObject                 = __webpack_require__(16)
-	  , toPrimitive              = __webpack_require__(36)
+	  , toPrimitive              = __webpack_require__(35)
 	  , getPrototypeOf           = __webpack_require__(27)
 	  , getOwnPropertyDescriptor = __webpack_require__(26).f;
 	
@@ -48618,7 +48953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 	var $export                  = __webpack_require__(2)
 	  , toObject                 = __webpack_require__(16)
-	  , toPrimitive              = __webpack_require__(36)
+	  , toPrimitive              = __webpack_require__(35)
 	  , getPrototypeOf           = __webpack_require__(27)
 	  , getOwnPropertyDescriptor = __webpack_require__(26).f;
 	
@@ -75770,7 +76105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 771 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	
 	module.exports = function clean(str) {
 	  return trim(str).replace(/\s\s+/g, ' ');
@@ -75963,7 +76298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var capitalize = __webpack_require__(163);
 	var underscored = __webpack_require__(353);
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	
 	module.exports = function humanize(str) {
 	  return capitalize(trim(underscored(str).replace(/_id$/, '').replace(/_/g, ' ')));
@@ -76008,7 +76343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	s.capitalize       = __webpack_require__(163);
 	s.decapitalize     = __webpack_require__(344);
 	s.chop             = __webpack_require__(769);
-	s.trim             = __webpack_require__(37);
+	s.trim             = __webpack_require__(36);
 	s.clean            = __webpack_require__(771);
 	s.count            = __webpack_require__(773);
 	s.chars            = __webpack_require__(164);
@@ -76428,7 +76763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var makeString = __webpack_require__(6);
 	var defaultToWhiteSpace = __webpack_require__(106);
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	var dasherize = __webpack_require__(343);
 	var cleanDiacritics = __webpack_require__(772);
 	
@@ -76560,7 +76895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 809 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	
 	function boolMatch(s, matchers) {
 	  var i, matcher, down = s.toLowerCase();
@@ -76586,7 +76921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 810 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	
 	module.exports = function toNumber(num, precision) {
 	  if (num == null) return 0;
@@ -76673,7 +77008,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var isBlank = __webpack_require__(348);
-	var trim = __webpack_require__(37);
+	var trim = __webpack_require__(36);
 	
 	module.exports = function words(str, delimiter) {
 	  if (isBlank(str)) return [];

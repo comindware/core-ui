@@ -69,15 +69,6 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
             _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
         }
 
-        new Promise(function (resolve) {
-            setTimeout(() => resolve(), 500);
-        }).then(() => {
-            debugger;
-
-            let a = {};
-            a.asd.asd = 2;
-        });
-
         this.placeholder = this.options.emptyPlaceholder;
     },
 
