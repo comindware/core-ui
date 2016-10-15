@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../../../../libApi';
+import { keypress, Handlebars } from '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
 import template from '../templates/referencePanel.hbs';
@@ -33,7 +33,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'dd-list dd-list_reference',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         var value = this.model.get('value');

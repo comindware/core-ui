@@ -33,7 +33,7 @@ import numeral_ from 'numeral';
 require('babel-runtime/core-js/promise').default = Bluebird_;
 
 Promise.config({
-    warnings: false,
+    warnings: true,
     longStackTraces: true,
     cancellation: true
 });

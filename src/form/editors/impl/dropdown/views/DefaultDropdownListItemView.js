@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import { htmlHelpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
 import template from '../templates/defaultDropdownListItem.hbs';
@@ -26,7 +26,7 @@ export default Marionette.ItemView.extend({
 
     className: 'dd-list__i',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         var model = this.model.toJSON();

@@ -10,7 +10,7 @@
 
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import { keyCode } from '../../utils/utilsApi';
 import { numeral } from '../../libApi';
 
@@ -83,7 +83,7 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
         _.bindAll(this, '__stop');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     focusElement: '.js-input',
 

@@ -137,7 +137,8 @@ gulp.task('localization', function (cb) {
 gulp.task("webpack:build:release", function(callback) {
     // modify some webpack config options
     var myConfig = webpackConfigFactory.build({
-        env: 'production'
+        env: 'production',
+        uglify: true
     });
 
     // run webpack
@@ -153,7 +154,8 @@ gulp.task("webpack:build:release", function(callback) {
 });
 
 var myDevConfig = webpackConfigFactory.build({
-    env: 'development'
+    env: 'production',
+    uglify: false
 });
 var devCompiler = webpack(myDevConfig);
 

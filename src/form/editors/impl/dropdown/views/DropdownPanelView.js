@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../../../../libApi';
+import { Handlebars, keypress } from '../../../../../libApi';
 import template from '../templates/dropdownPanel.hbs';
 import DefaultDropdownListItemView from './DefaultDropdownListItemView';
 import DropdownCollection from '../collections/DropdownCollection';
@@ -30,7 +30,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'dd-list',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     events: {
         'keyup @ui.input': 'onFilter',

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/scrollbar.hbs';
 
 /*
@@ -50,7 +50,7 @@ let ScrollbarView = Marionette.ItemView.extend({
     },
 
     className: 'scrollbar',
-    template: template,
+    template: Handlebars.compile(template),
     model: null,
     state: null,
     dragContext: null,

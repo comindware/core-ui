@@ -11,7 +11,7 @@
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import { keyCode, helpers, htmlHelpers } from '../../utils/utilsApi';
 
 const changeMode = {
@@ -69,6 +69,15 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
             _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
         }
 
+        new Promise(function (resolve) {
+            setTimeout(() => resolve(), 500);
+        }).then(() => {
+            debugger;
+
+            let a = {};
+            a.asd.asd = 2;
+        });
+
         this.placeholder = this.options.emptyPlaceholder;
     },
 
@@ -85,7 +94,7 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
         'keyup @ui.textarea': '__keyup'
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return this.options;

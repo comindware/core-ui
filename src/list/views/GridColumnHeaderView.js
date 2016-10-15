@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/gridcolumnheader.hbs';
 
 /**
@@ -27,7 +27,7 @@ let GridColumnHeaderView = Marionette.ItemView.extend({
         this.column = options.column;
     },
 
-    template: template,
+    template: Handlebars.compile(template),
     className: 'grid-header-column-content',
 
     events: {

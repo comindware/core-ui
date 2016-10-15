@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import { helpers, comparators } from '../../utils/utilsApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/memberSelectEditor.hbs';
@@ -88,7 +88,7 @@ Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends modu
 
     className: 'users-list',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     setValue: function (value) {
         this.__value(_.isArray(value) ? (value.length ? value[0] : null) : value, false);

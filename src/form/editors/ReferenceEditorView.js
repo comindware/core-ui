@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/referenceEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -88,7 +88,7 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
 
     className: 'editor editor_reference',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     setValue: function (value) {
         value = this.__adjustValue(value);

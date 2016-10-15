@@ -9,6 +9,7 @@
 "use strict";
 
 import TextEditorView from './TextEditorView';
+import { Handlebars } from '../../libApi';
 import template from './templates/passwordEditor.hbs';
 
 /**
@@ -20,7 +21,7 @@ import template from './templates/passwordEditor.hbs';
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * */
 Backbone.Form.editors.Password = TextEditorView.extend(/** @lends module:core.form.editors.PasswordEditorView.prototype */{
-    template: template
+    template: Handlebars.compile(template)
 });
 
 export default Backbone.Form.editors.Password;

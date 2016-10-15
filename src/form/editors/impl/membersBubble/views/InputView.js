@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../../../../libApi';
+import { Handlebars, keypress } from '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';
@@ -31,7 +31,7 @@ export default Marionette.ItemView.extend({
         this.filterValue = '';
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     tagName: 'li',
 

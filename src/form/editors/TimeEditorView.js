@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment } from '../../libApi';
+import { Handlebars, moment } from '../../libApi';
 import template from './templates/timeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
@@ -60,7 +60,7 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
 
     className: 'editor editor_time',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     ui: {
         clearButton: '.js-clear-button'

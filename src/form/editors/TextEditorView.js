@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
@@ -77,7 +77,7 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
 
     className: 'editor',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return this.options;

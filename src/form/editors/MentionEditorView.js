@@ -9,7 +9,7 @@
 "use strict";
 
 import template from './templates/mentionEditor.hbs';
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import '../../utils/utilsApi';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -54,7 +54,7 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
         }, {}));
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     regions: {
         dropdownRegion: '.js-dropdown-region'

@@ -23,7 +23,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'time-view',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     regions: {
         dropdownRegion: '.js-dropdown-region'

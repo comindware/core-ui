@@ -9,7 +9,7 @@
 "use strict";
 
 import template from './templates/CommonField.hbs';
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import FieldInfoModel from './models/FieldInfoModel';
 import InfoButtonView from './views/InfoButtonView';
@@ -137,5 +137,5 @@ export default Backbone.Form.Field.extend({
         this.$el.toggleClass(classes.DISABLED, readonly || !enabled);
     }
 }, {
-    template: template
+    template: Handlebars.compile(template)
 });

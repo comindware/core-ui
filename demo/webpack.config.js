@@ -54,7 +54,7 @@ module.exports = {
             module: {
                 preLoaders: [
                     {
-                        test: /core\.bundle\.min\.js$/,
+                        test: /core\.bundle\.js$/,
                         loader: "source-map"
                     }
                 ],
@@ -159,7 +159,7 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    'comindware/core': `${__dirname}/../dist/core.bundle.min.js`,
+                    'comindware/core': `${__dirname}/../dist/core.bundle.js`,
                     prism: `${__dirname}/public/lib/prism/prism.js`,
                     markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                     localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,

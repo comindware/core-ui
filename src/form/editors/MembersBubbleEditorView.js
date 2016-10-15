@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import { helpers, comparators } from '../../utils/utilsApi';
 import template from './templates/membersBubbleEditor.hbs';
@@ -63,7 +63,7 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         this.reqres.setHandler('button:click', this.__onButtonClick, this);
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'editor editor_bubble',
 

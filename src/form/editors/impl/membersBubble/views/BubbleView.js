@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../templates/bubble.hbs';
 
 export default Marionette.ItemView.extend({
@@ -16,7 +16,7 @@ export default Marionette.ItemView.extend({
         this.reqres = options.reqres;
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return {

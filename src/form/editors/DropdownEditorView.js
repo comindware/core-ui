@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import list from '../../list/listApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/dropdownEditor.hbs';
@@ -104,7 +104,7 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
 
     className: 'dropdown-view',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     setValue: function (value) {
         this.__value(value, false);

@@ -9,6 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
+import { Handlebars } from '../libApi';
 import FadingPanelView from '../views/FadingPanelView';
 import template from '../templates/layerLayout.hbs';
 
@@ -23,7 +24,7 @@ export default Marionette.LayoutView.extend({
         this.faded = false;
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     onRender: function () {
         this.fadingPanelView = new FadingPanelView();

@@ -1,8 +1,9 @@
+import { Handlebars } from '../../../../../libApi';
 import ReferenceButtonView from './ReferenceButtonView';
 import template from '../templates/userReferenceButton.hbs';
 
 export default ReferenceButtonView.extend({
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'popout-field-user',
 

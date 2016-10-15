@@ -19,7 +19,7 @@ export default Marionette.ItemView.extend({
     initialize: function (options) {
         this.enabled = options.enabled;
         this.reqres = options.reqres;
-        this.options.template = options.template ? Handlebars.compile(options.template) : template;
+        this.options.template = Handlebars.compile(options.template || template);
     },
 
     behaviors: {

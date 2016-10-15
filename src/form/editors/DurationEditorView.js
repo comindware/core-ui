@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment } from '../../libApi';
+import { Handlebars, moment } from '../../libApi';
 import { keyCode, dateHelpers, helpers } from '../../utils/utilsApi';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
@@ -104,7 +104,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         };
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     focusElement: '.js-input',
 

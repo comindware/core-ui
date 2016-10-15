@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/loadingRow.hbs';
 
 /**
@@ -23,5 +23,5 @@ import template from '../templates/loadingRow.hbs';
 export default Marionette.ItemView.extend({
     className: 'dev-loading-row',
 
-    template: template
+    template: Handlebars.compile(template)
 });

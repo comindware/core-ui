@@ -44,7 +44,7 @@ let defaultOptions = {
  * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
  * */
 export default Marionette.LayoutView.extend({
-    template: template,
+    template: Handlebars.compile(template),
 
     regions: {
         headerRegion: '.js-native-grid-header-region',
