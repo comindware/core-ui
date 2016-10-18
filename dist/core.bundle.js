@@ -10206,6 +10206,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Number} [options.paddingLeft=10] Левый отступ
 	 * @param {Number} [options.paddingRight=20] Правый отступ
 	 * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
+	 * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка.
+	 * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
 	 * */
 	exports.default = Marionette.LayoutView.extend({
 	    template: _libApi.Handlebars.compile(_nativeGrid2.default),
@@ -10228,6 +10230,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _.defaults(this.options, defaultOptions);
 	
 	        this.rowView = this.options.rowView;
+	        this.rowViewSelector = this.options.rowViewSelector;
 	        this.collection = this.options.collection;
 	        this.emptyView = this.options.emptyView;
 	        options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
@@ -10261,6 +10264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            childView: this.rowView,
 	            collection: this.collection,
 	            childViewOptions: childViewOptions,
+	            childViewSelector: this.rowViewSelector,
 	            emptyView: this.emptyView
 	        });
 	
