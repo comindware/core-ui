@@ -75,7 +75,6 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
-        this.__applyFilter();
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: ButtonView,
             buttonViewOptions: {
@@ -90,6 +89,7 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
             autoOpen: false
         });
         this.dropdownRegion.show(this.dropdownView);
+        this.listenTo(this.dropdownView, 'before:open', this.__onBeforeDropdownOpen);
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
@@ -132,6 +132,10 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         } else {
             this.__sendPanelCommand('down');
         }
+    },
+
+    __onBeforeDropdownOpen: function () {
+        this.__applyFilter();
     },
 
     __onDropdownOpen: function () {
