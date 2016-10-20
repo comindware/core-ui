@@ -13,6 +13,7 @@ import factory from './factory';
 import filterViewFactory from './filterViewFactory';
 import RowView from './views/RowView';
 import HeaderView from './views/HeaderView';
+import ColumnHeaderView from './views/ColumnHeaderView';
 import NativeGridView from './views/NativeGridView';
 
 export default /** @lends module:core.nativeGrid */  {
@@ -20,19 +21,20 @@ export default /** @lends module:core.nativeGrid */  {
      * Фабрика списков
      * @namespace
      * */
-    factory: factory,
+    factory,
     /**
      * Фабрика фильтров
      * @namespace
      * */
-    filterViewFactory: filterViewFactory,
+    filterViewFactory,
     /**
      * Views-списка
      * @namespace
      * */
     views: {
-        RowView: RowView,
-        HeaderView: HeaderView,
-        NativeGridView: NativeGridView
+        RowView,
+        HeaderView,
+        ColumnHeaderView,
+        NativeGridView
     }
 };
