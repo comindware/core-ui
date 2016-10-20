@@ -2460,6 +2460,10 @@ input[type="checkbox"].checkbox {
     filter: alpha(opacity=100);
     opacity: 1;
 }
+
+.highlight {
+    background-color: #edecd0;
+}
 /* /search */
 
 
