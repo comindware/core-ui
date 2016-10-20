@@ -39,7 +39,7 @@ export default Marionette.ItemView.extend({
     },
 
     __getText: function () {
-        return this.model.get('fullName') || this.model.get('username');
+        return this.model.get('fullName') || this.model.get('name');
     },
 
     onHighlighted: function (fragment)
