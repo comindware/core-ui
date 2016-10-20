@@ -9,7 +9,7 @@
 "use strict";
 
 import template from '../templates/columnHeader.hbs';
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import GridColumnHeaderView from '../../list/views/GridColumnHeaderView';
 
 /**
@@ -34,7 +34,7 @@ let ColumnHeaderView = GridColumnHeaderView.extend({
         this.gridEventAggregator = options.gridEventAggregator;
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     ui: {
         cellContent: '.js-cell-content',

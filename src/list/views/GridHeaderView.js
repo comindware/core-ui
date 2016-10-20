@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -51,7 +51,7 @@ let GridHeaderView = Marionette.ItemView.extend({
         this.listenTo(GlobalEventService, 'resize', this.handleResize);
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'grid-header',
 

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment, $ } from '../../libApi';
+import { Handlebars, moment, $ } from '../../libApi';
 import template from './templates/dateTimeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
@@ -71,7 +71,7 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
 
     className: 'editor editor_date-time',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return this.options;

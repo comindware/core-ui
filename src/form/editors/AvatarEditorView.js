@@ -8,6 +8,7 @@
 
 'use strict';
 
+import { Handlebars } from '../../libApi';
 import {helpers} from '../../utils/utilsApi';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/avatarEditor.hbs';
@@ -41,7 +42,7 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
     
     focusElement: null,
     
-    template: template,
+    template: Handlebars.compile(template),
     
     ui: {
         image: '.js-image',

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
 import template from '../templates/multiSelectPanel.hbs';
@@ -17,7 +17,7 @@ import MultiSelectItemView from './MultiSelectItemView';
 export default Marionette.CompositeView.extend({
     className: 'multiselect-panel',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function() {
         return {

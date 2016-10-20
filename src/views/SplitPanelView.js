@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../libApi';
+import { Handlebars } from '../libApi';
 import template from '../templates/splitPanel.hbs';
 import GlobalEventService from '../services/GlobalEventService';
 
@@ -48,7 +48,7 @@ export default Marionette.LayoutView.extend({
         }.bind(this));
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     regions: {
         panel1Region: '.js-panel1',

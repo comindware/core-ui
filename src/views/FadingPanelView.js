@@ -8,14 +8,14 @@
 
 "use strict";
 
-import '../libApi';
+import { Handlebars } from '../libApi';
 import template from '../templates/fadingPanel.hbs';
 
 export default Marionette.ItemView.extend({
     initialize: function () {
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'fadingPanel',
 

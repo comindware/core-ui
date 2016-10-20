@@ -8,6 +8,7 @@
 
 "use strict";
 
+import { Handlebars } from '../../libApi';
 import template from './templates/booleanEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 
@@ -54,7 +55,7 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
         'tabindex': '0'
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return {

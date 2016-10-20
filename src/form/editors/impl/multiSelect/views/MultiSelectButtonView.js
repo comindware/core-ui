@@ -8,14 +8,14 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import template from '../templates/multiSelectButton.hbs';
 
 export default Marionette.ItemView.extend({
     className: 'input input_dropdown',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function() {
         let items = this.model.get('value'),

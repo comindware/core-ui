@@ -88,7 +88,7 @@
         ReferenceEditorView
         </h2>
         
-            <div class="class-description">Редактор для выбора объекта в формате <code>{ id, text }</code> из асинхронно подружаемых с сервера массива вариантов.</div>
+            <div class="class-description">Editor to select object in the format <code>{ id, text }</code>, using async fetch for 'options collection'.</div>
         
     
 </header>
@@ -170,7 +170,11 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -196,10 +200,146 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">Провайдер данных, наследник<a href="module-core.form.editors.reference.controllers.BaseReferenceEditorController.html">BaseReferenceEditorController</a>.</td>
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">Data provider, instance<a href="module-core.form.editors.reference.controllers.BaseReferenceEditorController.html">BaseReferenceEditorController</a>.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showAddNewButton</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">responsible for displaying button, which providing to user adding new elements.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>buttonView</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Marionette.html#ItemView">Marionette.ItemView</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ReferenceButtonView
+                
+                </td>
+            
+
+            <td class="description last">view to display button (what we click on to show dropdown).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>listItemView</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Marionette.html#ItemView">Marionette.ItemView</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ReferenceListItemView
+                
+                </td>
+            
+
+            <td class="description last">view to display item in the dropdown list.</td>
         </tr>
 
     

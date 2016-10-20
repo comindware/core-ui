@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {
@@ -22,7 +22,7 @@ export default Marionette.ItemView.extend({
 
     className: 'input',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         var value = this.model.get('value');

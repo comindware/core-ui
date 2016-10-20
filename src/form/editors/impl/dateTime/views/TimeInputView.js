@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment } from '../../../../../libApi';
+import { Handlebars, moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import template from '../templates/timeInput.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
@@ -20,7 +20,7 @@ export default Marionette.ItemView.extend({
         this.timeEditFormat = dateHelpers.getTimeEditFormat();
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     ui: {
         'input': '.js-time-input'

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { $ } from '../../../../../libApi';
+import { Handlebars, $ } from '../../../../../libApi';
 import template from '../templates/date.hbs';
 import dropdownApi from '../../../../../dropdown/dropdownApi';
 import PanelView from './DatePanelView';
@@ -22,7 +22,7 @@ export default Marionette.LayoutView.extend({
         this.dateDisplayFormat = this.getOption('dateDisplayFormat');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'date-view',
 

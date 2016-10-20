@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../libApi';
+import { Handlebars } from '../../../libApi';
 import template from '../templates/message.hbs';
 import WindowService from '../../WindowService';
 import LocalizationService from '../../LocalizationService';
@@ -27,7 +27,7 @@ export default Marionette.ItemView.extend({
         'click @ui.buttons': '__onSelect'
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     close: function (result) {
         WindowService.closePopup();

@@ -42,9 +42,11 @@ let defaultOptions = {
  * @param {Number} [options.paddingLeft=10] Левый отступ
  * @param {Number} [options.paddingRight=20] Правый отступ
  * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
+ * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка.
+ * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
  * */
 export default Marionette.LayoutView.extend({
-    template: template,
+    template: Handlebars.compile(template),
 
     regions: {
         headerRegion: '.js-native-grid-header-region',
@@ -64,6 +66,7 @@ export default Marionette.LayoutView.extend({
         _.defaults(this.options, defaultOptions);
 
         this.rowView = this.options.rowView;
+        this.rowViewSelector = this.options.rowViewSelector;
         this.collection = this.options.collection;
         this.emptyView = this.options.emptyView;
         options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
@@ -96,7 +99,8 @@ export default Marionette.LayoutView.extend({
         this.listView = new ListView({
             childView: this.rowView,
             collection: this.collection,
-            childViewOptions: childViewOptions,
+            childViewOptions,
+            childViewSelector: this.rowViewSelector,
             emptyView: this.emptyView
         });
 

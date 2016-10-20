@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../libApi';
+import { keypress, Handlebars } from '../../libApi';
 import { helpers, htmlHelpers } from '../../utils/utilsApi';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
@@ -132,7 +132,7 @@ let ListView = Marionette.LayoutView.extend({
     },
 
     className: 'list',
-    template: template,
+    template: Handlebars.compile(template),
 
     onShow: function () {
         // Updating viewportHeight and rendering subviews

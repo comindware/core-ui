@@ -8,16 +8,15 @@
 
 "use strict";
 
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
 
 const changeMode = {
-    blur: 'change',
-    keydown: 'keydown',
-    input: 'input'
+    blur: 'blur',
+    keydown: 'keydown'
 };
 
 const defaultOptions = function () {
@@ -78,7 +77,7 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
 
     className: 'editor',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return this.options;
@@ -86,8 +85,7 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
 
     events: {
         'keyup @ui.input': '__keyup',
-        'change @ui.input': '__change',
-        'input @ui.input': '__change'
+        'change @ui.input': '__change'
     },
 
     __keyup: function () {

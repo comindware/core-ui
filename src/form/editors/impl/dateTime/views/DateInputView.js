@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment } from '../../../../../libApi';
+import { Handlebars, moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/dateInput.hbs';
@@ -20,7 +20,7 @@ export default Marionette.ItemView.extend({
         this.editDateFormat = dateHelpers.getDateEditFormat();
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'date-view',
 

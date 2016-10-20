@@ -11,7 +11,7 @@
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import { keyCode, helpers, htmlHelpers } from '../../utils/utilsApi';
 
 const changeMode = {
@@ -85,7 +85,7 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
         'keyup @ui.textarea': '__keyup'
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return this.options;

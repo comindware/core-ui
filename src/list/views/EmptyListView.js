@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/emptyGrid.hbs';
 import LocalizationService from '../../services/LocalizationService';
 
@@ -30,7 +30,7 @@ let EmptyListView = Marionette.ItemView.extend({
         });
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'empty-view'
 });

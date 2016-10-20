@@ -9,7 +9,7 @@
 "use strict";
 
 import template from '../../list/templates/list.hbs';
-import { keypress } from '../../libApi';
+import { keypress, Handlebars } from '../../libApi';
 import { helpers, htmlHelpers } from '../../utils/utilsApi';
 import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -84,7 +84,7 @@ let ListView = Marionette.LayoutView.extend({
     },
 
     className: 'list',
-    template: template,
+    template: Handlebars.compile(template),
 
     onShow: function () {
         this.state.visibleHeight = this.$el.parent().height();

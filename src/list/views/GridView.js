@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import { helpers, htmlHelpers } from '../../utils/utilsApi';
 import template from '../templates/grid.hbs';
 import ListView from './ListView';
@@ -161,7 +161,7 @@ let GridView = Marionette.LayoutView.extend({
 
     className: 'grid',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     onShow: function () {
         let elementWidth = this.$el.width();

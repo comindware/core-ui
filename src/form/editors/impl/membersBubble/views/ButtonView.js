@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../templates/button.hbs';
 import BubbleView from './BubbleView';
 import InputView from './InputView';
@@ -25,7 +25,7 @@ export default Marionette.CollectionView.extend({
         this.collection = this.model.get('selected');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: function () {
         return classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED);

@@ -9,6 +9,7 @@
 "use strict";
 
 import list from '../../../../../list/listApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../templates/multiSelectItem.hbs';
 
 var classes = {
@@ -19,7 +20,7 @@ var classes = {
 export default Marionette.ItemView.extend({
     className: classes.BASE,
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function() {
         var displayAttribute = this.getOption('displayAttribute');

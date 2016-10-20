@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import WindowService from '../../services/WindowService';
 import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
@@ -106,7 +106,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         _.bindAll(this, 'open', 'close', '__handleWindowResize');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     behaviors: {
         BlurableBehavior: {

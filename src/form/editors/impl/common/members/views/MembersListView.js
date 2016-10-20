@@ -9,7 +9,7 @@
 "use strict";
 
 import { helpers } from '../../../../../../utils/utilsApi';
-import '../../../../../../libApi';
+import { Handlebars } from '../../../../../../libApi';
 import list from '../../../../../../list/listApi';
 import template from '../templates/panel.hbs';
 import ListItemView from './MembersListItemView';
@@ -23,7 +23,7 @@ export default Marionette.LayoutView.extend({
         helpers.ensureOption(options, 'collection');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'dd-list',
 

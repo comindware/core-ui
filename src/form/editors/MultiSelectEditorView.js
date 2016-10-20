@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/multiSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -77,7 +77,7 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
 
     className: 'multiselect-wrp',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     onRender: function() {
         this.dropdownView = dropdown.factory.createDropdown({

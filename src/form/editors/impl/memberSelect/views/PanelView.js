@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../../../../libApi';
+import { Handlebars, keypress } from '../../../../../libApi';
 import list from '../../../../../list/listApi';
 import dropdown from '../../../../../dropdown/dropdownApi';
 import { helpers } from '../../../../../utils/utilsApi';
@@ -32,7 +32,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'dd-list',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     ui: {
         input: '.js-input'

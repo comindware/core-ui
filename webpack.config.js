@@ -39,6 +39,7 @@ module.exports = {
         const PRODUCTION = options.env === 'production';
         const TEST_COVERAGE = options.env === 'test-coverage';
         const TEST = options.env === 'test' || TEST_COVERAGE;
+        const UGLIFY = options.uglify || false;
 
         const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
         const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
@@ -62,16 +63,16 @@ module.exports = {
                         }
                     },
                     {
-                        test: /\.hbs$/,
-                        loader: `handlebars-loader?helperDirs[]=${pathResolver.source('utils/handlebars')}`
-                    },
-                    {
                         test: /\.css$/,
                         loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader'].join('!'))
                     },
                     {
                         test: /\.scss$/,
                         loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'].join('!'))
+                    },
+                    {
+                        test: /\.hbs$/,
+                        loader: "html"
                     },
                     {
                         test: /\.html$/,
@@ -171,7 +172,7 @@ module.exports = {
                     'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
                     __DEV__: !PRODUCTION
                 }),
-                (PRODUCTION ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
+                (UGLIFY ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
             ],
             resolve: {
                 root: [
@@ -207,34 +208,37 @@ module.exports = {
         }
 
         if (!TEST) {
-            webpackConfig.entry = pathResolver.source('coreApi.js');
+            webpackConfig.entry = [ 'babel-polyfill', pathResolver.source('coreApi.js') ];
             webpackConfig.output = {
                 path: pathResolver.client(),
-                filename: "core.bundle.js",
+                filename: 'core.bundle.js',
                 library: 'core',
                 libraryTarget: 'umd'
             };
         }
 
         if (PRODUCTION) {
-            webpackConfig.output.filename = 'core.bundle.min.js';
+            webpackConfig.output.filename = UGLIFY ? 'core.bundle.min.js' : 'core.bundle.js';
 
-            webpackConfig.cache = false;
             webpackConfig.debug = false;
             webpackConfig.devtool = 'source-map';
 
             //noinspection JSUnresolvedFunction
             webpackConfig.plugins.push(
                 new webpack.optimize.OccurrenceOrderPlugin(),
-                new webpack.optimize.DedupePlugin(),
-                new webpack.optimize.UglifyJsPlugin({
+                new webpack.optimize.DedupePlugin()
+            );
+
+            if (UGLIFY) {
+                webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
                     compress: {
                         unused: true,
                         dead_code: true,
                         warnings: false
-                    }
-                })
-            );
+                    },
+                    comments: false
+                }));
+            }
         }
 
         return webpackConfig;

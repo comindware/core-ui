@@ -9,7 +9,7 @@
 "use strict";
 
 import template from '../templates/header.hbs';
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -31,7 +31,7 @@ let HeaderView = GridHeaderView.extend({
         this.listenTo(GlobalEventService, 'resize', this.__handleResizeInternal);
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     onRender: function () {
         var self = this;

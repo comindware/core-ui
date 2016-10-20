@@ -11,7 +11,6 @@
 import '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
-import SearchMoreModel from '../models/SearchMoreModel';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
 const config = {
@@ -52,9 +51,6 @@ export default Marionette.Controller.extend({
                 var filterText = options.text.trim().toUpperCase();
                 if (filterText) {
                     this.collection.filter(function (model) {
-                        if (model instanceof SearchMoreModel) {
-                            return true;
-                        }
                         var text = model.get('text');
                         if (!text) {
                             return false;

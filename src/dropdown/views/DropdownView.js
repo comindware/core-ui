@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { $ } from '../../libApi';
+import { $, Handlebars } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import template from '../templates/dropdown.hbs';
 import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
@@ -80,7 +80,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         _.bindAll(this, 'open', 'close');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'dropdown',
 

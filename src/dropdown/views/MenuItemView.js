@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/menuItem.hbs';
 
 /**
@@ -29,7 +29,7 @@ export default Marionette.ItemView.extend({
 
     className: 'popout-menu__i',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     events: {
         'click': function () {

@@ -8,12 +8,12 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../templates/radioButton.hbs';
 
 export default Marionette.ItemView.extend({
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'editor editor_radiobutton',
 
