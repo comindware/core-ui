@@ -30,13 +30,13 @@ let windowService = {
     },
 
     showPopup: function (view) {
+        this.__togglePopupRegion(false);
         self.layerLayoutView.showPopup(view);
-        this.__togglePopupRegion();
     },
 
     closePopup: function () {
         self.layerLayoutView.closePopup();
-        this.__togglePopupRegion();
+        this.__togglePopupRegion(!self.layerLayoutView.faded);
     },
 
     fadeIn: function (options) {
@@ -47,8 +47,8 @@ let windowService = {
         self.layerLayoutView.fadeOut();
     },
 
-    __togglePopupRegion: function () {
-        self.ui.popupRegion.toggleClass(classes.HIDDEN, !self.layerLayoutView.faded);
+    __togglePopupRegion: function (hide) {
+        self.ui.popupRegion.toggleClass(classes.HIDDEN, hide);
     }
 };
 
