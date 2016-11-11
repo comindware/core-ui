@@ -1,9 +1,5 @@
 /* General */
 
-.hidden, .Hidden {
-    display: none !important;
-}
-
 .header-container {
     position: absolute;
     width: 100%;
@@ -12,14 +8,6 @@
 
 .content-container {
     padding-top: 36px;
-    height: 100%;
-}
-
-.fading-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
     height: 100%;
 }
 

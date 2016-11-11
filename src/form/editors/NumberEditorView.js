@@ -6,13 +6,12 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import { Handlebars } from '../../libApi';
+import { numeral, Handlebars } from '../../libApi';
 import { keyCode } from '../../utils/utilsApi';
-import { numeral } from '../../libApi';
 
 const changeMode = {
     keydown: 'keydown',
@@ -106,7 +105,7 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
             if (this.options.changeMode === changeMode.keydown) {
                 this.__value(this.ui.input.val(), true, true, false);
             } else {
-            	this.__value(this.ui.input.val(), true, false, false);
+                this.__value(this.ui.input.val(), true, false, false);
             }
         },
         'change @ui.input': function () {
@@ -181,9 +180,11 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
         i = i || 500;
 
         clearTimeout(this.timer);
-        this.timer = setTimeout(function() {
-            this.__repeat(40, steps);
-        }.bind(this), i);
+        this.timer = setTimeout(() => {
+            if (!this.isDestroyed) {
+                this.__repeat(40, steps);
+            }
+        }, i);
 
         this.__spin(steps * constants.STEP);
     },
@@ -237,6 +238,9 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
     },
 
     __stop: function() {
+        if (this.isDestroyed) {
+            return;
+        }
         if (!this.spinning) {
             return;
         }
@@ -336,8 +340,9 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
     },
 
     __adjustValue: function(value) {
-        var base, aboveMin,
-            options = this.options;
+        let base;
+        let aboveMin;
+        let options = this.options;
 
         // make sure we're at a valid step
         // - find out where we are relative to the base (min or 0)

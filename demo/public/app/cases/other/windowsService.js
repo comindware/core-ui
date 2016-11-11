@@ -2,7 +2,6 @@ define(['comindware/core'],
     function (core) {
         'use strict';
         return function () {
-            // Create popup width close button
             var PopupView = Marionette.ItemView.extend({
                 initialize: function (options) {
                     this.index = (options && options.index) || 0;
@@ -28,7 +27,6 @@ define(['comindware/core'],
                     'click @ui.btnOpen': '__showPopup'
                 },
 
-            // Declare close popup method
                 __closePopup: function () {
                     core.services.WindowService.closePopup();
                 },
@@ -41,7 +39,6 @@ define(['comindware/core'],
                 }
             });
 
-            // Create show popup button view
             var View = Marionette.ItemView.extend({
                 template: Handlebars.compile('<input class="js-show__button" type="button" value="Show Popup"/>'),
 
@@ -53,7 +50,6 @@ define(['comindware/core'],
                     'click @ui.btnTest': '__showPopup'
                 },
 
-                //Declare show popup method
                 __showPopup: function () {
                     var popupView = new PopupView();
                     core.services.WindowService.showPopup(popupView);

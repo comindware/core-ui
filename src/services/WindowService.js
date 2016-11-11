@@ -6,49 +6,51 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import '../libApi';
-import { helpers } from '../utils/utilsApi';
-import LayerLayoutView from '../views/LayerLayoutView';
+import PopupStackView from './window/views/PopupStackView';
 
-let self = {};
+const windowService = /** @lends module:core.services.WindowService */ {
+    initialize () {
+        this.__$popupStackRegionEl = $(document.createElement('div'));
+        this.__$popupStackRegionEl.appendTo(document.body);
 
-let classes = {
-    HIDDEN: 'hidden'
-};
+        let regionManager = new Marionette.RegionManager();
+        regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
 
-let windowService = {
-    initialize: function (options) {
-        helpers.ensureOption(options, 'popupRegion');
-        
-        self.popupRegion = options.popupRegion;
-        self.ui = options.ui;
-
-        self.layerLayoutView = new LayerLayoutView();
-        self.popupRegion.show(self.layerLayoutView);
+        let popupStackRegion = regionManager.get('popupStackRegion');
+        this.__popupStackView = new PopupStackView();
+        popupStackRegion.show(this.__popupStackView);
     },
 
-    showPopup: function (view) {
-        this.__togglePopupRegion(false);
-        self.layerLayoutView.showPopup(view);
+    /**
+     * Shows a marionette.view as a popup. If another popup is already shown, overlaps it.
+     * The size of the view and it's location is totally the view's responsibility.
+     * @param {Marionette.View} view A Marionette.View instance to show.
+     * @returns {String} The popup id that you can use to close it.
+     * */
+    showPopup (view) {
+        this.__popupStackView.showPopup(view);
     },
 
-    closePopup: function () {
-        self.layerLayoutView.closePopup();
-        this.__togglePopupRegion(!self.layerLayoutView.faded);
+    /**
+     * Closes the top-level non-transient popup or does nothing if there is none.
+     * @param {string} [popupId=null]
+     * */
+    closePopup (popupId = null) {
+        this.__popupStackView.closePopup(popupId);
     },
 
-    fadeIn: function (options) {
-        self.layerLayoutView.fadeIn(options);
-    },
-
-    fadeOut: function () {
-        self.layerLayoutView.fadeOut();
-    },
-
-    __togglePopupRegion: function (hide) {
-        self.ui.popupRegion.toggleClass(classes.HIDDEN, hide);
+    /**
+     * Shows a marionette.view as a transient popup. If another popup is already shown, overlaps it.
+     * The size of the view and it's location is totally the view's responsibility.
+     * @param {Marionette.View} view A Marionette.View instance to show.
+     * @param {Object} options Options object.
+     * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
+     * */
+    showTransientPopup (view, options = { fadeBackground: false }) {
+        return this.__popupStackView.showPopup(view, { fadingBackground: options.fadeBackground, transient: true });
     }
 };
 

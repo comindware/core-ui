@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
@@ -179,8 +179,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     updatePanelFlow: function () {
-        let isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT,
-            anchor = this.ui.button;
+        let isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT;
+        let anchor = this.ui.button;
 
         if (this.options.customAnchor && this.button.$anchor) {
             anchor = this.button.$anchor;
@@ -245,12 +245,13 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
         this.panelView = new this.options.panelView(panelViewOptions);
         this.listenTo(this.panelView, 'all', function () {
-            var args = slice.call(arguments);
-            args[0] = 'panel:' + args[0];
+            let args = slice.call(arguments);
+            args[0] = `panel:${args[0]}`;
             this.triggerMethod.apply(this, args);
         });
         this.$el.addClass(classes.OPEN);
         if (this.options.fade) {
+            // TODO: rework it
             WindowService.fadeIn();
         }
         this.ui.panel.show();

@@ -33,7 +33,6 @@ import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import BlurableBehavior from './views/behaviors/BlurableBehavior';
 import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
-import FadingPanelView from './views/FadingPanelView';
 
 import RoutingServiceBase from './services/RoutingServiceBase';
 import MessageService from './services/MessageService';
@@ -64,6 +63,10 @@ var api = {
     services: {
         RoutingServiceBase: RoutingServiceBase,
         MessageService: MessageService,
+        /**
+         * The service is responsible for displaying global windows. For example, modal dialogs (popups).
+         * @namespace
+         * */
         WindowService: WindowService,
         LocalizationService: LocalizationService,
         AjaxService: AjaxService,

@@ -32,11 +32,10 @@ export default {
     initialize: function (options) {
         helpers.ensureOption(options, 'localizationService');
         helpers.ensureOption(options, 'ajaxService');
-        helpers.ensureOption(options, 'windowService');
         helpers.ensureOption(options, 'userService');
 
         UserService.initialize(options.userService);
-        WindowService.initialize(options.windowService);
+        WindowService.initialize();
         LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
 
