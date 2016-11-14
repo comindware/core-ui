@@ -70,6 +70,11 @@ var api = {
         WindowService: WindowService,
         LocalizationService: LocalizationService,
         AjaxService: AjaxService,
+        /**
+         * The services provides an interface to global window events, so you could easily subscribe
+         * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
+         * @namespace
+        * */
         GlobalEventService: GlobalEventService,
         PromiseService: PromiseService,
         UserService: UserService

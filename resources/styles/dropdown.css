@@ -4,7 +4,7 @@
     height: inherit;
 }
 
-.dropdown__button{
+.dropdown__button {
     height: inherit;
 }
 
@@ -18,33 +18,37 @@
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: absolute;
     left: 0;
-    top: 100%;
     z-index: 4;
 }
 
-.dropdown__wrp_over {
-    margin-top: 0;
-    top: 0;
+.dropdown__wrp_up {
+}
+
+.dropdown__wrp_down {
+}
+
+.dropdown__wrp_up-over {
+}
+
+.dropdown__wrp_down-over {
 }
 
 .dropdown__wrp_footer {
     padding-bottom: 38px;
 }
+
 .dropdown__wrp_right {
     left: auto;
     right: -10px;
 }
+
+/* fix for DropdownEditorView */
 .dropdown-view .dropdown__wrp {
     width: auto;
     left: 0;
     right: 0;
     top: 14px;
 }
-.dropdown__wrp_up {
-    top: auto;
-    bottom:30px;
-}
-
 
 /* dropdown-list */
 .dropdown__footer {
@@ -67,10 +71,8 @@
 
 .dropdown-list {
     position: relative;
-}
-
-.dropdown-list {
     width: 100%;
+    height: 100%;
     max-height: 310px;
     padding: 1px;
     overflow: hidden;
@@ -551,9 +553,6 @@
 
 
 /* Dropdown */
-.dropdown__wrp.dev-panel-up-over {
-    margin-top: 20px;
-}
 
 .popout__action-btn +
 .popout__wrp.popout__right,

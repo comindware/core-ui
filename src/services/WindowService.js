@@ -31,7 +31,10 @@ const windowService = /** @lends module:core.services.WindowService */ {
      * @returns {String} The popup id that you can use to close it.
      * */
     showPopup (view) {
-        this.__popupStackView.showPopup(view);
+        this.__popupStackView.showPopup(view, {
+            fadeBackground: true,
+            transient: false
+        });
     },
 
     /**
@@ -49,8 +52,12 @@ const windowService = /** @lends module:core.services.WindowService */ {
      * @param {Object} options Options object.
      * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
      * */
-    showTransientPopup (view, options = { fadeBackground: false }) {
-        return this.__popupStackView.showPopup(view, { fadingBackground: options.fadeBackground, transient: true });
+    showTransientPopup (view, options = { fadeBackground: false, anchorEl: null }) {
+        return this.__popupStackView.showPopup(view, {
+            fadeBackground: options.fadeBackground,
+            anchorEl: options.anchorEl,
+            transient: true
+        });
     }
 };
 

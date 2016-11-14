@@ -12,7 +12,7 @@ define([
         /* Объявленные ниже View не имеют никаких особенностей или хитрых behaviors. */
 
         var DemoDropdownItemView = Marionette.ItemView.extend({
-            template: Handlebars.compile('{{fullName}}'),
+            template: Handlebars.compile('{{name}}'),
             className: 'dropdown-list__i'
         });
 
@@ -49,7 +49,14 @@ define([
         return new CanvasView({
             view: dropdown,
             canvas: {
-                width: '300px'
+                width: '300px',
+                height: '1000px',
+                display: 'flex',
+                'justify-content': 'flex-end',
+                'flex-flow': 'column'
+            },
+            region: {
+                height: 'initial'
             }
         });
     };

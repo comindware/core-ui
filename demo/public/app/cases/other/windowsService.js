@@ -50,9 +50,11 @@ define(['comindware/core'],
                     'click @ui.btnTest': '__showPopup'
                 },
 
-                __showPopup: function () {
+                __showPopup: function (e) {
                     var popupView = new PopupView();
-                    core.services.WindowService.showPopup(popupView);
+                    core.services.WindowService.showTransientPopup(popupView, {
+                        anchorEl: e.target
+                    });
                 }
             });
 

@@ -6,12 +6,11 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import { helpers } from './utils/utilsApi';
 import { $ } from './libApi';
 import AjaxService from './services/AjaxService';
 import MessageService from './services/MessageService';
+import GlobalEventService from './services/GlobalEventService';
 import UserService from './services/UserService';
 import WindowService from './services/WindowService';
 import LocalizationService from './services/LocalizationService';
@@ -34,6 +33,7 @@ export default {
         helpers.ensureOption(options, 'ajaxService');
         helpers.ensureOption(options, 'userService');
 
+        GlobalEventService.initialize();
         UserService.initialize(options.userService);
         WindowService.initialize();
         LocalizationService.initialize(options.localizationService);

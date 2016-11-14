@@ -13,6 +13,7 @@
 
 import { Handlebars } from '../../../libApi';
 import template from '../templates/PopupStack.hbs';
+import GlobalEventService from '../../GlobalEventService';
 
 let classes = {
     POPUP_REGION: 'js-popup-region-',
@@ -20,10 +21,16 @@ let classes = {
 };
 
 const POPUP_ID_PREFIX = 'popup-region-';
+const THROTTLE_DELAY = 100;
 
 export default Marionette.LayoutView.extend({
     initialize () {
         this.__stack = [];
+
+        let checkTransientPopups = _.throttle(this.__checkTransientPopups.bind(this), THROTTLE_DELAY);
+        this.listenTo(GlobalEventService, 'window:wheel:captured', checkTransientPopups);
+        this.listenTo(GlobalEventService, 'window:mouseup:captured', checkTransientPopups);
+        this.listenTo(GlobalEventService, 'window:keydown:captured', checkTransientPopups);
     },
 
     template: Handlebars.compile(template),
@@ -33,7 +40,7 @@ export default Marionette.LayoutView.extend({
     },
 
     showPopup (view, options) {
-        let { fadeBackground } = options;
+        let { fadeBackground, transient, anchorEl } = options;
 
         let regionEl = $('<div>');
         let popupId = _.uniqueId(POPUP_ID_PREFIX);
@@ -43,6 +50,15 @@ export default Marionette.LayoutView.extend({
             regionEl,
             popupId
         };
+
+        if (transient && anchorEl) {
+            // saving el position relative to the viewport for further check
+            let { left, top } = anchorEl.getBoundingClientRect();
+            config.anchorViewportPos = {
+                left: Math.floor(left),
+                top: Math.floor(top)
+            };
+        }
 
         this.$el.append(regionEl);
         this.addRegion(popupId, { el: regionEl });
@@ -76,12 +92,12 @@ export default Marionette.LayoutView.extend({
             if (lastNonTransient) {
                 index = this.__stack.indexOf(lastNonTransient);
             }
-            if (index !== -1) {
-                while (this.__stack.length > index) {
-                    let popupDef = this.__stack.pop();
-                    this.removeRegion(popupDef.popupId);
-                    popupDef.regionEl.remove();
-                }
+        }
+        if (index !== -1) {
+            while (this.__stack.length > index) {
+                let popupDef = this.__stack.pop();
+                this.removeRegion(popupDef.popupId);
+                popupDef.regionEl.remove();
             }
         }
 
@@ -93,11 +109,24 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __toggleFadedBackground: function (fade) {
-        this.ui.fadingPanel.toggleClass('fadingPanel_open', fade);
+    __checkTransientPopups () {
+        setTimeout(() => {
+            let movedTransientPopup = this.__stack.find(x => {
+                if (x.options.transient && x.options.anchorEl) {
+                    let { left, top } = x.options.anchorEl.getBoundingClientRect();
+                    if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+            if (movedTransientPopup) {
+                this.closePopup(movedTransientPopup.popupId);
+            }
+        }, 50);
     },
-    
-    __fadePopup: function (fadeIn, popupNumber) {
-        this.$el.find(`.${classes.POPUP_REGION}${popupNumber}`).toggleClass(classes.POPUP_FADE, fadeIn);
+
+    __toggleFadedBackground (fade) {
+        this.ui.fadingPanel.toggleClass('fadingPanel_open', fade);
     }
 });
