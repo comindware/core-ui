@@ -28,6 +28,7 @@ module.exports = {
         "afterEach": true
     },
     "rules": {
+        "no-mixed-operators": 0,
         "new-cap": 0,
         "no-continue": 0,
         "import/no-amd": 0,

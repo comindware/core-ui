@@ -9,16 +9,14 @@
 }
 
 .dropdown__wrp {
-    width: 100%;
     margin: 0;
     font-size: 12px;
     background: #fff;
     border: 1px solid #c2c2c2;
     -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
-    position: absolute;
-    left: 0;
-    z-index: 4;
+    position: fixed;
+    z-index: 600;
 }
 
 .dropdown__wrp_up {
@@ -40,14 +38,6 @@
 .dropdown__wrp_right {
     left: auto;
     right: -10px;
-}
-
-/* fix for DropdownEditorView */
-.dropdown-view .dropdown__wrp {
-    width: auto;
-    left: 0;
-    right: 0;
-    top: 14px;
 }
 
 /* dropdown-list */

@@ -1,13 +1,17 @@
 define(['comindware/core'],
     function (core) {
         'use strict';
+
         return function () {
             var PopupView = Marionette.ItemView.extend({
                 initialize: function (options) {
-                    this.index = (options && options.index) || 0;
+                    this.index = (options && options.index) || 1;
                 },
 
-                template: Handlebars.compile('<div class="msg-popup__desc">Your popup message {{index}}</div> <input class="js-open__button msg-popup__button_default msg-popup__button" style="margin-left:140px;" type="button" value="Show popup" /> <input class="js-close__button msg-popup__button_default msg-popup__button" style="margin-right:10px;" type="button" value="Close" />'),
+                template: Handlebars.compile(
+                    '<div class="msg-popup__desc">Your popup message {{index}}</div> ' +
+                    '<input class="js-open__button msg-popup__button_default msg-popup__button" style="margin-left:140px;" type="button" value="Show popup" /> ' +
+                    '<input class="js-close__button msg-popup__button_default msg-popup__button" style="margin-right:10px;" type="button" value="Close" />'),
 
                 templateHelpers: function () {
                     return {
@@ -17,14 +21,9 @@ define(['comindware/core'],
 
                 className: 'demo-popup',
 
-                ui: {
-                    'btnClose': '.js-close__button',
-                    'btnOpen': '.js-open__button'
-                },
-
                 events: {
-                    'click @ui.btnClose': '__closePopup',
-                    'click @ui.btnOpen': '__showPopup'
+                    'click .js-close__button': '__closePopup',
+                    'click .js-open__button': '__showPopup'
                 },
 
                 __closePopup: function () {
@@ -32,29 +31,21 @@ define(['comindware/core'],
                 },
 
                 __showPopup: function () {
-                    var popupView = new PopupView({
+                    core.services.WindowService.showPopup(new PopupView({
                         index: this.index + 1 || 1
-                    });
-                    core.services.WindowService.showPopup(popupView);
+                    }));
                 }
             });
 
             var View = Marionette.ItemView.extend({
                 template: Handlebars.compile('<input class="js-show__button" type="button" value="Show Popup"/>'),
 
-                ui: {
-                    btnTest: '.js-show__button'
-                },
-
                 events: {
-                    'click @ui.btnTest': '__showPopup'
+                    'click .js-show__button': '__showPopup'
                 },
 
-                __showPopup: function (e) {
-                    var popupView = new PopupView();
-                    core.services.WindowService.showTransientPopup(popupView, {
-                        anchorEl: e.target
-                    });
+                __showPopup: function () {
+                    core.services.WindowService.showPopup(new PopupView());
                 }
             });
 

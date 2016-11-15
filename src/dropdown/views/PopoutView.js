@@ -6,15 +6,11 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import WindowService from '../../services/WindowService';
 import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
 import template from '../templates/popout.hbs';
-
-const slice = Array.prototype.slice;
 
 const classes = {
     OPEN: 'open',
@@ -150,10 +146,9 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
         this.button = new this.options.buttonView(_.result(this.options, 'buttonViewOptions'));
         this.buttonView = this.button;
-        this.listenTo(this.button, 'all', function () {
-            var args = slice.call(arguments);
-            args[0] = 'button:' + args[0];
-            this.triggerMethod.apply(this, args);
+        this.listenTo(this.button, 'all', (...args) => {
+            args[0] = `button:${args[0]}`;
+            this.triggerMethod(...args);
         });
         this.buttonRegion.show(this.button);
 
@@ -244,15 +239,14 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.stopListening(this.panelView);
         }
         this.panelView = new this.options.panelView(panelViewOptions);
-        this.listenTo(this.panelView, 'all', function () {
-            let args = slice.call(arguments);
+        this.listenTo(this.panelView, 'all', (...args) => {
             args[0] = `panel:${args[0]}`;
-            this.triggerMethod.apply(this, args);
+            this.triggerMethod(...args);
         });
         this.$el.addClass(classes.OPEN);
         if (this.options.fade) {
             // TODO: rework it
-            WindowService.fadeIn();
+            WindowService.fadeBackground(true);
         }
         this.ui.panel.show();
         this.panelRegion.show(this.panelView);
@@ -314,7 +308,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
         this.trigger('before:close', this);
         if (this.options.fade) {
-            WindowService.fadeOut();
+            WindowService.fadeBackground(false);
         }
         if (this.options.height === height.BOTTOM) {
             $(window).off('resize', this.__handleWindowResize);

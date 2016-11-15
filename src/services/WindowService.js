@@ -32,32 +32,20 @@ const windowService = /** @lends module:core.services.WindowService */ {
      * */
     showPopup (view) {
         this.__popupStackView.showPopup(view, {
-            fadeBackground: true,
-            transient: false
+            fadeBackground: true
         });
     },
 
     /**
-     * Closes the top-level non-transient popup or does nothing if there is none.
+     * Closes the top-level popup or does nothing if there is none.
      * @param {string} [popupId=null]
      * */
     closePopup (popupId = null) {
         this.__popupStackView.closePopup(popupId);
     },
 
-    /**
-     * Shows a marionette.view as a transient popup. If another popup is already shown, overlaps it.
-     * The size of the view and it's location is totally the view's responsibility.
-     * @param {Marionette.View} view A Marionette.View instance to show.
-     * @param {Object} options Options object.
-     * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
-     * */
-    showTransientPopup (view, options = { fadeBackground: false, anchorEl: null }) {
-        return this.__popupStackView.showPopup(view, {
-            fadeBackground: options.fadeBackground,
-            anchorEl: options.anchorEl,
-            transient: true
-        });
+    fadeBackground (fade) {
+        this.__popupStackView.fadeBackground(fade);
     }
 };
 

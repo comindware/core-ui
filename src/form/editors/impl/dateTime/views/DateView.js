@@ -48,7 +48,8 @@ export default Marionette.LayoutView.extend({
                 allowEmptyValue: this.allowEmptyValue
             },
             renderAfterClose: false,
-            autoOpen: false
+            autoOpen: false,
+            panelMinWidth: 'none'
         });
         this.listenTo(this.calendarDropdownView, 'before:close', this.__onBeforeClose, this);
         this.listenTo(this.calendarDropdownView, 'open', this.__onOpen, this);

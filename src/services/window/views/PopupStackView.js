@@ -13,7 +13,6 @@
 
 import { Handlebars } from '../../../libApi';
 import template from '../templates/PopupStack.hbs';
-import GlobalEventService from '../../GlobalEventService';
 
 let classes = {
     POPUP_REGION: 'js-popup-region-',
@@ -21,16 +20,11 @@ let classes = {
 };
 
 const POPUP_ID_PREFIX = 'popup-region-';
-const THROTTLE_DELAY = 100;
 
 export default Marionette.LayoutView.extend({
     initialize () {
         this.__stack = [];
-
-        let checkTransientPopups = _.throttle(this.__checkTransientPopups.bind(this), THROTTLE_DELAY);
-        this.listenTo(GlobalEventService, 'window:wheel:captured', checkTransientPopups);
-        this.listenTo(GlobalEventService, 'window:mouseup:captured', checkTransientPopups);
-        this.listenTo(GlobalEventService, 'window:keydown:captured', checkTransientPopups);
+        this.__forceFadeBackground = false;
     },
 
     template: Handlebars.compile(template),
@@ -40,7 +34,7 @@ export default Marionette.LayoutView.extend({
     },
 
     showPopup (view, options) {
-        let { fadeBackground, transient, anchorEl } = options;
+        let { fadeBackground } = options;
 
         let regionEl = $('<div>');
         let popupId = _.uniqueId(POPUP_ID_PREFIX);
@@ -50,15 +44,6 @@ export default Marionette.LayoutView.extend({
             regionEl,
             popupId
         };
-
-        if (transient && anchorEl) {
-            // saving el position relative to the viewport for further check
-            let { left, top } = anchorEl.getBoundingClientRect();
-            config.anchorViewportPos = {
-                left: Math.floor(left),
-                top: Math.floor(top)
-            };
-        }
 
         this.$el.append(regionEl);
         this.addRegion(popupId, { el: regionEl });
@@ -87,11 +72,7 @@ export default Marionette.LayoutView.extend({
         if (popupId) {
             index = this.__stack.findIndex(x => x.popupId === popupId);
         } else {
-            // We're popping the stack until we find an non-transient popup to close
-            let lastNonTransient = _.last(this.__stack.filter(x => !x.options.transient));
-            if (lastNonTransient) {
-                index = this.__stack.indexOf(lastNonTransient);
-            }
+            index = this.__stack.length - 1;
         }
         if (index !== -1) {
             while (this.__stack.length > index) {
@@ -105,25 +86,13 @@ export default Marionette.LayoutView.extend({
         if (lastFaded) {
             lastFaded.regionEl.addClass(classes.POPUP_FADE);
         } else {
-            this.__toggleFadedBackground(false);
+            this.__toggleFadedBackground(this.__forceFadeBackground);
         }
     },
 
-    __checkTransientPopups () {
-        setTimeout(() => {
-            let movedTransientPopup = this.__stack.find(x => {
-                if (x.options.transient && x.options.anchorEl) {
-                    let { left, top } = x.options.anchorEl.getBoundingClientRect();
-                    if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-            if (movedTransientPopup) {
-                this.closePopup(movedTransientPopup.popupId);
-            }
-        }, 50);
+    fadeBackground (fade) {
+        this.__forceFadeBackground = fade;
+        this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find(x => x.options.fadeBackground));
     },
 
     __toggleFadedBackground (fade) {

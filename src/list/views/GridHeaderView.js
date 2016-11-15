@@ -253,6 +253,9 @@ let GridHeaderView = Marionette.ItemView.extend({
     },
 
     handleResize: function () {
+        if (this.isDestroyed) {
+            return;
+        }
         this.__handleResizeInternal();
         this.gridEventAggregator.trigger('columnsResize');
     },
