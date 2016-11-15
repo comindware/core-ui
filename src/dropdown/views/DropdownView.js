@@ -137,7 +137,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.triggerMethod(...args);
         });
 
-        this.currentPosition = this.options.panelPosition;
         if (this.isShown) {
             this.buttonRegion.show(this.button);
         }
