@@ -1,11 +1,4 @@
 module.exports = {
-    settings: {
-        'import/resolver': {
-            webpack: {
-                config: 'js/build/webpack.app.development.config.js'
-            }
-        }
-    },
     "parser": "babel-eslint",
     "extends": "airbnb",
     "env": {

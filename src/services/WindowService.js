@@ -8,7 +8,7 @@
 
 'use strict';
 
-import '../libApi';
+import { $ } from '../libApi';
 import PopupStackView from './window/views/PopupStackView';
 
 const windowService = /** @lends module:core.services.WindowService */ {
