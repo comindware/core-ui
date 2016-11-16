@@ -19,8 +19,8 @@ const classes = {
     OPEN: 'open',
     DIRECTION_UP: 'popout__up',
     DIRECTION_DOWN: 'popout__down',
-    FLOW_LEFT: 'popout__left',
-    FLOW_RIGHT: 'popout__right',
+    FLOW_LEFT: 'popout__flow-left',
+    FLOW_RIGHT: 'popout__flow-right',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
     DEFAULT_ANCHOR: 'anchor'
@@ -161,18 +161,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.buttonRegion.$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
         }
 
-        if (this.options.popoutFlow === popoutFlow.LEFT) {
-            this.ui.panel.addClass(classes.FLOW_LEFT);
-            this.ui.panel.removeClass(classes.FLOW_RIGHT);
-        } else {
-            this.ui.panel.addClass(classes.FLOW_RIGHT);
-            this.ui.panel.removeClass(classes.FLOW_LEFT);
-        }
-        if (this.options.customAnchor) {
-            this.ui.button.addClass(classes.CUSTOM_ANCHOR_BUTTON);
-        } else {
-            this.ui.button.addClass(classes.DEFAULT_ANCHOR_BUTTON);
-        }
+        this.ui.panel.toggleClass(classes.FLOW_LEFT, this.options.popoutFlow === popoutFlow.LEFT);
+        this.ui.panel.toggleClass(classes.FLOW_RIGHT, this.options.popoutFlow === popoutFlow.RIGHT);
+        this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
+        this.ui.button.toggleClass(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
     },
 
     __getAnchorEl () {
@@ -210,23 +202,25 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             right: ''
         };
         switch (this.options.popoutFlow) {
-        case popoutFlow.RIGHT:
-            if (anchorRect.left < WINDOW_BORDER_OFFSET) {
+        case popoutFlow.RIGHT: {
+            let leftCenter = anchorRect.left + anchorRect.width / 2;
+            if (leftCenter < WINDOW_BORDER_OFFSET) {
                 css.left = WINDOW_BORDER_OFFSET;
-            } else if (anchorRect.left + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+            } else if (leftCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
                 css.left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
             } else {
-                css.left = anchorRect.left;
+                css.left = leftCenter;
             }
             break;
+        }
         case popoutFlow.LEFT: {
-            let anchorRight = viewport.width - (anchorRect.left + anchorRect.width);
-            if (anchorRight < WINDOW_BORDER_OFFSET) {
+            let anchorRightCenter = viewport.width - (anchorRect.left + anchorRect.width / 2);
+            if (anchorRightCenter < WINDOW_BORDER_OFFSET) {
                 css.right = WINDOW_BORDER_OFFSET;
-            } else if (anchorRight + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+            } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
                 css.right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
             } else {
-                css.right = anchorRight;
+                css.right = anchorRightCenter;
             }
             break;
         }
@@ -270,8 +264,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
 
         // class adjustments
-        this.ui.button.toggleClass(classes.DIRECTION_UP, direction === popoutDirection.UP);
-        this.ui.button.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
         $panelEl.toggleClass(classes.DIRECTION_UP, direction === popoutDirection.UP);
         $panelEl.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
 

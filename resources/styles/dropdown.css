@@ -515,19 +515,5 @@
     opacity: 1;
     background: no-repeat 50% 50% url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEBJREFUeNpiVO+7yUAk+A8imEhRDASMTKQohtnwH0kQr2KYBkY0SZyKkf2ArgmrYnRPMxJSjC2UGPEpBgGAAAMAVUUMnvjkXPcAAAAASUVORK5CYII=);
 }
+
 /*-----//------*/
-
-
-/* Dropdown */
-
-.popout__action-btn +
-.popout__wrp.popout__right,
-.popout__wrp.popout__right {
-    right: auto;
-}
-
-.popout__action-btn +
-.popout__wrp.popout__left,
-.popout__wrp.popout__left {
-    left: auto;
-}
