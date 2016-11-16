@@ -35,7 +35,7 @@ const windowEventList = [
     }
 ];
 
-const globalEventsService = /** @lends module:core.services.GlobalEventsService */ {
+var globalEventsService = /** @lends module:core.services.GlobalEventsService */ {
     initialize: function () {
         this.__windowEvents = windowEventList.map(x => {
             let captureSuffix = x.capture ? ':captured' : '';

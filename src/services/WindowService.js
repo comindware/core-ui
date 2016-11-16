@@ -11,7 +11,7 @@
 import { $ } from '../libApi';
 import PopupStackView from './window/views/PopupStackView';
 
-const windowService = /** @lends module:core.services.WindowService */ {
+var windowService = /** @lends module:core.services.WindowService */ {
     initialize () {
         this.__$popupStackRegionEl = $(document.createElement('div'));
         this.__$popupStackRegionEl.appendTo(document.body);

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Comindware UI-Core API Namespace: dateHelpers</title>
+	<title>Comindware UI-Core API Namespace: WindowService</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,15 +70,15 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Namespace: dateHelpers</h1>
+	<h1 class="page-title">Namespace: WindowService</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-core.html">module:core</a><a href="module-core.utils.html">.utils</a>.</span>
+            <span class="ancestors"><a href="module-core.html">module:core</a><a href="module-core.services.html">.services</a>.</span>
         
-        dateHelpers
+        WindowService
         </h2>
         
     
@@ -89,7 +89,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Date formatters and related methods.</div>
+            <div class="description">The service is responsible for displaying global windows. For example, modal dialogs (popups).</div>
         
 
         
@@ -155,7 +155,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="dateISOToDate"><span class="type-signature">&lt;static> </span>dateISOToDate(dateIsoString)</h4>
+    <h4 class="name" id="closePopup"><span class="type-signature">&lt;static> </span>closePopup( [popupId])</h4>
     
     
 </dt>
@@ -163,7 +163,7 @@
 
     
     <div class="description">
-        Takes a date string in ISO8601 format and converts it into a JavaScript <code>Date</code> object.
+        Closes the top-level popup or does nothing if there is none.
     </div>
     
 
@@ -186,7 +186,11 @@
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -198,13 +202,13 @@
 
         <tr>
             
-                <td class="name"><code>dateIsoString</code></td>
+                <td class="name"><code>popupId</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
 
@@ -212,10 +216,26 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">Date in ISO8601 format.</td>
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -275,30 +295,6 @@
     
 
     
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    JavaScript <code>Date</code> object.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Date</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
 
     
 </dd>
@@ -307,7 +303,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="dateToISOString"><span class="type-signature">&lt;static> </span>dateToISOString(date)</h4>
+    <h4 class="name" id="showPopup"><span class="type-signature">&lt;static> </span>showPopup(view)</h4>
     
     
 </dt>
@@ -315,7 +311,7 @@
 
     
     <div class="description">
-        Takes a date in the format that momentJS supports and converts it into a JavaScript <code>Date</code> object.
+        Shows a marionette.view as a popup. If another popup is already shown, overlaps it.The size of the view and it's location is totally the view's responsibility.
     </div>
     
 
@@ -350,19 +346,13 @@
 
         <tr>
             
-                <td class="name"><code>date</code></td>
+                <td class="name"><code>view</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Date</span>
-|
-
-<span class="param-type"><a href="Object.html">Object</a></span>
+<span class="param-type">Marionette.View</span>
 
 
 
@@ -373,7 +363,7 @@
 
             
 
-            <td class="description last">Date string in ISO8601 format, JavaScript or momentJS date object.</td>
+            <td class="description last">A Marionette.View instance to show.</td>
         </tr>
 
     
@@ -437,7 +427,7 @@
     
             
 <div class="param-desc">
-    JavaScript <code>Date</code> object.
+    The popup id that you can use to close it.
 </div>
 
 
@@ -448,7 +438,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Date</span>
+<span class="param-type">String</span>
 
 
 

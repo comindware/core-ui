@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Comindware UI-Core API Namespace: dateHelpers</title>
+	<title>Comindware UI-Core API Namespace: GlobalEventService</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,15 +70,15 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Namespace: dateHelpers</h1>
+	<h1 class="page-title">Namespace: GlobalEventService</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-core.html">module:core</a><a href="module-core.utils.html">.utils</a>.</span>
+            <span class="ancestors"><a href="module-core.html">module:core</a><a href="module-core.services.html">.services</a>.</span>
         
-        dateHelpers
+        GlobalEventService
         </h2>
         
     
@@ -89,7 +89,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Date formatters and related methods.</div>
+            <div class="description">The services provides an interface to global window events, so you could easily subscribeto them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.</div>
         
 
         
@@ -148,320 +148,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="dateISOToDate"><span class="type-signature">&lt;static> </span>dateISOToDate(dateIsoString)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Takes a date string in ISO8601 format and converts it into a JavaScript <code>Date</code> object.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dateIsoString</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date in ISO8601 format.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    JavaScript <code>Date</code> object.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Date</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="dateToISOString"><span class="type-signature">&lt;static> </span>dateToISOString(date)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Takes a date in the format that momentJS supports and converts it into a JavaScript <code>Date</code> object.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>date</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Date</span>
-|
-
-<span class="param-type"><a href="Object.html">Object</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Date string in ISO8601 format, JavaScript or momentJS date object.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    JavaScript <code>Date</code> object.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Date</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        </dl>
     
 
     

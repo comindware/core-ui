@@ -52,13 +52,14 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
- * @exports core
+ * @name module:core
  * */
-const api = {
+var core = {
     lib: libApi,
     /**
      * Services of general use the UI is built on.
      * @namespace
+     * @memberof module:core
      * */
     services: {
         RoutingServiceBase: RoutingServiceBase,
@@ -66,6 +67,7 @@ const api = {
         /**
          * The service is responsible for displaying global windows. For example, modal dialogs (popups).
          * @namespace
+         * @memberof module:core.services
          * */
         WindowService: WindowService,
         LocalizationService: LocalizationService,
@@ -74,6 +76,7 @@ const api = {
          * The services provides an interface to global window events, so you could easily subscribe
          * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
          * @namespace
+         * @memberof module:core.services
         * */
         GlobalEventService: GlobalEventService,
         PromiseService: PromiseService,
@@ -82,11 +85,13 @@ const api = {
     /**
      * Backbone collections of general use.
      * @namespace
+     * @memberof module:core
      * */
     collections: {
         /**
          * Backbone collection behaviors of general use.
          * @namespace
+         * @memberof module:core.collections
          * */
         behaviors: {
             HighlightableBehavior: CollectionHighlightableBehavior
@@ -97,6 +102,7 @@ const api = {
     /**
      * Backbone models of general use.
      * @namespace
+     * @memberof module:core
      * */
     models: {
         behaviors: {
@@ -117,46 +123,52 @@ const api = {
     /**
      * Dropdown components of general use. It may be used in menus, dropdown lists and more complex cases like displaying some fancy about-me panel.
      * @namespace
+     * @memberof module:core
      * */
     dropdown: dropdownApi,
     /**
      * A large set of editors and related classes built on top of [Backbone.Form](https://github.com/powmedia/backbone-forms) library.
      * @namespace
+     * @memberof module:core
      * */
     form: formApi,
     /**
      * List and Grid components with data virtualization.
      * @namespace
+     * @memberof module:core
      * */
     list: listApi,
     /**
      * List and Grid components without data virtualization.
      * @namespace
+     * @memberof module:core
      * */
     nativeGrid: nativeGridApi,
     /**
      * Combines useful helper classes, functions and constants.
      * @namespace
+     * @memberof module:core
      * */
     utils: utilsApi,
     /**
      * Constants used inside the library.
      * @namespace
+     * @memberof module:core
      * */
     meta: meta_,
     initialize: bootstrapper.initialize.bind(bootstrapper)
 };
 
-export default api;
-export const lib = api.lib;
-export const services = api.services;
-export const collections = api.collections;
-export const models = api.models;
-export const views = api.views;
-export const dropdown = api.dropdown;
-export const form = api.form;
-export const list = api.list;
-export const nativeGrid = api.nativeGrid;
-export const utils = api.utils;
-export const meta = api.meta;
-export const initialize = api.initialize;
+export default core;
+export var lib = core.lib;
+export var services = core.services;
+export var collections = core.collections;
+export var models = core.models;
+export var views = core.views;
+export var dropdown = core.dropdown;
+export var form = core.form;
+export var list = core.list;
+export var nativeGrid = core.nativeGrid;
+export var utils = core.utils;
+export var meta = core.meta;
+export var initialize = core.initialize;
