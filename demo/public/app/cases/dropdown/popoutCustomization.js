@@ -19,13 +19,7 @@ define([
         return new CanvasView({
             view: popout,
             canvas: {
-                height: '800px',
-                display: 'flex',
-                'flex-flow': 'column',
-                'justify-content': 'flex-end'
-            },
-            region: {
-                height: 'auto'
+                height: '30px'
             }
         });
     };
