@@ -217,14 +217,12 @@
 .popout__wrp {
     width: auto;
     font-size: 12px;
-    position: absolute;
-    left: 0;
-    top: 33px;
+    position: fixed;
     background: #fff;
     border: 1px solid #c2c2c2;
     -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
-    z-index: 4;
+    z-index: 600;
 }
 
 .popout__wrp.popout__down{
@@ -232,7 +230,7 @@
 }
 
 .popout__wrp.popout__up{
-    margin-top: -11px;
+    margin-top: -9px;
 }
 
 .popout__wrp_right {
