@@ -8,11 +8,11 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-"use strict";
-
 import '../resources/styles/bootstrap-datetimepicker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
+import '../resources/styles/services/messageService.css';
+import '../resources/styles/services/windowService.css';
 import '../resources/styles/form.css';
 import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
@@ -33,7 +33,6 @@ import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import BlurableBehavior from './views/behaviors/BlurableBehavior';
 import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
-import FadingPanelView from './views/FadingPanelView';
 
 import RoutingServiceBase from './services/RoutingServiceBase';
 import MessageService from './services/MessageService';
@@ -55,7 +54,7 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
  * @exports core
  * */
-var api = {
+const api = {
     lib: libApi,
     /**
      * Services of general use the UI is built on.
@@ -64,9 +63,18 @@ var api = {
     services: {
         RoutingServiceBase: RoutingServiceBase,
         MessageService: MessageService,
+        /**
+         * The service is responsible for displaying global windows. For example, modal dialogs (popups).
+         * @namespace
+         * */
         WindowService: WindowService,
         LocalizationService: LocalizationService,
         AjaxService: AjaxService,
+        /**
+         * The services provides an interface to global window events, so you could easily subscribe
+         * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
+         * @namespace
+        * */
         GlobalEventService: GlobalEventService,
         PromiseService: PromiseService,
         UserService: UserService
@@ -140,15 +148,15 @@ var api = {
 };
 
 export default api;
-export var lib = api.lib;
-export var services = api.services;
-export var collections = api.collections;
-export var models = api.models;
-export var views = api.views;
-export var dropdown = api.dropdown;
-export var form = api.form;
-export var list = api.list;
-export var nativeGrid = api.nativeGrid;
-export var utils = api.utils;
-export var meta = api.meta;
-export var initialize = api.initialize;
+export const lib = api.lib;
+export const services = api.services;
+export const collections = api.collections;
+export const models = api.models;
+export const views = api.views;
+export const dropdown = api.dropdown;
+export const form = api.form;
+export const list = api.list;
+export const nativeGrid = api.nativeGrid;
+export const utils = api.utils;
+export const meta = api.meta;
+export const initialize = api.initialize;

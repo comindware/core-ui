@@ -45,12 +45,10 @@ export function expectToHaveSameMembers (actual, expected) {
 }
 
 export function initializeCore () {
-    setFixtures('<div id="rootRegion"></div><div id="fadingRegion"></div><div id="popupRegion"></div>');
+    setFixtures('<div id="rootRegion"></div>');
     let regionManager = new Marionette.RegionManager();
     regionManager.addRegions({
-        rootRegion: '#rootRegion',
-        fadingRegion: '#fadingRegion',
-        popupRegion: '#popupRegion'
+        rootRegion: '#rootRegion'
     });
 
     let rootRegion = regionManager.get('rootRegion');
@@ -63,14 +61,6 @@ export function initializeCore () {
             langCode: 'en',
             localizationMap: localizationMap,
             warningAsError: true
-        },
-        windowService: {
-            fadingRegion: regionManager.get('fadingRegion'),
-            popupRegion: regionManager.get('popupRegion'),
-            ui: {
-                fadingRegion: $('#fadingRegion'),
-                popupRegion: $('#popupRegion')
-            }
         },
         userService: {
             dataProvider: dataProvider

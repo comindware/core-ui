@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import '../../../libApi';
 
 let classes = {
@@ -35,7 +33,7 @@ export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.
     },
 
     onRender: function () {
-        var $el;
+        let $el;
         if (this.options.anchor) {
             $el = this.$(this.options.anchor);
         } else {

@@ -21,6 +21,10 @@ const config = {
     TEXT_FETCH_DELAY: 300
 };
 
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
+};
+
 export default Marionette.LayoutView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'model');
@@ -67,7 +71,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow: function () {
-        var result = list.factory.createDefaultList({
+        let result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
                 childView: this.options.listItemView,
@@ -75,7 +79,8 @@ export default Marionette.LayoutView.extend({
                     reqres: this.reqres
                 },
                 emptyViewOptions: {
-                    text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS')
+                    text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
+                    className: classes.EMPTY_VIEW
                 },
                 childHeight: config.CHILD_HEIGHT
             }
@@ -84,9 +89,9 @@ export default Marionette.LayoutView.extend({
         this.listView = result.listView;
         this.eventAggregator = result.eventAggregator;
 
-        if(this.showAddNewButton) {
+        if (this.showAddNewButton) {
             this.$el.addClass('dd-list_reference-button');
-            var addNewButton = new AddNewButtonView({reqres: this.reqres});
+            let addNewButton = new AddNewButtonView({reqres: this.reqres});
             this.addNewButtonRegion.show(addNewButton);
         }
 

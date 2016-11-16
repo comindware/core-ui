@@ -69,7 +69,7 @@ export var dataProvider = {
                 name: name,
                 userName: (nameSplit[0][0] + nameSplit[1]).toLowerCase(),
                 abbreviation: nameSplit[0][0] + nameSplit[1][0],
-                avatarUrl: '/avatars?id=' + id,
+                avatarUrl: null,
                 url: '#People/' + (i+1)
             };
         });
