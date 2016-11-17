@@ -2613,13 +2613,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    showPopup: function showPopup(view) {
+	        this.__togglePopupRegion(false);
 	        self.layerLayoutView.showPopup(view);
-	        this.__togglePopupRegion();
 	    },
 	
 	    closePopup: function closePopup() {
 	        self.layerLayoutView.closePopup();
-	        this.__togglePopupRegion();
+	        this.__togglePopupRegion(!self.layerLayoutView.faded);
 	    },
 	
 	    fadeIn: function fadeIn(options) {
@@ -2630,8 +2630,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        self.layerLayoutView.fadeOut();
 	    },
 	
-	    __togglePopupRegion: function __togglePopupRegion() {
-	        self.ui.popupRegion.toggleClass(classes.HIDDEN, !self.layerLayoutView.faded);
+	    __togglePopupRegion: function __togglePopupRegion(hide) {
+	        self.ui.popupRegion.toggleClass(classes.HIDDEN, hide);
 	    }
 	};
 	
@@ -10035,6 +10035,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    },
 	
+	    constants: {
+	        MIN_COLUMN_WIDTH: 100
+	    },
+	
 	    __getAvailableWidth: function __getAvailableWidth() {
 	        return this.$el.parent().width() - 1;
 	    },
@@ -10084,24 +10088,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __setInitialWidth: function __setInitialWidth(availableWidth) {
-	        var columnsL = this.ui.gridHeaderColumn.length,
-	            columnWidth = availableWidth / columnsL,
-	            fullWidth = 0;
+	        var _this = this;
+	
+	        var columnsL = this.ui.gridHeaderColumn.length;
+	        var columnWidthData = this.__getColumnsWidthData(availableWidth, this.columns);
+	        var fullWidth = 0;
 	
 	        this.ui.gridHeaderColumn.each(function (i, el) {
-	            if (this.columns[i].width) columnWidth = this.columns[i].width;
+	            var columnWidth = columnWidthData[i];
 	
-	            if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
-	                this.columns[i].width = availableWidth - fullWidth;
+	            if (i === columnsL - 1 && fullWidth + _this.columns[i].width < availableWidth) {
+	                _this.columns[i].width = availableWidth - fullWidth;
 	            }
 	
 	            $(el).outerWidth(columnWidth);
-	            this.columns[i].width = columnWidth;
+	            _this.columns[i].width = columnWidth;
 	            fullWidth += columnWidth;
-	        }.bind(this));
+	        });
 	
 	        this.$el.width(Math.ceil(fullWidth));
 	    },
+	    __getColumnsWidthData: function __getColumnsWidthData(availableWidth, columns) {
+	        var _this2 = this;
+	
+	        var columnWidthData = [];
+	        var availableDynamicWidth = availableWidth;
+	        var nonStaticColumnsCount = columns.length;
+	
+	        this.ui.gridHeaderColumn.each(function (i, el) {
+	            var columnWidth = void 0;
+	            if (columns[i].width) {
+	                columnWidth = columns[i].width;
+	                --nonStaticColumnsCount;
+	            } else {
+	                columnWidth = Math.max($(el).outerWidth(), _this2.constants.MIN_COLUMN_WIDTH);
+	            }
+	            availableDynamicWidth -= columnWidth;
+	            columnWidthData.push(columnWidth);
+	        });
+	
+	        if (availableDynamicWidth > 0) {
+	            (function () {
+	                var columnAdditionalWidth = availableDynamicWidth / nonStaticColumnsCount;
+	                columns.forEach(function (column, i) {
+	                    if (!column.width) {
+	                        columnWidthData[i] += columnAdditionalWidth;
+	                    }
+	                });
+	            })();
+	        }
+	
+	        return columnWidthData;
+	    },
+	
 	
 	    onShow: function onShow() {
 	        this.headerMinWidth = this.__getAvailableWidth();
