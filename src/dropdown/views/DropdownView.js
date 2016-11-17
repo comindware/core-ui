@@ -8,9 +8,11 @@
 
 import { $, Handlebars } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
+import WindowService from '../../services/WindowService';
 import template from '../templates/dropdown.hbs';
 import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
+import WrapperView from './WrapperView';
 
 const classes = {
     OPEN: 'open',
@@ -92,13 +94,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     className: 'dropdown',
 
     regions: {
-        buttonRegion: '.js-button-region',
-        panelRegion: '.js-panel-region'
+        buttonRegion: '.js-button-region'
     },
 
     ui: {
-        button: '.js-button-region',
-        panel: '.js-panel-region'
+        button: '.js-button-region'
     },
 
     events: {
@@ -108,6 +108,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     behaviors: {
         BlurableBehavior: {
             behaviorClass: BlurableBehavior,
+            roots: function () {
+                if (!this.isOpen) {
+                    return [];
+                }
+                return [ this.panelView.$el ];
+            },
             onBlur: 'close'
         },
         ListenToElementMoveBehavior: {
@@ -186,10 +192,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
 
         // class adjustments
-        this.ui.panel.toggleClass(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
-        this.ui.panel.toggleClass(classes.DROPDOWN_WRP_OVER, position === panelPosition.DOWN_OVER);
-        this.ui.panel.toggleClass(classes.DROPDOWN_UP, position === panelPosition.UP);
-        this.ui.panel.toggleClass(classes.DROPDOWN_UP_OVER, position === panelPosition.UP_OVER);
+        $panelEl.toggleClass(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
+        $panelEl.toggleClass(classes.DROPDOWN_WRP_OVER, position === panelPosition.DOWN_OVER);
+        $panelEl.toggleClass(classes.DROPDOWN_UP, position === panelPosition.UP);
+        $panelEl.toggleClass(classes.DROPDOWN_UP_OVER, position === panelPosition.UP_OVER);
 
         // panel positioning
         let top;
@@ -241,18 +247,19 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             parent: this
         });
         this.$el.addClass(classes.OPEN);
-        this.ui.panel.show();
-        if (this.panelView) {
-            this.stopListening(this.panelView);
-        }
         this.panelView = new this.options.panelView(panelViewOptions);
-        this.listenTo(this.panelView, 'all', (...args) => {
+        this.panelView.on('all', (...args) => {
             args[0] = `panel:${args[0]}`;
             this.triggerMethod(...args);
         });
 
-        this.panelRegion.show(this.panelView);
-        this.__adjustPosition(this.panelRegion.$el);
+        let wrapperView = new WrapperView({
+            view: this.panelView,
+            className: 'dropdown__wrp'
+        });
+        this.popupId = WindowService.showTransientPopup(wrapperView);
+        this.__adjustPosition(wrapperView.$el);
+
         this.listenToElementMoveOnce(this.el, this.close);
 
         this.focus();
@@ -264,20 +271,20 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
      * Closes the dropdown panel.
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
-    close () {
+    close (...args) {
         if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
             return;
         }
         this.trigger('before:close', this);
 
-        let closeArgs = _.toArray(arguments);
-        this.ui.panel.hide();
         this.$el.removeClass(classes.OPEN);
-        this.panelRegion.reset();
+
+        WindowService.closePopup(this.popupId);
+
         this.isOpen = false;
         this.stopListeningToElementMove();
 
-        this.trigger('close', this, ...closeArgs);
+        this.trigger('close', this, ...args);
         if (this.options.renderAfterClose) {
             this.button.render();
         }

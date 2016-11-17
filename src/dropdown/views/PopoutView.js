@@ -12,6 +12,7 @@ import WindowService from '../../services/WindowService';
 import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
 import template from '../templates/popout.hbs';
+import WrapperView from './WrapperView';
 
 const WINDOW_BORDER_OFFSET = 10;
 
@@ -110,6 +111,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     behaviors: {
         BlurableBehavior: {
             behaviorClass: BlurableBehavior,
+            roots: function () {
+                if (!this.isOpen) {
+                    return [];
+                }
+                return [ this.panelView.$el ];
+            },
             onBlur: 'close'
         },
         ListenToElementMoveBehavior: {
@@ -120,13 +127,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     className: 'popout',
 
     regions: {
-        buttonRegion: '.js-button-region',
-        panelRegion: '.js-panel-region'
+        buttonRegion: '.js-button-region'
     },
 
     ui: {
-        button: '.js-button-region',
-        panel: '.js-panel-region'
+        button: '.js-button-region'
     },
 
     events: {
@@ -161,8 +166,6 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.buttonRegion.$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
         }
 
-        this.ui.panel.toggleClass(classes.FLOW_LEFT, this.options.popoutFlow === popoutFlow.LEFT);
-        this.ui.panel.toggleClass(classes.FLOW_RIGHT, this.options.popoutFlow === popoutFlow.RIGHT);
         this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
         this.ui.button.toggleClass(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
     },
@@ -180,9 +183,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         return $anchorEl;
     },
 
-    __adjustFlowPosition () {
+    __adjustFlowPosition ($panelEl) {
         let $buttonEl = this.ui.button;
-        let $panelEl = this.panelRegion.$el;
         let $anchorEl = this.__getAnchorEl();
         let viewport = {
             height: window.innerHeight,
@@ -228,11 +230,13 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             break;
         }
 
+        $panelEl.toggleClass(classes.FLOW_LEFT, this.options.popoutFlow === popoutFlow.LEFT);
+        $panelEl.toggleClass(classes.FLOW_RIGHT, this.options.popoutFlow === popoutFlow.RIGHT);
+
         $panelEl.css(css);
     },
 
-    __adjustDirectionPosition () {
-        let $panelEl = this.panelRegion.$el;
+    __adjustDirectionPosition ($panelEl) {
         let $anchorEl = this.__getAnchorEl();
         let viewport = {
             height: window.innerHeight,
@@ -316,22 +320,23 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         let panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
             parent: this
         });
-        if (this.panelView) {
-            this.stopListening(this.panelView);
-        }
         this.panelView = new this.options.panelView(panelViewOptions);
-        this.listenTo(this.panelView, 'all', (...args) => {
+        this.panelView.on('all', (...args) => {
             args[0] = `panel:${args[0]}`;
             this.triggerMethod(...args);
         });
         this.$el.addClass(classes.OPEN);
-        if (this.options.fade) {
-            WindowService.fadeBackground(true);
-        }
-        this.ui.panel.show();
-        this.panelRegion.show(this.panelView);
-        this.__adjustDirectionPosition();
-        this.__adjustFlowPosition();
+
+        let wrapperView = new WrapperView({
+            view: this.panelView,
+            className: 'popout__wrp'
+        });
+        this.popupId = WindowService.showTransientPopup(wrapperView, {
+            fadeBackground: this.options.fade
+        });
+        this.__adjustDirectionPosition(wrapperView.$el);
+        this.__adjustFlowPosition(wrapperView.$el);
+
         this.listenToElementMoveOnce(this.el, this.close);
         this.focus();
         this.isOpen = true;
@@ -347,13 +352,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             return;
         }
         this.trigger('before:close', this);
-        if (this.options.fade) {
-            WindowService.fadeBackground(false);
-        }
-
-        this.ui.panel.hide();
         this.$el.removeClass(classes.OPEN);
-        this.panelRegion.reset();
+
+        WindowService.closePopup(this.popupId);
+
         this.isOpen = false;
         this.stopListeningToElementMove();
 

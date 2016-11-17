@@ -18,7 +18,7 @@ let defaultOptions = {
 };
 
 export default Marionette.Behavior.extend({
-    initialize: function (options, view) {
+    initialize (options, view) {
         helpers.ensureOption(options, 'onBlur');
 
         _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
@@ -28,48 +28,54 @@ export default Marionette.Behavior.extend({
         view.focus = this.__focus.bind(this);
     },
 
-    events: function () {
-        var key = 'blur';
+    events () {
+        let key = 'blur';
         if (this.options.selector) {
-            key += ' ' + this.options.selector;
+            key += ` ${this.options.selector}`;
         }
         return {
             [key]: '__onBlur'
         };
     },
 
-    onRender: function () {
+    onRender () {
         this.__getFocusableEl().attr('tabindex', -1);
     },
 
-    __getFocusableEl: function () {
+    __getFocusableEl () {
         if (this.options.selector) {
             return this.$(this.options.selector);
-        } else {
-            return this.$el;
         }
+        return this.$el;
     },
 
-    __focus: function () {
+    __isActiveElementNestedInto ($focusableEl) {
+        return $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
+    },
+
+    __isActiveElementNestedIntoRoots () {
+        let roots = this.options.roots.call(this.view);
+        return Boolean(roots.find(r => this.__isActiveElementNestedInto(r)));
+    },
+
+    __focus () {
         // If the focused element is nested into our focusable element, we simply bind to it. Otherwise, we focus the focusable element.
-        var $focusableEl = this.__getFocusableEl();
-        let activeElementIsNested = $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
-        if (!activeElementIsNested) {
+        let $focusableEl = this.__getFocusableEl();
+        if (!this.__isActiveElementNestedInto($focusableEl) && !this.__isActiveElementNestedIntoRoots()) {
             $focusableEl.focus();
         } else {
             $(document.activeElement).one('blur', this.__onBlur);
         }
     },
 
-    __onBlur: function () {
-        var $focusableEl = this.__getFocusableEl();
+    __onBlur () {
+        let $focusableEl = this.__getFocusableEl();
         _.defer(function () {
-            let activeElementIsNested = $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
-            if (activeElementIsNested) {
+            if (this.__isActiveElementNestedInto($focusableEl) || this.__isActiveElementNestedIntoRoots()) {
                 $(document.activeElement).one('blur', this.__onBlur);
             } else {
                 // Call the provided onBlur function
-                var callback = this.options.onBlur;
+                let callback = this.options.onBlur;
                 if (_.isString(callback)) {
                     this.view[callback].call(this.view);
                 } else {

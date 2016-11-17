@@ -34,7 +34,7 @@ export default Marionette.LayoutView.extend({
     },
 
     showPopup (view, options) {
-        let { fadeBackground } = options;
+        let { fadeBackground, transient } = options;
 
         let regionEl = $('<div>');
         let popupId = _.uniqueId(POPUP_ID_PREFIX);
@@ -72,7 +72,11 @@ export default Marionette.LayoutView.extend({
         if (popupId) {
             index = this.__stack.findIndex(x => x.popupId === popupId);
         } else {
-            index = this.__stack.length - 1;
+            // We're popping the stack until we find an non-transient popup to close
+            let lastNonTransient = _.last(this.__stack.filter(x => !x.options.transient));
+            if (lastNonTransient) {
+                index = this.__stack.indexOf(lastNonTransient);
+            }
         }
         if (index !== -1) {
             while (this.__stack.length > index) {
