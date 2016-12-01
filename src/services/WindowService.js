@@ -22,6 +22,8 @@ var windowService = /** @lends module:core.services.WindowService */ {
         let popupStackRegion = regionManager.get('popupStackRegion');
         this.__popupStackView = new PopupStackView();
         popupStackRegion.show(this.__popupStackView);
+
+        this.__popupStackView.on('popup:close', ...args => this.trigger('popup:close', ...args));
     },
 
     /**
@@ -33,7 +35,8 @@ var windowService = /** @lends module:core.services.WindowService */ {
     showPopup (view) {
         this.__popupStackView.showPopup(view, {
             fadeBackground: true,
-            transient: false
+            transient: false,
+            hostEl: null
         });
     },
 
@@ -52,12 +55,17 @@ var windowService = /** @lends module:core.services.WindowService */ {
      * @param {Object} options Options object.
      * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
      * */
-    showTransientPopup (view, options = { fadeBackground: false }) {
+    showTransientPopup (view, options = { fadeBackground: false, hostEl: null }) {
         return this.__popupStackView.showPopup(view, {
             fadeBackground: options.fadeBackground,
             anchorEl: options.anchorEl,
-            transient: true
+            transient: true,
+            hostEl: options.hostEl
         });
+    },
+
+    get (popupId) {
+        return this.__popupStackView.get(popupId);
     },
 
     fadeBackground (fade) {

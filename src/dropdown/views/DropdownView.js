@@ -10,7 +10,8 @@ import { $, Handlebars } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import WindowService from '../../services/WindowService';
 import template from '../templates/dropdown.hbs';
-import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
+import BlurableBehavior from '../utils/BlurableBehavior';
+import GlobalEventService from '../../services/GlobalEventService';
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
 import WrapperView from './WrapperView';
 
@@ -87,6 +88,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
         _.bindAll(this, 'open', 'close');
+
+        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
     },
 
     template: Handlebars.compile(template),
@@ -108,13 +111,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     behaviors: {
         BlurableBehavior: {
             behaviorClass: BlurableBehavior,
-            roots: function () {
-                if (!this.isOpen) {
-                    return [];
-                }
-                return [ this.panelView.$el ];
-            },
-            onBlur: 'close'
+            onBlur: '__handleBlur'
         },
         ListenToElementMoveBehavior: {
             behaviorClass: ListenToElementMoveBehavior
@@ -257,12 +254,20 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             view: this.panelView,
             className: 'dropdown__wrp'
         });
-        this.popupId = WindowService.showTransientPopup(wrapperView);
+        this.popupId = WindowService.showTransientPopup(wrapperView, {
+            hostEl: this.el
+        });
         this.__adjustPosition(wrapperView.$el);
 
         this.listenToElementMoveOnce(this.el, this.close);
+        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
 
-        this.focus();
+        if (!this.__isNestedInButton(document.activeElement)) {
+            this.focus();
+        } else {
+            this.focus(document.activeElement);
+        }
+        this.__suppressHandlingBlur = false;
         this.isOpen = true;
         this.trigger('open', this);
     },
@@ -281,8 +286,9 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
         WindowService.closePopup(this.popupId);
 
-        this.isOpen = false;
         this.stopListeningToElementMove();
+        this.stopListening(GlobalEventService);
+        this.isOpen = false;
 
         this.trigger('close', this, ...args);
         if (this.options.renderAfterClose) {
@@ -293,6 +299,34 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     __handleClick () {
         if (this.options.autoOpen) {
             this.open();
+        }
+    },
+
+    __isNestedInButton (testedEl) {
+        return this.el === testedEl || $.contains(this.el, testedEl);
+    },
+
+    __isNestedInPanel (testedEl) {
+        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || $.contains(el, testedEl));
+    },
+
+    __handleBlur () {
+        if (!this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
+            this.close();
+        }
+    },
+
+    __handleGlobalMousedown (target) {
+        if (this.__isNestedInPanel(target)) {
+            this.__suppressHandlingBlur = true;
+        } else if (!this.__isNestedInButton(target)) {
+            this.close();
+        }
+    },
+
+    __onWindowServicePopupClose (popupId) {
+        if (this.isOpen && this.popupId === popupId) {
+            this.close();
         }
     }
 });

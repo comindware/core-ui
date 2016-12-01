@@ -30,7 +30,6 @@ import bootstrapper from './Bootstrapper';
 
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
-import BlurableBehavior from './views/behaviors/BlurableBehavior';
 import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
 
@@ -113,8 +112,7 @@ var core = {
     },
     views: {
         behaviors: {
-            LoadingBehavior: LoadingBehavior,
-            BlurableBehavior: BlurableBehavior
+            LoadingBehavior: LoadingBehavior
         },
         LoadingView: LoadingView,
         SearchBarView: SearchBarView,

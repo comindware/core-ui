@@ -10,7 +10,7 @@ import { keypress, Handlebars } from '../../libApi';
 import { helpers, htmlHelpers } from '../../utils/utilsApi';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
-import GlobalEventsService from '../../services/GlobalEventService';
+import GlobalEventService from '../../services/GlobalEventService';
 
 /*
     Public interface:
@@ -114,7 +114,7 @@ const ListView = Marionette.LayoutView.extend({
 
         _.bindAll(this, 'handleResize');
         let debouncedHandleResize = _.debounce(this.handleResize, 100);
-        this.listenTo(GlobalEventsService, 'resize', debouncedHandleResize);
+        this.listenTo(GlobalEventService, 'resize', debouncedHandleResize);
         this.listenTo(this.collection, 'add remove reset', debouncedHandleResize);
 
         this.visibleCollection = new SlidingWindowCollection(this.collection);

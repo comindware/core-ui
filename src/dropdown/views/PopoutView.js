@@ -6,10 +6,12 @@
  * Published under the MIT license
  */
 
-import { Handlebars } from '../../libApi';
+import { $, Handlebars } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 import WindowService from '../../services/WindowService';
-import BlurableBehavior from '../../views/behaviors/BlurableBehavior';
+import GlobalEventService from '../../services/GlobalEventService';
+import BlurableBehavior from '../utils/BlurableBehavior';
+
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
 import template from '../templates/popout.hbs';
 import WrapperView from './WrapperView';
@@ -104,6 +106,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
         _.bindAll(this, 'open', 'close');
+
+        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
     },
 
     template: Handlebars.compile(template),
@@ -111,13 +115,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     behaviors: {
         BlurableBehavior: {
             behaviorClass: BlurableBehavior,
-            roots: function () {
-                if (!this.isOpen) {
-                    return [];
-                }
-                return [ this.panelView.$el ];
-            },
-            onBlur: 'close'
+            onBlur: '__handleBlur'
         },
         ListenToElementMoveBehavior: {
             behaviorClass: ListenToElementMoveBehavior
@@ -308,6 +306,35 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
     },
 
+    __isNestedInButton (testedEl) {
+        return this.el === testedEl || $.contains(this.el, testedEl);
+    },
+
+    __isNestedInPanel (testedEl) {
+        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || $.contains(el, testedEl));
+    },
+
+    __handleBlur () {
+        if (!this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
+            this.close();
+        }
+    },
+
+    __handleGlobalMousedown (target) {
+        if (this.__isNestedInPanel(target)) {
+            // clicking on panel result in focusing body and normally lead to closing the popup
+            this.__suppressHandlingBlur = true;
+        } else if (!this.__isNestedInButton(target)) {
+            this.close();
+        }
+    },
+
+    __onWindowServicePopupClose (popupId) {
+        if (this.isOpen && this.popupId === popupId) {
+            this.close();
+        }
+    },
+
     /**
      * Opens the dropdown panel.
      * */
@@ -332,13 +359,20 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             className: 'popout__wrp'
         });
         this.popupId = WindowService.showTransientPopup(wrapperView, {
-            fadeBackground: this.options.fade
+            fadeBackground: this.options.fade,
+            hostEl: this.el
         });
         this.__adjustDirectionPosition(wrapperView.$el);
         this.__adjustFlowPosition(wrapperView.$el);
 
         this.listenToElementMoveOnce(this.el, this.close);
-        this.focus();
+        this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
+        if (!this.__isNestedInButton(document.activeElement)) {
+            this.focus();
+        } else {
+            this.focus(document.activeElement);
+        }
+        this.__suppressHandlingBlur = false;
         this.isOpen = true;
         this.trigger('open', this);
     },
@@ -358,6 +392,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
         this.isOpen = false;
         this.stopListeningToElementMove();
+        this.stopListening(GlobalEventService);
 
         this.trigger('close', this, ...args);
         if (this.options.renderAfterClose) {

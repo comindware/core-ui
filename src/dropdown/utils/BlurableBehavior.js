@@ -6,9 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { $ } from '../../libApi';
 import { helpers } from '../../utils/utilsApi';
 
 let defaultOptions = {
@@ -49,38 +46,23 @@ export default Marionette.Behavior.extend({
         return this.$el;
     },
 
-    __isActiveElementNestedInto ($focusableEl) {
-        return $focusableEl[0] === document.activeElement || $.contains($focusableEl[0], document.activeElement);
-    },
-
-    __isActiveElementNestedIntoRoots () {
-        let roots = this.options.roots.call(this.view);
-        return Boolean(roots.find(r => this.__isActiveElementNestedInto(r)));
-    },
-
-    __focus () {
-        // If the focused element is nested into our focusable element, we simply bind to it. Otherwise, we focus the focusable element.
-        let $focusableEl = this.__getFocusableEl();
-        if (!this.__isActiveElementNestedInto($focusableEl) && !this.__isActiveElementNestedIntoRoots()) {
-            $focusableEl.focus();
+    __focus (focusedEl) {
+        if (!focusedEl) {
+            this.__getFocusableEl().focus();
         } else {
             $(document.activeElement).one('blur', this.__onBlur);
         }
+        this.view.isFocused = true;
     },
 
     __onBlur () {
-        let $focusableEl = this.__getFocusableEl();
         _.defer(function () {
-            if (this.__isActiveElementNestedInto($focusableEl) || this.__isActiveElementNestedIntoRoots()) {
-                $(document.activeElement).one('blur', this.__onBlur);
+            this.view.isFocused = false;
+            let callback = this.options.onBlur;
+            if (_.isString(callback)) {
+                this.view[callback].call(this.view);
             } else {
-                // Call the provided onBlur function
-                let callback = this.options.onBlur;
-                if (_.isString(callback)) {
-                    this.view[callback].call(this.view);
-                } else {
-                    callback.call(this.view);
-                }
+                callback.call(this.view);
             }
         }.bind(this));
     }

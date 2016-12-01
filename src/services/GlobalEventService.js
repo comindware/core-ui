@@ -35,7 +35,7 @@ const windowEventList = [
     }
 ];
 
-var globalEventsService = /** @lends module:core.services.GlobalEventsService */ {
+var globalEventService = /** @lends module:core.services.GlobalEventService */ {
     initialize: function () {
         this.__windowEvents = windowEventList.map(x => {
             let captureSuffix = x.capture ? ':captured' : '';
@@ -60,6 +60,6 @@ var globalEventsService = /** @lends module:core.services.GlobalEventsService */
     }
 };
 
-_.extend(globalEventsService, Backbone.Events);
+_.extend(globalEventService, Backbone.Events);
 
-export default globalEventsService;
+export default globalEventService;
