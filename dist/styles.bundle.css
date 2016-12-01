@@ -2744,7 +2744,7 @@ input[type="checkbox"].checkbox {
     display: none;
     text-align: left;
 }
-.open .popout-menu, .popout-menu:hover .popout-menu {
+.popout-menu, .popout-menu:hover .popout-menu {
     display: block;
 }
 .popout-menu__i {
