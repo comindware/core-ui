@@ -7,6 +7,7 @@
  */
 
 import { helpers } from '../../utils/utilsApi';
+import { $ } from '../../libApi';
 
 let defaultOptions = {
     selector: null,
