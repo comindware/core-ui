@@ -63,7 +63,7 @@ export default {
         view.once('close', function (result) {
             deferred.resolve(result);
         });
-        WindowService.showPopup(view, { fadeOut: false });
+        WindowService.showPopup(view);
         return deferred.promise;
     }
 };

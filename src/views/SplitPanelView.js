@@ -39,7 +39,7 @@ export default Marionette.LayoutView.extend({
             '__startDragging', '__stopDragging', '__handleDocumentMouseMove',
             '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
 
-        this.listenTo(GlobalEventService, 'resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
+        this.listenTo(GlobalEventService, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
         this.on('render', function () {
             this.$el.addClass('double-panels');
         }.bind(this));

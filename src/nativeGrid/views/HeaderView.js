@@ -28,7 +28,7 @@ let HeaderView = GridHeaderView.extend({
     initialize: function (options) {
         GridHeaderView.prototype.initialize.apply(this, arguments);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
-        this.listenTo(GlobalEventService, 'resize', this.__handleResizeInternal);
+        this.listenTo(GlobalEventService, 'window:resize', this.__handleResizeInternal);
     },
 
     template: Handlebars.compile(template),
