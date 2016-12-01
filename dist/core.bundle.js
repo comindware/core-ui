@@ -6512,19 +6512,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
+	var _libApi = __webpack_require__(1);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 9/7/2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
 	
 	var defaultOptions = {
 	    selector: null,
 	    allowNestedFocus: true,
 	    onBlur: null
-	}; /**
-	    * Developer: Stepan Burguchev
-	    * Date: 9/7/2015
-	    * Copyright: 2009-2016 Comindware®
-	    *       All Rights Reserved
-	    * Published under the MIT license
-	    */
+	};
 	
 	exports.default = Marionette.Behavior.extend({
 	    initialize: function initialize(options, view) {
@@ -6556,7 +6560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!focusedEl) {
 	            this.__getFocusableEl().focus();
 	        } else {
-	            $(document.activeElement).one('blur', this.__onBlur);
+	            (0, _libApi.$)(document.activeElement).one('blur', this.__onBlur);
 	        }
 	        this.view.isFocused = true;
 	    },
