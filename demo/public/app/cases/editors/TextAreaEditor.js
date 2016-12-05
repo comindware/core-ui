@@ -11,8 +11,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 key: 'textAreaValue',
                 changeMode: 'keydown',
                 autocommit: true,
-                size: 'fixed',
-                height: 10
+                maxHeight: 10
             }),
             presentation: '<div style="display: inline-block"><span style="color: darkgreen">{{{renderAsHtml textAreaValue}}}</span></div>'
         });
