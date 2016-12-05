@@ -22,7 +22,7 @@ import 'backbone.forms';
 import * as Marionette_ from 'backbone.marionette';
 import $_ from 'jquery';
 import 'jquery.inputmask/dist/jquery.inputmask.bundle';
-import 'jquery.caret';
+import 'rangyinputs';
 import 'jquery-mousewheel';
 import 'jquery-autosize';
 import * as keypress_ from 'keypress';

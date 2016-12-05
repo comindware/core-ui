@@ -124,7 +124,7 @@ module.exports = {
                         loader: 'imports?jquery'
                     },
                     {
-                        test: /jquery\.caret/,
+                        test: /rangyinputs/,
                         loader: 'imports?jquery'
                     },
                     {
@@ -180,7 +180,7 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    "jquery.caret": pathResolver.source('lib/jquery.caret/index'),
+                    "rangyinputs": pathResolver.source('lib/rangyinputs/rangyinputs-jquery-src'),
                     "backbone.forms": pathResolver.source('lib/backbone.forms/backbone-forms'),
                     "keypress": pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
                     "handlebars": 'handlebars/dist/handlebars'

@@ -192,7 +192,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     getCaretPos: function () {
-        return this.ui.input.caret().start;
+        return this.ui.input.getSelection().start;
     },
 
     fixCaretPos: function (pos) {
@@ -209,7 +209,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     setCaretPos: function (pos) {
-        this.ui.input.caret(pos, pos);
+        this.ui.input.setSelection(pos, pos);
     },
 
     getSegmentIndex: function (pos) {
