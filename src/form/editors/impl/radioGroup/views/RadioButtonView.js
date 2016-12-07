@@ -23,8 +23,7 @@ export default Marionette.ItemView.extend({
         return {
             title: (this.model && this.model.get('title')) || null,
             tabindex: '0'
-        }
-        
+        }        
     },
 
     initialize: function (options) {
