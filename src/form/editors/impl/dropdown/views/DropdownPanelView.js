@@ -20,6 +20,10 @@ const config = {
     MAX_HEIGHT: 410
 };
 
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
+};
+
 export default Marionette.LayoutView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'model');
@@ -93,6 +97,9 @@ export default Marionette.LayoutView.extend({
                 childViewOptions: {
                     reqres: this.reqres,
                     displayAttribute: this.model.get('displayAttribute')
+                },
+                emptyViewOptions: {
+                    className: classes.EMPTY_VIEW
                 },
                 maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
                 height: 'auto',

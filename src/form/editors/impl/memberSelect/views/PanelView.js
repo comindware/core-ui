@@ -20,6 +20,10 @@ const config = {
     TEXT_FETCH_DELAY: 300
 };
 
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
+};
+
 export default Marionette.LayoutView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'model');
@@ -68,6 +72,9 @@ export default Marionette.LayoutView.extend({
                 childView: ListItemView,
                 childViewOptions: {
                     reqres: this.reqres
+                },
+                emptyViewOptions: {
+                    className: classes.EMPTY_VIEW
                 },
                 childHeight: config.CHILD_HEIGHT,
                 height: 'auto',

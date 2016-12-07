@@ -4,47 +4,41 @@
     height: inherit;
 }
 
-.dropdown__button{
+.dropdown__button {
     height: inherit;
 }
 
 .dropdown__wrp {
-    width: 100%;
     margin: 0;
     font-size: 12px;
     background: #fff;
     border: 1px solid #c2c2c2;
     -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
-    position: absolute;
-    left: 0;
-    top: 100%;
-    z-index: 4;
+    position: fixed;
+    z-index: 600;
 }
 
-.dropdown__wrp_over {
-    margin-top: 0;
-    top: 0;
+.dropdown__wrp_up {
+}
+
+.dropdown__wrp_down {
+}
+
+.dropdown__wrp_up-over {
+}
+
+.dropdown__wrp_down-over {
 }
 
 .dropdown__wrp_footer {
     padding-bottom: 38px;
 }
+
 .dropdown__wrp_right {
     left: auto;
     right: -10px;
 }
-.dropdown-view .dropdown__wrp {
-    width: auto;
-    left: 0;
-    right: 0;
-    top: 14px;
-}
-.dropdown__wrp_up {
-    top: auto;
-    bottom:30px;
-}
-
 
 /* dropdown-list */
 .dropdown__footer {
@@ -67,10 +61,8 @@
 
 .dropdown-list {
     position: relative;
-}
-
-.dropdown-list {
     width: 100%;
+    height: 100%;
     max-height: 310px;
     padding: 1px;
     overflow: hidden;
@@ -132,9 +124,6 @@
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
 }
-.dropdown-list__col:first-child {
-    /*padding-left: 40px;*/
-}
 
 .avatar-icon_dropdown-list {
     width: 22px;
@@ -145,27 +134,6 @@
     vertical-align: top;
     font-size: 12px;
     float: none;
-}
-
-
-
-
-.nav-profile_test {
-    width: 300px;
-    padding: 18px 20px 0;
-}
-
-.nav-profile:after {
-    display: none;
-}
-
-.nav-profile:before {
-    width: 16px;
-    height: 10px;
-    top: -10px;
-    right: 8px;
-    border: 0;
-    background: no-repeat 0 100% url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAYCAYAAADzoH0MAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3FpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoxYmNlMTA1YS1kOTcyLTE1NDctYjFhZC1iMTQxNjRiYzYyYjMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QURCN0IxNzE2RTVEMTFFNDk2QTdCMzNBN0RDNjU5NDciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QURCN0IxNzA2RTVEMTFFNDk2QTdCMzNBN0RDNjU5NDciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjljNmMwOWQ3LWFlYzItZmE0YS05YWI3LTRmNjMyYTZlNDBlNSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxYmNlMTA1YS1kOTcyLTE1NDctYjFhZC1iMTQxNjRiYzYyYjMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz64Ue/dAAABj0lEQVR42tySzUrDQBDHN5ttmq8mKcmmaW0PHj36ApYKHsWjID6AoHgQ8eLBkwi9CB6lF/E5VPoM3kPqsfRQeil+tOuMRCm2Iam5ObBksjP/38zujiSEIMrZI4lNkGwmvbU3vxz6O5BFPPtD0xLSYjRrYhKYZqyW2BVb5rwLE/AV8hglOe0fAFi3+5QLkPsVEucAOsNYMf59bTZbH5nvAMQyfMr1euMS1hX4bryXDoBE3LODoHaoafqxrhtH1WrtFIGLIHSB2OK8smua5jnnXMJlmqWTIKgeIDjOmQdAAOfe8Dy+bVnWNQhZoVAgjDECPgXIhe9X9rHALITOiHXHKW+UStaN67pFRVF+qiAIgRBrQ4Ed2DK/IXKr1USxCsF11/XuQOzruj53WbIsE4CyyWSyJUnS83g8fun1onekFOGi1kB87zjOimEYiW+uqirxPM+wbecWu8Wu4ZxKg3O/A+dehZU6OJqmEeiyDG4HhnCPhGH4MBgMxLI2Go1EFEUh6ff7Yjqdir/YcDgUnwIMAE9Vza6XoQGiAAAAAElFTkSuQmCC');
 }
 
 
@@ -547,22 +515,5 @@
     opacity: 1;
     background: no-repeat 50% 50% url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEBJREFUeNpiVO+7yUAk+A8imEhRDASMTKQohtnwH0kQr2KYBkY0SZyKkf2ArgmrYnRPMxJSjC2UGPEpBgGAAAMAVUUMnvjkXPcAAAAASUVORK5CYII=);
 }
+
 /*-----//------*/
-
-
-/* Dropdown */
-.dropdown__wrp.dev-panel-up-over {
-    margin-top: 20px;
-}
-
-.popout__action-btn +
-.popout__wrp.popout__right,
-.popout__wrp.popout__right {
-    right: auto;
-}
-
-.popout__action-btn +
-.popout__wrp.popout__left,
-.popout__wrp.popout__left {
-    left: auto;
-}

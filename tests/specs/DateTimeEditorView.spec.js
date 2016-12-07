@@ -26,12 +26,8 @@ describe('Editors', function () {
             return view.$('.js-time-input');
         };
 
-        let findDateDropdownPanel = function (view) {
-            return view.$('.js-date-region .js-popout-region .dropdown');
-        };
-
         let selectTodayOnOpenPanel = function (view) {
-            view.$('.today:visible').click();
+            view.dateView.calendarDropdownView.panelView.$('.today:visible').click();
         };
 
         it('should get focus when focus() is called', function () {
