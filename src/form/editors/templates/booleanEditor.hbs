@@ -1,1 +1,6 @@
-<span class="checkbox js-toggle-button"></span> <span class="checkbox-text js-display-text">{{displayText}}</span>
+<span class="checkbox js-toggle-button"></span> 
+{{#if displayHTML}}
+{{{displayHTML}}}
+{{else}}
+<span class="checkbox-text js-display-text">{{displayText}}</span>
+{{/if}}

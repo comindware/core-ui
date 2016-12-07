@@ -51,8 +51,11 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
 
     className: 'editor editor_checkbox',
 
-    attributes: {
-        'tabindex': '0'
+    attributes() {
+        return {
+            title: this.options.title || null,
+            tabindex: '0'
+        }
     },
 
     template: Handlebars.compile(template),
