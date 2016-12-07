@@ -6,13 +6,11 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import '../../../../../libApi';
 import BaseReferenceEditorController from './BaseReferenceEditorController';
 
 export default BaseReferenceEditorController.extend({
-    navigate: function (model) {
+    navigate: function (value) {
         return false;
     }
 });

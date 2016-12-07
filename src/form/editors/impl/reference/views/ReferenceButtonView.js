@@ -25,9 +25,9 @@ export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers: function () {
-        var value = this.model.get('value');
+        let value = this.model.get('value');
         return {
-            text: (value && (value.get('text') || '#' + value.id)) || ''
+            text: this.options.getDisplayText(value)
         };
     },
 

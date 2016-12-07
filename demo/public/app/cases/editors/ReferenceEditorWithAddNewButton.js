@@ -15,13 +15,17 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 key: 'referenceValue',
                 autocommit: true,
                 controller: new (core.form.editors.reference.controllers.DemoReferenceEditorController.extend({
-                    addNewItem:function(){
+                    addNewItem: function (callback) {
                         alert('Added');
+                        callback({
+                            id: 'test.new',
+                            text: 'New Item'
+                        });
                     }
                 })),
                 showAddNewButton: true
             }),
-            presentation: "{ id: '{{referenceValue.attributes.id}}', text: '{{referenceValue.attributes.text}}' }"
+            presentation: "{{#if referenceValue}}{ id: '{{referenceValue.id}}', text: '{{referenceValue.text}}' }{{else}}null{{/if}}"
         });
     };
 });
