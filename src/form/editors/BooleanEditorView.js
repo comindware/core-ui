@@ -27,6 +27,7 @@ const classes = {
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
+ * @param {String} [options.displayHTML] HTML content to the right of the checkbox. Click on it triggers the checkbox.
  * */
 Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
     initialize: function (options) {

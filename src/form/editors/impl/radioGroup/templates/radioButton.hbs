@@ -1,6 +1,4 @@
 <span class="radiobutton js-toggle-button"></span>
-{{#if displayHTML}}
-{{{displayHTML}}}
-{{else}}
-<span class="radiobutton-text js-display-text">{{displayText}}</span>
-{{/if}}
+<span class="radiobutton-text js-display-text">
+    {{#if displayHTML}}{{{displayHTML}}}{{else}}{{displayText}}{{/if}}
+</span>
