@@ -26,6 +26,8 @@ const defaultOptions = {
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText }</code>, описывающих радио-кнопки.
+ * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
+ * @param {String} [options.title] Title attribute for the editor.
  * */
 Backbone.Form.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
     initialize: function (options) {
