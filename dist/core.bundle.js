@@ -3353,15 +3353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/12/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -3373,18 +3365,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = Backbone.AssociatedModel.extend({
-	    initialize: function initialize(data) {
+	exports.default = Backbone.Model.extend({
+	    initialize: function initialize() {
 	        _.extend(this, new _listApi2.default.models.behaviors.ListItemBehavior(this));
-	
-	        // because of two class 'Reference' on server
-	        if (data.name) {
-	            this.set('text', data.name);
-	        } else {
-	            this.set('name', data.text);
-	        }
 	    }
-	});
+	}); /**
+	     * Developer: Stepan Burguchev
+	     * Date: 12/12/2014
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
 
 /***/ },
 /* 90 */
@@ -4207,7 +4198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    templateHelpers: function templateHelpers() {
 	        var value = this.model.get('value');
 	        return {
-	            text: value && (value.get('text') || '#' + value.id) || ''
+	            text: this.options.getDisplayText(value)
 	        };
 	    },
 	
@@ -4265,15 +4256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/3/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -4308,7 +4291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    templateHelpers: function templateHelpers() {
 	        return {
-	            text: this.model.get('text') || '#' + this.model.id
+	            text: this.options.getDisplayText(this.model.toJSON())
 	        };
 	    },
 	
@@ -4319,7 +4302,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    __select: function __select() {
 	        this.reqres.request('value:set', this.model);
 	    }
-	});
+	}); /**
+	     * Developer: Stepan Burguchev
+	     * Date: 12/3/2014
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
 
 /***/ },
 /* 114 */
@@ -6901,6 +6890,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.buttonRegion.show(this.button);
 	        this.isShown = true;
 	    },
+	    onDestroy: function onDestroy() {
+	        if (this.isOpen) {
+	            _WindowService2.default.closePopup(this.popupId);
+	        }
+	    },
 	    __adjustPosition: function __adjustPosition($panelEl) {
 	        var viewportHeight = window.innerHeight;
 	        var $buttonEl = this.buttonRegion.$el;
@@ -7362,6 +7356,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
 	        this.ui.button.toggleClass(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
+	    },
+	    onDestroy: function onDestroy() {
+	        if (this.isOpen) {
+	            _WindowService2.default.closePopup(this.popupId);
+	        }
 	    },
 	    __getAnchorEl: function __getAnchorEl() {
 	        var $anchorEl = this.ui.button;
@@ -7840,7 +7839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Published under the MIT license
 	 */
 	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -7882,33 +7881,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	        readonlyPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
 	        disablePlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
 	        maxLength: null,
-	        textHeight: null,
-	        initialHeight: 2
+	        height: null,
+	        minHeight: 2,
+	        maxHeight: null
 	    };
 	};
 	
 	/**
 	 * @name TextAreaEditorView
 	 * @memberof module:core.form.editors
-	 * @class Многострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
+	 * @class Multiline text editor. Supported data type: <code>String</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
-	 * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
-	 *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
-	 *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
-	 * @param {String} [options.size='auto'] Определяет метод вычисления высоты эдитора:<ul>
-	 *     <li><code>'auto'</code> - автоматически определяется контентом.</li>
-	 *     <li><code>'fixed'</code> - высота фиксирована.</li></ul>
-	 * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder для пустого текста.
+	 * @param {Number|null} [options.maxLength=null] The maximum number of characters. Not limited if <code>null</code>.
+	 * @param {String} [options.changeMode='blur'] Determines the moment the editor's value is updated:<ul>
+	 *     <li><code>'keydown'</code> - on key press.</li>
+	 *     <li><code>'blur'</code> - on focus out.</li></ul>
+	 * @param {String} [options.size='auto'] Determines the strategy to compute the editor's height:<ul>
+	 *     <li><code>'auto'</code> - determined by the content (withing the range [<code>minHeight</code>, <code>maxHeight</code>]).</li>
+	 *     <li><code>'fixed'</code> - fixed, determined by <code>height</code> option.</li></ul>
+	 * @param {String} [options.emptyPlaceholder='Field is empty'] Empty text placeholder.
 	 * @param {String} [options.readonlyPlaceholder='Field is readonly'] Текст placeholder, отображаемый
 	 * в случае если эдитор имеет флаг <code>readonly</code>.
 	 * @param {String} [options.disablePlaceholder='Field is disabled'] Текст placeholder, отображаемый
 	 * в случае если эдитор имеет флаг <code>enabled: false</code>.
-	 * @param {Number} [options.initialHeight=2] Изначальная высота эдитора (количество строк).
-	 * @param {Number} [options.textHeight=null]
-	 * При установленной опции <code>size: 'auto'</code>, определяет максимальную высоту эдитора (количество строк).
-	 * При установленной опции <code>size: 'fixed'</code>, определяет высоту эдитора (количество строк).
+	 * @param {Number} [options.height=null] The height of the editor (in rows) when its size is fixed.
+	 * @param {Number} [options.minHeight=2] The minimum height of the editor (in rows).
+	 * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
 	 * */
 	Backbone.Form.editors.TextArea = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.TextAreaEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -7941,19 +7940,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this.options;
 	    },
 	
-	    setMaxHeight: function setMaxHeight() {
-	        if (this.options.textHeight) {
-	            this.options.maxHeight = parseInt(this.ui.textarea.css('line-height')) * this.options.textHeight;
-	        }
-	    },
-	
 	    onRender: function onRender() {
 	        // Keyboard shortcuts listener
 	        if (this.keyListener) {
 	            this.keyListener.reset();
 	        }
 	        this.keyListener = new _libApi.keypress.Listener(this.ui.textarea[0]);
-	        this.ui.textarea.attr('rows', this.options.initialHeight);
 	    },
 	
 	    /**
@@ -7975,18 +7967,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    onShow: function onShow() {
-	        this.setMaxHeight();
-	        this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
+	        this.ui.textarea.val(this.getValue() || '');
 	        switch (this.options.size) {
 	            case size.auto:
+	                this.ui.textarea.attr('rows', this.options.minHeight);
+	                if (this.options.maxHeight) {
+	                    var maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
+	                    this.ui.textarea.css('maxHeight', maxHeight);
+	                }
 	                if (!_utilsApi.htmlHelpers.isElementInDom(this.el)) {
 	                    _utilsApi.helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
 	                }
 	                this.ui.textarea.autosize({ append: '' });
 	                break;
 	            case size.fixed:
-	                this.ui.textarea.attr('rows', this.options.textHeight);
+	                this.ui.textarea.attr('rows', this.options.height);
 	                break;
+	            default:
+	                _utilsApi.helpers.throwArgumentError('Invalid `size parameter`.');
 	        }
 	    },
 	
@@ -8008,11 +8006,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __setEnabled: function __setEnabled(enabled) {
+	        //noinspection Eslint
 	        _BaseItemEditorView2.default.prototype.__setEnabled.call(this, enabled);
 	        this.ui.textarea.prop('disabled', !enabled);
 	    },
 	
 	    __setReadonly: function __setReadonly(readonly) {
+	        //noinspection Eslint
 	        _BaseItemEditorView2.default.prototype.__setReadonly.call(this, readonly);
 	        if (this.getEnabled()) {
 	            this.ui.textarea.prop('readonly', readonly);
@@ -8037,7 +8037,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Number} position Новая позиция курсора.
 	     * */
 	    setCaretPos: function setCaretPos(position) {
-	        this.ui.textarea.caret(position, position);
+	        this.ui.textarea.setSelection(position, position);
 	    },
 	
 	    setValue: function setValue(value) {
@@ -8061,7 +8061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 	
-	        var caret = this.ui.textarea.caret();
+	        var caret = this.ui.textarea.getSelection();
 	        if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
 	            return;
 	        }
@@ -8078,7 +8078,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	
 	        this.oldText = text;
-	        var caret = this.ui.textarea.caret();
+	        var caret = this.ui.textarea.getSelection();
 	
 	        this.trigger('input', text, {
 	            start: caret.start,
@@ -8713,15 +8713,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/12/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -8807,12 +8799,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    /**
 	     * Handles a navigation request to an object. The method is abstract.
-	     * @param {Backbone.Model} model Data model that describes the object to navigate to.
+	     * @param {Object} value Value object that describes the object to navigate to.
 	     * */
-	    navigate: function navigate(model) {
+	    navigate: function navigate(value) {
 	        _utilsApi.helpers.throwError('Not Implemented.', 'NotImplementedError');
 	    }
-	});
+	}); /**
+	     * Developer: Stepan Burguchev
+	     * Date: 12/12/2014
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
 
 /***/ },
 /* 187 */
@@ -8905,6 +8903,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    initialize: function initialize(options) {
 	        _utilsApi.helpers.ensureOption(options, 'model');
 	        _utilsApi.helpers.ensureOption(options, 'reqres');
+	        _utilsApi.helpers.ensureOption(options, 'getDisplayText');
 	
 	        this.reqres = options.reqres;
 	        this.showAddNewButton = this.options.showAddNewButton;
@@ -8918,7 +8917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    templateHelpers: function templateHelpers() {
 	        var value = this.model.get('value');
 	        return {
-	            text: value && (value.get('text') || '#' + value.id) || '',
+	            text: this.options.getDisplayText(this.model.get('value')),
 	            showAddNewButton: this.showAddNewButton
 	        };
 	    },
@@ -8952,7 +8951,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            listViewOptions: {
 	                childView: this.options.listItemView,
 	                childViewOptions: {
-	                    reqres: this.reqres
+	                    reqres: this.reqres,
+	                    getDisplayText: this.options.getDisplayText
 	                },
 	                emptyViewOptions: {
 	                    text: _LocalizationService2.default.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
@@ -8990,6 +8990,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, this);
 	        }, this);
 	    },
+	
 	
 	    keyboardShortcuts: {
 	        'up': function up() {
@@ -23754,79 +23755,328 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*** IMPORTS FROM imports-loader ***/
 	var jquery = __webpack_require__(44);
 	
-	/*
+	/**
+	 * @license Rangy Inputs, a jQuery plug-in for selection and caret manipulation within textareas and text inputs.
+	 * 
+	 * https://github.com/timdown/rangyinputs
 	 *
-	 * Copyright (c) 2010 C. F., Wong (<a href="http://cloudgen.w0ng.hk">Cloudgen Examplet Store</a>)
-	 * Licensed under the MIT License:
-	 * http://www.opensource.org/licenses/mit-license.php
+	 * For range and selection features for contenteditable, see Rangy.
+	
+	 * http://code.google.com/p/rangy/
 	 *
+	 * Depends on jQuery 1.0 or later.
+	 *
+	 * Copyright 2014, Tim Down
+	 * Licensed under the MIT license.
+	 * Version: 1.2.0
+	 * Build date: 30 November 2014
 	 */
-	(function ($, len, createRange, duplicate) {
-		$.fn.caret = function (options, opt2) {
-			var start,
-			    end,
-			    t = this[0],
-			    browser = $.browser.msie;
-			if ((typeof options === "undefined" ? "undefined" : (0, _typeof3.default)(options)) === "object" && typeof options.start === "number" && typeof options.end === "number") {
-				start = options.start;
-				end = options.end;
-			} else if (typeof options === "number" && typeof opt2 === "number") {
-				start = options;
-				end = opt2;
-			} else if (typeof options === "string") {
-				if ((start = t.value.indexOf(options)) > -1) end = start + options[len];else start = null;
-			} else if (Object.prototype.toString.call(options) === "[object RegExp]") {
-				var re = options.exec(t.value);
-				if (re != null) {
-					start = re.index;
-					end = start + re[0][len];
-				}
-			}
-			if (typeof start != "undefined") {
-				if (browser) {
-					var selRange = this[0].createTextRange();
-					selRange.collapse(true);
-					selRange.moveStart('character', start);
-					selRange.moveEnd('character', end - start);
-					selRange.select();
-				} else {
-					this[0].selectionStart = start;
-					this[0].selectionEnd = end;
-				}
-				this[0].focus();
-				return this;
-			} else {
-				// Modification as suggested by Андрей Юткин
-				if (browser) {
-					var selection = document.selection;
-					if (this[0].tagName.toLowerCase() != "textarea") {
-						var val = this.val(),
-						    range = selection[createRange]()[duplicate]();
-						range.moveEnd("character", val[len]);
-						var s = range.text == "" ? val[len] : val.lastIndexOf(range.text);
-						range = selection[createRange]()[duplicate]();
-						range.moveStart("character", -val[len]);
-						var e = range.text[len];
-					} else {
-						var range = selection[createRange](),
-						    stored_range = range[duplicate]();
-						stored_range.moveToElementText(this[0]);
-						stored_range.setEndPoint('EndToEnd', range);
-						var s = stored_range.text[len] - range.text[len],
-						    e = s + range.text[len];
-					}
-					// End of Modification
-				} else {
-					var s = t.selectionStart,
-					    e = t.selectionEnd;
-				}
-				var te = t.value.substring(s, e);
-				return { start: s, end: e, text: te, replace: function replace(st) {
-						return t.value.substring(0, s) + st + t.value.substring(e, t.value[len]);
-					} };
-			}
-		};
-	})(jQuery, "length", "createRange", "duplicate");
+	(function ($) {
+	    var UNDEF = "undefined";
+	    var getSelection, setSelection, deleteSelectedText, deleteText, insertText;
+	    var replaceSelectedText, surroundSelectedText, extractSelectedText, collapseSelection;
+	
+	    // Trio of isHost* functions taken from Peter Michaux's article:
+	    // http://peter.michaux.ca/articles/feature-detection-state-of-the-art-browser-scripting
+	    function isHostMethod(object, property) {
+	        var t = (0, _typeof3.default)(object[property]);
+	        return t === "function" || !!(t == "object" && object[property]) || t == "unknown";
+	    }
+	
+	    function isHostProperty(object, property) {
+	        return (0, _typeof3.default)(object[property]) != UNDEF;
+	    }
+	
+	    function isHostObject(object, property) {
+	        return !!((0, _typeof3.default)(object[property]) == "object" && object[property]);
+	    }
+	
+	    function fail(reason) {
+	        if (window.console && window.console.log) {
+	            window.console.log("RangyInputs not supported in your browser. Reason: " + reason);
+	        }
+	    }
+	
+	    function adjustOffsets(el, start, end) {
+	        if (start < 0) {
+	            start += el.value.length;
+	        }
+	        if ((typeof end === "undefined" ? "undefined" : (0, _typeof3.default)(end)) == UNDEF) {
+	            end = start;
+	        }
+	        if (end < 0) {
+	            end += el.value.length;
+	        }
+	        return { start: start, end: end };
+	    }
+	
+	    function makeSelection(el, start, end) {
+	        return {
+	            start: start,
+	            end: end,
+	            length: end - start,
+	            text: el.value.slice(start, end)
+	        };
+	    }
+	
+	    function getBody() {
+	        return isHostObject(document, "body") ? document.body : document.getElementsByTagName("body")[0];
+	    }
+	
+	    $(document).ready(function () {
+	        var testTextArea = document.createElement("textarea");
+	
+	        getBody().appendChild(testTextArea);
+	
+	        if (isHostProperty(testTextArea, "selectionStart") && isHostProperty(testTextArea, "selectionEnd")) {
+	            getSelection = function getSelection(el) {
+	                var start = el.selectionStart,
+	                    end = el.selectionEnd;
+	                return makeSelection(el, start, end);
+	            };
+	
+	            setSelection = function setSelection(el, startOffset, endOffset) {
+	                var offsets = adjustOffsets(el, startOffset, endOffset);
+	                el.selectionStart = offsets.start;
+	                el.selectionEnd = offsets.end;
+	            };
+	
+	            collapseSelection = function collapseSelection(el, toStart) {
+	                if (toStart) {
+	                    el.selectionEnd = el.selectionStart;
+	                } else {
+	                    el.selectionStart = el.selectionEnd;
+	                }
+	            };
+	        } else if (isHostMethod(testTextArea, "createTextRange") && isHostObject(document, "selection") && isHostMethod(document.selection, "createRange")) {
+	
+	            getSelection = function getSelection(el) {
+	                var start = 0,
+	                    end = 0,
+	                    normalizedValue,
+	                    textInputRange,
+	                    len,
+	                    endRange;
+	                var range = document.selection.createRange();
+	
+	                if (range && range.parentElement() == el) {
+	                    len = el.value.length;
+	
+	                    normalizedValue = el.value.replace(/\r\n/g, "\n");
+	                    textInputRange = el.createTextRange();
+	                    textInputRange.moveToBookmark(range.getBookmark());
+	                    endRange = el.createTextRange();
+	                    endRange.collapse(false);
+	                    if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
+	                        start = end = len;
+	                    } else {
+	                        start = -textInputRange.moveStart("character", -len);
+	                        start += normalizedValue.slice(0, start).split("\n").length - 1;
+	                        if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
+	                            end = len;
+	                        } else {
+	                            end = -textInputRange.moveEnd("character", -len);
+	                            end += normalizedValue.slice(0, end).split("\n").length - 1;
+	                        }
+	                    }
+	                }
+	
+	                return makeSelection(el, start, end);
+	            };
+	
+	            // Moving across a line break only counts as moving one character in a TextRange, whereas a line break in
+	            // the textarea value is two characters. This function corrects for that by converting a text offset into a
+	            // range character offset by subtracting one character for every line break in the textarea prior to the
+	            // offset
+	            var offsetToRangeCharacterMove = function offsetToRangeCharacterMove(el, offset) {
+	                return offset - (el.value.slice(0, offset).split("\r\n").length - 1);
+	            };
+	
+	            setSelection = function setSelection(el, startOffset, endOffset) {
+	                var offsets = adjustOffsets(el, startOffset, endOffset);
+	                var range = el.createTextRange();
+	                var startCharMove = offsetToRangeCharacterMove(el, offsets.start);
+	                range.collapse(true);
+	                if (offsets.start == offsets.end) {
+	                    range.move("character", startCharMove);
+	                } else {
+	                    range.moveEnd("character", offsetToRangeCharacterMove(el, offsets.end));
+	                    range.moveStart("character", startCharMove);
+	                }
+	                range.select();
+	            };
+	
+	            collapseSelection = function collapseSelection(el, toStart) {
+	                var range = document.selection.createRange();
+	                range.collapse(toStart);
+	                range.select();
+	            };
+	        } else {
+	            getBody().removeChild(testTextArea);
+	            fail("No means of finding text input caret position");
+	            return;
+	        }
+	
+	        // Clean up
+	        getBody().removeChild(testTextArea);
+	
+	        function getValueAfterPaste(el, text) {
+	            var val = el.value,
+	                sel = getSelection(el),
+	                selStart = sel.start;
+	            return {
+	                value: val.slice(0, selStart) + text + val.slice(sel.end),
+	                index: selStart,
+	                replaced: sel.text
+	            };
+	        }
+	
+	        function pasteTextWithCommand(el, text) {
+	            el.focus();
+	            var sel = getSelection(el);
+	
+	            // Hack to work around incorrect delete command when deleting the last word on a line
+	            setSelection(el, sel.start, sel.end);
+	            if (text == "") {
+	                document.execCommand("delete", false, null);
+	            } else {
+	                document.execCommand("insertText", false, text);
+	            }
+	
+	            return {
+	                replaced: sel.text,
+	                index: sel.start
+	            };
+	        }
+	
+	        function pasteTextWithValueChange(el, text) {
+	            el.focus();
+	            var valueAfterPaste = getValueAfterPaste(el, text);
+	            el.value = valueAfterPaste.value;
+	            return valueAfterPaste;
+	        }
+	
+	        var _pasteText = function pasteText(el, text) {
+	            var valueAfterPaste = getValueAfterPaste(el, text);
+	            try {
+	                var pasteInfo = pasteTextWithCommand(el, text);
+	                if (el.value == valueAfterPaste.value) {
+	                    _pasteText = pasteTextWithCommand;
+	                    return pasteInfo;
+	                }
+	            } catch (ex) {
+	                // Do nothing and fall back to changing the value manually
+	            }
+	            _pasteText = pasteTextWithValueChange;
+	            el.value = valueAfterPaste.value;
+	            return valueAfterPaste;
+	        };
+	
+	        deleteText = function deleteText(el, start, end, moveSelection) {
+	            if (start != end) {
+	                setSelection(el, start, end);
+	                _pasteText(el, "");
+	            }
+	            if (moveSelection) {
+	                setSelection(el, start);
+	            }
+	        };
+	
+	        deleteSelectedText = function deleteSelectedText(el) {
+	            setSelection(el, _pasteText(el, "").index);
+	        };
+	
+	        extractSelectedText = function extractSelectedText(el) {
+	            var pasteInfo = _pasteText(el, "");
+	            setSelection(el, pasteInfo.index);
+	            return pasteInfo.replaced;
+	        };
+	
+	        var updateSelectionAfterInsert = function updateSelectionAfterInsert(el, startIndex, text, selectionBehaviour) {
+	            var endIndex = startIndex + text.length;
+	
+	            selectionBehaviour = typeof selectionBehaviour == "string" ? selectionBehaviour.toLowerCase() : "";
+	
+	            if ((selectionBehaviour == "collapsetoend" || selectionBehaviour == "select") && /[\r\n]/.test(text)) {
+	                // Find the length of the actual text inserted, which could vary
+	                // depending on how the browser deals with line breaks
+	                var normalizedText = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+	                endIndex = startIndex + normalizedText.length;
+	                var firstLineBreakIndex = startIndex + normalizedText.indexOf("\n");
+	
+	                if (el.value.slice(firstLineBreakIndex, firstLineBreakIndex + 2) == "\r\n") {
+	                    // Browser uses \r\n, so we need to account for extra \r characters
+	                    endIndex += normalizedText.match(/\n/g).length;
+	                }
+	            }
+	
+	            switch (selectionBehaviour) {
+	                case "collapsetostart":
+	                    setSelection(el, startIndex, startIndex);
+	                    break;
+	                case "collapsetoend":
+	                    setSelection(el, endIndex, endIndex);
+	                    break;
+	                case "select":
+	                    setSelection(el, startIndex, endIndex);
+	                    break;
+	            }
+	        };
+	
+	        insertText = function insertText(el, text, index, selectionBehaviour) {
+	            setSelection(el, index);
+	            _pasteText(el, text);
+	            if (typeof selectionBehaviour == "boolean") {
+	                selectionBehaviour = selectionBehaviour ? "collapseToEnd" : "";
+	            }
+	            updateSelectionAfterInsert(el, index, text, selectionBehaviour);
+	        };
+	
+	        replaceSelectedText = function replaceSelectedText(el, text, selectionBehaviour) {
+	            var pasteInfo = _pasteText(el, text);
+	            updateSelectionAfterInsert(el, pasteInfo.index, text, selectionBehaviour || "collapseToEnd");
+	        };
+	
+	        surroundSelectedText = function surroundSelectedText(el, before, after, selectionBehaviour) {
+	            if ((typeof after === "undefined" ? "undefined" : (0, _typeof3.default)(after)) == UNDEF) {
+	                after = before;
+	            }
+	            var sel = getSelection(el);
+	            var pasteInfo = _pasteText(el, before + sel.text + after);
+	            updateSelectionAfterInsert(el, pasteInfo.index + before.length, sel.text, selectionBehaviour || "select");
+	        };
+	
+	        function jQuerify(func, returnThis) {
+	            return function () {
+	                var el = this.jquery ? this[0] : this;
+	                var nodeName = el.nodeName.toLowerCase();
+	
+	                if (el.nodeType == 1 && (nodeName == "textarea" || nodeName == "input" && /^(?:text|email|number|search|tel|url|password)$/i.test(el.type))) {
+	                    var args = [el].concat(Array.prototype.slice.call(arguments));
+	                    var result = func.apply(this, args);
+	                    if (!returnThis) {
+	                        return result;
+	                    }
+	                }
+	                if (returnThis) {
+	                    return this;
+	                }
+	            };
+	        }
+	
+	        $.fn.extend({
+	            getSelection: jQuerify(getSelection, false),
+	            setSelection: jQuerify(setSelection, true),
+	            collapseSelection: jQuerify(collapseSelection, true),
+	            deleteSelectedText: jQuerify(deleteSelectedText, true),
+	            deleteText: jQuerify(deleteText, true),
+	            extractSelectedText: jQuerify(extractSelectedText, false),
+	            insertText: jQuerify(insertText, true),
+	            replaceSelectedText: jQuerify(replaceSelectedText, true),
+	            surroundSelectedText: jQuerify(surroundSelectedText, true)
+	        });
+	    });
+	})(jQuery);
 
 /***/ },
 /* 363 */
@@ -24690,6 +24940,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
+	 * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
+	 * @param {String} [options.title] Title attribute for the editor.
 	 * */
 	Backbone.Form.editors.Boolean = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.BooleanEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -24714,9 +24966,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    className: 'editor editor_checkbox',
 	
-	    attributes: {
-	        'tabindex': '0'
+	    attributes: function attributes() {
+	        return {
+	            title: this.options.title || null,
+	            tabindex: '0'
+	        };
 	    },
+	
 	
 	    template: _libApi.Handlebars.compile(_booleanEditor2.default),
 	
@@ -25633,7 +25889,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    getCaretPos: function getCaretPos() {
-	        return this.ui.input.caret().start;
+	        return this.ui.input.getSelection().start;
 	    },
 	
 	    fixCaretPos: function fixCaretPos(pos) {
@@ -25650,7 +25906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    setCaretPos: function setCaretPos(pos) {
-	        this.ui.input.caret(pos, pos);
+	        this.ui.input.setSelection(pos, pos);
 	    },
 	
 	    getSegmentIndex: function getSegmentIndex(pos) {
@@ -27586,7 +27842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * совпадать с типом данных поля <code>id</code> элементов массива <code>radioOptions</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText }</code>, описывающих радио-кнопки.
+	 * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
 	 * */
 	Backbone.Form.editors.RadioGroup = _BaseCollectionEditorView2.default.extend( /** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -27656,15 +27912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 10/13/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -27702,13 +27950,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 10/13/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
 	var classes = {};
 	
 	var defaultOptions = {
-	    'controller': null,
-	    'showAddNewButton': false,
-	    'buttonView': _ReferenceButtonView2.default,
-	    'listItemView': _ReferenceListItemView2.default
+	    displayAttribute: 'text',
+	    controller: null,
+	    showAddNewButton: false,
+	    buttonView: _ReferenceButtonView2.default,
+	    listItemView: _ReferenceListItemView2.default
 	};
 	
 	/**
@@ -27722,6 +27979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
 	 * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
 	 * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
+	 * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
 	 * */
 	Backbone.Form.editors.Reference = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.ReferenceEditorView.prototype */{
 	    initialize: function initialize(options) {
@@ -27731,18 +27989,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 	        }
 	
+	        _.bindAll(this, '__getDisplayText');
+	
 	        this.reqres = new Backbone.Wreqr.RequestResponse();
 	        this.controller = this.options.controller;
-	        this.value = this.__adjustValue(this.value);
 	        this.showAddNewButton = this.options.showAddNewButton;
 	
-	        this.reqres.setHandler('panel:open', this.onPanelOpenRequest, this);
-	        this.reqres.setHandler('value:clear', this.onValueClear, this);
-	        this.reqres.setHandler('value:set', this.onValueSet, this);
-	        this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-	        this.reqres.setHandler('filter:text', this.onFilterText, this);
-	        this.reqres.setHandler('add:new:item', this.onAddNewItem, this);
+	        this.reqres.setHandler('panel:open', this.__onPanelOpenRequest, this);
+	        this.reqres.setHandler('value:clear', this.__onValueClear, this);
+	        this.reqres.setHandler('value:set', this.__onValueSet, this);
+	        this.reqres.setHandler('value:navigate', this.__onValueNavigate, this);
+	        this.reqres.setHandler('filter:text', this.__onFilterText, this);
+	        this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
 	
+	        this.value = this.__adjustValue(this.value);
 	        this.viewModel = new Backbone.Model({
 	            button: new Backbone.Model({
 	                value: this.getValue(),
@@ -27759,6 +28019,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    },
 	
+	
 	    focusElement: null,
 	
 	    attributes: {
@@ -27774,24 +28035,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _libApi.Handlebars.compile(_referenceEditor2.default),
 	
 	    setValue: function setValue(value) {
-	        value = this.__adjustValue(value);
 	        this.__value(value, false);
 	    },
-	
 	    onRender: function onRender() {
 	        // dropdown
 	        this.dropdownView = _dropdownApi2.default.factory.createDropdown({
 	            buttonView: this.options.buttonView,
 	            buttonViewOptions: {
 	                model: this.viewModel.get('button'),
-	                reqres: this.reqres
+	                reqres: this.reqres,
+	                getDisplayText: this.__getDisplayText
 	            },
 	            panelView: _ReferencePanelView2.default,
 	            panelViewOptions: {
 	                model: this.viewModel.get('panel'),
 	                reqres: this.reqres,
 	                showAddNewButton: this.showAddNewButton,
-	                listItemView: this.options.listItemView
+	                listItemView: this.options.listItemView,
+	                getDisplayText: this.__getDisplayText
 	            },
 	            panelPosition: 'down-over',
 	            autoOpen: false
@@ -27813,53 +28074,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }.bind(this));
 	        }, this);
 	    },
-	
 	    __adjustValue: function __adjustValue(value) {
 	        if (!value || !value.id) {
 	            return null;
 	        }
-	        if (value instanceof _DefaultReferenceModel2.default) {
-	            return value;
-	        }
-	        if (value instanceof Backbone.Model) {
-	            value = value.attributes;
-	        }
-	
-	        return new _DefaultReferenceModel2.default(value);
+	        return value;
 	    },
-	
 	    __value: function __value(value, triggerChange) {
 	        if (this.value === value) {
 	            return;
 	        }
-	        this.value = value;
-	        this.viewModel.get('button').set('value', value);
-	        this.viewModel.get('panel').set('value', value);
+	        this.value = this.__adjustValue(value);
+	        this.viewModel.get('button').set('value', this.value);
+	        this.viewModel.get('panel').set('value', this.value);
 	        if (triggerChange) {
 	            this.__triggerChange();
 	        }
 	    },
-	
 	    isEmptyValue: function isEmptyValue() {
 	        var value = this.getValue();
 	        return !value || _.isEmpty(value);
 	    },
-	
-	    onValueClear: function onValueClear() {
+	    __onValueClear: function __onValueClear() {
 	        this.__value(null, true);
 	    },
-	
-	    onValueSet: function onValueSet(model) {
-	        this.__value(model, true);
+	    __onValueSet: function __onValueSet(model) {
+	        this.__value(model.toJSON(), true);
 	        this.dropdownView.close();
 	        this.$el.focus();
 	    },
-	
-	    onValueNavigate: function onValueNavigate() {
+	    __onValueNavigate: function __onValueNavigate() {
 	        return this.controller.navigate(this.getValue());
 	    },
-	
-	    onFilterText: function onFilterText(options) {
+	    __onFilterText: function __onFilterText(options) {
 	        var deferred = $.Deferred();
 	        this.controller.fetch(options).then(function () {
 	            this.viewModel.get('panel').set('totalCount', this.controller.totalCount);
@@ -27867,31 +28114,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }.bind(this));
 	        return deferred.promise();
 	    },
-	
-	    onPanelOpenRequest: function onPanelOpenRequest() {
+	    __onPanelOpenRequest: function __onPanelOpenRequest() {
 	        if (this.getEnabled() && !this.getReadonly()) {
 	            this.dropdownView.open();
 	        }
 	    },
+	    __onAddNewItem: function __onAddNewItem() {
+	        var _this = this;
 	
-	    onAddNewItem: function onAddNewItem() {
-	        this.controller.addNewItem();
+	        this.controller.addNewItem(function (createdValue) {
+	            _this.dropdownView.close();
+	            if (createdValue) {
+	                _this.__value(createdValue, true);
+	            }
+	        });
 	    },
-	
+	    __getDisplayText: function __getDisplayText(value) {
+	        if (!value) {
+	            return '';
+	        }
+	        return value[this.options.displayAttribute] || '#' + value.id;
+	    },
 	    setReadonly: function setReadonly(readonly) {
+	        //noinspection Eslint
 	        _BaseLayoutEditorView2.default.prototype.__setReadonly.call(this, readonly);
 	        this.viewModel.get('button').set('readonly', this.getReadonly());
 	    },
-	
 	    setEnabled: function setEnabled(enabled) {
+	        //noinspection Eslint
 	        _BaseLayoutEditorView2.default.prototype.__setEnabled.call(this, enabled);
 	        this.viewModel.get('button').set('enabled', this.getEnabled());
 	    },
-	
 	    focus: function focus() {
 	        this.dropdownView.open();
 	    },
-	
 	    blur: function blur() {
 	        this.dropdownView.close();
 	    }
@@ -30246,9 +30502,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    focusElement: null,
 	
-	    attributes: {
-	        'tabindex': '0'
+	    attributes: function attributes() {
+	        return {
+	            title: this.model && this.model.get('title') || null,
+	            tabindex: '0'
+	        };
 	    },
+	
 	
 	    initialize: function initialize(options) {
 	        this.enabled = options.enabled;
@@ -30299,15 +30559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/4/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -30333,7 +30585,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var defaultOptions = {
 	    DEFAULT_COUNT: 200
-	};
+	}; /**
+	    * Developer: Stepan Burguchev
+	    * Date: 12/4/2014
+	    * Copyright: 2009-2016 Comindware®
+	    *       All Rights Reserved
+	    * Published under the MIT license
+	    */
 	
 	exports.default = Backbone.Collection.extend({
 	    constructor: function constructor() {
@@ -30341,7 +30599,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _.extend(this, new _HighlightableBehavior2.default(this));
 	        _.extend(this, new _SelectableBehavior2.default.SingleSelect(this));
 	    },
-	
 	    fetch: function fetch(options) {
 	        _utilsApi.helpers.ensureOption(options, 'data.filter');
 	        if (options.data.count === undefined) {
@@ -30352,11 +30609,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return Backbone.Collection.prototype.fetch.call(this, options);
 	    },
-	
 	    parse: function parse(response, options) {
 	        this.totalCount = response.totalCount;
 	        return Backbone.Collection.prototype.parse.call(this, response.options, options);
 	    },
+	
 	
 	    model: _DefaultReferenceModel2.default,
 	
@@ -30367,15 +30624,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 3/20/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -30389,8 +30638,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 3/20/2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
 	exports.default = _BaseReferenceEditorController2.default.extend({
-	    navigate: function navigate(model) {
+	    navigate: function navigate(value) {
 	        return false;
 	    }
 	});
@@ -30399,15 +30656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/10/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -30427,6 +30676,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 12/10/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
 	var config = {
 	    DEFAULT_COUNT: 200
 	};
@@ -30436,7 +30693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var id = 'task.' + (i + 1);
 	        return {
 	            id: id,
-	            text: 'Test Reference ' + (i + 1)
+	            text: 'Test Reference ' + i + '1'
 	        };
 	    });
 	};
@@ -30455,6 +30712,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var deferred = $.Deferred();
 	        var promise = deferred.promise();
 	        setTimeout(function () {
+	            var _this = this;
+	
 	            if (promise !== this.fetchPromise) {
 	                deferred.reject();
 	                return;
@@ -30462,18 +30721,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this.collection.reset(createDemoData());
 	            if (options.text) {
-	                var filterText = options.text.trim().toUpperCase();
-	                if (filterText) {
-	                    this.collection.filter(function (model) {
-	                        var text = model.get('text');
-	                        if (!text) {
-	                            return false;
-	                        }
-	                        return text.toUpperCase().indexOf(filterText) !== -1;
-	                    });
-	                } else {
-	                    this.collection.filter(null);
-	                }
+	                (function () {
+	                    var filterText = options.text.trim().toUpperCase();
+	                    if (filterText) {
+	                        _this.collection.filter(function (model) {
+	                            var text = model.get('text');
+	                            if (!text) {
+	                                return false;
+	                            }
+	                            return text.toUpperCase().indexOf(filterText) !== -1;
+	                        });
+	                    } else {
+	                        _this.collection.filter(null);
+	                    }
+	                })();
 	            } else {
 	                this.collection.filter(null);
 	            }
@@ -30486,7 +30747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this.fetchPromise;
 	    },
 	
-	    navigate: function navigate(model) {
+	    navigate: function navigate(value) {
 	        _utilsApi.helpers.throwError('Not Implemented.', 'NotImplementedError');
 	    }
 	});
@@ -30575,7 +30836,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    templateHelpers: function templateHelpers() {
 	        var value = this.model.get('value');
 	        return {
-	            text: value && (value.get('text') || '#' + value.id) || '',
+	            text: this.options.getDisplayText(value),
 	            avatarUrl: value && value.get('avatarUrl'),
 	            abbreviation: value && value.get('abbreviation')
 	        };
@@ -54967,7 +55228,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 723 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"radiobutton js-toggle-button\"></span> <span class=\"radiobutton-text js-display-text\">{{displayText}}</span>";
+	module.exports = "<span class=\"radiobutton js-toggle-button\"></span><span class=\"radiobutton-text js-display-text\">{{#if displayHtml}}{{{displayHtml}}}{{else}}{{displayText}}{{/if}}</span>\r\n";
 
 /***/ },
 /* 724 */
@@ -55017,7 +55278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 732 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"checkbox js-toggle-button\"></span> <span class=\"checkbox-text js-display-text\">{{displayText}}</span>";
+	module.exports = "<span class=\"checkbox js-toggle-button\"></span><span class=\"checkbox-text js-display-text\">{{#if displayHtml}}{{{displayHtml}}}{{else}}{{displayText}}{{/if}}</span>\r\n";
 
 /***/ },
 /* 733 */
