@@ -150,6 +150,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.isShown = true;
     },
 
+    onDestroy () {
+        if (this.isOpen) {
+            WindowService.closePopup(this.popupId);
+        }
+    },
+
     __adjustPosition ($panelEl) {
         let viewportHeight = window.innerHeight;
         let $buttonEl = this.buttonRegion.$el;
