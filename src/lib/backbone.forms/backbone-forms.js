@@ -51,25 +51,18 @@
          * @param {Backbone.Model} [options.model]
          */
         initialize: function (options) {
-            var self = this;
-
             options = options || {};
 
             var schema = this.schema = _.result(options, 'schema');
 
-            this.Field = this.Field || Form.Field;
-
-            //Check which fields will be included (defaults to all)
-
             //Create fields
             var fields = this.fields = {};
 
-            var fieldKeys = _.keys(schema);
-            _.each(fieldKeys, function (key) {
+            _.each(schema, function (fieldSchema, key) {
                 var field = new this.Field({
                     form: this,
                     key: key,
-                    schema: schema[key],
+                    schema: fieldSchema,
                     model: this.model
                 });
                 this.listenTo(field.editor, 'all', this.handleEditorEvent);
@@ -229,181 +222,6 @@
         editors: {},
 
         validators: {}
-    });
-
-//==================================================================================================
-//FIELD
-//==================================================================================================
-
-    Form.Field = Backbone.View.extend({
-
-        /**
-         * Constructor
-         *
-         * @param {Object} options.key
-         * @param {Object} options.form
-         * @param {Object} [options.schema]
-         * @param {Backbone.Model} [options.model]
-         * @param {Object} [options.value]
-         */
-        initialize: function (options) {
-            options = options || {};
-
-            _.extend(this, _.pick(options, 'form', 'key', 'model', 'value'));
-
-            this.schema = this.__createSchema(options.schema);
-            this.template = this.constructor.template;
-            this.errorClassName = this.constructor.errorClassName;
-
-            this.editor = this.__createEditor();
-        },
-
-        __createSchema: function (schema) {
-            //Set defaults
-            schema = _.extend({
-                type: 'Text',
-                title: this.__createDefaultTitle()
-            }, schema);
-
-            //Get the real constructor function i.e. if type is a string such as 'Text'
-            schema.type = _.isString(schema.type) ? Form.editors[schema.type] : schema.type;
-
-            return schema;
-        },
-
-        __createEditor: function () {
-            var ConstructorFn = this.schema.type;
-            return new ConstructorFn(_.extend(
-                _.pick(this, 'schema', 'form', 'key', 'model', 'value'), {
-                    id: this.__createEditorId()
-                }
-            ));
-        },
-
-        __createEditorId: function () {
-            var prefix = this.idPrefix,
-                id = this.key;
-
-            //Replace periods with underscores (e.g. for when using paths)
-            id = id.replace(/\./g, '_');
-
-            //If a specific ID prefix is set, use it
-            if (_.isString(prefix) || _.isNumber(prefix)) return prefix + id;
-            if (_.isNull(prefix)) return id;
-
-            //Otherwise, if there is a model use it's CID to avoid conflicts when multiple forms are on the page
-            if (this.model) return this.model.cid + '_' + id;
-
-            return id;
-        },
-
-        /*
-         * Create the default field title (label text) from the key name.
-         * (Converts 'camelCase' to 'Camel Case')
-         */
-        __createDefaultTitle: function () {
-            var str = this.key;
-            if (!str) {
-                return '';
-            }
-
-            //Add spaces
-            str = str.replace(/([A-Z])/g, ' $1');
-
-            //Uppercase first character
-            str = str.replace(/^./, function(str) { return str.toUpperCase(); });
-
-            return str;
-        },
-
-        /**
-         * Returns the data to be passed to the template
-         *
-         * @return {Object}
-         */
-        templateData: function () {
-            var schema = this.schema;
-
-            return {
-                help: schema.help || '',
-                title: schema.title,
-                key: this.key,
-                editorId: this.editor.id
-            };
-        },
-
-        /**
-         * Render the field and editor
-         *
-         * @return {Field} self
-         */
-        render: function () {
-            //Render field
-            var $field = $($.trim(this.template(_.result(this, 'templateData'))));
-
-            //Render editor
-            $field.find('[data-editor]').add($field).each(function (i, el) {
-                var $container = $(el),
-                    selection = $container.attr('data-editor');
-
-                if (_.isUndefined(selection)) return;
-
-                $container.append(this.editor.render().el);
-            }.bind(this));
-
-            this.setElement($field);
-
-            return this;
-        },
-
-        /**
-         * Update the model with the new value from the editor
-         *
-         * @return {Mixed}
-         */
-        commit: function () {
-            return this.editor.commit();
-        },
-
-        /**
-         * Get the value from the editor
-         *
-         * @return {Mixed}
-         */
-        getValue: function () {
-            return this.editor.getValue();
-        },
-
-        /**
-         * Set/change the value of the editor
-         *
-         * @param {Mixed} value
-         */
-        setValue: function (value) {
-            this.editor.setValue(value);
-        },
-
-        /**
-         * Give the editor focus
-         */
-        focus: function () {
-            this.editor.focus();
-        },
-
-        /**
-         * Remove focus from the editor
-         */
-        blur: function () {
-            this.editor.blur();
-        },
-
-        /**
-         * Remove the field and editor views
-         */
-        remove: function () {
-            this.editor.remove();
-            Backbone.View.prototype.remove.call(this);
-        }
     });
 
     //Metadata
