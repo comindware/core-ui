@@ -64,7 +64,8 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
 
     templateHelpers: function () {
         return {
-            displayText: this.options.displayText
+            displayText: this.options.displayText,
+            displayHtml: this.options.displayHtml
         };
     },
 
