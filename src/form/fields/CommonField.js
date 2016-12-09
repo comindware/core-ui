@@ -50,40 +50,18 @@ export default Backbone.Form.Field.extend({
     },
 
     /**
-     * Create the default field title (label text) from the key name.
-     * (Converts 'camelCase' to 'Camel Case')
+     * Check the validity of the field
      *
      * @return {String}
      */
-    createTitle: function() {
-        var str = this.key;
-        if (!str) {
-            return '';
+    validate: function () {
+        var error = this.editor.validate();
+        if (error) {
+            this.setError(error.message);
+        } else {
+            this.clearError();
         }
-
-        //Add spaces
-        str = str.replace(/([A-Z])/g, ' $1');
-
-        //Uppercase first character
-        str = str.replace(/^./, function(str) { return str.toUpperCase(); });
-
-        return str;
-    },
-
-    validate: function (options) {
-        options = options || {};
-        if (this.schema.validators) {
-            var error = this.editor.validate();
-            if (!options.silent) {
-                if (error) {
-                    this.setError(error.message);
-                } else {
-                    this.clearError();
-                }
-            }
-            return error;
-        }
-        return null;
+        return error;
     },
 
     setError: function (msg) {
@@ -137,5 +115,10 @@ export default Backbone.Form.Field.extend({
         this.$el.toggleClass(classes.DISABLED, readonly || !enabled);
     }
 }, {
+    /**
+     * CSS class name added to the field when there is a validation error
+     */
+    errorClassName: 'error',
+
     template: Handlebars.compile(template)
 });

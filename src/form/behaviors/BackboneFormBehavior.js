@@ -6,22 +6,15 @@
  * Published under the MIT license
  */
 
-"use strict";
+import CommonField from '../fields/CommonField';
 
-import ExtendedForm from '../ExtendedForm';
-
-const constants = {
-    RENDER_STRATEGY_RENDER: 'render',
-    RENDER_STRATEGY_SHOW: 'show',
-    RENDER_STRATEGY_MANUAL: 'manual'
-};
-
-//noinspection JSUnresolvedFunction,SpellCheckingInspection
-let MariotizedExtendedForm = ExtendedForm.extend({
+let ExtendedForm = Backbone.Form.extend({
     initialize: function (options) {
         this.options = options || {};
-        ExtendedForm.prototype.initialize.apply(this, _.toArray(arguments));
+        Backbone.Form.prototype.initialize.apply(this, _.toArray(arguments));
     },
+
+    name: 'form',
 
     render: function () {
         var self = this,
@@ -31,66 +24,159 @@ let MariotizedExtendedForm = ExtendedForm.extend({
         var $form = this.options.$target;
 
         //Render standalone editors
-        $form.find('[data-editors]').add($form).each(function (i, el) {
-            var $container = $(el),
-                selection = $container.attr('data-editors');
-
-            if (_.isUndefined(selection)) {
-                return;
-            }
-
-            //Work out which fields to include
-            var keys = (selection === '*') ?
-                self.selectedFields || _.keys(fields) :
-                selection.split(',');
-
-            //Add them
-            _.each(keys, function (key) {
-                var field = fields[key];
-
-                $container.append(field.editor.render().el);
-            });
+        $form.find('[data-editors]').each(function (i, el) {
+            var $editorRegion = $(el);
+            var path = $editorRegion.attr('data-editors');
+            $editorRegion.append(fields[path].editor.render().el);
         });
 
         //Render standalone fields
-        $form.find('[data-fields]').add($form).each(function (i, el) {
-            var $container = $(el),
-                selection = $container.attr('data-fields');
-
-            if (_.isUndefined(selection)) {
-                return;
-            }
-
-            //Work out which fields to include
-            var keys = (selection === '*') ? self.selectedFields || _.keys(fields) : selection.split(',');
-
-            //Add them
-            _.each(keys, function (key) {
-                var field = fields[key];
-
-                $container.append(field.render().el);
-            });
-        });
-
-        //Render fieldsets
-        $form.find('[data-fieldsets]').add($form).each(function (i, el) {
-            var $container = $(el),
-                selection = $container.attr('data-fieldsets');
-
-            if (_.isUndefined(selection)) {
-                return;
-            }
-
-            _.each(self.fieldsets, function (fieldset) {
-                $container.append(fieldset.render().el);
-            });
+        $form.find('[data-fields]').each(function (i, el) {
+            var $fieldRegion = $(el);
+            var path = $fieldRegion.attr('data-fields');
+            $fieldRegion.append(fields[path].render().el);
         });
 
         //Set the main element
         this.setElement($form);
         return this;
-    }
+    },
+
+    handleEditorEvent: function (event, editor, field) {
+        var formEvent = this.name + ':' + event;
+        if (event !== 'validated') {
+            //Re-trigger editor events on the form
+            this.trigger.call(this, formEvent, this, editor, Array.prototype.slice.call(arguments, 2));
+        }
+
+        //Trigger additional events
+        switch (event) {
+        case 'statechanged':
+            this.state = editor.state;
+            break;
+        case 'change':
+            this.trigger('change', this, editor);
+            this.trigger(editor.key + ':change', this, editor);
+            break;
+        case 'focus':
+            if (!this.hasFocus) {
+                this.trigger('focus', this);
+            }
+            break;
+        case 'blur':
+            if (this.hasFocus) {
+                var self = this;
+                _.defer(function () {
+                    var focusedField = _.find(self.fields, function (field) {
+                        return field.editor.hasFocus;
+                    });
+
+                    if (!focusedField) {
+                        self.trigger('blur', self);
+                    }
+                });
+            }
+            break;
+        case 'validated':
+            this.validate({
+                silent: true
+            });
+            break;
+        case 'resize':
+            $(window).trigger('resize');
+            break;
+        }
+    },
+
+    setErrors: function(errors) {
+        _.each(_.pairs(errors), function(pair) {
+            var field = this.fields[pair[0]];
+            if (field) {
+                field.setError(pair[1]);
+            }
+        }.bind(this));
+    },
+
+    onShow: function () {
+        this.validate({
+            silent: true
+        });
+        _.each(this.fields || {}, function (v) {
+            if (v.editor.onShow) {
+                v.editor.onShow();
+            }
+        });
+    },
+
+    /**
+     * Validate the data
+     * @return {Object} Validation errors
+     */
+    validate: function (options) {
+        var self = this,
+            fields = this.fields,
+            model = this.model,
+            errors = {};
+
+        options = options || {};
+
+        //Collect errors from schema validation
+        _.each(fields, function (field) {
+            var error = field.validate(options);
+            if (error) {
+                errors[field.key] = error;
+            }
+        });
+
+        //Get errors from default Backbone model validator
+        if (!options.skipModelValidate && model && model.validate) {
+            var modelErrors = model.validate(this.getValue());
+
+            if (modelErrors) {
+                var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+
+                //If errors are not in object form then just store on the error object
+                if (!isDictionary) {
+                    errors._others = errors._others || [];
+                    errors._others.push(modelErrors);
+                }
+
+                //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
+                if (isDictionary) {
+                    _.each(modelErrors, function (val, key) {
+                        //Set error on field if there isn't one already
+                        if (fields[key] && !errors[key]) {
+                            fields[key].setError(val);
+                            errors[key] = val;
+                        }
+
+                        else {
+                            //Otherwise add to '_others' key
+                            errors._others = errors._others || [];
+                            var tmpErr = {};
+                            tmpErr[key] = val;
+                            errors._others.push(tmpErr);
+                        }
+                    });
+                }
+            }
+        }
+
+        var result = _.isEmpty(errors) ? null : errors;
+        this.trigger('form:validated', !result, result);
+        return result;
+    },
+
+    validationDelay: 1000,
+
+    Field: CommonField
 });
+
+const constants = {
+    RENDER_STRATEGY_RENDER: 'render',
+    RENDER_STRATEGY_SHOW: 'show',
+    RENDER_STRATEGY_MANUAL: 'manual'
+};
 
 /**
  * Marionette.Behavior constructor shall never be called manually.
@@ -123,11 +209,11 @@ export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.
     initialize: function (options, view) {
         view.renderForm = this.__renderForm.bind(this);
         if (options.field) {
-            this.CustomizedForm = MariotizedExtendedForm.extend({
+            this.CustomizedForm = ExtendedForm.extend({
                 Field: options.field
             });
         } else {
-            this.CustomizedForm = MariotizedExtendedForm;
+            this.CustomizedForm = ExtendedForm;
         }
     },
 
@@ -162,15 +248,10 @@ export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.
         if (_.isFunction(schema)) {
             schema = schema.call(this.view);
         }
-        var stateModel = this.options.stateModel;
-        if (_.isFunction(stateModel)) {
-            stateModel = stateModel.call(this.view);
-        }
         var form = new this.CustomizedForm({
             model: model,
             schema: schema,
-            $target: this.$el,
-            stateModel: stateModel
+            $target: this.$el
         });
         this.view.form = this.form = form;
         if (this.view.initForm) {

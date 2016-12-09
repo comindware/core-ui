@@ -14,8 +14,6 @@
 *
 * */
 
-"use strict";
-
 import '../../../libApi';
 
 const classes = {
@@ -331,8 +329,7 @@ export default {
                     //Run through validators until an error is found
                     _.every(validators, function(validator) {
                         error = getValidator(validator)(value, formValues);
-
-                        return error ? false : true;
+                        return !error;
                     });
                 }
 
