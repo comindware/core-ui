@@ -13,6 +13,7 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import { Handlebars, keypress } from '../../libApi';
 import { keyCode, helpers, htmlHelpers } from '../../utils/utilsApi';
+import formRepository from '../formRepository';
 
 const changeMode = {
     blur: 'blur',
@@ -60,7 +61,7 @@ const defaultOptions = function () {
  * @param {Number} [options.minHeight=2] The minimum height of the editor (in rows).
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * */
-Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
+formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
     initialize: function (options) {
         let defaults = defaultOptions();
         if (options.schema) {
@@ -250,4 +251,4 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
     }
 });
 
-export default Backbone.Form.editors.TextArea;
+export default formRepository.editors.TextArea;
