@@ -80,7 +80,9 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
 
     __change: function () {
         this.__value(this.dateTimeModel.get('value'), true, true);
-        this.__updateClearButton();
+        if (!this.isDestroyed) {
+            this.__updateClearButton();
+        }
     },
 
     setValue: function (value) {

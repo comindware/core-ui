@@ -74,6 +74,7 @@ export default Marionette.LayoutView.extend({
         }
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
+        this.__rendered = true;
     },
 
     /**
@@ -92,11 +93,17 @@ export default Marionette.LayoutView.extend({
     },
 
     setError (msg) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
         this.$el.addClass(classes.ERROR);
         this.ui.errorText.text(msg);
     },
 
     clearError () {
+        if (!this.__checkUiReady()) {
+            return;
+        }
         this.$el.removeClass(classes.ERROR);
         this.ui.errorText.text('');
     },
@@ -143,10 +150,16 @@ export default Marionette.LayoutView.extend({
     },
 
     setRequired (required) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
         this.$el.toggleClass(classes.REQUIRED, Boolean(required));
     },
 
     __updateEditorState (readonly, enabled) {
+        if (!this.__checkUiReady()) {
+            return;
+        }
         this.$el.toggleClass(classes.READONLY, Boolean(readonly));
         this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     },
@@ -218,4 +231,8 @@ export default Marionette.LayoutView.extend({
         }
         return id;
     },
+
+    __checkUiReady () {
+        return this.__rendered && !this.isDestroyed;
+    }
 });

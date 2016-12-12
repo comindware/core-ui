@@ -9423,6 +9423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        this.setRequired(this.schema.required);
 	        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
+	        this.__rendered = true;
 	    },
 	
 	
@@ -9441,10 +9442,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return error;
 	    },
 	    setError: function setError(msg) {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
 	        this.$el.addClass(classes.ERROR);
 	        this.ui.errorText.text(msg);
 	    },
 	    clearError: function clearError() {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
 	        this.$el.removeClass(classes.ERROR);
 	        this.ui.errorText.text('');
 	    },
@@ -9495,9 +9502,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.editor.blur();
 	    },
 	    setRequired: function setRequired(required) {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
 	        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
 	    },
 	    __updateEditorState: function __updateEditorState(readonly, enabled) {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
 	        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
 	        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
 	    },
@@ -9570,6 +9583,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this.model.cid + '_' + id;
 	        }
 	        return id;
+	    },
+	    __checkUiReady: function __checkUiReady() {
+	        return this.__rendered && !this.isDestroyed;
 	    }
 	});
 
@@ -22998,7 +23014,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __change: function __change() {
 	        this.__value(this.dateTimeModel.get('value'), true, true);
-	        this.__updateClearButton();
+	        if (!this.isDestroyed) {
+	            this.__updateClearButton();
+	        }
 	    },
 	
 	    setValue: function setValue(value) {
