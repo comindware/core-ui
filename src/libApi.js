@@ -18,7 +18,6 @@ import 'underscore';
 import * as underscoreString from 'underscore.string';
 import { Backbone as Backbone_ } from 'backbone';
 import 'backbone-associations';
-import 'backbone.forms';
 import * as Marionette_ from 'backbone.marionette';
 import $_ from 'jquery';
 import 'jquery.inputmask/dist/jquery.inputmask.bundle';

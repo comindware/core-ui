@@ -11,6 +11,7 @@
 import { Handlebars } from '../../libApi';
 import template from './templates/booleanEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     displayText: ''
@@ -30,7 +31,7 @@ const classes = {
  * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
  * @param {String} [options.title] Title attribute for the editor.
  * */
-Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
+formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -101,4 +102,4 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
     classes
 });
 
-export default Backbone.Form.editors.Boolean;
+export default formRepository.editors.Boolean;

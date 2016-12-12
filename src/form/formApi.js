@@ -7,7 +7,7 @@
  */
 
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
-import CommonField from './fields/CommonField';
+import FieldView from './fields/FieldView';
 import BaseItemEditorView from './editors/base/BaseItemEditorView';
 import BaseLayoutEditorView from './editors/base/BaseLayoutEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
@@ -49,6 +49,7 @@ import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
 import './validators/phoneValidator';
+import formRepository from './formRepository';
 
 var api = /** @lends module:core.form */ {
     /**
@@ -59,12 +60,15 @@ var api = /** @lends module:core.form */ {
         BackboneFormBehavior: BackboneFormBehavior
     },
     /**
+     * Repository that is used when an editor or validator is declared as string in form schema.
+     * @namespace
+     * */
+    repository: formRepository,
+    /**
      * Extended version of Backbone.Form.Field which is able to display validation errors and information tooltips.
      * @namespace
      * */
-    fields: {
-        CommonField: CommonField
-    },
+    Field: FieldView,
     /**
      * A lot of editors
      * @namespace

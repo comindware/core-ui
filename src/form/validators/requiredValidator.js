@@ -10,8 +10,9 @@
 
 import '../../libApi';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
 
-Backbone.Form.validators.required = function (options) {
+formRepository.validators.required = function (options) {
     options = _.extend({
         type: 'required',
         message: LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED')
@@ -34,4 +35,4 @@ Backbone.Form.validators.required = function (options) {
     };
 };
 
-export default Backbone.Form.validators.required;
+export default formRepository.validators.required;

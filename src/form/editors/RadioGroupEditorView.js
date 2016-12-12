@@ -12,6 +12,7 @@ import '../../libApi';
 import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
 import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     radioOptions: [{ id: '', displayText: '' }]
@@ -27,7 +28,7 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
  * */
-Backbone.Form.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
+formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -89,4 +90,4 @@ Backbone.Form.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends mo
     }
 });
 
-export default Backbone.Form.editors.RadioGroup;
+export default formRepository.editors.RadioGroup;

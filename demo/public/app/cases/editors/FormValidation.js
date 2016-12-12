@@ -61,14 +61,14 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'Boolean',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 dropdown: {
                                     type: 'Dropdown',
                                     title: 'Dropdown',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true,
+                                    validateOnChange: true,
                                     collection: [
                                         { id: 'id.1', text: 'Item 1' },
                                         { id: 'id.2', text: 'Item 2' }
@@ -79,28 +79,28 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'MembersBubble',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 memberSelect: {
                                     type: 'MemberSelect',
                                     title: 'MemberSelect',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 number: {
                                     type: 'Number',
                                     title: 'Number',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 radioGroup: {
                                     type: 'RadioGroup',
                                     title: 'RadioGroup',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true,
+                                    validateOnChange: true,
                                     radioOptions: [
                                         { id: 'id.1', displayText: 'Option 1' },
                                         { id: 'id.2', displayText: 'Option 2' }
@@ -111,7 +111,7 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'Reference',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true,
+                                    validateOnChange: true,
                                     controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
                                 },
                                 textArea: {
@@ -119,21 +119,21 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'TextArea',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 text: {
                                     type: 'Text',
                                     title: 'Text',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 avatar: {
                                     type: 'Avatar',
                                     title: 'Avatar',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true,
+                                    validateOnChange: true,
                                     fullName: 'Foo Bar',
                                     autoUpload: true,
                                     refreshPreviewAfterUpload: true,
@@ -146,35 +146,35 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'Date',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 dateTime: {
                                     type: 'DateTime',
                                     title: 'DateTime',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 duration: {
                                     type: 'Duration',
                                     title: 'Duration',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 mention: {
                                     type: 'Mention',
                                     title: 'Mention',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 multiSelect: {
                                     type: 'MultiSelect',
                                     title: 'MultiSelect',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true,
+                                    validateOnChange: true,
                                     collection: [
                                         { id: 'id.1', text: 'Item 1' },
                                         { id: 'id.2', text: 'Item 2' }
@@ -185,14 +185,14 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'Password',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 },
                                 time: {
                                     type: 'Time',
                                     title: 'Time',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    autoValidate: true
+                                    validateOnChange: true
                                 }
                             };
                         }

@@ -14,6 +14,7 @@ import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './impl/reference/views/ReferencePanelView';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
+import formRepository from '../formRepository';
 
 const classes = {
 };
@@ -39,7 +40,7 @@ const defaultOptions = {
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
  * */
-Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
+formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -223,4 +224,4 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
     }
 });
 
-export default Backbone.Form.editors.Reference;
+export default formRepository.editors.Reference;

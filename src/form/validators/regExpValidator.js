@@ -8,6 +8,7 @@
 
 import '../../libApi';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
 
 let defaultRegExp = function(options) {
     if (!options.regexp) {
@@ -45,11 +46,11 @@ let defaultRegExp = function(options) {
     };
 };
 
-Backbone.Form.validators.regexp = function (options) {
+formRepository.validators.regexp = function (options) {
     return _.wrap(defaultRegExp(options), function (func, opts) {
         let val = _.isObject(opts) ? opts.value : opts;
         return func(val);
     });
 };
 
-export default Backbone.Form.validators.regexp;
+export default formRepository.validators.regexp;

@@ -15,6 +15,7 @@
 * */
 
 import '../../../libApi';
+import formRepository from '../../formRepository';
 
 const classes = {
     disabled: 'editor_disabled',
@@ -25,17 +26,8 @@ const classes = {
 
 let onRender = function () {
     this.$el.attr('id', this.id);
-    this.$el.attr('name', this.getName());
     this.setPermissions(this.enabled, this.readonly);
-    //noinspection JSUnresolvedVariable
-    if (this.schema.editorClass) {
-        //noinspection JSUnresolvedVariable
-        this.$el.addClass(this.schema.editorClass);
-    }
-    if (this.schema.editorAttrs) {
-        this.$el.attr(this.schema.editorAttrs);
-    }
-    this.setValue(this.value, true);
+    this.setValue(this.value);
     if (this.focusElement) {
         this.$el.on('focus', this.focusElement, this.onFocus);
         this.$el.on('blur', this.focusElement, this.onBlur);
@@ -56,8 +48,7 @@ let onChange = function () {
 /**
  * @name BaseEditorView
  * @memberof module:core.form.editors.base
- * @class Base class for all editors that use Marionette.View. The class is a reworked version of Backbone.Form.Editor from
- * [Backbone.Form](https://github.com/powmedia/backbone-forms) library.<br/>
+ * @class Base class for all editors in the library.
  * While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul>
  * <li><code>BaseCollectionEditorView</code></li>
  * <li><code>BaseCompositeEditorView</code></li>
@@ -116,8 +107,7 @@ export default {
 
                     this.model = options.model;
                     this.value = this.model.get(options.key);
-                }
-                else if (options.value !== undefined) {
+                } else if (options.value !== undefined) {
                     this.value = options.value;
                 }
 
@@ -128,7 +118,7 @@ export default {
                 //Store important data
                 _.extend(this, _.pick(options, 'key', 'form'));
 
-                var schema = this.schema = options.schema || {};
+                let schema = this.schema = options.schema || {};
 
                 this.validators = options.validators || schema.validators;
 
@@ -145,7 +135,7 @@ export default {
 
                 viewClass.prototype.constructor.apply(this, arguments);
                 if (this.model) {
-                    this.listenTo(this.model, 'change:' + this.key, this.updateValue);
+                    this.listenTo(this.model, `change:${this.key}`, this.updateValue);
                     this.listenTo(this.model, 'sync', this.updateValue);
                 }
 
@@ -171,20 +161,12 @@ export default {
             __getFocusElement: function () {
                 if (this.focusElement) {
                     return this.$el.find(this.focusElement);
-                } else {
-                    return this.$el;
                 }
+                return this.$el;
             },
 
-            __triggerChange: function () {
-                this.trigger.apply(this, [ 'change', this].concat(arguments));
-            },
-
-            getName: function() {
-                var key = this.key || '';
-
-                //Replace periods with underscores (e.g. for when using paths)
-                return key.replace(/\./g, '_');
+            __triggerChange: function (...args) {
+                this.trigger('change', this, ...args);
             },
 
             /**
@@ -214,7 +196,7 @@ export default {
              * @param {Boolean} enabled New flag value.
              */
             setEnabled: function (enabled) {
-                var readonly = this.getReadonly();
+                let readonly = this.getReadonly();
                 this.setPermissions(enabled, readonly);
             },
 
@@ -223,7 +205,7 @@ export default {
              * @param {Boolean} readonly New flag value.
              */
             setReadonly: function (readonly) {
-                var enabled = this.getEnabled();
+                let enabled = this.getEnabled();
                 this.setPermissions(enabled, readonly);
             },
 
@@ -286,7 +268,7 @@ export default {
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails
              * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
              */
-            commit: function(options) {
+            commit: function (options) {
                 options = options || {};
                 var error = this.validate();
                 if (error && !this.schema.forceCommit) {
@@ -305,7 +287,7 @@ export default {
                 if (error && !this.schema.forceCommit) {
                     return error;
                 }
-                this.trigger(this.key + ':committed', this, this.model, this.getValue());
+                this.trigger(`${this.key}:committed`, this, this.model, this.getValue());
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
             },
 
@@ -318,12 +300,11 @@ export default {
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
              */
             validate: function() {
-                var $el = this.$el,
-                    error = null,
-                    value = this.getValue(),
-                    formValues = this.form ? this.form.getValue() : {},
-                    validators = this.validators,
-                    getValidator = this.getValidator;
+                let error = null;
+                let value = this.getValue();
+                let formValues = this.form ? this.form.getValue() : {};
+                let validators = this.validators;
+                let getValidator = this.getValidator;
 
                 if (validators) {
                     //Run through validators until an error is found
@@ -339,8 +320,7 @@ export default {
             trigger: function(event) {
                 if (event === 'focus') {
                     this.hasFocus = true;
-                }
-                else if (event === 'blur') {
+                } else if (event === 'blur') {
                     this.hasFocus = false;
                 }
 
@@ -348,7 +328,7 @@ export default {
             },
 
             getValidator: function(validator) {
-                var validators = Backbone.Form.validators;
+                let validators = formRepository.validators;
 
                 //Convert regular expressions to validators
                 if (_.isRegExp(validator)) {
@@ -358,7 +338,7 @@ export default {
                 //Use a built-in validator if given a string
                 if (_.isString(validator)) {
                     if (!validators[validator]) {
-                        throw new Error('Validator "' + validator + '" not found');
+                        throw new Error(`Validator "${validator}" not found`);
                     }
 
                     return validators[validator]();
@@ -372,14 +352,14 @@ export default {
                 //Use a customised built-in validator if given an object
                 //noinspection JSUnresolvedVariable
                 if (_.isObject(validator) && validator.type) {
-                    var config = validator;
+                    let config = validator;
 
                     //noinspection JSUnresolvedVariable
                     return validators[config.type](config);
                 }
 
                 //Unknown validator type
-                throw new Error('Invalid validator: ' + validator);
+                throw new Error(`Invalid validator: ${validator}`);
             },
 
             onFocus: function () {
