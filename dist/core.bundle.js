@@ -10917,7 +10917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	
 	        this.dragContext.tableInitialWidth = this.__getTableWidth();
-	        this.gridEventAggregator.trigger('columnStartDrag');
+	        this.gridEventAggregator.trigger('columnStartDrag', this, draggedColumn.index);
 	
 	        this.dragContext.fullWidth = this.headerMinWidth;
 	        this.dragContext.draggedColumn = draggedColumn;
@@ -53186,7 +53186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 742 */
 /***/ function(module, exports) {
 
-	module.exports = "<textarea class=\"textarea js-textarea\"\r\n          placeholder=\"{{placeholder}}\"\r\n          {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}}\r\n></textarea>\r\n";
+	module.exports = "<textarea class=\"textarea js-textarea\"\r\n          placeholder=\"{{placeholder}}\"\r\n          {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}}\r\n></textarea>";
 
 /***/ },
 /* 743 */

@@ -231,7 +231,7 @@ let HeaderView = GridHeaderView.extend({
         };
 
         this.dragContext.tableInitialWidth = this.__getTableWidth();
-        this.gridEventAggregator.trigger('columnStartDrag');
+        this.gridEventAggregator.trigger('columnStartDrag', this, draggedColumn.index);
 
         this.dragContext.fullWidth = this.headerMinWidth;
         this.dragContext.draggedColumn = draggedColumn;
