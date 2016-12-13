@@ -152,7 +152,7 @@ let Form = Marionette.Object.extend({
             data = prop;
         }
 
-        this.schema.keys().forEach(key => {
+        Object.keys(this.schema).forEach(key => {
             if (data[key] !== undefined) {
                 this.fields[key].setValue(data[key]);
             }
