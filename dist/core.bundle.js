@@ -26349,15 +26349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 10.09.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -26376,6 +26368,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _dateInput2 = _interopRequireDefault(_dateInput);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 10.09.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
 	
 	exports.default = Marionette.ItemView.extend({
 	    initialize: function initialize(options) {
@@ -26404,8 +26404,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    startEditing: function startEditing() {
-	        var value = this.model.get('value'),
-	            editableText = value ? _libApi.moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.editDateFormat) : '';
+	        var value = this.model.get('value');
+	        var editableText = value ? _libApi.moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.editDateFormat) : '';
 	        this.ui.dateInput.val(editableText);
 	    },
 	
@@ -26456,8 +26456,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    setInputPermissions: function setInputPermissions() {
-	        var enabled = this.model.get('enabled'),
-	            readonly = this.model.get('readonly');
+	        var enabled = this.model.get('enabled');
+	        var readonly = this.model.get('readonly');
 	
 	        if (!enabled) {
 	            this.ui.dateInput.prop('disabled', true);
@@ -26473,23 +26473,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    updateDisplayValue: function updateDisplayValue() {
+	        if (this.isDestroyed) {
+	            return;
+	        }
 	        var value = this.model.get('value');
 	        var formattedDisplayValue = void 0;
 	        if (value === null) {
 	            formattedDisplayValue = '';
+	        } else if (this.options.dateDisplayFormat) {
+	            formattedDisplayValue = (0, _libApi.moment)(this.model.get('value')).locale(_LocalizationService2.default.langCode).format(this.options.dateDisplayFormat);
 	        } else {
-	            if (this.options.dateDisplayFormat) {
-	                formattedDisplayValue = (0, _libApi.moment)(this.model.get('value')).locale(_LocalizationService2.default.langCode).format(this.options.dateDisplayFormat);
-	            } else {
-	                formattedDisplayValue = _utilsApi.dateHelpers.getDisplayDate(_libApi.moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
-	            }
+	            formattedDisplayValue = _utilsApi.dateHelpers.getDisplayDate(_libApi.moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
 	        }
 	        this.ui.dateInput.val(formattedDisplayValue);
 	    },
 	
 	    __setModelValue: function __setModelValue(date) {
-	        var oldVal = this.model.get('value'),
-	            newVal = null;
+	        var oldVal = this.model.get('value');
+	        var newVal = null;
 	
 	        if (date === null || date === '') {
 	            newVal = null;
@@ -28731,39 +28732,37 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 1/26/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 	
 	__webpack_require__(1);
 	
 	exports.default = Marionette.ItemView.extend({
-		modelEvents: {
-			'change:text': 'onChangeText'
-		},
+	    modelEvents: {
+	        'change:text': 'onChangeText'
+	    },
 	
-		className: 'fr-dropdown-message',
+	    className: 'fr-dropdown-message',
 	
-		template: false,
+	    template: false,
 	
-		onRender: function onRender() {
-			this.$el.text(this.model.get('text'));
-		},
+	    onRender: function onRender() {
+	        this.$el.text(this.model.get('text'));
+	    },
 	
-		onChangeText: function onChangeText() {
-			this.$el.text(this.model.get('text'));
-		}
-	});
+	    onChangeText: function onChangeText() {
+	        this.$el.text(this.model.get('text'));
+	    }
+	}); /**
+	     * Developer: Stepan Burguchev
+	     * Date: 1/26/2015
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
 
 /***/ },
 /* 414 */
