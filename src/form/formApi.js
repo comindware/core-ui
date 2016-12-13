@@ -6,15 +6,12 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
-import CommonField from './fields/CommonField';
+import FieldView from './fields/FieldView';
 import BaseItemEditorView from './editors/base/BaseItemEditorView';
 import BaseLayoutEditorView from './editors/base/BaseLayoutEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
 import BaseCompositeEditorView from './editors/base/BaseCompositeEditorView';
-import ExtendedForm_ from './ExtendedForm';
 import BooleanEditorView from './editors/BooleanEditorView';
 import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
@@ -52,9 +49,9 @@ import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
 import './validators/phoneValidator';
+import formRepository from './formRepository';
 
 var api = /** @lends module:core.form */ {
-    ExtendedForm: ExtendedForm_,
     /**
      * Marionette.Behavior classes useful with Backbone.Form.
      * @namespace
@@ -63,12 +60,15 @@ var api = /** @lends module:core.form */ {
         BackboneFormBehavior: BackboneFormBehavior
     },
     /**
+     * Repository that is used when an editor or validator is declared as string in form schema.
+     * @namespace
+     * */
+    repository: formRepository,
+    /**
      * Extended version of Backbone.Form.Field which is able to display validation errors and information tooltips.
      * @namespace
      * */
-    fields: {
-        CommonField: CommonField
-    },
+    Field: FieldView,
     /**
      * A lot of editors
      * @namespace
@@ -144,7 +144,7 @@ var api = /** @lends module:core.form */ {
         NumberEditor: NumberEditorView,
         TextAreaEditor: TextAreaEditorView,
         TextEditor: TextEditorView,
-        PasswordEditor:PasswordEditorView,
+        PasswordEditor: PasswordEditorView,
         ReferenceEditor: ReferenceEditorView,
         MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
@@ -163,4 +163,3 @@ export default api;
 export var editors = api.editors;
 export var fields = api.fields;
 export var behaviors = api.behaviors;
-export var ExtendedForm = api.ExtendedForm;

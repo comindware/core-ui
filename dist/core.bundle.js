@@ -77,8 +77,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(450);
-	module.exports = __webpack_require__(357);
+	__webpack_require__(456);
+	module.exports = __webpack_require__(364);
 
 
 /***/ },
@@ -100,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.numeral = exports.Marionette = exports.Backbone = exports._ = exports.$ = exports.Bluebird = exports.Handlebars = exports.moment = exports.keypress = undefined;
 	
-	var _promise = __webpack_require__(37);
+	var _promise = __webpack_require__(39);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -108,55 +108,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	__webpack_require__(160);
+	__webpack_require__(166);
 	
-	__webpack_require__(159);
+	__webpack_require__(165);
 	
-	__webpack_require__(158);
+	__webpack_require__(164);
 	
-	var _bluebird = __webpack_require__(460);
+	var _bluebird = __webpack_require__(466);
 	
 	var _bluebird2 = _interopRequireDefault(_bluebird);
 	
-	var _handlebars = __webpack_require__(682);
+	var _handlebars = __webpack_require__(687);
 	
 	var Handlebars_ = _interopRequireWildcard(_handlebars);
 	
-	__webpack_require__(49);
+	__webpack_require__(72);
 	
-	var _underscore = __webpack_require__(782);
+	var _underscore = __webpack_require__(788);
 	
 	var underscoreString = _interopRequireWildcard(_underscore);
 	
-	var _backbone = __webpack_require__(64);
+	var _backbone = __webpack_require__(85);
 	
-	__webpack_require__(455);
+	__webpack_require__(461);
 	
-	__webpack_require__(354);
-	
-	var _backbone2 = __webpack_require__(683);
+	var _backbone2 = __webpack_require__(688);
 	
 	var Marionette_ = _interopRequireWildcard(_backbone2);
 	
-	var _jquery = __webpack_require__(42);
+	var _jquery = __webpack_require__(64);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	__webpack_require__(759);
+	__webpack_require__(765);
 	
-	__webpack_require__(355);
+	__webpack_require__(362);
 	
-	__webpack_require__(760);
+	__webpack_require__(766);
 	
-	__webpack_require__(758);
+	__webpack_require__(764);
 	
-	var _keypress = __webpack_require__(412);
+	var _keypress = __webpack_require__(419);
 	
 	var keypress_ = _interopRequireWildcard(_keypress);
 	
-	__webpack_require__(757);
+	__webpack_require__(763);
 	
-	var _numeral = __webpack_require__(767);
+	var _numeral = __webpack_require__(773);
 	
 	var _numeral2 = _interopRequireDefault(_numeral);
 	
@@ -165,7 +163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// Replacing ES6 promise with bluebird
-	__webpack_require__(37).default = _bluebird2.default;
+	__webpack_require__(39).default = _bluebird2.default;
 	
 	_promise2.default.config({
 	    warnings: true,
@@ -208,10 +206,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var global    = __webpack_require__(7)
-	  , core      = __webpack_require__(38)
-	  , hide      = __webpack_require__(21)
-	  , redefine  = __webpack_require__(22)
-	  , ctx       = __webpack_require__(39)
+	  , core      = __webpack_require__(41)
+	  , hide      = __webpack_require__(22)
+	  , redefine  = __webpack_require__(23)
+	  , ctx       = __webpack_require__(42)
 	  , PROTOTYPE = 'prototype';
 	
 	var $export = function(type, name, source){
@@ -255,7 +253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["moment"] = __webpack_require__(763);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["moment"] = __webpack_require__(769);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
@@ -277,33 +275,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.keyCode = exports.cookieHelpers = exports.dateHelpers = exports.htmlHelpers = exports.helpers = exports.comparators = undefined;
 	
-	var _comparators = __webpack_require__(429);
+	var _comparators = __webpack_require__(436);
 	
 	var _comparators2 = _interopRequireDefault(_comparators);
 	
-	var _helpers = __webpack_require__(199);
+	var _helpers = __webpack_require__(120);
 	
 	var _helpers2 = _interopRequireDefault(_helpers);
 	
-	var _htmlHelpers = __webpack_require__(443);
+	var _htmlHelpers = __webpack_require__(450);
 	
 	var _htmlHelpers2 = _interopRequireDefault(_htmlHelpers);
 	
-	var _dateHelpers = __webpack_require__(431);
+	var _dateHelpers = __webpack_require__(438);
 	
 	var _dateHelpers2 = _interopRequireDefault(_dateHelpers);
 	
-	var _cookieHelpers = __webpack_require__(430);
+	var _cookieHelpers = __webpack_require__(437);
 	
 	var _cookieHelpers2 = _interopRequireDefault(_cookieHelpers);
 	
-	var _keyCode = __webpack_require__(445);
+	var _keyCode = __webpack_require__(452);
 	
 	var _keyCode2 = _interopRequireDefault(_keyCode);
 	
-	__webpack_require__(432);
+	__webpack_require__(439);
 	
-	__webpack_require__(444);
+	__webpack_require__(451);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -352,7 +350,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 5 */
-[820, 9],
+[826, 9],
 /* 6 */
 /***/ function(module, exports) {
 
@@ -416,15 +414,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _ru = __webpack_require__(766);
+	var _ru = __webpack_require__(772);
 	
 	var _ru2 = _interopRequireDefault(_ru);
 	
-	var _enGb = __webpack_require__(765);
+	var _enGb = __webpack_require__(771);
 	
 	var _enGb2 = _interopRequireDefault(_enGb);
 	
-	var _de = __webpack_require__(764);
+	var _de = __webpack_require__(770);
 	
 	var _de2 = _interopRequireDefault(_de);
 	
@@ -491,12 +489,37 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 11 */
-[864, 104, 63, 7],
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 12/12/2016
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 *
+	 * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
+	 *       The copyright notice above does not evidence any
+	 *       actual or intended publication of such source code.
+	 */
+	
+	exports.default = {
+	  editors: {},
+	  validators: {}
+	};
+
+/***/ },
 /* 12 */
-[824, 8],
+[871, 105, 63, 7],
 /* 13 */
-[843, 5, 227, 35, 12],
+[831, 8],
 /* 14 */
+[850, 5, 235, 37, 13],
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -515,75 +538,75 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _EventAggregator = __webpack_require__(185);
+	var _EventAggregator = __webpack_require__(193);
 	
 	var _EventAggregator2 = _interopRequireDefault(_EventAggregator);
 	
-	var _EmptyListView = __webpack_require__(188);
+	var _EmptyListView = __webpack_require__(196);
 	
 	var _EmptyListView2 = _interopRequireDefault(_EmptyListView);
 	
-	var _EmptyGridView = __webpack_require__(187);
+	var _EmptyGridView = __webpack_require__(195);
 	
 	var _EmptyGridView2 = _interopRequireDefault(_EmptyGridView);
 	
-	var _GridColumnHeaderView = __webpack_require__(114);
+	var _GridColumnHeaderView = __webpack_require__(115);
 	
 	var _GridColumnHeaderView2 = _interopRequireDefault(_GridColumnHeaderView);
 	
-	var _GridHeaderView = __webpack_require__(88);
+	var _GridHeaderView = __webpack_require__(91);
 	
 	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
 	
-	var _GridView = __webpack_require__(189);
+	var _GridView = __webpack_require__(197);
 	
 	var _GridView2 = _interopRequireDefault(_GridView);
 	
-	var _ListView = __webpack_require__(115);
+	var _ListView = __webpack_require__(116);
 	
 	var _ListView2 = _interopRequireDefault(_ListView);
 	
-	var _RowView = __webpack_require__(116);
+	var _RowView = __webpack_require__(117);
 	
 	var _RowView2 = _interopRequireDefault(_RowView);
 	
-	var _ScrollbarView = __webpack_require__(191);
+	var _ScrollbarView = __webpack_require__(199);
 	
 	var _ScrollbarView2 = _interopRequireDefault(_ScrollbarView);
 	
-	var _ListGroupViewBehavior = __webpack_require__(419);
+	var _ListGroupViewBehavior = __webpack_require__(426);
 	
 	var _ListGroupViewBehavior2 = _interopRequireDefault(_ListGroupViewBehavior);
 	
-	var _ListItemViewBehavior = __webpack_require__(420);
+	var _ListItemViewBehavior = __webpack_require__(427);
 	
 	var _ListItemViewBehavior2 = _interopRequireDefault(_ListItemViewBehavior);
 	
-	var _GridItemViewBehavior = __webpack_require__(117);
+	var _GridItemViewBehavior = __webpack_require__(118);
 	
 	var _GridItemViewBehavior2 = _interopRequireDefault(_GridItemViewBehavior);
 	
-	var _LoadingRowModel = __webpack_require__(415);
+	var _LoadingRowModel = __webpack_require__(422);
 	
 	var _LoadingRowModel2 = _interopRequireDefault(_LoadingRowModel);
 	
-	var _ListGroupBehavior = __webpack_require__(416);
+	var _ListGroupBehavior = __webpack_require__(423);
 	
 	var _ListGroupBehavior2 = _interopRequireDefault(_ListGroupBehavior);
 	
-	var _ListItemBehavior = __webpack_require__(417);
+	var _ListItemBehavior = __webpack_require__(424);
 	
 	var _ListItemBehavior2 = _interopRequireDefault(_ListItemBehavior);
 	
-	var _GridItemBehavior = __webpack_require__(186);
+	var _GridItemBehavior = __webpack_require__(194);
 	
 	var _GridItemBehavior2 = _interopRequireDefault(_GridItemBehavior);
 	
-	var _factory = __webpack_require__(414);
+	var _factory = __webpack_require__(421);
 	
 	var _factory2 = _interopRequireDefault(_factory);
 	
-	var _CellViewFactory = __webpack_require__(413);
+	var _CellViewFactory = __webpack_require__(420);
 	
 	var _CellViewFactory2 = _interopRequireDefault(_CellViewFactory);
 	
@@ -636,11 +659,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 15 */
-[859, 48],
 /* 16 */
-[860, 29],
+[866, 49],
 /* 17 */
+[867, 31],
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -657,35 +680,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _PopoutView = __webpack_require__(172);
+	var _PopoutView = __webpack_require__(180);
 	
 	var _PopoutView2 = _interopRequireDefault(_PopoutView);
 	
-	var _DropdownView = __webpack_require__(170);
+	var _DropdownView = __webpack_require__(178);
 	
 	var _DropdownView2 = _interopRequireDefault(_DropdownView);
 	
-	var _ListPanelView = __webpack_require__(109);
+	var _ListPanelView = __webpack_require__(110);
 	
 	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
 	
-	var _MenuItemView = __webpack_require__(110);
+	var _MenuItemView = __webpack_require__(111);
 	
 	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
 	
-	var _MenuPanelView = __webpack_require__(171);
+	var _MenuPanelView = __webpack_require__(179);
 	
 	var _MenuPanelView2 = _interopRequireDefault(_MenuPanelView);
 	
-	var _DefaultButtonView = __webpack_require__(169);
+	var _DefaultButtonView = __webpack_require__(177);
 	
 	var _DefaultButtonView2 = _interopRequireDefault(_DefaultButtonView);
 	
-	var _CustomAnchorBehavior = __webpack_require__(358);
+	var _CustomAnchorBehavior = __webpack_require__(365);
 	
 	var _CustomAnchorBehavior2 = _interopRequireDefault(_CustomAnchorBehavior);
 	
-	var _factory = __webpack_require__(168);
+	var _factory = __webpack_require__(174);
 	
 	var _factory2 = _interopRequireDefault(_factory);
 	
@@ -715,7 +738,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	var hasOwnProperty = {}.hasOwnProperty;
@@ -724,9 +747,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */
-[864, 127, 94, 25],
 /* 20 */
+[871, 130, 95, 26],
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = function(it){
@@ -735,20 +758,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 21 */
-[828, 13, 47, 12],
 /* 22 */
+[835, 14, 48, 13],
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global    = __webpack_require__(7)
-	  , hide      = __webpack_require__(21)
-	  , has       = __webpack_require__(18)
+	  , hide      = __webpack_require__(22)
+	  , has       = __webpack_require__(19)
 	  , SRC       = __webpack_require__(63)('src')
 	  , TO_STRING = 'toString'
 	  , $toString = Function[TO_STRING]
 	  , TPL       = ('' + $toString).split(TO_STRING);
 	
-	__webpack_require__(38).inspectSource = function(it){
+	__webpack_require__(41).inspectSource = function(it){
 	  return $toString.call(it);
 	};
 	
@@ -774,12 +797,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(2)
 	  , fails   = __webpack_require__(8)
-	  , defined = __webpack_require__(29)
+	  , defined = __webpack_require__(31)
 	  , quot    = /"/g;
 	// B.2.3.2.1 CreateHTML(string, tag, attribute, value)
 	var createHTML = function(string, tag, attribute, value) {
@@ -798,15 +821,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 24 */
-[858, 81, 29],
 /* 25 */
-7,
+[865, 83, 31],
 /* 26 */
-[845, 82, 47, 24, 35, 18, 227, 12],
+7,
 /* 27 */
-[848, 18, 16, 147],
+[852, 84, 48, 25, 37, 19, 235, 13],
 /* 28 */
+[855, 19, 17, 153],
+/* 29 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 30 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -816,7 +846,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports) {
 
 	// 7.2.1 RequireObjectCoercible(argument)
@@ -826,7 +856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var fails = __webpack_require__(8);
@@ -838,7 +868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -863,7 +893,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _MarionetteEditorPrototype = __webpack_require__(84);
+	var _MarionetteEditorPrototype = __webpack_require__(87);
 	
 	var _MarionetteEditorPrototype2 = _interopRequireDefault(_MarionetteEditorPrototype);
 	
@@ -872,14 +902,76 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Marionette.LayoutView.extend(_MarionetteEditorPrototype2.default.create(Marionette.LayoutView));
 
 /***/ },
-/* 32 */
-/***/ function(module, exports) {
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
 
-	var core = module.exports = {version: '2.4.0'};
-	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	var windowEventList = [{
+	    name: 'click',
+	    capture: true
+	}, {
+	    name: 'keydown',
+	    capture: true
+	}, {
+	    name: 'mousedown',
+	    capture: true
+	}, {
+	    name: 'mouseup',
+	    capture: true
+	}, {
+	    name: 'wheel',
+	    capture: true
+	}, {
+	    name: 'resize',
+	    capture: false
+	}]; /**
+	     * Developer: Stepan Burguchev
+	     * Date: 7/17/2015
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
+	
+	var globalEventService = /** @lends module:core.services.GlobalEventService */{
+	    initialize: function initialize() {
+	        var _this = this;
+	
+	        this.__windowEvents = windowEventList.map(function (x) {
+	            var captureSuffix = x.capture ? ':captured' : '';
+	            var eventName = 'window:' + x.name + captureSuffix;
+	            return {
+	                name: x.name,
+	                capture: x.capture,
+	                handler: function handler(e) {
+	                    _this.trigger(eventName, e.target, e);
+	                }
+	            };
+	        });
+	        this.__windowEvents.forEach(function (x) {
+	            window.addEventListener(x.name, x.handler, x.capture);
+	        });
+	    },
+	
+	    onDestroy: function onDestroy() {
+	        this.__windowEvents.forEach(function (x) {
+	            window.removeEventListener(x.name, x.handler, x.capture);
+	        });
+	    }
+	};
+	
+	_.extend(globalEventService, Backbone.Events);
+	
+	exports.default = globalEventService;
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 0 -> Array#forEach
@@ -889,11 +981,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	// 4 -> Array#every
 	// 5 -> Array#find
 	// 6 -> Array#findIndex
-	var ctx      = __webpack_require__(39)
-	  , IObject  = __webpack_require__(81)
-	  , toObject = __webpack_require__(16)
-	  , toLength = __webpack_require__(15)
-	  , asc      = __webpack_require__(502);
+	var ctx      = __webpack_require__(42)
+	  , IObject  = __webpack_require__(83)
+	  , toObject = __webpack_require__(17)
+	  , toLength = __webpack_require__(16)
+	  , asc      = __webpack_require__(507);
 	module.exports = function(TYPE, $create){
 	  var IS_MAP        = TYPE == 1
 	    , IS_FILTER     = TYPE == 2
@@ -928,12 +1020,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
 	var $export = __webpack_require__(2)
-	  , core    = __webpack_require__(38)
+	  , core    = __webpack_require__(41)
 	  , fails   = __webpack_require__(8);
 	module.exports = function(KEY, exec){
 	  var fn  = (core.Object || {})[KEY] || Object[KEY]
@@ -943,13 +1035,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 35 */
-[861, 9],
-/* 36 */
+/* 37 */
+[868, 9],
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var defaultToWhiteSpace = __webpack_require__(106);
+	var defaultToWhiteSpace = __webpack_require__(107);
 	var nativeTrim = String.prototype.trim;
 	
 	module.exports = function trim(str, characters) {
@@ -961,23 +1053,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 37 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(465), __esModule: true };
+	module.exports = { "default": __webpack_require__(472), __esModule: true };
 
 /***/ },
-/* 38 */
-32,
-/* 39 */
-[823, 20],
 /* 40 */
+[850, 51, 213, 134, 46],
+/* 41 */
+29,
+/* 42 */
+[830, 21],
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Map     = __webpack_require__(243)
+	var Map     = __webpack_require__(251)
 	  , $export = __webpack_require__(2)
-	  , shared  = __webpack_require__(104)('metadata')
-	  , store   = shared.store || (shared.store = new (__webpack_require__(246)));
+	  , shared  = __webpack_require__(105)('metadata')
+	  , store   = shared.store || (shared.store = new (__webpack_require__(254)));
 	
 	var getOrCreateMetadataMap = function(target, targetKey, create){
 	  var targetMetadata = store.get(target);
@@ -1027,49 +1121,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 41 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	if(__webpack_require__(12)){
+	if(__webpack_require__(13)){
 	  var LIBRARY             = __webpack_require__(56)
 	    , global              = __webpack_require__(7)
 	    , fails               = __webpack_require__(8)
 	    , $export             = __webpack_require__(2)
-	    , $typed              = __webpack_require__(105)
-	    , $buffer             = __webpack_require__(154)
-	    , ctx                 = __webpack_require__(39)
+	    , $typed              = __webpack_require__(106)
+	    , $buffer             = __webpack_require__(160)
+	    , ctx                 = __webpack_require__(42)
 	    , anInstance          = __webpack_require__(55)
-	    , propertyDesc        = __webpack_require__(47)
-	    , hide                = __webpack_require__(21)
+	    , propertyDesc        = __webpack_require__(48)
+	    , hide                = __webpack_require__(22)
 	    , redefineAll         = __webpack_require__(60)
-	    , toInteger           = __webpack_require__(48)
-	    , toLength            = __webpack_require__(15)
+	    , toInteger           = __webpack_require__(49)
+	    , toLength            = __webpack_require__(16)
 	    , toIndex             = __webpack_require__(62)
-	    , toPrimitive         = __webpack_require__(35)
-	    , has                 = __webpack_require__(18)
-	    , same                = __webpack_require__(240)
-	    , classof             = __webpack_require__(80)
+	    , toPrimitive         = __webpack_require__(37)
+	    , has                 = __webpack_require__(19)
+	    , same                = __webpack_require__(248)
+	    , classof             = __webpack_require__(82)
 	    , isObject            = __webpack_require__(9)
-	    , toObject            = __webpack_require__(16)
-	    , isArrayIter         = __webpack_require__(139)
+	    , toObject            = __webpack_require__(17)
+	    , isArrayIter         = __webpack_require__(145)
 	    , create              = __webpack_require__(57)
-	    , getPrototypeOf      = __webpack_require__(27)
+	    , getPrototypeOf      = __webpack_require__(28)
 	    , gOPN                = __webpack_require__(58).f
-	    , getIterFn           = __webpack_require__(156)
+	    , getIterFn           = __webpack_require__(162)
 	    , uid                 = __webpack_require__(63)
-	    , wks                 = __webpack_require__(11)
-	    , createArrayMethod   = __webpack_require__(33)
-	    , createArrayIncludes = __webpack_require__(95)
-	    , speciesConstructor  = __webpack_require__(148)
-	    , ArrayIterators      = __webpack_require__(157)
-	    , Iterators           = __webpack_require__(68)
-	    , $iterDetect         = __webpack_require__(101)
+	    , wks                 = __webpack_require__(12)
+	    , createArrayMethod   = __webpack_require__(35)
+	    , createArrayIncludes = __webpack_require__(96)
+	    , speciesConstructor  = __webpack_require__(154)
+	    , ArrayIterators      = __webpack_require__(163)
+	    , Iterators           = __webpack_require__(69)
+	    , $iterDetect         = __webpack_require__(102)
 	    , setSpecies          = __webpack_require__(61)
-	    , arrayFill           = __webpack_require__(132)
-	    , arrayCopyWithin     = __webpack_require__(220)
-	    , $DP                 = __webpack_require__(13)
-	    , $GOPD               = __webpack_require__(26)
+	    , arrayFill           = __webpack_require__(138)
+	    , arrayCopyWithin     = __webpack_require__(228)
+	    , $DP                 = __webpack_require__(14)
+	    , $GOPD               = __webpack_require__(27)
 	    , dP                  = $DP.f
 	    , gOPD                = $GOPD.f
 	    , RangeError          = global.RangeError
@@ -1511,14 +1605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	} else module.exports = function(){ /* empty */ };
 
 /***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["jQuery"] = __webpack_require__(681);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1794,13 +1881,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var MultiSelect = exports.MultiSelect = SelectableBehavior.MultiSelect;
 
 /***/ },
-/* 44 */
-[824, 76],
-/* 45 */
-[843, 51, 206, 129, 44],
 /* 46 */
-[839, 63, 9, 18, 13, 8],
+[831, 77],
 /* 47 */
+[846, 63, 9, 19, 14, 8],
+/* 48 */
 /***/ function(module, exports) {
 
 	module.exports = function(bitmap, value){
@@ -1813,7 +1898,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports) {
 
 	// 7.1.4 ToInteger
@@ -1822,13 +1907,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = function(it){
 	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
 	};
-
-/***/ },
-/* 49 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["_"] = __webpack_require__(818);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 50 */
@@ -1856,7 +1934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _MarionetteEditorPrototype = __webpack_require__(84);
+	var _MarionetteEditorPrototype = __webpack_require__(87);
 	
 	var _MarionetteEditorPrototype2 = _interopRequireDefault(_MarionetteEditorPrototype);
 	
@@ -1866,13 +1944,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 51 */
-[820, 77],
+[826, 78],
 /* 52 */
-18,
+19,
 /* 53 */
-[828, 45, 92, 44],
+[835, 40, 81, 46],
 /* 54 */
-[858, 207, 122],
+[865, 214, 125],
 /* 55 */
 /***/ function(module, exports) {
 
@@ -1890,15 +1968,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 57 */
-[842, 5, 233, 135, 147, 134, 137],
+[849, 5, 241, 141, 153, 140, 143],
 /* 58 */
-[847, 235, 135],
+[854, 243, 141],
 /* 59 */
-[850, 235, 135],
+[857, 243, 141],
 /* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var redefine = __webpack_require__(22);
+	var redefine = __webpack_require__(23);
 	module.exports = function(target, src, safe){
 	  for(var key in src)redefine(target, key, src[key], safe);
 	  return target;
@@ -1910,9 +1988,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	var global      = __webpack_require__(7)
-	  , dP          = __webpack_require__(13)
-	  , DESCRIPTORS = __webpack_require__(12)
-	  , SPECIES     = __webpack_require__(11)('species');
+	  , dP          = __webpack_require__(14)
+	  , DESCRIPTORS = __webpack_require__(13)
+	  , SPECIES     = __webpack_require__(12)('species');
 	
 	module.exports = function(KEY){
 	  var C = global[KEY];
@@ -1924,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 62 */
-[857, 48],
+[864, 49],
 /* 63 */
 /***/ function(module, exports) {
 
@@ -1938,7 +2016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Backbone"] = __webpack_require__(459);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["jQuery"] = __webpack_require__(686);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
@@ -1947,82 +2025,202 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Developer: Stepan Burguchev
-	 * Date: 7/17/2015
+	 * Date: 7/6/2015
 	 * Copyright: 2009-2016 Comindware®
 	 *       All Rights Reserved
 	 * Published under the MIT license
 	 */
 	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
-	__webpack_require__(1);
+	var _toConsumableArray2 = __webpack_require__(210);
 	
-	var $window = $(window);
+	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 	
-	var GlobalEventsService = Marionette.Object.extend({
+	var _libApi = __webpack_require__(1);
+	
+	var _PopupStackView = __webpack_require__(435);
+	
+	var _PopupStackView2 = _interopRequireDefault(_PopupStackView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var windowService = /** @lends module:core.services.WindowService */{
 	    initialize: function initialize() {
-	        _.bindAll(this, '__onResize', '__onWindowClickCaptured', '__onWindowMousedownCaptured');
+	        var _popupStackView,
+	            _this = this;
 	
-	        $window.on('resize', this.__onResize);
-	        window.addEventListener('click', this.__onWindowClickCaptured, true);
-	        window.addEventListener('mousedown', this.__onWindowMousedownCaptured, true);
+	        this.__$popupStackRegionEl = (0, _libApi.$)(document.createElement('div'));
+	        this.__$popupStackRegionEl.appendTo(document.body);
+	
+	        var regionManager = new Marionette.RegionManager();
+	        regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
+	
+	        var popupStackRegion = regionManager.get('popupStackRegion');
+	        this.__popupStackView = new _PopupStackView2.default();
+	        popupStackRegion.show(this.__popupStackView);
+	
+	        (_popupStackView = this.__popupStackView).on.apply(_popupStackView, ['popup:close'].concat((0, _toConsumableArray3.default)(function (args) {
+	            return _this.trigger.apply(_this, ['popup:close'].concat((0, _toConsumableArray3.default)(args)));
+	        })));
 	    },
 	
-	    onDestroy: function onDestroy() {
-	        $window.off('resize');
-	        window.removeEventListener('click', this.__onWindowClickCaptured, true);
-	        window.removeEventListener('mousedown', this.__onWindowMousedownCaptured, true);
+	
+	    /**
+	     * Shows a marionette.view as a popup. If another popup is already shown, overlaps it.
+	     * The size of the view and it's location is totally the view's responsibility.
+	     * @param {Marionette.View} view A Marionette.View instance to show.
+	     * @returns {String} The popup id that you can use to close it.
+	     * */
+	    showPopup: function showPopup(view) {
+	        this.__popupStackView.showPopup(view, {
+	            fadeBackground: true,
+	            transient: false,
+	            hostEl: null
+	        });
 	    },
 	
-	    __onWindowClickCaptured: function __onWindowClickCaptured(e) {
-	        this.trigger('windowClickCaptured', e.target, e);
+	
+	    /**
+	     * Closes the top-level popup or does nothing if there is none.
+	     * @param {string} [popupId=null]
+	     * */
+	    closePopup: function closePopup() {
+	        var popupId = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	
+	        this.__popupStackView.closePopup(popupId);
 	    },
 	
-	    __onWindowMousedownCaptured: function __onWindowMousedownCaptured(e) {
-	        this.trigger('windowMousedownCaptured', e.target, e);
-	    },
 	
-	    __onResize: function __onResize(e) {
-	        this.trigger('resize', e);
+	    /**
+	     * Shows a marionette.view as a transient popup. If another popup is already shown, overlaps it.
+	     * The size of the view and it's location is totally the view's responsibility.
+	     * @param {Marionette.View} view A Marionette.View instance to show.
+	     * @param {Object} options Options object.
+	     * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
+	     * */
+	    showTransientPopup: function showTransientPopup(view) {
+	        var options = arguments.length <= 1 || arguments[1] === undefined ? { fadeBackground: false, hostEl: null } : arguments[1];
+	
+	        return this.__popupStackView.showPopup(view, {
+	            fadeBackground: options.fadeBackground,
+	            anchorEl: options.anchorEl,
+	            transient: true,
+	            hostEl: options.hostEl
+	        });
+	    },
+	    get: function get(popupId) {
+	        return this.__popupStackView.get(popupId);
+	    },
+	    fadeBackground: function fadeBackground(fade) {
+	        this.__popupStackView.fadeBackground(fade);
 	    }
-	});
+	};
 	
-	exports.default = new GlobalEventsService();
+	_.extend(windowService, Backbone.Events);
+	
+	exports.default = windowService;
 
 /***/ },
 /* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var global    = __webpack_require__(26)
+	  , core      = __webpack_require__(29)
+	  , ctx       = __webpack_require__(76)
+	  , hide      = __webpack_require__(53)
+	  , PROTOTYPE = 'prototype';
+	
+	var $export = function(type, name, source){
+	  var IS_FORCED = type & $export.F
+	    , IS_GLOBAL = type & $export.G
+	    , IS_STATIC = type & $export.S
+	    , IS_PROTO  = type & $export.P
+	    , IS_BIND   = type & $export.B
+	    , IS_WRAP   = type & $export.W
+	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+	    , expProto  = exports[PROTOTYPE]
+	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+	    , key, own, out;
+	  if(IS_GLOBAL)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !IS_FORCED && target && target[key] !== undefined;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+	    // bind timers to global for call from export context
+	    : IS_BIND && own ? ctx(out, global)
+	    // wrap global constructors for prevent change them in library
+	    : IS_WRAP && target[key] == out ? (function(C){
+	      var F = function(a, b, c){
+	        if(this instanceof C){
+	          switch(arguments.length){
+	            case 0: return new C;
+	            case 1: return new C(a);
+	            case 2: return new C(a, b);
+	          } return new C(a, b, c);
+	        } return C.apply(this, arguments);
+	      };
+	      F[PROTOTYPE] = C[PROTOTYPE];
+	      return F;
+	    // make static versions for prototype methods
+	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+	    if(IS_PROTO){
+	      (exports.virtual || (exports.virtual = {}))[key] = out;
+	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+	      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+	    }
+	  }
+	};
+	// type bitmap
+	$export.F = 1;   // forced
+	$export.G = 2;   // global
+	$export.S = 4;   // static
+	$export.P = 8;   // proto
+	$export.B = 16;  // bind
+	$export.W = 32;  // wrap
+	$export.U = 64;  // safe
+	$export.R = 128; // real proto method for `library` 
+	module.exports = $export;
+
+/***/ },
+/* 67 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// 22.1.3.31 Array.prototype[@@unscopables]
-	var UNSCOPABLES = __webpack_require__(11)('unscopables')
+	var UNSCOPABLES = __webpack_require__(12)('unscopables')
 	  , ArrayProto  = Array.prototype;
-	if(ArrayProto[UNSCOPABLES] == undefined)__webpack_require__(21)(ArrayProto, UNSCOPABLES, {});
+	if(ArrayProto[UNSCOPABLES] == undefined)__webpack_require__(22)(ArrayProto, UNSCOPABLES, {});
 	module.exports = function(key){
 	  ArrayProto[UNSCOPABLES][key] = true;
 	};
 
 /***/ },
-/* 67 */
-[827, 39, 229, 139, 5, 15, 156],
 /* 68 */
+[834, 42, 237, 145, 5, 16, 162],
+/* 69 */
 /***/ function(module, exports) {
 
 	module.exports = {};
 
 /***/ },
-/* 69 */
-[851, 13, 18, 11],
 /* 70 */
+[858, 14, 19, 12],
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(2)
-	  , defined = __webpack_require__(29)
+	  , defined = __webpack_require__(31)
 	  , fails   = __webpack_require__(8)
-	  , spaces  = __webpack_require__(152)
+	  , spaces  = __webpack_require__(158)
 	  , space   = '[' + spaces + ']'
 	  , non     = '\u200b\u0085'
 	  , ltrim   = RegExp('^' + space + space + '*')
@@ -2051,7 +2249,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exporter;
 
 /***/ },
-/* 71 */
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["_"] = __webpack_require__(824);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2070,7 +2275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _SelectableBehavior = __webpack_require__(43);
+	var _SelectableBehavior = __webpack_require__(45);
 	
 	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
 	
@@ -2468,7 +2673,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	
 	        if (!rebuildRequired && this.comparator) {
-	            var previousModel = new model.constructor(model.previousAttributes(), options);
+	            var previousModel = new model.constructor(model.previousAttributes(), model.options);
 	            if (this.comparator.length === 1) {
 	                var cmpVal1 = this.comparator(previousModel);
 	                var cmpVal2 = this.comparator(model);
@@ -2519,7 +2724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = VirtualCollection;
 
 /***/ },
-/* 72 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2536,7 +2741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _helpers = __webpack_require__(199);
+	var _helpers = __webpack_require__(120);
 	
 	var _helpers2 = _interopRequireDefault(_helpers);
 	
@@ -2568,165 +2773,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 73 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/6/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _LayerLayoutView = __webpack_require__(446);
-	
-	var _LayerLayoutView2 = _interopRequireDefault(_LayerLayoutView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var self = {};
-	
-	var classes = {
-	    HIDDEN: 'hidden'
-	};
-	
-	var windowService = {
-	    initialize: function initialize(options) {
-	        _utilsApi.helpers.ensureOption(options, 'popupRegion');
-	
-	        self.popupRegion = options.popupRegion;
-	        self.ui = options.ui;
-	
-	        self.layerLayoutView = new _LayerLayoutView2.default();
-	        self.popupRegion.show(self.layerLayoutView);
-	    },
-	
-	    showPopup: function showPopup(view) {
-	        self.layerLayoutView.showPopup(view);
-	        this.__togglePopupRegion();
-	    },
-	
-	    closePopup: function closePopup() {
-	        self.layerLayoutView.closePopup();
-	        this.__togglePopupRegion();
-	    },
-	
-	    fadeIn: function fadeIn(options) {
-	        self.layerLayoutView.fadeIn(options);
-	    },
-	
-	    fadeOut: function fadeOut() {
-	        self.layerLayoutView.fadeOut();
-	    },
-	
-	    __togglePopupRegion: function __togglePopupRegion() {
-	        self.ui.popupRegion.toggleClass(classes.HIDDEN, !self.layerLayoutView.faded);
-	    }
-	};
-	
-	_.extend(windowService, Backbone.Events);
-	
-	exports.default = windowService;
-
-/***/ },
-/* 74 */
-28,
 /* 75 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var global    = __webpack_require__(25)
-	  , core      = __webpack_require__(32)
-	  , ctx       = __webpack_require__(89)
-	  , hide      = __webpack_require__(53)
-	  , PROTOTYPE = 'prototype';
-	
-	var $export = function(type, name, source){
-	  var IS_FORCED = type & $export.F
-	    , IS_GLOBAL = type & $export.G
-	    , IS_STATIC = type & $export.S
-	    , IS_PROTO  = type & $export.P
-	    , IS_BIND   = type & $export.B
-	    , IS_WRAP   = type & $export.W
-	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
-	    , expProto  = exports[PROTOTYPE]
-	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
-	    , key, own, out;
-	  if(IS_GLOBAL)source = name;
-	  for(key in source){
-	    // contains in native
-	    own = !IS_FORCED && target && target[key] !== undefined;
-	    if(own && key in exports)continue;
-	    // export native or passed
-	    out = own ? target[key] : source[key];
-	    // prevent global pollution for namespaces
-	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-	    // bind timers to global for call from export context
-	    : IS_BIND && own ? ctx(out, global)
-	    // wrap global constructors for prevent change them in library
-	    : IS_WRAP && target[key] == out ? (function(C){
-	      var F = function(a, b, c){
-	        if(this instanceof C){
-	          switch(arguments.length){
-	            case 0: return new C;
-	            case 1: return new C(a);
-	            case 2: return new C(a, b);
-	          } return new C(a, b, c);
-	        } return C.apply(this, arguments);
-	      };
-	      F[PROTOTYPE] = C[PROTOTYPE];
-	      return F;
-	    // make static versions for prototype methods
-	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-	    if(IS_PROTO){
-	      (exports.virtual || (exports.virtual = {}))[key] = out;
-	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-	      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
-	    }
-	  }
-	};
-	// type bitmap
-	$export.F = 1;   // forced
-	$export.G = 2;   // global
-	$export.S = 4;   // static
-	$export.P = 8;   // proto
-	$export.B = 16;  // bind
-	$export.W = 32;  // wrap
-	$export.U = 64;  // safe
-	$export.R = 128; // real proto method for `library` 
-	module.exports = $export;
-
-/***/ },
+30,
 /* 76 */
-8,
+[830, 124],
 /* 77 */
-9,
+8,
 /* 78 */
-68,
+9,
 /* 79 */
-[850, 211, 124],
+69,
 /* 80 */
-[822, 28, 11],
+[857, 221, 127],
 /* 81 */
-[831, 28],
+48,
 /* 82 */
+[828, 30, 12],
+/* 83 */
+[838, 30],
+/* 84 */
 /***/ function(module, exports) {
 
 	exports.f = {}.propertyIsEnumerable;
 
 /***/ },
-/* 83 */
+/* 85 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Backbone"] = __webpack_require__(465);
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2785,9 +2863,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = HighlightableBehavior;
 
 /***/ },
-/* 84 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	/**
 	 * Developer: Stepan Burguchev
 	 * Date: 12/2/2014
@@ -2804,14 +2896,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	*
 	* */
 	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
 	var classes = {
 	    disabled: 'editor_disabled',
 	    readonly: 'editor_readonly',
@@ -2821,17 +2905,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var onRender = function onRender() {
 	    this.$el.attr('id', this.id);
-	    this.$el.attr('name', this.getName());
 	    this.setPermissions(this.enabled, this.readonly);
-	    //noinspection JSUnresolvedVariable
-	    if (this.schema.editorClass) {
-	        //noinspection JSUnresolvedVariable
-	        this.$el.addClass(this.schema.editorClass);
-	    }
-	    if (this.schema.editorAttrs) {
-	        this.$el.attr(this.schema.editorAttrs);
-	    }
-	    this.setValue(this.value, true);
+	    this.setValue(this.value);
 	    if (this.focusElement) {
 	        this.$el.on('focus', this.focusElement, this.onFocus);
 	        this.$el.on('blur', this.focusElement, this.onBlur);
@@ -2852,8 +2927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @name BaseEditorView
 	 * @memberof module:core.form.editors.base
-	 * @class Base class for all editors that use Marionette.View. The class is a reworked version of Backbone.Form.Editor from
-	 * [Backbone.Form](https://github.com/powmedia/backbone-forms) library.<br/>
+	 * @class Base class for all editors in the library.
 	 * While implementing editors, inherit from one of the following classes which in turn are inherited from this one:<ul>
 	 * <li><code>BaseCollectionEditorView</code></li>
 	 * <li><code>BaseCompositeEditorView</code></li>
@@ -2964,20 +3038,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                __getFocusElement: function __getFocusElement() {
 	                    if (this.focusElement) {
 	                        return this.$el.find(this.focusElement);
-	                    } else {
-	                        return this.$el;
 	                    }
+	                    return this.$el;
 	                },
 	
 	                __triggerChange: function __triggerChange() {
-	                    this.trigger.apply(this, ['change', this].concat(arguments));
-	                },
+	                    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                        args[_key] = arguments[_key];
+	                    }
 	
-	                getName: function getName() {
-	                    var key = this.key || '';
-	
-	                    //Replace periods with underscores (e.g. for when using paths)
-	                    return key.replace(/\./g, '_');
+	                    this.trigger.apply(this, ['change', this].concat(args));
 	                },
 	
 	                /**
@@ -3111,19 +3181,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                 * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
 	                 */
 	                validate: function validate() {
-	                    var $el = this.$el,
-	                        error = null,
-	                        value = this.getValue(),
-	                        formValues = this.form ? this.form.getValue() : {},
-	                        validators = this.validators,
-	                        getValidator = this.getValidator;
+	                    var error = null;
+	                    var value = this.getValue();
+	                    var formValues = this.form ? this.form.getValue() : {};
+	                    var validators = this.validators;
+	                    var getValidator = this.getValidator;
 	
 	                    if (validators) {
 	                        //Run through validators until an error is found
 	                        _.every(validators, function (validator) {
 	                            error = getValidator(validator)(value, formValues);
-	
-	                            return error ? false : true;
+	                            return !error;
 	                        });
 	                    }
 	
@@ -3141,7 +3209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                },
 	
 	                getValidator: function getValidator(validator) {
-	                    var validators = Backbone.Form.validators;
+	                    var validators = _formRepository2.default.validators;
 	
 	                    //Convert regular expressions to validators
 	                    if (_.isRegExp(validator)) {
@@ -3190,7 +3258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3209,15 +3277,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _VirtualCollection = __webpack_require__(71);
+	var _VirtualCollection = __webpack_require__(73);
 	
 	var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 	
-	var _HighlightableBehavior = __webpack_require__(83);
+	var _HighlightableBehavior = __webpack_require__(86);
 	
 	var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 	
-	var _MemberModel = __webpack_require__(86);
+	var _MemberModel = __webpack_require__(89);
 	
 	var _MemberModel2 = _interopRequireDefault(_MemberModel);
 	
@@ -3257,7 +3325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 86 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3276,7 +3344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -3295,44 +3363,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/12/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = Backbone.AssociatedModel.extend({
-	    initialize: function initialize(data) {
+	exports.default = Backbone.Model.extend({
+	    initialize: function initialize() {
 	        _.extend(this, new _listApi2.default.models.behaviors.ListItemBehavior(this));
-	
-	        // because of two class 'Reference' on server
-	        if (data.name) {
-	            this.set('text', data.name);
-	        } else {
-	            this.set('name', data.text);
-	        }
 	    }
-	});
+	}); /**
+	     * Developer: Stepan Burguchev
+	     * Date: 12/12/2014
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3351,11 +3410,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _gridheader = __webpack_require__(744);
+	var _gridheader = __webpack_require__(751);
 	
 	var _gridheader2 = _interopRequireDefault(_gridheader);
 	
-	var _GlobalEventService = __webpack_require__(65);
+	var _GlobalEventService = __webpack_require__(34);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -3397,7 +3456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.columns = options.columns;
 	        this.$document = $(document);
 	        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
-	        this.listenTo(_GlobalEventService2.default, 'resize', this.handleResize);
+	        this.listenTo(_GlobalEventService2.default, 'window:resize', this.handleResize);
 	    },
 	
 	    template: _libApi.Handlebars.compile(_gridheader2.default),
@@ -3602,6 +3661,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    handleResize: function handleResize() {
+	        if (this.isDestroyed) {
+	            return;
+	        }
 	        this.__handleResizeInternal();
 	        this.gridEventAggregator.trigger('columnsResize');
 	    },
@@ -3643,40 +3705,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GridHeaderView;
 
 /***/ },
-/* 89 */
-[823, 121],
-/* 90 */
+/* 92 */
 /***/ function(module, exports) {
 
 	module.exports = true;
 
 /***/ },
-/* 91 */
-82,
-/* 92 */
-47,
 /* 93 */
-[851, 45, 52, 19],
+84,
 /* 94 */
-63,
+[858, 40, 52, 20],
 /* 95 */
-[821, 24, 15, 62],
+63,
 /* 96 */
+[827, 25, 16, 62],
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var global            = __webpack_require__(7)
 	  , $export           = __webpack_require__(2)
-	  , redefine          = __webpack_require__(22)
+	  , redefine          = __webpack_require__(23)
 	  , redefineAll       = __webpack_require__(60)
-	  , meta              = __webpack_require__(46)
-	  , forOf             = __webpack_require__(67)
+	  , meta              = __webpack_require__(47)
+	  , forOf             = __webpack_require__(68)
 	  , anInstance        = __webpack_require__(55)
 	  , isObject          = __webpack_require__(9)
 	  , fails             = __webpack_require__(8)
-	  , $iterDetect       = __webpack_require__(101)
-	  , setToStringTag    = __webpack_require__(69)
-	  , inheritIfRequired = __webpack_require__(138);
+	  , $iterDetect       = __webpack_require__(102)
+	  , setToStringTag    = __webpack_require__(70)
+	  , inheritIfRequired = __webpack_require__(144);
 	
 	module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 	  var Base  = global[NAME]
@@ -3751,15 +3809,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var hide     = __webpack_require__(21)
-	  , redefine = __webpack_require__(22)
+	var hide     = __webpack_require__(22)
+	  , redefine = __webpack_require__(23)
 	  , fails    = __webpack_require__(8)
-	  , defined  = __webpack_require__(29)
-	  , wks      = __webpack_require__(11);
+	  , defined  = __webpack_require__(31)
+	  , wks      = __webpack_require__(12);
 	
 	module.exports = function(KEY, length, exec){
 	  var SYMBOL   = wks(KEY)
@@ -3784,7 +3842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3802,7 +3860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports) {
 
 	// fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -3823,22 +3881,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 100 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.2.8 IsRegExp(argument)
 	var isObject = __webpack_require__(9)
-	  , cof      = __webpack_require__(28)
-	  , MATCH    = __webpack_require__(11)('match');
+	  , cof      = __webpack_require__(30)
+	  , MATCH    = __webpack_require__(12)('match');
 	module.exports = function(it){
 	  var isRegExp;
 	  return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
 	};
 
 /***/ },
-/* 101 */
-[837, 11],
 /* 102 */
+[844, 12],
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Forced replacement prototype accessors methods
@@ -3850,19 +3908,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 103 */
+/* 104 */
 /***/ function(module, exports) {
 
 	exports.f = Object.getOwnPropertySymbols;
 
 /***/ },
-/* 104 */
-[853, 7],
 /* 105 */
+[860, 7],
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global = __webpack_require__(7)
-	  , hide   = __webpack_require__(21)
+	  , hide   = __webpack_require__(22)
 	  , uid    = __webpack_require__(63)
 	  , TYPED  = uid('typed_array')
 	  , VIEW   = uid('view')
@@ -3889,10 +3947,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 106 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var escapeRegExp = __webpack_require__(346);
+	var escapeRegExp = __webpack_require__(354);
 	
 	module.exports = function defaultToWhiteSpace(characters) {
 	  if (characters == null)
@@ -3905,11 +3963,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 107 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var strRepeat = __webpack_require__(165);
+	var strRepeat = __webpack_require__(171);
 	
 	module.exports = function pad(str, length, padStr, type) {
 	  str = makeString(str);
@@ -3937,7 +3995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 108 */
+/* 109 */
 /***/ function(module, exports) {
 
 	/**
@@ -3973,7 +4031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 109 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4008,7 +4066,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 110 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4027,7 +4085,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _menuItem = __webpack_require__(694);
+	var _menuItem = __webpack_require__(701);
 	
 	var _menuItem2 = _interopRequireDefault(_menuItem);
 	
@@ -4060,7 +4118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4077,15 +4135,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _MembersCollection = __webpack_require__(85);
+	var _MembersCollection = __webpack_require__(88);
 	
 	var _MembersCollection2 = _interopRequireDefault(_MembersCollection);
 	
-	var _MembersListView = __webpack_require__(378);
+	var _MembersListView = __webpack_require__(385);
 	
 	var _MembersListView2 = _interopRequireDefault(_MembersListView);
 	
-	var _UserService = __webpack_require__(72);
+	var _UserService = __webpack_require__(74);
 	
 	var _UserService2 = _interopRequireDefault(_UserService);
 	
@@ -4112,7 +4170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 112 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4131,7 +4189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _referenceButton = __webpack_require__(718);
+	var _referenceButton = __webpack_require__(725);
 	
 	var _referenceButton2 = _interopRequireDefault(_referenceButton);
 	
@@ -4153,7 +4211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    templateHelpers: function templateHelpers() {
 	        var value = this.model.get('value');
 	        return {
-	            text: value && (value.get('text') || '#' + value.id) || ''
+	            text: this.options.getDisplayText(value)
 	        };
 	    },
 	
@@ -4208,18 +4266,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 113 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/3/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -4227,11 +4277,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _referenceListItem = __webpack_require__(719);
+	var _referenceListItem = __webpack_require__(726);
 	
 	var _referenceListItem2 = _interopRequireDefault(_referenceListItem);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -4254,7 +4304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    templateHelpers: function templateHelpers() {
 	        return {
-	            text: this.model.get('text') || '#' + this.model.id
+	            text: this.options.getDisplayText(this.model.toJSON())
 	        };
 	    },
 	
@@ -4265,10 +4315,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    __select: function __select() {
 	        this.reqres.request('value:set', this.model);
 	    }
-	});
+	}); /**
+	     * Developer: Stepan Burguchev
+	     * Date: 12/3/2014
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4287,7 +4343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _gridcolumnheader = __webpack_require__(743);
+	var _gridcolumnheader = __webpack_require__(750);
 	
 	var _gridcolumnheader2 = _interopRequireDefault(_gridcolumnheader);
 	
@@ -4333,24 +4389,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GridColumnHeaderView;
 
 /***/ },
-/* 115 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/7/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
-	var _typeof2 = __webpack_require__(120);
+	var _typeof2 = __webpack_require__(123);
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
@@ -4358,15 +4406,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _list = __webpack_require__(248);
+	var _list = __webpack_require__(256);
 	
 	var _list2 = _interopRequireDefault(_list);
 	
-	var _SlidingWindowCollection = __webpack_require__(167);
+	var _SlidingWindowCollection = __webpack_require__(173);
 	
 	var _SlidingWindowCollection2 = _interopRequireDefault(_SlidingWindowCollection);
 	
-	var _GlobalEventService = __webpack_require__(65);
+	var _GlobalEventService = __webpack_require__(34);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -4386,7 +4434,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var config = {
 	    VISIBLE_COLLECTION_RESERVE: 5,
 	    VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
-	};
+	}; /**
+	    * Developer: Stepan Burguchev
+	    * Date: 7/7/2014
+	    * Copyright: 2009-2016 Comindware®
+	    *       All Rights Reserved
+	    * Published under the MIT license
+	    */
 	
 	var VisibleCollectionView = Marionette.CollectionView.extend({
 	    getChildView: function getChildView(child) {
@@ -4454,11 +4508,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            internalListViewReqres: this.internalReqres
 	        });
 	
-	        options.emptyView && (this.emptyView = options.emptyView); // jshint ignore:line
-	        options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
-	        options.childView && (this.childView = options.childView); // jshint ignore:line
-	        options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
-	        options.loadingChildView && (this.loadingChildView = options.loadingChildView); // jshint ignore:line
+	        options.emptyView && (this.emptyView = options.emptyView);
+	        options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions);
+	        options.childView && (this.childView = options.childView);
+	        options.childViewSelector && (this.childViewSelector = options.childViewSelector);
+	        options.loadingChildView && (this.loadingChildView = options.loadingChildView);
 	        this.maxRows = options.maxRows;
 	        this.height = options.height;
 	
@@ -4655,6 +4709,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    // Updates state.viewportHeight and visibleCollection.state.windowSize.
 	    handleResize: function handleResize() {
+	        if (this.isDestroyed) {
+	            return;
+	        }
 	        var oldViewportHeight = this.state.viewportHeight;
 	        var elementHeight = this.$el.height();
 	
@@ -4724,7 +4781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ListView;
 
 /***/ },
-/* 116 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4741,11 +4798,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _GridItemViewBehavior = __webpack_require__(117);
+	var _GridItemViewBehavior = __webpack_require__(118);
 	
 	var _GridItemViewBehavior2 = _interopRequireDefault(_GridItemViewBehavior);
 	
-	var _GridItemBehavior = __webpack_require__(186);
+	var _GridItemBehavior = __webpack_require__(194);
 	
 	var _GridItemBehavior2 = _interopRequireDefault(_GridItemBehavior);
 	
@@ -4846,7 +4903,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4967,7 +5024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5015,5675 +5072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = HighlightableBehavior;
 
 /***/ },
-/* 119 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 9/7/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _defineProperty2 = __webpack_require__(203);
-	
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var defaultOptions = {
-	    selector: null,
-	    allowNestedFocus: true,
-	    onBlur: null
-	};
-	
-	exports.default = Marionette.Behavior.extend({
-	    initialize: function initialize(options, view) {
-	        _utilsApi.helpers.ensureOption(options, 'onBlur');
-	
-	        _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-	
-	        _.bindAll(this, '__onBlur');
-	
-	        view.focus = this.__focus.bind(this);
-	    },
-	
-	    events: function events() {
-	        var key = 'blur';
-	        if (this.options.selector) {
-	            key += ' ' + this.options.selector;
-	        }
-	        return (0, _defineProperty3.default)({}, key, '__onBlur');
-	    },
-	
-	    onRender: function onRender() {
-	        this.__getFocusableEl().attr('tabindex', -1);
-	    },
-	
-	    __getFocusableEl: function __getFocusableEl() {
-	        if (this.options.selector) {
-	            return this.$(this.options.selector);
-	        } else {
-	            return this.$el;
-	        }
-	    },
-	
-	    __focus: function __focus() {
-	        // If the focused element is nested into our focusable element, we simply bind to it. Otherwise, we focus the focusable element.
-	        var $focusableEl = this.__getFocusableEl();
-	        var activeElementIsNested = $focusableEl[0] === document.activeElement || _libApi.$.contains($focusableEl[0], document.activeElement);
-	        if (!activeElementIsNested) {
-	            $focusableEl.focus();
-	        } else {
-	            (0, _libApi.$)(document.activeElement).one('blur', this.__onBlur);
-	        }
-	    },
-	
-	    __onBlur: function __onBlur() {
-	        var $focusableEl = this.__getFocusableEl();
-	        _.defer(function () {
-	            var activeElementIsNested = $focusableEl[0] === document.activeElement || _libApi.$.contains($focusableEl[0], document.activeElement);
-	            if (activeElementIsNested) {
-	                (0, _libApi.$)(document.activeElement).one('blur', this.__onBlur);
-	            } else {
-	                // Call the provided onBlur function
-	                var callback = this.options.onBlur;
-	                if (_.isString(callback)) {
-	                    this.view[callback].call(this.view);
-	                } else {
-	                    callback.call(this.view);
-	                }
-	            }
-	        }.bind(this));
-	    }
-	});
-
-/***/ },
 /* 120 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	
-	var _iterator = __webpack_require__(454);
-	
-	var _iterator2 = _interopRequireDefault(_iterator);
-	
-	var _symbol = __webpack_require__(453);
-	
-	var _symbol2 = _interopRequireDefault(_symbol);
-	
-	var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj; };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
-	  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
-	} : function (obj) {
-	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
-	};
-
-/***/ },
-/* 121 */
-20,
-/* 122 */
-29,
-/* 123 */
-[825, 77, 25],
-/* 124 */
-/***/ function(module, exports) {
-
-	// IE 8- don't enum bug keys
-	module.exports = (
-	  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-	).split(',');
-
-/***/ },
-/* 125 */
-103,
-/* 126 */
-[852, 127, 94],
-/* 127 */
-[853, 25],
-/* 128 */
-48,
-/* 129 */
-[861, 77],
-/* 130 */
-[862, 25, 32, 90, 131, 45],
-/* 131 */
-[863, 19],
-/* 132 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
-	'use strict';
-	var toObject = __webpack_require__(16)
-	  , toIndex  = __webpack_require__(62)
-	  , toLength = __webpack_require__(15);
-	module.exports = function fill(value /*, start = 0, end = @length */){
-	  var O      = toObject(this)
-	    , length = toLength(O.length)
-	    , aLen   = arguments.length
-	    , index  = toIndex(aLen > 1 ? arguments[1] : undefined, length)
-	    , end    = aLen > 2 ? arguments[2] : undefined
-	    , endPos = end === undefined ? length : toIndex(end, length);
-	  while(endPos > index)O[index++] = value;
-	  return O;
-	};
-
-/***/ },
-/* 133 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var $defineProperty = __webpack_require__(13)
-	  , createDesc      = __webpack_require__(47);
-	
-	module.exports = function(object, index, value){
-	  if(index in object)$defineProperty.f(object, index, createDesc(0, value));
-	  else object[index] = value;
-	};
-
-/***/ },
-/* 134 */
-[825, 9, 7],
-/* 135 */
-124,
-/* 136 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var MATCH = __webpack_require__(11)('match');
-	module.exports = function(KEY){
-	  var re = /./;
-	  try {
-	    '/./'[KEY](re);
-	  } catch(e){
-	    try {
-	      re[MATCH] = false;
-	      return !'/./'[KEY](re);
-	    } catch(f){ /* empty */ }
-	  } return true;
-	};
-
-/***/ },
-/* 137 */
-[829, 7],
-/* 138 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isObject       = __webpack_require__(9)
-	  , setPrototypeOf = __webpack_require__(146).set;
-	module.exports = function(that, target, C){
-	  var P, S = target.constructor;
-	  if(S !== C && typeof S == 'function' && (P = S.prototype) !== C.prototype && isObject(P) && setPrototypeOf){
-	    setPrototypeOf(that, P);
-	  } return that;
-	};
-
-/***/ },
-/* 139 */
-[832, 68, 11],
-/* 140 */
-[833, 28],
-/* 141 */
-[835, 57, 47, 69, 21, 11],
-/* 142 */
-[836, 56, 2, 22, 21, 18, 68, 141, 69, 27, 11],
-/* 143 */
-/***/ function(module, exports) {
-
-	// 20.2.2.14 Math.expm1(x)
-	var $expm1 = Math.expm1;
-	module.exports = (!$expm1
-	  // Old FF bug
-	  || $expm1(10) > 22025.465794806719 || $expm1(10) < 22025.4657948067165168
-	  // Tor Browser bug
-	  || $expm1(-2e-17) != -2e-17
-	) ? function expm1(x){
-	  return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : Math.exp(x) - 1;
-	} : $expm1;
-
-/***/ },
-/* 144 */
-/***/ function(module, exports) {
-
-	// 20.2.2.28 Math.sign(x)
-	module.exports = Math.sign || function sign(x){
-	  return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
-	};
-
-/***/ },
-/* 145 */
-[840, 7, 153, 28],
-/* 146 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Works with __proto__ only. Old v8 can't work with null proto objects.
-	/* eslint-disable no-proto */
-	var isObject = __webpack_require__(9)
-	  , anObject = __webpack_require__(5);
-	var check = function(O, proto){
-	  anObject(O);
-	  if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
-	};
-	module.exports = {
-	  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
-	    function(test, buggy, set){
-	      try {
-	        set = __webpack_require__(39)(Function.call, __webpack_require__(26).f(Object.prototype, '__proto__').set, 2);
-	        set(test, []);
-	        buggy = !(test instanceof Array);
-	      } catch(e){ buggy = true; }
-	      return function setPrototypeOf(O, proto){
-	        check(O, proto);
-	        if(buggy)O.__proto__ = proto;
-	        else set(O, proto);
-	        return O;
-	      };
-	    }({}, false) : undefined),
-	  check: check
-	};
-
-/***/ },
-/* 147 */
-[852, 104, 63],
-/* 148 */
-[854, 5, 20, 11],
-/* 149 */
-[855, 48, 29],
-/* 150 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// helper for String#{startsWith, endsWith, includes}
-	var isRegExp = __webpack_require__(100)
-	  , defined  = __webpack_require__(29);
-	
-	module.exports = function(that, searchString, NAME){
-	  if(isRegExp(searchString))throw TypeError('String#' + NAME + " doesn't accept regex!");
-	  return String(defined(that));
-	};
-
-/***/ },
-/* 151 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var toInteger = __webpack_require__(48)
-	  , defined   = __webpack_require__(29);
-	
-	module.exports = function repeat(count){
-	  var str = String(defined(this))
-	    , res = ''
-	    , n   = toInteger(count);
-	  if(n < 0 || n == Infinity)throw RangeError("Count can't be negative");
-	  for(;n > 0; (n >>>= 1) && (str += str))if(n & 1)res += str;
-	  return res;
-	};
-
-/***/ },
-/* 152 */
-/***/ function(module, exports) {
-
-	module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
-	  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-
-/***/ },
-/* 153 */
-[856, 39, 99, 137, 134, 7, 28],
-/* 154 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var global         = __webpack_require__(7)
-	  , DESCRIPTORS    = __webpack_require__(12)
-	  , LIBRARY        = __webpack_require__(56)
-	  , $typed         = __webpack_require__(105)
-	  , hide           = __webpack_require__(21)
-	  , redefineAll    = __webpack_require__(60)
-	  , fails          = __webpack_require__(8)
-	  , anInstance     = __webpack_require__(55)
-	  , toInteger      = __webpack_require__(48)
-	  , toLength       = __webpack_require__(15)
-	  , gOPN           = __webpack_require__(58).f
-	  , dP             = __webpack_require__(13).f
-	  , arrayFill      = __webpack_require__(132)
-	  , setToStringTag = __webpack_require__(69)
-	  , ARRAY_BUFFER   = 'ArrayBuffer'
-	  , DATA_VIEW      = 'DataView'
-	  , PROTOTYPE      = 'prototype'
-	  , WRONG_LENGTH   = 'Wrong length!'
-	  , WRONG_INDEX    = 'Wrong index!'
-	  , $ArrayBuffer   = global[ARRAY_BUFFER]
-	  , $DataView      = global[DATA_VIEW]
-	  , Math           = global.Math
-	  , RangeError     = global.RangeError
-	  , Infinity       = global.Infinity
-	  , BaseBuffer     = $ArrayBuffer
-	  , abs            = Math.abs
-	  , pow            = Math.pow
-	  , floor          = Math.floor
-	  , log            = Math.log
-	  , LN2            = Math.LN2
-	  , BUFFER         = 'buffer'
-	  , BYTE_LENGTH    = 'byteLength'
-	  , BYTE_OFFSET    = 'byteOffset'
-	  , $BUFFER        = DESCRIPTORS ? '_b' : BUFFER
-	  , $LENGTH        = DESCRIPTORS ? '_l' : BYTE_LENGTH
-	  , $OFFSET        = DESCRIPTORS ? '_o' : BYTE_OFFSET;
-	
-	// IEEE754 conversions based on https://github.com/feross/ieee754
-	var packIEEE754 = function(value, mLen, nBytes){
-	  var buffer = Array(nBytes)
-	    , eLen   = nBytes * 8 - mLen - 1
-	    , eMax   = (1 << eLen) - 1
-	    , eBias  = eMax >> 1
-	    , rt     = mLen === 23 ? pow(2, -24) - pow(2, -77) : 0
-	    , i      = 0
-	    , s      = value < 0 || value === 0 && 1 / value < 0 ? 1 : 0
-	    , e, m, c;
-	  value = abs(value)
-	  if(value != value || value === Infinity){
-	    m = value != value ? 1 : 0;
-	    e = eMax;
-	  } else {
-	    e = floor(log(value) / LN2);
-	    if(value * (c = pow(2, -e)) < 1){
-	      e--;
-	      c *= 2;
-	    }
-	    if(e + eBias >= 1){
-	      value += rt / c;
-	    } else {
-	      value += rt * pow(2, 1 - eBias);
-	    }
-	    if(value * c >= 2){
-	      e++;
-	      c /= 2;
-	    }
-	    if(e + eBias >= eMax){
-	      m = 0;
-	      e = eMax;
-	    } else if(e + eBias >= 1){
-	      m = (value * c - 1) * pow(2, mLen);
-	      e = e + eBias;
-	    } else {
-	      m = value * pow(2, eBias - 1) * pow(2, mLen);
-	      e = 0;
-	    }
-	  }
-	  for(; mLen >= 8; buffer[i++] = m & 255, m /= 256, mLen -= 8);
-	  e = e << mLen | m;
-	  eLen += mLen;
-	  for(; eLen > 0; buffer[i++] = e & 255, e /= 256, eLen -= 8);
-	  buffer[--i] |= s * 128;
-	  return buffer;
-	};
-	var unpackIEEE754 = function(buffer, mLen, nBytes){
-	  var eLen  = nBytes * 8 - mLen - 1
-	    , eMax  = (1 << eLen) - 1
-	    , eBias = eMax >> 1
-	    , nBits = eLen - 7
-	    , i     = nBytes - 1
-	    , s     = buffer[i--]
-	    , e     = s & 127
-	    , m;
-	  s >>= 7;
-	  for(; nBits > 0; e = e * 256 + buffer[i], i--, nBits -= 8);
-	  m = e & (1 << -nBits) - 1;
-	  e >>= -nBits;
-	  nBits += mLen;
-	  for(; nBits > 0; m = m * 256 + buffer[i], i--, nBits -= 8);
-	  if(e === 0){
-	    e = 1 - eBias;
-	  } else if(e === eMax){
-	    return m ? NaN : s ? -Infinity : Infinity;
-	  } else {
-	    m = m + pow(2, mLen);
-	    e = e - eBias;
-	  } return (s ? -1 : 1) * m * pow(2, e - mLen);
-	};
-	
-	var unpackI32 = function(bytes){
-	  return bytes[3] << 24 | bytes[2] << 16 | bytes[1] << 8 | bytes[0];
-	};
-	var packI8 = function(it){
-	  return [it & 0xff];
-	};
-	var packI16 = function(it){
-	  return [it & 0xff, it >> 8 & 0xff];
-	};
-	var packI32 = function(it){
-	  return [it & 0xff, it >> 8 & 0xff, it >> 16 & 0xff, it >> 24 & 0xff];
-	};
-	var packF64 = function(it){
-	  return packIEEE754(it, 52, 8);
-	};
-	var packF32 = function(it){
-	  return packIEEE754(it, 23, 4);
-	};
-	
-	var addGetter = function(C, key, internal){
-	  dP(C[PROTOTYPE], key, {get: function(){ return this[internal]; }});
-	};
-	
-	var get = function(view, bytes, index, isLittleEndian){
-	  var numIndex = +index
-	    , intIndex = toInteger(numIndex);
-	  if(numIndex != intIndex || intIndex < 0 || intIndex + bytes > view[$LENGTH])throw RangeError(WRONG_INDEX);
-	  var store = view[$BUFFER]._b
-	    , start = intIndex + view[$OFFSET]
-	    , pack  = store.slice(start, start + bytes);
-	  return isLittleEndian ? pack : pack.reverse();
-	};
-	var set = function(view, bytes, index, conversion, value, isLittleEndian){
-	  var numIndex = +index
-	    , intIndex = toInteger(numIndex);
-	  if(numIndex != intIndex || intIndex < 0 || intIndex + bytes > view[$LENGTH])throw RangeError(WRONG_INDEX);
-	  var store = view[$BUFFER]._b
-	    , start = intIndex + view[$OFFSET]
-	    , pack  = conversion(+value);
-	  for(var i = 0; i < bytes; i++)store[start + i] = pack[isLittleEndian ? i : bytes - i - 1];
-	};
-	
-	var validateArrayBufferArguments = function(that, length){
-	  anInstance(that, $ArrayBuffer, ARRAY_BUFFER);
-	  var numberLength = +length
-	    , byteLength   = toLength(numberLength);
-	  if(numberLength != byteLength)throw RangeError(WRONG_LENGTH);
-	  return byteLength;
-	};
-	
-	if(!$typed.ABV){
-	  $ArrayBuffer = function ArrayBuffer(length){
-	    var byteLength = validateArrayBufferArguments(this, length);
-	    this._b       = arrayFill.call(Array(byteLength), 0);
-	    this[$LENGTH] = byteLength;
-	  };
-	
-	  $DataView = function DataView(buffer, byteOffset, byteLength){
-	    anInstance(this, $DataView, DATA_VIEW);
-	    anInstance(buffer, $ArrayBuffer, DATA_VIEW);
-	    var bufferLength = buffer[$LENGTH]
-	      , offset       = toInteger(byteOffset);
-	    if(offset < 0 || offset > bufferLength)throw RangeError('Wrong offset!');
-	    byteLength = byteLength === undefined ? bufferLength - offset : toLength(byteLength);
-	    if(offset + byteLength > bufferLength)throw RangeError(WRONG_LENGTH);
-	    this[$BUFFER] = buffer;
-	    this[$OFFSET] = offset;
-	    this[$LENGTH] = byteLength;
-	  };
-	
-	  if(DESCRIPTORS){
-	    addGetter($ArrayBuffer, BYTE_LENGTH, '_l');
-	    addGetter($DataView, BUFFER, '_b');
-	    addGetter($DataView, BYTE_LENGTH, '_l');
-	    addGetter($DataView, BYTE_OFFSET, '_o');
-	  }
-	
-	  redefineAll($DataView[PROTOTYPE], {
-	    getInt8: function getInt8(byteOffset){
-	      return get(this, 1, byteOffset)[0] << 24 >> 24;
-	    },
-	    getUint8: function getUint8(byteOffset){
-	      return get(this, 1, byteOffset)[0];
-	    },
-	    getInt16: function getInt16(byteOffset /*, littleEndian */){
-	      var bytes = get(this, 2, byteOffset, arguments[1]);
-	      return (bytes[1] << 8 | bytes[0]) << 16 >> 16;
-	    },
-	    getUint16: function getUint16(byteOffset /*, littleEndian */){
-	      var bytes = get(this, 2, byteOffset, arguments[1]);
-	      return bytes[1] << 8 | bytes[0];
-	    },
-	    getInt32: function getInt32(byteOffset /*, littleEndian */){
-	      return unpackI32(get(this, 4, byteOffset, arguments[1]));
-	    },
-	    getUint32: function getUint32(byteOffset /*, littleEndian */){
-	      return unpackI32(get(this, 4, byteOffset, arguments[1])) >>> 0;
-	    },
-	    getFloat32: function getFloat32(byteOffset /*, littleEndian */){
-	      return unpackIEEE754(get(this, 4, byteOffset, arguments[1]), 23, 4);
-	    },
-	    getFloat64: function getFloat64(byteOffset /*, littleEndian */){
-	      return unpackIEEE754(get(this, 8, byteOffset, arguments[1]), 52, 8);
-	    },
-	    setInt8: function setInt8(byteOffset, value){
-	      set(this, 1, byteOffset, packI8, value);
-	    },
-	    setUint8: function setUint8(byteOffset, value){
-	      set(this, 1, byteOffset, packI8, value);
-	    },
-	    setInt16: function setInt16(byteOffset, value /*, littleEndian */){
-	      set(this, 2, byteOffset, packI16, value, arguments[2]);
-	    },
-	    setUint16: function setUint16(byteOffset, value /*, littleEndian */){
-	      set(this, 2, byteOffset, packI16, value, arguments[2]);
-	    },
-	    setInt32: function setInt32(byteOffset, value /*, littleEndian */){
-	      set(this, 4, byteOffset, packI32, value, arguments[2]);
-	    },
-	    setUint32: function setUint32(byteOffset, value /*, littleEndian */){
-	      set(this, 4, byteOffset, packI32, value, arguments[2]);
-	    },
-	    setFloat32: function setFloat32(byteOffset, value /*, littleEndian */){
-	      set(this, 4, byteOffset, packF32, value, arguments[2]);
-	    },
-	    setFloat64: function setFloat64(byteOffset, value /*, littleEndian */){
-	      set(this, 8, byteOffset, packF64, value, arguments[2]);
-	    }
-	  });
-	} else {
-	  if(!fails(function(){
-	    new $ArrayBuffer;     // eslint-disable-line no-new
-	  }) || !fails(function(){
-	    new $ArrayBuffer(.5); // eslint-disable-line no-new
-	  })){
-	    $ArrayBuffer = function ArrayBuffer(length){
-	      return new BaseBuffer(validateArrayBufferArguments(this, length));
-	    };
-	    var ArrayBufferProto = $ArrayBuffer[PROTOTYPE] = BaseBuffer[PROTOTYPE];
-	    for(var keys = gOPN(BaseBuffer), j = 0, key; keys.length > j; ){
-	      if(!((key = keys[j++]) in $ArrayBuffer))hide($ArrayBuffer, key, BaseBuffer[key]);
-	    };
-	    if(!LIBRARY)ArrayBufferProto.constructor = $ArrayBuffer;
-	  }
-	  // iOS Safari 7.x bug
-	  var view = new $DataView(new $ArrayBuffer(2))
-	    , $setInt8 = $DataView[PROTOTYPE].setInt8;
-	  view.setInt8(0, 2147483648);
-	  view.setInt8(1, 2147483649);
-	  if(view.getInt8(0) || !view.getInt8(1))redefineAll($DataView[PROTOTYPE], {
-	    setInt8: function setInt8(byteOffset, value){
-	      $setInt8.call(this, byteOffset, value << 24 >> 24);
-	    },
-	    setUint8: function setUint8(byteOffset, value){
-	      $setInt8.call(this, byteOffset, value << 24 >> 24);
-	    }
-	  }, true);
-	}
-	setToStringTag($ArrayBuffer, ARRAY_BUFFER);
-	setToStringTag($DataView, DATA_VIEW);
-	hide($DataView[PROTOTYPE], $typed.VIEW, true);
-	exports[ARRAY_BUFFER] = $ArrayBuffer;
-	exports[DATA_VIEW] = $DataView;
-
-/***/ },
-/* 155 */
-[862, 7, 38, 56, 242, 13],
-/* 156 */
-[865, 80, 11, 68, 38],
-/* 157 */
-[866, 66, 230, 68, 24, 142],
-/* 158 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : german (de)
-	//! author : lluchs : https://github.com/lluchs
-	//! author: Menelion Elensúle: https://github.com/Oire
-	//! author : Mikolaj Dadela : https://github.com/mik01aj
-	
-	;(function (global, factory) {
-	    true ? factory(__webpack_require__(3)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-	
-	
-	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
-	        var format = {
-	            'm': ['eine Minute', 'einer Minute'],
-	            'h': ['eine Stunde', 'einer Stunde'],
-	            'd': ['ein Tag', 'einem Tag'],
-	            'dd': [number + ' Tage', number + ' Tagen'],
-	            'M': ['ein Monat', 'einem Monat'],
-	            'MM': [number + ' Monate', number + ' Monaten'],
-	            'y': ['ein Jahr', 'einem Jahr'],
-	            'yy': [number + ' Jahre', number + ' Jahren']
-	        };
-	        return withoutSuffix ? format[key][0] : format[key][1];
-	    }
-	
-	    var de = moment.defineLocale('de', {
-	        months : 'Januar_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
-	        monthsShort : 'Jan._Febr._Mrz._Apr._Mai_Jun._Jul._Aug._Sept._Okt._Nov._Dez.'.split('_'),
-	        weekdays : 'Sonntag_Montag_Dienstag_Mittwoch_Donnerstag_Freitag_Samstag'.split('_'),
-	        weekdaysShort : 'So._Mo._Di._Mi._Do._Fr._Sa.'.split('_'),
-	        weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
-	        longDateFormat : {
-	            LT: 'HH:mm',
-	            LTS: 'HH:mm:ss',
-	            L : 'DD.MM.YYYY',
-	            LL : 'D. MMMM YYYY',
-	            LLL : 'D. MMMM YYYY HH:mm',
-	            LLLL : 'dddd, D. MMMM YYYY HH:mm'
-	        },
-	        calendar : {
-	            sameDay: '[heute um] LT [Uhr]',
-	            sameElse: 'L',
-	            nextDay: '[morgen um] LT [Uhr]',
-	            nextWeek: 'dddd [um] LT [Uhr]',
-	            lastDay: '[gestern um] LT [Uhr]',
-	            lastWeek: '[letzten] dddd [um] LT [Uhr]'
-	        },
-	        relativeTime : {
-	            future : 'in %s',
-	            past : 'vor %s',
-	            s : 'ein paar Sekunden',
-	            m : processRelativeTime,
-	            mm : '%d Minuten',
-	            h : processRelativeTime,
-	            hh : '%d Stunden',
-	            d : processRelativeTime,
-	            dd : processRelativeTime,
-	            M : processRelativeTime,
-	            MM : processRelativeTime,
-	            y : processRelativeTime,
-	            yy : processRelativeTime
-	        },
-	        ordinalParse: /\d{1,2}\./,
-	        ordinal : '%d.',
-	        week : {
-	            dow : 1, // Monday is the first day of the week.
-	            doy : 4  // The week that contains Jan 4th is the first week of the year.
-	        }
-	    });
-	
-	    return de;
-	
-	}));
-
-/***/ },
-/* 159 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : great britain english (en-gb)
-	//! author : Chris Gedrim : https://github.com/chrisgedrim
-	
-	;(function (global, factory) {
-	    true ? factory(__webpack_require__(3)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-	
-	
-	    var en_gb = moment.defineLocale('en-gb', {
-	        months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
-	        monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
-	        weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
-	        weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
-	        weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
-	        longDateFormat : {
-	            LT : 'HH:mm',
-	            LTS : 'HH:mm:ss',
-	            L : 'DD/MM/YYYY',
-	            LL : 'D MMMM YYYY',
-	            LLL : 'D MMMM YYYY HH:mm',
-	            LLLL : 'dddd, D MMMM YYYY HH:mm'
-	        },
-	        calendar : {
-	            sameDay : '[Today at] LT',
-	            nextDay : '[Tomorrow at] LT',
-	            nextWeek : 'dddd [at] LT',
-	            lastDay : '[Yesterday at] LT',
-	            lastWeek : '[Last] dddd [at] LT',
-	            sameElse : 'L'
-	        },
-	        relativeTime : {
-	            future : 'in %s',
-	            past : '%s ago',
-	            s : 'a few seconds',
-	            m : 'a minute',
-	            mm : '%d minutes',
-	            h : 'an hour',
-	            hh : '%d hours',
-	            d : 'a day',
-	            dd : '%d days',
-	            M : 'a month',
-	            MM : '%d months',
-	            y : 'a year',
-	            yy : '%d years'
-	        },
-	        ordinalParse: /\d{1,2}(st|nd|rd|th)/,
-	        ordinal : function (number) {
-	            var b = number % 10,
-	                output = (~~(number % 100 / 10) === 1) ? 'th' :
-	                (b === 1) ? 'st' :
-	                (b === 2) ? 'nd' :
-	                (b === 3) ? 'rd' : 'th';
-	            return number + output;
-	        },
-	        week : {
-	            dow : 1, // Monday is the first day of the week.
-	            doy : 4  // The week that contains Jan 4th is the first week of the year.
-	        }
-	    });
-	
-	    return en_gb;
-	
-	}));
-
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//! moment.js locale configuration
-	//! locale : russian (ru)
-	//! author : Viktorminator : https://github.com/Viktorminator
-	//! Author : Menelion Elensúle : https://github.com/Oire
-	
-	;(function (global, factory) {
-	    true ? factory(__webpack_require__(3)) :
-	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
-	   factory(global.moment)
-	}(this, function (moment) { 'use strict';
-	
-	
-	    function plural(word, num) {
-	        var forms = word.split('_');
-	        return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
-	    }
-	    function relativeTimeWithPlural(number, withoutSuffix, key) {
-	        var format = {
-	            'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
-	            'hh': 'час_часа_часов',
-	            'dd': 'день_дня_дней',
-	            'MM': 'месяц_месяца_месяцев',
-	            'yy': 'год_года_лет'
-	        };
-	        if (key === 'm') {
-	            return withoutSuffix ? 'минута' : 'минуту';
-	        }
-	        else {
-	            return number + ' ' + plural(format[key], +number);
-	        }
-	    }
-	    var monthsParse = [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i];
-	
-	    var ru = moment.defineLocale('ru', {
-	        months : {
-	            format: 'Января_Февраля_Марта_Апреля_Мая_Июня_Июля_Августа_Сентября_Октября_Ноября_Декабря'.split('_'),
-	            standalone: 'Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь'.split('_')
-	        },
-	        monthsShort : {
-	            format: 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_'),
-	            standalone: 'янв_фев_март_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_')
-	        },
-	        weekdays : {
-	            standalone: 'Воскресенье_Понедельник_Вторник_Среда_Четверг_Пятница_Суббота'.split('_'),
-	            format: 'Воскресенье_Понедельник_Вторник_Среду_Четверг_Пятницу_Субботу'.split('_'),
-	            isFormat: /\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/
-	        },
-	        weekdaysShort : 'Вс_Пн_Вт_Ср_Чт_Пт_Сб'.split('_'),
-	        weekdaysMin : 'Вс_Пн_Вт_Ср_Чт_Пт_Сб'.split('_'),
-	        monthsParse : monthsParse,
-	        longMonthsParse : monthsParse,
-	        shortMonthsParse : monthsParse,
-	        longDateFormat : {
-	            LT : 'HH:mm',
-	            LTS : 'HH:mm:ss',
-	            L : 'DD.MM.YYYY',
-	            LL : 'D MMMM YYYY г.',
-	            LLL : 'D MMMM YYYY г., HH:mm',
-	            LLLL : 'dddd, D MMMM YYYY г., HH:mm'
-	        },
-	        calendar : {
-	            sameDay: '[Сегодня в] LT',
-	            nextDay: '[Завтра в] LT',
-	            lastDay: '[Вчера в] LT',
-	            nextWeek: function (now) {
-	                if (now.week() !== this.week()) {
-	                    switch (this.day()) {
-	                    case 0:
-	                        return '[В следующее] dddd [в] LT';
-	                    case 1:
-	                    case 2:
-	                    case 4:
-	                        return '[В следующий] dddd [в] LT';
-	                    case 3:
-	                    case 5:
-	                    case 6:
-	                        return '[В следующую] dddd [в] LT';
-	                    }
-	                } else {
-	                    if (this.day() === 2) {
-	                        return '[Во] dddd [в] LT';
-	                    } else {
-	                        return '[В] dddd [в] LT';
-	                    }
-	                }
-	            },
-	            lastWeek: function (now) {
-	                if (now.week() !== this.week()) {
-	                    switch (this.day()) {
-	                    case 0:
-	                        return '[В прошлое] dddd [в] LT';
-	                    case 1:
-	                    case 2:
-	                    case 4:
-	                        return '[В прошлый] dddd [в] LT';
-	                    case 3:
-	                    case 5:
-	                    case 6:
-	                        return '[В прошлую] dddd [в] LT';
-	                    }
-	                } else {
-	                    if (this.day() === 2) {
-	                        return '[Во] dddd [в] LT';
-	                    } else {
-	                        return '[В] dddd [в] LT';
-	                    }
-	                }
-	            },
-	            sameElse: 'L'
-	        },
-	        relativeTime : {
-	            future : 'через %s',
-	            past : '%s назад',
-	            s : 'несколько секунд',
-	            m : relativeTimeWithPlural,
-	            mm : relativeTimeWithPlural,
-	            h : 'час',
-	            hh : relativeTimeWithPlural,
-	            d : 'день',
-	            dd : relativeTimeWithPlural,
-	            M : 'месяц',
-	            MM : relativeTimeWithPlural,
-	            y : 'год',
-	            yy : relativeTimeWithPlural
-	        },
-	        meridiemParse: /ночи|утра|дня|вечера/i,
-	        isPM : function (input) {
-	            return /^(дня|вечера)$/.test(input);
-	        },
-	        meridiem : function (hour, minute, isLower) {
-	            if (hour < 4) {
-	                return 'ночи';
-	            } else if (hour < 12) {
-	                return 'утра';
-	            } else if (hour < 17) {
-	                return 'дня';
-	            } else {
-	                return 'вечера';
-	            }
-	        },
-	        ordinalParse: /\d{1,2}-(й|го|я)/,
-	        ordinal: function (number, period) {
-	            switch (period) {
-	            case 'M':
-	            case 'd':
-	            case 'DDD':
-	                return number + '-й';
-	            case 'D':
-	                return number + '-го';
-	            case 'w':
-	            case 'W':
-	                return number + '-я';
-	            default:
-	                return number;
-	            }
-	        },
-	        week : {
-	            dow : 1, // Monday is the first day of the week.
-	            doy : 7  // The week that contains Jan 1st is the first week of the year.
-	        }
-	    });
-	
-	    return ru;
-	
-	}));
-
-/***/ },
-/* 161 */
-/***/ function(module, exports) {
-
-	// shim for using process in browser
-	
-	var process = module.exports = {};
-	
-	// cached from whatever global is present so that test runners that stub it
-	// don't break things.  But we need to wrap it in a try catch in case it is
-	// wrapped in strict mode code which doesn't define any globals.  It's inside a
-	// function because try/catches deoptimize in certain engines.
-	
-	var cachedSetTimeout;
-	var cachedClearTimeout;
-	
-	(function () {
-	  try {
-	    cachedSetTimeout = setTimeout;
-	  } catch (e) {
-	    cachedSetTimeout = function () {
-	      throw new Error('setTimeout is not defined');
-	    }
-	  }
-	  try {
-	    cachedClearTimeout = clearTimeout;
-	  } catch (e) {
-	    cachedClearTimeout = function () {
-	      throw new Error('clearTimeout is not defined');
-	    }
-	  }
-	} ())
-	var queue = [];
-	var draining = false;
-	var currentQueue;
-	var queueIndex = -1;
-	
-	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
-	    draining = false;
-	    if (currentQueue.length) {
-	        queue = currentQueue.concat(queue);
-	    } else {
-	        queueIndex = -1;
-	    }
-	    if (queue.length) {
-	        drainQueue();
-	    }
-	}
-	
-	function drainQueue() {
-	    if (draining) {
-	        return;
-	    }
-	    var timeout = cachedSetTimeout(cleanUpNextTick);
-	    draining = true;
-	
-	    var len = queue.length;
-	    while(len) {
-	        currentQueue = queue;
-	        queue = [];
-	        while (++queueIndex < len) {
-	            if (currentQueue) {
-	                currentQueue[queueIndex].run();
-	            }
-	        }
-	        queueIndex = -1;
-	        len = queue.length;
-	    }
-	    currentQueue = null;
-	    draining = false;
-	    cachedClearTimeout(timeout);
-	}
-	
-	process.nextTick = function (fun) {
-	    var args = new Array(arguments.length - 1);
-	    if (arguments.length > 1) {
-	        for (var i = 1; i < arguments.length; i++) {
-	            args[i - 1] = arguments[i];
-	        }
-	    }
-	    queue.push(new Item(fun, args));
-	    if (queue.length === 1 && !draining) {
-	        cachedSetTimeout(drainQueue, 0);
-	    }
-	};
-	
-	// v8 likes predictible objects
-	function Item(fun, array) {
-	    this.fun = fun;
-	    this.array = array;
-	}
-	Item.prototype.run = function () {
-	    this.fun.apply(null, this.array);
-	};
-	process.title = 'browser';
-	process.browser = true;
-	process.env = {};
-	process.argv = [];
-	process.version = ''; // empty string to avoid regexp issues
-	process.versions = {};
-	
-	function noop() {}
-	
-	process.on = noop;
-	process.addListener = noop;
-	process.once = noop;
-	process.off = noop;
-	process.removeListener = noop;
-	process.removeAllListeners = noop;
-	process.emit = noop;
-	
-	process.binding = function (name) {
-	    throw new Error('process.binding is not supported');
-	};
-	
-	process.cwd = function () { return '/' };
-	process.chdir = function (dir) {
-	    throw new Error('process.chdir is not supported');
-	};
-	process.umask = function() { return 0; };
-
-
-/***/ },
-/* 162 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(161).nextTick;
-	var apply = Function.prototype.apply;
-	var slice = Array.prototype.slice;
-	var immediateIds = {};
-	var nextImmediateId = 0;
-	
-	// DOM APIs, for completeness
-	
-	exports.setTimeout = function() {
-	  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
-	};
-	exports.setInterval = function() {
-	  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
-	};
-	exports.clearTimeout =
-	exports.clearInterval = function(timeout) { timeout.close(); };
-	
-	function Timeout(id, clearFn) {
-	  this._id = id;
-	  this._clearFn = clearFn;
-	}
-	Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-	Timeout.prototype.close = function() {
-	  this._clearFn.call(window, this._id);
-	};
-	
-	// Does not start the time, just sets up the members needed.
-	exports.enroll = function(item, msecs) {
-	  clearTimeout(item._idleTimeoutId);
-	  item._idleTimeout = msecs;
-	};
-	
-	exports.unenroll = function(item) {
-	  clearTimeout(item._idleTimeoutId);
-	  item._idleTimeout = -1;
-	};
-	
-	exports._unrefActive = exports.active = function(item) {
-	  clearTimeout(item._idleTimeoutId);
-	
-	  var msecs = item._idleTimeout;
-	  if (msecs >= 0) {
-	    item._idleTimeoutId = setTimeout(function onTimeout() {
-	      if (item._onTimeout)
-	        item._onTimeout();
-	    }, msecs);
-	  }
-	};
-	
-	// That's not how node.js implements it but the exposed api is the same.
-	exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
-	  var id = nextImmediateId++;
-	  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
-	
-	  immediateIds[id] = true;
-	
-	  nextTick(function onNextTick() {
-	    if (immediateIds[id]) {
-	      // fn.call() is faster so we optimize for the common use-case
-	      // @see http://jsperf.com/call-apply-segu
-	      if (args) {
-	        fn.apply(null, args);
-	      } else {
-	        fn.call(null);
-	      }
-	      // Prevent ids from leaking
-	      exports.clearImmediate(id);
-	    }
-	  });
-	
-	  return id;
-	};
-	
-	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
-	  delete immediateIds[id];
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(162).setImmediate, __webpack_require__(162).clearImmediate))
-
-/***/ },
-/* 163 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var makeString = __webpack_require__(6);
-	
-	module.exports = function capitalize(str, lowercaseRest) {
-	  str = makeString(str);
-	  var remainingChars = !lowercaseRest ? str.slice(1) : str.slice(1).toLowerCase();
-	
-	  return str.charAt(0).toUpperCase() + remainingChars;
-	};
-
-
-/***/ },
-/* 164 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var makeString = __webpack_require__(6);
-	
-	module.exports = function chars(str) {
-	  return makeString(str).split('');
-	};
-
-
-/***/ },
-/* 165 */
-/***/ function(module, exports) {
-
-	module.exports = function strRepeat(str, qty){
-	  if (qty < 1) return '';
-	  var result = '';
-	  while (qty > 0) {
-	    if (qty & 1) result += str;
-	    qty >>= 1, str += str;
-	  }
-	  return result;
-	};
-
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var makeString = __webpack_require__(6);
-	var defaultToWhiteSpace = __webpack_require__(106);
-	var nativeTrimRight = String.prototype.trimRight;
-	
-	module.exports = function rtrim(str, characters) {
-	  str = makeString(str);
-	  if (!characters && nativeTrimRight) return nativeTrimRight.call(str);
-	  characters = defaultToWhiteSpace(characters);
-	  return str.replace(new RegExp(characters + '+$'), '');
-	};
-
-
-/***/ },
-/* 167 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/18/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	/**
-	 * @name SlidingWindowCollection
-	 * @memberof module:core.collections
-	 * @class Коллекция-обертка, отображающая указанный интервал родительской Backbone-коллекции (скользящее окно).
-	 * @constructor
-	 * @extends Backbone.Collection
-	 * @param {Object} options Объект опций.
-	 * @param {Number} [options.position=0] Изначальное значении позиции окна.
-	 * @param {Number} [options.windowSize=0] Изначальное значение размера окна (количество элементов).
-	 * */
-	
-	var SlidingWindowCollection = Backbone.Collection.extend( /** @lends module:core.collections.SlidingWindowCollection.prototype */{
-	    constructor: function constructor(collection, options) //noinspection JSHint
-	    {
-	        options = options || {};
-	        this.parentCollection = collection;
-	        this.innerCollection = new Backbone.Collection();
-	
-	        //noinspection JSUnresolvedVariable,JSHint
-	        options.close_with && this.__bindLifecycle(options.close_with, 'close');
-	        //noinspection JSUnresolvedVariable,JSHint
-	        options.destroy_with && this.__bindLifecycle(options.destroy_with, 'destroy');
-	
-	        this.state = {
-	            position: options.position || 0,
-	            windowSize: options.windowSize || 0
-	        };
-	
-	        this.__rebuildModels();
-	
-	        this.listenTo(collection, 'add', this.__onAdd);
-	        this.listenTo(collection, 'remove', this.__onRemove);
-	        this.listenTo(collection, 'reset', this.__onReset);
-	        this.listenTo(collection, 'sort', this.__onSort);
-	
-	        _.each(['add', 'remove', 'reset', 'sort'], function (eventName) {
-	            this.listenTo(this.innerCollection, eventName, function () {
-	                var args = _.toArray(arguments);
-	                args.unshift(eventName);
-	                this.trigger.apply(this, args);
-	            });
-	        }, this);
-	
-	        this.initialize.apply(this, arguments);
-	    },
-	
-	    __rebuildModels: function __rebuildModels(options) {
-	        options = options || {};
-	        var newModels = this.parentCollection.chain().rest(this.state.position).first(this.state.windowSize).value();
-	        this.innerCollection.reset(newModels, _.extend(options, { silent: true }));
-	        this.models = this.innerCollection.models;
-	        this.length = this.innerCollection.length;
-	        this.trigger('reset', this, _.clone(options));
-	        if (this.models.length !== newModels.length) {
-	            throw new Error('SlidingWindowCollection size mismatch: does parent collection have models with duplicated id?');
-	        }
-	    },
-	
-	    __buildModelsInternal: function __buildModelsInternal(list) {
-	        for (var i = 0, len = list.length; i < len; i++) {
-	            var model = list.at(i);
-	            this.models.push(model);
-	            model.collection = this;
-	            this._byId[model.cid] = model;
-	            if (model.id) {
-	                this._byId[model.id] = model;
-	            }
-	            //noinspection JSHint
-	            !model.collapsed && model.children && this.__buildModelsInternal(model.children);
-	        }
-	        this.length = this.models.length;
-	    },
-	
-	    __bindLifecycle: function __bindLifecycle(view, methodName) {
-	        view.on(methodName, _.bind(this.stopListening, this));
-	    },
-	
-	    __onSort: function __onSort(collection, options) {
-	        this.__rebuildModels(options);
-	    },
-	
-	    __onAdd: function __onAdd(model, collection, options) {
-	        this.__rebuildModels(options);
-	    },
-	
-	    __onRemove: function __onRemove(model, collection, options) {
-	        this.__rebuildModels(options);
-	    },
-	
-	    __onReset: function __onReset(collection, options) {
-	        this.__rebuildModels(options);
-	    },
-	
-	    sort: function sort(options) {
-	        this.parentCollection.sort(options);
-	    },
-	
-	    /**
-	     * Обновить размер скользящего окна
-	     * @param {Number} newWindowSize Новый размер скользящего окна
-	     * */
-	    updateWindowSize: function updateWindowSize(newWindowSize) {
-	        if (this.state.windowSize !== newWindowSize) {
-	            this.state.windowSize = newWindowSize;
-	            this.__rebuildModels();
-	        }
-	    },
-	
-	    /**
-	     * Обновить позицию скользящего окна
-	     * @param {Number} newPosition Новая позиция скользящего окна
-	     * */
-	    updatePosition: function updatePosition(newPosition) {
-	        if (this.state.windowSize === undefined) {
-	            throw 'updatePosition() has been called before setting window size';
-	        }
-	
-	        newPosition = this.__normalizePosition(newPosition);
-	        if (newPosition === this.state.position) {
-	            return newPosition;
-	        }
-	
-	        var actualWindowSize = this.innerCollection.length;
-	        var delta = newPosition - this.state.position;
-	        var oldValues;
-	        var newValues;
-	        if (Math.abs(delta) < actualWindowSize) {
-	            // update collection via add/remove
-	            if (delta > 0) {
-	                oldValues = this.innerCollection.first(delta);
-	                this.length -= oldValues.length;
-	                this.innerCollection.remove(oldValues);
-	                newValues = this.parentCollection.chain().rest(this.state.position + actualWindowSize).first(delta).value();
-	                this.length += newValues.length;
-	                this.innerCollection.add(newValues);
-	            } else {
-	                if (this.length >= this.state.windowSize) {
-	                    oldValues = this.innerCollection.last(-delta);
-	                    this.length -= oldValues.length;
-	                    this.innerCollection.remove(oldValues);
-	                }
-	
-	                newValues = this.parentCollection.chain().rest(newPosition).first(-delta).value();
-	                this.length += newValues.length;
-	                this.innerCollection.add(newValues, {
-	                    at: 0
-	                });
-	            }
-	            this.state.position = newPosition;
-	        } else {
-	            this.state.position = newPosition;
-	            this.__rebuildModels();
-	        }
-	
-	        return newPosition;
-	    },
-	
-	    __normalizePosition: function __normalizePosition(position) {
-	        var maxPos = Math.max(0, this.parentCollection.length - 1);
-	        return Math.max(0, Math.min(maxPos, position));
-	    }
-	});
-	
-	// methods that alter data should proxy to the parent collection
-	_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'], function (methodName) {
-	    SlidingWindowCollection.prototype[methodName] = function () {
-	        return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
-	    };
-	});
-	
-	// methods that retrieves data should proxy to the inner collection
-	_.each(['each', 'at', 'get', 'filter', 'map'], function (methodName) {
-	    SlidingWindowCollection.prototype[methodName] = function () {
-	        return this.innerCollection[methodName].apply(this.innerCollection, _.toArray(arguments));
-	    };
-	});
-	
-	_.extend(SlidingWindowCollection.prototype, Backbone.Events);
-	
-	exports.default = SlidingWindowCollection;
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 11/26/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _PopoutView = __webpack_require__(172);
-	
-	var _PopoutView2 = _interopRequireDefault(_PopoutView);
-	
-	var _ListPanelView = __webpack_require__(109);
-	
-	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
-	
-	var _MenuItemView = __webpack_require__(110);
-	
-	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
-	
-	var _DefaultButtonView = __webpack_require__(169);
-	
-	var _DefaultButtonView2 = _interopRequireDefault(_DefaultButtonView);
-	
-	var _MenuPanelView = __webpack_require__(171);
-	
-	var _MenuPanelView2 = _interopRequireDefault(_MenuPanelView);
-	
-	var _DropdownView = __webpack_require__(170);
-	
-	var _DropdownView2 = _interopRequireDefault(_DropdownView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * The factory covers common use cases of Popout/Dropdown views.
-	 * You can create a simple menu (and other stuff like this) in one click without lots of manual work.
-	 * @namespace factory
-	 * @memberof module:core.dropdown
-	 * */
-	
-	exports.default = /** @lends module:core.dropdown.factory */{
-	    /**
-	     * @description Метод служит для быстрого создания меню на базе {@link module:core.dropdown.views.PopoutView PopoutView}.
-	     *              В качестве <code>buttonView</code> и <code>panelView</code> (если они не заданы в опциях явно)
-	     *              используются предустановленные View для меню. Остальные опции PopoutView передаются 'as is'.
-	     * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}. Доступны дополнительные опции, приведенные ниже:
-	     * @param {Array} options.items Элементы списка меню. Могут быть переданы как простой массив объектов <code>{ id, name }</code>
-	     *                              или как Backbone.Collection.
-	     * @param {String} [options.text] Текст кнопки меню. Если не задан, требуется вручную установить опцию <code>buttonView</code>.
-	     * @returns {Backbone.View} View Меню
-	     * */
-	    createMenu: function createMenu(options) {
-	        options = options || {};
-	        var collection = options.items;
-	        if (!(collection instanceof Backbone.Collection)) {
-	            collection = new Backbone.Collection(collection);
-	        }
-	
-	        var effectiveButtonModel = options.buttonModel || new Backbone.Model({
-	            text: options.text
-	        });
-	
-	        if (!options.buttonModel) {
-	            var defaultActModel = collection.findWhere({ default: true });
-	            if (defaultActModel) {
-	                effectiveButtonModel = defaultActModel;
-	                collection.remove(effectiveButtonModel);
-	            }
-	        }
-	
-	        return this.createPopout(_.extend({
-	            buttonView: _DefaultButtonView2.default,
-	            buttonViewOptions: {
-	                model: effectiveButtonModel
-	            },
-	            panelView: _MenuPanelView2.default,
-	            panelViewOptions: {
-	                collection: collection
-	            }
-	        }, options));
-	    },
-	
-	    /**
-	     * @description Метод служит для создания {@link module:core.dropdown.views.PopoutView PopoutView} в режиме диалога.
-	     *              Выпадающая панель занимает все пространство до низа экрана, а область вокруг затемняется.
-	     *              Метод устанавливает опции <code>{ fade: true, height: 'bottom' }</code>.
-	     * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
-	     * @returns {PopoutView} Экземпляр PopoutView
-	     * */
-	    createDialogPopout: function createDialogPopout(options) {
-	        var defaults = {
-	            fade: true,
-	            height: 'bottom'
-	        };
-	        options = _.extend(defaults, options);
-	        return this.createPopout(options);
-	    },
-	
-	    /**
-	     * @description Метод вызывает стандартный конструктор
-	     *              {@link module:core.dropdown.views.PopoutView PopoutView} передавая ему опции 'as is'.
-	     * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
-	     * @returns {PopoutView} Экземпляр PopoutView
-	     * */
-	    createPopout: function createPopout(options) {
-	        return new _PopoutView2.default(options);
-	    },
-	
-	    /**
-	     * @description Метод вызывает стандартный конструктор
-	     *              {@link module:core.dropdown.views.DropdownView DropdownView} передавая ему опции 'as is'.
-	     * @param {Object} options Объект опций {@link module:core.dropdown.views.DropdownView DropdownView}
-	     * @returns {DropdownView} Экземпляр DropdownView
-	     * */
-	    createDropdown: function createDropdown(options) {
-	        return new _DropdownView2.default(options);
-	    }
-	};
-
-/***/ },
-/* 169 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 11/27/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _defaultButton = __webpack_require__(692);
-	
-	var _defaultButton2 = _interopRequireDefault(_defaultButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * @name DefaultButtonView
-	 * @memberof module:core.dropdown.views
-	 * @class Trivial implementation of a button View that displays plain text without any styles.
-	 * The <code>text</code> attribute of the passed model is displayed.
-	 * Factory method {@link module:core.dropdown.factory createMenu} uses this view to display menu button.
-	 * @constructor
-	 * @extends Marionette.ItemView
-	 * @param {Object} options Options object.
-	 * @param {Backbone.Model} options.model Data model. Must contain <code>text</code> attribute.
-	 * */
-	
-	exports.default = Marionette.ItemView.extend({
-	    initialize: function initialize(options) {},
-	
-	    tagName: 'span',
-	
-	    template: _libApi.Handlebars.compile(_defaultButton2.default),
-	
-	    modelEvents: {
-	        'change': 'render'
-	    }
-	});
-
-/***/ },
-/* 170 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 11/27/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _dropdown = __webpack_require__(693);
-	
-	var _dropdown2 = _interopRequireDefault(_dropdown);
-	
-	var _BlurableBehavior = __webpack_require__(119);
-	
-	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var classes = {
-	    OPEN: 'open',
-	    DROPDOWN_DOWN: 'dropdown__wrp_down',
-	    DROPDOWN_WRP_OVER: 'dropdown__wrp_over',
-	    DROPDOWN_UP: 'dropdown__wrp_up',
-	    DROPDOWN_UP_OVER: 'dev-panel-up-over'
-	};
-	
-	var panelPosition = {
-	    DOWN: 'down',
-	    DOWN_OVER: 'down-over',
-	    UP: 'up',
-	    UP_OVER: 'up-over'
-	};
-	
-	var defaultOptions = {
-	    autoOpen: true,
-	    renderAfterClose: true,
-	    panelPosition: panelPosition.DOWN
-	};
-	
-	/**
-	 * @name DropdownView
-	 * @memberof module:core.dropdown.views
-	 * @class Composite View that implements dropdown logic similar to SELECT HTML-element.
-	 * Unlike {@link module:core.dropdown.views.PopoutView PopoutView}, a panel doesn't have a speech bubble triangle and
-	 * it's min-width is always determined and equal to the width of a button view.
-	 *
-	 * A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.
-	 * <ul>
-	 * <li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
-	 * <li>Panel View is used to display a panel that drops down.</li>
-	 * </ul>
-	 *
-	 * Panel width is determined by its layout but it cannot be less than the button's width. Panel height is fully determined by its layout.
-	 * A place where the panel appears depends on the <code>panelPosition</code> option.<br/>
-	 * Possible events:<ul>
-	 * <li><code>'open' (dropdownView)</code> - fires after the panel has opened.</li>
-	 * <li><code>'close' (dropdownView, ...)</code> - fires after the panel has closed.
-	 * If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li>
-	 * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
-	 * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
-	 * </ul>
-	 * @constructor
-	 * @extends Marionette.LayoutView
-	 * @param {Object} options Options object.
-	 * @param {Marionette.View} options.buttonView View class for displaying the button.
-	 * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
-	 * @param {Marionette.View} options.panelView View class for displaying the panel. The view is created every time the panel is triggered to open.
-	 * @param {(Object|Function)} [options.panelViewOptions] Options passed into the view on its creation.
-	 * @param {Boolean} [options.autoOpen=true] Whether click on the button should trigger the panel to open.
-	 * @param {String} [options.panelPosition='down'] Opening direction:
-	 *       <ul><li><code>'down'</code> - opens down.</li>
-	 *       <li><code>'down-over'</code> - opens down and the panel is located above the button overlapping it.</li>
-	 *       <li><code>'up'</code> - opens up.</li>
-	 *       <li><code>'up-over'</code> - opens up and the panel is located above the button overlapping it.</li></ul>
-	 * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
-	 * */
-	
-	exports.default = Marionette.LayoutView.extend( /** @lends module:core.dropdown.views.DropdownView.prototype */{
-	    initialize: function initialize(options) {
-	        _.extend(this.options, _.clone(defaultOptions), options || {});
-	        _utilsApi.helpers.ensureOption(options, 'buttonView');
-	        _utilsApi.helpers.ensureOption(options, 'panelView');
-	        _.bindAll(this, 'open', 'close');
-	    },
-	
-	    template: _libApi.Handlebars.compile(_dropdown2.default),
-	
-	    className: 'dropdown',
-	
-	    regions: {
-	        buttonRegion: '.js-button-region',
-	        panelRegion: '.js-panel-region'
-	    },
-	
-	    ui: {
-	        button: '.js-button-region',
-	        panel: '.js-panel-region'
-	    },
-	
-	    events: {
-	        'click @ui.button': '__handleClick'
-	    },
-	
-	    behaviors: {
-	        BlurableBehavior: {
-	            behaviorClass: _BlurableBehavior2.default,
-	            onBlur: 'close'
-	        }
-	    },
-	
-	    /**
-	     * Contains an instance of <code>options.buttonView</code> if the dropdown is rendered, <code>null</code> otherwise.
-	     * */
-	    buttonView: null,
-	
-	    /**
-	     * Contains an instance of <code>options.panelView</code> if the dropdown is open, <code>null</code> otherwise.
-	     * The view is created every time (!) the panel is triggered to open.
-	     * */
-	    panelView: null,
-	
-	    onRender: function onRender() {
-	        if (this.button) {
-	            this.stopListening(this.button);
-	        }
-	        this.button = new this.options.buttonView(_.extend({ parent: this }, _.result(this.options, 'buttonViewOptions')));
-	        this.buttonView = this.button;
-	        this.listenTo(this.button, 'all', function () {
-	            var args = Array.prototype.slice.call(arguments);
-	            args[0] = 'button:' + args[0];
-	            this.triggerMethod.apply(this, args);
-	        });
-	
-	        this.currentPosition = this.options.panelPosition;
-	        this.updatePositionClasses();
-	        if (this.isShown) {
-	            this.buttonRegion.show(this.button);
-	        }
-	    },
-	
-	    onShow: function onShow() {
-	        this.buttonRegion.show(this.button);
-	        this.isShown = true;
-	    },
-	
-	    updatePositionClasses: function updatePositionClasses() {
-	        if (this.currentPosition === panelPosition.DOWN) {
-	            this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER).removeClass(classes.DROPDOWN_UP).removeClass(classes.DROPDOWN_UP_OVER);
-	
-	            this.ui.panel.addClass(classes.DROPDOWN_DOWN);
-	        } else if (this.currentPosition === panelPosition.DOWN_OVER) {
-	            this.ui.panel.removeClass(classes.DROPDOWN_DOWN).removeClass(classes.DROPDOWN_UP).removeClass(classes.DROPDOWN_UP_OVER);
-	
-	            this.ui.panel.addClass(classes.DROPDOWN_WRP_OVER);
-	        } else if (this.currentPosition === panelPosition.UP) {
-	            this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER).removeClass(classes.DROPDOWN_DOWN).removeClass(classes.DROPDOWN_UP_OVER);
-	
-	            this.ui.panel.addClass(classes.DROPDOWN_UP);
-	        } else if (this.currentPosition === panelPosition.UP_OVER) {
-	            this.ui.panel.removeClass(classes.DROPDOWN_WRP_OVER).removeClass(classes.DROPDOWN_UP).removeClass(classes.DROPDOWN_DOWN);
-	
-	            this.ui.panel.addClass(classes.DROPDOWN_UP_OVER);
-	        }
-	    },
-	
-	    correctPosition: function correctPosition() {
-	        var buttonHeight = this.buttonRegion.$el.height(),
-	            panelHeight = this.panelRegion.$el.height(),
-	            viewportHeight = window.innerHeight,
-	            buttonTopOffset = this.buttonRegion.$el.offset().top,
-	            buttonBottomOffset = viewportHeight - buttonTopOffset - buttonHeight;
-	
-	        if (this.currentPosition === panelPosition.DOWN && buttonBottomOffset < panelHeight) {
-	            this.currentPosition = panelPosition.UP;
-	        }
-	
-	        if (this.currentPosition === panelPosition.DOWN_OVER && buttonBottomOffset + buttonHeight < panelHeight) {
-	            this.currentPosition = panelPosition.UP_OVER;
-	        }
-	
-	        if (this.currentPosition === panelPosition.UP && buttonTopOffset < panelHeight) {
-	            this.currentPosition = panelPosition.DOWN;
-	        }
-	
-	        if (this.currentPosition === panelPosition.UP_OVER && buttonTopOffset + buttonHeight < panelHeight) {
-	            this.currentPosition = panelPosition.DOWN_OVER;
-	        }
-	
-	        this.updatePositionClasses();
-	
-	        switch (this.currentPosition) {
-	            case panelPosition.UP:
-	                this.panelRegion.$el.css({
-	                    top: -panelHeight
-	                });
-	                break;
-	            case panelPosition.UP_OVER:
-	                this.panelRegion.$el.css({
-	                    top: buttonHeight - panelHeight
-	                });
-	                break;
-	            case panelPosition.DOWN:
-	                this.panelRegion.$el.css({
-	                    top: buttonHeight
-	                });
-	                break;
-	            case panelPosition.DOWN_OVER:
-	                this.panelRegion.$el.css({
-	                    top: 0
-	                });
-	                break;
-	        }
-	    },
-	
-	    /**
-	     * Opens the dropdown panel.
-	     * */
-	    open: function open() {
-	        if (this.isOpen) {
-	            return;
-	        }
-	        this.trigger('before:open', this);
-	
-	        var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
-	            parent: this
-	        });
-	        this.$el.addClass(classes.OPEN);
-	        this.ui.panel.show();
-	        if (this.panelView) {
-	            this.stopListening(this.panelView);
-	        }
-	        this.panelView = new this.options.panelView(panelViewOptions);
-	        this.listenTo(this.panelView, 'all', function () {
-	            var args = Array.prototype.slice.call(arguments);
-	            args[0] = 'panel:' + args[0];
-	            this.triggerMethod.apply(this, args);
-	        });
-	
-	        this.panelRegion.show(this.panelView);
-	        this.correctPosition();
-	
-	        this.focus();
-	        //noinspection JSValidateTypes
-	        this.isOpen = true;
-	        this.trigger('open', this);
-	    },
-	
-	    /**
-	     * Closes the dropdown panel.
-	     * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
-	     * */
-	    close: function close() {
-	        if (!this.isOpen || !_libApi.$.contains(document.documentElement, this.el)) {
-	            return;
-	        }
-	        this.trigger('before:close', this);
-	
-	        var closeArgs = _.toArray(arguments);
-	        this.ui.panel.hide();
-	        this.$el.removeClass(classes.OPEN);
-	        this.panelRegion.reset();
-	        //noinspection JSValidateTypes
-	        this.isOpen = false;
-	
-	        this.trigger.apply(this, ['close', this].concat(closeArgs));
-	        if (this.options.renderAfterClose) {
-	            this.button.render();
-	        }
-	    },
-	
-	    __handleClick: function __handleClick() {
-	        if (this.options.autoOpen) {
-	            this.open();
-	        }
-	    }
-	});
-
-/***/ },
-/* 171 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 11/27/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _ListPanelView = __webpack_require__(109);
-	
-	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
-	
-	var _MenuItemView = __webpack_require__(110);
-	
-	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * @name MenuPanelView
-	 * @memberof module:core.dropdown.views
-	 * @class Одиночный элемент меню. Используется для создания стандартного меню фабричным методом
-	 * @class List view used to display a list of menu items.
-	 * Factory method {@link module:core.dropdown.factory createMenu} uses it to create a menu.
-	 * {@link module:core.dropdown.factory createMenu}.
-	 * @constructor
-	 * @extends module:core.dropdown.views.ListPanelView
-	 * */
-	
-	exports.default = _ListPanelView2.default.extend({
-	    initialize: function initialize(options) {
-	        _ListPanelView2.default.prototype.initialize.apply(this, _.toArray(arguments));
-	    },
-	
-	    className: 'popout-menu',
-	
-	    childView: _MenuItemView2.default,
-	
-	    getChildView: function getChildView(model) {
-	        if (model.get('customView')) {
-	            return model.get('customView');
-	        }
-	        return _MenuItemView2.default;
-	    },
-	
-	    childEvents: {
-	        'execute': '__execute'
-	    },
-	
-	    __execute: function __execute(child, model) {
-	        this.options.parent.close();
-	        this.options.parent.trigger('execute', model.id, model);
-	    }
-	});
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 11/26/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _WindowService = __webpack_require__(73);
-	
-	var _WindowService2 = _interopRequireDefault(_WindowService);
-	
-	var _BlurableBehavior = __webpack_require__(119);
-	
-	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
-	
-	var _popout = __webpack_require__(695);
-	
-	var _popout2 = _interopRequireDefault(_popout);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var slice = Array.prototype.slice;
-	
-	var classes = {
-	    OPEN: 'open',
-	    DIRECTION_UP: 'popout__up',
-	    DIRECTION_DOWN: 'popout__down',
-	    FLOW_LEFT: 'popout__left',
-	    FLOW_RIGHT: 'popout__right',
-	    CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
-	    DEFAULT_ANCHOR_BUTTON: 'popout__action',
-	    DEFAULT_ANCHOR: 'anchor'
-	};
-	
-	var popoutFlow = {
-	    LEFT: 'left',
-	    RIGHT: 'right'
-	};
-	
-	var popoutDirection = {
-	    UP: 'up',
-	    DOWN: 'down'
-	};
-	
-	var height = {
-	    AUTO: 'auto',
-	    BOTTOM: 'bottom'
-	};
-	
-	var defaultOptions = {
-	    popoutFlow: popoutFlow.LEFT,
-	    customAnchor: false,
-	    fade: false,
-	    height: 'auto',
-	    autoOpen: true,
-	    direction: popoutDirection.DOWN,
-	    renderAfterClose: true
-	};
-	
-	/**
-	 * @name PopoutView
-	 * @memberof module:core.dropdown.views
-	 * @class Composite View that may be to display a dropdown panel as a speech bubble. Unlike {@link module:core.dropdown.views.DropdownView DropdownView},
-	 * the panel is displayed in speech bubble and has a triangle like in comics.
-	 * A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.
-	 * <ul>
-	 * <li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
-	 * <li>Panel View is used to display a panel that drops down.</li>
-	 * </ul>
-	 * Panel width is fully determined by its layout and the <code>popoutFlow</code> option.
-	 * Panel height is determined by its layout and the <code>height</code> option.
-	 * A place where the panel appears depends on the <code>direction</code> and <code>popoutFlow</code> options.<br/>
-	 * Possible events:<ul>
-	 * <li><code>'before:open' (popoutView)</code> - fires before the panel has opened.</li>
-	 * <li><code>'open' (popoutView)</code> - fires after the panel has opened.</li>
-	 * <li><code>'before:close' (popoutView)</code> - fires before the panel has closed.</li>
-	 * <li><code>'close' (popoutView, ...)</code> - fires after the panel has closed.
-	 * If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li>
-	 * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
-	 * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
-	 * </ul>
-	 * @constructor
-	 * @extends Marionette.LayoutView
-	 * @param {Object} options Options object.
-	 * @param {Marionette.View} options.buttonView View class for displaying the button.
-	 * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
-	 * @param {Marionette.View} options.panelView View class for displaying the panel. The view is created every time the panel is triggered to open.
-	 * @param {(Object|Function)} [options.panelViewOptions] Options passed into the view on its creation.
-	 * @param {Boolean} [options.autoOpen=true] Whether click on the button should trigger the panel to open.
-	 * @param {Boolean} [options.customAnchor=false] Whether to attach the speech bubble triangle (anchor) to a custom element in <code>buttonView</code>.
-	 *                                               The View passed into the <code>buttonView</code> option must implement
-	 *                                               @{link module:core.dropdown.views.behaviors.CustomAnchorBehavior CustomAnchorBehavior}.
-	 * @param {String} [options.direction='down'] Opening direction. Can be either: <code>'up'</code>, <code>'down'</code>.
-	 * @param {Boolean} [options.fade=false] Whether to dim the background when the panel is open.
-	 * @param {String} [options.height='auto'] A way of determining the panel height.
-	 *                                       <ul><li><code>'auto'</code> - is determined by panel's layout only.</li>
-	 *                                       <li><code>'bottom'</code> - the bottom border is fixed to the bottom of the window.</li></ul>
-	 * @param {String} [options.popoutFlow='left'] Panel's horizontal position.
-	 *                                       <ul><li><code>'left'</code> - The left border of the panel is attached to the left border of the button.
-	 *                                       The panel grows to the right.</li>
-	 *                                       <li><code>'right'</code> - The right border of the panel is attached to the right border of the button.
-	 *                                       The panel grows to the left.</li></ul>
-	 * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
-	 * */
-	
-	exports.default = Marionette.LayoutView.extend( /** @lends module:core.dropdown.views.PopoutView.prototype */{
-	    initialize: function initialize(options) {
-	        _.defaults(this.options, defaultOptions);
-	        _utilsApi.helpers.ensureOption(options, 'buttonView');
-	        _utilsApi.helpers.ensureOption(options, 'panelView');
-	        _.bindAll(this, 'open', 'close', '__handleWindowResize');
-	    },
-	
-	    template: _libApi.Handlebars.compile(_popout2.default),
-	
-	    behaviors: {
-	        BlurableBehavior: {
-	            behaviorClass: _BlurableBehavior2.default,
-	            onBlur: 'close'
-	        }
-	    },
-	
-	    className: 'popout',
-	
-	    regions: {
-	        buttonRegion: '.js-button-region',
-	        panelRegion: '.js-panel-region'
-	    },
-	
-	    ui: {
-	        button: '.js-button-region',
-	        panel: '.js-panel-region'
-	    },
-	
-	    events: {
-	        'click @ui.button': '__handleClick'
-	    },
-	
-	    /**
-	     * Contains an instance of <code>options.buttonView</code> if the popout is rendered, <code>null</code> otherwise.
-	     * */
-	    buttonView: null,
-	
-	    /**
-	     * Contains an instance of <code>options.panelView</code> if the popout is open, <code>null</code> otherwise.
-	     * The view is created every time (!) the panel is triggered to open.
-	     * */
-	    panelView: null,
-	
-	    onRender: function onRender() {
-	        //noinspection JSValidateTypes
-	        this.isOpen = false;
-	        if (this.button) {
-	            this.stopListening(this.button);
-	        }
-	        this.button = new this.options.buttonView(_.result(this.options, 'buttonViewOptions'));
-	        this.buttonView = this.button;
-	        this.listenTo(this.button, 'all', function () {
-	            var args = slice.call(arguments);
-	            args[0] = 'button:' + args[0];
-	            this.triggerMethod.apply(this, args);
-	        });
-	        this.buttonRegion.show(this.button);
-	
-	        if (!this.options.customAnchor) {
-	            this.buttonRegion.$el.append('<span class="js-default-anchor ' + classes.DEFAULT_ANCHOR + '"></span>');
-	        }
-	
-	        if (this.options.popoutFlow === popoutFlow.LEFT) {
-	            this.ui.panel.addClass(classes.FLOW_LEFT);
-	            this.ui.panel.removeClass(classes.FLOW_RIGHT);
-	        } else {
-	            this.ui.panel.addClass(classes.FLOW_RIGHT);
-	            this.ui.panel.removeClass(classes.FLOW_LEFT);
-	        }
-	        if (this.options.customAnchor) {
-	            this.ui.button.addClass(classes.CUSTOM_ANCHOR_BUTTON);
-	        } else {
-	            this.ui.button.addClass(classes.DEFAULT_ANCHOR_BUTTON);
-	        }
-	
-	        this.currentDirection = this.options.direction;
-	        this.updateDirectionClasses();
-	    },
-	
-	    updatePanelFlow: function updatePanelFlow() {
-	        var isFlowRight = this.options.popoutFlow === popoutFlow.RIGHT,
-	            anchor = this.ui.button;
-	
-	        if (this.options.customAnchor && this.button.$anchor) {
-	            anchor = this.button.$anchor;
-	        } else {
-	            var defaultAnchor = this.ui.button.find('.js-default-anchor');
-	            if (defaultAnchor && defaultAnchor.length) {
-	                anchor = defaultAnchor;
-	            }
-	        }
-	
-	        if (isFlowRight) {
-	            this.panelRegion.$el.css({
-	                left: anchor.offset().left - this.ui.button.offset().left
-	            });
-	        } else {
-	            this.panelRegion.$el.css({
-	                right: this.ui.button.offset().left + this.ui.button.width() - (anchor.offset().left + anchor.width())
-	            });
-	        }
-	    },
-	
-	    updateDirectionClasses: function updateDirectionClasses() {
-	        if (this.currentDirection === popoutDirection.UP) {
-	            this.ui.button.addClass(classes.DIRECTION_UP);
-	            this.ui.button.removeClass(classes.DIRECTION_DOWN);
-	
-	            if (this.panelRegion.$el) {
-	                this.panelRegion.$el.removeClass(classes.DIRECTION_DOWN);
-	                this.panelRegion.$el.addClass(classes.DIRECTION_UP);
-	            }
-	        } else {
-	            this.ui.button.addClass(classes.DIRECTION_DOWN);
-	            this.ui.button.removeClass(classes.DIRECTION_UP);
-	
-	            if (this.panelRegion.$el) {
-	                this.panelRegion.$el.removeClass(classes.DIRECTION_UP);
-	                this.panelRegion.$el.addClass(classes.DIRECTION_DOWN);
-	            }
-	        }
-	    },
-	
-	    __handleClick: function __handleClick() {
-	        if (this.options.autoOpen) {
-	            this.open();
-	        }
-	    },
-	
-	    /**
-	     * Opens the dropdown panel.
-	     * */
-	    open: function open() {
-	        if (this.isOpen) {
-	            return;
-	        }
-	        this.trigger('before:open', this);
-	
-	        var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
-	            parent: this
-	        });
-	        if (this.panelView) {
-	            this.stopListening(this.panelView);
-	        }
-	        this.panelView = new this.options.panelView(panelViewOptions);
-	        this.listenTo(this.panelView, 'all', function () {
-	            var args = slice.call(arguments);
-	            args[0] = 'panel:' + args[0];
-	            this.triggerMethod.apply(this, args);
-	        });
-	        this.$el.addClass(classes.OPEN);
-	        if (this.options.fade) {
-	            _WindowService2.default.fadeIn();
-	        }
-	        this.ui.panel.show();
-	        this.panelRegion.show(this.panelView);
-	        this.correctDirection();
-	        this.updatePanelFlow();
-	        if (this.options.height === height.BOTTOM) {
-	            $(window).on('resize', this.__handleWindowResize);
-	            this.__handleWindowResize();
-	        }
-	        this.focus();
-	        //noinspection JSValidateTypes
-	        this.isOpen = true;
-	        this.trigger('open', this);
-	    },
-	
-	    correctDirection: function correctDirection() {
-	        var anchor = this.ui.button;
-	
-	        if (this.options.customAnchor && this.button.$anchor) {
-	            anchor = this.button.$anchor;
-	        } else {
-	            var defaultAnchor = this.ui.button.find('.js-default-anchor');
-	            if (defaultAnchor && defaultAnchor.length) {
-	                anchor = defaultAnchor;
-	            }
-	        }
-	
-	        var anchorHeight = anchor.height(),
-	            panelHeight = this.panelRegion.$el.height(),
-	            viewportHeight = window.innerHeight,
-	            anchorTopOffset = anchor.offset().top,
-	            anchorBottomOffset = viewportHeight - anchorTopOffset - anchorHeight,
-	            anchorButtonOffset = anchor.offset().top - this.ui.button.offset().top;
-	
-	        if (this.currentDirection === popoutDirection.UP || anchorBottomOffset < panelHeight) {
-	            this.currentDirection = popoutDirection.UP;
-	            this.panelRegion.$el.css({
-	                top: anchorButtonOffset - panelHeight
-	            });
-	            this.updateDirectionClasses();
-	        }
-	
-	        if (this.currentDirection === popoutDirection.DOWN || anchorTopOffset < panelHeight) {
-	            this.currentDirection = popoutDirection.DOWN;
-	            this.panelRegion.$el.css({
-	                top: anchorButtonOffset + anchorHeight
-	            });
-	            this.updateDirectionClasses();
-	        }
-	    },
-	
-	    /**
-	     * Closes the dropdown panel.
-	     * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
-	     * */
-	    close: function close() {
-	        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
-	            return;
-	        }
-	        this.trigger('before:close', this);
-	        if (this.options.fade) {
-	            _WindowService2.default.fadeOut();
-	        }
-	        if (this.options.height === height.BOTTOM) {
-	            $(window).off('resize', this.__handleWindowResize);
-	        }
-	
-	        var closeArgs = _.toArray(arguments);
-	        this.ui.panel.hide();
-	        this.$el.removeClass(classes.OPEN);
-	        this.panelRegion.reset();
-	        //noinspection JSValidateTypes
-	        this.isOpen = false;
-	
-	        this.trigger.apply(this, ['close', this].concat(closeArgs));
-	        if (this.options.renderAfterClose) {
-	            this.render();
-	        }
-	    },
-	
-	    __handleWindowResize: function __handleWindowResize() {
-	        var outlineDiff = this.panelView.$el.outerHeight() - this.panelView.$el.height();
-	        var panelHeight = $(window).height() - this.panelView.$el.offset().top - outlineDiff;
-	        this.panelView.$el.height(panelHeight);
-	    }
-	});
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/12/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _CommonField = __webpack_require__(184);
-	
-	var _CommonField2 = _interopRequireDefault(_CommonField);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * @name ExtendedForm
-	 * @memberof module:core.form
-	 * @class [Backbone.Form](https://github.com/powmedia/backbone-forms) extended with some additional features.
-	 * @extends Backbone.Form
-	 * */
-	
-	exports.default = Backbone.Form.extend( /** @lends module:core.form.ExtendedForm.prototype */{
-	    focusRequiredInput: function focusRequiredInput() {
-	        this.methodOptions.silent = true;
-	        var errors = this.validate();
-	        this.methodOptions.silent = false;
-	        var self = this;
-	        if (errors) {
-	            var fieldToFocus = _.chain(_.keys(errors)).map(function (key) {
-	                return self.fields[key];
-	            }).filter(function (field) {
-	                return !_.isUndefined(field.schema.tabIndex);
-	            }).sortBy(function (field) {
-	                return field.schema.tabIndex;
-	            }).first().value();
-	            if (fieldToFocus) {
-	                fieldToFocus.focus();
-	            }
-	        }
-	    },
-	
-	    name: 'form',
-	
-	    handleEditorEvent: function handleEditorEvent(event, editor, field) {
-	        var formEvent = this.name + ':' + event;
-	        if (event !== 'validated') {
-	            //Re-trigger editor events on the form
-	            this.trigger.call(this, formEvent, this, editor, Array.prototype.slice.call(arguments, 2));
-	        }
-	
-	        //Trigger additional events
-	        switch (event) {
-	            case 'statechanged':
-	                this.state = editor.state;
-	                break;
-	            case 'change':
-	                this.trigger('change', this, editor);
-	                this.trigger(editor.key + ':change', this, editor);
-	                break;
-	            case 'focus':
-	                if (!this.hasFocus) {
-	                    this.trigger('focus', this);
-	                }
-	                break;
-	            case 'blur':
-	                if (this.hasFocus) {
-	                    var self = this;
-	                    _.defer(function () {
-	                        var focusedField = _.find(self.fields, function (field) {
-	                            return field.editor.hasFocus;
-	                        });
-	
-	                        if (!focusedField) {
-	                            self.trigger('blur', self);
-	                        }
-	                    });
-	                }
-	                break;
-	            case 'validated':
-	                this.validate({
-	                    silent: true
-	                });
-	                break;
-	            case 'resize':
-	                $(window).trigger('resize');
-	                break;
-	        }
-	    },
-	
-	    setErrors: function setErrors(errors) {
-	        _.each(_.pairs(errors), function (pair) {
-	            var field = this.fields[pair[0]];
-	            if (field) {
-	                field.setError(pair[1]);
-	            }
-	        }.bind(this));
-	    },
-	
-	    onShow: function onShow() {
-	        this.validate({
-	            silent: true
-	        });
-	        _.each(this.fields || {}, function (v) {
-	            if (v.editor.onShow) {
-	                v.editor.onShow();
-	            }
-	        });
-	    },
-	
-	    /**
-	     * Validate the data
-	     * @return {Object} Validation errors
-	     */
-	    validate: function validate(options) {
-	        var self = this,
-	            fields = this.fields,
-	            model = this.model,
-	            errors = {};
-	
-	        options = options || {};
-	
-	        //Collect errors from schema validation
-	        _.each(fields, function (field) {
-	            var error = field.validate(options);
-	            if (error) {
-	                errors[field.key] = error;
-	            }
-	        });
-	
-	        //Get errors from default Backbone model validator
-	        if (!options.skipModelValidate && model && model.validate) {
-	            var modelErrors = model.validate(this.getValue());
-	
-	            if (modelErrors) {
-	                var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
-	
-	                //If errors are not in object form then just store on the error object
-	                if (!isDictionary) {
-	                    errors._others = errors._others || [];
-	                    errors._others.push(modelErrors);
-	                }
-	
-	                //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
-	                if (isDictionary) {
-	                    _.each(modelErrors, function (val, key) {
-	                        //Set error on field if there isn't one already
-	                        if (fields[key] && !errors[key]) {
-	                            fields[key].setError(val);
-	                            errors[key] = val;
-	                        } else {
-	                            //Otherwise add to '_others' key
-	                            errors._others = errors._others || [];
-	                            var tmpErr = {};
-	                            tmpErr[key] = val;
-	                            errors._others.push(tmpErr);
-	                        }
-	                    });
-	                }
-	            }
-	        }
-	
-	        var result = _.isEmpty(errors) ? null : errors;
-	        this.trigger('form:validated', !result, result);
-	        return result;
-	    },
-	
-	    validationDelay: 1000,
-	
-	    Field: _CommonField2.default
-	});
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 10/13/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _textAreaEditor = __webpack_require__(736);
-	
-	var _textAreaEditor2 = _interopRequireDefault(_textAreaEditor);
-	
-	var _BaseItemEditorView = __webpack_require__(50);
-	
-	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
-	
-	var _LocalizationService = __webpack_require__(10);
-	
-	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var changeMode = {
-	    blur: 'blur',
-	    keydown: 'keydown'
-	};
-	
-	var size = {
-	    auto: 'auto',
-	    fixed: 'fixed'
-	};
-	
-	var defaultOptions = function defaultOptions() {
-	    return {
-	        changeMode: changeMode.blur,
-	        size: size.auto,
-	        emptyPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
-	        readonlyPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
-	        disablePlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
-	        maxLength: null,
-	        textHeight: null,
-	        initialHeight: 2
-	    };
-	};
-	
-	/**
-	 * @name TextAreaEditorView
-	 * @memberof module:core.form.editors
-	 * @class Многострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
-	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
-	 * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
-	 *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
-	 *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
-	 * @param {String} [options.size='auto'] Определяет метод вычисления высоты эдитора:<ul>
-	 *     <li><code>'auto'</code> - автоматически определяется контентом.</li>
-	 *     <li><code>'fixed'</code> - высота фиксирована.</li></ul>
-	 * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder для пустого текста.
-	 * @param {String} [options.readonlyPlaceholder='Field is readonly'] Текст placeholder, отображаемый
-	 * в случае если эдитор имеет флаг <code>readonly</code>.
-	 * @param {String} [options.disablePlaceholder='Field is disabled'] Текст placeholder, отображаемый
-	 * в случае если эдитор имеет флаг <code>enabled: false</code>.
-	 * @param {Number} [options.initialHeight=2] Изначальная высота эдитора (количество строк).
-	 * @param {Number} [options.textHeight=null]
-	 * При установленной опции <code>size: 'auto'</code>, определяет максимальную высоту эдитора (количество строк).
-	 * При установленной опции <code>size: 'fixed'</code>, определяет высоту эдитора (количество строк).
-	 * */
-	Backbone.Form.editors.TextArea = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.TextAreaEditorView.prototype */{
-	    initialize: function initialize(options) {
-	        var defaults = defaultOptions();
-	        if (options.schema) {
-	            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
-	        } else {
-	            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
-	        }
-	
-	        this.placeholder = this.options.emptyPlaceholder;
-	    },
-	
-	    focusElement: '.js-textarea',
-	    className: 'editor editor_textarea',
-	
-	    ui: {
-	        textarea: '.js-textarea'
-	    },
-	
-	    events: {
-	        'change': '__change',
-	        'input @ui.textarea': '__input',
-	        'keyup @ui.textarea': '__keyup'
-	    },
-	
-	    template: _libApi.Handlebars.compile(_textAreaEditor2.default),
-	
-	    templateHelpers: function templateHelpers() {
-	        return this.options;
-	    },
-	
-	    setMaxHeight: function setMaxHeight() {
-	        if (this.options.textHeight) {
-	            this.options.maxHeight = parseInt(this.ui.textarea.css('line-height')) * this.options.textHeight;
-	        }
-	    },
-	
-	    onRender: function onRender() {
-	        // Keyboard shortcuts listener
-	        if (this.keyListener) {
-	            this.keyListener.reset();
-	        }
-	        this.keyListener = new _libApi.keypress.Listener(this.ui.textarea[0]);
-	        this.ui.textarea.attr('rows', this.options.initialHeight);
-	    },
-	
-	    /**
-	     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
-	     * [Keypress](https://dmauro.github.io/Keypress/).
-	     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
-	     * Полный список с названиями клавиш указан в исходном файле плагина:
-	     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
-	     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
-	     * */
-	    addKeyboardListener: function addKeyboardListener(key, callback) {
-	        if (!this.keyListener) {
-	            _utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-	        }
-	        var keys = key.split(',');
-	        _.each(keys, function (k) {
-	            this.keyListener.simple_combo(k, callback);
-	        }, this);
-	    },
-	
-	    onShow: function onShow() {
-	        this.setMaxHeight();
-	        this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
-	        switch (this.options.size) {
-	            case size.auto:
-	                if (!_utilsApi.htmlHelpers.isElementInDom(this.el)) {
-	                    _utilsApi.helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
-	                }
-	                this.ui.textarea.autosize({ append: '' });
-	                break;
-	            case size.fixed:
-	                this.ui.textarea.attr('rows', this.options.textHeight);
-	                break;
-	        }
-	    },
-	
-	    setPermissions: function setPermissions(enabled, readonly) {
-	        _BaseItemEditorView2.default.prototype.setPermissions.call(this, enabled, readonly);
-	        this.setPlaceholder();
-	    },
-	
-	    setPlaceholder: function setPlaceholder() {
-	        if (!this.getEnabled()) {
-	            this.placeholder = this.options.disablePlaceholder;
-	        } else if (this.getReadonly()) {
-	            this.placeholder = this.options.readonlyPlaceholder;
-	        } else {
-	            this.placeholder = this.options.emptyPlaceholder;
-	        }
-	
-	        this.ui.textarea.prop('placeholder', this.placeholder);
-	    },
-	
-	    __setEnabled: function __setEnabled(enabled) {
-	        _BaseItemEditorView2.default.prototype.__setEnabled.call(this, enabled);
-	        this.ui.textarea.prop('disabled', !enabled);
-	    },
-	
-	    __setReadonly: function __setReadonly(readonly) {
-	        _BaseItemEditorView2.default.prototype.__setReadonly.call(this, readonly);
-	        if (this.getEnabled()) {
-	            this.ui.textarea.prop('readonly', readonly);
-	        }
-	    },
-	
-	    __value: function __value(value, updateUi, triggerChange) {
-	        if (this.value === value) {
-	            return;
-	        }
-	        this.value = value;
-	        if (updateUi) {
-	            this.ui.textarea.val(value);
-	        }
-	        if (triggerChange) {
-	            this.__triggerChange();
-	        }
-	    },
-	
-	    /**
-	     * Метод позволяет установить позицию курсора.
-	     * @param {Number} position Новая позиция курсора.
-	     * */
-	    setCaretPos: function setCaretPos(position) {
-	        this.ui.textarea.caret(position, position);
-	    },
-	
-	    setValue: function setValue(value) {
-	        this.__value(value, true, false);
-	    },
-	
-	    __change: function __change() {
-	        this.__triggerInput();
-	        this.__value(this.ui.textarea.val(), false, true);
-	    },
-	
-	    __input: function __input() {
-	        this.__triggerInput();
-	        if (this.options.changeMode === changeMode.keydown) {
-	            this.__value(this.ui.textarea.val(), false, true);
-	        }
-	    },
-	
-	    __keyup: function __keyup(e) {
-	        if ([_utilsApi.keyCode.LEFT, _utilsApi.keyCode.RIGHT, _utilsApi.keyCode.HOME, _utilsApi.keyCode.END].indexOf(e.keyCode) === -1) {
-	            return;
-	        }
-	
-	        var caret = this.ui.textarea.caret();
-	        if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
-	            return;
-	        }
-	
-	        this.oldCaret = caret;
-	        var text = this.ui.textarea.val();
-	        this.trigger('caretChange', text, caret);
-	    },
-	
-	    __triggerInput: function __triggerInput() {
-	        var text = this.ui.textarea.val();
-	        if (this.oldText === text) {
-	            return;
-	        }
-	
-	        this.oldText = text;
-	        var caret = this.ui.textarea.caret();
-	
-	        this.trigger('input', text, {
-	            start: caret.start,
-	            end: caret.end
-	        });
-	    },
-	
-	    /**
-	     * Focuses the editor's input and selects all the text in it.
-	     * */
-	    select: function select() {
-	        this.ui.textarea.select();
-	    }
-	});
-	
-	exports.default = Backbone.Form.editors.TextArea;
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 10/13/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _LocalizationService = __webpack_require__(10);
-	
-	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-	
-	var _BaseItemEditorView = __webpack_require__(50);
-	
-	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
-	
-	var _textEditor = __webpack_require__(737);
-	
-	var _textEditor2 = _interopRequireDefault(_textEditor);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var changeMode = {
-	    blur: 'blur',
-	    keydown: 'keydown'
-	};
-	
-	var defaultOptions = function defaultOptions() {
-	    return {
-	        changeMode: 'blur',
-	        emptyPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-	        maxLength: null,
-	        mask: null,
-	        maskPlaceholder: '_',
-	        maskOptions: {}
-	    };
-	};
-	
-	/**
-	 * @name TextEditorView
-	 * @memberof module:core.form.editors
-	 * @class Однострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
-	 * @extends module:core.form.editors.base.BaseEditorView
-	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
-	 * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
-	 *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
-	 *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
-	 * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
-	 * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
-	 * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
-	 * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
-	 * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
-	 * */
-	Backbone.Form.editors.Text = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.TextEditorView.prototype */{
-	    initialize: function initialize(options) {
-	        options = options || {};
-	        var defaults = defaultOptions();
-	        if (options.schema) {
-	            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
-	        } else {
-	            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
-	        }
-	
-	        this.placeholder = this.options.emptyPlaceholder;
-	    },
-	
-	    onShow: function onShow() {
-	        if (this.options.mask) {
-	            this.ui.input.inputmask(_.extend({
-	                mask: this.options.mask,
-	                placeholder: this.options.maskPlaceholder,
-	                autoUnmask: true
-	            }, this.options.maskOptions || {}));
-	        }
-	    },
-	
-	    focusElement: '.js-input',
-	
-	    ui: {
-	        input: '.js-input'
-	    },
-	
-	    className: 'editor',
-	
-	    template: _libApi.Handlebars.compile(_textEditor2.default),
-	
-	    templateHelpers: function templateHelpers() {
-	        return this.options;
-	    },
-	
-	    events: {
-	        'keyup @ui.input': '__keyup',
-	        'change @ui.input': '__change'
-	    },
-	
-	    __keyup: function __keyup() {
-	        if (this.options.changeMode === changeMode.keydown) {
-	            this.__value(this.ui.input.val(), false, true);
-	        }
-	
-	        this.trigger('keyup', this);
-	    },
-	
-	    __change: function __change() {
-	        this.__value(this.ui.input.val(), false, true);
-	    },
-	
-	    setValue: function setValue(value) {
-	        this.__value(value, true, false);
-	    },
-	
-	    setPermissions: function setPermissions(enabled, readonly) {
-	        _BaseItemEditorView2.default.prototype.setPermissions.call(this, enabled, readonly);
-	        this.setPlaceholder();
-	    },
-	
-	    setPlaceholder: function setPlaceholder() {
-	        if (!this.getEnabled() || this.getReadonly()) {
-	            this.placeholder = '';
-	        } else {
-	            this.placeholder = this.options.emptyPlaceholder;
-	        }
-	
-	        this.ui.input.prop('placeholder', this.placeholder);
-	    },
-	
-	    __setEnabled: function __setEnabled(enabled) {
-	        _BaseItemEditorView2.default.prototype.__setEnabled.call(this, enabled);
-	        this.ui.input.prop('disabled', !enabled);
-	    },
-	
-	    __setReadonly: function __setReadonly(readonly) {
-	        _BaseItemEditorView2.default.prototype.__setReadonly.call(this, readonly);
-	        if (this.getEnabled()) {
-	            this.ui.input.prop('readonly', readonly);
-	        }
-	    },
-	
-	    onRender: function onRender() {
-	        this.ui.input.val(this.getValue() || '');
-	
-	        // Keyboard shortcuts listener
-	        if (this.keyListener) {
-	            this.keyListener.reset();
-	        }
-	        this.keyListener = new _libApi.keypress.Listener(this.ui.input[0]);
-	    },
-	
-	    /**
-	     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
-	     * [Keypress](https://dmauro.github.io/Keypress/).
-	     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
-	     * Полный список с названиями клавиш указан в исходном файле плагина:
-	     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
-	     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
-	     * */
-	    addKeyboardListener: function addKeyboardListener(key, callback) {
-	        if (!this.keyListener) {
-	            _utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-	        }
-	        var keys = key.split(',');
-	        _.each(keys, function (k) {
-	            this.keyListener.simple_combo(k, callback);
-	        }, this);
-	    },
-	
-	    __value: function __value(value, updateUi, triggerChange) {
-	        if (this.value === value) {
-	            return;
-	        }
-	        this.value = value;
-	        if (updateUi) {
-	            this.ui.input.val(value);
-	        }
-	        if (triggerChange) {
-	            this.__triggerChange();
-	        }
-	    },
-	
-	    /**
-	     * Focuses the editor's input and selects all the text in it.
-	     * */
-	    select: function select() {
-	        this.ui.input.select();
-	    },
-	
-	    deselect: function deselect() {
-	        this.ui.input.deselect();
-	    }
-	});
-	
-	exports.default = Backbone.Form.editors.Text;
-
-/***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/2/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-	
-	/*
-	 * This class is fully compatible with Backbone.Form.editors.Base and should be used to create Marionette-based editors for Backbone.Form
-	 * */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	__webpack_require__(1);
-	
-	var _MarionetteEditorPrototype = __webpack_require__(84);
-	
-	var _MarionetteEditorPrototype2 = _interopRequireDefault(_MarionetteEditorPrototype);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = Marionette.CollectionView.extend(_MarionetteEditorPrototype2.default.create(Marionette.CollectionView));
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Oleg Verevkin
-	 * Date: 02/20/2016
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var defaultOptions = {
-	  defaultURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIAQMAAABvIyEEAAAABlBMVEUAAABTU1OoaSf/AAAAAXRSTlMAQObYZgAAAENJREFUeF7tzbEJACEQRNGBLeAasBCza2lLEGx0CxFGG9hBMDDxRy/72O9FMnIFapGylsu1fgoBdkXfUHLrQgdfrlJN1BdYBjQQm3UAAAAASUVORK5CYII='
-	};
-	
-	/**
-	 * @name BaseAvatarEditorController
-	 * @memberof module:core.form.editors.avatar.controllers
-	 * @class Base data provider class for {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
-	 * Methods <code>upload</code> and <code>getImage</code> must be implemented by subclasses.
-	 * @param {Object} options - Options object.
-	 * @param {string} options.defaultURL - Default image URL to display when neither image value for <code>getImage</code> method nor full name for {@link module:core.form.editors.AvatarEditorView AvatarEditorView} provided.
-	 */
-	exports.default = Marionette.Object.extend({
-	  /**
-	   * Object containing default options to be used when no corresponding options are provided while instantiating controller
-	   */
-	  defaultOptions: defaultOptions,
-	
-	  initialize: function initialize(options) {
-	    this.options = _.defaults(options, this.defaultOptions);
-	  },
-	
-	
-	  /**
-	   * Uploads file to server or processes it any other way.
-	   * @param {File} file - File to be processed (uploaded to server).
-	   * @return {Promise} - Promise object that resolves with object containing value to be used as {@link module:core.form.editors.AvatarEditorView AvatarEditorView} value.
-	   * This value will be used as <code>getImage</code> method argument and may be a file.
-	   */
-	  upload: function upload(file) {
-	    _utilsApi.helpers.throwError('Not Implemented', 'NotImplementedError');
-	  },
-	
-	
-	  /**
-	   * Converts incoming value to valid Image URL to be displayed in {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
-	   * @param {?(string|number|File)} value - Value to be converted to valid image URL. If no value provided, the function must return default image URL.
-	   * @return {!string} - Image URL to be displayed in {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
-	   */
-	  getImage: function getImage(value) {
-	    _utilsApi.helpers.throwError('Not Implemented', 'NotImplementedError');
-	  }
-	});
-
-/***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 16.07.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _date = __webpack_require__(698);
-	
-	var _date2 = _interopRequireDefault(_date);
-	
-	var _dropdownApi = __webpack_require__(17);
-	
-	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
-	
-	var _DatePanelView = __webpack_require__(380);
-	
-	var _DatePanelView2 = _interopRequireDefault(_DatePanelView);
-	
-	var _DateInputView = __webpack_require__(379);
-	
-	var _DateInputView2 = _interopRequireDefault(_DateInputView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = Marionette.LayoutView.extend({
-	    initialize: function initialize() {
-	        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
-	        this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
-	        this.allowEmptyValue = this.getOption('allowEmptyValue');
-	        this.dateDisplayFormat = this.getOption('dateDisplayFormat');
-	    },
-	
-	    template: _libApi.Handlebars.compile(_date2.default),
-	
-	    className: 'date-view',
-	
-	    regions: {
-	        popoutRegion: '.js-popout-region'
-	    },
-	
-	    onShow: function onShow() {
-	        this.calendarDropdownView = _dropdownApi2.default.factory.createDropdown({
-	            buttonView: _DateInputView2.default,
-	            buttonViewOptions: {
-	                model: this.model,
-	                timezoneOffset: this.timezoneOffset,
-	                preserveTime: this.preserveTime,
-	                allowEmptyValue: this.allowEmptyValue,
-	                dateDisplayFormat: this.dateDisplayFormat
-	            },
-	            panelView: _DatePanelView2.default,
-	            panelViewOptions: {
-	                model: this.model,
-	                timezoneOffset: this.timezoneOffset,
-	                preserveTime: this.preserveTime,
-	                allowEmptyValue: this.allowEmptyValue
-	            },
-	            renderAfterClose: false,
-	            autoOpen: false
-	        });
-	        this.listenTo(this.calendarDropdownView, 'before:close', this.__onBeforeClose, this);
-	        this.listenTo(this.calendarDropdownView, 'open', this.__onOpen, this);
-	
-	        this.listenTo(this.calendarDropdownView, 'button:focus', this.__onButtonFocus, this);
-	        this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
-	        this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
-	
-	        this.popoutRegion.show(this.calendarDropdownView);
-	    },
-	
-	    __onBeforeClose: function __onBeforeClose() {
-	        this.calendarDropdownView.button.endEditing();
-	        this.trigger('blur');
-	    },
-	
-	    __onOpen: function __onOpen() {
-	        this.calendarDropdownView.button.startEditing();
-	        this.trigger('focus');
-	    },
-	
-	    __onPanelSelect: function __onPanelSelect() {
-	        this.calendarDropdownView.close();
-	    },
-	
-	    __onButtonCalendarOpen: function __onButtonCalendarOpen() {
-	        this.calendarDropdownView.open();
-	    },
-	
-	    __onButtonFocus: function __onButtonFocus() {
-	        if (this.model.get('enabled') && !this.model.get('readonly')) {
-	            this.calendarDropdownView.open();
-	        }
-	    },
-	
-	    focus: function focus() {
-	        this.calendarDropdownView.button.focus();
-	    },
-	
-	    blur: function blur() {
-	        this.calendarDropdownView.close();
-	    },
-	
-	    hasFocus: function hasFocus() {
-	        return _libApi.$.contains(this.el, document.activeElement);
-	    }
-	});
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 16.07.2015
-	 * Copyright: 2009-2016 Comindware
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _dropdownApi = __webpack_require__(17);
-	
-	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
-	
-	var _TimeInputView = __webpack_require__(381);
-	
-	var _TimeInputView2 = _interopRequireDefault(_TimeInputView);
-	
-	var _time = __webpack_require__(701);
-	
-	var _time2 = _interopRequireDefault(_time);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = Marionette.LayoutView.extend({
-	    initialize: function initialize() {
-	        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
-	        this.allowEmptyValue = this.getOption('allowEmptyValue');
-	        this.timeDisplayFormat = this.getOption('timeDisplayFormat');
-	    },
-	
-	    className: 'time-view',
-	
-	    template: _libApi.Handlebars.compile(_time2.default),
-	
-	    regions: {
-	        dropdownRegion: '.js-dropdown-region'
-	    },
-	
-	    onRender: function onRender() {
-	        var timeArray = [];
-	
-	        for (var h = 0; h < 24; h++) {
-	            for (var m = 0; m < 60; m += 15) {
-	                var val = { hours: h, minutes: m },
-	                    time = _libApi.moment.utc(val),
-	                    formattedTime = _utilsApi.dateHelpers.getDisplayTime(time);
-	
-	                timeArray.push({
-	                    time: time,
-	                    formattedTime: formattedTime
-	                });
-	            }
-	        }
-	
-	        this.dropdownView = _dropdownApi2.default.factory.createDropdown({
-	            buttonView: _TimeInputView2.default,
-	            buttonViewOptions: {
-	                model: this.model,
-	                timezoneOffset: this.timezoneOffset,
-	                allowEmptyValue: this.allowEmptyValue,
-	                timeDisplayFormat: this.timeDisplayFormat
-	            },
-	            panelView: Marionette.CollectionView.extend({
-	                collection: new Backbone.Collection(timeArray),
-	                tagName: 'ul',
-	                className: 'time-dropdown',
-	                childEvents: {
-	                    'select': function select(view, time) {
-	                        this.trigger('select', time);
-	                    }
-	                },
-	                childView: Marionette.ItemView.extend({
-	                    tagName: 'li',
-	                    className: 'time-dropdown__i',
-	                    events: {
-	                        'click': function click() {
-	                            this.trigger('select', this.model.get('time'));
-	                        }
-	                    },
-	                    template: _libApi.Handlebars.compile('{{formattedTime}}')
-	                })
-	            }),
-	            renderAfterClose: false,
-	            autoOpen: false
-	        });
-	        this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
-	        this.listenTo(this.dropdownView, 'open', this.__onOpen, this);
-	
-	        this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus, this);
-	        this.listenTo(this.dropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
-	        this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
-	
-	        this.dropdownRegion.show(this.dropdownView);
-	    },
-	
-	    __onBeforeClose: function __onBeforeClose() {
-	        this.dropdownView.button.endEditing();
-	        this.trigger('blur');
-	    },
-	
-	    __onOpen: function __onOpen() {
-	        this.dropdownView.button.startEditing();
-	        this.trigger('focus');
-	    },
-	
-	    __onPanelSelect: function __onPanelSelect(time) {
-	        var oldVal = this.model.get('value'),
-	            newVal = null;
-	
-	        if (time === null || time === '') {
-	            newVal = null;
-	        } else if (oldVal) {
-	            newVal = _libApi.moment.utc(oldVal).utcOffset(this.timezoneOffset).hour(time.hour()).minute(time.minute()).second(0).millisecond(0).toISOString();
-	        } else {
-	            time = time.clone();
-	            newVal = time.minute(time.minute() - this.timezoneOffset).toISOString();
-	        }
-	
-	        this.model.set('value', newVal);
-	
-	        this.dropdownView.close();
-	    },
-	
-	    __onButtonCalendarOpen: function __onButtonCalendarOpen() {
-	        this.dropdownView.open();
-	    },
-	
-	    __onButtonFocus: function __onButtonFocus() {
-	        if (this.model.get('enabled') && !this.model.get('readonly')) {
-	            this.dropdownView.open();
-	        }
-	    },
-	
-	    focus: function focus() {
-	        this.dropdownView.button.focus();
-	    },
-	
-	    blur: function blur() {
-	        this.dropdownView.close();
-	    },
-	
-	    hasFocus: function hasFocus() {
-	        return _libApi.$.contains(this.el, document.activeElement);
-	    }
-	});
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Ksenia Kartvelishvili
-	 * Date: 05.05.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	exports.default = Backbone.Model.extend({
-	    updateEmpty: function updateEmpty() {
-	        this.set('empty', this.collection.models.length === 1);
-	    }
-	});
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/12/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _promise = __webpack_require__(37);
-	
-	var _promise2 = _interopRequireDefault(_promise);
-	
-	__webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _listApi = __webpack_require__(14);
-	
-	var _listApi2 = _interopRequireDefault(_listApi);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * @name BaseReferenceEditorController
-	 * @memberof module:core.form.editors.reference.controllers
-	 * @class Base data provider class for {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
-	 * Data request is performed by fetching Backbone.Collection passed via <code>options.collection</code> option.
-	 * Various scenarios are covered and server request is made only if it is required.
-	 * @param {Object} options Options object.
-	 * @param {Backbone.Collection} options.collection Backbone.Collection of objects. The objects must have <code>id</code> and <code>text</code> attributes.
-	 * The collection must implement <code>fetch()</code> method that supports text filtration.
-	 * For example, the call <code>collection.fetch({ data: { filter: 'myFilterText' } })</code> must
-	 * fetch the objects which contains 'myFilterText' in it's text attribute.
-	 * Besides that, the <code>collection.totalCount</code> attribute must be updated during the fetch and contain
-	 * the total count of object with the applied filter on server.
-	 * */
-	
-	exports.default = Marionette.Controller.extend( /** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */{
-	    initialize: function initialize(options) {
-	        _utilsApi.helpers.ensureOption(options, 'collection');
-	
-	        this.originalCollection = options.collection;
-	        this.collection = _listApi2.default.factory.createWrappedCollection(options.collection);
-	    },
-	
-	    /**
-	     * Requests data with a text filter applied.
-	     * @param {Object} options Options object.
-	     * @param {Object} options.text Text filter filter to apply or <code>null</code>.
-	     * @return {Promise} Promise object that resolves when the data is ready.
-	     * */
-	    fetch: function fetch(options) {
-	        options = options || {};
-	
-	        var filterText = options.text ? options.text.trim().toUpperCase() : '';
-	        if (filterText.indexOf(this.activeFilterText) && this.totalCount) {
-	            // Client-side filter
-	            if (filterText) {
-	                this.collection.filter(function (model) {
-	                    var text = model.get('text');
-	                    if (!text) {
-	                        return false;
-	                    }
-	                    return text.toUpperCase().indexOf(filterText) !== -1;
-	                });
-	            } else {
-	                this.collection.filter(null);
-	            }
-	            return _promise2.default.resolve();
-	        }
-	        // Server-side filter or new data request
-	        this.collection.filter(null);
-	        this.fetchPromise = this.collection.fetch({ data: { filter: filterText } }).then(function () {
-	            this.totalCount = this.collection.totalCount;
-	            this.activeFilterText = filterText;
-	        }.bind(this));
-	
-	        return this.fetchPromise;
-	    },
-	
-	    /*
-	    * Backbone.Collection that should be used to read data. The data should not be fetched from this object directly.
-	    * Use the controller's <code>fetch()</code> method instead.
-	    * */
-	    collection: null,
-	
-	    /**
-	     * Handles a navigation request to an object. The method is abstract.
-	     * @param {Backbone.Model} model Data model that describes the object to navigate to.
-	     * */
-	    navigate: function navigate(model) {
-	        _utilsApi.helpers.throwError('Not Implemented.', 'NotImplementedError');
-	    }
-	});
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 11/18/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _loading = __webpack_require__(717);
-	
-	var _loading2 = _interopRequireDefault(_loading);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = Marionette.ItemView.extend({
-	    initialize: function initialize() {},
-	
-	    className: 'l-loader',
-	
-	    template: _libApi.Handlebars.compile(_loading2.default)
-	});
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/3/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _listApi = __webpack_require__(14);
-	
-	var _listApi2 = _interopRequireDefault(_listApi);
-	
-	var _referencePanel = __webpack_require__(720);
-	
-	var _referencePanel2 = _interopRequireDefault(_referencePanel);
-	
-	var _LocalizationService = __webpack_require__(10);
-	
-	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-	
-	var _LoadingView = __webpack_require__(182);
-	
-	var _LoadingView2 = _interopRequireDefault(_LoadingView);
-	
-	var _AddNewButtonView = __webpack_require__(401);
-	
-	var _AddNewButtonView2 = _interopRequireDefault(_AddNewButtonView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var config = {
-	    CHILD_HEIGHT: 30,
-	    TEXT_FETCH_DELAY: 300
-	};
-	
-	exports.default = Marionette.LayoutView.extend({
-	    initialize: function initialize(options) {
-	        _utilsApi.helpers.ensureOption(options, 'model');
-	        _utilsApi.helpers.ensureOption(options, 'reqres');
-	
-	        this.reqres = options.reqres;
-	        this.showAddNewButton = this.options.showAddNewButton;
-	        this.fetchDelayId = _.uniqueId('fetch-delay-id-');
-	    },
-	
-	    className: 'dd-list dd-list_reference',
-	
-	    template: _libApi.Handlebars.compile(_referencePanel2.default),
-	
-	    templateHelpers: function templateHelpers() {
-	        var value = this.model.get('value');
-	        return {
-	            text: value && (value.get('text') || '#' + value.id) || '',
-	            showAddNewButton: this.showAddNewButton
-	        };
-	    },
-	
-	    ui: {
-	        input: '.js-input',
-	        clear: '.js-clear'
-	    },
-	
-	    events: {
-	        'keyup @ui.input': '__updateFilter',
-	        'change @ui.input': '__updateFilter',
-	        'input @ui.input': '__updateFilter',
-	        'click @ui.clear': '__clear'
-	    },
-	
-	    regions: {
-	        listRegion: '.js-list-region',
-	        scrollbarRegion: '.js-scrollbar-region',
-	        loadingRegion: '.js-loading-region',
-	        addNewButtonRegion: '.js-add-new-button-region'
-	    },
-	
-	    onRender: function onRender() {
-	        this.__assignKeyboardShortcuts();
-	    },
-	
-	    onShow: function onShow() {
-	        var result = _listApi2.default.factory.createDefaultList({
-	            collection: this.model.get('collection'),
-	            listViewOptions: {
-	                childView: this.options.listItemView,
-	                childViewOptions: {
-	                    reqres: this.reqres
-	                },
-	                emptyViewOptions: {
-	                    text: _LocalizationService2.default.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS')
-	                },
-	                childHeight: config.CHILD_HEIGHT
-	            }
-	        });
-	
-	        this.listView = result.listView;
-	        this.eventAggregator = result.eventAggregator;
-	
-	        if (this.showAddNewButton) {
-	            this.$el.addClass('dd-list_reference-button');
-	            var addNewButton = new _AddNewButtonView2.default({ reqres: this.reqres });
-	            this.addNewButtonRegion.show(addNewButton);
-	        }
-	
-	        this.listRegion.show(result.listView);
-	        this.scrollbarRegion.show(result.scrollbarView);
-	
-	        this.ui.input.focus();
-	        this.__updateFilter();
-	    },
-	
-	    __assignKeyboardShortcuts: function __assignKeyboardShortcuts() {
-	        if (this.keyListener) {
-	            this.keyListener.reset();
-	        }
-	        this.keyListener = new _libApi.keypress.Listener(this.ui.input[0]);
-	        _.each(this.keyboardShortcuts, function (value, key) {
-	            var keys = key.split(',');
-	            _.each(keys, function (k) {
-	                this.keyListener.simple_combo(k, value.bind(this));
-	            }, this);
-	        }, this);
-	    },
-	
-	    keyboardShortcuts: {
-	        'up': function up() {
-	            this.listView.moveCursorBy(-1, false);
-	        },
-	        'down': function down() {
-	            this.listView.moveCursorBy(1, false);
-	        },
-	        'enter,num_enter': function enterNum_enter() {
-	            if (this.isLoading) {
-	                return;
-	            }
-	            var selectedModel = this.model.get('collection').selected;
-	            this.reqres.request('value:set', selectedModel);
-	        }
-	    },
-	
-	    __clear: function __clear() {
-	        this.reqres.request('value:set', null);
-	    },
-	
-	    __updateFilter: function __updateFilter() {
-	        var text = (this.ui.input.val() || '').trim();
-	        if (this.activeText === text) {
-	            return;
-	        }
-	        _utilsApi.helpers.setUniqueTimeout(this.fetchDelayId, function () {
-	            this.activeText = text;
-	            this.__setLoading(true);
-	            var collection = this.model.get('collection');
-	            collection.deselect();
-	            this.reqres.request('filter:text', {
-	                text: text
-	            }).then(function () {
-	                if (collection.length > 0) {
-	                    var model = collection.at(0);
-	                    model.select();
-	                    this.eventAggregator.scrollTo(model);
-	                }
-	
-	                this.__setLoading(false);
-	            }.bind(this));
-	        }.bind(this), config.TEXT_FETCH_DELAY);
-	    },
-	
-	    __setLoading: function __setLoading(isLoading) {
-	        if (this.isDestroyed) {
-	            return false;
-	        }
-	        this.isLoading = isLoading;
-	        if (isLoading) {
-	            this.loadingRegion.show(new _LoadingView2.default());
-	        } else {
-	            this.loadingRegion.reset();
-	        }
-	    }
-	});
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 1/26/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _CommonField = __webpack_require__(739);
-	
-	var _CommonField2 = _interopRequireDefault(_CommonField);
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _dropdownApi = __webpack_require__(17);
-	
-	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
-	
-	var _FieldInfoModel = __webpack_require__(404);
-	
-	var _FieldInfoModel2 = _interopRequireDefault(_FieldInfoModel);
-	
-	var _InfoButtonView = __webpack_require__(405);
-	
-	var _InfoButtonView2 = _interopRequireDefault(_InfoButtonView);
-	
-	var _InfoMessageView = __webpack_require__(406);
-	
-	var _InfoMessageView2 = _interopRequireDefault(_InfoMessageView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var classes = {
-	    REQUIRED: 'required',
-	    READONLY: 'readonly',
-	    DISABLED: 'disabled'
-	};
-	
-	var ui = {
-	    errorText: '.js-error-text'
-	};
-	
-	exports.default = Backbone.Form.Field.extend({
-	    initialize: function initialize(options) {
-	        Backbone.Form.Field.prototype.initialize.apply(this, arguments);
-	        this.debounceValidate = _.debounce(function () {
-	            this.validate();
-	            this.editor.trigger('validated', this);
-	        }.bind(this), this.form && this.form.validationDelay || 100);
-	        if (this.schema.autoValidate) {
-	            this.editor.on('change', function () {
-	                this.debounceValidate();
-	            }.bind(this));
-	            this.editor.on('blur', function () {
-	                this.validate();
-	                this.editor.trigger('validated', this);
-	            }.bind(this));
-	        }
-	        this.editor.on('readonly', function (readonly) {
-	            this.__updateEditorState(readonly, this.editor.getEnabled());
-	        }.bind(this));
-	        this.editor.on('enabled', function (enabled) {
-	            this.__updateEditorState(this.editor.getReadonly(), enabled);
-	        }.bind(this));
-	    },
-	
-	    /**
-	     * Create the default field title (label text) from the key name.
-	     * (Converts 'camelCase' to 'Camel Case')
-	     *
-	     * @return {String}
-	     */
-	    createTitle: function createTitle() {
-	        var str = this.key;
-	        if (!str) {
-	            return '';
-	        }
-	
-	        //Add spaces
-	        str = str.replace(/([A-Z])/g, ' $1');
-	
-	        //Uppercase first character
-	        str = str.replace(/^./, function (str) {
-	            return str.toUpperCase();
-	        });
-	
-	        return str;
-	    },
-	
-	    validate: function validate(options) {
-	        options = options || {};
-	        if (this.schema.validators) {
-	            var error = this.editor.validate();
-	            if (!options.silent) {
-	                if (error) {
-	                    this.setError(error.message);
-	                } else {
-	                    this.clearError();
-	                }
-	            }
-	            return error;
-	        }
-	        return null;
-	    },
-	
-	    setError: function setError(msg) {
-	        if (this.editor.hasNestedForm) {
-	            return;
-	        }
-	        this.$el.addClass(this.errorClassName);
-	        this.$(ui.errorText).text(msg);
-	    },
-	
-	    clearError: function clearError() {
-	        this.$el.removeClass(this.errorClassName);
-	        this.$(ui.errorText).text('');
-	    },
-	
-	    render: function render() {
-	        Backbone.Form.Field.prototype.render.apply(this, arguments);
-	        if (this.schema.helpText) {
-	            this.fieldInfoModel = new _FieldInfoModel2.default({
-	                text: this.schema.helpText
-	            });
-	            var infoPopout = _dropdownApi2.default.factory.createPopout({
-	                panelView: _InfoMessageView2.default,
-	                panelViewOptions: {
-	                    model: this.fieldInfoModel
-	                },
-	                buttonView: _InfoButtonView2.default,
-	                buttonViewOptions: {
-	                    model: this.fieldInfoModel
-	                },
-	                popoutFlow: 'right',
-	                customAnchor: true
-	            });
-	            infoPopout.render();
-	            this.$('.js-field-info').append(infoPopout.$el);
-	            infoPopout.onRender();
-	        }
-	        if (this.schema.required) {
-	            this.$el.addClass(classes.REQUIRED);
-	        }
-	        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
-	        return this;
-	    },
-	
-	    setRequired: function setRequired(required) {
-	        this.$el.toggleClass(classes.REQUIRED, required);
-	    },
-	
-	    __updateEditorState: function __updateEditorState(readonly, enabled) {
-	        this.$el.toggleClass(classes.READONLY, readonly);
-	        this.$el.toggleClass(classes.DISABLED, readonly || !enabled);
-	    }
-	}, {
-	    template: _libApi.Handlebars.compile(_CommonField2.default)
-	});
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/7/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	/*
-	    Behavior-like controller that is responsible for synchronization between views presenting the same collection.
-	
-	    For example, it keeps current scroll position in sync so that all the views are scrolled to the same item.
-	
-	    Does not provide any public interface for now since all the behavior logic is inside.
-	
-	    Usage:
-	
-	    new EventAggregator({
-	        views: [
-	            scrollbarView,
-	            listView,
-	            // etc
-	        ]
-	    });
-	 */
-	
-	exports.default = Marionette.Controller.extend({
-	    initialize: function initialize(options) {
-	        if (options.views === undefined) {
-	            throw new Error('You must pass the views you want to keep in sync (displaying the same collection) into the `views` option.');
-	        }
-	        if (!options.collection) {
-	            throw new Error('`collection` option is required.');
-	        }
-	
-	        _.bindAll(this, '__handleCollectionAdd', '__handleCollectionRemove', '__handleCollectionReset');
-	
-	        this.views = options.views;
-	        this.collection = options.collection;
-	        this.state = {};
-	
-	        this.listenTo(this.collection, 'add', this.__handleCollectionAdd);
-	        this.listenTo(this.collection, 'remove', this.__handleCollectionRemove);
-	        this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
-	        this.__updateCount(this.collection.length);
-	
-	        _.each(this.views, function (v) {
-	            this.listenTo(v, 'viewportHeightChanged', this.__handleViewportHeightChanged);
-	            this.listenTo(v, 'positionChanged', this.__handlePositionChanged);
-	        }, this);
-	    },
-	
-	    __handleCollectionAdd: function __handleCollectionAdd(model, collection) {
-	        this.__updateCount(collection.length);
-	    },
-	
-	    __handleCollectionRemove: function __handleCollectionRemove(model, collection) {
-	        this.__updateCount(collection.length);
-	    },
-	
-	    __handleCollectionReset: function __handleCollectionReset(collection) {
-	        this.__updateCount(collection.length);
-	    },
-	
-	    scrollTo: function scrollTo(model) {
-	        var modelIndex = this.collection.indexOf(model);
-	        var view = _.find(this.views, function (view) {
-	            return view.scrollTo;
-	        });
-	        if (view) {
-	            view.scrollTo(modelIndex);
-	        }
-	    },
-	
-	    __updateCount: function __updateCount(count) {
-	        this.state.count = count;
-	    },
-	
-	    __handleViewportHeightChanged: function __handleViewportHeightChanged(sender, e) {
-	        console.log('viewportHeight changed: ', e.oldViewportHeight, '->', e.viewportHeight);
-	        _.chain(this.views).filter(function (v) {
-	            return v !== sender;
-	        }).each(function (v) {
-	            v.updateViewportHeight && v.updateViewportHeight(e.viewportHeight);
-	        });
-	        this.state.viewportHeight = e.viewportHeight;
-	    },
-	
-	    __handlePositionChanged: function __handlePositionChanged(sender, e) {
-	        console.log('position changed: ', e.oldPosition, '->', e.position);
-	        _.chain(this.views).filter(function (v) {
-	            return v !== sender;
-	        }).each(function (v) {
-	            v.updatePosition && v.updatePosition(e.position);
-	        });
-	        this.state.position = e.position;
-	        this.__tryMoreDataRequest();
-	    },
-	
-	    __tryMoreDataRequest: function __tryMoreDataRequest() {
-	        if (this.state.position === this.__getMaxPosition()) {
-	            if (!this.atEnd) {
-	                this.atEnd = true;
-	                this.trigger('request:moreData', this, this.collection);
-	            }
-	        } else {
-	            this.atEnd = false;
-	        }
-	    },
-	
-	    __getMaxPosition: function __getMaxPosition() {
-	        return Math.max(0, this.state.count - 1 - this.state.viewportHeight + 1);
-	    }
-	});
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 8/7/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function (model) {
-	  _.extend(this, new _SelectableBehavior2.default.Selectable(model));
-	  _.extend(this, new _HighlightableBehavior2.default(model));
-	};
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _SelectableBehavior = __webpack_require__(43);
-	
-	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
-	
-	var _HighlightableBehavior = __webpack_require__(118);
-	
-	var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/17/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _emptyGrid = __webpack_require__(247);
-	
-	var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
-	
-	var _LocalizationService = __webpack_require__(10);
-	
-	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Some description for initializer
-	 * @name EmptyGridView
-	 * @memberof module:core.list.views
-	 * @class EmptyGridView
-	 * @constructor
-	 * @description View для отображения списка без колонок
-	 * @extends Marionette.ItemView
-	 * @param {Object} options Constructor options
-	 * @param {string} [options.text=Список пуст] отображаемый текст
-	 * */
-	
-	exports.default = Marionette.ItemView.extend({
-	    initialize: function initialize(options) {
-	        this.model = new Backbone.Model({
-	            text: options.text || _LocalizationService2.default.get('CORE.GRID.EMPTYVIEW.EMPTY')
-	        });
-	    },
-	
-	    template: _libApi.Handlebars.compile(_emptyGrid2.default),
-	    className: 'empty-view'
-	});
-
-/***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/17/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _emptyGrid = __webpack_require__(247);
-	
-	var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
-	
-	var _LocalizationService = __webpack_require__(10);
-	
-	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Some description for initializer
-	 * @name EmptyListView
-	 * @memberof module:core.list.views
-	 * @class EmptyListView
-	 * @constructor
-	 * @description View используемый по умолчанию для отображения пустого списка (нет строк), передавать в {@link module:core.list.views.GridView GridView options.emptyView}
-	 * @extends Marionette.ItemView
-	 * @param {Object} options Constructor options
-	 * @param {string} [options.text=Список пуст] отображаемый текст
-	 * */
-	var EmptyListView = Marionette.ItemView.extend({
-	    initialize: function initialize(options) {
-	        this.model = new Backbone.Model({
-	            text: options && options.text || _LocalizationService2.default.get("CORE.GRID.EMPTYVIEW.EMPTY")
-	        });
-	    },
-	
-	    template: _libApi.Handlebars.compile(_emptyGrid2.default),
-	
-	    className: 'empty-view'
-	});
-	
-	exports.default = EmptyListView;
-
-/***/ },
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/7/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _grid = __webpack_require__(742);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _ListView = __webpack_require__(115);
-	
-	var _ListView2 = _interopRequireDefault(_ListView);
-	
-	var _RowView = __webpack_require__(116);
-	
-	var _RowView2 = _interopRequireDefault(_RowView);
-	
-	var _GridHeaderView = __webpack_require__(88);
-	
-	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
-	
-	var _NoColumnsView = __webpack_require__(190);
-	
-	var _NoColumnsView2 = _interopRequireDefault(_NoColumnsView);
-	
-	var _LoadingRowView = __webpack_require__(418);
-	
-	var _LoadingRowView2 = _interopRequireDefault(_LoadingRowView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/*
-	    Public interface:
-	
-	    This view produce:
-	        trigger: positionChanged (sender, { oldPosition, position })
-	        trigger: viewportHeightChanged (sender, { oldViewportHeight, viewportHeight })
-	    This view react on:
-	        collection change (via Backbone.Collection events)
-	        position change (when we scroll with scrollbar for example): updatePosition(newPosition)
-	 */
-	
-	var constants = {
-	    gridRowHeight: 32,
-	    gridHeaderHeight: 51
-	};
-	
-	/**
-	 * @name GridView
-	 * @memberof module:core.list.views
-	 * @class GridView
-	 * @constructor
-	 * @description View-контейнер для заголовка и контента
-	 * @extends Marionette.LayoutView
-	 * @param {Object} options Constructor options
-	 * @param {Array} options.collection массив элементов списка
-	 * @param {Array} options.columns массив колонок
-	 * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
-	 * @param {Number} options.childHeight высота строки списка (childView)
-	 * @param {Backbone.View} [options.childView] view строки списка
-	 * @param {Backbone.View} [options.childViewOptions] опции для childView
-	 * @param {Function} options.childViewSelector ?
-	 * @param {Object} [options.emptyViewOptions] опции для emptyView
-	 * @param {Backbone.View} options.gridColumnHeaderView View заголовка списка
-	 * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
-	 * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
-	 * @param {Backbone.View} options.noColumnsView View для отображения списка без колонок
-	 * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
-	 * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
-	 * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
-	 * */
-	var GridView = Marionette.LayoutView.extend({
-	    initialize: function initialize(options) {
-	        if (this.collection === undefined) {
-	            throw 'You must provide a collection to display.';
-	        }
-	
-	        if (options.columns === undefined) {
-	            throw 'You must provide columns definition ("columns" option)';
-	        }
-	
-	        options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
-	
-	        this.headerView = new _GridHeaderView2.default({
-	            columns: options.columns,
-	            gridEventAggregator: this,
-	            gridColumnHeaderView: options.gridColumnHeaderView
-	        });
-	
-	        this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-	
-	        if (options.noColumnsView) {
-	            this.noColumnsView = options.noColumnsView;
-	        } else {
-	            this.noColumnsView = _NoColumnsView2.default;
-	        }
-	        options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
-	
-	        var childView = options.childView;
-	        if (options.useDefaultRowView) {
-	            _.each(options.columns, function (column) {
-	                if (column.cellView === undefined) throw 'You must specify cellView for each column (useDefaultRowView flag is true)';
-	            });
-	
-	            childView = _RowView2.default;
-	            options.childHeight = constants.gridRowHeight;
-	        } else if (options.childHeight === undefined) {
-	            throw 'You must provide a childHeight for the child item view (in pixels).';
-	        }
-	
-	        var childViewOptions = _.extend(options.childViewOptions || {}, {
-	            columns: options.columns,
-	            gridEventAggregator: this
-	        });
-	
-	        this.listView = new _ListView2.default({
-	            collection: this.collection,
-	            childView: childView,
-	            childViewSelector: options.childViewSelector,
-	            emptyView: options.emptyView,
-	            emptyViewOptions: options.emptyViewOptions,
-	            noColumnsView: options.noColumnsView,
-	            noColumnsViewOptions: options.noColumnsViewOptions,
-	            childHeight: options.childHeight,
-	            childViewOptions: childViewOptions,
-	            loadingChildView: options.loadingChildView || _LoadingRowView2.default,
-	            maxRows: options.maxRows,
-	            height: options.height
-	        });
-	
-	        this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
-	            if (_.string.startsWith(eventName, 'childview')) {
-	                this.trigger.apply(this, [eventName, view].concat(eventArguments));
-	            }
-	        }.bind(this));
-	
-	        this.listenTo(this.listView, 'positionChanged', function (sender, args) {
-	            this.trigger('positionChanged', this, args);
-	        }.bind(this));
-	
-	        this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
-	
-	        this.updatePosition = this.listView.updatePosition.bind(this.listView);
-	
-	        this.listenTo(this.collection, 'reset', function (collection, options) {
-	            // fixing display:table style if there were not rows
-	            if (options && options.previousModels.length === 0) {
-	                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'none');
-	                // forcing browser to rebuild DOM accessing the attribute
-	                this.listView.visibleCollectionRegion.currentView.$el.css('display');
-	                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'table');
-	            }
-	        }.bind(this));
-	    },
-	
-	    __updateHeight: function __updateHeight(sender, args) {
-	        args.gridHeight = args.listViewHeight + constants.gridHeaderHeight;
-	        this.$el.height(args.gridHeight);
-	        this.trigger('viewportHeightChanged', this, args);
-	    },
-	
-	    onColumnSort: function onColumnSort(column, comparator) {
-	        this.collection.comparator = comparator;
-	        this.collection.sort();
-	    },
-	
-	    regions: {
-	        headerRegion: '.grid-header-view',
-	        contentViewRegion: '.grid-content-view',
-	        noColumnsViewRegion: '.js-nocolumns-view-region'
-	    },
-	
-	    className: 'grid',
-	
-	    template: _libApi.Handlebars.compile(_grid2.default),
-	
-	    onShow: function onShow() {
-	        var elementWidth = this.$el.width();
-	        if (this.options.columns.length === 0) {
-	            var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
-	            this.noColumnsViewRegion.show(noColumnsView);
-	        }
-	        this.headerRegion.show(this.headerView);
-	        this.contentViewRegion.show(this.listView);
-	        var updatedElementWidth = this.$el.width();
-	        if (elementWidth !== updatedElementWidth) {
-	            // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
-	            this.headerView.handleResize();
-	            this.listView.handleResize();
-	        }
-	    },
-	
-	    onRender: function onRender() {
-	        _utilsApi.htmlHelpers.forbidSelection(this.el);
-	    },
-	
-	    sortBy: function sortBy(columnIndex, sorting) {
-	        var column = this.options.columns[columnIndex];
-	        if (sorting) {
-	            _.each(this.options.columns, function (c) {
-	                c.sorting = null;
-	            });
-	            column.sorting = sorting;
-	            switch (sorting) {
-	                case 'asc':
-	                    this.collection.comparator = column.sortAsc;
-	                    break;
-	                case 'desc':
-	                    this.collection.comparator = column.sortDesc;
-	                    break;
-	            }
-	        } else {
-	            sorting = column.sorting;
-	            _.each(this.options.columns, function (c) {
-	                c.sorting = null;
-	            });
-	            switch (sorting) {
-	                case 'asc':
-	                    column.sorting = 'desc';
-	                    this.collection.comparator = column.sortDesc;
-	                    break;
-	                case 'desc':
-	                    column.sorting = 'asc';
-	                    this.collection.comparator = column.sortAsc;
-	                    break;
-	                default:
-	                    column.sorting = 'asc';
-	                    this.collection.comparator = column.sortAsc;
-	                    break;
-	            }
-	        }
-	        this.onColumnSort(column, this.collection.comparator);
-	        this.headerView.updateSorting();
-	    },
-	
-	    handleResize: function handleResize() {
-	        this.headerView.handleResize();
-	    }
-	});
-	
-	exports.default = GridView;
-
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 27.07.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _noColumns = __webpack_require__(746);
-	
-	var _noColumns2 = _interopRequireDefault(_noColumns);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Some description for initializer
-	 * @name NoColumnsView
-	 * @memberof module:core.list.views
-	 * @class NoColumnsView
-	 * @extends Marionette.ItemView
-	 * @constructor
-	 * @description View используемый по умолчанию для отображения списка без колонок
-	 * */
-	exports.default = Marionette.ItemView.extend({
-	  className: 'dev-no-columns-view',
-	  template: _libApi.Handlebars.compile(_noColumns2.default)
-	});
-
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/7/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _scrollbar = __webpack_require__(747);
-	
-	var _scrollbar2 = _interopRequireDefault(_scrollbar);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/*
-	    Public interface:
-	
-	    This view produce:
-	        trigger: positionChanged (sender, { oldPosition, position })
-	    This view react on:
-	        collection change (via Backbone.Collection events)
-	        position change (when we scroll content view somehow without this scrollbar): updatePosition(newPosition)
-	        viewportHeight change (when we resize content views attached to this scrollbar): updateViewportHeight(newViewportHeight)
-	*/
-	
-	/**
-	 * Some description for initializer
-	 * @name ScrollBarView
-	 * @memberof module:core.list.views
-	 * @class ScrollBarView
-	 * @extends Marionette.ItemView
-	 * @constructor
-	 * @description View Scrollbar'а
-	 * @param {Object} options Constructor options
-	 * */
-	var ScrollbarView = Marionette.ItemView.extend({
-	    initialize: function initialize() {
-	        if (this.collection === undefined) {
-	            throw 'You must provide a collection to display.';
-	        }
-	
-	        _.bindAll(this, '__documentMouseUp', '__documentMouseMove');
-	        this.$document = $(document);
-	        this.state = {
-	            position: 0,
-	            viewportHeight: 25,
-	            count: 0
-	        };
-	
-	        this.__updateCount(this.collection.length);
-	    },
-	
-	    className: 'scrollbar',
-	    template: _libApi.Handlebars.compile(_scrollbar2.default),
-	    model: null,
-	    state: null,
-	    dragContext: null,
-	
-	    ui: {
-	        dragger: '.dragger'
-	    },
-	
-	    constants: {
-	        minDraggerHeight: 25 // in pixels
-	    },
-	
-	    collectionEvents: {
-	        'add': '__handleCollectionAdd',
-	        'remove': '__handleCollectionRemove',
-	        'reset': '__handleCollectionReset'
-	    },
-	
-	    events: {
-	        'mousewheel': '__mousewheel',
-	        'mousedown': '__mousedown',
-	        'mouseenter': '__mouseenter',
-	        'mouseleave': '__mouseleave',
-	        'mousedown @ui.dragger': '__draggerMousedown'
-	    },
-	
-	    onShow: function onShow() {
-	        this.rendered = true;
-	        this.__updateScrollbarVisibility();
-	        this.__updateDraggerPosition();
-	        this.__updateDraggerHeight();
-	    },
-	
-	    onRender: function onRender() {
-	        function stopAndPreventDefault(e) {
-	            e.preventDefault();
-	            e.stopPropagation();
-	        }
-	
-	        this.el.onselectstart = stopAndPreventDefault;
-	        this.el.ondragstart = stopAndPreventDefault;
-	    },
-	
-	    updateViewportHeight: function updateViewportHeight(newViewportHeight) {
-	        if (newViewportHeight === undefined) {
-	            throw 'newViewportHeight is undefined';
-	        }
-	
-	        if (newViewportHeight < 1) {
-	            throw 'newViewportHeight is invalid';
-	        }
-	
-	        if (!this.rendered) {
-	            this.state.viewportHeight = newViewportHeight;
-	            return;
-	        }
-	
-	        if (this.state.viewportHeight !== newViewportHeight) {
-	            this.state.viewportHeight = newViewportHeight;
-	            this.__updateScrollbarVisibility();
-	            this.__updateDraggerHeight();
-	
-	            var maxPos = this.__getMaxPosition();
-	            if (this.state.position > maxPos) {
-	                this.__updatePositionState(maxPos, true);
-	                this.__updateDraggerPosition();
-	            }
-	        }
-	    },
-	
-	    updatePosition: function updatePosition(newPosition) {
-	        this.__updatePositionInternal(newPosition, false);
-	    },
-	
-	    __updateCount: function __updateCount(newCount) {
-	        if (newCount === undefined) {
-	            throw 'newCount is undefined';
-	        }
-	
-	        if (newCount < 0) {
-	            throw 'newCount is invalid';
-	        }
-	
-	        if (!this.rendered) {
-	            this.state.count = newCount;
-	            return;
-	        }
-	
-	        if (this.state.count !== newCount) {
-	            var maxPos = this.__getMaxPosition();
-	            var newMaxPos = Math.max(0, maxPos - (this.state.count - newCount));
-	
-	            if (this.state.position > newMaxPos) {
-	                this.__updatePositionState(newMaxPos, true);
-	            }
-	
-	            this.state.count = newCount;
-	            this.__updateScrollbarVisibility();
-	            this.__updateDraggerHeight();
-	            this.__updateDraggerPosition();
-	        }
-	    },
-	
-	    // normalizes new position into [min,max] and updates view+state
-	    __updatePositionInternal: function __updatePositionInternal(newPosition, triggerEvents) {
-	        if (newPosition === undefined) {
-	            throw 'newPosition is undefined';
-	        }
-	
-	        if (!this.rendered) {
-	            this.state.position = newPosition;
-	            return;
-	        }
-	
-	        newPosition = Math.max(0, Math.min(this.__getMaxPosition(), newPosition));
-	        if (this.state.position !== newPosition) {
-	            this.__updatePositionState(newPosition, triggerEvents);
-	            this.__updateDraggerPosition();
-	        }
-	
-	        return newPosition;
-	    },
-	
-	    __handleCollectionAdd: function __handleCollectionAdd(model, collection) {
-	        this.__updateCount(collection.length);
-	    },
-	
-	    __handleCollectionRemove: function __handleCollectionRemove(model, collection) {
-	        this.__updateCount(collection.length);
-	    },
-	
-	    __handleCollectionReset: function __handleCollectionReset(collection) {
-	        this.__updateCount(collection.length);
-	    },
-	
-	    __mouseenter: function __mouseenter() {
-	        this.$el.addClass('hover');
-	    },
-	
-	    __mouseleave: function __mouseleave() {
-	        this.$el.removeClass('hover');
-	    },
-	
-	    __draggerMousedown: function __draggerMousedown(e) {
-	        this.__stopDrag();
-	        this.__startDrag(e);
-	        return false;
-	    },
-	
-	    __documentMouseMove: function __documentMouseMove(e) {
-	        if (!this.dragContext) {
-	            return;
-	        }
-	
-	        var ctx = this.dragContext;
-	        if (e.pageY !== ctx.pageOffsetY) {
-	            var availableHeight = ctx.scrollbarHeight - ctx.draggerHeight;
-	            var currentPosition = e.pageY - ctx.mouseOffsetY - ctx.scrollbarPositionY;
-	            var newDraggerTop = Math.min(Math.max(currentPosition, 0), availableHeight);
-	
-	            var devicePercents = newDraggerTop / ctx.scrollbarHeight * 100;
-	            this.ui.dragger.css({ top: devicePercents + '%' });
-	
-	            // updating scrollbar state, sending positionChanged event if needed
-	            var maxPos = this.__getMaxPosition();
-	            var newPosition = availableHeight !== 0 ? Math.min(maxPos, Math.floor((maxPos + 1) * (newDraggerTop / availableHeight))) : 0;
-	            this.__updatePositionState(newPosition, true);
-	        }
-	
-	        return false;
-	    },
-	
-	    __documentMouseUp: function __documentMouseUp() {
-	        this.__stopDrag();
-	        return false;
-	    },
-	
-	    __mousedown: function __mousedown(e) {
-	        if (e.target !== e.currentTarget) {
-	            return false;
-	        }
-	
-	        var draggerY = this.__getPosition(this.ui.dragger).y;
-	        var sign = e.pageY - draggerY;
-	        sign = sign / Math.abs(sign);
-	
-	        var delta = this.state.viewportHeight;
-	        var newPosition = this.state.position + sign * delta;
-	        this.__updatePositionInternal(newPosition, true);
-	        return false;
-	    },
-	
-	    __mousewheel: function __mousewheel(e) {
-	        var delta = this.state.viewportHeight;
-	        var newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
-	        this.__updatePositionInternal(newPosition, true);
-	        return false;
-	    },
-	
-	    __updatePositionState: function __updatePositionState(newPosition, triggerEvents) {
-	        if (this.state.position === newPosition) {
-	            return;
-	        }
-	
-	        var oldPosition = this.state.position;
-	        this.state.position = newPosition;
-	        if (triggerEvents) {
-	            this.trigger('positionChanged', this, {
-	                oldPosition: oldPosition,
-	                position: newPosition
-	            });
-	        }
-	    },
-	
-	    __updateScrollbarVisibility: function __updateScrollbarVisibility() {
-	        if (this.state.count > this.state.viewportHeight) {
-	            this.$el.removeClass('dev-scrollbar__hidden');
-	        } else {
-	            this.$el.addClass('dev-scrollbar__hidden');
-	        }
-	    },
-	
-	    __updateDraggerHeight: function __updateDraggerHeight() {
-	        var minHeight = Math.min(1, this.constants.minDraggerHeight / this.$el.height());
-	        var heightPc = Math.max(minHeight, Math.min(1, this.state.viewportHeight / this.state.count)) * 100;
-	        this.ui.dragger.css({ height: heightPc + '%' });
-	    },
-	
-	    __updateDraggerPosition: function __updateDraggerPosition() {
-	        var newTopPc;
-	        var maxPos = this.__getMaxPosition();
-	        if (maxPos > 0) {
-	            var h = this.$el.height();
-	            var dh = this.ui.dragger.height();
-	            var availableHeight = h - dh;
-	            var newTop = this.state.position / this.__getMaxPosition() * availableHeight;
-	            newTopPc = newTop / h * 100;
-	        } else {
-	            newTopPc = 0;
-	        }
-	
-	        this.ui.dragger.css({ top: newTopPc + '%' });
-	    },
-	
-	    __getMaxPosition: function __getMaxPosition() {
-	        return Math.max(0, this.state.count - 1 - this.state.viewportHeight + 1);
-	    },
-	
-	    __startDrag: function __startDrag(event) {
-	        this.dragContext = {
-	            scrollbarHeight: this.$el.height(),
-	            draggerHeight: this.ui.dragger.height(),
-	            pageOffsetY: event.pageY,
-	            scrollbarPositionY: this.__getPosition(this.el).y,
-	            mouseOffsetY: event.pageY - this.__getPosition(this.ui.dragger).y
-	        };
-	
-	        this.ui.dragger.addClass('active');
-	        $(document).mousemove(this.__documentMouseMove).mouseup(this.__documentMouseUp);
-	    },
-	
-	    __stopDrag: function __stopDrag() {
-	        if (!this.dragContext) {
-	            return;
-	        }
-	
-	        this.dragContext = null;
-	        this.$document.unbind('mousemove', this.__documentMouseMove);
-	        this.$document.unbind('mouseup', this.__documentMouseUp);
-	        this.ui.dragger.removeClass('active');
-	    },
-	
-	    // returns DOM element position relatively to the document
-	    __getPosition: function __getPosition(domElement) {
-	        if (domElement instanceof jQuery) {
-	            domElement = domElement[0];
-	        }
-	
-	        var left = 0;
-	        var top = 0;
-	        do {
-	            if (!isNaN(domElement.offsetLeft)) {
-	                left += domElement.offsetLeft;
-	            }
-	            if (!isNaN(domElement.offsetTop)) {
-	                top += domElement.offsetTop;
-	            }
-	            domElement = domElement.offsetParent;
-	        } while (domElement);
-	        return { x: left, y: top };
-	    }
-	});
-	
-	exports.default = ScrollbarView;
-
-/***/ },
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 7/23/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	var CollapsibleBehavior = function CollapsibleBehavior(model) {};
-	
-	_.extend(CollapsibleBehavior.prototype, {
-	    collapse: function collapse(internal) {
-	        if (this.collapsed) {
-	            return;
-	        }
-	
-	        this.collapsed = true;
-	        this.trigger("collapsed", this);
-	        this.trigger("toggle:collapse", this);
-	
-	        if (!internal && this.collection && this.collection.collapse) {
-	            this.collection.collapse(this);
-	        }
-	    },
-	
-	    expand: function expand(internal) {
-	        if (!this.collapsed) {
-	            return;
-	        }
-	
-	        this.collapsed = false;
-	        this.trigger("expanded", this);
-	        this.trigger("toggle:collapse", this);
-	        if (!internal && this.collection && this.collection.expand) {
-	            this.collection.expand(this);
-	        }
-	    },
-	
-	    toggleCollapsed: function toggleCollapsed() {
-	        if (this.collapsed) {
-	            this.expand();
-	        } else {
-	            this.collapse();
-	        }
-	    }
-	});
-	
-	exports.default = CollapsibleBehavior;
-
-/***/ },
-/* 193 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 17.08.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _header = __webpack_require__(749);
-	
-	var _header2 = _interopRequireDefault(_header);
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _GridHeaderView = __webpack_require__(88);
-	
-	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
-	
-	var _GlobalEventService = __webpack_require__(65);
-	
-	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * @name HeaderView
-	 * @memberof module:core.nativeGrid.views
-	 * @class HeaderView
-	 * @description View заголовка списка
-	 * @extends module:core.list.views.GridHeaderView {@link module:core.list.views.GridHeaderView}
-	 * @param {Object} options Constructor options
-	 * @param {Array} options.columns Массив колонок
-	 * @param {Object} options.gridEventAggregator ?
-	 * @param {Backbone.View} options.gridColumnHeaderView View Используемый для отображения заголовка (шапки) списка
-	 * */
-	var HeaderView = _GridHeaderView2.default.extend({
-	    initialize: function initialize(options) {
-	        _GridHeaderView2.default.prototype.initialize.apply(this, arguments);
-	        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
-	        this.listenTo(_GlobalEventService2.default, 'resize', this.__handleResizeInternal);
-	    },
-	
-	    template: _libApi.Handlebars.compile(_header2.default),
-	
-	    onRender: function onRender() {
-	        var self = this;
-	        this.ui.gridHeaderColumnContent.each(function (i, el) {
-	            var column = self.columns[i];
-	            var view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
-	                model: column.viewModel,
-	                column: column,
-	                gridEventAggregator: self.gridEventAggregator
-	            }));
-	            self.listenTo(view, 'columnSort', self.__handleColumnSort);
-	            var childEl = view.render().el;
-	            el.appendChild(childEl);
-	        });
-	    },
-	
-	    __getAvailableWidth: function __getAvailableWidth() {
-	        return this.$el.parent().width() - 1;
-	    },
-	
-	    __getElementOuterWidth: function __getElementOuterWidth(el) {
-	        return $(el)[0].getBoundingClientRect().width;
-	    },
-	
-	    setFitToView: function setFitToView() {
-	        var availableWidth = this.__getAvailableWidth(),
-	            viewWidth = this.__getTableWidth(),
-	            columnsL = this.ui.gridHeaderColumn.length,
-	            fullWidth = 0,
-	            sumDelta = 0,
-	            sumGap = 0;
-	
-	        this.ui.gridHeaderColumn.each(function (i, el) {
-	            if (availableWidth !== viewWidth) {
-	                var columnWidth = this.__getElementOuterWidth(el) * availableWidth / viewWidth;
-	                if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
-	                    sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
-	                    columnWidth = this.constants.MIN_COLUMN_WIDTH;
-	                } else {
-	                    sumGap += columnWidth - this.constants.MIN_COLUMN_WIDTH;
-	                }
-	            }
-	
-	            this.columns[i].width = columnWidth;
-	        }.bind(this));
-	
-	        this.ui.gridHeaderColumn.each(function (i, el) {
-	            if (availableWidth !== viewWidth) {
-	                if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
-	                    var delta = (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-	                    this.columns[i].width -= delta;
-	                }
-	            }
-	
-	            if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
-	                this.columns[i].width = availableWidth - fullWidth;
-	            }
-	
-	            $(el).outerWidth(this.columns[i].width);
-	            fullWidth += this.columns[i].width;
-	        }.bind(this));
-	        this.$el.width(Math.ceil(fullWidth));
-	    },
-	
-	    __setInitialWidth: function __setInitialWidth(availableWidth) {
-	        var columnsL = this.ui.gridHeaderColumn.length,
-	            columnWidth = availableWidth / columnsL,
-	            fullWidth = 0;
-	
-	        this.ui.gridHeaderColumn.each(function (i, el) {
-	            if (this.columns[i].width) columnWidth = this.columns[i].width;
-	
-	            if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
-	                this.columns[i].width = availableWidth - fullWidth;
-	            }
-	
-	            $(el).outerWidth(columnWidth);
-	            this.columns[i].width = columnWidth;
-	            fullWidth += columnWidth;
-	        }.bind(this));
-	
-	        this.$el.width(Math.ceil(fullWidth));
-	    },
-	
-	    onShow: function onShow() {
-	        this.headerMinWidth = this.__getAvailableWidth();
-	        this.__setInitialWidth(this.headerMinWidth);
-	        this.__handleResizeInternal();
-	    },
-	
-	    __startDrag: function __startDrag(e) {
-	        var $dragger = $(e.target);
-	        var $column = $dragger.parent();
-	
-	        this.updateDragContext($column, e.pageX);
-	        this.dragContext.tableInitialWidth = this.__getTableWidth();
-	
-	        this.dragContext.$dragger = $dragger;
-	
-	        $dragger.addClass('active');
-	        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
-	    },
-	
-	    __stopDrag: function __stopDrag() {
-	        if (!this.dragContext) {
-	            return;
-	        }
-	
-	        this.dragContext.$dragger.removeClass('active');
-	        this.dragContext = null;
-	        this.$document.unbind('mousemove', this.__draggerMouseMove);
-	        this.$document.unbind('mouseup', this.__draggerMouseUp);
-	
-	        this.gridEventAggregator.trigger('columnStopDrag');
-	    },
-	
-	    __draggerMouseMove: function __draggerMouseMove(e) {
-	        if (!this.dragContext) {
-	            return;
-	        }
-	
-	        var ctx = this.dragContext;
-	        var delta = e.pageX - ctx.pageOffsetX;
-	
-	        if (delta !== 0) {
-	            var index = ctx.draggedColumn.index;
-	
-	            this.updateColumnAndNeighbourWidths(index, delta);
-	        }
-	
-	        return false;
-	    },
-	
-	    updateColumnAndNeighbourWidths: function updateColumnAndNeighbourWidths(index, delta) {
-	        var $current = $(this.ui.gridHeaderColumn[index]),
-	            newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
-	
-	        if (this.dragContext.draggedColumn.initialWidth + delta < 20) {
-	            return;
-	        }
-	
-	        $current.outerWidth(newColumnWidth);
-	        this.gridEventAggregator.trigger('singleColumnResize', this, {
-	            index: index,
-	            delta: delta
-	        });
-	
-	        this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
-	        this.columns[index].width = newColumnWidth;
-	    },
-	
-	    __changeTableWidth: function __changeTableWidth(initialWidth, delta) {
-	        this.$el.width(initialWidth + delta + 1);
-	    },
-	
-	    updateDragContext: function updateDragContext($column, offset) {
-	        this.dragContext = this.dragContext || {};
-	
-	        var draggedColumn = {
-	            $el: $column,
-	            initialWidth: this.__getElementOuterWidth($column),
-	            index: $column.index()
-	        };
-	
-	        this.dragContext.tableInitialWidth = this.__getTableWidth();
-	        this.gridEventAggregator.trigger('columnStartDrag');
-	
-	        this.dragContext.fullWidth = this.headerMinWidth;
-	        this.dragContext.draggedColumn = draggedColumn;
-	        this.dragContext.pageOffsetX = offset;
-	    },
-	
-	    __getTableWidth: function __getTableWidth() {
-	        return this.$el.width() - 1;
-	    },
-	
-	    __handleResizeInternal: function __handleResizeInternal() {
-	        var fullWidth = this.__getAvailableWidth(),
-	            currentWidth = this.__getTableWidth();
-	
-	        if (fullWidth > currentWidth) {
-	            this.$el.width(fullWidth);
-	        }
-	        this.headerMinWidth = fullWidth;
-	        this.__updateColumnsWidth();
-	    },
-	
-	    __updateColumnsWidth: function __updateColumnsWidth() {
-	        var columns = this.columns,
-	            needUpdate = false,
-	            fullWidth = 0;
-	
-	        this.ui.gridHeaderColumn.each(function (i, el) {
-	            var child = $(el);
-	            var col = columns[i];
-	            if (col.width) {
-	                needUpdate = true;
-	                child.outerWidth(col.width);
-	                fullWidth += col.width;
-	            }
-	        });
-	
-	        needUpdate && this.$el.width(fullWidth);
-	    }
-	});
-	
-	exports.default = HeaderView;
-
-/***/ },
-/* 194 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 14.08.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _nativeGrid = __webpack_require__(750);
-	
-	var _nativeGrid2 = _interopRequireDefault(_nativeGrid);
-	
-	var _ListView = __webpack_require__(425);
-	
-	var _ListView2 = _interopRequireDefault(_ListView);
-	
-	var _RowView = __webpack_require__(195);
-	
-	var _RowView2 = _interopRequireDefault(_RowView);
-	
-	var _HeaderView = __webpack_require__(193);
-	
-	var _HeaderView2 = _interopRequireDefault(_HeaderView);
-	
-	var _ColumnHeaderView = __webpack_require__(424);
-	
-	var _ColumnHeaderView2 = _interopRequireDefault(_ColumnHeaderView);
-	
-	var _NoColumnsView = __webpack_require__(190);
-	
-	var _NoColumnsView2 = _interopRequireDefault(_NoColumnsView);
-	
-	var _SelectableBehavior = __webpack_require__(43);
-	
-	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
-	
-	var _factory = __webpack_require__(168);
-	
-	var _factory2 = _interopRequireDefault(_factory);
-	
-	var _dropdownApi = __webpack_require__(17);
-	
-	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var defaultOptions = {
-	    rowView: _RowView2.default,
-	    paddingLeft: 20,
-	    paddingRight: 10
-	};
-	
-	/**
-	 * Some description for initializer
-	 * @name NativeGridView
-	 * @memberof module:core.nativeGrid.views
-	 * @class NativeGridView
-	 * @description View используемый по умолчанию для отображения строки списка
-	 * @extends Marionette.LayoutView
-	 * @param {Object} options Constructor options
-	 * @param {Backbone.Collection} options.collection Коллекция строк списка
-	 * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
-	 * @param {Backbone.View} [options.noColumnsView] View для отображения списка без колонок
-	 * @param {Object} [options.noColumnsViewOptions] Опции для noColumnsView
-	 * @param {Function} [options.onColumnSort] Метод, обрабатывющий событие сортировки колонок
-	 * @param {Number} [options.paddingLeft=10] Левый отступ
-	 * @param {Number} [options.paddingRight=20] Правый отступ
-	 * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
-	 * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка.
-	 * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
-	 * */
-	exports.default = Marionette.LayoutView.extend({
-	    template: _libApi.Handlebars.compile(_nativeGrid2.default),
-	
-	    regions: {
-	        headerRegion: '.js-native-grid-header-region',
-	        listRegion: '.js-native-grid-list-region',
-	        noColumnsViewRegion: '.js-nocolumns-view-region',
-	        popoutRegion: '.js-popout-region'
-	    },
-	
-	    ui: {
-	        headerRegion: '.js-native-grid-header-region'
-	    },
-	
-	    className: 'native-grid',
-	
-	    initialize: function initialize(options) {
-	        _utilsApi.helpers.ensureOption(options, 'collection');
-	        _.defaults(this.options, defaultOptions);
-	
-	        this.rowView = this.options.rowView;
-	        this.rowViewSelector = this.options.rowViewSelector;
-	        this.collection = this.options.collection;
-	        this.emptyView = this.options.emptyView;
-	        options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
-	
-	        this.initializeViews();
-	        this.$document = $(document);
-	    },
-	
-	    initializeViews: function initializeViews() {
-	        this.headerView = new _HeaderView2.default({
-	            columns: this.options.columns,
-	            gridColumnHeaderView: _ColumnHeaderView2.default,
-	            gridEventAggregator: this
-	        });
-	
-	        if (this.options.noColumnsView) {
-	            this.noColumnsView = this.options.noColumnsView;
-	        } else {
-	            this.noColumnsView = _NoColumnsView2.default;
-	        }
-	        this.options.noColumnsViewOptions && (this.noColumnsViewOptions = this.options.noColumnsViewOptions); // jshint ignore:line
-	
-	        var childViewOptions = _.extend(this.options.gridViewOptions || {}, {
-	            columns: this.options.columns,
-	            gridEventAggregator: this,
-	            paddingLeft: this.options.paddingLeft,
-	            paddingRight: this.options.paddingRight
-	        });
-	
-	        this.listView = new _ListView2.default({
-	            childView: this.rowView,
-	            collection: this.collection,
-	            childViewOptions: childViewOptions,
-	            childViewSelector: this.rowViewSelector,
-	            emptyView: this.emptyView
-	        });
-	
-	        this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
-	        this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
-	        this.listenTo(this, 'showFilterView', this.showFilterPopout, this);
-	        this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
-	            if (_.string.startsWith(eventName, 'childview')) {
-	                this.trigger.apply(this, [eventName, view].concat(eventArguments));
-	            }
-	        }.bind(this));
-	    },
-	
-	    __onRowClick: function __onRowClick(model) {
-	        this.trigger('row:click', model);
-	    },
-	
-	    __onRowDblClick: function __onRowDblClick(model) {
-	        this.trigger('row:dblclick', model);
-	    },
-	
-	    __afterColumnsResize: function __afterColumnsResize(width) {
-	        this.listView.setWidth(width);
-	    },
-	
-	    onRender: function onRender() {
-	        this.ui.headerRegion.css({
-	            left: this.options.paddingLeft + 'px',
-	            right: this.options.paddingRight + 'px'
-	        });
-	    },
-	
-	    onShow: function onShow() {
-	        if (this.options.columns.length === 0) {
-	            var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
-	            this.noColumnsViewRegion.show(noColumnsView);
-	        }
-	        this.headerRegion.show(this.headerView);
-	        this.listRegion.show(this.listView);
-	        this.bindListRegionScroll();
-	    },
-	
-	    bindListRegionScroll: function bindListRegionScroll() {
-	        this.listRegion.$el.scroll(function (event) {
-	            this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
-	        }.bind(this));
-	    },
-	
-	    onColumnSort: function onColumnSort(column, comparator) {
-	        this.collection.comparator = comparator;
-	        this.collection.sort();
-	    },
-	
-	    setFitToView: function setFitToView() {
-	        this.headerView.setFitToView();
-	        if (this.collection.length > 0) {
-	            this.listView.setFitToView();
-	        }
-	    },
-	
-	    showFilterPopout: function showFilterPopout(options) {
-	        var AnchoredButtonView = Marionette.ItemView.extend({
-	            template: _libApi.Handlebars.compile('<span class="js-anchor"></span>'),
-	            behaviors: {
-	                CustomAnchorBehavior: {
-	                    behaviorClass: _dropdownApi2.default.views.behaviors.CustomAnchorBehavior,
-	                    anchor: '.js-anchor'
-	                }
-	            },
-	            tagName: 'div'
-	        });
-	
-	        var filterViewOptions = _.find(this.options.columns, function (c) {
-	            return c.id === options.columnHeader.options.column.id;
-	        }).filterViewOptions;
-	
-	        this.filterDropdown = _factory2.default.createPopout({
-	            buttonView: AnchoredButtonView,
-	            panelView: options.filterView,
-	            panelViewOptions: filterViewOptions,
-	            customAnchor: true
-	        });
-	
-	        this.listenTo(this.filterDropdown, 'all', function (eventName, eventArguments) {
-	            if (_.string.startsWith(eventName, 'panel:')) {
-	                this.trigger.apply(this, ['column:filter:' + eventName.slice(6), options.columnHeader.options.column.id, this.filterDropdown.panelView].concat(eventArguments));
-	            }
-	        }.bind(this));
-	
-	        this.listenTo(this.filterDropdown, 'close', function (child, closeOptions) {
-	            this.trigger('column:filter:close', options.columnHeader.options.column.id, child.panelView, closeOptions);
-	        }.bind(this));
-	
-	        this.popoutRegion.show(this.filterDropdown);
-	        this.filterDropdown.$el.offset(options.position);
-	        this.filterDropdown.open();
-	    }
-	});
-
-/***/ },
-/* 195 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 22.07.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _RowView = __webpack_require__(116);
-	
-	var _RowView2 = _interopRequireDefault(_RowView);
-	
-	var _NativeGridItemViewBehavior = __webpack_require__(426);
-	
-	var _NativeGridItemViewBehavior2 = _interopRequireDefault(_NativeGridItemViewBehavior);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * Some description for initializer
-	 * @name RowView
-	 * @memberof module:core.nativeGrid.views
-	 * @class RowView
-	 * @constructor
-	 * @description View используемый по умолчанию для отображения строки списка
-	 * @extends module:core.list.views.RowView {@link module:core.list.views.RowView}
-	 * @param {Object} options Constructor options
-	 * @param {Array} options.columns Массив колонк
-	 * @param {Object} options.gridEventAggregator ?
-	 * @param {Number} [options.paddingLeft=20] Левый отступ
-	 * @param {Number} [options.paddingRight=10] Правый отступ
-	 * */
-	exports.default = _RowView2.default.extend({
-	    behaviors: {
-	        NativeGridItemViewBehavior: {
-	            behaviorClass: _NativeGridItemViewBehavior2.default,
-	            padding: 15
-	        }
-	    }
-	});
-
-/***/ },
-/* 196 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 8/4/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _promise = __webpack_require__(37);
-	
-	var _promise2 = _interopRequireDefault(_promise);
-	
-	var _stringify = __webpack_require__(202);
-	
-	var _stringify2 = _interopRequireDefault(_stringify);
-	
-	__webpack_require__(1);
-	
-	var _utilsApi = __webpack_require__(4);
-	
-	var _PromiseService = __webpack_require__(198);
-	
-	var _PromiseService2 = _interopRequireDefault(_PromiseService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var extendAjaxService = function extendAjaxService(ajaxService, ajaxMap) {
-	    _.each(ajaxMap, function (actionInfo) {
-	        var controller = ajaxService[actionInfo.className] || (ajaxService[actionInfo.className] = {});
-	
-	        // The result of compilation below is something like this:
-	        //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {
-	        //         return window.Ajax.getJsApiResponse('RecordTypes/List', [  ], _.take(arguments, 0), callback);
-	        //     };
-	        var actionParameters = _.map(actionInfo.parameters, function (parameterInfo) {
-	            return '/*' + parameterInfo.typeName + '*/ ' + parameterInfo.name;
-	        });
-	        actionParameters.push('/*optional*/ callback');
-	        var actionBody = _utilsApi.helpers.format('return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}), callback);', actionInfo.url, _.map(actionInfo.parameters, function (p) {
-	            return '\'' + p.name + '\'';
-	        }).join(', '), actionInfo.parameters.length);
-	        //noinspection JSUnresolvedVariable
-	        var actionFn = _utilsApi.helpers.format('function {0}_{1}({2}) {\r\n{3}\r\n}', actionInfo.className, actionInfo.methodName, actionParameters.join(', '), actionBody);
-	
-	        eval('controller[actionInfo.methodName] = ' + actionFn + ';'); // jshint ignore:line
-	    });
-	};
-	
-	var AjaxServicePrototype = {
-	    load: function load(options) {
-	        _utilsApi.helpers.ensureOption(options, 'ajaxMap');
-	        extendAjaxService(this, options.ajaxMap);
-	    },
-	
-	    getResponse: function getResponse(type, url, data, options) {
-	        _utilsApi.helpers.assertArgumentNotFalsy(type, 'type');
-	        _utilsApi.helpers.assertArgumentNotFalsy(url, 'url');
-	        var config = _.extend({
-	            type: type,
-	            url: url,
-	            data: (0, _stringify2.default)(data || {}),
-	            traditional: true,
-	            dataType: 'json',
-	            contentType: 'application/json'
-	        }, options || {});
-	        var promise = _promise2.default.resolve($.ajax(config));
-	        return _PromiseService2.default.registerPromise(promise);
-	    },
-	
-	    sendFormData: function sendFormData(url, formData) {
-	        _utilsApi.helpers.assertArgumentNotFalsy(url, 'url');
-	        _utilsApi.helpers.assertArgumentNotFalsy(formData, 'formData');
-	        return _promise2.default.resolve($.ajax({
-	            url: url,
-	            type: 'POST',
-	            data: formData,
-	            processData: false,
-	            contentType: false
-	        }));
-	    },
-	
-	    getJsApiResponse: function getJsApiResponse(url, parameterNames, parameters, callback) {
-	        if (callback && !_.isFunction(callback)) {
-	            _utilsApi.helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
-	        }
-	        var parametersLength = _.last(parameters) === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
-	        if (parametersLength < parameterNames.length) {
-	            _utilsApi.helpers.throwFormatError(_utilsApi.helpers.format('Invalid request parameters: expected {0} parameters, actual: {1}.', parameterNames.length, parametersLength));
-	        }
-	        var successCallback = callback || null;
-	
-	        var data = {};
-	        for (var i = 0; i < parameterNames.length; i++) {
-	            data[parameterNames[i]] = parameters[i];
-	        }
-	
-	        return this.getResponse('POST', url, data, {
-	            success: function (result) {
-	                if (result.success !== true) {
-	                    this.trigger('jsApi:error', result);
-	                } else if (successCallback) {
-	                    successCallback(result.data);
-	                }
-	            }.bind(this)
-	        }).then(function (result) {
-	            if (result.success !== true) {
-	                this.trigger('jsApi:error', result);
-	                var error = new Error(result.errorMessage);
-	                error.name = 'JsApiError';
-	                error.errorType = result.errorType;
-	                error.errorData = result.errorData;
-	                error.source = result;
-	                throw error;
-	            }
-	            // TODO: remove this check!
-	            if (result.refresh) {
-	                _.defer(function () {
-	                    window.location.reload();
-	                });
-	            }
-	            return result.data;
-	        }.bind(this));
-	    }
-	};
-	
-	var global = window;
-	var AjaxService = Marionette.Object.extend(AjaxServicePrototype);
-	global.Ajax = new AjaxService();
-	
-	exports.default = global.Ajax;
-
-/***/ },
-/* 197 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 4/23/2015
-	 * Copyright: 2009-2016 Comindware
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _promise = __webpack_require__(37);
-	
-	var _promise2 = _interopRequireDefault(_promise);
-	
-	__webpack_require__(1);
-	
-	var _MessageView = __webpack_require__(428);
-	
-	var _MessageView2 = _interopRequireDefault(_MessageView);
-	
-	var _WindowService = __webpack_require__(73);
-	
-	var _WindowService2 = _interopRequireDefault(_WindowService);
-	
-	var _LocalizationService = __webpack_require__(10);
-	
-	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var iconIds = {
-	    NONE: 'none',
-	    QUESTION: 'question',
-	    ERROR: 'error'
-	};
-	
-	exports.default = {
-	    confirm: function confirm(description) {
-	        return this.askYesNo(description, _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.TITLE.CONFIRMATION'));
-	    },
-	
-	    askYesNo: function askYesNo(description, text) {
-	        return this.showMessageDialog(description, text, [{
-	            id: true,
-	            text: _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.BUTTONS.YES')
-	        }, {
-	            id: false,
-	            text: _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.BUTTONS.NO'),
-	            default: true
-	        }], iconIds.QUESTION);
-	    },
-	
-	    error: function error(description, text) {
-	        text = text || _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.TITLE.ERROR');
-	        return this.showMessageDialog(description, text, [{
-	            id: false,
-	            text: _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.BUTTONS.OK'),
-	            default: true
-	        }], iconIds.ERROR);
-	    },
-	
-	    showMessageDialog: function showMessageDialog(description, text, buttons, iconId) {
-	        iconId = iconId || iconIds.NONE;
-	        var deferred = _promise2.default.pending();
-	        var view = new _MessageView2.default({
-	            model: new Backbone.Model({
-	                iconId: iconId,
-	                text: text,
-	                description: description,
-	                buttons: buttons || []
-	            })
-	        });
-	        view.once('close', function (result) {
-	            deferred.resolve(result);
-	        });
-	        _WindowService2.default.showPopup(view, { fadeOut: false });
-	        return deferred.promise;
-	    }
-	};
-
-/***/ },
-/* 198 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 8/27/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	var promiseQueue = [];
-	
-	exports.default = {
-	    registerPromise: function registerPromise(promise) {
-	        promiseQueue.push(promise);
-	
-	        return promise.finally(function () {
-	            delete promiseQueue.splice(promiseQueue.indexOf(promise), 1);
-	        });
-	    },
-	
-	    cancelAll: function cancelAll() {
-	        _.each(promiseQueue, function (promise) {
-	            promise.cancel();
-	        });
-	    }
-	};
-
-/***/ },
-/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10700,7 +5089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(37);
+	var _promise = __webpack_require__(39);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -11074,110 +5463,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 200 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 9/16/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _fadingPanel = __webpack_require__(752);
-	
-	var _fadingPanel2 = _interopRequireDefault(_fadingPanel);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = Marionette.ItemView.extend({
-	    initialize: function initialize() {},
-	
-	    template: _libApi.Handlebars.compile(_fadingPanel2.default),
-	
-	    className: 'fadingPanel',
-	
-	    events: {
-	        'click': '__onClick'
-	    },
-	
-	    fadeIn: function fadeIn(options) {
-	        this.activeOptions = options || null;
-	        this.$el.addClass('fadingPanel_open');
-	    },
-	
-	    fadeOut: function fadeOut() {
-	        this.activeOptions = null;
-	        this.$el.removeClass('fadingPanel_open');
-	    },
-	
-	    __onClick: function __onClick() {
-	        this.trigger('click', this, this.activeOptions);
-	    }
-	});
+	module.exports = { "default": __webpack_require__(470), __esModule: true };
 
 /***/ },
-/* 201 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Ksenia Kartvelishvili
-	 * Date: 29.06.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _loading = __webpack_require__(754);
-	
-	var _loading2 = _interopRequireDefault(_loading);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = Marionette.ItemView.extend({
-	    templateHelpers: function templateHelpers() {
-	        return {
-	            text: this.options.text
-	        };
-	    },
-	
-	    template: _libApi.Handlebars.compile(_loading2.default),
-	
-	    className: 'l-loader'
-	});
-
-/***/ },
-/* 202 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(462), __esModule: true };
-
-/***/ },
-/* 203 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _defineProperty = __webpack_require__(452);
+	var _defineProperty = __webpack_require__(458);
 	
 	var _defineProperty2 = _interopRequireDefault(_defineProperty);
 	
@@ -11199,50 +5498,6168 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
+/* 123 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	var _iterator = __webpack_require__(460);
+	
+	var _iterator2 = _interopRequireDefault(_iterator);
+	
+	var _symbol = __webpack_require__(459);
+	
+	var _symbol2 = _interopRequireDefault(_symbol);
+	
+	var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj; };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+	  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+	} : function (obj) {
+	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+	};
+
+/***/ },
+/* 124 */
+21,
+/* 125 */
+31,
+/* 126 */
+[832, 78, 26],
+/* 127 */
+/***/ function(module, exports) {
+
+	// IE 8- don't enum bug keys
+	module.exports = (
+	  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+	).split(',');
+
+/***/ },
+/* 128 */
+104,
+/* 129 */
+[859, 130, 95],
+/* 130 */
+[860, 26],
+/* 131 */
+49,
+/* 132 */
+[866, 131],
+/* 133 */
+[867, 125],
+/* 134 */
+[868, 78],
+/* 135 */
+[869, 26, 29, 92, 136, 40],
+/* 136 */
+[870, 20],
+/* 137 */
+[878, 496, 217],
+/* 138 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
+	'use strict';
+	var toObject = __webpack_require__(17)
+	  , toIndex  = __webpack_require__(62)
+	  , toLength = __webpack_require__(16);
+	module.exports = function fill(value /*, start = 0, end = @length */){
+	  var O      = toObject(this)
+	    , length = toLength(O.length)
+	    , aLen   = arguments.length
+	    , index  = toIndex(aLen > 1 ? arguments[1] : undefined, length)
+	    , end    = aLen > 2 ? arguments[2] : undefined
+	    , endPos = end === undefined ? length : toIndex(end, length);
+	  while(endPos > index)O[index++] = value;
+	  return O;
+	};
+
+/***/ },
+/* 139 */
+[829, 14, 48],
+/* 140 */
+[832, 9, 7],
+/* 141 */
+127,
+/* 142 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MATCH = __webpack_require__(12)('match');
+	module.exports = function(KEY){
+	  var re = /./;
+	  try {
+	    '/./'[KEY](re);
+	  } catch(e){
+	    try {
+	      re[MATCH] = false;
+	      return !'/./'[KEY](re);
+	    } catch(f){ /* empty */ }
+	  } return true;
+	};
+
+/***/ },
+/* 143 */
+[836, 7],
+/* 144 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject       = __webpack_require__(9)
+	  , setPrototypeOf = __webpack_require__(152).set;
+	module.exports = function(that, target, C){
+	  var P, S = target.constructor;
+	  if(S !== C && typeof S == 'function' && (P = S.prototype) !== C.prototype && isObject(P) && setPrototypeOf){
+	    setPrototypeOf(that, P);
+	  } return that;
+	};
+
+/***/ },
+/* 145 */
+[839, 69, 12],
+/* 146 */
+[840, 30],
+/* 147 */
+[842, 57, 48, 70, 22, 12],
+/* 148 */
+[843, 56, 2, 23, 22, 19, 69, 147, 70, 28, 12],
+/* 149 */
+/***/ function(module, exports) {
+
+	// 20.2.2.14 Math.expm1(x)
+	var $expm1 = Math.expm1;
+	module.exports = (!$expm1
+	  // Old FF bug
+	  || $expm1(10) > 22025.465794806719 || $expm1(10) < 22025.4657948067165168
+	  // Tor Browser bug
+	  || $expm1(-2e-17) != -2e-17
+	) ? function expm1(x){
+	  return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : Math.exp(x) - 1;
+	} : $expm1;
+
+/***/ },
+/* 150 */
+/***/ function(module, exports) {
+
+	// 20.2.2.28 Math.sign(x)
+	module.exports = Math.sign || function sign(x){
+	  return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
+	};
+
+/***/ },
+/* 151 */
+[847, 7, 159, 30],
+/* 152 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Works with __proto__ only. Old v8 can't work with null proto objects.
+	/* eslint-disable no-proto */
+	var isObject = __webpack_require__(9)
+	  , anObject = __webpack_require__(5);
+	var check = function(O, proto){
+	  anObject(O);
+	  if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
+	};
+	module.exports = {
+	  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+	    function(test, buggy, set){
+	      try {
+	        set = __webpack_require__(42)(Function.call, __webpack_require__(27).f(Object.prototype, '__proto__').set, 2);
+	        set(test, []);
+	        buggy = !(test instanceof Array);
+	      } catch(e){ buggy = true; }
+	      return function setPrototypeOf(O, proto){
+	        check(O, proto);
+	        if(buggy)O.__proto__ = proto;
+	        else set(O, proto);
+	        return O;
+	      };
+	    }({}, false) : undefined),
+	  check: check
+	};
+
+/***/ },
+/* 153 */
+[859, 105, 63],
+/* 154 */
+[861, 5, 21, 12],
+/* 155 */
+[862, 49, 31],
+/* 156 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// helper for String#{startsWith, endsWith, includes}
+	var isRegExp = __webpack_require__(101)
+	  , defined  = __webpack_require__(31);
+	
+	module.exports = function(that, searchString, NAME){
+	  if(isRegExp(searchString))throw TypeError('String#' + NAME + " doesn't accept regex!");
+	  return String(defined(that));
+	};
+
+/***/ },
+/* 157 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var toInteger = __webpack_require__(49)
+	  , defined   = __webpack_require__(31);
+	
+	module.exports = function repeat(count){
+	  var str = String(defined(this))
+	    , res = ''
+	    , n   = toInteger(count);
+	  if(n < 0 || n == Infinity)throw RangeError("Count can't be negative");
+	  for(;n > 0; (n >>>= 1) && (str += str))if(n & 1)res += str;
+	  return res;
+	};
+
+/***/ },
+/* 158 */
+/***/ function(module, exports) {
+
+	module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+	  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+/***/ },
+/* 159 */
+[863, 42, 100, 143, 140, 7, 30],
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var global         = __webpack_require__(7)
+	  , DESCRIPTORS    = __webpack_require__(13)
+	  , LIBRARY        = __webpack_require__(56)
+	  , $typed         = __webpack_require__(106)
+	  , hide           = __webpack_require__(22)
+	  , redefineAll    = __webpack_require__(60)
+	  , fails          = __webpack_require__(8)
+	  , anInstance     = __webpack_require__(55)
+	  , toInteger      = __webpack_require__(49)
+	  , toLength       = __webpack_require__(16)
+	  , gOPN           = __webpack_require__(58).f
+	  , dP             = __webpack_require__(14).f
+	  , arrayFill      = __webpack_require__(138)
+	  , setToStringTag = __webpack_require__(70)
+	  , ARRAY_BUFFER   = 'ArrayBuffer'
+	  , DATA_VIEW      = 'DataView'
+	  , PROTOTYPE      = 'prototype'
+	  , WRONG_LENGTH   = 'Wrong length!'
+	  , WRONG_INDEX    = 'Wrong index!'
+	  , $ArrayBuffer   = global[ARRAY_BUFFER]
+	  , $DataView      = global[DATA_VIEW]
+	  , Math           = global.Math
+	  , RangeError     = global.RangeError
+	  , Infinity       = global.Infinity
+	  , BaseBuffer     = $ArrayBuffer
+	  , abs            = Math.abs
+	  , pow            = Math.pow
+	  , floor          = Math.floor
+	  , log            = Math.log
+	  , LN2            = Math.LN2
+	  , BUFFER         = 'buffer'
+	  , BYTE_LENGTH    = 'byteLength'
+	  , BYTE_OFFSET    = 'byteOffset'
+	  , $BUFFER        = DESCRIPTORS ? '_b' : BUFFER
+	  , $LENGTH        = DESCRIPTORS ? '_l' : BYTE_LENGTH
+	  , $OFFSET        = DESCRIPTORS ? '_o' : BYTE_OFFSET;
+	
+	// IEEE754 conversions based on https://github.com/feross/ieee754
+	var packIEEE754 = function(value, mLen, nBytes){
+	  var buffer = Array(nBytes)
+	    , eLen   = nBytes * 8 - mLen - 1
+	    , eMax   = (1 << eLen) - 1
+	    , eBias  = eMax >> 1
+	    , rt     = mLen === 23 ? pow(2, -24) - pow(2, -77) : 0
+	    , i      = 0
+	    , s      = value < 0 || value === 0 && 1 / value < 0 ? 1 : 0
+	    , e, m, c;
+	  value = abs(value)
+	  if(value != value || value === Infinity){
+	    m = value != value ? 1 : 0;
+	    e = eMax;
+	  } else {
+	    e = floor(log(value) / LN2);
+	    if(value * (c = pow(2, -e)) < 1){
+	      e--;
+	      c *= 2;
+	    }
+	    if(e + eBias >= 1){
+	      value += rt / c;
+	    } else {
+	      value += rt * pow(2, 1 - eBias);
+	    }
+	    if(value * c >= 2){
+	      e++;
+	      c /= 2;
+	    }
+	    if(e + eBias >= eMax){
+	      m = 0;
+	      e = eMax;
+	    } else if(e + eBias >= 1){
+	      m = (value * c - 1) * pow(2, mLen);
+	      e = e + eBias;
+	    } else {
+	      m = value * pow(2, eBias - 1) * pow(2, mLen);
+	      e = 0;
+	    }
+	  }
+	  for(; mLen >= 8; buffer[i++] = m & 255, m /= 256, mLen -= 8);
+	  e = e << mLen | m;
+	  eLen += mLen;
+	  for(; eLen > 0; buffer[i++] = e & 255, e /= 256, eLen -= 8);
+	  buffer[--i] |= s * 128;
+	  return buffer;
+	};
+	var unpackIEEE754 = function(buffer, mLen, nBytes){
+	  var eLen  = nBytes * 8 - mLen - 1
+	    , eMax  = (1 << eLen) - 1
+	    , eBias = eMax >> 1
+	    , nBits = eLen - 7
+	    , i     = nBytes - 1
+	    , s     = buffer[i--]
+	    , e     = s & 127
+	    , m;
+	  s >>= 7;
+	  for(; nBits > 0; e = e * 256 + buffer[i], i--, nBits -= 8);
+	  m = e & (1 << -nBits) - 1;
+	  e >>= -nBits;
+	  nBits += mLen;
+	  for(; nBits > 0; m = m * 256 + buffer[i], i--, nBits -= 8);
+	  if(e === 0){
+	    e = 1 - eBias;
+	  } else if(e === eMax){
+	    return m ? NaN : s ? -Infinity : Infinity;
+	  } else {
+	    m = m + pow(2, mLen);
+	    e = e - eBias;
+	  } return (s ? -1 : 1) * m * pow(2, e - mLen);
+	};
+	
+	var unpackI32 = function(bytes){
+	  return bytes[3] << 24 | bytes[2] << 16 | bytes[1] << 8 | bytes[0];
+	};
+	var packI8 = function(it){
+	  return [it & 0xff];
+	};
+	var packI16 = function(it){
+	  return [it & 0xff, it >> 8 & 0xff];
+	};
+	var packI32 = function(it){
+	  return [it & 0xff, it >> 8 & 0xff, it >> 16 & 0xff, it >> 24 & 0xff];
+	};
+	var packF64 = function(it){
+	  return packIEEE754(it, 52, 8);
+	};
+	var packF32 = function(it){
+	  return packIEEE754(it, 23, 4);
+	};
+	
+	var addGetter = function(C, key, internal){
+	  dP(C[PROTOTYPE], key, {get: function(){ return this[internal]; }});
+	};
+	
+	var get = function(view, bytes, index, isLittleEndian){
+	  var numIndex = +index
+	    , intIndex = toInteger(numIndex);
+	  if(numIndex != intIndex || intIndex < 0 || intIndex + bytes > view[$LENGTH])throw RangeError(WRONG_INDEX);
+	  var store = view[$BUFFER]._b
+	    , start = intIndex + view[$OFFSET]
+	    , pack  = store.slice(start, start + bytes);
+	  return isLittleEndian ? pack : pack.reverse();
+	};
+	var set = function(view, bytes, index, conversion, value, isLittleEndian){
+	  var numIndex = +index
+	    , intIndex = toInteger(numIndex);
+	  if(numIndex != intIndex || intIndex < 0 || intIndex + bytes > view[$LENGTH])throw RangeError(WRONG_INDEX);
+	  var store = view[$BUFFER]._b
+	    , start = intIndex + view[$OFFSET]
+	    , pack  = conversion(+value);
+	  for(var i = 0; i < bytes; i++)store[start + i] = pack[isLittleEndian ? i : bytes - i - 1];
+	};
+	
+	var validateArrayBufferArguments = function(that, length){
+	  anInstance(that, $ArrayBuffer, ARRAY_BUFFER);
+	  var numberLength = +length
+	    , byteLength   = toLength(numberLength);
+	  if(numberLength != byteLength)throw RangeError(WRONG_LENGTH);
+	  return byteLength;
+	};
+	
+	if(!$typed.ABV){
+	  $ArrayBuffer = function ArrayBuffer(length){
+	    var byteLength = validateArrayBufferArguments(this, length);
+	    this._b       = arrayFill.call(Array(byteLength), 0);
+	    this[$LENGTH] = byteLength;
+	  };
+	
+	  $DataView = function DataView(buffer, byteOffset, byteLength){
+	    anInstance(this, $DataView, DATA_VIEW);
+	    anInstance(buffer, $ArrayBuffer, DATA_VIEW);
+	    var bufferLength = buffer[$LENGTH]
+	      , offset       = toInteger(byteOffset);
+	    if(offset < 0 || offset > bufferLength)throw RangeError('Wrong offset!');
+	    byteLength = byteLength === undefined ? bufferLength - offset : toLength(byteLength);
+	    if(offset + byteLength > bufferLength)throw RangeError(WRONG_LENGTH);
+	    this[$BUFFER] = buffer;
+	    this[$OFFSET] = offset;
+	    this[$LENGTH] = byteLength;
+	  };
+	
+	  if(DESCRIPTORS){
+	    addGetter($ArrayBuffer, BYTE_LENGTH, '_l');
+	    addGetter($DataView, BUFFER, '_b');
+	    addGetter($DataView, BYTE_LENGTH, '_l');
+	    addGetter($DataView, BYTE_OFFSET, '_o');
+	  }
+	
+	  redefineAll($DataView[PROTOTYPE], {
+	    getInt8: function getInt8(byteOffset){
+	      return get(this, 1, byteOffset)[0] << 24 >> 24;
+	    },
+	    getUint8: function getUint8(byteOffset){
+	      return get(this, 1, byteOffset)[0];
+	    },
+	    getInt16: function getInt16(byteOffset /*, littleEndian */){
+	      var bytes = get(this, 2, byteOffset, arguments[1]);
+	      return (bytes[1] << 8 | bytes[0]) << 16 >> 16;
+	    },
+	    getUint16: function getUint16(byteOffset /*, littleEndian */){
+	      var bytes = get(this, 2, byteOffset, arguments[1]);
+	      return bytes[1] << 8 | bytes[0];
+	    },
+	    getInt32: function getInt32(byteOffset /*, littleEndian */){
+	      return unpackI32(get(this, 4, byteOffset, arguments[1]));
+	    },
+	    getUint32: function getUint32(byteOffset /*, littleEndian */){
+	      return unpackI32(get(this, 4, byteOffset, arguments[1])) >>> 0;
+	    },
+	    getFloat32: function getFloat32(byteOffset /*, littleEndian */){
+	      return unpackIEEE754(get(this, 4, byteOffset, arguments[1]), 23, 4);
+	    },
+	    getFloat64: function getFloat64(byteOffset /*, littleEndian */){
+	      return unpackIEEE754(get(this, 8, byteOffset, arguments[1]), 52, 8);
+	    },
+	    setInt8: function setInt8(byteOffset, value){
+	      set(this, 1, byteOffset, packI8, value);
+	    },
+	    setUint8: function setUint8(byteOffset, value){
+	      set(this, 1, byteOffset, packI8, value);
+	    },
+	    setInt16: function setInt16(byteOffset, value /*, littleEndian */){
+	      set(this, 2, byteOffset, packI16, value, arguments[2]);
+	    },
+	    setUint16: function setUint16(byteOffset, value /*, littleEndian */){
+	      set(this, 2, byteOffset, packI16, value, arguments[2]);
+	    },
+	    setInt32: function setInt32(byteOffset, value /*, littleEndian */){
+	      set(this, 4, byteOffset, packI32, value, arguments[2]);
+	    },
+	    setUint32: function setUint32(byteOffset, value /*, littleEndian */){
+	      set(this, 4, byteOffset, packI32, value, arguments[2]);
+	    },
+	    setFloat32: function setFloat32(byteOffset, value /*, littleEndian */){
+	      set(this, 4, byteOffset, packF32, value, arguments[2]);
+	    },
+	    setFloat64: function setFloat64(byteOffset, value /*, littleEndian */){
+	      set(this, 8, byteOffset, packF64, value, arguments[2]);
+	    }
+	  });
+	} else {
+	  if(!fails(function(){
+	    new $ArrayBuffer;     // eslint-disable-line no-new
+	  }) || !fails(function(){
+	    new $ArrayBuffer(.5); // eslint-disable-line no-new
+	  })){
+	    $ArrayBuffer = function ArrayBuffer(length){
+	      return new BaseBuffer(validateArrayBufferArguments(this, length));
+	    };
+	    var ArrayBufferProto = $ArrayBuffer[PROTOTYPE] = BaseBuffer[PROTOTYPE];
+	    for(var keys = gOPN(BaseBuffer), j = 0, key; keys.length > j; ){
+	      if(!((key = keys[j++]) in $ArrayBuffer))hide($ArrayBuffer, key, BaseBuffer[key]);
+	    };
+	    if(!LIBRARY)ArrayBufferProto.constructor = $ArrayBuffer;
+	  }
+	  // iOS Safari 7.x bug
+	  var view = new $DataView(new $ArrayBuffer(2))
+	    , $setInt8 = $DataView[PROTOTYPE].setInt8;
+	  view.setInt8(0, 2147483648);
+	  view.setInt8(1, 2147483649);
+	  if(view.getInt8(0) || !view.getInt8(1))redefineAll($DataView[PROTOTYPE], {
+	    setInt8: function setInt8(byteOffset, value){
+	      $setInt8.call(this, byteOffset, value << 24 >> 24);
+	    },
+	    setUint8: function setUint8(byteOffset, value){
+	      $setInt8.call(this, byteOffset, value << 24 >> 24);
+	    }
+	  }, true);
+	}
+	setToStringTag($ArrayBuffer, ARRAY_BUFFER);
+	setToStringTag($DataView, DATA_VIEW);
+	hide($DataView[PROTOTYPE], $typed.VIEW, true);
+	exports[ARRAY_BUFFER] = $ArrayBuffer;
+	exports[DATA_VIEW] = $DataView;
+
+/***/ },
+/* 161 */
+[869, 7, 41, 56, 250, 14],
+/* 162 */
+[872, 82, 12, 69, 41],
+/* 163 */
+[874, 67, 238, 69, 25, 148],
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : german (de)
+	//! author : lluchs : https://github.com/lluchs
+	//! author: Menelion Elensúle: https://github.com/Oire
+	//! author : Mikolaj Dadela : https://github.com/mik01aj
+	
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(3)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+	
+	
+	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
+	        var format = {
+	            'm': ['eine Minute', 'einer Minute'],
+	            'h': ['eine Stunde', 'einer Stunde'],
+	            'd': ['ein Tag', 'einem Tag'],
+	            'dd': [number + ' Tage', number + ' Tagen'],
+	            'M': ['ein Monat', 'einem Monat'],
+	            'MM': [number + ' Monate', number + ' Monaten'],
+	            'y': ['ein Jahr', 'einem Jahr'],
+	            'yy': [number + ' Jahre', number + ' Jahren']
+	        };
+	        return withoutSuffix ? format[key][0] : format[key][1];
+	    }
+	
+	    var de = moment.defineLocale('de', {
+	        months : 'Januar_Februar_März_April_Mai_Juni_Juli_August_September_Oktober_November_Dezember'.split('_'),
+	        monthsShort : 'Jan._Febr._Mrz._Apr._Mai_Jun._Jul._Aug._Sept._Okt._Nov._Dez.'.split('_'),
+	        weekdays : 'Sonntag_Montag_Dienstag_Mittwoch_Donnerstag_Freitag_Samstag'.split('_'),
+	        weekdaysShort : 'So._Mo._Di._Mi._Do._Fr._Sa.'.split('_'),
+	        weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
+	        longDateFormat : {
+	            LT: 'HH:mm',
+	            LTS: 'HH:mm:ss',
+	            L : 'DD.MM.YYYY',
+	            LL : 'D. MMMM YYYY',
+	            LLL : 'D. MMMM YYYY HH:mm',
+	            LLLL : 'dddd, D. MMMM YYYY HH:mm'
+	        },
+	        calendar : {
+	            sameDay: '[heute um] LT [Uhr]',
+	            sameElse: 'L',
+	            nextDay: '[morgen um] LT [Uhr]',
+	            nextWeek: 'dddd [um] LT [Uhr]',
+	            lastDay: '[gestern um] LT [Uhr]',
+	            lastWeek: '[letzten] dddd [um] LT [Uhr]'
+	        },
+	        relativeTime : {
+	            future : 'in %s',
+	            past : 'vor %s',
+	            s : 'ein paar Sekunden',
+	            m : processRelativeTime,
+	            mm : '%d Minuten',
+	            h : processRelativeTime,
+	            hh : '%d Stunden',
+	            d : processRelativeTime,
+	            dd : processRelativeTime,
+	            M : processRelativeTime,
+	            MM : processRelativeTime,
+	            y : processRelativeTime,
+	            yy : processRelativeTime
+	        },
+	        ordinalParse: /\d{1,2}\./,
+	        ordinal : '%d.',
+	        week : {
+	            dow : 1, // Monday is the first day of the week.
+	            doy : 4  // The week that contains Jan 4th is the first week of the year.
+	        }
+	    });
+	
+	    return de;
+	
+	}));
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : great britain english (en-gb)
+	//! author : Chris Gedrim : https://github.com/chrisgedrim
+	
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(3)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+	
+	
+	    var en_gb = moment.defineLocale('en-gb', {
+	        months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+	        monthsShort : 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
+	        weekdays : 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
+	        weekdaysShort : 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
+	        weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'DD/MM/YYYY',
+	            LL : 'D MMMM YYYY',
+	            LLL : 'D MMMM YYYY HH:mm',
+	            LLLL : 'dddd, D MMMM YYYY HH:mm'
+	        },
+	        calendar : {
+	            sameDay : '[Today at] LT',
+	            nextDay : '[Tomorrow at] LT',
+	            nextWeek : 'dddd [at] LT',
+	            lastDay : '[Yesterday at] LT',
+	            lastWeek : '[Last] dddd [at] LT',
+	            sameElse : 'L'
+	        },
+	        relativeTime : {
+	            future : 'in %s',
+	            past : '%s ago',
+	            s : 'a few seconds',
+	            m : 'a minute',
+	            mm : '%d minutes',
+	            h : 'an hour',
+	            hh : '%d hours',
+	            d : 'a day',
+	            dd : '%d days',
+	            M : 'a month',
+	            MM : '%d months',
+	            y : 'a year',
+	            yy : '%d years'
+	        },
+	        ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+	        ordinal : function (number) {
+	            var b = number % 10,
+	                output = (~~(number % 100 / 10) === 1) ? 'th' :
+	                (b === 1) ? 'st' :
+	                (b === 2) ? 'nd' :
+	                (b === 3) ? 'rd' : 'th';
+	            return number + output;
+	        },
+	        week : {
+	            dow : 1, // Monday is the first day of the week.
+	            doy : 4  // The week that contains Jan 4th is the first week of the year.
+	        }
+	    });
+	
+	    return en_gb;
+	
+	}));
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//! moment.js locale configuration
+	//! locale : russian (ru)
+	//! author : Viktorminator : https://github.com/Viktorminator
+	//! Author : Menelion Elensúle : https://github.com/Oire
+	
+	;(function (global, factory) {
+	    true ? factory(__webpack_require__(3)) :
+	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
+	   factory(global.moment)
+	}(this, function (moment) { 'use strict';
+	
+	
+	    function plural(word, num) {
+	        var forms = word.split('_');
+	        return num % 10 === 1 && num % 100 !== 11 ? forms[0] : (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? forms[1] : forms[2]);
+	    }
+	    function relativeTimeWithPlural(number, withoutSuffix, key) {
+	        var format = {
+	            'mm': withoutSuffix ? 'минута_минуты_минут' : 'минуту_минуты_минут',
+	            'hh': 'час_часа_часов',
+	            'dd': 'день_дня_дней',
+	            'MM': 'месяц_месяца_месяцев',
+	            'yy': 'год_года_лет'
+	        };
+	        if (key === 'm') {
+	            return withoutSuffix ? 'минута' : 'минуту';
+	        }
+	        else {
+	            return number + ' ' + plural(format[key], +number);
+	        }
+	    }
+	    var monthsParse = [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i];
+	
+	    var ru = moment.defineLocale('ru', {
+	        months : {
+	            format: 'Января_Февраля_Марта_Апреля_Мая_Июня_Июля_Августа_Сентября_Октября_Ноября_Декабря'.split('_'),
+	            standalone: 'Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь'.split('_')
+	        },
+	        monthsShort : {
+	            format: 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_'),
+	            standalone: 'янв_фев_март_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_')
+	        },
+	        weekdays : {
+	            standalone: 'Воскресенье_Понедельник_Вторник_Среда_Четверг_Пятница_Суббота'.split('_'),
+	            format: 'Воскресенье_Понедельник_Вторник_Среду_Четверг_Пятницу_Субботу'.split('_'),
+	            isFormat: /\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/
+	        },
+	        weekdaysShort : 'Вс_Пн_Вт_Ср_Чт_Пт_Сб'.split('_'),
+	        weekdaysMin : 'Вс_Пн_Вт_Ср_Чт_Пт_Сб'.split('_'),
+	        monthsParse : monthsParse,
+	        longMonthsParse : monthsParse,
+	        shortMonthsParse : monthsParse,
+	        longDateFormat : {
+	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
+	            L : 'DD.MM.YYYY',
+	            LL : 'D MMMM YYYY г.',
+	            LLL : 'D MMMM YYYY г., HH:mm',
+	            LLLL : 'dddd, D MMMM YYYY г., HH:mm'
+	        },
+	        calendar : {
+	            sameDay: '[Сегодня в] LT',
+	            nextDay: '[Завтра в] LT',
+	            lastDay: '[Вчера в] LT',
+	            nextWeek: function (now) {
+	                if (now.week() !== this.week()) {
+	                    switch (this.day()) {
+	                    case 0:
+	                        return '[В следующее] dddd [в] LT';
+	                    case 1:
+	                    case 2:
+	                    case 4:
+	                        return '[В следующий] dddd [в] LT';
+	                    case 3:
+	                    case 5:
+	                    case 6:
+	                        return '[В следующую] dddd [в] LT';
+	                    }
+	                } else {
+	                    if (this.day() === 2) {
+	                        return '[Во] dddd [в] LT';
+	                    } else {
+	                        return '[В] dddd [в] LT';
+	                    }
+	                }
+	            },
+	            lastWeek: function (now) {
+	                if (now.week() !== this.week()) {
+	                    switch (this.day()) {
+	                    case 0:
+	                        return '[В прошлое] dddd [в] LT';
+	                    case 1:
+	                    case 2:
+	                    case 4:
+	                        return '[В прошлый] dddd [в] LT';
+	                    case 3:
+	                    case 5:
+	                    case 6:
+	                        return '[В прошлую] dddd [в] LT';
+	                    }
+	                } else {
+	                    if (this.day() === 2) {
+	                        return '[Во] dddd [в] LT';
+	                    } else {
+	                        return '[В] dddd [в] LT';
+	                    }
+	                }
+	            },
+	            sameElse: 'L'
+	        },
+	        relativeTime : {
+	            future : 'через %s',
+	            past : '%s назад',
+	            s : 'несколько секунд',
+	            m : relativeTimeWithPlural,
+	            mm : relativeTimeWithPlural,
+	            h : 'час',
+	            hh : relativeTimeWithPlural,
+	            d : 'день',
+	            dd : relativeTimeWithPlural,
+	            M : 'месяц',
+	            MM : relativeTimeWithPlural,
+	            y : 'год',
+	            yy : relativeTimeWithPlural
+	        },
+	        meridiemParse: /ночи|утра|дня|вечера/i,
+	        isPM : function (input) {
+	            return /^(дня|вечера)$/.test(input);
+	        },
+	        meridiem : function (hour, minute, isLower) {
+	            if (hour < 4) {
+	                return 'ночи';
+	            } else if (hour < 12) {
+	                return 'утра';
+	            } else if (hour < 17) {
+	                return 'дня';
+	            } else {
+	                return 'вечера';
+	            }
+	        },
+	        ordinalParse: /\d{1,2}-(й|го|я)/,
+	        ordinal: function (number, period) {
+	            switch (period) {
+	            case 'M':
+	            case 'd':
+	            case 'DDD':
+	                return number + '-й';
+	            case 'D':
+	                return number + '-го';
+	            case 'w':
+	            case 'W':
+	                return number + '-я';
+	            default:
+	                return number;
+	            }
+	        },
+	        week : {
+	            dow : 1, // Monday is the first day of the week.
+	            doy : 7  // The week that contains Jan 1st is the first week of the year.
+	        }
+	    });
+	
+	    return ru;
+	
+	}));
+
+/***/ },
+/* 167 */
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+	
+	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+	
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+	
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
+	    draining = true;
+	
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    cachedClearTimeout(timeout);
+	}
+	
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        cachedSetTimeout(drainQueue, 0);
+	    }
+	};
+	
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+	
+	function noop() {}
+	
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+	
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+	
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(167).nextTick;
+	var apply = Function.prototype.apply;
+	var slice = Array.prototype.slice;
+	var immediateIds = {};
+	var nextImmediateId = 0;
+	
+	// DOM APIs, for completeness
+	
+	exports.setTimeout = function() {
+	  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+	};
+	exports.setInterval = function() {
+	  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+	};
+	exports.clearTimeout =
+	exports.clearInterval = function(timeout) { timeout.close(); };
+	
+	function Timeout(id, clearFn) {
+	  this._id = id;
+	  this._clearFn = clearFn;
+	}
+	Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+	Timeout.prototype.close = function() {
+	  this._clearFn.call(window, this._id);
+	};
+	
+	// Does not start the time, just sets up the members needed.
+	exports.enroll = function(item, msecs) {
+	  clearTimeout(item._idleTimeoutId);
+	  item._idleTimeout = msecs;
+	};
+	
+	exports.unenroll = function(item) {
+	  clearTimeout(item._idleTimeoutId);
+	  item._idleTimeout = -1;
+	};
+	
+	exports._unrefActive = exports.active = function(item) {
+	  clearTimeout(item._idleTimeoutId);
+	
+	  var msecs = item._idleTimeout;
+	  if (msecs >= 0) {
+	    item._idleTimeoutId = setTimeout(function onTimeout() {
+	      if (item._onTimeout)
+	        item._onTimeout();
+	    }, msecs);
+	  }
+	};
+	
+	// That's not how node.js implements it but the exposed api is the same.
+	exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+	  var id = nextImmediateId++;
+	  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+	
+	  immediateIds[id] = true;
+	
+	  nextTick(function onNextTick() {
+	    if (immediateIds[id]) {
+	      // fn.call() is faster so we optimize for the common use-case
+	      // @see http://jsperf.com/call-apply-segu
+	      if (args) {
+	        fn.apply(null, args);
+	      } else {
+	        fn.call(null);
+	      }
+	      // Prevent ids from leaking
+	      exports.clearImmediate(id);
+	    }
+	  });
+	
+	  return id;
+	};
+	
+	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+	  delete immediateIds[id];
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(168).setImmediate, __webpack_require__(168).clearImmediate))
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var makeString = __webpack_require__(6);
+	
+	module.exports = function capitalize(str, lowercaseRest) {
+	  str = makeString(str);
+	  var remainingChars = !lowercaseRest ? str.slice(1) : str.slice(1).toLowerCase();
+	
+	  return str.charAt(0).toUpperCase() + remainingChars;
+	};
+
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var makeString = __webpack_require__(6);
+	
+	module.exports = function chars(str) {
+	  return makeString(str).split('');
+	};
+
+
+/***/ },
+/* 171 */
+/***/ function(module, exports) {
+
+	module.exports = function strRepeat(str, qty){
+	  if (qty < 1) return '';
+	  var result = '';
+	  while (qty > 0) {
+	    if (qty & 1) result += str;
+	    qty >>= 1, str += str;
+	  }
+	  return result;
+	};
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var makeString = __webpack_require__(6);
+	var defaultToWhiteSpace = __webpack_require__(107);
+	var nativeTrimRight = String.prototype.trimRight;
+	
+	module.exports = function rtrim(str, characters) {
+	  str = makeString(str);
+	  if (!characters && nativeTrimRight) return nativeTrimRight.call(str);
+	  characters = defaultToWhiteSpace(characters);
+	  return str.replace(new RegExp(characters + '+$'), '');
+	};
+
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 7/18/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	/**
+	 * @name SlidingWindowCollection
+	 * @memberof module:core.collections
+	 * @class Коллекция-обертка, отображающая указанный интервал родительской Backbone-коллекции (скользящее окно).
+	 * @constructor
+	 * @extends Backbone.Collection
+	 * @param {Object} options Объект опций.
+	 * @param {Number} [options.position=0] Изначальное значении позиции окна.
+	 * @param {Number} [options.windowSize=0] Изначальное значение размера окна (количество элементов).
+	 * */
+	
+	var SlidingWindowCollection = Backbone.Collection.extend( /** @lends module:core.collections.SlidingWindowCollection.prototype */{
+	    constructor: function constructor(collection, options) //noinspection JSHint
+	    {
+	        options = options || {};
+	        this.parentCollection = collection;
+	        this.innerCollection = new Backbone.Collection();
+	
+	        //noinspection JSUnresolvedVariable,JSHint
+	        options.close_with && this.__bindLifecycle(options.close_with, 'close');
+	        //noinspection JSUnresolvedVariable,JSHint
+	        options.destroy_with && this.__bindLifecycle(options.destroy_with, 'destroy');
+	
+	        this.state = {
+	            position: options.position || 0,
+	            windowSize: options.windowSize || 0
+	        };
+	
+	        this.__rebuildModels();
+	
+	        this.listenTo(collection, 'add', this.__onAdd);
+	        this.listenTo(collection, 'remove', this.__onRemove);
+	        this.listenTo(collection, 'reset', this.__onReset);
+	        this.listenTo(collection, 'sort', this.__onSort);
+	
+	        _.each(['add', 'remove', 'reset', 'sort'], function (eventName) {
+	            this.listenTo(this.innerCollection, eventName, function () {
+	                var args = _.toArray(arguments);
+	                args.unshift(eventName);
+	                this.trigger.apply(this, args);
+	            });
+	        }, this);
+	
+	        this.initialize.apply(this, arguments);
+	    },
+	
+	    __rebuildModels: function __rebuildModels(options) {
+	        options = options || {};
+	        var newModels = this.parentCollection.chain().rest(this.state.position).first(this.state.windowSize).value();
+	        this.innerCollection.reset(newModels, _.extend(options, { silent: true }));
+	        this.models = this.innerCollection.models;
+	        this.length = this.innerCollection.length;
+	        this.trigger('reset', this, _.clone(options));
+	        if (this.models.length !== newModels.length) {
+	            throw new Error('SlidingWindowCollection size mismatch: does parent collection have models with duplicated id?');
+	        }
+	    },
+	
+	    __buildModelsInternal: function __buildModelsInternal(list) {
+	        for (var i = 0, len = list.length; i < len; i++) {
+	            var model = list.at(i);
+	            this.models.push(model);
+	            model.collection = this;
+	            this._byId[model.cid] = model;
+	            if (model.id) {
+	                this._byId[model.id] = model;
+	            }
+	            //noinspection JSHint
+	            !model.collapsed && model.children && this.__buildModelsInternal(model.children);
+	        }
+	        this.length = this.models.length;
+	    },
+	
+	    __bindLifecycle: function __bindLifecycle(view, methodName) {
+	        view.on(methodName, _.bind(this.stopListening, this));
+	    },
+	
+	    __onSort: function __onSort(collection, options) {
+	        this.__rebuildModels(options);
+	    },
+	
+	    __onAdd: function __onAdd(model, collection, options) {
+	        this.__rebuildModels(options);
+	    },
+	
+	    __onRemove: function __onRemove(model, collection, options) {
+	        this.__rebuildModels(options);
+	    },
+	
+	    __onReset: function __onReset(collection, options) {
+	        this.__rebuildModels(options);
+	    },
+	
+	    sort: function sort(options) {
+	        this.parentCollection.sort(options);
+	    },
+	
+	    /**
+	     * Обновить размер скользящего окна
+	     * @param {Number} newWindowSize Новый размер скользящего окна
+	     * */
+	    updateWindowSize: function updateWindowSize(newWindowSize) {
+	        if (this.state.windowSize !== newWindowSize) {
+	            this.state.windowSize = newWindowSize;
+	            this.__rebuildModels();
+	        }
+	    },
+	
+	    /**
+	     * Обновить позицию скользящего окна
+	     * @param {Number} newPosition Новая позиция скользящего окна
+	     * */
+	    updatePosition: function updatePosition(newPosition) {
+	        if (this.state.windowSize === undefined) {
+	            throw 'updatePosition() has been called before setting window size';
+	        }
+	
+	        newPosition = this.__normalizePosition(newPosition);
+	        if (newPosition === this.state.position) {
+	            return newPosition;
+	        }
+	
+	        var actualWindowSize = this.innerCollection.length;
+	        var delta = newPosition - this.state.position;
+	        var oldValues;
+	        var newValues;
+	        if (Math.abs(delta) < actualWindowSize) {
+	            // update collection via add/remove
+	            if (delta > 0) {
+	                oldValues = this.innerCollection.first(delta);
+	                this.length -= oldValues.length;
+	                this.innerCollection.remove(oldValues);
+	                newValues = this.parentCollection.chain().rest(this.state.position + actualWindowSize).first(delta).value();
+	                this.length += newValues.length;
+	                this.innerCollection.add(newValues);
+	            } else {
+	                if (this.length >= this.state.windowSize) {
+	                    oldValues = this.innerCollection.last(-delta);
+	                    this.length -= oldValues.length;
+	                    this.innerCollection.remove(oldValues);
+	                }
+	
+	                newValues = this.parentCollection.chain().rest(newPosition).first(-delta).value();
+	                this.length += newValues.length;
+	                this.innerCollection.add(newValues, {
+	                    at: 0
+	                });
+	            }
+	            this.state.position = newPosition;
+	        } else {
+	            this.state.position = newPosition;
+	            this.__rebuildModels();
+	        }
+	
+	        return newPosition;
+	    },
+	
+	    __normalizePosition: function __normalizePosition(position) {
+	        var maxPos = Math.max(0, this.parentCollection.length - 1);
+	        return Math.max(0, Math.min(maxPos, position));
+	    }
+	});
+	
+	// methods that alter data should proxy to the parent collection
+	_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'], function (methodName) {
+	    SlidingWindowCollection.prototype[methodName] = function () {
+	        return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
+	    };
+	});
+	
+	// methods that retrieves data should proxy to the inner collection
+	_.each(['each', 'at', 'get', 'filter', 'map'], function (methodName) {
+	    SlidingWindowCollection.prototype[methodName] = function () {
+	        return this.innerCollection[methodName].apply(this.innerCollection, _.toArray(arguments));
+	    };
+	});
+	
+	_.extend(SlidingWindowCollection.prototype, Backbone.Events);
+	
+	exports.default = SlidingWindowCollection;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 11/26/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _PopoutView = __webpack_require__(180);
+	
+	var _PopoutView2 = _interopRequireDefault(_PopoutView);
+	
+	var _ListPanelView = __webpack_require__(110);
+	
+	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
+	
+	var _MenuItemView = __webpack_require__(111);
+	
+	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
+	
+	var _DefaultButtonView = __webpack_require__(177);
+	
+	var _DefaultButtonView2 = _interopRequireDefault(_DefaultButtonView);
+	
+	var _MenuPanelView = __webpack_require__(179);
+	
+	var _MenuPanelView2 = _interopRequireDefault(_MenuPanelView);
+	
+	var _DropdownView = __webpack_require__(178);
+	
+	var _DropdownView2 = _interopRequireDefault(_DropdownView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * The factory covers common use cases of Popout/Dropdown views.
+	 * You can create a simple menu (and other stuff like this) in one click without lots of manual work.
+	 * @namespace factory
+	 * @memberof module:core.dropdown
+	 * */
+	
+	exports.default = /** @lends module:core.dropdown.factory */{
+	    /**
+	     * @description Метод служит для быстрого создания меню на базе {@link module:core.dropdown.views.PopoutView PopoutView}.
+	     *              В качестве <code>buttonView</code> и <code>panelView</code> (если они не заданы в опциях явно)
+	     *              используются предустановленные View для меню. Остальные опции PopoutView передаются 'as is'.
+	     * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}. Доступны дополнительные опции, приведенные ниже:
+	     * @param {Array} options.items Элементы списка меню. Могут быть переданы как простой массив объектов <code>{ id, name }</code>
+	     *                              или как Backbone.Collection.
+	     * @param {String} [options.text] Текст кнопки меню. Если не задан, требуется вручную установить опцию <code>buttonView</code>.
+	     * @returns {Backbone.View} View Меню
+	     * */
+	    createMenu: function createMenu(options) {
+	        options = options || {};
+	        var collection = options.items;
+	        if (!(collection instanceof Backbone.Collection)) {
+	            collection = new Backbone.Collection(collection);
+	        }
+	
+	        var effectiveButtonModel = options.buttonModel || new Backbone.Model({
+	            text: options.text
+	        });
+	
+	        if (!options.buttonModel) {
+	            var defaultActModel = collection.findWhere({ default: true });
+	            if (defaultActModel) {
+	                effectiveButtonModel = defaultActModel;
+	                collection.remove(effectiveButtonModel);
+	            }
+	        }
+	
+	        return this.createPopout(_.extend({
+	            buttonView: _DefaultButtonView2.default,
+	            buttonViewOptions: {
+	                model: effectiveButtonModel
+	            },
+	            panelView: _MenuPanelView2.default,
+	            panelViewOptions: {
+	                collection: collection
+	            }
+	        }, options));
+	    },
+	
+	    /**
+	     * @description Метод служит для создания {@link module:core.dropdown.views.PopoutView PopoutView} в режиме диалога.
+	     *              Выпадающая панель занимает все пространство до низа экрана, а область вокруг затемняется.
+	     *              Метод устанавливает опции <code>{ fade: true, height: 'bottom' }</code>.
+	     * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
+	     * @returns {PopoutView} Экземпляр PopoutView
+	     * */
+	    createDialogPopout: function createDialogPopout(options) {
+	        var defaults = {
+	            fade: true,
+	            height: 'bottom'
+	        };
+	        options = _.extend(defaults, options);
+	        return this.createPopout(options);
+	    },
+	
+	    /**
+	     * @description Метод вызывает стандартный конструктор
+	     *              {@link module:core.dropdown.views.PopoutView PopoutView} передавая ему опции 'as is'.
+	     * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
+	     * @returns {PopoutView} Экземпляр PopoutView
+	     * */
+	    createPopout: function createPopout(options) {
+	        return new _PopoutView2.default(options);
+	    },
+	
+	    /**
+	     * @description Метод вызывает стандартный конструктор
+	     *              {@link module:core.dropdown.views.DropdownView DropdownView} передавая ему опции 'as is'.
+	     * @param {Object} options Объект опций {@link module:core.dropdown.views.DropdownView DropdownView}
+	     * @returns {DropdownView} Экземпляр DropdownView
+	     * */
+	    createDropdown: function createDropdown(options) {
+	        return new _DropdownView2.default(options);
+	    }
+	};
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _defineProperty2 = __webpack_require__(122);
+	
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _libApi = __webpack_require__(1);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 9/7/2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	var defaultOptions = {
+	    selector: null,
+	    allowNestedFocus: true,
+	    onBlur: null
+	};
+	
+	exports.default = Marionette.Behavior.extend({
+	    initialize: function initialize(options, view) {
+	        _utilsApi.helpers.ensureOption(options, 'onBlur');
+	
+	        _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+	
+	        _.bindAll(this, '__onBlur');
+	
+	        view.focus = this.__focus.bind(this);
+	    },
+	    events: function events() {
+	        var key = 'blur';
+	        if (this.options.selector) {
+	            key += ' ' + this.options.selector;
+	        }
+	        return (0, _defineProperty3.default)({}, key, '__onBlur');
+	    },
+	    onRender: function onRender() {
+	        this.__getFocusableEl().attr('tabindex', -1);
+	    },
+	    __getFocusableEl: function __getFocusableEl() {
+	        if (this.options.selector) {
+	            return this.$(this.options.selector);
+	        }
+	        return this.$el;
+	    },
+	    __focus: function __focus(focusedEl) {
+	        if (!focusedEl) {
+	            this.__getFocusableEl().focus();
+	        } else {
+	            (0, _libApi.$)(document.activeElement).one('blur', this.__onBlur);
+	        }
+	        this.view.isFocused = true;
+	    },
+	    __onBlur: function __onBlur() {
+	        _.defer(function () {
+	            this.view.isFocused = false;
+	            var callback = this.options.onBlur;
+	            if (_.isString(callback)) {
+	                this.view[callback].call(this.view);
+	            } else {
+	                callback.call(this.view);
+	            }
+	        }.bind(this));
+	    }
+	});
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _GlobalEventService = __webpack_require__(34);
+	
+	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var THROTTLE_DELAY = 100; /**
+	                           * Developer: Stepan Burguchev
+	                           * Date: 11/15/2016
+	                           * Copyright: 2009-2016 Comindware®
+	                           *       All Rights Reserved
+	                           * Published under the MIT license
+	                           */
+	
+	exports.default = Marionette.Behavior.extend({
+	    initialize: function initialize(options, view) {
+	        this.__observedEntities = [];
+	        this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
+	
+	        view.listenToElementMoveOnce = this.__listenToElementMoveOnce.bind(this);
+	        view.stopListeningToElementMove = this.__stopListeningToElementMove.bind(this);
+	    },
+	    __listenToElementMoveOnce: function __listenToElementMoveOnce(el, callback) {
+	        if (this.__observedEntities.length === 0) {
+	            this.listenTo(_GlobalEventService2.default, 'window:wheel:captured', this.__checkElements);
+	            this.listenTo(_GlobalEventService2.default, 'window:mouseup:captured', this.__checkElements);
+	            this.listenTo(_GlobalEventService2.default, 'window:keydown:captured', this.__checkElements);
+	        }
+	
+	        // saving el position relative to the viewport for further check
+	
+	        var _el$getBoundingClient = el.getBoundingClientRect();
+	
+	        var left = _el$getBoundingClient.left;
+	        var top = _el$getBoundingClient.top;
+	
+	        this.__observedEntities.push({
+	            anchorViewportPos: {
+	                left: Math.floor(left),
+	                top: Math.floor(top)
+	            },
+	            el: el,
+	            callback: callback
+	        });
+	    },
+	    __stopListeningToElementMove: function __stopListeningToElementMove() {
+	        var el = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	
+	        if (!el) {
+	            this.__observedEntities = [];
+	        } else {
+	            this.__observedEntities.splice(this.__observedEntities.findIndex(function (x) {
+	                return x.el === el;
+	            }), 1);
+	        }
+	    },
+	    __checkElements: function __checkElements() {
+	        var _this = this;
+	
+	        setTimeout(function () {
+	            if (_this.view.isDestroyed) {
+	                return;
+	            }
+	            _this.__observedEntities.forEach(function (x) {
+	                var _x$el$getBoundingClie = x.el.getBoundingClientRect();
+	
+	                var left = _x$el$getBoundingClie.left;
+	                var top = _x$el$getBoundingClie.top;
+	
+	                if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
+	                    x.callback.call(_this.view);
+	                }
+	            });
+	        }, 50);
+	    }
+	});
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 11/27/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _defaultButton = __webpack_require__(699);
+	
+	var _defaultButton2 = _interopRequireDefault(_defaultButton);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @name DefaultButtonView
+	 * @memberof module:core.dropdown.views
+	 * @class Trivial implementation of a button View that displays plain text without any styles.
+	 * The <code>text</code> attribute of the passed model is displayed.
+	 * Factory method {@link module:core.dropdown.factory createMenu} uses this view to display menu button.
+	 * @constructor
+	 * @extends Marionette.ItemView
+	 * @param {Object} options Options object.
+	 * @param {Backbone.Model} options.model Data model. Must contain <code>text</code> attribute.
+	 * */
+	
+	exports.default = Marionette.ItemView.extend({
+	    initialize: function initialize(options) {},
+	
+	    tagName: 'span',
+	
+	    template: _libApi.Handlebars.compile(_defaultButton2.default),
+	
+	    modelEvents: {
+	        'change': 'render'
+	    }
+	});
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _WindowService = __webpack_require__(65);
+	
+	var _WindowService2 = _interopRequireDefault(_WindowService);
+	
+	var _dropdown = __webpack_require__(700);
+	
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+	
+	var _BlurableBehavior = __webpack_require__(175);
+	
+	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
+	
+	var _GlobalEventService = __webpack_require__(34);
+	
+	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
+	
+	var _ListenToElementMoveBehavior = __webpack_require__(176);
+	
+	var _ListenToElementMoveBehavior2 = _interopRequireDefault(_ListenToElementMoveBehavior);
+	
+	var _WrapperView = __webpack_require__(181);
+	
+	var _WrapperView2 = _interopRequireDefault(_WrapperView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 11/27/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	var classes = {
+	    OPEN: 'open',
+	    DROPDOWN_DOWN: 'dropdown__wrp_down',
+	    DROPDOWN_WRP_OVER: 'dropdown__wrp_down-over',
+	    DROPDOWN_UP: 'dropdown__wrp_up',
+	    DROPDOWN_UP_OVER: 'dropdown__wrp_up-over'
+	};
+	
+	var WINDOW_BORDER_OFFSET = 10;
+	
+	var panelPosition = {
+	    DOWN: 'down',
+	    DOWN_OVER: 'down-over',
+	    UP: 'up',
+	    UP_OVER: 'up-over'
+	};
+	
+	var panelMinWidth = {
+	    NONE: 'none',
+	    BUTTON_WIDTH: 'button-width'
+	};
+	
+	var defaultOptions = {
+	    autoOpen: true,
+	    renderAfterClose: true,
+	    panelPosition: panelPosition.DOWN,
+	    panelMinWidth: panelMinWidth.BUTTON_WIDTH
+	};
+	
+	/**
+	 * @name DropdownView
+	 * @memberof module:core.dropdown.views
+	 * @class Composite View that implements dropdown logic similar to SELECT HTML-element.
+	 * Unlike {@link module:core.dropdown.views.PopoutView PopoutView}, a panel doesn't have a speech bubble triangle and
+	 * it's min-width is always determined and equal to the width of a button view.
+	 *
+	 * A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.
+	 * <ul>
+	 * <li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
+	 * <li>Panel View is used to display a panel that drops down.</li>
+	 * </ul>
+	 *
+	 * Panel width is determined by its layout but it cannot be less than the button's width. Panel height is fully determined by its layout.
+	 * A place where the panel appears depends on the <code>panelPosition</code> option.<br/>
+	 * Possible events:<ul>
+	 * <li><code>'open' (dropdownView)</code> - fires after the panel has opened.</li>
+	 * <li><code>'close' (dropdownView, ...)</code> - fires after the panel has closed.
+	 * If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li>
+	 * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
+	 * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
+	 * </ul>
+	 * @constructor
+	 * @extends Marionette.LayoutView
+	 * @param {Object} options Options object.
+	 * @param {Marionette.View} options.buttonView View class for displaying the button.
+	 * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
+	 * @param {Marionette.View} options.panelView View class for displaying the panel. The view is created every time the panel is triggered to open.
+	 * @param {(Object|Function)} [options.panelViewOptions] Options passed into the view on its creation.
+	 * @param {Boolean} [options.autoOpen=true] Whether click on the button should trigger the panel to open.
+	 * @param {String} [options.panelPosition='down'] Opening direction:
+	 *       <ul><li><code>'down'</code> - opens down.</li>
+	 *       <li><code>'down-over'</code> - opens down and the panel is located above the button overlapping it.</li>
+	 *       <li><code>'up'</code> - opens up.</li>
+	 *       <li><code>'up-over'</code> - opens up and the panel is located above the button overlapping it.</li></ul>
+	 * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
+	 * */
+	
+	exports.default = Marionette.LayoutView.extend( /** @lends module:core.dropdown.views.DropdownView.prototype */{
+	    initialize: function initialize(options) {
+	        _.extend(this.options, _.clone(defaultOptions), options || {});
+	        _utilsApi.helpers.ensureOption(options, 'buttonView');
+	        _utilsApi.helpers.ensureOption(options, 'panelView');
+	        _.bindAll(this, 'open', 'close');
+	
+	        this.listenTo(_WindowService2.default, 'popup:close', this.__onWindowServicePopupClose);
+	    },
+	
+	    template: _libApi.Handlebars.compile(_dropdown2.default),
+	
+	    className: 'dropdown',
+	
+	    regions: {
+	        buttonRegion: '.js-button-region'
+	    },
+	
+	    ui: {
+	        button: '.js-button-region'
+	    },
+	
+	    events: {
+	        'click @ui.button': '__handleClick'
+	    },
+	
+	    behaviors: {
+	        BlurableBehavior: {
+	            behaviorClass: _BlurableBehavior2.default,
+	            onBlur: '__handleBlur'
+	        },
+	        ListenToElementMoveBehavior: {
+	            behaviorClass: _ListenToElementMoveBehavior2.default
+	        }
+	    },
+	
+	    /**
+	     * Contains an instance of <code>options.buttonView</code> if the dropdown is rendered, <code>null</code> otherwise.
+	     * */
+	    buttonView: null,
+	
+	    /**
+	     * Contains an instance of <code>options.panelView</code> if the dropdown is open, <code>null</code> otherwise.
+	     * The view is created every time (!) the panel is triggered to open.
+	     * */
+	    panelView: null,
+	
+	    onRender: function onRender() {
+	        var _this = this;
+	
+	        if (this.button) {
+	            this.stopListening(this.button);
+	        }
+	        this.button = new this.options.buttonView(_.extend({ parent: this }, _.result(this.options, 'buttonViewOptions')));
+	        this.buttonView = this.button;
+	        this.listenTo(this.button, 'all', function () {
+	            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                args[_key] = arguments[_key];
+	            }
+	
+	            args[0] = 'button:' + args[0];
+	            _this.triggerMethod.apply(_this, args);
+	        });
+	
+	        if (this.isShown) {
+	            this.buttonRegion.show(this.button);
+	        }
+	    },
+	    onShow: function onShow() {
+	        this.buttonRegion.show(this.button);
+	        this.isShown = true;
+	    },
+	    onDestroy: function onDestroy() {
+	        if (this.isOpen) {
+	            _WindowService2.default.closePopup(this.popupId);
+	        }
+	    },
+	    __adjustPosition: function __adjustPosition($panelEl) {
+	        var viewportHeight = window.innerHeight;
+	        var $buttonEl = this.buttonRegion.$el;
+	        var buttonRect = $buttonEl.offset();
+	        buttonRect.height = $buttonEl.outerHeight();
+	        buttonRect.width = $buttonEl.outerWidth();
+	        buttonRect.bottom = viewportHeight - buttonRect.top - buttonRect.height;
+	        var panelRect = $panelEl.offset();
+	        panelRect.height = $panelEl.outerHeight();
+	
+	        var position = this.options.panelPosition;
+	
+	        // switching position if there is not enough space
+	        switch (position) {
+	            case panelPosition.DOWN:
+	                if (buttonRect.bottom < panelRect.height && buttonRect.top > buttonRect.bottom) {
+	                    position = panelPosition.UP;
+	                }
+	                break;
+	            case panelPosition.DOWN_OVER:
+	                if (buttonRect.bottom + buttonRect.height < panelRect.height && buttonRect.top > buttonRect.bottom) {
+	                    position = panelPosition.UP_OVER;
+	                }
+	                break;
+	            case panelPosition.UP:
+	                if (buttonRect.top < panelRect.height && buttonRect.bottom > buttonRect.top) {
+	                    position = panelPosition.UP;
+	                }
+	                break;
+	            case panelPosition.UP_OVER:
+	                if (buttonRect.top + buttonRect.height < panelRect.height && buttonRect.bottom > buttonRect.top) {
+	                    position = panelPosition.UP;
+	                }
+	                break;
+	            default:
+	                break;
+	        }
+	
+	        // class adjustments
+	        $panelEl.toggleClass(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
+	        $panelEl.toggleClass(classes.DROPDOWN_WRP_OVER, position === panelPosition.DOWN_OVER);
+	        $panelEl.toggleClass(classes.DROPDOWN_UP, position === panelPosition.UP);
+	        $panelEl.toggleClass(classes.DROPDOWN_UP_OVER, position === panelPosition.UP_OVER);
+	
+	        // panel positioning
+	        var top = void 0;
+	        switch (position) {
+	            case panelPosition.UP:
+	                top = buttonRect.top - panelRect.height;
+	                break;
+	            case panelPosition.UP_OVER:
+	                top = buttonRect.top + buttonRect.height - panelRect.height;
+	                break;
+	            case panelPosition.DOWN:
+	                top = buttonRect.top + buttonRect.height;
+	                break;
+	            case panelPosition.DOWN_OVER:
+	                top = buttonRect.top;
+	                break;
+	            default:
+	                break;
+	        }
+	
+	        // trying to fit into viewport
+	        if (top + panelRect.height > viewportHeight - WINDOW_BORDER_OFFSET) {
+	            top = viewportHeight - WINDOW_BORDER_OFFSET - panelRect.height;
+	        }
+	        if (top <= WINDOW_BORDER_OFFSET) {
+	            top = WINDOW_BORDER_OFFSET;
+	        }
+	
+	        var panelCss = {
+	            top: top,
+	            left: buttonRect.left
+	        };
+	        if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
+	            panelCss['min-width'] = buttonRect.width;
+	        }
+	        $panelEl.css(panelCss);
+	    },
+	
+	
+	    /**
+	     * Opens the dropdown panel.
+	     * */
+	    open: function open() {
+	        var _this2 = this;
+	
+	        if (this.isOpen) {
+	            return;
+	        }
+	        this.trigger('before:open', this);
+	
+	        var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+	            parent: this
+	        });
+	        this.$el.addClass(classes.OPEN);
+	        this.panelView = new this.options.panelView(panelViewOptions);
+	        this.panelView.on('all', function () {
+	            for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	                args[_key2] = arguments[_key2];
+	            }
+	
+	            args[0] = 'panel:' + args[0];
+	            _this2.triggerMethod.apply(_this2, args);
+	        });
+	
+	        var wrapperView = new _WrapperView2.default({
+	            view: this.panelView,
+	            className: 'dropdown__wrp'
+	        });
+	        this.popupId = _WindowService2.default.showTransientPopup(wrapperView, {
+	            hostEl: this.el
+	        });
+	        this.__adjustPosition(wrapperView.$el);
+	
+	        this.listenToElementMoveOnce(this.el, this.close);
+	        this.listenTo(_GlobalEventService2.default, 'window:mousedown:captured', this.__handleGlobalMousedown);
+	
+	        if (!this.__isNestedInButton(document.activeElement)) {
+	            this.focus();
+	        } else {
+	            this.focus(document.activeElement);
+	        }
+	        this.__suppressHandlingBlur = false;
+	        this.isOpen = true;
+	        this.trigger('open', this);
+	    },
+	
+	
+	    /**
+	     * Closes the dropdown panel.
+	     * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
+	     * */
+	    close: function close() {
+	        if (!this.isOpen || !_libApi.$.contains(document.documentElement, this.el)) {
+	            return;
+	        }
+	        this.trigger('before:close', this);
+	
+	        this.$el.removeClass(classes.OPEN);
+	
+	        _WindowService2.default.closePopup(this.popupId);
+	
+	        this.stopListeningToElementMove();
+	        this.stopListening(_GlobalEventService2.default);
+	        this.isOpen = false;
+	
+	        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	            args[_key3] = arguments[_key3];
+	        }
+	
+	        this.trigger.apply(this, ['close', this].concat(args));
+	        if (this.options.renderAfterClose) {
+	            this.button.render();
+	        }
+	    },
+	    __handleClick: function __handleClick() {
+	        if (this.options.autoOpen) {
+	            this.open();
+	        }
+	    },
+	    __isNestedInButton: function __isNestedInButton(testedEl) {
+	        return this.el === testedEl || _libApi.$.contains(this.el, testedEl);
+	    },
+	    __isNestedInPanel: function __isNestedInPanel(testedEl) {
+	        return _WindowService2.default.get(this.popupId).map(function (x) {
+	            return x.el;
+	        }).some(function (el) {
+	            return el === testedEl || _libApi.$.contains(el, testedEl);
+	        });
+	    },
+	    __handleBlur: function __handleBlur() {
+	        if (!this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
+	            this.close();
+	        }
+	    },
+	    __handleGlobalMousedown: function __handleGlobalMousedown(target) {
+	        if (this.__isNestedInPanel(target)) {
+	            this.__suppressHandlingBlur = true;
+	        } else if (!this.__isNestedInButton(target)) {
+	            this.close();
+	        }
+	    },
+	    __onWindowServicePopupClose: function __onWindowServicePopupClose(popupId) {
+	        if (this.isOpen && this.popupId === popupId) {
+	            this.close();
+	        }
+	    }
+	});
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 11/27/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _ListPanelView = __webpack_require__(110);
+	
+	var _ListPanelView2 = _interopRequireDefault(_ListPanelView);
+	
+	var _MenuItemView = __webpack_require__(111);
+	
+	var _MenuItemView2 = _interopRequireDefault(_MenuItemView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @name MenuPanelView
+	 * @memberof module:core.dropdown.views
+	 * @class Одиночный элемент меню. Используется для создания стандартного меню фабричным методом
+	 * @class List view used to display a list of menu items.
+	 * Factory method {@link module:core.dropdown.factory createMenu} uses it to create a menu.
+	 * {@link module:core.dropdown.factory createMenu}.
+	 * @constructor
+	 * @extends module:core.dropdown.views.ListPanelView
+	 * */
+	
+	exports.default = _ListPanelView2.default.extend({
+	    initialize: function initialize(options) {
+	        _ListPanelView2.default.prototype.initialize.apply(this, _.toArray(arguments));
+	    },
+	
+	    className: 'popout-menu',
+	
+	    childView: _MenuItemView2.default,
+	
+	    getChildView: function getChildView(model) {
+	        if (model.get('customView')) {
+	            return model.get('customView');
+	        }
+	        return _MenuItemView2.default;
+	    },
+	
+	    childEvents: {
+	        'execute': '__execute'
+	    },
+	
+	    __execute: function __execute(child, model) {
+	        this.options.parent.close();
+	        this.options.parent.trigger('execute', model.id, model);
+	    }
+	});
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _WindowService = __webpack_require__(65);
+	
+	var _WindowService2 = _interopRequireDefault(_WindowService);
+	
+	var _GlobalEventService = __webpack_require__(34);
+	
+	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
+	
+	var _BlurableBehavior = __webpack_require__(175);
+	
+	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
+	
+	var _ListenToElementMoveBehavior = __webpack_require__(176);
+	
+	var _ListenToElementMoveBehavior2 = _interopRequireDefault(_ListenToElementMoveBehavior);
+	
+	var _popout = __webpack_require__(702);
+	
+	var _popout2 = _interopRequireDefault(_popout);
+	
+	var _WrapperView = __webpack_require__(181);
+	
+	var _WrapperView2 = _interopRequireDefault(_WrapperView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 11/26/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	var WINDOW_BORDER_OFFSET = 10;
+	
+	var classes = {
+	    OPEN: 'open',
+	    DIRECTION_UP: 'popout__up',
+	    DIRECTION_DOWN: 'popout__down',
+	    FLOW_LEFT: 'popout__flow-left',
+	    FLOW_RIGHT: 'popout__flow-right',
+	    CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
+	    DEFAULT_ANCHOR_BUTTON: 'popout__action',
+	    DEFAULT_ANCHOR: 'anchor'
+	};
+	
+	var popoutFlow = {
+	    LEFT: 'left',
+	    RIGHT: 'right'
+	};
+	
+	var popoutDirection = {
+	    UP: 'up',
+	    DOWN: 'down'
+	};
+	
+	var height = {
+	    AUTO: 'auto',
+	    BOTTOM: 'bottom'
+	};
+	
+	var defaultOptions = {
+	    popoutFlow: popoutFlow.LEFT,
+	    customAnchor: false,
+	    fade: false,
+	    height: 'auto',
+	    autoOpen: true,
+	    direction: popoutDirection.DOWN,
+	    renderAfterClose: true
+	};
+	
+	/**
+	 * @name PopoutView
+	 * @memberof module:core.dropdown.views
+	 * @class Composite View that may be to display a dropdown panel as a speech bubble. Unlike {@link module:core.dropdown.views.DropdownView DropdownView},
+	 * the panel is displayed in speech bubble and has a triangle like in comics.
+	 * A dropdown view contains button and panel regions that can be fully customizable by the properties <code>buttonView</code> and <code>panelView</code>.
+	 * <ul>
+	 * <li>Button View is used for displaying a button. Click on that button trigger a panel to open.</li>
+	 * <li>Panel View is used to display a panel that drops down.</li>
+	 * </ul>
+	 * Panel width is fully determined by its layout and the <code>popoutFlow</code> option.
+	 * Panel height is determined by its layout and the <code>height</code> option.
+	 * A place where the panel appears depends on the <code>direction</code> and <code>popoutFlow</code> options.<br/>
+	 * Possible events:<ul>
+	 * <li><code>'before:open' (popoutView)</code> - fires before the panel has opened.</li>
+	 * <li><code>'open' (popoutView)</code> - fires after the panel has opened.</li>
+	 * <li><code>'before:close' (popoutView)</code> - fires before the panel has closed.</li>
+	 * <li><code>'close' (popoutView, ...)</code> - fires after the panel has closed.
+	 * If the panel was closed via <code>close(...)</code> method, the arguments of this method are transferred into this event.</li>
+	 * <li><code>'button:\*' </code> - all events the buttonView triggers are repeated by this view with 'button:' prefix.</li>
+	 * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
+	 * </ul>
+	 * @constructor
+	 * @extends Marionette.LayoutView
+	 * @param {Object} options Options object.
+	 * @param {Marionette.View} options.buttonView View class for displaying the button.
+	 * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
+	 * @param {Marionette.View} options.panelView View class for displaying the panel. The view is created every time the panel is triggered to open.
+	 * @param {(Object|Function)} [options.panelViewOptions] Options passed into the view on its creation.
+	 * @param {Boolean} [options.autoOpen=true] Whether click on the button should trigger the panel to open.
+	 * @param {Boolean} [options.customAnchor=false] Whether to attach the speech bubble triangle (anchor) to a custom element in <code>buttonView</code>.
+	 *                                               The View passed into the <code>buttonView</code> option must implement
+	 *                                               @{link module:core.dropdown.views.behaviors.CustomAnchorBehavior CustomAnchorBehavior}.
+	 * @param {String} [options.direction='down'] Opening direction. Can be either: <code>'up'</code>, <code>'down'</code>.
+	 * @param {Boolean} [options.fade=false] Whether to dim the background when the panel is open.
+	 * @param {String} [options.height='auto'] A way of determining the panel height.
+	 *                                       <ul><li><code>'auto'</code> - is determined by panel's layout only.</li>
+	 *                                       <li><code>'bottom'</code> - the bottom border is fixed to the bottom of the window.</li></ul>
+	 * @param {String} [options.popoutFlow='left'] Panel's horizontal position.
+	 *                                       <ul><li><code>'left'</code> - The left border of the panel is attached to the left border of the button.
+	 *                                       The panel grows to the right.</li>
+	 *                                       <li><code>'right'</code> - The right border of the panel is attached to the right border of the button.
+	 *                                       The panel grows to the left.</li></ul>
+	 * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
+	 * */
+	
+	exports.default = Marionette.LayoutView.extend( /** @lends module:core.dropdown.views.PopoutView.prototype */{
+	    initialize: function initialize(options) {
+	        _.defaults(this.options, defaultOptions);
+	        _utilsApi.helpers.ensureOption(options, 'buttonView');
+	        _utilsApi.helpers.ensureOption(options, 'panelView');
+	        _.bindAll(this, 'open', 'close');
+	
+	        this.listenTo(_WindowService2.default, 'popup:close', this.__onWindowServicePopupClose);
+	    },
+	
+	
+	    template: _libApi.Handlebars.compile(_popout2.default),
+	
+	    behaviors: {
+	        BlurableBehavior: {
+	            behaviorClass: _BlurableBehavior2.default,
+	            onBlur: '__handleBlur'
+	        },
+	        ListenToElementMoveBehavior: {
+	            behaviorClass: _ListenToElementMoveBehavior2.default
+	        }
+	    },
+	
+	    className: 'popout',
+	
+	    regions: {
+	        buttonRegion: '.js-button-region'
+	    },
+	
+	    ui: {
+	        button: '.js-button-region'
+	    },
+	
+	    events: {
+	        'click @ui.button': '__handleClick'
+	    },
+	
+	    /**
+	     * Contains an instance of <code>options.buttonView</code> if the popout is rendered, <code>null</code> otherwise.
+	     * */
+	    buttonView: null,
+	
+	    /**
+	     * Contains an instance of <code>options.panelView</code> if the popout is open, <code>null</code> otherwise.
+	     * The view is created every time (!) the panel is triggered to open.
+	     * */
+	    panelView: null,
+	
+	    onRender: function onRender() {
+	        var _this = this;
+	
+	        this.isOpen = false;
+	        if (this.button) {
+	            this.stopListening(this.button);
+	        }
+	        this.button = new this.options.buttonView(_.result(this.options, 'buttonViewOptions'));
+	        this.buttonView = this.button;
+	        this.listenTo(this.button, 'all', function () {
+	            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                args[_key] = arguments[_key];
+	            }
+	
+	            args[0] = 'button:' + args[0];
+	            _this.triggerMethod.apply(_this, args);
+	        });
+	        this.buttonRegion.show(this.button);
+	
+	        if (!this.options.customAnchor) {
+	            this.buttonRegion.$el.append('<span class="js-default-anchor ' + classes.DEFAULT_ANCHOR + '"></span>');
+	        }
+	
+	        this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
+	        this.ui.button.toggleClass(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
+	    },
+	    onDestroy: function onDestroy() {
+	        if (this.isOpen) {
+	            _WindowService2.default.closePopup(this.popupId);
+	        }
+	    },
+	    __getAnchorEl: function __getAnchorEl() {
+	        var $anchorEl = this.ui.button;
+	        if (this.options.customAnchor && this.button.$anchor) {
+	            $anchorEl = this.button.$anchor;
+	        } else {
+	            var defaultAnchor = this.ui.button.find('.js-default-anchor');
+	            if (defaultAnchor && defaultAnchor.length) {
+	                $anchorEl = defaultAnchor;
+	            }
+	        }
+	        return $anchorEl;
+	    },
+	    __adjustFlowPosition: function __adjustFlowPosition($panelEl) {
+	        var $buttonEl = this.ui.button;
+	        var $anchorEl = this.__getAnchorEl();
+	        var viewport = {
+	            height: window.innerHeight,
+	            width: window.innerWidth
+	        };
+	        var anchorRect = $anchorEl.offset();
+	        anchorRect.height = $anchorEl.outerHeight();
+	        anchorRect.width = $anchorEl.outerWidth();
+	        anchorRect.bottom = viewport.height - anchorRect.top - anchorRect.height;
+	        var buttonRect = $buttonEl.offset();
+	        buttonRect.width = $buttonEl.outerWidth();
+	        var panelRect = $panelEl.offset();
+	        panelRect.width = $panelEl.outerWidth();
+	
+	        var css = {
+	            left: '',
+	            right: ''
+	        };
+	        switch (this.options.popoutFlow) {
+	            case popoutFlow.RIGHT:
+	                {
+	                    var leftCenter = anchorRect.left + anchorRect.width / 2;
+	                    if (leftCenter < WINDOW_BORDER_OFFSET) {
+	                        css.left = WINDOW_BORDER_OFFSET;
+	                    } else if (leftCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+	                        css.left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+	                    } else {
+	                        css.left = leftCenter;
+	                    }
+	                    break;
+	                }
+	            case popoutFlow.LEFT:
+	                {
+	                    var anchorRightCenter = viewport.width - (anchorRect.left + anchorRect.width / 2);
+	                    if (anchorRightCenter < WINDOW_BORDER_OFFSET) {
+	                        css.right = WINDOW_BORDER_OFFSET;
+	                    } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+	                        css.right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+	                    } else {
+	                        css.right = anchorRightCenter;
+	                    }
+	                    break;
+	                }
+	            default:
+	                break;
+	        }
+	
+	        $panelEl.toggleClass(classes.FLOW_LEFT, this.options.popoutFlow === popoutFlow.LEFT);
+	        $panelEl.toggleClass(classes.FLOW_RIGHT, this.options.popoutFlow === popoutFlow.RIGHT);
+	
+	        $panelEl.css(css);
+	    },
+	    __adjustDirectionPosition: function __adjustDirectionPosition($panelEl) {
+	        var $anchorEl = this.__getAnchorEl();
+	        var viewport = {
+	            height: window.innerHeight,
+	            width: window.innerWidth
+	        };
+	        var anchorRect = $anchorEl.offset();
+	        anchorRect.height = $anchorEl.outerHeight();
+	        anchorRect.width = $anchorEl.outerWidth();
+	        anchorRect.bottom = viewport.height - anchorRect.top - anchorRect.height;
+	        var panelRect = $panelEl.offset();
+	        panelRect.height = $panelEl.outerHeight();
+	
+	        var direction = this.options.direction;
+	
+	        // switching direction if there is not enough space
+	        switch (direction) {
+	            case popoutDirection.UP:
+	                if (anchorRect.top < panelRect.height && anchorRect.bottom > anchorRect.top) {
+	                    direction = popoutDirection.DOWN;
+	                }
+	                break;
+	            case popoutDirection.DOWN:
+	                if (anchorRect.bottom < panelRect.height && anchorRect.top > anchorRect.bottom) {
+	                    direction = popoutDirection.UP;
+	                }
+	                break;
+	            default:
+	                break;
+	        }
+	
+	        // class adjustments
+	        $panelEl.toggleClass(classes.DIRECTION_UP, direction === popoutDirection.UP);
+	        $panelEl.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
+	
+	        // panel positioning
+	        var top = void 0;
+	        switch (direction) {
+	            case popoutDirection.UP:
+	                top = anchorRect.top - panelRect.height;
+	                break;
+	            case popoutDirection.DOWN:
+	                top = anchorRect.top + anchorRect.height;
+	                break;
+	            default:
+	                break;
+	        }
+	
+	        // trying to fit into viewport
+	        if (top + panelRect.height > viewport.height - WINDOW_BORDER_OFFSET) {
+	            top = viewport.height - WINDOW_BORDER_OFFSET - panelRect.height;
+	        }
+	        if (top <= WINDOW_BORDER_OFFSET) {
+	            top = WINDOW_BORDER_OFFSET;
+	        }
+	
+	        var css = {
+	            top: top,
+	            bottom: ''
+	        };
+	        if (this.options.height === height.BOTTOM) {
+	            css.bottom = WINDOW_BORDER_OFFSET;
+	        }
+	        $panelEl.css(css);
+	    },
+	    __handleClick: function __handleClick() {
+	        if (this.options.autoOpen) {
+	            this.open();
+	        }
+	    },
+	    __isNestedInButton: function __isNestedInButton(testedEl) {
+	        return this.el === testedEl || _libApi.$.contains(this.el, testedEl);
+	    },
+	    __isNestedInPanel: function __isNestedInPanel(testedEl) {
+	        return _WindowService2.default.get(this.popupId).map(function (x) {
+	            return x.el;
+	        }).some(function (el) {
+	            return el === testedEl || _libApi.$.contains(el, testedEl);
+	        });
+	    },
+	    __handleBlur: function __handleBlur() {
+	        if (!this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
+	            this.close();
+	        }
+	    },
+	    __handleGlobalMousedown: function __handleGlobalMousedown(target) {
+	        if (this.__isNestedInPanel(target)) {
+	            // clicking on panel result in focusing body and normally lead to closing the popup
+	            this.__suppressHandlingBlur = true;
+	        } else if (!this.__isNestedInButton(target)) {
+	            this.close();
+	        }
+	    },
+	    __onWindowServicePopupClose: function __onWindowServicePopupClose(popupId) {
+	        if (this.isOpen && this.popupId === popupId) {
+	            this.close();
+	        }
+	    },
+	
+	
+	    /**
+	     * Opens the dropdown panel.
+	     * */
+	    open: function open() {
+	        var _this2 = this;
+	
+	        if (this.isOpen) {
+	            return;
+	        }
+	        this.trigger('before:open', this);
+	
+	        var panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+	            parent: this
+	        });
+	        this.panelView = new this.options.panelView(panelViewOptions);
+	        this.panelView.on('all', function () {
+	            for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	                args[_key2] = arguments[_key2];
+	            }
+	
+	            args[0] = 'panel:' + args[0];
+	            _this2.triggerMethod.apply(_this2, args);
+	        });
+	        this.$el.addClass(classes.OPEN);
+	
+	        var wrapperView = new _WrapperView2.default({
+	            view: this.panelView,
+	            className: 'popout__wrp'
+	        });
+	        this.popupId = _WindowService2.default.showTransientPopup(wrapperView, {
+	            fadeBackground: this.options.fade,
+	            hostEl: this.el
+	        });
+	        this.__adjustDirectionPosition(wrapperView.$el);
+	        this.__adjustFlowPosition(wrapperView.$el);
+	
+	        this.listenToElementMoveOnce(this.el, this.close);
+	        this.listenTo(_GlobalEventService2.default, 'window:mousedown:captured', this.__handleGlobalMousedown);
+	        if (!this.__isNestedInButton(document.activeElement)) {
+	            this.focus();
+	        } else {
+	            this.focus(document.activeElement);
+	        }
+	        this.__suppressHandlingBlur = false;
+	        this.isOpen = true;
+	        this.trigger('open', this);
+	    },
+	
+	
+	    /**
+	     * Closes the dropdown panel.
+	     * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
+	     * */
+	    close: function close() {
+	        if (!this.isOpen || !_libApi.$.contains(document.documentElement, this.el)) {
+	            return;
+	        }
+	        this.trigger('before:close', this);
+	        this.$el.removeClass(classes.OPEN);
+	
+	        _WindowService2.default.closePopup(this.popupId);
+	
+	        this.isOpen = false;
+	        this.stopListeningToElementMove();
+	        this.stopListening(_GlobalEventService2.default);
+	
+	        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	            args[_key3] = arguments[_key3];
+	        }
+	
+	        this.trigger.apply(this, ['close', this].concat(args));
+	        if (this.options.renderAfterClose) {
+	            this.render();
+	        }
+	    }
+	});
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 11/17/2016
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	exports.default = Marionette.ItemView.extend({
+	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'view');
+	
+	        this.regionManager = new Marionette.RegionManager();
+	    },
+	
+	
+	    template: _libApi.Handlebars.compile(''),
+	
+	    onShow: function onShow() {
+	        this.regionManager.addRegion('viewRegion', { el: this.$el });
+	        this.regionManager.get('viewRegion').show(this.options.view);
+	    },
+	    onDestroy: function onDestroy() {
+	        this.regionManager.destroy();
+	    }
+	});
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 10/13/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _textAreaEditor = __webpack_require__(743);
+	
+	var _textAreaEditor2 = _interopRequireDefault(_textAreaEditor);
+	
+	var _BaseItemEditorView = __webpack_require__(50);
+	
+	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
+	
+	var _LocalizationService = __webpack_require__(10);
+	
+	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var changeMode = {
+	    blur: 'blur',
+	    keydown: 'keydown'
+	};
+	
+	var size = {
+	    auto: 'auto',
+	    fixed: 'fixed'
+	};
+	
+	var defaultOptions = function defaultOptions() {
+	    return {
+	        changeMode: changeMode.blur,
+	        size: size.auto,
+	        emptyPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
+	        readonlyPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
+	        disablePlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
+	        maxLength: null,
+	        height: null,
+	        minHeight: 2,
+	        maxHeight: null
+	    };
+	};
+	
+	/**
+	 * @name TextAreaEditorView
+	 * @memberof module:core.form.editors
+	 * @class Multiline text editor. Supported data type: <code>String</code>.
+	 * @extends module:core.form.editors.base.BaseEditorView
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {Number|null} [options.maxLength=null] The maximum number of characters. Not limited if <code>null</code>.
+	 * @param {String} [options.changeMode='blur'] Determines the moment the editor's value is updated:<ul>
+	 *     <li><code>'keydown'</code> - on key press.</li>
+	 *     <li><code>'blur'</code> - on focus out.</li></ul>
+	 * @param {String} [options.size='auto'] Determines the strategy to compute the editor's height:<ul>
+	 *     <li><code>'auto'</code> - determined by the content (withing the range [<code>minHeight</code>, <code>maxHeight</code>]).</li>
+	 *     <li><code>'fixed'</code> - fixed, determined by <code>height</code> option.</li></ul>
+	 * @param {String} [options.emptyPlaceholder='Field is empty'] Empty text placeholder.
+	 * @param {String} [options.readonlyPlaceholder='Field is readonly'] Текст placeholder, отображаемый
+	 * в случае если эдитор имеет флаг <code>readonly</code>.
+	 * @param {String} [options.disablePlaceholder='Field is disabled'] Текст placeholder, отображаемый
+	 * в случае если эдитор имеет флаг <code>enabled: false</code>.
+	 * @param {Number} [options.height=null] The height of the editor (in rows) when its size is fixed.
+	 * @param {Number} [options.minHeight=2] The minimum height of the editor (in rows).
+	 * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
+	 * */
+	_formRepository2.default.editors.TextArea = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.TextAreaEditorView.prototype */{
+	    initialize: function initialize(options) {
+	        var defaults = defaultOptions();
+	        if (options.schema) {
+	            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
+	        } else {
+	            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
+	        }
+	
+	        this.placeholder = this.options.emptyPlaceholder;
+	    },
+	
+	    focusElement: '.js-textarea',
+	    className: 'editor editor_textarea',
+	
+	    ui: {
+	        textarea: '.js-textarea'
+	    },
+	
+	    events: {
+	        'change': '__change',
+	        'input @ui.textarea': '__input',
+	        'keyup @ui.textarea': '__keyup'
+	    },
+	
+	    template: _libApi.Handlebars.compile(_textAreaEditor2.default),
+	
+	    templateHelpers: function templateHelpers() {
+	        return this.options;
+	    },
+	
+	    onRender: function onRender() {
+	        // Keyboard shortcuts listener
+	        if (this.keyListener) {
+	            this.keyListener.reset();
+	        }
+	        this.keyListener = new _libApi.keypress.Listener(this.ui.textarea[0]);
+	    },
+	
+	    /**
+	     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
+	     * [Keypress](https://dmauro.github.io/Keypress/).
+	     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
+	     * Полный список с названиями клавиш указан в исходном файле плагина:
+	     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
+	     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
+	     * */
+	    addKeyboardListener: function addKeyboardListener(key, callback) {
+	        if (!this.keyListener) {
+	            _utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+	        }
+	        var keys = key.split(',');
+	        _.each(keys, function (k) {
+	            this.keyListener.simple_combo(k, callback);
+	        }, this);
+	    },
+	
+	    onShow: function onShow() {
+	        this.ui.textarea.val(this.getValue() || '');
+	        switch (this.options.size) {
+	            case size.auto:
+	                this.ui.textarea.attr('rows', this.options.minHeight);
+	                if (this.options.maxHeight) {
+	                    var maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
+	                    this.ui.textarea.css('maxHeight', maxHeight);
+	                }
+	                if (!_utilsApi.htmlHelpers.isElementInDom(this.el)) {
+	                    _utilsApi.helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
+	                }
+	                this.ui.textarea.autosize({ append: '' });
+	                break;
+	            case size.fixed:
+	                this.ui.textarea.attr('rows', this.options.height);
+	                break;
+	            default:
+	                _utilsApi.helpers.throwArgumentError('Invalid `size parameter`.');
+	        }
+	    },
+	
+	    setPermissions: function setPermissions(enabled, readonly) {
+	        _BaseItemEditorView2.default.prototype.setPermissions.call(this, enabled, readonly);
+	        this.setPlaceholder();
+	    },
+	
+	    setPlaceholder: function setPlaceholder() {
+	        if (!this.getEnabled()) {
+	            this.placeholder = this.options.disablePlaceholder;
+	        } else if (this.getReadonly()) {
+	            this.placeholder = this.options.readonlyPlaceholder;
+	        } else {
+	            this.placeholder = this.options.emptyPlaceholder;
+	        }
+	
+	        this.ui.textarea.prop('placeholder', this.placeholder);
+	    },
+	
+	    __setEnabled: function __setEnabled(enabled) {
+	        //noinspection Eslint
+	        _BaseItemEditorView2.default.prototype.__setEnabled.call(this, enabled);
+	        this.ui.textarea.prop('disabled', !enabled);
+	    },
+	
+	    __setReadonly: function __setReadonly(readonly) {
+	        //noinspection Eslint
+	        _BaseItemEditorView2.default.prototype.__setReadonly.call(this, readonly);
+	        if (this.getEnabled()) {
+	            this.ui.textarea.prop('readonly', readonly);
+	        }
+	    },
+	
+	    __value: function __value(value, updateUi, triggerChange) {
+	        if (this.value === value) {
+	            return;
+	        }
+	        this.value = value;
+	        if (updateUi) {
+	            this.ui.textarea.val(value);
+	        }
+	        if (triggerChange) {
+	            this.__triggerChange();
+	        }
+	    },
+	
+	    /**
+	     * Метод позволяет установить позицию курсора.
+	     * @param {Number} position Новая позиция курсора.
+	     * */
+	    setCaretPos: function setCaretPos(position) {
+	        this.ui.textarea.setSelection(position, position);
+	    },
+	
+	    setValue: function setValue(value) {
+	        this.__value(value, true, false);
+	    },
+	
+	    __change: function __change() {
+	        this.__triggerInput();
+	        this.__value(this.ui.textarea.val(), false, true);
+	    },
+	
+	    __input: function __input() {
+	        this.__triggerInput();
+	        if (this.options.changeMode === changeMode.keydown) {
+	            this.__value(this.ui.textarea.val(), false, true);
+	        }
+	    },
+	
+	    __keyup: function __keyup(e) {
+	        if ([_utilsApi.keyCode.LEFT, _utilsApi.keyCode.RIGHT, _utilsApi.keyCode.HOME, _utilsApi.keyCode.END].indexOf(e.keyCode) === -1) {
+	            return;
+	        }
+	
+	        var caret = this.ui.textarea.getSelection();
+	        if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
+	            return;
+	        }
+	
+	        this.oldCaret = caret;
+	        var text = this.ui.textarea.val();
+	        this.trigger('caretChange', text, caret);
+	    },
+	
+	    __triggerInput: function __triggerInput() {
+	        var text = this.ui.textarea.val();
+	        if (this.oldText === text) {
+	            return;
+	        }
+	
+	        this.oldText = text;
+	        var caret = this.ui.textarea.getSelection();
+	
+	        this.trigger('input', text, {
+	            start: caret.start,
+	            end: caret.end
+	        });
+	    },
+	
+	    /**
+	     * Focuses the editor's input and selects all the text in it.
+	     * */
+	    select: function select() {
+	        this.ui.textarea.select();
+	    }
+	});
+	
+	exports.default = _formRepository2.default.editors.TextArea;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _LocalizationService = __webpack_require__(10);
+	
+	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+	
+	var _BaseItemEditorView = __webpack_require__(50);
+	
+	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
+	
+	var _textEditor = __webpack_require__(744);
+	
+	var _textEditor2 = _interopRequireDefault(_textEditor);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 10/13/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	var changeMode = {
+	    blur: 'blur',
+	    keydown: 'keydown'
+	};
+	
+	var defaultOptions = function defaultOptions() {
+	    return {
+	        changeMode: 'blur',
+	        emptyPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+	        maxLength: null,
+	        mask: null,
+	        maskPlaceholder: '_',
+	        maskOptions: {}
+	    };
+	};
+	
+	/**
+	 * @name TextEditorView
+	 * @memberof module:core.form.editors
+	 * @class Однострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
+	 * @extends module:core.form.editors.base.BaseEditorView
+	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
+	 * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
+	 * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
+	 *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
+	 *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
+	 * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
+	 * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
+	 * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
+	 * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
+	 * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
+	 * */
+	_formRepository2.default.editors.Text = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.TextEditorView.prototype */{
+	    initialize: function initialize(options) {
+	        options = options || {};
+	        var defaults = defaultOptions();
+	        if (options.schema) {
+	            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
+	        } else {
+	            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
+	        }
+	
+	        this.placeholder = this.options.emptyPlaceholder;
+	    },
+	
+	    onShow: function onShow() {
+	        if (this.options.mask) {
+	            this.ui.input.inputmask(_.extend({
+	                mask: this.options.mask,
+	                placeholder: this.options.maskPlaceholder,
+	                autoUnmask: true
+	            }, this.options.maskOptions || {}));
+	        }
+	    },
+	
+	    focusElement: '.js-input',
+	
+	    ui: {
+	        input: '.js-input'
+	    },
+	
+	    className: 'editor',
+	
+	    template: _libApi.Handlebars.compile(_textEditor2.default),
+	
+	    templateHelpers: function templateHelpers() {
+	        return this.options;
+	    },
+	
+	    events: {
+	        'keyup @ui.input': '__keyup',
+	        'change @ui.input': '__change'
+	    },
+	
+	    __keyup: function __keyup() {
+	        if (this.options.changeMode === changeMode.keydown) {
+	            this.__value(this.ui.input.val(), false, true);
+	        }
+	
+	        this.trigger('keyup', this);
+	    },
+	
+	    __change: function __change() {
+	        this.__value(this.ui.input.val(), false, true);
+	    },
+	
+	    setValue: function setValue(value) {
+	        this.__value(value, true, false);
+	    },
+	
+	    setPermissions: function setPermissions(enabled, readonly) {
+	        _BaseItemEditorView2.default.prototype.setPermissions.call(this, enabled, readonly);
+	        this.setPlaceholder();
+	    },
+	
+	    setPlaceholder: function setPlaceholder() {
+	        if (!this.getEnabled() || this.getReadonly()) {
+	            this.placeholder = '';
+	        } else {
+	            this.placeholder = this.options.emptyPlaceholder;
+	        }
+	
+	        this.ui.input.prop('placeholder', this.placeholder);
+	    },
+	
+	    __setEnabled: function __setEnabled(enabled) {
+	        _BaseItemEditorView2.default.prototype.__setEnabled.call(this, enabled);
+	        this.ui.input.prop('disabled', !enabled);
+	    },
+	
+	    __setReadonly: function __setReadonly(readonly) {
+	        _BaseItemEditorView2.default.prototype.__setReadonly.call(this, readonly);
+	        if (this.getEnabled()) {
+	            this.ui.input.prop('readonly', readonly);
+	        }
+	    },
+	
+	    onRender: function onRender() {
+	        this.ui.input.val(this.getValue() || '');
+	
+	        // Keyboard shortcuts listener
+	        if (this.keyListener) {
+	            this.keyListener.reset();
+	        }
+	        this.keyListener = new _libApi.keypress.Listener(this.ui.input[0]);
+	    },
+	
+	    /**
+	     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
+	     * [Keypress](https://dmauro.github.io/Keypress/).
+	     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
+	     * Полный список с названиями клавиш указан в исходном файле плагина:
+	     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
+	     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
+	     * */
+	    addKeyboardListener: function addKeyboardListener(key, callback) {
+	        if (!this.keyListener) {
+	            _utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+	        }
+	        var keys = key.split(',');
+	        _.each(keys, function (k) {
+	            this.keyListener.simple_combo(k, callback);
+	        }, this);
+	    },
+	
+	    __value: function __value(value, updateUi, triggerChange) {
+	        if (this.value === value) {
+	            return;
+	        }
+	        this.value = value;
+	        if (updateUi) {
+	            this.ui.input.val(value);
+	        }
+	        if (triggerChange) {
+	            this.__triggerChange();
+	        }
+	    },
+	
+	    /**
+	     * Focuses the editor's input and selects all the text in it.
+	     * */
+	    select: function select() {
+	        this.ui.input.select();
+	    },
+	
+	    deselect: function deselect() {
+	        this.ui.input.deselect();
+	    }
+	});
+	
+	exports.default = _formRepository2.default.editors.Text;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 12/2/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+	
+	/*
+	 * This class is fully compatible with Backbone.Form.editors.Base and should be used to create Marionette-based editors for Backbone.Form
+	 * */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	__webpack_require__(1);
+	
+	var _MarionetteEditorPrototype = __webpack_require__(87);
+	
+	var _MarionetteEditorPrototype2 = _interopRequireDefault(_MarionetteEditorPrototype);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = Marionette.CollectionView.extend(_MarionetteEditorPrototype2.default.create(Marionette.CollectionView));
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Oleg Verevkin
+	 * Date: 02/20/2016
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var defaultOptions = {
+	  defaultURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIAQMAAABvIyEEAAAABlBMVEUAAABTU1OoaSf/AAAAAXRSTlMAQObYZgAAAENJREFUeF7tzbEJACEQRNGBLeAasBCza2lLEGx0CxFGG9hBMDDxRy/72O9FMnIFapGylsu1fgoBdkXfUHLrQgdfrlJN1BdYBjQQm3UAAAAASUVORK5CYII='
+	};
+	
+	/**
+	 * @name BaseAvatarEditorController
+	 * @memberof module:core.form.editors.avatar.controllers
+	 * @class Base data provider class for {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
+	 * Methods <code>upload</code> and <code>getImage</code> must be implemented by subclasses.
+	 * @param {Object} options - Options object.
+	 * @param {string} options.defaultURL - Default image URL to display when neither image value for <code>getImage</code> method nor full name for {@link module:core.form.editors.AvatarEditorView AvatarEditorView} provided.
+	 */
+	exports.default = Marionette.Object.extend({
+	  /**
+	   * Object containing default options to be used when no corresponding options are provided while instantiating controller
+	   */
+	  defaultOptions: defaultOptions,
+	
+	  initialize: function initialize(options) {
+	    this.options = _.defaults(options, this.defaultOptions);
+	  },
+	
+	
+	  /**
+	   * Uploads file to server or processes it any other way.
+	   * @param {File} file - File to be processed (uploaded to server).
+	   * @return {Promise} - Promise object that resolves with object containing value to be used as {@link module:core.form.editors.AvatarEditorView AvatarEditorView} value.
+	   * This value will be used as <code>getImage</code> method argument and may be a file.
+	   */
+	  upload: function upload(file) {
+	    _utilsApi.helpers.throwError('Not Implemented', 'NotImplementedError');
+	  },
+	
+	
+	  /**
+	   * Converts incoming value to valid Image URL to be displayed in {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
+	   * @param {?(string|number|File)} value - Value to be converted to valid image URL. If no value provided, the function must return default image URL.
+	   * @return {!string} - Image URL to be displayed in {@link module:core.form.editors.AvatarEditorView AvatarEditorView}.
+	   */
+	  getImage: function getImage(value) {
+	    _utilsApi.helpers.throwError('Not Implemented', 'NotImplementedError');
+	  }
+	});
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 16.07.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _date = __webpack_require__(705);
+	
+	var _date2 = _interopRequireDefault(_date);
+	
+	var _dropdownApi = __webpack_require__(18);
+	
+	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
+	
+	var _DatePanelView = __webpack_require__(387);
+	
+	var _DatePanelView2 = _interopRequireDefault(_DatePanelView);
+	
+	var _DateInputView = __webpack_require__(386);
+	
+	var _DateInputView2 = _interopRequireDefault(_DateInputView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = Marionette.LayoutView.extend({
+	    initialize: function initialize() {
+	        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
+	        this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
+	        this.allowEmptyValue = this.getOption('allowEmptyValue');
+	        this.dateDisplayFormat = this.getOption('dateDisplayFormat');
+	    },
+	
+	    template: _libApi.Handlebars.compile(_date2.default),
+	
+	    className: 'date-view',
+	
+	    regions: {
+	        popoutRegion: '.js-popout-region'
+	    },
+	
+	    onShow: function onShow() {
+	        this.calendarDropdownView = _dropdownApi2.default.factory.createDropdown({
+	            buttonView: _DateInputView2.default,
+	            buttonViewOptions: {
+	                model: this.model,
+	                timezoneOffset: this.timezoneOffset,
+	                preserveTime: this.preserveTime,
+	                allowEmptyValue: this.allowEmptyValue,
+	                dateDisplayFormat: this.dateDisplayFormat
+	            },
+	            panelView: _DatePanelView2.default,
+	            panelViewOptions: {
+	                model: this.model,
+	                timezoneOffset: this.timezoneOffset,
+	                preserveTime: this.preserveTime,
+	                allowEmptyValue: this.allowEmptyValue
+	            },
+	            renderAfterClose: false,
+	            autoOpen: false,
+	            panelMinWidth: 'none'
+	        });
+	        this.listenTo(this.calendarDropdownView, 'before:close', this.__onBeforeClose, this);
+	        this.listenTo(this.calendarDropdownView, 'open', this.__onOpen, this);
+	
+	        this.listenTo(this.calendarDropdownView, 'button:focus', this.__onButtonFocus, this);
+	        this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
+	        this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
+	
+	        this.popoutRegion.show(this.calendarDropdownView);
+	    },
+	
+	    __onBeforeClose: function __onBeforeClose() {
+	        this.calendarDropdownView.button.endEditing();
+	        this.trigger('blur');
+	    },
+	
+	    __onOpen: function __onOpen() {
+	        this.calendarDropdownView.button.startEditing();
+	        this.trigger('focus');
+	    },
+	
+	    __onPanelSelect: function __onPanelSelect() {
+	        this.calendarDropdownView.close();
+	    },
+	
+	    __onButtonCalendarOpen: function __onButtonCalendarOpen() {
+	        this.calendarDropdownView.open();
+	    },
+	
+	    __onButtonFocus: function __onButtonFocus() {
+	        if (this.model.get('enabled') && !this.model.get('readonly')) {
+	            this.calendarDropdownView.open();
+	        }
+	    },
+	
+	    focus: function focus() {
+	        this.calendarDropdownView.button.focus();
+	    },
+	
+	    blur: function blur() {
+	        this.calendarDropdownView.close();
+	    },
+	
+	    hasFocus: function hasFocus() {
+	        return _libApi.$.contains(this.el, document.activeElement);
+	    }
+	});
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 16.07.2015
+	 * Copyright: 2009-2016 Comindware
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _dropdownApi = __webpack_require__(18);
+	
+	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
+	
+	var _TimeInputView = __webpack_require__(388);
+	
+	var _TimeInputView2 = _interopRequireDefault(_TimeInputView);
+	
+	var _time = __webpack_require__(708);
+	
+	var _time2 = _interopRequireDefault(_time);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = Marionette.LayoutView.extend({
+	    initialize: function initialize() {
+	        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
+	        this.allowEmptyValue = this.getOption('allowEmptyValue');
+	        this.timeDisplayFormat = this.getOption('timeDisplayFormat');
+	    },
+	
+	    className: 'time-view',
+	
+	    template: _libApi.Handlebars.compile(_time2.default),
+	
+	    regions: {
+	        dropdownRegion: '.js-dropdown-region'
+	    },
+	
+	    onRender: function onRender() {
+	        var timeArray = [];
+	
+	        for (var h = 0; h < 24; h++) {
+	            for (var m = 0; m < 60; m += 15) {
+	                var val = { hours: h, minutes: m },
+	                    time = _libApi.moment.utc(val),
+	                    formattedTime = _utilsApi.dateHelpers.getDisplayTime(time);
+	
+	                timeArray.push({
+	                    time: time,
+	                    formattedTime: formattedTime
+	                });
+	            }
+	        }
+	
+	        this.dropdownView = _dropdownApi2.default.factory.createDropdown({
+	            buttonView: _TimeInputView2.default,
+	            buttonViewOptions: {
+	                model: this.model,
+	                timezoneOffset: this.timezoneOffset,
+	                allowEmptyValue: this.allowEmptyValue,
+	                timeDisplayFormat: this.timeDisplayFormat
+	            },
+	            panelView: Marionette.CollectionView.extend({
+	                collection: new Backbone.Collection(timeArray),
+	                tagName: 'ul',
+	                className: 'time-dropdown',
+	                childEvents: {
+	                    'select': function select(view, time) {
+	                        this.trigger('select', time);
+	                    }
+	                },
+	                childView: Marionette.ItemView.extend({
+	                    tagName: 'li',
+	                    className: 'time-dropdown__i',
+	                    events: {
+	                        'click': function click() {
+	                            this.trigger('select', this.model.get('time'));
+	                        }
+	                    },
+	                    template: _libApi.Handlebars.compile('{{formattedTime}}')
+	                })
+	            }),
+	            renderAfterClose: false,
+	            autoOpen: false
+	        });
+	        this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
+	        this.listenTo(this.dropdownView, 'open', this.__onOpen, this);
+	
+	        this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus, this);
+	        this.listenTo(this.dropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
+	        this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
+	
+	        this.dropdownRegion.show(this.dropdownView);
+	    },
+	
+	    __onBeforeClose: function __onBeforeClose() {
+	        this.dropdownView.button.endEditing();
+	        this.trigger('blur');
+	    },
+	
+	    __onOpen: function __onOpen() {
+	        this.dropdownView.button.startEditing();
+	        this.trigger('focus');
+	    },
+	
+	    __onPanelSelect: function __onPanelSelect(time) {
+	        var oldVal = this.model.get('value'),
+	            newVal = null;
+	
+	        if (time === null || time === '') {
+	            newVal = null;
+	        } else if (oldVal) {
+	            newVal = _libApi.moment.utc(oldVal).utcOffset(this.timezoneOffset).hour(time.hour()).minute(time.minute()).second(0).millisecond(0).toISOString();
+	        } else {
+	            time = time.clone();
+	            newVal = time.minute(time.minute() - this.timezoneOffset).toISOString();
+	        }
+	
+	        this.model.set('value', newVal);
+	
+	        this.dropdownView.close();
+	    },
+	
+	    __onButtonCalendarOpen: function __onButtonCalendarOpen() {
+	        this.dropdownView.open();
+	    },
+	
+	    __onButtonFocus: function __onButtonFocus() {
+	        if (this.model.get('enabled') && !this.model.get('readonly')) {
+	            this.dropdownView.open();
+	        }
+	    },
+	
+	    focus: function focus() {
+	        this.dropdownView.button.focus();
+	    },
+	
+	    blur: function blur() {
+	        this.dropdownView.close();
+	    },
+	
+	    hasFocus: function hasFocus() {
+	        return _libApi.$.contains(this.el, document.activeElement);
+	    }
+	});
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Ksenia Kartvelishvili
+	 * Date: 05.05.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	exports.default = Backbone.Model.extend({
+	    updateEmpty: function updateEmpty() {
+	        this.set('empty', this.collection.models.length === 1);
+	    }
+	});
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _promise = __webpack_require__(39);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
+	__webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _listApi = __webpack_require__(15);
+	
+	var _listApi2 = _interopRequireDefault(_listApi);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @name BaseReferenceEditorController
+	 * @memberof module:core.form.editors.reference.controllers
+	 * @class Base data provider class for {@link module:core.form.editors.ReferenceEditorView ReferenceEditorView}.
+	 * Data request is performed by fetching Backbone.Collection passed via <code>options.collection</code> option.
+	 * Various scenarios are covered and server request is made only if it is required.
+	 * @param {Object} options Options object.
+	 * @param {Backbone.Collection} options.collection Backbone.Collection of objects. The objects must have <code>id</code> and <code>text</code> attributes.
+	 * The collection must implement <code>fetch()</code> method that supports text filtration.
+	 * For example, the call <code>collection.fetch({ data: { filter: 'myFilterText' } })</code> must
+	 * fetch the objects which contains 'myFilterText' in it's text attribute.
+	 * Besides that, the <code>collection.totalCount</code> attribute must be updated during the fetch and contain
+	 * the total count of object with the applied filter on server.
+	 * */
+	
+	exports.default = Marionette.Controller.extend( /** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */{
+	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'collection');
+	
+	        this.originalCollection = options.collection;
+	        this.collection = _listApi2.default.factory.createWrappedCollection(options.collection);
+	    },
+	
+	    /**
+	     * Requests data with a text filter applied.
+	     * @param {Object} options Options object.
+	     * @param {Object} options.text Text filter filter to apply or <code>null</code>.
+	     * @return {Promise} Promise object that resolves when the data is ready.
+	     * */
+	    fetch: function fetch(options) {
+	        options = options || {};
+	
+	        var filterText = options.text ? options.text.trim().toUpperCase() : '';
+	        if (filterText.indexOf(this.activeFilterText) && this.totalCount) {
+	            // Client-side filter
+	            if (filterText) {
+	                this.collection.filter(function (model) {
+	                    var text = model.get('text');
+	                    if (!text) {
+	                        return false;
+	                    }
+	                    return text.toUpperCase().indexOf(filterText) !== -1;
+	                });
+	            } else {
+	                this.collection.filter(null);
+	            }
+	            return _promise2.default.resolve();
+	        }
+	        // Server-side filter or new data request
+	        this.collection.filter(null);
+	        this.fetchPromise = this.collection.fetch({ data: { filter: filterText } }).then(function () {
+	            this.totalCount = this.collection.totalCount;
+	            this.activeFilterText = filterText;
+	        }.bind(this));
+	
+	        return this.fetchPromise;
+	    },
+	
+	    /*
+	    * Backbone.Collection that should be used to read data. The data should not be fetched from this object directly.
+	    * Use the controller's <code>fetch()</code> method instead.
+	    * */
+	    collection: null,
+	
+	    /**
+	     * Handles a navigation request to an object. The method is abstract.
+	     * @param {Object} value Value object that describes the object to navigate to.
+	     * */
+	    navigate: function navigate(value) {
+	        _utilsApi.helpers.throwError('Not Implemented.', 'NotImplementedError');
+	    }
+	}); /**
+	     * Developer: Stepan Burguchev
+	     * Date: 12/12/2014
+	     * Copyright: 2009-2016 Comindware®
+	     *       All Rights Reserved
+	     * Published under the MIT license
+	     */
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 11/18/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _loading = __webpack_require__(724);
+	
+	var _loading2 = _interopRequireDefault(_loading);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = Marionette.ItemView.extend({
+	    initialize: function initialize() {},
+	
+	    className: 'l-loader',
+	
+	    template: _libApi.Handlebars.compile(_loading2.default)
+	});
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 12/3/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _listApi = __webpack_require__(15);
+	
+	var _listApi2 = _interopRequireDefault(_listApi);
+	
+	var _referencePanel = __webpack_require__(727);
+	
+	var _referencePanel2 = _interopRequireDefault(_referencePanel);
+	
+	var _LocalizationService = __webpack_require__(10);
+	
+	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+	
+	var _LoadingView = __webpack_require__(190);
+	
+	var _LoadingView2 = _interopRequireDefault(_LoadingView);
+	
+	var _AddNewButtonView = __webpack_require__(408);
+	
+	var _AddNewButtonView2 = _interopRequireDefault(_AddNewButtonView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var config = {
+	    CHILD_HEIGHT: 30,
+	    TEXT_FETCH_DELAY: 300
+	};
+	
+	var classes = {
+	    EMPTY_VIEW: 'editor__common-empty-view'
+	};
+	
+	exports.default = Marionette.LayoutView.extend({
+	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'model');
+	        _utilsApi.helpers.ensureOption(options, 'reqres');
+	        _utilsApi.helpers.ensureOption(options, 'getDisplayText');
+	
+	        this.reqres = options.reqres;
+	        this.showAddNewButton = this.options.showAddNewButton;
+	        this.fetchDelayId = _.uniqueId('fetch-delay-id-');
+	    },
+	
+	    className: 'dd-list dd-list_reference',
+	
+	    template: _libApi.Handlebars.compile(_referencePanel2.default),
+	
+	    templateHelpers: function templateHelpers() {
+	        var value = this.model.get('value');
+	        return {
+	            text: this.options.getDisplayText(this.model.get('value')),
+	            showAddNewButton: this.showAddNewButton
+	        };
+	    },
+	
+	    ui: {
+	        input: '.js-input',
+	        clear: '.js-clear'
+	    },
+	
+	    events: {
+	        'keyup @ui.input': '__updateFilter',
+	        'change @ui.input': '__updateFilter',
+	        'input @ui.input': '__updateFilter',
+	        'click @ui.clear': '__clear'
+	    },
+	
+	    regions: {
+	        listRegion: '.js-list-region',
+	        scrollbarRegion: '.js-scrollbar-region',
+	        loadingRegion: '.js-loading-region',
+	        addNewButtonRegion: '.js-add-new-button-region'
+	    },
+	
+	    onRender: function onRender() {
+	        this.__assignKeyboardShortcuts();
+	    },
+	
+	    onShow: function onShow() {
+	        var result = _listApi2.default.factory.createDefaultList({
+	            collection: this.model.get('collection'),
+	            listViewOptions: {
+	                childView: this.options.listItemView,
+	                childViewOptions: {
+	                    reqres: this.reqres,
+	                    getDisplayText: this.options.getDisplayText
+	                },
+	                emptyViewOptions: {
+	                    text: _LocalizationService2.default.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
+	                    className: classes.EMPTY_VIEW
+	                },
+	                childHeight: config.CHILD_HEIGHT
+	            }
+	        });
+	
+	        this.listView = result.listView;
+	        this.eventAggregator = result.eventAggregator;
+	
+	        if (this.showAddNewButton) {
+	            this.$el.addClass('dd-list_reference-button');
+	            var addNewButton = new _AddNewButtonView2.default({ reqres: this.reqres });
+	            this.addNewButtonRegion.show(addNewButton);
+	        }
+	
+	        this.listRegion.show(result.listView);
+	        this.scrollbarRegion.show(result.scrollbarView);
+	
+	        this.ui.input.focus();
+	        this.__updateFilter();
+	    },
+	
+	    __assignKeyboardShortcuts: function __assignKeyboardShortcuts() {
+	        if (this.keyListener) {
+	            this.keyListener.reset();
+	        }
+	        this.keyListener = new _libApi.keypress.Listener(this.ui.input[0]);
+	        _.each(this.keyboardShortcuts, function (value, key) {
+	            var keys = key.split(',');
+	            _.each(keys, function (k) {
+	                this.keyListener.simple_combo(k, value.bind(this));
+	            }, this);
+	        }, this);
+	    },
+	
+	
+	    keyboardShortcuts: {
+	        'up': function up() {
+	            this.listView.moveCursorBy(-1, false);
+	        },
+	        'down': function down() {
+	            this.listView.moveCursorBy(1, false);
+	        },
+	        'enter,num_enter': function enterNum_enter() {
+	            if (this.isLoading) {
+	                return;
+	            }
+	            var selectedModel = this.model.get('collection').selected;
+	            this.reqres.request('value:set', selectedModel);
+	        }
+	    },
+	
+	    __clear: function __clear() {
+	        this.reqres.request('value:set', null);
+	    },
+	
+	    __updateFilter: function __updateFilter() {
+	        var text = (this.ui.input.val() || '').trim();
+	        if (this.activeText === text) {
+	            return;
+	        }
+	        _utilsApi.helpers.setUniqueTimeout(this.fetchDelayId, function () {
+	            this.activeText = text;
+	            this.__setLoading(true);
+	            var collection = this.model.get('collection');
+	            collection.deselect();
+	            this.reqres.request('filter:text', {
+	                text: text
+	            }).then(function () {
+	                if (collection.length > 0) {
+	                    var model = collection.at(0);
+	                    model.select();
+	                    this.eventAggregator.scrollTo(model);
+	                }
+	
+	                this.__setLoading(false);
+	            }.bind(this));
+	        }.bind(this), config.TEXT_FETCH_DELAY);
+	    },
+	
+	    __setLoading: function __setLoading(isLoading) {
+	        if (this.isDestroyed) {
+	            return false;
+	        }
+	        this.isLoading = isLoading;
+	        if (isLoading) {
+	            this.loadingRegion.show(new _LoadingView2.default());
+	        } else {
+	            this.loadingRegion.reset();
+	        }
+	    }
+	});
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _assign = __webpack_require__(121);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _field = __webpack_require__(748);
+	
+	var _field2 = _interopRequireDefault(_field);
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _dropdownApi = __webpack_require__(18);
+	
+	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
+	
+	var _FieldInfoModel = __webpack_require__(411);
+	
+	var _FieldInfoModel2 = _interopRequireDefault(_FieldInfoModel);
+	
+	var _InfoButtonView = __webpack_require__(412);
+	
+	var _InfoButtonView2 = _interopRequireDefault(_InfoButtonView);
+	
+	var _InfoMessageView = __webpack_require__(413);
+	
+	var _InfoMessageView2 = _interopRequireDefault(_InfoMessageView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var classes = {
+	    REQUIRED: 'required',
+	    READONLY: 'readonly',
+	    DISABLED: 'disabled',
+	    ERROR: 'error'
+	}; /**
+	    * Developer: Stepan Burguchev
+	    * Date: 1/26/2015
+	    * Copyright: 2009-2016 Comindware®
+	    *       All Rights Reserved
+	    * Published under the MIT license
+	    */
+	
+	exports.default = Marionette.LayoutView.extend({
+	    initialize: function initialize(options) {
+	        options = options || {};
+	
+	        this.form = options.form;
+	        this.key = options.key;
+	        this.__createSchema(options.schema);
+	
+	        this.__createEditor();
+	    },
+	    templateHelpers: function templateHelpers() {
+	        return {
+	            help: this.schema.help || '',
+	            title: this.schema.title,
+	            key: this.key,
+	            editorId: this.editor.id
+	        };
+	    },
+	
+	
+	    template: _libApi.Handlebars.compile(_field2.default),
+	
+	    ui: {
+	        errorText: '.js-error-text'
+	    },
+	
+	    regions: {
+	        editorRegion: '.js-editor-region',
+	        helpTextRegion: '.js-help-text-region'
+	    },
+	
+	    onShow: function onShow() {
+	        this.editorRegion.show(this.editor);
+	        if (this.schema.helpText) {
+	            this.fieldInfoModel = new _FieldInfoModel2.default({
+	                text: this.schema.helpText
+	            });
+	            var infoPopout = _dropdownApi2.default.factory.createPopout({
+	                panelView: _InfoMessageView2.default,
+	                panelViewOptions: {
+	                    model: this.fieldInfoModel
+	                },
+	                buttonView: _InfoButtonView2.default,
+	                buttonViewOptions: {
+	                    model: this.fieldInfoModel
+	                },
+	                popoutFlow: 'right',
+	                customAnchor: true
+	            });
+	            this.helpTextRegion.show(infoPopout);
+	        }
+	        this.setRequired(this.schema.required);
+	        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
+	        this.__rendered = true;
+	    },
+	
+	
+	    /**
+	     * Check the validity of the field
+	     *
+	     * @return {String}
+	     */
+	    validate: function validate() {
+	        var error = this.editor.validate();
+	        if (error) {
+	            this.setError(error.message);
+	        } else {
+	            this.clearError();
+	        }
+	        return error;
+	    },
+	    setError: function setError(msg) {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
+	        this.$el.addClass(classes.ERROR);
+	        this.ui.errorText.text(msg);
+	    },
+	    clearError: function clearError() {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
+	        this.$el.removeClass(classes.ERROR);
+	        this.ui.errorText.text('');
+	    },
+	
+	
+	    /**
+	     * Update the model with the new value from the editor
+	     *
+	     * @return {Mixed}
+	     */
+	    commit: function commit() {
+	        return this.editor.commit();
+	    },
+	
+	
+	    /**
+	     * Get the value from the editor
+	     *
+	     * @return {Mixed}
+	     */
+	    getValue: function getValue() {
+	        return this.editor.getValue();
+	    },
+	
+	
+	    /**
+	     * Set/change the value of the editor
+	     *
+	     * @param {Mixed} value
+	     */
+	    setValue: function setValue(value) {
+	        this.editor.setValue(value);
+	    },
+	
+	
+	    /**
+	     * Give the editor focus
+	     */
+	    focus: function focus() {
+	        this.editor.focus();
+	    },
+	
+	
+	    /**
+	     * Remove focus from the editor
+	     */
+	    blur: function blur() {
+	        this.editor.blur();
+	    },
+	    setRequired: function setRequired(required) {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
+	        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
+	    },
+	    __updateEditorState: function __updateEditorState(readonly, enabled) {
+	        if (!this.__checkUiReady()) {
+	            return;
+	        }
+	        this.$el.toggleClass(classes.READONLY, Boolean(readonly));
+	        this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
+	    },
+	    __createSchema: function __createSchema(schema) {
+	        // Resolving editor type declared as string
+	        var type = _.isString(schema.type) ? _formRepository2.default.editors[schema.type] : schema.type || 'Text';
+	        this.schema = (0, _assign2.default)({
+	            title: this.__createDefaultTitle(),
+	            required: false
+	        }, schema);
+	        this.schema.type = type;
+	    },
+	
+	
+	    /*
+	     * Create the default field title (label text) from the key name.
+	     * (Converts 'camelCase' to 'Camel Case')
+	     */
+	    __createDefaultTitle: function __createDefaultTitle() {
+	        var str = this.key;
+	        if (!str) {
+	            return '';
+	        }
+	
+	        //Add spaces
+	        str = str.replace(/([A-Z])/g, ' $1');
+	        //Uppercase first character
+	        str = str.replace(/^./, function (x) {
+	            return x.toUpperCase();
+	        });
+	        return str;
+	    },
+	    __createEditor: function __createEditor() {
+	        var _this = this;
+	
+	        var ConstructorFn = this.schema.type;
+	        this.editor = new ConstructorFn({
+	            schema: this.schema,
+	            form: this.form,
+	            key: this.key,
+	            model: this.model,
+	            id: this.__createEditorId(),
+	            value: this.options.value
+	        });
+	        this.editor.on('readonly', function (readonly) {
+	            _this.__updateEditorState(readonly, _this.editor.getEnabled());
+	        });
+	        this.editor.on('enabled', function (enabled) {
+	            _this.__updateEditorState(_this.editor.getReadonly(), enabled);
+	        });
+	
+	        if (this.schema.validateOnChange) {
+	            this.editor.on('change', _.debounce(function () {
+	                _this.validate();
+	                _this.editor.trigger('validated', _this);
+	            }, 500));
+	            this.editor.on('blur', function () {
+	                _this.validate();
+	                _this.editor.trigger('validated', _this);
+	            });
+	        }
+	    },
+	    __createEditorId: function __createEditorId() {
+	        var id = this.key;
+	
+	        //Replace periods with underscores
+	        id = id.replace(/\./g, '_');
+	        //Otherwise, if there is a model use it's CID to avoid conflicts when multiple forms are on the page
+	        if (this.model) {
+	            return this.model.cid + '_' + id;
+	        }
+	        return id;
+	    },
+	    __checkUiReady: function __checkUiReady() {
+	        return this.__rendered && !this.isDestroyed;
+	    }
+	});
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 7/7/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	/*
+	    Behavior-like controller that is responsible for synchronization between views presenting the same collection.
+	
+	    For example, it keeps current scroll position in sync so that all the views are scrolled to the same item.
+	
+	    Does not provide any public interface for now since all the behavior logic is inside.
+	
+	    Usage:
+	
+	    new EventAggregator({
+	        views: [
+	            scrollbarView,
+	            listView,
+	            // etc
+	        ]
+	    });
+	 */
+	
+	exports.default = Marionette.Controller.extend({
+	    initialize: function initialize(options) {
+	        if (options.views === undefined) {
+	            throw new Error('You must pass the views you want to keep in sync (displaying the same collection) into the `views` option.');
+	        }
+	        if (!options.collection) {
+	            throw new Error('`collection` option is required.');
+	        }
+	
+	        _.bindAll(this, '__handleCollectionAdd', '__handleCollectionRemove', '__handleCollectionReset');
+	
+	        this.views = options.views;
+	        this.collection = options.collection;
+	        this.state = {};
+	
+	        this.listenTo(this.collection, 'add', this.__handleCollectionAdd);
+	        this.listenTo(this.collection, 'remove', this.__handleCollectionRemove);
+	        this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
+	        this.__updateCount(this.collection.length);
+	
+	        _.each(this.views, function (v) {
+	            this.listenTo(v, 'viewportHeightChanged', this.__handleViewportHeightChanged);
+	            this.listenTo(v, 'positionChanged', this.__handlePositionChanged);
+	        }, this);
+	    },
+	
+	    __handleCollectionAdd: function __handleCollectionAdd(model, collection) {
+	        this.__updateCount(collection.length);
+	    },
+	
+	    __handleCollectionRemove: function __handleCollectionRemove(model, collection) {
+	        this.__updateCount(collection.length);
+	    },
+	
+	    __handleCollectionReset: function __handleCollectionReset(collection) {
+	        this.__updateCount(collection.length);
+	    },
+	
+	    scrollTo: function scrollTo(model) {
+	        var modelIndex = this.collection.indexOf(model);
+	        var view = _.find(this.views, function (view) {
+	            return view.scrollTo;
+	        });
+	        if (view) {
+	            view.scrollTo(modelIndex);
+	        }
+	    },
+	
+	    __updateCount: function __updateCount(count) {
+	        this.state.count = count;
+	    },
+	
+	    __handleViewportHeightChanged: function __handleViewportHeightChanged(sender, e) {
+	        console.log('viewportHeight changed: ', e.oldViewportHeight, '->', e.viewportHeight);
+	        _.chain(this.views).filter(function (v) {
+	            return v !== sender;
+	        }).each(function (v) {
+	            v.updateViewportHeight && v.updateViewportHeight(e.viewportHeight);
+	        });
+	        this.state.viewportHeight = e.viewportHeight;
+	    },
+	
+	    __handlePositionChanged: function __handlePositionChanged(sender, e) {
+	        console.log('position changed: ', e.oldPosition, '->', e.position);
+	        _.chain(this.views).filter(function (v) {
+	            return v !== sender;
+	        }).each(function (v) {
+	            v.updatePosition && v.updatePosition(e.position);
+	        });
+	        this.state.position = e.position;
+	        this.__tryMoreDataRequest();
+	    },
+	
+	    __tryMoreDataRequest: function __tryMoreDataRequest() {
+	        if (this.state.position === this.__getMaxPosition()) {
+	            if (!this.atEnd) {
+	                this.atEnd = true;
+	                this.trigger('request:moreData', this, this.collection);
+	            }
+	        } else {
+	            this.atEnd = false;
+	        }
+	    },
+	
+	    __getMaxPosition: function __getMaxPosition() {
+	        return Math.max(0, this.state.count - 1 - this.state.viewportHeight + 1);
+	    }
+	});
+
+/***/ },
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 8/7/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function (model) {
+	  _.extend(this, new _SelectableBehavior2.default.Selectable(model));
+	  _.extend(this, new _HighlightableBehavior2.default(model));
+	};
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _SelectableBehavior = __webpack_require__(45);
+	
+	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
+	
+	var _HighlightableBehavior = __webpack_require__(119);
+	
+	var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 7/17/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _emptyGrid = __webpack_require__(255);
+	
+	var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
+	
+	var _LocalizationService = __webpack_require__(10);
+	
+	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Some description for initializer
+	 * @name EmptyGridView
+	 * @memberof module:core.list.views
+	 * @class EmptyGridView
+	 * @constructor
+	 * @description View для отображения списка без колонок
+	 * @extends Marionette.ItemView
+	 * @param {Object} options Constructor options
+	 * @param {string} [options.text=Список пуст] отображаемый текст
+	 * */
+	
+	exports.default = Marionette.ItemView.extend({
+	    initialize: function initialize(options) {
+	        this.model = new Backbone.Model({
+	            text: options.text || _LocalizationService2.default.get('CORE.GRID.EMPTYVIEW.EMPTY')
+	        });
+	    },
+	
+	    template: _libApi.Handlebars.compile(_emptyGrid2.default),
+	    className: 'empty-view'
+	});
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 7/17/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _emptyGrid = __webpack_require__(255);
+	
+	var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
+	
+	var _LocalizationService = __webpack_require__(10);
+	
+	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Some description for initializer
+	 * @name EmptyListView
+	 * @memberof module:core.list.views
+	 * @class EmptyListView
+	 * @constructor
+	 * @description View используемый по умолчанию для отображения пустого списка (нет строк), передавать в {@link module:core.list.views.GridView GridView options.emptyView}
+	 * @extends Marionette.ItemView
+	 * @param {Object} options Constructor options
+	 * @param {string} [options.text=Список пуст] отображаемый текст
+	 * */
+	var EmptyListView = Marionette.ItemView.extend({
+	    initialize: function initialize(options) {
+	        this.model = new Backbone.Model({
+	            text: options && options.text || _LocalizationService2.default.get("CORE.GRID.EMPTYVIEW.EMPTY")
+	        });
+	    },
+	
+	    template: _libApi.Handlebars.compile(_emptyGrid2.default),
+	
+	    className: 'empty-view'
+	});
+	
+	exports.default = EmptyListView;
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 7/7/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _grid = __webpack_require__(749);
+	
+	var _grid2 = _interopRequireDefault(_grid);
+	
+	var _ListView = __webpack_require__(116);
+	
+	var _ListView2 = _interopRequireDefault(_ListView);
+	
+	var _RowView = __webpack_require__(117);
+	
+	var _RowView2 = _interopRequireDefault(_RowView);
+	
+	var _GridHeaderView = __webpack_require__(91);
+	
+	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
+	
+	var _NoColumnsView = __webpack_require__(198);
+	
+	var _NoColumnsView2 = _interopRequireDefault(_NoColumnsView);
+	
+	var _LoadingRowView = __webpack_require__(425);
+	
+	var _LoadingRowView2 = _interopRequireDefault(_LoadingRowView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/*
+	    Public interface:
+	
+	    This view produce:
+	        trigger: positionChanged (sender, { oldPosition, position })
+	        trigger: viewportHeightChanged (sender, { oldViewportHeight, viewportHeight })
+	    This view react on:
+	        collection change (via Backbone.Collection events)
+	        position change (when we scroll with scrollbar for example): updatePosition(newPosition)
+	 */
+	
+	var constants = {
+	    gridRowHeight: 32,
+	    gridHeaderHeight: 51
+	};
+	
+	/**
+	 * @name GridView
+	 * @memberof module:core.list.views
+	 * @class GridView
+	 * @constructor
+	 * @description View-контейнер для заголовка и контента
+	 * @extends Marionette.LayoutView
+	 * @param {Object} options Constructor options
+	 * @param {Array} options.collection массив элементов списка
+	 * @param {Array} options.columns массив колонок
+	 * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+	 * @param {Number} options.childHeight высота строки списка (childView)
+	 * @param {Backbone.View} [options.childView] view строки списка
+	 * @param {Backbone.View} [options.childViewOptions] опции для childView
+	 * @param {Function} options.childViewSelector ?
+	 * @param {Object} [options.emptyViewOptions] опции для emptyView
+	 * @param {Backbone.View} options.gridColumnHeaderView View заголовка списка
+	 * @param {String} options.height задает как определяется высота строки, значения: fixed, auto
+	 * @param {Backbone.View} [options.loadingChildView] view-лоадер, показывается при подгрузке строк
+	 * @param {Backbone.View} options.noColumnsView View для отображения списка без колонок
+	 * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
+	 * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
+	 * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
+	 * */
+	var GridView = Marionette.LayoutView.extend({
+	    initialize: function initialize(options) {
+	        if (this.collection === undefined) {
+	            throw 'You must provide a collection to display.';
+	        }
+	
+	        if (options.columns === undefined) {
+	            throw 'You must provide columns definition ("columns" option)';
+	        }
+	
+	        options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
+	
+	        this.headerView = new _GridHeaderView2.default({
+	            columns: options.columns,
+	            gridEventAggregator: this,
+	            gridColumnHeaderView: options.gridColumnHeaderView
+	        });
+	
+	        this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
+	
+	        if (options.noColumnsView) {
+	            this.noColumnsView = options.noColumnsView;
+	        } else {
+	            this.noColumnsView = _NoColumnsView2.default;
+	        }
+	        options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
+	
+	        var childView = options.childView;
+	        if (options.useDefaultRowView) {
+	            _.each(options.columns, function (column) {
+	                if (column.cellView === undefined) throw 'You must specify cellView for each column (useDefaultRowView flag is true)';
+	            });
+	
+	            childView = _RowView2.default;
+	            options.childHeight = constants.gridRowHeight;
+	        } else if (options.childHeight === undefined) {
+	            throw 'You must provide a childHeight for the child item view (in pixels).';
+	        }
+	
+	        var childViewOptions = _.extend(options.childViewOptions || {}, {
+	            columns: options.columns,
+	            gridEventAggregator: this
+	        });
+	
+	        this.listView = new _ListView2.default({
+	            collection: this.collection,
+	            childView: childView,
+	            childViewSelector: options.childViewSelector,
+	            emptyView: options.emptyView,
+	            emptyViewOptions: options.emptyViewOptions,
+	            noColumnsView: options.noColumnsView,
+	            noColumnsViewOptions: options.noColumnsViewOptions,
+	            childHeight: options.childHeight,
+	            childViewOptions: childViewOptions,
+	            loadingChildView: options.loadingChildView || _LoadingRowView2.default,
+	            maxRows: options.maxRows,
+	            height: options.height
+	        });
+	
+	        this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
+	            if (_.string.startsWith(eventName, 'childview')) {
+	                this.trigger.apply(this, [eventName, view].concat(eventArguments));
+	            }
+	        }.bind(this));
+	
+	        this.listenTo(this.listView, 'positionChanged', function (sender, args) {
+	            this.trigger('positionChanged', this, args);
+	        }.bind(this));
+	
+	        this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
+	
+	        this.updatePosition = this.listView.updatePosition.bind(this.listView);
+	
+	        this.listenTo(this.collection, 'reset', function (collection, options) {
+	            // fixing display:table style if there were not rows
+	            if (options && options.previousModels.length === 0) {
+	                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'none');
+	                // forcing browser to rebuild DOM accessing the attribute
+	                this.listView.visibleCollectionRegion.currentView.$el.css('display');
+	                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'table');
+	            }
+	        }.bind(this));
+	    },
+	
+	    __updateHeight: function __updateHeight(sender, args) {
+	        args.gridHeight = args.listViewHeight + constants.gridHeaderHeight;
+	        this.$el.height(args.gridHeight);
+	        this.trigger('viewportHeightChanged', this, args);
+	    },
+	
+	    onColumnSort: function onColumnSort(column, comparator) {
+	        this.collection.comparator = comparator;
+	        this.collection.sort();
+	    },
+	
+	    regions: {
+	        headerRegion: '.grid-header-view',
+	        contentViewRegion: '.grid-content-view',
+	        noColumnsViewRegion: '.js-nocolumns-view-region'
+	    },
+	
+	    className: 'grid',
+	
+	    template: _libApi.Handlebars.compile(_grid2.default),
+	
+	    onShow: function onShow() {
+	        var elementWidth = this.$el.width();
+	        if (this.options.columns.length === 0) {
+	            var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
+	            this.noColumnsViewRegion.show(noColumnsView);
+	        }
+	        this.headerRegion.show(this.headerView);
+	        this.contentViewRegion.show(this.listView);
+	        var updatedElementWidth = this.$el.width();
+	        if (elementWidth !== updatedElementWidth) {
+	            // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
+	            this.headerView.handleResize();
+	            this.listView.handleResize();
+	        }
+	    },
+	
+	    onRender: function onRender() {
+	        _utilsApi.htmlHelpers.forbidSelection(this.el);
+	    },
+	
+	    sortBy: function sortBy(columnIndex, sorting) {
+	        var column = this.options.columns[columnIndex];
+	        if (sorting) {
+	            _.each(this.options.columns, function (c) {
+	                c.sorting = null;
+	            });
+	            column.sorting = sorting;
+	            switch (sorting) {
+	                case 'asc':
+	                    this.collection.comparator = column.sortAsc;
+	                    break;
+	                case 'desc':
+	                    this.collection.comparator = column.sortDesc;
+	                    break;
+	            }
+	        } else {
+	            sorting = column.sorting;
+	            _.each(this.options.columns, function (c) {
+	                c.sorting = null;
+	            });
+	            switch (sorting) {
+	                case 'asc':
+	                    column.sorting = 'desc';
+	                    this.collection.comparator = column.sortDesc;
+	                    break;
+	                case 'desc':
+	                    column.sorting = 'asc';
+	                    this.collection.comparator = column.sortAsc;
+	                    break;
+	                default:
+	                    column.sorting = 'asc';
+	                    this.collection.comparator = column.sortAsc;
+	                    break;
+	            }
+	        }
+	        this.onColumnSort(column, this.collection.comparator);
+	        this.headerView.updateSorting();
+	    },
+	
+	    handleResize: function handleResize() {
+	        this.headerView.handleResize();
+	    }
+	});
+	
+	exports.default = GridView;
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 27.07.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _noColumns = __webpack_require__(753);
+	
+	var _noColumns2 = _interopRequireDefault(_noColumns);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Some description for initializer
+	 * @name NoColumnsView
+	 * @memberof module:core.list.views
+	 * @class NoColumnsView
+	 * @extends Marionette.ItemView
+	 * @constructor
+	 * @description View используемый по умолчанию для отображения списка без колонок
+	 * */
+	exports.default = Marionette.ItemView.extend({
+	  className: 'dev-no-columns-view',
+	  template: _libApi.Handlebars.compile(_noColumns2.default)
+	});
+
+/***/ },
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 7/7/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _scrollbar = __webpack_require__(754);
+	
+	var _scrollbar2 = _interopRequireDefault(_scrollbar);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/*
+	    Public interface:
+	
+	    This view produce:
+	        trigger: positionChanged (sender, { oldPosition, position })
+	    This view react on:
+	        collection change (via Backbone.Collection events)
+	        position change (when we scroll content view somehow without this scrollbar): updatePosition(newPosition)
+	        viewportHeight change (when we resize content views attached to this scrollbar): updateViewportHeight(newViewportHeight)
+	*/
+	
+	/**
+	 * Some description for initializer
+	 * @name ScrollBarView
+	 * @memberof module:core.list.views
+	 * @class ScrollBarView
+	 * @extends Marionette.ItemView
+	 * @constructor
+	 * @description View Scrollbar'а
+	 * @param {Object} options Constructor options
+	 * */
+	var ScrollbarView = Marionette.ItemView.extend({
+	    initialize: function initialize() {
+	        if (this.collection === undefined) {
+	            throw 'You must provide a collection to display.';
+	        }
+	
+	        _.bindAll(this, '__documentMouseUp', '__documentMouseMove');
+	        this.$document = $(document);
+	        this.state = {
+	            position: 0,
+	            viewportHeight: 25,
+	            count: 0
+	        };
+	
+	        this.__updateCount(this.collection.length);
+	    },
+	
+	    className: 'scrollbar',
+	    template: _libApi.Handlebars.compile(_scrollbar2.default),
+	    model: null,
+	    state: null,
+	    dragContext: null,
+	
+	    ui: {
+	        dragger: '.dragger'
+	    },
+	
+	    constants: {
+	        minDraggerHeight: 25 // in pixels
+	    },
+	
+	    collectionEvents: {
+	        'add': '__handleCollectionAdd',
+	        'remove': '__handleCollectionRemove',
+	        'reset': '__handleCollectionReset'
+	    },
+	
+	    events: {
+	        'mousewheel': '__mousewheel',
+	        'mousedown': '__mousedown',
+	        'mouseenter': '__mouseenter',
+	        'mouseleave': '__mouseleave',
+	        'mousedown @ui.dragger': '__draggerMousedown'
+	    },
+	
+	    onShow: function onShow() {
+	        this.rendered = true;
+	        this.__updateScrollbarVisibility();
+	        this.__updateDraggerPosition();
+	        this.__updateDraggerHeight();
+	    },
+	
+	    onRender: function onRender() {
+	        function stopAndPreventDefault(e) {
+	            e.preventDefault();
+	            e.stopPropagation();
+	        }
+	
+	        this.el.onselectstart = stopAndPreventDefault;
+	        this.el.ondragstart = stopAndPreventDefault;
+	    },
+	
+	    updateViewportHeight: function updateViewportHeight(newViewportHeight) {
+	        if (newViewportHeight === undefined) {
+	            throw 'newViewportHeight is undefined';
+	        }
+	
+	        if (newViewportHeight < 1) {
+	            throw 'newViewportHeight is invalid';
+	        }
+	
+	        if (!this.rendered) {
+	            this.state.viewportHeight = newViewportHeight;
+	            return;
+	        }
+	
+	        if (this.state.viewportHeight !== newViewportHeight) {
+	            this.state.viewportHeight = newViewportHeight;
+	            this.__updateScrollbarVisibility();
+	            this.__updateDraggerHeight();
+	
+	            var maxPos = this.__getMaxPosition();
+	            if (this.state.position > maxPos) {
+	                this.__updatePositionState(maxPos, true);
+	                this.__updateDraggerPosition();
+	            }
+	        }
+	    },
+	
+	    updatePosition: function updatePosition(newPosition) {
+	        this.__updatePositionInternal(newPosition, false);
+	    },
+	
+	    __updateCount: function __updateCount(newCount) {
+	        if (newCount === undefined) {
+	            throw 'newCount is undefined';
+	        }
+	
+	        if (newCount < 0) {
+	            throw 'newCount is invalid';
+	        }
+	
+	        if (!this.rendered) {
+	            this.state.count = newCount;
+	            return;
+	        }
+	
+	        if (this.state.count !== newCount) {
+	            var maxPos = this.__getMaxPosition();
+	            var newMaxPos = Math.max(0, maxPos - (this.state.count - newCount));
+	
+	            if (this.state.position > newMaxPos) {
+	                this.__updatePositionState(newMaxPos, true);
+	            }
+	
+	            this.state.count = newCount;
+	            this.__updateScrollbarVisibility();
+	            this.__updateDraggerHeight();
+	            this.__updateDraggerPosition();
+	        }
+	    },
+	
+	    // normalizes new position into [min,max] and updates view+state
+	    __updatePositionInternal: function __updatePositionInternal(newPosition, triggerEvents) {
+	        if (newPosition === undefined) {
+	            throw 'newPosition is undefined';
+	        }
+	
+	        if (!this.rendered) {
+	            this.state.position = newPosition;
+	            return;
+	        }
+	
+	        newPosition = Math.max(0, Math.min(this.__getMaxPosition(), newPosition));
+	        if (this.state.position !== newPosition) {
+	            this.__updatePositionState(newPosition, triggerEvents);
+	            this.__updateDraggerPosition();
+	        }
+	
+	        return newPosition;
+	    },
+	
+	    __handleCollectionAdd: function __handleCollectionAdd(model, collection) {
+	        this.__updateCount(collection.length);
+	    },
+	
+	    __handleCollectionRemove: function __handleCollectionRemove(model, collection) {
+	        this.__updateCount(collection.length);
+	    },
+	
+	    __handleCollectionReset: function __handleCollectionReset(collection) {
+	        this.__updateCount(collection.length);
+	    },
+	
+	    __mouseenter: function __mouseenter() {
+	        this.$el.addClass('hover');
+	    },
+	
+	    __mouseleave: function __mouseleave() {
+	        this.$el.removeClass('hover');
+	    },
+	
+	    __draggerMousedown: function __draggerMousedown(e) {
+	        this.__stopDrag();
+	        this.__startDrag(e);
+	        return false;
+	    },
+	
+	    __documentMouseMove: function __documentMouseMove(e) {
+	        if (!this.dragContext) {
+	            return;
+	        }
+	
+	        var ctx = this.dragContext;
+	        if (e.pageY !== ctx.pageOffsetY) {
+	            var availableHeight = ctx.scrollbarHeight - ctx.draggerHeight;
+	            var currentPosition = e.pageY - ctx.mouseOffsetY - ctx.scrollbarPositionY;
+	            var newDraggerTop = Math.min(Math.max(currentPosition, 0), availableHeight);
+	
+	            var devicePercents = newDraggerTop / ctx.scrollbarHeight * 100;
+	            this.ui.dragger.css({ top: devicePercents + '%' });
+	
+	            // updating scrollbar state, sending positionChanged event if needed
+	            var maxPos = this.__getMaxPosition();
+	            var newPosition = availableHeight !== 0 ? Math.min(maxPos, Math.floor((maxPos + 1) * (newDraggerTop / availableHeight))) : 0;
+	            this.__updatePositionState(newPosition, true);
+	        }
+	
+	        return false;
+	    },
+	
+	    __documentMouseUp: function __documentMouseUp() {
+	        this.__stopDrag();
+	        return false;
+	    },
+	
+	    __mousedown: function __mousedown(e) {
+	        if (e.target !== e.currentTarget) {
+	            return false;
+	        }
+	
+	        var draggerY = this.__getPosition(this.ui.dragger).y;
+	        var sign = e.pageY - draggerY;
+	        sign = sign / Math.abs(sign);
+	
+	        var delta = this.state.viewportHeight;
+	        var newPosition = this.state.position + sign * delta;
+	        this.__updatePositionInternal(newPosition, true);
+	        return false;
+	    },
+	
+	    __mousewheel: function __mousewheel(e) {
+	        var delta = this.state.viewportHeight;
+	        var newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
+	        this.__updatePositionInternal(newPosition, true);
+	        return false;
+	    },
+	
+	    __updatePositionState: function __updatePositionState(newPosition, triggerEvents) {
+	        if (this.state.position === newPosition) {
+	            return;
+	        }
+	
+	        var oldPosition = this.state.position;
+	        this.state.position = newPosition;
+	        if (triggerEvents) {
+	            this.trigger('positionChanged', this, {
+	                oldPosition: oldPosition,
+	                position: newPosition
+	            });
+	        }
+	    },
+	
+	    __updateScrollbarVisibility: function __updateScrollbarVisibility() {
+	        if (this.state.count > this.state.viewportHeight) {
+	            this.$el.removeClass('dev-scrollbar__hidden');
+	        } else {
+	            this.$el.addClass('dev-scrollbar__hidden');
+	        }
+	    },
+	
+	    __updateDraggerHeight: function __updateDraggerHeight() {
+	        var minHeight = Math.min(1, this.constants.minDraggerHeight / this.$el.height());
+	        var heightPc = Math.max(minHeight, Math.min(1, this.state.viewportHeight / this.state.count)) * 100;
+	        this.ui.dragger.css({ height: heightPc + '%' });
+	    },
+	
+	    __updateDraggerPosition: function __updateDraggerPosition() {
+	        var newTopPc;
+	        var maxPos = this.__getMaxPosition();
+	        if (maxPos > 0) {
+	            var h = this.$el.height();
+	            var dh = this.ui.dragger.height();
+	            var availableHeight = h - dh;
+	            var newTop = this.state.position / this.__getMaxPosition() * availableHeight;
+	            newTopPc = newTop / h * 100;
+	        } else {
+	            newTopPc = 0;
+	        }
+	
+	        this.ui.dragger.css({ top: newTopPc + '%' });
+	    },
+	
+	    __getMaxPosition: function __getMaxPosition() {
+	        return Math.max(0, this.state.count - 1 - this.state.viewportHeight + 1);
+	    },
+	
+	    __startDrag: function __startDrag(event) {
+	        this.dragContext = {
+	            scrollbarHeight: this.$el.height(),
+	            draggerHeight: this.ui.dragger.height(),
+	            pageOffsetY: event.pageY,
+	            scrollbarPositionY: this.__getPosition(this.el).y,
+	            mouseOffsetY: event.pageY - this.__getPosition(this.ui.dragger).y
+	        };
+	
+	        this.ui.dragger.addClass('active');
+	        $(document).mousemove(this.__documentMouseMove).mouseup(this.__documentMouseUp);
+	    },
+	
+	    __stopDrag: function __stopDrag() {
+	        if (!this.dragContext) {
+	            return;
+	        }
+	
+	        this.dragContext = null;
+	        this.$document.unbind('mousemove', this.__documentMouseMove);
+	        this.$document.unbind('mouseup', this.__documentMouseUp);
+	        this.ui.dragger.removeClass('active');
+	    },
+	
+	    // returns DOM element position relatively to the document
+	    __getPosition: function __getPosition(domElement) {
+	        if (domElement instanceof jQuery) {
+	            domElement = domElement[0];
+	        }
+	
+	        var left = 0;
+	        var top = 0;
+	        do {
+	            if (!isNaN(domElement.offsetLeft)) {
+	                left += domElement.offsetLeft;
+	            }
+	            if (!isNaN(domElement.offsetTop)) {
+	                top += domElement.offsetTop;
+	            }
+	            domElement = domElement.offsetParent;
+	        } while (domElement);
+	        return { x: left, y: top };
+	    }
+	});
+	
+	exports.default = ScrollbarView;
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 7/23/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	var CollapsibleBehavior = function CollapsibleBehavior(model) {};
+	
+	_.extend(CollapsibleBehavior.prototype, {
+	    collapse: function collapse(internal) {
+	        if (this.collapsed) {
+	            return;
+	        }
+	
+	        this.collapsed = true;
+	        this.trigger("collapsed", this);
+	        this.trigger("toggle:collapse", this);
+	
+	        if (!internal && this.collection && this.collection.collapse) {
+	            this.collection.collapse(this);
+	        }
+	    },
+	
+	    expand: function expand(internal) {
+	        if (!this.collapsed) {
+	            return;
+	        }
+	
+	        this.collapsed = false;
+	        this.trigger("expanded", this);
+	        this.trigger("toggle:collapse", this);
+	        if (!internal && this.collection && this.collection.expand) {
+	            this.collection.expand(this);
+	        }
+	    },
+	
+	    toggleCollapsed: function toggleCollapsed() {
+	        if (this.collapsed) {
+	            this.expand();
+	        } else {
+	            this.collapse();
+	        }
+	    }
+	});
+	
+	exports.default = CollapsibleBehavior;
+
+/***/ },
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 17.08.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _columnHeader = __webpack_require__(755);
+	
+	var _columnHeader2 = _interopRequireDefault(_columnHeader);
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _GridColumnHeaderView = __webpack_require__(115);
+	
+	var _GridColumnHeaderView2 = _interopRequireDefault(_GridColumnHeaderView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @name ColumnHeaderView
+	 * @memberof module:core.nativeGrid.views
+	 * @class ColumnHeaderView
+	 * @constructor
+	 * @description View для отображения ячейки заголовка (шапки) списка
+	 * @extends module:core.list.views.GridColumnHeaderView {@link module:core.list.views.GridColumnHeaderView}
+	 * @param {Object} options Constructor options
+	 * @param {Array} options.columns Массив колонок
+	 * @param {} options.gridEventAggregator ?
+	 * */
+	var ColumnHeaderView = _GridColumnHeaderView2.default.extend({
+	    initialize: function initialize(options) {
+	        _GridColumnHeaderView2.default.prototype.initialize.apply(this, arguments);
+	
+	        if (this.column.filterView) {
+	            this.filterView = this.column.filterView;
+	            this.listenTo(this.model, 'change:hasFilter', this.__resolveFilterClass, this);
+	        }
+	        this.gridEventAggregator = options.gridEventAggregator;
+	    },
+	
+	    template: _libApi.Handlebars.compile(_columnHeader2.default),
+	
+	    ui: {
+	        cellContent: '.js-cell-content',
+	        filterBtn: '.js-filter-btn'
+	    },
+	
+	    events: {
+	        'click @ui.cellContent': '__handleSorting',
+	        'click @ui.filterBtn': 'showFilterPopout'
+	    },
+	
+	    __resolveFilterClass: function __resolveFilterClass() {
+	        if (!this.column.filterView) {
+	            return;
+	        }
+	
+	        var hasFilter = this.model.get('hasFilter');
+	
+	        if (hasFilter) {
+	            this.$el.addClass('has-filter');
+	        } else {
+	            this.$el.removeClass('has-filter');
+	        }
+	    },
+	
+	    showFilterPopout: function showFilterPopout(event) {
+	        event.preventDefault();
+	        event.stopPropagation();
+	        this.gridEventAggregator.trigger('showFilterView', {
+	            columnHeader: this,
+	            filterView: this.filterView,
+	            position: $(event.currentTarget).offset()
+	        });
+	    },
+	
+	    templateHelpers: function templateHelpers() {
+	        return {
+	            sortingAsc: this.column.sorting === 'asc',
+	            sortingDesc: this.column.sorting === 'desc',
+	            filterView: this.filterView !== undefined
+	        };
+	    },
+	
+	    onRender: function onRender() {
+	        this.__resolveFilterClass();
+	    }
+	});
+	
+	exports.default = ColumnHeaderView;
+
+/***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 17.08.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _header = __webpack_require__(756);
+	
+	var _header2 = _interopRequireDefault(_header);
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _GridHeaderView = __webpack_require__(91);
+	
+	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
+	
+	var _GlobalEventService = __webpack_require__(34);
+	
+	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @name HeaderView
+	 * @memberof module:core.nativeGrid.views
+	 * @class HeaderView
+	 * @description View заголовка списка
+	 * @extends module:core.list.views.GridHeaderView {@link module:core.list.views.GridHeaderView}
+	 * @param {Object} options Constructor options
+	 * @param {Array} options.columns Массив колонок
+	 * @param {Object} options.gridEventAggregator ?
+	 * @param {Backbone.View} options.gridColumnHeaderView View Используемый для отображения заголовка (шапки) списка
+	 * */
+	var HeaderView = _GridHeaderView2.default.extend({
+	    initialize: function initialize(options) {
+	        _GridHeaderView2.default.prototype.initialize.apply(this, arguments);
+	        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
+	        this.listenTo(_GlobalEventService2.default, 'window:resize', this.__handleResizeInternal);
+	    },
+	
+	    template: _libApi.Handlebars.compile(_header2.default),
+	
+	    onRender: function onRender() {
+	        var self = this;
+	        this.ui.gridHeaderColumnContent.each(function (i, el) {
+	            var column = self.columns[i];
+	            var view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
+	                model: column.viewModel,
+	                column: column,
+	                gridEventAggregator: self.gridEventAggregator
+	            }));
+	            self.listenTo(view, 'columnSort', self.__handleColumnSort);
+	            var childEl = view.render().el;
+	            el.appendChild(childEl);
+	        });
+	    },
+	
+	    constants: {
+	        MIN_COLUMN_WIDTH: 100
+	    },
+	
+	    __getAvailableWidth: function __getAvailableWidth() {
+	        return this.$el.parent().width() - 1;
+	    },
+	
+	    __getElementOuterWidth: function __getElementOuterWidth(el) {
+	        return $(el)[0].getBoundingClientRect().width;
+	    },
+	
+	    setFitToView: function setFitToView() {
+	        var availableWidth = this.__getAvailableWidth(),
+	            viewWidth = this.__getTableWidth(),
+	            columnsL = this.ui.gridHeaderColumn.length,
+	            fullWidth = 0,
+	            sumDelta = 0,
+	            sumGap = 0;
+	
+	        this.ui.gridHeaderColumn.each(function (i, el) {
+	            if (availableWidth !== viewWidth) {
+	                var columnWidth = this.__getElementOuterWidth(el) * availableWidth / viewWidth;
+	                if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
+	                    sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
+	                    columnWidth = this.constants.MIN_COLUMN_WIDTH;
+	                } else {
+	                    sumGap += columnWidth - this.constants.MIN_COLUMN_WIDTH;
+	                }
+	            }
+	
+	            this.columns[i].width = columnWidth;
+	        }.bind(this));
+	
+	        this.ui.gridHeaderColumn.each(function (i, el) {
+	            if (availableWidth !== viewWidth) {
+	                if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
+	                    var delta = (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
+	                    this.columns[i].width -= delta;
+	                }
+	            }
+	
+	            if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
+	                this.columns[i].width = availableWidth - fullWidth;
+	            }
+	
+	            $(el).outerWidth(this.columns[i].width);
+	            fullWidth += this.columns[i].width;
+	        }.bind(this));
+	        this.$el.width(Math.ceil(fullWidth));
+	    },
+	
+	    __setInitialWidth: function __setInitialWidth(availableWidth) {
+	        var _this = this;
+	
+	        var columnsL = this.ui.gridHeaderColumn.length;
+	        var columnWidthData = this.__getColumnsWidthData(availableWidth, this.columns);
+	        var fullWidth = 0;
+	
+	        this.ui.gridHeaderColumn.each(function (i, el) {
+	            var columnWidth = columnWidthData[i];
+	
+	            if (i === columnsL - 1 && fullWidth + _this.columns[i].width < availableWidth) {
+	                _this.columns[i].width = availableWidth - fullWidth;
+	            }
+	
+	            $(el).outerWidth(columnWidth);
+	            _this.columns[i].width = columnWidth;
+	            fullWidth += columnWidth;
+	        });
+	
+	        this.$el.width(Math.ceil(fullWidth));
+	    },
+	    __getColumnsWidthData: function __getColumnsWidthData(availableWidth, columns) {
+	        var _this2 = this;
+	
+	        var columnWidthData = [];
+	        var availableDynamicWidth = availableWidth;
+	        var nonStaticColumnsCount = columns.length;
+	
+	        this.ui.gridHeaderColumn.each(function (i, el) {
+	            var columnWidth = void 0;
+	            if (columns[i].width) {
+	                columnWidth = columns[i].width;
+	                --nonStaticColumnsCount;
+	            } else {
+	                columnWidth = Math.max($(el).outerWidth(), _this2.constants.MIN_COLUMN_WIDTH);
+	            }
+	            availableDynamicWidth -= columnWidth;
+	            columnWidthData.push(columnWidth);
+	        });
+	
+	        if (availableDynamicWidth > 0) {
+	            (function () {
+	                var columnAdditionalWidth = availableDynamicWidth / nonStaticColumnsCount;
+	                columns.forEach(function (column, i) {
+	                    if (!column.width) {
+	                        columnWidthData[i] += columnAdditionalWidth;
+	                    }
+	                });
+	            })();
+	        }
+	
+	        return columnWidthData;
+	    },
+	
+	
+	    onShow: function onShow() {
+	        this.headerMinWidth = this.__getAvailableWidth();
+	        this.__setInitialWidth(this.headerMinWidth);
+	        this.__handleResizeInternal();
+	    },
+	
+	    __startDrag: function __startDrag(e) {
+	        var $dragger = $(e.target);
+	        var $column = $dragger.parent();
+	
+	        this.updateDragContext($column, e.pageX);
+	        this.dragContext.tableInitialWidth = this.__getTableWidth();
+	
+	        this.dragContext.$dragger = $dragger;
+	
+	        $dragger.addClass('active');
+	        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+	    },
+	
+	    __stopDrag: function __stopDrag() {
+	        if (!this.dragContext) {
+	            return;
+	        }
+	
+	        this.dragContext.$dragger.removeClass('active');
+	        this.dragContext = null;
+	        this.$document.unbind('mousemove', this.__draggerMouseMove);
+	        this.$document.unbind('mouseup', this.__draggerMouseUp);
+	
+	        this.gridEventAggregator.trigger('columnStopDrag');
+	    },
+	
+	    __draggerMouseMove: function __draggerMouseMove(e) {
+	        if (!this.dragContext) {
+	            return;
+	        }
+	
+	        var ctx = this.dragContext;
+	        var delta = e.pageX - ctx.pageOffsetX;
+	
+	        if (delta !== 0) {
+	            var index = ctx.draggedColumn.index;
+	
+	            this.updateColumnAndNeighbourWidths(index, delta);
+	        }
+	
+	        return false;
+	    },
+	
+	    updateColumnAndNeighbourWidths: function updateColumnAndNeighbourWidths(index, delta) {
+	        var $current = $(this.ui.gridHeaderColumn[index]),
+	            newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
+	
+	        if (this.dragContext.draggedColumn.initialWidth + delta < 20) {
+	            return;
+	        }
+	
+	        $current.outerWidth(newColumnWidth);
+	        this.gridEventAggregator.trigger('singleColumnResize', this, {
+	            index: index,
+	            delta: delta
+	        });
+	
+	        this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
+	        this.columns[index].width = newColumnWidth;
+	    },
+	
+	    __changeTableWidth: function __changeTableWidth(initialWidth, delta) {
+	        this.$el.width(initialWidth + delta + 1);
+	    },
+	
+	    updateDragContext: function updateDragContext($column, offset) {
+	        this.dragContext = this.dragContext || {};
+	
+	        var draggedColumn = {
+	            $el: $column,
+	            initialWidth: this.__getElementOuterWidth($column),
+	            index: $column.index()
+	        };
+	
+	        this.dragContext.tableInitialWidth = this.__getTableWidth();
+	        this.gridEventAggregator.trigger('columnStartDrag');
+	
+	        this.dragContext.fullWidth = this.headerMinWidth;
+	        this.dragContext.draggedColumn = draggedColumn;
+	        this.dragContext.pageOffsetX = offset;
+	    },
+	
+	    __getTableWidth: function __getTableWidth() {
+	        return this.$el.width() - 1;
+	    },
+	
+	    __handleResizeInternal: function __handleResizeInternal() {
+	        var fullWidth = this.__getAvailableWidth(),
+	            currentWidth = this.__getTableWidth();
+	
+	        if (fullWidth > currentWidth) {
+	            this.$el.width(fullWidth);
+	        }
+	        this.headerMinWidth = fullWidth;
+	        this.__updateColumnsWidth();
+	    },
+	
+	    __updateColumnsWidth: function __updateColumnsWidth() {
+	        var columns = this.columns,
+	            needUpdate = false,
+	            fullWidth = 0;
+	
+	        this.ui.gridHeaderColumn.each(function (i, el) {
+	            var child = $(el);
+	            var col = columns[i];
+	            if (col.width) {
+	                needUpdate = true;
+	                child.outerWidth(col.width);
+	                fullWidth += col.width;
+	            }
+	        });
+	
+	        needUpdate && this.$el.width(fullWidth);
+	    }
+	});
+	
+	exports.default = HeaderView;
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 14.08.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _nativeGrid = __webpack_require__(757);
+	
+	var _nativeGrid2 = _interopRequireDefault(_nativeGrid);
+	
+	var _ListView = __webpack_require__(431);
+	
+	var _ListView2 = _interopRequireDefault(_ListView);
+	
+	var _RowView = __webpack_require__(204);
+	
+	var _RowView2 = _interopRequireDefault(_RowView);
+	
+	var _HeaderView = __webpack_require__(202);
+	
+	var _HeaderView2 = _interopRequireDefault(_HeaderView);
+	
+	var _ColumnHeaderView = __webpack_require__(201);
+	
+	var _ColumnHeaderView2 = _interopRequireDefault(_ColumnHeaderView);
+	
+	var _NoColumnsView = __webpack_require__(198);
+	
+	var _NoColumnsView2 = _interopRequireDefault(_NoColumnsView);
+	
+	var _SelectableBehavior = __webpack_require__(45);
+	
+	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
+	
+	var _factory = __webpack_require__(174);
+	
+	var _factory2 = _interopRequireDefault(_factory);
+	
+	var _dropdownApi = __webpack_require__(18);
+	
+	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var defaultOptions = {
+	    headerView: _HeaderView2.default,
+	    rowView: _RowView2.default,
+	    paddingLeft: 20,
+	    paddingRight: 10
+	};
+	
+	/**
+	 * Some description for initializer
+	 * @name NativeGridView
+	 * @memberof module:core.nativeGrid.views
+	 * @class NativeGridView
+	 * @description View используемый по умолчанию для отображения строки списка
+	 * @extends Marionette.LayoutView
+	 * @param {Object} options Constructor options
+	 * @param {Backbone.Collection} options.collection Коллекция строк списка
+	 * @param {Backbone.View} [options.headerView={@link module:core.nativeGrid.views.HeaderView}] View, используемый для отображения заголовка списка
+	 * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+	 * @param {Backbone.View} [options.noColumnsView] View для отображения списка без колонок
+	 * @param {Object} [options.noColumnsViewOptions] Опции для noColumnsView
+	 * @param {Function} [options.onColumnSort] Метод, обрабатывющий событие сортировки колонок
+	 * @param {Number} [options.paddingLeft=10] Левый отступ
+	 * @param {Number} [options.paddingRight=20] Правый отступ
+	 * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
+	 * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка.
+	 * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
+	 * */
+	exports.default = Marionette.LayoutView.extend({
+	    template: _libApi.Handlebars.compile(_nativeGrid2.default),
+	
+	    regions: {
+	        headerRegion: '.js-native-grid-header-region',
+	        listRegion: '.js-native-grid-list-region',
+	        noColumnsViewRegion: '.js-nocolumns-view-region',
+	        popoutRegion: '.js-popout-region'
+	    },
+	
+	    ui: {
+	        headerRegion: '.js-native-grid-header-region'
+	    },
+	
+	    className: 'native-grid',
+	
+	    initialize: function initialize(options) {
+	        _utilsApi.helpers.ensureOption(options, 'collection');
+	        _.defaults(this.options, defaultOptions);
+	
+	        this.rowView = this.options.rowView;
+	        this.rowViewSelector = this.options.rowViewSelector;
+	        this.collection = this.options.collection;
+	        this.emptyView = this.options.emptyView;
+	        options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
+	
+	        this.initializeViews();
+	        this.$document = $(document);
+	    },
+	
+	    initializeViews: function initializeViews() {
+	        this.headerView = new this.options.headerView({
+	            columns: this.options.columns,
+	            gridColumnHeaderView: _ColumnHeaderView2.default,
+	            gridEventAggregator: this
+	        });
+	
+	        if (this.options.noColumnsView) {
+	            this.noColumnsView = this.options.noColumnsView;
+	        } else {
+	            this.noColumnsView = _NoColumnsView2.default;
+	        }
+	        this.options.noColumnsViewOptions && (this.noColumnsViewOptions = this.options.noColumnsViewOptions); // jshint ignore:line
+	
+	        var childViewOptions = _.extend(this.options.gridViewOptions || {}, {
+	            columns: this.options.columns,
+	            gridEventAggregator: this,
+	            paddingLeft: this.options.paddingLeft,
+	            paddingRight: this.options.paddingRight
+	        });
+	
+	        this.listView = new _ListView2.default({
+	            childView: this.rowView,
+	            collection: this.collection,
+	            childViewOptions: childViewOptions,
+	            childViewSelector: this.rowViewSelector,
+	            emptyView: this.emptyView
+	        });
+	
+	        this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
+	        this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
+	        this.listenTo(this, 'showFilterView', this.showFilterPopout, this);
+	        this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
+	            if (_.string.startsWith(eventName, 'childview')) {
+	                this.trigger.apply(this, [eventName, view].concat(eventArguments));
+	            }
+	        }.bind(this));
+	    },
+	
+	    __onRowClick: function __onRowClick(model) {
+	        this.trigger('row:click', model);
+	    },
+	
+	    __onRowDblClick: function __onRowDblClick(model) {
+	        this.trigger('row:dblclick', model);
+	    },
+	
+	    __afterColumnsResize: function __afterColumnsResize(width) {
+	        this.listView.setWidth(width);
+	    },
+	
+	    onRender: function onRender() {
+	        this.ui.headerRegion.css({
+	            left: this.options.paddingLeft + 'px',
+	            right: this.options.paddingRight + 'px'
+	        });
+	    },
+	
+	    onShow: function onShow() {
+	        if (this.options.columns.length === 0) {
+	            var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
+	            this.noColumnsViewRegion.show(noColumnsView);
+	        }
+	        this.headerRegion.show(this.headerView);
+	        this.listRegion.show(this.listView);
+	        this.bindListRegionScroll();
+	    },
+	
+	    bindListRegionScroll: function bindListRegionScroll() {
+	        this.listRegion.$el.scroll(function (event) {
+	            this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
+	        }.bind(this));
+	    },
+	
+	    onColumnSort: function onColumnSort(column, comparator) {
+	        this.collection.comparator = comparator;
+	        this.collection.sort();
+	    },
+	
+	    setFitToView: function setFitToView() {
+	        this.headerView.setFitToView();
+	        if (this.collection.length > 0) {
+	            this.listView.setFitToView();
+	        }
+	    },
+	
+	    showFilterPopout: function showFilterPopout(options) {
+	        var AnchoredButtonView = Marionette.ItemView.extend({
+	            template: _libApi.Handlebars.compile('<span class="js-anchor"></span>'),
+	            behaviors: {
+	                CustomAnchorBehavior: {
+	                    behaviorClass: _dropdownApi2.default.views.behaviors.CustomAnchorBehavior,
+	                    anchor: '.js-anchor'
+	                }
+	            },
+	            tagName: 'div'
+	        });
+	
+	        var filterViewOptions = _.find(this.options.columns, function (c) {
+	            return c.id === options.columnHeader.options.column.id;
+	        }).filterViewOptions;
+	
+	        this.filterDropdown = _factory2.default.createPopout({
+	            buttonView: AnchoredButtonView,
+	            panelView: options.filterView,
+	            panelViewOptions: filterViewOptions,
+	            customAnchor: true
+	        });
+	
+	        this.listenTo(this.filterDropdown, 'all', function (eventName, eventArguments) {
+	            if (_.string.startsWith(eventName, 'panel:')) {
+	                this.trigger.apply(this, ['column:filter:' + eventName.slice(6), options.columnHeader.options.column.id, this.filterDropdown.panelView].concat(eventArguments));
+	            }
+	        }.bind(this));
+	
+	        this.listenTo(this.filterDropdown, 'close', function (child, closeOptions) {
+	            this.trigger('column:filter:close', options.columnHeader.options.column.id, child.panelView, closeOptions);
+	        }.bind(this));
+	
+	        this.popoutRegion.show(this.filterDropdown);
+	        this.filterDropdown.$el.offset(options.position);
+	        this.filterDropdown.open();
+	    }
+	});
+
+/***/ },
 /* 204 */
-[822, 74, 19],
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Grigory Kuznetsov
+	 * Date: 22.07.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _RowView = __webpack_require__(117);
+	
+	var _RowView2 = _interopRequireDefault(_RowView);
+	
+	var _NativeGridItemViewBehavior = __webpack_require__(432);
+	
+	var _NativeGridItemViewBehavior2 = _interopRequireDefault(_NativeGridItemViewBehavior);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Some description for initializer
+	 * @name RowView
+	 * @memberof module:core.nativeGrid.views
+	 * @class RowView
+	 * @constructor
+	 * @description View используемый по умолчанию для отображения строки списка
+	 * @extends module:core.list.views.RowView {@link module:core.list.views.RowView}
+	 * @param {Object} options Constructor options
+	 * @param {Array} options.columns Массив колонк
+	 * @param {Object} options.gridEventAggregator ?
+	 * @param {Number} [options.paddingLeft=20] Левый отступ
+	 * @param {Number} [options.paddingRight=10] Правый отступ
+	 * */
+	exports.default = _RowView2.default.extend({
+	    behaviors: {
+	        NativeGridItemViewBehavior: {
+	            behaviorClass: _NativeGridItemViewBehavior2.default,
+	            padding: 15
+	        }
+	    }
+	});
+
+/***/ },
 /* 205 */
-[829, 25],
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 8/4/2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _promise = __webpack_require__(39);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
+	var _stringify = __webpack_require__(209);
+	
+	var _stringify2 = _interopRequireDefault(_stringify);
+	
+	__webpack_require__(1);
+	
+	var _utilsApi = __webpack_require__(4);
+	
+	var _PromiseService = __webpack_require__(207);
+	
+	var _PromiseService2 = _interopRequireDefault(_PromiseService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var extendAjaxService = function extendAjaxService(ajaxService, ajaxMap) {
+	    _.each(ajaxMap, function (actionInfo) {
+	        var controller = ajaxService[actionInfo.className] || (ajaxService[actionInfo.className] = {});
+	
+	        // The result of compilation below is something like this:
+	        //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {
+	        //         return window.Ajax.getJsApiResponse('RecordTypes/List', [  ], _.take(arguments, 0), callback);
+	        //     };
+	        var actionParameters = _.map(actionInfo.parameters, function (parameterInfo) {
+	            return '/*' + parameterInfo.typeName + '*/ ' + parameterInfo.name;
+	        });
+	        actionParameters.push('/*optional*/ callback');
+	        var actionBody = _utilsApi.helpers.format('return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}), callback);', actionInfo.url, _.map(actionInfo.parameters, function (p) {
+	            return '\'' + p.name + '\'';
+	        }).join(', '), actionInfo.parameters.length);
+	        //noinspection JSUnresolvedVariable
+	        var actionFn = _utilsApi.helpers.format('function {0}_{1}({2}) {\r\n{3}\r\n}', actionInfo.className, actionInfo.methodName, actionParameters.join(', '), actionBody);
+	
+	        eval('controller[actionInfo.methodName] = ' + actionFn + ';'); // jshint ignore:line
+	    });
+	};
+	
+	var AjaxServicePrototype = {
+	    load: function load(options) {
+	        _utilsApi.helpers.ensureOption(options, 'ajaxMap');
+	        extendAjaxService(this, options.ajaxMap);
+	    },
+	
+	    getResponse: function getResponse(type, url, data, options) {
+	        _utilsApi.helpers.assertArgumentNotFalsy(type, 'type');
+	        _utilsApi.helpers.assertArgumentNotFalsy(url, 'url');
+	        var config = _.extend({
+	            type: type,
+	            url: url,
+	            data: (0, _stringify2.default)(data || {}),
+	            traditional: true,
+	            dataType: 'json',
+	            contentType: 'application/json'
+	        }, options || {});
+	        var promise = _promise2.default.resolve($.ajax(config));
+	        return _PromiseService2.default.registerPromise(promise);
+	    },
+	
+	    sendFormData: function sendFormData(url, formData) {
+	        _utilsApi.helpers.assertArgumentNotFalsy(url, 'url');
+	        _utilsApi.helpers.assertArgumentNotFalsy(formData, 'formData');
+	        return _promise2.default.resolve($.ajax({
+	            url: url,
+	            type: 'POST',
+	            data: formData,
+	            processData: false,
+	            contentType: false
+	        }));
+	    },
+	
+	    getJsApiResponse: function getJsApiResponse(url, parameterNames, parameters, callback) {
+	        if (callback && !_.isFunction(callback)) {
+	            _utilsApi.helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
+	        }
+	        var parametersLength = _.last(parameters) === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
+	        if (parametersLength < parameterNames.length) {
+	            _utilsApi.helpers.throwFormatError(_utilsApi.helpers.format('Invalid request parameters: expected {0} parameters, actual: {1}.', parameterNames.length, parametersLength));
+	        }
+	        var successCallback = callback || null;
+	
+	        var data = {};
+	        for (var i = 0; i < parameterNames.length; i++) {
+	            data[parameterNames[i]] = parameters[i];
+	        }
+	
+	        return this.getResponse('POST', url, data, {
+	            success: function (result) {
+	                if (result.success !== true) {
+	                    this.trigger('jsApi:error', result);
+	                } else if (successCallback) {
+	                    successCallback(result.data);
+	                }
+	            }.bind(this)
+	        }).then(function (result) {
+	            if (result.success !== true) {
+	                this.trigger('jsApi:error', result);
+	                var error = new Error(result.errorMessage);
+	                error.name = 'JsApiError';
+	                error.errorType = result.errorType;
+	                error.errorData = result.errorData;
+	                error.source = result;
+	                throw error;
+	            }
+	            // TODO: remove this check!
+	            if (result.refresh) {
+	                _.defer(function () {
+	                    window.location.reload();
+	                });
+	            }
+	            return result.data;
+	        }.bind(this));
+	    }
+	};
+	
+	var global = window;
+	var AjaxService = Marionette.Object.extend(AjaxServicePrototype);
+	global.Ajax = new AjaxService();
+	
+	exports.default = global.Ajax;
+
+/***/ },
 /* 206 */
-[830, 44, 76, 123],
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 4/23/2015
+	 * Copyright: 2009-2016 Comindware
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _promise = __webpack_require__(39);
+	
+	var _promise2 = _interopRequireDefault(_promise);
+	
+	__webpack_require__(1);
+	
+	var _MessageView = __webpack_require__(434);
+	
+	var _MessageView2 = _interopRequireDefault(_MessageView);
+	
+	var _WindowService = __webpack_require__(65);
+	
+	var _WindowService2 = _interopRequireDefault(_WindowService);
+	
+	var _LocalizationService = __webpack_require__(10);
+	
+	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var iconIds = {
+	    NONE: 'none',
+	    QUESTION: 'question',
+	    ERROR: 'error'
+	};
+	
+	exports.default = {
+	    confirm: function confirm(description) {
+	        return this.askYesNo(description, _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.TITLE.CONFIRMATION'));
+	    },
+	
+	    askYesNo: function askYesNo(description, text) {
+	        return this.showMessageDialog(description, text, [{
+	            id: true,
+	            text: _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.BUTTONS.YES')
+	        }, {
+	            id: false,
+	            text: _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.BUTTONS.NO'),
+	            default: true
+	        }], iconIds.QUESTION);
+	    },
+	
+	    error: function error(description, text) {
+	        text = text || _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.TITLE.ERROR');
+	        return this.showMessageDialog(description, text, [{
+	            id: false,
+	            text: _LocalizationService2.default.get('CORE.SERVICES.MESSAGE.BUTTONS.OK'),
+	            default: true
+	        }], iconIds.ERROR);
+	    },
+	
+	    showMessageDialog: function showMessageDialog(description, text, buttons, iconId) {
+	        iconId = iconId || iconIds.NONE;
+	        var deferred = _promise2.default.pending();
+	        var view = new _MessageView2.default({
+	            model: new Backbone.Model({
+	                iconId: iconId,
+	                text: text,
+	                description: description,
+	                buttons: buttons || []
+	            })
+	        });
+	        view.once('close', function (result) {
+	            deferred.resolve(result);
+	        });
+	        _WindowService2.default.showPopup(view);
+	        return deferred.promise;
+	    }
+	};
+
+/***/ },
 /* 207 */
-[831, 74],
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 8/27/2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	var promiseQueue = [];
+	
+	exports.default = {
+	    registerPromise: function registerPromise(promise) {
+	        promiseQueue.push(promise);
+	
+	        return promise.finally(function () {
+	            delete promiseQueue.splice(promiseQueue.indexOf(promise), 1);
+	        });
+	    },
+	
+	    cancelAll: function cancelAll() {
+	        _.each(promiseQueue, function (promise) {
+	            promise.cancel();
+	        });
+	    }
+	};
+
+/***/ },
 /* 208 */
-[836, 90, 75, 212, 53, 52, 78, 477, 93, 487, 19],
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Ksenia Kartvelishvili
+	 * Date: 29.06.2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _loading = __webpack_require__(760);
+	
+	var _loading2 = _interopRequireDefault(_loading);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = Marionette.ItemView.extend({
+	    templateHelpers: function templateHelpers() {
+	        return {
+	            text: this.options.text
+	        };
+	    },
+	
+	    template: _libApi.Handlebars.compile(_loading2.default),
+	
+	    className: 'l-loader'
+	});
+
+/***/ },
 /* 209 */
-[842, 51, 484, 124, 126, 123, 205],
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(469), __esModule: true };
+
+/***/ },
 /* 210 */
-[847, 211, 124],
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	var _from = __webpack_require__(457);
+	
+	var _from2 = _interopRequireDefault(_from);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (arr) {
+	  if (Array.isArray(arr)) {
+	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	      arr2[i] = arr[i];
+	    }
+	
+	    return arr2;
+	  } else {
+	    return (0, _from2.default)(arr);
+	  }
+	};
+
+/***/ },
 /* 211 */
-[849, 52, 54, 470, 126],
+[828, 75, 20],
 /* 212 */
+[836, 26],
+/* 213 */
+[837, 46, 77, 126],
+/* 214 */
+[838, 75],
+/* 215 */
+[839, 79, 20],
+/* 216 */
+[841, 51],
+/* 217 */
+[843, 92, 66, 222, 53, 52, 79, 483, 94, 492, 20],
+/* 218 */
+[844, 20],
+/* 219 */
+[849, 51, 489, 127, 129, 126, 212],
+/* 220 */
+[854, 221, 127],
+/* 221 */
+[856, 52, 54, 477, 129],
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(53);
 
 /***/ },
-/* 213 */
-[856, 89, 473, 205, 123, 25, 74],
-/* 214 */
-[859, 128],
-/* 215 */
-[860, 122],
-/* 216 */
+/* 223 */
+[863, 76, 481, 212, 126, 26, 75],
+/* 224 */
+[872, 211, 20, 79, 29],
+/* 225 */
 /***/ function(module, exports) {
 
 
 
 /***/ },
-/* 217 */
-[870, 491, 208],
-/* 218 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(494);
-	var global        = __webpack_require__(25)
+	__webpack_require__(499);
+	var global        = __webpack_require__(26)
 	  , hide          = __webpack_require__(53)
-	  , Iterators     = __webpack_require__(78)
-	  , TO_STRING_TAG = __webpack_require__(19)('toStringTag');
+	  , Iterators     = __webpack_require__(79)
+	  , TO_STRING_TAG = __webpack_require__(20)('toStringTag');
 	
 	for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
 	  var NAME       = collections[i]
@@ -11253,24 +11670,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 219 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var cof = __webpack_require__(28);
+	var cof = __webpack_require__(30);
 	module.exports = function(it, msg){
 	  if(typeof it != 'number' && cof(it) != 'Number')throw TypeError(msg);
 	  return +it;
 	};
 
 /***/ },
-/* 220 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 	'use strict';
-	var toObject = __webpack_require__(16)
+	var toObject = __webpack_require__(17)
 	  , toIndex  = __webpack_require__(62)
-	  , toLength = __webpack_require__(15);
+	  , toLength = __webpack_require__(16);
 	
 	module.exports = [].copyWithin || function copyWithin(target/*= 0*/, start/*= 0, end = @length*/){
 	  var O     = toObject(this)
@@ -11294,10 +11711,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 221 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var forOf = __webpack_require__(67);
+	var forOf = __webpack_require__(68);
 	
 	module.exports = function(iter, ITERATOR){
 	  var result = [];
@@ -11307,13 +11724,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 222 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var aFunction = __webpack_require__(20)
-	  , toObject  = __webpack_require__(16)
-	  , IObject   = __webpack_require__(81)
-	  , toLength  = __webpack_require__(15);
+	var aFunction = __webpack_require__(21)
+	  , toObject  = __webpack_require__(17)
+	  , IObject   = __webpack_require__(83)
+	  , toLength  = __webpack_require__(16);
 	
 	module.exports = function(that, callbackfn, aLen, memo, isRight){
 	  aFunction(callbackfn);
@@ -11340,13 +11757,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 223 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var aFunction  = __webpack_require__(20)
+	var aFunction  = __webpack_require__(21)
 	  , isObject   = __webpack_require__(9)
-	  , invoke     = __webpack_require__(99)
+	  , invoke     = __webpack_require__(100)
 	  , arraySlice = [].slice
 	  , factories  = {};
 	
@@ -11369,22 +11786,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 224 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var dP          = __webpack_require__(13).f
+	var dP          = __webpack_require__(14).f
 	  , create      = __webpack_require__(57)
 	  , redefineAll = __webpack_require__(60)
-	  , ctx         = __webpack_require__(39)
+	  , ctx         = __webpack_require__(42)
 	  , anInstance  = __webpack_require__(55)
-	  , defined     = __webpack_require__(29)
-	  , forOf       = __webpack_require__(67)
-	  , $iterDefine = __webpack_require__(142)
-	  , step        = __webpack_require__(230)
+	  , defined     = __webpack_require__(31)
+	  , forOf       = __webpack_require__(68)
+	  , $iterDefine = __webpack_require__(148)
+	  , step        = __webpack_require__(238)
 	  , setSpecies  = __webpack_require__(61)
-	  , DESCRIPTORS = __webpack_require__(12)
-	  , fastKey     = __webpack_require__(46).fastKey
+	  , DESCRIPTORS = __webpack_require__(13)
+	  , fastKey     = __webpack_require__(47).fastKey
 	  , SIZE        = DESCRIPTORS ? '_s' : 'size';
 	
 	var getEntry = function(that, key){
@@ -11516,12 +11933,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 225 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
-	var classof = __webpack_require__(80)
-	  , from    = __webpack_require__(221);
+	var classof = __webpack_require__(82)
+	  , from    = __webpack_require__(229);
 	module.exports = function(NAME){
 	  return function toJSON(){
 	    if(classof(this) != NAME)throw TypeError(NAME + "#toJSON isn't generic");
@@ -11530,18 +11947,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 226 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var redefineAll       = __webpack_require__(60)
-	  , getWeak           = __webpack_require__(46).getWeak
+	  , getWeak           = __webpack_require__(47).getWeak
 	  , anObject          = __webpack_require__(5)
 	  , isObject          = __webpack_require__(9)
 	  , anInstance        = __webpack_require__(55)
-	  , forOf             = __webpack_require__(67)
-	  , createArrayMethod = __webpack_require__(33)
-	  , $has              = __webpack_require__(18)
+	  , forOf             = __webpack_require__(68)
+	  , createArrayMethod = __webpack_require__(35)
+	  , $has              = __webpack_require__(19)
 	  , arrayFind         = createArrayMethod(5)
 	  , arrayFindIndex    = createArrayMethod(6)
 	  , id                = 0;
@@ -11618,9 +12035,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 227 */
-[830, 12, 8, 134],
-/* 228 */
+/* 235 */
+[837, 13, 8, 140],
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.3 Number.isInteger(number)
@@ -11631,9 +12048,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 229 */
-[834, 5],
-/* 230 */
+/* 237 */
+[841, 5],
+/* 238 */
 /***/ function(module, exports) {
 
 	module.exports = function(done, value){
@@ -11641,7 +12058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 231 */
+/* 239 */
 /***/ function(module, exports) {
 
 	// 20.2.2.20 Math.log1p(x)
@@ -11650,20 +12067,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 232 */
-[841, 59, 103, 82, 16, 81, 8],
-/* 233 */
-[844, 13, 5, 59, 12],
-/* 234 */
-[846, 24, 58],
-/* 235 */
-[849, 18, 24, 95, 147],
-/* 236 */
+/* 240 */
+[848, 59, 104, 84, 17, 83, 8],
+/* 241 */
+[851, 14, 5, 59, 13],
+/* 242 */
+[853, 25, 58],
+/* 243 */
+[856, 19, 25, 96, 153],
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getKeys   = __webpack_require__(59)
-	  , toIObject = __webpack_require__(24)
-	  , isEnum    = __webpack_require__(82).f;
+	  , toIObject = __webpack_require__(25)
+	  , isEnum    = __webpack_require__(84).f;
 	module.exports = function(isEntries){
 	  return function(it){
 	    var O      = toIObject(it)
@@ -11679,12 +12096,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 237 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// all object keys, includes non-enumerable and symbols
 	var gOPN     = __webpack_require__(58)
-	  , gOPS     = __webpack_require__(103)
+	  , gOPS     = __webpack_require__(104)
 	  , anObject = __webpack_require__(5)
 	  , Reflect  = __webpack_require__(7).Reflect;
 	module.exports = Reflect && Reflect.ownKeys || function ownKeys(it){
@@ -11694,25 +12111,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 238 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $parseFloat = __webpack_require__(7).parseFloat
-	  , $trim       = __webpack_require__(70).trim;
+	  , $trim       = __webpack_require__(71).trim;
 	
-	module.exports = 1 / $parseFloat(__webpack_require__(152) + '-0') !== -Infinity ? function parseFloat(str){
+	module.exports = 1 / $parseFloat(__webpack_require__(158) + '-0') !== -Infinity ? function parseFloat(str){
 	  var string = $trim(String(str), 3)
 	    , result = $parseFloat(string);
 	  return result === 0 && string.charAt(0) == '-' ? -0 : result;
 	} : $parseFloat;
 
 /***/ },
-/* 239 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $parseInt = __webpack_require__(7).parseInt
-	  , $trim     = __webpack_require__(70).trim
-	  , ws        = __webpack_require__(152)
+	  , $trim     = __webpack_require__(71).trim
+	  , ws        = __webpack_require__(158)
 	  , hex       = /^[\-+]?0[xX]/;
 	
 	module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix){
@@ -11721,7 +12138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	} : $parseInt;
 
 /***/ },
-/* 240 */
+/* 248 */
 /***/ function(module, exports) {
 
 	// 7.2.9 SameValue(x, y)
@@ -11730,13 +12147,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 241 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/tc39/proposal-string-pad-start-end
-	var toLength = __webpack_require__(15)
-	  , repeat   = __webpack_require__(151)
-	  , defined  = __webpack_require__(29);
+	var toLength = __webpack_require__(16)
+	  , repeat   = __webpack_require__(157)
+	  , defined  = __webpack_require__(31);
 	
 	module.exports = function(that, maxLength, fillString, left){
 	  var S            = String(defined(that))
@@ -11752,16 +12169,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 242 */
-[863, 11],
-/* 243 */
+/* 250 */
+[870, 12],
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var strong = __webpack_require__(224);
+	var strong = __webpack_require__(232);
 	
 	// 23.1 Map Objects
-	module.exports = __webpack_require__(96)('Map', function(get){
+	module.exports = __webpack_require__(97)('Map', function(get){
 	  return function Map(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 	}, {
 	  // 23.1.3.6 Map.prototype.get(key)
@@ -11776,24 +12193,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	}, strong, true);
 
 /***/ },
-/* 244 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.2.5.3 get RegExp.prototype.flags()
-	if(__webpack_require__(12) && /./g.flags != 'g')__webpack_require__(13).f(RegExp.prototype, 'flags', {
+	if(__webpack_require__(13) && /./g.flags != 'g')__webpack_require__(14).f(RegExp.prototype, 'flags', {
 	  configurable: true,
-	  get: __webpack_require__(98)
+	  get: __webpack_require__(99)
 	});
 
 /***/ },
-/* 245 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var strong = __webpack_require__(224);
+	var strong = __webpack_require__(232);
 	
 	// 23.2 Set Objects
-	module.exports = __webpack_require__(96)('Set', function(get){
+	module.exports = __webpack_require__(97)('Set', function(get){
 	  return function Set(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 	}, {
 	  // 23.2.3.1 Set.prototype.add(value)
@@ -11803,15 +12220,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}, strong);
 
 /***/ },
-/* 246 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var each         = __webpack_require__(33)(0)
-	  , redefine     = __webpack_require__(22)
-	  , meta         = __webpack_require__(46)
-	  , assign       = __webpack_require__(232)
-	  , weak         = __webpack_require__(226)
+	var each         = __webpack_require__(35)(0)
+	  , redefine     = __webpack_require__(23)
+	  , meta         = __webpack_require__(47)
+	  , assign       = __webpack_require__(240)
+	  , weak         = __webpack_require__(234)
 	  , isObject     = __webpack_require__(9)
 	  , getWeak      = meta.getWeak
 	  , isExtensible = Object.isExtensible
@@ -11841,7 +12258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	// 23.3 WeakMap Objects
-	var $WeakMap = module.exports = __webpack_require__(96)('WeakMap', wrapper, methods, weak, true, true);
+	var $WeakMap = module.exports = __webpack_require__(97)('WeakMap', wrapper, methods, weak, true, true);
 	
 	// IE11 WeakMap frozen keys fix
 	if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
@@ -11864,19 +12281,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 247 */
+/* 255 */
 /***/ function(module, exports) {
 
 	module.exports = "{{text}}";
 
 /***/ },
-/* 248 */
+/* 256 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"visible-collection-view\" tabindex=\"0\"></div>";
 
 /***/ },
-/* 249 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11953,7 +12370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 250 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12016,7 +12433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 251 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12123,7 +12540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 252 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12184,7 +12601,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 253 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12324,7 +12741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 254 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12432,7 +12849,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 255 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12570,7 +12987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 256 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12664,7 +13081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 257 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12781,7 +13198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 258 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12895,7 +13312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 259 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13006,7 +13423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 260 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13151,7 +13568,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 261 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13234,7 +13651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 262 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13409,7 +13826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 263 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13476,7 +13893,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 264 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13559,7 +13976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 265 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13623,7 +14040,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 266 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13704,7 +14121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 267 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13807,7 +14224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 268 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13909,7 +14326,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 269 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13979,7 +14396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 270 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14046,7 +14463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 271 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14117,7 +14534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 272 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14187,7 +14604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 273 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14264,7 +14681,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 274 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14347,7 +14764,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 275 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14431,7 +14848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 276 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14499,7 +14916,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 277 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14608,7 +15025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 278 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14719,7 +15136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 279 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14783,7 +15200,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 280 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14845,7 +15262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 281 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14911,7 +15328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 282 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14977,7 +15394,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 283 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15052,7 +15469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 284 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15132,7 +15549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 285 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15211,7 +15628,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 286 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15297,7 +15714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 287 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15424,7 +15841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 288 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15571,7 +15988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 289 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15684,7 +16101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 290 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15783,7 +16200,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 291 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15870,7 +16287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 292 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16001,7 +16418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 293 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16075,7 +16492,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 294 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16144,7 +16561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 295 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16231,7 +16648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 296 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16324,7 +16741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 297 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16415,7 +16832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 298 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16477,7 +16894,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 299 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16549,7 +16966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 300 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16687,7 +17104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 301 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16760,7 +17177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 302 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16879,7 +17296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 303 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -16979,7 +17396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 304 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17092,7 +17509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 305 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17186,7 +17603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 306 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17261,7 +17678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 307 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17423,7 +17840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 308 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17509,7 +17926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 309 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17595,7 +18012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 310 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17692,7 +18109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 311 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17757,7 +18174,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 312 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17882,7 +18299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 313 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -17957,7 +18374,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 314 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18021,7 +18438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 315 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18130,7 +18547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 316 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18194,7 +18611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 317 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18262,7 +18679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 318 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18340,7 +18757,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 319 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18405,7 +18822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 320 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18475,7 +18892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 321 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18629,7 +19046,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 322 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18793,7 +19210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 323 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18866,7 +19283,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 324 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -18978,7 +19395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 325 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19090,7 +19507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 326 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19161,7 +19578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 327 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19223,7 +19640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 328 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19356,7 +19773,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 329 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19448,7 +19865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 330 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19517,7 +19934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 331 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19583,7 +20000,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 332 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19706,7 +20123,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 333 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19800,7 +20217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 334 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19891,7 +20308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 335 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -19953,7 +20370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 336 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20015,7 +20432,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 337 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20165,7 +20582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 338 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20227,7 +20644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 339 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20297,7 +20714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 340 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20428,7 +20845,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 341 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -20533,11 +20950,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 342 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(36);
-	var decap = __webpack_require__(344);
+	var trim = __webpack_require__(38);
+	var decap = __webpack_require__(352);
 	
 	module.exports = function camelize(str, decapitalize) {
 	  str = trim(str).replace(/[-_\s]+(.)?/g, function(match, c) {
@@ -20553,10 +20970,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 343 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(36);
+	var trim = __webpack_require__(38);
 	
 	module.exports = function dasherize(str) {
 	  return trim(str).replace(/([A-Z])/g, '-$1').replace(/[-_\s]+/g, '-').toLowerCase();
@@ -20564,7 +20981,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 344 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -20576,7 +20993,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 345 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -20591,7 +21008,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 346 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -20602,7 +21019,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 347 */
+/* 355 */
 /***/ function(module, exports) {
 
 	module.exports = function toPositive(number) {
@@ -20611,7 +21028,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 348 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -20622,10 +21039,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 349 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var chars = __webpack_require__(164);
+	var chars = __webpack_require__(170);
 	
 	module.exports = function splice(str, i, howmany, substr) {
 	  var arr = chars(str);
@@ -20635,7 +21052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 350 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// sprintf() for JavaScript 0.7-beta1
@@ -20643,7 +21060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//
 	// Copyright (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>
 	// All rights reserved.
-	var strRepeat = __webpack_require__(165);
+	var strRepeat = __webpack_require__(171);
 	var toString = Object.prototype.toString;
 	var sprintf = (function() {
 	  function get_type(variable) {
@@ -20765,7 +21182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 351 */
+/* 359 */
 /***/ function(module, exports) {
 
 	module.exports = function surround(str, wrapper) {
@@ -20774,10 +21191,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 352 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var rtrim = __webpack_require__(166);
+	var rtrim = __webpack_require__(172);
 	
 	module.exports = function toSentence(array, separator, lastSeparator, serial) {
 	  separator = separator || ', ';
@@ -20792,10 +21209,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 353 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(36);
+	var trim = __webpack_require__(38);
 	
 	module.exports = function underscored(str) {
 	  return trim(str).replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
@@ -20803,2579 +21220,348 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 354 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
-	
-	/*** IMPORTS FROM imports-loader ***/
-	var backbone = __webpack_require__(64);
-	
-	/*** IMPORTS FROM imports-loader ***/
-	var underscore = __webpack_require__(49);
-	
-	/*** IMPORTS FROM imports-loader ***/
-	var jquery = __webpack_require__(42);
-	
-	/**
-	 * Backbone Forms v0.14.0
-	 *
-	 * Copyright (c) 2013 Charles Davison, Pow Media Ltd
-	 *
-	 * License and more information at:
-	 * http://github.com/powmedia/backbone-forms
-	 */
-	;(function (root) {
-	
-	  //DEPENDENCIES
-	  //CommonJS
-	  if (true) {
-	    var $ = root.jQuery || root.Zepto || root.ender || __webpack_require__(42),
-	        _ = root._ || __webpack_require__(49),
-	        Backbone = root.Backbone || __webpack_require__(64);
-	    Backbone.$ = $;
-	  }
-	
-	  //Browser
-	  else {
-	      var $ = root.jQuery,
-	          _ = root._,
-	          Backbone = root.Backbone;
-	    }
-	
-	  //SOURCE
-	  //==================================================================================================
-	  //FORM
-	  //==================================================================================================
-	
-	  var templateSettings = {
-	    evaluate: /<%([\s\S]+?)%>/g,
-	    interpolate: /<%=([\s\S]+?)%>/g,
-	    escape: /<%-([\s\S]+?)%>/g
-	  };
-	
-	  var Form = Backbone.View.extend({
-	
-	    events: {
-	      'submit': function submit(event) {
-	        this.trigger('submit', event);
-	      }
-	    },
-	
-	    /**
-	     * Constructor
-	     * 
-	     * @param {Object} [options.schema]
-	     * @param {Backbone.Model} [options.model]
-	     * @param {Object} [options.data]
-	     * @param {String[]|Object[]} [options.fieldsets]
-	     * @param {String[]} [options.fields]
-	     * @param {String} [options.idPrefix]
-	     * @param {Form.Field} [options.Field]
-	     * @param {Form.Fieldset} [options.Fieldset]
-	     * @param {Function} [options.template]
-	     */
-	    initialize: function initialize(options) {
-	      var self = this;
-	
-	      options = options || {};
-	
-	      //Find the schema to use
-	      var schema = this.schema = function () {
-	        //Prefer schema from options
-	        if (options.schema) return _.result(options, 'schema');
-	
-	        //Then schema on model
-	        var model = options.model;
-	        if (model && model.schema) return _.result(model, 'schema');
-	
-	        //Then built-in schema
-	        if (self.schema) return _.result(self, 'schema');
-	
-	        //Fallback to empty schema
-	        return {};
-	      }();
-	
-	      //Store important data
-	      _.extend(this, _.pick(options, 'model', 'data', 'idPrefix', 'templateData'));
-	
-	      //Override defaults
-	      var constructor = this.constructor;
-	      this.template = options.template || this.template || constructor.template;
-	      this.Fieldset = options.Fieldset || this.Fieldset || constructor.Fieldset;
-	      this.Field = options.Field || this.Field || constructor.Field;
-	      this.NestedField = options.NestedField || this.NestedField || constructor.NestedField;
-	
-	      //Check which fields will be included (defaults to all)
-	      var selectedFields = this.selectedFields = options.fields || _.keys(schema);
-	
-	      //Create fields
-	      var fields = this.fields = {};
-	
-	      _.each(selectedFields, function (key) {
-	        var fieldSchema = schema[key];
-	        fields[key] = this.createField(key, fieldSchema);
-	      }, this);
-	
-	      //Create fieldsets
-	      var fieldsetSchema = options.fieldsets || _.result(this, 'fieldsets') || [selectedFields],
-	          fieldsets = this.fieldsets = [];
-	
-	      _.each(fieldsetSchema, function (itemSchema) {
-	        this.fieldsets.push(this.createFieldset(itemSchema));
-	      }, this);
-	    },
-	
-	    /**
-	     * Creates a Fieldset instance
-	     *
-	     * @param {String[]|Object[]} schema       Fieldset schema
-	     *
-	     * @return {Form.Fieldset}
-	     */
-	    createFieldset: function createFieldset(schema) {
-	      var options = {
-	        schema: schema,
-	        fields: this.fields
-	      };
-	
-	      return new this.Fieldset(options);
-	    },
-	
-	    /**
-	     * Creates a Field instance
-	     *
-	     * @param {String} key
-	     * @param {Object} schema       Field schema
-	     *
-	     * @return {Form.Field}
-	     */
-	    createField: function createField(key, schema) {
-	      var options = {
-	        form: this,
-	        key: key,
-	        schema: schema,
-	        idPrefix: this.idPrefix
-	      };
-	
-	      if (this.model) {
-	        options.model = this.model;
-	      } else if (this.data) {
-	        options.value = this.data[key];
-	      } else {
-	        options.value = null;
-	      }
-	
-	      var field = new this.Field(options);
-	
-	      this.listenTo(field.editor, 'all', this.handleEditorEvent);
-	
-	      return field;
-	    },
-	
-	    /**
-	     * Callback for when an editor event is fired.
-	     * Re-triggers events on the form as key:event and triggers additional form-level events
-	     *
-	     * @param {String} event
-	     * @param {Editor} editor
-	     */
-	    handleEditorEvent: function handleEditorEvent(event, editor) {
-	      //Re-trigger editor events on the form
-	      var formEvent = editor.key + ':' + event;
-	
-	      this.trigger.call(this, formEvent, this, editor, Array.prototype.slice.call(arguments, 2));
-	
-	      //Trigger additional events
-	      switch (event) {
-	        case 'change':
-	          this.trigger('change', this);
-	          break;
-	
-	        case 'focus':
-	          if (!this.hasFocus) this.trigger('focus', this);
-	          break;
-	
-	        case 'blur':
-	          if (this.hasFocus) {
-	            //TODO: Is the timeout etc needed?
-	            var self = this;
-	            setTimeout(function () {
-	              var focusedField = _.find(self.fields, function (field) {
-	                return field.editor.hasFocus;
-	              });
-	
-	              if (!focusedField) self.trigger('blur', self);
-	            }, 0);
-	          }
-	          break;
-	      }
-	    },
-	
-	    render: function render() {
-	      var self = this,
-	          fields = this.fields;
-	
-	      //Render form
-	      var $form = $($.trim(this.template(_.result(this, 'templateData'))));
-	
-	      //Render standalone editors
-	      $form.find('[data-editors]').add($form).each(function (i, el) {
-	        var $container = $(el),
-	            selection = $container.attr('data-editors');
-	
-	        if (_.isUndefined(selection)) return;
-	
-	        //Work out which fields to include
-	        var keys = selection == '*' ? self.selectedFields || _.keys(fields) : selection.split(',');
-	
-	        //Add them
-	        _.each(keys, function (key) {
-	          var field = fields[key];
-	
-	          $container.append(field.editor.render().el);
-	        });
-	      });
-	
-	      //Render standalone fields
-	      $form.find('[data-fields]').add($form).each(function (i, el) {
-	        var $container = $(el),
-	            selection = $container.attr('data-fields');
-	
-	        if (_.isUndefined(selection)) return;
-	
-	        //Work out which fields to include
-	        var keys = selection == '*' ? self.selectedFields || _.keys(fields) : selection.split(',');
-	
-	        //Add them
-	        _.each(keys, function (key) {
-	          var field = fields[key];
-	
-	          $container.append(field.render().el);
-	        });
-	      });
-	
-	      //Render fieldsets
-	      $form.find('[data-fieldsets]').add($form).each(function (i, el) {
-	        var $container = $(el),
-	            selection = $container.attr('data-fieldsets');
-	
-	        if (_.isUndefined(selection)) return;
-	
-	        _.each(self.fieldsets, function (fieldset) {
-	          $container.append(fieldset.render().el);
-	        });
-	      });
-	
-	      //Set the main element
-	      this.setElement($form);
-	
-	      //Set class
-	      $form.addClass(this.className);
-	
-	      return this;
-	    },
-	
-	    /**
-	     * Validate the data
-	     *
-	     * @return {Object}       Validation errors
-	     */
-	    validate: function validate(options) {
-	      var self = this,
-	          fields = this.fields,
-	          model = this.model,
-	          errors = {};
-	
-	      options = options || {};
-	
-	      //Collect errors from schema validation
-	      _.each(fields, function (field) {
-	        var error = field.validate();
-	        if (error) {
-	          errors[field.key] = error;
-	        }
-	      });
-	
-	      //Get errors from default Backbone model validator
-	      if (!options.skipModelValidate && model && model.validate) {
-	        var modelErrors = model.validate(this.getValue());
-	
-	        if (modelErrors) {
-	          var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
-	
-	          //If errors are not in object form then just store on the error object
-	          if (!isDictionary) {
-	            errors._others = errors._others || [];
-	            errors._others.push(modelErrors);
-	          }
-	
-	          //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
-	          if (isDictionary) {
-	            _.each(modelErrors, function (val, key) {
-	              //Set error on field if there isn't one already
-	              if (fields[key] && !errors[key]) {
-	                fields[key].setError(val);
-	                errors[key] = val;
-	              } else {
-	                //Otherwise add to '_others' key
-	                errors._others = errors._others || [];
-	                var tmpErr = {};
-	                tmpErr[key] = val;
-	                errors._others.push(tmpErr);
-	              }
-	            });
-	          }
-	        }
-	      }
-	
-	      return _.isEmpty(errors) ? null : errors;
-	    },
-	
-	    /**
-	     * Update the model with all latest values.
-	     *
-	     * @param {Object} [options]  Options to pass to Model#set (e.g. { silent: true })
-	     *
-	     * @return {Object}  Validation errors
-	     */
-	    commit: function commit(options) {
-	      //Validate
-	      options = options || {};
-	
-	      var validateOptions = {
-	        skipModelValidate: !options.validate
-	      };
-	
-	      var errors = this.validate(validateOptions);
-	      if (errors) return errors;
-	
-	      //Commit
-	      var modelError;
-	
-	      var setOptions = _.extend({
-	        error: function error(model, e) {
-	          modelError = e;
-	        }
-	      }, options);
-	
-	      this.model.set(this.getValue(), setOptions);
-	
-	      if (modelError) return modelError;
-	    },
-	
-	    /**
-	     * Get all the field values as an object.
-	     * Use this method when passing data instead of objects
-	     *
-	     * @param {String} [key]    Specific field value to get
-	     */
-	    getValue: function getValue(key) {
-	      //Return only given key if specified
-	      if (key) return this.fields[key].getValue();
-	
-	      //Otherwise return entire form
-	      var values = {};
-	      _.each(this.fields, function (field) {
-	        values[field.key] = field.getValue();
-	      });
-	
-	      return values;
-	    },
-	
-	    /**
-	     * Update field values, referenced by key
-	     *
-	     * @param {Object|String} key     New values to set, or property to set
-	     * @param val                     Value to set
-	     */
-	    setValue: function setValue(prop, val) {
-	      var data = {};
-	      if (typeof prop === 'string') {
-	        data[prop] = val;
-	      } else {
-	        data = prop;
-	      }
-	
-	      var key;
-	      for (key in this.schema) {
-	        if (data[key] !== undefined) {
-	          this.fields[key].setValue(data[key]);
-	        }
-	      }
-	    },
-	
-	    /**
-	     * Returns the editor for a given field key
-	     *
-	     * @param {String} key
-	     *
-	     * @return {Editor}
-	     */
-	    getEditor: function getEditor(key) {
-	      var field = this.fields[key];
-	      if (!field) throw new Error('Field not found: ' + key);
-	
-	      return field.editor;
-	    },
-	
-	    /**
-	     * Gives the first editor in the form focus
-	     */
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      //Get the first field
-	      var fieldset = this.fieldsets[0],
-	          field = fieldset.getFieldAt(0);
-	
-	      if (!field) return;
-	
-	      //Set focus
-	      field.editor.focus();
-	    },
-	
-	    /**
-	     * Removes focus from the currently focused editor
-	     */
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      var focusedField = _.find(this.fields, function (field) {
-	        return field.editor.hasFocus;
-	      });
-	
-	      if (focusedField) focusedField.editor.blur();
-	    },
-	
-	    /**
-	     * Manages the hasFocus property
-	     *
-	     * @param {String} event
-	     */
-	    trigger: function trigger(event) {
-	      if (event === 'focus') {
-	        this.hasFocus = true;
-	      } else if (event === 'blur') {
-	        this.hasFocus = false;
-	      }
-	
-	      return Backbone.View.prototype.trigger.apply(this, arguments);
-	    },
-	
-	    /**
-	     * Override default remove function in order to remove embedded views
-	     *
-	     * TODO: If editors are included directly with data-editors="x", they need to be removed
-	     * May be best to use XView to manage adding/removing views
-	     */
-	    remove: function remove() {
-	      _.each(this.fieldsets, function (fieldset) {
-	        fieldset.remove();
-	      });
-	
-	      _.each(this.fields, function (field) {
-	        field.remove();
-	      });
-	
-	      return Backbone.View.prototype.remove.apply(this, arguments);
-	    }
-	
-	  }, {
-	
-	    //STATICS
-	    template: _.template('\
-	    <form data-fieldsets></form>\
-	  ', null, templateSettings),
-	
-	    templateSettings: templateSettings,
-	
-	    editors: {}
-	
-	  });
-	
-	  //==================================================================================================
-	  //VALIDATORS
-	  //==================================================================================================
-	
-	  Form.validators = function () {
-	
-	    var validators = {};
-	
-	    validators.errMessages = {
-	      required: 'Required',
-	      regexp: 'Invalid',
-	      number: 'Must be a number',
-	      email: 'Invalid email address',
-	      url: 'Invalid URL',
-	      match: _.template('Must match field "<%= field %>"', null, Form.templateSettings)
-	    };
-	
-	    validators.required = function (options) {
-	      options = _.extend({
-	        type: 'required',
-	        message: this.errMessages.required
-	      }, options);
-	
-	      return function required(value) {
-	        options.value = value;
-	
-	        var err = {
-	          type: options.type,
-	          message: _.isFunction(options.message) ? options.message(options) : options.message
-	        };
-	
-	        if (value === null || value === undefined || value === false || value === '') return err;
-	      };
-	    };
-	
-	    validators.regexp = function (options) {
-	      if (!options.regexp) throw new Error('Missing required "regexp" option for "regexp" validator');
-	
-	      options = _.extend({
-	        type: 'regexp',
-	        match: true,
-	        message: this.errMessages.regexp
-	      }, options);
-	
-	      return function regexp(value) {
-	        options.value = value;
-	
-	        var err = {
-	          type: options.type,
-	          message: _.isFunction(options.message) ? options.message(options) : options.message
-	        };
-	
-	        //Don't check empty values (add a 'required' validator for this)
-	        if (value === null || value === undefined || value === '') return;
-	
-	        //Create RegExp from string if it's valid
-	        if ('string' === typeof options.regexp) options.regexp = new RegExp(options.regexp, options.flags);
-	
-	        if (options.match ? !options.regexp.test(value) : options.regexp.test(value)) return err;
-	      };
-	    };
-	
-	    validators.number = function (options) {
-	      options = _.extend({
-	        type: 'number',
-	        message: this.errMessages.number,
-	        regexp: /^[0-9]*\.?[0-9]*?$/
-	      }, options);
-	
-	      return validators.regexp(options);
-	    };
-	
-	    validators.email = function (options) {
-	      options = _.extend({
-	        type: 'email',
-	        message: this.errMessages.email,
-	        regexp: /^[\w\-]{1,}([\w\-\+.]{1,1}[\w\-]{1,}){0,}[@][\w\-]{1,}([.]([\w\-]{1,})){1,3}$/
-	      }, options);
-	
-	      return validators.regexp(options);
-	    };
-	
-	    validators.url = function (options) {
-	      options = _.extend({
-	        type: 'url',
-	        message: this.errMessages.url,
-	        regexp: /^(http|https):\/\/(([A-Z0-9][A-Z0-9_\-]*)(\.[A-Z0-9][A-Z0-9_\-]*)+)(:(\d+))?\/?/i
-	      }, options);
-	
-	      return validators.regexp(options);
-	    };
-	
-	    validators.match = function (options) {
-	      if (!options.field) throw new Error('Missing required "field" options for "match" validator');
-	
-	      options = _.extend({
-	        type: 'match',
-	        message: this.errMessages.match
-	      }, options);
-	
-	      return function match(value, attrs) {
-	        options.value = value;
-	
-	        var err = {
-	          type: options.type,
-	          message: _.isFunction(options.message) ? options.message(options) : options.message
-	        };
-	
-	        //Don't check empty values (add a 'required' validator for this)
-	        if (value === null || value === undefined || value === '') return;
-	
-	        if (value !== attrs[options.field]) return err;
-	      };
-	    };
-	
-	    return validators;
-	  }();
-	
-	  //==================================================================================================
-	  //FIELDSET
-	  //==================================================================================================
-	
-	  Form.Fieldset = Backbone.View.extend({
-	
-	    /**
-	     * Constructor
-	     *
-	     * Valid fieldset schemas:
-	     *   ['field1', 'field2']
-	     *   { legend: 'Some Fieldset', fields: ['field1', 'field2'] }
-	     *
-	     * @param {String[]|Object[]} options.schema      Fieldset schema
-	     * @param {Object} options.fields           Form fields
-	     */
-	    initialize: function initialize(options) {
-	      options = options || {};
-	
-	      //Create the full fieldset schema, merging defaults etc.
-	      var schema = this.schema = this.createSchema(options.schema);
-	
-	      //Store the fields for this fieldset
-	      this.fields = _.pick(options.fields, schema.fields);
-	
-	      //Override defaults
-	      this.template = options.template || schema.template || this.template || this.constructor.template;
-	    },
-	
-	    /**
-	     * Creates the full fieldset schema, normalising, merging defaults etc.
-	     *
-	     * @param {String[]|Object[]} schema
-	     *
-	     * @return {Object}
-	     */
-	    createSchema: function createSchema(schema) {
-	      //Normalise to object
-	      if (_.isArray(schema)) {
-	        schema = { fields: schema };
-	      }
-	
-	      //Add null legend to prevent template error
-	      schema.legend = schema.legend || null;
-	
-	      return schema;
-	    },
-	
-	    /**
-	     * Returns the field for a given index
-	     *
-	     * @param {Number} index
-	     *
-	     * @return {Field}
-	     */
-	    getFieldAt: function getFieldAt(index) {
-	      var key = this.schema.fields[index];
-	
-	      return this.fields[key];
-	    },
-	
-	    /**
-	     * Returns data to pass to template
-	     *
-	     * @return {Object}
-	     */
-	    templateData: function templateData() {
-	      return this.schema;
-	    },
-	
-	    /**
-	     * Renders the fieldset and fields
-	     *
-	     * @return {Fieldset} this
-	     */
-	    render: function render() {
-	      var schema = this.schema,
-	          fields = this.fields;
-	
-	      //Render fieldset
-	      var $fieldset = $($.trim(this.template(_.result(this, 'templateData'))));
-	
-	      //Render fields
-	      $fieldset.find('[data-fields]').add($fieldset).each(function (i, el) {
-	        var $container = $(el),
-	            selection = $container.attr('data-fields');
-	
-	        if (_.isUndefined(selection)) return;
-	
-	        _.each(fields, function (field) {
-	          $container.append(field.render().el);
-	        });
-	      });
-	
-	      this.setElement($fieldset);
-	
-	      return this;
-	    },
-	
-	    /**
-	     * Remove embedded views then self
-	     */
-	    remove: function remove() {
-	      _.each(this.fields, function (field) {
-	        field.remove();
-	      });
-	
-	      Backbone.View.prototype.remove.call(this);
-	    }
-	
-	  }, {
-	    //STATICS
-	
-	    template: _.template('\
-	    <fieldset data-fields>\
-	      <% if (legend) { %>\
-	        <legend><%= legend %></legend>\
-	      <% } %>\
-	    </fieldset>\
-	  ', null, Form.templateSettings)
-	
-	  });
-	
-	  //==================================================================================================
-	  //FIELD
-	  //==================================================================================================
-	
-	  Form.Field = Backbone.View.extend({
-	
-	    /**
-	     * Constructor
-	     * 
-	     * @param {Object} options.key
-	     * @param {Object} options.form
-	     * @param {Object} [options.schema]
-	     * @param {Function} [options.schema.template]
-	     * @param {Backbone.Model} [options.model]
-	     * @param {Object} [options.value]
-	     * @param {String} [options.idPrefix]
-	     * @param {Function} [options.template]
-	     * @param {Function} [options.errorClassName]
-	     */
-	    initialize: function initialize(options) {
-	      options = options || {};
-	
-	      //Store important data
-	      _.extend(this, _.pick(options, 'form', 'key', 'model', 'value', 'idPrefix'));
-	
-	      //Create the full field schema, merging defaults etc.
-	      var schema = this.schema = this.createSchema(options.schema);
-	
-	      //Override defaults
-	      this.template = options.template || schema.template || this.template || this.constructor.template;
-	      this.errorClassName = options.errorClassName || this.errorClassName || this.constructor.errorClassName;
-	
-	      //Create editor
-	      this.editor = this.createEditor();
-	    },
-	
-	    /**
-	     * Creates the full field schema, merging defaults etc.
-	     *
-	     * @param {Object|String} schema
-	     *
-	     * @return {Object}
-	     */
-	    createSchema: function createSchema(schema) {
-	      if (_.isString(schema)) schema = { type: schema };
-	
-	      //Set defaults
-	      schema = _.extend({
-	        type: 'Text',
-	        title: this.createTitle()
-	      }, schema);
-	
-	      //Get the real constructor function i.e. if type is a string such as 'Text'
-	      schema.type = _.isString(schema.type) ? Form.editors[schema.type] : schema.type;
-	
-	      return schema;
-	    },
-	
-	    /**
-	     * Creates the editor specified in the schema; either an editor string name or
-	     * a constructor function
-	     *
-	     * @return {View}
-	     */
-	    createEditor: function createEditor() {
-	      var options = _.extend(_.pick(this, 'schema', 'form', 'key', 'model', 'value'), { id: this.createEditorId() });
-	
-	      var constructorFn = this.schema.type;
-	
-	      return new constructorFn(options);
-	    },
-	
-	    /**
-	     * Creates the ID that will be assigned to the editor
-	     *
-	     * @return {String}
-	     */
-	    createEditorId: function createEditorId() {
-	      var prefix = this.idPrefix,
-	          id = this.key;
-	
-	      //Replace periods with underscores (e.g. for when using paths)
-	      id = id.replace(/\./g, '_');
-	
-	      //If a specific ID prefix is set, use it
-	      if (_.isString(prefix) || _.isNumber(prefix)) return prefix + id;
-	      if (_.isNull(prefix)) return id;
-	
-	      //Otherwise, if there is a model use it's CID to avoid conflicts when multiple forms are on the page
-	      if (this.model) return this.model.cid + '_' + id;
-	
-	      return id;
-	    },
-	
-	    /**
-	     * Create the default field title (label text) from the key name.
-	     * (Converts 'camelCase' to 'Camel Case')
-	     *
-	     * @return {String}
-	     */
-	    createTitle: function createTitle() {
-	      var str = this.key;
-	
-	      //Add spaces
-	      str = str.replace(/([A-Z])/g, ' $1');
-	
-	      //Uppercase first character
-	      str = str.replace(/^./, function (str) {
-	        return str.toUpperCase();
-	      });
-	
-	      return str;
-	    },
-	
-	    /**
-	     * Returns the data to be passed to the template
-	     *
-	     * @return {Object}
-	     */
-	    templateData: function templateData() {
-	      var schema = this.schema;
-	
-	      return {
-	        help: schema.help || '',
-	        title: schema.title,
-	        fieldAttrs: schema.fieldAttrs,
-	        editorAttrs: schema.editorAttrs,
-	        key: this.key,
-	        editorId: this.editor.id
-	      };
-	    },
-	
-	    /**
-	     * Render the field and editor
-	     *
-	     * @return {Field} self
-	     */
-	    render: function render() {
-	      var schema = this.schema,
-	          editor = this.editor;
-	
-	      //Only render the editor if Hidden
-	      if (schema.type == Form.editors.Hidden) {
-	        return this.setElement(editor.render().el);
-	      }
-	
-	      //Render field
-	      var $field = $($.trim(this.template(_.result(this, 'templateData'))));
-	
-	      if (schema.fieldClass) $field.addClass(schema.fieldClass);
-	      if (schema.fieldAttrs) $field.attr(schema.fieldAttrs);
-	
-	      //Render editor
-	      $field.find('[data-editor]').add($field).each(function (i, el) {
-	        var $container = $(el),
-	            selection = $container.attr('data-editor');
-	
-	        if (_.isUndefined(selection)) return;
-	
-	        $container.append(editor.render().el);
-	      });
-	
-	      this.setElement($field);
-	
-	      return this;
-	    },
-	
-	    /**
-	     * Check the validity of the field
-	     *
-	     * @return {String}
-	     */
-	    validate: function validate() {
-	      var error = this.editor.validate();
-	
-	      if (error) {
-	        this.setError(error.message);
-	      } else {
-	        this.clearError();
-	      }
-	
-	      return error;
-	    },
-	
-	    /**
-	     * Set the field into an error state, adding the error class and setting the error message
-	     *
-	     * @param {String} msg     Error message
-	     */
-	    setError: function setError(msg) {
-	      //Nested form editors (e.g. Object) set their errors internally
-	      if (this.editor.hasNestedForm) return;
-	
-	      //Add error CSS class
-	      this.$el.addClass(this.errorClassName);
-	
-	      //Set error message
-	      this.$('[data-error]').html(msg);
-	    },
-	
-	    /**
-	     * Clear the error state and reset the help message
-	     */
-	    clearError: function clearError() {
-	      //Remove error CSS class
-	      this.$el.removeClass(this.errorClassName);
-	
-	      //Clear error message
-	      this.$('[data-error]').empty();
-	    },
-	
-	    /**
-	     * Update the model with the new value from the editor
-	     *
-	     * @return {Mixed}
-	     */
-	    commit: function commit() {
-	      return this.editor.commit();
-	    },
-	
-	    /**
-	     * Get the value from the editor
-	     *
-	     * @return {Mixed}
-	     */
-	    getValue: function getValue() {
-	      return this.editor.getValue();
-	    },
-	
-	    /**
-	     * Set/change the value of the editor
-	     *
-	     * @param {Mixed} value
-	     */
-	    setValue: function setValue(value) {
-	      this.editor.setValue(value);
-	    },
-	
-	    /**
-	     * Give the editor focus
-	     */
-	    focus: function focus() {
-	      this.editor.focus();
-	    },
-	
-	    /**
-	     * Remove focus from the editor
-	     */
-	    blur: function blur() {
-	      this.editor.blur();
-	    },
-	
-	    /**
-	     * Remove the field and editor views
-	     */
-	    remove: function remove() {
-	      this.editor.remove();
-	
-	      Backbone.View.prototype.remove.call(this);
-	    }
-	
-	  }, {
-	    //STATICS
-	
-	    template: _.template('\
-	    <div>\
-	      <label for="<%= editorId %>"><%= title %></label>\
-	      <div>\
-	        <span data-editor></span>\
-	        <div data-error></div>\
-	        <div><%= help %></div>\
-	      </div>\
-	    </div>\
-	  ', null, Form.templateSettings),
-	
-	    /**
-	     * CSS class name added to the field when there is a validation error
-	     */
-	    errorClassName: 'error'
-	
-	  });
-	
-	  //==================================================================================================
-	  //NESTEDFIELD
-	  //==================================================================================================
-	
-	  Form.NestedField = Form.Field.extend({
-	
-	    template: _.template($.trim('\
-	    <div>\
-	      <span data-editor></span>\
-	      <% if (help) { %>\
-	        <div><%= help %></div>\
-	      <% } %>\
-	      <div data-error></div>\
-	    </div>\
-	  '), null, Form.templateSettings)
-	
-	  });
-	
-	  /**
-	   * Base editor (interface). To be extended, not used directly
-	   *
-	   * @param {Object} options
-	   * @param {String} [options.id]         Editor ID
-	   * @param {Model} [options.model]       Use instead of value, and use commit()
-	   * @param {String} [options.key]        The model attribute key. Required when using 'model'
-	   * @param {Mixed} [options.value]       When not using a model. If neither provided, defaultValue will be used
-	   * @param {Object} [options.schema]     Field schema; may be required by some editors
-	   * @param {Object} [options.validators] Validators; falls back to those stored on schema
-	   * @param {Object} [options.form]       The form
-	   */
-	  Form.Editor = Form.editors.Base = Backbone.View.extend({
-	
-	    defaultValue: null,
-	
-	    hasFocus: false,
-	
-	    initialize: function initialize(options) {
-	      var options = options || {};
-	
-	      //Set initial value
-	      if (options.model) {
-	        if (!options.key) throw new Error("Missing option: 'key'");
-	
-	        this.model = options.model;
-	
-	        this.value = this.model.get(options.key);
-	      } else if (options.value !== undefined) {
-	        this.value = options.value;
-	      }
-	
-	      if (this.value === undefined) this.value = this.defaultValue;
-	
-	      //Store important data
-	      _.extend(this, _.pick(options, 'key', 'form'));
-	
-	      var schema = this.schema = options.schema || {};
-	
-	      this.validators = options.validators || schema.validators;
-	
-	      //Main attributes
-	      this.$el.attr('id', this.id);
-	      this.$el.attr('name', this.getName());
-	      if (schema.editorClass) this.$el.addClass(schema.editorClass);
-	      if (schema.editorAttrs) this.$el.attr(schema.editorAttrs);
-	    },
-	
-	    /**
-	     * Get the value for the form input 'name' attribute
-	     *
-	     * @return {String}
-	     *
-	     * @api private
-	     */
-	    getName: function getName() {
-	      var key = this.key || '';
-	
-	      //Replace periods with underscores (e.g. for when using paths)
-	      return key.replace(/\./g, '_');
-	    },
-	
-	    /**
-	     * Get editor value
-	     * Extend and override this method to reflect changes in the DOM
-	     *
-	     * @return {Mixed}
-	     */
-	    getValue: function getValue() {
-	      return this.value;
-	    },
-	
-	    /**
-	     * Set editor value
-	     * Extend and override this method to reflect changes in the DOM
-	     *
-	     * @param {Mixed} value
-	     */
-	    setValue: function setValue(value) {
-	      this.value = value;
-	    },
-	
-	    /**
-	     * Give the editor focus
-	     * Extend and override this method
-	     */
-	    focus: function focus() {
-	      throw new Error('Not implemented');
-	    },
-	
-	    /**
-	     * Remove focus from the editor
-	     * Extend and override this method
-	     */
-	    blur: function blur() {
-	      throw new Error('Not implemented');
-	    },
-	
-	    /**
-	     * Update the model with the current value
-	     *
-	     * @param {Object} [options]              Options to pass to model.set()
-	     * @param {Boolean} [options.validate]    Set to true to trigger built-in model validation
-	     *
-	     * @return {Mixed} error
-	     */
-	    commit: function commit(options) {
-	      var error = this.validate();
-	      if (error) return error;
-	
-	      this.listenTo(this.model, 'invalid', function (model, e) {
-	        error = e;
-	      });
-	      this.model.set(this.key, this.getValue(), options);
-	
-	      if (error) return error;
-	    },
-	
-	    /**
-	     * Check validity
-	     *
-	     * @return {Object|Undefined}
-	     */
-	    validate: function validate() {
-	      var $el = this.$el,
-	          error = null,
-	          value = this.getValue(),
-	          formValues = this.form ? this.form.getValue() : {},
-	          validators = this.validators,
-	          getValidator = this.getValidator;
-	
-	      if (validators) {
-	        //Run through validators until an error is found
-	        _.every(validators, function (validator) {
-	          error = getValidator(validator)(value, formValues);
-	
-	          return error ? false : true;
-	        });
-	      }
-	
-	      return error;
-	    },
-	
-	    /**
-	     * Set this.hasFocus, or call parent trigger()
-	     *
-	     * @param {String} event
-	     */
-	    trigger: function trigger(event) {
-	      if (event === 'focus') {
-	        this.hasFocus = true;
-	      } else if (event === 'blur') {
-	        this.hasFocus = false;
-	      }
-	
-	      return Backbone.View.prototype.trigger.apply(this, arguments);
-	    },
-	
-	    /**
-	     * Returns a validation function based on the type defined in the schema
-	     *
-	     * @param {RegExp|String|Function} validator
-	     * @return {Function}
-	     */
-	    getValidator: function getValidator(validator) {
-	      var validators = Form.validators;
-	
-	      //Convert regular expressions to validators
-	      if (_.isRegExp(validator)) {
-	        return validators.regexp({ regexp: validator });
-	      }
-	
-	      //Use a built-in validator if given a string
-	      if (_.isString(validator)) {
-	        if (!validators[validator]) throw new Error('Validator "' + validator + '" not found');
-	
-	        return validators[validator]();
-	      }
-	
-	      //Functions can be used directly
-	      if (_.isFunction(validator)) return validator;
-	
-	      //Use a customised built-in validator if given an object
-	      if (_.isObject(validator) && validator.type) {
-	        var config = validator;
-	
-	        return validators[config.type](config);
-	      }
-	
-	      //Unkown validator type
-	      throw new Error('Invalid validator: ' + validator);
-	    }
-	  });
-	
-	  /**
-	   * Text
-	   * 
-	   * Text input with focus, blur and change events
-	   */
-	  Form.editors.Text = Form.Editor.extend({
-	
-	    tagName: 'input',
-	
-	    defaultValue: '',
-	
-	    previousValue: '',
-	
-	    events: {
-	      'keyup': 'determineChange',
-	      'keypress': function keypress(event) {
-	        var self = this;
-	        setTimeout(function () {
-	          self.determineChange();
-	        }, 0);
-	      },
-	      'select': function select(event) {
-	        this.trigger('select', this);
-	      },
-	      'focus': function focus(event) {
-	        this.trigger('focus', this);
-	      },
-	      'blur': function blur(event) {
-	        this.trigger('blur', this);
-	      }
-	    },
-	
-	    initialize: function initialize(options) {
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	
-	      var schema = this.schema;
-	
-	      //Allow customising text type (email, phone etc.) for HTML5 browsers
-	      var type = 'text';
-	
-	      if (schema && schema.editorAttrs && schema.editorAttrs.type) type = schema.editorAttrs.type;
-	      if (schema && schema.dataType) type = schema.dataType;
-	
-	      this.$el.attr('type', type);
-	    },
-	
-	    /**
-	     * Adds the editor to the DOM
-	     */
-	    render: function render() {
-	      this.setValue(this.value);
-	
-	      return this;
-	    },
-	
-	    determineChange: function determineChange(event) {
-	      var currentValue = this.$el.val();
-	      var changed = currentValue !== this.previousValue;
-	
-	      if (changed) {
-	        this.previousValue = currentValue;
-	
-	        this.trigger('change', this);
-	      }
-	    },
-	
-	    /**
-	     * Returns the current editor value
-	     * @return {String}
-	     */
-	    getValue: function getValue() {
-	      return this.$el.val();
-	    },
-	
-	    /**
-	     * Sets the value of the form element
-	     * @param {String}
-	     */
-	    setValue: function setValue(value) {
-	      this.$el.val(value);
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      this.$el.focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.$el.blur();
-	    },
-	
-	    select: function select() {
-	      this.$el.select();
-	    }
-	
-	  });
-	
-	  /**
-	   * TextArea editor
-	   */
-	  Form.editors.TextArea = Form.editors.Text.extend({
-	
-	    tagName: 'textarea',
-	
-	    /**
-	     * Override Text constructor so type property isn't set (issue #261)
-	     */
-	    initialize: function initialize(options) {
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	    }
-	
-	  });
-	
-	  /**
-	   * Password editor
-	   */
-	  Form.editors.Password = Form.editors.Text.extend({
-	
-	    initialize: function initialize(options) {
-	      Form.editors.Text.prototype.initialize.call(this, options);
-	
-	      this.$el.attr('type', 'password');
-	    }
-	
-	  });
-	
-	  /**
-	   * NUMBER
-	   * 
-	   * Normal text input that only allows a number. Letters etc. are not entered.
-	   */
-	  Form.editors.Number = Form.editors.Text.extend({
-	
-	    defaultValue: 0,
-	
-	    events: _.extend({}, Form.editors.Text.prototype.events, {
-	      'keypress': 'onKeyPress',
-	      'change': 'onKeyPress'
-	    }),
-	
-	    initialize: function initialize(options) {
-	      Form.editors.Text.prototype.initialize.call(this, options);
-	
-	      var schema = this.schema;
-	
-	      this.$el.attr('type', 'number');
-	
-	      if (!schema || !schema.editorAttrs || !schema.editorAttrs.step) {
-	        // provide a default for `step` attr,
-	        // but don't overwrite if already specified
-	        this.$el.attr('step', 'any');
-	      }
-	    },
-	
-	    /**
-	     * Check value is numeric
-	     */
-	    onKeyPress: function onKeyPress(event) {
-	      var self = this,
-	          delayedDetermineChange = function delayedDetermineChange() {
-	        setTimeout(function () {
-	          self.determineChange();
-	        }, 0);
-	      };
-	
-	      //Allow backspace
-	      if (event.charCode === 0) {
-	        delayedDetermineChange();
-	        return;
-	      }
-	
-	      //Get the whole new value so that we can prevent things like double decimals points etc.
-	      var newVal = this.$el.val();
-	      if (event.charCode != undefined) {
-	        newVal = newVal + String.fromCharCode(event.charCode);
-	      }
-	
-	      var numeric = /^[0-9]*\.?[0-9]*?$/.test(newVal);
-	
-	      if (numeric) {
-	        delayedDetermineChange();
-	      } else {
-	        event.preventDefault();
-	      }
-	    },
-	
-	    getValue: function getValue() {
-	      var value = this.$el.val();
-	
-	      return value === "" ? null : parseFloat(value, 10);
-	    },
-	
-	    setValue: function setValue(value) {
-	      value = function () {
-	        if (_.isNumber(value)) return value;
-	
-	        if (_.isString(value) && value !== '') return parseFloat(value, 10);
-	
-	        return null;
-	      }();
-	
-	      if (_.isNaN(value)) value = null;
-	
-	      Form.editors.Text.prototype.setValue.call(this, value);
-	    }
-	
-	  });
-	
-	  /**
-	   * Hidden editor
-	   */
-	  Form.editors.Hidden = Form.editors.Text.extend({
-	
-	    defaultValue: '',
-	
-	    initialize: function initialize(options) {
-	      Form.editors.Text.prototype.initialize.call(this, options);
-	
-	      this.$el.attr('type', 'hidden');
-	    },
-	
-	    focus: function focus() {},
-	
-	    blur: function blur() {}
-	
-	  });
-	
-	  /**
-	   * Checkbox editor
-	   *
-	   * Creates a single checkbox, i.e. boolean value
-	   */
-	  Form.editors.Checkbox = Form.editors.Base.extend({
-	
-	    defaultValue: false,
-	
-	    tagName: 'input',
-	
-	    events: {
-	      'click': function click(event) {
-	        this.trigger('change', this);
-	      },
-	      'focus': function focus(event) {
-	        this.trigger('focus', this);
-	      },
-	      'blur': function blur(event) {
-	        this.trigger('blur', this);
-	      }
-	    },
-	
-	    initialize: function initialize(options) {
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	
-	      this.$el.attr('type', 'checkbox');
-	    },
-	
-	    /**
-	     * Adds the editor to the DOM
-	     */
-	    render: function render() {
-	      this.setValue(this.value);
-	
-	      return this;
-	    },
-	
-	    getValue: function getValue() {
-	      return this.$el.prop('checked');
-	    },
-	
-	    setValue: function setValue(value) {
-	      if (value) {
-	        this.$el.prop('checked', true);
-	      } else {
-	        this.$el.prop('checked', false);
-	      }
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      this.$el.focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.$el.blur();
-	    }
-	
-	  });
-	
-	  /**
-	   * Select editor
-	   *
-	   * Renders a <select> with given options
-	   *
-	   * Requires an 'options' value on the schema.
-	   *  Can be an array of options, a function that calls back with the array of options, a string of HTML
-	   *  or a Backbone collection. If a collection, the models must implement a toString() method
-	   */
-	  Form.editors.Select = Form.editors.Base.extend({
-	
-	    tagName: 'select',
-	
-	    events: {
-	      'change': function change(event) {
-	        this.trigger('change', this);
-	      },
-	      'focus': function focus(event) {
-	        this.trigger('focus', this);
-	      },
-	      'blur': function blur(event) {
-	        this.trigger('blur', this);
-	      }
-	    },
-	
-	    initialize: function initialize(options) {
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	
-	      if (!this.schema || !this.schema.options) throw new Error("Missing required 'schema.options'");
-	    },
-	
-	    render: function render() {
-	      this.setOptions(this.schema.options);
-	
-	      return this;
-	    },
-	
-	    /**
-	     * Sets the options that populate the <select>
-	     *
-	     * @param {Mixed} options
-	     */
-	    setOptions: function setOptions(options) {
-	      var self = this;
-	
-	      //If a collection was passed, check if it needs fetching
-	      if (options instanceof Backbone.Collection) {
-	        var collection = options;
-	
-	        //Don't do the fetch if it's already populated
-	        if (collection.length > 0) {
-	          this.renderOptions(options);
-	        } else {
-	          collection.fetch({
-	            success: function success(collection) {
-	              self.renderOptions(options);
-	            }
-	          });
-	        }
-	      }
-	
-	      //If a function was passed, run it to get the options
-	      else if (_.isFunction(options)) {
-	          options(function (result) {
-	            self.renderOptions(result);
-	          }, self);
-	        }
-	
-	        //Otherwise, ready to go straight to renderOptions
-	        else {
-	            this.renderOptions(options);
-	          }
-	    },
-	
-	    /**
-	     * Adds the <option> html to the DOM
-	     * @param {Mixed}   Options as a simple array e.g. ['option1', 'option2']
-	     *                      or as an array of objects e.g. [{val: 543, label: 'Title for object 543'}]
-	     *                      or as a string of <option> HTML to insert into the <select>
-	     *                      or any object
-	     */
-	    renderOptions: function renderOptions(options) {
-	      var $select = this.$el,
-	          html;
-	
-	      html = this._getOptionsHtml(options);
-	
-	      //Insert options
-	      $select.html(html);
-	
-	      //Select correct option
-	      this.setValue(this.value);
-	    },
-	
-	    _getOptionsHtml: function _getOptionsHtml(options) {
-	      var html;
-	      //Accept string of HTML
-	      if (_.isString(options)) {
-	        html = options;
-	      }
-	
-	      //Or array
-	      else if (_.isArray(options)) {
-	          html = this._arrayToHtml(options);
-	        }
-	
-	        //Or Backbone collection
-	        else if (options instanceof Backbone.Collection) {
-	            html = this._collectionToHtml(options);
-	          } else if (_.isFunction(options)) {
-	            var newOptions;
-	
-	            options(function (opts) {
-	              newOptions = opts;
-	            }, this);
-	
-	            html = this._getOptionsHtml(newOptions);
-	            //Or any object
-	          } else {
-	            html = this._objectToHtml(options);
-	          }
-	
-	      return html;
-	    },
-	
-	    getValue: function getValue() {
-	      return this.$el.val();
-	    },
-	
-	    setValue: function setValue(value) {
-	      this.$el.val(value);
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      this.$el.focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.$el.blur();
-	    },
-	
-	    /**
-	     * Transforms a collection into HTML ready to use in the renderOptions method
-	     * @param {Backbone.Collection}
-	     * @return {String}
-	     */
-	    _collectionToHtml: function _collectionToHtml(collection) {
-	      //Convert collection to array first
-	      var array = [];
-	      collection.each(function (model) {
-	        array.push({ val: model.id, label: model.toString() });
-	      });
-	
-	      //Now convert to HTML
-	      var html = this._arrayToHtml(array);
-	
-	      return html;
-	    },
-	    /**
-	     * Transforms an object into HTML ready to use in the renderOptions method
-	     * @param {Object}
-	     * @return {String}
-	     */
-	    _objectToHtml: function _objectToHtml(obj) {
-	      //Convert object to array first
-	      var array = [];
-	      for (var key in obj) {
-	        if (obj.hasOwnProperty(key)) {
-	          array.push({ val: key, label: obj[key] });
-	        }
-	      }
-	
-	      //Now convert to HTML
-	      var html = this._arrayToHtml(array);
-	
-	      return html;
-	    },
-	
-	    /**
-	     * Create the <option> HTML
-	     * @param {Array}   Options as a simple array e.g. ['option1', 'option2']
-	     *                      or as an array of objects e.g. [{val: 543, label: 'Title for object 543'}]
-	     * @return {String} HTML
-	     */
-	    _arrayToHtml: function _arrayToHtml(array) {
-	      var html = [];
-	
-	      //Generate HTML
-	      _.each(array, function (option) {
-	        if (_.isObject(option)) {
-	          if (option.group) {
-	            html.push('<optgroup label="' + option.group + '">');
-	            html.push(this._getOptionsHtml(option.options));
-	            html.push('</optgroup>');
-	          } else {
-	            var val = option.val || option.val === 0 ? option.val : '';
-	            html.push('<option value="' + val + '">' + option.label + '</option>');
-	          }
-	        } else {
-	          html.push('<option>' + option + '</option>');
-	        }
-	      }, this);
-	
-	      return html.join('');
-	    }
-	
-	  });
-	
-	  /**
-	   * Radio editor
-	   *
-	   * Renders a <ul> with given options represented as <li> objects containing radio buttons
-	   *
-	   * Requires an 'options' value on the schema.
-	   *  Can be an array of options, a function that calls back with the array of options, a string of HTML
-	   *  or a Backbone collection. If a collection, the models must implement a toString() method
-	   */
-	  Form.editors.Radio = Form.editors.Select.extend({
-	
-	    tagName: 'ul',
-	
-	    events: {
-	      'change input[type=radio]': function changeInputTypeRadio() {
-	        this.trigger('change', this);
-	      },
-	      'focus input[type=radio]': function focusInputTypeRadio() {
-	        if (this.hasFocus) return;
-	        this.trigger('focus', this);
-	      },
-	      'blur input[type=radio]': function blurInputTypeRadio() {
-	        if (!this.hasFocus) return;
-	        var self = this;
-	        setTimeout(function () {
-	          if (self.$('input[type=radio]:focus')[0]) return;
-	          self.trigger('blur', self);
-	        }, 0);
-	      }
-	    },
-	
-	    /**
-	     * Returns the template. Override for custom templates
-	     *
-	     * @return {Function}       Compiled template
-	     */
-	    getTemplate: function getTemplate() {
-	      return this.schema.template || this.constructor.template;
-	    },
-	
-	    getValue: function getValue() {
-	      return this.$('input[type=radio]:checked').val();
-	    },
-	
-	    setValue: function setValue(value) {
-	      this.$('input[type=radio]').val([value]);
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      var checked = this.$('input[type=radio]:checked');
-	      if (checked[0]) {
-	        checked.focus();
-	        return;
-	      }
-	
-	      this.$('input[type=radio]').first().focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.$('input[type=radio]:focus').blur();
-	    },
-	
-	    /**
-	     * Create the radio list HTML
-	     * @param {Array}   Options as a simple array e.g. ['option1', 'option2']
-	     *                      or as an array of objects e.g. [{val: 543, label: 'Title for object 543'}]
-	     * @return {String} HTML
-	     */
-	    _arrayToHtml: function _arrayToHtml(array) {
-	      var self = this;
-	
-	      var template = this.getTemplate(),
-	          name = self.getName(),
-	          id = self.id;
-	
-	      var items = _.map(array, function (option, index) {
-	        var item = {
-	          name: name,
-	          id: id + '-' + index
-	        };
-	
-	        if (_.isObject(option)) {
-	          item.value = option.val || option.val === 0 ? option.val : '';
-	          item.label = option.label;
-	        } else {
-	          item.value = option;
-	          item.label = option;
-	        }
-	
-	        return item;
-	      });
-	
-	      return template({ items: items });
-	    }
-	
-	  }, {
-	
-	    //STATICS
-	    template: _.template('\
-	    <ul>\
-	      <% _.each(items, function(item) { %>\
-	        <li>\
-	          <input type="radio" name="<%= item.name %>" value="<%= item.value %>" id="<%= item.id %>" />\
-	          <label for="<%= item.id %>"><%= item.label %></label>\
-	        </li>\
-	      <% }); %>\
-	    </ul>\
-	  ', null, Form.templateSettings)
-	
-	  });
-	
-	  /**
-	   * Checkboxes editor
-	   *
-	   * Renders a <ul> with given options represented as <li> objects containing checkboxes
-	   *
-	   * Requires an 'options' value on the schema.
-	   *  Can be an array of options, a function that calls back with the array of options, a string of HTML
-	   *  or a Backbone collection. If a collection, the models must implement a toString() method
-	   */
-	  Form.editors.Checkboxes = Form.editors.Select.extend({
-	
-	    tagName: 'ul',
-	
-	    groupNumber: 0,
-	
-	    events: {
-	      'click input[type=checkbox]': function clickInputTypeCheckbox() {
-	        this.trigger('change', this);
-	      },
-	      'focus input[type=checkbox]': function focusInputTypeCheckbox() {
-	        if (this.hasFocus) return;
-	        this.trigger('focus', this);
-	      },
-	      'blur input[type=checkbox]': function blurInputTypeCheckbox() {
-	        if (!this.hasFocus) return;
-	        var self = this;
-	        setTimeout(function () {
-	          if (self.$('input[type=checkbox]:focus')[0]) return;
-	          self.trigger('blur', self);
-	        }, 0);
-	      }
-	    },
-	
-	    getValue: function getValue() {
-	      var values = [];
-	      this.$('input[type=checkbox]:checked').each(function () {
-	        values.push($(this).val());
-	      });
-	      return values;
-	    },
-	
-	    setValue: function setValue(values) {
-	      if (!_.isArray(values)) values = [values];
-	      this.$('input[type=checkbox]').val(values);
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      this.$('input[type=checkbox]').first().focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.$('input[type=checkbox]:focus').blur();
-	    },
-	
-	    /**
-	     * Create the checkbox list HTML
-	     * @param {Array}   Options as a simple array e.g. ['option1', 'option2']
-	     *                      or as an array of objects e.g. [{val: 543, label: 'Title for object 543'}]
-	     * @return {String} HTML
-	     */
-	    _arrayToHtml: function _arrayToHtml(array) {
-	      var html = [];
-	      var self = this;
-	
-	      _.each(array, function (option, index) {
-	        var itemHtml = '<li>';
-	        var close = true;
-	        if (_.isObject(option)) {
-	          if (option.group) {
-	            var originalId = self.id;
-	            self.id += "-" + self.groupNumber++;
-	            itemHtml = '<fieldset class="group"> <legend>' + option.group + '</legend>';
-	            itemHtml += self._arrayToHtml(option.options);
-	            itemHtml += '</fieldset>';
-	            self.id = originalId;
-	            close = false;
-	          } else {
-	            var val = option.val || option.val === 0 ? option.val : '';
-	            itemHtml += '<input type="checkbox" name="' + self.getName() + '" value="' + val + '" id="' + self.id + '-' + index + '" />';
-	            itemHtml += '<label for="' + self.id + '-' + index + '">' + option.label + '</label>';
-	          }
-	        } else {
-	          itemHtml += '<input type="checkbox" name="' + self.getName() + '" value="' + option + '" id="' + self.id + '-' + index + '" />';
-	          itemHtml += '<label for="' + self.id + '-' + index + '">' + option + '</label>';
-	        }
-	        if (close) {
-	          itemHtml += '</li>';
-	        }
-	        html.push(itemHtml);
-	      });
-	
-	      return html.join('');
-	    }
-	
-	  });
-	
-	  /**
-	   * Object editor
-	   *
-	   * Creates a child form. For editing Javascript objects
-	   *
-	   * @param {Object} options
-	   * @param {Form} options.form                 The form this editor belongs to; used to determine the constructor for the nested form
-	   * @param {Object} options.schema             The schema for the object
-	   * @param {Object} options.schema.subSchema   The schema for the nested form
-	   */
-	  Form.editors.Object = Form.editors.Base.extend({
-	    //Prevent error classes being set on the main control; they are internally on the individual fields
-	    hasNestedForm: true,
-	
-	    initialize: function initialize(options) {
-	      //Set default value for the instance so it's not a shared object
-	      this.value = {};
-	
-	      //Init
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	
-	      //Check required options
-	      if (!this.form) throw new Error('Missing required option "form"');
-	      if (!this.schema.subSchema) throw new Error("Missing required 'schema.subSchema' option for Object editor");
-	    },
-	
-	    render: function render() {
-	      //Get the constructor for creating the nested form; i.e. the same constructor as used by the parent form
-	      var NestedForm = this.form.constructor;
-	
-	      //Create the nested form
-	      this.nestedForm = new NestedForm({
-	        schema: this.schema.subSchema,
-	        data: this.value,
-	        idPrefix: this.id + '_',
-	        Field: NestedForm.NestedField
-	      });
-	
-	      this._observeFormEvents();
-	
-	      this.$el.html(this.nestedForm.render().el);
-	
-	      if (this.hasFocus) this.trigger('blur', this);
-	
-	      return this;
-	    },
-	
-	    getValue: function getValue() {
-	      if (this.nestedForm) return this.nestedForm.getValue();
-	
-	      return this.value;
-	    },
-	
-	    setValue: function setValue(value) {
-	      this.value = value;
-	
-	      this.render();
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      this.nestedForm.focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.nestedForm.blur();
-	    },
-	
-	    remove: function remove() {
-	      this.nestedForm.remove();
-	
-	      Backbone.View.prototype.remove.call(this);
-	    },
-	
-	    validate: function validate() {
-	      return this.nestedForm.validate();
-	    },
-	
-	    _observeFormEvents: function _observeFormEvents() {
-	      if (!this.nestedForm) return;
-	
-	      this.nestedForm.on('all', function () {
-	        // args = ["key:change", form, fieldEditor]
-	        var args = _.toArray(arguments);
-	        args[1] = this;
-	        // args = ["key:change", this=objectEditor, fieldEditor]
-	
-	        this.trigger.apply(this, args);
-	      }, this);
-	    }
-	
-	  });
-	
-	  /**
-	   * NestedModel editor
-	   *
-	   * Creates a child form. For editing nested Backbone models
-	   *
-	   * Special options:
-	   *   schema.model:   Embedded model constructor
-	   */
-	  Form.editors.NestedModel = Form.editors.Object.extend({
-	    initialize: function initialize(options) {
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	
-	      if (!this.form) throw new Error('Missing required option "form"');
-	      if (!options.schema.model) throw new Error('Missing required "schema.model" option for NestedModel editor');
-	    },
-	
-	    render: function render() {
-	      //Get the constructor for creating the nested form; i.e. the same constructor as used by the parent form
-	      var NestedForm = this.form.constructor;
-	
-	      var data = this.value || {},
-	          key = this.key,
-	          nestedModel = this.schema.model;
-	
-	      //Wrap the data in a model if it isn't already a model instance
-	      var modelInstance = data.constructor === nestedModel ? data : new nestedModel(data);
-	
-	      this.nestedForm = new NestedForm({
-	        model: modelInstance,
-	        idPrefix: this.id + '_',
-	        fieldTemplate: 'nestedField'
-	      });
-	
-	      this._observeFormEvents();
-	
-	      //Render form
-	      this.$el.html(this.nestedForm.render().el);
-	
-	      if (this.hasFocus) this.trigger('blur', this);
-	
-	      return this;
-	    },
-	
-	    /**
-	     * Update the embedded model, checking for nested validation errors and pass them up
-	     * Then update the main model if all OK
-	     *
-	     * @return {Error|null} Validation error or null
-	     */
-	    commit: function commit() {
-	      var error = this.nestedForm.commit();
-	      if (error) {
-	        this.$el.addClass('error');
-	        return error;
-	      }
-	
-	      return Form.editors.Object.prototype.commit.call(this);
-	    }
-	
-	  });
-	
-	  /**
-	   * Date editor
-	   *
-	   * Schema options
-	   * @param {Number|String} [options.schema.yearStart]  First year in list. Default: 100 years ago
-	   * @param {Number|String} [options.schema.yearEnd]    Last year in list. Default: current year
-	   *
-	   * Config options (if not set, defaults to options stored on the main Date class)
-	   * @param {Boolean} [options.showMonthNames]  Use month names instead of numbers. Default: true
-	   * @param {String[]} [options.monthNames]     Month names. Default: Full English names
-	   */
-	  Form.editors.Date = Form.editors.Base.extend({
-	
-	    events: {
-	      'change select': function changeSelect() {
-	        this.updateHidden();
-	        this.trigger('change', this);
-	      },
-	      'focus select': function focusSelect() {
-	        if (this.hasFocus) return;
-	        this.trigger('focus', this);
-	      },
-	      'blur select': function blurSelect() {
-	        if (!this.hasFocus) return;
-	        var self = this;
-	        setTimeout(function () {
-	          if (self.$('select:focus')[0]) return;
-	          self.trigger('blur', self);
-	        }, 0);
-	      }
-	    },
-	
-	    initialize: function initialize(options) {
-	      options = options || {};
-	
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	
-	      var Self = Form.editors.Date,
-	          today = new Date();
-	
-	      //Option defaults
-	      this.options = _.extend({
-	        monthNames: Self.monthNames,
-	        showMonthNames: Self.showMonthNames
-	      }, options);
-	
-	      //Schema defaults
-	      this.schema = _.extend({
-	        yearStart: today.getFullYear() - 100,
-	        yearEnd: today.getFullYear()
-	      }, options.schema || {});
-	
-	      //Cast to Date
-	      if (this.value && !_.isDate(this.value)) {
-	        this.value = new Date(this.value);
-	      }
-	
-	      //Set default date
-	      if (!this.value) {
-	        var date = new Date();
-	        date.setSeconds(0);
-	        date.setMilliseconds(0);
-	
-	        this.value = date;
-	      }
-	
-	      //Template
-	      this.template = options.template || this.constructor.template;
-	    },
-	
-	    render: function render() {
-	      var options = this.options,
-	          schema = this.schema;
-	
-	      var datesOptions = _.map(_.range(1, 32), function (date) {
-	        return '<option value="' + date + '">' + date + '</option>';
-	      });
-	
-	      var monthsOptions = _.map(_.range(0, 12), function (month) {
-	        var value = options.showMonthNames ? options.monthNames[month] : month + 1;
-	
-	        return '<option value="' + month + '">' + value + '</option>';
-	      });
-	
-	      var yearRange = schema.yearStart < schema.yearEnd ? _.range(schema.yearStart, schema.yearEnd + 1) : _.range(schema.yearStart, schema.yearEnd - 1, -1);
-	
-	      var yearsOptions = _.map(yearRange, function (year) {
-	        return '<option value="' + year + '">' + year + '</option>';
-	      });
-	
-	      //Render the selects
-	      var $el = $($.trim(this.template({
-	        dates: datesOptions.join(''),
-	        months: monthsOptions.join(''),
-	        years: yearsOptions.join('')
-	      })));
-	
-	      //Store references to selects
-	      this.$date = $el.find('[data-type="date"]');
-	      this.$month = $el.find('[data-type="month"]');
-	      this.$year = $el.find('[data-type="year"]');
-	
-	      //Create the hidden field to store values in case POSTed to server
-	      this.$hidden = $('<input type="hidden" name="' + this.key + '" />');
-	      $el.append(this.$hidden);
-	
-	      //Set value on this and hidden field
-	      this.setValue(this.value);
-	
-	      //Remove the wrapper tag
-	      this.setElement($el);
-	      this.$el.attr('id', this.id);
-	      this.$el.attr('name', this.getName());
-	
-	      if (this.hasFocus) this.trigger('blur', this);
-	
-	      return this;
-	    },
-	
-	    /**
-	     * @return {Date}   Selected date
-	     */
-	    getValue: function getValue() {
-	      var year = this.$year.val(),
-	          month = this.$month.val(),
-	          date = this.$date.val();
-	
-	      if (!year || !month || !date) return null;
-	
-	      return new Date(year, month, date);
-	    },
-	
-	    /**
-	     * @param {Date} date
-	     */
-	    setValue: function setValue(date) {
-	      this.$date.val(date.getDate());
-	      this.$month.val(date.getMonth());
-	      this.$year.val(date.getFullYear());
-	
-	      this.updateHidden();
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      this.$('select').first().focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.$('select:focus').blur();
-	    },
-	
-	    /**
-	     * Update the hidden input which is maintained for when submitting a form
-	     * via a normal browser POST
-	     */
-	    updateHidden: function updateHidden() {
-	      var val = this.getValue();
-	
-	      if (_.isDate(val)) val = val.toISOString();
-	
-	      this.$hidden.val(val);
-	    }
-	
-	  }, {
-	    //STATICS
-	    template: _.template('\
-	    <div>\
-	      <select data-type="date"><%= dates %></select>\
-	      <select data-type="month"><%= months %></select>\
-	      <select data-type="year"><%= years %></select>\
-	    </div>\
-	  ', null, Form.templateSettings),
-	
-	    //Whether to show month names instead of numbers
-	    showMonthNames: true,
-	
-	    //Month names to use if showMonthNames is true
-	    //Replace for localisation, e.g. Form.editors.Date.monthNames = ['Janvier', 'Fevrier'...]
-	    monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-	  });
-	
-	  /**
-	   * DateTime editor
-	   *
-	   * @param {Editor} [options.DateEditor]           Date editor view to use (not definition)
-	   * @param {Number} [options.schema.minsInterval]  Interval between minutes. Default: 15
-	   */
-	  Form.editors.DateTime = Form.editors.Base.extend({
-	
-	    events: {
-	      'change select': function changeSelect() {
-	        this.updateHidden();
-	        this.trigger('change', this);
-	      },
-	      'focus select': function focusSelect() {
-	        if (this.hasFocus) return;
-	        this.trigger('focus', this);
-	      },
-	      'blur select': function blurSelect() {
-	        if (!this.hasFocus) return;
-	        var self = this;
-	        setTimeout(function () {
-	          if (self.$('select:focus')[0]) return;
-	          self.trigger('blur', self);
-	        }, 0);
-	      }
-	    },
-	
-	    initialize: function initialize(options) {
-	      options = options || {};
-	
-	      Form.editors.Base.prototype.initialize.call(this, options);
-	
-	      //Option defaults
-	      this.options = _.extend({
-	        DateEditor: Form.editors.DateTime.DateEditor
-	      }, options);
-	
-	      //Schema defaults
-	      this.schema = _.extend({
-	        minsInterval: 15
-	      }, options.schema || {});
-	
-	      //Create embedded date editor
-	      this.dateEditor = new this.options.DateEditor(options);
-	
-	      this.value = this.dateEditor.value;
-	
-	      //Template
-	      this.template = options.template || this.constructor.template;
-	    },
-	
-	    render: function render() {
-	      function pad(n) {
-	        return n < 10 ? '0' + n : n;
-	      }
-	
-	      var schema = this.schema;
-	
-	      //Create options
-	      var hoursOptions = _.map(_.range(0, 24), function (hour) {
-	        return '<option value="' + hour + '">' + pad(hour) + '</option>';
-	      });
-	
-	      var minsOptions = _.map(_.range(0, 60, schema.minsInterval), function (min) {
-	        return '<option value="' + min + '">' + pad(min) + '</option>';
-	      });
-	
-	      //Render time selects
-	      var $el = $($.trim(this.template({
-	        hours: hoursOptions.join(),
-	        mins: minsOptions.join()
-	      })));
-	
-	      //Include the date editor
-	      $el.find('[data-date]').append(this.dateEditor.render().el);
-	
-	      //Store references to selects
-	      this.$hour = $el.find('select[data-type="hour"]');
-	      this.$min = $el.find('select[data-type="min"]');
-	
-	      //Get the hidden date field to store values in case POSTed to server
-	      this.$hidden = $el.find('input[type="hidden"]');
-	
-	      //Set time
-	      this.setValue(this.value);
-	
-	      this.setElement($el);
-	      this.$el.attr('id', this.id);
-	      this.$el.attr('name', this.getName());
-	
-	      if (this.hasFocus) this.trigger('blur', this);
-	
-	      return this;
-	    },
-	
-	    /**
-	     * @return {Date}   Selected datetime
-	     */
-	    getValue: function getValue() {
-	      var date = this.dateEditor.getValue();
-	
-	      var hour = this.$hour.val(),
-	          min = this.$min.val();
-	
-	      if (!date || !hour || !min) return null;
-	
-	      date.setHours(hour);
-	      date.setMinutes(min);
-	
-	      return date;
-	    },
-	
-	    /**
-	     * @param {Date}
-	     */
-	    setValue: function setValue(date) {
-	      if (!_.isDate(date)) date = new Date(date);
-	
-	      this.dateEditor.setValue(date);
-	
-	      this.$hour.val(date.getHours());
-	      this.$min.val(date.getMinutes());
-	
-	      this.updateHidden();
-	    },
-	
-	    focus: function focus() {
-	      if (this.hasFocus) return;
-	
-	      this.$('select').first().focus();
-	    },
-	
-	    blur: function blur() {
-	      if (!this.hasFocus) return;
-	
-	      this.$('select:focus').blur();
-	    },
-	
-	    /**
-	     * Update the hidden input which is maintained for when submitting a form
-	     * via a normal browser POST
-	     */
-	    updateHidden: function updateHidden() {
-	      var val = this.getValue();
-	      if (_.isDate(val)) val = val.toISOString();
-	
-	      this.$hidden.val(val);
-	    },
-	
-	    /**
-	     * Remove the Date editor before removing self
-	     */
-	    remove: function remove() {
-	      this.dateEditor.remove();
-	
-	      Form.editors.Base.prototype.remove.call(this);
-	    }
-	
-	  }, {
-	    //STATICS
-	    template: _.template('\
-	    <div class="bbf-datetime">\
-	      <div class="bbf-date-container" data-date></div>\
-	      <select data-type="hour"><%= hours %></select>\
-	      :\
-	      <select data-type="min"><%= mins %></select>\
-	    </div>\
-	  ', null, Form.templateSettings),
-	
-	    //The date editor to use (constructor function, not instance)
-	    DateEditor: Form.editors.Date
-	  });
-	
-	  //Metadata
-	  Form.VERSION = '0.14.0';
-	
-	  //Exports
-	  Backbone.Form = Form;
-	  if (true) module.exports = Form;
-	})(window || global || undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 355 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var _typeof2 = __webpack_require__(120);
+	var _typeof2 = __webpack_require__(123);
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/*** IMPORTS FROM imports-loader ***/
-	var jquery = __webpack_require__(42);
+	var jquery = __webpack_require__(64);
 	
-	/*
+	/**
+	 * @license Rangy Inputs, a jQuery plug-in for selection and caret manipulation within textareas and text inputs.
+	 * 
+	 * https://github.com/timdown/rangyinputs
 	 *
-	 * Copyright (c) 2010 C. F., Wong (<a href="http://cloudgen.w0ng.hk">Cloudgen Examplet Store</a>)
-	 * Licensed under the MIT License:
-	 * http://www.opensource.org/licenses/mit-license.php
+	 * For range and selection features for contenteditable, see Rangy.
+	
+	 * http://code.google.com/p/rangy/
 	 *
+	 * Depends on jQuery 1.0 or later.
+	 *
+	 * Copyright 2014, Tim Down
+	 * Licensed under the MIT license.
+	 * Version: 1.2.0
+	 * Build date: 30 November 2014
 	 */
-	(function ($, len, createRange, duplicate) {
-		$.fn.caret = function (options, opt2) {
-			var start,
-			    end,
-			    t = this[0],
-			    browser = $.browser.msie;
-			if ((typeof options === "undefined" ? "undefined" : (0, _typeof3.default)(options)) === "object" && typeof options.start === "number" && typeof options.end === "number") {
-				start = options.start;
-				end = options.end;
-			} else if (typeof options === "number" && typeof opt2 === "number") {
-				start = options;
-				end = opt2;
-			} else if (typeof options === "string") {
-				if ((start = t.value.indexOf(options)) > -1) end = start + options[len];else start = null;
-			} else if (Object.prototype.toString.call(options) === "[object RegExp]") {
-				var re = options.exec(t.value);
-				if (re != null) {
-					start = re.index;
-					end = start + re[0][len];
-				}
-			}
-			if (typeof start != "undefined") {
-				if (browser) {
-					var selRange = this[0].createTextRange();
-					selRange.collapse(true);
-					selRange.moveStart('character', start);
-					selRange.moveEnd('character', end - start);
-					selRange.select();
-				} else {
-					this[0].selectionStart = start;
-					this[0].selectionEnd = end;
-				}
-				this[0].focus();
-				return this;
-			} else {
-				// Modification as suggested by Андрей Юткин
-				if (browser) {
-					var selection = document.selection;
-					if (this[0].tagName.toLowerCase() != "textarea") {
-						var val = this.val(),
-						    range = selection[createRange]()[duplicate]();
-						range.moveEnd("character", val[len]);
-						var s = range.text == "" ? val[len] : val.lastIndexOf(range.text);
-						range = selection[createRange]()[duplicate]();
-						range.moveStart("character", -val[len]);
-						var e = range.text[len];
-					} else {
-						var range = selection[createRange](),
-						    stored_range = range[duplicate]();
-						stored_range.moveToElementText(this[0]);
-						stored_range.setEndPoint('EndToEnd', range);
-						var s = stored_range.text[len] - range.text[len],
-						    e = s + range.text[len];
-					}
-					// End of Modification
-				} else {
-					var s = t.selectionStart,
-					    e = t.selectionEnd;
-				}
-				var te = t.value.substring(s, e);
-				return { start: s, end: e, text: te, replace: function replace(st) {
-						return t.value.substring(0, s) + st + t.value.substring(e, t.value[len]);
-					} };
-			}
-		};
-	})(jQuery, "length", "createRange", "duplicate");
+	(function ($) {
+	    var UNDEF = "undefined";
+	    var getSelection, setSelection, deleteSelectedText, deleteText, insertText;
+	    var replaceSelectedText, surroundSelectedText, extractSelectedText, collapseSelection;
+	
+	    // Trio of isHost* functions taken from Peter Michaux's article:
+	    // http://peter.michaux.ca/articles/feature-detection-state-of-the-art-browser-scripting
+	    function isHostMethod(object, property) {
+	        var t = (0, _typeof3.default)(object[property]);
+	        return t === "function" || !!(t == "object" && object[property]) || t == "unknown";
+	    }
+	
+	    function isHostProperty(object, property) {
+	        return (0, _typeof3.default)(object[property]) != UNDEF;
+	    }
+	
+	    function isHostObject(object, property) {
+	        return !!((0, _typeof3.default)(object[property]) == "object" && object[property]);
+	    }
+	
+	    function fail(reason) {
+	        if (window.console && window.console.log) {
+	            window.console.log("RangyInputs not supported in your browser. Reason: " + reason);
+	        }
+	    }
+	
+	    function adjustOffsets(el, start, end) {
+	        if (start < 0) {
+	            start += el.value.length;
+	        }
+	        if ((typeof end === "undefined" ? "undefined" : (0, _typeof3.default)(end)) == UNDEF) {
+	            end = start;
+	        }
+	        if (end < 0) {
+	            end += el.value.length;
+	        }
+	        return { start: start, end: end };
+	    }
+	
+	    function makeSelection(el, start, end) {
+	        return {
+	            start: start,
+	            end: end,
+	            length: end - start,
+	            text: el.value.slice(start, end)
+	        };
+	    }
+	
+	    function getBody() {
+	        return isHostObject(document, "body") ? document.body : document.getElementsByTagName("body")[0];
+	    }
+	
+	    $(document).ready(function () {
+	        var testTextArea = document.createElement("textarea");
+	
+	        getBody().appendChild(testTextArea);
+	
+	        if (isHostProperty(testTextArea, "selectionStart") && isHostProperty(testTextArea, "selectionEnd")) {
+	            getSelection = function getSelection(el) {
+	                var start = el.selectionStart,
+	                    end = el.selectionEnd;
+	                return makeSelection(el, start, end);
+	            };
+	
+	            setSelection = function setSelection(el, startOffset, endOffset) {
+	                var offsets = adjustOffsets(el, startOffset, endOffset);
+	                el.selectionStart = offsets.start;
+	                el.selectionEnd = offsets.end;
+	            };
+	
+	            collapseSelection = function collapseSelection(el, toStart) {
+	                if (toStart) {
+	                    el.selectionEnd = el.selectionStart;
+	                } else {
+	                    el.selectionStart = el.selectionEnd;
+	                }
+	            };
+	        } else if (isHostMethod(testTextArea, "createTextRange") && isHostObject(document, "selection") && isHostMethod(document.selection, "createRange")) {
+	
+	            getSelection = function getSelection(el) {
+	                var start = 0,
+	                    end = 0,
+	                    normalizedValue,
+	                    textInputRange,
+	                    len,
+	                    endRange;
+	                var range = document.selection.createRange();
+	
+	                if (range && range.parentElement() == el) {
+	                    len = el.value.length;
+	
+	                    normalizedValue = el.value.replace(/\r\n/g, "\n");
+	                    textInputRange = el.createTextRange();
+	                    textInputRange.moveToBookmark(range.getBookmark());
+	                    endRange = el.createTextRange();
+	                    endRange.collapse(false);
+	                    if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
+	                        start = end = len;
+	                    } else {
+	                        start = -textInputRange.moveStart("character", -len);
+	                        start += normalizedValue.slice(0, start).split("\n").length - 1;
+	                        if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
+	                            end = len;
+	                        } else {
+	                            end = -textInputRange.moveEnd("character", -len);
+	                            end += normalizedValue.slice(0, end).split("\n").length - 1;
+	                        }
+	                    }
+	                }
+	
+	                return makeSelection(el, start, end);
+	            };
+	
+	            // Moving across a line break only counts as moving one character in a TextRange, whereas a line break in
+	            // the textarea value is two characters. This function corrects for that by converting a text offset into a
+	            // range character offset by subtracting one character for every line break in the textarea prior to the
+	            // offset
+	            var offsetToRangeCharacterMove = function offsetToRangeCharacterMove(el, offset) {
+	                return offset - (el.value.slice(0, offset).split("\r\n").length - 1);
+	            };
+	
+	            setSelection = function setSelection(el, startOffset, endOffset) {
+	                var offsets = adjustOffsets(el, startOffset, endOffset);
+	                var range = el.createTextRange();
+	                var startCharMove = offsetToRangeCharacterMove(el, offsets.start);
+	                range.collapse(true);
+	                if (offsets.start == offsets.end) {
+	                    range.move("character", startCharMove);
+	                } else {
+	                    range.moveEnd("character", offsetToRangeCharacterMove(el, offsets.end));
+	                    range.moveStart("character", startCharMove);
+	                }
+	                range.select();
+	            };
+	
+	            collapseSelection = function collapseSelection(el, toStart) {
+	                var range = document.selection.createRange();
+	                range.collapse(toStart);
+	                range.select();
+	            };
+	        } else {
+	            getBody().removeChild(testTextArea);
+	            fail("No means of finding text input caret position");
+	            return;
+	        }
+	
+	        // Clean up
+	        getBody().removeChild(testTextArea);
+	
+	        function getValueAfterPaste(el, text) {
+	            var val = el.value,
+	                sel = getSelection(el),
+	                selStart = sel.start;
+	            return {
+	                value: val.slice(0, selStart) + text + val.slice(sel.end),
+	                index: selStart,
+	                replaced: sel.text
+	            };
+	        }
+	
+	        function pasteTextWithCommand(el, text) {
+	            el.focus();
+	            var sel = getSelection(el);
+	
+	            // Hack to work around incorrect delete command when deleting the last word on a line
+	            setSelection(el, sel.start, sel.end);
+	            if (text == "") {
+	                document.execCommand("delete", false, null);
+	            } else {
+	                document.execCommand("insertText", false, text);
+	            }
+	
+	            return {
+	                replaced: sel.text,
+	                index: sel.start
+	            };
+	        }
+	
+	        function pasteTextWithValueChange(el, text) {
+	            el.focus();
+	            var valueAfterPaste = getValueAfterPaste(el, text);
+	            el.value = valueAfterPaste.value;
+	            return valueAfterPaste;
+	        }
+	
+	        var _pasteText = function pasteText(el, text) {
+	            var valueAfterPaste = getValueAfterPaste(el, text);
+	            try {
+	                var pasteInfo = pasteTextWithCommand(el, text);
+	                if (el.value == valueAfterPaste.value) {
+	                    _pasteText = pasteTextWithCommand;
+	                    return pasteInfo;
+	                }
+	            } catch (ex) {
+	                // Do nothing and fall back to changing the value manually
+	            }
+	            _pasteText = pasteTextWithValueChange;
+	            el.value = valueAfterPaste.value;
+	            return valueAfterPaste;
+	        };
+	
+	        deleteText = function deleteText(el, start, end, moveSelection) {
+	            if (start != end) {
+	                setSelection(el, start, end);
+	                _pasteText(el, "");
+	            }
+	            if (moveSelection) {
+	                setSelection(el, start);
+	            }
+	        };
+	
+	        deleteSelectedText = function deleteSelectedText(el) {
+	            setSelection(el, _pasteText(el, "").index);
+	        };
+	
+	        extractSelectedText = function extractSelectedText(el) {
+	            var pasteInfo = _pasteText(el, "");
+	            setSelection(el, pasteInfo.index);
+	            return pasteInfo.replaced;
+	        };
+	
+	        var updateSelectionAfterInsert = function updateSelectionAfterInsert(el, startIndex, text, selectionBehaviour) {
+	            var endIndex = startIndex + text.length;
+	
+	            selectionBehaviour = typeof selectionBehaviour == "string" ? selectionBehaviour.toLowerCase() : "";
+	
+	            if ((selectionBehaviour == "collapsetoend" || selectionBehaviour == "select") && /[\r\n]/.test(text)) {
+	                // Find the length of the actual text inserted, which could vary
+	                // depending on how the browser deals with line breaks
+	                var normalizedText = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+	                endIndex = startIndex + normalizedText.length;
+	                var firstLineBreakIndex = startIndex + normalizedText.indexOf("\n");
+	
+	                if (el.value.slice(firstLineBreakIndex, firstLineBreakIndex + 2) == "\r\n") {
+	                    // Browser uses \r\n, so we need to account for extra \r characters
+	                    endIndex += normalizedText.match(/\n/g).length;
+	                }
+	            }
+	
+	            switch (selectionBehaviour) {
+	                case "collapsetostart":
+	                    setSelection(el, startIndex, startIndex);
+	                    break;
+	                case "collapsetoend":
+	                    setSelection(el, endIndex, endIndex);
+	                    break;
+	                case "select":
+	                    setSelection(el, startIndex, endIndex);
+	                    break;
+	            }
+	        };
+	
+	        insertText = function insertText(el, text, index, selectionBehaviour) {
+	            setSelection(el, index);
+	            _pasteText(el, text);
+	            if (typeof selectionBehaviour == "boolean") {
+	                selectionBehaviour = selectionBehaviour ? "collapseToEnd" : "";
+	            }
+	            updateSelectionAfterInsert(el, index, text, selectionBehaviour);
+	        };
+	
+	        replaceSelectedText = function replaceSelectedText(el, text, selectionBehaviour) {
+	            var pasteInfo = _pasteText(el, text);
+	            updateSelectionAfterInsert(el, pasteInfo.index, text, selectionBehaviour || "collapseToEnd");
+	        };
+	
+	        surroundSelectedText = function surroundSelectedText(el, before, after, selectionBehaviour) {
+	            if ((typeof after === "undefined" ? "undefined" : (0, _typeof3.default)(after)) == UNDEF) {
+	                after = before;
+	            }
+	            var sel = getSelection(el);
+	            var pasteInfo = _pasteText(el, before + sel.text + after);
+	            updateSelectionAfterInsert(el, pasteInfo.index + before.length, sel.text, selectionBehaviour || "select");
+	        };
+	
+	        function jQuerify(func, returnThis) {
+	            return function () {
+	                var el = this.jquery ? this[0] : this;
+	                var nodeName = el.nodeName.toLowerCase();
+	
+	                if (el.nodeType == 1 && (nodeName == "textarea" || nodeName == "input" && /^(?:text|email|number|search|tel|url|password)$/i.test(el.type))) {
+	                    var args = [el].concat(Array.prototype.slice.call(arguments));
+	                    var result = func.apply(this, args);
+	                    if (!returnThis) {
+	                        return result;
+	                    }
+	                }
+	                if (returnThis) {
+	                    return this;
+	                }
+	            };
+	        }
+	
+	        $.fn.extend({
+	            getSelection: jQuerify(getSelection, false),
+	            setSelection: jQuerify(setSelection, true),
+	            collapseSelection: jQuerify(collapseSelection, true),
+	            deleteSelectedText: jQuerify(deleteSelectedText, true),
+	            deleteText: jQuerify(deleteText, true),
+	            extractSelectedText: jQuerify(extractSelectedText, false),
+	            insertText: jQuerify(insertText, true),
+	            replaceSelectedText: jQuerify(replaceSelectedText, true),
+	            surroundSelectedText: jQuerify(surroundSelectedText, true)
+	        });
+	    });
+	})(jQuery);
 
 /***/ },
-/* 356 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 8/10/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -23385,19 +21571,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _AjaxService = __webpack_require__(196);
+	var _AjaxService = __webpack_require__(205);
 	
 	var _AjaxService2 = _interopRequireDefault(_AjaxService);
 	
-	var _MessageService = __webpack_require__(197);
+	var _MessageService = __webpack_require__(206);
 	
 	var _MessageService2 = _interopRequireDefault(_MessageService);
 	
-	var _UserService = __webpack_require__(72);
+	var _GlobalEventService = __webpack_require__(34);
+	
+	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
+	
+	var _UserService = __webpack_require__(74);
 	
 	var _UserService2 = _interopRequireDefault(_UserService);
 	
-	var _WindowService = __webpack_require__(73);
+	var _WindowService = __webpack_require__(65);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
@@ -23406,6 +21596,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 8/10/2015
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
 	
 	var initializeThirdParties = function initializeThirdParties() {
 	    _libApi.$.fn.datetimepicker.dates[_LocalizationService2.default.langCode] = {
@@ -23423,11 +21621,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    initialize: function initialize(options) {
 	        _utilsApi.helpers.ensureOption(options, 'localizationService');
 	        _utilsApi.helpers.ensureOption(options, 'ajaxService');
-	        _utilsApi.helpers.ensureOption(options, 'windowService');
 	        _utilsApi.helpers.ensureOption(options, 'userService');
 	
+	        _GlobalEventService2.default.initialize();
 	        _UserService2.default.initialize(options.userService);
-	        _WindowService2.default.initialize(options.windowService);
+	        _WindowService2.default.initialize();
 	        _LocalizationService2.default.initialize(options.localizationService);
 	        _AjaxService2.default.load(options.ajaxService);
 	
@@ -23436,39 +21634,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 357 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 5/21/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.initialize = exports.meta = exports.utils = exports.nativeGrid = exports.list = exports.form = exports.dropdown = exports.views = exports.models = exports.collections = exports.services = exports.lib = undefined;
 	
-	__webpack_require__(684);
+	__webpack_require__(689);
 	
-	__webpack_require__(687);
-	
-	__webpack_require__(685);
-	
-	__webpack_require__(688);
-	
-	__webpack_require__(686);
+	__webpack_require__(692);
 	
 	__webpack_require__(690);
 	
-	__webpack_require__(689);
+	__webpack_require__(696);
+	
+	__webpack_require__(697);
+	
+	__webpack_require__(693);
+	
+	__webpack_require__(691);
+	
+	__webpack_require__(695);
+	
+	__webpack_require__(694);
 	
 	var _libApi = __webpack_require__(1);
 	
@@ -23478,67 +21670,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi2 = _interopRequireDefault(_utilsApi);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _nativeGridApi = __webpack_require__(423);
+	var _nativeGridApi = __webpack_require__(430);
 	
 	var _nativeGridApi2 = _interopRequireDefault(_nativeGridApi);
 	
-	var _formApi = __webpack_require__(407);
+	var _formApi = __webpack_require__(414);
 	
 	var _formApi2 = _interopRequireDefault(_formApi);
 	
-	var _Meta = __webpack_require__(108);
+	var _Meta = __webpack_require__(109);
 	
 	var _Meta2 = _interopRequireDefault(_Meta);
 	
-	var _Bootstrapper = __webpack_require__(356);
+	var _Bootstrapper = __webpack_require__(363);
 	
 	var _Bootstrapper2 = _interopRequireDefault(_Bootstrapper);
 	
-	var _LoadingView = __webpack_require__(201);
+	var _LoadingView = __webpack_require__(208);
 	
 	var _LoadingView2 = _interopRequireDefault(_LoadingView);
 	
-	var _LoadingBehavior = __webpack_require__(449);
+	var _LoadingBehavior = __webpack_require__(455);
 	
 	var _LoadingBehavior2 = _interopRequireDefault(_LoadingBehavior);
 	
-	var _BlurableBehavior = __webpack_require__(119);
-	
-	var _BlurableBehavior2 = _interopRequireDefault(_BlurableBehavior);
-	
-	var _SearchBarView = __webpack_require__(447);
+	var _SearchBarView = __webpack_require__(453);
 	
 	var _SearchBarView2 = _interopRequireDefault(_SearchBarView);
 	
-	var _SplitPanelView = __webpack_require__(448);
+	var _SplitPanelView = __webpack_require__(454);
 	
 	var _SplitPanelView2 = _interopRequireDefault(_SplitPanelView);
 	
-	var _FadingPanelView = __webpack_require__(200);
-	
-	var _FadingPanelView2 = _interopRequireDefault(_FadingPanelView);
-	
-	var _RoutingServiceBase = __webpack_require__(427);
+	var _RoutingServiceBase = __webpack_require__(433);
 	
 	var _RoutingServiceBase2 = _interopRequireDefault(_RoutingServiceBase);
 	
-	var _MessageService = __webpack_require__(197);
+	var _MessageService = __webpack_require__(206);
 	
 	var _MessageService2 = _interopRequireDefault(_MessageService);
 	
-	var _WindowService = __webpack_require__(73);
+	var _WindowService = __webpack_require__(65);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
-	var _GlobalEventService = __webpack_require__(65);
+	var _GlobalEventService = __webpack_require__(34);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -23546,39 +21730,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
-	var _AjaxService = __webpack_require__(196);
+	var _AjaxService = __webpack_require__(205);
 	
 	var _AjaxService2 = _interopRequireDefault(_AjaxService);
 	
-	var _PromiseService = __webpack_require__(198);
+	var _PromiseService = __webpack_require__(207);
 	
 	var _PromiseService2 = _interopRequireDefault(_PromiseService);
 	
-	var _UserService = __webpack_require__(72);
+	var _UserService = __webpack_require__(74);
 	
 	var _UserService2 = _interopRequireDefault(_UserService);
 	
-	var _SlidingWindowCollection = __webpack_require__(167);
+	var _SlidingWindowCollection = __webpack_require__(173);
 	
 	var _SlidingWindowCollection2 = _interopRequireDefault(_SlidingWindowCollection);
 	
-	var _VirtualCollection = __webpack_require__(71);
+	var _VirtualCollection = __webpack_require__(73);
 	
 	var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 	
-	var _HighlightableBehavior = __webpack_require__(83);
+	var _HighlightableBehavior = __webpack_require__(86);
 	
 	var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 	
-	var _CollapsibleBehavior = __webpack_require__(192);
+	var _CollapsibleBehavior = __webpack_require__(200);
 	
 	var _CollapsibleBehavior2 = _interopRequireDefault(_CollapsibleBehavior);
 	
-	var _HighlightableBehavior3 = __webpack_require__(118);
+	var _HighlightableBehavior3 = __webpack_require__(119);
 	
 	var _HighlightableBehavior4 = _interopRequireDefault(_HighlightableBehavior3);
 	
-	var _SelectableBehavior = __webpack_require__(43);
+	var _SelectableBehavior = __webpack_require__(45);
 	
 	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
 	
@@ -23586,20 +21770,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/**
 	 * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
-	 * @exports core
+	 * @name module:core
 	 * */
-	var api = {
+	var core = {
 	  lib: _libApi2.default,
 	  /**
 	   * Services of general use the UI is built on.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  services: {
 	    RoutingServiceBase: _RoutingServiceBase2.default,
 	    MessageService: _MessageService2.default,
+	    /**
+	     * The service is responsible for displaying global windows. For example, modal dialogs (popups).
+	     * @namespace
+	     * @memberof module:core.services
+	     * */
 	    WindowService: _WindowService2.default,
 	    LocalizationService: _LocalizationService2.default,
 	    AjaxService: _AjaxService2.default,
+	    /**
+	     * The services provides an interface to global window events, so you could easily subscribe
+	     * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
+	     * @namespace
+	     * @memberof module:core.services
+	    * */
 	    GlobalEventService: _GlobalEventService2.default,
 	    PromiseService: _PromiseService2.default,
 	    UserService: _UserService2.default
@@ -23607,11 +21803,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Backbone collections of general use.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  collections: {
 	    /**
 	     * Backbone collection behaviors of general use.
 	     * @namespace
+	     * @memberof module:core.collections
 	     * */
 	    behaviors: {
 	      HighlightableBehavior: _HighlightableBehavior2.default
@@ -23622,6 +21820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Backbone models of general use.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  models: {
 	    behaviors: {
@@ -23632,8 +21831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  views: {
 	    behaviors: {
-	      LoadingBehavior: _LoadingBehavior2.default,
-	      BlurableBehavior: _BlurableBehavior2.default
+	      LoadingBehavior: _LoadingBehavior2.default
 	    },
 	    LoadingView: _LoadingView2.default,
 	    SearchBarView: _SearchBarView2.default,
@@ -23642,63 +21840,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Dropdown components of general use. It may be used in menus, dropdown lists and more complex cases like displaying some fancy about-me panel.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  dropdown: _dropdownApi2.default,
 	  /**
 	   * A large set of editors and related classes built on top of [Backbone.Form](https://github.com/powmedia/backbone-forms) library.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  form: _formApi2.default,
 	  /**
 	   * List and Grid components with data virtualization.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  list: _listApi2.default,
 	  /**
 	   * List and Grid components without data virtualization.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  nativeGrid: _nativeGridApi2.default,
 	  /**
 	   * Combines useful helper classes, functions and constants.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  utils: _utilsApi2.default,
 	  /**
 	   * Constants used inside the library.
 	   * @namespace
+	   * @memberof module:core
 	   * */
 	  meta: _Meta2.default,
 	  initialize: _Bootstrapper2.default.initialize.bind(_Bootstrapper2.default)
-	};
+	}; /**
+	    * Developer: Stepan Burguchev
+	    * Date: 5/21/2015
+	    * Copyright: 2009-2016 Comindware®
+	    *       All Rights Reserved
+	    * Published under the MIT license
+	    */
 	
-	exports.default = api;
-	var lib = exports.lib = api.lib;
-	var services = exports.services = api.services;
-	var collections = exports.collections = api.collections;
-	var models = exports.models = api.models;
-	var views = exports.views = api.views;
-	var dropdown = exports.dropdown = api.dropdown;
-	var form = exports.form = api.form;
-	var list = exports.list = api.list;
-	var nativeGrid = exports.nativeGrid = api.nativeGrid;
-	var utils = exports.utils = api.utils;
-	var meta = exports.meta = api.meta;
-	var initialize = exports.initialize = api.initialize;
+	/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+	
+	exports.default = core;
+	var lib = exports.lib = core.lib;
+	var services = exports.services = core.services;
+	var collections = exports.collections = core.collections;
+	var models = exports.models = core.models;
+	var views = exports.views = core.views;
+	var dropdown = exports.dropdown = core.dropdown;
+	var form = exports.form = core.form;
+	var list = exports.list = core.list;
+	var nativeGrid = exports.nativeGrid = core.nativeGrid;
+	var utils = exports.utils = core.utils;
+	var meta = exports.meta = core.meta;
+	var initialize = exports.initialize = core.initialize;
 
 /***/ },
-/* 358 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/1/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -23726,11 +21930,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Marionette.View} view A view the behavior is applied to.
 	 * */
 	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 12/1/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
+	
 	exports.default = Marionette.Behavior.extend( /** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */{
 	    initialize: function initialize(options, view) {},
 	
 	    onRender: function onRender() {
-	        var $el;
+	        var $el = void 0;
 	        if (this.options.anchor) {
 	            $el = this.$(this.options.anchor);
 	        } else {
@@ -23742,9 +21954,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 359 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _defineProperty2 = __webpack_require__(122);
+	
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+	
+	var _assign = __webpack_require__(121);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _FieldView = __webpack_require__(192);
+	
+	var _FieldView2 = _interopRequireDefault(_FieldView);
+	
+	var _helpers = __webpack_require__(120);
+	
+	var _helpers2 = _interopRequireDefault(_helpers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	/**
 	 * Developer: Stepan Burguchev
 	 * Date: 11/19/2014
@@ -23753,97 +21989,305 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Published under the MIT license
 	 */
 	
-	"use strict";
+	var Form = Marionette.Object.extend({
+	    /**
+	     * Constructor
+	     *
+	     * @param {Object} [options.schema]
+	     * @param {Backbone.Model} [options.model]
+	     */
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	    initialize: function initialize(options) {
+	        var _this = this;
+	
+	        this.options = options = options || {};
+	
+	        this.__regionManager = new Marionette.RegionManager();
+	        this.schema = _.result(options, 'schema');
+	        this.model = options.model;
+	
+	        this.fields = {};
+	        _.each(this.schema, function (fieldSchema, key) {
+	            var FieldType = fieldSchema.field || options.field || _FieldView2.default;
+	            var field = new FieldType({
+	                form: this,
+	                key: key,
+	                schema: fieldSchema,
+	                model: this.model
+	            });
+	            this.listenTo(field.editor, 'all', this.__handleEditorEvent);
+	            this.fields[key] = field;
+	        }, this);
+	
+	        var $target = this.options.$target;
+	
+	        var usedFields = {};
+	        //Render standalone editors
+	        $target.find('[data-editors]').each(function (i, el) {
+	            var $editorRegion = $(el);
+	            var key = $editorRegion.attr('data-editors');
+	            var regionName = key + 'Region';
+	            if (usedFields[key]) {
+	                _helpers2.default.throwFormatError('Duplicated field \'' + key + '\'.');
+	            }
+	            _this.__regionManager.addRegion(regionName, { el: $editorRegion });
+	            _this.__regionManager.get(regionName).show(_this.fields[key].editor);
+	            usedFields[key] = true;
+	        });
+	
+	        //Render standalone fields
+	        $target.find('[data-fields]').each(function (i, el) {
+	            var $fieldRegion = $(el);
+	            var key = $fieldRegion.attr('data-fields');
+	            var regionName = key + 'Region';
+	            if (usedFields[key]) {
+	                _helpers2.default.throwFormatError('Duplicated field \'' + key + '\'.');
+	            }
+	            _this.__regionManager.addRegion(regionName, { el: $fieldRegion });
+	            _this.__regionManager.get(regionName).show(_this.fields[key]);
+	            usedFields[key] = true;
+	        });
+	
+	        this.validate({
+	            silent: true
+	        });
+	    },
+	
+	
+	    /**
+	     * Update the model with all latest values.
+	     *
+	     * @param {Object} [options]  Options to pass to Model#set (e.g. { silent: true })
+	     *
+	     * @return {Object}  Validation errors
+	     */
+	    commit: function commit(options) {
+	        // Validate
+	        options = options || {};
+	
+	        var errors = this.validate({
+	            skipModelValidate: !options.validate
+	        });
+	        if (errors) {
+	            return errors;
+	        }
+	
+	        // Commit
+	        var modelError = null;
+	        var setOptions = (0, _assign2.default)({
+	            error: function error(model, e) {
+	                modelError = e;
+	            }
+	        }, options);
+	
+	        this.model.set(this.getValue(), setOptions);
+	        return modelError;
+	    },
+	
+	
+	    /**
+	     * Returns the editor for a given field key
+	     *
+	     * @param {String} key
+	     *
+	     * @return {Editor}
+	     */
+	    getEditor: function getEditor(key) {
+	        var field = this.fields[key];
+	        if (!field) {
+	            throw new Error('Field not found: ' + key);
+	        }
+	        return field.editor;
+	    },
+	    onDestroy: function onDestroy() {
+	        this.__regionManager.destroy();
+	    },
+	
+	
+	    /**
+	     * Get all the field values as an object.
+	     * @param {String} [key]    Specific field value to get
+	     */
+	    getValue: function getValue(key) {
+	        // Return only given key if specified
+	        if (key) {
+	            return this.fields[key].getValue();
+	        }
+	
+	        // Otherwise return entire form
+	        var values = {};
+	        _.each(this.fields, function (field) {
+	            values[field.key] = field.getValue();
+	        });
+	
+	        return values;
+	    },
+	
+	
+	    /**
+	     * Update field values, referenced by key
+	     *
+	     * @param {Object|String} prop     New values to set, or property to set
+	     * @param val                     Value to set
+	     */
+	    setValue: function setValue(prop, val) {
+	        var _this2 = this;
+	
+	        var data = {};
+	        if (typeof prop === 'string') {
+	            data[prop] = val;
+	        } else {
+	            data = prop;
+	        }
+	
+	        this.schema.keys().forEach(function (key) {
+	            if (data[key] !== undefined) {
+	                _this2.fields[key].setValue(data[key]);
+	            }
+	        });
+	    },
+	    __handleEditorEvent: function __handleEditorEvent(event, editor, field) {
+	        if (event !== 'validated') {
+	            //Re-trigger editor events on the form
+	            this.trigger.call(this, 'form:' + event, this, editor, Array.prototype.slice.call(arguments, 2));
+	        }
+	
+	        switch (event) {
+	            case 'change':
+	                this.trigger('change', this, editor);
+	                this.trigger(editor.key + ':change', this, editor);
+	                break;
+	            case 'focus':
+	                if (!this.hasFocus) {
+	                    this.hasFocus = true;
+	                    this.trigger('focus', this);
+	                }
+	                break;
+	            case 'blur':
+	                if (this.hasFocus) {
+	                    var focusedField = _.find(this.fields, function (f) {
+	                        return f.editor.hasFocus;
+	                    });
+	                    if (!focusedField) {
+	                        this.hasFocus = false;
+	                        this.trigger('blur', this);
+	                    }
+	                }
+	                break;
+	            case 'validated':
+	                this.validate({
+	                    silent: true
+	                });
+	                break;
+	            default:
+	                break;
+	        }
+	    },
+	    setErrors: function setErrors(errors) {
+	        var _this3 = this;
+	
+	        _.each(errors, function (value, key) {
+	            var field = _this3.fields[key];
+	            if (field) {
+	                field.setError(value);
+	            }
+	        });
+	    },
+	
+	
+	    /**
+	     * Validate the data
+	     * @return {Object} Validation errors
+	     */
+	    validate: function validate(options) {
+	        var fields = this.fields;
+	        var model = this.model;
+	        var errors = {};
+	
+	        options = options || {};
+	
+	        //Collect errors from schema validation
+	        _.each(fields, function (field) {
+	            var error = field.validate(options);
+	            if (error) {
+	                errors[field.key] = error;
+	            }
+	        });
+	
+	        //Get errors from default Backbone model validator
+	        if (!options.skipModelValidate && model && model.validate) {
+	            var modelErrors = model.validate(this.getValue());
+	
+	            if (modelErrors) {
+	                var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+	
+	                //If errors are not in object form then just store on the error object
+	                if (!isDictionary) {
+	                    errors._others = errors._others || [];
+	                    errors._others.push(modelErrors);
+	                }
+	
+	                //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
+	                if (isDictionary) {
+	                    _.each(modelErrors, function (val, key) {
+	                        //Set error on field if there isn't one already
+	                        if (fields[key] && !errors[key]) {
+	                            fields[key].setError(val);
+	                            errors[key] = val;
+	                        } else {
+	                            //Otherwise add to '_others' key
+	                            errors._others = errors._others || [];
+	                            errors._others.push((0, _defineProperty3.default)({}, key, val));
+	                        }
+	                    });
+	                }
+	            }
+	        }
+	
+	        var result = _.isEmpty(errors) ? null : errors;
+	        this.trigger('form:validated', !result, result);
+	        return result;
+	    },
+	
+	
+	    /**
+	     * Gives the first editor in the form focus
+	     */
+	    focus: function focus() {
+	        if (this.hasFocus) {
+	            return;
+	        }
+	
+	        var field = this.fields[0];
+	        if (!field) {
+	            return;
+	        }
+	        field.editor.focus();
+	    },
+	
+	
+	    /**
+	     * Removes focus from the currently focused editor
+	     */
+	    blur: function blur() {
+	        if (!this.hasFocus) {
+	            return;
+	        }
+	
+	        var focusedField = _.find(this.fields, function (field) {
+	            return field.editor.hasFocus;
+	        });
+	        if (focusedField) {
+	            focusedField.editor.blur();
+	        }
+	    }
 	});
-	
-	var _ExtendedForm = __webpack_require__(173);
-	
-	var _ExtendedForm2 = _interopRequireDefault(_ExtendedForm);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var constants = {
 	    RENDER_STRATEGY_RENDER: 'render',
 	    RENDER_STRATEGY_SHOW: 'show',
 	    RENDER_STRATEGY_MANUAL: 'manual'
 	};
-	
-	//noinspection JSUnresolvedFunction,SpellCheckingInspection
-	var MariotizedExtendedForm = _ExtendedForm2.default.extend({
-	    initialize: function initialize(options) {
-	        this.options = options || {};
-	        _ExtendedForm2.default.prototype.initialize.apply(this, _.toArray(arguments));
-	    },
-	
-	    render: function render() {
-	        var self = this,
-	            fields = this.fields;
-	
-	        //Render form
-	        var $form = this.options.$target;
-	
-	        //Render standalone editors
-	        $form.find('[data-editors]').add($form).each(function (i, el) {
-	            var $container = $(el),
-	                selection = $container.attr('data-editors');
-	
-	            if (_.isUndefined(selection)) {
-	                return;
-	            }
-	
-	            //Work out which fields to include
-	            var keys = selection === '*' ? self.selectedFields || _.keys(fields) : selection.split(',');
-	
-	            //Add them
-	            _.each(keys, function (key) {
-	                var field = fields[key];
-	
-	                $container.append(field.editor.render().el);
-	            });
-	        });
-	
-	        //Render standalone fields
-	        $form.find('[data-fields]').add($form).each(function (i, el) {
-	            var $container = $(el),
-	                selection = $container.attr('data-fields');
-	
-	            if (_.isUndefined(selection)) {
-	                return;
-	            }
-	
-	            //Work out which fields to include
-	            var keys = selection === '*' ? self.selectedFields || _.keys(fields) : selection.split(',');
-	
-	            //Add them
-	            _.each(keys, function (key) {
-	                var field = fields[key];
-	
-	                $container.append(field.render().el);
-	            });
-	        });
-	
-	        //Render fieldsets
-	        $form.find('[data-fieldsets]').add($form).each(function (i, el) {
-	            var $container = $(el),
-	                selection = $container.attr('data-fieldsets');
-	
-	            if (_.isUndefined(selection)) {
-	                return;
-	            }
-	
-	            _.each(self.fieldsets, function (fieldset) {
-	                $container.append(fieldset.render().el);
-	            });
-	        });
-	
-	        //Set the main element
-	        this.setElement($form);
-	        return this;
-	    }
-	});
 	
 	/**
 	 * Marionette.Behavior constructor shall never be called manually.
@@ -23868,20 +22312,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *     <li><code>'manual'</code> - Form render method (<code>renderForm()</code>) must be called manually.</li>
 	 *     </ul>
 	 * @param {Backbone.Form.Field} [options.field] Backbone.Form.Field that will be used to render fields of the form.
-	 * The field <code>core.form.fields.CommonField</code> is used by default.
+	 * The field <code>core.form.fields.Field</code> is used by default.
 	 * @param {Marionette.View} view A view the behavior is applied to.
 	 * */
 	
 	exports.default = Marionette.Behavior.extend( /** @lends module:core.form.behaviors.BackboneFormBehavior.prototype */{
 	    initialize: function initialize(options, view) {
 	        view.renderForm = this.__renderForm.bind(this);
-	        if (options.field) {
-	            this.CustomizedForm = MariotizedExtendedForm.extend({
-	                Field: options.field
-	            });
-	        } else {
-	            this.CustomizedForm = MariotizedExtendedForm;
-	        }
 	    },
 	
 	    defaults: {
@@ -23906,37 +22343,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
+	    onDestroy: function onDestroy() {
+	        if (this.form) {
+	            this.form.destroy();
+	        }
+	    },
+	
+	
 	    __renderForm: function __renderForm() {
 	        var model = this.options.model;
 	        if (_.isFunction(model)) {
 	            model = model.call(this.view);
 	        }
+	
 	        var schema = this.options.schema;
 	        if (_.isFunction(schema)) {
 	            schema = schema.call(this.view);
 	        }
-	        var stateModel = this.options.stateModel;
-	        if (_.isFunction(stateModel)) {
-	            stateModel = stateModel.call(this.view);
-	        }
-	        var form = new this.CustomizedForm({
+	
+	        var form = new Form({
 	            model: model,
 	            schema: schema,
 	            $target: this.$el,
-	            stateModel: stateModel
+	            field: this.options.field
 	        });
 	        this.view.form = this.form = form;
 	        if (this.view.initForm) {
 	            this.view.initForm();
 	        }
-	        form.render();
-	        form.onShow();
 	        this.view.triggerMethod('form:render', form);
 	    }
 	});
 
 /***/ },
-/* 360 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23953,11 +22393,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(37);
+	var _promise = __webpack_require__(39);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
-	var _assign = __webpack_require__(451);
+	var _assign = __webpack_require__(121);
 	
 	var _assign2 = _interopRequireDefault(_assign);
 	
@@ -23969,9 +22409,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 	
-	var _avatarEditor = __webpack_require__(723);
+	var _avatarEditor = __webpack_require__(730);
 	
 	var _avatarEditor2 = _interopRequireDefault(_avatarEditor);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23995,7 +22439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {BaseAvatarEditorController} options.controller - Data provider controller in the form of subclass of
 	 * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
 	 */
-	Backbone.Form.editors.Avatar = _BaseItemEditorView2.default.extend({
+	_formRepository2.default.editors.Avatar = _BaseItemEditorView2.default.extend({
 	    className: 'user-avatar-wrp',
 	
 	    attributes: {
@@ -24160,10 +22604,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Avatar;
+	exports.default = _formRepository2.default.editors.Avatar;
 
 /***/ },
-/* 361 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24182,13 +22626,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _booleanEditor = __webpack_require__(724);
+	var _booleanEditor = __webpack_require__(731);
 	
 	var _booleanEditor2 = _interopRequireDefault(_booleanEditor);
 	
 	var _BaseItemEditorView = __webpack_require__(50);
 	
 	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24207,8 +22655,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
+	 * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
+	 * @param {String} [options.title] Title attribute for the editor.
 	 * */
-	Backbone.Form.editors.Boolean = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.BooleanEditorView.prototype */{
+	_formRepository2.default.editors.Boolean = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.BooleanEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -24231,15 +22681,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    className: 'editor editor_checkbox',
 	
-	    attributes: {
-	        'tabindex': '0'
+	    attributes: function attributes() {
+	        return {
+	            title: this.options.title || null,
+	            tabindex: '0'
+	        };
 	    },
+	
 	
 	    template: _libApi.Handlebars.compile(_booleanEditor2.default),
 	
 	    templateHelpers: function templateHelpers() {
 	        return {
-	            displayText: this.options.displayText
+	            displayText: this.options.displayText,
+	            displayHtml: this.options.displayHtml
 	        };
 	    },
 	
@@ -24276,10 +22731,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    classes: classes
 	});
 	
-	exports.default = Backbone.Form.editors.Boolean;
+	exports.default = _formRepository2.default.editors.Boolean;
 
 /***/ },
-/* 362 */
+/* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24298,17 +22753,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dateEditor = __webpack_require__(725);
+	var _dateEditor = __webpack_require__(732);
 	
 	var _dateEditor2 = _interopRequireDefault(_dateEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _DateView = __webpack_require__(178);
+	var _DateView = __webpack_require__(186);
 	
 	var _DateView2 = _interopRequireDefault(_DateView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24328,7 +22787,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
 	 * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
 	 * */
-	Backbone.Form.editors.Date = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateEditorView.prototype */{
+	_formRepository2.default.editors.Date = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        options = options || {};
 	        if (options.schema) {
@@ -24446,10 +22905,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Date;
+	exports.default = _formRepository2.default.editors.Date;
 
 /***/ },
-/* 363 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24468,21 +22927,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dateTimeEditor = __webpack_require__(726);
+	var _dateTimeEditor = __webpack_require__(733);
 	
 	var _dateTimeEditor2 = _interopRequireDefault(_dateTimeEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _DateView = __webpack_require__(178);
+	var _DateView = __webpack_require__(186);
 	
 	var _DateView2 = _interopRequireDefault(_DateView);
 	
-	var _TimeView = __webpack_require__(179);
+	var _TimeView = __webpack_require__(187);
 	
 	var _TimeView2 = _interopRequireDefault(_TimeView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24507,7 +22970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
 	 * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
 	 * */
-	Backbone.Form.editors.DateTime = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateTimeEditorView.prototype */{
+	_formRepository2.default.editors.DateTime = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateTimeEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        options = options || {};
 	        if (options.schema) {
@@ -24551,7 +23014,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    __change: function __change() {
 	        this.__value(this.dateTimeModel.get('value'), true, true);
-	        this.__updateClearButton();
+	        if (!this.isDestroyed) {
+	            this.__updateClearButton();
+	        }
 	    },
 	
 	    setValue: function setValue(value) {
@@ -24665,10 +23130,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.DateTime;
+	exports.default = _formRepository2.default.editors.DateTime;
 
 /***/ },
-/* 364 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24687,29 +23152,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _dropdownEditor = __webpack_require__(727);
+	var _dropdownEditor = __webpack_require__(734);
 	
 	var _dropdownEditor2 = _interopRequireDefault(_dropdownEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _DropdownPanelView = __webpack_require__(385);
+	var _DropdownPanelView = __webpack_require__(392);
 	
 	var _DropdownPanelView2 = _interopRequireDefault(_DropdownPanelView);
 	
-	var _DropdownButtonView = __webpack_require__(384);
+	var _DropdownButtonView = __webpack_require__(391);
 	
 	var _DropdownButtonView2 = _interopRequireDefault(_DropdownButtonView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24737,7 +23206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
 	 * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
 	 * */
-	Backbone.Form.editors.Dropdown = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DropdownEditorView.prototype */{
+	_formRepository2.default.editors.Dropdown = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DropdownEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -24930,10 +23399,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Dropdown;
+	exports.default = _formRepository2.default.editors.Dropdown;
 
 /***/ },
-/* 365 */
+/* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24950,7 +23419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _defineProperty2 = __webpack_require__(203);
+	var _defineProperty2 = __webpack_require__(122);
 	
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 	
@@ -24962,13 +23431,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
-	var _durationEditor = __webpack_require__(728);
+	var _durationEditor = __webpack_require__(735);
 	
 	var _durationEditor2 = _interopRequireDefault(_durationEditor);
 	
 	var _BaseItemEditorView = __webpack_require__(50);
 	
 	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -25046,7 +23519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
 	 * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
 	 * */
-	Backbone.Form.editors.Duration = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.DurationEditorView.prototype */{
+	_formRepository2.default.editors.Duration = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.DurationEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -25150,7 +23623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    getCaretPos: function getCaretPos() {
-	        return this.ui.input.caret().start;
+	        return this.ui.input.getSelection().start;
 	    },
 	
 	    fixCaretPos: function fixCaretPos(pos) {
@@ -25167,7 +23640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    setCaretPos: function setCaretPos(pos) {
-	        this.ui.input.caret(pos, pos);
+	        this.ui.input.setSelection(pos, pos);
 	    },
 	
 	    getSegmentIndex: function getSegmentIndex(pos) {
@@ -25475,10 +23948,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Duration;
+	exports.default = _formRepository2.default.editors.Duration;
 
 /***/ },
-/* 366 */
+/* 373 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25499,37 +23972,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _memberSelectEditor = __webpack_require__(729);
+	var _memberSelectEditor = __webpack_require__(736);
 	
 	var _memberSelectEditor2 = _interopRequireDefault(_memberSelectEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _UserService = __webpack_require__(72);
+	var _UserService = __webpack_require__(74);
 	
 	var _UserService2 = _interopRequireDefault(_UserService);
 	
-	var _DefaultButtonView = __webpack_require__(386);
+	var _DefaultButtonView = __webpack_require__(393);
 	
 	var _DefaultButtonView2 = _interopRequireDefault(_DefaultButtonView);
 	
-	var _PanelView = __webpack_require__(388);
+	var _PanelView = __webpack_require__(395);
 	
 	var _PanelView2 = _interopRequireDefault(_PanelView);
 	
-	var _MemberModel = __webpack_require__(86);
+	var _MemberModel = __webpack_require__(89);
 	
 	var _MemberModel2 = _interopRequireDefault(_MemberModel);
 	
-	var _MembersCollection = __webpack_require__(85);
+	var _MembersCollection = __webpack_require__(88);
 	
 	var _MembersCollection2 = _interopRequireDefault(_MembersCollection);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -25561,7 +24038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Полезно для задания направления открытия и кастомизации кнопки. Значения по умолчанию:
 	 * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
 	 * */
-	Backbone.Form.editors.MemberSelect = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
+	_formRepository2.default.editors.MemberSelect = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -25708,10 +24185,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.MemberSelect;
+	exports.default = _formRepository2.default.editors.MemberSelect;
 
 /***/ },
-/* 367 */
+/* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25728,45 +24205,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _stringify = __webpack_require__(202);
+	var _stringify = __webpack_require__(209);
 	
 	var _stringify2 = _interopRequireDefault(_stringify);
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _membersBubbleEditor = __webpack_require__(730);
+	var _membersBubbleEditor = __webpack_require__(737);
 	
 	var _membersBubbleEditor2 = _interopRequireDefault(_membersBubbleEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _MemberModel = __webpack_require__(86);
+	var _MemberModel = __webpack_require__(89);
 	
 	var _MemberModel2 = _interopRequireDefault(_MemberModel);
 	
-	var _FakeInputModel = __webpack_require__(180);
+	var _FakeInputModel = __webpack_require__(188);
 	
 	var _FakeInputModel2 = _interopRequireDefault(_FakeInputModel);
 	
-	var _MembersCollection = __webpack_require__(85);
+	var _MembersCollection = __webpack_require__(88);
 	
 	var _MembersCollection2 = _interopRequireDefault(_MembersCollection);
 	
-	var _ButtonView = __webpack_require__(390);
+	var _ButtonView = __webpack_require__(397);
 	
 	var _ButtonView2 = _interopRequireDefault(_ButtonView);
 	
-	var _factory = __webpack_require__(111);
+	var _factory = __webpack_require__(112);
 	
 	var _factory2 = _interopRequireDefault(_factory);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -25788,7 +24269,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {String[]} [options.exclude] Массив идентификаторов пользователей, которые будут скрыты из списка доступных для выбора.
 	 * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
 	 * */
-	Backbone.Form.editors.MembersBubble = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
+	_formRepository2.default.editors.MembersBubble = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -25826,7 +24307,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this.dropdownView) {
 	            this.stopListening(this.dropdownView);
 	        }
-	        this.__applyFilter();
 	        this.dropdownView = _dropdownApi2.default.factory.createDropdown({
 	            buttonView: _ButtonView2.default,
 	            buttonViewOptions: {
@@ -25841,6 +24321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            autoOpen: false
 	        });
 	        this.dropdownRegion.show(this.dropdownView);
+	        this.listenTo(this.dropdownView, 'before:open', this.__onBeforeDropdownOpen);
 	        this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
 	        this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
 	        this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
@@ -25883,6 +24364,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            this.__sendPanelCommand('down');
 	        }
+	    },
+	
+	    __onBeforeDropdownOpen: function __onBeforeDropdownOpen() {
+	        this.__applyFilter();
 	    },
 	
 	    __onDropdownOpen: function __onDropdownOpen() {
@@ -26068,10 +24553,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.MembersBubble;
+	exports.default = _formRepository2.default.editors.MembersBubble;
 
 /***/ },
-/* 368 */
+/* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26088,33 +24573,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _mentionEditor = __webpack_require__(731);
+	var _mentionEditor = __webpack_require__(738);
 	
 	var _mentionEditor2 = _interopRequireDefault(_mentionEditor);
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
 	__webpack_require__(4);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _factory = __webpack_require__(111);
+	var _factory = __webpack_require__(112);
 	
 	var _factory2 = _interopRequireDefault(_factory);
 	
-	var _TextAreaEditorView = __webpack_require__(174);
+	var _TextAreaEditorView = __webpack_require__(182);
 	
 	var _TextAreaEditorView2 = _interopRequireDefault(_TextAreaEditorView);
 	
 	var _LocalizationService = __webpack_require__(10);
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26132,7 +24621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
 	 * */
-	Backbone.Form.editors.Mention = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MentionEditorView.prototype */{
+	_formRepository2.default.editors.Mention = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MentionEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -26359,10 +24848,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Mention;
+	exports.default = _formRepository2.default.editors.Mention;
 
 /***/ },
-/* 369 */
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26381,25 +24870,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _multiSelectEditor = __webpack_require__(732);
+	var _multiSelectEditor = __webpack_require__(739);
 	
 	var _multiSelectEditor2 = _interopRequireDefault(_multiSelectEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _MultiSelectPanelView = __webpack_require__(394);
+	var _MultiSelectPanelView = __webpack_require__(401);
 	
 	var _MultiSelectPanelView2 = _interopRequireDefault(_MultiSelectPanelView);
 	
-	var _MultiSelectButtonView = __webpack_require__(392);
+	var _MultiSelectButtonView = __webpack_require__(399);
 	
 	var _MultiSelectButtonView2 = _interopRequireDefault(_MultiSelectButtonView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26425,7 +24918,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
 	 * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
 	 * */
-	Backbone.Form.editors.MultiSelect = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
+	_formRepository2.default.editors.MultiSelect = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -26640,10 +25133,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.MultiSelect;
+	exports.default = _formRepository2.default.editors.MultiSelect;
 
 /***/ },
-/* 370 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26654,13 +25147,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Published under the MIT license
 	 */
 	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
-	var _numberEditor = __webpack_require__(733);
+	var _numberEditor = __webpack_require__(740);
 	
 	var _numberEditor2 = _interopRequireDefault(_numberEditor);
 	
@@ -26671,6 +25164,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _libApi = __webpack_require__(1);
 	
 	var _utilsApi = __webpack_require__(4);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26711,7 +25208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
 	 * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
 	 * */
-	Backbone.Form.editors.Number = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.NumberEditorView.prototype */{
+	_formRepository2.default.editors.Number = _BaseItemEditorView2.default.extend( /** @lends module:core.form.editors.NumberEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -26816,12 +25313,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __repeat: function __repeat(i, steps) {
+	        var _this = this;
+	
 	        i = i || 500;
 	
 	        clearTimeout(this.timer);
 	        this.timer = setTimeout(function () {
-	            this.__repeat(40, steps);
-	        }.bind(this), i);
+	            if (!_this.isDestroyed) {
+	                _this.__repeat(40, steps);
+	            }
+	        }, i);
 	
 	        this.__spin(steps * constants.STEP);
 	    },
@@ -26875,6 +25376,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __stop: function __stop() {
+	        if (this.isDestroyed) {
+	            return;
+	        }
 	        if (!this.spinning) {
 	            return;
 	        }
@@ -26972,9 +25476,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __adjustValue: function __adjustValue(value) {
-	        var base,
-	            aboveMin,
-	            options = this.options;
+	        var base = void 0;
+	        var aboveMin = void 0;
+	        var options = this.options;
 	
 	        // make sure we're at a valid step
 	        // - find out where we are relative to the base (min or 0)
@@ -27000,10 +25504,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Number;
+	exports.default = _formRepository2.default.editors.Number;
 
 /***/ },
-/* 371 */
+/* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27020,15 +25524,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _TextEditorView = __webpack_require__(175);
+	var _TextEditorView = __webpack_require__(183);
 	
 	var _TextEditorView2 = _interopRequireDefault(_TextEditorView);
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _passwordEditor = __webpack_require__(734);
+	var _passwordEditor = __webpack_require__(741);
 	
 	var _passwordEditor2 = _interopRequireDefault(_passwordEditor);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27040,14 +25548,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Object} options Options object. Doesn't have it's own options.
 	 * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
 	 * */
-	Backbone.Form.editors.Password = _TextEditorView2.default.extend( /** @lends module:core.form.editors.PasswordEditorView.prototype */{
+	_formRepository2.default.editors.Password = _TextEditorView2.default.extend( /** @lends module:core.form.editors.PasswordEditorView.prototype */{
 	  template: _libApi.Handlebars.compile(_passwordEditor2.default)
 	});
 	
-	exports.default = Backbone.Form.editors.Password;
+	exports.default = _formRepository2.default.editors.Password;
 
 /***/ },
-/* 372 */
+/* 379 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27066,17 +25574,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _BaseCollectionEditorView = __webpack_require__(176);
+	var _BaseCollectionEditorView = __webpack_require__(184);
 	
 	var _BaseCollectionEditorView2 = _interopRequireDefault(_BaseCollectionEditorView);
 	
-	var _RadioButtonView = __webpack_require__(397);
+	var _RadioButtonView = __webpack_require__(404);
 	
 	var _RadioButtonView2 = _interopRequireDefault(_RadioButtonView);
 	
-	var _RadioGroupCollection = __webpack_require__(395);
+	var _RadioGroupCollection = __webpack_require__(402);
 	
 	var _RadioGroupCollection2 = _interopRequireDefault(_RadioGroupCollection);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27092,9 +25604,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * совпадать с типом данных поля <code>id</code> элементов массива <code>radioOptions</code>.
 	 * @extends module:core.form.editors.base.BaseEditorView
 	 * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
-	 * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText }</code>, описывающих радио-кнопки.
+	 * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
 	 * */
-	Backbone.Form.editors.RadioGroup = _BaseCollectionEditorView2.default.extend( /** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
+	_formRepository2.default.editors.RadioGroup = _BaseCollectionEditorView2.default.extend( /** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -27156,21 +25668,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.RadioGroup;
+	exports.default = _formRepository2.default.editors.RadioGroup;
 
 /***/ },
-/* 373 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 10/13/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -27178,43 +25682,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _referenceEditor = __webpack_require__(735);
+	var _referenceEditor = __webpack_require__(742);
 	
 	var _referenceEditor2 = _interopRequireDefault(_referenceEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _ReferenceButtonView = __webpack_require__(112);
+	var _ReferenceButtonView = __webpack_require__(113);
 	
 	var _ReferenceButtonView2 = _interopRequireDefault(_ReferenceButtonView);
 	
-	var _ReferencePanelView = __webpack_require__(183);
+	var _ReferencePanelView = __webpack_require__(191);
 	
 	var _ReferencePanelView2 = _interopRequireDefault(_ReferencePanelView);
 	
-	var _DefaultReferenceModel = __webpack_require__(87);
+	var _DefaultReferenceModel = __webpack_require__(90);
 	
 	var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 	
-	var _ReferenceListItemView = __webpack_require__(113);
+	var _ReferenceListItemView = __webpack_require__(114);
 	
 	var _ReferenceListItemView2 = _interopRequireDefault(_ReferenceListItemView);
 	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var classes = {};
+	var classes = {}; /**
+	                   * Developer: Stepan Burguchev
+	                   * Date: 10/13/2014
+	                   * Copyright: 2009-2016 Comindware®
+	                   *       All Rights Reserved
+	                   * Published under the MIT license
+	                   */
 	
 	var defaultOptions = {
-	    'controller': null,
-	    'showAddNewButton': false,
-	    'buttonView': _ReferenceButtonView2.default,
-	    'listItemView': _ReferenceListItemView2.default
+	    displayAttribute: 'text',
+	    controller: null,
+	    showAddNewButton: false,
+	    buttonView: _ReferenceButtonView2.default,
+	    listItemView: _ReferenceListItemView2.default
 	};
 	
 	/**
@@ -27228,8 +25743,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
 	 * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
 	 * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
+	 * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
 	 * */
-	Backbone.Form.editors.Reference = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.ReferenceEditorView.prototype */{
+	_formRepository2.default.editors.Reference = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.ReferenceEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        if (options.schema) {
 	            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -27237,18 +25753,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 	        }
 	
+	        _.bindAll(this, '__getDisplayText');
+	
 	        this.reqres = new Backbone.Wreqr.RequestResponse();
 	        this.controller = this.options.controller;
-	        this.value = this.__adjustValue(this.value);
 	        this.showAddNewButton = this.options.showAddNewButton;
 	
-	        this.reqres.setHandler('panel:open', this.onPanelOpenRequest, this);
-	        this.reqres.setHandler('value:clear', this.onValueClear, this);
-	        this.reqres.setHandler('value:set', this.onValueSet, this);
-	        this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-	        this.reqres.setHandler('filter:text', this.onFilterText, this);
-	        this.reqres.setHandler('add:new:item', this.onAddNewItem, this);
+	        this.reqres.setHandler('panel:open', this.__onPanelOpenRequest, this);
+	        this.reqres.setHandler('value:clear', this.__onValueClear, this);
+	        this.reqres.setHandler('value:set', this.__onValueSet, this);
+	        this.reqres.setHandler('value:navigate', this.__onValueNavigate, this);
+	        this.reqres.setHandler('filter:text', this.__onFilterText, this);
+	        this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
 	
+	        this.value = this.__adjustValue(this.value);
 	        this.viewModel = new Backbone.Model({
 	            button: new Backbone.Model({
 	                value: this.getValue(),
@@ -27265,6 +25783,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    },
 	
+	
 	    focusElement: null,
 	
 	    attributes: {
@@ -27280,24 +25799,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    template: _libApi.Handlebars.compile(_referenceEditor2.default),
 	
 	    setValue: function setValue(value) {
-	        value = this.__adjustValue(value);
 	        this.__value(value, false);
 	    },
-	
 	    onRender: function onRender() {
 	        // dropdown
 	        this.dropdownView = _dropdownApi2.default.factory.createDropdown({
 	            buttonView: this.options.buttonView,
 	            buttonViewOptions: {
 	                model: this.viewModel.get('button'),
-	                reqres: this.reqres
+	                reqres: this.reqres,
+	                getDisplayText: this.__getDisplayText
 	            },
 	            panelView: _ReferencePanelView2.default,
 	            panelViewOptions: {
 	                model: this.viewModel.get('panel'),
 	                reqres: this.reqres,
 	                showAddNewButton: this.showAddNewButton,
-	                listItemView: this.options.listItemView
+	                listItemView: this.options.listItemView,
+	                getDisplayText: this.__getDisplayText
 	            },
 	            panelPosition: 'down-over',
 	            autoOpen: false
@@ -27319,53 +25838,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }.bind(this));
 	        }, this);
 	    },
-	
 	    __adjustValue: function __adjustValue(value) {
 	        if (!value || !value.id) {
 	            return null;
 	        }
-	        if (value instanceof _DefaultReferenceModel2.default) {
-	            return value;
-	        }
-	        if (value instanceof Backbone.Model) {
-	            value = value.attributes;
-	        }
-	
-	        return new _DefaultReferenceModel2.default(value);
+	        return value;
 	    },
-	
 	    __value: function __value(value, triggerChange) {
 	        if (this.value === value) {
 	            return;
 	        }
-	        this.value = value;
-	        this.viewModel.get('button').set('value', value);
-	        this.viewModel.get('panel').set('value', value);
+	        this.value = this.__adjustValue(value);
+	        this.viewModel.get('button').set('value', this.value);
+	        this.viewModel.get('panel').set('value', this.value);
 	        if (triggerChange) {
 	            this.__triggerChange();
 	        }
 	    },
-	
 	    isEmptyValue: function isEmptyValue() {
 	        var value = this.getValue();
 	        return !value || _.isEmpty(value);
 	    },
-	
-	    onValueClear: function onValueClear() {
+	    __onValueClear: function __onValueClear() {
 	        this.__value(null, true);
 	    },
-	
-	    onValueSet: function onValueSet(model) {
-	        this.__value(model, true);
+	    __onValueSet: function __onValueSet(model) {
+	        this.__value(model.toJSON(), true);
 	        this.dropdownView.close();
 	        this.$el.focus();
 	    },
-	
-	    onValueNavigate: function onValueNavigate() {
+	    __onValueNavigate: function __onValueNavigate() {
 	        return this.controller.navigate(this.getValue());
 	    },
-	
-	    onFilterText: function onFilterText(options) {
+	    __onFilterText: function __onFilterText(options) {
 	        var deferred = $.Deferred();
 	        this.controller.fetch(options).then(function () {
 	            this.viewModel.get('panel').set('totalCount', this.controller.totalCount);
@@ -27373,40 +25878,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }.bind(this));
 	        return deferred.promise();
 	    },
-	
-	    onPanelOpenRequest: function onPanelOpenRequest() {
+	    __onPanelOpenRequest: function __onPanelOpenRequest() {
 	        if (this.getEnabled() && !this.getReadonly()) {
 	            this.dropdownView.open();
 	        }
 	    },
+	    __onAddNewItem: function __onAddNewItem() {
+	        var _this = this;
 	
-	    onAddNewItem: function onAddNewItem() {
-	        this.controller.addNewItem();
+	        this.controller.addNewItem(function (createdValue) {
+	            _this.dropdownView.close();
+	            if (createdValue) {
+	                _this.__value(createdValue, true);
+	            }
+	        });
 	    },
-	
+	    __getDisplayText: function __getDisplayText(value) {
+	        if (!value) {
+	            return '';
+	        }
+	        return value[this.options.displayAttribute] || '#' + value.id;
+	    },
 	    setReadonly: function setReadonly(readonly) {
+	        //noinspection Eslint
 	        _BaseLayoutEditorView2.default.prototype.__setReadonly.call(this, readonly);
 	        this.viewModel.get('button').set('readonly', this.getReadonly());
 	    },
-	
 	    setEnabled: function setEnabled(enabled) {
+	        //noinspection Eslint
 	        _BaseLayoutEditorView2.default.prototype.__setEnabled.call(this, enabled);
 	        this.viewModel.get('button').set('enabled', this.getEnabled());
 	    },
-	
 	    focus: function focus() {
 	        this.dropdownView.open();
 	    },
-	
 	    blur: function blur() {
 	        this.dropdownView.close();
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Reference;
+	exports.default = _formRepository2.default.editors.Reference;
 
 /***/ },
-/* 374 */
+/* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27425,17 +25939,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _timeEditor = __webpack_require__(738);
+	var _timeEditor = __webpack_require__(745);
 	
 	var _timeEditor2 = _interopRequireDefault(_timeEditor);
 	
-	var _BaseLayoutEditorView = __webpack_require__(31);
+	var _BaseLayoutEditorView = __webpack_require__(33);
 	
 	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 	
-	var _TimeView = __webpack_require__(179);
+	var _TimeView = __webpack_require__(187);
 	
 	var _TimeView2 = _interopRequireDefault(_TimeView);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27455,7 +25973,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
 	 * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
 	 * */
-	Backbone.Form.editors.Time = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.TimeEditorView.prototype */{
+	_formRepository2.default.editors.Time = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.TimeEditorView.prototype */{
 	    initialize: function initialize(options) {
 	        options = options || {};
 	        if (options.schema) {
@@ -27573,10 +26091,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	exports.default = Backbone.Form.editors.Time;
+	exports.default = _formRepository2.default.editors.Time;
 
 /***/ },
-/* 375 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27601,7 +26119,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _MarionetteEditorPrototype = __webpack_require__(84);
+	var _MarionetteEditorPrototype = __webpack_require__(87);
 	
 	var _MarionetteEditorPrototype2 = _interopRequireDefault(_MarionetteEditorPrototype);
 	
@@ -27610,7 +26128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Marionette.CompositeView.extend(_MarionetteEditorPrototype2.default.create(Marionette.CompositeView));
 
 /***/ },
-/* 376 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27627,11 +26145,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(37);
+	var _promise = __webpack_require__(39);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
-	var _BaseAvatarEditorController = __webpack_require__(177);
+	var _BaseAvatarEditorController = __webpack_require__(185);
 	
 	var _BaseAvatarEditorController2 = _interopRequireDefault(_BaseAvatarEditorController);
 	
@@ -27668,7 +26186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 377 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27689,11 +26207,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _listItem = __webpack_require__(696);
+	var _listItem = __webpack_require__(703);
 	
 	var _listItem2 = _interopRequireDefault(_listItem);
 	
@@ -27735,18 +26253,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 378 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Ksenia Kartvelishvili
-	 * Date: 20.04.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -27756,15 +26266,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _panel = __webpack_require__(697);
+	var _panel = __webpack_require__(704);
 	
 	var _panel2 = _interopRequireDefault(_panel);
 	
-	var _MembersListItemView = __webpack_require__(377);
+	var _MembersListItemView = __webpack_require__(384);
 	
 	var _MembersListItemView2 = _interopRequireDefault(_MembersListItemView);
 	
@@ -27772,6 +26282,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var config = {
 	    CHILD_HEIGHT: 34
+	}; /**
+	    * Developer: Ksenia Kartvelishvili
+	    * Date: 20.04.2015
+	    * Copyright: 2009-2016 Comindware®
+	    *       All Rights Reserved
+	    * Published under the MIT license
+	    */
+	
+	var classes = {
+	    EMPTY_VIEW: 'editor__common-empty-view'
 	};
 	
 	exports.default = Marionette.LayoutView.extend({
@@ -27795,6 +26315,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                childView: _MembersListItemView2.default,
 	                childViewOptions: {
 	                    reqres: this.reqres
+	                },
+	                emptyViewOptions: {
+	                    className: classes.EMPTY_VIEW
 	                },
 	                childHeight: config.CHILD_HEIGHT,
 	                height: 'auto',
@@ -27823,7 +26346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 379 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27848,7 +26371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
-	var _dateInput = __webpack_require__(699);
+	var _dateInput = __webpack_require__(706);
 	
 	var _dateInput2 = _interopRequireDefault(_dateInput);
 	
@@ -28007,7 +26530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 380 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28028,7 +26551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _datePanel = __webpack_require__(700);
+	var _datePanel = __webpack_require__(707);
 	
 	var _datePanel2 = _interopRequireDefault(_datePanel);
 	
@@ -28113,7 +26636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 381 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28134,7 +26657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _timeInput = __webpack_require__(702);
+	var _timeInput = __webpack_require__(709);
 	
 	var _timeInput2 = _interopRequireDefault(_timeInput);
 	
@@ -28299,7 +26822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 382 */
+/* 389 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28320,11 +26843,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _VirtualCollection = __webpack_require__(71);
+	var _VirtualCollection = __webpack_require__(73);
 	
 	var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 	
-	var _HighlightableBehavior = __webpack_require__(83);
+	var _HighlightableBehavior = __webpack_require__(86);
 	
 	var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 	
@@ -28337,7 +26860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 383 */
+/* 390 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28358,11 +26881,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _defaultDropdownListItem = __webpack_require__(703);
+	var _defaultDropdownListItem = __webpack_require__(710);
 	
 	var _defaultDropdownListItem2 = _interopRequireDefault(_defaultDropdownListItem);
 	
@@ -28411,7 +26934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 384 */
+/* 391 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28430,7 +26953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownButton = __webpack_require__(704);
+	var _dropdownButton = __webpack_require__(711);
 	
 	var _dropdownButton2 = _interopRequireDefault(_dropdownButton);
 	
@@ -28483,7 +27006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 385 */
+/* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28502,19 +27025,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownPanel = __webpack_require__(705);
+	var _dropdownPanel = __webpack_require__(712);
 	
 	var _dropdownPanel2 = _interopRequireDefault(_dropdownPanel);
 	
-	var _DefaultDropdownListItemView = __webpack_require__(383);
+	var _DefaultDropdownListItemView = __webpack_require__(390);
 	
 	var _DefaultDropdownListItemView2 = _interopRequireDefault(_DefaultDropdownListItemView);
 	
-	var _DropdownCollection = __webpack_require__(382);
+	var _DropdownCollection = __webpack_require__(389);
 	
 	var _DropdownCollection2 = _interopRequireDefault(_DropdownCollection);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -28525,6 +27048,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var config = {
 	    CHILD_HEIGHT: 34,
 	    MAX_HEIGHT: 410
+	};
+	
+	var classes = {
+	    EMPTY_VIEW: 'editor__common-empty-view'
 	};
 	
 	exports.default = Marionette.LayoutView.extend({
@@ -28599,6 +27126,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                childViewOptions: {
 	                    reqres: this.reqres,
 	                    displayAttribute: this.model.get('displayAttribute')
+	                },
+	                emptyViewOptions: {
+	                    className: classes.EMPTY_VIEW
 	                },
 	                maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
 	                height: 'auto',
@@ -28677,7 +27207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 386 */
+/* 393 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28696,11 +27226,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
-	var _defaultButton = __webpack_require__(706);
+	var _defaultButton = __webpack_require__(713);
 	
 	var _defaultButton2 = _interopRequireDefault(_defaultButton);
 	
@@ -28776,7 +27306,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 387 */
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28797,11 +27327,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _listItem = __webpack_require__(707);
+	var _listItem = __webpack_require__(714);
 	
 	var _listItem2 = _interopRequireDefault(_listItem);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -28833,7 +27363,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __getText: function __getText() {
-	        return this.model.get('fullName') || this.model.get('userName');
+	        return this.model.get('name') || this.model.get('userName');
 	    },
 	
 	    onHighlighted: function onHighlighted(fragment) {
@@ -28855,7 +27385,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 388 */
+/* 395 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28874,21 +27404,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _panel = __webpack_require__(708);
+	var _panel = __webpack_require__(715);
 	
 	var _panel2 = _interopRequireDefault(_panel);
 	
-	var _ListItemView = __webpack_require__(387);
+	var _ListItemView = __webpack_require__(394);
 	
 	var _ListItemView2 = _interopRequireDefault(_ListItemView);
 	
@@ -28897,6 +27427,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var config = {
 	    CHILD_HEIGHT: 34,
 	    TEXT_FETCH_DELAY: 300
+	};
+	
+	var classes = {
+	    EMPTY_VIEW: 'editor__common-empty-view'
 	};
 	
 	exports.default = Marionette.LayoutView.extend({
@@ -28947,6 +27481,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                childView: _ListItemView2.default,
 	                childViewOptions: {
 	                    reqres: this.reqres
+	                },
+	                emptyViewOptions: {
+	                    className: classes.EMPTY_VIEW
 	                },
 	                childHeight: config.CHILD_HEIGHT,
 	                height: 'auto',
@@ -29016,7 +27553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 389 */
+/* 396 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29035,7 +27572,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _bubble = __webpack_require__(709);
+	var _bubble = __webpack_require__(716);
 	
 	var _bubble2 = _interopRequireDefault(_bubble);
 	
@@ -29092,7 +27629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 390 */
+/* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29111,19 +27648,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _button = __webpack_require__(710);
+	var _button = __webpack_require__(717);
 	
 	var _button2 = _interopRequireDefault(_button);
 	
-	var _BubbleView = __webpack_require__(389);
+	var _BubbleView = __webpack_require__(396);
 	
 	var _BubbleView2 = _interopRequireDefault(_BubbleView);
 	
-	var _InputView = __webpack_require__(391);
+	var _InputView = __webpack_require__(398);
 	
 	var _InputView2 = _interopRequireDefault(_InputView);
 	
-	var _FakeInputModel = __webpack_require__(180);
+	var _FakeInputModel = __webpack_require__(188);
 	
 	var _FakeInputModel2 = _interopRequireDefault(_FakeInputModel);
 	
@@ -29207,7 +27744,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 391 */
+/* 398 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29232,7 +27769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
-	var _input = __webpack_require__(711);
+	var _input = __webpack_require__(718);
 	
 	var _input2 = _interopRequireDefault(_input);
 	
@@ -29380,7 +27917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 392 */
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29401,7 +27938,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _multiSelectButton = __webpack_require__(712);
+	var _multiSelectButton = __webpack_require__(719);
 	
 	var _multiSelectButton2 = _interopRequireDefault(_multiSelectButton);
 	
@@ -29459,7 +27996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 393 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29476,13 +28013,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _multiSelectItem = __webpack_require__(713);
+	var _multiSelectItem = __webpack_require__(720);
 	
 	var _multiSelectItem2 = _interopRequireDefault(_multiSelectItem);
 	
@@ -29533,7 +28070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 394 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29554,15 +28091,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _multiSelectPanel = __webpack_require__(714);
+	var _multiSelectPanel = __webpack_require__(721);
 	
 	var _multiSelectPanel2 = _interopRequireDefault(_multiSelectPanel);
 	
-	var _MultiSelectItemView = __webpack_require__(393);
+	var _MultiSelectItemView = __webpack_require__(400);
 	
 	var _MultiSelectItemView2 = _interopRequireDefault(_MultiSelectItemView);
 	
@@ -29626,7 +28163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 395 */
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29647,11 +28184,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _SelectableBehavior = __webpack_require__(43);
+	var _SelectableBehavior = __webpack_require__(45);
 	
 	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
 	
-	var _RadioButtonModel = __webpack_require__(396);
+	var _RadioButtonModel = __webpack_require__(403);
 	
 	var _RadioButtonModel2 = _interopRequireDefault(_RadioButtonModel);
 	
@@ -29666,7 +28203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 396 */
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29687,7 +28224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _SelectableBehavior = __webpack_require__(43);
+	var _SelectableBehavior = __webpack_require__(45);
 	
 	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
 	
@@ -29700,7 +28237,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 397 */
+/* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29719,7 +28256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _radioButton = __webpack_require__(715);
+	var _radioButton = __webpack_require__(722);
 	
 	var _radioButton2 = _interopRequireDefault(_radioButton);
 	
@@ -29733,9 +28270,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    focusElement: null,
 	
-	    attributes: {
-	        'tabindex': '0'
+	    attributes: function attributes() {
+	        return {
+	            title: this.model && this.model.get('title') || null,
+	            tabindex: '0'
+	        };
 	    },
+	
 	
 	    initialize: function initialize(options) {
 	        this.enabled = options.enabled;
@@ -29783,18 +28324,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 398 */
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/4/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -29804,15 +28337,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _HighlightableBehavior = __webpack_require__(83);
+	var _HighlightableBehavior = __webpack_require__(86);
 	
 	var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 	
-	var _SelectableBehavior = __webpack_require__(43);
+	var _SelectableBehavior = __webpack_require__(45);
 	
 	var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
 	
-	var _DefaultReferenceModel = __webpack_require__(87);
+	var _DefaultReferenceModel = __webpack_require__(90);
 	
 	var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 	
@@ -29820,7 +28353,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var defaultOptions = {
 	    DEFAULT_COUNT: 200
-	};
+	}; /**
+	    * Developer: Stepan Burguchev
+	    * Date: 12/4/2014
+	    * Copyright: 2009-2016 Comindware®
+	    *       All Rights Reserved
+	    * Published under the MIT license
+	    */
 	
 	exports.default = Backbone.Collection.extend({
 	    constructor: function constructor() {
@@ -29828,7 +28367,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _.extend(this, new _HighlightableBehavior2.default(this));
 	        _.extend(this, new _SelectableBehavior2.default.SingleSelect(this));
 	    },
-	
 	    fetch: function fetch(options) {
 	        _utilsApi.helpers.ensureOption(options, 'data.filter');
 	        if (options.data.count === undefined) {
@@ -29839,11 +28377,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        return Backbone.Collection.prototype.fetch.call(this, options);
 	    },
-	
 	    parse: function parse(response, options) {
 	        this.totalCount = response.totalCount;
 	        return Backbone.Collection.prototype.parse.call(this, response.options, options);
 	    },
+	
 	
 	    model: _DefaultReferenceModel2.default,
 	
@@ -29851,9 +28389,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 399 */
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	__webpack_require__(1);
+	
+	var _BaseReferenceEditorController = __webpack_require__(189);
+	
+	var _BaseReferenceEditorController2 = _interopRequireDefault(_BaseReferenceEditorController);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	/**
 	 * Developer: Stepan Burguchev
 	 * Date: 3/20/2015
@@ -29862,39 +28414,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Published under the MIT license
 	 */
 	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	__webpack_require__(1);
-	
-	var _BaseReferenceEditorController = __webpack_require__(181);
-	
-	var _BaseReferenceEditorController2 = _interopRequireDefault(_BaseReferenceEditorController);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	exports.default = _BaseReferenceEditorController2.default.extend({
-	    navigate: function navigate(model) {
+	    navigate: function navigate(value) {
 	        return false;
 	    }
 	});
 
 /***/ },
-/* 400 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 12/10/2014
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -29904,15 +28434,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
-	var _DefaultReferenceModel = __webpack_require__(87);
+	var _DefaultReferenceModel = __webpack_require__(90);
 	
 	var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * Developer: Stepan Burguchev
+	 * Date: 12/10/2014
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 * Published under the MIT license
+	 */
 	
 	var config = {
 	    DEFAULT_COUNT: 200
@@ -29923,7 +28461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var id = 'task.' + (i + 1);
 	        return {
 	            id: id,
-	            text: 'Test Reference ' + (i + 1)
+	            text: 'Test Reference ' + i + '1'
 	        };
 	    });
 	};
@@ -29942,6 +28480,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var deferred = $.Deferred();
 	        var promise = deferred.promise();
 	        setTimeout(function () {
+	            var _this = this;
+	
 	            if (promise !== this.fetchPromise) {
 	                deferred.reject();
 	                return;
@@ -29949,18 +28489,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this.collection.reset(createDemoData());
 	            if (options.text) {
-	                var filterText = options.text.trim().toUpperCase();
-	                if (filterText) {
-	                    this.collection.filter(function (model) {
-	                        var text = model.get('text');
-	                        if (!text) {
-	                            return false;
-	                        }
-	                        return text.toUpperCase().indexOf(filterText) !== -1;
-	                    });
-	                } else {
-	                    this.collection.filter(null);
-	                }
+	                (function () {
+	                    var filterText = options.text.trim().toUpperCase();
+	                    if (filterText) {
+	                        _this.collection.filter(function (model) {
+	                            var text = model.get('text');
+	                            if (!text) {
+	                                return false;
+	                            }
+	                            return text.toUpperCase().indexOf(filterText) !== -1;
+	                        });
+	                    } else {
+	                        _this.collection.filter(null);
+	                    }
+	                })();
 	            } else {
 	                this.collection.filter(null);
 	            }
@@ -29973,13 +28515,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this.fetchPromise;
 	    },
 	
-	    navigate: function navigate(model) {
+	    navigate: function navigate(value) {
 	        _utilsApi.helpers.throwError('Not Implemented.', 'NotImplementedError');
 	    }
 	});
 
 /***/ },
-/* 401 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30003,11 +28545,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _addNewButton = __webpack_require__(716);
+	var _addNewButton = __webpack_require__(723);
 	
 	var _addNewButton2 = _interopRequireDefault(_addNewButton);
 	
-	var _listApi = __webpack_require__(14);
+	var _listApi = __webpack_require__(15);
 	
 	var _listApi2 = _interopRequireDefault(_listApi);
 	
@@ -30033,7 +28575,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 402 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30044,11 +28586,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _ReferenceButtonView = __webpack_require__(112);
+	var _ReferenceButtonView = __webpack_require__(113);
 	
 	var _ReferenceButtonView2 = _interopRequireDefault(_ReferenceButtonView);
 	
-	var _userReferenceButton = __webpack_require__(721);
+	var _userReferenceButton = __webpack_require__(728);
 	
 	var _userReferenceButton2 = _interopRequireDefault(_userReferenceButton);
 	
@@ -30062,7 +28604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    templateHelpers: function templateHelpers() {
 	        var value = this.model.get('value');
 	        return {
-	            text: value && (value.get('text') || '#' + value.id) || '',
+	            text: this.options.getDisplayText(value),
 	            avatarUrl: value && value.get('avatarUrl'),
 	            abbreviation: value && value.get('abbreviation')
 	        };
@@ -30080,7 +28622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 403 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30089,11 +28631,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _ReferenceListItemView = __webpack_require__(113);
+	var _ReferenceListItemView = __webpack_require__(114);
 	
 	var _ReferenceListItemView2 = _interopRequireDefault(_ReferenceListItemView);
 	
-	var _userReferenceListItem = __webpack_require__(722);
+	var _userReferenceListItem = __webpack_require__(729);
 	
 	var _userReferenceListItem2 = _interopRequireDefault(_userReferenceListItem);
 	
@@ -30106,7 +28648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 404 */
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30133,7 +28675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 405 */
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30150,17 +28692,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		value: true
 	});
 	
-	var _InfoButton_Normal = __webpack_require__(741);
+	var _InfoButton_Normal = __webpack_require__(747);
 	
 	var _InfoButton_Normal2 = _interopRequireDefault(_InfoButton_Normal);
 	
-	var _InfoButton_Error = __webpack_require__(740);
+	var _InfoButton_Error = __webpack_require__(746);
 	
 	var _InfoButton_Error2 = _interopRequireDefault(_InfoButton_Error);
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _dropdownApi = __webpack_require__(17);
+	var _dropdownApi = __webpack_require__(18);
 	
 	var _dropdownApi2 = _interopRequireDefault(_dropdownApi);
 	
@@ -30186,7 +28728,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 406 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30224,9 +28766,186 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 407 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.behaviors = exports.fields = exports.editors = undefined;
+	
+	var _BackboneFormBehavior = __webpack_require__(366);
+	
+	var _BackboneFormBehavior2 = _interopRequireDefault(_BackboneFormBehavior);
+	
+	var _FieldView = __webpack_require__(192);
+	
+	var _FieldView2 = _interopRequireDefault(_FieldView);
+	
+	var _BaseItemEditorView = __webpack_require__(50);
+	
+	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
+	
+	var _BaseLayoutEditorView = __webpack_require__(33);
+	
+	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
+	
+	var _BaseCollectionEditorView = __webpack_require__(184);
+	
+	var _BaseCollectionEditorView2 = _interopRequireDefault(_BaseCollectionEditorView);
+	
+	var _BaseCompositeEditorView = __webpack_require__(382);
+	
+	var _BaseCompositeEditorView2 = _interopRequireDefault(_BaseCompositeEditorView);
+	
+	var _BooleanEditorView = __webpack_require__(368);
+	
+	var _BooleanEditorView2 = _interopRequireDefault(_BooleanEditorView);
+	
+	var _NumberEditorView = __webpack_require__(377);
+	
+	var _NumberEditorView2 = _interopRequireDefault(_NumberEditorView);
+	
+	var _TextAreaEditorView = __webpack_require__(182);
+	
+	var _TextAreaEditorView2 = _interopRequireDefault(_TextAreaEditorView);
+	
+	var _TextEditorView = __webpack_require__(183);
+	
+	var _TextEditorView2 = _interopRequireDefault(_TextEditorView);
+	
+	var _PasswordEditorView = __webpack_require__(378);
+	
+	var _PasswordEditorView2 = _interopRequireDefault(_PasswordEditorView);
+	
+	var _ReferenceEditorView = __webpack_require__(380);
+	
+	var _ReferenceEditorView2 = _interopRequireDefault(_ReferenceEditorView);
+	
+	var _MemberSelectEditorView = __webpack_require__(373);
+	
+	var _MemberSelectEditorView2 = _interopRequireDefault(_MemberSelectEditorView);
+	
+	var _DropdownEditorView = __webpack_require__(371);
+	
+	var _DropdownEditorView2 = _interopRequireDefault(_DropdownEditorView);
+	
+	var _MembersBubbleEditorView = __webpack_require__(374);
+	
+	var _MembersBubbleEditorView2 = _interopRequireDefault(_MembersBubbleEditorView);
+	
+	var _DurationEditorView = __webpack_require__(372);
+	
+	var _DurationEditorView2 = _interopRequireDefault(_DurationEditorView);
+	
+	var _RadioGroupEditorView = __webpack_require__(379);
+	
+	var _RadioGroupEditorView2 = _interopRequireDefault(_RadioGroupEditorView);
+	
+	var _DateEditorView = __webpack_require__(369);
+	
+	var _DateEditorView2 = _interopRequireDefault(_DateEditorView);
+	
+	var _TimeEditorView = __webpack_require__(381);
+	
+	var _TimeEditorView2 = _interopRequireDefault(_TimeEditorView);
+	
+	var _DateTimeEditorView = __webpack_require__(370);
+	
+	var _DateTimeEditorView2 = _interopRequireDefault(_DateTimeEditorView);
+	
+	var _MentionEditorView = __webpack_require__(375);
+	
+	var _MentionEditorView2 = _interopRequireDefault(_MentionEditorView);
+	
+	var _MultiSelectEditorView = __webpack_require__(376);
+	
+	var _MultiSelectEditorView2 = _interopRequireDefault(_MultiSelectEditorView);
+	
+	var _AvatarEditorView = __webpack_require__(367);
+	
+	var _AvatarEditorView2 = _interopRequireDefault(_AvatarEditorView);
+	
+	var _factory = __webpack_require__(112);
+	
+	var _factory2 = _interopRequireDefault(_factory);
+	
+	var _MembersCollection = __webpack_require__(88);
+	
+	var _MembersCollection2 = _interopRequireDefault(_MembersCollection);
+	
+	var _MemberModel = __webpack_require__(89);
+	
+	var _MemberModel2 = _interopRequireDefault(_MemberModel);
+	
+	var _BaseAvatarEditorController = __webpack_require__(185);
+	
+	var _BaseAvatarEditorController2 = _interopRequireDefault(_BaseAvatarEditorController);
+	
+	var _DemoAvatarEditorController = __webpack_require__(383);
+	
+	var _DemoAvatarEditorController2 = _interopRequireDefault(_DemoAvatarEditorController);
+	
+	var _DemoReferenceEditorController = __webpack_require__(407);
+	
+	var _DemoReferenceEditorController2 = _interopRequireDefault(_DemoReferenceEditorController);
+	
+	var _DataSourceReferenceEditorController = __webpack_require__(406);
+	
+	var _DataSourceReferenceEditorController2 = _interopRequireDefault(_DataSourceReferenceEditorController);
+	
+	var _BaseReferenceEditorController = __webpack_require__(189);
+	
+	var _BaseReferenceEditorController2 = _interopRequireDefault(_BaseReferenceEditorController);
+	
+	var _BaseReferenceCollection = __webpack_require__(405);
+	
+	var _BaseReferenceCollection2 = _interopRequireDefault(_BaseReferenceCollection);
+	
+	var _DefaultReferenceModel = __webpack_require__(90);
+	
+	var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
+	
+	var _ReferenceListItemView = __webpack_require__(114);
+	
+	var _ReferenceListItemView2 = _interopRequireDefault(_ReferenceListItemView);
+	
+	var _UserReferenceListItemView = __webpack_require__(410);
+	
+	var _UserReferenceListItemView2 = _interopRequireDefault(_UserReferenceListItemView);
+	
+	var _LoadingView = __webpack_require__(190);
+	
+	var _LoadingView2 = _interopRequireDefault(_LoadingView);
+	
+	var _ReferenceButtonView = __webpack_require__(113);
+	
+	var _ReferenceButtonView2 = _interopRequireDefault(_ReferenceButtonView);
+	
+	var _UserReferenceButtonView = __webpack_require__(409);
+	
+	var _UserReferenceButtonView2 = _interopRequireDefault(_UserReferenceButtonView);
+	
+	var _ReferencePanelView = __webpack_require__(191);
+	
+	var _ReferencePanelView2 = _interopRequireDefault(_ReferencePanelView);
+	
+	__webpack_require__(418);
+	
+	__webpack_require__(415);
+	
+	__webpack_require__(416);
+	
+	__webpack_require__(417);
+	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	/**
 	 * Developer: Stepan Burguchev
 	 * Date: 10/13/2014
@@ -30235,185 +28954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Published under the MIT license
 	 */
 	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.ExtendedForm = exports.behaviors = exports.fields = exports.editors = undefined;
-	
-	var _BackboneFormBehavior = __webpack_require__(359);
-	
-	var _BackboneFormBehavior2 = _interopRequireDefault(_BackboneFormBehavior);
-	
-	var _CommonField = __webpack_require__(184);
-	
-	var _CommonField2 = _interopRequireDefault(_CommonField);
-	
-	var _BaseItemEditorView = __webpack_require__(50);
-	
-	var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
-	
-	var _BaseLayoutEditorView = __webpack_require__(31);
-	
-	var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
-	
-	var _BaseCollectionEditorView = __webpack_require__(176);
-	
-	var _BaseCollectionEditorView2 = _interopRequireDefault(_BaseCollectionEditorView);
-	
-	var _BaseCompositeEditorView = __webpack_require__(375);
-	
-	var _BaseCompositeEditorView2 = _interopRequireDefault(_BaseCompositeEditorView);
-	
-	var _ExtendedForm = __webpack_require__(173);
-	
-	var _ExtendedForm2 = _interopRequireDefault(_ExtendedForm);
-	
-	var _BooleanEditorView = __webpack_require__(361);
-	
-	var _BooleanEditorView2 = _interopRequireDefault(_BooleanEditorView);
-	
-	var _NumberEditorView = __webpack_require__(370);
-	
-	var _NumberEditorView2 = _interopRequireDefault(_NumberEditorView);
-	
-	var _TextAreaEditorView = __webpack_require__(174);
-	
-	var _TextAreaEditorView2 = _interopRequireDefault(_TextAreaEditorView);
-	
-	var _TextEditorView = __webpack_require__(175);
-	
-	var _TextEditorView2 = _interopRequireDefault(_TextEditorView);
-	
-	var _PasswordEditorView = __webpack_require__(371);
-	
-	var _PasswordEditorView2 = _interopRequireDefault(_PasswordEditorView);
-	
-	var _ReferenceEditorView = __webpack_require__(373);
-	
-	var _ReferenceEditorView2 = _interopRequireDefault(_ReferenceEditorView);
-	
-	var _MemberSelectEditorView = __webpack_require__(366);
-	
-	var _MemberSelectEditorView2 = _interopRequireDefault(_MemberSelectEditorView);
-	
-	var _DropdownEditorView = __webpack_require__(364);
-	
-	var _DropdownEditorView2 = _interopRequireDefault(_DropdownEditorView);
-	
-	var _MembersBubbleEditorView = __webpack_require__(367);
-	
-	var _MembersBubbleEditorView2 = _interopRequireDefault(_MembersBubbleEditorView);
-	
-	var _DurationEditorView = __webpack_require__(365);
-	
-	var _DurationEditorView2 = _interopRequireDefault(_DurationEditorView);
-	
-	var _RadioGroupEditorView = __webpack_require__(372);
-	
-	var _RadioGroupEditorView2 = _interopRequireDefault(_RadioGroupEditorView);
-	
-	var _DateEditorView = __webpack_require__(362);
-	
-	var _DateEditorView2 = _interopRequireDefault(_DateEditorView);
-	
-	var _TimeEditorView = __webpack_require__(374);
-	
-	var _TimeEditorView2 = _interopRequireDefault(_TimeEditorView);
-	
-	var _DateTimeEditorView = __webpack_require__(363);
-	
-	var _DateTimeEditorView2 = _interopRequireDefault(_DateTimeEditorView);
-	
-	var _MentionEditorView = __webpack_require__(368);
-	
-	var _MentionEditorView2 = _interopRequireDefault(_MentionEditorView);
-	
-	var _MultiSelectEditorView = __webpack_require__(369);
-	
-	var _MultiSelectEditorView2 = _interopRequireDefault(_MultiSelectEditorView);
-	
-	var _AvatarEditorView = __webpack_require__(360);
-	
-	var _AvatarEditorView2 = _interopRequireDefault(_AvatarEditorView);
-	
-	var _factory = __webpack_require__(111);
-	
-	var _factory2 = _interopRequireDefault(_factory);
-	
-	var _MembersCollection = __webpack_require__(85);
-	
-	var _MembersCollection2 = _interopRequireDefault(_MembersCollection);
-	
-	var _MemberModel = __webpack_require__(86);
-	
-	var _MemberModel2 = _interopRequireDefault(_MemberModel);
-	
-	var _BaseAvatarEditorController = __webpack_require__(177);
-	
-	var _BaseAvatarEditorController2 = _interopRequireDefault(_BaseAvatarEditorController);
-	
-	var _DemoAvatarEditorController = __webpack_require__(376);
-	
-	var _DemoAvatarEditorController2 = _interopRequireDefault(_DemoAvatarEditorController);
-	
-	var _DemoReferenceEditorController = __webpack_require__(400);
-	
-	var _DemoReferenceEditorController2 = _interopRequireDefault(_DemoReferenceEditorController);
-	
-	var _DataSourceReferenceEditorController = __webpack_require__(399);
-	
-	var _DataSourceReferenceEditorController2 = _interopRequireDefault(_DataSourceReferenceEditorController);
-	
-	var _BaseReferenceEditorController = __webpack_require__(181);
-	
-	var _BaseReferenceEditorController2 = _interopRequireDefault(_BaseReferenceEditorController);
-	
-	var _BaseReferenceCollection = __webpack_require__(398);
-	
-	var _BaseReferenceCollection2 = _interopRequireDefault(_BaseReferenceCollection);
-	
-	var _DefaultReferenceModel = __webpack_require__(87);
-	
-	var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
-	
-	var _ReferenceListItemView = __webpack_require__(113);
-	
-	var _ReferenceListItemView2 = _interopRequireDefault(_ReferenceListItemView);
-	
-	var _UserReferenceListItemView = __webpack_require__(403);
-	
-	var _UserReferenceListItemView2 = _interopRequireDefault(_UserReferenceListItemView);
-	
-	var _LoadingView = __webpack_require__(182);
-	
-	var _LoadingView2 = _interopRequireDefault(_LoadingView);
-	
-	var _ReferenceButtonView = __webpack_require__(112);
-	
-	var _ReferenceButtonView2 = _interopRequireDefault(_ReferenceButtonView);
-	
-	var _UserReferenceButtonView = __webpack_require__(402);
-	
-	var _UserReferenceButtonView2 = _interopRequireDefault(_UserReferenceButtonView);
-	
-	var _ReferencePanelView = __webpack_require__(183);
-	
-	var _ReferencePanelView2 = _interopRequireDefault(_ReferencePanelView);
-	
-	__webpack_require__(411);
-	
-	__webpack_require__(408);
-	
-	__webpack_require__(409);
-	
-	__webpack_require__(410);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	var api = /** @lends module:core.form */{
-	    ExtendedForm: _ExtendedForm2.default,
 	    /**
 	     * Marionette.Behavior classes useful with Backbone.Form.
 	     * @namespace
@@ -30422,12 +28963,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        BackboneFormBehavior: _BackboneFormBehavior2.default
 	    },
 	    /**
+	     * Repository that is used when an editor or validator is declared as string in form schema.
+	     * @namespace
+	     * */
+	    repository: _formRepository2.default,
+	    /**
 	     * Extended version of Backbone.Form.Field which is able to display validation errors and information tooltips.
 	     * @namespace
 	     * */
-	    fields: {
-	        CommonField: _CommonField2.default
-	    },
+	    Field: _FieldView2.default,
 	    /**
 	     * A lot of editors
 	     * @namespace
@@ -30522,10 +29066,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var editors = exports.editors = api.editors;
 	var fields = exports.fields = api.fields;
 	var behaviors = exports.behaviors = api.behaviors;
-	var ExtendedForm = exports.ExtendedForm = api.ExtendedForm;
 
 /***/ },
-/* 408 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30548,9 +29091,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	Backbone.Form.validators.length = function (options) {
+	_formRepository2.default.validators.length = function (options) {
 	    options = _.extend({
 	        type: 'length',
 	        message: _LocalizationService2.default.get('CORE.FORM.VALIDATION.LENGTH')
@@ -30580,21 +29127,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 	
-	exports.default = Backbone.Form.validators.length;
+	exports.default = _formRepository2.default.validators.length;
 
 /***/ },
-/* 409 */
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Developer: Stepan Burguchev
-	 * Date: 1/26/2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -30606,22 +29145,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	Backbone.Form.validators.password = function (options) {
+	_formRepository2.default.validators.password = function (options) {
 	    options = _.extend({
 	        type: 'length',
 	        message: _LocalizationService2.default.get('CORE.FORM.VALIDATION.PASSWORD'),
 	        min: 8
 	    }, options);
 	
-	    return Backbone.Form.validators.length(options);
-	};
+	    return _formRepository2.default.validators.length(options);
+	}; /**
+	    * Developer: Stepan Burguchev
+	    * Date: 1/26/2015
+	    * Copyright: 2009-2016 Comindware®
+	    *       All Rights Reserved
+	    * Published under the MIT license
+	    */
 	
-	exports.default = Backbone.Form.validators.password;
+	exports.default = _formRepository2.default.validators.password;
 
 /***/ },
-/* 410 */
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30644,22 +29193,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	Backbone.Form.validators.phone = function (options) {
+	_formRepository2.default.validators.phone = function (options) {
 	    options = _.extend({
 	        type: 'phone',
 	        message: _LocalizationService2.default.get('CORE.FORM.VALIDATION.PHONE'),
 	        regexp: /^\+?[0-9]+[0-9\-().\s]{7,}$/
 	    }, options);
 	
-	    return Backbone.Form.validators.regexp(options);
+	    return _formRepository2.default.validators.regexp(options);
 	};
 	
-	exports.default = Backbone.Form.validators.phone;
+	exports.default = _formRepository2.default.validators.phone;
 
 /***/ },
-/* 411 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30682,9 +29235,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
+	var _formRepository = __webpack_require__(11);
+	
+	var _formRepository2 = _interopRequireDefault(_formRepository);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	Backbone.Form.validators.required = function (options) {
+	_formRepository2.default.validators.required = function (options) {
 	    options = _.extend({
 	        type: 'required',
 	        message: _LocalizationService2.default.get('CORE.FORM.VALIDATION.REQUIRED')
@@ -30707,10 +29264,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 	
-	exports.default = Backbone.Form.validators.required;
+	exports.default = _formRepository2.default.validators.required;
 
 /***/ },
-/* 412 */
+/* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
@@ -31016,7 +29573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}).call(undefined);
 
 /***/ },
-/* 413 */
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31033,7 +29590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _Meta = __webpack_require__(108);
+	var _Meta = __webpack_require__(109);
 	
 	var _utilsApi = __webpack_require__(4);
 	
@@ -31226,7 +29783,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = factory;
 
 /***/ },
-/* 414 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31245,35 +29802,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _VirtualCollection = __webpack_require__(71);
+	var _VirtualCollection = __webpack_require__(73);
 	
 	var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 	
-	var _ListView = __webpack_require__(115);
+	var _ListView = __webpack_require__(116);
 	
 	var _ListView2 = _interopRequireDefault(_ListView);
 	
-	var _ScrollbarView = __webpack_require__(191);
+	var _ScrollbarView = __webpack_require__(199);
 	
 	var _ScrollbarView2 = _interopRequireDefault(_ScrollbarView);
 	
-	var _EmptyListView = __webpack_require__(188);
+	var _EmptyListView = __webpack_require__(196);
 	
 	var _EmptyListView2 = _interopRequireDefault(_EmptyListView);
 	
-	var _EmptyGridView = __webpack_require__(187);
+	var _EmptyGridView = __webpack_require__(195);
 	
 	var _EmptyGridView2 = _interopRequireDefault(_EmptyGridView);
 	
-	var _EventAggregator = __webpack_require__(185);
+	var _EventAggregator = __webpack_require__(193);
 	
 	var _EventAggregator2 = _interopRequireDefault(_EventAggregator);
 	
-	var _GridView = __webpack_require__(189);
+	var _GridView = __webpack_require__(197);
 	
 	var _GridView2 = _interopRequireDefault(_GridView);
 	
-	var _GridColumnHeaderView = __webpack_require__(114);
+	var _GridColumnHeaderView = __webpack_require__(115);
 	
 	var _GridColumnHeaderView2 = _interopRequireDefault(_GridColumnHeaderView);
 	
@@ -31408,7 +29965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = factory;
 
 /***/ },
-/* 415 */
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31445,7 +30002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 416 */
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31464,7 +30021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _CollapsibleBehavior = __webpack_require__(192);
+	var _CollapsibleBehavior = __webpack_require__(200);
 	
 	var _CollapsibleBehavior2 = _interopRequireDefault(_CollapsibleBehavior);
 	
@@ -31483,9 +30040,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ListGroupBehavior;
 
 /***/ },
-/* 417 */
-186,
-/* 418 */
+/* 424 */
+194,
+/* 425 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31504,7 +30061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _loadingRow = __webpack_require__(745);
+	var _loadingRow = __webpack_require__(752);
 	
 	var _loadingRow2 = _interopRequireDefault(_loadingRow);
 	
@@ -31526,7 +30083,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 419 */
+/* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31586,7 +30143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ListGroupViewBehavior;
 
 /***/ },
-/* 420 */
+/* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31692,7 +30249,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 421 */
+/* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31711,11 +30268,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _NativeGridView = __webpack_require__(194);
+	var _NativeGridView = __webpack_require__(203);
 	
 	var _NativeGridView2 = _interopRequireDefault(_NativeGridView);
 	
-	var _VirtualCollection = __webpack_require__(71);
+	var _VirtualCollection = __webpack_require__(73);
 	
 	var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 	
@@ -31753,7 +30310,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} options.gridViewOptions Опции списка
 	     * @param {Object} [options.gridViewOptions.selectableBehavior] Выбора элементов в списке (none/single/multi)
 	     * @param {Function} [options.onColumnSort] Обработчик oncColumnSort события
+	     * @param {Backbone.View} [options.headerView] View, используемый для отображения заголовка списка
 	     * @param {Backbone.View} [options.rowView] View строки списка
+	     * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка
 	     * @returns {Backbone.View} NativeGridView View-списка
 	     * */
 	    createNativeGrid: function createNativeGrid(options) {
@@ -31762,7 +30321,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var gridViewOptions = _.extend({
 	            collection: collection,
 	            onColumnSort: options.onColumnSort,
+	            headerView: options.headerView,
 	            rowView: options.rowView,
+	            rowViewSelector: options.rowViewSelector,
 	            emptyView: options.emptyView
 	        }, options.gridViewOptions);
 	
@@ -31771,7 +30332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 422 */
+/* 429 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31800,7 +30361,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 423 */
+/* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31819,23 +30380,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _factory = __webpack_require__(421);
+	var _factory = __webpack_require__(428);
 	
 	var _factory2 = _interopRequireDefault(_factory);
 	
-	var _filterViewFactory = __webpack_require__(422);
+	var _filterViewFactory = __webpack_require__(429);
 	
 	var _filterViewFactory2 = _interopRequireDefault(_filterViewFactory);
 	
-	var _RowView = __webpack_require__(195);
+	var _RowView = __webpack_require__(204);
 	
 	var _RowView2 = _interopRequireDefault(_RowView);
 	
-	var _HeaderView = __webpack_require__(193);
+	var _HeaderView = __webpack_require__(202);
 	
 	var _HeaderView2 = _interopRequireDefault(_HeaderView);
 	
-	var _NativeGridView = __webpack_require__(194);
+	var _ColumnHeaderView = __webpack_require__(201);
+	
+	var _ColumnHeaderView2 = _interopRequireDefault(_ColumnHeaderView);
+	
+	var _NativeGridView = __webpack_require__(203);
 	
 	var _NativeGridView2 = _interopRequireDefault(_NativeGridView);
 	
@@ -31859,12 +30424,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  views: {
 	    RowView: _RowView2.default,
 	    HeaderView: _HeaderView2.default,
+	    ColumnHeaderView: _ColumnHeaderView2.default,
 	    NativeGridView: _NativeGridView2.default
 	  }
 	};
 
 /***/ },
-/* 424 */
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31881,114 +30447,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _columnHeader = __webpack_require__(748);
-	
-	var _columnHeader2 = _interopRequireDefault(_columnHeader);
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _GridColumnHeaderView = __webpack_require__(114);
-	
-	var _GridColumnHeaderView2 = _interopRequireDefault(_GridColumnHeaderView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/**
-	 * @name ColumnHeaderView
-	 * @memberof module:core.nativeGrid.views
-	 * @class ColumnHeaderView
-	 * @constructor
-	 * @description View для отображения ячейки заголовка (шапки) списка
-	 * @extends module:core.list.views.GridColumnHeaderView {@link module:core.list.views.GridColumnHeaderView}
-	 * @param {Object} options Constructor options
-	 * @param {Array} options.columns Массив колонок
-	 * @param {} options.gridEventAggregator ?
-	 * */
-	var ColumnHeaderView = _GridColumnHeaderView2.default.extend({
-	    initialize: function initialize(options) {
-	        _GridColumnHeaderView2.default.prototype.initialize.apply(this, arguments);
-	
-	        if (this.column.filterView) {
-	            this.filterView = this.column.filterView;
-	            this.listenTo(this.model, 'change:hasFilter', this.__resolveFilterClass, this);
-	        }
-	        this.gridEventAggregator = options.gridEventAggregator;
-	    },
-	
-	    template: _libApi.Handlebars.compile(_columnHeader2.default),
-	
-	    ui: {
-	        cellContent: '.js-cell-content',
-	        filterBtn: '.js-filter-btn'
-	    },
-	
-	    events: {
-	        'click @ui.cellContent': '__handleSorting',
-	        'click @ui.filterBtn': 'showFilterPopout'
-	    },
-	
-	    __resolveFilterClass: function __resolveFilterClass() {
-	        if (!this.column.filterView) {
-	            return;
-	        }
-	
-	        var hasFilter = this.model.get('hasFilter');
-	
-	        if (hasFilter) {
-	            this.$el.addClass('has-filter');
-	        } else {
-	            this.$el.removeClass('has-filter');
-	        }
-	    },
-	
-	    showFilterPopout: function showFilterPopout(event) {
-	        event.preventDefault();
-	        event.stopPropagation();
-	        this.gridEventAggregator.trigger('showFilterView', {
-	            columnHeader: this,
-	            filterView: this.filterView,
-	            position: $(event.currentTarget).offset()
-	        });
-	    },
-	
-	    templateHelpers: function templateHelpers() {
-	        return {
-	            sortingAsc: this.column.sorting === 'asc',
-	            sortingDesc: this.column.sorting === 'desc',
-	            filterView: this.filterView !== undefined
-	        };
-	    },
-	
-	    onRender: function onRender() {
-	        this.__resolveFilterClass();
-	    }
-	});
-	
-	exports.default = ColumnHeaderView;
-
-/***/ },
-/* 425 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Developer: Grigory Kuznetsov
-	 * Date: 17.08.2015
-	 * Copyright: 2009-2016 Comindware®
-	 *       All Rights Reserved
-	 * Published under the MIT license
-	 */
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _typeof2 = __webpack_require__(120);
+	var _typeof2 = __webpack_require__(123);
 	
 	var _typeof3 = _interopRequireDefault(_typeof2);
 	
-	var _list = __webpack_require__(248);
+	var _list = __webpack_require__(256);
 	
 	var _list2 = _interopRequireDefault(_list);
 	
@@ -31996,11 +30459,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utilsApi = __webpack_require__(4);
 	
-	var _GridHeaderView = __webpack_require__(88);
+	var _GridHeaderView = __webpack_require__(91);
 	
 	var _GridHeaderView2 = _interopRequireDefault(_GridHeaderView);
 	
-	var _GlobalEventService = __webpack_require__(65);
+	var _GlobalEventService = __webpack_require__(34);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -32332,7 +30795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ListView;
 
 /***/ },
-/* 426 */
+/* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32351,7 +30814,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(1);
 	
-	var _GridItemViewBehavior = __webpack_require__(117);
+	var _GridItemViewBehavior = __webpack_require__(118);
 	
 	var _GridItemViewBehavior2 = _interopRequireDefault(_GridItemViewBehavior);
 	
@@ -32433,7 +30896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = NativeGridItemViewBehavior;
 
 /***/ },
-/* 427 */
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32444,7 +30907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Published under the MIT license
 	 */
 	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -32496,7 +30959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 428 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32515,11 +30978,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _message = __webpack_require__(751);
+	var _message = __webpack_require__(758);
 	
 	var _message2 = _interopRequireDefault(_message);
 	
-	var _WindowService = __webpack_require__(73);
+	var _WindowService = __webpack_require__(65);
 	
 	var _WindowService2 = _interopRequireDefault(_WindowService);
 	
@@ -32558,7 +31021,193 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 429 */
+/* 435 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Developer: Ksenia Kartvelishvili
+	 * Date: 9/9/2016
+	 * Copyright: 2009-2016 Comindware®
+	 *       All Rights Reserved
+	 *
+	 * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
+	 *       The copyright notice above does not evidence any
+	 *       actual or intended publication of such source code.
+	 */
+	
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _toConsumableArray2 = __webpack_require__(210);
+	
+	var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+	
+	var _libApi = __webpack_require__(1);
+	
+	var _PopupStack = __webpack_require__(759);
+	
+	var _PopupStack2 = _interopRequireDefault(_PopupStack);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var classes = {
+	    POPUP_REGION: 'js-popup-region-',
+	    POPUP_FADE: 'popup-fade'
+	};
+	
+	var POPUP_ID_PREFIX = 'popup-region-';
+	
+	exports.default = Marionette.LayoutView.extend({
+	    initialize: function initialize() {
+	        this.__stack = [];
+	        this.__forceFadeBackground = false;
+	    },
+	
+	
+	    template: _libApi.Handlebars.compile(_PopupStack2.default),
+	
+	    ui: {
+	        fadingPanel: '.js-fading-panel'
+	    },
+	
+	    showPopup: function showPopup(view, options) {
+	        var fadeBackground = options.fadeBackground;
+	        var transient = options.transient;
+	        var hostEl = options.hostEl;
+	
+	
+	        var popupId = _.uniqueId(POPUP_ID_PREFIX);
+	        var regionEl = (0, _libApi.$)('<div data-popup-id="' + popupId + '" class="js-core-ui__global-popup-region">');
+	        var parentPopupId = null;
+	        if (hostEl) {
+	            parentPopupId = (0, _libApi.$)(hostEl).closest('.js-core-ui__global-popup-region').data('popup-id') || null;
+	        }
+	        var config = {
+	            view: view,
+	            options: options,
+	            regionEl: regionEl,
+	            popupId: popupId,
+	            parentPopupId: parentPopupId
+	        };
+	
+	        if (parentPopupId) {
+	            // If there is a child popup, it must be closed:
+	            // 1. There might be nested dropdowns
+	            // 2. There can't be dropdowns opened on the same level
+	            var childPopupDef = this.__stack.find(function (x) {
+	                return x.parentPopupId === parentPopupId;
+	            });
+	            if (childPopupDef) {
+	                this.closePopup(childPopupDef.popupId);
+	            }
+	        }
+	
+	        this.$el.append(regionEl);
+	        this.addRegion(popupId, { el: regionEl });
+	        this.getRegion(popupId).show(view);
+	
+	        if (fadeBackground) {
+	            var lastFaded = _.last(this.__stack.filter(function (x) {
+	                return x.options.fadeBackground;
+	            }));
+	            if (lastFaded) {
+	                lastFaded.regionEl.removeClass(classes.POPUP_FADE);
+	            } else {
+	                this.__toggleFadedBackground(true);
+	            }
+	            regionEl.addClass(classes.POPUP_FADE);
+	        }
+	
+	        this.__stack.push(config);
+	        return popupId;
+	    },
+	    closePopup: function closePopup() {
+	        var _this = this;
+	
+	        var popupId = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	
+	        if (this.__stack.length === 0) {
+	            return;
+	        }
+	
+	        var targets = void 0;
+	        var popup = this.__stack.find(function (x) {
+	            return x.popupId === popupId;
+	        });
+	        if (popup) {
+	            (function () {
+	                // All the children of the provided popup will also be closed
+	                targets = [popup];
+	                var handleChildren = function handleChildren(pId) {
+	                    var _targets;
+	
+	                    var children = _this.__stack.filter(function (x) {
+	                        return x.parentPopupId === pId;
+	                    });
+	                    (_targets = targets).push.apply(_targets, (0, _toConsumableArray3.default)(children));
+	                    children.forEach(function (c) {
+	                        return handleChildren(c.popupId);
+	                    });
+	                };
+	                handleChildren(popupId);
+	            })();
+	        } else if (popupId) {
+	            // If we don't find the popup, it must have been closed so the job is done
+	            targets = [];
+	        } else {
+	            // We're popping the stack until we find an non-transient popup to close
+	            var index = 0;
+	            var lastNonTransient = _.last(this.__stack.filter(function (x) {
+	                return !x.options.transient;
+	            }));
+	            if (lastNonTransient) {
+	                index = this.__stack.indexOf(lastNonTransient);
+	            }
+	            targets = this.__stack.slice(index);
+	        }
+	        targets.forEach(function (popupDef) {
+	            _this.removeRegion(popupDef.popupId);
+	            popupDef.regionEl.remove();
+	            _this.__stack.splice(_this.__stack.indexOf(popupDef), 1);
+	            _this.trigger('popup:close', popupDef.popupId);
+	        });
+	
+	        var lastFaded = _.last(this.__stack.filter(function (x) {
+	            return x.options.fadeBackground;
+	        }));
+	        if (lastFaded) {
+	            lastFaded.regionEl.addClass(classes.POPUP_FADE);
+	        } else {
+	            this.__toggleFadedBackground(this.__forceFadeBackground);
+	        }
+	    },
+	    get: function get(popupId) {
+	        var index = this.__stack.findIndex(function (x) {
+	            return x.popupId === popupId;
+	        });
+	        if (index === -1) {
+	            return [];
+	        }
+	        return this.__stack.slice(index).map(function (x) {
+	            return x.view;
+	        });
+	    },
+	    fadeBackground: function fadeBackground(fade) {
+	        this.__forceFadeBackground = fade;
+	        this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find(function (x) {
+	            return x.options.fadeBackground;
+	        }));
+	    },
+	    __toggleFadedBackground: function __toggleFadedBackground(fade) {
+	        this.ui.fadingPanel.toggleClass('fadingPanel_open', fade);
+	    }
+	});
+
+/***/ },
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32576,7 +31225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.emptyComparator = exports.stringComparator1 = exports.getComparatorByDataType = exports.referenceComparator2Desc = exports.referenceComparator2Asc = exports.booleanComparator2Desc = exports.dateComparator2Desc = exports.dateComparator2Asc = exports.booleanComparator2Asc = exports.durationComparator2Desc = exports.durationComparator2Asc = exports.numberComparator2Desc = exports.numberComparator2Asc = exports.stringComparator2Desc = exports.stringComparator2Asc = undefined;
 	
-	var _Meta = __webpack_require__(108);
+	var _Meta = __webpack_require__(109);
 	
 	var _libApi = __webpack_require__(1);
 	
@@ -32891,7 +31540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 430 */
+/* 437 */
 /***/ function(module, exports) {
 
 	/**
@@ -32986,7 +31635,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 431 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33251,7 +31900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 432 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33266,43 +31915,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _debug = __webpack_require__(433);
+	var _debug = __webpack_require__(440);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
-	var _equal = __webpack_require__(434);
+	var _equal = __webpack_require__(441);
 	
 	var _equal2 = _interopRequireDefault(_equal);
 	
-	var _isNull = __webpack_require__(436);
+	var _isNull = __webpack_require__(443);
 	
 	var _isNull2 = _interopRequireDefault(_isNull);
 	
-	var _highlightFragment = __webpack_require__(435);
+	var _highlightFragment = __webpack_require__(442);
 	
 	var _highlightFragment2 = _interopRequireDefault(_highlightFragment);
 	
-	var _localize = __webpack_require__(437);
+	var _localize = __webpack_require__(444);
 	
 	var _localize2 = _interopRequireDefault(_localize);
 	
-	var _localizedText = __webpack_require__(438);
+	var _localizedText = __webpack_require__(445);
 	
 	var _localizedText2 = _interopRequireDefault(_localizedText);
 	
-	var _renderAsHtml = __webpack_require__(439);
+	var _renderAsHtml = __webpack_require__(446);
 	
 	var _renderAsHtml2 = _interopRequireDefault(_renderAsHtml);
 	
-	var _renderFullDate = __webpack_require__(440);
+	var _renderFullDate = __webpack_require__(447);
 	
 	var _renderFullDate2 = _interopRequireDefault(_renderFullDate);
 	
-	var _renderFullDateTime = __webpack_require__(441);
+	var _renderFullDateTime = __webpack_require__(448);
 	
 	var _renderFullDateTime2 = _interopRequireDefault(_renderFullDateTime);
 	
-	var _renderShortDuration = __webpack_require__(442);
+	var _renderShortDuration = __webpack_require__(449);
 	
 	var _renderShortDuration2 = _interopRequireDefault(_renderShortDuration);
 	
@@ -33320,7 +31969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	_libApi.Handlebars.registerHelper("renderShortDuration", _renderShortDuration2.default);
 
 /***/ },
-/* 433 */
+/* 440 */
 /***/ function(module, exports) {
 
 	/**
@@ -33347,7 +31996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 434 */
+/* 441 */
 /***/ function(module, exports) {
 
 	/**
@@ -33371,7 +32020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 435 */
+/* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33399,7 +32048,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 436 */
+/* 443 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33425,7 +32074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 437 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33451,7 +32100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 438 */
+/* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33477,7 +32126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 439 */
+/* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33507,7 +32156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 440 */
+/* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33529,7 +32178,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 441 */
+/* 448 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33551,7 +32200,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 442 */
+/* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33592,7 +32241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 443 */
+/* 450 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33611,7 +32260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _UserService = __webpack_require__(72);
+	var _UserService = __webpack_require__(74);
 	
 	var _UserService2 = _interopRequireDefault(_UserService);
 	
@@ -33757,7 +32406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 444 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33806,7 +32455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(jQuery);
 
 /***/ },
-/* 445 */
+/* 452 */
 /***/ function(module, exports) {
 
 	/**
@@ -33858,118 +32507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 446 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _libApi = __webpack_require__(1);
-	
-	var _FadingPanelView = __webpack_require__(200);
-	
-	var _FadingPanelView2 = _interopRequireDefault(_FadingPanelView);
-	
-	var _layerLayout = __webpack_require__(753);
-	
-	var _layerLayout2 = _interopRequireDefault(_layerLayout);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var classes = {
-	    POPUP_REGION: 'js-popup-region-',
-	    POPUP_FADE: 'popup-fade'
-	}; /**
-	    * Developer: Ksenia Kartvelishvili
-	    * Date: 9/9/2016
-	    * Copyright: 2009-2016 Comindware®
-	    *       All Rights Reserved
-	    *
-	    * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
-	    *       The copyright notice above does not evidence any
-	    *       actual or intended publication of such source code.
-	    */
-	
-	exports.default = Marionette.LayoutView.extend({
-	    initialize: function initialize() {
-	        this.popupNumber = -1;
-	        this.faded = false;
-	    },
-	
-	    template: _libApi.Handlebars.compile(_layerLayout2.default),
-	
-	    onRender: function onRender() {
-	        this.fadingPanelView = new _FadingPanelView2.default();
-	        this.fadingPopupRegion.show(this.fadingPanelView);
-	        this.listenTo(this.fadingPanelView, 'click', this.__onFadingPanelClick);
-	    },
-	
-	    regions: {
-	        fadingPopupRegion: '.js-fading-popup-region'
-	    },
-	
-	    ui: {
-	        fadingPopupRegion: '.js-fading-popup-region'
-	    },
-	
-	    showPopup: function showPopup(view) {
-	        if (this.popupNumber < 0) {
-	            this.fadeIn({
-	                fadeOut: false
-	            });
-	        } else {
-	            this.__fadePopup(true, this.popupNumber);
-	        }
-	        this.popupNumber++;
-	        var className = classes.POPUP_REGION + this.popupNumber;
-	        this.$el.append($('<div></div>').addClass(className));
-	        this.addRegion(className, '.' + className);
-	        this.getRegion(className).show(view);
-	    },
-	
-	    closePopup: function closePopup() {
-	        if (this.popupNumber < 0) {
-	            return;
-	        }
-	        if (this.popupNumber === 0) {
-	            this.fadeOut();
-	        }
-	        var className = classes.POPUP_REGION + this.popupNumber;
-	        this.removeRegion(className);
-	        this.$el.find('.' + className).remove();
-	
-	        this.popupNumber--;
-	        if (this.popupNumber >= 0) {
-	            this.__fadePopup(false, this.popupNumber);
-	        }
-	    },
-	
-	    fadeIn: function fadeIn(options) {
-	        this.fadingPanelView.fadeIn(options);
-	        this.faded = true;
-	    },
-	
-	    fadeOut: function fadeOut() {
-	        this.fadingPanelView.fadeOut();
-	        this.faded = false;
-	    },
-	
-	    __onFadingPanelClick: function __onFadingPanelClick(view, options) {
-	        if (!options || options.fadeOut !== false) {
-	            this.fadeOut();
-	        }
-	    },
-	
-	    __fadePopup: function __fadePopup(fadeIn, popupNumber) {
-	        this.$el.find('.' + classes.POPUP_REGION + popupNumber).toggleClass(classes.POPUP_FADE, fadeIn);
-	    }
-	});
-
-/***/ },
-/* 447 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33988,7 +32526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _searchBar = __webpack_require__(755);
+	var _searchBar = __webpack_require__(761);
 	
 	var _searchBar2 = _interopRequireDefault(_searchBar);
 	
@@ -34050,7 +32588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 448 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34069,11 +32607,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _libApi = __webpack_require__(1);
 	
-	var _splitPanel = __webpack_require__(756);
+	var _splitPanel = __webpack_require__(762);
 	
 	var _splitPanel2 = _interopRequireDefault(_splitPanel);
 	
-	var _GlobalEventService = __webpack_require__(65);
+	var _GlobalEventService = __webpack_require__(34);
 	
 	var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 	
@@ -34104,7 +32642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        _.bindAll(this, '__startDragging', '__stopDragging', '__handleDocumentMouseMove', '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
 	
-	        this.listenTo(_GlobalEventService2.default, 'resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
+	        this.listenTo(_GlobalEventService2.default, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
 	        this.on('render', function () {
 	            this.$el.addClass('double-panels');
 	        }.bind(this));
@@ -34212,7 +32750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 449 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34229,7 +32767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _promise = __webpack_require__(37);
+	var _promise = __webpack_require__(39);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
@@ -34239,7 +32777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 	
-	var _LoadingView = __webpack_require__(201);
+	var _LoadingView = __webpack_require__(208);
 	
 	var _LoadingView2 = _interopRequireDefault(_LoadingView);
 	
@@ -34280,16 +32818,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 450 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
 	
-	__webpack_require__(680);
+	__webpack_require__(685);
 	
-	__webpack_require__(768);
+	__webpack_require__(774);
 	
-	__webpack_require__(461);
+	__webpack_require__(467);
 	
 	if (global._babelPolyfill) {
 	  throw new Error("only one instance of babel-polyfill is allowed");
@@ -34314,31 +32852,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 451 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(463), __esModule: true };
+	module.exports = { "default": __webpack_require__(468), __esModule: true };
 
 /***/ },
-/* 452 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(464), __esModule: true };
+	module.exports = { "default": __webpack_require__(471), __esModule: true };
 
 /***/ },
-/* 453 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(466), __esModule: true };
+	module.exports = { "default": __webpack_require__(473), __esModule: true };
 
 /***/ },
-/* 454 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(467), __esModule: true };
+	module.exports = { "default": __webpack_require__(474), __esModule: true };
 
 /***/ },
-/* 455 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//
@@ -34353,7 +32891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function(root, factory) {
 	    // Set up Backbone-associations appropriately for the environment. Start with AMD.
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(49), __webpack_require__(64)], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, Backbone) {
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(72), __webpack_require__(85)], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, Backbone) {
 	            // Export global even in AMD case in case this script is loaded with
 	            // others that may still expect a global Backbone.
 	            return factory(root, Backbone, _);
@@ -35172,7 +33710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 456 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Backbone.BabySitter
@@ -35187,7 +33725,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function(root, factory) {
 	
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(64), __webpack_require__(49)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(85), __webpack_require__(72)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
 	      return factory(Backbone, _);
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== 'undefined') {
@@ -35368,7 +33906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 457 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// MarionetteJS (Backbone.Marionette)
@@ -35383,7 +33921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function(root, factory) {
 	
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(64), __webpack_require__(49), __webpack_require__(458), __webpack_require__(456)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(85), __webpack_require__(72), __webpack_require__(464), __webpack_require__(462)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
 	      return (root.Marionette = factory(root, Backbone, _));
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== 'undefined') {
@@ -38490,7 +37028,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 458 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Backbone.Wreqr (Backbone.Marionette)
@@ -38506,7 +37044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function(root, factory) {
 	
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(64), __webpack_require__(49)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(85), __webpack_require__(72)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
 	      return factory(Backbone, _);
 	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	  } else if (typeof exports !== 'undefined') {
@@ -38931,7 +37469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 459 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Backbone.js 1.1.2
@@ -38945,7 +37483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  // Set up Backbone appropriately for the environment. Start with AMD.
 	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(49), __webpack_require__(42), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(72), __webpack_require__(64), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
 	      // Export global even in AMD case in case this script is loaded with
 	      // others that may still expect a global Backbone.
 	      root.Backbone = factory(root, exports, _, $);
@@ -40545,7 +39083,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 460 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -46146,116 +44684,120 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	},{"./es5":13}]},{},[4])(4)
 	});                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(161), (function() { return this; }()), __webpack_require__(162).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(167), (function() { return this; }()), __webpack_require__(168).setImmediate))
 
 /***/ },
-/* 461 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(509);
-	module.exports = __webpack_require__(38).RegExp.escape;
+	__webpack_require__(514);
+	module.exports = __webpack_require__(41).RegExp.escape;
 
 /***/ },
-/* 462 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core  = __webpack_require__(32)
+	__webpack_require__(137);
+	__webpack_require__(498);
+	module.exports = __webpack_require__(29).Array.from;
+
+/***/ },
+/* 469 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var core  = __webpack_require__(29)
 	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
 	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
 	  return $JSON.stringify.apply($JSON, arguments);
 	};
 
 /***/ },
-/* 463 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(495);
-	module.exports = __webpack_require__(32).Object.assign;
+	__webpack_require__(500);
+	module.exports = __webpack_require__(29).Object.assign;
 
 /***/ },
-/* 464 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(496);
-	var $Object = __webpack_require__(32).Object;
+	__webpack_require__(501);
+	var $Object = __webpack_require__(29).Object;
 	module.exports = function defineProperty(it, key, desc){
 	  return $Object.defineProperty(it, key, desc);
 	};
 
 /***/ },
-/* 465 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(216);
-	__webpack_require__(217);
-	__webpack_require__(218);
-	__webpack_require__(497);
-	module.exports = __webpack_require__(32).Promise;
+	__webpack_require__(225);
+	__webpack_require__(137);
+	__webpack_require__(226);
+	__webpack_require__(502);
+	module.exports = __webpack_require__(29).Promise;
 
 /***/ },
-/* 466 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(498);
-	__webpack_require__(216);
-	__webpack_require__(499);
-	__webpack_require__(500);
-	module.exports = __webpack_require__(32).Symbol;
+	__webpack_require__(503);
+	__webpack_require__(225);
+	__webpack_require__(504);
+	__webpack_require__(505);
+	module.exports = __webpack_require__(29).Symbol;
 
 /***/ },
-/* 467 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(217);
-	__webpack_require__(218);
-	module.exports = __webpack_require__(131).f('iterator');
+	__webpack_require__(137);
+	__webpack_require__(226);
+	module.exports = __webpack_require__(136).f('iterator');
 
 /***/ },
-/* 468 */
+/* 475 */
 /***/ function(module, exports) {
 
 	module.exports = function(){ /* empty */ };
 
 /***/ },
-/* 469 */
-55,
-/* 470 */
-[821, 54, 214, 492],
-/* 471 */
-[826, 79, 125, 91],
-/* 472 */
-[827, 89, 476, 474, 51, 214, 493],
-/* 473 */
-99,
-/* 474 */
-[832, 78, 19],
-/* 475 */
-[833, 74],
 /* 476 */
-[834, 51],
+55,
 /* 477 */
-[835, 209, 92, 93, 53, 19],
+[827, 54, 132, 497],
 /* 478 */
-[837, 19],
+[829, 40, 81],
 /* 479 */
-230,
+[833, 80, 128, 93],
 /* 480 */
-[838, 79, 54],
+[834, 76, 216, 215, 51, 132, 224],
 /* 481 */
-[839, 94, 77, 52, 45, 76],
+100,
 /* 482 */
-[840, 25, 213, 74],
+[840, 75],
 /* 483 */
-[841, 79, 125, 91, 215, 207, 76],
+[842, 219, 81, 94, 53, 20],
 /* 484 */
-[844, 45, 51, 79, 44],
+238,
 /* 485 */
-[845, 91, 92, 54, 129, 52, 206, 44],
+[845, 80, 54],
 /* 486 */
-[846, 54, 210],
+[846, 95, 78, 52, 40, 77],
 /* 487 */
-[848, 52, 215, 126],
+[847, 26, 223, 75],
 /* 488 */
+[848, 80, 128, 93, 133, 214, 77],
+/* 489 */
+[851, 40, 51, 80, 46],
+/* 490 */
+[852, 93, 81, 54, 134, 52, 213, 46],
+/* 491 */
+[853, 54, 220],
+/* 492 */
+[855, 52, 133, 129],
+/* 493 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var hide = __webpack_require__(53);
@@ -46267,15 +44809,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 489 */
+/* 494 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var global      = __webpack_require__(25)
-	  , core        = __webpack_require__(32)
-	  , dP          = __webpack_require__(45)
-	  , DESCRIPTORS = __webpack_require__(44)
-	  , SPECIES     = __webpack_require__(19)('species');
+	var global      = __webpack_require__(26)
+	  , core        = __webpack_require__(29)
+	  , dP          = __webpack_require__(40)
+	  , DESCRIPTORS = __webpack_require__(46)
+	  , SPECIES     = __webpack_require__(20)('species');
 	
 	module.exports = function(KEY){
 	  var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
@@ -46286,34 +44828,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 490 */
-[854, 51, 121, 19],
-/* 491 */
-[855, 128, 122],
-/* 492 */
-[857, 128],
-/* 493 */
-[865, 204, 19, 78, 32],
-/* 494 */
-[866, 468, 479, 78, 54, 208],
 /* 495 */
-[867, 75, 483],
+[861, 51, 124, 20],
 /* 496 */
-[868, 75, 44, 45],
+[862, 131, 125],
 /* 497 */
-[869, 90, 25, 89, 204, 75, 77, 121, 469, 472, 490, 213, 482, 19, 488, 93, 489, 32, 478],
+[864, 131],
 /* 498 */
-[871, 25, 52, 44, 75, 212, 481, 76, 127, 93, 94, 19, 131, 130, 480, 471, 475, 51, 54, 129, 92, 209, 486, 485, 45, 79, 210, 91, 125, 90, 53],
+[873, 76, 66, 133, 216, 215, 132, 478, 224, 218],
 /* 499 */
-[872, 130],
+[874, 475, 484, 79, 54, 217],
 /* 500 */
-[873, 130],
+[875, 66, 488],
 /* 501 */
+[876, 66, 46, 40],
+/* 502 */
+[877, 92, 26, 76, 211, 66, 78, 124, 476, 480, 495, 223, 487, 20, 493, 94, 494, 29, 218],
+/* 503 */
+[879, 26, 52, 46, 66, 222, 486, 77, 130, 94, 95, 20, 136, 135, 485, 479, 482, 51, 54, 134, 81, 219, 491, 490, 40, 80, 220, 93, 128, 92, 53],
+/* 504 */
+[880, 135],
+/* 505 */
+[881, 135],
+/* 506 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(9)
-	  , isArray  = __webpack_require__(140)
-	  , SPECIES  = __webpack_require__(11)('species');
+	  , isArray  = __webpack_require__(146)
+	  , SPECIES  = __webpack_require__(12)('species');
 	
 	module.exports = function(original){
 	  var C;
@@ -46329,23 +44871,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 502 */
+/* 507 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-	var speciesConstructor = __webpack_require__(501);
+	var speciesConstructor = __webpack_require__(506);
 	
 	module.exports = function(original, length){
 	  return new (speciesConstructor(original))(length);
 	};
 
 /***/ },
-/* 503 */
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var anObject    = __webpack_require__(5)
-	  , toPrimitive = __webpack_require__(35)
+	  , toPrimitive = __webpack_require__(37)
 	  , NUMBER      = 'number';
 	
 	module.exports = function(hint){
@@ -46354,17 +44896,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 504 */
-[826, 59, 103, 82],
-/* 505 */
-[838, 59, 24],
-/* 506 */
+/* 509 */
+[833, 59, 104, 84],
+/* 510 */
+[845, 59, 25],
+/* 511 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var path      = __webpack_require__(507)
-	  , invoke    = __webpack_require__(99)
-	  , aFunction = __webpack_require__(20);
+	var path      = __webpack_require__(512)
+	  , invoke    = __webpack_require__(100)
+	  , aFunction = __webpack_require__(21);
 	module.exports = function(/* ...pargs */){
 	  var fn     = aFunction(this)
 	    , length = arguments.length
@@ -46386,13 +44928,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 507 */
+/* 512 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(7);
 
 /***/ },
-/* 508 */
+/* 513 */
 /***/ function(module, exports) {
 
 	module.exports = function(regExp, replace){
@@ -46405,36 +44947,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 509 */
+/* 514 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/benjamingr/RexExp.escape
 	var $export = __webpack_require__(2)
-	  , $re     = __webpack_require__(508)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+	  , $re     = __webpack_require__(513)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 	
 	$export($export.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
 
 
 /***/ },
-/* 510 */
+/* 515 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 	var $export = __webpack_require__(2);
 	
-	$export($export.P, 'Array', {copyWithin: __webpack_require__(220)});
+	$export($export.P, 'Array', {copyWithin: __webpack_require__(228)});
 	
-	__webpack_require__(66)('copyWithin');
+	__webpack_require__(67)('copyWithin');
 
 /***/ },
-/* 511 */
+/* 516 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $every  = __webpack_require__(33)(4);
+	  , $every  = __webpack_require__(35)(4);
 	
-	$export($export.P + $export.F * !__webpack_require__(30)([].every, true), 'Array', {
+	$export($export.P + $export.F * !__webpack_require__(32)([].every, true), 'Array', {
 	  // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
 	  every: function every(callbackfn /* , thisArg */){
 	    return $every(this, callbackfn, arguments[1]);
@@ -46442,25 +44984,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 512 */
+/* 517 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 	var $export = __webpack_require__(2);
 	
-	$export($export.P, 'Array', {fill: __webpack_require__(132)});
+	$export($export.P, 'Array', {fill: __webpack_require__(138)});
 	
-	__webpack_require__(66)('fill');
+	__webpack_require__(67)('fill');
 
 /***/ },
-/* 513 */
+/* 518 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $filter = __webpack_require__(33)(2);
+	  , $filter = __webpack_require__(35)(2);
 	
-	$export($export.P + $export.F * !__webpack_require__(30)([].filter, true), 'Array', {
+	$export($export.P + $export.F * !__webpack_require__(32)([].filter, true), 'Array', {
 	  // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
 	  filter: function filter(callbackfn /* , thisArg */){
 	    return $filter(this, callbackfn, arguments[1]);
@@ -46468,13 +45010,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 514 */
+/* 519 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 	var $export = __webpack_require__(2)
-	  , $find   = __webpack_require__(33)(6)
+	  , $find   = __webpack_require__(35)(6)
 	  , KEY     = 'findIndex'
 	  , forced  = true;
 	// Shouldn't skip holes
@@ -46484,16 +45026,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
-	__webpack_require__(66)(KEY);
+	__webpack_require__(67)(KEY);
 
 /***/ },
-/* 515 */
+/* 520 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 	var $export = __webpack_require__(2)
-	  , $find   = __webpack_require__(33)(5)
+	  , $find   = __webpack_require__(35)(5)
 	  , KEY     = 'find'
 	  , forced  = true;
 	// Shouldn't skip holes
@@ -46503,16 +45045,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
-	__webpack_require__(66)(KEY);
+	__webpack_require__(67)(KEY);
 
 /***/ },
-/* 516 */
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export  = __webpack_require__(2)
-	  , $forEach = __webpack_require__(33)(0)
-	  , STRICT   = __webpack_require__(30)([].forEach, true);
+	  , $forEach = __webpack_require__(35)(0)
+	  , STRICT   = __webpack_require__(32)([].forEach, true);
 	
 	$export($export.P + $export.F * !STRICT, 'Array', {
 	  // 22.1.3.10 / 15.4.4.18 Array.prototype.forEach(callbackfn [, thisArg])
@@ -46522,59 +45064,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 517 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var ctx            = __webpack_require__(39)
-	  , $export        = __webpack_require__(2)
-	  , toObject       = __webpack_require__(16)
-	  , call           = __webpack_require__(229)
-	  , isArrayIter    = __webpack_require__(139)
-	  , toLength       = __webpack_require__(15)
-	  , createProperty = __webpack_require__(133)
-	  , getIterFn      = __webpack_require__(156);
-	
-	$export($export.S + $export.F * !__webpack_require__(101)(function(iter){ Array.from(iter); }), 'Array', {
-	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
-	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
-	    var O       = toObject(arrayLike)
-	      , C       = typeof this == 'function' ? this : Array
-	      , aLen    = arguments.length
-	      , mapfn   = aLen > 1 ? arguments[1] : undefined
-	      , mapping = mapfn !== undefined
-	      , index   = 0
-	      , iterFn  = getIterFn(O)
-	      , length, result, step, iterator;
-	    if(mapping)mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
-	    // if object isn't iterable or it's array with default iterator - use simple case
-	    if(iterFn != undefined && !(C == Array && isArrayIter(iterFn))){
-	      for(iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++){
-	        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
-	      }
-	    } else {
-	      length = toLength(O.length);
-	      for(result = new C(length); length > index; index++){
-	        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
-	      }
-	    }
-	    result.length = index;
-	    return result;
-	  }
-	});
-
-
-/***/ },
-/* 518 */
+/* 522 */
+[873, 42, 2, 17, 237, 145, 16, 139, 162, 102],
+/* 523 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export       = __webpack_require__(2)
-	  , $indexOf      = __webpack_require__(95)(false)
+	  , $indexOf      = __webpack_require__(96)(false)
 	  , $native       = [].indexOf
 	  , NEGATIVE_ZERO = !!$native && 1 / [1].indexOf(1, -0) < 0;
 	
-	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(30)($native)), 'Array', {
+	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(32)($native)), 'Array', {
 	  // 22.1.3.11 / 15.4.4.14 Array.prototype.indexOf(searchElement [, fromIndex])
 	  indexOf: function indexOf(searchElement /*, fromIndex = 0 */){
 	    return NEGATIVE_ZERO
@@ -46585,44 +45086,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 519 */
+/* 524 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
 	var $export = __webpack_require__(2);
 	
-	$export($export.S, 'Array', {isArray: __webpack_require__(140)});
+	$export($export.S, 'Array', {isArray: __webpack_require__(146)});
 
 /***/ },
-/* 520 */
+/* 525 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 22.1.3.13 Array.prototype.join(separator)
 	var $export   = __webpack_require__(2)
-	  , toIObject = __webpack_require__(24)
+	  , toIObject = __webpack_require__(25)
 	  , arrayJoin = [].join;
 	
 	// fallback for not array-like strings
-	$export($export.P + $export.F * (__webpack_require__(81) != Object || !__webpack_require__(30)(arrayJoin)), 'Array', {
+	$export($export.P + $export.F * (__webpack_require__(83) != Object || !__webpack_require__(32)(arrayJoin)), 'Array', {
 	  join: function join(separator){
 	    return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
 	  }
 	});
 
 /***/ },
-/* 521 */
+/* 526 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export       = __webpack_require__(2)
-	  , toIObject     = __webpack_require__(24)
-	  , toInteger     = __webpack_require__(48)
-	  , toLength      = __webpack_require__(15)
+	  , toIObject     = __webpack_require__(25)
+	  , toInteger     = __webpack_require__(49)
+	  , toLength      = __webpack_require__(16)
 	  , $native       = [].lastIndexOf
 	  , NEGATIVE_ZERO = !!$native && 1 / [1].lastIndexOf(1, -0) < 0;
 	
-	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(30)($native)), 'Array', {
+	$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(32)($native)), 'Array', {
 	  // 22.1.3.14 / 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex])
 	  lastIndexOf: function lastIndexOf(searchElement /*, fromIndex = @[*-1] */){
 	    // convert -0 to +0
@@ -46638,14 +45139,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 522 */
+/* 527 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $map    = __webpack_require__(33)(1);
+	  , $map    = __webpack_require__(35)(1);
 	
-	$export($export.P + $export.F * !__webpack_require__(30)([].map, true), 'Array', {
+	$export($export.P + $export.F * !__webpack_require__(32)([].map, true), 'Array', {
 	  // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
 	  map: function map(callbackfn /* , thisArg */){
 	    return $map(this, callbackfn, arguments[1]);
@@ -46653,12 +45154,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 523 */
+/* 528 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export        = __webpack_require__(2)
-	  , createProperty = __webpack_require__(133);
+	  , createProperty = __webpack_require__(139);
 	
 	// WebKit Array.of isn't generic
 	$export($export.S + $export.F * __webpack_require__(8)(function(){
@@ -46677,14 +45178,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 524 */
+/* 529 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $reduce = __webpack_require__(222);
+	  , $reduce = __webpack_require__(230);
 	
-	$export($export.P + $export.F * !__webpack_require__(30)([].reduceRight, true), 'Array', {
+	$export($export.P + $export.F * !__webpack_require__(32)([].reduceRight, true), 'Array', {
 	  // 22.1.3.19 / 15.4.4.22 Array.prototype.reduceRight(callbackfn [, initialValue])
 	  reduceRight: function reduceRight(callbackfn /* , initialValue */){
 	    return $reduce(this, callbackfn, arguments.length, arguments[1], true);
@@ -46692,14 +45193,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 525 */
+/* 530 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $reduce = __webpack_require__(222);
+	  , $reduce = __webpack_require__(230);
 	
-	$export($export.P + $export.F * !__webpack_require__(30)([].reduce, true), 'Array', {
+	$export($export.P + $export.F * !__webpack_require__(32)([].reduce, true), 'Array', {
 	  // 22.1.3.18 / 15.4.4.21 Array.prototype.reduce(callbackfn [, initialValue])
 	  reduce: function reduce(callbackfn /* , initialValue */){
 	    return $reduce(this, callbackfn, arguments.length, arguments[1], false);
@@ -46707,15 +45208,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 526 */
+/* 531 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export    = __webpack_require__(2)
-	  , html       = __webpack_require__(137)
-	  , cof        = __webpack_require__(28)
+	  , html       = __webpack_require__(143)
+	  , cof        = __webpack_require__(30)
 	  , toIndex    = __webpack_require__(62)
-	  , toLength   = __webpack_require__(15)
+	  , toLength   = __webpack_require__(16)
 	  , arraySlice = [].slice;
 	
 	// fallback for not array-like ES3 strings and DOM objects
@@ -46740,14 +45241,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 527 */
+/* 532 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $some   = __webpack_require__(33)(3);
+	  , $some   = __webpack_require__(35)(3);
 	
-	$export($export.P + $export.F * !__webpack_require__(30)([].some, true), 'Array', {
+	$export($export.P + $export.F * !__webpack_require__(32)([].some, true), 'Array', {
 	  // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
 	  some: function some(callbackfn /* , thisArg */){
 	    return $some(this, callbackfn, arguments[1]);
@@ -46755,13 +45256,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 528 */
+/* 533 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export   = __webpack_require__(2)
-	  , aFunction = __webpack_require__(20)
-	  , toObject  = __webpack_require__(16)
+	  , aFunction = __webpack_require__(21)
+	  , toObject  = __webpack_require__(17)
 	  , fails     = __webpack_require__(8)
 	  , $sort     = [].sort
 	  , test      = [1, 2, 3];
@@ -46773,7 +45274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // V8 bug
 	  test.sort(null);
 	  // Old WebKit
-	}) || !__webpack_require__(30)($sort)), 'Array', {
+	}) || !__webpack_require__(32)($sort)), 'Array', {
 	  // 22.1.3.25 Array.prototype.sort(comparefn)
 	  sort: function sort(comparefn){
 	    return comparefn === undefined
@@ -46783,13 +45284,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 529 */
+/* 534 */
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(61)('Array');
 
 /***/ },
-/* 530 */
+/* 535 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.3.3.1 / 15.9.4.4 Date.now()
@@ -46798,7 +45299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'Date', {now: function(){ return new Date().getTime(); }});
 
 /***/ },
-/* 531 */
+/* 536 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46831,13 +45332,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 532 */
+/* 537 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export     = __webpack_require__(2)
-	  , toObject    = __webpack_require__(16)
-	  , toPrimitive = __webpack_require__(35);
+	  , toObject    = __webpack_require__(17)
+	  , toPrimitive = __webpack_require__(37);
 	
 	$export($export.P + $export.F * __webpack_require__(8)(function(){
 	  return new Date(NaN).toJSON() !== null || Date.prototype.toJSON.call({toISOString: function(){ return 1; }}) !== 1;
@@ -46850,16 +45351,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 533 */
+/* 538 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var TO_PRIMITIVE = __webpack_require__(11)('toPrimitive')
+	var TO_PRIMITIVE = __webpack_require__(12)('toPrimitive')
 	  , proto        = Date.prototype;
 	
-	if(!(TO_PRIMITIVE in proto))__webpack_require__(21)(proto, TO_PRIMITIVE, __webpack_require__(503));
+	if(!(TO_PRIMITIVE in proto))__webpack_require__(22)(proto, TO_PRIMITIVE, __webpack_require__(508));
 
 /***/ },
-/* 534 */
+/* 539 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var DateProto    = Date.prototype
@@ -46868,32 +45369,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	  , $toString    = DateProto[TO_STRING]
 	  , getTime      = DateProto.getTime;
 	if(new Date(NaN) + '' != INVALID_DATE){
-	  __webpack_require__(22)(DateProto, TO_STRING, function toString(){
+	  __webpack_require__(23)(DateProto, TO_STRING, function toString(){
 	    var value = getTime.call(this);
 	    return value === value ? $toString.call(this) : INVALID_DATE;
 	  });
 	}
 
 /***/ },
-/* 535 */
+/* 540 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
 	var $export = __webpack_require__(2);
 	
-	$export($export.P, 'Function', {bind: __webpack_require__(223)});
+	$export($export.P, 'Function', {bind: __webpack_require__(231)});
 
 /***/ },
-/* 536 */
+/* 541 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var isObject       = __webpack_require__(9)
-	  , getPrototypeOf = __webpack_require__(27)
-	  , HAS_INSTANCE   = __webpack_require__(11)('hasInstance')
+	  , getPrototypeOf = __webpack_require__(28)
+	  , HAS_INSTANCE   = __webpack_require__(12)('hasInstance')
 	  , FunctionProto  = Function.prototype;
 	// 19.2.3.6 Function.prototype[@@hasInstance](V)
-	if(!(HAS_INSTANCE in FunctionProto))__webpack_require__(13).f(FunctionProto, HAS_INSTANCE, {value: function(O){
+	if(!(HAS_INSTANCE in FunctionProto))__webpack_require__(14).f(FunctionProto, HAS_INSTANCE, {value: function(O){
 	  if(typeof this != 'function' || !isObject(O))return false;
 	  if(!isObject(this.prototype))return O instanceof this;
 	  // for environment w/o native `@@hasInstance` logic enough `instanceof`, but add this:
@@ -46902,12 +45403,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 537 */
+/* 542 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var dP         = __webpack_require__(13).f
-	  , createDesc = __webpack_require__(47)
-	  , has        = __webpack_require__(18)
+	var dP         = __webpack_require__(14).f
+	  , createDesc = __webpack_require__(48)
+	  , has        = __webpack_require__(19)
 	  , FProto     = Function.prototype
 	  , nameRE     = /^\s*function ([^ (]*)/
 	  , NAME       = 'name';
@@ -46917,7 +45418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	// 19.2.4.2 name
-	NAME in FProto || __webpack_require__(12) && dP(FProto, NAME, {
+	NAME in FProto || __webpack_require__(13) && dP(FProto, NAME, {
 	  configurable: true,
 	  get: function(){
 	    try {
@@ -46932,12 +45433,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 538 */
+/* 543 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.3 Math.acosh(x)
 	var $export = __webpack_require__(2)
-	  , log1p   = __webpack_require__(231)
+	  , log1p   = __webpack_require__(239)
 	  , sqrt    = Math.sqrt
 	  , $acosh  = Math.acosh;
 	
@@ -46955,7 +45456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 539 */
+/* 544 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.5 Math.asinh(x)
@@ -46970,7 +45471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', {asinh: asinh});
 
 /***/ },
-/* 540 */
+/* 545 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.7 Math.atanh(x)
@@ -46985,12 +45486,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 541 */
+/* 546 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.9 Math.cbrt(x)
 	var $export = __webpack_require__(2)
-	  , sign    = __webpack_require__(144);
+	  , sign    = __webpack_require__(150);
 	
 	$export($export.S, 'Math', {
 	  cbrt: function cbrt(x){
@@ -46999,7 +45500,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 542 */
+/* 547 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.11 Math.clz32(x)
@@ -47012,7 +45513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 543 */
+/* 548 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.12 Math.cosh(x)
@@ -47026,22 +45527,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 544 */
+/* 549 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.14 Math.expm1(x)
 	var $export = __webpack_require__(2)
-	  , $expm1  = __webpack_require__(143);
+	  , $expm1  = __webpack_require__(149);
 	
 	$export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', {expm1: $expm1});
 
 /***/ },
-/* 545 */
+/* 550 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.16 Math.fround(x)
 	var $export   = __webpack_require__(2)
-	  , sign      = __webpack_require__(144)
+	  , sign      = __webpack_require__(150)
 	  , pow       = Math.pow
 	  , EPSILON   = pow(2, -52)
 	  , EPSILON32 = pow(2, -23)
@@ -47067,7 +45568,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 546 */
+/* 551 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
@@ -47097,7 +45598,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 547 */
+/* 552 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.18 Math.imul(x, y)
@@ -47119,7 +45620,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 548 */
+/* 553 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.21 Math.log10(x)
@@ -47132,16 +45633,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 549 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.20 Math.log1p(x)
 	var $export = __webpack_require__(2);
 	
-	$export($export.S, 'Math', {log1p: __webpack_require__(231)});
+	$export($export.S, 'Math', {log1p: __webpack_require__(239)});
 
 /***/ },
-/* 550 */
+/* 555 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.22 Math.log2(x)
@@ -47154,21 +45655,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 551 */
+/* 556 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.28 Math.sign(x)
 	var $export = __webpack_require__(2);
 	
-	$export($export.S, 'Math', {sign: __webpack_require__(144)});
+	$export($export.S, 'Math', {sign: __webpack_require__(150)});
 
 /***/ },
-/* 552 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.30 Math.sinh(x)
 	var $export = __webpack_require__(2)
-	  , expm1   = __webpack_require__(143)
+	  , expm1   = __webpack_require__(149)
 	  , exp     = Math.exp;
 	
 	// V8 near Chromium 38 has a problem with very small numbers
@@ -47183,12 +45684,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 553 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.33 Math.tanh(x)
 	var $export = __webpack_require__(2)
-	  , expm1   = __webpack_require__(143)
+	  , expm1   = __webpack_require__(149)
 	  , exp     = Math.exp;
 	
 	$export($export.S, 'Math', {
@@ -47200,7 +45701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 554 */
+/* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.2.2.34 Math.trunc(x)
@@ -47213,20 +45714,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 555 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var global            = __webpack_require__(7)
-	  , has               = __webpack_require__(18)
-	  , cof               = __webpack_require__(28)
-	  , inheritIfRequired = __webpack_require__(138)
-	  , toPrimitive       = __webpack_require__(35)
+	  , has               = __webpack_require__(19)
+	  , cof               = __webpack_require__(30)
+	  , inheritIfRequired = __webpack_require__(144)
+	  , toPrimitive       = __webpack_require__(37)
 	  , fails             = __webpack_require__(8)
 	  , gOPN              = __webpack_require__(58).f
-	  , gOPD              = __webpack_require__(26).f
-	  , dP                = __webpack_require__(13).f
-	  , $trim             = __webpack_require__(70).trim
+	  , gOPD              = __webpack_require__(27).f
+	  , dP                = __webpack_require__(14).f
+	  , $trim             = __webpack_require__(71).trim
 	  , NUMBER            = 'Number'
 	  , $Number           = global[NUMBER]
 	  , Base              = $Number
@@ -47270,7 +45771,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      && (BROKEN_COF ? fails(function(){ proto.valueOf.call(that); }) : cof(that) != NUMBER)
 	        ? inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
 	  };
-	  for(var keys = __webpack_require__(12) ? gOPN(Base) : (
+	  for(var keys = __webpack_require__(13) ? gOPN(Base) : (
 	    // ES3:
 	    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
 	    // ES6 (in case, if modules with ES6 Number statics required before):
@@ -47283,11 +45784,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  $Number.prototype = proto;
 	  proto.constructor = $Number;
-	  __webpack_require__(22)(global, NUMBER, $Number);
+	  __webpack_require__(23)(global, NUMBER, $Number);
 	}
 
 /***/ },
-/* 556 */
+/* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.1 Number.EPSILON
@@ -47296,7 +45797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'Number', {EPSILON: Math.pow(2, -52)});
 
 /***/ },
-/* 557 */
+/* 562 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.2 Number.isFinite(number)
@@ -47310,16 +45811,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 558 */
+/* 563 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.3 Number.isInteger(number)
 	var $export = __webpack_require__(2);
 	
-	$export($export.S, 'Number', {isInteger: __webpack_require__(228)});
+	$export($export.S, 'Number', {isInteger: __webpack_require__(236)});
 
 /***/ },
-/* 559 */
+/* 564 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.4 Number.isNaN(number)
@@ -47332,12 +45833,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 560 */
+/* 565 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.5 Number.isSafeInteger(number)
 	var $export   = __webpack_require__(2)
-	  , isInteger = __webpack_require__(228)
+	  , isInteger = __webpack_require__(236)
 	  , abs       = Math.abs;
 	
 	$export($export.S, 'Number', {
@@ -47347,7 +45848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 561 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.6 Number.MAX_SAFE_INTEGER
@@ -47356,7 +45857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
 
 /***/ },
-/* 562 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 20.1.2.10 Number.MIN_SAFE_INTEGER
@@ -47365,32 +45866,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
 
 /***/ },
-/* 563 */
+/* 568 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export     = __webpack_require__(2)
-	  , $parseFloat = __webpack_require__(238);
+	  , $parseFloat = __webpack_require__(246);
 	// 20.1.2.12 Number.parseFloat(string)
 	$export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', {parseFloat: $parseFloat});
 
 /***/ },
-/* 564 */
+/* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export   = __webpack_require__(2)
-	  , $parseInt = __webpack_require__(239);
+	  , $parseInt = __webpack_require__(247);
 	// 20.1.2.13 Number.parseInt(string, radix)
 	$export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
 
 /***/ },
-/* 565 */
+/* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export      = __webpack_require__(2)
-	  , toInteger    = __webpack_require__(48)
-	  , aNumberValue = __webpack_require__(219)
-	  , repeat       = __webpack_require__(151)
+	  , toInteger    = __webpack_require__(49)
+	  , aNumberValue = __webpack_require__(227)
+	  , repeat       = __webpack_require__(157)
 	  , $toFixed     = 1..toFixed
 	  , floor        = Math.floor
 	  , data         = [0, 0, 0, 0, 0, 0]
@@ -47501,13 +46002,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 566 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export      = __webpack_require__(2)
 	  , $fails       = __webpack_require__(8)
-	  , aNumberValue = __webpack_require__(219)
+	  , aNumberValue = __webpack_require__(227)
 	  , $toPrecision = 1..toPrecision;
 	
 	$export($export.P + $export.F * ($fails(function(){
@@ -47524,9 +46025,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 567 */
-[867, 2, 232],
-/* 568 */
+/* 572 */
+[875, 2, 240],
+/* 573 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(2)
@@ -47534,89 +46035,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'Object', {create: __webpack_require__(57)});
 
 /***/ },
-/* 569 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(2);
 	// 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
-	$export($export.S + $export.F * !__webpack_require__(12), 'Object', {defineProperties: __webpack_require__(233)});
+	$export($export.S + $export.F * !__webpack_require__(13), 'Object', {defineProperties: __webpack_require__(241)});
 
 /***/ },
-/* 570 */
-[868, 2, 12, 13],
-/* 571 */
+/* 575 */
+[876, 2, 13, 14],
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.5 Object.freeze(O)
 	var isObject = __webpack_require__(9)
-	  , meta     = __webpack_require__(46).onFreeze;
+	  , meta     = __webpack_require__(47).onFreeze;
 	
-	__webpack_require__(34)('freeze', function($freeze){
+	__webpack_require__(36)('freeze', function($freeze){
 	  return function freeze(it){
 	    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
-	  };
-	});
-
-/***/ },
-/* 572 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-	var toIObject                 = __webpack_require__(24)
-	  , $getOwnPropertyDescriptor = __webpack_require__(26).f;
-	
-	__webpack_require__(34)('getOwnPropertyDescriptor', function(){
-	  return function getOwnPropertyDescriptor(it, key){
-	    return $getOwnPropertyDescriptor(toIObject(it), key);
-	  };
-	});
-
-/***/ },
-/* 573 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.7 Object.getOwnPropertyNames(O)
-	__webpack_require__(34)('getOwnPropertyNames', function(){
-	  return __webpack_require__(234).f;
-	});
-
-/***/ },
-/* 574 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.9 Object.getPrototypeOf(O)
-	var toObject        = __webpack_require__(16)
-	  , $getPrototypeOf = __webpack_require__(27);
-	
-	__webpack_require__(34)('getPrototypeOf', function(){
-	  return function getPrototypeOf(it){
-	    return $getPrototypeOf(toObject(it));
-	  };
-	});
-
-/***/ },
-/* 575 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.11 Object.isExtensible(O)
-	var isObject = __webpack_require__(9);
-	
-	__webpack_require__(34)('isExtensible', function($isExtensible){
-	  return function isExtensible(it){
-	    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
-	  };
-	});
-
-/***/ },
-/* 576 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.12 Object.isFrozen(O)
-	var isObject = __webpack_require__(9);
-	
-	__webpack_require__(34)('isFrozen', function($isFrozen){
-	  return function isFrozen(it){
-	    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
 	  };
 	});
 
@@ -47624,12 +46062,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.13 Object.isSealed(O)
-	var isObject = __webpack_require__(9);
+	// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+	var toIObject                 = __webpack_require__(25)
+	  , $getOwnPropertyDescriptor = __webpack_require__(27).f;
 	
-	__webpack_require__(34)('isSealed', function($isSealed){
-	  return function isSealed(it){
-	    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
+	__webpack_require__(36)('getOwnPropertyDescriptor', function(){
+	  return function getOwnPropertyDescriptor(it, key){
+	    return $getOwnPropertyDescriptor(toIObject(it), key);
 	  };
 	});
 
@@ -47637,21 +46076,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.3.10 Object.is(value1, value2)
-	var $export = __webpack_require__(2);
-	$export($export.S, 'Object', {is: __webpack_require__(240)});
+	// 19.1.2.7 Object.getOwnPropertyNames(O)
+	__webpack_require__(36)('getOwnPropertyNames', function(){
+	  return __webpack_require__(242).f;
+	});
 
 /***/ },
 /* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.14 Object.keys(O)
-	var toObject = __webpack_require__(16)
-	  , $keys    = __webpack_require__(59);
+	// 19.1.2.9 Object.getPrototypeOf(O)
+	var toObject        = __webpack_require__(17)
+	  , $getPrototypeOf = __webpack_require__(28);
 	
-	__webpack_require__(34)('keys', function(){
-	  return function keys(it){
-	    return $keys(toObject(it));
+	__webpack_require__(36)('getPrototypeOf', function(){
+	  return function getPrototypeOf(it){
+	    return $getPrototypeOf(toObject(it));
 	  };
 	});
 
@@ -47659,13 +46099,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.15 Object.preventExtensions(O)
-	var isObject = __webpack_require__(9)
-	  , meta     = __webpack_require__(46).onFreeze;
+	// 19.1.2.11 Object.isExtensible(O)
+	var isObject = __webpack_require__(9);
 	
-	__webpack_require__(34)('preventExtensions', function($preventExtensions){
-	  return function preventExtensions(it){
-	    return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
+	__webpack_require__(36)('isExtensible', function($isExtensible){
+	  return function isExtensible(it){
+	    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
 	  };
 	});
 
@@ -47673,13 +46112,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 581 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.17 Object.seal(O)
-	var isObject = __webpack_require__(9)
-	  , meta     = __webpack_require__(46).onFreeze;
+	// 19.1.2.12 Object.isFrozen(O)
+	var isObject = __webpack_require__(9);
 	
-	__webpack_require__(34)('seal', function($seal){
-	  return function seal(it){
-	    return $seal && isObject(it) ? $seal(meta(it)) : it;
+	__webpack_require__(36)('isFrozen', function($isFrozen){
+	  return function isFrozen(it){
+	    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
 	  };
 	});
 
@@ -47687,52 +46125,115 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.3.19 Object.setPrototypeOf(O, proto)
-	var $export = __webpack_require__(2);
-	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(146).set});
+	// 19.1.2.13 Object.isSealed(O)
+	var isObject = __webpack_require__(9);
+	
+	__webpack_require__(36)('isSealed', function($isSealed){
+	  return function isSealed(it){
+	    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
+	  };
+	});
 
 /***/ },
 /* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	// 19.1.3.6 Object.prototype.toString()
-	var classof = __webpack_require__(80)
-	  , test    = {};
-	test[__webpack_require__(11)('toStringTag')] = 'z';
-	if(test + '' != '[object z]'){
-	  __webpack_require__(22)(Object.prototype, 'toString', function toString(){
-	    return '[object ' + classof(this) + ']';
-	  }, true);
-	}
+	// 19.1.3.10 Object.is(value1, value2)
+	var $export = __webpack_require__(2);
+	$export($export.S, 'Object', {is: __webpack_require__(248)});
 
 /***/ },
 /* 584 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $export     = __webpack_require__(2)
-	  , $parseFloat = __webpack_require__(238);
-	// 18.2.4 parseFloat(string)
-	$export($export.G + $export.F * (parseFloat != $parseFloat), {parseFloat: $parseFloat});
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(17)
+	  , $keys    = __webpack_require__(59);
+	
+	__webpack_require__(36)('keys', function(){
+	  return function keys(it){
+	    return $keys(toObject(it));
+	  };
+	});
 
 /***/ },
 /* 585 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// 19.1.2.15 Object.preventExtensions(O)
+	var isObject = __webpack_require__(9)
+	  , meta     = __webpack_require__(47).onFreeze;
+	
+	__webpack_require__(36)('preventExtensions', function($preventExtensions){
+	  return function preventExtensions(it){
+	    return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
+	  };
+	});
+
+/***/ },
+/* 586 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.17 Object.seal(O)
+	var isObject = __webpack_require__(9)
+	  , meta     = __webpack_require__(47).onFreeze;
+	
+	__webpack_require__(36)('seal', function($seal){
+	  return function seal(it){
+	    return $seal && isObject(it) ? $seal(meta(it)) : it;
+	  };
+	});
+
+/***/ },
+/* 587 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.19 Object.setPrototypeOf(O, proto)
+	var $export = __webpack_require__(2);
+	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(152).set});
+
+/***/ },
+/* 588 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 19.1.3.6 Object.prototype.toString()
+	var classof = __webpack_require__(82)
+	  , test    = {};
+	test[__webpack_require__(12)('toStringTag')] = 'z';
+	if(test + '' != '[object z]'){
+	  __webpack_require__(23)(Object.prototype, 'toString', function toString(){
+	    return '[object ' + classof(this) + ']';
+	  }, true);
+	}
+
+/***/ },
+/* 589 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $export     = __webpack_require__(2)
+	  , $parseFloat = __webpack_require__(246);
+	// 18.2.4 parseFloat(string)
+	$export($export.G + $export.F * (parseFloat != $parseFloat), {parseFloat: $parseFloat});
+
+/***/ },
+/* 590 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var $export   = __webpack_require__(2)
-	  , $parseInt = __webpack_require__(239);
+	  , $parseInt = __webpack_require__(247);
 	// 18.2.5 parseInt(string, radix)
 	$export($export.G + $export.F * (parseInt != $parseInt), {parseInt: $parseInt});
 
 /***/ },
-/* 586 */
-[869, 56, 7, 39, 80, 2, 9, 20, 55, 67, 148, 153, 145, 11, 60, 69, 61, 38, 101],
-/* 587 */
+/* 591 */
+[877, 56, 7, 42, 82, 2, 9, 21, 55, 68, 154, 159, 151, 12, 60, 70, 61, 41, 102],
+/* 592 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
 	var $export   = __webpack_require__(2)
-	  , aFunction = __webpack_require__(20)
+	  , aFunction = __webpack_require__(21)
 	  , anObject  = __webpack_require__(5)
 	  , rApply    = (__webpack_require__(7).Reflect || {}).apply
 	  , fApply    = Function.apply;
@@ -47748,17 +46249,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 588 */
+/* 593 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
 	var $export    = __webpack_require__(2)
 	  , create     = __webpack_require__(57)
-	  , aFunction  = __webpack_require__(20)
+	  , aFunction  = __webpack_require__(21)
 	  , anObject   = __webpack_require__(5)
 	  , isObject   = __webpack_require__(9)
 	  , fails      = __webpack_require__(8)
-	  , bind       = __webpack_require__(223)
+	  , bind       = __webpack_require__(231)
 	  , rConstruct = (__webpack_require__(7).Reflect || {}).construct;
 	
 	// MS Edge supports only 2 arguments and argumentsList argument is optional
@@ -47800,14 +46301,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 589 */
+/* 594 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
-	var dP          = __webpack_require__(13)
+	var dP          = __webpack_require__(14)
 	  , $export     = __webpack_require__(2)
 	  , anObject    = __webpack_require__(5)
-	  , toPrimitive = __webpack_require__(35);
+	  , toPrimitive = __webpack_require__(37);
 	
 	// MS Edge has broken Reflect.defineProperty - throwing instead of returning false
 	$export($export.S + $export.F * __webpack_require__(8)(function(){
@@ -47827,12 +46328,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 590 */
+/* 595 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.4 Reflect.deleteProperty(target, propertyKey)
 	var $export  = __webpack_require__(2)
-	  , gOPD     = __webpack_require__(26).f
+	  , gOPD     = __webpack_require__(27).f
 	  , anObject = __webpack_require__(5);
 	
 	$export($export.S, 'Reflect', {
@@ -47843,7 +46344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 591 */
+/* 596 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47857,7 +46358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    , key;
 	  for(key in iterated)keys.push(key);
 	};
-	__webpack_require__(141)(Enumerate, 'Object', function(){
+	__webpack_require__(147)(Enumerate, 'Object', function(){
 	  var that = this
 	    , keys = that._k
 	    , key;
@@ -47874,11 +46375,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 592 */
+/* 597 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
-	var gOPD     = __webpack_require__(26)
+	var gOPD     = __webpack_require__(27)
 	  , $export  = __webpack_require__(2)
 	  , anObject = __webpack_require__(5);
 	
@@ -47889,12 +46390,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 593 */
+/* 598 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.8 Reflect.getPrototypeOf(target)
 	var $export  = __webpack_require__(2)
-	  , getProto = __webpack_require__(27)
+	  , getProto = __webpack_require__(28)
 	  , anObject = __webpack_require__(5);
 	
 	$export($export.S, 'Reflect', {
@@ -47904,13 +46405,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 594 */
+/* 599 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.6 Reflect.get(target, propertyKey [, receiver])
-	var gOPD           = __webpack_require__(26)
-	  , getPrototypeOf = __webpack_require__(27)
-	  , has            = __webpack_require__(18)
+	var gOPD           = __webpack_require__(27)
+	  , getPrototypeOf = __webpack_require__(28)
+	  , has            = __webpack_require__(19)
 	  , $export        = __webpack_require__(2)
 	  , isObject       = __webpack_require__(9)
 	  , anObject       = __webpack_require__(5);
@@ -47930,7 +46431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'Reflect', {get: get});
 
 /***/ },
-/* 595 */
+/* 600 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.9 Reflect.has(target, propertyKey)
@@ -47943,7 +46444,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 596 */
+/* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.10 Reflect.isExtensible(target)
@@ -47959,16 +46460,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 597 */
+/* 602 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.11 Reflect.ownKeys(target)
 	var $export = __webpack_require__(2);
 	
-	$export($export.S, 'Reflect', {ownKeys: __webpack_require__(237)});
+	$export($export.S, 'Reflect', {ownKeys: __webpack_require__(245)});
 
 /***/ },
-/* 598 */
+/* 603 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.12 Reflect.preventExtensions(target)
@@ -47989,12 +46490,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 599 */
+/* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.14 Reflect.setPrototypeOf(target, proto)
 	var $export  = __webpack_require__(2)
-	  , setProto = __webpack_require__(146);
+	  , setProto = __webpack_require__(152);
 	
 	if(setProto)$export($export.S, 'Reflect', {
 	  setPrototypeOf: function setPrototypeOf(target, proto){
@@ -48009,16 +46510,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 600 */
+/* 605 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
-	var dP             = __webpack_require__(13)
-	  , gOPD           = __webpack_require__(26)
-	  , getPrototypeOf = __webpack_require__(27)
-	  , has            = __webpack_require__(18)
+	var dP             = __webpack_require__(14)
+	  , gOPD           = __webpack_require__(27)
+	  , getPrototypeOf = __webpack_require__(28)
+	  , has            = __webpack_require__(19)
 	  , $export        = __webpack_require__(2)
-	  , createDesc     = __webpack_require__(47)
+	  , createDesc     = __webpack_require__(48)
 	  , anObject       = __webpack_require__(5)
 	  , isObject       = __webpack_require__(9);
 	
@@ -48045,15 +46546,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'Reflect', {set: set});
 
 /***/ },
-/* 601 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global            = __webpack_require__(7)
-	  , inheritIfRequired = __webpack_require__(138)
-	  , dP                = __webpack_require__(13).f
+	  , inheritIfRequired = __webpack_require__(144)
+	  , dP                = __webpack_require__(14).f
 	  , gOPN              = __webpack_require__(58).f
-	  , isRegExp          = __webpack_require__(100)
-	  , $flags            = __webpack_require__(98)
+	  , isRegExp          = __webpack_require__(101)
+	  , $flags            = __webpack_require__(99)
 	  , $RegExp           = global.RegExp
 	  , Base              = $RegExp
 	  , proto             = $RegExp.prototype
@@ -48062,8 +46563,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // "new" creates a new object, old webkit buggy here
 	  , CORRECT_NEW       = new $RegExp(re1) !== re1;
 	
-	if(__webpack_require__(12) && (!CORRECT_NEW || __webpack_require__(8)(function(){
-	  re2[__webpack_require__(11)('match')] = false;
+	if(__webpack_require__(13) && (!CORRECT_NEW || __webpack_require__(8)(function(){
+	  re2[__webpack_require__(12)('match')] = false;
 	  // RegExp constructor can alter flags and IsRegExp works correct with @@match
 	  return $RegExp(re1) != re1 || $RegExp(re2) == re2 || $RegExp(re1, 'i') != '/a/i';
 	}))){
@@ -48087,17 +46588,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  for(var keys = gOPN(Base), i = 0; keys.length > i; )proxy(keys[i++]);
 	  proto.constructor = $RegExp;
 	  $RegExp.prototype = proto;
-	  __webpack_require__(22)(global, 'RegExp', $RegExp);
+	  __webpack_require__(23)(global, 'RegExp', $RegExp);
 	}
 	
 	__webpack_require__(61)('RegExp');
 
 /***/ },
-/* 602 */
+/* 607 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@match logic
-	__webpack_require__(97)('match', 1, function(defined, MATCH, $match){
+	__webpack_require__(98)('match', 1, function(defined, MATCH, $match){
 	  // 21.1.3.11 String.prototype.match(regexp)
 	  return [function match(regexp){
 	    'use strict';
@@ -48108,11 +46609,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 603 */
+/* 608 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@replace logic
-	__webpack_require__(97)('replace', 2, function(defined, REPLACE, $replace){
+	__webpack_require__(98)('replace', 2, function(defined, REPLACE, $replace){
 	  // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
 	  return [function replace(searchValue, replaceValue){
 	    'use strict';
@@ -48125,11 +46626,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 604 */
+/* 609 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@search logic
-	__webpack_require__(97)('search', 1, function(defined, SEARCH, $search){
+	__webpack_require__(98)('search', 1, function(defined, SEARCH, $search){
 	  // 21.1.3.15 String.prototype.search(regexp)
 	  return [function search(regexp){
 	    'use strict';
@@ -48140,13 +46641,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 605 */
+/* 610 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// @@split logic
-	__webpack_require__(97)('split', 2, function(defined, SPLIT, $split){
+	__webpack_require__(98)('split', 2, function(defined, SPLIT, $split){
 	  'use strict';
-	  var isRegExp   = __webpack_require__(100)
+	  var isRegExp   = __webpack_require__(101)
 	    , _split     = $split
 	    , $push      = [].push
 	    , $SPLIT     = 'split'
@@ -48215,19 +46716,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 606 */
+/* 611 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(244);
+	__webpack_require__(252);
 	var anObject    = __webpack_require__(5)
-	  , $flags      = __webpack_require__(98)
-	  , DESCRIPTORS = __webpack_require__(12)
+	  , $flags      = __webpack_require__(99)
+	  , DESCRIPTORS = __webpack_require__(13)
 	  , TO_STRING   = 'toString'
 	  , $toString   = /./[TO_STRING];
 	
 	var define = function(fn){
-	  __webpack_require__(22)(RegExp.prototype, TO_STRING, fn, true);
+	  __webpack_require__(23)(RegExp.prototype, TO_STRING, fn, true);
 	};
 	
 	// 21.2.5.14 RegExp.prototype.toString()
@@ -48245,60 +46746,60 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 607 */
+/* 612 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.2 String.prototype.anchor(name)
-	__webpack_require__(23)('anchor', function(createHTML){
+	__webpack_require__(24)('anchor', function(createHTML){
 	  return function anchor(name){
 	    return createHTML(this, 'a', 'name', name);
 	  }
 	});
 
 /***/ },
-/* 608 */
+/* 613 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.3 String.prototype.big()
-	__webpack_require__(23)('big', function(createHTML){
+	__webpack_require__(24)('big', function(createHTML){
 	  return function big(){
 	    return createHTML(this, 'big', '', '');
 	  }
 	});
 
 /***/ },
-/* 609 */
+/* 614 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.4 String.prototype.blink()
-	__webpack_require__(23)('blink', function(createHTML){
+	__webpack_require__(24)('blink', function(createHTML){
 	  return function blink(){
 	    return createHTML(this, 'blink', '', '');
 	  }
 	});
 
 /***/ },
-/* 610 */
+/* 615 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.5 String.prototype.bold()
-	__webpack_require__(23)('bold', function(createHTML){
+	__webpack_require__(24)('bold', function(createHTML){
 	  return function bold(){
 	    return createHTML(this, 'b', '', '');
 	  }
 	});
 
 /***/ },
-/* 611 */
+/* 616 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export = __webpack_require__(2)
-	  , $at     = __webpack_require__(149)(false);
+	  , $at     = __webpack_require__(155)(false);
 	$export($export.P, 'String', {
 	  // 21.1.3.3 String.prototype.codePointAt(pos)
 	  codePointAt: function codePointAt(pos){
@@ -48307,18 +46808,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 612 */
+/* 617 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.1.3.6 String.prototype.endsWith(searchString [, endPosition])
 	'use strict';
 	var $export   = __webpack_require__(2)
-	  , toLength  = __webpack_require__(15)
-	  , context   = __webpack_require__(150)
+	  , toLength  = __webpack_require__(16)
+	  , context   = __webpack_require__(156)
 	  , ENDS_WITH = 'endsWith'
 	  , $endsWith = ''[ENDS_WITH];
 	
-	$export($export.P + $export.F * __webpack_require__(136)(ENDS_WITH), 'String', {
+	$export($export.P + $export.F * __webpack_require__(142)(ENDS_WITH), 'String', {
 	  endsWith: function endsWith(searchString /*, endPosition = @length */){
 	    var that = context(this, searchString, ENDS_WITH)
 	      , endPosition = arguments.length > 1 ? arguments[1] : undefined
@@ -48332,43 +46833,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 613 */
+/* 618 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.6 String.prototype.fixed()
-	__webpack_require__(23)('fixed', function(createHTML){
+	__webpack_require__(24)('fixed', function(createHTML){
 	  return function fixed(){
 	    return createHTML(this, 'tt', '', '');
 	  }
 	});
 
 /***/ },
-/* 614 */
+/* 619 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.7 String.prototype.fontcolor(color)
-	__webpack_require__(23)('fontcolor', function(createHTML){
+	__webpack_require__(24)('fontcolor', function(createHTML){
 	  return function fontcolor(color){
 	    return createHTML(this, 'font', 'color', color);
 	  }
 	});
 
 /***/ },
-/* 615 */
+/* 620 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.8 String.prototype.fontsize(size)
-	__webpack_require__(23)('fontsize', function(createHTML){
+	__webpack_require__(24)('fontsize', function(createHTML){
 	  return function fontsize(size){
 	    return createHTML(this, 'font', 'size', size);
 	  }
 	});
 
 /***/ },
-/* 616 */
+/* 621 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export        = __webpack_require__(2)
@@ -48396,16 +46897,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 617 */
+/* 622 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.1.3.7 String.prototype.includes(searchString, position = 0)
 	'use strict';
 	var $export  = __webpack_require__(2)
-	  , context  = __webpack_require__(150)
+	  , context  = __webpack_require__(156)
 	  , INCLUDES = 'includes';
 	
-	$export($export.P + $export.F * __webpack_require__(136)(INCLUDES), 'String', {
+	$export($export.P + $export.F * __webpack_require__(142)(INCLUDES), 'String', {
 	  includes: function includes(searchString /*, position = 0 */){
 	    return !!~context(this, searchString, INCLUDES)
 	      .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
@@ -48413,38 +46914,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 618 */
+/* 623 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.9 String.prototype.italics()
-	__webpack_require__(23)('italics', function(createHTML){
+	__webpack_require__(24)('italics', function(createHTML){
 	  return function italics(){
 	    return createHTML(this, 'i', '', '');
 	  }
 	});
 
 /***/ },
-/* 619 */
-[870, 149, 142],
-/* 620 */
+/* 624 */
+[878, 155, 148],
+/* 625 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.10 String.prototype.link(url)
-	__webpack_require__(23)('link', function(createHTML){
+	__webpack_require__(24)('link', function(createHTML){
 	  return function link(url){
 	    return createHTML(this, 'a', 'href', url);
 	  }
 	});
 
 /***/ },
-/* 621 */
+/* 626 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export   = __webpack_require__(2)
-	  , toIObject = __webpack_require__(24)
-	  , toLength  = __webpack_require__(15);
+	  , toIObject = __webpack_require__(25)
+	  , toLength  = __webpack_require__(16);
 	
 	$export($export.S, 'String', {
 	  // 21.1.2.4 String.raw(callSite, ...substitutions)
@@ -48462,41 +46963,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 622 */
+/* 627 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(2);
 	
 	$export($export.P, 'String', {
 	  // 21.1.3.13 String.prototype.repeat(count)
-	  repeat: __webpack_require__(151)
+	  repeat: __webpack_require__(157)
 	});
 
 /***/ },
-/* 623 */
+/* 628 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.11 String.prototype.small()
-	__webpack_require__(23)('small', function(createHTML){
+	__webpack_require__(24)('small', function(createHTML){
 	  return function small(){
 	    return createHTML(this, 'small', '', '');
 	  }
 	});
 
 /***/ },
-/* 624 */
+/* 629 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 21.1.3.18 String.prototype.startsWith(searchString [, position ])
 	'use strict';
 	var $export     = __webpack_require__(2)
-	  , toLength    = __webpack_require__(15)
-	  , context     = __webpack_require__(150)
+	  , toLength    = __webpack_require__(16)
+	  , context     = __webpack_require__(156)
 	  , STARTS_WITH = 'startsWith'
 	  , $startsWith = ''[STARTS_WITH];
 	
-	$export($export.P + $export.F * __webpack_require__(136)(STARTS_WITH), 'String', {
+	$export($export.P + $export.F * __webpack_require__(142)(STARTS_WITH), 'String', {
 	  startsWith: function startsWith(searchString /*, position = 0 */){
 	    var that   = context(this, searchString, STARTS_WITH)
 	      , index  = toLength(Math.min(arguments.length > 1 ? arguments[1] : undefined, that.length))
@@ -48508,69 +47009,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 625 */
+/* 630 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.12 String.prototype.strike()
-	__webpack_require__(23)('strike', function(createHTML){
+	__webpack_require__(24)('strike', function(createHTML){
 	  return function strike(){
 	    return createHTML(this, 'strike', '', '');
 	  }
 	});
 
 /***/ },
-/* 626 */
+/* 631 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.13 String.prototype.sub()
-	__webpack_require__(23)('sub', function(createHTML){
+	__webpack_require__(24)('sub', function(createHTML){
 	  return function sub(){
 	    return createHTML(this, 'sub', '', '');
 	  }
 	});
 
 /***/ },
-/* 627 */
+/* 632 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// B.2.3.14 String.prototype.sup()
-	__webpack_require__(23)('sup', function(createHTML){
+	__webpack_require__(24)('sup', function(createHTML){
 	  return function sup(){
 	    return createHTML(this, 'sup', '', '');
 	  }
 	});
 
 /***/ },
-/* 628 */
+/* 633 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// 21.1.3.25 String.prototype.trim()
-	__webpack_require__(70)('trim', function($trim){
+	__webpack_require__(71)('trim', function($trim){
 	  return function trim(){
 	    return $trim(this, 3);
 	  };
 	});
 
 /***/ },
-/* 629 */
-[871, 7, 18, 12, 2, 22, 46, 8, 104, 69, 63, 11, 242, 155, 505, 504, 140, 5, 24, 35, 47, 57, 234, 26, 13, 59, 58, 82, 103, 56, 21],
-/* 630 */
+/* 634 */
+[879, 7, 19, 13, 2, 23, 47, 8, 105, 70, 63, 12, 250, 161, 510, 509, 146, 5, 25, 37, 48, 57, 242, 27, 14, 59, 58, 84, 104, 56, 22],
+/* 635 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export      = __webpack_require__(2)
-	  , $typed       = __webpack_require__(105)
-	  , buffer       = __webpack_require__(154)
+	  , $typed       = __webpack_require__(106)
+	  , buffer       = __webpack_require__(160)
 	  , anObject     = __webpack_require__(5)
 	  , toIndex      = __webpack_require__(62)
-	  , toLength     = __webpack_require__(15)
+	  , toLength     = __webpack_require__(16)
 	  , isObject     = __webpack_require__(9)
 	  , ArrayBuffer  = __webpack_require__(7).ArrayBuffer
-	  , speciesConstructor = __webpack_require__(148)
+	  , speciesConstructor = __webpack_require__(154)
 	  , $ArrayBuffer = buffer.ArrayBuffer
 	  , $DataView    = buffer.DataView
 	  , $isView      = $typed.ABV && ArrayBuffer.isView
@@ -48609,70 +47110,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(61)(ARRAY_BUFFER);
 
 /***/ },
-/* 631 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $export = __webpack_require__(2);
-	$export($export.G + $export.W + $export.F * !__webpack_require__(105).ABV, {
-	  DataView: __webpack_require__(154).DataView
-	});
-
-/***/ },
-/* 632 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(41)('Float32', 4, function(init){
-	  return function Float32Array(data, byteOffset, length){
-	    return init(this, data, byteOffset, length);
-	  };
-	});
-
-/***/ },
-/* 633 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(41)('Float64', 8, function(init){
-	  return function Float64Array(data, byteOffset, length){
-	    return init(this, data, byteOffset, length);
-	  };
-	});
-
-/***/ },
-/* 634 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(41)('Int16', 2, function(init){
-	  return function Int16Array(data, byteOffset, length){
-	    return init(this, data, byteOffset, length);
-	  };
-	});
-
-/***/ },
-/* 635 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(41)('Int32', 4, function(init){
-	  return function Int32Array(data, byteOffset, length){
-	    return init(this, data, byteOffset, length);
-	  };
-	});
-
-/***/ },
 /* 636 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(41)('Int8', 1, function(init){
-	  return function Int8Array(data, byteOffset, length){
-	    return init(this, data, byteOffset, length);
-	  };
+	var $export = __webpack_require__(2);
+	$export($export.G + $export.W + $export.F * !__webpack_require__(106).ABV, {
+	  DataView: __webpack_require__(160).DataView
 	});
 
 /***/ },
 /* 637 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(41)('Uint16', 2, function(init){
-	  return function Uint16Array(data, byteOffset, length){
+	__webpack_require__(44)('Float32', 4, function(init){
+	  return function Float32Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -48681,8 +47132,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 638 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(41)('Uint32', 4, function(init){
-	  return function Uint32Array(data, byteOffset, length){
+	__webpack_require__(44)('Float64', 8, function(init){
+	  return function Float64Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -48691,8 +47142,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 639 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(41)('Uint8', 1, function(init){
-	  return function Uint8Array(data, byteOffset, length){
+	__webpack_require__(44)('Int16', 2, function(init){
+	  return function Int16Array(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	});
@@ -48701,21 +47152,71 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 640 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(41)('Uint8', 1, function(init){
+	__webpack_require__(44)('Int32', 4, function(init){
+	  return function Int32Array(data, byteOffset, length){
+	    return init(this, data, byteOffset, length);
+	  };
+	});
+
+/***/ },
+/* 641 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(44)('Int8', 1, function(init){
+	  return function Int8Array(data, byteOffset, length){
+	    return init(this, data, byteOffset, length);
+	  };
+	});
+
+/***/ },
+/* 642 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(44)('Uint16', 2, function(init){
+	  return function Uint16Array(data, byteOffset, length){
+	    return init(this, data, byteOffset, length);
+	  };
+	});
+
+/***/ },
+/* 643 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(44)('Uint32', 4, function(init){
+	  return function Uint32Array(data, byteOffset, length){
+	    return init(this, data, byteOffset, length);
+	  };
+	});
+
+/***/ },
+/* 644 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(44)('Uint8', 1, function(init){
+	  return function Uint8Array(data, byteOffset, length){
+	    return init(this, data, byteOffset, length);
+	  };
+	});
+
+/***/ },
+/* 645 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(44)('Uint8', 1, function(init){
 	  return function Uint8ClampedArray(data, byteOffset, length){
 	    return init(this, data, byteOffset, length);
 	  };
 	}, true);
 
 /***/ },
-/* 641 */
+/* 646 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var weak = __webpack_require__(226);
+	var weak = __webpack_require__(234);
 	
 	// 23.4 WeakSet Objects
-	__webpack_require__(96)('WeakSet', function(get){
+	__webpack_require__(97)('WeakSet', function(get){
 	  return function WeakSet(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 	}, {
 	  // 23.4.3.1 WeakSet.prototype.add(value)
@@ -48725,13 +47226,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}, weak, false, true);
 
 /***/ },
-/* 642 */
+/* 647 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/tc39/Array.prototype.includes
 	var $export   = __webpack_require__(2)
-	  , $includes = __webpack_require__(95)(true);
+	  , $includes = __webpack_require__(96)(true);
 	
 	$export($export.P, 'Array', {
 	  includes: function includes(el /*, fromIndex = 0 */){
@@ -48739,17 +47240,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	__webpack_require__(66)('includes');
+	__webpack_require__(67)('includes');
 
 /***/ },
-/* 643 */
+/* 648 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 	var $export   = __webpack_require__(2)
-	  , microtask = __webpack_require__(145)()
+	  , microtask = __webpack_require__(151)()
 	  , process   = __webpack_require__(7).process
-	  , isNode    = __webpack_require__(28)(process) == 'process';
+	  , isNode    = __webpack_require__(30)(process) == 'process';
 	
 	$export($export.G, {
 	  asap: function asap(fn){
@@ -48759,12 +47260,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 644 */
+/* 649 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/ljharb/proposal-is-error
 	var $export = __webpack_require__(2)
-	  , cof     = __webpack_require__(28);
+	  , cof     = __webpack_require__(30);
 	
 	$export($export.S, 'Error', {
 	  isError: function isError(it){
@@ -48773,16 +47274,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 645 */
+/* 650 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
 	var $export  = __webpack_require__(2);
 	
-	$export($export.P + $export.R, 'Map', {toJSON: __webpack_require__(225)('Map')});
+	$export($export.P + $export.R, 'Map', {toJSON: __webpack_require__(233)('Map')});
 
 /***/ },
-/* 646 */
+/* 651 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -48798,7 +47299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 647 */
+/* 652 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -48819,7 +47320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 648 */
+/* 653 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -48835,7 +47336,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 649 */
+/* 654 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -48856,46 +47357,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 650 */
+/* 655 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export         = __webpack_require__(2)
-	  , toObject        = __webpack_require__(16)
-	  , aFunction       = __webpack_require__(20)
-	  , $defineProperty = __webpack_require__(13);
+	  , toObject        = __webpack_require__(17)
+	  , aFunction       = __webpack_require__(21)
+	  , $defineProperty = __webpack_require__(14);
 	
 	// B.2.2.2 Object.prototype.__defineGetter__(P, getter)
-	__webpack_require__(12) && $export($export.P + __webpack_require__(102), 'Object', {
+	__webpack_require__(13) && $export($export.P + __webpack_require__(103), 'Object', {
 	  __defineGetter__: function __defineGetter__(P, getter){
 	    $defineProperty.f(toObject(this), P, {get: aFunction(getter), enumerable: true, configurable: true});
 	  }
 	});
 
 /***/ },
-/* 651 */
+/* 656 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export         = __webpack_require__(2)
-	  , toObject        = __webpack_require__(16)
-	  , aFunction       = __webpack_require__(20)
-	  , $defineProperty = __webpack_require__(13);
+	  , toObject        = __webpack_require__(17)
+	  , aFunction       = __webpack_require__(21)
+	  , $defineProperty = __webpack_require__(14);
 	
 	// B.2.2.3 Object.prototype.__defineSetter__(P, setter)
-	__webpack_require__(12) && $export($export.P + __webpack_require__(102), 'Object', {
+	__webpack_require__(13) && $export($export.P + __webpack_require__(103), 'Object', {
 	  __defineSetter__: function __defineSetter__(P, setter){
 	    $defineProperty.f(toObject(this), P, {set: aFunction(setter), enumerable: true, configurable: true});
 	  }
 	});
 
 /***/ },
-/* 652 */
+/* 657 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/tc39/proposal-object-values-entries
 	var $export  = __webpack_require__(2)
-	  , $entries = __webpack_require__(236)(true);
+	  , $entries = __webpack_require__(244)(true);
 	
 	$export($export.S, 'Object', {
 	  entries: function entries(it){
@@ -48904,15 +47405,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 653 */
+/* 658 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/tc39/proposal-object-getownpropertydescriptors
 	var $export        = __webpack_require__(2)
-	  , ownKeys        = __webpack_require__(237)
-	  , toIObject      = __webpack_require__(24)
-	  , gOPD           = __webpack_require__(26)
-	  , createProperty = __webpack_require__(133);
+	  , ownKeys        = __webpack_require__(245)
+	  , toIObject      = __webpack_require__(25)
+	  , gOPD           = __webpack_require__(27)
+	  , createProperty = __webpack_require__(139);
 	
 	$export($export.S, 'Object', {
 	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object){
@@ -48928,18 +47429,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 654 */
+/* 659 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export                  = __webpack_require__(2)
-	  , toObject                 = __webpack_require__(16)
-	  , toPrimitive              = __webpack_require__(35)
-	  , getPrototypeOf           = __webpack_require__(27)
-	  , getOwnPropertyDescriptor = __webpack_require__(26).f;
+	  , toObject                 = __webpack_require__(17)
+	  , toPrimitive              = __webpack_require__(37)
+	  , getPrototypeOf           = __webpack_require__(28)
+	  , getOwnPropertyDescriptor = __webpack_require__(27).f;
 	
 	// B.2.2.4 Object.prototype.__lookupGetter__(P)
-	__webpack_require__(12) && $export($export.P + __webpack_require__(102), 'Object', {
+	__webpack_require__(13) && $export($export.P + __webpack_require__(103), 'Object', {
 	  __lookupGetter__: function __lookupGetter__(P){
 	    var O = toObject(this)
 	      , K = toPrimitive(P, true)
@@ -48951,18 +47452,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 655 */
+/* 660 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var $export                  = __webpack_require__(2)
-	  , toObject                 = __webpack_require__(16)
-	  , toPrimitive              = __webpack_require__(35)
-	  , getPrototypeOf           = __webpack_require__(27)
-	  , getOwnPropertyDescriptor = __webpack_require__(26).f;
+	  , toObject                 = __webpack_require__(17)
+	  , toPrimitive              = __webpack_require__(37)
+	  , getPrototypeOf           = __webpack_require__(28)
+	  , getOwnPropertyDescriptor = __webpack_require__(27).f;
 	
 	// B.2.2.5 Object.prototype.__lookupSetter__(P)
-	__webpack_require__(12) && $export($export.P + __webpack_require__(102), 'Object', {
+	__webpack_require__(13) && $export($export.P + __webpack_require__(103), 'Object', {
 	  __lookupSetter__: function __lookupSetter__(P){
 	    var O = toObject(this)
 	      , K = toPrimitive(P, true)
@@ -48974,12 +47475,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 656 */
+/* 661 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/tc39/proposal-object-values-entries
 	var $export = __webpack_require__(2)
-	  , $values = __webpack_require__(236)(false);
+	  , $values = __webpack_require__(244)(false);
 	
 	$export($export.S, 'Object', {
 	  values: function values(it){
@@ -48988,22 +47489,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 657 */
+/* 662 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/zenparsing/es-observable
 	var $export     = __webpack_require__(2)
 	  , global      = __webpack_require__(7)
-	  , core        = __webpack_require__(38)
-	  , microtask   = __webpack_require__(145)()
-	  , OBSERVABLE  = __webpack_require__(11)('observable')
-	  , aFunction   = __webpack_require__(20)
+	  , core        = __webpack_require__(41)
+	  , microtask   = __webpack_require__(151)()
+	  , OBSERVABLE  = __webpack_require__(12)('observable')
+	  , aFunction   = __webpack_require__(21)
 	  , anObject    = __webpack_require__(5)
 	  , anInstance  = __webpack_require__(55)
 	  , redefineAll = __webpack_require__(60)
-	  , hide        = __webpack_require__(21)
-	  , forOf       = __webpack_require__(67)
+	  , hide        = __webpack_require__(22)
+	  , forOf       = __webpack_require__(68)
 	  , RETURN      = forOf.RETURN;
 	
 	var getMethod = function(fn){
@@ -49192,10 +47693,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(61)('Observable');
 
 /***/ },
-/* 658 */
+/* 663 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata                  = __webpack_require__(40)
+	var metadata                  = __webpack_require__(43)
 	  , anObject                  = __webpack_require__(5)
 	  , toMetaKey                 = metadata.key
 	  , ordinaryDefineOwnMetadata = metadata.set;
@@ -49205,10 +47706,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 659 */
+/* 664 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(40)
+	var metadata               = __webpack_require__(43)
 	  , anObject               = __webpack_require__(5)
 	  , toMetaKey              = metadata.key
 	  , getOrCreateMetadataMap = metadata.map
@@ -49225,14 +47726,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 660 */
+/* 665 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Set                     = __webpack_require__(245)
-	  , from                    = __webpack_require__(221)
-	  , metadata                = __webpack_require__(40)
+	var Set                     = __webpack_require__(253)
+	  , from                    = __webpack_require__(229)
+	  , metadata                = __webpack_require__(43)
 	  , anObject                = __webpack_require__(5)
-	  , getPrototypeOf          = __webpack_require__(27)
+	  , getPrototypeOf          = __webpack_require__(28)
 	  , ordinaryOwnMetadataKeys = metadata.keys
 	  , toMetaKey               = metadata.key;
 	
@@ -49249,12 +47750,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 661 */
+/* 666 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(40)
+	var metadata               = __webpack_require__(43)
 	  , anObject               = __webpack_require__(5)
-	  , getPrototypeOf         = __webpack_require__(27)
+	  , getPrototypeOf         = __webpack_require__(28)
 	  , ordinaryHasOwnMetadata = metadata.has
 	  , ordinaryGetOwnMetadata = metadata.get
 	  , toMetaKey              = metadata.key;
@@ -49271,10 +47772,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 662 */
+/* 667 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata                = __webpack_require__(40)
+	var metadata                = __webpack_require__(43)
 	  , anObject                = __webpack_require__(5)
 	  , ordinaryOwnMetadataKeys = metadata.keys
 	  , toMetaKey               = metadata.key;
@@ -49284,10 +47785,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 663 */
+/* 668 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(40)
+	var metadata               = __webpack_require__(43)
 	  , anObject               = __webpack_require__(5)
 	  , ordinaryGetOwnMetadata = metadata.get
 	  , toMetaKey              = metadata.key;
@@ -49298,12 +47799,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 664 */
+/* 669 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(40)
+	var metadata               = __webpack_require__(43)
 	  , anObject               = __webpack_require__(5)
-	  , getPrototypeOf         = __webpack_require__(27)
+	  , getPrototypeOf         = __webpack_require__(28)
 	  , ordinaryHasOwnMetadata = metadata.has
 	  , toMetaKey              = metadata.key;
 	
@@ -49319,10 +47820,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 665 */
+/* 670 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata               = __webpack_require__(40)
+	var metadata               = __webpack_require__(43)
 	  , anObject               = __webpack_require__(5)
 	  , ordinaryHasOwnMetadata = metadata.has
 	  , toMetaKey              = metadata.key;
@@ -49333,12 +47834,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 666 */
+/* 671 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var metadata                  = __webpack_require__(40)
+	var metadata                  = __webpack_require__(43)
 	  , anObject                  = __webpack_require__(5)
-	  , aFunction                 = __webpack_require__(20)
+	  , aFunction                 = __webpack_require__(21)
 	  , toMetaKey                 = metadata.key
 	  , ordinaryDefineOwnMetadata = metadata.set;
 	
@@ -49353,22 +47854,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	}});
 
 /***/ },
-/* 667 */
+/* 672 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
 	var $export  = __webpack_require__(2);
 	
-	$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(225)('Set')});
+	$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(233)('Set')});
 
 /***/ },
-/* 668 */
+/* 673 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/mathiasbynens/String.prototype.at
 	var $export = __webpack_require__(2)
-	  , $at     = __webpack_require__(149)(true);
+	  , $at     = __webpack_require__(155)(true);
 	
 	$export($export.P, 'String', {
 	  at: function at(pos){
@@ -49377,16 +47878,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 669 */
+/* 674 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://tc39.github.io/String.prototype.matchAll/
 	var $export     = __webpack_require__(2)
-	  , defined     = __webpack_require__(29)
-	  , toLength    = __webpack_require__(15)
-	  , isRegExp    = __webpack_require__(100)
-	  , getFlags    = __webpack_require__(98)
+	  , defined     = __webpack_require__(31)
+	  , toLength    = __webpack_require__(16)
+	  , isRegExp    = __webpack_require__(101)
+	  , getFlags    = __webpack_require__(99)
 	  , RegExpProto = RegExp.prototype;
 	
 	var $RegExpStringIterator = function(regexp, string){
@@ -49394,7 +47895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this._s = string;
 	};
 	
-	__webpack_require__(141)($RegExpStringIterator, 'RegExp String', function next(){
+	__webpack_require__(147)($RegExpStringIterator, 'RegExp String', function next(){
 	  var match = this._r.exec(this._s);
 	  return {value: match, done: match === null};
 	});
@@ -49412,13 +47913,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 670 */
+/* 675 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/tc39/proposal-string-pad-start-end
 	var $export = __webpack_require__(2)
-	  , $pad    = __webpack_require__(241);
+	  , $pad    = __webpack_require__(249);
 	
 	$export($export.P, 'String', {
 	  padEnd: function padEnd(maxLength /*, fillString = ' ' */){
@@ -49427,13 +47928,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 671 */
+/* 676 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/tc39/proposal-string-pad-start-end
 	var $export = __webpack_require__(2)
-	  , $pad    = __webpack_require__(241);
+	  , $pad    = __webpack_require__(249);
 	
 	$export($export.P, 'String', {
 	  padStart: function padStart(maxLength /*, fillString = ' ' */){
@@ -49442,35 +47943,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 672 */
+/* 677 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-	__webpack_require__(70)('trimLeft', function($trim){
+	__webpack_require__(71)('trimLeft', function($trim){
 	  return function trimLeft(){
 	    return $trim(this, 1);
 	  };
 	}, 'trimStart');
 
 /***/ },
-/* 673 */
+/* 678 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	// https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-	__webpack_require__(70)('trimRight', function($trim){
+	__webpack_require__(71)('trimRight', function($trim){
 	  return function trimRight(){
 	    return $trim(this, 2);
 	  };
 	}, 'trimEnd');
 
 /***/ },
-/* 674 */
-[872, 155],
-/* 675 */
-[873, 155],
-/* 676 */
+/* 679 */
+[880, 161],
+/* 680 */
+[881, 161],
+/* 681 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// https://github.com/ljharb/proposal-global
@@ -49479,15 +47980,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S, 'System', {global: __webpack_require__(7)});
 
 /***/ },
-/* 677 */
+/* 682 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $iterators    = __webpack_require__(157)
-	  , redefine      = __webpack_require__(22)
+	var $iterators    = __webpack_require__(163)
+	  , redefine      = __webpack_require__(23)
 	  , global        = __webpack_require__(7)
-	  , hide          = __webpack_require__(21)
-	  , Iterators     = __webpack_require__(68)
-	  , wks           = __webpack_require__(11)
+	  , hide          = __webpack_require__(22)
+	  , Iterators     = __webpack_require__(69)
+	  , wks           = __webpack_require__(12)
 	  , ITERATOR      = wks('iterator')
 	  , TO_STRING_TAG = wks('toStringTag')
 	  , ArrayValues   = Iterators.Array;
@@ -49506,25 +48007,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 678 */
+/* 683 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(2)
-	  , $task   = __webpack_require__(153);
+	  , $task   = __webpack_require__(159);
 	$export($export.G + $export.B, {
 	  setImmediate:   $task.set,
 	  clearImmediate: $task.clear
 	});
 
 /***/ },
-/* 679 */
+/* 684 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// ie9- setTimeout & setInterval additional parameters fix
 	var global     = __webpack_require__(7)
 	  , $export    = __webpack_require__(2)
-	  , invoke     = __webpack_require__(99)
-	  , partial    = __webpack_require__(506)
+	  , invoke     = __webpack_require__(100)
+	  , partial    = __webpack_require__(511)
 	  , navigator  = global.navigator
 	  , MSIE       = !!navigator && /MSIE .\./.test(navigator.userAgent); // <- dirty ie9- check
 	var wrap = function(set){
@@ -49542,49 +48043,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 680 */
+/* 685 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(629);
-	__webpack_require__(568);
-	__webpack_require__(570);
-	__webpack_require__(569);
-	__webpack_require__(572);
-	__webpack_require__(574);
-	__webpack_require__(579);
+	__webpack_require__(634);
 	__webpack_require__(573);
-	__webpack_require__(571);
-	__webpack_require__(581);
-	__webpack_require__(580);
-	__webpack_require__(576);
-	__webpack_require__(577);
 	__webpack_require__(575);
-	__webpack_require__(567);
-	__webpack_require__(578);
-	__webpack_require__(582);
-	__webpack_require__(583);
-	__webpack_require__(535);
-	__webpack_require__(537);
-	__webpack_require__(536);
-	__webpack_require__(585);
+	__webpack_require__(574);
+	__webpack_require__(577);
+	__webpack_require__(579);
 	__webpack_require__(584);
-	__webpack_require__(555);
-	__webpack_require__(565);
-	__webpack_require__(566);
-	__webpack_require__(556);
-	__webpack_require__(557);
-	__webpack_require__(558);
-	__webpack_require__(559);
+	__webpack_require__(578);
+	__webpack_require__(576);
+	__webpack_require__(586);
+	__webpack_require__(585);
+	__webpack_require__(581);
+	__webpack_require__(582);
+	__webpack_require__(580);
+	__webpack_require__(572);
+	__webpack_require__(583);
+	__webpack_require__(587);
+	__webpack_require__(588);
+	__webpack_require__(540);
+	__webpack_require__(542);
+	__webpack_require__(541);
+	__webpack_require__(590);
+	__webpack_require__(589);
 	__webpack_require__(560);
+	__webpack_require__(570);
+	__webpack_require__(571);
 	__webpack_require__(561);
 	__webpack_require__(562);
 	__webpack_require__(563);
 	__webpack_require__(564);
-	__webpack_require__(538);
-	__webpack_require__(539);
-	__webpack_require__(540);
-	__webpack_require__(541);
-	__webpack_require__(542);
+	__webpack_require__(565);
+	__webpack_require__(566);
+	__webpack_require__(567);
+	__webpack_require__(568);
+	__webpack_require__(569);
 	__webpack_require__(543);
 	__webpack_require__(544);
 	__webpack_require__(545);
@@ -49597,172 +48093,181 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(552);
 	__webpack_require__(553);
 	__webpack_require__(554);
-	__webpack_require__(616);
+	__webpack_require__(555);
+	__webpack_require__(556);
+	__webpack_require__(557);
+	__webpack_require__(558);
+	__webpack_require__(559);
 	__webpack_require__(621);
-	__webpack_require__(628);
-	__webpack_require__(619);
-	__webpack_require__(611);
-	__webpack_require__(612);
+	__webpack_require__(626);
+	__webpack_require__(633);
+	__webpack_require__(624);
+	__webpack_require__(616);
 	__webpack_require__(617);
 	__webpack_require__(622);
-	__webpack_require__(624);
-	__webpack_require__(607);
-	__webpack_require__(608);
-	__webpack_require__(609);
-	__webpack_require__(610);
+	__webpack_require__(627);
+	__webpack_require__(629);
+	__webpack_require__(612);
 	__webpack_require__(613);
 	__webpack_require__(614);
 	__webpack_require__(615);
 	__webpack_require__(618);
+	__webpack_require__(619);
 	__webpack_require__(620);
 	__webpack_require__(623);
 	__webpack_require__(625);
-	__webpack_require__(626);
-	__webpack_require__(627);
-	__webpack_require__(530);
-	__webpack_require__(532);
-	__webpack_require__(531);
-	__webpack_require__(534);
-	__webpack_require__(533);
-	__webpack_require__(519);
-	__webpack_require__(517);
-	__webpack_require__(523);
-	__webpack_require__(520);
-	__webpack_require__(526);
-	__webpack_require__(528);
-	__webpack_require__(516);
-	__webpack_require__(522);
-	__webpack_require__(513);
-	__webpack_require__(527);
-	__webpack_require__(511);
-	__webpack_require__(525);
-	__webpack_require__(524);
-	__webpack_require__(518);
-	__webpack_require__(521);
-	__webpack_require__(510);
-	__webpack_require__(512);
-	__webpack_require__(515);
-	__webpack_require__(514);
-	__webpack_require__(529);
-	__webpack_require__(157);
-	__webpack_require__(601);
-	__webpack_require__(606);
-	__webpack_require__(244);
-	__webpack_require__(602);
-	__webpack_require__(603);
-	__webpack_require__(604);
-	__webpack_require__(605);
-	__webpack_require__(586);
-	__webpack_require__(243);
-	__webpack_require__(245);
-	__webpack_require__(246);
-	__webpack_require__(641);
+	__webpack_require__(628);
 	__webpack_require__(630);
 	__webpack_require__(631);
-	__webpack_require__(636);
-	__webpack_require__(639);
-	__webpack_require__(640);
-	__webpack_require__(634);
-	__webpack_require__(637);
-	__webpack_require__(635);
-	__webpack_require__(638);
 	__webpack_require__(632);
-	__webpack_require__(633);
-	__webpack_require__(587);
-	__webpack_require__(588);
-	__webpack_require__(589);
-	__webpack_require__(590);
+	__webpack_require__(535);
+	__webpack_require__(537);
+	__webpack_require__(536);
+	__webpack_require__(539);
+	__webpack_require__(538);
+	__webpack_require__(524);
+	__webpack_require__(522);
+	__webpack_require__(528);
+	__webpack_require__(525);
+	__webpack_require__(531);
+	__webpack_require__(533);
+	__webpack_require__(521);
+	__webpack_require__(527);
+	__webpack_require__(518);
+	__webpack_require__(532);
+	__webpack_require__(516);
+	__webpack_require__(530);
+	__webpack_require__(529);
+	__webpack_require__(523);
+	__webpack_require__(526);
+	__webpack_require__(515);
+	__webpack_require__(517);
+	__webpack_require__(520);
+	__webpack_require__(519);
+	__webpack_require__(534);
+	__webpack_require__(163);
+	__webpack_require__(606);
+	__webpack_require__(611);
+	__webpack_require__(252);
+	__webpack_require__(607);
+	__webpack_require__(608);
+	__webpack_require__(609);
+	__webpack_require__(610);
 	__webpack_require__(591);
-	__webpack_require__(594);
+	__webpack_require__(251);
+	__webpack_require__(253);
+	__webpack_require__(254);
+	__webpack_require__(646);
+	__webpack_require__(635);
+	__webpack_require__(636);
+	__webpack_require__(641);
+	__webpack_require__(644);
+	__webpack_require__(645);
+	__webpack_require__(639);
+	__webpack_require__(642);
+	__webpack_require__(640);
+	__webpack_require__(643);
+	__webpack_require__(637);
+	__webpack_require__(638);
 	__webpack_require__(592);
 	__webpack_require__(593);
+	__webpack_require__(594);
 	__webpack_require__(595);
 	__webpack_require__(596);
+	__webpack_require__(599);
 	__webpack_require__(597);
 	__webpack_require__(598);
 	__webpack_require__(600);
-	__webpack_require__(599);
-	__webpack_require__(642);
-	__webpack_require__(668);
-	__webpack_require__(671);
-	__webpack_require__(670);
-	__webpack_require__(672);
-	__webpack_require__(673);
-	__webpack_require__(669);
-	__webpack_require__(674);
-	__webpack_require__(675);
-	__webpack_require__(653);
-	__webpack_require__(656);
-	__webpack_require__(652);
-	__webpack_require__(650);
-	__webpack_require__(651);
-	__webpack_require__(654);
-	__webpack_require__(655);
-	__webpack_require__(645);
-	__webpack_require__(667);
-	__webpack_require__(676);
-	__webpack_require__(644);
-	__webpack_require__(646);
-	__webpack_require__(648);
+	__webpack_require__(601);
+	__webpack_require__(602);
+	__webpack_require__(603);
+	__webpack_require__(605);
+	__webpack_require__(604);
 	__webpack_require__(647);
-	__webpack_require__(649);
-	__webpack_require__(658);
-	__webpack_require__(659);
-	__webpack_require__(661);
-	__webpack_require__(660);
-	__webpack_require__(663);
-	__webpack_require__(662);
-	__webpack_require__(664);
-	__webpack_require__(665);
-	__webpack_require__(666);
-	__webpack_require__(643);
-	__webpack_require__(657);
-	__webpack_require__(679);
-	__webpack_require__(678);
+	__webpack_require__(673);
+	__webpack_require__(676);
+	__webpack_require__(675);
 	__webpack_require__(677);
-	module.exports = __webpack_require__(38);
+	__webpack_require__(678);
+	__webpack_require__(674);
+	__webpack_require__(679);
+	__webpack_require__(680);
+	__webpack_require__(658);
+	__webpack_require__(661);
+	__webpack_require__(657);
+	__webpack_require__(655);
+	__webpack_require__(656);
+	__webpack_require__(659);
+	__webpack_require__(660);
+	__webpack_require__(650);
+	__webpack_require__(672);
+	__webpack_require__(681);
+	__webpack_require__(649);
+	__webpack_require__(651);
+	__webpack_require__(653);
+	__webpack_require__(652);
+	__webpack_require__(654);
+	__webpack_require__(663);
+	__webpack_require__(664);
+	__webpack_require__(666);
+	__webpack_require__(665);
+	__webpack_require__(668);
+	__webpack_require__(667);
+	__webpack_require__(669);
+	__webpack_require__(670);
+	__webpack_require__(671);
+	__webpack_require__(648);
+	__webpack_require__(662);
+	__webpack_require__(684);
+	__webpack_require__(683);
+	__webpack_require__(682);
+	module.exports = __webpack_require__(41);
 
 /***/ },
-/* 681 */
+/* 686 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["$"] = __webpack_require__(761);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["$"] = __webpack_require__(767);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 682 */
+/* 687 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Handlebars"] = __webpack_require__(691);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Handlebars"] = __webpack_require__(698);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 683 */
+/* 688 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Marionette"] = __webpack_require__(457);
+	/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Marionette"] = __webpack_require__(463);
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 684 */
+/* 689 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 685 */
-684,
-/* 686 */
-684,
-/* 687 */
-684,
-/* 688 */
-684,
-/* 689 */
-684,
 /* 690 */
-684,
+689,
 /* 691 */
+689,
+/* 692 */
+689,
+/* 693 */
+689,
+/* 694 */
+689,
+/* 695 */
+689,
+/* 696 */
+689,
+/* 697 */
+689,
+/* 698 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -54375,381 +52880,371 @@ return /******/ (function(modules) { // webpackBootstrap
 	;
 
 /***/ },
-/* 692 */
-247,
-/* 693 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"dropdown__button js-button-region\"></div>\r\n<div class=\"dropdown__wrp js-panel-region\" style=\"display: none\"></div>\r\n";
-
-/***/ },
-/* 694 */
-/***/ function(module, exports) {
-
-	module.exports = "{{#if tooltip}}\r\n<span class=\"popout-menu__txt\" title=\"{{tooltip}}\">{{name}}</span>\r\n{{else}}\r\n<span class=\"popout-menu__txt\">{{name}}</span>\r\n{{/if}}";
-
-/***/ },
-/* 695 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"dropdown__button js-button-region\"></div>\r\n<div class=\"popout__wrp js-panel-region\" style=\"display: none\"></div>";
-
-/***/ },
-/* 696 */
-/***/ function(module, exports) {
-
-	module.exports = "{{#if avatarUrl}}\r\n    <span style=\"background-image: url({{avatarUrl}});\" class=\"member-icon member-icon_list\"></span>\r\n{{else}}\r\n{{#if abbreviation}}\r\n    <span class=\"member-icon member-icon_list member-icon_abr\">{{abbreviation}}</span>\r\n{{/if}}\r\n{{/if}}\r\n<span class=\"js-name member-text\">{{name}}</span>";
-
-/***/ },
-/* 697 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"dd-list__list\">\r\n    <div class=\"js-list-region dd-list__wrp\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar\"></div>\r\n</div>";
-
-/***/ },
-/* 698 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"js-popout-region\"></div>";
-
-/***/ },
 /* 699 */
-/***/ function(module, exports) {
-
-	module.exports = "<input class=\"js-date-input input input_date\" type=\"text\" placeholder=\"\">";
-
-/***/ },
+255,
 /* 700 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-datetimepicker\"></div>";
+	module.exports = "<div class=\"dropdown__button js-button-region\"></div>";
 
 /***/ },
 /* 701 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-dropdown-region\"></div>";
+	module.exports = "{{#if tooltip}}\r\n<span class=\"popout-menu__txt\" title=\"{{tooltip}}\">{{name}}</span>\r\n{{else}}\r\n<span class=\"popout-menu__txt\">{{name}}</span>\r\n{{/if}}";
 
 /***/ },
 /* 702 */
+700,
+/* 703 */
 /***/ function(module, exports) {
 
-	module.exports = "<input class=\"js-time-input input input_time\">";
+	module.exports = "{{#if avatarUrl}}\r\n    <span style=\"background-image: url({{avatarUrl}});\" class=\"member-icon member-icon_list\"></span>\r\n{{else}}\r\n{{#if abbreviation}}\r\n    <span class=\"member-icon member-icon_list member-icon_abr\">{{abbreviation}}</span>\r\n{{/if}}\r\n{{/if}}\r\n<span class=\"js-name member-text\">{{name}}</span>";
 
 /***/ },
-/* 703 */
-247,
 /* 704 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"js-text dropdown-text\">{{#if hasValue}}{{#if text}}{{text}}{{else}}&nbsp{{/if}}{{else}}{{localize 'CORE.FORM.EDITORS.DROPDOWN.NOTSET'}}{{/if}}</span>";
+	module.exports = "<div class=\"dd-list__list\">\r\n    <div class=\"js-list-region dd-list__wrp\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar\"></div>\r\n</div>";
 
 /***/ },
 /* 705 */
 /***/ function(module, exports) {
 
-	module.exports = "{{#enableSearch}}\r\n<div class=\"dd-list__filter\">\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\"{{localize 'CORE.FORM.EDITORS.DROPDOWN.SEARCH'}}\">\r\n    </div>\r\n</div>\r\n{{/enableSearch}}\r\n<div class=\"dd-list__list\">\r\n    <div class=\"js-list-region dd-list__wrp\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar\"></div>\r\n</div>\r\n";
+	module.exports = "<div class=\"js-popout-region\"></div>";
 
 /***/ },
 /* 706 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"js-anchor\">\r\n    {{#with member}}\r\n      {{#if avatarUrl}}\r\n       <span style=\"background-image: url({{avatarUrl}});\" class=\"js-avatar member-icon\"></span>\r\n      {{else}}\r\n      <span class=\"member-icon member-icon_abr\">\r\n        {{abbreviation}}\r\n      </span>\r\n      {{/if}}\r\n    {{else}}\r\n    <span class=\"member-icon member-icon_empty\">\r\n    </span>\r\n    {{/with}}\r\n</span>\r\n<span class=\"js-text member-text\">\r\n    {{#with member}}\r\n    {{name}}\r\n    {{else}}\r\n      <span class=\"member-text__empty\">{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>\r\n    {{/with}}\r\n    <span class=\"js-clear-button btn-remove btn-remove_absolute\"></span>\r\n</span>";
+	module.exports = "<input class=\"js-date-input input input_date\" type=\"text\" placeholder=\"\">";
 
 /***/ },
 /* 707 */
 /***/ function(module, exports) {
 
-	module.exports = "{{#if avatarUrl}}\r\n    <span style=\"background-image: url({{avatarUrl}});\" class=\"avatar-icon avatar-icon_list\"></span>\r\n{{else}}\r\n    <span class=\"avatar-icon avatar-icon_list\">{{abbreviation}}</span>\r\n{{/if}}\r\n<span class=\"js-fullName\">{{name}}</span>";
+	module.exports = "<div class=\"js-datetimepicker\"></div>";
 
 /***/ },
 /* 708 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-loading-region l-loader\"></div>\r\n<div class=\"dd-list__filter\">\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\"{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.SEARCHPLACEHOLDER'}}\">\r\n    </div>\r\n</div>\r\n<div class=\"dd-list__list\">\r\n    <div class=\"js-list-region dd-list__wrp\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar\"></div>\r\n</div>";
+	module.exports = "<div class=\"js-dropdown-region\"></div>";
 
 /***/ },
 /* 709 */
 /***/ function(module, exports) {
 
-	module.exports = "{{#if url}}\r\n    <span class=\"bubbles__link js-bubble-link\">\r\n{{/if}}\r\n    {{name}}\r\n{{#if url}}\r\n    </span>\r\n{{/if}}\r\n<div class=\"js-bubble-delete btn-remove btn-remove_absolute btn-remove_bubble\"></div>";
+	module.exports = "<input class=\"js-time-input input input_time\">";
 
 /***/ },
 /* 710 */
-/***/ function(module, exports) {
-
-	module.exports = "<ul class=\"dev-bubble-list\"></ul>";
-
-/***/ },
+255,
 /* 711 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"text\" class=\"js-input bubbles__input\" autocomplete=\"off\">";
+	module.exports = "<span class=\"js-text dropdown-text\">{{#if hasValue}}{{#if text}}{{text}}{{else}}&nbsp{{/if}}{{else}}{{localize 'CORE.FORM.EDITORS.DROPDOWN.NOTSET'}}{{/if}}</span>";
 
 /***/ },
 /* 712 */
 /***/ function(module, exports) {
 
-	module.exports = "{{displayValue}}";
+	module.exports = "{{#enableSearch}}\r\n<div class=\"dd-list__filter\">\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\"{{localize 'CORE.FORM.EDITORS.DROPDOWN.SEARCH'}}\">\r\n    </div>\r\n</div>\r\n{{/enableSearch}}\r\n<div class=\"dd-list__list\">\r\n    <div class=\"js-list-region dd-list__wrp\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar\"></div>\r\n</div>\r\n";
 
 /***/ },
 /* 713 */
-247,
+/***/ function(module, exports) {
+
+	module.exports = "<span class=\"js-anchor\">\r\n    {{#with member}}\r\n      {{#if avatarUrl}}\r\n       <span style=\"background-image: url({{avatarUrl}});\" class=\"js-avatar member-icon\"></span>\r\n      {{else}}\r\n      <span class=\"member-icon member-icon_abr\">\r\n        {{abbreviation}}\r\n      </span>\r\n      {{/if}}\r\n    {{else}}\r\n    <span class=\"member-icon member-icon_empty\">\r\n    </span>\r\n    {{/with}}\r\n</span>\r\n<span class=\"js-text member-text\">\r\n    {{#with member}}\r\n    {{name}}\r\n    {{else}}\r\n      <span class=\"member-text__empty\">{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>\r\n    {{/with}}\r\n    <span class=\"js-clear-button btn-remove btn-remove_absolute\"></span>\r\n</span>";
+
+/***/ },
 /* 714 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\r\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\r\n{{#if explicitApply}}\r\n    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>\r\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>\r\n{{else}}\r\n    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>\r\n{{/if}}\r\n</div>";
+	module.exports = "{{#if avatarUrl}}\r\n    <span style=\"background-image: url({{avatarUrl}});\" class=\"avatar-icon avatar-icon_list\"></span>\r\n{{else}}\r\n    <span class=\"avatar-icon avatar-icon_list\">{{abbreviation}}</span>\r\n{{/if}}\r\n<span class=\"js-fullName\">{{name}}</span>";
 
 /***/ },
 /* 715 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"radiobutton js-toggle-button\"></span> <span class=\"radiobutton-text js-display-text\">{{displayText}}</span>";
+	module.exports = "<div class=\"js-loading-region l-loader\"></div>\r\n<div class=\"dd-list__filter\">\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\"{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.SEARCHPLACEHOLDER'}}\">\r\n    </div>\r\n</div>\r\n<div class=\"dd-list__list\">\r\n    <div class=\"js-list-region dd-list__wrp\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar\"></div>\r\n</div>";
 
 /***/ },
 /* 716 */
 /***/ function(module, exports) {
 
-	module.exports = "{{localize 'CORE.FORM.EDITORS.REFERENCE.ADDNEW'}}";
+	module.exports = "{{#if url}}\r\n    <span class=\"bubbles__link js-bubble-link\">\r\n{{/if}}\r\n    {{name}}\r\n{{#if url}}\r\n    </span>\r\n{{/if}}\r\n<div class=\"js-bubble-delete btn-remove btn-remove_absolute btn-remove_bubble\"></div>";
 
 /***/ },
 /* 717 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"loader\">{{localize 'CORE.FORM.EDITORS.REFERENCE.LOADING'}}</div>";
+	module.exports = "<ul class=\"dev-bubble-list\"></ul>";
 
 /***/ },
 /* 718 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"js-text reference-field__txt btn-wrp\">\r\n    {{#if text}}\r\n        {{text}}\r\n        <span class=\"js-clear-button btn-del btn-del_absolute\"></span>\r\n    {{else}}\r\n        {{localize 'CORE.FORM.EDITORS.REFERENCE.NOTSET'}}\r\n    {{/if}}\r\n</span>";
+	module.exports = "<input type=\"text\" class=\"js-input bubbles__input\" autocomplete=\"off\">";
 
 /***/ },
 /* 719 */
-247,
-/* 720 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-loading-region l-loader\"></div>\r\n\r\n<div class=\"dd-list__filter dd-list__filter_reference\">\r\n    {{#if text}}\r\n    <div class=\"dd-list__title btn-wrp-active\">\r\n        {{text}}\r\n        <span class=\"js-clear btn-del btn-del_absolute\"></span>\r\n    </div>\r\n    {{/if}}\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\"{{localize 'CORE.FORM.EDITORS.REFERENCE.SEARCH'}}\">\r\n    </div>\r\n</div>\r\n<div class=\"dd-list__list dd-list__list_reference\">\r\n    <div class=\"js-list-region dd-list__wrp {{#if showAddNewButton}}dd-list__wrp_button{{/if}}\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar {{#if showAddNewButton}}dd-list__scrollbar_button{{/if}}\"></div>\r\n</div>\r\n{{#if showAddNewButton}}\r\n<div class=\"dd-list__btn js-add-new-button-region\"></div>\r\n{{/if}}";
+	module.exports = "{{displayValue}}";
 
 /***/ },
+/* 720 */
+255,
 /* 721 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"js-anchor\">\r\n    {{#if text}}\r\n        {{#if avatarUrl}}\r\n            <span style=\"background-image: url({{avatarUrl}});\" class=\"js-avatar member-icon\"></span>\r\n        {{else}}\r\n            <span class=\"member-icon member-icon_abr\">\r\n                {{abbreviation}}\r\n            </span>\r\n        {{/if}}\r\n    {{else}}\r\n        <span class=\"member-icon member-icon_empty\">\r\n    </span>\r\n    {{/if}}\r\n</span>\r\n<span class=\"js-text reference-field__txt btn-wrp\">\r\n    {{#if text}}\r\n        {{text}}\r\n    {{else}}\r\n        <span class=\"member-text__empty\">{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>\r\n    {{/if}}\r\n    <span class=\"js-clear-button btn-del btn-del_absolute\"></span>\r\n</span>";
+	module.exports = "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\r\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\r\n{{#if explicitApply}}\r\n    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>\r\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>\r\n{{else}}\r\n    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>\r\n{{/if}}\r\n</div>";
 
 /***/ },
 /* 722 */
 /***/ function(module, exports) {
 
-	module.exports = "{{#if avatarUrl}}\r\n    <span style=\"background-image: url({{avatarUrl}});\" class=\"avatar-icon avatar-icon_list\"></span>\r\n{{else}}\r\n    <span class=\"avatar-icon avatar-icon_list\">{{abbreviation}}</span>\r\n{{/if}}\r\n<span class=\"js-fullName\">{{text}}</span>";
+	module.exports = "<span class=\"radiobutton js-toggle-button\"></span><span class=\"radiobutton-text js-display-text\">{{#if displayHtml}}{{{displayHtml}}}{{else}}{{displayText}}{{/if}}</span>\r\n";
 
 /***/ },
 /* 723 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-remove user-avatar-editor__empty\">X</div>\r\n<div class=\"js-image user-avatar-editor\">\r\n    <div class=\"js-initials user-avatar-editor__txt\"></div>\r\n    <div class=\"js-tooltip user-avatar-editor__btn\"><span class=\"user-avatar-editor-btn\">{{localize 'CORE.FORM.EDITORS.AVATAR.CHANGE'}}</span></div>\r\n</div>";
+	module.exports = "{{localize 'CORE.FORM.EDITORS.REFERENCE.ADDNEW'}}";
 
 /***/ },
 /* 724 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"checkbox js-toggle-button\"></span> <span class=\"checkbox-text js-display-text\">{{displayText}}</span>";
+	module.exports = "<div class=\"loader\">{{localize 'CORE.FORM.EDITORS.REFERENCE.LOADING'}}</div>";
 
 /***/ },
 /* 725 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"date-wrp js-date-region\"></div>\r\n<div class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_date\"></div>";
+	module.exports = "<span class=\"js-text reference-field__txt btn-wrp\">\r\n    {{#if text}}\r\n        {{text}}\r\n        <span class=\"js-clear-button btn-del btn-del_absolute\"></span>\r\n    {{else}}\r\n        {{localize 'CORE.FORM.EDITORS.REFERENCE.NOTSET'}}\r\n    {{/if}}\r\n</span>";
 
 /***/ },
 /* 726 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"date-time js-date-region\"></div>\r\n<div class=\"date-time js-time-region\"></div>\r\n<span class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_date-time\"></span>";
-
-/***/ },
+255,
 /* 727 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-dropdown-region editor\"></div>";
+	module.exports = "<div class=\"js-loading-region l-loader\"></div>\r\n\r\n<div class=\"dd-list__filter dd-list__filter_reference\">\r\n    {{#if text}}\r\n    <div class=\"dd-list__title btn-wrp-active\">\r\n        {{text}}\r\n        <span class=\"js-clear btn-del btn-del_absolute\"></span>\r\n    </div>\r\n    {{/if}}\r\n    <div class=\"list-search list-search_dd\">\r\n        <input type=\"text\" class=\"list-search__input js-input\" placeholder=\"{{localize 'CORE.FORM.EDITORS.REFERENCE.SEARCH'}}\">\r\n    </div>\r\n</div>\r\n<div class=\"dd-list__list dd-list__list_reference\">\r\n    <div class=\"js-list-region dd-list__wrp {{#if showAddNewButton}}dd-list__wrp_button{{/if}}\"></div>\r\n    <div class=\"js-scrollbar-region dd-list__scrollbar {{#if showAddNewButton}}dd-list__scrollbar_button{{/if}}\"></div>\r\n</div>\r\n{{#if showAddNewButton}}\r\n<div class=\"dd-list__btn js-add-new-button-region\"></div>\r\n{{/if}}";
 
 /***/ },
 /* 728 */
 /***/ function(module, exports) {
 
-	module.exports = "<input class=\"js-input input input_duration\" placeholder=\"{{localize 'CORE.FORM.EDITORS.DURATION.NOTSET'}}\">\r\n<div class=\"js-duration-remove btn-remove btn-remove_absolute\"></div>";
+	module.exports = "<span class=\"js-anchor\">\r\n    {{#if text}}\r\n        {{#if avatarUrl}}\r\n            <span style=\"background-image: url({{avatarUrl}});\" class=\"js-avatar member-icon\"></span>\r\n        {{else}}\r\n            <span class=\"member-icon member-icon_abr\">\r\n                {{abbreviation}}\r\n            </span>\r\n        {{/if}}\r\n    {{else}}\r\n        <span class=\"member-icon member-icon_empty\">\r\n    </span>\r\n    {{/if}}\r\n</span>\r\n<span class=\"js-text reference-field__txt btn-wrp\">\r\n    {{#if text}}\r\n        {{text}}\r\n    {{else}}\r\n        <span class=\"member-text__empty\">{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>\r\n    {{/if}}\r\n    <span class=\"js-clear-button btn-del btn-del_absolute\"></span>\r\n</span>";
 
 /***/ },
 /* 729 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-dropdown-region editor editor_user\"></div>";
+	module.exports = "{{#if avatarUrl}}\r\n    <span style=\"background-image: url({{avatarUrl}});\" class=\"avatar-icon avatar-icon_list\"></span>\r\n{{else}}\r\n    <span class=\"avatar-icon avatar-icon_list\">{{abbreviation}}</span>\r\n{{/if}}\r\n<span class=\"js-fullName\">{{text}}</span>";
 
 /***/ },
 /* 730 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-dropdown-region dropdown-bubble\"></div>";
+	module.exports = "<div class=\"js-remove user-avatar-editor__empty\">X</div>\r\n<div class=\"js-image user-avatar-editor\">\r\n    <div class=\"js-initials user-avatar-editor__txt\"></div>\r\n    <div class=\"js-tooltip user-avatar-editor__btn\"><span class=\"user-avatar-editor-btn\">{{localize 'CORE.FORM.EDITORS.AVATAR.CHANGE'}}</span></div>\r\n</div>";
 
 /***/ },
 /* 731 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-dropdown-region dev-mention-editor__dropdown-region\"></div>";
+	module.exports = "<span class=\"checkbox js-toggle-button\"></span><span class=\"checkbox-text js-display-text\">{{#if displayHtml}}{{{displayHtml}}}{{else}}{{displayText}}{{/if}}</span>\r\n";
 
 /***/ },
 /* 732 */
-727,
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"date-wrp js-date-region\"></div>\r\n<div class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_date\"></div>";
+
+/***/ },
 /* 733 */
 /***/ function(module, exports) {
 
-	module.exports = "<input class=\"input input_number js-input\" type=\"text\">\r\n<div class=\"number-btn number-btn_up js-spinner-up js-spinner-button\"></div>\r\n<div class=\"number-btn number-btn_down js-spinner-down js-spinner-button\"></div>\r\n";
+	module.exports = "<div class=\"date-time js-date-region\"></div>\r\n<div class=\"date-time js-time-region\"></div>\r\n<span class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_date-time\"></span>";
 
 /***/ },
 /* 734 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"Password\"\r\n       class=\"input js-input\"\r\n       placeholder=\"{{placeholder}}\"\r\n       {{#if maxLength}} maxlength='{{maxLength}}' {{/if}}>";
+	module.exports = "<div class=\"js-dropdown-region editor\"></div>";
 
 /***/ },
 /* 735 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-dropdown-region dropdown-reference\"></div>";
+	module.exports = "<input class=\"js-input input input_duration\" placeholder=\"{{localize 'CORE.FORM.EDITORS.DURATION.NOTSET'}}\">\r\n<div class=\"js-duration-remove btn-remove btn-remove_absolute\"></div>";
 
 /***/ },
 /* 736 */
 /***/ function(module, exports) {
 
-	module.exports = "<textarea class=\"textarea js-textarea\"\r\n          placeholder=\"{{placeholder}}\"\r\n          {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}}\r\n></textarea>";
+	module.exports = "<div class=\"js-dropdown-region editor editor_user\"></div>";
 
 /***/ },
 /* 737 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"text\"\r\n       class=\"input js-input\"\r\n       placeholder=\"{{placeholder}}\"\r\n       {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}} >";
+	module.exports = "<div class=\"js-dropdown-region dropdown-bubble\"></div>";
 
 /***/ },
 /* 738 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"time-wrp js-time-region\"></div>\r\n<div class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_time\"></div>";
+	module.exports = "<div class=\"js-dropdown-region dev-mention-editor__dropdown-region\"></div>";
 
 /***/ },
 /* 739 */
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"form-group\">\r\n    <div class=\"form-label\">\r\n        <span class=\"js-field-error form-label__error\"></span>\r\n        <span class=\"form-label__txt\">{{title}}</span>\r\n        <span class=\"js-field-info form-label__info\"></span>\r\n    </div>\r\n    <div data-editor class=\"form-editor\"></div>\r\n    <div class=\"js-error-text form-error\"></div>\r\n</div>";
-
-/***/ },
+734,
 /* 740 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"js-anchor dropdown__anchor_error\"></span>";
+	module.exports = "<input class=\"input input_number js-input\" type=\"text\">\r\n<div class=\"number-btn number-btn_up js-spinner-up js-spinner-button\"></div>\r\n<div class=\"number-btn number-btn_down js-spinner-down js-spinner-button\"></div>\r\n";
 
 /***/ },
 /* 741 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"js-anchor\">(?)</span>";
+	module.exports = "<input type=\"Password\"\r\n       class=\"input js-input\"\r\n       placeholder=\"{{placeholder}}\"\r\n       {{#if maxLength}} maxlength='{{maxLength}}' {{/if}}>";
 
 /***/ },
 /* 742 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"grid-header-view\"></div>\r\n<div class=\"grid-content-view\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>";
+	module.exports = "<div class=\"js-dropdown-region dropdown-reference\"></div>";
 
 /***/ },
 /* 743 */
 /***/ function(module, exports) {
 
-	module.exports = "{{displayText}}\r\n{{#if sortingAsc}} <span class=\"sort_down\"></span>{{/if}}\r\n{{#if sortingDesc}} <span class=\"sort_up\"></span>{{/if}}";
+	module.exports = "<textarea class=\"textarea js-textarea\"\r\n          placeholder=\"{{placeholder}}\"\r\n          {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}}\r\n></textarea>";
 
 /***/ },
 /* 744 */
 /***/ function(module, exports) {
 
-	module.exports = "{{#each columns}}\r\n    <div class=\"grid-header-column\">\r\n        <div class=\"grid-header-column-content-view\"></div>\r\n        {{#unless @last}}\r\n            <div class=\"grid-header-dragger\"></div>\r\n        {{/unless}}\r\n    </div>\r\n{{/each}}";
+	module.exports = "<input type=\"text\"\r\n       class=\"input js-input\"\r\n       placeholder=\"{{placeholder}}\"\r\n       {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}} >";
 
 /***/ },
 /* 745 */
 /***/ function(module, exports) {
 
-	module.exports = "{{localize 'CORE.GRID.LOADINGROW.LOADING'}}";
+	module.exports = "<div class=\"time-wrp js-time-region\"></div>\r\n<div class=\"js-clear-button btn-remove btn-remove_absolute btn-remove_time\"></div>";
 
 /***/ },
 /* 746 */
 /***/ function(module, exports) {
 
-	module.exports = "{{localize 'CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'}}";
+	module.exports = "<span class=\"js-anchor dropdown__anchor_error\"></span>";
 
 /***/ },
 /* 747 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"dragger\"></div>";
+	module.exports = "<span class=\"js-anchor\">(?)</span>";
 
 /***/ },
 /* 748 */
 /***/ function(module, exports) {
 
-	module.exports = "{{#if filterView}}<span class=\"js-filter-btn filter-sort-btn\"></span>{{/if}}\r\n<div class=\"js-cell-content\" style=\"display: inline\">\r\n    {{displayText}}\r\n    {{#if sortingAsc}}<span class=\"sort_down\"></span>{{/if}}\r\n    {{#if sortingDesc}}<span class=\"sort_up\"></span>{{/if}}\r\n</div>\r\n";
+	module.exports = "<div class=\"form-group\">\r\n    <div class=\"form-label\">\r\n        <span class=\"js-field-error form-label__error\"></span>\r\n        <span class=\"form-label__txt\">{{title}}</span>\r\n        <span class=\"js-help-text-region form-label__info\"></span>\r\n    </div>\r\n    <div class=\"form-editor js-editor-region\"></div>\r\n    <div class=\"js-error-text form-error\"></div>\r\n</div>";
 
 /***/ },
 /* 749 */
 /***/ function(module, exports) {
 
-	module.exports = "{{#each columns}}\r\n<div class=\"grid-header-column\">\r\n    <div class=\"grid-header-column-content-view\"></div>\r\n    <div class=\"grid-header-dragger\"></div>\r\n</div>\r\n{{/each}}";
+	module.exports = "<div class=\"grid-header-view\"></div>\r\n<div class=\"grid-content-view\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>";
 
 /***/ },
 /* 750 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-popout-region native-grid__popout\"></div>\r\n<div class=\"js-native-grid-header-region native-grid__header\"></div>\r\n<div class=\"js-native-grid-list-region native-grid__list\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>\r\n";
+	module.exports = "{{displayText}}\r\n{{#if sortingAsc}} <span class=\"sort_down\"></span>{{/if}}\r\n{{#if sortingDesc}} <span class=\"sort_up\"></span>{{/if}}";
 
 /***/ },
 /* 751 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"msg-popup__content\">\r\n\t<div class=\"msg-popup__title\">\r\n\t\t{{text}}\r\n\t</div>\r\n\t<div class=\"msg-popup__desc\">{{description}}</div>\r\n\t<div class=\"msg-popup__buttons\">\r\n\t    {{#each buttons}}\r\n\t        <div class=\"js-buttons msg-popup__button {{#if default}}msg-popup__button_default{{/if}}\">{{text}}</div>\r\n\t    {{/each}}\r\n\t</div>\r\n</div>";
+	module.exports = "{{#each columns}}\r\n    <div class=\"grid-header-column\">\r\n        <div class=\"grid-header-column-content-view\"></div>\r\n        {{#unless @last}}\r\n            <div class=\"grid-header-dragger\"></div>\r\n        {{/unless}}\r\n    </div>\r\n{{/each}}";
 
 /***/ },
 /* 752 */
 /***/ function(module, exports) {
 
-	module.exports = "";
+	module.exports = "{{localize 'CORE.GRID.LOADINGROW.LOADING'}}";
 
 /***/ },
 /* 753 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-fading-popup-region fading-container\"></div>";
+	module.exports = "{{localize 'CORE.GRID.NOCOLUMNSVIEW.ALLCOLUMNSHIDDEN'}}";
 
 /***/ },
 /* 754 */
 /***/ function(module, exports) {
 
-	module.exports = "<span class=\"loader\">{{text}}</span>";
+	module.exports = "<div class=\"dragger\"></div>";
 
 /***/ },
 /* 755 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"tr-search tr-search_mselect\" id=\"searchInput\">\r\n    <input class=\"tr-search__input js-search-input\" name=\"searchName\" placeholder=\"{{{placeholder}}}\">\r\n    <div class=\"js-search-clear tr-search__clear\"></div>\r\n</div>";
+	module.exports = "{{#if filterView}}<span class=\"js-filter-btn filter-sort-btn\"></span>{{/if}}\r\n<div class=\"js-cell-content\" style=\"display: inline\">\r\n    {{displayText}}\r\n    {{#if sortingAsc}}<span class=\"sort_down\"></span>{{/if}}\r\n    {{#if sortingDesc}}<span class=\"sort_up\"></span>{{/if}}\r\n</div>\r\n";
 
 /***/ },
 /* 756 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"js-panel1 double-panels__panel\"></div>\r\n<div class=\"js-resizer double-panels__resizer\"></div>\r\n<div class=\"js-panel2 double-panels__panel\"></div>";
+	module.exports = "{{#each columns}}\r\n<div class=\"grid-header-column\">\r\n    <div class=\"grid-header-column-content-view\"></div>\r\n    <div class=\"grid-header-dragger\"></div>\r\n</div>\r\n{{/each}}";
 
 /***/ },
 /* 757 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"js-popout-region native-grid__popout\"></div>\r\n<div class=\"js-native-grid-header-region native-grid__header\"></div>\r\n<div class=\"js-native-grid-list-region native-grid__list\"></div>\r\n<div class=\"js-nocolumns-view-region\"></div>\r\n";
+
+/***/ },
+/* 758 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"msg-popup__content\">\r\n\t<div class=\"msg-popup__title\">\r\n\t\t{{text}}\r\n\t</div>\r\n\t<div class=\"msg-popup__desc\">{{description}}</div>\r\n\t<div class=\"msg-popup__buttons\">\r\n\t    {{#each buttons}}\r\n\t        <div class=\"js-buttons msg-popup__button {{#if default}}msg-popup__button_default{{/if}}\">{{text}}</div>\r\n\t    {{/each}}\r\n\t</div>\r\n</div>";
+
+/***/ },
+/* 759 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"fadingPanel js-fading-panel\"></div>";
+
+/***/ },
+/* 760 */
+/***/ function(module, exports) {
+
+	module.exports = "<span class=\"loader\">{{text}}</span>";
+
+/***/ },
+/* 761 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"tr-search tr-search_mselect\" id=\"searchInput\">\r\n    <input class=\"tr-search__input js-search-input\" name=\"searchName\" placeholder=\"{{{placeholder}}}\">\r\n    <div class=\"js-search-clear tr-search__clear\"></div>\r\n</div>";
+
+/***/ },
+/* 762 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"js-panel1 double-panels__panel\"></div>\r\n<div class=\"js-resizer double-panels__resizer\"></div>\r\n<div class=\"js-panel2 double-panels__panel\"></div>";
+
+/***/ },
+/* 763 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
-	var jquery = __webpack_require__(42);
+	var jquery = __webpack_require__(64);
 	
 	/* =========================================================
 	 * bootstrap-datetimepicker.js
@@ -56601,11 +55096,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 758 */
+/* 764 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
-	var jquery = __webpack_require__(42);
+	var jquery = __webpack_require__(64);
 	
 	/*!
 		Autosize 1.18.13
@@ -56885,11 +55380,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 759 */
+/* 765 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
-	var jquery = __webpack_require__(42);
+	var jquery = __webpack_require__(64);
 	
 	/*!
 	* jquery.inputmask.bundle.js
@@ -59511,7 +58006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 760 */
+/* 766 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -59525,7 +58020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function (factory) {
 	    if ( true ) {
 	        // AMD. Register as an anonymous module.
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(42)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(64)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports === 'object') {
 	        // Node/CommonJS style for Browserify
 	        module.exports = factory;
@@ -59738,7 +58233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 761 */
+/* 767 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -70771,202 +69266,202 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 762 */
+/* 768 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 249,
-		"./af.js": 249,
-		"./ar": 253,
-		"./ar-ma": 250,
-		"./ar-ma.js": 250,
-		"./ar-sa": 251,
-		"./ar-sa.js": 251,
-		"./ar-tn": 252,
-		"./ar-tn.js": 252,
-		"./ar.js": 253,
-		"./az": 254,
-		"./az.js": 254,
-		"./be": 255,
-		"./be.js": 255,
-		"./bg": 256,
-		"./bg.js": 256,
-		"./bn": 257,
-		"./bn.js": 257,
-		"./bo": 258,
-		"./bo.js": 258,
-		"./br": 259,
-		"./br.js": 259,
-		"./bs": 260,
-		"./bs.js": 260,
-		"./ca": 261,
-		"./ca.js": 261,
-		"./cs": 262,
-		"./cs.js": 262,
-		"./cv": 263,
-		"./cv.js": 263,
-		"./cy": 264,
-		"./cy.js": 264,
-		"./da": 265,
-		"./da.js": 265,
-		"./de": 158,
-		"./de-at": 266,
-		"./de-at.js": 266,
-		"./de.js": 158,
-		"./dv": 267,
-		"./dv.js": 267,
-		"./el": 268,
-		"./el.js": 268,
-		"./en-au": 269,
-		"./en-au.js": 269,
-		"./en-ca": 270,
-		"./en-ca.js": 270,
-		"./en-gb": 159,
-		"./en-gb.js": 159,
-		"./en-ie": 271,
-		"./en-ie.js": 271,
-		"./en-nz": 272,
-		"./en-nz.js": 272,
-		"./eo": 273,
-		"./eo.js": 273,
-		"./es": 274,
-		"./es.js": 274,
-		"./et": 275,
-		"./et.js": 275,
-		"./eu": 276,
-		"./eu.js": 276,
-		"./fa": 277,
-		"./fa.js": 277,
-		"./fi": 278,
-		"./fi.js": 278,
-		"./fo": 279,
-		"./fo.js": 279,
-		"./fr": 282,
-		"./fr-ca": 280,
-		"./fr-ca.js": 280,
-		"./fr-ch": 281,
-		"./fr-ch.js": 281,
-		"./fr.js": 282,
-		"./fy": 283,
-		"./fy.js": 283,
-		"./gd": 284,
-		"./gd.js": 284,
-		"./gl": 285,
-		"./gl.js": 285,
-		"./he": 286,
-		"./he.js": 286,
-		"./hi": 287,
-		"./hi.js": 287,
-		"./hr": 288,
-		"./hr.js": 288,
-		"./hu": 289,
-		"./hu.js": 289,
-		"./hy-am": 290,
-		"./hy-am.js": 290,
-		"./id": 291,
-		"./id.js": 291,
-		"./is": 292,
-		"./is.js": 292,
-		"./it": 293,
-		"./it.js": 293,
-		"./ja": 294,
-		"./ja.js": 294,
-		"./jv": 295,
-		"./jv.js": 295,
-		"./ka": 296,
-		"./ka.js": 296,
-		"./kk": 297,
-		"./kk.js": 297,
-		"./km": 298,
-		"./km.js": 298,
-		"./ko": 299,
-		"./ko.js": 299,
-		"./lb": 300,
-		"./lb.js": 300,
-		"./lo": 301,
-		"./lo.js": 301,
-		"./lt": 302,
-		"./lt.js": 302,
-		"./lv": 303,
-		"./lv.js": 303,
-		"./me": 304,
-		"./me.js": 304,
-		"./mk": 305,
-		"./mk.js": 305,
-		"./ml": 306,
-		"./ml.js": 306,
-		"./mr": 307,
-		"./mr.js": 307,
-		"./ms": 309,
-		"./ms-my": 308,
-		"./ms-my.js": 308,
-		"./ms.js": 309,
-		"./my": 310,
-		"./my.js": 310,
-		"./nb": 311,
-		"./nb.js": 311,
-		"./ne": 312,
-		"./ne.js": 312,
-		"./nl": 313,
-		"./nl.js": 313,
-		"./nn": 314,
-		"./nn.js": 314,
-		"./pl": 315,
-		"./pl.js": 315,
-		"./pt": 317,
-		"./pt-br": 316,
-		"./pt-br.js": 316,
-		"./pt.js": 317,
-		"./ro": 318,
-		"./ro.js": 318,
-		"./ru": 160,
-		"./ru.js": 160,
-		"./se": 319,
-		"./se.js": 319,
-		"./si": 320,
-		"./si.js": 320,
-		"./sk": 321,
-		"./sk.js": 321,
-		"./sl": 322,
-		"./sl.js": 322,
-		"./sq": 323,
-		"./sq.js": 323,
-		"./sr": 325,
-		"./sr-cyrl": 324,
-		"./sr-cyrl.js": 324,
-		"./sr.js": 325,
-		"./sv": 326,
-		"./sv.js": 326,
-		"./sw": 327,
-		"./sw.js": 327,
-		"./ta": 328,
-		"./ta.js": 328,
-		"./te": 329,
-		"./te.js": 329,
-		"./th": 330,
-		"./th.js": 330,
-		"./tl-ph": 331,
-		"./tl-ph.js": 331,
-		"./tlh": 332,
-		"./tlh.js": 332,
-		"./tr": 333,
-		"./tr.js": 333,
-		"./tzl": 334,
-		"./tzl.js": 334,
-		"./tzm": 336,
-		"./tzm-latn": 335,
-		"./tzm-latn.js": 335,
-		"./tzm.js": 336,
-		"./uk": 337,
-		"./uk.js": 337,
-		"./uz": 338,
-		"./uz.js": 338,
-		"./vi": 339,
-		"./vi.js": 339,
-		"./zh-cn": 340,
-		"./zh-cn.js": 340,
-		"./zh-tw": 341,
-		"./zh-tw.js": 341
+		"./af": 257,
+		"./af.js": 257,
+		"./ar": 261,
+		"./ar-ma": 258,
+		"./ar-ma.js": 258,
+		"./ar-sa": 259,
+		"./ar-sa.js": 259,
+		"./ar-tn": 260,
+		"./ar-tn.js": 260,
+		"./ar.js": 261,
+		"./az": 262,
+		"./az.js": 262,
+		"./be": 263,
+		"./be.js": 263,
+		"./bg": 264,
+		"./bg.js": 264,
+		"./bn": 265,
+		"./bn.js": 265,
+		"./bo": 266,
+		"./bo.js": 266,
+		"./br": 267,
+		"./br.js": 267,
+		"./bs": 268,
+		"./bs.js": 268,
+		"./ca": 269,
+		"./ca.js": 269,
+		"./cs": 270,
+		"./cs.js": 270,
+		"./cv": 271,
+		"./cv.js": 271,
+		"./cy": 272,
+		"./cy.js": 272,
+		"./da": 273,
+		"./da.js": 273,
+		"./de": 164,
+		"./de-at": 274,
+		"./de-at.js": 274,
+		"./de.js": 164,
+		"./dv": 275,
+		"./dv.js": 275,
+		"./el": 276,
+		"./el.js": 276,
+		"./en-au": 277,
+		"./en-au.js": 277,
+		"./en-ca": 278,
+		"./en-ca.js": 278,
+		"./en-gb": 165,
+		"./en-gb.js": 165,
+		"./en-ie": 279,
+		"./en-ie.js": 279,
+		"./en-nz": 280,
+		"./en-nz.js": 280,
+		"./eo": 281,
+		"./eo.js": 281,
+		"./es": 282,
+		"./es.js": 282,
+		"./et": 283,
+		"./et.js": 283,
+		"./eu": 284,
+		"./eu.js": 284,
+		"./fa": 285,
+		"./fa.js": 285,
+		"./fi": 286,
+		"./fi.js": 286,
+		"./fo": 287,
+		"./fo.js": 287,
+		"./fr": 290,
+		"./fr-ca": 288,
+		"./fr-ca.js": 288,
+		"./fr-ch": 289,
+		"./fr-ch.js": 289,
+		"./fr.js": 290,
+		"./fy": 291,
+		"./fy.js": 291,
+		"./gd": 292,
+		"./gd.js": 292,
+		"./gl": 293,
+		"./gl.js": 293,
+		"./he": 294,
+		"./he.js": 294,
+		"./hi": 295,
+		"./hi.js": 295,
+		"./hr": 296,
+		"./hr.js": 296,
+		"./hu": 297,
+		"./hu.js": 297,
+		"./hy-am": 298,
+		"./hy-am.js": 298,
+		"./id": 299,
+		"./id.js": 299,
+		"./is": 300,
+		"./is.js": 300,
+		"./it": 301,
+		"./it.js": 301,
+		"./ja": 302,
+		"./ja.js": 302,
+		"./jv": 303,
+		"./jv.js": 303,
+		"./ka": 304,
+		"./ka.js": 304,
+		"./kk": 305,
+		"./kk.js": 305,
+		"./km": 306,
+		"./km.js": 306,
+		"./ko": 307,
+		"./ko.js": 307,
+		"./lb": 308,
+		"./lb.js": 308,
+		"./lo": 309,
+		"./lo.js": 309,
+		"./lt": 310,
+		"./lt.js": 310,
+		"./lv": 311,
+		"./lv.js": 311,
+		"./me": 312,
+		"./me.js": 312,
+		"./mk": 313,
+		"./mk.js": 313,
+		"./ml": 314,
+		"./ml.js": 314,
+		"./mr": 315,
+		"./mr.js": 315,
+		"./ms": 317,
+		"./ms-my": 316,
+		"./ms-my.js": 316,
+		"./ms.js": 317,
+		"./my": 318,
+		"./my.js": 318,
+		"./nb": 319,
+		"./nb.js": 319,
+		"./ne": 320,
+		"./ne.js": 320,
+		"./nl": 321,
+		"./nl.js": 321,
+		"./nn": 322,
+		"./nn.js": 322,
+		"./pl": 323,
+		"./pl.js": 323,
+		"./pt": 325,
+		"./pt-br": 324,
+		"./pt-br.js": 324,
+		"./pt.js": 325,
+		"./ro": 326,
+		"./ro.js": 326,
+		"./ru": 166,
+		"./ru.js": 166,
+		"./se": 327,
+		"./se.js": 327,
+		"./si": 328,
+		"./si.js": 328,
+		"./sk": 329,
+		"./sk.js": 329,
+		"./sl": 330,
+		"./sl.js": 330,
+		"./sq": 331,
+		"./sq.js": 331,
+		"./sr": 333,
+		"./sr-cyrl": 332,
+		"./sr-cyrl.js": 332,
+		"./sr.js": 333,
+		"./sv": 334,
+		"./sv.js": 334,
+		"./sw": 335,
+		"./sw.js": 335,
+		"./ta": 336,
+		"./ta.js": 336,
+		"./te": 337,
+		"./te.js": 337,
+		"./th": 338,
+		"./th.js": 338,
+		"./tl-ph": 339,
+		"./tl-ph.js": 339,
+		"./tlh": 340,
+		"./tlh.js": 340,
+		"./tr": 341,
+		"./tr.js": 341,
+		"./tzl": 342,
+		"./tzl.js": 342,
+		"./tzm": 344,
+		"./tzm-latn": 343,
+		"./tzm-latn.js": 343,
+		"./tzm.js": 344,
+		"./uk": 345,
+		"./uk.js": 345,
+		"./uz": 346,
+		"./uz.js": 346,
+		"./vi": 347,
+		"./vi.js": 347,
+		"./zh-cn": 348,
+		"./zh-cn.js": 348,
+		"./zh-tw": 349,
+		"./zh-tw.js": 349
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -70979,11 +69474,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 762;
+	webpackContext.id = 768;
 
 
 /***/ },
-/* 763 */
+/* 769 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -71262,7 +69757,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(762)("./" + name);
+	                __webpack_require__(768)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -74592,10 +73087,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _moment;
 	
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(819)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(825)(module)))
 
 /***/ },
-/* 764 */
+/* 770 */
 /***/ function(module, exports) {
 
 	/*! 
@@ -74634,7 +73129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}());
 
 /***/ },
-/* 765 */
+/* 771 */
 /***/ function(module, exports) {
 
 	/*! 
@@ -74677,7 +73172,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}());
 
 /***/ },
-/* 766 */
+/* 772 */
 /***/ function(module, exports) {
 
 	/*! 
@@ -74720,7 +73215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 767 */
+/* 773 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -75405,7 +73900,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 768 */
+/* 774 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {/**
@@ -76077,10 +74572,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  typeof self === "object" ? self : this
 	);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(161)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(167)))
 
 /***/ },
-/* 769 */
+/* 775 */
 /***/ function(module, exports) {
 
 	module.exports = function chop(str, step) {
@@ -76092,11 +74587,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 770 */
+/* 776 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var capitalize = __webpack_require__(163);
-	var camelize = __webpack_require__(342);
+	var capitalize = __webpack_require__(169);
+	var camelize = __webpack_require__(350);
 	var makeString = __webpack_require__(6);
 	
 	module.exports = function classify(str) {
@@ -76106,10 +74601,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 771 */
+/* 777 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(36);
+	var trim = __webpack_require__(38);
 	
 	module.exports = function clean(str) {
 	  return trim(str).replace(/\s\s+/g, ' ');
@@ -76117,7 +74612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 772 */
+/* 778 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -76138,7 +74633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 773 */
+/* 779 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76154,7 +74649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 774 */
+/* 780 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76188,11 +74683,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 775 */
+/* 781 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var toPositive = __webpack_require__(347);
+	var toPositive = __webpack_require__(355);
 	
 	module.exports = function endsWith(str, ends, position) {
 	  str = makeString(str);
@@ -76207,11 +74702,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 776 */
+/* 782 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var escapeChars = __webpack_require__(778);
+	var escapeChars = __webpack_require__(784);
 	var reversedEscapeChars = {};
 	
 	var regexString = "[";
@@ -76231,7 +74726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 777 */
+/* 783 */
 /***/ function(module, exports) {
 
 	module.exports = function() {
@@ -76247,7 +74742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 778 */
+/* 784 */
 /***/ function(module, exports) {
 
 	/* We're explicitly defining the list of entities we want to escape.
@@ -76272,7 +74767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 779 */
+/* 785 */
 /***/ function(module, exports) {
 
 	/*
@@ -76297,12 +74792,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 780 */
+/* 786 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var capitalize = __webpack_require__(163);
-	var underscored = __webpack_require__(353);
-	var trim = __webpack_require__(36);
+	var capitalize = __webpack_require__(169);
+	var underscored = __webpack_require__(361);
+	var trim = __webpack_require__(38);
 	
 	module.exports = function humanize(str) {
 	  return capitalize(trim(underscored(str).replace(/_id$/, '').replace(/_/g, ' ')));
@@ -76310,7 +74805,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 781 */
+/* 787 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76322,7 +74817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 782 */
+/* 788 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//  Underscore.string
@@ -76342,66 +74837,66 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	s.VERSION = '3.2.0';
 	
-	s.isBlank          = __webpack_require__(348);
-	s.stripTags        = __webpack_require__(805);
-	s.capitalize       = __webpack_require__(163);
-	s.decapitalize     = __webpack_require__(344);
-	s.chop             = __webpack_require__(769);
-	s.trim             = __webpack_require__(36);
-	s.clean            = __webpack_require__(771);
-	s.count            = __webpack_require__(773);
-	s.chars            = __webpack_require__(164);
-	s.swapCase         = __webpack_require__(807);
-	s.escapeHTML       = __webpack_require__(776);
-	s.unescapeHTML     = __webpack_require__(813);
-	s.splice           = __webpack_require__(349);
-	s.insert           = __webpack_require__(783);
-	s.replaceAll       = __webpack_require__(796);
-	s.include          = __webpack_require__(781);
-	s.join             = __webpack_require__(784);
-	s.lines            = __webpack_require__(786);
-	s.dedent           = __webpack_require__(774);
-	s.reverse          = __webpack_require__(797);
-	s.startsWith       = __webpack_require__(800);
-	s.endsWith         = __webpack_require__(775);
-	s.pred             = __webpack_require__(792);
-	s.succ             = __webpack_require__(806);
-	s.titleize         = __webpack_require__(808);
-	s.camelize         = __webpack_require__(342);
-	s.underscored      = __webpack_require__(353);
-	s.dasherize        = __webpack_require__(343);
-	s.classify         = __webpack_require__(770);
-	s.humanize         = __webpack_require__(780);
-	s.ltrim            = __webpack_require__(789);
-	s.rtrim            = __webpack_require__(166);
-	s.truncate         = __webpack_require__(812);
-	s.prune            = __webpack_require__(793);
-	s.words            = __webpack_require__(816);
-	s.pad              = __webpack_require__(107);
-	s.lpad             = __webpack_require__(787);
-	s.rpad             = __webpack_require__(798);
-	s.lrpad            = __webpack_require__(788);
-	s.sprintf          = __webpack_require__(350);
-	s.vsprintf         = __webpack_require__(815);
-	s.toNumber         = __webpack_require__(810);
-	s.numberFormat     = __webpack_require__(791);
-	s.strRight         = __webpack_require__(803);
-	s.strRightBack     = __webpack_require__(804);
-	s.strLeft          = __webpack_require__(801);
-	s.strLeftBack      = __webpack_require__(802);
-	s.toSentence       = __webpack_require__(352);
-	s.toSentenceSerial = __webpack_require__(811);
-	s.slugify          = __webpack_require__(799);
-	s.surround         = __webpack_require__(351);
-	s.quote            = __webpack_require__(794);
-	s.unquote          = __webpack_require__(814);
-	s.repeat           = __webpack_require__(795);
-	s.naturalCmp       = __webpack_require__(790);
-	s.levenshtein      = __webpack_require__(785);
-	s.toBoolean        = __webpack_require__(809);
-	s.exports          = __webpack_require__(777);
-	s.escapeRegExp     = __webpack_require__(346);
-	s.wrap             = __webpack_require__(817);
+	s.isBlank          = __webpack_require__(356);
+	s.stripTags        = __webpack_require__(811);
+	s.capitalize       = __webpack_require__(169);
+	s.decapitalize     = __webpack_require__(352);
+	s.chop             = __webpack_require__(775);
+	s.trim             = __webpack_require__(38);
+	s.clean            = __webpack_require__(777);
+	s.count            = __webpack_require__(779);
+	s.chars            = __webpack_require__(170);
+	s.swapCase         = __webpack_require__(813);
+	s.escapeHTML       = __webpack_require__(782);
+	s.unescapeHTML     = __webpack_require__(819);
+	s.splice           = __webpack_require__(357);
+	s.insert           = __webpack_require__(789);
+	s.replaceAll       = __webpack_require__(802);
+	s.include          = __webpack_require__(787);
+	s.join             = __webpack_require__(790);
+	s.lines            = __webpack_require__(792);
+	s.dedent           = __webpack_require__(780);
+	s.reverse          = __webpack_require__(803);
+	s.startsWith       = __webpack_require__(806);
+	s.endsWith         = __webpack_require__(781);
+	s.pred             = __webpack_require__(798);
+	s.succ             = __webpack_require__(812);
+	s.titleize         = __webpack_require__(814);
+	s.camelize         = __webpack_require__(350);
+	s.underscored      = __webpack_require__(361);
+	s.dasherize        = __webpack_require__(351);
+	s.classify         = __webpack_require__(776);
+	s.humanize         = __webpack_require__(786);
+	s.ltrim            = __webpack_require__(795);
+	s.rtrim            = __webpack_require__(172);
+	s.truncate         = __webpack_require__(818);
+	s.prune            = __webpack_require__(799);
+	s.words            = __webpack_require__(822);
+	s.pad              = __webpack_require__(108);
+	s.lpad             = __webpack_require__(793);
+	s.rpad             = __webpack_require__(804);
+	s.lrpad            = __webpack_require__(794);
+	s.sprintf          = __webpack_require__(358);
+	s.vsprintf         = __webpack_require__(821);
+	s.toNumber         = __webpack_require__(816);
+	s.numberFormat     = __webpack_require__(797);
+	s.strRight         = __webpack_require__(809);
+	s.strRightBack     = __webpack_require__(810);
+	s.strLeft          = __webpack_require__(807);
+	s.strLeftBack      = __webpack_require__(808);
+	s.toSentence       = __webpack_require__(360);
+	s.toSentenceSerial = __webpack_require__(817);
+	s.slugify          = __webpack_require__(805);
+	s.surround         = __webpack_require__(359);
+	s.quote            = __webpack_require__(800);
+	s.unquote          = __webpack_require__(820);
+	s.repeat           = __webpack_require__(801);
+	s.naturalCmp       = __webpack_require__(796);
+	s.levenshtein      = __webpack_require__(791);
+	s.toBoolean        = __webpack_require__(815);
+	s.exports          = __webpack_require__(783);
+	s.escapeRegExp     = __webpack_require__(354);
+	s.wrap             = __webpack_require__(823);
 	
 	// Aliases
 	s.strip     = s.trim;
@@ -76465,10 +74960,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 783 */
+/* 789 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var splice = __webpack_require__(349);
+	var splice = __webpack_require__(357);
 	
 	module.exports = function insert(str, i, substr) {
 	  return splice(str, i, 0, substr);
@@ -76476,7 +74971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 784 */
+/* 790 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76491,7 +74986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 785 */
+/* 791 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76549,7 +75044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 786 */
+/* 792 */
 /***/ function(module, exports) {
 
 	module.exports = function lines(str) {
@@ -76559,10 +75054,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 787 */
+/* 793 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pad = __webpack_require__(107);
+	var pad = __webpack_require__(108);
 	
 	module.exports = function lpad(str, length, padStr) {
 	  return pad(str, length, padStr);
@@ -76570,10 +75065,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 788 */
+/* 794 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pad = __webpack_require__(107);
+	var pad = __webpack_require__(108);
 	
 	module.exports = function lrpad(str, length, padStr) {
 	  return pad(str, length, padStr, 'both');
@@ -76581,11 +75076,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 789 */
+/* 795 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var defaultToWhiteSpace = __webpack_require__(106);
+	var defaultToWhiteSpace = __webpack_require__(107);
 	var nativeTrimLeft = String.prototype.trimLeft;
 	
 	module.exports = function ltrim(str, characters) {
@@ -76597,7 +75092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 790 */
+/* 796 */
 /***/ function(module, exports) {
 
 	module.exports = function naturalCmp(str1, str2) {
@@ -76632,7 +75127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 791 */
+/* 797 */
 /***/ function(module, exports) {
 
 	module.exports = function numberFormat(number, dec, dsep, tsep) {
@@ -76650,10 +75145,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 792 */
+/* 798 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var adjacent = __webpack_require__(345);
+	var adjacent = __webpack_require__(353);
 	
 	module.exports = function succ(str) {
 	  return adjacent(str, -1);
@@ -76661,7 +75156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 793 */
+/* 799 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -76670,7 +75165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @author github.com/rwz
 	 */
 	var makeString = __webpack_require__(6);
-	var rtrim = __webpack_require__(166);
+	var rtrim = __webpack_require__(172);
 	
 	module.exports = function prune(str, length, pruneStr) {
 	  str = makeString(str);
@@ -76694,10 +75189,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 794 */
+/* 800 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var surround = __webpack_require__(351);
+	var surround = __webpack_require__(359);
 	
 	module.exports = function quote(str, quoteChar) {
 	  return surround(str, quoteChar || '"');
@@ -76705,11 +75200,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 795 */
+/* 801 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var strRepeat = __webpack_require__(165);
+	var strRepeat = __webpack_require__(171);
 	
 	module.exports = function repeat(str, qty, separator) {
 	  str = makeString(str);
@@ -76726,7 +75221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 796 */
+/* 802 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76740,10 +75235,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 797 */
+/* 803 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var chars = __webpack_require__(164);
+	var chars = __webpack_require__(170);
 	
 	module.exports = function reverse(str) {
 	  return chars(str).reverse().join('');
@@ -76751,10 +75246,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 798 */
+/* 804 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pad = __webpack_require__(107);
+	var pad = __webpack_require__(108);
 	
 	module.exports = function rpad(str, length, padStr) {
 	  return pad(str, length, padStr, 'right');
@@ -76762,14 +75257,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 799 */
+/* 805 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var defaultToWhiteSpace = __webpack_require__(106);
-	var trim = __webpack_require__(36);
-	var dasherize = __webpack_require__(343);
-	var cleanDiacritics = __webpack_require__(772);
+	var defaultToWhiteSpace = __webpack_require__(107);
+	var trim = __webpack_require__(38);
+	var dasherize = __webpack_require__(351);
+	var cleanDiacritics = __webpack_require__(778);
 	
 	module.exports = function slugify(str) {
 	  return trim(dasherize(cleanDiacritics(str).replace(/[^\w\s-]/g, '-')), '-');
@@ -76777,11 +75272,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 800 */
+/* 806 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var toPositive = __webpack_require__(347);
+	var toPositive = __webpack_require__(355);
 	
 	module.exports = function startsWith(str, starts, position) {
 	  str = makeString(str);
@@ -76792,7 +75287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 801 */
+/* 807 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76806,7 +75301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 802 */
+/* 808 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76820,7 +75315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 803 */
+/* 809 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76834,7 +75329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 804 */
+/* 810 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76848,7 +75343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 805 */
+/* 811 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76859,10 +75354,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 806 */
+/* 812 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var adjacent = __webpack_require__(345);
+	var adjacent = __webpack_require__(353);
 	
 	module.exports = function succ(str) {
 	  return adjacent(str, 1);
@@ -76870,7 +75365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 807 */
+/* 813 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76883,7 +75378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 808 */
+/* 814 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76896,10 +75391,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 809 */
+/* 815 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(36);
+	var trim = __webpack_require__(38);
 	
 	function boolMatch(s, matchers) {
 	  var i, matcher, down = s.toLowerCase();
@@ -76922,10 +75417,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 810 */
+/* 816 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(36);
+	var trim = __webpack_require__(38);
 	
 	module.exports = function toNumber(num, precision) {
 	  if (num == null) return 0;
@@ -76935,10 +75430,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 811 */
+/* 817 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toSentence = __webpack_require__(352);
+	var toSentence = __webpack_require__(360);
 	
 	module.exports = function toSentenceSerial(array, sep, lastSep) {
 	  return toSentence(array, sep, lastSep, true);
@@ -76946,7 +75441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 812 */
+/* 818 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
@@ -76960,11 +75455,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 813 */
+/* 819 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var makeString = __webpack_require__(6);
-	var htmlEntities = __webpack_require__(779);
+	var htmlEntities = __webpack_require__(785);
 	
 	module.exports = function unescapeHTML(str) {
 	  return makeString(str).replace(/\&([^;]+);/g, function(entity, entityCode) {
@@ -76984,7 +75479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 814 */
+/* 820 */
 /***/ function(module, exports) {
 
 	module.exports = function unquote(str, quoteChar) {
@@ -76996,10 +75491,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 815 */
+/* 821 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var sprintf = __webpack_require__(350);
+	var sprintf = __webpack_require__(358);
 	
 	module.exports = function vsprintf(fmt, argv) {
 	  argv.unshift(fmt);
@@ -77008,11 +75503,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 816 */
+/* 822 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isBlank = __webpack_require__(348);
-	var trim = __webpack_require__(36);
+	var isBlank = __webpack_require__(356);
+	var trim = __webpack_require__(38);
 	
 	module.exports = function words(str, delimiter) {
 	  if (isBlank(str)) return [];
@@ -77021,7 +75516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 817 */
+/* 823 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Wrap
@@ -77126,7 +75621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 818 */
+/* 824 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.6.0
@@ -78475,7 +76970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 819 */
+/* 825 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -78491,7 +76986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 820 */
+/* 826 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	var isObject = __webpack_require__(__webpack_module_template_argument_0__);
@@ -78501,7 +76996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 821 */
+/* 827 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	// false -> Array#indexOf
@@ -78527,7 +77022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 822 */
+/* 828 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	// getting tag from 19.1.3.6 Object.prototype.toString()
@@ -78555,7 +77050,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 823 */
+/* 829 */
+/***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
+
+	'use strict';
+	var $defineProperty = __webpack_require__(__webpack_module_template_argument_0__)
+	  , createDesc      = __webpack_require__(__webpack_module_template_argument_1__);
+	
+	module.exports = function(object, index, value){
+	  if(index in object)$defineProperty.f(object, index, createDesc(0, value));
+	  else object[index] = value;
+	};
+
+/***/ },
+/* 830 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// optional / simple context binding
@@ -78580,7 +77088,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 824 */
+/* 831 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// Thank's IE8 for his funny defineProperty
@@ -78589,7 +77097,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 825 */
+/* 832 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	var isObject = __webpack_require__(__webpack_module_template_argument_0__)
@@ -78601,7 +77109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 826 */
+/* 833 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	// all enumerable object keys, includes symbols
@@ -78621,7 +77129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 827 */
+/* 834 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__) {
 
 	var ctx         = __webpack_require__(__webpack_module_template_argument_0__)
@@ -78651,7 +77159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.RETURN = RETURN;
 
 /***/ },
-/* 828 */
+/* 835 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	var dP         = __webpack_require__(__webpack_module_template_argument_0__)
@@ -78664,13 +77172,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 829 */
+/* 836 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	module.exports = __webpack_require__(__webpack_module_template_argument_0__).document && document.documentElement;
 
 /***/ },
-/* 830 */
+/* 837 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	module.exports = !__webpack_require__(__webpack_module_template_argument_0__) && !__webpack_require__(__webpack_module_template_argument_1__)(function(){
@@ -78678,7 +77186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 831 */
+/* 838 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -78688,7 +77196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 832 */
+/* 839 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	// check on default Array iterator
@@ -78701,7 +77209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 833 */
+/* 840 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// 7.2.2 IsArray(argument)
@@ -78711,7 +77219,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 834 */
+/* 841 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// call something on iterator step with safe closing on error
@@ -78728,7 +77236,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 835 */
+/* 842 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__) {
 
 	'use strict';
@@ -78746,7 +77254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 836 */
+/* 843 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__, __webpack_module_template_argument_6__, __webpack_module_template_argument_7__, __webpack_module_template_argument_8__, __webpack_module_template_argument_9__) {
 
 	'use strict';
@@ -78821,7 +77329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 837 */
+/* 844 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	var ITERATOR     = __webpack_require__(__webpack_module_template_argument_0__)('iterator')
@@ -78847,7 +77355,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 838 */
+/* 845 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	var getKeys   = __webpack_require__(__webpack_module_template_argument_0__)
@@ -78862,7 +77370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 839 */
+/* 846 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__) {
 
 	var META     = __webpack_require__(__webpack_module_template_argument_0__)('meta')
@@ -78920,7 +77428,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 840 */
+/* 847 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	var global    = __webpack_require__(__webpack_module_template_argument_0__)
@@ -78993,7 +77501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 841 */
+/* 848 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__) {
 
 	'use strict';
@@ -79031,7 +77539,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	} : $assign;
 
 /***/ },
-/* 842 */
+/* 849 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__) {
 
 	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
@@ -79078,7 +77586,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 843 */
+/* 850 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__) {
 
 	var anObject       = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79099,7 +77607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 844 */
+/* 851 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__) {
 
 	var dP       = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79117,7 +77625,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 845 */
+/* 852 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__, __webpack_module_template_argument_6__) {
 
 	var pIE            = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79138,7 +77646,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 846 */
+/* 853 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
@@ -79163,7 +77671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 847 */
+/* 854 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
@@ -79175,7 +77683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 848 */
+/* 855 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
@@ -79193,7 +77701,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 849 */
+/* 856 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__) {
 
 	var has          = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79215,7 +77723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 850 */
+/* 857 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
@@ -79227,7 +77735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 851 */
+/* 858 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	var def = __webpack_require__(__webpack_module_template_argument_0__).f
@@ -79239,7 +77747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 852 */
+/* 859 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	var shared = __webpack_require__(__webpack_module_template_argument_0__)('keys')
@@ -79249,7 +77757,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 853 */
+/* 860 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	var global = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79260,7 +77768,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 854 */
+/* 861 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	// 7.3.20 SpeciesConstructor(O, defaultConstructor)
@@ -79273,7 +77781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 855 */
+/* 862 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	var toInteger = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79295,7 +77803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 856 */
+/* 863 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__) {
 
 	var ctx                = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79375,7 +77883,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 857 */
+/* 864 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	var toInteger = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79387,7 +77895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 858 */
+/* 865 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	// to indexed object, toObject with fallback for non-array-like ES3 strings
@@ -79398,7 +77906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 859 */
+/* 866 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// 7.1.15 ToLength
@@ -79409,7 +77917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 860 */
+/* 867 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// 7.1.13 ToObject(argument)
@@ -79419,7 +77927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 861 */
+/* 868 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// 7.1.1 ToPrimitive(input [, PreferredType])
@@ -79436,7 +77944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 862 */
+/* 869 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__) {
 
 	var global         = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79450,13 +77958,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 863 */
+/* 870 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	exports.f = __webpack_require__(__webpack_module_template_argument_0__);
 
 /***/ },
-/* 864 */
+/* 871 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	var store      = __webpack_require__(__webpack_module_template_argument_0__)('wks')
@@ -79472,7 +77980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$exports.store = store;
 
 /***/ },
-/* 865 */
+/* 872 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__) {
 
 	var classof   = __webpack_require__(__webpack_module_template_argument_0__)
@@ -79485,7 +77993,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 866 */
+/* 873 */
+/***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__, __webpack_module_template_argument_6__, __webpack_module_template_argument_7__, __webpack_module_template_argument_8__) {
+
+	'use strict';
+	var ctx            = __webpack_require__(__webpack_module_template_argument_0__)
+	  , $export        = __webpack_require__(__webpack_module_template_argument_1__)
+	  , toObject       = __webpack_require__(__webpack_module_template_argument_2__)
+	  , call           = __webpack_require__(__webpack_module_template_argument_3__)
+	  , isArrayIter    = __webpack_require__(__webpack_module_template_argument_4__)
+	  , toLength       = __webpack_require__(__webpack_module_template_argument_5__)
+	  , createProperty = __webpack_require__(__webpack_module_template_argument_6__)
+	  , getIterFn      = __webpack_require__(__webpack_module_template_argument_7__);
+	
+	$export($export.S + $export.F * !__webpack_require__(__webpack_module_template_argument_8__)(function(iter){ Array.from(iter); }), 'Array', {
+	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
+	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
+	    var O       = toObject(arrayLike)
+	      , C       = typeof this == 'function' ? this : Array
+	      , aLen    = arguments.length
+	      , mapfn   = aLen > 1 ? arguments[1] : undefined
+	      , mapping = mapfn !== undefined
+	      , index   = 0
+	      , iterFn  = getIterFn(O)
+	      , length, result, step, iterator;
+	    if(mapping)mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
+	    // if object isn't iterable or it's array with default iterator - use simple case
+	    if(iterFn != undefined && !(C == Array && isArrayIter(iterFn))){
+	      for(iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++){
+	        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
+	      }
+	    } else {
+	      length = toLength(O.length);
+	      for(result = new C(length); length > index; index++){
+	        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
+	      }
+	    }
+	    result.length = index;
+	    return result;
+	  }
+	});
+
+
+/***/ },
+/* 874 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__) {
 
 	'use strict';
@@ -79524,7 +78075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	addToUnscopables('entries');
 
 /***/ },
-/* 867 */
+/* 875 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	// 19.1.3.1 Object.assign(target, source)
@@ -79533,7 +78084,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(__webpack_module_template_argument_1__)});
 
 /***/ },
-/* 868 */
+/* 876 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__) {
 
 	var $export = __webpack_require__(__webpack_module_template_argument_0__);
@@ -79541,7 +78092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	$export($export.S + $export.F * !__webpack_require__(__webpack_module_template_argument_1__), 'Object', {defineProperty: __webpack_require__(__webpack_module_template_argument_2__).f});
 
 /***/ },
-/* 869 */
+/* 877 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__, __webpack_module_template_argument_6__, __webpack_module_template_argument_7__, __webpack_module_template_argument_8__, __webpack_module_template_argument_9__, __webpack_module_template_argument_10__, __webpack_module_template_argument_11__, __webpack_module_template_argument_12__, __webpack_module_template_argument_13__, __webpack_module_template_argument_14__, __webpack_module_template_argument_15__, __webpack_module_template_argument_16__, __webpack_module_template_argument_17__) {
 
 	'use strict';
@@ -79845,7 +78396,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 870 */
+/* 878 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__) {
 
 	'use strict';
@@ -79867,7 +78418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 871 */
+/* 879 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__, __webpack_module_template_argument_1__, __webpack_module_template_argument_2__, __webpack_module_template_argument_3__, __webpack_module_template_argument_4__, __webpack_module_template_argument_5__, __webpack_module_template_argument_6__, __webpack_module_template_argument_7__, __webpack_module_template_argument_8__, __webpack_module_template_argument_9__, __webpack_module_template_argument_10__, __webpack_module_template_argument_11__, __webpack_module_template_argument_12__, __webpack_module_template_argument_13__, __webpack_module_template_argument_14__, __webpack_module_template_argument_15__, __webpack_module_template_argument_16__, __webpack_module_template_argument_17__, __webpack_module_template_argument_18__, __webpack_module_template_argument_19__, __webpack_module_template_argument_20__, __webpack_module_template_argument_21__, __webpack_module_template_argument_22__, __webpack_module_template_argument_23__, __webpack_module_template_argument_24__, __webpack_module_template_argument_25__, __webpack_module_template_argument_26__, __webpack_module_template_argument_27__, __webpack_module_template_argument_28__, __webpack_module_template_argument_29__) {
 
 	'use strict';
@@ -80107,13 +78658,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	setToStringTag(global.JSON, 'JSON', true);
 
 /***/ },
-/* 872 */
+/* 880 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	__webpack_require__(__webpack_module_template_argument_0__)('asyncIterator');
 
 /***/ },
-/* 873 */
+/* 881 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	__webpack_require__(__webpack_module_template_argument_0__)('observable');

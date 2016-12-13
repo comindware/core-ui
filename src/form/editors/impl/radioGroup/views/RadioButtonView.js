@@ -19,8 +19,11 @@ export default Marionette.ItemView.extend({
 
     focusElement: null,
 
-    attributes: {
-        'tabindex': '0'
+    attributes() {
+        return {
+            title: (this.model && this.model.get('title')) || null,
+            tabindex: '0'
+        }        
     },
 
     initialize: function (options) {

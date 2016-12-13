@@ -15,7 +15,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
                 autocommit: true,
                 controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
             }),
-            presentation: "{ id: '{{referenceValue.attributes.id}}', text: '{{referenceValue.attributes.text}}' }"
+            presentation: "{{#if referenceValue}}{ id: '{{referenceValue.id}}', text: '{{referenceValue.text}}' }{{else}}null{{/if}}"
         });
     };
 });

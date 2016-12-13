@@ -18,6 +18,7 @@ import FakeInputModel from './impl/membersBubble/models/FakeInputModel';
 import MembersCollection from './impl/common/members/collections/MembersCollection';
 import ButtonView from './impl/membersBubble/views/ButtonView';
 import factory from './impl/common/members/services/factory';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     exclude: [],
@@ -37,7 +38,7 @@ const defaultOptions = {
  * @param {String[]} [options.exclude] Массив идентификаторов пользователей, которые будут скрыты из списка доступных для выбора.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
-Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
+formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -325,4 +326,4 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
     }
 });
 
-export default Backbone.Form.editors.MembersBubble;
+export default formRepository.editors.MembersBubble;

@@ -10,15 +10,16 @@
 
 import '../../libApi';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
     
-Backbone.Form.validators.phone = function (options) {
+formRepository.validators.phone = function (options) {
     options = _.extend({
         type: 'phone',
         message: LocalizationService.get('CORE.FORM.VALIDATION.PHONE'),
         regexp: /^\+?[0-9]+[0-9\-().\s]{7,}$/
     }, options);
 
-    return Backbone.Form.validators.regexp(options);
+    return formRepository.validators.regexp(options);
 };
 
-export default Backbone.Form.validators.phone;
+export default formRepository.validators.phone;

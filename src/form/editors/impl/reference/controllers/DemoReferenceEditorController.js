@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
@@ -19,10 +17,10 @@ const config = {
 
 let createDemoData = function () {
     return _.times(1000, function (i) {
-        var id = 'task.' + (i + 1);
+        let id = `task.${i + 1}`;
         return {
             id: id,
-            text: 'Test Reference ' + (i + 1)
+            text: `Test Reference ${i}1`
         };
     });
 };
@@ -38,8 +36,8 @@ export default Marionette.Controller.extend({
 
     fetch: function (options) {
         options = options || {};
-        var deferred = $.Deferred();
-        var promise = deferred.promise();
+        let deferred = $.Deferred();
+        let promise = deferred.promise();
         setTimeout(function () {
             if (promise !== this.fetchPromise) {
                 deferred.reject();
@@ -48,10 +46,10 @@ export default Marionette.Controller.extend({
 
             this.collection.reset(createDemoData());
             if (options.text) {
-                var filterText = options.text.trim().toUpperCase();
+                let filterText = options.text.trim().toUpperCase();
                 if (filterText) {
                     this.collection.filter(function (model) {
-                        var text = model.get('text');
+                        let text = model.get('text');
                         if (!text) {
                             return false;
                         }
@@ -72,7 +70,7 @@ export default Marionette.Controller.extend({
         return this.fetchPromise;
     },
 
-    navigate: function (model) {
+    navigate: function (value) {
         helpers.throwError('Not Implemented.', 'NotImplementedError');
     }
 });

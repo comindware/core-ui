@@ -6,13 +6,13 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import { Handlebars } from '../../libApi';
+import { numeral, Handlebars } from '../../libApi';
 import { keyCode } from '../../utils/utilsApi';
-import { numeral } from '../../libApi';
+import formRepository from '../formRepository';
 
 const changeMode = {
     keydown: 'keydown',
@@ -73,7 +73,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * */
-Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
+formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -106,7 +106,7 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
             if (this.options.changeMode === changeMode.keydown) {
                 this.__value(this.ui.input.val(), true, true, false);
             } else {
-            	this.__value(this.ui.input.val(), true, false, false);
+                this.__value(this.ui.input.val(), true, false, false);
             }
         },
         'change @ui.input': function () {
@@ -181,9 +181,11 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
         i = i || 500;
 
         clearTimeout(this.timer);
-        this.timer = setTimeout(function() {
-            this.__repeat(40, steps);
-        }.bind(this), i);
+        this.timer = setTimeout(() => {
+            if (!this.isDestroyed) {
+                this.__repeat(40, steps);
+            }
+        }, i);
 
         this.__spin(steps * constants.STEP);
     },
@@ -237,6 +239,9 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
     },
 
     __stop: function() {
+        if (this.isDestroyed) {
+            return;
+        }
         if (!this.spinning) {
             return;
         }
@@ -336,8 +341,9 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
     },
 
     __adjustValue: function(value) {
-        var base, aboveMin,
-            options = this.options;
+        let base;
+        let aboveMin;
+        let options = this.options;
 
         // make sure we're at a valid step
         // - find out where we are relative to the base (min or 0)
@@ -363,4 +369,4 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
     }
 });
 
-export default Backbone.Form.editors.Number;
+export default formRepository.editors.Number;
