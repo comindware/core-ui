@@ -138,7 +138,7 @@ gulp.task("webpack:build:release", function(callback) {
     // modify some webpack config options
     var myConfig = webpackConfigFactory.build({
         env: 'production',
-        uglify: true
+        uglify: false
     });
 
     // run webpack
