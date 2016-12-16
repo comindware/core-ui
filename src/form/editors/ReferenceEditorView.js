@@ -188,8 +188,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __onAddNewItem () {
+        this.dropdownView.close();
         this.controller.addNewItem((createdValue) => {
-            this.dropdownView.close();
             if (createdValue) {
                 this.__value(createdValue, true);
             }
