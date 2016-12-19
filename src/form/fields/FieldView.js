@@ -72,9 +72,9 @@ export default Marionette.LayoutView.extend({
             });
             this.helpTextRegion.show(infoPopout);
         }
+        this.__rendered = true;
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);
-        this.__rendered = true;
     },
 
     /**
