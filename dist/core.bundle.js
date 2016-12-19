@@ -9409,9 +9409,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	            this.helpTextRegion.show(infoPopout);
 	        }
+	        this.__rendered = true;
 	        this.setRequired(this.schema.required);
 	        this.__updateEditorState(this.schema.readonly, this.schema.enabled);
-	        this.__rendered = true;
 	    },
 	
 	
@@ -25878,8 +25878,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    __onAddNewItem: function __onAddNewItem() {
 	        var _this = this;
 	
+	        this.dropdownView.close();
 	        this.controller.addNewItem(function (createdValue) {
-	            _this.dropdownView.close();
 	            if (createdValue) {
 	                _this.__value(createdValue, true);
 	            }
