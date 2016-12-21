@@ -130,7 +130,9 @@ let GridView = Marionette.LayoutView.extend({
         this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
 
         this.updatePosition = this.listView.updatePosition.bind(this.listView);
-
+        if (this.collection.length) {
+            this.__presortCollection(options.columns);
+        }
         this.listenTo(this.collection, 'reset', function (collection, options) {
             // fixing display:table style if there were not rows
             if (options && options.previousModels.length === 0) {
@@ -138,6 +140,7 @@ let GridView = Marionette.LayoutView.extend({
                 // forcing browser to rebuild DOM accessing the attribute
                 this.listView.visibleCollectionRegion.currentView.$el.css('display');
                 this.listView.visibleCollectionRegion.currentView.$el.css('display', 'table');
+                this.__presortCollection(this.getOption('columns'));
             }
         }.bind(this));
     },
@@ -226,6 +229,17 @@ let GridView = Marionette.LayoutView.extend({
 
     handleResize: function () {
         this.headerView.handleResize();
+    },
+
+    __presortCollection(columns) {
+        const sortingColumn = columns.find(column => column.sorting);
+        if (sortingColumn) {
+            if (sortingColumn.sorting === 'asc') {
+                this.onColumnSort(sortingColumn, sortingColumn.sortAsc);
+            } else {
+                this.onColumnSort(sortingColumn, sortingColumn.sortDesc);
+            }
+        }
     }
 });
 
