@@ -12,6 +12,7 @@ import { Handlebars } from '../../libApi';
 import {helpers} from '../../utils/utilsApi';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/avatarEditor.hbs';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     removable: true,
@@ -33,7 +34,7 @@ const defaultOptions = {
  * @param {BaseAvatarEditorController} options.controller - Data provider controller in the form of subclass of
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
-Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
+formRepository.editors.Avatar = BaseItemEditorView.extend({
     className: 'user-avatar-wrp',
     
     attributes: {
@@ -201,4 +202,4 @@ Backbone.Form.editors.Avatar = BaseItemEditorView.extend({
     }
 });
 
-export default Backbone.Form.editors.Avatar;
+export default formRepository.editors.Avatar;

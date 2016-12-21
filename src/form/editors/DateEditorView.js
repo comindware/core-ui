@@ -12,6 +12,7 @@ import { Handlebars, moment } from '../../libApi';
 import template from './templates/dateEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -29,7 +30,7 @@ const defaultOptions = {
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * */
-Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
+formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
     initialize: function (options) {
         options = options || {};
         if (options.schema) {
@@ -147,4 +148,4 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
     }
 });
 
-export default Backbone.Form.editors.Date;
+export default formRepository.editors.Date;

@@ -11,8 +11,8 @@ export default ReferenceButtonView.extend({
         let value = this.model.get('value');
         return {
             text: this.options.getDisplayText(value),
-            avatarUrl: value && value.get('avatarUrl'),
-            abbreviation: value && value.get('abbreviation')
+            avatarUrl: value && value.avatarUrl,
+            abbreviation: value && value.abbreviation
         };
     },
 
