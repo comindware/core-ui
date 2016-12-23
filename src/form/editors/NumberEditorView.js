@@ -12,6 +12,7 @@ import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import { numeral, Handlebars } from '../../libApi';
 import { keyCode } from '../../utils/utilsApi';
+import formRepository from '../formRepository';
 
 const changeMode = {
     keydown: 'keydown',
@@ -72,7 +73,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * */
-Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
+formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -368,4 +369,4 @@ Backbone.Form.editors.Number = BaseItemEditorView.extend(/** @lends module:core.
     }
 });
 
-export default Backbone.Form.editors.Number;
+export default formRepository.editors.Number;

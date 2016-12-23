@@ -1335,6 +1335,9 @@ input[type="checkbox"].checkbox {
     border-bottom:1px solid #182026;
     vertical-align: top;
 }
+.input::-ms-clear {
+    display: none;
+}
 
 .editor_empty .input{
     border-bottom-color:#b9bcbd;
@@ -1359,6 +1362,7 @@ input[type="checkbox"].checkbox {
 }
 
 .textarea {
+    overflow-y: auto;
     width: 100%;
     min-height: 26px;
     padding: 0 0 2px;
@@ -1502,6 +1506,9 @@ input[type="checkbox"].checkbox {
     visibility: hidden;
 }
 
+.input_number {
+    padding: 0 12px 0 0;
+}
 .number-btn_up {
     top: 2px;
     background: no-repeat 50% 3px url(data:image/gif;base64,R0lGODlhBgADAIABACeO2f///yH5BAEAAAEALAAAAAAGAAMAAAIHTAB2mGhYAAA7);

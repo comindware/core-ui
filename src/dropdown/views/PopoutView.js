@@ -168,6 +168,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.ui.button.toggleClass(classes.DEFAULT_ANCHOR_BUTTON, !this.options.customAnchor);
     },
 
+    onDestroy () {
+        if (this.isOpen) {
+            WindowService.closePopup(this.popupId);
+        }
+    },
+
     __getAnchorEl () {
         let $anchorEl = this.ui.button;
         if (this.options.customAnchor && this.button.$anchor) {

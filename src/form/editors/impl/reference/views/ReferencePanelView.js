@@ -29,6 +29,7 @@ export default Marionette.LayoutView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
+        helpers.ensureOption(options, 'getDisplayText');
 
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
@@ -40,9 +41,9 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers: function () {
-        var value = this.model.get('value');
+        let value = this.model.get('value');
         return {
-            text: (value && (value.get('text') || '#' + value.id)) || '',
+            text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton
         };
     },
@@ -76,7 +77,8 @@ export default Marionette.LayoutView.extend({
             listViewOptions: {
                 childView: this.options.listItemView,
                 childViewOptions: {
-                    reqres: this.reqres
+                    reqres: this.reqres,
+                    getDisplayText: this.options.getDisplayText
                 },
                 emptyViewOptions: {
                     text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
@@ -102,15 +104,14 @@ export default Marionette.LayoutView.extend({
         this.__updateFilter();
     },
 
-    __assignKeyboardShortcuts: function ()
-    {
+    __assignKeyboardShortcuts () {
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
         _.each(this.keyboardShortcuts, function (value, key)
         {
-            var keys = key.split(',');
+            let keys = key.split(',');
             _.each(keys, function (k) {
                 this.keyListener.simple_combo(k, value.bind(this));
             }, this);
@@ -128,7 +129,7 @@ export default Marionette.LayoutView.extend({
             if (this.isLoading) {
                 return;
             }
-            var selectedModel = this.model.get('collection').selected;
+            let selectedModel = this.model.get('collection').selected;
             this.reqres.request('value:set', selectedModel);
         }
     },
@@ -138,20 +139,20 @@ export default Marionette.LayoutView.extend({
     },
 
     __updateFilter: function () {
-        var text = (this.ui.input.val() || '').trim();
+        let text = (this.ui.input.val() || '').trim();
         if (this.activeText === text) {
             return;
         }
         helpers.setUniqueTimeout(this.fetchDelayId, function () {
             this.activeText = text;
             this.__setLoading(true);
-            var collection = this.model.get('collection');
+            let collection = this.model.get('collection');
             collection.deselect();
             this.reqres.request('filter:text', {
                 text: text
             }).then(function () {
                 if (collection.length > 0) {
-                    var model = collection.at(0);
+                    let model = collection.at(0);
                     model.select();
                     this.eventAggregator.scrollTo(model);
                 }
@@ -161,7 +162,7 @@ export default Marionette.LayoutView.extend({
         }.bind(this), config.TEXT_FETCH_DELAY);
     },
 
-    __setLoading: function (isLoading) {
+    __setLoading (isLoading) {
         if (this.isDestroyed) {
             return false;
         }

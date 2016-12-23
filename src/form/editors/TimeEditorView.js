@@ -12,6 +12,7 @@ import { Handlebars, moment } from '../../libApi';
 import template from './templates/timeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -29,7 +30,7 @@ const defaultOptions = {
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * */
-Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
+formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
     initialize: function (options) {
         options = options || {};
         if (options.schema) {
@@ -147,4 +148,4 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
     }
 });
 
-export default Backbone.Form.editors.Time;
+export default formRepository.editors.Time;

@@ -8,7 +8,9 @@
 
 /* global module, __dirname */
 
-"use strict";
+'use strict';
+
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const webpack = require('webpack');
 const path = require('path');
@@ -29,7 +31,7 @@ const pathResolver = {
         return path.resolve.apply(path.resolve, [__dirname].concat(_.toArray(arguments)));
     },
     stylesDir: function () {
-        return path.resolve(__dirname, "./resources/styles");
+        return path.resolve(__dirname, './resources/styles');
     }
 };
 
@@ -72,11 +74,11 @@ module.exports = {
                     },
                     {
                         test: /\.hbs$/,
-                        loader: "html"
+                        loader: 'html'
                     },
                     {
                         test: /\.html$/,
-                        loader: "html"
+                        loader: 'html'
                     },
                     {
                         test: /\.woff(\?.*)?$/,
@@ -124,7 +126,7 @@ module.exports = {
                         loader: 'imports?jquery'
                     },
                     {
-                        test: /jquery\.caret/,
+                        test: /rangyinputs/,
                         loader: 'imports?jquery'
                     },
                     {
@@ -142,10 +144,6 @@ module.exports = {
                     {
                         test: /backbone\.js/,
                         loader: 'expose?Backbone'
-                    },
-                    {
-                        test: /backbone.forms\.js/,
-                        loader: 'imports?backbone!imports?underscore!imports?jquery'
                     },
                     {
                         test: /moment\.js/,
@@ -180,10 +178,9 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    "jquery.caret": pathResolver.source('lib/jquery.caret/index'),
-                    "backbone.forms": pathResolver.source('lib/backbone.forms/backbone-forms'),
-                    "keypress": pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
-                    "handlebars": 'handlebars/dist/handlebars'
+                    'rangyinputs': pathResolver.source('lib/rangyinputs/rangyinputs-jquery-src'),
+                    'keypress': pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
+                    'handlebars': 'handlebars/dist/handlebars'
                 }
             }
         };

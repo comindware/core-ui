@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import { Handlebars, keypress } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/referenceEditor.hbs';
@@ -16,16 +14,17 @@ import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';
 import ReferencePanelView from './impl/reference/views/ReferencePanelView';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
-
+import formRepository from '../formRepository';
 
 const classes = {
 };
 
 const defaultOptions = {
-    'controller': null,
-    'showAddNewButton': false,
-    'buttonView': ReferenceButtonView,
-    'listItemView': ReferenceListItemView
+    displayAttribute: 'text',
+    controller: null,
+    showAddNewButton: false,
+    buttonView: ReferenceButtonView,
+    listItemView: ReferenceListItemView
 };
 
 /**
@@ -39,27 +38,30 @@ const defaultOptions = {
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
  * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
+ * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
  * */
-Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
-    initialize: function (options) {
+formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
+    initialize (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
 
+        _.bindAll(this, '__getDisplayText');
+
         this.reqres = new Backbone.Wreqr.RequestResponse();
         this.controller = this.options.controller;
-        this.value = this.__adjustValue(this.value);
         this.showAddNewButton = this.options.showAddNewButton;
 
-        this.reqres.setHandler('panel:open', this.onPanelOpenRequest, this);
-        this.reqres.setHandler('value:clear', this.onValueClear, this);
-        this.reqres.setHandler('value:set', this.onValueSet, this);
-        this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-        this.reqres.setHandler('filter:text', this.onFilterText, this);
-        this.reqres.setHandler('add:new:item',this.onAddNewItem, this );
+        this.reqres.setHandler('panel:open', this.__onPanelOpenRequest, this);
+        this.reqres.setHandler('value:clear', this.__onValueClear, this);
+        this.reqres.setHandler('value:set', this.__onValueSet, this);
+        this.reqres.setHandler('value:navigate', this.__onValueNavigate, this);
+        this.reqres.setHandler('filter:text', this.__onFilterText, this);
+        this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
 
+        this.value = this.__adjustValue(this.value);
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
                 value: this.getValue(),
@@ -90,25 +92,26 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
 
     template: Handlebars.compile(template),
 
-    setValue: function (value) {
-        value = this.__adjustValue(value);
+    setValue (value) {
         this.__value(value, false);
     },
 
-    onRender: function () {
+    onRender () {
         // dropdown
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
-                reqres: this.reqres
+                reqres: this.reqres,
+                getDisplayText: this.__getDisplayText
             },
             panelView: ReferencePanelView,
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
                 showAddNewButton: this.showAddNewButton,
-                listItemView: this.options.listItemView
+                listItemView: this.options.listItemView,
+                getDisplayText: this.__getDisplayText
             },
             panelPosition: 'down-over',
             autoOpen: false
@@ -131,53 +134,46 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         }, this);
     },
 
-    __adjustValue: function (value) {
+    __adjustValue (value) {
         if (!value || !value.id) {
             return null;
         }
-        if (value instanceof DefaultReferenceModel) {
-            return value;
-        }
-        if (value instanceof Backbone.Model) {
-            value = value.attributes;
-        }
-
-        return new DefaultReferenceModel(value);
+        return value;
     },
 
-    __value: function (value, triggerChange) {
+    __value (value, triggerChange) {
         if (this.value === value) {
             return;
         }
-        this.value = value;
-        this.viewModel.get('button').set('value', value);
-        this.viewModel.get('panel').set('value', value);
+        this.value = this.__adjustValue(value);
+        this.viewModel.get('button').set('value', this.value);
+        this.viewModel.get('panel').set('value', this.value);
         if (triggerChange) {
             this.__triggerChange();
         }
     },
 
-    isEmptyValue: function () {
+    isEmptyValue () {
         let value = this.getValue();
         return !value || _.isEmpty(value);
     },
 
-    onValueClear: function () {
+    __onValueClear () {
         this.__value(null, true);
     },
 
-    onValueSet: function (model) {
-        this.__value(model, true);
+    __onValueSet (model) {
+        this.__value(model.toJSON(), true);
         this.dropdownView.close();
         this.$el.focus();
     },
 
-    onValueNavigate: function () {
-       return this.controller.navigate(this.getValue());
+    __onValueNavigate () {
+        return this.controller.navigate(this.getValue());
     },
 
-    onFilterText: function (options) {
-        var deferred = $.Deferred();
+    __onFilterText (options) {
+        let deferred = $.Deferred();
         this.controller.fetch(options).then(function () {
             this.viewModel.get('panel').set('totalCount', this.controller.totalCount);
             deferred.resolve();
@@ -185,33 +181,47 @@ Backbone.Form.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:
         return deferred.promise();
     },
 
-    onPanelOpenRequest: function () {
+    __onPanelOpenRequest () {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
     },
 
-    onAddNewItem:function(){
-        this.controller.addNewItem();
+    __onAddNewItem () {
+        this.dropdownView.close();
+        this.controller.addNewItem((createdValue) => {
+            if (createdValue) {
+                this.__value(createdValue, true);
+            }
+        });
     },
 
-    setReadonly: function (readonly) {
+    __getDisplayText (value) {
+        if (!value) {
+            return '';
+        }
+        return value[this.options.displayAttribute] || `#${value.id}`;
+    },
+
+    setReadonly (readonly) {
+        //noinspection Eslint
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.viewModel.get('button').set('readonly', this.getReadonly());
     },
 
-    setEnabled: function (enabled) {
+    setEnabled (enabled) {
+        //noinspection Eslint
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.viewModel.get('button').set('enabled', this.getEnabled());
     },
 
-    focus: function () {
+    focus () {
         this.dropdownView.open();
     },
 
-    blur: function () {
+    blur () {
         this.dropdownView.close();
     }
 });
 
-export default Backbone.Form.editors.Reference;
+export default formRepository.editors.Reference;

@@ -8,11 +8,11 @@ export default ReferenceButtonView.extend({
     className: 'popout-field-user',
 
     templateHelpers: function () {
-        var value = this.model.get('value');
+        let value = this.model.get('value');
         return {
-            text: (value && (value.get('text') || '#' + value.id)) || '',
-            avatarUrl: value && value.get('avatarUrl'),
-            abbreviation: value && value.get('abbreviation')
+            text: this.options.getDisplayText(value),
+            avatarUrl: value && value.avatarUrl,
+            abbreviation: value && value.abbreviation
         };
     },
 

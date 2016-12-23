@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
@@ -79,9 +77,9 @@ export default Marionette.Controller.extend( /** @lends module:core.form.editors
 
     /**
      * Handles a navigation request to an object. The method is abstract.
-     * @param {Backbone.Model} model Data model that describes the object to navigate to.
+     * @param {Object} value Value object that describes the object to navigate to.
      * */
-    navigate: function(model) {
+    navigate: function(value) {
         helpers.throwError('Not Implemented.', 'NotImplementedError');
     }
 });
