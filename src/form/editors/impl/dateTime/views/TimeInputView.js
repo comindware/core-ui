@@ -123,7 +123,7 @@ export default Marionette.ItemView.extend({
             formattedValue = '';
         } else {
             if (this.options.timeDisplayFormat) {
-                formattedValue = moment(value).locale(LocalizationService.langCode).format(this.options.timeDisplayFormat);
+                formattedValue = moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.options.timeDisplayFormat);
             } else {
                 formattedValue = dateHelpers.getDisplayTime(moment.utc(value).utcOffset(this.getOption('timezoneOffset')));
             }

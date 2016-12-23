@@ -48,6 +48,8 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         var readonly = this.getReadonly(),
             enabled = this.getEnabled();
 
+        this.value = this.__adjustValue(this.value);
+
         this.dateTimeModel = new Backbone.Model({
             value: this.value,
             readonly: readonly,
@@ -128,6 +130,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     },
 
     __value: function (value, updateUi, triggerChange) {
+        value = this.__adjustValue(value);
         if (this.value === value) {
             return;
         }
@@ -193,6 +196,10 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
             return;
         }
         this.onBlur();
+    },
+
+    __adjustValue(value) {
+        return value === null ? value : moment(value).toISOString();
     }
 });
 
