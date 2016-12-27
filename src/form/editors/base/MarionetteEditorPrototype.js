@@ -35,14 +35,14 @@ let onRender = function () {
         this.$el.on('focus', this.onFocus);
         this.$el.on('blur', this.onBlur);
     }
-    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
+    this.__updateEmpty();
 };
 
 let onChange = function () {
     if (this.model && this.schema.autocommit) {
         this.commit();
     }
-    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
+    this.__updateEmpty();
 };
 
 /**
@@ -124,6 +124,12 @@ export default {
 
                 this.on('render', onRender.bind(this));
                 this.on('change', onChange.bind(this));
+                this.setValue = _.wrap(this.setValue, (fn, val) => {
+                    fn.call(this, val);
+                    if (this.$el) {
+                        this.__updateEmpty();
+                    }
+                });
 
                 schema.autocommit = schema.autocommit || options.autocommit;
 
@@ -140,6 +146,10 @@ export default {
                 }
 
                 this.classes = classes;
+            },
+
+            __updateEmpty () {
+                this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
             },
 
             /**
@@ -182,6 +192,7 @@ export default {
              * @param {*} value The new value.
              */
             setValue: function(value) {
+
                 this.value = value;
             },
 
