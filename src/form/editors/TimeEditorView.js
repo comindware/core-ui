@@ -39,6 +39,8 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
 
+        this.value = this.__adjustValue(this.value);
+
         this.timeModel = new Backbone.Model({
             value: this.value,
             enabled: this.getEnabled(),
@@ -101,6 +103,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     __value: function (value, updateUi, triggerChange) {
+        value = this.__adjustValue(value);
         if (this.value === value) {
             return;
         }
@@ -145,6 +148,10 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
             return;
         }
         this.timeView.blur();
+    },
+
+    __adjustValue(value) {
+        return value === null ? value : moment(value).toISOString();
     }
 });
 

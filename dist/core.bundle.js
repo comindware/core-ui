@@ -2901,14 +2901,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.$el.on('focus', this.onFocus);
 	        this.$el.on('blur', this.onBlur);
 	    }
-	    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
+	    this.__updateEmpty();
 	};
 	
 	var onChange = function onChange() {
 	    if (this.model && this.schema.autocommit) {
 	        this.commit();
 	    }
-	    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
+	    this.__updateEmpty();
 	};
 	
 	/**
@@ -2961,6 +2961,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                hasFocus: false,
 	
 	                constructor: function constructor(options) {
+	                    var _this = this;
+	
 	                    options = options || {};
 	
 	                    _.bindAll(this, 'onFocus', 'onBlur');
@@ -2990,6 +2992,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                    this.on('render', onRender.bind(this));
 	                    this.on('change', onChange.bind(this));
+	                    this.setValue = _.wrap(this.setValue, function (fn, val) {
+	                        fn.call(_this, val);
+	                        if (_this.$el) {
+	                            _this.__updateEmpty();
+	                        }
+	                    });
 	
 	                    schema.autocommit = schema.autocommit || options.autocommit;
 	
@@ -3005,6 +3013,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                    this.classes = classes;
 	                },
+	
+	                __updateEmpty: function __updateEmpty() {
+	                    this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
+	                },
+	
 	
 	                /**
 	                 * Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
@@ -3050,6 +3063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                 * @param {*} value The new value.
 	                 */
 	                setValue: function setValue(value) {
+	
 	                    this.value = value;
 	                },
 	
@@ -10007,7 +10021,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
 	
 	        this.updatePosition = this.listView.updatePosition.bind(this.listView);
-	
+	        if (this.collection.length) {
+	            this.__presortCollection(options.columns);
+	        }
 	        this.listenTo(this.collection, 'reset', function (collection, options) {
 	            // fixing display:table style if there were not rows
 	            if (options && options.previousModels.length === 0) {
@@ -10015,6 +10031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // forcing browser to rebuild DOM accessing the attribute
 	                this.listView.visibleCollectionRegion.currentView.$el.css('display');
 	                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'table');
+	                this.__presortCollection(this.getOption('columns'));
 	            }
 	        }.bind(this));
 	    },
@@ -10101,6 +10118,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    handleResize: function handleResize() {
 	        this.headerView.handleResize();
+	    },
+	
+	    __presortCollection: function __presortCollection(columns) {
+	        var sortingColumn = columns.find(function (column) {
+	            return column.sorting;
+	        });
+	        if (sortingColumn) {
+	            if (sortingColumn.sorting === 'asc') {
+	                this.onColumnSort(sortingColumn, sortingColumn.sortAsc);
+	            } else {
+	                this.onColumnSort(sortingColumn, sortingColumn.sortDesc);
+	            }
+	        }
 	    }
 	});
 	
@@ -22788,6 +22818,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 	        }
 	
+	        this.value = this.__adjustValue(this.value);
+	
 	        this.dateModel = new Backbone.Model({
 	            value: this.value,
 	            enabled: this.getEnabled(),
@@ -22854,6 +22886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __value: function __value(value, updateUi, triggerChange) {
+	        value = this.__adjustValue(value);
 	        if (this.value === value) {
 	            return;
 	        }
@@ -22894,6 +22927,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 	        this.dateView.blur();
+	    },
+	
+	    __adjustValue: function __adjustValue(value) {
+	        return value === null ? value : (0, _libApi.moment)(value).toISOString();
 	    }
 	});
 	
@@ -22973,6 +23010,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        var readonly = this.getReadonly(),
 	            enabled = this.getEnabled();
+	
+	        this.value = this.__adjustValue(this.value);
 	
 	        this.dateTimeModel = new Backbone.Model({
 	            value: this.value,
@@ -23054,6 +23093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __value: function __value(value, updateUi, triggerChange) {
+	        value = this.__adjustValue(value);
 	        if (this.value === value) {
 	            return;
 	        }
@@ -23119,6 +23159,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 	        this.onBlur();
+	    },
+	
+	    __adjustValue: function __adjustValue(value) {
+	        return value === null ? value : (0, _libApi.moment)(value).toISOString();
 	    }
 	});
 	
@@ -25974,6 +26018,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
 	        }
 	
+	        this.value = this.__adjustValue(this.value);
+	
 	        this.timeModel = new Backbone.Model({
 	            value: this.value,
 	            enabled: this.getEnabled(),
@@ -26036,6 +26082,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __value: function __value(value, updateUi, triggerChange) {
+	        value = this.__adjustValue(value);
 	        if (this.value === value) {
 	            return;
 	        }
@@ -26080,6 +26127,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 	        this.timeView.blur();
+	    },
+	
+	    __adjustValue: function __adjustValue(value) {
+	        return value === null ? value : (0, _libApi.moment)(value).toISOString();
 	    }
 	});
 	
@@ -26769,7 +26820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            formattedValue = '';
 	        } else {
 	            if (this.options.timeDisplayFormat) {
-	                formattedValue = (0, _libApi.moment)(value).locale(_LocalizationService2.default.langCode).format(this.options.timeDisplayFormat);
+	                formattedValue = _libApi.moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.options.timeDisplayFormat);
 	            } else {
 	                formattedValue = _utilsApi.dateHelpers.getDisplayTime(_libApi.moment.utc(value).utcOffset(this.getOption('timezoneOffset')));
 	            }
