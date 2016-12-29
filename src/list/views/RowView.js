@@ -73,7 +73,8 @@ export default Marionette.ItemView.extend({
                     value: value,
                     rowModel: this.model,
                     columnConfig: gridColumn,
-                    highlightedFragment: null
+                    highlightedFragment: null,
+                    width: gridColumn.width
                 }),
                 gridEventAggregator: this.options.gridEventAggregator
             });
