@@ -27,19 +27,10 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
 
     __onColumnStartDrag: function (sender, index) {
         this.gridCellDragger = $(this.cells[index]);
-        this.columnsWidth = [];
-        this.cells.each(function (i, el) {
-            this.columnsWidth.push(this.__getElementOuterWidth(el));
-        }.bind(this));
     },
 
     __onColumnStopDrag: function () {
         delete this.draggedColumn;
-    },
-
-    onRender: function () {
-        GridItemViewBehavior.prototype.onRender.apply(this, arguments);
-        this.__setInitialWidth();
     },
 
     onShow(){},
@@ -58,8 +49,8 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
         return $(el)[0].getBoundingClientRect().width;
     },
 
-    __onSingleColumnResize: function (sender, args) {
-        this.gridCellDragger.outerWidth(this.columnsWidth[args.index] + args.delta);
+    __onSingleColumnResize(newWidth) {
+        this.gridCellDragger.outerWidth(newWidth);
     }
 });
 
