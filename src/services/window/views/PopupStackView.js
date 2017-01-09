@@ -94,9 +94,18 @@ export default Marionette.LayoutView.extend({
                 this.__removeTransientPopups();
             }
             // All the children of the popup will also be closed
-            let index = this.__stack.indexOf(popupDef);
-            if (index !== -1) {
-                targets = this.__stack.slice(index);
+            // Important: we collect only logical children because another popup might have been opened at the same level already.
+            // e.g.: focus-blur events (usually focus comes first) - one popup is opened on focus and the previous one is closed on blur.
+            if (this.__stack.includes(popupDef)) {
+                targets = [ popupDef ];
+                let handleChildren = (pId) => {
+                    let children = this.__stack.filter(x => x.parentPopupId === pId);
+                    targets.push(...children);
+                    children.forEach(c => handleChildren(c.popupId));
+                };
+                handleChildren(popupId);
+            } else {
+                targets = [];
             }
         } else if (popupId) {
             // If we don't find the popup, it must have been closed so the job is done
