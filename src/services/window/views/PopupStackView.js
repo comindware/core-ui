@@ -36,6 +36,10 @@ export default Marionette.LayoutView.extend({
     showPopup (view, options) {
         let { fadeBackground, transient, hostEl } = options;
 
+        if (!transient) {
+            this.__removeTransientPopups();
+        }
+
         let popupId = _.uniqueId(POPUP_ID_PREFIX);
         let regionEl = $(`<div data-popup-id="${popupId}" class="js-core-ui__global-popup-region">`);
         let parentPopupId = null;
@@ -84,33 +88,29 @@ export default Marionette.LayoutView.extend({
         }
 
         let targets;
-        let popup = this.__stack.find(x => x.popupId === popupId);
-        if (popup) {
-            // All the children of the provided popup will also be closed
-            targets = [ popup ];
-            let handleChildren = (pId) => {
-                let children = this.__stack.filter(x => x.parentPopupId === pId);
-                targets.push(...children);
-                children.forEach(c => handleChildren(c.popupId));
-            };
-            handleChildren(popupId);
+        let popupDef = this.__stack.find(x => x.popupId === popupId);
+        if (popupDef) {
+            if (!popupDef.options.transient) {
+                this.__removeTransientPopups();
+            }
+            // All the children of the popup will also be closed
+            let index = this.__stack.indexOf(popupDef);
+            if (index !== -1) {
+                targets = this.__stack.slice(index);
+            }
         } else if (popupId) {
             // If we don't find the popup, it must have been closed so the job is done
             targets = [];
         } else {
-            // We're popping the stack until we find an non-transient popup to close
-            let index = 0;
-            let lastNonTransient = _.last(this.__stack.filter(x => !x.options.transient));
-            if (lastNonTransient) {
-                index = this.__stack.indexOf(lastNonTransient);
+            // Close all transient popups and the top-most non-transient
+            this.__removeTransientPopups();
+            let topMostNonTransient = _.last(this.__stack);
+            if (topMostNonTransient) {
+                targets = [ topMostNonTransient ];
             }
-            targets = this.__stack.slice(index);
         }
-        targets.forEach(popupDef => {
-            this.removeRegion(popupDef.popupId);
-            popupDef.regionEl.remove();
-            this.__stack.splice(this.__stack.indexOf(popupDef), 1);
-            this.trigger('popup:close', popupDef.popupId);
+        targets.reverse().forEach(pd => {
+            this.__removePopup(pd);
         });
 
         let lastFaded = _.last(this.__stack.filter(x => x.options.fadeBackground));
@@ -119,6 +119,19 @@ export default Marionette.LayoutView.extend({
         } else {
             this.__toggleFadedBackground(this.__forceFadeBackground);
         }
+    },
+
+    __removeTransientPopups () {
+        this.__stack.filter(x => x.options.transient).reverse().forEach(popupDef => {
+            this.__removePopup(popupDef);
+        });
+    },
+
+    __removePopup (popupDef) {
+        this.removeRegion(popupDef.popupId);
+        popupDef.regionEl.remove();
+        this.__stack.splice(this.__stack.indexOf(popupDef), 1);
+        this.trigger('popup:close', popupDef.popupId);
     },
 
     get (popupId) {
