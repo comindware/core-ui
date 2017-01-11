@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import { keypress, Handlebars } from '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import list from '../../../../../list/listApi';
@@ -17,8 +15,7 @@ import LoadingView from './LoadingView';
 import AddNewButtonView from './AddNewButtonView';
 
 const config = {
-    CHILD_HEIGHT: 30,
-    TEXT_FETCH_DELAY: 300
+    CHILD_HEIGHT: 30
 };
 
 const classes = {
@@ -54,9 +51,9 @@ export default Marionette.LayoutView.extend({
     },
 
     events: {
-        'keyup @ui.input': '__updateFilter',
-        'change @ui.input': '__updateFilter',
-        'input @ui.input': '__updateFilter',
+        'keyup @ui.input': '__onTextChange',
+        'change @ui.input': '__onTextChange',
+        'input @ui.input': '__onTextChange',
         'click @ui.clear': '__clear'
     },
 
@@ -101,7 +98,7 @@ export default Marionette.LayoutView.extend({
         this.scrollbarRegion.show(result.scrollbarView);
 
         this.ui.input.focus();
-        this.__updateFilter();
+        this.__updateFilter(true);
     },
 
     __assignKeyboardShortcuts () {
@@ -138,12 +135,16 @@ export default Marionette.LayoutView.extend({
         this.reqres.request('value:set', null);
     },
 
-    __updateFilter: function () {
+    __onTextChange () {
+        this.__updateFilter(false);
+    },
+
+    __updateFilter: function (immediate) {
         let text = (this.ui.input.val() || '').trim();
         if (this.activeText === text) {
             return;
         }
-        helpers.setUniqueTimeout(this.fetchDelayId, function () {
+        const updateNow = function () {
             this.activeText = text;
             this.__setLoading(true);
             let collection = this.model.get('collection');
@@ -152,19 +153,24 @@ export default Marionette.LayoutView.extend({
                 text: text
             }).then(function () {
                 if (collection.length > 0) {
-                    let model = collection.at(0);
-                    model.select();
-                    this.eventAggregator.scrollTo(model);
+                    if (!collection.contains(collection.selected)) {
+                        let model = collection.at(0);
+                        model.select();
+                    }
                 }
-
                 this.__setLoading(false);
             }.bind(this));
-        }.bind(this), config.TEXT_FETCH_DELAY);
+        }.bind(this);
+        if (immediate) {
+            updateNow();
+        } else {
+            helpers.setUniqueTimeout(this.fetchDelayId, updateNow, this.options.textFilterDelay);
+        }
     },
 
     __setLoading (isLoading) {
         if (this.isDestroyed) {
-            return false;
+            return;
         }
         this.isLoading = isLoading;
         if (isLoading) {
