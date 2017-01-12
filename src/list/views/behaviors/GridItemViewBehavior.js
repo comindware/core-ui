@@ -68,7 +68,6 @@ export default Marionette.Behavior.extend({
         if (htmlHelpers.isElementInDom(this.el)) {
             Marionette.triggerMethodOn(this.view, 'show');
         }
-        this.cells = this.__getCellElements();
     },
 
     onShow: function () {
@@ -83,8 +82,12 @@ export default Marionette.Behavior.extend({
         return this.$el.find('.js-grid-cell');
     },
 
-    __handleColumnsResize() {
-        this.columns.forEach((col, i) => $(this.cells[i]).outerWidth(col.absWidth));
+    __handleColumnsResize: function () {
+        var cells = _.toArray(this.__getCellElements());
+        _.each(this.columns, function (col, k) {
+            var $cell = $(cells[k]);
+            $cell.outerWidth(col.absWidth);
+        }, this);
     },
 
     __handleClick: function (e) {
