@@ -35,7 +35,6 @@ import editorsImplCommonMemberModel from './editors/impl/common/members/models/M
 import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
 import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
-import DataSourceReferenceEditorController from './editors/impl/reference/controllers/DataSourceReferenceEditorController';
 import BaseReferenceEditorController from './editors/impl/reference/controllers/BaseReferenceEditorController';
 import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
@@ -123,7 +122,6 @@ var api = /** @lends module:core.form */ {
             controllers: {
                 DemoReferenceEditorController: DemoReferenceEditorController,
                 BaseReferenceEditorController: BaseReferenceEditorController,
-                DataSourceReferenceEditorController: DataSourceReferenceEditorController
             },
             collections: {
                 BaseReferenceCollection: BaseReferenceCollection

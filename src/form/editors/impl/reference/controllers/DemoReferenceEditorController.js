@@ -36,38 +36,41 @@ export default Marionette.Controller.extend({
 
     fetch: function (options) {
         options = options || {};
-        let deferred = $.Deferred();
-        let promise = deferred.promise();
-        setTimeout(function () {
-            if (promise !== this.fetchPromise) {
-                deferred.reject();
-                return;
-            }
+        let promise = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                if (promise !== this.fetchPromise) {
+                    reject();
+                    return;
+                }
 
-            this.collection.reset(createDemoData());
-            if (options.text) {
-                let filterText = options.text.trim().toUpperCase();
-                if (filterText) {
-                    this.collection.filter(function (model) {
-                        let text = model.get('text');
-                        if (!text) {
-                            return false;
-                        }
-                        return text.toUpperCase().indexOf(filterText) !== -1;
-                    });
+                this.collection.reset(createDemoData());
+                if (options.text) {
+                    let filterText = options.text.trim().toUpperCase();
+                    if (filterText) {
+                        this.collection.filter(function (model) {
+                            let text = model.get('text');
+                            if (!text) {
+                                return false;
+                            }
+                            return text.toUpperCase().indexOf(filterText) !== -1;
+                        });
+                    } else {
+                        this.collection.filter(null);
+                    }
                 } else {
                     this.collection.filter(null);
                 }
-            } else {
-                this.collection.filter(null);
-            }
 
-            this.totalCount = 123123;
-            deferred.resolve();
-            this.fetchPromise = null;
-        }.bind(this), 1000);
+                this.totalCount = 1000;
+                resolve({
+                    collection: this.collection.toJSON(),
+                    totalCount: this.totalCount
+                });
+                this.fetchPromise = null;
+            }.bind(this), 1000);
+        });
         this.fetchPromise = promise;
-        return this.fetchPromise;
+        return promise;
     },
 
     navigate: function (value) {

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import '../libApi';
 import MessageView from './message/views/MessageView';
 import WindowService from './WindowService';
@@ -51,19 +49,23 @@ export default {
 
     showMessageDialog: function (description, text, buttons, iconId) {
         iconId = iconId || iconIds.NONE;
-        var deferred = Promise.pending();
-        var view = new MessageView({
-            model: new Backbone.Model({
-                iconId: iconId,
-                text: text,
-                description: description,
-                buttons: buttons || []
-            })
+        return new Promise(resolve => {
+            let view = new MessageView({
+                model: new Backbone.Model({
+                    iconId: iconId,
+                    text: text,
+                    description: description,
+                    buttons: buttons || []
+                })
+            });
+            view.once('close', result => {
+                this.openedPopupId = null;
+                resolve(result);
+            });
+            if (this.openedPopupId) {
+                WindowService.closePopup(this.openedPopupId);
+            }
+            this.openedPopupId = WindowService.showPopup(view);
         });
-        view.once('close', function (result) {
-            deferred.resolve(result);
-        });
-        WindowService.showPopup(view);
-        return deferred.promise;
     }
 };

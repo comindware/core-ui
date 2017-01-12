@@ -7,6 +7,7 @@
  */
 
 import { Handlebars, keypress } from '../../libApi';
+import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/referenceEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -16,6 +17,10 @@ import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
 import formRepository from '../formRepository';
 
+const ReferenceCollection = Backbone.Collection.extend({
+    model: DefaultReferenceModel
+});
+
 const classes = {
 };
 
@@ -24,7 +29,8 @@ const defaultOptions = {
     controller: null,
     showAddNewButton: false,
     buttonView: ReferenceButtonView,
-    listItemView: ReferenceListItemView
+    listItemView: ReferenceListItemView,
+    textFilterDelay: 300
 };
 
 /**
@@ -72,7 +78,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
             }),
             panel: new Backbone.Model({
                 value: this.getValue(),
-                collection: this.controller.collection,
+                collection: new VirtualCollection(new ReferenceCollection([])),
                 totalCount: this.controller.totalCount || 0
             })
         });
@@ -111,7 +117,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 reqres: this.reqres,
                 showAddNewButton: this.showAddNewButton,
                 listItemView: this.options.listItemView,
-                getDisplayText: this.__getDisplayText
+                getDisplayText: this.__getDisplayText,
+                textFilterDelay: this.options.textFilterDelay
             },
             panelPosition: 'down-over',
             autoOpen: false
@@ -173,12 +180,14 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __onFilterText (options) {
-        let deferred = $.Deferred();
-        this.controller.fetch(options).then(function () {
-            this.viewModel.get('panel').set('totalCount', this.controller.totalCount);
-            deferred.resolve();
+        let text = (options && options.text) || null;
+        this.text = text;
+        return this.controller.fetch(options).then(function (data) {
+            if (this.text === text) {
+                this.viewModel.get('panel').get('collection').reset(data.collection);
+                this.viewModel.get('panel').set('totalCount', data.totalCount);
+            }
         }.bind(this));
-        return deferred.promise();
     },
 
     __onPanelOpenRequest () {
