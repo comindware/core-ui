@@ -102,11 +102,6 @@ let factory = {
                 this.render();
             },
             className: 'grid-cell',
-            attributes() {
-                return {
-                    style: `width:${this.model.get('width')}px`
-                }
-            },
             templateHelpers: templateHelpers
         });
     },
@@ -151,11 +146,6 @@ let factory = {
             __handleHighlightedFragmentChange: function () {
                 this.render();
             },
-            attributes() {
-                return {
-                    style: `width: ${this.model.get('width')}px`
-                }
-            },
             className: 'grid-cell'
         });
     },
@@ -192,11 +182,6 @@ let factory = {
             __handleHighlightedFragmentChange: function () {
                 this.render();
             },
-            attributes() {
-                return {
-                    style: `width: ${this.model.get('width')}px`
-                }
-            },
             className: 'grid-cell'
         });
     },
@@ -216,11 +201,6 @@ let factory = {
                     value: value,
                     valueExplained: value.valueExplained
                 };
-            },
-            attributes() {
-                return {
-                    style: `width: ${this.model.get('width')}px`
-                }
             },
             className: 'grid-cell'
         });

@@ -166,10 +166,7 @@ let HeaderView = GridHeaderView.extend({
         this.dragContext.$dragger = $dragger;
 
         $dragger.addClass('active');
-        if (this.dragContext) {
-            this.$document.mousemove(this.__draggerMouseMove)
-        }
-        this.$document.mouseup(this.__draggerMouseUp);
+        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
     },
 
     __stopDrag: function () {
@@ -185,8 +182,20 @@ let HeaderView = GridHeaderView.extend({
         this.gridEventAggregator.trigger('columnStopDrag');
     },
 
-    __draggerMouseMove(e) {
-        this.updateColumnAndNeighbourWidths(this.dragContext.draggedColumn.index, e.pageX - this.dragContext.pageOffsetX);
+    __draggerMouseMove: function (e) {
+        if (!this.dragContext) {
+            return;
+        }
+
+        var ctx = this.dragContext;
+        var delta = e.pageX - ctx.pageOffsetX;
+
+        if (delta !== 0) {
+            var index = ctx.draggedColumn.index;
+
+            this.updateColumnAndNeighbourWidths(index, delta);
+        }
+
         return false;
     },
 
@@ -199,7 +208,10 @@ let HeaderView = GridHeaderView.extend({
         }
 
         $current.outerWidth(newColumnWidth);
-        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+        this.gridEventAggregator.trigger('singleColumnResize', this, {
+            index: index,
+            delta: delta
+        });
 
         this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
         this.columns[index].width = newColumnWidth;

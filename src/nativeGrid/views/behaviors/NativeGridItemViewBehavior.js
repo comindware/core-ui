@@ -26,22 +26,35 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
     },
 
     __onColumnStartDrag: function (sender, index) {
-        this.gridCellDragger = $(this.cells[index]);
+        var cells = this.__getCellElements();
+        this.gridCellDragger = $(cells[index]);
+        this.columnsWidth = [];
+        cells.each(function (i, el) {
+            this.columnsWidth.push(this.__getElementOuterWidth(el));
+        }.bind(this));
+        this.initialFullWidth = this.$el.parent().width();
     },
 
     __onColumnStopDrag: function () {
         delete this.draggedColumn;
     },
 
-    onShow(){},
+    onShow: function () {
+        this.__setInitialWidth(true);
+    },
 
     setFitToView: function () {
         this.__setInitialWidth();
     },
 
-    __setInitialWidth() {
-        for (let i = 0; i < this.cells.length; i++) {
-            $(this.cells[i]).outerWidth(this.columns[i].width);
+    __setInitialWidth: function () {
+        const $cells = this.__getCellElements();
+
+        for (let i = 0; i < $cells.length; i++) {
+            const $cell = $($cells[i]);
+            const cellWidth = this.columns[i].width;
+
+            $cell.outerWidth(cellWidth);
         }
     },
 
@@ -49,8 +62,8 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
         return $(el)[0].getBoundingClientRect().width;
     },
 
-    __onSingleColumnResize(newWidth) {
-        this.gridCellDragger.outerWidth(newWidth);
+    __onSingleColumnResize: function (sender, args) {
+        this.gridCellDragger.outerWidth(this.columnsWidth[args.index] + args.delta);
     }
 });
 
