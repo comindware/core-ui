@@ -84,6 +84,12 @@ export default Marionette.ItemView.extend({
         this.$el.append('<div class="padding js-padding" style="width: ' + this.options.paddingRight + 'px"></div>');
     },
 
+    onDestroy() {
+        if (this.cellViews) {
+            this.cellViews.forEach(x => x.destroy());
+        }
+    },
+
     onHighlighted: function (fragment)
     {
         _.each(this.cellViews, function (cellView) {
