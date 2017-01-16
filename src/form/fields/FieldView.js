@@ -154,7 +154,9 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.$el.toggleClass(classes.REQUIRED, Boolean(required));
-        this.validate();
+        if (this.$el.hasClass(classes.ERROR)) {
+            this.validate();
+        }
     },
 
     __updateEditorState (readonly, enabled) {
