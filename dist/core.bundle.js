@@ -4874,8 +4874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    value: value,
 	                    rowModel: this.model,
 	                    columnConfig: gridColumn,
-	                    highlightedFragment: null,
-	                    width: gridColumn.width
+	                    highlightedFragment: null
 	                }),
 	                gridEventAggregator: this.options.gridEventAggregator
 	            });
@@ -4977,7 +4976,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (_utilsApi.htmlHelpers.isElementInDom(this.el)) {
 	            Marionette.triggerMethodOn(this.view, 'show');
 	        }
-	        this.cells = this.__getCellElements();
 	    },
 	
 	    onShow: function onShow() {
@@ -4993,13 +4991,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __handleColumnsResize: function __handleColumnsResize() {
-	        var _this = this;
-	
-	        this.columns.forEach(function (col, i) {
-	            return $(_this.cells[i]).outerWidth(col.absWidth);
-	        });
+	        var cells = _.toArray(this.__getCellElements());
+	        _.each(this.columns, function (col, k) {
+	            var $cell = $(cells[k]);
+	            $cell.outerWidth(col.absWidth);
+	        }, this);
 	    },
-	
 	
 	    __handleClick: function __handleClick(e) {
 	        var model = this.view.model;
@@ -10801,10 +10798,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.dragContext.$dragger = $dragger;
 	
 	        $dragger.addClass('active');
-	        if (this.dragContext) {
-	            this.$document.mousemove(this.__draggerMouseMove);
-	        }
-	        this.$document.mouseup(this.__draggerMouseUp);
+	        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
 	    },
 	
 	    __stopDrag: function __stopDrag() {
@@ -10821,10 +10815,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __draggerMouseMove: function __draggerMouseMove(e) {
-	        this.updateColumnAndNeighbourWidths(this.dragContext.draggedColumn.index, e.pageX - this.dragContext.pageOffsetX);
+	        if (!this.dragContext) {
+	            return;
+	        }
+	
+	        var ctx = this.dragContext;
+	        var delta = e.pageX - ctx.pageOffsetX;
+	
+	        if (delta !== 0) {
+	            var index = ctx.draggedColumn.index;
+	
+	            this.updateColumnAndNeighbourWidths(index, delta);
+	        }
+	
 	        return false;
 	    },
-	
 	
 	    updateColumnAndNeighbourWidths: function updateColumnAndNeighbourWidths(index, delta) {
 	        var $current = $(this.ui.gridHeaderColumn[index]),
@@ -10835,7 +10840,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	
 	        $current.outerWidth(newColumnWidth);
-	        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+	        this.gridEventAggregator.trigger('singleColumnResize', this, {
+	            index: index,
+	            delta: delta
+	        });
 	
 	        this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
 	        this.columns[index].width = newColumnWidth;
@@ -29696,12 +29704,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.render();
 	            },
 	            className: 'grid-cell',
-	            attributes: function attributes() {
-	                return {
-	                    style: 'width:' + this.model.get('width') + 'px'
-	                };
-	            },
-	
 	            templateHelpers: templateHelpers
 	        });
 	    },
@@ -29741,12 +29743,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            __handleHighlightedFragmentChange: function __handleHighlightedFragmentChange() {
 	                this.render();
 	            },
-	            attributes: function attributes() {
-	                return {
-	                    style: 'width: ' + this.model.get('width') + 'px'
-	                };
-	            },
-	
 	            className: 'grid-cell'
 	        });
 	    },
@@ -29780,12 +29776,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            __handleHighlightedFragmentChange: function __handleHighlightedFragmentChange() {
 	                this.render();
 	            },
-	            attributes: function attributes() {
-	                return {
-	                    style: 'width: ' + this.model.get('width') + 'px'
-	                };
-	            },
-	
 	            className: 'grid-cell'
 	        });
 	    },
@@ -29806,12 +29796,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    valueExplained: value.valueExplained
 	                };
 	            },
-	            attributes: function attributes() {
-	                return {
-	                    style: 'width: ' + this.model.get('width') + 'px'
-	                };
-	            },
-	
 	            className: 'grid-cell'
 	        });
 	    }
@@ -30870,33 +30854,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    __onColumnStartDrag: function __onColumnStartDrag(sender, index) {
-	        this.gridCellDragger = $(this.cells[index]);
+	        var cells = this.__getCellElements();
+	        this.gridCellDragger = $(cells[index]);
+	        this.columnsWidth = [];
+	        cells.each(function (i, el) {
+	            this.columnsWidth.push(this.__getElementOuterWidth(el));
+	        }.bind(this));
+	        this.initialFullWidth = this.$el.parent().width();
 	    },
 	
 	    __onColumnStopDrag: function __onColumnStopDrag() {
 	        delete this.draggedColumn;
 	    },
 	
-	    onShow: function onShow() {},
-	
+	    onShow: function onShow() {
+	        this.__setInitialWidth(true);
+	    },
 	
 	    setFitToView: function setFitToView() {
 	        this.__setInitialWidth();
 	    },
 	
 	    __setInitialWidth: function __setInitialWidth() {
-	        for (var i = 0; i < this.cells.length; i++) {
-	            $(this.cells[i]).outerWidth(this.columns[i].width);
+	        var $cells = this.__getCellElements();
+	
+	        for (var i = 0; i < $cells.length; i++) {
+	            var $cell = $($cells[i]);
+	            var cellWidth = this.columns[i].width;
+	
+	            $cell.outerWidth(cellWidth);
 	        }
 	    },
-	
 	
 	    __getElementOuterWidth: function __getElementOuterWidth(el) {
 	        return $(el)[0].getBoundingClientRect().width;
 	    },
 	
-	    __onSingleColumnResize: function __onSingleColumnResize(newWidth) {
-	        this.gridCellDragger.outerWidth(newWidth);
+	    __onSingleColumnResize: function __onSingleColumnResize(sender, args) {
+	        this.gridCellDragger.outerWidth(this.columnsWidth[args.index] + args.delta);
 	    }
 	});
 	
