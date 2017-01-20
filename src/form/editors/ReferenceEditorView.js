@@ -170,7 +170,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __onValueSet (model) {
-        this.__value(model.toJSON(), true);
+        let value = model ? model.toJSON() : null;
+        this.__value(value, true);
         this.dropdownView.close();
         this.$el.focus();
     },
