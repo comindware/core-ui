@@ -25,11 +25,10 @@ import list from '../../../../../list/listApi';
  * the total count of object with the applied filter on server.
  * */
 
-export default Marionette.Controller.extend( /** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
+export default Marionette.Controller.extend(/** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
     initialize: function(options) {
         helpers.ensureOption(options, 'collection');
 
-        this.originalCollection = options.collection;
         this.collection = list.factory.createWrappedCollection(options.collection);
     },
 
@@ -42,31 +41,15 @@ export default Marionette.Controller.extend( /** @lends module:core.form.editors
     fetch: function(options) {
         options = options || {};
 
-        var filterText = options.text ? options.text.trim().toUpperCase() : '';
-        if (filterText.indexOf(this.activeFilterText) && this.totalCount) {
-            // Client-side filter
-            if (filterText) {
-                this.collection.filter(function(model) {
-                    var text = model.get('text');
-                    if (!text) {
-                        return false;
-                    }
-                    return text.toUpperCase().indexOf(filterText) !== -1;
-                });
-            } else {
-                this.collection.filter(null);
-            }
-            return Promise.resolve();
-        }
-        // Server-side filter or new data request
-        this.collection.filter(null);
-        this.fetchPromise = this.collection.fetch({ data: { filter: filterText } })
+        let filterText = options.text ? options.text.trim().toUpperCase() : '';
+        return this.collection.fetch({ data: { filter: filterText } })
             .then(function() {
                 this.totalCount = this.collection.totalCount;
-                this.activeFilterText = filterText;
+                return {
+                    collection: this.collection.toJSON(),
+                    totalCount: this.totalCount
+                };
             }.bind(this));
-
-        return this.fetchPromise;
     },
 
     /*

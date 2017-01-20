@@ -33,7 +33,7 @@ var windowService = /** @lends module:core.services.WindowService */ {
      * @returns {String} The popup id that you can use to close it.
      * */
     showPopup (view) {
-        this.__popupStackView.showPopup(view, {
+        return this.__popupStackView.showPopup(view, {
             fadeBackground: true,
             transient: false,
             hostEl: null
