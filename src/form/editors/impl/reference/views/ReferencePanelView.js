@@ -31,6 +31,7 @@ export default Marionette.LayoutView.extend({
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
         this.fetchDelayId = _.uniqueId('fetch-delay-id-');
+        this.timeoutId = null;
     },
 
     className: 'dd-list dd-list_reference',
@@ -97,7 +98,6 @@ export default Marionette.LayoutView.extend({
         this.listRegion.show(result.listView);
         this.scrollbarRegion.show(result.scrollbarView);
 
-        this.ui.input.focus();
         this.__updateFilter(true);
     },
 
@@ -126,6 +126,13 @@ export default Marionette.LayoutView.extend({
             if (this.isLoading) {
                 return;
             }
+
+            if (this.timeoutId) {
+                clearTimeout(this.timeoutId);
+                this.__updateFilter(true);
+                return
+            }
+
             let selectedModel = this.model.get('collection').selected;
             this.reqres.request('value:set', selectedModel);
         }
@@ -152,6 +159,7 @@ export default Marionette.LayoutView.extend({
             this.reqres.request('filter:text', {
                 text: text
             }).then(function () {
+                this.timeoutId = null;
                 if (collection.length > 0) {
                     if (!collection.contains(collection.selected)) {
                         let model = collection.at(0);
@@ -164,7 +172,7 @@ export default Marionette.LayoutView.extend({
         if (immediate) {
             updateNow();
         } else {
-            helpers.setUniqueTimeout(this.fetchDelayId, updateNow, this.options.textFilterDelay);
+            this.timeoutId = helpers.setUniqueTimeout(this.fetchDelayId, updateNow, this.options.textFilterDelay);
         }
     },
 
@@ -175,7 +183,9 @@ export default Marionette.LayoutView.extend({
         this.isLoading = isLoading;
         if (isLoading) {
             this.loadingRegion.show(new LoadingView());
+            this.ui.input.blur();
         } else {
+            this.ui.input.focus();
             this.loadingRegion.reset();
         }
     }
