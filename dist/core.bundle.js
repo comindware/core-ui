@@ -4885,6 +4885,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.$el.append('<div class="padding js-padding" style="width: ' + this.options.paddingRight + 'px"></div>');
 	    },
 	
+	    onDestroy: function onDestroy() {
+	        if (this.cellViews) {
+	            this.cellViews.forEach(function (x) {
+	                return x.destroy();
+	            });
+	        }
+	    },
+	
+	
 	    onHighlighted: function onHighlighted(fragment) {
 	        _.each(this.cellViews, function (cellView) {
 	            cellView.model.set('highlightedFragment', fragment);
@@ -9070,6 +9079,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.reqres = options.reqres;
 	        this.showAddNewButton = this.options.showAddNewButton;
 	        this.fetchDelayId = _.uniqueId('fetch-delay-id-');
+	        this.timeoutId = null;
 	    },
 	
 	    className: 'dd-list dd-list_reference',
@@ -9136,7 +9146,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.listRegion.show(result.listView);
 	        this.scrollbarRegion.show(result.scrollbarView);
 	
-	        this.ui.input.focus();
 	        this.__updateFilter(true);
 	    },
 	
@@ -9165,6 +9174,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.isLoading) {
 	                return;
 	            }
+	
+	            if (this.timeoutId) {
+	                clearTimeout(this.timeoutId);
+	                this.__updateFilter(true);
+	                return;
+	            }
+	
 	            var selectedModel = this.model.get('collection').selected;
 	            this.reqres.request('value:set', selectedModel);
 	        }
@@ -9192,6 +9208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.reqres.request('filter:text', {
 	                text: text
 	            }).then(function () {
+	                this.timeoutId = null;
 	                if (collection.length > 0) {
 	                    if (!collection.contains(collection.selected)) {
 	                        var model = collection.at(0);
@@ -9204,7 +9221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (immediate) {
 	            updateNow();
 	        } else {
-	            _utilsApi.helpers.setUniqueTimeout(this.fetchDelayId, updateNow, this.options.textFilterDelay);
+	            this.timeoutId = _utilsApi.helpers.setUniqueTimeout(this.fetchDelayId, updateNow, this.options.textFilterDelay);
 	        }
 	    },
 	
@@ -9215,7 +9232,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.isLoading = isLoading;
 	        if (isLoading) {
 	            this.loadingRegion.show(new _LoadingView2.default());
+	            this.ui.input.blur();
 	        } else {
+	            this.ui.input.focus();
 	            this.loadingRegion.reset();
 	        }
 	    }
@@ -9412,7 +9431,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 	        this.$el.toggleClass(classes.REQUIRED, Boolean(required));
-	        this.validate();
+	        if (this.$el.hasClass(classes.ERROR)) {
+	            this.validate();
+	        }
 	    },
 	    __updateEditorState: function __updateEditorState(readonly, enabled) {
 	        if (!this.__checkUiReady()) {
@@ -25822,7 +25843,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.__value(null, true);
 	    },
 	    __onValueSet: function __onValueSet(model) {
-	        this.__value(model.toJSON(), true);
+	        var value = model ? model.toJSON() : null;
+	        this.__value(value, true);
 	        this.dropdownView.close();
 	        this.$el.focus();
 	    },
