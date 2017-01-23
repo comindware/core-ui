@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.2.61",
+  "version": "1.2.62",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
