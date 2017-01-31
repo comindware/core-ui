@@ -42,6 +42,9 @@ let onChange = function () {
     if (this.model && this.schema.autocommit) {
         this.commit();
     }
+    if (this.validated && this.form) {
+        this.form.validate();
+    }
     this.__updateEmpty();
 };
 
@@ -121,6 +124,7 @@ export default {
                 let schema = this.schema = options.schema || {};
 
                 this.validators = options.validators || schema.validators;
+                this.validated = false;
 
                 this.on('render', onRender.bind(this));
                 this.on('change', onChange.bind(this));
@@ -281,7 +285,7 @@ export default {
              */
             commit: function (options) {
                 options = options || {};
-                var error = this.validate();
+                var error = this.validate(true);
                 if (error && !this.schema.forceCommit) {
                     return error;
                 }
@@ -310,12 +314,16 @@ export default {
              * Check validity with built-in validator functions (initially passed into constructor options).
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
              */
-            validate: function() {
+            validate: function(internal) {
                 let error = null;
                 let value = this.getValue();
                 let formValues = this.form ? this.form.getValue() : {};
                 let validators = this.validators;
                 let getValidator = this.getValidator;
+
+                if (internal) {
+                    this.validated = true;
+                }
 
                 if (validators) {
                     //Run through validators until an error is found
