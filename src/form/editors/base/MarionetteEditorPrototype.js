@@ -321,7 +321,7 @@ export default {
                 let validators = this.validators;
                 let getValidator = this.getValidator;
 
-                if (internal) {
+                if (!internal) {
                     this.validated = true;
                 }
 
