@@ -42,8 +42,12 @@ let onChange = function () {
     if (this.model && this.schema.autocommit) {
         this.commit();
     }
-    if (this.validated && this.form) {
-        this.form.validate();
+    if (this.__validatedOnce) {
+        if (this.form) {
+            this.form.validate();
+        } else if (this.field) {
+            this.field.validate();
+        }
     }
     this.__updateEmpty();
 };
@@ -124,7 +128,7 @@ export default {
                 let schema = this.schema = options.schema || {};
 
                 this.validators = options.validators || schema.validators;
-                this.validated = false;
+                this.__validatedOnce = false;
 
                 this.on('render', onRender.bind(this));
                 this.on('change', onChange.bind(this));
@@ -322,7 +326,7 @@ export default {
                 let getValidator = this.getValidator;
 
                 if (!internal) {
-                    this.validated = true;
+                    this.__validatedOnce = true;
                 }
 
                 if (validators) {

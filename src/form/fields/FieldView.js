@@ -195,7 +195,8 @@ export default Marionette.LayoutView.extend({
         let ConstructorFn = this.schema.type;
         this.editor = new ConstructorFn({
             schema: this.schema,
-            form: this.form || this,
+            form: this.form,
+            field: this,
             key: this.key,
             model: this.model,
             id: this.__createEditorId(),
