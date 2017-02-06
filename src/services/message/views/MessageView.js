@@ -11,7 +11,10 @@
 import { Handlebars } from '../../../libApi';
 import template from '../templates/message.hbs';
 import WindowService from '../../WindowService';
-import LocalizationService from '../../LocalizationService';
+
+const constants = {
+    slideToggleDuration: 100
+};
 
 export default Marionette.ItemView.extend({
     initialize: function () {
@@ -20,11 +23,14 @@ export default Marionette.ItemView.extend({
     className: 'msg-popup',
 
     ui: {
-        buttons: '.js-buttons'
+        buttons: '.js-buttons',
+        serviceMessageToggle: '.js-service-message-toggle',
+        serviceMessage: '.js-service-message'
     },
 
     events: {
-        'click @ui.buttons': '__onSelect'
+        'click @ui.buttons': '__onSelect',
+        'click @ui.serviceMessageToggle': '__toggleServiceMessage'
     },
 
     template: Handlebars.compile(template),
@@ -39,5 +45,9 @@ export default Marionette.ItemView.extend({
         var buttonModel = this.model.get('buttons')[index];
         var result = buttonModel.id;
         this.close(result);
+    },
+
+    __toggleServiceMessage() {
+        this.ui.serviceMessage.slideToggle(constants.slideToggleDuration);
     }
 });

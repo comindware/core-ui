@@ -3,7 +3,9 @@
 		{{text}}
 	</div>
 	<div class="msg-popup__desc">{{description}}</div>
+    {{#if serviceMessage}}<div class="js-service-message msg-popup__service-msg">{{serviceMessage}}</div>{{/if}}
 	<div class="msg-popup__buttons">
+    {{#if serviceMessage}}<div class="js-service-message-toggle msg-popup__service-msg__toggle">{{localize 'CORE.SERVICES.MESSAGE.SERVICEMESSAGE.TOGGLE'}}</div>{{/if}}
 	    {{#each buttons}}
 	        <div class="js-buttons msg-popup__button {{#if default}}msg-popup__button_default{{/if}}">{{text}}</div>
 	    {{/each}}

@@ -67,3 +67,14 @@
     color: #fff;
     background-color: #009bfe;
 }
+
+.msg-popup__service-msg {
+    display: none;
+    text-align: left;
+}
+
+.msg-popup__service-msg__toggle{
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+}
