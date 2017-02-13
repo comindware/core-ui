@@ -26,7 +26,7 @@ export default Marionette.ItemView.extend({
         'input': '.js-time-input'
     },
 
-    className: 'time-input-view',
+    className: 'time-view',
 
     events: {
         'click': '__onClick',
