@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../templates/referenceListItem.hbs';
 import list from '../../../../../list/listApi';
 
@@ -25,11 +23,11 @@ export default Marionette.ItemView.extend({
 
     className: 'dd-list__i',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return {
-            text: this.model.get('text') || '#' + this.model.id
+            text: this.options.getDisplayText(this.model.toJSON())
         };
     },
 

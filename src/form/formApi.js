@@ -6,15 +6,12 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
-import CommonField from './fields/CommonField';
+import FieldView from './fields/FieldView';
 import BaseItemEditorView from './editors/base/BaseItemEditorView';
 import BaseLayoutEditorView from './editors/base/BaseLayoutEditorView';
 import BaseCollectionEditorView from './editors/base/BaseCollectionEditorView';
 import BaseCompositeEditorView from './editors/base/BaseCompositeEditorView';
-import ExtendedForm_ from './ExtendedForm';
 import BooleanEditorView from './editors/BooleanEditorView';
 import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
@@ -38,24 +35,22 @@ import editorsImplCommonMemberModel from './editors/impl/common/members/models/M
 import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
 import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
-import DataSourceReferenceEditorController from './editors/impl/reference/controllers/DataSourceReferenceEditorController';
 import BaseReferenceEditorController from './editors/impl/reference/controllers/BaseReferenceEditorController';
-import DataSourceReferenceCollection from './editors/impl/reference/collections/DataSourceReferenceCollection';
 import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
-import SearchMoreModel from './editors/impl/reference/models/SearchMoreModel';
 import ReferenceListItemView from './editors/impl/reference/views/ReferenceListItemView';
-import SearchMoreListItemView from './editors/impl/reference/views/SearchMoreListItemView';
+import UserReferenceListItemView from './editors/impl/reference/views/UserReferenceListItemView';
 import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
+import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
 import './validators/phoneValidator';
+import formRepository from './formRepository';
 
 var api = /** @lends module:core.form */ {
-    ExtendedForm: ExtendedForm_,
     /**
      * Marionette.Behavior classes useful with Backbone.Form.
      * @namespace
@@ -64,12 +59,15 @@ var api = /** @lends module:core.form */ {
         BackboneFormBehavior: BackboneFormBehavior
     },
     /**
+     * Repository that is used when an editor or validator is declared as string in form schema.
+     * @namespace
+     * */
+    repository: formRepository,
+    /**
      * Extended version of Backbone.Form.Field which is able to display validation errors and information tooltips.
      * @namespace
      * */
-    fields: {
-        CommonField: CommonField
-    },
+    Field: FieldView,
     /**
      * A lot of editors
      * @namespace
@@ -124,29 +122,27 @@ var api = /** @lends module:core.form */ {
             controllers: {
                 DemoReferenceEditorController: DemoReferenceEditorController,
                 BaseReferenceEditorController: BaseReferenceEditorController,
-                DataSourceReferenceEditorController: DataSourceReferenceEditorController
             },
             collections: {
-                BaseReferenceCollection: BaseReferenceCollection,
-                DataSourceReferenceCollection: DataSourceReferenceCollection
+                BaseReferenceCollection: BaseReferenceCollection
             },
             models: {
-                DefaultReferenceModel: DefaultReferenceModel,
-                SearchMoreModel: SearchMoreModel
+                DefaultReferenceModel: DefaultReferenceModel
             },
             views: {
                 ReferenceListItemView: ReferenceListItemView,
-                SearchMoreListItemView: SearchMoreListItemView,
                 LoadingView: LoadingView,
                 ReferenceButtonView: ReferenceButtonView,
-                ReferencePanelView: ReferencePanelView
+                ReferencePanelView: ReferencePanelView,
+                UserReferenceButtonView,
+                UserReferenceListItemView
             }
         },
         BooleanEditor: BooleanEditorView,
         NumberEditor: NumberEditorView,
         TextAreaEditor: TextAreaEditorView,
         TextEditor: TextEditorView,
-        PasswordEditor:PasswordEditorView,
+        PasswordEditor: PasswordEditorView,
         ReferenceEditor: ReferenceEditorView,
         MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
@@ -165,4 +161,3 @@ export default api;
 export var editors = api.editors;
 export var fields = api.fields;
 export var behaviors = api.behaviors;
-export var ExtendedForm = api.ExtendedForm;

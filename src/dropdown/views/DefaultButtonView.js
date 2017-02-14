@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/defaultButton.hbs';
 
 /**
@@ -29,7 +29,7 @@ export default Marionette.ItemView.extend({
 
     tagName: 'span',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     modelEvents: {
         'change': 'render'

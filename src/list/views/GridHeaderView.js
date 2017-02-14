@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -48,10 +48,10 @@ let GridHeaderView = Marionette.ItemView.extend({
         this.columns = options.columns;
         this.$document = $(document);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
-        this.listenTo(GlobalEventService, 'resize', this.handleResize);
+        this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'grid-header',
 
@@ -253,6 +253,9 @@ let GridHeaderView = Marionette.ItemView.extend({
     },
 
     handleResize: function () {
+        if (this.isDestroyed) {
+            return;
+        }
         this.__handleResizeInternal();
         this.gridEventAggregator.trigger('columnsResize');
     },

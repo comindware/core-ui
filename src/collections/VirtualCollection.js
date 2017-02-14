@@ -419,7 +419,7 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         });
 
         if (!rebuildRequired && this.comparator) {
-            var previousModel = new model.constructor(model.previousAttributes(), options);
+            var previousModel = new model.constructor(model.previousAttributes(), model.options);
             if (this.comparator.length === 1) {
                 var cmpVal1 = this.comparator(previousModel);
                 var cmpVal2 = this.comparator(model);

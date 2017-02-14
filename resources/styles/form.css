@@ -360,6 +360,7 @@ input[type="checkbox"].checkbox {
 /* /input/ */
 
 
+
 /* textarea */
 .editor_textarea {
     height: auto;
@@ -367,6 +368,7 @@ input[type="checkbox"].checkbox {
 }
 
 .textarea {
+    overflow-y: auto;
     width: 100%;
     min-height: 26px;
     padding: 0 0 2px;
@@ -811,6 +813,26 @@ input[type="checkbox"].checkbox {
 
 
 
+
+/* user-referense */
+.popout-field-user{
+    border-bottom:1px solid #182026;
+    height: 30px;
+}
+.editor_disabled .popout-field-user, .editor_readonly .popout-field-user {
+    border-bottom-color: #70787f;
+}
+.popout-field-user .member-icon{
+    width: 18px;
+    height: 18px;
+    margin: -3px 0 1;
+    line-height: 19px;
+}
+/* /user-referense/ */
+
+
+
+
 /* button remove */
 .btn-remove {
     width: 16px;
@@ -937,5 +959,26 @@ input[type="checkbox"].checkbox {
 .editor_readonly .input:hover{
     border-bottom-color: transparent;
     background: none;
+}
+
+.editor_reference.editor_focused:after {
+    width: 0;
+}
+
+.editor__common-empty-view {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #70787F;
+    min-height: 30px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.input::-ms-clear {
+    display: none;
 }
 

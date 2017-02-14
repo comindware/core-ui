@@ -8,13 +8,15 @@
 
 "use strict";
 
-import { moment } from '../../libApi';
+import { Handlebars, moment } from '../../libApi';
 import template from './templates/dateEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
-    allowEmptyValue: true
+    allowEmptyValue: true,
+    dateDisplayFormat: null
 };
 
 /**
@@ -26,8 +28,9 @@ const defaultOptions = {
  * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
+ * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * */
-Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
+formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
     initialize: function (options) {
         options = options || {};
         if (options.schema) {
@@ -35,6 +38,8 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
         } else {
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
+
+        this.value = this.__adjustValue(this.value);
 
         this.dateModel = new Backbone.Model({
             value: this.value,
@@ -45,7 +50,8 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
 
         this.dateView = new DateView({
             model: this.dateModel,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            dateDisplayFormat: this.options.dateDisplayFormat
         });
         this.listenTo(this.dateView, 'focus', this.onFocus);
         this.listenTo(this.dateView, 'blur', this.onBlur);
@@ -57,7 +63,7 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
 
     className: 'editor editor_date',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     ui: {
         clearButton: '.js-clear-button'
@@ -101,6 +107,7 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
     },
 
     __value: function (value, updateUi, triggerChange) {
+        value = this.__adjustValue(value);
         if (this.value === value) {
             return;
         }
@@ -141,7 +148,11 @@ Backbone.Form.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.
             return;
         }
         this.dateView.blur();
+    },
+
+    __adjustValue(value) {
+        return value === null ? value : moment(value).toISOString();
     }
 });
 
-export default Backbone.Form.editors.Date;
+export default formRepository.editors.Date;

@@ -10,8 +10,11 @@
 
 import infoTemplate from '../templates/InfoButton_Normal.hbs';
 import errorTemplate from '../templates/InfoButton_Error.hbs';
-import '../../../libApi';
+import { Handlebars } from '../../../libApi';
 import dropdown from '../../../dropdown/dropdownApi';
+
+let infoTemplateCompiled = Handlebars.compile(infoTemplate);
+let errorTemplateCompiled = Handlebars.compile(errorTemplate);
 
 export default Marionette.ItemView.extend({
 	behaviors: {
@@ -23,8 +26,8 @@ export default Marionette.ItemView.extend({
 
 	getTemplate: function() {
 		if (this.model.get('error')) {
-			return errorTemplate;
+			return errorTemplateCompiled;
 		}
-		return infoTemplate;
+		return infoTemplateCompiled;
 	}
 });

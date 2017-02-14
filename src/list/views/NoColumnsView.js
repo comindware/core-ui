@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import template from '../templates/noColumns.hbs';
 
 /**
@@ -22,5 +22,5 @@ import template from '../templates/noColumns.hbs';
  * */
 export default Marionette.ItemView.extend({
     className: 'dev-no-columns-view',
-    template: template
+    template: Handlebars.compile(template)
 });

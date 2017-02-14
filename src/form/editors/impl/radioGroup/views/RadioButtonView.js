@@ -8,19 +8,22 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../templates/radioButton.hbs';
 
 export default Marionette.ItemView.extend({
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'editor editor_radiobutton',
 
     focusElement: null,
 
-    attributes: {
-        'tabindex': '0'
+    attributes() {
+        return {
+            title: (this.model && this.model.get('title')) || null,
+            tabindex: '0'
+        }        
     },
 
     initialize: function (options) {

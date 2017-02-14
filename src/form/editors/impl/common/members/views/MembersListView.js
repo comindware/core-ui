@@ -6,10 +6,8 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import { helpers } from '../../../../../../utils/utilsApi';
-import '../../../../../../libApi';
+import { Handlebars } from '../../../../../../libApi';
 import list from '../../../../../../list/listApi';
 import template from '../templates/panel.hbs';
 import ListItemView from './MembersListItemView';
@@ -18,12 +16,16 @@ let config = {
     CHILD_HEIGHT: 34
 };
 
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
+};
+
 export default Marionette.LayoutView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'collection');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'dd-list',
 
@@ -39,6 +41,9 @@ export default Marionette.LayoutView.extend({
                 childView: ListItemView,
                 childViewOptions: {
                     reqres: this.reqres
+                },
+                emptyViewOptions: {
+                    className: classes.EMPTY_VIEW
                 },
                 childHeight: config.CHILD_HEIGHT,
                 height: 'auto',

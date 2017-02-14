@@ -9,7 +9,7 @@
 "use strict";
 
 import template from '../templates/header.hbs';
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -28,10 +28,10 @@ let HeaderView = GridHeaderView.extend({
     initialize: function (options) {
         GridHeaderView.prototype.initialize.apply(this, arguments);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
-        this.listenTo(GlobalEventService, 'resize', this.__handleResizeInternal);
+        this.listenTo(GlobalEventService, 'window:resize', this.__handleResizeInternal);
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     onRender: function () {
         var self = this;
@@ -46,6 +46,10 @@ let HeaderView = GridHeaderView.extend({
             var childEl = view.render().el;
             el.appendChild(childEl);
         });
+    },
+
+    constants: {
+        MIN_COLUMN_WIDTH: 100
     },
 
     __getAvailableWidth: function () {
@@ -97,14 +101,13 @@ let HeaderView = GridHeaderView.extend({
         this.$el.width(Math.ceil(fullWidth));
     },
 
-    __setInitialWidth: function (availableWidth) {
-        var columnsL = this.ui.gridHeaderColumn.length,
-            columnWidth = availableWidth / columnsL,
-            fullWidth = 0;
+    __setInitialWidth(availableWidth) {
+        const columnsL = this.ui.gridHeaderColumn.length;
+        const columnWidthData = this.__getColumnsWidthData(availableWidth, this.columns);
+        let fullWidth = 0;
 
-        this.ui.gridHeaderColumn.each(function (i, el) {
-            if (this.columns[i].width)
-                columnWidth = this.columns[i].width;
+        this.ui.gridHeaderColumn.each((i, el) => {
+            const columnWidth = columnWidthData[i];
 
             if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
                 this.columns[i].width = availableWidth - fullWidth;
@@ -113,9 +116,38 @@ let HeaderView = GridHeaderView.extend({
             $(el).outerWidth(columnWidth);
             this.columns[i].width = columnWidth;
             fullWidth += columnWidth;
-        }.bind(this));
+        });
 
         this.$el.width(Math.ceil(fullWidth));
+    },
+
+    __getColumnsWidthData(availableWidth, columns) {
+        const columnWidthData = [];
+        let availableDynamicWidth = availableWidth;
+        let nonStaticColumnsCount = columns.length;
+
+        this.ui.gridHeaderColumn.each((i, el) => {
+            let columnWidth;
+            if (columns[i].width) {
+                columnWidth = columns[i].width;
+                --nonStaticColumnsCount;
+            } else {
+                columnWidth = Math.max($(el).outerWidth(), this.constants.MIN_COLUMN_WIDTH);
+            }
+            availableDynamicWidth -= columnWidth;
+            columnWidthData.push(columnWidth);
+        });
+
+        if (availableDynamicWidth > 0) {
+            const columnAdditionalWidth = availableDynamicWidth / nonStaticColumnsCount;
+            columns.forEach((column, i) => {
+                if (!column.width) {
+                    columnWidthData[i] += columnAdditionalWidth;
+                }
+            });
+        }
+
+        return columnWidthData;
     },
 
     onShow: function () {
@@ -199,7 +231,7 @@ let HeaderView = GridHeaderView.extend({
         };
 
         this.dragContext.tableInitialWidth = this.__getTableWidth();
-        this.gridEventAggregator.trigger('columnStartDrag');
+        this.gridEventAggregator.trigger('columnStartDrag', this, draggedColumn.index);
 
         this.dragContext.fullWidth = this.headerMinWidth;
         this.dragContext.draggedColumn = draggedColumn;

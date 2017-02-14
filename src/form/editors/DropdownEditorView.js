@@ -8,13 +8,14 @@
 
 "use strict";
 
-import { keypress } from '../../libApi';
+import { Handlebars, keypress } from '../../libApi';
 import list from '../../list/listApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/dropdownEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DropdownPanelView from './impl/dropdown/views/DropdownPanelView';
 import DropdownButtonView from './impl/dropdown/views/DropdownButtonView';
+import formRepository from '../formRepository';
 
 const classes = {
 };
@@ -41,7 +42,7 @@ const defaultOptions = {
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
  * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
  * */
-Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
+formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -104,7 +105,7 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
 
     className: 'dropdown-view',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     setValue: function (value) {
         this.__value(value, false);
@@ -234,4 +235,4 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
     }
 });
 
-export default Backbone.Form.editors.Dropdown;
+export default formRepository.editors.Dropdown;

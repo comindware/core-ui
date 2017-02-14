@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import { helpers, comparators } from '../../utils/utilsApi';
 import template from './templates/membersBubbleEditor.hbs';
@@ -18,6 +18,7 @@ import FakeInputModel from './impl/membersBubble/models/FakeInputModel';
 import MembersCollection from './impl/common/members/collections/MembersCollection';
 import ButtonView from './impl/membersBubble/views/ButtonView';
 import factory from './impl/common/members/services/factory';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     exclude: [],
@@ -37,7 +38,7 @@ const defaultOptions = {
  * @param {String[]} [options.exclude] Массив идентификаторов пользователей, которые будут скрыты из списка доступных для выбора.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
-Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
+formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -63,7 +64,7 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         this.reqres.setHandler('button:click', this.__onButtonClick, this);
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'editor editor_bubble',
 
@@ -75,7 +76,6 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
-        this.__applyFilter();
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: ButtonView,
             buttonViewOptions: {
@@ -90,6 +90,7 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
             autoOpen: false
         });
         this.dropdownRegion.show(this.dropdownView);
+        this.listenTo(this.dropdownView, 'before:open', this.__onBeforeDropdownOpen);
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
@@ -132,6 +133,10 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
         } else {
             this.__sendPanelCommand('down');
         }
+    },
+
+    __onBeforeDropdownOpen: function () {
+        this.__applyFilter();
     },
 
     __onDropdownOpen: function () {
@@ -321,4 +326,4 @@ Backbone.Form.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mod
     }
 });
 
-export default Backbone.Form.editors.MembersBubble;
+export default formRepository.editors.MembersBubble;

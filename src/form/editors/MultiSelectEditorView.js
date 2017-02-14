@@ -8,12 +8,13 @@
 
 "use strict";
 
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import template from './templates/multiSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import MultiSelectPanelView from './impl/multiSelect/views/MultiSelectPanelView';
 import MultiSelectButtonView from './impl/multiSelect/views/MultiSelectButtonView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     collection: null,
@@ -37,7 +38,7 @@ const defaultOptions = {
  * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
  * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
  * */
-Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
+formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
     initialize: function(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -77,7 +78,7 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
 
     className: 'multiselect-wrp',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     onRender: function() {
         this.dropdownView = dropdown.factory.createDropdown({
@@ -250,4 +251,4 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
     }
 });
 
-export default Backbone.Form.editors.MultiSelect;
+export default formRepository.editors.MultiSelect;

@@ -44,7 +44,9 @@ export default {
      * @param {Object} options.gridViewOptions Опции списка
      * @param {Object} [options.gridViewOptions.selectableBehavior] Выбора элементов в списке (none/single/multi)
      * @param {Function} [options.onColumnSort] Обработчик oncColumnSort события
+     * @param {Backbone.View} [options.headerView] View, используемый для отображения заголовка списка
      * @param {Backbone.View} [options.rowView] View строки списка
+     * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка
      * @returns {Backbone.View} NativeGridView View-списка
      * */
     createNativeGrid: function (options) {
@@ -53,7 +55,9 @@ export default {
         var gridViewOptions = _.extend({
             collection: collection,
             onColumnSort: options.onColumnSort,
+            headerView: options.headerView,
             rowView: options.rowView,
+            rowViewSelector: options.rowViewSelector,
             emptyView: options.emptyView
         }, options.gridViewOptions);
 

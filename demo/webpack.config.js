@@ -41,7 +41,6 @@ module.exports = {
             entry: {
                 app: ['./public/index'],
                 vendor: [
-                    'babel-polyfill',
                     'comindware/core'
                 ]
             },
@@ -53,6 +52,12 @@ module.exports = {
                 sourceMapFilename: '[file].map'
             },
             module: {
+                preLoaders: [
+                    {
+                        test: /core\.bundle\.js$/,
+                        loader: "source-map"
+                    }
+                ],
                 loaders: [
                     {
                         test: /\.jsx?$/,

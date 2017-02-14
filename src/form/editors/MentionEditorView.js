@@ -9,13 +9,14 @@
 "use strict";
 
 import template from './templates/mentionEditor.hbs';
-import '../../libApi';
+import { Handlebars } from '../../libApi';
 import dropdown from '../../dropdown/dropdownApi';
 import '../../utils/utilsApi';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import membersFactory from './impl/common/members/services/factory';
 import TextAreaEditorView from './TextAreaEditorView';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     editorOptions: null
@@ -31,7 +32,7 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
-Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{
+formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -54,7 +55,7 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
         }, {}));
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     regions: {
         dropdownRegion: '.js-dropdown-region'
@@ -260,4 +261,4 @@ Backbone.Form.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:co
     }
 });
 
-export default Backbone.Form.editors.Mention;
+export default formRepository.editors.Mention;

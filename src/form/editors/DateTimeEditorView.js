@@ -8,15 +8,18 @@
 
 "use strict";
 
-import { moment, $ } from '../../libApi';
+import { Handlebars, moment, $ } from '../../libApi';
 import template from './templates/dateTimeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 import TimeView from './impl/dateTime/views/TimeView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    timezoneOffset: -new Date().getTimezoneOffset()
+    timezoneOffset: -new Date().getTimezoneOffset(),
+    dateDisplayFormat: null,
+    timeDisplayFormat: null
 };
 
 /**
@@ -30,8 +33,10 @@ const defaultOptions = {
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
  * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
+ * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
+ * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * */
-Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
+formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize: function(options) {
         options = options || {};
         if (options.schema) {
@@ -42,6 +47,8 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
 
         var readonly = this.getReadonly(),
             enabled = this.getEnabled();
+
+        this.value = this.__adjustValue(this.value);
 
         this.dateTimeModel = new Backbone.Model({
             value: this.value,
@@ -67,7 +74,7 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
 
     className: 'editor editor_date-time',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return this.options;
@@ -75,7 +82,9 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
 
     __change: function () {
         this.__value(this.dateTimeModel.get('value'), true, true);
-        this.__updateClearButton();
+        if (!this.isDestroyed) {
+            this.__updateClearButton();
+        }
     },
 
     setValue: function (value) {
@@ -92,7 +101,8 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
             model: this.dateTimeModel,
             timezoneOffset: this.options.timezoneOffset,
             preserveTime: true,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            dateDisplayFormat: this.options.dateDisplayFormat
         });
         this.listenTo(this.dateView, 'focus', this.onFocus);
         this.listenTo(this.dateView, 'blur', this.onDateBlur);
@@ -100,7 +110,8 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
         this.timeView = new TimeView({
             model: this.dateTimeModel,
             timezoneOffset: this.options.timezoneOffset,
-            allowEmptyValue: this.options.allowEmptyValue
+            allowEmptyValue: this.options.allowEmptyValue,
+            timeDisplayFormat: this.options.timeDisplayFormat
         });
         this.listenTo(this.timeView, 'focus', this.onFocus);
         this.listenTo(this.timeView, 'blur', this.onTimeBlur);
@@ -119,6 +130,7 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
     },
 
     __value: function (value, updateUi, triggerChange) {
+        value = this.__adjustValue(value);
         if (this.value === value) {
             return;
         }
@@ -184,7 +196,11 @@ Backbone.Form.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:c
             return;
         }
         this.onBlur();
+    },
+
+    __adjustValue(value) {
+        return value === null ? value : moment(value).toISOString();
     }
 });
 
-export default Backbone.Form.editors.DateTime;
+export default formRepository.editors.DateTime;

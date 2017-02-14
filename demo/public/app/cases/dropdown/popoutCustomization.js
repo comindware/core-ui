@@ -20,9 +20,6 @@ define([
             view: popout,
             canvas: {
                 height: '30px'
-            },
-            region: {
-                float: 'left'
             }
         });
     };

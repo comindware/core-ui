@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {
@@ -22,12 +20,12 @@ export default Marionette.ItemView.extend({
 
     className: 'input',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     templateHelpers: function () {
-        var value = this.model.get('value');
+        let value = this.model.get('value');
         return {
-            text: (value && (value.get('text') || '#' + value.id)) || ''
+            text: this.options.getDisplayText(value)
         };
     },
 
@@ -51,6 +49,7 @@ export default Marionette.ItemView.extend({
         if (this.reqres.request('value:navigate', this.model.get('value'))) {
             return false;
         }
+        return null;
     },
 
     modelEvents: {
@@ -67,10 +66,10 @@ export default Marionette.ItemView.extend({
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.$el.addClass(classes.ARROW_BUTTON);
             this.ui.clearButton.show();
-        } else if(this.model.get('readonly')){
+        } else if (this.model.get('readonly')) {
             this.$el.removeClass(classes.ARROW_BUTTON);
             this.ui.clearButton.hide();
-        } else if (!this.model.get('enabled')){
+        } else if (!this.model.get('enabled')) {
             this.$el.addClass(classes.ARROW_BUTTON);
             this.ui.clearButton.hide();
         }

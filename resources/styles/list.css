@@ -1,4 +1,5 @@
 /* List/Grid CSS */
+
 .list-item {
     height: 34px;
     padding: 0 5px;
@@ -292,3 +293,55 @@
     margin-left: -14px;
     margin-top: 4px;
 }
+
+/* Scrollbar */
+
+.scrollbar-region{
+    position: absolute;
+    width: 10px;
+    right: 0;
+    bottom: 0;
+    top: 46px;
+}
+.scrollbar {
+    height: 100%;
+    background-color: #fcfcfc;
+    z-index: 1;
+    position: absolute;
+    width: 12px;
+}
+.dragger {
+    position: relative;
+    top: 0;
+    height: 10%;
+    background-color: #d9d7d7;
+    opacity: 0.3;
+}
+
+.scrollbar.hover {
+    background-color: #F0F0F0;
+}
+
+.scrollbar.hover .dragger {
+    background-color: #B9B9B9;
+    opacity: 1;
+}
+
+.scrollbar .dragger.active {
+    background-color: #A0A0A0;
+}
+
+/* Empty View */
+.empty-view {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 300;
+    color: #70787F;
+    min-height: 30px;
+}
+/* /Empty View */

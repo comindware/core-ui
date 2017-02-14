@@ -22,6 +22,7 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         plugins: [
+            'karma-ie-launcher',
             'karma-chrome-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine',
@@ -31,6 +32,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
+            'node_modules/babel-polyfill/dist/polyfill.js',
             'tests/tests.bundle.js'
         ],
 

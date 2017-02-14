@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { keypress } from '../../../../../libApi';
+import { Handlebars, keypress } from '../../../../../libApi';
 import list from '../../../../../list/listApi';
 import dropdown from '../../../../../dropdown/dropdownApi';
 import { helpers } from '../../../../../utils/utilsApi';
@@ -18,6 +18,10 @@ import ListItemView from './ListItemView';
 const config = {
     CHILD_HEIGHT: 34,
     TEXT_FETCH_DELAY: 300
+};
+
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
 };
 
 export default Marionette.LayoutView.extend({
@@ -32,7 +36,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'dd-list',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     ui: {
         input: '.js-input'
@@ -68,6 +72,9 @@ export default Marionette.LayoutView.extend({
                 childView: ListItemView,
                 childViewOptions: {
                     reqres: this.reqres
+                },
+                emptyViewOptions: {
+                    className: classes.EMPTY_VIEW
                 },
                 childHeight: config.CHILD_HEIGHT,
                 height: 'auto',

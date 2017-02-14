@@ -8,7 +8,9 @@
 
 /* global module, __dirname */
 
-"use strict";
+'use strict';
+
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 
 const webpack = require('webpack');
 const path = require('path');
@@ -29,7 +31,7 @@ const pathResolver = {
         return path.resolve.apply(path.resolve, [__dirname].concat(_.toArray(arguments)));
     },
     stylesDir: function () {
-        return path.resolve(__dirname, "./resources/styles");
+        return path.resolve(__dirname, './resources/styles');
     }
 };
 
@@ -39,6 +41,7 @@ module.exports = {
         const PRODUCTION = options.env === 'production';
         const TEST_COVERAGE = options.env === 'test-coverage';
         const TEST = options.env === 'test' || TEST_COVERAGE;
+        const UGLIFY = options.uglify || false;
 
         const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
         const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
@@ -62,10 +65,6 @@ module.exports = {
                         }
                     },
                     {
-                        test: /\.hbs$/,
-                        loader: `handlebars-loader?helperDirs[]=${pathResolver.source('utils/handlebars')}`
-                    },
-                    {
                         test: /\.css$/,
                         loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader'].join('!'))
                     },
@@ -74,8 +73,12 @@ module.exports = {
                         loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'].join('!'))
                     },
                     {
+                        test: /\.hbs$/,
+                        loader: 'html'
+                    },
+                    {
                         test: /\.html$/,
-                        loader: "html"
+                        loader: 'html'
                     },
                     {
                         test: /\.woff(\?.*)?$/,
@@ -123,7 +126,7 @@ module.exports = {
                         loader: 'imports?jquery'
                     },
                     {
-                        test: /jquery\.caret/,
+                        test: /rangyinputs/,
                         loader: 'imports?jquery'
                     },
                     {
@@ -141,10 +144,6 @@ module.exports = {
                     {
                         test: /backbone\.js/,
                         loader: 'expose?Backbone'
-                    },
-                    {
-                        test: /backbone.forms\.js/,
-                        loader: 'imports?backbone!imports?underscore!imports?jquery'
                     },
                     {
                         test: /moment\.js/,
@@ -171,7 +170,7 @@ module.exports = {
                     'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
                     __DEV__: !PRODUCTION
                 }),
-                (PRODUCTION ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
+                (UGLIFY ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
             ],
             resolve: {
                 root: [
@@ -179,10 +178,9 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    "jquery.caret": pathResolver.source('lib/jquery.caret/index'),
-                    "backbone.forms": pathResolver.source('lib/backbone.forms/backbone-forms'),
-                    "keypress": pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
-                    "handlebars": 'handlebars/dist/handlebars'
+                    'rangyinputs': pathResolver.source('lib/rangyinputs/rangyinputs-jquery-src'),
+                    'keypress': pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
+                    'handlebars': 'handlebars/dist/handlebars'
                 }
             }
         };
@@ -207,34 +205,37 @@ module.exports = {
         }
 
         if (!TEST) {
-            webpackConfig.entry = pathResolver.source('coreApi.js');
+            webpackConfig.entry = [ 'babel-polyfill', pathResolver.source('coreApi.js') ];
             webpackConfig.output = {
                 path: pathResolver.client(),
-                filename: "core.bundle.js",
+                filename: 'core.bundle.js',
                 library: 'core',
                 libraryTarget: 'umd'
             };
         }
 
         if (PRODUCTION) {
-            webpackConfig.output.filename = 'core.bundle.min.js';
+            webpackConfig.output.filename = UGLIFY ? 'core.bundle.min.js' : 'core.bundle.js';
 
-            webpackConfig.cache = false;
             webpackConfig.debug = false;
             webpackConfig.devtool = 'source-map';
 
             //noinspection JSUnresolvedFunction
             webpackConfig.plugins.push(
                 new webpack.optimize.OccurrenceOrderPlugin(),
-                new webpack.optimize.DedupePlugin(),
-                new webpack.optimize.UglifyJsPlugin({
+                new webpack.optimize.DedupePlugin()
+            );
+
+            if (UGLIFY) {
+                webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
                     compress: {
                         unused: true,
                         dead_code: true,
                         warnings: false
-                    }
-                })
-            );
+                    },
+                    comments: false
+                }));
+            }
         }
 
         return webpackConfig;

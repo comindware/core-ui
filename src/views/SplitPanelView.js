@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../libApi';
+import { Handlebars } from '../libApi';
 import template from '../templates/splitPanel.hbs';
 import GlobalEventService from '../services/GlobalEventService';
 
@@ -39,7 +39,7 @@ export default Marionette.LayoutView.extend({
             '__startDragging', '__stopDragging', '__handleDocumentMouseMove',
             '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
 
-        this.listenTo(GlobalEventService, 'resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
+        this.listenTo(GlobalEventService, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
         this.on('render', function () {
             this.$el.addClass('double-panels');
         }.bind(this));
@@ -48,7 +48,7 @@ export default Marionette.LayoutView.extend({
         }.bind(this));
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     regions: {
         panel1Region: '.js-panel1',

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment } from '../../../../../libApi';
+import { Handlebars, moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import template from '../templates/timeInput.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
@@ -20,7 +20,7 @@ export default Marionette.ItemView.extend({
         this.timeEditFormat = dateHelpers.getTimeEditFormat();
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     ui: {
         'input': '.js-time-input'
@@ -118,9 +118,16 @@ export default Marionette.ItemView.extend({
 
     __updateDisplayValue: function () {
         let value = this.model.get('value');
-        let formattedValue = value === null || value === '' ?
-            '' :
-            dateHelpers.getDisplayTime(moment.utc(value).utcOffset(this.getOption('timezoneOffset')));
+        let formattedValue;
+        if (value === null || value === '') {
+            formattedValue = '';
+        } else {
+            if (this.options.timeDisplayFormat) {
+                formattedValue = moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.options.timeDisplayFormat);
+            } else {
+                formattedValue = dateHelpers.getDisplayTime(moment.utc(value).utcOffset(this.getOption('timezoneOffset')));
+            }
+        }
         this.ui.input.val(formattedValue);
     },
 

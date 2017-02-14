@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { moment } from '../../../../../libApi';
+import { Handlebars, moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/dateInput.hbs';
@@ -20,7 +18,7 @@ export default Marionette.ItemView.extend({
         this.editDateFormat = dateHelpers.getDateEditFormat();
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'date-view',
 
@@ -40,8 +38,8 @@ export default Marionette.ItemView.extend({
     },
 
     startEditing: function () {
-        let value = this.model.get('value'),
-            editableText = value ? moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.editDateFormat) : '';
+        let value = this.model.get('value');
+        let editableText = value ? moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.editDateFormat) : '';
         this.ui.dateInput.val(editableText);
     },
 
@@ -92,8 +90,8 @@ export default Marionette.ItemView.extend({
     },
 
     setInputPermissions: function () {
-        var enabled = this.model.get('enabled'),
-            readonly = this.model.get('readonly');
+        let enabled = this.model.get('enabled');
+        let readonly = this.model.get('readonly');
 
         if (!enabled) {
             this.ui.dateInput.prop('disabled', true);
@@ -109,15 +107,24 @@ export default Marionette.ItemView.extend({
     },
 
     updateDisplayValue: function () {
-        let formattedDisplayValue = this.model.get('value') === null ?
-            '' :
-            dateHelpers.getDisplayDate(moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
+        if (this.isDestroyed) {
+            return;
+        }
+        let value = this.model.get('value');
+        let formattedDisplayValue;
+        if (value === null) {
+            formattedDisplayValue = '';
+        } else if (this.options.dateDisplayFormat) {
+            formattedDisplayValue = moment(this.model.get('value')).locale(LocalizationService.langCode).format(this.options.dateDisplayFormat);
+        } else {
+            formattedDisplayValue = dateHelpers.getDisplayDate(moment.utc(this.model.get('value')).utcOffset(this.getOption('timezoneOffset')));
+        }
         this.ui.dateInput.val(formattedDisplayValue);
     },
 
     __setModelValue: function (date) {
-        var oldVal = this.model.get('value'),
-            newVal = null;
+        let oldVal = this.model.get('value');
+        let newVal = null;
 
         if (date === null || date === '') {
             newVal = null;

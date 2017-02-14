@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import template from '../templates/dropdownButton.hbs';
 
 const classes = {
@@ -21,7 +21,7 @@ export default Marionette.ItemView.extend({
 
     className: 'input input_dropdown',
 
-    template: template,
+    template: Handlebars.compile(template),
 
     attributes: {
         tabindex: 0

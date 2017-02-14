@@ -11,7 +11,7 @@
 
 "use strict";
 
-import '../../../../../libApi';
+import { Handlebars } from '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import template from '../templates/addNewButton.hbs';
 import list from '../../../../../list/listApi';
@@ -22,7 +22,7 @@ export default Marionette.ItemView.extend({
         this.reqres = options.reqres;
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     events:{
         'click': '__onClick'

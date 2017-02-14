@@ -8,11 +8,12 @@
 
 "use strict";
 
-import { moment } from '../../libApi';
+import { Handlebars, moment } from '../../libApi';
 import { keyCode, dateHelpers, helpers } from '../../utils/utilsApi';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
+import formRepository from '../formRepository';
 
 const focusablePartId  = {
     DAYS: 'days',
@@ -88,7 +89,7 @@ const stateModes = {
  * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
  * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
  * */
-Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
+formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -104,7 +105,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
         };
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     focusElement: '.js-input',
 
@@ -192,7 +193,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     getCaretPos: function () {
-        return this.ui.input.caret().start;
+        return this.ui.input.getSelection().start;
     },
 
     fixCaretPos: function (pos) {
@@ -209,7 +210,7 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     setCaretPos: function (pos) {
-        this.ui.input.caret(pos, pos);
+        this.ui.input.setSelection(pos, pos);
     },
 
     getSegmentIndex: function (pos) {
@@ -517,4 +518,4 @@ Backbone.Form.editors.Duration = BaseItemEditorView.extend(/** @lends module:cor
     }
 });
 
-export default Backbone.Form.editors.Duration;
+export default formRepository.editors.Duration;

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { $ } from '../../../../../libApi';
+import { Handlebars, $ } from '../../../../../libApi';
 import template from '../templates/date.hbs';
 import dropdownApi from '../../../../../dropdown/dropdownApi';
 import PanelView from './DatePanelView';
@@ -19,9 +19,10 @@ export default Marionette.LayoutView.extend({
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
         this.allowEmptyValue = this.getOption('allowEmptyValue');
+        this.dateDisplayFormat = this.getOption('dateDisplayFormat');
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'date-view',
 
@@ -36,7 +37,8 @@ export default Marionette.LayoutView.extend({
                 model: this.model,
                 timezoneOffset: this.timezoneOffset,
                 preserveTime: this.preserveTime,
-                allowEmptyValue: this.allowEmptyValue
+                allowEmptyValue: this.allowEmptyValue,
+                dateDisplayFormat: this.dateDisplayFormat
             },
             panelView: PanelView,
             panelViewOptions: {
@@ -46,7 +48,8 @@ export default Marionette.LayoutView.extend({
                 allowEmptyValue: this.allowEmptyValue
             },
             renderAfterClose: false,
-            autoOpen: false
+            autoOpen: false,
+            panelMinWidth: 'none'
         });
         this.listenTo(this.calendarDropdownView, 'before:close', this.__onBeforeClose, this);
         this.listenTo(this.calendarDropdownView, 'open', this.__onOpen, this);

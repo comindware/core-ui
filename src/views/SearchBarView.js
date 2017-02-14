@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../libApi';
+import { Handlebars } from '../libApi';
 import template from '../templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 
@@ -28,7 +28,7 @@ export default Marionette.ItemView.extend({
         this.__triggerSearch = _.debounce(this.__triggerSearch, this.options.delay);
     },
 
-    template: template,
+    template: Handlebars.compile(template),
 
     className: 'search-view',
 

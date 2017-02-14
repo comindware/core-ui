@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { moment } from '../../../../../libApi';
+import { Handlebars, moment } from '../../../../../libApi';
 import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
 import template from '../templates/datePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
@@ -18,7 +18,7 @@ const defaultOptions = {
 };
 
 export default Marionette.ItemView.extend({
-    template: template,
+    template: Handlebars.compile(template),
 
     initialize: function (options) {
         helpers.ensureOption(options, 'timezoneOffset');
