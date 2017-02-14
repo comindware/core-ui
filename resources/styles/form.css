@@ -15,7 +15,7 @@
     padding: 0 16px 0 0;
     height: 14px;
     line-height: 14px;
-    letter-spacing:normal;
+    letter-spacing: normal;
     font-size: 11px;
     font-weight: 400;
     color: #70787f;
@@ -163,11 +163,14 @@
     color:#384650;
 }
 
-
-
 .editor_readonly:after,
 .editor_disabled:after{
     width: 0;
+}
+
+.editor_readonly,
+.editor_disabled{
+    cursor: default;
 }
 
 .editor_disabled div,
@@ -406,44 +409,7 @@ input[type="checkbox"].checkbox {
 .editor_empty .input_number:hover {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAHCAYAAADu4qZ8AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDQ5Nzc3OTNFRTAwMTFFNjlCRUFBQTJFNkNBRUE0MUEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDQ5Nzc3OTJFRTAwMTFFNjlCRUFBQTJFNkNBRUE0MUEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjI2OUFCNjFBQjEzODExRTQ5ODE4QkQxNzczQTFDRTRFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjI2OUFCNjFCQjEzODExRTQ5ODE4QkQxNzczQTFDRTRFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+p4NffQAAAMJJREFUeNqEUcENwjAMTKMuACO0I9BX3zACjEBHSEdoRwgrZAT40EdfdIWs0BHouVwkC6Fi6RT7Yp9jJ3sOg3mNozPGdEBb1XWPuIDvgaP52AP8iXlXoCDfg28tLjpeaJuBCOyBUsSQdxYxFmbSEHDSMIcTRA3BOykgFpFGfPA7xU84JobCR3Ax58WWeY4TKOrVy9dGdqsaBXd2vKjXNBxHOI+cg/0jIEUVx0sf8G3rTn4JuPQzalc3WbjeHZccFgEGAJWxU02CVEfzAAAAAElFTkSuQmCC')
 }
-
-.number-btn {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border:1px solid transparent;
-    border-radius: 50%;
-    line-height: normal;
-    position: absolute;
-    right: 0;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity .3s;
-}
-
-.editor_focused .number-btn, .editor:hover .number-btn {
-    opacity: 1;
-}
-
-.number-btn:hover {
-    border-color: #009bfe;
-}
-
-.editor_disabled .number-btn,
-.editor_readonly .number-btn {
-    visibility: hidden;
-}
-
-.number-btn_up {
-    top: 2px;
-    background: no-repeat 50% 3px url(data:image/gif;base64,R0lGODlhBgADAIABACeO2f///yH5BAEAAAEALAAAAAAGAAMAAAIHTAB2mGhYAAA7);
-}
-.number-btn_down {
-    bottom: 2px;
-    background: no-repeat 50% 4px url(data:image/gif;base64,R0lGODlhBgADAIABACeO2f///yH5BAEAAAEALAAAAAAGAAMAAAIHBBKWdqhRAAA7);
-}
 /* /Number/ */
-
 
 
 /* Date */
@@ -645,7 +611,6 @@ input[type="checkbox"].checkbox {
 .bubbles__input.empty{
     color: inherit;
 }
-
 /* /Bubbles/ */
 
 
@@ -888,44 +853,6 @@ input[type="checkbox"].checkbox {
 /* /button remove */
 
 
-/* button delete */
-.btn-del {
-    width: 16px;
-    height: 16px;
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    vertical-align: middle;
-    visibility: hidden;
-    border-radius: 50%;
-    border: 0;
-    background: #b6b6b6 no-repeat 50% 50% url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMiIgYmFzZVByb2ZpbGU9InRpbnkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iOHB4IiBoZWlnaHQ9IjhweCIgdmlld0JveD0iMCAwIDggOCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsPSIjZmZmZmZmIiBwb2ludHM9IjgsNi43IDUuMyw0IDgsMS4zIDYuNywwIDQsMi43IDEuMywwIDAsMS4zIDIuNyw0IDAsNi43IDEuMyw4IDQsNS4zIDYuNyw4ICIvPjwvc3ZnPg==);
-    cursor: pointer;
-    transition: all .2s;
-}
-
-.btn-del_absolute {
-    margin: -8px 0 0;
-    position: absolute;
-    top: 50%;
-    right: 7px;
-}
-.btn-del:hover {
-    background-color: #c94e36;
-}
-.btn-wrp:hover .btn-del, .btn-wrp-active .btn-del {
-    visibility: visible;
-}
-.editor:hover .btn-del {
-    visibility: visible;
-}
-.editor_empty .btn-del,
-.editor_disabled .btn-del,
-.editor_readonly .btn-del{
-    visibility: hidden !important;
-}
-/* button delete */
-
 
 /* ------------------------------ Calendar Bootstrap empty style ------------------------------ */
 .editor_date.editor_empty,
@@ -1011,5 +938,4 @@ input[type="checkbox"].checkbox {
     border-bottom-color: transparent;
     background: none;
 }
-
 
