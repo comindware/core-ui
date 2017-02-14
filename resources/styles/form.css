@@ -637,6 +637,23 @@ input[type="checkbox"].checkbox {
     white-space: nowrap;
 }
 
+
+.editor_reference.editor_focused:after {
+    width: 0;
+}
+
+.editor__common-empty-view {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    color: #70787F;
+    min-height: 30px;
+    font-size: 12px;
+    font-weight: 400;
+}
 /* /reference-field/ */
 
 
@@ -808,29 +825,7 @@ input[type="checkbox"].checkbox {
     cursor: default;
 }
 
-
 /* /Member editor/ */
-
-
-
-
-/* user-referense */
-.popout-field-user{
-    border-bottom:1px solid #182026;
-    height: 30px;
-}
-.editor_disabled .popout-field-user, .editor_readonly .popout-field-user {
-    border-bottom-color: #70787f;
-}
-.popout-field-user .member-icon{
-    width: 18px;
-    height: 18px;
-    margin: -3px 0 1;
-    line-height: 19px;
-}
-/* /user-referense/ */
-
-
 
 
 /* button remove */
@@ -849,6 +844,10 @@ input[type="checkbox"].checkbox {
 
 .editor:hover .btn-remove,
 .editor_focused .btn-remove{
+    visibility: visible;
+}
+
+.dd-list__filter_reference:hover .btn-remove{
     visibility: visible;
 }
 
@@ -960,25 +959,10 @@ input[type="checkbox"].checkbox {
     border-bottom-color: transparent;
     background: none;
 }
-
-.editor_reference.editor_focused:after {
-    width: 0;
-}
-
-.editor__common-empty-view {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    color: #70787F;
-    min-height: 30px;
-    font-size: 12px;
-    font-weight: 400;
-}
-
 .input::-ms-clear {
     display: none;
 }
+
+
+
 

@@ -168,9 +168,9 @@
 
 .dd-list__title {
     max-width: 90%;
-    padding: 5px 20px 5px 5px;
-    line-height: 18px;
-    font-size: 14px;
+    padding: 3px 14px 3px 5px;
+    line-height: 19px;
+    font-size: 12px;
     font-weight: 500;
     display: inline-block;
     overflow: hidden;
@@ -309,9 +309,9 @@
 }
 
 .list-search_dd {
-    height: 17px;
+    height: 16px;
     margin: 0;
-    padding: 8px 5px 8px 5px;
+    padding: 4px 5px 4px 5px;
     border-bottom: solid 1px #ced3d7;
     opacity: 1;
 }
@@ -393,10 +393,10 @@
     overflow-y: auto;
 }
 .time-dropdown__i {
-    height: 34px;
+    height: 25px;
     padding: 0 10px;
-    line-height: 34px;
-    font-size: 13px;
+    line-height: 25px;
+    font-size: 12px;
     font-weight: normal;
     text-align: left;
     color: #43525d;
