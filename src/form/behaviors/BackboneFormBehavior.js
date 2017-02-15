@@ -64,10 +64,6 @@ let Form = Marionette.Object.extend({
             this.__regionManager.get(regionName).show(this.fields[key]);
             usedFields[key] = true;
         });
-
-        this.validate({
-            silent: true
-        });
     },
 
     /**
@@ -160,11 +156,6 @@ let Form = Marionette.Object.extend({
     },
 
     __handleEditorEvent (event, editor, field) {
-        if (event !== 'validated') {
-            //Re-trigger editor events on the form
-            this.trigger.call(this, `form:${event}`, this, editor, Array.prototype.slice.call(arguments, 2));
-        }
-
         switch (event) {
         case 'change':
             this.trigger('change', this, editor);
@@ -184,11 +175,6 @@ let Form = Marionette.Object.extend({
                     this.trigger('blur', this);
                 }
             }
-            break;
-        case 'validated':
-            this.validate({
-                silent: true
-            });
             break;
         default:
             break;

@@ -154,9 +154,6 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.$el.toggleClass(classes.REQUIRED, Boolean(required));
-        if (this.$el.hasClass(classes.ERROR)) {
-            this.validate();
-        }
     },
 
     __updateEditorState (readonly, enabled) {
@@ -199,6 +196,7 @@ export default Marionette.LayoutView.extend({
         this.editor = new ConstructorFn({
             schema: this.schema,
             form: this.form,
+            field: this,
             key: this.key,
             model: this.model,
             id: this.__createEditorId(),
@@ -210,17 +208,6 @@ export default Marionette.LayoutView.extend({
         this.editor.on('enabled', enabled => {
             this.__updateEditorState(this.editor.getReadonly(), enabled);
         });
-
-        if (this.schema.validateOnChange) {
-            this.editor.on('change', _.debounce(() => {
-                this.validate();
-                this.editor.trigger('validated', this);
-            }, 500));
-            this.editor.on('blur', () => {
-                this.validate();
-                this.editor.trigger('validated', this);
-            });
-        }
     },
 
     __createEditorId () {

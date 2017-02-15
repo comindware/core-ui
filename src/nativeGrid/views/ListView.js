@@ -112,7 +112,6 @@ let ListView = Marionette.LayoutView.extend({
     },
 
     onRender: function () {
-        htmlHelpers.forbidSelection(this.el);
         this.__assignKeyboardShortcuts();
     },
 
