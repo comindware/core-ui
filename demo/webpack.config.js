@@ -56,14 +56,20 @@ module.exports = {
             module: {
                 preLoaders: [
                     {
-                        test: `${__dirname}/../dist/core.js`,
+                        test: /dist\/core\.js$/,
                         loader: 'source-map'
                     }
                 ],
                 loaders: [
                     {
                         test: /\.jsx?$/,
-                        exclude: /(node_modules|bower_components|core\.bundle|cases|prism\.js|markdown\.js)/,
+                        include: [
+                            pathResolver.source()
+                        ],
+                        exclude: [
+                            pathResolver.source('lib'),
+                            pathResolver.source('app/cases')
+                        ],
                         loader: 'babel-loader',
                         query: {
                             cacheDirectory: true,
