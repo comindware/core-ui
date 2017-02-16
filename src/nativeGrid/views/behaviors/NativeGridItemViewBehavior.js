@@ -20,6 +20,7 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
         this.paddingRight = view.options.paddingRight;
         this.padding = options.padding;
         this.listenTo(view.options.gridEventAggregator, 'columnStartDrag', this.__onColumnStartDrag);
+        this.listenTo(view.options.gridEventAggregator, 'columnStoptDrag', this.__onColumnStopDrag);
         this.listenTo(view.options.gridEventAggregator, 'singleColumnResize', this.__onSingleColumnResize);
         this.view.setFitToView = this.setFitToView.bind(this);
     },
@@ -31,6 +32,11 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
         cells.each(function (i, el) {
             this.columnsWidth.push(this.__getElementOuterWidth(el));
         }.bind(this));
+        this.initialFullWidth = this.$el.parent().width();
+    },
+
+    __onColumnStopDrag: function () {
+        delete this.draggedColumn;
     },
 
     onShow: function () {

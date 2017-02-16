@@ -47,7 +47,7 @@ export default {
         ], iconIds.ERROR);
     },
 
-    showMessageDialog: function (description, text, buttons, iconId, serviceMessage) {
+    showMessageDialog: function (description, text, buttons, iconId) {
         iconId = iconId || iconIds.NONE;
         return new Promise(resolve => {
             let view = new MessageView({
@@ -55,8 +55,7 @@ export default {
                     iconId: iconId,
                     text: text,
                     description: description,
-                    buttons: buttons || [],
-                    serviceMessage: serviceMessage
+                    buttons: buttons || []
                 })
             });
             view.once('close', result => {
