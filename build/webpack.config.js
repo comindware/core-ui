@@ -17,23 +17,12 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const _ = require('lodash');
+const pathResolver = require('./pathResolver');
 
-const pathResolver = {
-    client: function () {
-        //noinspection Eslint
-        return path.resolve.apply(path.resolve, [__dirname, 'dist'].concat(_.toArray(arguments)));
-    },
-    source: function () {
-        //noinspection Eslint
-        return path.resolve.apply(path.resolve, [__dirname, 'src'].concat(_.toArray(arguments)));
-    },
-    thisDir: function () {
-        return path.resolve.apply(path.resolve, [__dirname].concat(_.toArray(arguments)));
-    },
-    stylesDir: function () {
-        return path.resolve(__dirname, './resources/styles');
-    }
-};
+const jsFileName = 'core.js';
+const jsFileNameMin = 'core.min.js';
+const cssFileName = 'core.css';
+const cssFileNameMin = 'core.min.css';
 
 module.exports = {
     build: function (options) {
@@ -157,7 +146,7 @@ module.exports = {
             },
             sassLoader: {
                 includePaths: [
-                    pathResolver.stylesDir()
+                    pathResolver.resources('styles')
                 ]
             },
             postcss: [
@@ -170,11 +159,10 @@ module.exports = {
                     'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
                     __DEV__: !PRODUCTION
                 }),
-                (UGLIFY ? new ExtractTextPlugin('styles.bundle.min.css') : new ExtractTextPlugin('styles.bundle.css'))
+                new ExtractTextPlugin(UGLIFY ? cssFileNameMin : cssFileName)
             ],
             resolve: {
                 root: [
-                    pathResolver.thisDir(),
                     pathResolver.source()
                 ],
                 alias: {
@@ -182,11 +170,15 @@ module.exports = {
                     'keypress': pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
                     'handlebars': 'handlebars/dist/handlebars'
                 }
+            },
+            devServer: {
+                noInfo: true,
+                stats: 'minimal'
             }
         };
 
         if (TEST) {
-            webpackConfig.resolve.alias.localizationMap = `${__dirname}/dist/localization/localization.en.json`;
+            webpackConfig.resolve.alias.localizationMap = pathResolver.compiled('localization/localization.en.json');
         }
 
         if (TEST_COVERAGE) {
@@ -194,10 +186,9 @@ module.exports = {
                 {
                     test: /\.jsx?$/,
                     exclude: [
-                        pathResolver.thisDir('tests'),
-                        pathResolver.thisDir('node_modules'),
-                        pathResolver.thisDir('bower_components'),
-                        pathResolver.thisDir('src/lib')
+                        pathResolver.tests(),
+                        pathResolver.node_modules(),
+                        pathResolver.source('lib')
                     ],
                     loader: 'istanbul-instrumenter'
                 }
@@ -207,15 +198,15 @@ module.exports = {
         if (!TEST) {
             webpackConfig.entry = [ 'babel-polyfill', pathResolver.source('coreApi.js') ];
             webpackConfig.output = {
-                path: pathResolver.client(),
-                filename: 'core.bundle.js',
+                path: pathResolver.compiled(),
+                filename: jsFileName,
                 library: 'core',
                 libraryTarget: 'umd'
             };
         }
 
         if (PRODUCTION) {
-            webpackConfig.output.filename = UGLIFY ? 'core.bundle.min.js' : 'core.bundle.js';
+            webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
 
             webpackConfig.debug = false;
             webpackConfig.devtool = 'source-map';

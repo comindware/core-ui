@@ -6,6 +6,8 @@
  * Published under the MIT license
  */
 
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}], no-new-func: 0 */
+
 'use strict';
 
 const webpack = require('webpack');
@@ -54,8 +56,8 @@ module.exports = {
             module: {
                 preLoaders: [
                     {
-                        test: /core\.bundle\.js$/,
-                        loader: "source-map"
+                        test: `${__dirname}/../dist/core.js`,
+                        loader: 'source-map'
                     }
                 ],
                 loaders: [
@@ -66,11 +68,11 @@ module.exports = {
                         query: {
                             cacheDirectory: true,
                             presets: [
-                                "es2015",
-                                "stage-0"
+                                'es2015',
+                                'stage-0'
                             ],
                             plugins: [
-                                "transform-runtime"
+                                'transform-runtime'
                             ]
                         }
                     },
@@ -159,7 +161,7 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    'comindware/core': `${__dirname}/../dist/core.bundle.js`,
+                    'comindware/core': `${__dirname}/../dist/core.js`,
                     prism: `${__dirname}/public/lib/prism/prism.js`,
                     markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                     localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,

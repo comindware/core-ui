@@ -1,4 +1,6 @@
-<input type="text"
-       class="input input_text js-input"
-       placeholder="{{placeholder}}"
-       {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}} ><div class="js-clear-button btn-remove btn-remove_absolute btn-remove_text"></div>
+{{#if maxLength}}
+    <input type="text" class="input input_text js-input" placeholder="{{placeholder}}" maxlength="{{maxLength}}">
+{{else}}
+    <input type="text" class="input input_text js-input" placeholder="{{placeholder}}">
+{{/if}}
+<div class="js-clear-button btn-remove btn-remove_absolute btn-remove_text"></div>
