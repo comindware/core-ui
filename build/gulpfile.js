@@ -42,6 +42,8 @@ gulp.task('watch:localization', () => {
 
 gulp.task('jsdoc', require('./tasks/jsdocTask'));
 
+gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
+
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
 gulp.task('watch:build:core:dev', () => {
     gulp.watch([ pathResolver.source('**/*'), pathResolver.resources('**/*') ], [ 'build:core:dev' ]);
@@ -79,6 +81,6 @@ gulp.task('start', callback => runSequence('localization', 'build:core:dev', ['w
 
 gulp.task('build', callback => runSequence('clean', 'localization', ['build:core:prod', 'build:core:prod:min', 'jsdoc'], callback));
 
-gulp.task('deploy', callback => runSequence('build', 'test:coverage', callback));
+gulp.task('deploy', callback => runSequence('build', 'test:coverage', 'prepareToPublish', callback));
 
 gulp.task('default', ['start']);
