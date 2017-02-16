@@ -16,7 +16,7 @@ import list from '../../../../../list/listApi';
 import { helpers } from '../../../../../utils/utilsApi';
 
 const config = {
-    CHILD_HEIGHT: 34,
+    CHILD_HEIGHT: 25,
     MAX_HEIGHT: 410
 };
 

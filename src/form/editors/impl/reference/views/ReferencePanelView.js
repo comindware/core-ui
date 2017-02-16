@@ -15,7 +15,7 @@ import LoadingView from './LoadingView';
 import AddNewButtonView from './AddNewButtonView';
 
 const config = {
-    CHILD_HEIGHT: 30
+    CHILD_HEIGHT: 25
 };
 
 const classes = {

@@ -1,2 +1,2 @@
 <span class="js-text dropdown-text">{{#if hasValue}}{{#if text}}{{text}}{{else}}&nbsp{{/if}}{{else}}{{localize 'CORE.FORM.EDITORS.DROPDOWN.NOTSET'}}{{/if}}</span>
-<div class="js-clear-button btn-remove btn-remove_absolute btn-remove_dropdown"></div>
+{{#if allowEmptyValue}}<div class="js-clear-button btn-remove btn-remove_absolute btn-remove_dropdown"></div>{{/if}}

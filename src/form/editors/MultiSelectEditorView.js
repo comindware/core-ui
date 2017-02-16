@@ -100,7 +100,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.listenTo(this.dropdownView, 'open', this.onPanelOpen);
 
         this.listenTo(this.dropdownView, 'button:open:panel', this.onPanelOpenRequest);
-        this.listenTo(this.dropdownView, 'button:focus', this.onPanelOpenRequest);
+        this.listenTo(this.dropdownView, 'button:value:set', this.__onValueSet);
 
         this.listenTo(this.dropdownView, 'panel:select:all', this.__selectAll);
         this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
@@ -114,6 +114,10 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.__triggerChange();
         this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
         this.__resetValue();
+    },
+
+    __onValueSet (values) {
+        this.__value(values, true);
     },
 
     __onSelect: function(model) {
@@ -196,9 +200,12 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.tempValue = _.without(this.tempValue, value);
     },
 
-    __value: function (value) {
+    __value: function (value, updateUi) {
         this.tempValue = value;
         this.__applyValue();
+        if (updateUi) {
+            this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
+        }
     },
 
     __applyValue: function() {
