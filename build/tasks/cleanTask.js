@@ -17,6 +17,7 @@ const rimraf = require('rimraf');
 
 const pathResolver = require('../pathResolver');
 
-module.exports = callback => {
-    rimraf(pathResolver.compiled('**'), callback);
+module.exports = () => {
+    rimraf.sync(pathResolver.compiled('*'));
+    rimraf.sync(pathResolver.compiled('_/**'));
 };

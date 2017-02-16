@@ -80,7 +80,8 @@ module.exports = function (config) {
         }),
 
         webpackMiddleware: {
-            noInfo: true
+            noInfo: true,
+            stats: 'minimal'
         }
     };
 
