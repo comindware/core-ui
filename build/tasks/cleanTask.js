@@ -13,11 +13,15 @@
 
 'use strict';
 
-const rimraf = require('rimraf');
+const del = require('del');
 
 const pathResolver = require('../pathResolver');
 
 module.exports = () => {
-    rimraf.sync(pathResolver.compiled('*'));
-    rimraf.sync(pathResolver.compiled('_/**'));
+    del.sync([
+        pathResolver.compiled('**'),
+        `!${pathResolver.compiled()}`,
+        `!${pathResolver.compiled('localization')}`,
+        `!${pathResolver.compiled('localization/*.json')}`
+    ], { force: true });
 };
