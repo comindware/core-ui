@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import moment_ from 'moment';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';

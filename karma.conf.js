@@ -8,7 +8,7 @@
 
 'use strict';
 
-const webpackConfigFactory = require("./webpack.config.js");
+const webpackConfigFactory = require('./build/webpack.config.js');
 
 module.exports = function (config) {
     let TEST_COVERAGE = config.coverage === true;
@@ -80,7 +80,8 @@ module.exports = function (config) {
         }),
 
         webpackMiddleware: {
-            noInfo: true
+            noInfo: true,
+            stats: 'minimal'
         }
     };
 
@@ -90,7 +91,7 @@ module.exports = function (config) {
         result.reporters.push('coverage');
 
         result.coverageReporter = {
-            dir : 'reports/',
+            dir: 'reports/',
             reporters: [
                 { type: 'html', subdir: 'report-html' },
                 { type: 'lcov', subdir: 'report-lcov' },

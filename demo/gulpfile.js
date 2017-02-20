@@ -6,6 +6,8 @@
  * Published under the MIT license
  */
 
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}], no-new-func: 0 */
+
 'use strict';
 
 const gulp = require('gulp');
@@ -46,7 +48,8 @@ gulp.task('start', function () {
                         noInfo: true,
                         publicPath: webpackConfig.output.publicPath,
                         stats: {
-                            colors: true
+                            colors: true,
+                            chunks: false
                         }
                     })
                 ]
