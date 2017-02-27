@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { helpers } from '../../../utils/utilsApi';
+import { helpers } from 'utils';
 import CollapsibleBehavior from '../../../models/behaviors/CollapsibleBehavior';
 
 let ListGroupBehavior = function (model) {

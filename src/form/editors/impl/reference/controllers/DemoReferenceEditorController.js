@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-import '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
-import list from '../../../../../list/listApi';
+import 'lib';
+import { helpers } from 'utils';
+import list from 'list';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
 const config = {

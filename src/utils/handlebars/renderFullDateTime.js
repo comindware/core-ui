@@ -10,7 +10,7 @@
 
 "use strict";
 
-import { moment } from '../../libApi';
+import { moment } from 'lib';
 
 module.exports = function(date) {
     return moment(date).format('LLL');

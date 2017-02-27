@@ -14,7 +14,7 @@
 *
 * */
 
-import '../../../libApi';
+import 'lib';
 import formRepository from '../../formRepository';
 
 const classes = {

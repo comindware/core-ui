@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../libApi';
+import 'lib';
 
 export default Backbone.Model.extend({
 	defaults:

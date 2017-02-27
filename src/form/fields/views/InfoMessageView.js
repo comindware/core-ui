@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import '../../../libApi';
+import 'lib';
 
 export default Marionette.ItemView.extend({
     modelEvents: {

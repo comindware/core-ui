@@ -8,8 +8,8 @@
 
 "use strict";
 
-import '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import 'lib';
+import { helpers } from 'utils';
 import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
 import RadioButtonModel from '../models/RadioButtonModel';
 

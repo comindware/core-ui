@@ -152,6 +152,17 @@ define([], function () {
                 ]
             },
             {
+                id: 'layout',
+                displayName: 'Layout',
+                groups: [
+                    {
+                        id: 'TabLayout',
+                        displayName: 'Tab Layout',
+                        description: ''
+                    }
+                ]
+            },
+            {
                 id: 'list',
                 displayName: 'List & Grid',
                 groups: [

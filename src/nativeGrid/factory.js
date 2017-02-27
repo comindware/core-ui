@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { helpers } from '../utils/utilsApi';
+import { helpers } from 'utils';
 import NativeGridView from './views/NativeGridView';
 import VirtualCollection from '../collections/VirtualCollection';
 

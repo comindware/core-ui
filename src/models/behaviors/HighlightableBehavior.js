@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 
 let HighlightableBehavior = function () {
 };

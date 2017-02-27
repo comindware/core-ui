@@ -56,7 +56,7 @@ module.exports = {
             module: {
                 preLoaders: [
                     {
-                        test: /dist\/core\.js$/,
+                        test: /core\.js$/,
                         loader: 'source-map'
                     }
                 ],

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 import template from '../templates/nativeGrid.hbs';
 import ListView from './ListView';
 import RowView from './RowView';
@@ -17,8 +17,8 @@ import ColumnHeaderView from './ColumnHeaderView';
 import NoColumnsDefaultView from '../../list/views/NoColumnsView';
 import SelectableBehavior from '../../models/behaviors/SelectableBehavior';
 import dropdownFactory from '../../dropdown/factory';
-import dropdownApi from '../../dropdown/dropdownApi';
-import { helpers } from '../../utils/utilsApi';
+import dropdownApi from 'dropdown';
+import { helpers } from 'utils';
 
 let defaultOptions = {
     headerView: HeaderView,

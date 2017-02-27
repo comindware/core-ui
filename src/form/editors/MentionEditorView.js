@@ -9,9 +9,9 @@
 "use strict";
 
 import template from './templates/mentionEditor.hbs';
-import { Handlebars } from '../../libApi';
-import dropdown from '../../dropdown/dropdownApi';
-import '../../utils/utilsApi';
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
+import 'utils';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import membersFactory from './impl/common/members/services/factory';
 import TextAreaEditorView from './TextAreaEditorView';

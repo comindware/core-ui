@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../libApi';
+import 'lib';
 
 /*
     Behavior-like controller that is responsible for synchronization between views presenting the same collection.

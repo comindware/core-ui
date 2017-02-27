@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { Handlebars } from '../../../../../libApi';
-import dropdown from '../../../../../dropdown/dropdownApi';
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
 import template from '../templates/defaultButton.hbs';
 
 const classes = {

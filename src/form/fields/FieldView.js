@@ -7,8 +7,8 @@
  */
 
 import template from './templates/field.hbs';
-import { Handlebars } from '../../libApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
 import FieldInfoModel from './models/FieldInfoModel';
 import InfoButtonView from './views/InfoButtonView';
 import InfoMessageView from './views/InfoMessageView';

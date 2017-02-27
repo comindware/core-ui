@@ -11,8 +11,8 @@
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
-import { Handlebars, keypress } from '../../libApi';
-import { keyCode, helpers, htmlHelpers } from '../../utils/utilsApi';
+import { Handlebars, keypress } from 'lib';
+import { keyCode, helpers, htmlHelpers } from 'utils';
 import formRepository from '../formRepository';
 
 const changeMode = {

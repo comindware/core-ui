@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-import { keypress, Handlebars } from '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
-import list from '../../../../../list/listApi';
+import { keypress, Handlebars } from 'lib';
+import { helpers } from 'utils';
+import list from 'list';
 import template from '../templates/referencePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 import LoadingView from './LoadingView';

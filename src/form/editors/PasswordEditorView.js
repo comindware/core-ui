@@ -9,7 +9,7 @@
 "use strict";
 
 import TextEditorView from './TextEditorView';
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 import template from './templates/passwordEditor.hbs';
 import formRepository from '../formRepository';
 

@@ -43,7 +43,7 @@ module.exports = {
                 loaders: [
                     {
                         test: /\.jsx?$/,
-                        exclude: /(node_modules|bower_components|src\/lib\/)/,
+                        exclude: /(node_modules|bower_components|src\/external\/)/,
                         loader: 'babel-loader',
                         query: {
                             presets: ['es2015'],
@@ -166,8 +166,8 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    'rangyinputs': pathResolver.source('lib/rangyinputs/rangyinputs-jquery-src'),
-                    'keypress': pathResolver.source('lib/Keypress/keypress-2.1.0.min'),
+                    'rangyinputs': pathResolver.source('external/rangyinputs/rangyinputs-jquery-src'),
+                    'keypress': pathResolver.source('external/Keypress/keypress-2.1.0.min'),
                     'handlebars': 'handlebars/dist/handlebars'
                 }
             },
@@ -188,7 +188,7 @@ module.exports = {
                     exclude: [
                         pathResolver.tests(),
                         pathResolver.node_modules(),
-                        pathResolver.source('lib')
+                        pathResolver.source('external')
                     ],
                     loader: 'istanbul-instrumenter'
                 }
