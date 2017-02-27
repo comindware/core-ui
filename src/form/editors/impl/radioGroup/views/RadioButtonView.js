@@ -30,11 +30,6 @@ export default Marionette.ItemView.extend({
         this.enabled = options.enabled;
     },
 
-    ui: {
-        toggleButton: '.js-toggle-button',
-        displayText: '.js-display-text'
-    },
-
     classes: {
         checked: 'editor_checked'
     },
@@ -45,8 +40,7 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click @ui.toggleButton': '__changeModelSelected',
-        'click @ui.displayText': '__changeModelSelected'
+        'click': '__changeModelSelected'
     },
 
     onRender: function () {

@@ -259,6 +259,7 @@ input[type="checkbox"].checkbox {
     height: 19px;
     padding: 0 0 0 19px;
     line-height: 19px;
+    cursor: pointer;
 }
 
 .editor_radiobutton:after {
@@ -280,7 +281,6 @@ input[type="checkbox"].checkbox {
     left: 0;
     border: solid 1px #838c92;
     border-radius: 50%;
-    cursor: pointer;
     transition: box-shadow .5s;
 }
 
@@ -307,7 +307,6 @@ input[type="checkbox"].checkbox {
 
 .radiobutton-text {
     line-height: inherit;
-    cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
