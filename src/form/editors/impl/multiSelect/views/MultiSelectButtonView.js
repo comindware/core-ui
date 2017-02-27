@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import { Handlebars } from '../../../../../libApi';
 import { helpers } from '../../../../../utils/utilsApi';
 import template from '../templates/multiSelectButton.hbs';
@@ -18,9 +16,9 @@ export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers: function() {
-        let items = this.model.get('value'),
-            empty = !items || !items.length,
-            collection = this.model.get('collection');
+        let items = this.model.get('value');
+        let empty = !items || !items.length;
+        let collection = this.model.get('collection');
 
         let displayValue;
         if (empty) {
@@ -29,7 +27,7 @@ export default Marionette.ItemView.extend({
             displayValue = items.map(x => x.get(this.options.displayAttribute)).join(', ');
         }
         return {
-            displayValue: displayValue
+            displayValue
         };
     },
 
@@ -38,6 +36,7 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
+        'click .js-clear-button': '__onClear',
         'click': '__onClick',
         'focus': '__onFocus'
     },
@@ -48,6 +47,11 @@ export default Marionette.ItemView.extend({
 
     initialize: function(options) {
         helpers.ensureOption(options, 'model');
+    },
+
+    __onClear () {
+        this.trigger('value:set', null);
+        return false;
     },
 
     __onClick: function() {

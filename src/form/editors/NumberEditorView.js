@@ -97,6 +97,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
     },
 
     events: {
+        'click .js-clear-button': '__clear',
         'keydown @ui.input': '__keydown',
         'keypress @ui.input': '__keypress',
         'keyup @ui.input': function (event) {
@@ -138,12 +139,12 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
             this.__start();
             this.__repeat(null, -1);
         },
-        "mouseup @ui.spinnerButtons": "__stop",
+        'mouseup @ui.spinnerButtons': '__stop',
         'mouseleave @ui.spinnerButtons': '__stop'
     },
 
     onRender: function () {
-       this.__value(this.value, false, false, true);
+        this.__value(this.value, false, false, true);
     },
 
     __setActive: function (el, isActive) {
@@ -175,6 +176,11 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
         }
+    },
+
+    __clear () {
+        this.__value(null, false, true, false);
+        return false;
     },
 
     __repeat: function(i, steps) {

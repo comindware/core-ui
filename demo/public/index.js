@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../dist/styles.bundle.css';
+import '../../dist/core.css';
 import 'styles/demo.css';
 import 'lib/prism/prism.css';
 
