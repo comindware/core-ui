@@ -1,4 +1,4 @@
-.form__tab-layout {
+.layout__tab-layout {
     height: 100%;
     width: 100%;
     display: flex;
@@ -7,11 +7,11 @@
 
 /* header */
 
-.form__tab-layout__header-region {
+.layout__tab-layout__header-region {
     overflow: hidden;
 }
 
-.form__tab-layout__header-view {
+.layout__tab-layout__header-view {
     width: 100%;
     height: 40px;
     display: flex;
@@ -22,7 +22,7 @@
     margin-bottom: 10px;
 }
 
-.form__tab-layout__header-view-item {
+.layout__tab-layout__header-view-item {
     display: inline-block;
     flex: 1 1;
     height: 40px;
@@ -36,32 +36,32 @@
     text-overflow: ellipsis;
 }
 
-.form__tab-layout__header-view-item:hover {
+.layout__tab-layout__header-view-item:hover {
     color: #009bfe;
 }
 
-.form__tab-layout__header-view-item_selected {
+.layout__tab-layout__header-view-item_selected {
     font-weight: 500;
     color: #0575bd;
     border-bottom: 2px solid #2b81c2;
 }
 
-.form__tab-layout__header-view-item_error {
+.layout__tab-layout__header-view-item_error {
     color: #BA0C08;
     border-bottom-color: #BA0C08;
 }
 
-.form__tab-layout__header-view-item_error:hover {
+.layout__tab-layout__header-view-item_error:hover {
     color: #BA0C08;
     font-weight: 500;
 }
 
-.form__tab-layout__header-view-item_disabled {
+.layout__tab-layout__header-view-item_disabled {
     color: #d3d5d6 !important;
     border-bottom-color: #d3d5d6 !important;
 }
 
-.form__tab-layout__header-view-item-text {
+.layout__tab-layout__header-view-item-text {
     display: inline-block;
     max-width: 100%;
     overflow: hidden;
@@ -70,11 +70,11 @@
 
 /* panel */
 
-.form__tab-layout__panel-container {
+.layout__tab-layout__panel-container {
     flex: 1;
     overflow: hidden;
 }
 
-.form__tab-layout__panel-region {
+.layout__tab-layout__panel-region {
     height: 100%;
 }

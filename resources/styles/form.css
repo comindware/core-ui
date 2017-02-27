@@ -1,13 +1,10 @@
 ﻿/* CSS form and editors */
 
-
 .form-group {
-    padding: 0 0 16px;
     position: relative;
     letter-spacing: -.36em;
     font-size: 0;
 }
-
 
 /*------------------ Form Label ------------------*/
 .form-label {

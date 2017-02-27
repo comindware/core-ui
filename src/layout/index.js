@@ -7,5 +7,9 @@
  */
 
 import './resources/tabLayout.css';
+import './resources/verticalLayout.css';
+import './resources/horizontalLayout.css';
 
 export { default as TabLayout } from './tabLayout/TabLayoutView';
+export { default as VerticalLayout } from './verticalLayout/VerticalLayoutView';
+export { default as HorizontalLayout } from './horizontalLayout/HorizontalLayoutView';

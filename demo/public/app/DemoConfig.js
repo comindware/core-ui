@@ -159,6 +159,21 @@ define([], function () {
                         id: 'TabLayout',
                         displayName: 'Tab Layout',
                         description: ''
+                    },
+                    {
+                        id: 'VerticalLayout',
+                        displayName: 'Vertical Layout',
+                        description: ''
+                    },
+                    {
+                        id: 'HorizontalLayout',
+                        displayName: 'Horizontal Layout',
+                        description: ''
+                    },
+                    {
+                        id: 'DetachedField',
+                        displayName: 'Detached Fields',
+                        description: ''
                     }
                 ]
             },

@@ -12,8 +12,8 @@ import template from './tabLayout.hbs';
 import HeaderView from './HeaderView';
 
 const classes = {
-    CLASS_NAME: 'form__tab-layout',
-    PANEL_REGION: 'form__tab-layout__panel-region'
+    CLASS_NAME: 'layout__tab-layout',
+    PANEL_REGION: 'layout__tab-layout__panel-region'
 };
 
 export default Marionette.LayoutView.extend({

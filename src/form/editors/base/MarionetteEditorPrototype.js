@@ -25,7 +25,9 @@ const classes = {
 };
 
 let onRender = function () {
-    this.$el.attr('id', this.id);
+    if (this.id) {
+        this.$el.attr('id', this.id);
+    }
     this.setPermissions(this.enabled, this.readonly);
     this.setValue(this.value);
     if (this.focusElement) {

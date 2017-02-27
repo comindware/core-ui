@@ -12,7 +12,7 @@ import template from './headerItem.hbs';
 export default Marionette.ItemView.extend({
     tagName: 'li',
 
-    className: 'form__tab-layout__header-view-item',
+    className: 'layout__tab-layout__header-view-item',
 
     template: Handlebars.compile(template),
 
@@ -27,9 +27,9 @@ export default Marionette.ItemView.extend({
     },
 
     onRender () {
-        this.$el.toggleClass('form__tab-layout__header-view-item_selected', Boolean(this.model.get('selected')));
-        this.$el.toggleClass('form__tab-layout__header-view-item_error', Boolean(this.model.get('error')));
-        this.$el.toggleClass('form__tab-layout__header-view-item_disabled', !this.model.get('enabled'));
+        this.$el.toggleClass('layout__tab-layout__header-view-item_selected', Boolean(this.model.get('selected')));
+        this.$el.toggleClass('layout__tab-layout__header-view-item_error', Boolean(this.model.get('error')));
+        this.$el.toggleClass('layout__tab-layout__header-view-item_disabled', !this.model.get('enabled'));
     },
 
     __onClick () {

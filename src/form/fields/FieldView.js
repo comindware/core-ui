@@ -211,6 +211,10 @@ export default Marionette.LayoutView.extend({
     },
 
     __createEditorId () {
+        if (!this.key) {
+            return null;
+        }
+
         let id = this.key;
 
         //Replace periods with underscores

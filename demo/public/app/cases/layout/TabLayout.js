@@ -15,11 +15,6 @@ define(
         'use strict';
 
         return function() {
-            var model = new Backbone.Model({
-                //avatar: '14167968',
-                fullName: 'Foo Bar'
-            });
-
             return new CanvasView({
                 view: new core.layout.TabLayout({
                     tabs: [
