@@ -35,6 +35,11 @@ export default Marionette.LayoutView.extend({
         }
 
         this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
+
+        this.tabs = options.tabs.reduce((s, a) => {
+            s[a.id] = a.view;
+            return s;
+        }, {});
     },
 
     template: Handlebars.compile(template),

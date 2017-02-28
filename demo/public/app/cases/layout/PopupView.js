@@ -16,39 +16,16 @@ define(
 
         return function() {
             const model = new Backbone.Model({
-                title: 'foo',
+                name: 'new operation',
                 idealDays: 12,
                 dueDate: '2015-07-20T10:46:37Z',
-                description: 'bar\nbaz',
-                blocked: true
+                description: 'no-op',
+                computed: false
             });
 
-            /*const PopupView = Marionette.LayoutView.extend({
-                initialize: function (options) {
-                    this.model = model;
-                },
-
-                template: Handlebars.compile('<div class="js-layout" />'),
-
-                regions: {
-                    layoutRegion: '.js-layout'
-                },
-
-                behaviors: {
-                    BackboneFormBehavior: {
-                        behaviorClass: core.form.behaviors.BackboneFormBehavior,
-                        renderStrategy: 'manual',
-                        schema: function () {
-                            return {
-                            };
-                        }
-                    }
-                }
-            });*/
-
             const formSchema = {
-                title: {
-                    title: 'Title',
+                name: {
+                    title: 'Name',
                     type: 'Text'
                 },
                 idealDays: {
@@ -63,13 +40,20 @@ define(
                     title: 'Description',
                     type: 'TextArea'
                 },
-                blocked: {
+                computed: {
                     type: 'Boolean',
-                    displayText: 'Blocked by another task'
-                }
+                    displayText: 'Computed via expression'
+                },
+                expression: {
+                    type: 'TextArea'
+                },
             };
 
-            const PopupView = new core.layout.Popup({
+            const createPopup = () => new core.layout.Popup({
+                size: {
+                    width: '800px',
+                    height: '700px'
+                },
                 header: 'New Operation',
                 buttons: [
                     {
@@ -78,6 +62,7 @@ define(
                         handler (popup) {
                             popup.content.form.commit();
                             core.services.WindowService.closePopup();
+                            alert(JSON.stringify(model.toJSON(), null, 4));
                         }
                     },
                     {
@@ -91,17 +76,30 @@ define(
                 content: new core.layout.Form({
                     model: model,
                     schema: formSchema,
-                    content: new core.layout.VerticalLayout({
-                        rows: [
-                            core.layout.createFieldAnchor('title'),
-                            new core.layout.HorizontalLayout({
-                                columns: [
-                                    core.layout.createFieldAnchor('idealDays'),
-                                    core.layout.createFieldAnchor('dueDate')
-                                ]
-                            }),
-                            core.layout.createFieldAnchor('description'),
-                            core.layout.createEditorAnchor('blocked')
+                    content: new core.layout.TabLayout({
+                        tabs: [
+                            {
+                                id: 'general',
+                                name: 'General',
+                                view: new core.layout.VerticalLayout({
+                                    rows: [
+                                        core.layout.createFieldAnchor('name'),
+                                        new core.layout.HorizontalLayout({
+                                            columns: [
+                                                core.layout.createFieldAnchor('idealDays'),
+                                                core.layout.createFieldAnchor('dueDate')
+                                            ]
+                                        }),
+                                        core.layout.createFieldAnchor('description'),
+                                        core.layout.createEditorAnchor('computed')
+                                    ]
+                                })
+                            },
+                            {
+                                id: 'expression',
+                                name: 'Computed Expression',
+                                view: core.layout.createEditorAnchor('expression')
+                            }
                         ]
                     })
                 })
@@ -112,7 +110,7 @@ define(
 
                 events: {
                     'click .js-show-popup' () {
-                        core.services.WindowService.showPopup(new PopupView());
+                        core.services.WindowService.showPopup(createPopup());
                     }
                 }
             });

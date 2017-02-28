@@ -6,18 +6,67 @@
  * Published under the MIT license
  */
 
-import 'lib';
+import { Handlebars } from 'lib';
 import { helpers } from 'utils';
+import template from './popup.hbs';
+
+const classes = {
+    CLASS_NAME: 'layout__popup-view'
+};
 
 export default Marionette.LayoutView.extend({
-    initialize () {
+    initialize (options) {
+        helpers.ensureOption(options, 'header');
+        helpers.ensureOption(options, 'buttons');
+        helpers.ensureOption(options, 'content');
+
+        this.__buttons = this.options.buttons.map(x => {
+            return Object.assign({
+                id: _.uniqueId('buttonId')
+            }, x);
+        });
+
+        this.content = options.content;
     },
 
-    template: false,
+    template: Handlebars.compile(template),
 
-    regions: {},
+    templateHelpers () {
+        return {
+            headerText: this.options.header,
+            buttons: this.__buttons
+        };
+    },
+
+    className: classes.CLASS_NAME,
+
+    ui: {
+        button: '.js-button',
+        window: '.js-window'
+    },
+
+    events: {
+        'click @ui.button': '__onButtonClick'
+    },
+
+    regions: {
+        contentRegion: '.js-content-region'
+    },
 
     onRender () {
-        // show regions
+        if (this.options.size) {
+            this.ui.window.css(this.options.size);
+        }
+    },
+
+    onShow () {
+        this.contentRegion.show(this.options.content);
+    },
+
+    __onButtonClick (e) {
+        const id = $(e.target).data('id');
+        const button = this.__buttons.find(x => x.id === id);
+        button.handler(this);
+        this.trigger('button', id);
     }
 });

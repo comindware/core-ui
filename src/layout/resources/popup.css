@@ -1,4 +1,73 @@
 .layout__popup-view {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 555;
+    padding: 20px;
+}
+
+.layout__popup-view-window {
+    background: #fff;
+    max-width: 90%;
+    min-width: 700px;
+    max-height: 100%;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    overflow-y: hidden;
+}
+
+.layout__popup-view-header {
+    height: 60px;
+}
+
+.layout__popup-view-header-text {
+    margin: 0 0 0 20px;
+    font-size: 28px;
+    font-weight: 300;
+    color: #000;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.layout__popup-view-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0 20px;
+    height: 100%;
+}
+
+.layout__popup-view-button-list {
+    padding: 20px 20px 0;
+    text-align: right;
+}
+
+.layout__popup-view-button {
+    height: 26px;
+    margin: 0 10px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    color: #0575BD;
+    line-height: 26px;
+    font-size: 16px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+
+.layout__popup-view-button:hover {
+    color: #009BFE;
+}
+
+.layout__popup-view-button[disabled] {
+    color: #999;
+    cursor: text;
 }
