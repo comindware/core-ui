@@ -192,6 +192,8 @@ input[type="checkbox"].checkbox {
     display: inline-block;
     max-width: 100%;
     padding: 0 0 0 20px;
+    height: 14px;
+    line-height: 14px;
 }
 
 .editor_checkbox:after {
@@ -210,7 +212,7 @@ input[type="checkbox"].checkbox {
     overflow: hidden;
     display: block;
     position: absolute;
-    top: 4px;
+    top: 0;
     left: 0;
     border: solid 1px #838c92;
     cursor: pointer;

@@ -35,6 +35,12 @@ define(
                     new core.form.editors.BooleanEditor({
                         value: true,
                         displayText: 'Make me some tea!'
+                    }),
+                    new core.layout.Button({
+                        text: 'Say hello!',
+                        handler () {
+                            alert('Hello!');
+                        }
                     })
                 ]
             });

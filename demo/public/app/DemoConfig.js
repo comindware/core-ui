@@ -171,8 +171,28 @@ define([], function () {
                         description: ''
                     },
                     {
-                        id: 'DetachedField',
-                        displayName: 'Detached Fields',
+                        id: 'Button',
+                        displayName: 'Button',
+                        description: ''
+                    },
+                    {
+                        id: 'PopupView',
+                        displayName: 'Popup View',
+                        description: ''
+                    },
+                    {
+                        id: 'AttachedFields',
+                        displayName: 'Using with FormBehavior',
+                        description: ''
+                    },
+                    {
+                        id: 'FormView',
+                        displayName: 'Using with Form View',
+                        description: ''
+                    },
+                    {
+                        id: 'DetachedFields',
+                        displayName: 'Special Cases (Detached Fields)',
                         description: ''
                     }
                 ]
