@@ -10,6 +10,7 @@ import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 import template from './tabLayout.hbs';
 import HeaderView from './HeaderView';
+import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
     CLASS_NAME: 'layout__tab-layout',
@@ -54,6 +55,12 @@ export default Marionette.LayoutView.extend({
         panelContainer: '.js-panel-container'
     },
 
+    behaviors: {
+        LayoutBehavior: {
+            behaviorClass: LayoutBehavior
+        }
+    },
+
     onShow () {
         let headerView = new HeaderView({
             collection: this.__tabsCollection
@@ -74,6 +81,16 @@ export default Marionette.LayoutView.extend({
             });
             this.__updateTabRegion(tabModel);
         });
+        this.__updateState();
+    },
+
+    update () {
+        Object.values(this.tabs).forEach(view => {
+            if (view.update) {
+                view.update();
+            }
+        });
+        this.__updateState();
     },
 
     getViewById (tabId) {

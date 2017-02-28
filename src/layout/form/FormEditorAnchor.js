@@ -8,6 +8,7 @@
 
 import 'lib';
 import { helpers } from 'utils';
+import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 export default Marionette.ItemView.extend({
     initialize (options) {
@@ -20,5 +21,19 @@ export default Marionette.ItemView.extend({
         return {
             'data-editors': this.options.key
         };
+    },
+
+    behaviors: {
+        LayoutBehavior: {
+            behaviorClass: LayoutBehavior
+        }
+    },
+
+    onShow () {
+        this.__updateState();
+    },
+
+    update () {
+        this.__updateState();
     }
 });

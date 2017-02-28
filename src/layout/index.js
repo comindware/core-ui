@@ -6,6 +6,7 @@
  * Published under the MIT license
  */
 
+import './resources/layout.css';
 import './resources/tabLayout.css';
 import './resources/verticalLayout.css';
 import './resources/horizontalLayout.css';

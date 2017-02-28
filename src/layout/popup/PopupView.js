@@ -9,6 +9,7 @@
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 import template from './popup.hbs';
+import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view'
@@ -40,6 +41,12 @@ export default Marionette.LayoutView.extend({
 
     className: classes.CLASS_NAME,
 
+    behaviors: {
+        LayoutBehavior: {
+            behaviorClass: LayoutBehavior
+        }
+    },
+
     ui: {
         button: '.js-button',
         window: '.js-window'
@@ -61,6 +68,14 @@ export default Marionette.LayoutView.extend({
 
     onShow () {
         this.contentRegion.show(this.options.content);
+        this.__updateState();
+    },
+
+    update () {
+        if (this.content.update) {
+            this.content.update();
+        }
+        this.__updateState();
     },
 
     __onButtonClick (e) {

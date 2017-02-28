@@ -191,6 +191,11 @@ define([], function () {
                         description: ''
                     },
                     {
+                        id: 'DynamicState',
+                        displayName: 'Computed Visibility',
+                        description: ''
+                    },
+                    {
                         id: 'DetachedFields',
                         displayName: 'Special Cases (Detached Fields)',
                         description: ''
