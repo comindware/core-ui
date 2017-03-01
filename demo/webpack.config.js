@@ -136,7 +136,7 @@ module.exports = {
                     __DEV__: DEVELOPMENT
                 }),
                 new HtmlWebpackPlugin({
-                    template: pathResolver.source('index.html'),
+                    template: pathResolver.source('index.hbs'),
                     hash: PRODUCTION,
                     filename: 'index.html',
                     inject: 'body',
