@@ -20,17 +20,14 @@ const del = require('del');
 
 const pathResolver = require('../pathResolver');
 
-const run = (cmd, cwd, silent) => {
-    let stdout = execSync(`${cmd}`, {
-        cwd
+const run = (cmd, cwd) => {
+    execSync(`${cmd}`, {
+        cwd,
+        stdio: 'inherit'
     });
-    if (!silent) {
-        console.log(stdout);
-    }
-    return stdout;
 };
 
-module.exports = callback => {
+module.exports = () => {
     const token = process.env.GH_TOKEN;
     const ref = process.env.GH_REF;
 
@@ -40,7 +37,7 @@ module.exports = callback => {
     run('git config user.name "Travis-CI"', deployDir);
     run('git config user.email "me@sburg.net"', deployDir);
     fs.copySync(pathResolver.compiled(), pathResolver.pages('dist'));
-    run('git commit -am "Auto-deploy to Github Pages"', deployDir);
+    run('git add -A', deployDir);
+    run('git commit -m "Auto-deploy to Github Pages"', deployDir);
     run(`git push --force --quiet "https://${token}@${ref}" master:gh-pages`, deployDir);
-    run('', deployDir);
 };
