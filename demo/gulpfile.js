@@ -60,15 +60,15 @@ gulp.task('start', function () {
     });
 });
 
-gulp.task('deploy', ['clear'], function (callback) {
+gulp.task('build', ['clear'], function (callback) {
     const webpackConfig = webpackConfigFactory.build({
         env: 'production'
     });
     webpack(webpackConfig, function (err, stats) {
         if (err) {
-            throw new gutil.PluginError('deploy', err);
+            throw new gutil.PluginError('build', err);
         }
-        gutil.log('[deploy]', stats.toString({
+        gutil.log('[build]', stats.toString({
             colors: true
         }));
         callback();

@@ -27,17 +27,29 @@ const run = (cmd, cwd) => {
     });
 };
 
+const copyDemo = (resolver) => {
+    run('npm install', pathResolver.demo());
+    run('npm run build', pathResolver.demo());
+    fs.copySync(pathResolver.demo('public/assets'), resolver());
+};
+
+const copyDoc = (resolver) => {
+    fs.copySync(pathResolver.root('doc'), resolver('doc'));
+};
+
 module.exports = () => {
     const token = process.env.GH_TOKEN;
     const ref = process.env.GH_REF;
 
-    let deployDir = pathResolver.pages();
-    mkdirp.sync(deployDir);
-    run('git init', deployDir);
-    run('git config user.name "Travis-CI"', deployDir);
-    run('git config user.email "me@sburg.net"', deployDir);
-    fs.copySync(pathResolver.compiled(), pathResolver.pages('dist'));
-    run('git add -A', deployDir);
-    run('git commit -m "Auto-deploy to Github Pages"', deployDir);
-    run(`git push --force --quiet "https://${token}@${ref}" master:gh-pages`, deployDir);
+    const pagesDir = pathResolver.pages();
+    const pagesResolver = pathResolver.createResolver(pagesDir);
+    mkdirp.sync(pagesDir);
+    run('git init', pagesDir);
+    run('git config user.name "Travis-CI"', pagesDir);
+    run('git config user.email "me@sburg.net"', pagesDir);
+    copyDemo(pagesResolver);
+    copyDoc(pagesResolver);
+    run('git add -A', pagesDir);
+    run('git commit -m "Auto-deploy to Github Pages"', pagesDir);
+    run(`git push --force --quiet "https://${token}@${ref}" master:gh-pages`, pagesDir);
 };

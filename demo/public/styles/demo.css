@@ -55,17 +55,24 @@
 
 .demo-welcome {
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
     height: 100%;
+    justify-content: center;
 }
 
 .demo-welcome__ribbon {
-    margin: auto;
     width: 100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     padding: 20px;
+}
+
+.demo-welcome__doc-navi {
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    font-size: 14px;
 }
 
 .demo-welcome__item {
@@ -88,7 +95,6 @@
     z-index: 2;
     color:#fff;
     text-decoration: none;
-
 }
 
 

@@ -72,14 +72,7 @@ module.exports = {
                         ],
                         loader: 'babel-loader',
                         query: {
-                            cacheDirectory: true,
-                            presets: [
-                                'es2015',
-                                'stage-0'
-                            ],
-                            plugins: [
-                                'transform-runtime'
-                            ]
+                            cacheDirectory: true
                         }
                     },
                     (PRODUCTION ? {
