@@ -16,6 +16,7 @@ define([
     'text!../templates/indexPage.html'
 ], function (core, template) {
     'use strict';
+
     return Marionette.ItemView.extend({
         className: "demo-welcome",
         

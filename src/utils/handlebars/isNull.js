@@ -10,7 +10,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 
 module.exports = function(a, options){
     if(_.isNull(a)) {

@@ -6,6 +6,8 @@
  * Published under the MIT license
  */
 
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}], no-new-func: 0 */
+
 'use strict';
 
 const webpack = require('webpack');
@@ -54,24 +56,23 @@ module.exports = {
             module: {
                 preLoaders: [
                     {
-                        test: /core\.bundle\.js$/,
-                        loader: "source-map"
+                        test: /core\.js$/,
+                        loader: 'source-map'
                     }
                 ],
                 loaders: [
                     {
                         test: /\.jsx?$/,
-                        exclude: /(node_modules|bower_components|core\.bundle|cases|prism\.js|markdown\.js)/,
+                        include: [
+                            pathResolver.source()
+                        ],
+                        exclude: [
+                            pathResolver.source('lib'),
+                            pathResolver.source('app/cases')
+                        ],
                         loader: 'babel-loader',
                         query: {
-                            cacheDirectory: true,
-                            presets: [
-                                "es2015",
-                                "stage-0"
-                            ],
-                            plugins: [
-                                "transform-runtime"
-                            ]
+                            cacheDirectory: true
                         }
                     },
                     (PRODUCTION ? {
@@ -159,7 +160,7 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    'comindware/core': `${__dirname}/../dist/core.bundle.js`,
+                    'comindware/core': `${__dirname}/../dist/core.js`,
                     prism: `${__dirname}/public/lib/prism/prism.js`,
                     markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                     localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,

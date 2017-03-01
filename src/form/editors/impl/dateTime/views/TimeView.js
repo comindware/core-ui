@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { moment, Handlebars, $ } from '../../../../../libApi';
-import { dateHelpers } from '../../../../../utils/utilsApi';
-import dropdown from '../../../../../dropdown/dropdownApi';
+import { moment, Handlebars, $ } from 'lib';
+import { dateHelpers } from 'utils';
+import dropdown from 'dropdown';
 import TimeInputView from './TimeInputView';
 import template from '../templates/time.hbs';
 

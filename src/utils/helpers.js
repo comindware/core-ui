@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../libApi';
+import 'lib';
 import LocalizationService from '../services/LocalizationService';
 
 let timeoutCache = {};
@@ -290,7 +290,7 @@ export default /** @lends module:core.utils.helpers */ {
      * // Inside of implementation of some Marionette.View.
      * addKeyboardListener: function (key, callback) {
      *     if (!this.keyListener) {
-     *         utilsApi.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+     *         utils.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
      *     }
      *     var keys = key.split(',');
      *     _.each(keys, function (k) {
@@ -310,7 +310,7 @@ export default /** @lends module:core.utils.helpers */ {
      * function (url, parameterNames, parameters, callback) {
      *     // Some code here ...
      *     if (parameters.Length !== parameterNames.length) {
-     *         utilsApi.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
+     *         utils.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
      *     }
      *     // Some code here ...
      * @param {String} [message='Invalid format'] Error message.
@@ -326,7 +326,7 @@ export default /** @lends module:core.utils.helpers */ {
      * function (url, parameterNames, parameters, callback) {
      *     // Some code here ...
      *     if (parameterNames.Length !== 2) {
-     *         utilsApi.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
+     *         utils.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
      *     }
      *     // Some code here ...
      * @param {String} [message='Invalid argument'] Error message.
@@ -342,7 +342,7 @@ export default /** @lends module:core.utils.helpers */ {
      * // Inside of implementation of some Stream class
      * seek() {
      *     // Some code here ...
-     *     utilsApi.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
+     *     utils.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
      *     // Some code here ...
      * }
      * @param {String} [message='The operation is not supported'] Error message.
@@ -357,7 +357,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @example
      * // Inside of implementation of some base controller class.
      * navigate() {
-     *     utilsApi.this.throwNotImplementedError();
+     *     utils.this.throwNotImplementedError();
      * }
      * @param {String} [message='The operation is not implemented'] Error message.
      * */

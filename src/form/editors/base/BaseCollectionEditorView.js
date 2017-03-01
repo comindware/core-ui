@@ -14,7 +14,7 @@
 
 "use strict";
 
-import '../../../libApi';
+import 'lib';
 import MarionetteEditorPrototype from './MarionetteEditorPrototype';
 
 export default Marionette.CollectionView.extend(MarionetteEditorPrototype.create(Marionette.CollectionView));

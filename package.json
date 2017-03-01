@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.2.62",
+  "version": "1.2.63",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -19,9 +19,10 @@
   ],
   "main": "dist/core.bundle.min.js",
   "scripts": {
-    "build": "gulp production",
-    "dev": "gulp dev",
-    "test": "gulp test"
+    "start": "cross-env NODE_ENV=development DEBUG=true gulp --gulpfile build/gulpfile.js start",
+    "build": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js build",
+    "deploy": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy",
+    "deploy:pages": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy:pages"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,7 @@
     "babel-runtime": "^6.9.2",
     "chance": "^1.0.3",
     "coveralls": "^2.11.11",
+    "cross-env": "^3.1.4",
     "css-loader": "^0.23.1",
     "del": "^2.2.0",
     "eslint": "^3.8.1",
@@ -92,6 +94,8 @@
     "mkdirp": "^0.5.1",
     "phantomjs-prebuilt": "^2.1.7",
     "postcss-loader": "^0.8.2",
+    "rimraf": "^2.5.4",
+    "run-sequence": "^1.2.2",
     "sanitize-html": "^1.12.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",

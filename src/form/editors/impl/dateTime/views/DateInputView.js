@@ -6,8 +6,8 @@
  * Published under the MIT license
  */
 
-import { Handlebars, moment } from '../../../../../libApi';
-import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
+import { Handlebars, moment } from 'lib';
+import { helpers, dateHelpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/dateInput.hbs';
 

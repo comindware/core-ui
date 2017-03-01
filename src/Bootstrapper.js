@@ -6,8 +6,8 @@
  * Published under the MIT license
  */
 
-import { helpers } from './utils/utilsApi';
-import { $ } from './libApi';
+import { helpers } from 'utils';
+import { $ } from 'lib';
 import AjaxService from './services/AjaxService';
 import MessageService from './services/MessageService';
 import GlobalEventService from './services/GlobalEventService';

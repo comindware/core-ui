@@ -6,10 +6,8 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { Handlebars } from '../../libApi';
-import { helpers, htmlHelpers } from '../../utils/utilsApi';
+import { Handlebars } from 'lib';
+import { helpers, htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './ListView';
 import RowView from './RowView';

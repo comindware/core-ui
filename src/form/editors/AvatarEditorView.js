@@ -8,8 +8,8 @@
 
 'use strict';
 
-import { Handlebars } from '../../libApi';
-import {helpers} from '../../utils/utilsApi';
+import { Handlebars } from 'lib';
+import {helpers} from 'utils';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/avatarEditor.hbs';
 import formRepository from '../formRepository';

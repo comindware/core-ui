@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { Handlebars, moment } from '../../../../../libApi';
-import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
+import { Handlebars, moment } from 'lib';
+import { helpers, dateHelpers } from 'utils';
 import template from '../templates/datePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 

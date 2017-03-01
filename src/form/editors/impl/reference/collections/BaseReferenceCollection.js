@@ -6,8 +6,8 @@
  * Published under the MIT license
  */
 
-import '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import 'lib';
+import { helpers } from 'utils';
 import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';

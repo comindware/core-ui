@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 
 /**
  * Конструктор Behavior никогда не вызывается явно. Описанные в объекте options свойства должны

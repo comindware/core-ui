@@ -1,19 +1,27 @@
 language: node_js
+cache:
+  directories:
+    - node_modules
+    - demo/node_modules
 node_js:
-  - '4.1'
-before_install: npm install -g gulp-cli
+  - '7'
 install: npm install
 script:
-  - gulp deploy
-  - gulp test:coverage
+  - npm run deploy
 after_script:
   - node ./node_modules/coveralls/bin/coveralls.js -v < ./reports/report-lcov/lcov.info
 deploy:
-  provider: npm
-  email: me@sburg.net
-  api_key:
-    secure: K7YPT8VJo56HeoCPImXbBgGpnVXhO/S8L+pwMYzQesefujP5UWQkG1bFLYCBmyrom5L6stLqvZMToDAvQgE6yFBHLXSW9WVTWIAp87Uw89WBndKHMvBlUqiKEfJTVuZ0D2IE5eahA+h/C8Nd12nB2yrXI+LW3OVm8cEQxFZ6rn2ECmEKCBoQaXqH+0P2E1uaHu3vfJIgvQtAGMhk8fsEUkWnPa23uJVJklyUIm+ZKYtOL3ZROetY7lsMxL7PGTWgPg6FQnyqBaK1o5d0fIszdKGngs1KimTSOPCBxo/RGInhDfygz6C/CuOyk6FyHY8PoqKzHr9C7dVidIF117YyyfsrIKvq96qjvbishf2tZxz70xZZbXkf61CXno42RUEsFoVgFdFYeseHhfelrZvwoxWSRLsM/lQkvZKVrYVanxqoSIZXrWPb3YFy5LkJSejGBpZm1tgwBDQObiSjjMquomW6VVD8Ad4epuZtQVYjxj54hTf8gFttGcnwg/xMv/qhDdX2BkE9PbLNZz/hfY6NaGRIQzdcg+gJOfFeSTVqJjWnVesPR4EHvARPGcBhCujdDycJDxD0Njfq1OggSiCIJm/8lvrl4VeWPASsDN2zwKLYO6M71eCUdOrUdA0vwCFOtOFbqAhSn9ifPD/Hlw2B/uf3XbZ+o/OgN3PnzmMDoAU=
-  on:
-    tags: true
-    repo: comindware/core-ui
-    branch: master
+  - provider: npm
+    email: me@sburg.net
+    api_key:
+      secure: K7YPT8VJo56HeoCPImXbBgGpnVXhO/S8L+pwMYzQesefujP5UWQkG1bFLYCBmyrom5L6stLqvZMToDAvQgE6yFBHLXSW9WVTWIAp87Uw89WBndKHMvBlUqiKEfJTVuZ0D2IE5eahA+h/C8Nd12nB2yrXI+LW3OVm8cEQxFZ6rn2ECmEKCBoQaXqH+0P2E1uaHu3vfJIgvQtAGMhk8fsEUkWnPa23uJVJklyUIm+ZKYtOL3ZROetY7lsMxL7PGTWgPg6FQnyqBaK1o5d0fIszdKGngs1KimTSOPCBxo/RGInhDfygz6C/CuOyk6FyHY8PoqKzHr9C7dVidIF117YyyfsrIKvq96qjvbishf2tZxz70xZZbXkf61CXno42RUEsFoVgFdFYeseHhfelrZvwoxWSRLsM/lQkvZKVrYVanxqoSIZXrWPb3YFy5LkJSejGBpZm1tgwBDQObiSjjMquomW6VVD8Ad4epuZtQVYjxj54hTf8gFttGcnwg/xMv/qhDdX2BkE9PbLNZz/hfY6NaGRIQzdcg+gJOfFeSTVqJjWnVesPR4EHvARPGcBhCujdDycJDxD0Njfq1OggSiCIJm/8lvrl4VeWPASsDN2zwKLYO6M71eCUdOrUdA0vwCFOtOFbqAhSn9ifPD/Hlw2B/uf3XbZ+o/OgN3PnzmMDoAU=
+    on:
+      tags: true
+      repo: comindware/core-ui
+      branch: master
+  - provider: script
+    script: npm run deploy:pages
+    on:
+      tags: true
+      repo: comindware/core-ui
+      branch: master

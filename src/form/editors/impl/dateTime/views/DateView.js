@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars, $ } from '../../../../../libApi';
+import { Handlebars, $ } from 'lib';
 import template from '../templates/date.hbs';
-import dropdownApi from '../../../../../dropdown/dropdownApi';
+import dropdown from 'dropdown';
 import PanelView from './DatePanelView';
 import InputView from './DateInputView';
 
@@ -31,7 +31,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow: function () {
-        this.calendarDropdownView = dropdownApi.factory.createDropdown({
+        this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {
                 model: this.model,

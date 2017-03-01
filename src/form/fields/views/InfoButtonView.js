@@ -10,8 +10,8 @@
 
 import infoTemplate from '../templates/InfoButton_Normal.hbs';
 import errorTemplate from '../templates/InfoButton_Error.hbs';
-import { Handlebars } from '../../../libApi';
-import dropdown from '../../../dropdown/dropdownApi';
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
 
 let infoTemplateCompiled = Handlebars.compile(infoTemplate);
 let errorTemplateCompiled = Handlebars.compile(errorTemplate);

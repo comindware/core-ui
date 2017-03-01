@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 
 /**
  * Some description for initializer

@@ -1,4 +1,8 @@
-<input type="text" class="input input_text js-input" placeholder="{{placeholder}}" {{#if maxLength}} maxLength = '{{maxLength}}' {{/if}} >
+{{#if maxLength}}
+    <input type="text" class="input input_text js-input" placeholder="{{placeholder}}" maxlength="{{maxLength}}">
+{{else}}
+    <input type="text" class="input input_text js-input" placeholder="{{placeholder}}">
+{{/if}}
 <div class="svg-icons-wrp">
     <div class="svg-icons-wrp__empty">
         <svg class="svg-icons svg-icons_text"><use xlink:href="#svg-icons_text" /> </svg>

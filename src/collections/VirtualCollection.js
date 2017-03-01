@@ -8,9 +8,9 @@
 
 "use strict";
 
-import '../libApi';
+import 'lib';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
-import { helpers } from '../utils/utilsApi';
+import { helpers } from 'utils';
 
 let selectableBehavior = {
     'none': null,

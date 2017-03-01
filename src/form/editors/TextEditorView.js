@@ -6,8 +6,8 @@
  * Published under the MIT license
  */
 
-import { Handlebars, keypress } from '../../libApi';
-import { helpers } from '../../utils/utilsApi';
+import { Handlebars, keypress } from 'lib';
+import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
@@ -84,7 +84,8 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
 
     events: {
         'keyup @ui.input': '__keyup',
-        'change @ui.input': '__change'
+        'change @ui.input': '__change',
+        'click .js-clear-button': '__clear'
     },
 
     __keyup: function () {
@@ -97,6 +98,11 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
 
     __change: function () {
         this.__value(this.ui.input.val(), false, true);
+    },
+
+    __clear () {
+        this.__value(null, true, true);
+        return false;
     },
 
     setValue: function (value) {

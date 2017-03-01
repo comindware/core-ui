@@ -8,8 +8,8 @@
 
 "use strict";
 
-import list from '../../../../../list/listApi';
-import { Handlebars } from '../../../../../libApi';
+import list from 'list';
+import { Handlebars } from 'lib';
 import template from '../templates/multiSelectItem.hbs';
 
 var classes = {
