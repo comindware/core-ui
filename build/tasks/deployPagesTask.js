@@ -21,7 +21,7 @@ const del = require('del');
 const pathResolver = require('../pathResolver');
 
 const run = (cmd, cwd, silent) => {
-    let stdout = execSync(`git ${cmd}`, {
+    let stdout = execSync(`${cmd}`, {
         cwd
     });
     if (!silent) {
