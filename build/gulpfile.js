@@ -56,6 +56,8 @@ gulp.task('build:core:prod:min', require('./tasks/buildProdTask')(true));
 // Public tasks
 // ###
 
+gulp.task('deploy:pages', require('./tasks/deployPagesTask'));
+
 gulp.task('test', function (done) {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js'),

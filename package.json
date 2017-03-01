@@ -21,7 +21,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development DEBUG=true gulp --gulpfile build/gulpfile.js start",
     "build": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js build",
-    "deploy": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy"
+    "deploy": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy",
+    "deploy:pages": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy:pages"
   },
   "repository": {
     "type": "git",
