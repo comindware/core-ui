@@ -20,18 +20,14 @@ const del = require('del');
 
 const pathResolver = require('../pathResolver');
 
-const run = (cmd, cwd, env) => {
+const run = (cmd, cwd) => {
     execSync(`${cmd}`, {
         cwd,
-        stdio: 'inherit',
-        env: env || {}
+        stdio: 'inherit'
     });
 };
 
 const copyDemo = (resolver) => {
-    run('npm install', pathResolver.demo(), {
-        NODE_ENV: 'development'
-    });
     run('npm run build', pathResolver.demo());
     fs.copySync(pathResolver.demo('public/assets'), resolver());
 };
