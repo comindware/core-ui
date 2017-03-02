@@ -42,7 +42,7 @@ gulp.task('watch:localization', () => {
 
 gulp.task('generateSprites', require('./tasks/generateSpritesTask'));
 gulp.task('watch:generateSprites', () => {
-    gulp.watch(pathResolver.resources('sprites'), [ 'generateSprites' ]);
+    gulp.watch(pathResolver.resources('sprites/*'), [ 'generateSprites' ]);
 });
 
 gulp.task('jsdoc', require('./tasks/jsdocTask'));
