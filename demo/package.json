@@ -41,7 +41,6 @@
     "node-sass": "^3.7.0",
     "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
-    "sass-loader": "^3.2.0",
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
