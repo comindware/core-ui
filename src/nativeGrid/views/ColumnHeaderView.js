@@ -9,7 +9,7 @@
 "use strict";
 
 import template from '../templates/columnHeader.hbs';
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 import GridColumnHeaderView from '../../list/views/GridColumnHeaderView';
 
 /**

@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { Handlebars, moment } from '../../libApi';
-import { keyCode, dateHelpers, helpers } from '../../utils/utilsApi';
+import { Handlebars, moment } from 'lib';
+import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';

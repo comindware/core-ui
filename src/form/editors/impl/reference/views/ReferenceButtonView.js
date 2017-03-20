@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import { Handlebars } from '../../../../../libApi';
+import { Handlebars } from 'lib';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {

@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../libApi';
-import list from '../../list/listApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars, keypress } from 'lib';
+import list from 'list';
+import dropdown from 'dropdown';
 import template from './templates/dropdownEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DropdownPanelView from './impl/dropdown/views/DropdownPanelView';
@@ -117,7 +117,8 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             buttonView: DropdownButtonView,
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
-                reqres: this.reqres
+                reqres: this.reqres,
+                allowEmptyValue: this.options.allowEmptyValue
             },
             panelView: DropdownPanelView,
             panelViewOptions: {
@@ -127,20 +128,19 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             },
             autoOpen: false
         });
-        this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus);
         this.listenTo(this.dropdownView, 'open', this.onFocus);
         this.listenTo(this.dropdownView, 'close', this.onBlur);
         this.dropdownRegion.show(this.dropdownView);
     },
 
     __onCollectionChange: function () {
-        var value = this.getValue();
-        var valueModel = this.collection.findWhere({id: value});
+        let value = this.getValue();
+        let valueModel = this.collection.findWhere({id: value});
         if (valueModel !== null) {
-            if (valueModel !== this.viewModel.get('button').get("value")) {
+            if (valueModel !== this.viewModel.get('button').get('value')) {
                 this.viewModel.get('button').set('value', valueModel);
             }
-            if (valueModel !== this.viewModel.get('panel').get("value")) {
+            if (valueModel !== this.viewModel.get('panel').get('value')) {
                 this.viewModel.get('panel').set('value', valueModel);
             }
 
@@ -211,13 +211,9 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
     },
 
     onValueSet: function (o) {
-        this.__value(o.id, true);
+        this.__value(o ? o.id : null, true);
         this.$el.focus();
         this.dropdownView.close();
-    },
-
-    __onButtonFocus: function () {
-        this.onPanelOpen();
     },
 
     onPanelOpen: function () {

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import list from '../../../../../list/listApi';
+import list from 'list';
 
 export default Backbone.Model.extend({
     initialize: function () {

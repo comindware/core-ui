@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../libApi';
+import 'lib';
 import GridItemViewBehavior from '../../../list/views/behaviors/GridItemViewBehavior';
 
 let NativeGridItemViewBehavior = GridItemViewBehavior.extend({

@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { Handlebars, moment } from '../../../../../libApi';
-import { helpers, dateHelpers } from '../../../../../utils/utilsApi';
+import { Handlebars, moment } from 'lib';
+import { helpers, dateHelpers } from 'utils';
 import template from '../templates/timeInput.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 
@@ -26,7 +26,7 @@ export default Marionette.ItemView.extend({
         'input': '.js-time-input'
     },
 
-    className: 'time-input-view',
+    className: 'time-view',
 
     events: {
         'click': '__onClick',

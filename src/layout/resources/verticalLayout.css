@@ -1,0 +1,11 @@
+.layout__vertical-layout {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    margin: -8px 0;
+}
+
+.layout__vertical-layout-item {
+    flex: 0;
+    margin: 8px 0;
+}

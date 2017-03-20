@@ -6,10 +6,13 @@
  * Published under the MIT license
  */
 
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}], no-new-func: 0 */
+
 'use strict';
 
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs-extra');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -24,6 +27,15 @@ const pathResolver = {
         //noinspection Eslint
         return path.resolve.apply(path.resolve, [__dirname, 'public'].concat(_.toArray(arguments)));
     }
+};
+
+const removeBom = (text) => {
+    return text.replace(/^\uFEFF/, '');
+};
+
+const readSpritesFile = () => {
+    const svgSpritesFile = `${__dirname}/../dist/sprites.svg`;
+    return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
 module.exports = {
@@ -54,24 +66,23 @@ module.exports = {
             module: {
                 preLoaders: [
                     {
-                        test: /core\.bundle\.js$/,
-                        loader: "source-map"
+                        test: /core\.js$/,
+                        loader: 'source-map'
                     }
                 ],
                 loaders: [
                     {
                         test: /\.jsx?$/,
-                        exclude: /(node_modules|bower_components|core\.bundle|cases|prism\.js|markdown\.js)/,
+                        include: [
+                            pathResolver.source()
+                        ],
+                        exclude: [
+                            pathResolver.source('lib'),
+                            pathResolver.source('app/cases')
+                        ],
                         loader: 'babel-loader',
                         query: {
-                            cacheDirectory: true,
-                            presets: [
-                                "es2015",
-                                "stage-0"
-                            ],
-                            plugins: [
-                                "transform-runtime"
-                            ]
+                            cacheDirectory: true
                         }
                     },
                     (PRODUCTION ? {
@@ -135,9 +146,10 @@ module.exports = {
                     __DEV__: DEVELOPMENT
                 }),
                 new HtmlWebpackPlugin({
-                    template: pathResolver.source('index.html'),
+                    template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
                     hash: PRODUCTION,
                     filename: 'index.html',
+                    svgSprites: readSpritesFile(),
                     inject: 'body',
                     chunks: ['vendor', 'app'],
                     minify: {
@@ -159,7 +171,7 @@ module.exports = {
                     pathResolver.source()
                 ],
                 alias: {
-                    'comindware/core': `${__dirname}/../dist/core.bundle.js`,
+                    'comindware/core': `${__dirname}/../dist/core.js`,
                     prism: `${__dirname}/public/lib/prism/prism.js`,
                     markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                     localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,

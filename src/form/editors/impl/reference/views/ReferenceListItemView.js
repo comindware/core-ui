@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-import { Handlebars } from '../../../../../libApi';
+import { Handlebars } from 'lib';
 import template from '../templates/referenceListItem.hbs';
-import list from '../../../../../list/listApi';
+import list from 'list';
 
 export default Marionette.ItemView.extend({
     initialize: function (options) {

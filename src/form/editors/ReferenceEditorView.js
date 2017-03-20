@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-import { Handlebars, keypress } from '../../libApi';
+import { Handlebars, keypress } from 'lib';
 import VirtualCollection from '../../collections/VirtualCollection';
-import dropdown from '../../dropdown/dropdownApi';
+import dropdown from 'dropdown';
 import template from './templates/referenceEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';

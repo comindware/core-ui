@@ -8,8 +8,8 @@
 
 "use strict";
 
-import '../../../libApi';
-import { helpers, htmlHelpers } from '../../../utils/utilsApi';
+import 'lib';
+import { helpers, htmlHelpers } from 'utils';
 
 const eventBubblingIgnoreList = [
     'before:render',

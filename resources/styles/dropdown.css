@@ -168,9 +168,9 @@
 
 .dd-list__title {
     max-width: 90%;
-    padding: 5px 30px 5px 5px;
-    line-height: 18px;
-    font-size: 14px;
+    padding: 3px 20px 3px 5px;
+    line-height: 19px;
+    font-size: 12px;
     font-weight: 500;
     display: inline-block;
     overflow: hidden;
@@ -191,13 +191,13 @@
 }
 
 .dd-list__i {
-    height: 34px;
+    height: 25px;
     padding: 0 10px;
-    line-height: 34px;
-    font-size: 13px;
+    line-height: 25px;
+    font-size: 12px;
     font-weight: normal;
     text-align: left;
-    color: #43525d;
+    color: #384650;
     overflow: hidden;
     white-space: nowrap;
     -o-text-overflow: ellipsis;
@@ -233,7 +233,7 @@
 
 .dd-list__btn{
     width: 100%;
-    height: 40px;
+    height: 25px;
     border-top: 1px solid #dee3e8;
     background-color: #fff;
     cursor: pointer;
@@ -252,23 +252,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
+    height: 25px;
+    line-height: 24px;
+    padding-left: 22px;
 }
 
-.reference-btn:before {
-    content: '+';
-    color: #4d4d4d;
-    font-size: 30px;
-    font-weight: 500;
-    float: left;
-    margin: -1px 5px 0 0;
-}
-
-.reference-btn:hover{
-    color: #009bfe;
-}
-.reference-btn:hover:before{
-    color: #009bfe;
-}
 
 .reference-btn-more{
     color: #4d4d4d;
@@ -278,9 +266,6 @@
     cursor: pointer;
 }
 
-.reference-btn-more:hover{
-    color: #009bfe;
-}
 
 /* /dd-list */
 
@@ -309,9 +294,9 @@
 }
 
 .list-search_dd {
-    height: 17px;
+    height: 16px;
     margin: 0;
-    padding: 8px 5px 8px 5px;
+    padding: 4px 5px 4px 5px;
     border-bottom: solid 1px #ced3d7;
     opacity: 1;
 }
@@ -393,10 +378,10 @@
     overflow-y: auto;
 }
 .time-dropdown__i {
-    height: 34px;
+    height: 25px;
     padding: 0 10px;
-    line-height: 34px;
-    font-size: 13px;
+    line-height: 25px;
+    font-size: 12px;
     font-weight: normal;
     text-align: left;
     color: #43525d;
@@ -419,7 +404,7 @@
 .multiselect-panel{
     min-width: 160px;
     max-width: 100%;
-    padding: 40px 0;
+    padding: 25px 0;
     position: relative;
 }
 .multiselect-panel__list{
@@ -430,11 +415,11 @@
 
 .multiselect-panel__btn{
     width: 100%;
-    height: 40px;
+    height: 25px;
     padding: 0 12px;
-    line-height: 40px;
+    line-height: 25px;
     text-align: left;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     position: absolute;
     background-color: #fff;
@@ -472,10 +457,10 @@
 }
 
 .multiselect-i {
-    height: 34px;
-    padding: 0 34px 0 10px;
-    line-height: 34px;
-    font-size: 13px;
+    height: 25px;
+    padding: 0 25px 0 10px;
+    line-height: 25px;
+    font-size: 12px;
     font-weight: 400;
     text-align: left;
     color: #43525d;
@@ -492,28 +477,9 @@
     background: #f5f5f5;
 }
 
-.multiselect-i:after {
-    content: '';
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    overflow: hidden;
-    display: block;
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    border: solid 1px #838c92;
-    opacity: .4;
-    border-radius: 50%;
-}
-
 .multiselect-i_selected {
     font-weight: 500;
     color:#000;
-}
-.multiselect-i_selected:after {
-    opacity: 1;
-    background: no-repeat 50% 50% url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAYAAADN5B7xAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEBJREFUeNpiVO+7yUAk+A8imEhRDASMTKQohtnwH0kQr2KYBkY0SZyKkf2ArgmrYnRPMxJSjC2UGPEpBgGAAAMAVUUMnvjkXPcAAAAASUVORK5CYII=);
 }
 
 /*-----//------*/

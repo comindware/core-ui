@@ -8,15 +8,15 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../../../../libApi';
+import { Handlebars, keypress } from 'lib';
 import template from '../templates/dropdownPanel.hbs';
 import DefaultDropdownListItemView from './DefaultDropdownListItemView';
 import DropdownCollection from '../collections/DropdownCollection';
-import list from '../../../../../list/listApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import list from 'list';
+import { helpers } from 'utils';
 
 const config = {
-    CHILD_HEIGHT: 34,
+    CHILD_HEIGHT: 25,
     MAX_HEIGHT: 410
 };
 

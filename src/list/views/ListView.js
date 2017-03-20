@@ -6,8 +6,8 @@
  * Published under the MIT license
  */
 
-import { keypress, Handlebars } from '../../libApi';
-import { helpers, htmlHelpers } from '../../utils/utilsApi';
+import { keypress, Handlebars } from 'lib';
+import { helpers, htmlHelpers } from 'utils';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
 import GlobalEventService from '../../services/GlobalEventService';

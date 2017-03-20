@@ -11,8 +11,8 @@
 import MembersCollection from '../collections/MembersCollection';
 import MembersListView from '../views/MembersListView';
 import UserService from 'services/UserService';
-import 'libApi';
-import 'utils/utilsApi';
+import 'lib';
+import 'utils';
 
 export default {
     createMembersCollection: function () {
