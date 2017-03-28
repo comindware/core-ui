@@ -20,7 +20,8 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                 '<div class="field-width" data-fields="mention"></div>' +
                 '<div class="field-width" data-fields="multiSelect"></div>' +
                 '<div class="field-width" data-fields="password"></div>' +
-                '<div class="field-width" data-fields="time"></div>';
+                '<div class="field-width" data-fields="time"></div>' +
+                '<button class="js-validate">Validate</button>';
 
             // 2. Create model
             var model = new Backbone.Model({
@@ -51,6 +52,12 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
 
                 template: Handlebars.compile(template),
 
+                events: {
+                    'click .js-validate': function () {
+                        this.form.validate();
+                    }
+                },
+
                 behaviors: {
                     BackboneFormBehavior: {
                         behaviorClass: core.form.behaviors.BackboneFormBehavior,
@@ -61,14 +68,12 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'Boolean',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true
                                 },
                                 dropdown: {
                                     type: 'Dropdown',
                                     title: 'Dropdown',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true,
                                     collection: [
                                         { id: 'id.1', text: 'Item 1' },
                                         { id: 'id.2', text: 'Item 2' }
@@ -79,28 +84,24 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'MembersBubble',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true
                                 },
                                 memberSelect: {
                                     type: 'MemberSelect',
                                     title: 'MemberSelect',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true
                                 },
                                 number: {
                                     type: 'Number',
                                     title: 'Number',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true
                                 },
                                 radioGroup: {
                                     type: 'RadioGroup',
                                     title: 'RadioGroup',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true,
                                     radioOptions: [
                                         { id: 'id.1', displayText: 'Option 1' },
                                         { id: 'id.2', displayText: 'Option 2' }
@@ -111,29 +112,25 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     title: 'Reference',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true,
                                     controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
                                 },
                                 textArea: {
                                     type: 'TextArea',
                                     title: 'TextArea',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 },
                                 text: {
                                     type: 'Text',
                                     title: 'Text',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 },
                                 avatar: {
                                     type: 'Avatar',
                                     title: 'Avatar',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true,
                                     fullName: 'Foo Bar',
                                     autoUpload: true,
                                     refreshPreviewAfterUpload: true,
@@ -145,36 +142,31 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     type: 'Date',
                                     title: 'Date',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 },
                                 dateTime: {
                                     type: 'DateTime',
                                     title: 'DateTime',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 },
                                 duration: {
                                     type: 'Duration',
                                     title: 'Duration',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 },
                                 mention: {
                                     type: 'Mention',
                                     title: 'Mention',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 },
                                 multiSelect: {
                                     type: 'MultiSelect',
                                     title: 'MultiSelect',
                                     validators: [ 'required' ],
                                     required: true, // to display the asterisk left from title
-                                    validateOnChange: true,
                                     collection: [
                                         { id: 'id.1', text: 'Item 1' },
                                         { id: 'id.2', text: 'Item 2' }
@@ -184,15 +176,13 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                                     type: 'Password',
                                     title: 'Password',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 },
                                 time: {
                                     type: 'Time',
                                     title: 'Time',
                                     validators: [ 'required' ],
-                                    required: true, // to display the asterisk left from title
-                                    validateOnChange: true
+                                    required: true // to display the asterisk left from title
                                 }
                             };
                         }

@@ -44,7 +44,8 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     ui: {
-        errorText: '.js-error-text'
+        errorText: '.js-error-text',
+        errorIcon: '.js-field-error'
     },
 
     regions: {
@@ -98,6 +99,7 @@ export default Marionette.LayoutView.extend({
         }
         this.$el.addClass(classes.ERROR);
         this.ui.errorText.text(msg);
+        this.ui.errorIcon.attr('title', msg);
     },
 
     clearError () {
@@ -106,6 +108,7 @@ export default Marionette.LayoutView.extend({
         }
         this.$el.removeClass(classes.ERROR);
         this.ui.errorText.text('');
+        this.ui.errorIcon.attr('title', null);
     },
 
     /**
