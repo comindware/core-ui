@@ -9,9 +9,9 @@
 import template from './templates/field.hbs';
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
-import FieldInfoModel from './models/FieldInfoModel';
+import ErrorButtonView from './views/ErrorButtonView';
 import InfoButtonView from './views/InfoButtonView';
-import InfoMessageView from './views/InfoMessageView';
+import TooltipPanelView from './views/TooltipPanelView';
 import formRepository from '../formRepository';
 
 const classes = {
@@ -30,43 +30,47 @@ export default Marionette.LayoutView.extend({
         this.__createSchema(options.schema);
 
         this.__createEditor();
+
+        this.__viewModel = new Backbone.Model({
+            helpText: this.schema.helpText,
+            errorText: null
+        });
     },
 
     templateHelpers () {
         return {
-            help: this.schema.help || '',
-            title: this.schema.title,
-            key: this.key,
-            editorId: this.editor.id
+            title: this.schema.title
         };
     },
 
     template: Handlebars.compile(template),
 
-    ui: {
-        errorText: '.js-error-text',
-        errorIcon: '.js-field-error'
-    },
-
     regions: {
         editorRegion: '.js-editor-region',
+        errorTextRegion: '.js-error-text-region',
         helpTextRegion: '.js-help-text-region'
     },
 
     onShow () {
         this.editorRegion.show(this.editor);
+        let errorPopout = dropdown.factory.createPopout({
+            buttonView: ErrorButtonView,
+            panelView: TooltipPanelView,
+            panelViewOptions: {
+                model: this.__viewModel,
+                textAttribute: 'errorText'
+            },
+            popoutFlow: 'right',
+            customAnchor: true
+        });
+        this.errorTextRegion.show(errorPopout);
         if (this.schema.helpText) {
-            this.fieldInfoModel = new FieldInfoModel({
-                text: this.schema.helpText
-            });
             let infoPopout = dropdown.factory.createPopout({
-                panelView: InfoMessageView,
-                panelViewOptions: {
-                    model: this.fieldInfoModel
-                },
                 buttonView: InfoButtonView,
-                buttonViewOptions: {
-                    model: this.fieldInfoModel
+                panelView: TooltipPanelView,
+                panelViewOptions: {
+                    model: this.__viewModel,
+                    textAttribute: 'helpText'
                 },
                 popoutFlow: 'right',
                 customAnchor: true
@@ -98,8 +102,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.$el.addClass(classes.ERROR);
-        this.ui.errorText.text(msg);
-        this.ui.errorIcon.attr('title', msg);
+        this.__viewModel.set('errorText', msg);
     },
 
     clearError () {
@@ -107,8 +110,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.$el.removeClass(classes.ERROR);
-        this.ui.errorText.text('');
-        this.ui.errorIcon.attr('title', null);
+        this.__viewModel.set('errorText', null);
     },
 
     /**
