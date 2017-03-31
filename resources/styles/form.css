@@ -720,6 +720,10 @@ input[type="checkbox"].checkbox {
     white-space: nowrap;
 }
 
+.editor_disabled .reference-field__txt-link{
+    color:#384650;
+}
+
 .reference-field__edit-btn {
     display: inline-block;
     cursor: pointer;
@@ -737,6 +741,11 @@ input[type="checkbox"].checkbox {
 
 .editor:hover .reference-field__edit-btn{
     visibility: visible;
+}
+
+.editor_readonly .reference-field__edit-btn, .editor_readonly:hover .reference-field__edit-btn,
+.editor_disabled .reference-field__edit-btn, .editor_disabled:hover .reference-field__edit-btn{
+    visibility: hidden;
 }
 
 .reference-field__edit-btn:hover {
