@@ -6,10 +6,8 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../../libApi';
-import { helpers, htmlHelpers } from '../../../utils/utilsApi';
+import 'lib';
+import { helpers, htmlHelpers } from 'utils';
 
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.

@@ -8,8 +8,8 @@
 
 "use strict";
 
-import '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import 'lib';
+import { helpers } from 'utils';
 import VirtualCollection from '../../../../../collections/VirtualCollection';
 import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 

@@ -42,6 +42,12 @@ module.exports = {
     compiled: function () {
         return resolve(rootDir, 'dist', arguments);
     },
+    pages: function () {
+        return resolve(rootDir, 'pages', arguments);
+    },
+    demo: function () {
+        return resolve(rootDir, 'demo', arguments);
+    },
     source: function () {
         return resolve(rootDir, 'src', arguments);
     },

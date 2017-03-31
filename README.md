@@ -1,13 +1,14 @@
 [![NPM](https://nodei.co/npm/comindware.core.ui.png?compact=true)](https://nodei.co/npm/comindware.core.ui/)
 
 [![Build Status](https://travis-ci.org/comindware/core-ui.svg)](https://travis-ci.org/comindware/core-ui)
+
 # core-ui
 
-Comindware Core UI is a set of components based on Marionette framework and some other third-party libraries. Built in the best tradition of Marionette, it allows you to create complex modular UI by nesting powerful ready-to-use components.
+Comindware Core UI is a set of components based on Marionette framework and some other third-party libraries. It's built in the best tradition of Marionette and enables you to create complex modular UI by nesting powerful ready-to-use components.
 
-The package includes a variety of components such as editors, lists, dropdowns, as well as several high-level services to build pop-ups, show messages, arrange RPC-ajax communication and localize the application.
+The package includes a variety of components such as editors, layouts, lists, dropdowns, as well as several high-level services to build pop-ups, show messages, arrange RPC-ajax communication and localize the application.
 
-For more details look at the [documentation](https://comindware.github.io/core-ui/doc/index.html) and try out the [demo](https://comindware.github.io/core-ui/demo/index.html).
+For more details have a look at the [demo](https://comindware.github.io/core-ui/) and JSDoc-based [documentation](https://comindware.github.io/core-ui/doc/).
 
 # License
 

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import { Handlebars } from '../../../../../libApi';
+import { Handlebars } from 'lib';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {
@@ -25,18 +25,22 @@ export default Marionette.ItemView.extend({
     templateHelpers: function () {
         let value = this.model.get('value');
         return {
-            text: this.options.getDisplayText(value)
+            hasValue: Boolean(value),
+            valueUrl: value ? this.options.createValueUrl(value) : false,
+            text: this.options.getDisplayText(value),
+            showEditButton: this.options.showEditButton && Boolean(value)
         };
     },
 
     ui: {
         text: '.js-text',
-        clearButton: '.js-clear-button'
+        clearButton: '.js-clear-button',
+        editButton: '.js-edit-button'
     },
 
     events: {
         'click @ui.clearButton': '__clear',
-        'click @ui.text': '__navigate',
+        'click @ui.editButton': '__edit',
         'click': '__click'
     },
 
@@ -45,8 +49,8 @@ export default Marionette.ItemView.extend({
         return false;
     },
 
-    __navigate: function () {
-        if (this.reqres.request('value:navigate', this.model.get('value'))) {
+    __edit: function () {
+        if (this.reqres.request('value:edit', this.model.get('value'))) {
             return false;
         }
         return null;
@@ -58,7 +62,10 @@ export default Marionette.ItemView.extend({
         'change:readonly': 'updateView'
     },
 
-    __click: function () {
+    __click (e) {
+        if (e.target.tagName === 'A') {
+            return;
+        }
         this.reqres.request('panel:open');
     },
 

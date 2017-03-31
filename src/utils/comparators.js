@@ -9,7 +9,7 @@
 "use strict";
 
 import { objectPropertyTypes } from '../Meta';
-import { moment } from '../libApi';
+import { moment } from 'lib';
 
 export var stringComparator2Asc = function (a, b) {
     if (a) {

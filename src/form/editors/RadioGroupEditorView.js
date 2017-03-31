@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
 import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';

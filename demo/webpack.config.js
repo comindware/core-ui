@@ -12,6 +12,7 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs-extra');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -26,6 +27,15 @@ const pathResolver = {
         //noinspection Eslint
         return path.resolve.apply(path.resolve, [__dirname, 'public'].concat(_.toArray(arguments)));
     }
+};
+
+const removeBom = (text) => {
+    return text.replace(/^\uFEFF/, '');
+};
+
+const readSpritesFile = () => {
+    const svgSpritesFile = `${__dirname}/../dist/sprites.svg`;
+    return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
 module.exports = {
@@ -56,7 +66,7 @@ module.exports = {
             module: {
                 preLoaders: [
                     {
-                        test: /dist\/core\.js$/,
+                        test: /core\.js$/,
                         loader: 'source-map'
                     }
                 ],
@@ -72,14 +82,7 @@ module.exports = {
                         ],
                         loader: 'babel-loader',
                         query: {
-                            cacheDirectory: true,
-                            presets: [
-                                'es2015',
-                                'stage-0'
-                            ],
-                            plugins: [
-                                'transform-runtime'
-                            ]
+                            cacheDirectory: true
                         }
                     },
                     (PRODUCTION ? {
@@ -143,9 +146,10 @@ module.exports = {
                     __DEV__: DEVELOPMENT
                 }),
                 new HtmlWebpackPlugin({
-                    template: pathResolver.source('index.html'),
+                    template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
                     hash: PRODUCTION,
                     filename: 'index.html',
+                    svgSprites: readSpritesFile(),
                     inject: 'body',
                     chunks: ['vendor', 'app'],
                     minify: {

@@ -1,8 +1,20 @@
-<span class="js-text reference-field__txt btn-wrp">
-    {{#if text}}
-        {{text}}
+{{#if hasValue}}
+    {{#if valueUrl}}
+        <a class="js-text reference-field__txt-link btn-wrp" href="{{valueUrl}}">{{text}}</a>
     {{else}}
-        {{localize 'CORE.FORM.EDITORS.REFERENCE.NOTSET'}}
+        <span class="js-text reference-field__txt btn-wrp">{{text}}</span>
     {{/if}}
-</span>
-<span class="js-clear-button btn-remove btn-remove_absolute"></span>
+{{else}}
+    <span class="js-text reference-field__txt btn-wrp">{{localize 'CORE.FORM.EDITORS.REFERENCE.NOTSET'}}</span>
+{{/if}}
+{{#if showEditButton}}
+    <div class="js-edit-button reference-field__edit-btn">Karandashik</div>
+{{/if}}
+<div class="svg-icons-wrp">
+    <div class="svg-icons-wrp__empty">
+        <svg class="svg-icons svg-icons_dropdown"><use xlink:href="#icon-dropdown" /> </svg>
+    </div>
+    <div class="js-clear-button svg-icons-wrp__remove">
+        <svg class="svg-icons svg-icons_remove"><use xlink:href="#icon-remove" /> </svg>
+    </div>
+</div>

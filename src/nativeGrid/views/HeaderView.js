@@ -9,7 +9,7 @@
 "use strict";
 
 import template from '../templates/header.hbs';
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
 

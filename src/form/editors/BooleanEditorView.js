@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 import template from './templates/booleanEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';

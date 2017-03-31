@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { helpers, comparators } from '../../../../../../utils/utilsApi';
+import { helpers, comparators } from 'utils';
 import VirtualCollection from '../../../../../../collections/VirtualCollection';
 import HighlightableBehavior from '../../../../../../collections/behaviors/HighlightableBehavior';
 import MemberModel from '../models/MemberModel';

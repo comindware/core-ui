@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import '../libApi';
+import 'lib';
 import MessageView from './message/views/MessageView';
 import WindowService from './WindowService';
 import LocalizationService from './LocalizationService';

@@ -152,6 +152,57 @@ define([], function () {
                 ]
             },
             {
+                id: 'layout',
+                displayName: 'Layout',
+                groups: [
+                    {
+                        id: 'TabLayout',
+                        displayName: 'Tab Layout',
+                        description: ''
+                    },
+                    {
+                        id: 'VerticalLayout',
+                        displayName: 'Vertical Layout',
+                        description: ''
+                    },
+                    {
+                        id: 'HorizontalLayout',
+                        displayName: 'Horizontal Layout',
+                        description: ''
+                    },
+                    {
+                        id: 'Button',
+                        displayName: 'Button',
+                        description: ''
+                    },
+                    {
+                        id: 'PopupView',
+                        displayName: 'Popup View',
+                        description: ''
+                    },
+                    {
+                        id: 'AttachedFields',
+                        displayName: 'Using with FormBehavior',
+                        description: ''
+                    },
+                    {
+                        id: 'FormView',
+                        displayName: 'Using with Form View',
+                        description: ''
+                    },
+                    {
+                        id: 'DynamicState',
+                        displayName: 'Computed Visibility',
+                        description: ''
+                    },
+                    {
+                        id: 'DetachedFields',
+                        displayName: 'Special Cases (Detached Fields)',
+                        description: ''
+                    }
+                ]
+            },
+            {
                 id: 'list',
                 displayName: 'List & Grid',
                 groups: [

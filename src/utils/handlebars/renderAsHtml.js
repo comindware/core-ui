@@ -10,7 +10,7 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 
 module.exports = function(text) {
     if (!text) {

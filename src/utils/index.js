@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
 import comparators_ from './comparators';
 import helpers_ from './helpers';
 import htmlHelpers_ from './htmlHelpers';
@@ -16,13 +14,15 @@ import cookieHelpers_ from './cookieHelpers';
 import keyCode_ from './keyCode';
 import './handlebars/all';
 import './jquery/selector.focusable';
+import RegionBehavior_ from './marionette/RegionBehavior';
 
-export var comparators = comparators_;
-export var helpers = helpers_;
-export var htmlHelpers = htmlHelpers_;
-export var dateHelpers = dateHelpers_;
-export var cookieHelpers = cookieHelpers_;
-export var keyCode = keyCode_;
+export const RegionBehavior = RegionBehavior_;
+export const comparators = comparators_;
+export const helpers = helpers_;
+export const htmlHelpers = htmlHelpers_;
+export const dateHelpers = dateHelpers_;
+export const cookieHelpers = cookieHelpers_;
+export const keyCode = keyCode_;
 
 export default /** @lends module:core.utils */ {
     /**
@@ -57,5 +57,7 @@ export default /** @lends module:core.utils */ {
      * Enumeration of key codes used in keyboard events.
      * @namespace
      * */
-    keyCode: keyCode
+    keyCode: keyCode,
+
+    RegionBehavior: RegionBehavior
 };

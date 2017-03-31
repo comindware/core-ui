@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../libApi';
+import 'lib';
 import EventAggregator from './EventAggregator';
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';

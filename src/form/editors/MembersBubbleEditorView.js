@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
-import dropdown from '../../dropdown/dropdownApi';
-import { helpers, comparators } from '../../utils/utilsApi';
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
+import { helpers, comparators } from 'utils';
 import template from './templates/membersBubbleEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import MemberModel from './impl/common/members/models/MemberModel';

@@ -1,4 +1,4 @@
-import { Handlebars } from '../../../../../libApi';
+import { Handlebars } from 'lib';
 import ReferenceButtonView from './ReferenceButtonView';
 import template from '../templates/userReferenceButton.hbs';
 

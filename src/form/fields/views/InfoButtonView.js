@@ -6,28 +6,20 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import infoTemplate from '../templates/InfoButton_Normal.hbs';
-import errorTemplate from '../templates/InfoButton_Error.hbs';
-import { Handlebars } from '../../../libApi';
-import dropdown from '../../../dropdown/dropdownApi';
-
-let infoTemplateCompiled = Handlebars.compile(infoTemplate);
-let errorTemplateCompiled = Handlebars.compile(errorTemplate);
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
+import template from '../templates/infoButton.hbs';
 
 export default Marionette.ItemView.extend({
-	behaviors: {
-		CustomAnchorBehavior: {
-			behaviorClass: dropdown.views.behaviors.CustomAnchorBehavior,
-			anchor: '.js-anchor'
-		}
-	},
+    template: Handlebars.compile(template),
 
-	getTemplate: function() {
-		if (this.model.get('error')) {
-			return errorTemplateCompiled;
-		}
-		return infoTemplateCompiled;
-	}
+    className: 'form-label__info-button',
+
+    behaviors: {
+        CustomAnchorBehavior: {
+            behaviorClass: dropdown.views.behaviors.CustomAnchorBehavior,
+            anchor: '.js-anchor',
+            omitDefaultStyling: true
+        }
+    }
 });

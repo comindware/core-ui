@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../libApi';
+import 'lib';
 
 /*
     This behavior makes grouping items collapsible. To switch between the collapsed/expanded states there is a templateHelpers property 'collapsed' passed to the template model.

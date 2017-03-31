@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 

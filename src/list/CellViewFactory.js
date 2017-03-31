@@ -9,8 +9,8 @@
 "use strict";
 
 import { objectPropertyTypes } from '../Meta';
-import { helpers } from '../utils/utilsApi';
-import { Handlebars } from '../libApi';
+import { helpers } from 'utils';
+import { Handlebars } from 'lib';
 
 let factory = {
     getCellViewByDataType: function(type) {

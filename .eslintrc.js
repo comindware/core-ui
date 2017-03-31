@@ -24,6 +24,7 @@ module.exports = {
         "no-mixed-operators": 0,
         "new-cap": 0,
         "no-continue": 0,
+        "import/prefer-default-export": 0,
         "import/no-amd": 0,
         "import/no-dynamic-require": 0,
         "import/newline-after-import": 0,

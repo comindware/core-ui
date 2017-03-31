@@ -10,7 +10,7 @@
 
 "use strict";
 
-import { moment } from '../libApi';
+import { moment } from 'lib';
 import LocalizationService from '../services/LocalizationService';
 
 let dateTimeFormats = {

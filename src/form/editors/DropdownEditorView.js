@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../libApi';
-import list from '../../list/listApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars, keypress } from 'lib';
+import list from 'list';
+import dropdown from 'dropdown';
 import template from './templates/dropdownEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DropdownPanelView from './impl/dropdown/views/DropdownPanelView';

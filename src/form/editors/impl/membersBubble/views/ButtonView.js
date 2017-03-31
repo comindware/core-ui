@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Handlebars } from '../../../../../libApi';
+import { Handlebars } from 'lib';
 import template from '../templates/button.hbs';
 import BubbleView from './BubbleView';
 import InputView from './InputView';
