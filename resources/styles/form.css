@@ -743,11 +743,6 @@ input[type="checkbox"].checkbox {
     visibility: visible;
 }
 
-.editor_readonly .reference-field__edit-btn, .editor_readonly:hover .reference-field__edit-btn,
-.editor_disabled .reference-field__edit-btn, .editor_disabled:hover .reference-field__edit-btn{
-    visibility: hidden;
-}
-
 .reference-field__edit-btn:hover {
     border-color: #dfe4e8;
     background: #f7f6f6;
