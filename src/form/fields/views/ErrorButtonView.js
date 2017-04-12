@@ -8,12 +8,12 @@
 
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
-import template from '../templates/infoButton.hbs';
+import template from '../templates/errorButton.hbs';
 
 export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
-    className: 'form-label__info-button',
+    className: 'form-label__error-button',
 
     behaviors: {
         CustomAnchorBehavior: {

@@ -58,11 +58,15 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
     * */
     collection: null,
 
+    createValueUrl (value) {
+        return false;
+    },
+
     /**
-     * Handles a navigation request to an object. The method is abstract.
-     * @param {Object} value Value object that describes the object to navigate to.
+     * Handles the edit request to the editor.
+     * @param {Object} value Value object that describes the object to edit.
      * */
-    navigate: function(value) {
-        helpers.throwError('Not Implemented.', 'NotImplementedError');
+    edit: function(value) {
+        return false;
     }
 });
