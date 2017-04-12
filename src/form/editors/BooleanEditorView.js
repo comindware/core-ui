@@ -72,10 +72,11 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
 
     __toggle: function () {
         if (!this.getEnabled() || this.getReadonly()) {
-            return;
+            return false;
         }
         this.setValue(!this.getValue());
         this.__triggerChange();
+        return false;
     },
 
     onRender: function () {
