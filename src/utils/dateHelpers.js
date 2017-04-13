@@ -108,17 +108,17 @@ let dateTimeFormats = {
         shortDate: {general: 'DD.MM.YYYY' /* 03.12.2009 */},
         dateISO: {general: 'YYYY-MM-DD' /* 2005-08-09 */},
         condensedDate: {general: 'D MMM YYYY' /* 3 Дек 2014 */},
-        longDate: {general: 'dddd, D MMMM YYYY' /* среда, 3 декабря 2014 */},
+        longDate: {general: 'D MMMM YYYY' /* 3 декабря 2014 */},
         monthDay: {general: 'D MMMM' /* 3 декабря */},
         yearMonth: {general: 'MMMM YYYY' /* декабрь 2014 */},
         fullDateShortTime: {
-            general: 'dddd, D MMMM, YYYY HH:mm', /* среда, 3 декабря 2014 19:00 */
-            date: 'dddd, D MMMM, YYYY', // среда, 3 декабря 2014
+            general: 'D MMMM, YYYY HH:mm', /* 3 декабря 2014 19:00 */
+            date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm' // 19:00
         },
         fullDateLongTime: {
-            general: 'dddd, D MMMM, YYYY HH:mm:ss', // среда, 3 декабря 2014 19:00:00
-            date: 'dddd, D MMMM, YYYY', // среда, 3 декабря 2014
+            general: 'D MMMM, YYYY HH:mm:ss', // 3 декабря 2014 19:00:00
+            date: 'D MMMM, YYYY', // 3 декабря 2014
             time: 'HH:mm:ss' // 19:00:00
         },
         generalDateShortTime: {
