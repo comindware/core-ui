@@ -6,11 +6,9 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
-import list from '../../../../../list/listApi';
+import 'lib';
+import { helpers } from 'utils';
+import list from 'list';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
 const config = {
@@ -19,10 +17,10 @@ const config = {
 
 let createDemoData = function () {
     return _.times(1000, function (i) {
-        var id = 'task.' + (i + 1);
+        let id = `task.${i + 1}`;
         return {
             id: id,
-            text: 'Test Reference ' + (i + 1)
+            text: `Test Reference ${i}`
         };
     });
 };
@@ -38,41 +36,49 @@ export default Marionette.Controller.extend({
 
     fetch: function (options) {
         options = options || {};
-        var deferred = $.Deferred();
-        var promise = deferred.promise();
-        setTimeout(function () {
-            if (promise !== this.fetchPromise) {
-                deferred.reject();
-                return;
-            }
+        let promise = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                if (promise !== this.fetchPromise) {
+                    reject();
+                    return;
+                }
 
-            this.collection.reset(createDemoData());
-            if (options.text) {
-                var filterText = options.text.trim().toUpperCase();
-                if (filterText) {
-                    this.collection.filter(function (model) {
-                        var text = model.get('text');
-                        if (!text) {
-                            return false;
-                        }
-                        return text.toUpperCase().indexOf(filterText) !== -1;
-                    });
+                this.collection.reset(createDemoData());
+                if (options.text) {
+                    let filterText = options.text.trim().toUpperCase();
+                    if (filterText) {
+                        this.collection.filter(function (model) {
+                            let text = model.get('text');
+                            if (!text) {
+                                return false;
+                            }
+                            return text.toUpperCase().indexOf(filterText) !== -1;
+                        });
+                    } else {
+                        this.collection.filter(null);
+                    }
                 } else {
                     this.collection.filter(null);
                 }
-            } else {
-                this.collection.filter(null);
-            }
 
-            this.totalCount = 123123;
-            deferred.resolve();
-            this.fetchPromise = null;
-        }.bind(this), 1000);
+                this.totalCount = 1000;
+                resolve({
+                    collection: this.collection.toJSON(),
+                    totalCount: this.totalCount
+                });
+                this.fetchPromise = null;
+            }.bind(this), 1000);
+        });
         this.fetchPromise = promise;
-        return this.fetchPromise;
+        return promise;
     },
 
-    navigate: function (model) {
-        helpers.throwError('Not Implemented.', 'NotImplementedError');
+    createValueUrl (value) {
+        return `#example/${value.id}`;
+    },
+
+    edit: function (value) {
+        alert(`You could edit ${value.id} here.`);
+        return true;
     }
 });

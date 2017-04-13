@@ -6,19 +6,18 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../libApi';
+import 'lib';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
 
-Backbone.Form.validators.password = function(options) {
+formRepository.validators.password = function(options) {
     options = _.extend({
         type: 'length',
         message: LocalizationService.get('CORE.FORM.VALIDATION.PASSWORD'),
         min: 8
     }, options);
 
-    return Backbone.Form.validators.length(options);
+    return formRepository.validators.length(options);
 };
 
-export default Backbone.Form.validators.password;
+export default formRepository.validators.password;

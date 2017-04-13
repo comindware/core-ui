@@ -6,16 +6,18 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { helpers } from '../../../../../../utils/utilsApi';
-import { Handlebars } from '../../../../../../libApi';
-import list from '../../../../../../list/listApi';
+import { helpers } from 'utils';
+import { Handlebars } from 'lib';
+import list from 'list';
 import template from '../templates/panel.hbs';
 import ListItemView from './MembersListItemView';
 
 let config = {
     CHILD_HEIGHT: 34
+};
+
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
 };
 
 export default Marionette.LayoutView.extend({
@@ -39,6 +41,9 @@ export default Marionette.LayoutView.extend({
                 childView: ListItemView,
                 childViewOptions: {
                     reqres: this.reqres
+                },
+                emptyViewOptions: {
+                    className: classes.EMPTY_VIEW
                 },
                 childHeight: config.CHILD_HEIGHT,
                 height: 'auto',

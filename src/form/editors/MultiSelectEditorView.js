@@ -8,12 +8,13 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
 import template from './templates/multiSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import MultiSelectPanelView from './impl/multiSelect/views/MultiSelectPanelView';
 import MultiSelectButtonView from './impl/multiSelect/views/MultiSelectButtonView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     collection: null,
@@ -37,7 +38,7 @@ const defaultOptions = {
  * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
  * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
  * */
-Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
+formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
     initialize: function(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -99,7 +100,7 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         this.listenTo(this.dropdownView, 'open', this.onPanelOpen);
 
         this.listenTo(this.dropdownView, 'button:open:panel', this.onPanelOpenRequest);
-        this.listenTo(this.dropdownView, 'button:focus', this.onPanelOpenRequest);
+        this.listenTo(this.dropdownView, 'button:value:set', this.__onValueSet);
 
         this.listenTo(this.dropdownView, 'panel:select:all', this.__selectAll);
         this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
@@ -113,6 +114,10 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         this.__triggerChange();
         this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
         this.__resetValue();
+    },
+
+    __onValueSet (values) {
+        this.__value(values, true);
     },
 
     __onSelect: function(model) {
@@ -195,9 +200,12 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
         this.tempValue = _.without(this.tempValue, value);
     },
 
-    __value: function (value) {
+    __value: function (value, updateUi) {
         this.tempValue = value;
         this.__applyValue();
+        if (updateUi) {
+            this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
+        }
     },
 
     __applyValue: function() {
@@ -250,4 +258,4 @@ Backbone.Form.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modul
     }
 });
 
-export default Backbone.Form.editors.MultiSelect;
+export default formRepository.editors.MultiSelect;

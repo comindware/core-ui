@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Comindware UI-Core API Namespace: WindowService</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Comindware UI-Core API</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-core.collections.html">core.collections</a></li><li><a href="module-core.collections.behaviors.html">core.collections.behaviors</a></li><li><a href="module-core.dropdown.html">core.dropdown</a></li><li><a href="module-core.dropdown.factory.html">core.dropdown.factory</a></li><li><a href="module-core.dropdown.views.html">core.dropdown.views</a></li><li><a href="module-core.dropdown.views.behaviors.html">core.dropdown.views.behaviors</a></li><li><a href="module-core.form.html">core.form</a></li><li><a href="module-core.form.behaviors.html">core.form.behaviors</a></li><li><a href="module-core.form.editors.html">core.form.editors</a></li><li><a href="module-core.form.editors.avatar.html">core.form.editors.avatar</a></li><li><a href="module-core.form.editors.avatar.controllers.html">core.form.editors.avatar.controllers</a></li><li><a href="module-core.form.editors.base.html">core.form.editors.base</a></li><li><a href="module-core.form.editors.reference.html">core.form.editors.reference</a></li><li><a href="module-core.form.editors.reference.controllers.html">core.form.editors.reference.controllers</a></li><li><a href="module-core.form.Field.html">core.form.Field</a></li><li><a href="module-core.form.repository.html">core.form.repository</a></li><li><a href="module-core.list.html">core.list</a></li><li><a href="module-core.list.cellFactory.html">core.list.cellFactory</a></li><li><a href="module-core.list.factory.html">core.list.factory</a></li><li><a href="module-core.list.models.html">core.list.models</a></li><li><a href="module-core.list.views.html">core.list.views</a></li><li><a href="module-core.meta.html">core.meta</a></li><li><a href="module-core.models.html">core.models</a></li><li><a href="module-core.nativeGrid.html">core.nativeGrid</a></li><li><a href="module-core.nativeGrid.factory.html">core.nativeGrid.factory</a></li><li><a href="module-core.nativeGrid.filterViewFactory.html">core.nativeGrid.filterViewFactory</a></li><li><a href="module-core.nativeGrid.views.html">core.nativeGrid.views</a></li><li><a href="module-core.services.html">core.services</a></li><li><a href="module-core.services.GlobalEventService.html">core.services.GlobalEventService</a></li><li><a href="module-core.services.WindowService.html">core.services.WindowService</a></li><li><a href="module-core.utils.html">core.utils</a></li><li><a href="module-core.utils.comparators.html">core.utils.comparators</a></li><li><a href="module-core.utils.cookieHelpers.html">core.utils.cookieHelpers</a></li><li><a href="module-core.utils.dateHelpers.html">core.utils.dateHelpers</a></li><li><a href="module-core.utils.helpers.html">core.utils.helpers</a></li><li><a href="module-core.utils.htmlHelpers.html">core.utils.htmlHelpers</a></li><li><a href="module-core.utils.keyCode.html">core.utils.keyCode</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-core.collection.behaviors.HighlightableBehavior.html">core.collection.behaviors.HighlightableBehavior</a></li><li><a href="module-core.collections.SlidingWindowCollection.html">core.collections.SlidingWindowCollection</a></li><li><a href="module-core.collections.VirtualCollection.html">core.collections.VirtualCollection</a></li><li><a href="module-core.dropdown.views.behaviors.CustomAnchorBehavior.html">core.dropdown.views.behaviors.CustomAnchorBehavior</a></li><li><a href="module-core.dropdown.views.DefaultButtonView.html">core.dropdown.views.DefaultButtonView</a></li><li><a href="module-core.dropdown.views.DropdownView.html">core.dropdown.views.DropdownView</a></li><li><a href="module-core.dropdown.views.ListPanelView.html">core.dropdown.views.ListPanelView</a></li><li><a href="module-core.dropdown.views.MenuItemView.html">core.dropdown.views.MenuItemView</a></li><li><a href="module-core.dropdown.views.MenuPanelView.html">core.dropdown.views.MenuPanelView</a></li><li><a href="module-core.dropdown.views.PopoutView.html">core.dropdown.views.PopoutView</a></li><li><a href="module-core.form.behaviors.BackboneFormBehavior.html">core.form.behaviors.BackboneFormBehavior</a></li><li><a href="module-core.form.editors.avatar.controllers.BaseAvatarEditorController.html">core.form.editors.avatar.controllers.BaseAvatarEditorController</a></li><li><a href="module-core.form.editors.AvatarEditorView.html">core.form.editors.AvatarEditorView</a></li><li><a href="module-core.form.editors.base.BaseEditorView.html">core.form.editors.base.BaseEditorView</a></li><li><a href="module-core.form.editors.BooleanEditorView.html">core.form.editors.BooleanEditorView</a></li><li><a href="module-core.form.editors.DateEditorView.html">core.form.editors.DateEditorView</a></li><li><a href="module-core.form.editors.DateTimeEditorView.html">core.form.editors.DateTimeEditorView</a></li><li><a href="module-core.form.editors.DropdownEditorView.html">core.form.editors.DropdownEditorView</a></li><li><a href="module-core.form.editors.DurationEditorView.html">core.form.editors.DurationEditorView</a></li><li><a href="module-core.form.editors.MembersBubbleEditorView.html">core.form.editors.MembersBubbleEditorView</a></li><li><a href="module-core.form.editors.MemberSelectEditorView.html">core.form.editors.MemberSelectEditorView</a></li><li><a href="module-core.form.editors.MentionEditorView.html">core.form.editors.MentionEditorView</a></li><li><a href="module-core.form.editors.MultiSelectEditorView.html">core.form.editors.MultiSelectEditorView</a></li><li><a href="module-core.form.editors.NumberEditorView.html">core.form.editors.NumberEditorView</a></li><li><a href="module-core.form.editors.PasswordEditorView.html">core.form.editors.PasswordEditorView</a></li><li><a href="module-core.form.editors.RadioGroupEditorView.html">core.form.editors.RadioGroupEditorView</a></li><li><a href="module-core.form.editors.reference.controllers.BaseReferenceEditorController.html">core.form.editors.reference.controllers.BaseReferenceEditorController</a></li><li><a href="module-core.form.editors.ReferenceEditorView.html">core.form.editors.ReferenceEditorView</a></li><li><a href="module-core.form.editors.TextAreaEditorView.html">core.form.editors.TextAreaEditorView</a></li><li><a href="module-core.form.editors.TextEditorView.html">core.form.editors.TextEditorView</a></li><li><a href="module-core.form.editors.TimeEditorView.html">core.form.editors.TimeEditorView</a></li><li><a href="module-core.list.models.LoadingRowModel.html">core.list.models.LoadingRowModel</a></li><li><a href="module-core.list.views.EmptyGridView.html">core.list.views.EmptyGridView</a></li><li><a href="module-core.list.views.EmptyListView.html">core.list.views.EmptyListView</a></li><li><a href="module-core.list.views.GridColumnHeaderView.html">core.list.views.GridColumnHeaderView</a></li><li><a href="module-core.list.views.GridHeaderView.html">core.list.views.GridHeaderView</a></li><li><a href="module-core.list.views.GridView.html">core.list.views.GridView</a></li><li><a href="module-core.list.views.ListView.html">core.list.views.ListView</a></li><li><a href="module-core.list.views.LoadingRowView.html">core.list.views.LoadingRowView</a></li><li><a href="module-core.list.views.NoColumnsView.html">core.list.views.NoColumnsView</a></li><li><a href="module-core.list.views.RowView.html">core.list.views.RowView</a></li><li><a href="module-core.list.views.ScrollBarView.html">core.list.views.ScrollBarView</a></li><li><a href="module-core.nativeGrid.views.ColumnHeaderView.html">core.nativeGrid.views.ColumnHeaderView</a></li><li><a href="module-core.nativeGrid.views.HeaderView.html">core.nativeGrid.views.HeaderView</a></li><li><a href="module-core.nativeGrid.views.ListView.html">core.nativeGrid.views.ListView</a></li><li><a href="module-core.nativeGrid.views.NativeGridView.html">core.nativeGrid.views.NativeGridView</a></li><li><a href="module-core.nativeGrid.views.RowView.html">core.nativeGrid.views.RowView</a></li><li><a href="module-core.services.UserService.html">core.services.UserService</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Namespace: WindowService</h1>
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-core.html">module:core</a><a href="module-core.services.html">.services</a>.</span>
+        
+        WindowService
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">The service is responsible for displaying global windows. For example, modal dialogs (popups).</div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="closePopup"><span class="type-signature">&lt;static> </span>closePopup( [popupId])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Closes the top-level popup or does nothing if there is none.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>popupId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="showPopup"><span class="type-signature">&lt;static> </span>showPopup(view)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Shows a marionette.view as a popup. If another popup is already shown, overlaps it.The size of the view and it's location is totally the view's responsibility.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>view</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Marionette.View</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A Marionette.View instance to show.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The popup id that you can use to close it.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="showTransientPopup"><span class="type-signature">&lt;static> </span>showTransientPopup(view, options)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Shows a marionette.view as a transient popup. If another popup is already shown, overlaps it.The size of the view and it's location is totally the view's responsibility.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>view</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Marionette.View</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A Marionette.View instance to show.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Object.html">Object</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Options object.
+                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fadeBackground</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">Whether to fade the background behind the popup.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+
+	<span class="copyright">
+	Comindware Copyright © 2016
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
+
+</body>
+</html>

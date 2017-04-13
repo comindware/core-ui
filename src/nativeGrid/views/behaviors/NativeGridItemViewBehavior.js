@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../../libApi';
+import 'lib';
 import GridItemViewBehavior from '../../../list/views/behaviors/GridItemViewBehavior';
 
 let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
@@ -27,6 +27,7 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
 
     __onColumnStartDrag: function (sender, index) {
         var cells = this.__getCellElements();
+        this.gridCellDragger = $(cells[index]);
         this.columnsWidth = [];
         cells.each(function (i, el) {
             this.columnsWidth.push(this.__getElementOuterWidth(el));
@@ -47,19 +48,14 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
     },
 
     __setInitialWidth: function () {
-        var $cells = this.__getCellElements(),
-            fullWidth = this.paddingLeft + this.paddingRight;
+        const $cells = this.__getCellElements();
 
-        for (var i = 0; i < $cells.length; i++) {
-            var $cell = $($cells[i]),
-                cellWidth = this.columns[i].width;
+        for (let i = 0; i < $cells.length; i++) {
+            const $cell = $($cells[i]);
+            const cellWidth = this.columns[i].width;
 
             $cell.outerWidth(cellWidth);
-            fullWidth += cellWidth;
         }
-
-        this.$el.width(fullWidth);
-        this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
     },
 
     __getElementOuterWidth: function (el) {
@@ -67,21 +63,7 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
     },
 
     __onSingleColumnResize: function (sender, args) {
-        var cells = _.toArray(this.__getCellElements()),
-            $cell = $(cells[args.index]);
-
-        $cell.outerWidth(this.columnsWidth[args.index] + args.delta);
-
-        var fullWidth = 0;
-        this.__getCellElements().each(function (i, el) {
-            fullWidth += this.__getElementOuterWidth(el);
-        }.bind(this));
-
-        fullWidth += this.paddingLeft + this.paddingRight;
-
-        fullWidth = Math.ceil(fullWidth);
-        this.$el.outerWidth(fullWidth);
-        this.view.options.gridEventAggregator.trigger('afterColumnsResize', fullWidth);
+        this.gridCellDragger.outerWidth(this.columnsWidth[args.index] + args.delta);
     }
 });
 

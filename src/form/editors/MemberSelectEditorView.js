@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../libApi';
-import { helpers, comparators } from '../../utils/utilsApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars, keypress } from 'lib';
+import { helpers, comparators } from 'utils';
+import dropdown from 'dropdown';
 import template from './templates/memberSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import UserService from 'services/UserService';
@@ -18,6 +18,7 @@ import DefaultButtonView from './impl/memberSelect/views/DefaultButtonView';
 import PanelView from './impl/memberSelect/views/PanelView';
 import MemberModel from './impl/common/members/models/MemberModel';
 import MembersCollection from './impl/common/members/collections/MembersCollection';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     dropdownOptions: {
@@ -49,7 +50,7 @@ const ButtonModel = Backbone.AssociatedModel.extend({
  * Полезно для задания направления открытия и кастомизации кнопки. Значения по умолчанию:
  * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
  * */
-Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
+formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -198,4 +199,4 @@ Backbone.Form.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends modu
     }
 });
 
-export default Backbone.Form.editors.MemberSelect;
+export default formRepository.editors.MemberSelect;

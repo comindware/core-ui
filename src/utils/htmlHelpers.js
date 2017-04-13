@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Handlebars } from 'libApi';
+import { Handlebars } from 'lib';
 import UserService from 'services/UserService';
 
 export default /** @lends module:core.utils.htmlHelpers */ {

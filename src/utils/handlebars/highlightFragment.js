@@ -8,9 +8,7 @@
 
 /* global module */
 
-"use strict";
-
-import { htmlHelpers } from '../utilsApi';
+import { htmlHelpers } from '../index';
 
 module.exports = function(text, fragment) {
     if (!text) {

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 
 /*
 * This is a modified version of Backbone.Picky with extended list of features related to multiselect collections

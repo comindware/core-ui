@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Handlebars } from '../../../../../libApi';
+import { Handlebars } from 'lib';
 import template from '../templates/radioButton.hbs';
 
 export default Marionette.ItemView.extend({
@@ -19,17 +19,15 @@ export default Marionette.ItemView.extend({
 
     focusElement: null,
 
-    attributes: {
-        'tabindex': '0'
+    attributes() {
+        return {
+            title: (this.model && this.model.get('title')) || null,
+            tabindex: '0'
+        }        
     },
 
     initialize: function (options) {
         this.enabled = options.enabled;
-    },
-
-    ui: {
-        toggleButton: '.js-toggle-button',
-        displayText: '.js-display-text'
     },
 
     classes: {
@@ -42,8 +40,7 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click @ui.toggleButton': '__changeModelSelected',
-        'click @ui.displayText': '__changeModelSelected'
+        'click': '__changeModelSelected'
     },
 
     onRender: function () {

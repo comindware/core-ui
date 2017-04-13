@@ -8,9 +8,10 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 import template from './templates/booleanEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     displayText: ''
@@ -27,8 +28,10 @@ const classes = {
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
+ * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
+ * @param {String} [options.title] Title attribute for the editor.
  * */
-Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
+formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -51,24 +54,29 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
 
     className: 'editor editor_checkbox',
 
-    attributes: {
-        'tabindex': '0'
+    attributes() {
+        return {
+            title: this.options.title || null,
+            tabindex: '0'
+        }
     },
 
     template: Handlebars.compile(template),
 
     templateHelpers: function () {
         return {
-            displayText: this.options.displayText
+            displayText: this.options.displayText,
+            displayHtml: this.options.displayHtml
         };
     },
 
     __toggle: function () {
         if (!this.getEnabled() || this.getReadonly()) {
-            return;
+            return false;
         }
         this.setValue(!this.getValue());
         this.__triggerChange();
+        return false;
     },
 
     onRender: function () {
@@ -96,4 +104,4 @@ Backbone.Form.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core
     classes
 });
 
-export default Backbone.Form.editors.Boolean;
+export default formRepository.editors.Boolean;

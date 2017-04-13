@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.2.48",
+  "version": "1.2.63",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -19,9 +19,10 @@
   ],
   "main": "dist/core.bundle.min.js",
   "scripts": {
-    "build": "gulp production",
-    "dev": "gulp dev",
-    "test": "gulp test"
+    "start": "cross-env NODE_ENV=development DEBUG=true gulp --gulpfile build/gulpfile.js start",
+    "build": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js build",
+    "deploy": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy",
+    "deploy:pages": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy:pages"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "autoprefixer": "^6.3.3",
     "babel-core": "^6.4.5",
+    "babel-eslint": "^6.1.0",
     "babel-loader": "^6.2.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.4.5",
     "babel-plugin-transform-runtime": "^6.4.3",
@@ -50,8 +52,15 @@
     "babel-runtime": "^6.9.2",
     "chance": "^1.0.3",
     "coveralls": "^2.11.11",
+    "cross-env": "^3.1.4",
     "css-loader": "^0.23.1",
     "del": "^2.2.0",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-import-resolver-webpack": "^0.6.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1",
     "exports-loader": "^0.6.2",
     "expose-loader": "^0.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -61,6 +70,9 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
     "gulp-jsdoc": "^0.1.5",
+    "gulp-rename": "^1.2.2",
+    "gulp-svgmin": "^1.2.3",
+    "gulp-svgstore": "^6.1.0",
     "gulp-util": "^3.0.7",
     "handlebars": "^4.0.5",
     "handlebars-loader": "^1.1.4",
@@ -83,12 +95,16 @@
     "karma-webpack": "^1.7.0",
     "lodash": "^4.13.1",
     "mkdirp": "^0.5.1",
+    "node-sass": "^4.5.0",
     "phantomjs-prebuilt": "^2.1.7",
     "postcss-loader": "^0.8.2",
+    "rimraf": "^2.5.4",
+    "run-sequence": "^1.2.2",
     "sanitize-html": "^1.12.0",
+    "sass-loader": "^6.0.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
-    "webpack": "^1.12.12"
+    "webpack": "^1.13.1"
   },
   "dependencies": {
     "backbone": "1.1.2",

@@ -6,38 +6,60 @@
  * Published under the MIT license
  */
 
-"use strict";
+import 'lib';
 
-import '../libApi';
+const windowEventList = [
+    {
+        name: 'click',
+        capture: true
+    },
+    {
+        name: 'keydown',
+        capture: true
+    },
+    {
+        name: 'mousedown',
+        capture: true
+    },
+    {
+        name: 'mouseup',
+        capture: true
+    },
+    {
+        name: 'wheel',
+        capture: true
+    },
+    {
+        name: 'resize',
+        capture: false
+    }
+];
 
-let $window = $(window);
-
-let GlobalEventsService = Marionette.Object.extend({
+var globalEventService = /** @lends module:core.services.GlobalEventService */ {
     initialize: function () {
-        _.bindAll(this, '__onResize', '__onWindowClickCaptured', '__onWindowMousedownCaptured');
-
-        $window.on('resize', this.__onResize);
-        window.addEventListener('click', this.__onWindowClickCaptured, true);
-        window.addEventListener('mousedown', this.__onWindowMousedownCaptured, true);
+        this.__windowEvents = windowEventList.map(x => {
+            let captureSuffix = x.capture ? ':captured' : '';
+            let eventName = `window:${x.name}${captureSuffix}`;
+            return {
+                name: x.name,
+                capture: x.capture,
+                handler: e => {
+                    this.trigger(eventName, e.target, e);
+                }
+            };
+        });
+        this.__windowEvents.forEach(x => {
+            window.addEventListener(x.name, x.handler, x.capture);
+        });
     },
 
     onDestroy: function () {
-        $window.off('resize');
-        window.removeEventListener('click', this.__onWindowClickCaptured, true);
-        window.removeEventListener('mousedown', this.__onWindowMousedownCaptured, true);
-    },
-
-    __onWindowClickCaptured: function (e) {
-        this.trigger('windowClickCaptured', e.target, e);
-    },
-
-    __onWindowMousedownCaptured: function (e) {
-        this.trigger('windowMousedownCaptured', e.target, e);
-    },
-
-    __onResize: function (e) {
-        this.trigger('resize', e);
+        this.__windowEvents.forEach(x => {
+            window.removeEventListener(x.name, x.handler, x.capture);
+        });
     }
-});
+};
 
-export default new GlobalEventsService();
+_.extend(globalEventService, Backbone.Events);
+
+export default globalEventService;

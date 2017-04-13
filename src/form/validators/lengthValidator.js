@@ -8,10 +8,11 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
 
-Backbone.Form.validators.length = function(options) {
+formRepository.validators.length = function(options) {
     options = _.extend({
         type: 'length',
         message: LocalizationService.get('CORE.FORM.VALIDATION.LENGTH')
@@ -41,4 +42,4 @@ Backbone.Form.validators.length = function(options) {
     };
 };
 
-export default Backbone.Form.validators.length;
+export default formRepository.validators.length;

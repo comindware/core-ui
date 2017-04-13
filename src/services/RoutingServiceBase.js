@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
-import '../libApi';
+import 'lib';
 
 // storing active url to get back to it while canceling module leave
 let previousUrl;

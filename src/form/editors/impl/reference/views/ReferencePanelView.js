@@ -6,29 +6,32 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { keypress, Handlebars } from '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
-import list from '../../../../../list/listApi';
+import { keypress, Handlebars } from 'lib';
+import { helpers } from 'utils';
+import list from 'list';
 import template from '../templates/referencePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 import LoadingView from './LoadingView';
 import AddNewButtonView from './AddNewButtonView';
 
 const config = {
-    CHILD_HEIGHT: 30,
-    TEXT_FETCH_DELAY: 300
+    CHILD_HEIGHT: 25
+};
+
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
 };
 
 export default Marionette.LayoutView.extend({
     initialize: function (options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
+        helpers.ensureOption(options, 'getDisplayText');
 
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
         this.fetchDelayId = _.uniqueId('fetch-delay-id-');
+        this.timeoutId = null;
     },
 
     className: 'dd-list dd-list_reference',
@@ -36,9 +39,9 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers: function () {
-        var value = this.model.get('value');
+        let value = this.model.get('value');
         return {
-            text: (value && (value.get('text') || '#' + value.id)) || '',
+            text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton
         };
     },
@@ -49,9 +52,9 @@ export default Marionette.LayoutView.extend({
     },
 
     events: {
-        'keyup @ui.input': '__updateFilter',
-        'change @ui.input': '__updateFilter',
-        'input @ui.input': '__updateFilter',
+        'keyup @ui.input': '__onTextChange',
+        'change @ui.input': '__onTextChange',
+        'input @ui.input': '__onTextChange',
         'click @ui.clear': '__clear'
     },
 
@@ -67,15 +70,17 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow: function () {
-        var result = list.factory.createDefaultList({
+        let result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
                 childView: this.options.listItemView,
                 childViewOptions: {
-                    reqres: this.reqres
+                    reqres: this.reqres,
+                    getDisplayText: this.options.getDisplayText
                 },
                 emptyViewOptions: {
-                    text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS')
+                    text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
+                    className: classes.EMPTY_VIEW
                 },
                 childHeight: config.CHILD_HEIGHT
             }
@@ -84,28 +89,26 @@ export default Marionette.LayoutView.extend({
         this.listView = result.listView;
         this.eventAggregator = result.eventAggregator;
 
-        if(this.showAddNewButton) {
+        if (this.showAddNewButton) {
             this.$el.addClass('dd-list_reference-button');
-            var addNewButton = new AddNewButtonView({reqres: this.reqres});
+            let addNewButton = new AddNewButtonView({reqres: this.reqres});
             this.addNewButtonRegion.show(addNewButton);
         }
 
         this.listRegion.show(result.listView);
         this.scrollbarRegion.show(result.scrollbarView);
 
-        this.ui.input.focus();
-        this.__updateFilter();
+        this.__updateFilter(true);
     },
 
-    __assignKeyboardShortcuts: function ()
-    {
+    __assignKeyboardShortcuts () {
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
         _.each(this.keyboardShortcuts, function (value, key)
         {
-            var keys = key.split(',');
+            let keys = key.split(',');
             _.each(keys, function (k) {
                 this.keyListener.simple_combo(k, value.bind(this));
             }, this);
@@ -123,7 +126,14 @@ export default Marionette.LayoutView.extend({
             if (this.isLoading) {
                 return;
             }
-            var selectedModel = this.model.get('collection').selected;
+
+            if (this.timeoutId) {
+                clearTimeout(this.timeoutId);
+                this.__updateFilter(true);
+                return
+            }
+
+            let selectedModel = this.model.get('collection').selected;
             this.reqres.request('value:set', selectedModel);
         }
     },
@@ -132,38 +142,50 @@ export default Marionette.LayoutView.extend({
         this.reqres.request('value:set', null);
     },
 
-    __updateFilter: function () {
-        var text = (this.ui.input.val() || '').trim();
+    __onTextChange () {
+        this.__updateFilter(false);
+    },
+
+    __updateFilter: function (immediate) {
+        let text = (this.ui.input.val() || '').trim();
         if (this.activeText === text) {
             return;
         }
-        helpers.setUniqueTimeout(this.fetchDelayId, function () {
+        const updateNow = function () {
             this.activeText = text;
             this.__setLoading(true);
-            var collection = this.model.get('collection');
+            let collection = this.model.get('collection');
             collection.deselect();
             this.reqres.request('filter:text', {
                 text: text
             }).then(function () {
+                this.timeoutId = null;
                 if (collection.length > 0) {
-                    var model = collection.at(0);
-                    model.select();
-                    this.eventAggregator.scrollTo(model);
+                    if (!collection.contains(collection.selected)) {
+                        let model = collection.at(0);
+                        model.select();
+                    }
                 }
-
                 this.__setLoading(false);
             }.bind(this));
-        }.bind(this), config.TEXT_FETCH_DELAY);
+        }.bind(this);
+        if (immediate) {
+            updateNow();
+        } else {
+            this.timeoutId = helpers.setUniqueTimeout(this.fetchDelayId, updateNow, this.options.textFilterDelay);
+        }
     },
 
-    __setLoading: function (isLoading) {
+    __setLoading (isLoading) {
         if (this.isDestroyed) {
-            return false;
+            return;
         }
         this.isLoading = isLoading;
         if (isLoading) {
             this.loadingRegion.show(new LoadingView());
+            this.ui.input.blur();
         } else {
+            this.ui.input.focus();
             this.loadingRegion.reset();
         }
     }

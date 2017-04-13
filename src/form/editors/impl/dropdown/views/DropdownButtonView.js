@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { Handlebars } from '../../../../../libApi';
+import { Handlebars } from 'lib';
 import template from '../templates/dropdownButton.hbs';
 
 const classes = {
@@ -28,11 +26,12 @@ export default Marionette.ItemView.extend({
     },
 
     templateHelpers: function () {
-        var value = this.model.get('value');
-        var displayAttribute = this.model.get('displayAttribute');
+        const value = this.model.get('value');
+        const displayAttribute = this.model.get('displayAttribute');
         return {
             hasValue: Boolean(value),
-            text: value ? _.result(value.toJSON(), displayAttribute) : null
+            text: value ? _.result(value.toJSON(), displayAttribute) : null,
+            allowEmptyValue: this.options.allowEmptyValue
         };
     },
 
@@ -41,12 +40,18 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
+        'click .js-clear-button': '__clear',
         'click': '__click',
         'focus': '__onFocus'
     },
 
     modelEvents: {
         'change:value': 'render'
+    },
+
+    __clear () {
+        this.reqres.request('value:set', null);
+        return false;
     },
 
     __click: function () {

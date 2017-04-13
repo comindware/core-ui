@@ -8,13 +8,14 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../libApi';
-import list from '../../list/listApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars, keypress } from 'lib';
+import list from 'list';
+import dropdown from 'dropdown';
 import template from './templates/dropdownEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DropdownPanelView from './impl/dropdown/views/DropdownPanelView';
 import DropdownButtonView from './impl/dropdown/views/DropdownButtonView';
+import formRepository from '../formRepository';
 
 const classes = {
 };
@@ -41,7 +42,7 @@ const defaultOptions = {
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
  * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
  * */
-Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
+formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
     initialize: function (options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -116,7 +117,8 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
             buttonView: DropdownButtonView,
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
-                reqres: this.reqres
+                reqres: this.reqres,
+                allowEmptyValue: this.options.allowEmptyValue
             },
             panelView: DropdownPanelView,
             panelViewOptions: {
@@ -126,20 +128,19 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
             },
             autoOpen: false
         });
-        this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus);
         this.listenTo(this.dropdownView, 'open', this.onFocus);
         this.listenTo(this.dropdownView, 'close', this.onBlur);
         this.dropdownRegion.show(this.dropdownView);
     },
 
     __onCollectionChange: function () {
-        var value = this.getValue();
-        var valueModel = this.collection.findWhere({id: value});
+        let value = this.getValue();
+        let valueModel = this.collection.findWhere({id: value});
         if (valueModel !== null) {
-            if (valueModel !== this.viewModel.get('button').get("value")) {
+            if (valueModel !== this.viewModel.get('button').get('value')) {
                 this.viewModel.get('button').set('value', valueModel);
             }
-            if (valueModel !== this.viewModel.get('panel').get("value")) {
+            if (valueModel !== this.viewModel.get('panel').get('value')) {
                 this.viewModel.get('panel').set('value', valueModel);
             }
 
@@ -210,13 +211,9 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
     },
 
     onValueSet: function (o) {
-        this.__value(o.id, true);
+        this.__value(o ? o.id : null, true);
         this.$el.focus();
         this.dropdownView.close();
-    },
-
-    __onButtonFocus: function () {
-        this.onPanelOpen();
     },
 
     onPanelOpen: function () {
@@ -234,4 +231,4 @@ Backbone.Form.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:c
     }
 });
 
-export default Backbone.Form.editors.Dropdown;
+export default formRepository.editors.Dropdown;

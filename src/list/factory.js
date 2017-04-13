@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { helpers } from '../utils/utilsApi';
+import { helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
 import ListView from './views/ListView';
 import ScrollbarView from './views/ScrollbarView';

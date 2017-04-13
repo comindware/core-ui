@@ -8,10 +8,11 @@
 
 "use strict";
 
-import { Handlebars, moment } from '../../libApi';
+import { Handlebars, moment } from 'lib';
 import template from './templates/timeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
+import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -29,7 +30,7 @@ const defaultOptions = {
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * */
-Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
+formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
     initialize: function (options) {
         options = options || {};
         if (options.schema) {
@@ -37,6 +38,8 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
         } else {
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
+
+        this.value = this.__adjustValue(this.value);
 
         this.timeModel = new Backbone.Model({
             value: this.value,
@@ -100,6 +103,7 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
     },
 
     __value: function (value, updateUi, triggerChange) {
+        value = this.__adjustValue(value);
         if (this.value === value) {
             return;
         }
@@ -144,7 +148,11 @@ Backbone.Form.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.
             return;
         }
         this.timeView.blur();
+    },
+
+    __adjustValue(value) {
+        return value === null ? value : moment(value).toISOString();
     }
 });
 
-export default Backbone.Form.editors.Time;
+export default formRepository.editors.Time;

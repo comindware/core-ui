@@ -11,10 +11,10 @@
 
 "use strict";
 
-import { Handlebars } from '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import { Handlebars } from 'lib';
+import { helpers } from 'utils';
 import template from '../templates/addNewButton.hbs';
-import list from '../../../../../list/listApi';
+import list from 'list';
 
 export default Marionette.ItemView.extend({
     initialize: function(options) {

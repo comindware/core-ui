@@ -10,8 +10,8 @@
 
 "use strict";
 
-import '../../libApi';
-import { dateHelpers } from '../utilsApi';
+import 'lib';
+import { dateHelpers } from '../index';
 
 module.exports = function (duration) {
     if (duration === 0) {

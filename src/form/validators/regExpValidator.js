@@ -6,18 +6,51 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../libApi';
+import 'lib';
 import LocalizationService from '../../services/LocalizationService';
+import formRepository from '../formRepository';
 
-let regExpOld = Backbone.Form.validators.regexp;
+let defaultRegExp = function(options) {
+    if (!options.regexp) {
+        throw new Error('Missing required "regexp" option for "regexp" validator');
+    }
 
-Backbone.Form.validators.regexp = function (options) {
-    return _.wrap(regExpOld(options), function (func, value) {
-        var val = _.isObject(value) ? value.value : value;
+    options = _.extend({
+        type: 'regexp',
+        match: true,
+        message: 'Invalid'
+    }, options);
+
+    return function regexp (value) {
+        options.value = value;
+
+        let err = {
+            type: options.type,
+            message: _.isFunction(options.message) ? options.message(options) : options.message
+        };
+
+        //Don't check empty values (add a 'required' validator for this)
+        if (value === null || value === undefined || value === '') {
+            return undefined;
+        }
+
+        //Create RegExp from string if it's valid
+        if (typeof options.regexp === 'string') {
+            options.regexp = new RegExp(options.regexp, options.flags);
+        }
+
+        if ((options.match) ? !options.regexp.test(value) : options.regexp.test(value)) {
+            return err;
+        }
+        return undefined;
+    };
+};
+
+formRepository.validators.regexp = function (options) {
+    return _.wrap(defaultRegExp(options), function (func, opts) {
+        let val = _.isObject(opts) ? opts.value : opts;
         return func(val);
     });
 };
 
-export default Backbone.Form.validators.regexp;
+export default formRepository.validators.regexp;

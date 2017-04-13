@@ -6,10 +6,8 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import 'lib';
+import { helpers } from 'utils';
 import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
@@ -19,13 +17,13 @@ const defaultOptions = {
 };
 
 export default Backbone.Collection.extend({
-    constructor: function () {
+    constructor () {
         Backbone.Collection.prototype.constructor.apply(this, arguments);
         _.extend(this, new HighlightableBehavior(this));
         _.extend(this, new SelectableBehavior.SingleSelect(this));
     },
 
-    fetch: function (options) {
+    fetch (options) {
         helpers.ensureOption(options, 'data.filter');
         if (options.data.count === undefined) {
             options.data.count = defaultOptions.DEFAULT_COUNT;
@@ -36,8 +34,7 @@ export default Backbone.Collection.extend({
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
 
-    parse: function (response, options)
-    {
+    parse (response, options) {
         this.totalCount = response.totalCount;
         return Backbone.Collection.prototype.parse.call(this, response.options, options);
     },

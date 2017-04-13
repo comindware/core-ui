@@ -9,8 +9,8 @@
 "use strict";
 
 import template from '../../list/templates/list.hbs';
-import { keypress, Handlebars } from '../../libApi';
-import { helpers, htmlHelpers } from '../../utils/utilsApi';
+import { keypress, Handlebars } from 'lib';
+import { helpers, htmlHelpers } from 'utils';
 import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -112,7 +112,6 @@ let ListView = Marionette.LayoutView.extend({
     },
 
     onRender: function () {
-        htmlHelpers.forbidSelection(this.el);
         this.__assignKeyboardShortcuts();
     },
 

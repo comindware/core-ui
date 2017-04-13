@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { helpers } from '../../utils/utilsApi';
+import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import LoadingView from '../../views/LoadingView';
 

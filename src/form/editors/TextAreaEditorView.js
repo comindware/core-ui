@@ -6,13 +6,14 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
-import { Handlebars, keypress } from '../../libApi';
-import { keyCode, helpers, htmlHelpers } from '../../utils/utilsApi';
+import { Handlebars, keypress } from 'lib';
+import { keyCode, helpers, htmlHelpers } from 'utils';
+import formRepository from '../formRepository';
 
 const changeMode = {
     blur: 'blur',
@@ -32,37 +33,37 @@ const defaultOptions = function () {
         readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
         disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
         maxLength: null,
-        textHeight: null,
-        initialHeight: 2
+        height: null,
+        minHeight: 2,
+        maxHeight: null
     };
 };
 
 /**
  * @name TextAreaEditorView
  * @memberof module:core.form.editors
- * @class Многострочный текстовый редактор. Поддерживаемый тип данных: <code>String</code>.
+ * @class Multiline text editor. Supported data type: <code>String</code>.
  * @extends module:core.form.editors.base.BaseEditorView
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
- * @param {Number|null} [options.maxLength=null] Максимальное количество символов. Если <code>null</code>, не ограничено.
- * @param {String} [options.changeMode='blur'] Определяет момент обновления значения редактора:<ul>
- *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
- *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
- * @param {String} [options.size='auto'] Определяет метод вычисления высоты эдитора:<ul>
- *     <li><code>'auto'</code> - автоматически определяется контентом.</li>
- *     <li><code>'fixed'</code> - высота фиксирована.</li></ul>
- * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder для пустого текста.
+ * @param {Number|null} [options.maxLength=null] The maximum number of characters. Not limited if <code>null</code>.
+ * @param {String} [options.changeMode='blur'] Determines the moment the editor's value is updated:<ul>
+ *     <li><code>'keydown'</code> - on key press.</li>
+ *     <li><code>'blur'</code> - on focus out.</li></ul>
+ * @param {String} [options.size='auto'] Determines the strategy to compute the editor's height:<ul>
+ *     <li><code>'auto'</code> - determined by the content (withing the range [<code>minHeight</code>, <code>maxHeight</code>]).</li>
+ *     <li><code>'fixed'</code> - fixed, determined by <code>height</code> option.</li></ul>
+ * @param {String} [options.emptyPlaceholder='Field is empty'] Empty text placeholder.
  * @param {String} [options.readonlyPlaceholder='Field is readonly'] Текст placeholder, отображаемый
  * в случае если эдитор имеет флаг <code>readonly</code>.
  * @param {String} [options.disablePlaceholder='Field is disabled'] Текст placeholder, отображаемый
  * в случае если эдитор имеет флаг <code>enabled: false</code>.
- * @param {Number} [options.initialHeight=2] Изначальная высота эдитора (количество строк).
- * @param {Number} [options.textHeight=null]
- * При установленной опции <code>size: 'auto'</code>, определяет максимальную высоту эдитора (количество строк).
- * При установленной опции <code>size: 'fixed'</code>, определяет высоту эдитора (количество строк).
+ * @param {Number} [options.height=null] The height of the editor (in rows) when its size is fixed.
+ * @param {Number} [options.minHeight=2] The minimum height of the editor (in rows).
+ * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * */
-Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
+formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
     initialize: function (options) {
-        var defaults = defaultOptions();
+        let defaults = defaultOptions();
         if (options.schema) {
             _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
         } else {
@@ -91,19 +92,12 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
         return this.options;
     },
 
-    setMaxHeight: function(){
-        if (this.options.textHeight) {
-            this.options.maxHeight = parseInt(this.ui.textarea.css('line-height')) * this.options.textHeight;
-        }
-    },
-
     onRender: function () {
         // Keyboard shortcuts listener
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.textarea[0]);
-        this.ui.textarea.attr('rows', this.options.initialHeight);
     },
 
     /**
@@ -118,25 +112,31 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
         if (!this.keyListener) {
             helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
         }
-        var keys = key.split(',');
+        let keys = key.split(',');
         _.each(keys, function (k) {
             this.keyListener.simple_combo(k, callback);
         }, this);
     },
 
     onShow: function () {
-        this.setMaxHeight();
-        this.ui.textarea.val(this.getValue() || '').css('maxHeight', this.options.maxHeight);
+        this.ui.textarea.val(this.getValue() || '');
         switch (this.options.size) {
         case size.auto:
+            this.ui.textarea.attr('rows', this.options.minHeight);
+            if (this.options.maxHeight) {
+                let maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
+                this.ui.textarea.css('maxHeight', maxHeight);
+            }
             if (!htmlHelpers.isElementInDom(this.el)) {
                 helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
             }
             this.ui.textarea.autosize({ append: '' });
             break;
         case size.fixed:
-            this.ui.textarea.attr('rows', this.options.textHeight);
+            this.ui.textarea.attr('rows', this.options.height);
             break;
+        default:
+            helpers.throwArgumentError('Invalid `size parameter`.');
         }
     },
 
@@ -158,11 +158,13 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     __setEnabled: function (enabled) {
+        //noinspection Eslint
         BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.textarea.prop('disabled', !enabled);
     },
 
     __setReadonly: function (readonly) {
+        //noinspection Eslint
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.textarea.prop('readonly', readonly);
@@ -187,7 +189,7 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
      * @param {Number} position Новая позиция курсора.
      * */
     setCaretPos: function (position) {
-        this.ui.textarea.caret(position, position);
+        this.ui.textarea.setSelection(position, position);
     },
 
     setValue: function (value) {
@@ -216,24 +218,24 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
             return;
         }
 
-        var caret = this.ui.textarea.caret();
+        let caret = this.ui.textarea.getSelection();
         if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
             return;
         }
 
         this.oldCaret = caret;
-        var text = this.ui.textarea.val();
+        let text = this.ui.textarea.val();
         this.trigger('caretChange', text, caret);
     },
 
     __triggerInput: function () {
-        var text = this.ui.textarea.val();
+        let text = this.ui.textarea.val();
         if (this.oldText === text) {
             return;
         }
 
         this.oldText = text;
-        var caret = this.ui.textarea.caret();
+        let caret = this.ui.textarea.getSelection();
 
         this.trigger('input', text, {
             start: caret.start,
@@ -249,4 +251,4 @@ Backbone.Form.editors.TextArea = BaseItemEditorView.extend(/** @lends module:cor
     }
 });
 
-export default Backbone.Form.editors.TextArea;
+export default formRepository.editors.TextArea;

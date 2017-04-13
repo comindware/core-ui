@@ -6,13 +6,12 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { Handlebars, keypress } from '../../libApi';
-import { helpers } from '../../utils/utilsApi';
+import { Handlebars, keypress } from 'lib';
+import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
+import formRepository from '../formRepository';
 
 const changeMode = {
     blur: 'blur',
@@ -46,7 +45,7 @@ const defaultOptions = function () {
  * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * */
-Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
+formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize: function (options) {
         options = options || {};
         var defaults = defaultOptions();
@@ -85,7 +84,8 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
 
     events: {
         'keyup @ui.input': '__keyup',
-        'change @ui.input': '__change'
+        'change @ui.input': '__change',
+        'click .js-clear-button': '__clear'
     },
 
     __keyup: function () {
@@ -98,6 +98,11 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
 
     __change: function () {
         this.__value(this.ui.input.val(), false, true);
+    },
+
+    __clear () {
+        this.__value(null, true, true);
+        return false;
     },
 
     setValue: function (value) {
@@ -184,4 +189,4 @@ Backbone.Form.editors.Text = BaseItemEditorView.extend(/** @lends module:core.fo
     }
 });
 
-export default Backbone.Form.editors.Text;
+export default formRepository.editors.Text;

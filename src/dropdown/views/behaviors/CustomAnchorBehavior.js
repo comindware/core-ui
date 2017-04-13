@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import '../../../libApi';
+import 'lib';
 
 let classes = {
     ANCHOR: 'anchor anchor_inline'
@@ -35,13 +33,15 @@ export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.
     },
 
     onRender: function () {
-        var $el;
+        let $el;
         if (this.options.anchor) {
             $el = this.$(this.options.anchor);
         } else {
             $el = this.$el;
         }
-        $el.addClass(classes.ANCHOR);
+        if (!this.options.omitDefaultStyling) {
+            $el.addClass(classes.ANCHOR);
+        }
         this.view.$anchor = $el;
     }
 });

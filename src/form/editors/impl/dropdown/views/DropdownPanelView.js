@@ -8,16 +8,20 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../../../../libApi';
+import { Handlebars, keypress } from 'lib';
 import template from '../templates/dropdownPanel.hbs';
 import DefaultDropdownListItemView from './DefaultDropdownListItemView';
 import DropdownCollection from '../collections/DropdownCollection';
-import list from '../../../../../list/listApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import list from 'list';
+import { helpers } from 'utils';
 
 const config = {
-    CHILD_HEIGHT: 34,
+    CHILD_HEIGHT: 25,
     MAX_HEIGHT: 410
+};
+
+const classes = {
+    EMPTY_VIEW: 'editor__common-empty-view'
 };
 
 export default Marionette.LayoutView.extend({
@@ -93,6 +97,9 @@ export default Marionette.LayoutView.extend({
                 childViewOptions: {
                     reqres: this.reqres,
                     displayAttribute: this.model.get('displayAttribute')
+                },
+                emptyViewOptions: {
+                    className: classes.EMPTY_VIEW
                 },
                 maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
                 height: 'auto',

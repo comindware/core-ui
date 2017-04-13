@@ -6,19 +6,10 @@
  * Published under the MIT license
  */
 
-"use strict";
+import list from 'list';
 
-import list from '../../../../../list/listApi';
-
-export default Backbone.AssociatedModel.extend({
-    initialize: function (data) {
+export default Backbone.Model.extend({
+    initialize: function () {
         _.extend(this, new list.models.behaviors.ListItemBehavior(this));
-
-        // because of two class 'Reference' on server
-        if (data.name) {
-            this.set('text', data.name);
-        } else {
-            this.set('name', data.text);
-        }
     }
 });

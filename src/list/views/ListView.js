@@ -6,13 +6,11 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-import { keypress, Handlebars } from '../../libApi';
-import { helpers, htmlHelpers } from '../../utils/utilsApi';
+import { keypress, Handlebars } from 'lib';
+import { helpers, htmlHelpers } from 'utils';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
-import GlobalEventsService from '../../services/GlobalEventService';
+import GlobalEventService from '../../services/GlobalEventService';
 
 /*
     Public interface:
@@ -32,8 +30,7 @@ let config = {
 
 let VisibleCollectionView = Marionette.CollectionView.extend({
     getChildView: function(child) {
-        if (child.get('isLoadingRowModel'))
-        {
+        if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
         }
 
@@ -81,7 +78,7 @@ let defaultOptions = {
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true - обязательно
  * должны быть указаны cellView для каждой колонки.
  * */
-let ListView = Marionette.LayoutView.extend({
+const ListView = Marionette.LayoutView.extend({
     initialize: function (options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError('ListView: you must specify a \'collection\' option.');
@@ -98,11 +95,11 @@ let ListView = Marionette.LayoutView.extend({
             internalListViewReqres: this.internalReqres
         });
 
-        options.emptyView && (this.emptyView = options.emptyView); // jshint ignore:line
-        options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
-        options.childView && (this.childView = options.childView); // jshint ignore:line
-        options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
-        options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
+        options.emptyView && (this.emptyView = options.emptyView);
+        options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions);
+        options.childView && (this.childView = options.childView);
+        options.childViewSelector && (this.childViewSelector = options.childViewSelector);
+        options.loadingChildView && (this.loadingChildView = options.loadingChildView);
         this.maxRows = options.maxRows;
         this.height = options.height;
 
@@ -117,7 +114,7 @@ let ListView = Marionette.LayoutView.extend({
 
         _.bindAll(this, 'handleResize');
         let debouncedHandleResize = _.debounce(this.handleResize, 100);
-        this.listenTo(GlobalEventsService, 'resize', debouncedHandleResize);
+        this.listenTo(GlobalEventService, 'resize', debouncedHandleResize);
         this.listenTo(this.collection, 'add remove reset', debouncedHandleResize);
 
         this.visibleCollection = new SlidingWindowCollection(this.collection);
@@ -307,6 +304,9 @@ let ListView = Marionette.LayoutView.extend({
 
     // Updates state.viewportHeight and visibleCollection.state.windowSize.
     handleResize: function () {
+        if (this.isDestroyed) {
+            return;
+        }
         var oldViewportHeight = this.state.viewportHeight;
         var elementHeight = this.$el.height();
 

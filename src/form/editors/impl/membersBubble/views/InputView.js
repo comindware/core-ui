@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import { Handlebars, keypress } from 'lib';
+import { helpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';
 
