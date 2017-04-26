@@ -18,7 +18,8 @@ const defaultOptions = {
 };
 
 const classes = {
-    CHECKED: 'editor_checked'
+    CHECKED: 'editor_checked',
+    UNDEFINED: 'editor_check_undefined'
 };
 
 /**
@@ -80,9 +81,7 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     onRender: function () {
-        if (this.getValue()) {
-            this.$el.addClass(classes.CHECKED);
-        }
+        this.__updateState();
     },
 
     setValue: function (value) {
@@ -90,15 +89,24 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
             return;
         }
         this.value = value;
-        if (this.value) {
-            this.$el.addClass(classes.CHECKED);
-        } else {
-            this.$el.removeClass(classes.CHECKED);
-        }
+        this.__updateState();
     },
 
     isEmptyValue: function () {
         return !_.isBoolean(this.getValue());
+    },
+
+    __updateState(value) {
+        if (this.value) {
+            this.$el.addClass(classes.CHECKED);
+            this.$el.removeClass(classes.UNDEFINED);
+        } else if (this.value === false) {
+            this.$el.removeClass(classes.UNDEFINED);
+            this.$el.removeClass(classes.CHECKED);
+        } else {
+            this.$el.removeClass(classes.CHECKED);
+            this.$el.addClass(classes.UNDEFINED);
+        }
     }
 }, {
     classes
