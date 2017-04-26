@@ -81,13 +81,22 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
     },
 
     onRender: function () {
-        if (this.getValue()) {
-            this.$el.addClass(classes.CHECKED);
-        }
+        this.__updateState();
     },
 
     setValue: function (value) {
+        if (this.value === value) {
+            return;
+        }
         this.value = value;
+        this.__updateState();
+    },
+
+    isEmptyValue: function () {
+        return !_.isBoolean(this.getValue());
+    },
+
+    __updateState(value) {
         if (this.value) {
             this.$el.addClass(classes.CHECKED);
             this.$el.removeClass(classes.UNDEFINED);
@@ -98,10 +107,6 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
             this.$el.removeClass(classes.CHECKED);
             this.$el.addClass(classes.UNDEFINED);
         }
-    },
-
-    isEmptyValue: function () {
-        return !_.isBoolean(this.getValue());
     }
 }, {
     classes
