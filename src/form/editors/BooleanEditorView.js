@@ -14,7 +14,8 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    displayText: ''
+    displayText: '',
+    thirdState: false
 };
 
 const classes = {
@@ -31,6 +32,7 @@ const classes = {
  * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
  * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
  * @param {String} [options.title] Title attribute for the editor.
+ * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
 formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
     initialize: function (options) {
@@ -100,7 +102,7 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
         if (this.value) {
             this.$el.addClass(classes.CHECKED);
             this.$el.removeClass(classes.UNDEFINED);
-        } else if (this.value === false) {
+        } else if (this.value === false || !this.options.thirdState) {
             this.$el.removeClass(classes.UNDEFINED);
             this.$el.removeClass(classes.CHECKED);
         } else {
