@@ -14,11 +14,13 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    displayText: ''
+    displayText: '',
+    thirdState: false
 };
 
 const classes = {
-    CHECKED: 'editor_checked'
+    CHECKED: 'editor_checked',
+    UNDEFINED: 'editor_check_undefined'
 };
 
 /**
@@ -30,6 +32,7 @@ const classes = {
  * @param {String} [options.displayText] Text to the right of the checkbox. Click on text triggers the checkbox.
  * @param {String} [options.displayHtml] HTML content to the right of the checkbox. Click on it triggers the checkbox.
  * @param {String} [options.title] Title attribute for the editor.
+ * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
 formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
     initialize: function (options) {
@@ -72,16 +75,15 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
 
     __toggle: function () {
         if (!this.getEnabled() || this.getReadonly()) {
-            return;
+            return false;
         }
         this.setValue(!this.getValue());
         this.__triggerChange();
+        return false;
     },
 
     onRender: function () {
-        if (this.getValue()) {
-            this.$el.addClass(classes.CHECKED);
-        }
+        this.__updateState();
     },
 
     setValue: function (value) {
@@ -89,15 +91,24 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
             return;
         }
         this.value = value;
-        if (this.value) {
-            this.$el.addClass(classes.CHECKED);
-        } else {
-            this.$el.removeClass(classes.CHECKED);
-        }
+        this.__updateState();
     },
 
     isEmptyValue: function () {
         return !_.isBoolean(this.getValue());
+    },
+
+    __updateState(value) {
+        if (this.value) {
+            this.$el.addClass(classes.CHECKED);
+            this.$el.removeClass(classes.UNDEFINED);
+        } else if (this.value === false || !this.options.thirdState) {
+            this.$el.removeClass(classes.UNDEFINED);
+            this.$el.removeClass(classes.CHECKED);
+        } else {
+            this.$el.removeClass(classes.CHECKED);
+            this.$el.addClass(classes.UNDEFINED);
+        }
     }
 }, {
     classes

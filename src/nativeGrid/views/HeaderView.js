@@ -203,7 +203,7 @@ let HeaderView = GridHeaderView.extend({
         var $current = $(this.ui.gridHeaderColumn[index]),
             newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
-        if (this.dragContext.draggedColumn.initialWidth + delta < 20) {
+        if (this.dragContext.draggedColumn.initialWidth + delta < this.constants.MIN_COLUMN_WIDTH) {
             return;
         }
 

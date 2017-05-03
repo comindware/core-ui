@@ -964,6 +964,16 @@ input[type="checkbox"].checkbox {
 .editor_checked .svg-icons-wrp_checked{
     display: inline-block;
 }
+.editor_check_undefined .checkbox:after{
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #278ed9;
+    border-radius: 2px;
+}
 
 .svg-icons-wrp_multiselect{
     width: 16px;

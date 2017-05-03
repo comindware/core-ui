@@ -6,6 +6,6 @@
 }
 
 .layout__vertical-layout-item {
-    flex: 0;
+    flex: none;
     margin: 8px 0;
 }
