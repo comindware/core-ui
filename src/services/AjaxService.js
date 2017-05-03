@@ -114,10 +114,10 @@ export default window.Ajax = new (Marionette.Object.extend({
                 }
             }
         }).then(result => {
-            if (protocol === methodName.WebApi && !result.errorMessage) {
+            if (result && protocol === methodName.WebApi && !result.errorMessage) {
                 return result;
             }
-            if (result.success === false) {
+            if (result && result.success === false) {
                 this.trigger('jsApi:error', result);
                 const error = new Error(result.errorMessage);
                 error.name = 'JsApiError';
