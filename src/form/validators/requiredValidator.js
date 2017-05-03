@@ -26,7 +26,7 @@ formRepository.validators.required = function (options) {
             type: options.type,
             message: _.isFunction(options.message) ? options.message(options) : options.message
         };
-        if (val === null || val === undefined || val === false || val === '') {
+        if (val === null || val === undefined || val === '') {
             return err;
         }
         if (_.isArray(val) && val.length === 0) {
