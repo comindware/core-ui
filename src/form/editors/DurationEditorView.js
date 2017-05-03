@@ -180,14 +180,14 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             minutes: 0,
             seconds: 0
         };
-            this.focusableParts.forEach((seg, i) => {
+        this.focusableParts.forEach((seg, i) => {
             newValueObject[seg.id] = Number(values[i]);
-            });
+        });
 
-            this.__updateState({
-                mode: stateModes.VIEW,
-                displayValue: newValueObject
-            });
+        this.__updateState({
+            mode: stateModes.VIEW,
+            displayValue: newValueObject
+        });
         var newValue = moment.duration(this.state.displayValue).toISOString();
         this.__value(newValue, true);
     },
