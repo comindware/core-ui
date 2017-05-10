@@ -171,8 +171,8 @@ let factory = {
                         map(function (item) {
                             return {
                                 id: item.id,
-                                text: item.text || item.name,
-                                url: item.url
+                                text: item.text || item.name || item.columns && item.columns[0],
+                                url: item.url || item.columns && item.columns[1]
                             };
                         }).
                         sortBy(function (document) {
