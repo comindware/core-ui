@@ -86,7 +86,7 @@ let factory = {
                 } else if (this.value === false) {
                     return Localizer.get('CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.NO');
                 } else {
-                    return ''
+                    return '';
                 }
             }
         };
