@@ -79,9 +79,18 @@ let factory = {
     },
 
     getBooleanCellView: function () {
-        return factory.__getSimpleView(
-            "{{#if value}}{{localize 'CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.YES'}}{{/if}}" +
-            "{{#unless value}}{{localize 'CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.NO'}}{{/unless}}");
+        const templateHelpers = {
+            localizedValue() {
+                if (this.value === true) {
+                    return Localizer.get('CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.YES');
+                } else if (this.value === false) {
+                    return Localizer.get('CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.NO');
+                } else {
+                    return '';
+                }
+            }
+        };
+        return factory.__getSimpleView("{{localizedValue}}", templateHelpers);
     },
 
     getDateTimeCellView: function () {
@@ -117,7 +126,7 @@ let factory = {
                         map(function (item) {
                             return {
                                 id: item.id,
-                                text: item.columns[0]
+                                text: item.text || item.name || item.columns && item.columns[0]
                             };
                         }).
                         sortBy(function (member) {
@@ -162,8 +171,8 @@ let factory = {
                         map(function (item) {
                             return {
                                 id: item.id,
-                                text: item.columns[0],
-                                url: item.columns[1]
+                                text: item.text || item.name || item.columns && item.columns[0],
+                                url: item.url || item.columns && item.columns[1]
                             };
                         }).
                         sortBy(function (document) {
