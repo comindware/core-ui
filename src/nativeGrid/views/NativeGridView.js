@@ -71,6 +71,7 @@ export default Marionette.LayoutView.extend({
         this.rowViewSelector = this.options.rowViewSelector;
         this.collection = this.options.collection;
         this.emptyView = this.options.emptyView;
+        this.emptyViewOptions = this.options.emptyViewOptions;
         options.onColumnSort && (this.onColumnSort = this.options.onColumnSort); //jshint ignore:line
 
         this.initializeViews();
@@ -103,7 +104,8 @@ export default Marionette.LayoutView.extend({
             collection: this.collection,
             childViewOptions,
             childViewSelector: this.rowViewSelector,
-            emptyView: this.emptyView
+            emptyView: this.emptyView,
+            emptyViewOptions: this.emptyViewOptions
         });
 
         this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
