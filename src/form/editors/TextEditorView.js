@@ -6,8 +6,8 @@
  * Published under the MIT license
  */
 
-import { Handlebars, keypress } from '../../libApi';
-import { helpers } from '../../utils/utilsApi';
+import { Handlebars, keypress } from 'lib';
+import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';

@@ -6,10 +6,8 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import '../libApi';
-import { helpers } from '../utils/utilsApi';
+import 'lib';
+import { helpers } from 'utils';
 import PromiseService from './PromiseService';
 
 const methodName = {
@@ -17,51 +15,47 @@ const methodName = {
     WebApi: 'WebApi'
 };
 
-let extendAjaxService = function (ajaxService, ajaxMap) {
-    _.each(ajaxMap, function (actionInfo) {
-        const controller = ajaxService[actionInfo.className] || (ajaxService[actionInfo.className] = {});
-
-        // The result of compilation below is something like this:
-        //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {
-        //         return window.Ajax.getJsApiResponse('RecordTypes/List', [  ], _.take(arguments, 0), callback);
-        //     };
-        const actionParameters = _.map(actionInfo.parameters, parameterInfo => `/*${parameterInfo.typeName}*/ ${parameterInfo.name}`);
-
-        actionParameters.push('/*optional*/ callback');
-        const actionBody = helpers.format(
-            'return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}), \'{3}\', \'{4}\', callback);',
-            actionInfo.url,
-            _.map(actionInfo.parameters, p => `'${p.name}'`).join(', '),
-            actionInfo.parameters.length,
-            actionInfo.httpMethod,
-            actionInfo.protocol
-        );
-        //noinspection JSUnresolvedVariable
-        const actionFn = helpers.format(
-            'function {0}_{1}({2}) {\r\n{3}\r\n}',
-            actionInfo.className,
-            actionInfo.methodName,
-            actionParameters.join(', '), actionBody
-        );
-        /* eslint-disable */
-        eval(`controller[actionInfo.methodName] = ${actionFn};`); // jshint ignore:line
-        /* eslint-enable */
-    });
-};
-
-let AjaxServicePrototype = {
+export default window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
-        extendAjaxService(this, options.ajaxMap);
+        options.ajaxMap.forEach(actionInfo => {
+            const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
+
+            // The result of compilation below is something like this:
+            //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {
+            //         return window.Ajax.getJsApiResponse('RecordTypes/List', [  ], _.take(arguments, 0), callback);
+            //     };
+            const actionParameters = actionInfo.parameters.map(parameterInfo => `/*${parameterInfo.typeName}*/ ${parameterInfo.name}`);
+
+            actionParameters.push('/*optional*/ callback');
+            const actionBody = helpers.format(
+                'return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}), \'{3}\', \'{4}\', callback);',
+                actionInfo.url,
+                actionInfo.parameters.map(p => `'${p.name}'`).join(', '),
+                actionInfo.parameters.length,
+                actionInfo.httpMethod,
+                actionInfo.protocol
+            );
+            //noinspection JSUnresolvedVariable
+            const actionFn = helpers.format(
+                'function {0}_{1}({2}) {\r\n{3}\r\n}',
+                actionInfo.className,
+                actionInfo.methodName,
+                actionParameters.join(', '), actionBody
+            );
+            /* eslint-disable */
+            eval(`controller[actionInfo.methodName] = ${actionFn};`);
+            /* eslint-enable */
+        });
     },
 
     getResponse(type, url, data, options) {
         helpers.assertArgumentNotFalsy(type, 'type');
         helpers.assertArgumentNotFalsy(url, 'url');
         const config = _.extend({
-            type: type,
-            url: url,
-            data: JSON.stringify(data || {}),
+            type,
+            url,
+            data: data ? JSON.stringify(data) : null,
             traditional: true,
             dataType: 'json',
             contentType: 'application/json'
@@ -74,7 +68,7 @@ let AjaxServicePrototype = {
         helpers.assertArgumentNotFalsy(url, 'url');
         helpers.assertArgumentNotFalsy(formData, 'formData');
         return Promise.resolve($.ajax({
-            url: url,
+            url,
             type: 'POST',
             data: formData,
             processData: false,
@@ -112,18 +106,18 @@ let AjaxServicePrototype = {
         }
 
         return this.getResponse(httpMethod, url, data, {
-            success: function (result) {
-                if (result.success !== true) {
+            success: result => {
+                if (result && result.success === false) {
                     this.trigger('jsApi:error', result);
                 } else if (successCallback) {
                     successCallback(result.data);
                 }
-            }.bind(this)
-        }).then(function (result) {
-            if (protocol === methodName.WebApi && !result.errorMessage) {
+            }
+        }).then(result => {
+            if (result && protocol === methodName.WebApi && !result.errorMessage) {
                 return result;
             }
-            if (result.success !== true) {
+            if (result && result.success === false) {
                 this.trigger('jsApi:error', result);
                 const error = new Error(result.errorMessage);
                 error.name = 'JsApiError';
@@ -132,10 +126,7 @@ let AjaxServicePrototype = {
                 error.source = result;
                 throw error;
             }
-            return result.data;
-        }.bind(this));
+            return result ? result.data : result;
+        });
     }
-};
-
-let AjaxService = Marionette.Object.extend(AjaxServicePrototype);
-export default window.Ajax = new AjaxService();
+}))();

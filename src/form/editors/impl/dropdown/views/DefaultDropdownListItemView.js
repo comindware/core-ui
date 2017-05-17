@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars } from '../../../../../libApi';
-import { htmlHelpers } from '../../../../../utils/utilsApi';
-import list from '../../../../../list/listApi';
+import { Handlebars } from 'lib';
+import { htmlHelpers } from 'utils';
+import list from 'list';
 import template from '../templates/defaultDropdownListItem.hbs';
 
 export default Marionette.ItemView.extend({

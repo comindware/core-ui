@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { moment, numeral } from '../libApi';
-import { helpers } from '../utils/utilsApi';
+import { moment, numeral } from 'lib';
+import { helpers } from 'utils';
 import numeralRu from 'numeral/languages/ru';
 import numeralEn from 'numeral/languages/en-gb';
 import numeralDe from 'numeral/languages/de';

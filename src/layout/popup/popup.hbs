@@ -1,0 +1,9 @@
+<div class="layout__popup-view-window js-window">
+    <div class="layout__popup-view-header"><span class="layout__popup-view-header-text">{{headerText}}</span></div>
+    <div class="layout__popup-view-content js-content-region"></div>
+    <div class="layout__popup-view-button-list">
+        {{#each buttons}}
+            <div data-id="{{id}}" class="js-button layout__popup-view-button">{{text}}</div>
+        {{/each}}
+    </div>
+</div>

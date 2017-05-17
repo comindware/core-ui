@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-import '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
-import list from '../../../../../list/listApi';
+import 'lib';
+import { helpers } from 'utils';
+import list from 'list';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
 const config = {
@@ -20,7 +20,7 @@ let createDemoData = function () {
         let id = `task.${i + 1}`;
         return {
             id: id,
-            text: `Test Reference ${i}1`
+            text: `Test Reference ${i}`
         };
     });
 };
@@ -73,7 +73,12 @@ export default Marionette.Controller.extend({
         return promise;
     },
 
-    navigate: function (value) {
-        helpers.throwError('Not Implemented.', 'NotImplementedError');
+    createValueUrl (value) {
+        return `#example/${value.id}`;
+    },
+
+    edit: function (value) {
+        alert(`You could edit ${value.id} here.`);
+        return true;
     }
 });

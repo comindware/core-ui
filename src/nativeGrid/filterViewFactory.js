@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Handlebars } from '../libApi';
+import { Handlebars } from 'lib';
 
 export default {
     getFilterViewByType: function (type) {

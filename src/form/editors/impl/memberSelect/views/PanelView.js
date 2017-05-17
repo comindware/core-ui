@@ -8,10 +8,10 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../../../../libApi';
-import list from '../../../../../list/listApi';
-import dropdown from '../../../../../dropdown/dropdownApi';
-import { helpers } from '../../../../../utils/utilsApi';
+import { Handlebars, keypress } from 'lib';
+import list from 'list';
+import dropdown from 'dropdown';
+import { helpers } from 'utils';
 import template from '../templates/panel.hbs';
 import ListItemView from './ListItemView';
 

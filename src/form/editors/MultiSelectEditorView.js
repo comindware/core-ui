@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars } from 'lib';
+import dropdown from 'dropdown';
 import template from './templates/multiSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import MultiSelectPanelView from './impl/multiSelect/views/MultiSelectPanelView';

@@ -8,8 +8,8 @@
 
 "use strict";
 
-import { helpers } from '../../../../../../utils/utilsApi';
-import list from '../../../../../../list/listApi';
+import { helpers } from 'utils';
+import list from 'list';
 
 export default Backbone.Model.extend({
     initialize: function () {

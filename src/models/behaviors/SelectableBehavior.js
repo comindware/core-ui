@@ -8,7 +8,7 @@
 
 "use strict";
 
-import '../../libApi';
+import 'lib';
 
 /*
 * This is a modified version of Backbone.Picky with extended list of features related to multiselect collections
@@ -223,7 +223,8 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 // and update the collection with that length. Trigger events
 // from the collection based on the number of selected items.
 let calculateSelectedLength = function (collection) {
-    collection.selectedLength = collection.size({ selected: true });
+
+    collection.selectedLength = _.filter(collection.models, model  => model.selected).length;
 
     var selectedLength = collection.selectedLength;
     var length = collection.length;

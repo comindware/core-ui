@@ -6,22 +6,22 @@
  * Published under the MIT license
  */
 
-import '../../../libApi';
+import 'lib';
 
 export default Marionette.ItemView.extend({
     modelEvents: {
-        'change:text': 'onChangeText'
+        'change': 'onChangeText'
     },
 
-    className: 'fr-dropdown-message',
+    className: 'form-label__tooltip-panel',
 
     template: false,
 
     onRender: function() {
-        this.$el.text(this.model.get('text'));
+        this.$el.text(this.model.get(this.options.textAttribute));
     },
 
     onChangeText: function() {
-        this.$el.text(this.model.get('text'));
+        this.$el.text(this.model.get(this.options.textAttribute));
     }
 });

@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Handlebars } from '../../libApi';
+import { Handlebars } from 'lib';
 
 import debug from './debug';
 import equal from './equal';

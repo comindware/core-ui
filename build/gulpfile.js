@@ -40,6 +40,11 @@ gulp.task('watch:localization', () => {
     gulp.watch(pathResolver.localizationSource('*'), [ 'localization' ]);
 });
 
+gulp.task('generateSprites', require('./tasks/generateSpritesTask'));
+gulp.task('watch:generateSprites', () => {
+    gulp.watch(pathResolver.resources('sprites/*'), [ 'generateSprites' ]);
+});
+
 gulp.task('jsdoc', require('./tasks/jsdocTask'));
 
 gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
@@ -55,6 +60,8 @@ gulp.task('build:core:prod:min', require('./tasks/buildProdTask')(true));
 // ###
 // Public tasks
 // ###
+
+gulp.task('deploy:pages', require('./tasks/deployPagesTask'));
 
 gulp.task('test', function (done) {
     new karma.Server({
@@ -77,9 +84,10 @@ gulp.task('test:watch', function (done) {
     }, done).start();
 });
 
-gulp.task('start', callback => runSequence('localization', 'build:core:dev', ['watch:localization', 'watch:build:core:dev'], callback));
+gulp.task('start', callback =>
+    runSequence('localization', 'generateSprites', 'build:core:dev', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
 
-gulp.task('build', callback => runSequence('clean', 'localization', ['build:core:prod', 'build:core:prod:min', 'jsdoc'], callback));
+gulp.task('build', callback => runSequence('clean', 'localization', 'generateSprites', ['build:core:prod', 'build:core:prod:min', 'jsdoc'], callback));
 
 gulp.task('deploy', callback => runSequence('build', 'test:coverage', 'prepareToPublish', callback));
 

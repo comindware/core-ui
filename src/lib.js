@@ -27,9 +27,9 @@ import 'bootstrap-datetime-picker';
 import numeral_ from 'numeral';
 
 // Replacing ES6 promise with bluebird
-require('babel-runtime/core-js/promise').default = Bluebird_;
+window.Promise = Bluebird_;
 
-Promise.config({
+window.Promise.config({
     warnings: true,
     longStackTraces: true,
     cancellation: true

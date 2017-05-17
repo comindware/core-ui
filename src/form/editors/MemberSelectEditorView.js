@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars, keypress } from '../../libApi';
-import { helpers, comparators } from '../../utils/utilsApi';
-import dropdown from '../../dropdown/dropdownApi';
+import { Handlebars, keypress } from 'lib';
+import { helpers, comparators } from 'utils';
+import dropdown from 'dropdown';
 import template from './templates/memberSelectEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import UserService from 'services/UserService';

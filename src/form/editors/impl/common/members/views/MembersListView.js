@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-import { helpers } from '../../../../../../utils/utilsApi';
-import { Handlebars } from '../../../../../../libApi';
-import list from '../../../../../../list/listApi';
+import { helpers } from 'utils';
+import { Handlebars } from 'lib';
+import list from 'list';
 import template from '../templates/panel.hbs';
 import ListItemView from './MembersListItemView';
 

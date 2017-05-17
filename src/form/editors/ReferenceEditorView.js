@@ -6,9 +6,9 @@
  * Published under the MIT license
  */
 
-import { Handlebars, keypress } from '../../libApi';
+import { Handlebars, keypress } from 'lib';
 import VirtualCollection from '../../collections/VirtualCollection';
-import dropdown from '../../dropdown/dropdownApi';
+import dropdown from 'dropdown';
 import template from './templates/referenceEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import ReferenceButtonView from './impl/reference/views/ReferenceButtonView';
@@ -28,6 +28,7 @@ const defaultOptions = {
     displayAttribute: 'text',
     controller: null,
     showAddNewButton: false,
+    showEditButton: false,
     buttonView: ReferenceButtonView,
     listItemView: ReferenceListItemView,
     textFilterDelay: 300
@@ -63,7 +64,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         this.reqres.setHandler('panel:open', this.__onPanelOpenRequest, this);
         this.reqres.setHandler('value:clear', this.__onValueClear, this);
         this.reqres.setHandler('value:set', this.__onValueSet, this);
-        this.reqres.setHandler('value:navigate', this.__onValueNavigate, this);
+        this.reqres.setHandler('value:edit', this.__onValueEdit, this);
         this.reqres.setHandler('filter:text', this.__onFilterText, this);
         this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
 
@@ -74,7 +75,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 state: 'view',
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()
-
             }),
             panel: new Backbone.Model({
                 value: this.getValue(),
@@ -109,7 +109,9 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
                 reqres: this.reqres,
-                getDisplayText: this.__getDisplayText
+                getDisplayText: this.__getDisplayText,
+                showEditButton: this.options.showEditButton,
+                createValueUrl: this.controller.createValueUrl.bind(this.controller)
             },
             panelView: ReferencePanelView,
             panelViewOptions: {
@@ -176,8 +178,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         this.$el.focus();
     },
 
-    __onValueNavigate () {
-        return this.controller.navigate(this.getValue());
+    __onValueEdit () {
+        return this.controller.edit(this.getValue());
     },
 
     __onFilterText (options) {

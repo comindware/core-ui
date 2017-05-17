@@ -8,9 +8,9 @@
 
 "use strict";
 
-import { Handlebars } from '../../../../../libApi';
-import { helpers } from '../../../../../utils/utilsApi';
-import list from '../../../../../list/listApi';
+import { Handlebars } from 'lib';
+import { helpers } from 'utils';
+import list from 'list';
 import template from '../templates/multiSelectPanel.hbs';
 import MultiSelectItemView from './MultiSelectItemView';
 

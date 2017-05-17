@@ -18,12 +18,13 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 
-import libApi from './libApi';
-import utilsApi from './utils/utilsApi';
-import dropdownApi from './dropdown/dropdownApi';
-import listApi from './list/listApi';
+import libApi from 'lib';
+import utilsApi from 'utils';
+import dropdownApi from 'dropdown';
+import * as layoutApi from 'layout';
+import listApi from 'list';
 import nativeGridApi from './nativeGrid/nativeGridApi';
-import formApi from './form/formApi';
+import formApi from 'form';
 
 import meta_ from './Meta';
 import bootstrapper from './Bootstrapper';
@@ -124,6 +125,8 @@ var core = {
      * @memberof module:core
      * */
     dropdown: dropdownApi,
+
+    layout: layoutApi,
     /**
      * A large set of editors and related classes built on top of [Backbone.Form](https://github.com/powmedia/backbone-forms) library.
      * @namespace
@@ -159,6 +162,7 @@ var core = {
 
 export default core;
 export var lib = core.lib;
+export var layout = core.layout;
 export var services = core.services;
 export var collections = core.collections;
 export var models = core.models;
