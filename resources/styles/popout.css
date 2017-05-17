@@ -179,18 +179,22 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    cursor: pointer;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    vertical-align: middle;
 }
 .popout-menu__i:hover {
     background: #edf3fb;
 }
 .popout-menu__txt {
     padding: 5px 7px 5px 10px;
-    display: block;
+    display: inline-block;
+    cursor: pointer;
+    width: 100%;
+    color: #636262;
 }
 .popout-menu__txt:hover {
+    color: #000;
     text-decoration: none;
 }
