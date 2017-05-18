@@ -31,6 +31,12 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
+    templateHelpers() {
+        return {
+            getTitle: this.model.has('tooltip') ? this.model.get('tooltip') : this.model.get('name')
+        };
+    },
+
     events: {
         'click': function () {
             this.trigger('execute', this.model);
