@@ -113,7 +113,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     ui: {
         input: '.js-input',
-        remove: '.js-clear-button'
+        remove: '.js-duration-remove'
     },
 
     regions: {
@@ -168,35 +168,28 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         this.setCaretPos(pos);
     },
 
-    __blur() {
+    __blur: function () {
         if (this.state.mode === stateModes.VIEW) {
             return;
         }
 
-        const values = this.getSegmentValue();
+        let values = this.getSegmentValue();
         let newValueObject = {
             days: 0,
             hours: 0,
             minutes: 0,
             seconds: 0
         };
+        this.focusableParts.forEach((seg, i) => {
+            newValueObject[seg.id] = Number(values[i]);
+        });
 
-        if (_.compact(values).length === 0) {
-            this.__updateState({
-                mode: stateModes.VIEW,
-                displayValue: null
-            });
-            this.__value(null, true);
-        } else {
-            this.focusableParts.forEach((seg, i) => {
-                newValueObject[seg.id] = Number(values[i]) || null;
-            });
-            this.__updateState({
-                mode: stateModes.VIEW,
-                displayValue: newValueObject
-            });
-            this.__value(moment.duration(this.state.displayValue).toISOString(), true);
-        }
+        this.__updateState({
+            mode: stateModes.VIEW,
+            displayValue: newValueObject
+        });
+        var newValue = moment.duration(this.state.displayValue).toISOString();
+        this.__value(newValue, true);
     },
 
     getCaretPos: function () {
@@ -434,10 +427,10 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         // The string is set into UI in __updateState
 
         let isNull = value === null;
-        let seconds = !isNull ? value.seconds : null;
-        let minutes = !isNull ? value.minutes : null;
-        let hours = !isNull ? value.hours : null;
-        let days = !isNull ? value.days : null;
+        let seconds = !isNull ? value.seconds : 0;
+        let minutes = !isNull ? value.minutes : 0;
+        let hours = !isNull ? value.hours : 0;
+        let days = !isNull ? value.days : 0;
         let data = {
             [focusablePartId.DAYS]: days,
             [focusablePartId.HOURS]: hours,
@@ -485,7 +478,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             seconds: 0
         };
         this.focusableParts.forEach(seg => {
-            result[seg.id] = Math.floor(totalMilliseconds / seg.milliseconds) || null;
+            result[seg.id] = Math.floor(totalMilliseconds / seg.milliseconds);
             totalMilliseconds = totalMilliseconds % seg.milliseconds;
         });
         return result;
