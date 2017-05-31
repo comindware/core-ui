@@ -80,8 +80,8 @@ let factory = {
 
     getBooleanCellView: function () {
         return factory.__getSimpleView(
-            "{{#if value}}{{localize 'CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.YES'}}{{/if}}" +
-            "{{#unless value}}{{localize 'CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.NO'}}{{/unless}}");
+            '{{#if value}}<svg class="svg-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+            '{{#unless value}}<svg class="svg-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}');
     },
 
     getDateTimeCellView: function () {
