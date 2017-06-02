@@ -79,9 +79,17 @@ let factory = {
     },
 
     getBooleanCellView: function () {
+        const templateHelpers = {
+            showIcon() {
+                return _.isBoolean(this.value);
+            }
+        };
+        
         return factory.__getSimpleView(
-            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}');
+            '{{#if showIcon}}' +
+                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+            '{{/if}}', templateHelpers);
     },
 
     getDateTimeCellView: function () {
