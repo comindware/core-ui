@@ -93,17 +93,13 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         });
     },
 
-    focusElement: null,
-
-    attributes: {
-        tabindex: -1
-    },
+    focusElement: '.js-dropdown-region',
 
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },
 
-    className: 'dropdown-view',
+    className: 'dropdown-view editor',
 
     template: Handlebars.compile(template),
 
@@ -128,8 +124,8 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             },
             autoOpen: false
         });
-        this.listenTo(this.dropdownView, 'open', this.onFocus);
         this.listenTo(this.dropdownView, 'close', this.onBlur);
+        this.listenTo(this.dropdownView, 'panel:cancel', this.__onCancel);
         this.dropdownRegion.show(this.dropdownView);
     },
 
@@ -163,38 +159,25 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('enter,num_enter'.split(','), function (key) {
+        _.each('enter,num_enter,down'.split(','), function (key) {
             this.keyListener.simple_combo(key, function () {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
             }.bind(this));
         }, this);
-        this.keyListener.simple_combo('up', function () {
-            if (this.collection.length === 0) {
-                this.__value(null, true);
+        this.keyListener.simple_combo('esc', () => {
+            if (this.getEnabled() && !this.getReadonly()) {
+                this.dropdownView.close();
             }
-            var model = this.__findModel(this.getValue());
-            var index = this.collection.indexOf(model);
-            var nextIndex = 0;
-            if (index > 0) {
-                nextIndex = index - 1;
-            }
-            var nextModel = this.collection.at(nextIndex);
-            this.__value(nextModel.id, true);
-        }.bind(this));
-        this.keyListener.simple_combo('down', function () {
-            if (this.collection.length === 0) {
-                this.__value(null, true);
-            }
-            var model = this.__findModel(this.getValue());
-            var index = this.collection.indexOf(model);
-            if (index !== -1 && index < this.collection.length - 1) {
-                var nextIndex = index + 1;
-                var nextModel = this.collection.at(nextIndex);
-                this.__value(nextModel.id, true);
-            }
-        }.bind(this));
+        });
+    },
+
+    __setReadonly: function (readonly) {
+        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        if (this.getEnabled()) {
+            this.__getFocusElement().prop('tabindex', readonly ? -1 : 0);
+        }
     },
 
     __value: function (value, triggerChange) {
@@ -212,8 +195,8 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
     onValueSet: function (o) {
         this.__value(o ? o.id : null, true);
-        this.$el.focus();
         this.dropdownView.close();
+        this.focus();
     },
 
     onPanelOpen: function () {
@@ -222,12 +205,13 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
-    focus: function () {
-        this.dropdownView.open();
-    },
-
     blur: function () {
         this.dropdownView.close();
+    },
+
+    __onCancel() {
+        this.dropdownView.close();
+        this.focus();
     }
 });
 

@@ -81,6 +81,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
     __onClear: function () {
         this.__value(null, true, true);
         this.dateModel.set('value', null);
+        this.focus();
         return false;
     },
 

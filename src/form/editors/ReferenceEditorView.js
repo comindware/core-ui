@@ -84,12 +84,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         });
     },
 
-    focusElement: null,
-
-    attributes: {
-        tabindex: 0
-    },
-
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },
@@ -127,6 +121,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         });
         this.listenTo(this.dropdownView, 'open', this.onFocus);
         this.listenTo(this.dropdownView, 'close', this.onBlur);
+        this.listenTo(this.dropdownView, 'panel:cancel', this.__onCancel);
         this.dropdownRegion.show(this.dropdownView);
 
         // hotkeys
@@ -169,6 +164,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
 
     __onValueClear () {
         this.__value(null, true);
+        this.focus();
+        return false;
     },
 
     __onValueSet (model) {
@@ -227,12 +224,22 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         this.viewModel.get('button').set('enabled', this.getEnabled());
     },
 
+    __setReadonly(readonly) {
+        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        this.$el.prop('tabindex', readonly ? -1 : 0);
+    },
+
     focus () {
         this.dropdownView.open();
     },
 
     blur () {
         this.dropdownView.close();
+    },
+
+    __onCancel() {
+        this.dropdownView.close();
+        this.$el.focus();
     }
 });
 

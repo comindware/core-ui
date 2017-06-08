@@ -21,10 +21,6 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    attributes: {
-        tabindex: 0
-    },
-
     templateHelpers: function () {
         const value = this.model.get('value');
         const displayAttribute = this.model.get('displayAttribute');

@@ -52,6 +52,10 @@ export default Marionette.LayoutView.extend({
         scrollbarRegion: '.js-scrollbar-region'
     },
 
+    attributes: {
+        tabindex: 0
+    },
+
     templateHelpers: function () {
         return {
             enableSearch: this.options.enableSearch
@@ -139,12 +143,15 @@ export default Marionette.LayoutView.extend({
     },
 
     keyboardShortcuts: {
-        'enter,num_enter': function () {
+        'enter,num_enter,tab': function () {
             if (this.isLoading) {
                 return;
             }
             var selectedModel = this.model.get('virtualCollection').selected;
             this.reqres.request('value:set', selectedModel);
+        },
+        'esc': function () {
+            this.trigger('cancel');
         }
     },
 

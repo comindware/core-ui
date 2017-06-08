@@ -102,6 +102,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
 
     __clear () {
         this.__value(null, true, true);
+        this.focus();
         return false;
     },
 
@@ -133,6 +134,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
+            this.ui.input.prop('tabindex', readonly ? -1 : 0);
         }
     },
 
