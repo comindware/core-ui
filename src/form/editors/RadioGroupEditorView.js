@@ -13,7 +13,7 @@ import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
 import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';
 import formRepository from '../formRepository';
-
+import keyCode from '../../utils/keyCode';
 const defaultOptions = {
     radioOptions: [{ id: '', displayText: '' }]
 };
@@ -42,6 +42,10 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends m
     className: 'fd-radio-group',
 
     childView: RadioButtonView,
+
+    events: {
+        keydown: '__onKeyDown'
+    },
 
     collectionEvents: {
         'select:one': '__onSelectChild'
@@ -76,6 +80,9 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends m
         this.children.each(function (cv) {
             cv.setEnabled(isEnabled);
         }.bind(this));
+        if (this.getEnabled()) {
+            this.$el.prop('tabindex', readonly ? -1 : 0);
+        }
     },
 
     __value: function (value, triggerChange) {
@@ -87,6 +94,34 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends m
         if (triggerChange) {
             this.__triggerChange();
         }
+    },
+
+    __onKeyDown(event) {
+        let direction;
+        switch (event.keyCode) {
+            case keyCode.DOWN:
+                direction = 1;
+                break;
+            case keyCode.UP:
+                direction = -1;
+                break;
+            default:
+                direction = 0;
+        }
+        if (direction !== 0) {
+            this.__selectNew(direction);
+            event.preventDefault();
+        }
+    },
+
+    __selectNew(direction) {
+        const currentElement = this.collection.selected;
+        const currentIndex = currentElement ? this.collection.indexOf(currentElement) : -1;
+        let newElement = this.collection.at(currentIndex + direction);
+        if (!newElement) {
+            newElement = direction === 1 ? this.collection.at(0) : this.collection.last();
+        }
+        newElement.select();
     }
 });
 

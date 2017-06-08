@@ -268,10 +268,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
 
-        if (!this.__isNestedInButton(document.activeElement)) {
-            this.focus();
+        const activeElement = document.activeElement;
+        if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {
+            this.panelView.$el.focus();
         } else {
-            this.focus(document.activeElement);
+            this.focus(activeElement);
         }
         this.__suppressHandlingBlur = false;
         this.isOpen = true;
@@ -294,6 +295,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
         this.stopListeningToElementMove();
         this.stopListening(GlobalEventService);
+        this.button.$el.focus();
         this.isOpen = false;
 
         this.trigger('close', this, ...args);

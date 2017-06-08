@@ -114,12 +114,15 @@ export default Marionette.LayoutView.extend({
         'down': function () {
             this.listView.moveCursorBy(1, false);
         },
-        'enter,num_enter': function () {
+        'enter,num_enter,tab': function () {
             if (this.isLoading) {
                 return;
             }
             var selectedModel = this.model.get('collection').selected;
             this.reqres.request('value:set', selectedModel.id);
+        },
+        'esc': function () {
+            this.trigger('cancel');
         }
     },
 
