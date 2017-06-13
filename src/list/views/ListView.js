@@ -76,6 +76,7 @@ let defaultOptions = {
  * @param {Backbone.View} options.loadingChildView view-лоадер, показывается при подгрузке строк
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true - обязательно
+ * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * должны быть указаны cellView для каждой колонки.
  * */
 const ListView = Marionette.LayoutView.extend({
@@ -102,6 +103,7 @@ const ListView = Marionette.LayoutView.extend({
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);
         this.maxRows = options.maxRows;
         this.height = options.height;
+        this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
 
         if (options.height === undefined) {
             this.height = defaultOptions.height;
@@ -150,7 +152,9 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     onRender: function () {
-        htmlHelpers.forbidSelection(this.el);
+        if (this.forbidSelection) {
+            htmlHelpers.forbidSelection(this.el);
+        }
         this.__assignKeyboardShortcuts();
     },
 
