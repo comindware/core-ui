@@ -49,11 +49,16 @@ export default Marionette.LayoutView.extend({
 
     ui: {
         button: '.js-button',
-        window: '.js-window'
+        window: '.js-window',
+        close: '.js-close'
     },
 
     events: {
         'click @ui.button': '__onButtonClick'
+    },
+
+    triggers: {
+        'click @ui.close': 'close'
     },
 
     regions: {
