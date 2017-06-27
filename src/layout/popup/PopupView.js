@@ -84,7 +84,7 @@ export default Marionette.LayoutView.extend({
     },
 
     __onButtonClick (e) {
-        const id = $(e.target).data('id');
+        const id = $(e.target).data('id') || $(e.target.parentElement).data('id');
         const button = this.__buttons.find(x => x.id === id);
         button.handler(this);
         this.trigger('button', id);
