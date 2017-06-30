@@ -82,7 +82,6 @@ export default Marionette.Controller.extend({
     },
 
     __handleViewportHeightChanged: function (sender, e) {
-        console.log('viewportHeight changed: ', e.oldViewportHeight, '->', e.viewportHeight);
         _.chain(this.views).filter(function (v) {
             return v !== sender;
         }).each(function (v) {
@@ -92,7 +91,6 @@ export default Marionette.Controller.extend({
     },
 
     __handlePositionChanged: function (sender, e) {
-        console.log('position changed: ', e.oldPosition, '->', e.position);
         _.chain(this.views).filter(function (v) {
             return v !== sender;
         }).each(function (v) {
