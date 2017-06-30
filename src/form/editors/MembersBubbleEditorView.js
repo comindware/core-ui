@@ -313,8 +313,6 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.dropdownView.button.updateEnabled(isEnabled);
     },
 
-    focusElement: null,
-
     focus: function () {
         if (this.__canAddMember()) {
             this.dropdownView.open();

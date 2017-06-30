@@ -175,11 +175,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
+            this.ui.input.prop('tabindex', readonly ? -1 : 0);
         }
     },
 
     __clear () {
         this.__value(null, false, true, false);
+        this.focus();
         return false;
     },
 

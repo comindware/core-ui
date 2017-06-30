@@ -9,6 +9,7 @@
 "use strict";
 
 import { Handlebars } from 'lib';
+import keyCode from '../../utils/keyCode';
 import template from './templates/booleanEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
@@ -48,19 +49,17 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
         displayText: '.js-display-text'
     },
 
-    focusElement: null,
-
     events: {
         'click @ui.toggleButton': '__toggle',
-        'click @ui.displayText': '__toggle'
+        'click @ui.displayText': '__toggle',
+        'keydown': '__onKeyDown'
     },
 
     className: 'editor editor_checkbox',
 
     attributes() {
         return {
-            title: this.options.title || null,
-            tabindex: '0'
+            title: this.options.title || null
         }
     },
 
@@ -108,6 +107,20 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
         } else {
             this.$el.removeClass(classes.CHECKED);
             this.$el.addClass(classes.UNDEFINED);
+        }
+    },
+
+    __setReadonly: function (readonly) {
+        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        if (this.getEnabled()) {
+            this.$el.prop('tabindex', readonly ? -1 : 0);
+        }
+    },
+
+    __onKeyDown(event) {
+        if (event.keyCode === keyCode.SPACE) {
+            this.__toggle();
+            event.preventDefault();
         }
     }
 }, {

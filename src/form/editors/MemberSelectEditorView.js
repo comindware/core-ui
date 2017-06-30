@@ -77,17 +77,11 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
         this.__initCollection();
     },
 
-    focusElement: null,
-
-    attributes: {
-        tabindex: 0
-    },
-
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },
 
-    className: 'users-list',
+    className: 'users-list editor',
 
     template: Handlebars.compile(template),
 
@@ -111,6 +105,7 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
             reqres: this.reqres
         });
         this.dropdownView = dropdown.factory.createPopout(dropdownOptions);
+        this.listenTo(this.dropdownView, 'panel:cancel', this.__onCancel);
         this.dropdownRegion.show(this.dropdownView);
         // hotkeys
         if (this.keyListener) {
@@ -139,6 +134,7 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
 
     onValueClear: function () {
         this.__value(null, true);
+        this.focus();
     },
 
     onValueSet: function (value) {
@@ -196,6 +192,12 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
     __setReadonly: function (readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
+        this.$el.prop('tabindex', readonly ? -1 : 0);
+    },
+
+    __onCancel() {
+        this.dropdownView.close();
+        this.$el.focus();
     }
 });
 

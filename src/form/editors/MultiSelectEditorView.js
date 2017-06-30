@@ -70,8 +70,6 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         });
     },
 
-    focusElement: null,
-
     regions: {
         dropdownRegion: '.js-dropdown-region'
     },

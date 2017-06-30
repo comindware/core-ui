@@ -154,6 +154,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     __onClear: function() {
         this.__value(null, true, true);
         this.dateTimeModel.set('value', null);
+        this.focus();
         return false;
     },
 

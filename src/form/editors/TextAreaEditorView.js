@@ -168,6 +168,7 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.textarea.prop('readonly', readonly);
+            this.ui.textarea.prop('tabindex', readonly ? -1 : 0);
         }
     },
 
