@@ -22,6 +22,8 @@ const classes = {
     OPEN: 'open',
     DIRECTION_UP: 'popout__up',
     DIRECTION_DOWN: 'popout__down',
+    DISPLACEMENT_LEFT: 'popout__displacement-left',
+    DISPLACEMENT_RIGHT: 'popout__displacement-right',
     FLOW_LEFT: 'popout__flow-left',
     FLOW_RIGHT: 'popout__flow-right',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
@@ -39,6 +41,11 @@ const popoutDirection = {
     DOWN: 'down'
 };
 
+const popoutDisplacement = {
+    LEFT: 'left',
+    RIGHT: 'right'
+};
+
 const height = {
     AUTO: 'auto',
     BOTTOM: 'bottom'
@@ -51,6 +58,7 @@ const defaultOptions = {
     height: 'auto',
     autoOpen: true,
     direction: popoutDirection.DOWN,
+    displacement: null,
     renderAfterClose: true
 };
 
@@ -98,6 +106,12 @@ const defaultOptions = {
  *                                       <li><code>'right'</code> - The right border of the panel is attached to the right border of the button.
  *                                       The panel grows to the left.</li></ul>
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
+ *
+ * @param {String} [options.displacement=null] Panel's horizontal displacement of the button.
+ *                                       <ul><li><code>'left'</code> - The panel is situated on the left of the button.
+ *                                       The panel grows to the right.</li>
+ *                                       <li><code>'right'</code> - The panel is situated on the right of the button.
+ *                                       The panel grows to the left.</li></ul>
  * */
 
 export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.PopoutView.prototype */ {
@@ -306,6 +320,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         $panelEl.css(css);
     },
 
+    __adjustDisplacementPosition($panelEl) {
+        let displacement = this.options.displacement;
+        $panelEl.toggleClass(classes.DISPLACEMENT_LEFT, displacement === popoutDisplacement.LEFT);
+        $panelEl.toggleClass(classes.DISPLACEMENT_RIGHT, displacement === popoutDisplacement.RIGHT);
+    },
+
     __handleClick () {
         if (this.options.autoOpen) {
             this.open();
@@ -370,6 +390,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         });
         this.__adjustDirectionPosition(wrapperView.$el);
         this.__adjustFlowPosition(wrapperView.$el);
+        this.__adjustDisplacementPosition(wrapperView.$el);
 
         this.listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
