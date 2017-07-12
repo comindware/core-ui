@@ -70,6 +70,47 @@
     left: 10px;
 }
 
+.popout__wrp.popout__down.popout__displacement-right, .popout__down.popout__displacement-left {
+    margin-top: -17px;
+}
+
+.popout__wrp.popout__up.popout__displacement-right, .popout__up.popout__displacement-left {
+    margin-top: 17px;
+}
+
+.popout__wrp.popout__displacement-right {
+    margin-left: 10px;
+}
+
+.popout__wrp.popout__displacement-left {
+    margin-right: 10px;
+}
+
+.popout__wrp.popout__displacement-right:after{
+    transform: rotate(-90deg);
+    left: -12px;
+    top: 10px
+}
+
+.popout__wrp.popout__up.popout__displacement-right:after{
+    transform: rotate(90deg);
+    bottom: 10px;
+    top: auto;
+}
+
+.popout__wrp.popout__displacement-left:after{
+    transform: rotate(90deg);
+    left: auto;
+    right: -12px;
+    top: 10px
+}
+
+.popout__wrp.popout__up.popout__displacement-left:after{
+    transform: rotate(-90deg);
+    bottom: 10px;
+    top: auto;
+}
+
 .anchor {
     position: absolute;
     top:0;

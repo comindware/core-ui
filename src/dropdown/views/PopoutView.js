@@ -320,10 +320,150 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         $panelEl.css(css);
     },
 
-    __adjustDisplacementPosition($panelEl) {
+    __adjustDisplacementVerticalPosition($panelEl) {
+        let $anchorEl = this.__getAnchorEl();
+
+        let viewport = {
+            height: window.innerHeight,
+            width: window.innerWidth
+        };
+        let anchorRect = $anchorEl.offset();
+        anchorRect.height = $anchorEl.outerHeight();
+        anchorRect.width = $anchorEl.outerWidth();
+        anchorRect.bottom = viewport.height - anchorRect.top - anchorRect.height;
+
+        let panelRect = $panelEl.offset();
+        panelRect.height = $panelEl.outerHeight();
+        panelRect.width = $panelEl.outerWidth();
+
+        let css = {
+            top: '',
+            bottom: ''
+        };
+
+        // calculate vertical position
+        let direction = this.options.direction;
+
+        // switching direction if there is not enough space
+        switch (direction) {
+        case popoutDirection.UP:
+            let topCenter = anchorRect.top + anchorRect.height / 2;
+            if (topCenter < panelRect.height && anchorRect.bottom > topCenter) {
+                direction = popoutDirection.DOWN;
+            }
+            break;
+        case popoutDirection.DOWN:
+            let bottomCenter = anchorRect.bottom + anchorRect.height / 2;
+            if (bottomCenter < panelRect.height && anchorRect.top > bottomCenter) {
+                direction = popoutDirection.UP;
+            }
+            break;
+        default:
+            break;
+        }
+
+        // class adjustments
+        $panelEl.toggleClass(classes.DIRECTION_UP, direction === popoutDirection.UP);
+        $panelEl.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
+
+        // panel positioning
+        let top;
+        switch (direction) {
+        case popoutDirection.UP:
+            top = anchorRect.top + anchorRect.height / 2 - panelRect.height;
+            break;
+        case popoutDirection.DOWN:
+            top = anchorRect.top + anchorRect.height / 2;
+            break;
+        default:
+            break;
+        }
+
+        // trying to fit into viewport
+        if (top + anchorRect.height / 2 + panelRect.height > viewport.height - WINDOW_BORDER_OFFSET) {
+            top = viewport.height - WINDOW_BORDER_OFFSET - panelRect.height;
+        }
+        if (top <= WINDOW_BORDER_OFFSET) {
+            top = WINDOW_BORDER_OFFSET;
+        }
+
+        css.top = top;
+
+        if (this.options.height === height.BOTTOM) {
+            css.bottom = WINDOW_BORDER_OFFSET;
+        }
+        $panelEl.css(css);
+    },
+
+    __adjustDisplacementHorizontalPosition($panelEl) {
+        let $buttonEl = this.ui.button;
+        let $anchorEl = this.__getAnchorEl();
+        let viewport = {
+            height: window.innerHeight,
+            width: window.innerWidth
+        };
+        let anchorRect = $anchorEl.offset();
+        anchorRect.width = $anchorEl.outerWidth();
+        anchorRect.right = viewport.width - anchorRect.left - anchorRect.width;
+
+        let buttonRect = $buttonEl.offset();
+        buttonRect.width = $buttonEl.outerWidth();
+
+        let panelRect = $panelEl.offset();
+        panelRect.width = $panelEl.outerWidth();
+
+        let css = {
+            left: '',
+            right: ''
+        };
+
         let displacement = this.options.displacement;
+        switch (displacement) {
+        case popoutDisplacement.RIGHT:
+            if (anchorRect.right < panelRect.width && anchorRect.left > anchorRect.right) {
+                displacement = popoutDisplacement.LEFT;
+            }
+            break;
+        case  popoutDisplacement.LEFT:
+            if (anchorRect.left < panelRect.width && anchorRect.right > anchorRect.left) {
+                displacement =  popoutDisplacement.RIGHT;
+            }
+            break;
+        default:
+            break;
+        }
+
+        switch (displacement) {
+        case popoutDisplacement.RIGHT: {
+            let leftEdge = anchorRect.left + anchorRect.width;
+            if (leftEdge < WINDOW_BORDER_OFFSET) {
+                css.left = WINDOW_BORDER_OFFSET;
+            } else if (leftEdge + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+                css.left = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+            } else {
+                css.left = leftEdge;
+            }
+            break;
+        }
+        case popoutDisplacement.LEFT: {
+            let anchorRightEdge = viewport.width - anchorRect.left;
+            if (anchorRightEdge < WINDOW_BORDER_OFFSET) {
+                css.right = WINDOW_BORDER_OFFSET;
+            } else if (anchorRightEdge + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
+                css.right = viewport.width - WINDOW_BORDER_OFFSET - panelRect.width;
+            } else {
+                css.right = anchorRightEdge;
+            }
+            break;
+        }
+        default:
+            break;
+        }
+
         $panelEl.toggleClass(classes.DISPLACEMENT_LEFT, displacement === popoutDisplacement.LEFT);
         $panelEl.toggleClass(classes.DISPLACEMENT_RIGHT, displacement === popoutDisplacement.RIGHT);
+
+        $panelEl.css(css);
     },
 
     __handleClick () {
@@ -388,10 +528,13 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             fadeBackground: this.options.fade,
             hostEl: this.el
         });
-        this.__adjustDirectionPosition(wrapperView.$el);
-        this.__adjustFlowPosition(wrapperView.$el);
-        this.__adjustDisplacementPosition(wrapperView.$el);
-
+        if (this.options.displacement) {
+            this.__adjustDisplacementVerticalPosition(wrapperView.$el);
+            this.__adjustDisplacementHorizontalPosition(wrapperView.$el);
+        } else {
+            this.__adjustDirectionPosition(wrapperView.$el);
+            this.__adjustFlowPosition(wrapperView.$el);
+        }
         this.listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
         const activeElement = document.activeElement;
