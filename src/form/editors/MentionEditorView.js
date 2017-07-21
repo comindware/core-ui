@@ -43,8 +43,6 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         this.__createViewModel();
     },
 
-    focusElement: null,
-
     __createViewModel: function () {
         this.viewModel = new Backbone.Model();
         var membersCollection = membersFactory.createMembersCollection();

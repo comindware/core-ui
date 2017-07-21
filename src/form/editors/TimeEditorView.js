@@ -81,6 +81,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     __onClear: function () {
         this.__value(null, true, true);
         this.timeModel.set('value', null);
+        this.focus();
         return false;
     },
 

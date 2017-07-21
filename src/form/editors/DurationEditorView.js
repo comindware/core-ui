@@ -146,6 +146,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
+            this.ui.input.prop('tabindex', readonly ? -1 : 0);
         }
     },
 
@@ -155,6 +156,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             displayValue: null
         });
         this.__value(null, true);
+        this.focus();
     },
 
     __focus: function () {
@@ -374,8 +376,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             this.__blur();
             return false;
         case keyCode.TAB:
-            if(this.focusableParts[index + 1]) {
-                this.setCaretPos(this.focusableParts[index + 1].start);
+            const delta = event.shiftKey ? -1 : 1;
+            if(this.focusableParts[index + delta]) {
+                this.setCaretPos(this.focusableParts[index + delta].start);
                 return false;
             }
             break;

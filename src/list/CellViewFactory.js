@@ -80,17 +80,16 @@ let factory = {
 
     getBooleanCellView: function () {
         const templateHelpers = {
-            localizedValue() {
-                if (this.value === true) {
-                    return Localizer.get('CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.YES');
-                } else if (this.value === false) {
-                    return Localizer.get('CORE.GRID.CELLVIEWFACTORY.BOOLEANCELLVIEW.NO');
-                } else {
-                    return '';
-                }
+            showIcon() {
+                return _.isBoolean(this.value);
             }
         };
-        return factory.__getSimpleView("{{localizedValue}}", templateHelpers);
+        
+        return factory.__getSimpleView(
+            '{{#if showIcon}}' +
+                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+            '{{/if}}', templateHelpers);
     },
 
     getDateTimeCellView: function () {

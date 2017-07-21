@@ -54,6 +54,7 @@ let constants = {
  * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
+ * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * */
 let GridView = Marionette.LayoutView.extend({
      initialize: function (options) {
@@ -81,6 +82,8 @@ let GridView = Marionette.LayoutView.extend({
             this.noColumnsView = NoColumnsDefaultView;
         }
         options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
+
+        this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
 
         var childView = options.childView;
         if (options.useDefaultRowView) {
@@ -112,7 +115,8 @@ let GridView = Marionette.LayoutView.extend({
             childViewOptions: childViewOptions,
             loadingChildView: options.loadingChildView || LoadingChildView,
             maxRows: options.maxRows,
-            height: options.height
+            height: options.height,
+            forbidSelection: this.forbidSelection
         });
 
         this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
@@ -181,7 +185,9 @@ let GridView = Marionette.LayoutView.extend({
     },
 
     onRender: function () {
-        htmlHelpers.forbidSelection(this.el);
+        if (this.forbidSelection) {
+            htmlHelpers.forbidSelection(this.el);
+        }
     },
 
     sortBy: function (columnIndex, sorting) {

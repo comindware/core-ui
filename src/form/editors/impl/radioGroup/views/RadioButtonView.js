@@ -21,9 +21,8 @@ export default Marionette.ItemView.extend({
 
     attributes() {
         return {
-            title: (this.model && this.model.get('title')) || null,
-            tabindex: '0'
-        }        
+            title: (this.model && this.model.get('title')) || null
+        }
     },
 
     initialize: function (options) {
