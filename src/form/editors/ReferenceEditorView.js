@@ -114,7 +114,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 showAddNewButton: this.showAddNewButton,
                 listItemView: this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
-                textFilterDelay: this.options.textFilterDelay
+                textFilterDelay: this.options.textFilterDelay,
+                hideSearchBar: this.options.schema.hideSearchBar
             },
             panelPosition: 'down-over',
             autoOpen: false

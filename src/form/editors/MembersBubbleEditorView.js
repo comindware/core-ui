@@ -50,6 +50,8 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.__createViewModel();
         this.__updateViewModel(this.getValue());
         this.__updateFakeInputModel();
+        this.textFilterDelay = this.options.textFilterDelay || 0;
+        this.fetchDelayId = _.uniqueId('fetch-delay-id-');
         this.value = this.getValue() || [];
     },
 
@@ -108,8 +110,13 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.__triggerChange();
     },
 
-    __applyFilter: function (value) {
-        this.viewModel.get('available').applyTextFilter(value);
+    __applyFilter: function (value, immediate) {
+        const applyFilter = () => this.viewModel.get('available').applyTextFilter(value);
+        if (immediate) {
+            applyFilter();
+        } else {
+            helpers.setUniqueTimeout(this.fetchDelayId, applyFilter, this.textFilterDelay);
+        }
     },
 
     __onInputSearch: function (value) {
@@ -136,7 +143,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
     },
 
     __onBeforeDropdownOpen: function () {
-        this.__applyFilter();
+        this.__applyFilter(undefined, true);
     },
 
     __onDropdownOpen: function () {
