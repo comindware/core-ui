@@ -48,7 +48,8 @@ export default Marionette.LayoutView.extend({
 
     ui: {
         input: '.js-input',
-        clear: '.js-clear'
+        clear: '.js-clear',
+        searchBarContainer: '.js-search-bar-container'
     },
 
     events: {
@@ -96,7 +97,12 @@ export default Marionette.LayoutView.extend({
         }
 
         this.listRegion.show(result.listView);
+
         this.scrollbarRegion.show(result.scrollbarView);
+
+        if (this.getOption('hideSearchBar')) {
+            this.ui.searchBarContainer.hide();
+        }
 
         this.__updateFilter(true);
     },
