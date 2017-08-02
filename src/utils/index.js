@@ -32,32 +32,32 @@ export default /** @lends module:core.utils */ {
      * Can be used as <code>comparator</code> in Backbone.Collection.
      * @namespace
      * */
-    comparators: comparators,
+    comparators,
     /**
      * Useful methods used across the library.
      * @namespace
      * */
-    helpers: helpers,
+    helpers,
     /**
      * Useful methods to generate HTML and manipulate DOM-elements.
      * @namespace
      * */
-    htmlHelpers: htmlHelpers,
+    htmlHelpers,
     /**
      * Date formatters and related methods.
      * @namespace
      * */
-    dateHelpers: dateHelpers,
+    dateHelpers,
     /**
      * Methods to manipulate cookies data.
      * @namespace
      * */
-    cookieHelpers: cookieHelpers,
+    cookieHelpers,
     /**
      * Enumeration of key codes used in keyboard events.
      * @namespace
      * */
-    keyCode: keyCode,
+    keyCode,
 
-    RegionBehavior: RegionBehavior
+    RegionBehavior
 };

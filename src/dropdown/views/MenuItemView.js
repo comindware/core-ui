@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/menuItem.hbs';
@@ -22,7 +22,7 @@ import template from '../templates/menuItem.hbs';
  * */
 
 export default Marionette.ItemView.extend({
-    initialize: function () {
+    initialize() {
     },
 
     tagName: 'li',
@@ -38,7 +38,7 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click': function () {
+        click() {
             this.trigger('execute', this.model);
         }
     }

@@ -9,14 +9,14 @@
 import { helpers } from 'utils';
 import { $ } from 'lib';
 
-let defaultOptions = {
+const defaultOptions = {
     selector: null,
     allowNestedFocus: true,
     onBlur: null
 };
 
 export default Marionette.Behavior.extend({
-    initialize (options, view) {
+    initialize(options, view) {
         helpers.ensureOption(options, 'onBlur');
 
         _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
@@ -26,7 +26,7 @@ export default Marionette.Behavior.extend({
         view.focus = this.__focus.bind(this);
     },
 
-    events () {
+    events() {
         let key = 'blur';
         if (this.options.selector) {
             key += ` ${this.options.selector}`;
@@ -36,18 +36,18 @@ export default Marionette.Behavior.extend({
         };
     },
 
-    onRender () {
+    onRender() {
         this.__getFocusableEl().attr('tabindex', -1);
     },
 
-    __getFocusableEl () {
+    __getFocusableEl() {
         if (this.options.selector) {
             return this.$(this.options.selector);
         }
         return this.$el;
     },
 
-    __focus (focusedEl) {
+    __focus(focusedEl) {
         if (!focusedEl) {
             this.__getFocusableEl().focus();
         } else {
@@ -56,15 +56,15 @@ export default Marionette.Behavior.extend({
         this.view.isFocused = true;
     },
 
-    __onBlur () {
-        _.defer(function () {
+    __onBlur() {
+        _.defer(() => {
             this.view.isFocused = false;
-            let callback = this.options.onBlur;
+            const callback = this.options.onBlur;
             if (_.isString(callback)) {
                 this.view[callback].call(this.view);
             } else {
                 callback.call(this.view);
             }
-        }.bind(this));
+        });
     }
 });

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 export var objectPropertyTypes = {
     STRING: 'String',
@@ -24,5 +24,5 @@ export var objectPropertyTypes = {
 };
 
 export default {
-    objectPropertyTypes: objectPropertyTypes
+    objectPropertyTypes
 };

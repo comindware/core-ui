@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { moment, Handlebars, $ } from 'lib';
 import { dateHelpers } from 'utils';
@@ -15,7 +15,7 @@ import TimeInputView from './TimeInputView';
 import template from '../templates/time.hbs';
 
 export default Marionette.LayoutView.extend({
-    initialize: function () {
+    initialize() {
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.timeDisplayFormat = this.getOption('timeDisplayFormat');
@@ -29,18 +29,18 @@ export default Marionette.LayoutView.extend({
         dropdownRegion: '.js-dropdown-region'
     },
 
-    onRender: function () {
-        var timeArray = [];
+    onRender() {
+        const timeArray = [];
 
-        for (var h = 0; h < 24; h++) {
-            for (var m = 0; m < 60; m+=15) {
-                var val = {hours: h, minutes: m},
+        for (let h = 0; h < 24; h++) {
+            for (let m = 0; m < 60; m += 15) {
+                let val = { hours: h, minutes: m },
                     time = moment.utc(val),
                     formattedTime = dateHelpers.getDisplayTime(time);
 
                 timeArray.push({
-                    time: time,
-                    formattedTime: formattedTime
+                    time,
+                    formattedTime
                 });
             }
         }
@@ -58,13 +58,13 @@ export default Marionette.LayoutView.extend({
                 tagName: 'ul',
                 className: 'time-dropdown',
                 childEvents: {
-                    'select': function (view, time) { this.trigger('select', time); }
+                    select(view, time) { this.trigger('select', time); }
                 },
                 childView: Marionette.ItemView.extend({
                     tagName: 'li',
                     className: 'time-dropdown__i',
                     events: {
-                        'click': function () {
+                        click() {
                             this.trigger('select', this.model.get('time'));
                         }
                     },
@@ -84,18 +84,18 @@ export default Marionette.LayoutView.extend({
         this.dropdownRegion.show(this.dropdownView);
     },
 
-    __onBeforeClose: function () {
+    __onBeforeClose() {
         this.dropdownView.button.endEditing();
         this.trigger('blur');
     },
 
-    __onOpen: function () {
+    __onOpen() {
         this.dropdownView.button.startEditing();
         this.trigger('focus');
     },
 
-    __onPanelSelect: function (time) {
-        var oldVal = this.model.get('value'),
+    __onPanelSelect(time) {
+        let oldVal = this.model.get('value'),
             newVal = null;
 
         if (time === null || time === '') {
@@ -112,25 +112,25 @@ export default Marionette.LayoutView.extend({
         this.dropdownView.close();
     },
 
-    __onButtonCalendarOpen: function () {
+    __onButtonCalendarOpen() {
         this.dropdownView.open();
     },
 
-    __onButtonFocus: function () {
+    __onButtonFocus() {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.dropdownView.open();
         }
     },
 
-    focus: function () {
+    focus() {
         this.dropdownView.button.focus();
     },
 
-    blur: function () {
+    blur() {
         this.dropdownView.close();
     },
 
-    hasFocus: function () {
+    hasFocus() {
         return $.contains(this.el, document.activeElement);
     }
 });

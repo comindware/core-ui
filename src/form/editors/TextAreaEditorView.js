@@ -25,7 +25,7 @@ const size = {
     fixed: 'fixed'
 };
 
-const defaultOptions = function () {
+const defaultOptions = function() {
     return {
         changeMode: changeMode.blur,
         size: size.auto,
@@ -62,8 +62,8 @@ const defaultOptions = function () {
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * */
 formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
-    initialize: function (options) {
-        let defaults = defaultOptions();
+    initialize(options) {
+        const defaults = defaultOptions();
         if (options.schema) {
             _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
         } else {
@@ -81,18 +81,18 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
     },
 
     events: {
-        'change': '__change',
+        change: '__change',
         'input @ui.textarea': '__input',
         'keyup @ui.textarea': '__keyup'
     },
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
+    templateHelpers() {
         return this.options;
     },
 
-    onRender: function () {
+    onRender() {
         // Keyboard shortcuts listener
         if (this.keyListener) {
             this.keyListener.reset();
@@ -108,44 +108,44 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
      * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
      * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
      * */
-    addKeyboardListener: function (key, callback) {
+    addKeyboardListener(key, callback) {
         if (!this.keyListener) {
             helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
         }
-        let keys = key.split(',');
-        _.each(keys, function (k) {
+        const keys = key.split(',');
+        _.each(keys, function(k) {
             this.keyListener.simple_combo(k, callback);
         }, this);
     },
 
-    onShow: function () {
+    onShow() {
         this.ui.textarea.val(this.getValue() || '');
         switch (this.options.size) {
-        case size.auto:
-            this.ui.textarea.attr('rows', this.options.minHeight);
-            if (this.options.maxHeight) {
-                let maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
-                this.ui.textarea.css('maxHeight', maxHeight);
-            }
-            if (!htmlHelpers.isElementInDom(this.el)) {
-                helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
-            }
-            this.ui.textarea.autosize({ append: '' });
-            break;
-        case size.fixed:
-            this.ui.textarea.attr('rows', this.options.height);
-            break;
-        default:
-            helpers.throwArgumentError('Invalid `size parameter`.');
+            case size.auto:
+                this.ui.textarea.attr('rows', this.options.minHeight);
+                if (this.options.maxHeight) {
+                    const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
+                    this.ui.textarea.css('maxHeight', maxHeight);
+                }
+                if (!htmlHelpers.isElementInDom(this.el)) {
+                    helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
+                }
+                this.ui.textarea.autosize({ append: '' });
+                break;
+            case size.fixed:
+                this.ui.textarea.attr('rows', this.options.height);
+                break;
+            default:
+                helpers.throwArgumentError('Invalid `size parameter`.');
         }
     },
 
-    setPermissions: function (enabled, readonly) {
+    setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
     },
 
-    setPlaceholder: function () {
+    setPlaceholder() {
         if (!this.getEnabled()) {
             this.placeholder = this.options.disablePlaceholder;
         } else if (this.getReadonly()) {
@@ -157,13 +157,13 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
         this.ui.textarea.prop('placeholder', this.placeholder);
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         //noinspection Eslint
         BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.textarea.prop('disabled', !enabled);
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         //noinspection Eslint
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
@@ -172,7 +172,7 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
         }
     },
 
-    __value: function (value, updateUi, triggerChange) {
+    __value(value, updateUi, triggerChange) {
         if (this.value === value) {
             return;
         }
@@ -189,27 +189,27 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
      * Метод позволяет установить позицию курсора.
      * @param {Number} position Новая позиция курсора.
      * */
-    setCaretPos: function (position) {
+    setCaretPos(position) {
         this.ui.textarea.setSelection(position, position);
     },
 
-    setValue: function (value) {
+    setValue(value) {
         this.__value(value, true, false);
     },
 
-    __change: function () {
+    __change() {
         this.__triggerInput();
         this.__value(this.ui.textarea.val(), false, true);
     },
 
-    __input: function () {
+    __input() {
         this.__triggerInput();
         if (this.options.changeMode === changeMode.keydown) {
             this.__value(this.ui.textarea.val(), false, true);
         }
     },
 
-    __keyup: function (e) {
+    __keyup(e) {
         if ([
             keyCode.LEFT,
             keyCode.RIGHT,
@@ -219,24 +219,24 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
             return;
         }
 
-        let caret = this.ui.textarea.getSelection();
+        const caret = this.ui.textarea.getSelection();
         if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
             return;
         }
 
         this.oldCaret = caret;
-        let text = this.ui.textarea.val();
+        const text = this.ui.textarea.val();
         this.trigger('caretChange', text, caret);
     },
 
-    __triggerInput: function () {
-        let text = this.ui.textarea.val();
+    __triggerInput() {
+        const text = this.ui.textarea.val();
         if (this.oldText === text) {
             return;
         }
 
         this.oldText = text;
-        let caret = this.ui.textarea.getSelection();
+        const caret = this.ui.textarea.getSelection();
 
         this.trigger('input', text, {
             start: caret.start,
@@ -247,7 +247,7 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
     /**
      * Focuses the editor's input and selects all the text in it.
      * */
-    select: function () {
+    select() {
         this.ui.textarea.select();
     }
 });

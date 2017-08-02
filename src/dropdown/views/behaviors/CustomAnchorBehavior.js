@@ -8,7 +8,7 @@
 
 import 'lib';
 
-let classes = {
+const classes = {
     ANCHOR: 'anchor anchor_inline'
 };
 
@@ -29,10 +29,10 @@ let classes = {
  * */
 
 export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */ {
-    initialize: function (options, view) {
+    initialize(options, view) {
     },
 
-    onRender: function () {
+    onRender() {
         let $el;
         if (this.options.anchor) {
             $el = this.$(this.options.anchor);

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/emptyGrid.hbs';
@@ -25,7 +25,7 @@ import LocalizationService from '../../services/LocalizationService';
  * */
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.model = new Backbone.Model({
             text: options.text || LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY')
         });

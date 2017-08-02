@@ -6,22 +6,20 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { helpers } from 'utils';
 import CollapsibleBehavior from '../../../models/behaviors/CollapsibleBehavior';
 
-let ListGroupBehavior = function (model) {
+const ListGroupBehavior = function(model) {
     _.extend(this, new CollapsibleBehavior(model));
 };
 
 _.extend(ListGroupBehavior.prototype, {
-    deselect: function ()
-    {
+    deselect() {
     },
 
-    select: function ()
-    {
+    select() {
     }
 });
 

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import BaseCollectionEditorView from './base/BaseCollectionEditorView';
@@ -29,7 +29,7 @@ const defaultOptions = {
  * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
  * */
 formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -51,41 +51,41 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends m
         'select:one': '__onSelectChild'
     },
 
-    childViewOptions: function () {
+    childViewOptions() {
         return {
             selected: this.getValue(),
             enabled: this.getEnabled() && !this.getReadonly()
         };
     },
 
-    __onSelectChild: function (model) {
+    __onSelectChild(model) {
         this.__value(model.get('id'), true);
     },
 
-    setValue: function (value) {
+    setValue(value) {
         this.__value(value, false);
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         BaseCollectionEditorView.prototype.__setEnabled.call(this, enabled);
-        var isEnabled = this.getEnabled() && !this.getReadonly();
-        this.children.each(function (cv) {
+        const isEnabled = this.getEnabled() && !this.getReadonly();
+        this.children.each(cv => {
             cv.setEnabled(isEnabled);
-        }.bind(this));
+        });
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseCollectionEditorView.prototype.__setReadonly.call(this, readonly);
-        var isEnabled = this.getEnabled() && !this.getReadonly();
-        this.children.each(function (cv) {
+        const isEnabled = this.getEnabled() && !this.getReadonly();
+        this.children.each(cv => {
             cv.setEnabled(isEnabled);
-        }.bind(this));
+        });
         if (this.getEnabled()) {
             this.$el.prop('tabindex', readonly ? -1 : 0);
         }
     },
 
-    __value: function (value, triggerChange) {
+    __value(value, triggerChange) {
         if (this.value === value) {
             return;
         }

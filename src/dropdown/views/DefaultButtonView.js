@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/defaultButton.hbs';
@@ -24,7 +24,7 @@ import template from '../templates/defaultButton.hbs';
  * */
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
     },
 
     tagName: 'span',
@@ -32,6 +32,6 @@ export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
     modelEvents: {
-        'change': 'render'
+        change: 'render'
     }
 });

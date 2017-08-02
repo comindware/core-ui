@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
@@ -18,7 +18,7 @@ import EventAggregator from './EventAggregator';
 import GridView from './views/GridView';
 import GridColumnHeaderView from './views/GridColumnHeaderView';
 
-let factory = {
+const factory = {
     /**
      * @memberof module:core.list.factory
      * @method createDefaultList
@@ -34,7 +34,7 @@ let factory = {
      * @returns {Backbone.Collection} collection Коллекция элементов списка
      * @returns eventAggregator
      * */
-    createDefaultList: function (options) {
+    createDefaultList(options) {
         helpers.ensureOption(options, 'collection');
         helpers.ensureOption(options, 'listViewOptions');
         if (!options.listViewOptions.childView && !options.listViewOptions.childViewSelector) {
@@ -42,28 +42,28 @@ let factory = {
         }
         helpers.ensureOption(options, 'listViewOptions.childHeight');
 
-        var collection = factory.createWrappedCollection(options.collection, options.collectionOptions);
+        const collection = factory.createWrappedCollection(options.collection, options.collectionOptions);
 
-        var scrollbarView = new ScrollbarView({
-            collection: collection
+        const scrollbarView = new ScrollbarView({
+            collection
         });
 
-        var listViewOptions = _.extend({
-            collection: collection,
+        const listViewOptions = _.extend({
+            collection,
             emptyView: EmptyListView
         }, options.listViewOptions);
-        var listView = new ListView(listViewOptions);
+        const listView = new ListView(listViewOptions);
 
-        var eventAggregator = new EventAggregator({
+        const eventAggregator = new EventAggregator({
             views: [ scrollbarView, listView ],
-            collection: collection
+            collection
         });
 
         return {
-            scrollbarView: scrollbarView,
-            listView: listView,
-            collection: collection,
-            eventAggregator: eventAggregator
+            scrollbarView,
+            listView,
+            collection,
+            eventAggregator
         };
     },
 
@@ -84,7 +84,7 @@ let factory = {
      * @returns {Backbone.Collection} collection Коллекция элементов списка
      * @returns eventAggregator
      * */
-    createDefaultGrid: function (options) {
+    createDefaultGrid(options) {
         helpers.ensureOption(options, 'collection');
         helpers.ensureOption(options, 'gridViewOptions.columns');
         helpers.ensureOption(options, 'gridViewOptions.childHeight');
@@ -92,33 +92,33 @@ let factory = {
             helpers.ensureOption(options, 'gridViewOptions.childView');
         }
 
-        var collection = factory.createWrappedCollection(options.collection);
+        const collection = factory.createWrappedCollection(options.collection);
 
         //noinspection JSUnresolvedVariable
-        var gridViewOptions = _.extend({
+        const gridViewOptions = _.extend({
             gridColumnHeaderView: GridColumnHeaderView,
-            collection: collection,
+            collection,
             emptyView: EmptyGridView,
             emptyViewOptions: {
                 text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
             }
         }, options.gridViewOptions);
-        var gridView = new GridView(gridViewOptions);
+        const gridView = new GridView(gridViewOptions);
 
-        var scrollbarView = new ScrollbarView({
-            collection: collection
+        const scrollbarView = new ScrollbarView({
+            collection
         });
 
-        var eventAggregator = new EventAggregator({
+        const eventAggregator = new EventAggregator({
             views: [ scrollbarView, gridView ],
-            collection: collection
+            collection
         });
 
         return {
-            scrollbarView: scrollbarView,
-            gridView: gridView,
-            collection: collection,
-            eventAggregator: eventAggregator
+            scrollbarView,
+            gridView,
+            collection,
+            eventAggregator
         };
     },
 
@@ -131,7 +131,7 @@ let factory = {
      * @returns {Object}
      * @returns {Backbone.Collection} collection Коллекция элементов списка
      * */
-    createWrappedCollection: function (collection, options) {
+    createWrappedCollection(collection, options) {
         if (!(collection instanceof VirtualCollection)) {
             if (_.isArray(collection)) {
                 collection = new VirtualCollection(new Backbone.Collection(collection), options);

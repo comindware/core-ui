@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, keypress } from 'lib';
 import list from 'list';
@@ -43,7 +43,7 @@ const defaultOptions = {
  * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
  * */
 formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -64,13 +64,13 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.collection = this.options.collection;
 
         // adding ListItem behavior to collection model
-        var fixModel = function (model) {
+        const fixModel = function(model) {
             _.extend(model, new list.models.behaviors.ListItemBehavior(model));
         };
         this.collection.each(fixModel);
-        var oldModel = this.collection.model;
+        const oldModel = this.collection.model;
         this.collection.model = oldModel.extend({
-            initialize: function () {
+            initialize() {
                 oldModel.prototype.initialize.apply(this, arguments);
                 fixModel(this);
             }
@@ -103,11 +103,11 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
     template: Handlebars.compile(template),
 
-    setValue: function (value) {
+    setValue(value) {
         this.__value(value, false);
     },
 
-    onRender: function () {
+    onRender() {
         this.__assignKeyboardShortcuts();
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: DropdownButtonView,
@@ -129,9 +129,9 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.dropdownRegion.show(this.dropdownView);
     },
 
-    __onCollectionChange: function () {
-        let value = this.getValue();
-        let valueModel = this.collection.findWhere({id: value});
+    __onCollectionChange() {
+        const value = this.getValue();
+        const valueModel = this.collection.findWhere({ id: value });
         if (valueModel !== null) {
             if (valueModel !== this.viewModel.get('button').get('value')) {
                 this.viewModel.get('button').set('value', valueModel);
@@ -150,21 +150,21 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
-    __findModel: function (value) {
+    __findModel(value) {
         return this.collection ? this.collection.findWhere({ id: value }) : null;
     },
 
-    __assignKeyboardShortcuts: function () {
+    __assignKeyboardShortcuts() {
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('enter,num_enter,down'.split(','), function (key) {
-            this.keyListener.simple_combo(key, function () {
+        _.each('enter,num_enter,down'.split(','), function(key) {
+            this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
-            }.bind(this));
+            });
         }, this);
         this.keyListener.simple_combo('esc', () => {
             if (this.getEnabled() && !this.getReadonly()) {
@@ -173,19 +173,19 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         });
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.__getFocusElement().prop('tabindex', readonly ? -1 : 0);
         }
     },
 
-    __value: function (value, triggerChange) {
+    __value(value, triggerChange) {
         if (this.value === value) {
             return;
         }
         this.value = value;
-        var valueModel = this.__findModel(value) || null;
+        const valueModel = this.__findModel(value) || null;
         this.viewModel.get('button').set('value', valueModel);
         this.viewModel.get('panel').set('value', valueModel);
         if (triggerChange) {
@@ -193,19 +193,19 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
-    onValueSet: function (o) {
+    onValueSet(o) {
         this.__value(o ? o.id : null, true);
         this.dropdownView.close();
         this.focus();
     },
 
-    onPanelOpen: function () {
+    onPanelOpen() {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
     },
 
-    blur: function () {
+    blur() {
         this.dropdownView.close();
     },
 

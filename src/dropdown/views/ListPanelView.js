@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
@@ -20,7 +20,7 @@ import 'lib';
  * */
 
 export default Marionette.CollectionView.extend({
-    initialize: function () {
+    initialize() {
     },
 
     tagName: 'ul'

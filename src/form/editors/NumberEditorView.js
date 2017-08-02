@@ -74,7 +74,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * */
 formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -100,7 +100,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         'click .js-clear-button': '__clear',
         'keydown @ui.input': '__keydown',
         'keypress @ui.input': '__keypress',
-        'keyup @ui.input': function (event) {
+        'keyup @ui.input'(event) {
             if ([keyCode.UP, keyCode.DOWN, keyCode.PAGE_UP, keyCode.PAGE_DOWN].indexOf(event.keyCode) !== -1) {
                 this.__stop();
             }
@@ -110,10 +110,10 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
                 this.__value(this.ui.input.val(), true, false, false);
             }
         },
-        'change @ui.input': function () {
+        'change @ui.input'() {
             this.__value(this.ui.input.val(), false, true, false);
         },
-        'mousewheel @ui.input': function (event) {
+        'mousewheel @ui.input'(event) {
             if (!this.getEnabled() || this.getReadonly() || !this.hasFocus) {
                 return;
             }
@@ -125,14 +125,14 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
             this.mousewheelTimer = setTimeout(this.__stop, 100);
             return false;
         },
-        'mousedown @ui.spinnerUp': function (event) {
+        'mousedown @ui.spinnerUp'(event) {
             event.preventDefault();
             this.focus();
             this.__setActive(this.ui.spinnerDown, true);
             this.__start();
             this.__repeat(null, 1);
         },
-        'mousedown @ui.spinnerDown': function (event) {
+        'mousedown @ui.spinnerDown'(event) {
             event.preventDefault();
             this.focus();
             this.__setActive(this.ui.spinnerUp, true);
@@ -143,11 +143,11 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         'mouseleave @ui.spinnerButtons': '__stop'
     },
 
-    onRender: function () {
+    onRender() {
         this.__value(this.value, false, false, true);
     },
 
-    __setActive: function (el, isActive) {
+    __setActive(el, isActive) {
         if (isActive) {
             $(el).addClass('ui-state-active');
         } else {
@@ -155,7 +155,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
     },
 
-    setPermissions: function (enabled, readonly) {
+    setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         if (enabled && !readonly) {
             this.ui.spinnerUp.show();
@@ -166,12 +166,12 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.input.prop('disabled', !enabled);
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
@@ -179,13 +179,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
     },
 
-    __clear () {
+    __clear() {
         this.__value(null, false, true, false);
         this.focus();
         return false;
     },
 
-    __repeat: function(i, steps) {
+    __repeat(i, steps) {
         i = i || 500;
 
         clearTimeout(this.timer);
@@ -198,23 +198,23 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         this.__spin(steps * constants.STEP);
     },
 
-    __keydown: function(event) {
+    __keydown(event) {
         this.__start();
-        var options = this.options;
+        const options = this.options;
 
         switch (event.keyCode) {
-        case keyCode.UP:
-            this.__repeat(null, 1, event);
-            return false;
-        case keyCode.DOWN:
-            this.__repeat(null, -1, event);
-            return false;
-        case keyCode.PAGE_UP:
-            this.__repeat(null, constants.PAGE, event);
-            return false;
-        case keyCode.PAGE_DOWN:
-            this.__repeat(null, -constants.PAGE, event);
-            return false;
+            case keyCode.UP:
+                this.__repeat(null, 1, event);
+                return false;
+            case keyCode.DOWN:
+                this.__repeat(null, -1, event);
+                return false;
+            case keyCode.PAGE_UP:
+                this.__repeat(null, constants.PAGE, event);
+                return false;
+            case keyCode.PAGE_DOWN:
+                this.__repeat(null, -constants.PAGE, event);
+                return false;
         }
 
         if (event.ctrlKey === true || allowedKeys.indexOf(event.keyCode) !== -1) {
@@ -222,20 +222,20 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
     },
     
-    __keypress: function(event) {
-        let code = event.which == null /* check for IE */ ? event.keyCode : event.charCode;
+    __keypress(event) {
+        const code = event.which == null /* check for IE */ ? event.keyCode : event.charCode;
         return ALLOWED_CHARS.indexOf(String.fromCharCode(code)) !== -1;
     },
 
-    __start: function() {
+    __start() {
         if (!this.counter) {
             this.counter = 1;
         }
         this.spinning = true;
     },
 
-    __spin: function(step) {
-        var value = this.getValue() || 0;
+    __spin(step) {
+        let value = this.getValue() || 0;
 
         if (!this.counter) {
             this.counter = 1;
@@ -246,7 +246,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         this.counter++;
     },
 
-    __stop: function() {
+    __stop() {
         if (this.isDestroyed) {
             return;
         }
@@ -261,13 +261,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         this.spinning = false;
     },
 
-    __value: function(value, suppressRender, triggerChange, force) {
+    __value(value, suppressRender, triggerChange, force) {
         if (value === this.value && !force) {
             return;
         }
-        var parsed,
+        let parsed,
             formattedValue = null;
-        if (value !== "" && value !== null) {
+        if (value !== '' && value !== null) {
             parsed = this.__parse(value);
             if (parsed !== null) {
                 value = this.__adjustRange(parsed);
@@ -281,7 +281,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
             } else {
                 return;
             }
-        } else if (value === "") {
+        } else if (value === '') {
             value = null;
         }
 
@@ -298,8 +298,8 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
     },
 
-    __parse: function (val) {
-        if (typeof val === "string" && val !== "") {
+    __parse(val) {
+        if (typeof val === 'string' && val !== '') {
             if (numeral.languageData().delimiters.decimal !== '.') {
                 val = val.replace('.', numeral.languageData().delimiters.decimal);
             }
@@ -310,35 +310,35 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
                 val = Number.MIN_VALUE;
             }
         }
-        return val === "" || isNaN(val) ? null : val;
+        return val === '' || isNaN(val) ? null : val;
     },
 
-    __precision: function() {
-        var precision = this.__precisionOf(constants.STEP);
+    __precision() {
+        let precision = this.__precisionOf(constants.STEP);
         if (this.options.min !== null) {
             precision = Math.max(precision, this.__precisionOf(this.options.min));
         }
         return precision;
     },
 
-    __precisionOf: function(num) {
-        var str = num.toString();
-        var decimal = str.indexOf(".");
+    __precisionOf(num) {
+        const str = num.toString();
+        const decimal = str.indexOf('.');
         return decimal === -1 ? 0 : str.length - decimal - 1;
     },
 
-    __increment: function(i) {
-        var incremental = constants.INCREMENTAL;
+    __increment(i) {
+        const incremental = constants.INCREMENTAL;
         if (incremental) {
             return $.isFunction(incremental) ?
                 incremental(i) :
-                Math.floor(i*i*i/50000 - i*i/500 + 17*i/200 + 1);
+                Math.floor(i * i * i / 50000 - i * i / 500 + 17 * i / 200 + 1);
         }
         return 1;
     },
 
-    __adjustRange: function (value) {
-        var options = this.options;
+    __adjustRange(value) {
+        const options = this.options;
         if (options.max !== null && value > options.max) {
             return options.max;
         }
@@ -348,10 +348,10 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         return value;
     },
 
-    __adjustValue: function(value) {
+    __adjustValue(value) {
         let base;
         let aboveMin;
-        let options = this.options;
+        const options = this.options;
 
         // make sure we're at a valid step
         // - find out where we are relative to the base (min or 0)
@@ -368,11 +368,11 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         return value;
     },
 
-    setValue: function(value) {
+    setValue(value) {
         this.__value(value, false, false, false);
     },
 
-    isEmptyValue: function () {
+    isEmptyValue() {
         return !_.isNumber(this.getValue());
     }
 });

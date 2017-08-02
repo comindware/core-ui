@@ -12,7 +12,7 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/dateInput.hbs';
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'allowEmptyValue');
         this.editDateFormat = dateHelpers.getDateEditFormat();
@@ -33,19 +33,19 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click': '__onClick',
+        click: '__onClick',
         'focus @ui.dateInput': '__onFocus'
     },
 
-    startEditing: function () {
-        let value = this.model.get('value');
-        let editableText = value ? moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.editDateFormat) : '';
+    startEditing() {
+        const value = this.model.get('value');
+        const editableText = value ? moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.editDateFormat) : '';
         this.ui.dateInput.val(editableText);
     },
 
-    endEditing: function () {
-        let parsedInputValue = this.__getParsedInputValue();
-        let inputIsEmpty = parsedInputValue === null;
+    endEditing() {
+        const parsedInputValue = this.__getParsedInputValue();
+        const inputIsEmpty = parsedInputValue === null;
         if (inputIsEmpty && this.options.allowEmptyValue) {
             this.__setModelValue(null);
         } else if (parsedInputValue.isValid()) {
@@ -54,32 +54,32 @@ export default Marionette.ItemView.extend({
         this.updateDisplayValue();
     },
 
-    __getParsedInputValue: function () {
-        let value = this.ui.dateInput.val();
+    __getParsedInputValue() {
+        const value = this.ui.dateInput.val();
         if (value === '') {
             return null;
         }
         return moment.utc(value, this.editDateFormat, true);
     },
 
-    onRender: function () {
+    onRender() {
         this.setPlaceholder();
         this.setInputPermissions();
         this.updateDisplayValue();
     },
 
-    __onEnabledChange: function () {
+    __onEnabledChange() {
         this.setPlaceholder();
         this.setInputPermissions();
     },
 
-    __onClick: function () {
+    __onClick() {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.trigger('calendar:open');
         }
     },
 
-    setPlaceholder: function () {
+    setPlaceholder() {
         if (!this.model.get('enabled') || this.model.get('readonly')) {
             this.placeholder = '';
         } else {
@@ -89,9 +89,9 @@ export default Marionette.ItemView.extend({
         this.ui.dateInput.prop('placeholder', this.placeholder);
     },
 
-    setInputPermissions: function () {
-        let enabled = this.model.get('enabled');
-        let readonly = this.model.get('readonly');
+    setInputPermissions() {
+        const enabled = this.model.get('enabled');
+        const readonly = this.model.get('readonly');
 
         if (!enabled) {
             this.ui.dateInput.prop('disabled', true);
@@ -106,11 +106,11 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    updateDisplayValue: function () {
+    updateDisplayValue() {
         if (this.isDestroyed) {
             return;
         }
-        let value = this.model.get('value');
+        const value = this.model.get('value');
         let formattedDisplayValue;
         if (value === null) {
             formattedDisplayValue = '';
@@ -122,14 +122,14 @@ export default Marionette.ItemView.extend({
         this.ui.dateInput.val(formattedDisplayValue);
     },
 
-    __setModelValue: function (date) {
-        let oldVal = this.model.get('value');
+    __setModelValue(date) {
+        const oldVal = this.model.get('value');
         let newVal = null;
 
         if (date === null || date === '') {
             newVal = null;
         } else if (oldVal && this.getOption('preserveTime')) {
-            let momentOldVal = moment.utc(oldVal);
+            const momentOldVal = moment.utc(oldVal);
             let momentOldDisplayedDate = moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
             momentOldDisplayedDate = moment.utc({
                 year: momentOldDisplayedDate.year(),
@@ -138,7 +138,7 @@ export default Marionette.ItemView.extend({
             });
             // Figure out number of days between displayed old date and entered new date
             // and apply it to stored old date to prevent transition-through-the-day bugs
-            let diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');
+            const diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');
             newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();
         } else {
             newVal = moment.utc({
@@ -148,14 +148,14 @@ export default Marionette.ItemView.extend({
             }).minute(-this.getOption('timezoneOffset')).toISOString();
         }
 
-        this.model.set({value: newVal});
+        this.model.set({ value: newVal });
     },
 
-    __onFocus: function () {
+    __onFocus() {
         this.trigger('focus');
     },
 
-    focus: function () {
+    focus() {
         this.ui.dateInput.focus();
         this.trigger('focus');
         if (this.model.get('enabled') && !this.model.get('readonly')) {

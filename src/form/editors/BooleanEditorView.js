@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import keyCode from '../../utils/keyCode';
@@ -36,7 +36,7 @@ const classes = {
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
 formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -52,7 +52,7 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
     events: {
         'click @ui.toggleButton': '__toggle',
         'click @ui.displayText': '__toggle',
-        'keydown': '__onKeyDown'
+        keydown: '__onKeyDown'
     },
 
     className: 'editor editor_checkbox',
@@ -60,19 +60,19 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
     attributes() {
         return {
             title: this.options.title || null
-        }
+        };
     },
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             displayText: this.options.displayText,
             displayHtml: this.options.displayHtml
         };
     },
 
-    __toggle: function () {
+    __toggle() {
         if (!this.getEnabled() || this.getReadonly()) {
             return false;
         }
@@ -81,11 +81,11 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
         return false;
     },
 
-    onRender: function () {
+    onRender() {
         this.__updateState();
     },
 
-    setValue: function (value) {
+    setValue(value) {
         if (this.value === value) {
             return;
         }
@@ -93,7 +93,7 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
         this.__updateState();
     },
 
-    isEmptyValue: function () {
+    isEmptyValue() {
         return !_.isBoolean(this.getValue());
     },
 
@@ -110,7 +110,7 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
         }
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.$el.prop('tabindex', readonly ? -1 : 0);

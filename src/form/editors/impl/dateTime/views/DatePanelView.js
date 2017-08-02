@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, moment } from 'lib';
 import { helpers, dateHelpers } from 'utils';
@@ -20,7 +20,7 @@ const defaultOptions = {
 export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'timezoneOffset');
         
         this.pickerOptions = {
@@ -42,8 +42,8 @@ export default Marionette.ItemView.extend({
         pickerInput: '.js-datetimepicker'
     },
 
-    updatePickerDate: function () {
-        var val = this.model.get('value'),
+    updatePickerDate() {
+        let val = this.model.get('value'),
             format = defaultOptions.pickerFormat,
             pickerFormattedDate = val ? moment.utc(new Date(val)).utcOffset(this.getOption('timezoneOffset')).format(format) : moment.utc({}).format(format);
 
@@ -51,21 +51,21 @@ export default Marionette.ItemView.extend({
         this.ui.pickerInput.datetimepicker('update');
     },
 
-    updateValue: function (date) {
-        var oldVal = this.model.get('value'),
+    updateValue(date) {
+        let oldVal = this.model.get('value'),
             newVal = null;
 
         if (date === null || date === '') {
             newVal = null;
         } else if (oldVal && this.getOption('preserveTime')) {
-            let momentOldVal = moment.utc(oldVal);
+            const momentOldVal = moment.utc(oldVal);
             let momentOldDisplayedDate = moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
             momentOldDisplayedDate = moment({
                 year: momentOldDisplayedDate.year(),
                 month: momentOldDisplayedDate.month(),
                 date: momentOldDisplayedDate.date()
             });
-            let diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');               // Figure out number of days between displayed old date and entered new date
+            const diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');               // Figure out number of days between displayed old date and entered new date
             newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();    // and apply it to stored old date to prevent transition-through-the-day bugs
         } else {
             newVal = moment.utc({
@@ -75,15 +75,15 @@ export default Marionette.ItemView.extend({
             }).minute(-this.getOption('timezoneOffset')).toISOString();
         }
 
-        this.model.set({value: newVal});
+        this.model.set({ value: newVal });
     },
 
-    onShow: function () {
+    onShow() {
         this.ui.pickerInput.datetimepicker(this.pickerOptions)
-            .on('changeDate', function (e) {
+            .on('changeDate', e => {
                 this.updateValue(e.date);
                 this.trigger('select');
-            }.bind(this));
+            });
         this.updatePickerDate();
     }
 });

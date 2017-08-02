@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { htmlHelpers } from 'utils';
 import { Handlebars } from 'lib';
@@ -14,7 +14,7 @@ import list from 'list';
 import template from '../templates/listItem.hbs';
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
     },
 
     template: Handlebars.compile(template),
@@ -32,19 +32,19 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click': '__select'
+        click: '__select'
     },
 
-    __select: function () {
+    __select() {
         this.trigger('member:select', this.model);
     },
 
-    onHighlighted: function (fragment) {
-        var text = htmlHelpers.highlightText(this.model.get('name'), fragment);
+    onHighlighted(fragment) {
+        const text = htmlHelpers.highlightText(this.model.get('name'), fragment);
         this.ui.name.html(text);
     },
 
-    onUnhighlighted: function () {
+    onUnhighlighted() {
         this.ui.name.text(this.model.get('name'));
     }
 });

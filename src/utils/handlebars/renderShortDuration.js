@@ -8,28 +8,28 @@
 
 /* global module */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import { dateHelpers } from '../index';
 
-module.exports = function (duration) {
+module.exports = function(duration) {
     if (duration === 0) {
         return '0';
     }
     if (!duration) {
         return '';
     }
-    let o = dateHelpers.durationISOToObject(duration);
-    var result = '';
+    const o = dateHelpers.durationISOToObject(duration);
+    let result = '';
     if (o.days) {
-        result += o.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS') + ' ';
+        result += `${o.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
     }
     if (o.hours) {
-        result += o.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS') + ' ';
+        result += `${o.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
     }
     if (o.minutes) {
-        result += o.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES') + ' ';
+        result += `${o.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
     }
     return _.string.rtrim(result);
 };

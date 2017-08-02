@@ -11,13 +11,13 @@ import { helpers } from 'utils';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 export default Marionette.ItemView.extend({
-    initialize (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'key');
     },
 
     template: false,
 
-    attributes () {
+    attributes() {
         return {
             'data-editors': this.options.key
         };
@@ -29,11 +29,11 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onShow () {
+    onShow() {
         this.__updateState();
     },
 
-    update () {
+    update() {
         this.__updateState();
     }
 });

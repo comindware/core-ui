@@ -8,7 +8,7 @@
 
 /* global module */
 
-"use strict";
+'use strict';
 
 import { moment } from 'lib';
 

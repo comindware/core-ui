@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import UserService from 'services/UserService';
@@ -20,8 +20,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightText: function (text, fragment, escape)
-    {
+    highlightText(text, fragment, escape) {
         if (!text) {
             return '';
         }
@@ -29,13 +28,13 @@ export default /** @lends module:core.utils.htmlHelpers */ {
             text = Handlebars.Utils.escapeExpression(text);
         }
 
-        var lowerText = text.toLowerCase();
-        var startIndex = 0;
-        var index;
-        var output = '';
+        const lowerText = text.toLowerCase();
+        let startIndex = 0;
+        let index;
+        let output = '';
         while ((index = lowerText.indexOf(fragment, startIndex)) !== -1) {
-            var index2 = index + fragment.length;
-            output += text.substring(startIndex, index) + "<span class='highlight'>" + text.substring(index, index2) + '</span>';
+            const index2 = index + fragment.length;
+            output += `${text.substring(startIndex, index)}<span class='highlight'>${text.substring(index, index2)}</span>`;
             startIndex = index2;
         }
 
@@ -53,8 +52,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightMentions: function (text, escape)
-    {
+    highlightMentions(text, escape) {
         if (!text) {
             return '';
         }
@@ -62,21 +60,20 @@ export default /** @lends module:core.utils.htmlHelpers */ {
             text = Handlebars.Utils.escapeExpression(text);
         }
 
-        var membersByUserName = _.reduce(UserService.listUsers(), function (memo, user) {
+        const membersByUserName = _.reduce(UserService.listUsers(), (memo, user) => {
             if (user.userName) {
                 memo[user.userName] = user;
             }
             return memo;
         }, {});
-        var regex = /(\s|^)@([a-z0-9_\.]+)/gi;
+        const regex = /(\s|^)@([a-z0-9_\.]+)/gi;
 
-        return text.replace(regex, function(fragment, whitespace, userName) {
-            var user = membersByUserName[userName];
+        return text.replace(regex, (fragment, whitespace, userName) => {
+            const user = membersByUserName[userName];
             if (user) {
-                return whitespace + '<a href="' + user.url + '" title="' + user.name + '">@' + user.userName + '</a>';
-            } else {
-                return fragment;
+                return `${whitespace}<a href="${user.url}" title="${user.name}">@${user.userName}</a>`;
             }
+            return fragment;
         });
     },
 
@@ -87,7 +84,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightUrls: function (text, escape) {
+    highlightUrls(text, escape) {
         if (!text) {
             return '';
         }
@@ -95,10 +92,8 @@ export default /** @lends module:core.utils.htmlHelpers */ {
             text = Handlebars.Utils.escapeExpression(text);
         }
 
-        var regex = /(?:ht|f)tp(?:s?):\/\/[^\s]*/gi;
-        return  text.replace(regex, function(url){
-            return '<a href="' + url + '">'+url+'</a>';
-        });
+        const regex = /(?:ht|f)tp(?:s?):\/\/[^\s]*/gi;
+        return text.replace(regex, url => `<a href="${url}">${url}</a>`);
     },
 
     /**
@@ -106,7 +101,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * @param {Object} el DOM-element to check.
      * @return {Boolean} True if an element is presented in DOM.
      * */
-    isElementInDom: function (el) {
+    isElementInDom(el) {
         return document.body.contains(el);
     },
 
@@ -114,8 +109,7 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * Use CSS for the same effect. IE8 is not supported anymore.
      * @deprecated
      */
-    forbidSelection: function (el)
-    {
+    forbidSelection(el) {
         function stopAndPreventDefault(e) {
             if (e === undefined) {
                 return false;
@@ -133,13 +127,13 @@ export default /** @lends module:core.utils.htmlHelpers */ {
      * Use jQuery <code>.offset()</code>.
      * @deprecated
      */
-    getDocumentPosition: function (el) {
+    getDocumentPosition(el) {
         if (el instanceof window.jQuery) {
             el = el[0];
         }
 
-        var left = 0;
-        var top = 0;
+        let left = 0;
+        let top = 0;
         do {
             if (!isNaN(el.offsetLeft)) {
                 left += el.offsetLeft;
@@ -149,6 +143,6 @@ export default /** @lends module:core.utils.htmlHelpers */ {
             }
             el = el.offsetParent;
         } while (el);
-        return { x:left, y:top };
+        return { x: left, y: top };
     }
 };

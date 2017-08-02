@@ -11,15 +11,15 @@
 import { $ } from 'lib';
 import PopupStackView from './window/views/PopupStackView';
 
-var windowService = /** @lends module:core.services.WindowService */ {
-    initialize () {
+const windowService = /** @lends module:core.services.WindowService */ {
+    initialize() {
         this.__$popupStackRegionEl = $(document.createElement('div'));
         this.__$popupStackRegionEl.appendTo(document.body);
 
-        let regionManager = new Marionette.RegionManager();
+        const regionManager = new Marionette.RegionManager();
         regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
 
-        let popupStackRegion = regionManager.get('popupStackRegion');
+        const popupStackRegion = regionManager.get('popupStackRegion');
         this.__popupStackView = new PopupStackView();
         popupStackRegion.show(this.__popupStackView);
 
@@ -32,7 +32,7 @@ var windowService = /** @lends module:core.services.WindowService */ {
      * @param {Marionette.View} view A Marionette.View instance to show.
      * @returns {String} The popup id that you can use to close it.
      * */
-    showPopup (view) {
+    showPopup(view) {
         return this.__popupStackView.showPopup(view, {
             fadeBackground: true,
             transient: false,
@@ -44,7 +44,7 @@ var windowService = /** @lends module:core.services.WindowService */ {
      * Closes the top-level popup or does nothing if there is none.
      * @param {string} [popupId=null]
      * */
-    closePopup (popupId = null) {
+    closePopup(popupId = null) {
         this.__popupStackView.closePopup(popupId);
     },
 
@@ -55,7 +55,7 @@ var windowService = /** @lends module:core.services.WindowService */ {
      * @param {Object} options Options object.
      * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
      * */
-    showTransientPopup (view, options = { fadeBackground: false, hostEl: null }) {
+    showTransientPopup(view, options = { fadeBackground: false, hostEl: null }) {
         return this.__popupStackView.showPopup(view, {
             fadeBackground: options.fadeBackground,
             anchorEl: options.anchorEl,
@@ -64,11 +64,11 @@ var windowService = /** @lends module:core.services.WindowService */ {
         });
     },
 
-    get (popupId) {
+    get(popupId) {
         return this.__popupStackView.get(popupId);
     },
 
-    fadeBackground (fade) {
+    fadeBackground(fade) {
         this.__popupStackView.fadeBackground(fade);
     }
 };

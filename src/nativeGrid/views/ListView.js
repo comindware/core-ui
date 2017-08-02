@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import template from '../../list/templates/list.hbs';
 import { keypress, Handlebars } from 'lib';
@@ -14,27 +14,26 @@ import { helpers, htmlHelpers } from 'utils';
 import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
 
-let VisibleCollectionView = Marionette.CollectionView.extend({
-    getChildView: function(child) {
-        if (child.get('isLoadingRowModel'))
-        {
+const VisibleCollectionView = Marionette.CollectionView.extend({
+    getChildView(child) {
+        if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
         }
 
-        var childViewSelector = this.getOption('childViewSelector');
+        const childViewSelector = this.getOption('childViewSelector');
         if (childViewSelector) {
             return childViewSelector(child);
         }
 
-        var childView = this.getOption('childView');
+        const childView = this.getOption('childView');
         if (!childView) {
             helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
         }
         return childView;
     },
 
-    setFitToView: function () {
-        this.children.each(function (ch) {
+    setFitToView() {
+        this.children.each(ch => {
             ch.setFitToView();
         });
     }
@@ -54,8 +53,8 @@ let VisibleCollectionView = Marionette.CollectionView.extend({
  * @param {Object} [options.emptyViewOptions] Опции для emptyView
  * @param {Backbone.View} options.loadingChildView View-лоадер, показывается при подгрузке строк
  * */
-let ListView = Marionette.LayoutView.extend({
-    initialize: function (options) {
+const ListView = Marionette.LayoutView.extend({
+    initialize(options) {
         helpers.ensureOption(options, 'collection');
 
         this.__createReqres();
@@ -86,7 +85,7 @@ let ListView = Marionette.LayoutView.extend({
     className: 'list',
     template: Handlebars.compile(template),
 
-    onShow: function () {
+    onShow() {
         this.state.visibleHeight = this.$el.parent().height();
         // Updating viewportHeight and rendering subviews
         this.visibleCollectionView = new VisibleCollectionView({
@@ -100,65 +99,65 @@ let ListView = Marionette.LayoutView.extend({
             loadingChildView: this.loadingChildView
         });
 
-        this.listenTo(this.visibleCollectionView, 'childview:click', function (child) {
+        this.listenTo(this.visibleCollectionView, 'childview:click', function(child) {
             this.trigger('row:click', child.model);
         });
 
-        this.listenTo(this.visibleCollectionView, 'childview:dblclick', function (child) {
+        this.listenTo(this.visibleCollectionView, 'childview:dblclick', function(child) {
             this.trigger('row:dblclick', child.model);
         });
 
         this.visibleCollectionRegion.show(this.visibleCollectionView);
     },
 
-    onRender: function () {
+    onRender() {
         this.__assignKeyboardShortcuts();
     },
 
     keyboardShortcuts: {
-        'up': function (e) {
+        up(e) {
             this.__moveToNeighbor('top', e.shiftKey);
         },
-        'down': function (e) {
+        down(e) {
             this.__moveToNeighbor('bottom', e.shiftKey);
         },
-        'pageup': function (e) {
+        pageup(e) {
             this.__moveToNextPage('top', e.shiftKey);
         },
-        'pagedown': function (e) {
+        pagedown(e) {
             this.__moveToNextPage('bottom', e.shiftKey);
         },
-        'home': function (e) {
+        home(e) {
             this.__selectByIndex(this.getSelectedViewIndex(), 0, e.shiftKey);
             this.__scrollToTop();
         },
-        'end': function (e) {
+        end(e) {
             this.__selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
             this.__scrollToBottom();
         }
     },
 
-    __createReqres: function () {
+    __createReqres() {
         this.internalReqres = new Backbone.Wreqr.RequestResponse();
         this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
     },
 
-    __handleChildViewEvent: function (view, eventName, eventArguments) {
-        this.trigger.apply(this, [ 'childview:' + eventName, view ].concat(eventArguments));
+    __handleChildViewEvent(view, eventName, eventArguments) {
+        this.trigger.apply(this, [ `childview:${eventName}`, view ].concat(eventArguments));
     },
 
-    __scrollToTop: function () {
-        var $parentEl = this.$el.parent();
+    __scrollToTop() {
+        const $parentEl = this.$el.parent();
         $parentEl.scrollTop(0);
     },
 
-    __scrollToBottom : function () {
-        var $parentEl = this.$el.parent();
+    __scrollToBottom() {
+        const $parentEl = this.$el.parent();
         $parentEl.scrollTop(this.$el.height());
     },
 
-    __scrollToNeighbor: function (index) {
-        var view = this.visibleCollectionView.children.findByIndex(index),
+    __scrollToNeighbor(index) {
+        let view = this.visibleCollectionView.children.findByIndex(index),
             $parentEl = this.$el.parent(),
             currentScrollTop = $parentEl.scrollTop(),
             visibleHeight = this.state.visibleHeight,
@@ -173,8 +172,8 @@ let ListView = Marionette.LayoutView.extend({
         }
     },
 
-    __scrollToIndex: function (index, offset) {
-        var view = this.visibleCollectionView.children.findByIndex(index),
+    __scrollToIndex(index, offset) {
+        let view = this.visibleCollectionView.children.findByIndex(index),
             $parentEl = this.$el.parent(),
             currentScrollTop = $parentEl.scrollTop(),
             viewPositionTop = view.$el.position().top,
@@ -183,16 +182,16 @@ let ListView = Marionette.LayoutView.extend({
         $parentEl.scrollTop(newScrollPos);
     },
 
-    __selectByIndex: function (currentIndex, nextIndex, shiftPressed) {
-        var model = this.collection.at(nextIndex);
-        var selectFn = this.collection.selectSmart || this.collection.select;
+    __selectByIndex(currentIndex, nextIndex, shiftPressed) {
+        const model = this.collection.at(nextIndex);
+        const selectFn = this.collection.selectSmart || this.collection.select;
         if (selectFn) {
             selectFn.call(this.collection, model, false, shiftPressed);
         }
     },
 
-    __moveToNeighbor: function (direction, shiftPressed) {
-        var selectedIndex = this.getSelectedViewIndex(),
+    __moveToNeighbor(direction, shiftPressed) {
+        let selectedIndex = this.getSelectedViewIndex(),
             nextIndex = selectedIndex;
 
         direction === 'top' ? nextIndex-- : nextIndex++; //jshint ignore: line
@@ -204,8 +203,8 @@ let ListView = Marionette.LayoutView.extend({
         }
     },
 
-    __moveToNextPage: function (direction, shiftPressed) {
-        var selectedIndex = this.getSelectedViewIndex(),
+    __moveToNextPage(direction, shiftPressed) {
+        let selectedIndex = this.getSelectedViewIndex(),
             selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex),
             selectedPositionTop = selectedView.$el.position().top,
             nextIndex = selectedIndex;
@@ -223,10 +222,10 @@ let ListView = Marionette.LayoutView.extend({
         }
     },
 
-    getSelectedViewIndex: function () {
-        var cid = this.collection.cursorCid;
-        var index = 0;
-        this.collection.find(function (x, i) {
+    getSelectedViewIndex() {
+        const cid = this.collection.cursorCid;
+        let index = 0;
+        this.collection.find((x, i) => {
             if (x.cid === cid) {
                 index = i;
                 return true;
@@ -236,13 +235,13 @@ let ListView = Marionette.LayoutView.extend({
         return index;
     },
 
-    __getTopIndex: function (index) {
-        var cHeight = 0,
+    __getTopIndex(index) {
+        let cHeight = 0,
             newIndex = index,
             childViews = this.visibleCollectionView.children.toArray();
 
-        for (var i = index - 1; i >= 0; i--) {
-            var newH = cHeight + childViews[i].$el.height();
+        for (let i = index - 1; i >= 0; i--) {
+            const newH = cHeight + childViews[i].$el.height();
 
             if (newH > this.state.visibleHeight) {
                 break;
@@ -255,13 +254,13 @@ let ListView = Marionette.LayoutView.extend({
         return newIndex;
     },
 
-    __getBottomIndex: function (index) {
-        var cHeight = 0,
+    __getBottomIndex(index) {
+        let cHeight = 0,
             newIndex = index,
             childViews = this.visibleCollectionView.children.toArray();
 
-        for (var i = index + 1; i < childViews.length; i++) {
-            var newH = cHeight + childViews[i].$el.height();
+        for (let i = index + 1; i < childViews.length; i++) {
+            const newH = cHeight + childViews[i].$el.height();
 
             if (newH > this.state.visibleHeight) {
                 break;
@@ -275,21 +274,21 @@ let ListView = Marionette.LayoutView.extend({
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
-    __normalizeCollectionIndex: function (index) {
+    __normalizeCollectionIndex(index) {
         return Math.max(0, Math.min(this.collection.length - 1, index));
     },
 
-    __assignKeyboardShortcuts: function () {
+    __assignKeyboardShortcuts() {
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, function (value, key) //noinspection JSHint
+        _.each(this.keyboardShortcuts, function(value, key) //noinspection JSHint
         {
             if (typeof value === 'object') {
                 this.keyListener.register_combo(_.extend({
-                    'keys': key,
-                    'this': this
+                    keys: key,
+                    this: this
                 }, value));
             } else {
                 this.keyListener.simple_combo(key, value.bind(this));
@@ -297,13 +296,13 @@ let ListView = Marionette.LayoutView.extend({
         }, this);
     },
 
-    getElementHeight: function () {
-        var minHeight = 0;
+    getElementHeight() {
+        let minHeight = 0;
 
         if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
             minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
         } else {
-            this.visibleCollectionView.children.forEach(function (view) {
+            this.visibleCollectionView.children.forEach(view => {
                 minHeight += view.$el.height();
             });
         }
@@ -311,29 +310,29 @@ let ListView = Marionette.LayoutView.extend({
         return minHeight;
     },
 
-    setWidth: function (fullWidth) {
+    setWidth(fullWidth) {
         this.$el.width(fullWidth);
     },
 
-    setFitToView: function () {
+    setFitToView() {
         this.visibleCollectionView.setFitToView();
     },
 
-    __handleResize: function () {
+    __handleResize() {
         this.__handleResizeInternal();
     },
 
-    __handleResizeInternal: function () {
+    __handleResizeInternal() {
         this.state.visibleHeight = this.$el.parent().height();
 
-        setTimeout(function () {
-            var fullWidth = this.$el.parent().width(),
+        setTimeout(() => {
+            let fullWidth = this.$el.parent().width(),
                 currentWidth = this.$el.width();
 
             if (fullWidth > currentWidth) {
                 this.$el.width(fullWidth);
             }
-        }.bind(this), 200);
+        }, 200);
     }
 });
 

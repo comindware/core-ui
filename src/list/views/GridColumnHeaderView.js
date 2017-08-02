@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/gridcolumnheader.hbs';
@@ -22,8 +22,8 @@ import template from '../templates/gridcolumnheader.hbs';
  * @param {Object} options Constructor options
  * @param {Array} options.columns массив колонок
  * */
-let GridColumnHeaderView = Marionette.ItemView.extend({
-    initialize: function (options) {
+const GridColumnHeaderView = Marionette.ItemView.extend({
+    initialize(options) {
         this.column = options.column;
     },
 
@@ -31,17 +31,16 @@ let GridColumnHeaderView = Marionette.ItemView.extend({
     className: 'grid-header-column-content',
 
     events: {
-        'click': '__handleSorting'
+        click: '__handleSorting'
     },
 
-    __handleSorting: function ()
-    {
+    __handleSorting() {
         this.trigger('columnSort', this, {
             column: this.column
         });
     },
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             sortingAsc: this.column.sorting === 'asc',
             sortingDesc: this.column.sorting === 'desc'
