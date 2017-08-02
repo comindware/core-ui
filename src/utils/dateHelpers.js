@@ -225,8 +225,8 @@ export default /** @lends module:core.utils.dateHelpers */ {
         return time.locale(lang).format(format);
     },
 
-    getTimeEditFormat() {
-        return dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
+    getTimeEditFormat(hasSeconds) {
+        return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
     getDateEditFormat() {

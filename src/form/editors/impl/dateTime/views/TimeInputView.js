@@ -17,7 +17,8 @@ export default Marionette.ItemView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'allowEmptyValue');
-        this.timeEditFormat = dateHelpers.getTimeEditFormat();
+        this.hasSeconds = this.__hasSeconds(options.timeDisplayFormat);
+        this.timeEditFormat = dateHelpers.getTimeEditFormat(this.hasSeconds);
     },
 
     template: Handlebars.compile(template),
@@ -64,10 +65,10 @@ export default Marionette.ItemView.extend({
             if (currentValue) {
                 // Take previously selected date and new time
                 parsedDate = moment.utc(currentValue).utcOffset(this.getOption('timezoneOffset'))
-                    .hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0).toISOString();
+                    .hour(parsedVal.hour()).minute(parsedVal.minute()).second(this.hasSeconds ? parsedVal.second() : 0).millisecond(0).toISOString();
             } else {
                 // Take current date and newly selected time
-                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).toISOString();
+                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).second(this.hasSeconds ? parsedVal.second() : 0).toISOString();
             }
         } else if (currentValue !== '' && currentValue !== null) {
             parsedDate = currentValue;
@@ -159,6 +160,17 @@ export default Marionette.ItemView.extend({
         this.trigger('focus');
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.trigger('calendar:open');
+        }
+    },
+
+    __hasSeconds(format) {
+        switch (format) {
+            case 'LTS':
+            case 'HH:mm:ss':
+                return true;
+            case 'LT':
+            default:
+                return false;
         }
     }
 });

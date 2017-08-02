@@ -10,9 +10,7 @@ export default ReferenceButtonView.extend({
     templateHelpers() {
         const value = this.model.get('value');
         return {
-            text: this.options.getDisplayText(value),
-            avatarUrl: value && value.avatarUrl,
-            abbreviation: value && value.abbreviation
+            text: this.options.getDisplayText(value)
         };
     },
 
