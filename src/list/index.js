@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import EventAggregator from './EventAggregator';
@@ -29,35 +29,35 @@ import factory from './factory';
 import cellFactory from './CellViewFactory';
 
 export default /** @lends module:core.list */ {
-    EventAggregator: EventAggregator,
+    EventAggregator,
     /**
      * Фабрика списков
      * @namespace
      * */
-    factory: factory,
+    factory,
     /**
      * Фабрика ячеек
      * @namespace
      * */
-    cellFactory: cellFactory,
+    cellFactory,
     /**
      * Views-списка
      * @namespace
      * */
     views: {
-        EmptyListView: EmptyListView,
-        EmptyGridView: EmptyGridView,
-        GridColumnHeaderView: GridColumnHeaderView,
-        GridHeaderView: GridHeaderView,
-        GridView: GridView,
-        ListView: ListView,
-        RowView: RowView,
-        ScrollbarView: ScrollbarView,
+        EmptyListView,
+        EmptyGridView,
+        GridColumnHeaderView,
+        GridHeaderView,
+        GridView,
+        ListView,
+        RowView,
+        ScrollbarView,
 
         behaviors: {
-            ListGroupViewBehavior: ListGroupViewBehavior,
-            ListItemViewBehavior: ListItemViewBehavior,
-            GridItemViewBehavior: GridItemViewBehavior
+            ListGroupViewBehavior,
+            ListItemViewBehavior,
+            GridItemViewBehavior
         }
     },
     /**
@@ -65,11 +65,11 @@ export default /** @lends module:core.list */ {
      * @namespace
      * */
     models: {
-        LoadingRowModel:LoadingRowModel,
+        LoadingRowModel,
         behaviors: {
-            ListGroupBehavior: ListGroupBehavior,
-            ListItemBehavior: ListItemBehavior,
-            GridItemBehavior: GridItemBehavior
+            ListGroupBehavior,
+            ListItemBehavior,
+            GridItemBehavior
         }
     }
 };

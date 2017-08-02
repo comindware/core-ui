@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/loadingRow.hbs';

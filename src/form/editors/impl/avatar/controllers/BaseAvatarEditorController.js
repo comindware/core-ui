@@ -26,7 +26,7 @@ export default Marionette.Object.extend({
     /**
      * Object containing default options to be used when no corresponding options are provided while instantiating controller
      */
-    defaultOptions: defaultOptions,
+    defaultOptions,
     
     initialize(options) {
         this.options = _.defaults(options, this.defaultOptions);

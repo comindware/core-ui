@@ -9,7 +9,7 @@
 'use strict';
 
 import { Handlebars } from 'lib';
-import {helpers} from 'utils';
+import { helpers } from 'utils';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/avatarEditor.hbs';
 import formRepository from '../formRepository';
@@ -108,7 +108,7 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
     },
     
     upload() {
-        let file = this.fileInput.files[0];
+        const file = this.fileInput.files[0];
         this.__initFileInput();
         
         if (file) {
@@ -122,9 +122,8 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
                     }
                 }
             });
-        } else {
-            return Promise.resolve();
         }
+        return Promise.resolve();
     },
     
     __initFileInput() {
@@ -148,7 +147,7 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
     },
     
     __getInitials(fullName) {
-        let words = fullName.split(' ');
+        const words = fullName.split(' ');
         
         switch (words.length) {
             case 0:

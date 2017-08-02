@@ -7,14 +7,14 @@ export default ReferenceButtonView.extend({
 
     className: 'popout-field-user',
 
-    templateHelpers: function () {
-        let value = this.model.get('value');
+    templateHelpers() {
+        const value = this.model.get('value');
         return {
             text: this.options.getDisplayText(value)
         };
     },
 
-    updateView: function () {
+    updateView() {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.ui.clearButton.show();
         } else if (this.model.get('readonly')) {

@@ -8,14 +8,13 @@
 
 /* global module */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
-module.exports = function(a, options){
-    if(_.isNull(a)) {
+module.exports = function(a, options) {
+    if (_.isNull(a)) {
         return options.fn(this);
-    } else {
-        return options.inverse(this);
     }
+    return options.inverse(this);
 };

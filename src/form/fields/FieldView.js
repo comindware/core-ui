@@ -22,7 +22,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize (options) {
+    initialize(options) {
         options = options || {};
 
         this.form = options.form;
@@ -37,7 +37,7 @@ export default Marionette.LayoutView.extend({
         });
     },
 
-    templateHelpers () {
+    templateHelpers() {
         return {
             title: this.schema.title
         };
@@ -51,9 +51,9 @@ export default Marionette.LayoutView.extend({
         helpTextRegion: '.js-help-text-region'
     },
 
-    onShow () {
+    onShow() {
         this.editorRegion.show(this.editor);
-        let errorPopout = dropdown.factory.createPopout({
+        const errorPopout = dropdown.factory.createPopout({
             buttonView: ErrorButtonView,
             panelView: TooltipPanelView,
             panelViewOptions: {
@@ -65,7 +65,7 @@ export default Marionette.LayoutView.extend({
         });
         this.errorTextRegion.show(errorPopout);
         if (this.schema.helpText) {
-            let infoPopout = dropdown.factory.createPopout({
+            const infoPopout = dropdown.factory.createPopout({
                 buttonView: InfoButtonView,
                 panelView: TooltipPanelView,
                 panelViewOptions: {
@@ -87,8 +87,8 @@ export default Marionette.LayoutView.extend({
      *
      * @return {String}
      */
-    validate () {
-        let error = this.editor.validate();
+    validate() {
+        const error = this.editor.validate();
         if (error) {
             this.setError(error.message);
         } else {
@@ -97,7 +97,7 @@ export default Marionette.LayoutView.extend({
         return error;
     },
 
-    setError (msg) {
+    setError(msg) {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -105,7 +105,7 @@ export default Marionette.LayoutView.extend({
         this.__viewModel.set('errorText', msg);
     },
 
-    clearError () {
+    clearError() {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -118,7 +118,7 @@ export default Marionette.LayoutView.extend({
      *
      * @return {Mixed}
      */
-    commit () {
+    commit() {
         return this.editor.commit();
     },
 
@@ -127,7 +127,7 @@ export default Marionette.LayoutView.extend({
      *
      * @return {Mixed}
      */
-    getValue () {
+    getValue() {
         return this.editor.getValue();
     },
 
@@ -136,32 +136,32 @@ export default Marionette.LayoutView.extend({
      *
      * @param {Mixed} value
      */
-    setValue (value) {
+    setValue(value) {
         this.editor.setValue(value);
     },
 
     /**
      * Give the editor focus
      */
-    focus () {
+    focus() {
         this.editor.focus();
     },
 
     /**
      * Remove focus from the editor
      */
-    blur () {
+    blur() {
         this.editor.blur();
     },
 
-    setRequired (required) {
+    setRequired(required) {
         if (!this.__checkUiReady()) {
             return;
         }
         this.$el.toggleClass(classes.REQUIRED, Boolean(required));
     },
 
-    __updateEditorState (readonly, enabled) {
+    __updateEditorState(readonly, enabled) {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -169,9 +169,9 @@ export default Marionette.LayoutView.extend({
         this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     },
 
-    __createSchema (schema) {
+    __createSchema(schema) {
         // Resolving editor type declared as string
-        let type = _.isString(schema.type) ? formRepository.editors[schema.type] : schema.type || 'Text';
+        const type = _.isString(schema.type) ? formRepository.editors[schema.type] : schema.type || 'Text';
         this.schema = Object.assign({
             title: this.__createDefaultTitle(),
             required: false
@@ -183,7 +183,7 @@ export default Marionette.LayoutView.extend({
      * Create the default field title (label text) from the key name.
      * (Converts 'camelCase' to 'Camel Case')
      */
-    __createDefaultTitle () {
+    __createDefaultTitle() {
         let str = this.key;
         if (!str) {
             return '';
@@ -196,8 +196,8 @@ export default Marionette.LayoutView.extend({
         return str;
     },
 
-    __createEditor () {
-        let ConstructorFn = this.schema.type;
+    __createEditor() {
+        const ConstructorFn = this.schema.type;
         this.editor = new ConstructorFn({
             schema: this.schema,
             form: this.form,
@@ -215,7 +215,7 @@ export default Marionette.LayoutView.extend({
         });
     },
 
-    __createEditorId () {
+    __createEditorId() {
         if (!this.key) {
             return null;
         }
@@ -231,7 +231,7 @@ export default Marionette.LayoutView.extend({
         return id;
     },
 
-    __checkUiReady () {
+    __checkUiReady() {
         return this.__rendered && !this.isDestroyed;
     }
 });

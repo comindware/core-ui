@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Developer: Stepan Burguchev
  * Date: 8/27/2015
  * Copyright: 2009-2016 Comindware®
@@ -6,23 +6,23 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
-let promiseQueue = [];
+const promiseQueue = [];
 
 export default {
-    registerPromise: function(promise) {
+    registerPromise(promise) {
         promiseQueue.push(promise);
 
-        return promise.finally(function() {
+        return promise.finally(() => {
             delete promiseQueue.splice(promiseQueue.indexOf(promise), 1);
         });
     },
 
-    cancelAll: function() {
-        _.each(promiseQueue, function(promise) {
+    cancelAll() {
+        _.each(promiseQueue, promise => {
             promise.cancel();
         });
     }

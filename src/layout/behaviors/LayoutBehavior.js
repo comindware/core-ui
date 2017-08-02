@@ -14,14 +14,14 @@ const classes = {
 };
 
 export default Marionette.Behavior.extend({
-    initialize (options, view) {
+    initialize(options, view) {
         //noinspection Eslint
         view.__updateState = this.__updateState.bind(this);
 
         this.__state = {};
     },
 
-    __updateState () {
+    __updateState() {
         const nextState = this.__computeViewState();
         if (this.__state.visible !== nextState.visible) {
             this.$el.toggleClass(classes.HIDDEN, !nextState.visible);
@@ -30,7 +30,7 @@ export default Marionette.Behavior.extend({
         this.__state = nextState;
     },
 
-    __computeViewState () {
+    __computeViewState() {
         let visible = this.view.options.visible;
         visible = _.isFunction(visible) ? visible.call(this.view) : visible;
         if (_.isUndefined(visible)) {

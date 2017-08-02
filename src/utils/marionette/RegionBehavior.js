@@ -10,11 +10,11 @@ import 'lib';
 import helpers from '../helpers';
 
 export default Marionette.Behavior.extend({
-    initialize (options, view) {
+    initialize(options, view) {
         helpers.ensureOption(view, 'regions');
     },
 
-    onBeforeRender () {
+    onBeforeRender() {
         this.regionManager = new Marionette.RegionManager();
 
         const view = this.view;
@@ -25,7 +25,7 @@ export default Marionette.Behavior.extend({
         Object.assign(view, this.regionManager.getRegions());
     },
 
-    onDestroy () {
+    onDestroy() {
         this.regionManager.destroy();
     }
 });

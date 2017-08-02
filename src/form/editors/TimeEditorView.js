@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, moment } from 'lib';
 import template from './templates/timeEditor.hbs';
@@ -31,7 +31,7 @@ const defaultOptions = {
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * */
 formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         options = options || {};
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -73,19 +73,19 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
         'click @ui.clearButton': '__onClear'
     },
 
-    __change: function () {
+    __change() {
         this.__value(this.timeModel.get('value'), true, true);
         this.__updateClearButton();
     },
 
-    __onClear: function () {
+    __onClear() {
         this.__value(null, true, true);
         this.timeModel.set('value', null);
         this.focus();
         return false;
     },
 
-    __updateClearButton: function() {
+    __updateClearButton() {
         if (!this.options.allowEmptyValue || !this.getValue()) {
             this.ui.clearButton.hide();
         } else {
@@ -93,17 +93,17 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
         }
     },
 
-    setValue: function (value) {
+    setValue(value) {
         this.__value(value, true, false);
         this.timeModel.set('value', value);
     },
 
-    onRender: function () {
+    onRender() {
         this.timeRegion.show(this.timeView);
         this.__updateClearButton();
     },
 
-    __value: function (value, updateUi, triggerChange) {
+    __value(value, updateUi, triggerChange) {
         value = this.__adjustValue(value);
         if (this.value === value) {
             return;
@@ -115,18 +115,18 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
         }
     },
 
-    getValue: function () {
+    getValue() {
         return this.value === null ? this.value : moment(this.value).toISOString();
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
-        this.timeModel.set({enabled: this.getEnabled()});
+        this.timeModel.set({ enabled: this.getEnabled() });
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
-        this.timeModel.set({readonly: this.getReadonly()});
+        this.timeModel.set({ readonly: this.getReadonly() });
     },
 
     focusElement: null,
@@ -134,7 +134,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     /**
      * Sets the focus onto this editor.
      */
-    focus: function() {
+    focus() {
         if (this.hasFocus) {
             return;
         }
@@ -144,7 +144,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     /**
      * Clears the focus.
      */
-    blur: function() {
+    blur() {
         if (!this.hasFocus) {
             return;
         }

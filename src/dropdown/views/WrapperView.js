@@ -10,7 +10,7 @@ import { $, Handlebars } from 'lib';
 import { helpers } from 'utils';
 
 export default Marionette.ItemView.extend({
-    initialize (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'view');
 
         this.regionManager = new Marionette.RegionManager();
@@ -18,12 +18,12 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(''),
 
-    onShow () {
+    onShow() {
         this.regionManager.addRegion('viewRegion', { el: this.$el });
         this.regionManager.get('viewRegion').show(this.options.view);
     },
 
-    onDestroy () {
+    onDestroy() {
         this.regionManager.destroy();
     }
 });

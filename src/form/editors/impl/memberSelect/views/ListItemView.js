@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
@@ -14,7 +14,7 @@ import template from '../templates/listItem.hbs';
 import list from 'list';
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.reqres = options.reqres;
     },
 
@@ -32,32 +32,30 @@ export default Marionette.ItemView.extend({
         fullName: '.js-fullName'
     },
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             text: this.__getText()
         };
     },
 
-    __getText: function () {
+    __getText() {
         return this.model.get('name') || this.model.get('userName');
     },
 
-    onHighlighted: function (fragment)
-    {
-        var text = htmlHelpers.highlightText(this.__getText(), fragment);
+    onHighlighted(fragment) {
+        const text = htmlHelpers.highlightText(this.__getText(), fragment);
         this.ui.fullName.html(text);
     },
 
-    onUnhighlighted: function ()
-    {
+    onUnhighlighted() {
         this.ui.fullName.text(this.__getText());
     },
 
     events: {
-        'click': '__select'
+        click: '__select'
     },
 
-    __select: function () {
+    __select() {
         this.reqres.request('value:set', this.model.id);
     }
 });

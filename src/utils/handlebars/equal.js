@@ -8,12 +8,11 @@
 
 /* global module */
 
-"use strict";
+'use strict';
 
-module.exports = function(a, b, options){
-    if( a !== b ) {
+module.exports = function(a, b, options) {
+    if (a !== b) {
         return options.inverse(this);
-    } else {
-        return options.fn(this);
     }
+    return options.fn(this);
 };
