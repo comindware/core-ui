@@ -18,44 +18,27 @@ define(
             return new CanvasView({
                 view: new core.layout.Group({
                     name: 'Group',
-                    view: new core.layout.TabLayout({
-                        tabs: [
-                            {
-                                id: 'tab1',
-                                name: 'Tab 1',
-                                view: new core.form.editors.TextAreaEditor({
-                                    value: 'Content 1'
-                                })
-                            },
-                            {
-                                id: 'tab2',
-                                name: 'Tab 2',
-                                view: new core.form.editors.TextAreaEditor({
-                                    value: 'Content 2'
-                                })
-                            },
-                            {
-                                id: 'tab3',
-                                name: 'Tab 3',
-                                enabled: false,
-                                view: new core.form.editors.TextAreaEditor({
-                                    value: 'Content 3'
-                                })
-                            },
-                            {
-                                id: 'tab4',
-                                name: 'Tab 4',
-                                error: 'Validation Error',
-                                view: new core.form.editors.TextAreaEditor({
-                                    value: 'Content 4'
-                                })
-                            }
+                    view: new core.layout.VerticalLayout({
+                        rows: [
+                            new core.form.editors.TextEditor({
+                                value: 'foo'
+                            }),
+                            new core.form.editors.TextAreaEditor({
+                                value: 'bar'
+                            }),
+                            new core.form.editors.NumberEditor({
+                                value: 123
+                            }),
+                            new core.form.editors.DateTimeEditor({
+                                value: '2015-07-20T10:46:37Z'
+                            }),
+                            new core.form.editors.BooleanEditor({
+                                value: true,
+                                displayText: 'Make me some tea!'
+                            })
                         ]
                     })
-                }),
-                canvas: {
-                    height: '400px'
-                }
+                })
             });
         };
     }
