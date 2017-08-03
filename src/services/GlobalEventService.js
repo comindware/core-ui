@@ -35,11 +35,11 @@ const windowEventList = [
     }
 ];
 
-var globalEventService = /** @lends module:core.services.GlobalEventService */ {
-    initialize: function () {
+const globalEventService = /** @lends module:core.services.GlobalEventService */ {
+    initialize() {
         this.__windowEvents = windowEventList.map(x => {
-            let captureSuffix = x.capture ? ':captured' : '';
-            let eventName = `window:${x.name}${captureSuffix}`;
+            const captureSuffix = x.capture ? ':captured' : '';
+            const eventName = `window:${x.name}${captureSuffix}`;
             return {
                 name: x.name,
                 capture: x.capture,
@@ -53,7 +53,7 @@ var globalEventService = /** @lends module:core.services.GlobalEventService */ {
         });
     },
 
-    onDestroy: function () {
+    onDestroy() {
         this.__windowEvents.forEach(x => {
             window.removeEventListener(x.name, x.handler, x.capture);
         });

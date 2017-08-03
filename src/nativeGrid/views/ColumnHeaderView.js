@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import template from '../templates/columnHeader.hbs';
 import { Handlebars } from 'lib';
@@ -23,8 +23,8 @@ import GridColumnHeaderView from '../../list/views/GridColumnHeaderView';
  * @param {Array} options.columns Массив колонок
  * @param {} options.gridEventAggregator ?
  * */
-let ColumnHeaderView = GridColumnHeaderView.extend({
-    initialize: function (options) {
+const ColumnHeaderView = GridColumnHeaderView.extend({
+    initialize(options) {
         GridColumnHeaderView.prototype.initialize.apply(this, arguments);
 
         if (this.column.filterView) {
@@ -46,12 +46,12 @@ let ColumnHeaderView = GridColumnHeaderView.extend({
         'click @ui.filterBtn': 'showFilterPopout'
     },
 
-    __resolveFilterClass: function () {
+    __resolveFilterClass() {
         if (!this.column.filterView) {
             return;
         }
 
-        var hasFilter = this.model.get('hasFilter');
+        const hasFilter = this.model.get('hasFilter');
 
         if (hasFilter) {
             this.$el.addClass('has-filter');
@@ -60,7 +60,7 @@ let ColumnHeaderView = GridColumnHeaderView.extend({
         }
     },
 
-    showFilterPopout: function (event) {
+    showFilterPopout(event) {
         event.preventDefault();
         event.stopPropagation();
         this.gridEventAggregator.trigger('showFilterView', {
@@ -70,7 +70,7 @@ let ColumnHeaderView = GridColumnHeaderView.extend({
         });
     },
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             sortingAsc: this.column.sorting === 'asc',
             sortingDesc: this.column.sorting === 'desc',
@@ -78,7 +78,7 @@ let ColumnHeaderView = GridColumnHeaderView.extend({
         };
     },
 
-    onRender: function () {
+    onRender() {
         this.__resolveFilterClass();
     }
 });

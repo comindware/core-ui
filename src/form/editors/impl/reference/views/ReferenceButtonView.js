@@ -14,16 +14,14 @@ const classes = {
 };
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.reqres = options.reqres;
     },
-
-    className: 'input',
-
+    
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
-        let value = this.model.get('value');
+    templateHelpers() {
+        const value = this.model.get('value');
         return {
             hasValue: Boolean(value),
             valueUrl: value ? this.options.createValueUrl(value) : false,
@@ -41,15 +39,15 @@ export default Marionette.ItemView.extend({
     events: {
         'click @ui.clearButton': '__clear',
         'click @ui.editButton': '__edit',
-        'click': '__click'
+        click: '__click'
     },
 
-    __clear: function () {
+    __clear() {
         this.reqres.request('value:clear');
         return false;
     },
 
-    __edit: function () {
+    __edit() {
         if (this.reqres.request('value:edit', this.model.get('value'))) {
             return false;
         }
@@ -62,14 +60,14 @@ export default Marionette.ItemView.extend({
         'change:readonly': 'updateView'
     },
 
-    __click (e) {
+    __click(e) {
         if (e.target.tagName === 'A') {
             return;
         }
         this.reqres.request('panel:open');
     },
 
-    updateView: function () {
+    updateView() {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.$el.addClass(classes.ARROW_BUTTON);
             this.ui.clearButton.show();
@@ -82,7 +80,7 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onRender: function () {
+    onRender() {
         this.updateView();
     }
 });

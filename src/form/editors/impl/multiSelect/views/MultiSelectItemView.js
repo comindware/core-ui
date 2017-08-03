@@ -6,13 +6,13 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import list from 'list';
 import { Handlebars } from 'lib';
 import template from '../templates/multiSelectItem.hbs';
 
-var classes = {
+const classes = {
     BASE: 'multiselect-i',
     SELECTED: 'multiselect-i_selected'
 };
@@ -22,8 +22,8 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function() {
-        var displayAttribute = this.getOption('displayAttribute');
+    templateHelpers() {
+        const displayAttribute = this.getOption('displayAttribute');
 
         return {
             text: _.result(this.model.toJSON(), displayAttribute)
@@ -31,15 +31,15 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click': '__toggle'
+        click: '__toggle'
     },
 
     modelEvents: {
-        'select': '__markSelected',
-        'deselect': '__markDeselected'
+        select: '__markSelected',
+        deselect: '__markDeselected'
     },
 
-    __toggle: function() {
+    __toggle() {
         if (this.model.selected) {
             this.model.trigger('deselect', this.model);
         } else {
@@ -47,11 +47,11 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    __markSelected: function() {
+    __markSelected() {
         this.$el.addClass(classes.SELECTED);
     },
 
-    __markDeselected: function() {
+    __markDeselected() {
         this.$el.removeClass(classes.SELECTED);
     }
 });

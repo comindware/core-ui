@@ -9,14 +9,14 @@
 import FieldView from '../fields/FieldView';
 import helpers from '../../utils/helpers';
 
-let Form = Marionette.Object.extend({
+const Form = Marionette.Object.extend({
     /**
      * Constructor
      *
      * @param {Object} [options.schema]
      * @param {Backbone.Model} [options.model]
      */
-    initialize (options) {
+    initialize(options) {
         this.options = options = options || {};
 
         this.__regionManager = new Marionette.RegionManager();
@@ -24,11 +24,11 @@ let Form = Marionette.Object.extend({
         this.model = options.model;
 
         this.fields = {};
-        _.each(this.schema, function (fieldSchema, key) {
-            let FieldType = fieldSchema.field || options.field || FieldView;
-            let field = new FieldType({
+        _.each(this.schema, function(fieldSchema, key) {
+            const FieldType = fieldSchema.field || options.field || FieldView;
+            const field = new FieldType({
                 form: this,
-                key: key,
+                key,
                 schema: fieldSchema,
                 model: this.model
             });
@@ -36,14 +36,14 @@ let Form = Marionette.Object.extend({
             this.fields[key] = field;
         }, this);
 
-        let $target = this.options.$target;
+        const $target = this.options.$target;
 
-        let usedFields = {};
+        const usedFields = {};
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => {
-            let $editorRegion = $(el);
-            let key = $editorRegion.attr('data-editors');
-            let regionName = `${key}Region`;
+            const $editorRegion = $(el);
+            const key = $editorRegion.attr('data-editors');
+            const regionName = `${key}Region`;
             if (usedFields[key]) {
                 helpers.throwFormatError(`Duplicated field '${key}'.`);
             }
@@ -54,9 +54,9 @@ let Form = Marionette.Object.extend({
 
         //Render standalone fields
         $target.find('[data-fields]').each((i, el) => {
-            let $fieldRegion = $(el);
-            let key = $fieldRegion.attr('data-fields');
-            let regionName = `${key}Region`;
+            const $fieldRegion = $(el);
+            const key = $fieldRegion.attr('data-fields');
+            const regionName = `${key}Region`;
             if (usedFields[key]) {
                 helpers.throwFormatError(`Duplicated field '${key}'.`);
             }
@@ -73,11 +73,11 @@ let Form = Marionette.Object.extend({
      *
      * @return {Object}  Validation errors
      */
-    commit (options) {
+    commit(options) {
         // Validate
         options = options || {};
 
-        let errors = this.validate({
+        const errors = this.validate({
             skipModelValidate: !options.validate
         });
         if (errors) {
@@ -86,8 +86,8 @@ let Form = Marionette.Object.extend({
 
         // Commit
         let modelError = null;
-        let setOptions = Object.assign({
-            error: function (model, e) {
+        const setOptions = Object.assign({
+            error(model, e) {
                 modelError = e;
             }
         }, options);
@@ -103,15 +103,15 @@ let Form = Marionette.Object.extend({
      *
      * @return {Editor}
      */
-    getEditor (key) {
-        let field = this.fields[key];
+    getEditor(key) {
+        const field = this.fields[key];
         if (!field) {
-            throw new Error('Field not found: ' + key);
+            throw new Error(`Field not found: ${key}`);
         }
         return field.editor;
     },
 
-    onDestroy () {
+    onDestroy() {
         this.__regionManager.destroy();
     },
 
@@ -119,15 +119,15 @@ let Form = Marionette.Object.extend({
      * Get all the field values as an object.
      * @param {String} [key]    Specific field value to get
      */
-    getValue (key) {
+    getValue(key) {
         // Return only given key if specified
         if (key) {
             return this.fields[key].getValue();
         }
 
         // Otherwise return entire form
-        let values = {};
-        _.each(this.fields, function (field) {
+        const values = {};
+        _.each(this.fields, field => {
             values[field.key] = field.getValue();
         });
 
@@ -140,7 +140,7 @@ let Form = Marionette.Object.extend({
      * @param {Object|String} prop     New values to set, or property to set
      * @param val                     Value to set
      */
-    setValue (prop, val) {
+    setValue(prop, val) {
         let data = {};
         if (typeof prop === 'string') {
             data[prop] = val;
@@ -155,35 +155,35 @@ let Form = Marionette.Object.extend({
         });
     },
 
-    __handleEditorEvent (event, editor, field) {
+    __handleEditorEvent(event, editor, field) {
         switch (event) {
-        case 'change':
-            this.trigger('change', this, editor);
-            this.trigger(`${editor.key}:change`, this, editor);
-            break;
-        case 'focus':
-            if (!this.hasFocus) {
-                this.hasFocus = true;
-                this.trigger('focus', this);
-            }
-            break;
-        case 'blur':
-            if (this.hasFocus) {
-                let focusedField = _.find(this.fields, f => f.editor.hasFocus);
-                if (!focusedField) {
-                    this.hasFocus = false;
-                    this.trigger('blur', this);
+            case 'change':
+                this.trigger('change', this, editor);
+                this.trigger(`${editor.key}:change`, this, editor);
+                break;
+            case 'focus':
+                if (!this.hasFocus) {
+                    this.hasFocus = true;
+                    this.trigger('focus', this);
                 }
-            }
-            break;
-        default:
-            break;
+                break;
+            case 'blur':
+                if (this.hasFocus) {
+                    const focusedField = _.find(this.fields, f => f.editor.hasFocus);
+                    if (!focusedField) {
+                        this.hasFocus = false;
+                        this.trigger('blur', this);
+                    }
+                }
+                break;
+            default:
+                break;
         }
     },
 
-    setErrors (errors) {
+    setErrors(errors) {
         _.each(errors, (value, key) => {
-            let field = this.fields[key];
+            const field = this.fields[key];
             if (field) {
                 field.setError(value);
             }
@@ -194,16 +194,16 @@ let Form = Marionette.Object.extend({
      * Validate the data
      * @return {Object} Validation errors
      */
-    validate (options) {
-        let fields = this.fields;
-        let model = this.model;
-        let errors = {};
+    validate(options) {
+        const fields = this.fields;
+        const model = this.model;
+        const errors = {};
 
         options = options || {};
 
         //Collect errors from schema validation
-        _.each(fields, function (field) {
-            let error = field.validate(options);
+        _.each(fields, field => {
+            const error = field.validate(options);
             if (error) {
                 errors[field.key] = error;
             }
@@ -211,10 +211,10 @@ let Form = Marionette.Object.extend({
 
         //Get errors from default Backbone model validator
         if (!options.skipModelValidate && model && model.validate) {
-            let modelErrors = model.validate(this.getValue());
+            const modelErrors = model.validate(this.getValue());
 
             if (modelErrors) {
-                let isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+                const isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
 
                 //If errors are not in object form then just store on the error object
                 if (!isDictionary) {
@@ -224,7 +224,7 @@ let Form = Marionette.Object.extend({
 
                 //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
                 if (isDictionary) {
-                    _.each(modelErrors, function (val, key) {
+                    _.each(modelErrors, (val, key) => {
                         //Set error on field if there isn't one already
                         if (fields[key] && !errors[key]) {
                             fields[key].setError(val);
@@ -241,7 +241,7 @@ let Form = Marionette.Object.extend({
             }
         }
 
-        let result = _.isEmpty(errors) ? null : errors;
+        const result = _.isEmpty(errors) ? null : errors;
         this.trigger('form:validated', !result, result);
         return result;
     },
@@ -249,12 +249,12 @@ let Form = Marionette.Object.extend({
     /**
      * Gives the first editor in the form focus
      */
-    focus () {
+    focus() {
         if (this.hasFocus) {
             return;
         }
 
-        let field = this.fields[0];
+        const field = this.fields[0];
         if (!field) {
             return;
         }
@@ -264,14 +264,12 @@ let Form = Marionette.Object.extend({
     /**
      * Removes focus from the currently focused editor
      */
-    blur () {
+    blur() {
         if (!this.hasFocus) {
             return;
         }
 
-        let focusedField = _.find(this.fields, function (field) {
-            return field.editor.hasFocus;
-        });
+        const focusedField = _.find(this.fields, field => field.editor.hasFocus);
         if (focusedField) {
             focusedField.editor.blur();
         }
@@ -312,39 +310,39 @@ const constants = {
  * */
 
 export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.BackboneFormBehavior.prototype */{
-    initialize: function (options, view) {
+    initialize(options, view) {
         view.renderForm = this.__renderForm.bind(this);
     },
 
     defaults: {
         renderStrategy: constants.RENDER_STRATEGY_SHOW,
-        model: function () {
+        model() {
             return this.model;
         },
-        schema: function () {
+        schema() {
             return this.schema;
         }
     },
 
-    onRender: function () {
+    onRender() {
         if (this.options.renderStrategy === constants.RENDER_STRATEGY_RENDER) {
             this.__renderForm();
         }
     },
 
-    onShow: function () {
+    onShow() {
         if (this.options.renderStrategy === constants.RENDER_STRATEGY_SHOW) {
             this.__renderForm();
         }
     },
 
-    onDestroy () {
+    onDestroy() {
         if (this.form) {
             this.form.destroy();
         }
     },
 
-    __renderForm: function () {
+    __renderForm() {
         let model = this.options.model;
         if (_.isFunction(model)) {
             model = model.call(this.view);
@@ -355,9 +353,9 @@ export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.
             schema = schema.call(this.view);
         }
 
-        let form = new Form({
-            model: model,
-            schema: schema,
+        const form = new Form({
+            model,
+            schema,
             $target: this.$el,
             field: this.options.field
         });

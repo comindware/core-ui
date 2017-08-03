@@ -6,14 +6,14 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import LoadingView from '../../views/LoadingView';
 
 export default Marionette.Behavior.extend({
-    initialize: function (options, view) {
+    initialize(options, view) {
         helpers.ensureOption(options, 'region');
 
         this.loadingViewOptions = {
@@ -24,7 +24,7 @@ export default Marionette.Behavior.extend({
         };
     },
 
-    setLoading: function (visible) {
+    setLoading(visible) {
         if (_.isBoolean(visible)) {
             if (visible) {
                 this.view[this.options.region].show(new LoadingView(this.loadingViewOptions));
@@ -33,10 +33,10 @@ export default Marionette.Behavior.extend({
             }
         } else if (visible instanceof Promise) {
             this.setLoading(true);
-            Promise.resolve(visible).bind(this).then(function () {
+            Promise.resolve(visible).bind(this).then(function() {
                 //noinspection JSPotentiallyInvalidUsageOfThis
                 this.setLoading(false);
-            }, function () {
+            }, function() {
                 //noinspection JSPotentiallyInvalidUsageOfThis
                 this.setLoading(false);
             });

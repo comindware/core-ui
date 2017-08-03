@@ -11,7 +11,7 @@ import template from '../templates/referenceListItem.hbs';
 import list from 'list';
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.reqres = options.reqres;
     },
 
@@ -25,17 +25,17 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             text: this.options.getDisplayText(this.model.toJSON())
         };
     },
 
     events: {
-        'click': '__select'
+        click: '__select'
     },
 
-    __select: function () {
+    __select() {
         this.reqres.request('value:set', this.model);
     }
 });

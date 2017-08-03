@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
@@ -39,7 +39,7 @@ const defaultOptions = {
  * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
  * */
 formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
-    initialize: function(options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -51,7 +51,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         }
 
         this.collection = this.options.collection;
-        var collectionChangeHandler = _.throttle(this.__onCollectionChange, 100, {leading: false});
+        const collectionChangeHandler = _.throttle(this.__onCollectionChange, 100, { leading: false });
 
         this.listenTo(this.collection, 'add', collectionChangeHandler);
         this.listenTo(this.collection, 'remove', collectionChangeHandler);
@@ -78,7 +78,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
 
     template: Handlebars.compile(template),
 
-    onRender: function() {
+    onRender() {
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: MultiSelectButtonView,
             buttonViewOptions: {
@@ -107,65 +107,63 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.dropdownRegion.show(this.dropdownView);
     },
 
-    __onCollectionChange: function() {
+    __onCollectionChange() {
         this.__trimValues();
         this.__triggerChange();
         this.viewModel.get('button').set('value', this.__findModels(this.getValue()));
         this.__resetValue();
     },
 
-    __onValueSet (values) {
+    __onValueSet(values) {
         this.__value(values, true);
     },
 
-    __onSelect: function(model) {
+    __onSelect(model) {
         this.__select(model);
     },
 
-    __onDeselect: function(model) {
+    __onDeselect(model) {
         this.__deselect(model);
 
         if (!this.options.allowEmptyValue) {
-            var valueModels = this.__findModels(this.tempValue) || null;
+            const valueModels = this.__findModels(this.tempValue) || null;
             if (!(valueModels && valueModels.length)) {
                 model.trigger('select', model);
             }
         }
     },
 
-    __select: function(model) {
+    __select(model) {
         model.selected = true;
         this.__setValue(model.id);
     },
 
-    __deselect: function(model) {
+    __deselect(model) {
         model.selected = false;
         this.__unsetValue(model.id);
     },
 
-    __selectAll: function() {
-        this.collection.each(function(model) {
+    __selectAll() {
+        this.collection.each(model => {
             model.trigger('select', model);
-        }.bind(this));
+        });
     },
 
-    __deselectAll: function() {
-        this.collection.each(function(model) {
+    __deselectAll() {
+        this.collection.each(model => {
             model.trigger('deselect', model);
-        }.bind(this));
+        });
     },
 
-    __trimValues: function() {
-        var values = this.getValue();
+    __trimValues() {
+        let values = this.getValue();
         if (values === null) {
             return;
         }
 
-        _.chain(values).
-            reject(function(value) {
-                return this.collection.get(value);
-            }.bind(this)).
-            each(function(rejectedValue) {
+        _.chain(values)
+            .reject(value => this.collection.get(value))
+            .each(rejectedValue => {
                 values = _.without(values, rejectedValue);
             });
 
@@ -176,13 +174,11 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         }
     },
 
-    __findModels: function(values) {
-        return this.collection ? this.collection.filter(function(model) {
-            return _.contains(values, model.id);
-        }) : null;
+    __findModels(values) {
+        return this.collection ? this.collection.filter(model => _.contains(values, model.id)) : null;
     },
 
-    __setValue: function(value) {
+    __setValue(value) {
         if (_.contains(this.tempValue, value)) {
             return;
         }
@@ -190,7 +186,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.tempValue = this.tempValue.concat(value);
     },
 
-    __unsetValue: function(value) {
+    __unsetValue(value) {
         if (!_.contains(this.tempValue, value)) {
             return;
         }
@@ -198,7 +194,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.tempValue = _.without(this.tempValue, value);
     },
 
-    __value: function (value, updateUi) {
+    __value(value, updateUi) {
         this.tempValue = value;
         this.__applyValue();
         if (updateUi) {
@@ -206,39 +202,39 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         }
     },
 
-    __applyValue: function() {
+    __applyValue() {
         this.setValue(this.tempValue);
         this.__trimValues();
         this.__triggerChange();
         this.dropdownView.close();
     },
 
-    __resetValue: function() {
-        var value = this.getValue();
+    __resetValue() {
+        const value = this.getValue();
         this.tempValue = value === null ? [] : value;
 
-        this.collection.each(function(model) {
+        this.collection.each(model => {
             delete model.selected;
         });
 
-        var valueModels = this.__findModels(this.tempValue) || null;
-        _.each(valueModels, function(valueModel) {
+        const valueModels = this.__findModels(this.tempValue) || null;
+        _.each(valueModels, valueModel => {
             valueModel.trigger('select', valueModel);
         });
     },
 
-    onPanelOpenRequest: function() {
+    onPanelOpenRequest() {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
             this.__resetValue();
         }
     },
 
-    onPanelOpen: function () {
+    onPanelOpen() {
         this.onFocus();
     },
 
-    onPanelClose: function() {
+    onPanelClose() {
         if (!this.options.explicitApply) {
             this.__applyValue();
         }
@@ -247,11 +243,11 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.onBlur();
     },
 
-    focus: function () {
+    focus() {
         this.onPanelOpenRequest();
     },
 
-    blur: function () {
+    blur() {
         this.dropdownView.close();
     }
 });

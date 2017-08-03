@@ -18,7 +18,7 @@ const changeMode = {
     keydown: 'keydown'
 };
 
-const defaultOptions = function () {
+const defaultOptions = function() {
     return {
         changeMode: 'blur',
         emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
@@ -46,9 +46,9 @@ const defaultOptions = function () {
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * */
 formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         options = options || {};
-        var defaults = defaultOptions();
+        const defaults = defaultOptions();
         if (options.schema) {
             _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
         } else {
@@ -58,7 +58,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.placeholder = this.options.emptyPlaceholder;
     },
 
-    onShow: function() {
+    onShow() {
         if (this.options.mask) {
             this.ui.input.inputmask(_.extend({
                 mask: this.options.mask,
@@ -78,7 +78,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
+    templateHelpers() {
         return this.options;
     },
 
@@ -88,7 +88,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         'click .js-clear-button': '__clear'
     },
 
-    __keyup: function () {
+    __keyup() {
         if (this.options.changeMode === changeMode.keydown) {
             this.__value(this.ui.input.val(), false, true);
         }
@@ -96,26 +96,26 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.trigger('keyup', this);
     },
 
-    __change: function () {
+    __change() {
         this.__value(this.ui.input.val(), false, true);
     },
 
-    __clear () {
+    __clear() {
         this.__value(null, true, true);
         this.focus();
         return false;
     },
 
-    setValue: function (value) {
+    setValue(value) {
         this.__value(value, true, false);
     },
 
-    setPermissions: function (enabled, readonly) {
+    setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
     },
 
-    setPlaceholder: function () {
+    setPlaceholder() {
         if (!this.getEnabled() || this.getReadonly()) {
             this.placeholder = '';
         } else {
@@ -125,12 +125,12 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.ui.input.prop('placeholder', this.placeholder);
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
         this.ui.input.prop('disabled', !enabled);
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.ui.input.prop('readonly', readonly);
@@ -138,7 +138,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         }
     },
 
-    onRender: function () {
+    onRender() {
         this.ui.input.val(this.getValue() || '');
 
         // Keyboard shortcuts listener
@@ -156,17 +156,17 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
      * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
      * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
      * */
-    addKeyboardListener: function (key, callback) {
+    addKeyboardListener(key, callback) {
         if (!this.keyListener) {
             helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
         }
-        var keys = key.split(',');
-        _.each(keys, function (k) {
+        const keys = key.split(',');
+        _.each(keys, function(k) {
             this.keyListener.simple_combo(k, callback);
         }, this);
     },
 
-    __value: function (value, updateUi, triggerChange) {
+    __value(value, updateUi, triggerChange) {
         if (this.value === value) {
             return;
         }
@@ -182,11 +182,11 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     /**
      * Focuses the editor's input and selects all the text in it.
      * */
-    select: function () {
+    select() {
         this.ui.input.select();
     },
 
-    deselect: function () {
+    deselect() {
         this.ui.input.deselect();
     }
 });

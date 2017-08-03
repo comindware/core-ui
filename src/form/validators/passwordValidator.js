@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
  * Copyright: 2009-2016 Comindware®

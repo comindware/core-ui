@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Developer: Stepan Burguchev
  * Date: 7/21/2014
  * Copyright: 2009-2016 Comindware®
@@ -43,7 +43,7 @@ $_.browser = {
     msie: (/msie|trident/i).test(navigator.userAgent)
 };
 
-var api = {
+const api = {
     keypress: keypress_,
     moment: moment_,
     Handlebars: Handlebars_,

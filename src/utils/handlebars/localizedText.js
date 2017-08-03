@@ -8,7 +8,7 @@
 
 /* global module */
 
-"use strict";
+'use strict';
 
 import LocalizationService from '../../services/LocalizationService';
 

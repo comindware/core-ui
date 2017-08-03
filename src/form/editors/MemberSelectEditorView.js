@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, keypress } from 'lib';
 import { helpers, comparators } from 'utils';
@@ -51,7 +51,7 @@ const ButtonModel = Backbone.AssociatedModel.extend({
  * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
  * */
 formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -85,13 +85,13 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
 
     template: Handlebars.compile(template),
 
-    setValue: function (value) {
+    setValue(value) {
         this.__value(_.isArray(value) ? (value.length ? value[0] : null) : value, false);
     },
 
-    onRender: function () {
+    onRender() {
         // dropdown
-        var dropdownOptions = _.extend({
+        const dropdownOptions = _.extend({
             buttonViewOptions: {},
             panelView: PanelView,
             panelViewOptions: {
@@ -112,16 +112,16 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), function (key) {
-            this.keyListener.simple_combo(key, function () {
+        _.each('down,enter,num_enter'.split(','), function(key) {
+            this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
-            }.bind(this));
+            });
         }, this);
     },
 
-    __value: function (value, triggerChange) {
+    __value(value, triggerChange) {
         if (this.value === value) {
             return;
         }
@@ -132,29 +132,29 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
         }
     },
 
-    onValueClear: function () {
+    onValueClear() {
         this.__value(null, true);
         this.focus();
     },
 
-    onValueSet: function (value) {
+    onValueSet(value) {
         this.__value(value, true);
         this.dropdownView.close();
         this.$el.focus();
     },
 
-    onValueNavigate: function () {
+    onValueNavigate() {
     },
 
-    onFilterText: function (options) {
-        var deferred = $.Deferred();
-        var text = options.text.toLocaleLowerCase();
+    onFilterText(options) {
+        const deferred = $.Deferred();
+        const text = options.text.toLocaleLowerCase();
         this.collection.unhighlight();
         if (text === '') {
             this.collection.filter(null);
         } else {
-            this.collection.filter(function (model) {
-                var fullName = (model.get('name') || '').toLocaleLowerCase();
+            this.collection.filter(model => {
+                const fullName = (model.get('name') || '').toLocaleLowerCase();
                 return fullName.indexOf(text) !== -1;
             });
             this.collection.highlight(text);
@@ -163,14 +163,14 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
         return deferred.promise();
     },
 
-    onPanelOpen: function () {
+    onPanelOpen() {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
     },
 
-    __initCollection: function() {
-        var users = UserService.listUsers();
+    __initCollection() {
+        const users = UserService.listUsers();
         this.collection = new MembersCollection(new Backbone.Collection(users, {
             model: MemberModel
         }), {
@@ -180,16 +180,16 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
         this.viewModel.get('panel').set('collection', this.collection);
     },
 
-    __findModel: function (value) {
+    __findModel(value) {
         return this.collection.findWhere({ id: value });
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.viewModel.get('button').set('enabled', this.getEnabled() && !this.getReadonly());
         this.$el.prop('tabindex', readonly ? -1 : 0);

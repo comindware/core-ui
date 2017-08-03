@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import PopoutView from './views/PopoutView';
 import DropdownView from './views/DropdownView';
@@ -28,14 +28,14 @@ export default /** @lends module:core.dropdown */ {
          * @namespace
          * */
         behaviors: {
-            CustomAnchorBehavior: CustomAnchorBehavior
+            CustomAnchorBehavior
         },
-        PopoutView: PopoutView,
-        DropdownView: DropdownView,
-        ListPanelView: ListPanelView,
-        MenuItemView: MenuItemView,
-        MenuPanelView: MenuPanelView,
-        DefaultButtonView: DefaultButtonView
+        PopoutView,
+        DropdownView,
+        ListPanelView,
+        MenuItemView,
+        MenuPanelView,
+        DefaultButtonView
     },
-    factory: factory
+    factory
 };

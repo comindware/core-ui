@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import factory from './factory';
@@ -16,7 +16,7 @@ import HeaderView from './views/HeaderView';
 import ColumnHeaderView from './views/ColumnHeaderView';
 import NativeGridView from './views/NativeGridView';
 
-export default /** @lends module:core.nativeGrid */  {
+export default {
     /**
      * Фабрика списков
      * @namespace

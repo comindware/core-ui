@@ -6,14 +6,13 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import GridItemViewBehavior from '../../../list/views/behaviors/GridItemViewBehavior';
 
-let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
-    initialize: function (options, view)
-    {
+const NativeGridItemViewBehavior = GridItemViewBehavior.extend({
+    initialize(options, view) {
         GridItemViewBehavior.prototype.initialize.apply(this, arguments);
 
         this.paddingLeft = view.options.paddingLeft;
@@ -25,29 +24,29 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
         this.view.setFitToView = this.setFitToView.bind(this);
     },
 
-    __onColumnStartDrag: function (sender, index) {
-        var cells = this.__getCellElements();
+    __onColumnStartDrag(sender, index) {
+        const cells = this.__getCellElements();
         this.gridCellDragger = $(cells[index]);
         this.columnsWidth = [];
-        cells.each(function (i, el) {
+        cells.each((i, el) => {
             this.columnsWidth.push(this.__getElementOuterWidth(el));
-        }.bind(this));
+        });
         this.initialFullWidth = this.$el.parent().width();
     },
 
-    __onColumnStopDrag: function () {
+    __onColumnStopDrag() {
         delete this.draggedColumn;
     },
 
-    onShow: function () {
+    onShow() {
         this.__setInitialWidth(true);
     },
 
-    setFitToView: function () {
+    setFitToView() {
         this.__setInitialWidth();
     },
 
-    __setInitialWidth: function () {
+    __setInitialWidth() {
         const $cells = this.__getCellElements();
 
         for (let i = 0; i < $cells.length; i++) {
@@ -58,11 +57,11 @@ let NativeGridItemViewBehavior = GridItemViewBehavior.extend({
         }
     },
 
-    __getElementOuterWidth: function (el) {
+    __getElementOuterWidth(el) {
         return $(el)[0].getBoundingClientRect().width;
     },
 
-    __onSingleColumnResize: function (sender, args) {
+    __onSingleColumnResize(sender, args) {
         this.gridCellDragger.outerWidth(this.columnsWidth[args.index] + args.delta);
     }
 });

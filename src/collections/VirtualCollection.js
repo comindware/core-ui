@@ -6,45 +6,45 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import { helpers } from 'utils';
 
-let selectableBehavior = {
-    'none': null,
-    'single': SelectableBehavior.SingleSelect,
-    'multi': SelectableBehavior.MultiSelect
+const selectableBehavior = {
+    none: null,
+    single: SelectableBehavior.SingleSelect,
+    multi: SelectableBehavior.MultiSelect
 };
 
-let getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
-    var it = groupingOptions.iterator;
-    return _.isString(it) ? function (model) {
+const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
+    const it = groupingOptions.iterator;
+    return _.isString(it) ? function(model) {
         return model.get(it) || model[it];
     } : it;
 };
 
-let getNormalizedGroupingComparator = function getNormalizedGroupingComparator(groupingOptions) {
-    var cmp = groupingOptions.comparator;
+const getNormalizedGroupingComparator = function getNormalizedGroupingComparator(groupingOptions) {
+    const cmp = groupingOptions.comparator;
     return cmp !== undefined ?
-        (_.isString(cmp) ? function (model) {
+        (_.isString(cmp) ? function(model) {
             return model.get(cmp) || model[cmp];
         } : cmp) :
         groupingOptions.iterator;
 };
 
-let getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFactory(groupingOptions) {
-    var modelFactory = groupingOptions.modelFactory;
+const getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFactory(groupingOptions) {
+    const modelFactory = groupingOptions.modelFactory;
     return modelFactory !== undefined ?
         (_.isString(modelFactory) ?
-            function (model) {
+            function(model) {
                 return new Backbone.Model({
                     displayText: model.get(modelFactory),
                     groupingModel: true
                 });
             } : modelFactory) :
-        function (model) {
+        function(model) {
             return new Backbone.Model({
                 displayText: groupingOptions.iterator(model),
                 groupingModel: true
@@ -52,7 +52,7 @@ let getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFacto
         };
 };
 
-let fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
+const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
     if (groupingOptions.__normalized) {
         return;
     }
@@ -104,8 +104,8 @@ let fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
  * </ul>.
  * */
 
-let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collections.VirtualCollection.prototype */ {
-    constructor: function (collection, options) //noinspection JSHint
+const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collections.VirtualCollection.prototype */ {
+    constructor(collection, options) //noinspection JSHint
     {
         options = options || {};
         this.options = options;
@@ -155,14 +155,14 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this.listenTo(collection, 'add', this.__onAdd);
         this.listenTo(collection, 'remove', this.__onRemove);
         this.listenTo(collection, 'change', this.__onChange);
-        this.listenTo(collection, 'reset',  this.__onReset);
-        this.listenTo(collection, 'sort',  this.__onSort);
-        this.listenTo(collection, 'sync',  this.__onSync);
+        this.listenTo(collection, 'reset', this.__onReset);
+        this.listenTo(collection, 'sort', this.__onSort);
+        this.listenTo(collection, 'sync', this.__onSync);
 
         this.initialize.apply(this, arguments);
 
-        var SelectableBehaviorClass;
-        var selectableBehaviorOption = this.options.selectableBehavior;
+        let SelectableBehaviorClass;
+        const selectableBehaviorOption = this.options.selectableBehavior;
         if (selectableBehaviorOption && selectableBehavior[selectableBehaviorOption] !== undefined) {
             SelectableBehaviorClass = selectableBehavior[selectableBehaviorOption];
         } else {
@@ -173,14 +173,14 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         }
     },
 
-    __rebuildIndex: function () {
-        var tStart;
+    __rebuildIndex() {
+        let tStart;
         if (window.flag_debug) {
             //noinspection JSUnresolvedVariable
             tStart = window.performance.now && window.performance.now();
         }
 
-        var parentModels = this.filterFn ?
+        const parentModels = this.filterFn ?
             _.filter(this.parentCollection.models, this.filterFn) :
             this.parentCollection.models;
         this.index = this.__createIndexTree(parentModels, 0);
@@ -188,21 +188,20 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
 
         if (window.flag_debug) {
             //noinspection JSUnresolvedVariable
-            var tEnd = window.performance.now && window.performance.now();
+            const tEnd = window.performance.now && window.performance.now();
             //noinspection JSHint
-            console.log("Call to __rebuildIndex took " + (tEnd - tStart) + " milliseconds.");
+            console.log(`Call to __rebuildIndex took ${tEnd - tStart} milliseconds.`);
         }
     },
 
-    __rebuildModels: function () {
+    __rebuildModels() {
         this._reset();
         this.__buildModelsInternal(this.index);
     },
 
-    __buildModelsInternal: function (list)
-    {
-        for (var i = 0, len = list.length; i < len; i++) {
-            var model = list.at(i);
+    __buildModelsInternal(list) {
+        for (let i = 0, len = list.length; i < len; i++) {
+            const model = list.at(i);
             this.models.push(model);
             this._addReference(model);
             model.collection = this;
@@ -212,52 +211,47 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this.length = this.models.length;
     },
 
-    __createIndexTree: function (models, i) {
-        var self = this;
+    __createIndexTree(models, i) {
+        const self = this;
         if (i < this.grouping.length) {
-            var groupingOptions = this.grouping[i];
+            const groupingOptions = this.grouping[i];
             fixGroupingOptions(groupingOptions);
 
             return new Backbone.Collection(_.chain(models)
                 .groupBy(groupingOptions.iterator)
-                .map(function (v) {
-                    var node = groupingOptions.modelFactory(v[0], v);
+                .map(v => {
+                    const node = groupingOptions.modelFactory(v[0], v);
                     node.iteratorValue = groupingOptions.iterator(v[0]);
                     node.comparatorValue = groupingOptions.comparator(v[0], v);
                     node.children = self.__createIndexTree(v, i + 1);
                     return node;
                 })
-                .sortBy(function (n) {
-                    return n.comparatorValue;
-                })
+                .sortBy(n => n.comparatorValue)
                 .value());
-        } else {
+        }
             // Applying comparator to the ultimate items
-            if (!this.comparator) {
-                return new Backbone.Collection(models);
-            }
-
-            // Run sort based on type of `comparator`.
-            if (_.isString(this.comparator) || this.comparator.length === 1) {
-                models = _.sortBy(models, this.comparator, this);
-            } else {
-                models.sort(_.bind(this.comparator, this));
-            }
-
-            _.each(models, function (model)
-            {
-                if (model.children && !model.children.comparator) {
-                    model.children.comparator = this.comparator;
-                    model.children.sort();
-                }
-            }, this);
-
+        if (!this.comparator) {
             return new Backbone.Collection(models);
         }
+
+            // Run sort based on type of `comparator`.
+        if (_.isString(this.comparator) || this.comparator.length === 1) {
+            models = _.sortBy(models, this.comparator, this);
+        } else {
+            models.sort(_.bind(this.comparator, this));
+        }
+
+        _.each(models, function(model) {
+            if (model.children && !model.children.comparator) {
+                model.children.comparator = this.comparator;
+                model.children.sort();
+            }
+        }, this);
+
+        return new Backbone.Collection(models);
     },
 
-    filter: function (filterFn)
-    {
+    filter(filterFn) {
         if (filterFn !== undefined) {
             this.filterFn = filterFn;
         }
@@ -266,8 +260,7 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this.trigger('reset', this, {});
     },
 
-    group: function (grouping)
-    {
+    group(grouping) {
         if (grouping !== undefined) {
             this.grouping = grouping;
         }
@@ -276,14 +269,14 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this.trigger('reset', this, {});
     },
 
-    __bindLifecycle: function (view, methodName) {
+    __bindLifecycle(view, methodName) {
         view.on(methodName, _.bind(this.stopListening, this));
     },
 
     grouping: [
     ],
 
-    __onSort: function (collection, options) {
+    __onSort(collection, options) {
         if (this.comparator !== undefined) {
             return;
         }
@@ -292,35 +285,35 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this.trigger('reset', this, options);
     },
 
-    __onSync: function (collection, resp, options) {
+    __onSync(collection, resp, options) {
         this.trigger('sync', collection, resp, options);
     },
 
-    __onAddDelayed: _.debounce(function (options) {
+    __onAddDelayed: _.debounce(function(options) {
         this.__rebuildIndex();
         this.trigger('reset', this, options);
     }, 10),
 
-    __onAdd: function (model, collection, options) {
+    __onAdd(model, collection, options) {
         if (options.at !== undefined) {
             // Updating index
-            var addToIndex = function (ctx, list) {
-                for (var i = 0, len = list.length; i < len; i++) {
+            var addToIndex = function(ctx, list) {
+                for (let i = 0, len = list.length; i < len; i++) {
                     if (ctx.position === ctx.targetPosition) {
                         list.add(ctx.model, { at: i });
                         return true;
                     }
                     ctx.position++;
-                    var indexModel = list.at(i);
+                    const indexModel = list.at(i);
                     if (indexModel.children && addToIndex(ctx, indexModel.children)) {
                         return true;
                     }
                 }
             };
-            var added = addToIndex({ position: 0, targetPosition: options.at, model: model }, this.index);
+            const added = addToIndex({ position: 0, targetPosition: options.at, model }, this.index);
             if (!added) {
                 // border case when at === this.length
-                var targetCollection = this.index;
+                let targetCollection = this.index;
                 while (targetCollection.length > 0 && targetCollection.at(targetCollection.length - 1).children) {
                     targetCollection = targetCollection.at(targetCollection.length - 1).children;
                 }
@@ -341,23 +334,23 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         }
     },
 
-    __onRemove: function (model, collection, options) {
-        var i;
-        var len;
+    __onRemove(model, collection, options) {
+        let i;
+        let len;
         options || (options = {}); // jshint ignore:line
 
         // collecting items in index
         function createIteratorValueChecker(iteratorValue) {
-            return function (m) {
+            return function(m) {
                 return m.iteratorValue == iteratorValue; // jshint ignore:line
             };
         }
-        var index = this.index;
-        var groupItems = [];
+        let index = this.index;
+        const groupItems = [];
         if (this.grouping) {
             for (i = 0, len = this.grouping.length; i < len; i++) {
-                var groupingOptions = this.grouping[i];
-                var groupItem = index.filter(createIteratorValueChecker(groupingOptions.iterator(model)))[0];
+                const groupingOptions = this.grouping[i];
+                const groupItem = index.filter(createIteratorValueChecker(groupingOptions.iterator(model)))[0];
                 if (!groupItem) {
                     return;
                 }
@@ -366,7 +359,7 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
             }
         }
 
-        var item = index.get(model);
+        let item = index.get(model);
         if (item) {
             index.remove(item);
             this.__removeFromModels(item, _.extend(options, { silent: true }));
@@ -385,15 +378,14 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this.trigger('reset', this, options);
     },
 
-    __removeFromModels: function (model, options)
-    {
+    __removeFromModels(model, options) {
         if (!this.get(model)) {
             return;
         }
 
         delete this._byId[model.id];
         delete this._byId[model.cid];
-        var index = this.indexOf(model);
+        const index = this.indexOf(model);
         this.models.splice(index, 1);
         this.length--;
         if (!options.silent) {
@@ -403,26 +395,24 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         this._removeReference(model, options);
     },
 
-    __onChange: function (model, options) {
-        var changed = _.keys(model.changedAttributes());
-        var attrsAffectedByGrouping = [];
-        _.each(this.grouping, function (o) {
+    __onChange(model, options) {
+        const changed = _.keys(model.changedAttributes());
+        const attrsAffectedByGrouping = [];
+        _.each(this.grouping, o => {
             if (o.affectedAttributes) {
-                for (var i = 0, len = o.affectedAttributes.length; i < len; i++) {
+                for (let i = 0, len = o.affectedAttributes.length; i < len; i++) {
                     attrsAffectedByGrouping.push(o.affectedAttributes[i]);
                 }
             }
         });
 
-        var rebuildRequired = _.any(changed, function (key) {
-            return attrsAffectedByGrouping.indexOf(key) !== -1;
-        });
+        let rebuildRequired = _.any(changed, key => attrsAffectedByGrouping.indexOf(key) !== -1);
 
         if (!rebuildRequired && this.comparator) {
-            var previousModel = new model.constructor(model.previousAttributes(), model.options);
+            const previousModel = new model.constructor(model.previousAttributes(), model.options);
             if (this.comparator.length === 1) {
-                var cmpVal1 = this.comparator(previousModel);
-                var cmpVal2 = this.comparator(model);
+                const cmpVal1 = this.comparator(previousModel);
+                const cmpVal2 = this.comparator(model);
                 rebuildRequired = cmpVal1 !== cmpVal2;
             } else if (this.comparator.length === 2) {
                 rebuildRequired = this.comparator(previousModel, model) !== 0;
@@ -435,24 +425,23 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
         }
     },
 
-    __onReset: function (collection, options) {
+    __onReset(collection, options) {
         this.__rebuildIndex();
         this.trigger('reset', this, options);
     },
 
-    sort: function (options)
-    {
+    sort(options) {
         this.__rebuildIndex();
         this.trigger('reset', this, options);
     },
 
-    collapse: function (model) {
+    collapse(model) {
         model.collapse(true);
         this.__rebuildModels();
         this.trigger('reset', this);
     },
 
-    expand: function (model) {
+    expand(model) {
         model.expand(true);
         this.__rebuildModels();
         this.trigger('reset', this);
@@ -460,8 +449,8 @@ let VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collec
 });
 
 // methods that alter data should proxy to the parent collection
-_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'], function (methodName) {
-    VirtualCollection.prototype[methodName] = function () {
+_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'], methodName => {
+    VirtualCollection.prototype[methodName] = function() {
         return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
     };
 });

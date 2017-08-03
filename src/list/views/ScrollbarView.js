@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/scrollbar.hbs';
@@ -32,8 +32,8 @@ import template from '../templates/scrollbar.hbs';
  * @description View Scrollbar'а
  * @param {Object} options Constructor options
  * */
-let ScrollbarView = Marionette.ItemView.extend({
-    initialize: function () {
+const ScrollbarView = Marionette.ItemView.extend({
+    initialize() {
         if (this.collection === undefined) {
             throw 'You must provide a collection to display.';
         }
@@ -64,27 +64,28 @@ let ScrollbarView = Marionette.ItemView.extend({
     },
 
     collectionEvents: {
-        'add': '__handleCollectionAdd',
-        'remove': '__handleCollectionRemove',
-        'reset': '__handleCollectionReset'
+        add: '__handleCollectionAdd',
+        remove: '__handleCollectionRemove',
+        reset: '__handleCollectionReset'
     },
 
     events: {
-        'mousewheel': '__mousewheel',
-        'mousedown': '__mousedown',
-        'mouseenter': '__mouseenter',
-        'mouseleave': '__mouseleave',
+        mousewheel: '__mousewheel',
+        mousedown: '__mousedown',
+        mouseenter: '__mouseenter',
+        mouseleave: '__mouseleave',
         'mousedown @ui.dragger': '__draggerMousedown'
     },
 
-    onShow: function () {
+    onShow() {
         this.rendered = true;
+        this.__updateScrollbarVisibility();
         this.__updateScrollbarVisibility();
         this.__updateDraggerPosition();
         this.__updateDraggerHeight();
     },
 
-    onRender: function () {
+    onRender() {
         function stopAndPreventDefault(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -94,7 +95,7 @@ let ScrollbarView = Marionette.ItemView.extend({
         this.el.ondragstart = stopAndPreventDefault;
     },
 
-    updateViewportHeight: function (newViewportHeight) {
+    updateViewportHeight(newViewportHeight) {
         if (newViewportHeight === undefined) {
             throw 'newViewportHeight is undefined';
         }
@@ -113,7 +114,7 @@ let ScrollbarView = Marionette.ItemView.extend({
             this.__updateScrollbarVisibility();
             this.__updateDraggerHeight();
 
-            var maxPos = this.__getMaxPosition();
+            const maxPos = this.__getMaxPosition();
             if (this.state.position > maxPos) {
                 this.__updatePositionState(maxPos, true);
                 this.__updateDraggerPosition();
@@ -121,13 +122,11 @@ let ScrollbarView = Marionette.ItemView.extend({
         }
     },
 
-    updatePosition: function (newPosition)
-    {
+    updatePosition(newPosition) {
         this.__updatePositionInternal(newPosition, false);
     },
 
-    __updateCount: function (newCount)
-    {
+    __updateCount(newCount) {
         if (newCount === undefined) {
             throw 'newCount is undefined';
         }
@@ -142,8 +141,8 @@ let ScrollbarView = Marionette.ItemView.extend({
         }
 
         if (this.state.count !== newCount) {
-            var maxPos = this.__getMaxPosition();
-            var newMaxPos = Math.max(0, maxPos - (this.state.count - newCount));
+            const maxPos = this.__getMaxPosition();
+            const newMaxPos = Math.max(0, maxPos - (this.state.count - newCount));
 
             if (this.state.position > newMaxPos) {
                 this.__updatePositionState(newMaxPos, true);
@@ -157,8 +156,7 @@ let ScrollbarView = Marionette.ItemView.extend({
     },
 
     // normalizes new position into [min,max] and updates view+state
-    __updatePositionInternal: function (newPosition, triggerEvents)
-    {
+    __updatePositionInternal(newPosition, triggerEvents) {
         if (newPosition === undefined) {
             throw 'newPosition is undefined';
         }
@@ -177,134 +175,132 @@ let ScrollbarView = Marionette.ItemView.extend({
         return newPosition;
     },
 
-    __handleCollectionAdd: function (model, collection) {
+    __handleCollectionAdd(model, collection) {
         this.__updateCount(collection.length);
     },
 
-    __handleCollectionRemove: function (model, collection) {
+    __handleCollectionRemove(model, collection) {
         this.__updateCount(collection.length);
     },
 
-    __handleCollectionReset: function (collection) {
+    __handleCollectionReset(collection) {
         this.__updateCount(collection.length);
     },
 
-    __mouseenter: function () {
+    __mouseenter() {
         this.$el.addClass('hover');
     },
 
-    __mouseleave: function () {
+    __mouseleave() {
         this.$el.removeClass('hover');
     },
 
-    __draggerMousedown: function (e) {
+    __draggerMousedown(e) {
         this.__stopDrag();
         this.__startDrag(e);
         return false;
     },
 
-    __documentMouseMove: function (e) {
+    __documentMouseMove(e) {
         if (!this.dragContext) {
             return;
         }
 
-        var ctx = this.dragContext;
+        const ctx = this.dragContext;
         if (e.pageY !== ctx.pageOffsetY) {
-            var availableHeight = ctx.scrollbarHeight - ctx.draggerHeight;
-            var currentPosition = e.pageY - ctx.mouseOffsetY - ctx.scrollbarPositionY;
-            var newDraggerTop = Math.min(Math.max(currentPosition, 0), availableHeight);
+            const availableHeight = ctx.scrollbarHeight - ctx.draggerHeight;
+            const currentPosition = e.pageY - ctx.mouseOffsetY - ctx.scrollbarPositionY;
+            const newDraggerTop = Math.min(Math.max(currentPosition, 0), availableHeight);
 
-            var devicePercents = newDraggerTop / ctx.scrollbarHeight * 100;
-            this.ui.dragger.css({ top: devicePercents + '%' });
+            const devicePercents = newDraggerTop / ctx.scrollbarHeight * 100;
+            this.ui.dragger.css({ top: `${devicePercents}%` });
 
             // updating scrollbar state, sending positionChanged event if needed
-            var maxPos = this.__getMaxPosition();
-            var newPosition = availableHeight !== 0 ? Math.min(maxPos, Math.floor((maxPos + 1) * (newDraggerTop / availableHeight))) : 0;
+            const maxPos = this.__getMaxPosition();
+            const newPosition = availableHeight !== 0 ? Math.min(maxPos, Math.floor((maxPos + 1) * (newDraggerTop / availableHeight))) : 0;
             this.__updatePositionState(newPosition, true);
         }
 
         return false;
     },
 
-    __documentMouseUp: function () {
+    __documentMouseUp() {
         this.__stopDrag();
         return false;
     },
 
-    __mousedown: function (e) {
+    __mousedown(e) {
         if (e.target !== e.currentTarget) {
             return false;
         }
 
-        var draggerY = this.__getPosition(this.ui.dragger).y;
-        var sign = e.pageY - draggerY;
-        sign = sign / Math.abs(sign);
+        const draggerY = this.__getPosition(this.ui.dragger).y;
+        let sign = e.pageY - draggerY;
+        sign /= Math.abs(sign);
 
-        var delta = this.state.viewportHeight;
-        var newPosition = this.state.position + sign * delta;
+        const delta = this.state.viewportHeight;
+        const newPosition = this.state.position + sign * delta;
         this.__updatePositionInternal(newPosition, true);
         return false;
     },
 
-    __mousewheel: function (e) {
-        var delta = this.state.viewportHeight;
-        var newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
+    __mousewheel(e) {
+        const delta = this.state.viewportHeight;
+        const newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
         this.__updatePositionInternal(newPosition, true);
         return false;
     },
 
-    __updatePositionState: function (newPosition, triggerEvents) {
+    __updatePositionState(newPosition, triggerEvents) {
         if (this.state.position === newPosition) {
             return;
         }
 
-        var oldPosition = this.state.position;
+        const oldPosition = this.state.position;
         this.state.position = newPosition;
         if (triggerEvents) {
             this.trigger('positionChanged', this, {
-                oldPosition: oldPosition,
+                oldPosition,
                 position: newPosition
             });
         }
     },
 
-    __updateScrollbarVisibility: function() {
+    __updateScrollbarVisibility() {
         if (this.state.count > this.state.viewportHeight) {
-            this.$el.removeClass('dev-scrollbar__hidden');
+            this.$el.parent().removeClass('dev-scrollbar__hidden');
         } else {
-            this.$el.addClass('dev-scrollbar__hidden');
+            this.$el.parent().addClass('dev-scrollbar__hidden');
         }
     },
 
-    __updateDraggerHeight: function() {
-        var minHeight = Math.min(1, this.constants.minDraggerHeight / this.$el.height());
-        var heightPc = Math.max(minHeight, Math.min(1, this.state.viewportHeight / this.state.count)) * 100;
-        this.ui.dragger.css({ height: heightPc + '%' });
+    __updateDraggerHeight() {
+        const minHeight = Math.min(1, this.constants.minDraggerHeight / this.$el.height());
+        const heightPc = Math.max(minHeight, Math.min(1, this.state.viewportHeight / this.state.count)) * 100;
+        this.ui.dragger.css({ height: `${heightPc}%` });
     },
 
-    __updateDraggerPosition: function () {
-        var newTopPc;
-        var maxPos = this.__getMaxPosition();
+    __updateDraggerPosition() {
+        let newTopPc;
+        const maxPos = this.__getMaxPosition();
         if (maxPos > 0) {
-            var h = this.$el.height();
-            var dh = this.ui.dragger.height();
-            var availableHeight = h - dh;
-            var newTop = this.state.position / this.__getMaxPosition() * availableHeight;
+            const h = this.$el.height();
+            const dh = this.ui.dragger.height();
+            const availableHeight = h - dh;
+            const newTop = this.state.position / this.__getMaxPosition() * availableHeight;
             newTopPc = newTop / h * 100;
         } else {
             newTopPc = 0;
         }
 
-        this.ui.dragger.css({ top: newTopPc + '%' });
+        this.ui.dragger.css({ top: `${newTopPc}%` });
     },
 
-    __getMaxPosition: function ()
-    {
+    __getMaxPosition() {
         return Math.max(0, (this.state.count - 1) - this.state.viewportHeight + 1);
     },
 
-    __startDrag: function (event)
-    {
+    __startDrag(event) {
         this.dragContext = {
             scrollbarHeight: this.$el.height(),
             draggerHeight: this.ui.dragger.height(),
@@ -317,8 +313,7 @@ let ScrollbarView = Marionette.ItemView.extend({
         $(document).mousemove(this.__documentMouseMove).mouseup(this.__documentMouseUp);
     },
 
-    __stopDrag: function ()
-    {
+    __stopDrag() {
         if (!this.dragContext) {
             return;
         }
@@ -330,25 +325,23 @@ let ScrollbarView = Marionette.ItemView.extend({
     },
 
     // returns DOM element position relatively to the document
-    __getPosition: function (domElement) {
+    __getPosition(domElement) {
         if (domElement instanceof jQuery) {
             domElement = domElement[0];
         }
 
-        var left = 0;
-        var top = 0;
+        let left = 0;
+        let top = 0;
         do {
-            if (!isNaN(domElement.offsetLeft))
-            {
+            if (!isNaN(domElement.offsetLeft)) {
                 left += domElement.offsetLeft;
             }
-            if (!isNaN(domElement.offsetTop))
-            {
+            if (!isNaN(domElement.offsetTop)) {
                 top += domElement.offsetTop;
             }
             domElement = domElement.offsetParent;
         } while (domElement);
-        return { x:left, y:top };
+        return { x: left, y: top };
     }
 });
 

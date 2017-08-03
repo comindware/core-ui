@@ -16,7 +16,7 @@ const classes = {
 };
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'schema');
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'content');
@@ -31,7 +31,7 @@ export default Marionette.ItemView.extend({
 
     className: classes.CLASS_NAME,
 
-    regions () {
+    regions() {
         return {
             contentRegion: {
                 el: this.el
@@ -49,30 +49,30 @@ export default Marionette.ItemView.extend({
         BackboneFormBehavior: {
             behaviorClass: form.behaviors.BackboneFormBehavior,
             renderStrategy: 'manual',
-            model: function () {
+            model() {
                 return this.model;
             },
-            schema: function () {
+            schema() {
                 const schema = this.options.schema;
                 return _.isFunction(schema) ? schema.call(this) : schema;
             }
         }
     },
 
-    onShow () {
+    onShow() {
         this.contentRegion.show(this.options.content);
         this.renderForm();
         this.__updateState();
     },
 
-    getValue (key) {
+    getValue(key) {
         if (!this.form) {
             return this.model.get(key);
         }
         return this.form.getValue(key);
     },
 
-    update () {
+    update() {
         if (this.content.update) {
             this.content.update();
         }

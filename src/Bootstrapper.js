@@ -15,7 +15,7 @@ import UserService from './services/UserService';
 import WindowService from './services/WindowService';
 import LocalizationService from './services/LocalizationService';
 
-let initializeThirdParties = function () {
+const initializeThirdParties = function() {
     $.fn.datetimepicker.dates[LocalizationService.langCode] = {
         days: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSFULL').split(','), //["Sunday", "Monday", ... ]
         daysShort: LocalizationService.get('CORE.FORMATS.DATETIME.DAYSSHORT').split(','), //["Sun", "Mon", ... ],
@@ -28,7 +28,7 @@ let initializeThirdParties = function () {
 };
 
 export default {
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'localizationService');
         helpers.ensureOption(options, 'ajaxService');
         helpers.ensureOption(options, 'userService');

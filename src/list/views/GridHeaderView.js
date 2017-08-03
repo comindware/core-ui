@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/gridheader.hbs';
@@ -30,8 +30,8 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @param {Object} options.gridEventAggregator ?
  * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
  * */
-let GridHeaderView = Marionette.ItemView.extend({
-    initialize: function (options) {
+const GridHeaderView = Marionette.ItemView.extend({
+    initialize(options) {
         if (!options.columns) {
             throw new Error('You must provide columns definition ("columns" option)');
         }
@@ -68,40 +68,40 @@ let GridHeaderView = Marionette.ItemView.extend({
         MIN_COLUMN_WIDTH: 20
     },
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             columns: this.columns
         };
     },
 
-    onRender: function () {
-        var self = this;
-        this.ui.gridHeaderColumnContent.each(function (i, el) {
-            var column = self.columns[i];
-            var view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
+    onRender() {
+        const self = this;
+        this.ui.gridHeaderColumnContent.each((i, el) => {
+            const column = self.columns[i];
+            const view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
-                column: column
+                column
             }));
             self.listenTo(view, 'columnSort', self.__handleColumnSort);
-            var childEl = view.render().el;
+            const childEl = view.render().el;
             el.appendChild(childEl);
         });
     },
 
-    onShow: function () {
+    onShow() {
         this.__handleResizeInternal();
     },
 
-    updateSorting: function () {
+    updateSorting() {
         this.render();
         this.__handleResizeInternal();
     },
 
-    __handleColumnSort: function (sender, args) {
-        var column = args.column;
-        var sorting = column.sorting;
-        var comparator;
-        _.each(this.columns, function (c) {
+    __handleColumnSort(sender, args) {
+        const column = args.column;
+        const sorting = column.sorting;
+        let comparator;
+        _.each(this.columns, c => {
             c.sorting = null;
         });
         switch (sorting) {
@@ -123,43 +123,41 @@ let GridHeaderView = Marionette.ItemView.extend({
         this.trigger('onColumnSort', column, comparator);
     },
 
-    __handleDraggerMousedown: function (e) {
+    __handleDraggerMousedown(e) {
         this.__stopDrag();
         this.__startDrag(e);
         return false;
     },
 
-    __getElementOuterWidth: function (el) {
+    __getElementOuterWidth(el) {
         return $(el)[0].getBoundingClientRect().width;
     },
 
-    __startDrag: function (e) {
-        var $dragger = $(e.target);
-        var $column = $dragger.parent();
+    __startDrag(e) {
+        const $dragger = $(e.target);
+        const $column = $dragger.parent();
 
-        var affectedColumns = _.chain($column.nextAll()).toArray().map(function (el) {
+        const affectedColumns = _.chain($column.nextAll()).toArray().map(function(el) {
             return {
                 $el: $(el),
                 initialWidth: this.__getElementOuterWidth(el)
             };
         }, this).value();
-        var draggedColumn = {
+        const draggedColumn = {
             $el: $column,
             initialWidth: this.__getElementOuterWidth($column),
             index: $column.index()
         };
-        var unaffectedWidth = _.reduce($column.prevAll(), function (m, v) {
-            return m + this.__getElementOuterWidth(v);
-        }.bind(this), 0);
-        var fullWidth = this.__getFullWidth();
+        const unaffectedWidth = _.reduce($column.prevAll(), (m, v) => m + this.__getElementOuterWidth(v), 0);
+        const fullWidth = this.__getFullWidth();
 
         this.dragContext = {
             pageOffsetX: e.pageX,
-            $dragger: $dragger,
-            fullWidth: fullWidth,
-            unaffectedWidth: unaffectedWidth,
-            draggedColumn: draggedColumn,
-            affectedColumns: affectedColumns,
+            $dragger,
+            fullWidth,
+            unaffectedWidth,
+            draggedColumn,
+            affectedColumns,
             maxColumnWidth: fullWidth - affectedColumns.length * this.constants.MIN_COLUMN_WIDTH - unaffectedWidth
         };
 
@@ -167,7 +165,7 @@ let GridHeaderView = Marionette.ItemView.extend({
         this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
     },
 
-    __stopDrag: function () {
+    __stopDrag() {
         if (!this.dragContext) {
             return;
         }
@@ -178,17 +176,17 @@ let GridHeaderView = Marionette.ItemView.extend({
         this.$document.unbind('mouseup', this.__draggerMouseUp);
     },
 
-    __draggerMouseMove: function (e) {
+    __draggerMouseMove(e) {
         if (!this.dragContext) {
             return;
         }
 
-        var ctx = this.dragContext;
+        const ctx = this.dragContext;
         let delta = e.pageX - ctx.pageOffsetX;
         if (delta !== 0) {
-            var draggedColumn = ctx.draggedColumn;
-            var index = ctx.draggedColumn.index;
-            var changes = {};
+            const draggedColumn = ctx.draggedColumn;
+            let index = ctx.draggedColumn.index;
+            const changes = {};
 
             this.columns[index].absWidth = Math.min(ctx.maxColumnWidth, Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta));
             delta = this.columns[index].absWidth - draggedColumn.initialWidth;
@@ -197,13 +195,13 @@ let GridHeaderView = Marionette.ItemView.extend({
             var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
             this.columns[index].width = newColumnWidthPc;
             changes[index] = this.columns[index].absWidth;
-                index++;
+            index++;
 
             var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth,
                 sumDelta = 0,
                 sumGap = 0;
 
-            for (let i = 0;  i < ctx.affectedColumns.length; i++) {
+            for (let i = 0; i < ctx.affectedColumns.length; i++) {
                 let c = ctx.affectedColumns[i],
                     newColumnWidth = c.initialWidth - delta * c.initialWidth / affectedColumnsWidth;
 
@@ -218,12 +216,12 @@ let GridHeaderView = Marionette.ItemView.extend({
                 index++;
             }
 
-            var fullSum = 0;
+            let fullSum = 0;
             index = ctx.draggedColumn.index + 1;
             for (let i = 0; i < ctx.affectedColumns.length; i++) {
-                let c = ctx.affectedColumns[i];
+                const c = ctx.affectedColumns[i];
                 if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
-                    let delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
+                    const delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
                     this.columns[index].absWidth -= delta;
                 }
 
@@ -247,12 +245,12 @@ let GridHeaderView = Marionette.ItemView.extend({
         return false;
     },
 
-    __draggerMouseUp: function () {
+    __draggerMouseUp() {
         this.__stopDrag();
         return false;
     },
 
-    handleResize: function () {
+    handleResize() {
         if (this.isDestroyed) {
             return;
         }
@@ -260,19 +258,19 @@ let GridHeaderView = Marionette.ItemView.extend({
         this.gridEventAggregator.trigger('columnsResize');
     },
 
-    __getFullWidth: function () {
+    __getFullWidth() {
         return this.$el.parent().width() - 2; // Magic cross browser pixels, don't remove them
     },
 
-    __handleResizeInternal: function () {
-        var fullWidth = this.__getFullWidth(), // Grid header's full width
+    __handleResizeInternal() {
+        let fullWidth = this.__getFullWidth(), // Grid header's full width
             columnWidth = fullWidth / this.columns.length, // Default column width
             sumWidth = 0; // Columns' sum width
 
         // Iterate all but first columns counting their sum width
-        this.ui.gridHeaderColumn.not(':first').each(function (i, el) {
-            var child = $(el);
-            var col = this.columns[i + 1];
+        this.ui.gridHeaderColumn.not(':first').each((i, el) => {
+            const child = $(el);
+            const col = this.columns[i + 1];
             if (col.width) { // If column has it's custom width
                 col.absWidth = Math.floor(col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
             } else {
@@ -280,7 +278,7 @@ let GridHeaderView = Marionette.ItemView.extend({
             }
             child.outerWidth(col.absWidth); // Set absolute column width
             sumWidth += col.absWidth; // And add it to columns' sum width
-        }.bind(this));
+        });
         
         // Take remaining (or only) first column to calculate it's absolute width as difference between grid header's full width and
         // other columns' sum width. This logic is necessary because other columns' widths may have been rounded down during calculations

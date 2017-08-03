@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import MembersCollection from '../collections/MembersCollection';
 import MembersListView from '../views/MembersListView';
@@ -15,17 +15,17 @@ import 'lib';
 import 'utils';
 
 export default {
-    createMembersCollection: function () {
-        var membersCollection = new MembersCollection();
+    createMembersCollection() {
+        const membersCollection = new MembersCollection();
         membersCollection.reset(UserService.listUsers());
         return membersCollection;
     },
 
-    createMembersListView: function (options) {
+    createMembersListView(options) {
         return new MembersListView(options);
     },
 
-    getMembersListView: function () {
+    getMembersListView() {
         return MembersListView;
     }
 };

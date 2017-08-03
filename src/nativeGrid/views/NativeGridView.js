@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/nativeGrid.hbs';
@@ -20,7 +20,7 @@ import dropdownFactory from '../../dropdown/factory';
 import dropdownApi from 'dropdown';
 import { helpers } from 'utils';
 
-let defaultOptions = {
+const defaultOptions = {
     headerView: HeaderView,
     rowView: RowView,
     paddingLeft: 20,
@@ -63,7 +63,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'native-grid',
 
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'collection');
         _.defaults(this.options, defaultOptions);
 
@@ -78,7 +78,7 @@ export default Marionette.LayoutView.extend({
         this.$document = $(document);
     },
 
-    initializeViews: function () {
+    initializeViews() {
         this.headerView = new this.options.headerView({
             columns: this.options.columns,
             gridColumnHeaderView: ColumnHeaderView,
@@ -92,7 +92,7 @@ export default Marionette.LayoutView.extend({
         }
         this.options.noColumnsViewOptions && (this.noColumnsViewOptions = this.options.noColumnsViewOptions); // jshint ignore:line
 
-        var childViewOptions = _.extend(this.options.gridViewOptions || {}, {
+        const childViewOptions = _.extend(this.options.gridViewOptions || {}, {
             columns: this.options.columns,
             gridEventAggregator: this,
             paddingLeft: this.options.paddingLeft,
@@ -111,35 +111,35 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this, 'afterColumnsResize', this.__afterColumnsResize, this);
         this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
         this.listenTo(this, 'showFilterView', this.showFilterPopout, this);
-        this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
+        this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
             if (_.string.startsWith(eventName, 'childview')) {
                 this.trigger.apply(this, [eventName, view ].concat(eventArguments));
             }
-        }.bind(this));
-    },
-
-    __onRowClick: function (model) {
-        this.trigger('row:click', model);
-    },
-
-    __onRowDblClick: function (model) {
-        this.trigger('row:dblclick', model);
-    },
-
-    __afterColumnsResize: function (width) {
-        this.listView.setWidth(width);
-    },
-
-    onRender: function () {
-        this.ui.headerRegion.css({
-            left: this.options.paddingLeft + 'px',
-            right: this.options.paddingRight + 'px'
         });
     },
 
-    onShow: function () {
+    __onRowClick(model) {
+        this.trigger('row:click', model);
+    },
+
+    __onRowDblClick(model) {
+        this.trigger('row:dblclick', model);
+    },
+
+    __afterColumnsResize(width) {
+        this.listView.setWidth(width);
+    },
+
+    onRender() {
+        this.ui.headerRegion.css({
+            left: `${this.options.paddingLeft}px`,
+            right: `${this.options.paddingRight}px`
+        });
+    },
+
+    onShow() {
         if (this.options.columns.length === 0) {
-            var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
+            const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
         }
         this.headerRegion.show(this.headerView);
@@ -147,26 +147,26 @@ export default Marionette.LayoutView.extend({
         this.bindListRegionScroll();
     },
 
-    bindListRegionScroll: function () {
-        this.listRegion.$el.scroll(function (event) {
+    bindListRegionScroll() {
+        this.listRegion.$el.scroll(event => {
             this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
-        }.bind(this));
+        });
     },
 
-    onColumnSort: function (column, comparator) {
+    onColumnSort(column, comparator) {
         this.collection.comparator = comparator;
         this.collection.sort();
     },
 
-    setFitToView: function () {
+    setFitToView() {
         this.headerView.setFitToView();
         if (this.collection.length > 0) {
             this.listView.setFitToView();
         }
     },
 
-    showFilterPopout: function (options) {
-        var AnchoredButtonView = Marionette.ItemView.extend({
+    showFilterPopout(options) {
+        const AnchoredButtonView = Marionette.ItemView.extend({
             template: Handlebars.compile('<span class="js-anchor"></span>'),
             behaviors: {
                 CustomAnchorBehavior: {
@@ -177,9 +177,7 @@ export default Marionette.LayoutView.extend({
             tagName: 'div'
         });
 
-        var filterViewOptions = _.find(this.options.columns, function (c) {
-            return c.id === options.columnHeader.options.column.id;
-        }).filterViewOptions;
+        const filterViewOptions = _.find(this.options.columns, c => c.id === options.columnHeader.options.column.id).filterViewOptions;
 
         this.filterDropdown = dropdownFactory.createPopout({
             buttonView: AnchoredButtonView,
@@ -188,16 +186,16 @@ export default Marionette.LayoutView.extend({
             customAnchor: true
         });
 
-        this.listenTo(this.filterDropdown, 'all', function (eventName, eventArguments) {
+        this.listenTo(this.filterDropdown, 'all', (eventName, eventArguments) => {
             if (_.string.startsWith(eventName, 'panel:')) {
-                this.trigger.apply(this, ['column:filter:' + eventName.slice(6),
+                this.trigger.apply(this, [`column:filter:${eventName.slice(6)}`,
                     options.columnHeader.options.column.id, this.filterDropdown.panelView ].concat(eventArguments));
             }
-        }.bind(this));
+        });
 
-        this.listenTo(this.filterDropdown, 'close', function (child, closeOptions) {
+        this.listenTo(this.filterDropdown, 'close', (child, closeOptions) => {
             this.trigger('column:filter:close', options.columnHeader.options.column.id, child.panelView, closeOptions);
-        }.bind(this));
+        });
 
         this.popoutRegion.show(this.filterDropdown);
         this.filterDropdown.$el.offset(options.position);

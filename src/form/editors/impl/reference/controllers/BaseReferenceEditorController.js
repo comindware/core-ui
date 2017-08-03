@@ -26,7 +26,7 @@ import list from 'list';
  * */
 
 export default Marionette.Controller.extend(/** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
-    initialize: function(options) {
+    initialize(options) {
         helpers.ensureOption(options, 'collection');
 
         this.collection = list.factory.createWrappedCollection(options.collection);
@@ -38,18 +38,18 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
      * @param {Object} options.text Text filter filter to apply or <code>null</code>.
      * @return {Promise} Promise object that resolves when the data is ready.
      * */
-    fetch: function(options) {
+    fetch(options) {
         options = options || {};
 
-        let filterText = options.text ? options.text.trim().toUpperCase() : '';
+        const filterText = options.text ? options.text.trim().toUpperCase() : '';
         return this.collection.fetch({ data: { filter: filterText } })
-            .then(function() {
+            .then(() => {
                 this.totalCount = this.collection.totalCount;
                 return {
                     collection: this.collection.toJSON(),
                     totalCount: this.totalCount
                 };
-            }.bind(this));
+            });
     },
 
     /*
@@ -58,7 +58,7 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
     * */
     collection: null,
 
-    createValueUrl (value) {
+    createValueUrl(value) {
         return false;
     },
 
@@ -66,7 +66,7 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
      * Handles the edit request to the editor.
      * @param {Object} value Value object that describes the object to edit.
      * */
-    edit: function(value) {
+    edit(value) {
         return false;
     }
 });
