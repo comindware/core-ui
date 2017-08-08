@@ -91,6 +91,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     __keyup() {
         if (this.options.changeMode === changeMode.keydown) {
             this.__value(this.ui.input.val(), false, true);
+            this.__updateTitle();
         }
 
         this.trigger('keyup', this);
@@ -98,16 +99,19 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
 
     __change() {
         this.__value(this.ui.input.val(), false, true);
+        this.__updateTitle();
     },
 
     __clear() {
         this.__value(null, true, true);
+        this.__updateTitle();
         this.focus();
         return false;
     },
 
     setValue(value) {
         this.__value(value, true, false);
+        this.__updateTitle();
     },
 
     setPermissions(enabled, readonly) {
@@ -148,6 +152,11 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.keyListener = new keypress.Listener(this.ui.input[0]);
     },
 
+    __updateTitle() {
+        const value = this.getValue();
+        this.ui.input.prop('title', !value ? '' : value);
+    },
+
     /**
      * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
      * [Keypress](https://dmauro.github.io/Keypress/).
@@ -161,9 +170,9 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
             helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
         }
         const keys = key.split(',');
-        _.each(keys, function(k) {
+        _.each(keys, k => {
             this.keyListener.simple_combo(k, callback);
-        }, this);
+        });
     },
 
     __value(value, updateUi, triggerChange) {

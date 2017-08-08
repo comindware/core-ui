@@ -16,7 +16,8 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    timeDisplayFormat: null
+    timeDisplayFormat: null,
+    showTitle: true
 };
 
 /**
@@ -29,6 +30,7 @@ const defaultOptions = {
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
 formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
     initialize(options) {
@@ -51,7 +53,8 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
         this.timeView = new TimeView({
             model: this.timeModel,
             allowEmptyValue: this.options.allowEmptyValue,
-            timeDisplayFormat: this.options.timeDisplayFormat
+            timeDisplayFormat: this.options.timeDisplayFormat,
+            showTitle: this.options.showTitle
         });
         this.listenTo(this.timeView, 'focus', this.onFocus);
         this.listenTo(this.timeView, 'blur', this.onBlur);

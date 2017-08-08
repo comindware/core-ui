@@ -16,7 +16,8 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    dateDisplayFormat: null
+    dateDisplayFormat: null,
+    showTitle: true
 };
 
 /**
@@ -29,6 +30,7 @@ const defaultOptions = {
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
 formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
     initialize(options) {
@@ -51,7 +53,8 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
         this.dateView = new DateView({
             model: this.dateModel,
             allowEmptyValue: this.options.allowEmptyValue,
-            dateDisplayFormat: this.options.dateDisplayFormat
+            dateDisplayFormat: this.options.dateDisplayFormat,
+            showTitle: this.options.showTitle
         });
         this.listenTo(this.dateView, 'focus', this.onFocus);
         this.listenTo(this.dateView, 'blur', this.onBlur);

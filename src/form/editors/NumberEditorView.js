@@ -106,12 +106,15 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
             }
             if (this.options.changeMode === changeMode.keydown) {
                 this.__value(this.ui.input.val(), true, true, false);
+                this.__updateTitle();
             } else {
                 this.__value(this.ui.input.val(), true, false, false);
+                this.__updateTitle();
             }
         },
         'change @ui.input'() {
             this.__value(this.ui.input.val(), false, true, false);
+            this.__updateTitle();
         },
         'mousewheel @ui.input'(event) {
             if (!this.getEnabled() || this.getReadonly() || !this.hasFocus) {
@@ -145,6 +148,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     onRender() {
         this.__value(this.value, false, false, true);
+        this.__updateTitle();
     },
 
     __setActive(el, isActive) {
@@ -181,6 +185,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     __clear() {
         this.__value(null, false, true, false);
+        this.__updateTitle();
         this.focus();
         return false;
     },
@@ -243,6 +248,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
         value = this.__adjustValue(value + step * this.__increment(this.counter));
         this.__value(value, false, true, false);
+        this.__updateTitle();
         this.counter++;
     },
 
@@ -370,10 +376,16 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     setValue(value) {
         this.__value(value, false, false, false);
+        this.__updateTitle();
     },
 
     isEmptyValue() {
         return !_.isNumber(this.getValue());
+    },
+
+    __updateTitle() {
+        const value = this.getValue();
+        this.ui.input.prop('title', !value ? '' : value);
     }
 });
 
