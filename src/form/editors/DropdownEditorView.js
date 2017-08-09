@@ -24,7 +24,8 @@ const defaultOptions = {
     collection: null,
     displayAttribute: 'text',
     allowEmptyValue: true,
-    enableSearch: false
+    enableSearch: false,
+    showTitle: true
 };
 
 /**
@@ -41,6 +42,7 @@ const defaultOptions = {
  * отражается в выпадающем списке.
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
  * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
     initialize(options) {
@@ -127,6 +129,11 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.listenTo(this.dropdownView, 'close', this.onBlur);
         this.listenTo(this.dropdownView, 'panel:cancel', this.__onCancel);
         this.dropdownRegion.show(this.dropdownView);
+
+        if (this.options.showTitle) {
+            const valueModel = this.__findModel(this.getValue());
+            this.$el.prop('title', valueModel && valueModel.has('text') ? valueModel.get('text') : '');
+        }
     },
 
     __onCollectionChange() {
@@ -188,6 +195,10 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         const valueModel = this.__findModel(value) || null;
         this.viewModel.get('button').set('value', valueModel);
         this.viewModel.get('panel').set('value', valueModel);
+
+        if (this.options.showTitle) {
+            this.$el.prop('title', valueModel && valueModel.has('text') ? valueModel.get('text') : '');
+        }
         if (triggerChange) {
             this.__triggerChange();
         }

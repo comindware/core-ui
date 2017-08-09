@@ -25,7 +25,8 @@ const defaultOptions = function() {
         maxLength: null,
         mask: null,
         maskPlaceholder: '_',
-        maskOptions: {}
+        maskOptions: {},
+        showTitle: true
     };
 };
 
@@ -44,6 +45,7 @@ const defaultOptions = function() {
  * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
  * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize(options) {
@@ -91,7 +93,6 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     __keyup() {
         if (this.options.changeMode === changeMode.keydown) {
             this.__value(this.ui.input.val(), false, true);
-            this.__updateTitle();
         }
 
         this.trigger('keyup', this);
@@ -99,19 +100,16 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
 
     __change() {
         this.__value(this.ui.input.val(), false, true);
-        this.__updateTitle();
     },
 
     __clear() {
         this.__value(null, true, true);
-        this.__updateTitle();
         this.focus();
         return false;
     },
 
     setValue(value) {
         this.__value(value, true, false);
-        this.__updateTitle();
     },
 
     setPermissions(enabled, readonly) {
@@ -143,18 +141,16 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     },
 
     onRender() {
-        this.ui.input.val(this.getValue() || '');
-
+        const value = this.getValue() || '';
+        this.ui.input.val(value);
+        if (this.options.showTitle) {
+            this.$el.prop('title', value);
+        }
         // Keyboard shortcuts listener
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
-    },
-
-    __updateTitle() {
-        const value = this.getValue();
-        this.ui.input.prop('title', !value ? '' : value);
     },
 
     /**
@@ -180,6 +176,10 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
             return;
         }
         this.value = value;
+
+        if (this.options.showTitle) {
+            this.$el.prop('title', value);
+        }
         if (updateUi) {
             this.ui.input.val(value);
         }

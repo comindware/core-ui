@@ -20,7 +20,8 @@ const defaultOptions = {
     allowEmptyValue: true,
     timezoneOffset: -new Date().getTimezoneOffset(),
     dateDisplayFormat: null,
-    timeDisplayFormat: null
+    timeDisplayFormat: null,
+    showTitle: true
 };
 
 /**
@@ -36,6 +37,7 @@ const defaultOptions = {
  * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize(options) {
@@ -85,14 +87,12 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         this.__value(this.dateTimeModel.get('value'), true, true);
         if (!this.isDestroyed) {
             this.__updateClearButton();
-            this.__updateTitle();
         }
     },
 
     setValue(value) {
         this.__value(value, true, false);
         this.dateTimeModel.set('value', value);
-        this.__updateTitle();
     },
 
     getValue() {
@@ -124,6 +124,9 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         this.dateRegion.show(this.dateView);
         this.timeRegion.show(this.timeView);
         this.__updateClearButton();
+        if (this.options.showTitle) {
+            this.__updateTitle();
+        }
     },
 
     __updateClearButton() {
@@ -140,7 +143,9 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
             return;
         }
         this.value = value;
-
+        if (this.options.showTitle) {
+            this.__updateTitle();
+        }
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -159,7 +164,6 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     __onClear() {
         this.__value(null, true, true);
         this.dateTimeModel.set('value', null);
-        this.__updateTitle();
         this.focus();
         return false;
     },

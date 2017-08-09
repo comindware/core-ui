@@ -114,7 +114,7 @@ export default Marionette.ItemView.extend({
         const displayValue = DateTimeService.getDateDisplayValue(this.model.get('value'), this.options.dateDisplayFormat, this.getOption('timezoneOffset'));
         this.ui.dateInput.val(displayValue);
         if (this.getOption('showTitle')) {
-            this.ui.dateInput.prop('title', displayValue);
+            this.$el.prop('title', displayValue);
         }
     },
 

@@ -64,7 +64,8 @@ const defaultOptions = {
     allowDays: true,
     allowHours: true,
     allowMinutes: true,
-    allowSeconds: true
+    allowSeconds: true,
+    showTitle: true
 };
 
 const classes = {
@@ -88,6 +89,7 @@ const stateModes = {
  * @param {Boolean} [options.allowHours=true] Whether to display the hour segment. At least one segment must be displayed.
  * @param {Boolean} [options.allowMinutes=true] Whether to display the minute segment. At least one segment must be displayed.
  * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
     initialize(options) {
@@ -516,6 +518,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         const inEditMode = this.state.mode === stateModes.EDIT;
         const val = this.__createInputString(normalizedDisplayValue, inEditMode);
         this.ui.input.val(val);
+        if (this.options.showTitle && !inEditMode) {
+            this.$el.prop('title', val);
+        }
         this.$el.toggleClass(classes.FOCUSED, inEditMode);
     }
 });

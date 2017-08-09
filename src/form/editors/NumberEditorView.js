@@ -30,7 +30,8 @@ const defaultOptions = {
     min: 0,
     allowFloat: false,
     changeMode: changeMode.blur,
-    format: null
+    format: null,
+    showTitle: true
 };
 
 const allowedKeys = [
@@ -72,6 +73,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
     initialize(options) {
@@ -106,15 +108,12 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
             }
             if (this.options.changeMode === changeMode.keydown) {
                 this.__value(this.ui.input.val(), true, true, false);
-                this.__updateTitle();
             } else {
                 this.__value(this.ui.input.val(), true, false, false);
-                this.__updateTitle();
             }
         },
         'change @ui.input'() {
             this.__value(this.ui.input.val(), false, true, false);
-            this.__updateTitle();
         },
         'mousewheel @ui.input'(event) {
             if (!this.getEnabled() || this.getReadonly() || !this.hasFocus) {
@@ -148,7 +147,6 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     onRender() {
         this.__value(this.value, false, false, true);
-        this.__updateTitle();
     },
 
     __setActive(el, isActive) {
@@ -185,7 +183,6 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     __clear() {
         this.__value(null, false, true, false);
-        this.__updateTitle();
         this.focus();
         return false;
     },
@@ -248,7 +245,6 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
         value = this.__adjustValue(value + step * this.__increment(this.counter));
         this.__value(value, false, true, false);
-        this.__updateTitle();
         this.counter++;
     },
 
@@ -292,6 +288,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
 
         this.value = value;
+        if (this.options.showTitle) {
+            if (formattedValue) {
+                this.$el.prop('title', formattedValue);
+            } else {
+                this.$el.prop('title', value);
+            }
+        }
         if (!suppressRender) {
             if (formattedValue) {
                 this.ui.input.val(formattedValue);
@@ -376,16 +379,10 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     setValue(value) {
         this.__value(value, false, false, false);
-        this.__updateTitle();
     },
 
     isEmptyValue() {
         return !_.isNumber(this.getValue());
-    },
-
-    __updateTitle() {
-        const value = this.getValue();
-        this.ui.input.prop('title', !value ? '' : value);
     }
 });
 
