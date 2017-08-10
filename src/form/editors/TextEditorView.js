@@ -25,7 +25,8 @@ const defaultOptions = function() {
         maxLength: null,
         mask: null,
         maskPlaceholder: '_',
-        maskOptions: {}
+        maskOptions: {},
+        showTitle: true
     };
 };
 
@@ -44,6 +45,7 @@ const defaultOptions = function() {
  * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
  * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize(options) {
@@ -139,8 +141,11 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     },
 
     onRender() {
-        this.ui.input.val(this.getValue() || '');
-
+        const value = this.getValue() || '';
+        this.ui.input.val(value);
+        if (this.options.showTitle) {
+            this.$el.prop('title', value);
+        }
         // Keyboard shortcuts listener
         if (this.keyListener) {
             this.keyListener.reset();
@@ -161,9 +166,9 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
             helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
         }
         const keys = key.split(',');
-        _.each(keys, function(k) {
+        _.each(keys, k => {
             this.keyListener.simple_combo(k, callback);
-        }, this);
+        });
     },
 
     __value(value, updateUi, triggerChange) {
@@ -171,6 +176,10 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
             return;
         }
         this.value = value;
+
+        if (this.options.showTitle) {
+            this.$el.prop('title', value);
+        }
         if (updateUi) {
             this.ui.input.val(value);
         }

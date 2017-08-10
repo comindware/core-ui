@@ -11,6 +11,7 @@
 import { Handlebars, moment } from 'lib';
 import { helpers, dateHelpers } from 'utils';
 import template from '../templates/timeInput.hbs';
+import DateTimeService from '../../../services/DateTimeService';
 import LocalizationService from '../../../../../services/LocalizationService';
 
 export default Marionette.ItemView.extend({
@@ -115,16 +116,11 @@ export default Marionette.ItemView.extend({
     },
 
     __updateDisplayValue() {
-        const value = this.model.get('value');
-        let formattedValue;
-        if (value === null || value === '') {
-            formattedValue = '';
-        } else if (this.options.timeDisplayFormat) {
-            formattedValue = moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.options.timeDisplayFormat);
-        } else {
-            formattedValue = dateHelpers.getDisplayTime(moment.utc(value).utcOffset(this.getOption('timezoneOffset')));
+        const displayValue = DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat, this.getOption('timezoneOffset'));
+        this.ui.input.val(displayValue);
+        if (this.getOption('showTitle')) {
+            this.$el.prop('title', displayValue);
         }
-        this.ui.input.val(formattedValue);
     },
 
     setPlaceholder() {

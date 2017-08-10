@@ -30,7 +30,8 @@ const defaultOptions = {
     min: 0,
     allowFloat: false,
     changeMode: changeMode.blur,
-    format: null
+    format: null,
+    showTitle: true
 };
 
 const allowedKeys = [
@@ -72,6 +73,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @param {Number} [options.max=null] Максимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {Number} [options.min=0] Минимальное возможное значение. Если <code>null</code>, не ограничено.
  * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
     initialize(options) {
@@ -286,6 +288,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
 
         this.value = value;
+        if (this.options.showTitle) {
+            if (formattedValue) {
+                this.$el.prop('title', formattedValue);
+            } else {
+                this.$el.prop('title', value);
+            }
+        }
         if (!suppressRender) {
             if (formattedValue) {
                 this.ui.input.val(formattedValue);

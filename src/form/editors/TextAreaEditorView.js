@@ -35,7 +35,8 @@ const defaultOptions = function() {
         maxLength: null,
         height: null,
         minHeight: 2,
-        maxHeight: null
+        maxHeight: null,
+        showTitle: true
     };
 };
 
@@ -60,6 +61,7 @@ const defaultOptions = function() {
  * @param {Number} [options.height=null] The height of the editor (in rows) when its size is fixed.
  * @param {Number} [options.minHeight=2] The minimum height of the editor (in rows).
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
     initialize(options) {
@@ -119,7 +121,11 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
     },
 
     onShow() {
-        this.ui.textarea.val(this.getValue() || '');
+        const value = this.getValue() || '';
+        this.ui.textarea.val(value);
+        if (this.options.showTitle) {
+            this.$el.prop('title', value);
+        }
         switch (this.options.size) {
             case size.auto:
                 this.ui.textarea.attr('rows', this.options.minHeight);
@@ -177,6 +183,10 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
             return;
         }
         this.value = value;
+
+        if (this.options.showTitle) {
+            this.$el.prop('title', value);
+        }
         if (updateUi) {
             this.ui.textarea.val(value);
         }

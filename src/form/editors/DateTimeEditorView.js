@@ -10,6 +10,7 @@
 
 import { Handlebars, moment, $ } from 'lib';
 import template from './templates/dateTimeEditor.hbs';
+import DateTimeService from './services/DateTimeService';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 import TimeView from './impl/dateTime/views/TimeView';
@@ -19,7 +20,8 @@ const defaultOptions = {
     allowEmptyValue: true,
     timezoneOffset: -new Date().getTimezoneOffset(),
     dateDisplayFormat: null,
-    timeDisplayFormat: null
+    timeDisplayFormat: null,
+    showTitle: true
 };
 
 /**
@@ -35,6 +37,7 @@ const defaultOptions = {
  * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize(options) {
@@ -102,7 +105,8 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
             timezoneOffset: this.options.timezoneOffset,
             preserveTime: true,
             allowEmptyValue: this.options.allowEmptyValue,
-            dateDisplayFormat: this.options.dateDisplayFormat
+            dateDisplayFormat: this.options.dateDisplayFormat,
+            showTitle: false
         });
         this.listenTo(this.dateView, 'focus', this.onFocus);
         this.listenTo(this.dateView, 'blur', this.onDateBlur);
@@ -111,7 +115,8 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
             model: this.dateTimeModel,
             timezoneOffset: this.options.timezoneOffset,
             allowEmptyValue: this.options.allowEmptyValue,
-            timeDisplayFormat: this.options.timeDisplayFormat
+            timeDisplayFormat: this.options.timeDisplayFormat,
+            showTitle: false
         });
         this.listenTo(this.timeView, 'focus', this.onFocus);
         this.listenTo(this.timeView, 'blur', this.onTimeBlur);
@@ -119,6 +124,9 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         this.dateRegion.show(this.dateView);
         this.timeRegion.show(this.timeView);
         this.__updateClearButton();
+        if (this.options.showTitle) {
+            this.__updateTitle();
+        }
     },
 
     __updateClearButton() {
@@ -135,7 +143,9 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
             return;
         }
         this.value = value;
-
+        if (this.options.showTitle) {
+            this.__updateTitle();
+        }
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -201,6 +211,13 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
 
     __adjustValue(value) {
         return value === null ? value : moment(value).toISOString();
+    },
+
+    __updateTitle() {
+        const dateDisplayValue = DateTimeService.getDateDisplayValue(this.getValue(), this.options.dateDisplayFormat, this.options.timezoneOffset);
+        const timeDisplayValue = DateTimeService.getTimeDisplayValue(this.getValue(), this.options.timeDisplayFormat, this.options.timezoneOffset);
+        const resultValue = `${dateDisplayValue} ${timeDisplayValue}`;
+        this.$el.prop('title', resultValue);
     }
 });
 

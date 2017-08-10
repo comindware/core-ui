@@ -19,6 +19,16 @@ export default Marionette.LayoutView.extend({
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.timeDisplayFormat = this.getOption('timeDisplayFormat');
+        this.showTitle = this.getOption('showTitle');
+
+        this.dropdownView = this.__getDropdownView();
+        
+        this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
+        this.listenTo(this.dropdownView, 'open', this.__onOpen, this);
+
+        this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus, this);
+        this.listenTo(this.dropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
+        this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
     },
 
     className: 'time-view',
@@ -30,13 +40,17 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
+        this.dropdownRegion.show(this.dropdownView);
+    },
+
+    __getDropdownView() {
         const timeArray = [];
 
         for (let h = 0; h < 24; h++) {
             for (let m = 0; m < 60; m += 15) {
-                let val = { hours: h, minutes: m },
-                    time = moment.utc(val),
-                    formattedTime = dateHelpers.getDisplayTime(time);
+                const val = { hours: h, minutes: m };
+                const time = moment.utc(val);
+                const formattedTime = dateHelpers.getDisplayTime(time);
 
                 timeArray.push({
                     time,
@@ -45,13 +59,14 @@ export default Marionette.LayoutView.extend({
             }
         }
 
-        this.dropdownView = dropdown.factory.createDropdown({
+        return dropdown.factory.createDropdown({
             buttonView: TimeInputView,
             buttonViewOptions: {
                 model: this.model,
                 timezoneOffset: this.timezoneOffset,
                 allowEmptyValue: this.allowEmptyValue,
-                timeDisplayFormat: this.timeDisplayFormat
+                timeDisplayFormat: this.timeDisplayFormat,
+                showTitle: this.showTitle
             },
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(timeArray),
@@ -74,14 +89,6 @@ export default Marionette.LayoutView.extend({
             renderAfterClose: false,
             autoOpen: false
         });
-        this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
-        this.listenTo(this.dropdownView, 'open', this.__onOpen, this);
-
-        this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus, this);
-        this.listenTo(this.dropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
-        this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
-
-        this.dropdownRegion.show(this.dropdownView);
     },
 
     __onBeforeClose() {

@@ -20,6 +20,7 @@ export default Marionette.LayoutView.extend({
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.dateDisplayFormat = this.getOption('dateDisplayFormat');
+        this.showTitle = this.getOption('showTitle');
     },
 
     template: Handlebars.compile(template),
@@ -38,7 +39,8 @@ export default Marionette.LayoutView.extend({
                 timezoneOffset: this.timezoneOffset,
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.allowEmptyValue,
-                dateDisplayFormat: this.dateDisplayFormat
+                dateDisplayFormat: this.dateDisplayFormat,
+                showTitle: this.showTitle
             },
             panelView: PanelView,
             panelViewOptions: {
