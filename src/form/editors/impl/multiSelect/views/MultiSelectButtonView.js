@@ -15,10 +15,10 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function() {
-        let items = this.model.get('value');
-        let empty = !items || !items.length;
-        let collection = this.model.get('collection');
+    templateHelpers() {
+        const items = this.model.get('value');
+        const empty = !items || !items.length;
+        const collection = this.model.get('collection');
 
         let displayValue;
         if (empty) {
@@ -37,28 +37,28 @@ export default Marionette.ItemView.extend({
 
     events: {
         'click .js-clear-button': '__onClear',
-        'click': '__onClick',
-        'focus': '__onFocus'
+        click: '__onClick',
+        focus: '__onFocus'
     },
 
     modelEvents: {
         'change:value': 'render'
     },
 
-    initialize: function(options) {
+    initialize(options) {
         helpers.ensureOption(options, 'model');
     },
 
-    __onClear () {
+    __onClear() {
         this.trigger('value:set', null);
         return false;
     },
 
-    __onClick: function() {
+    __onClick() {
         this.trigger('open:panel');
     },
 
-    __onFocus: function () {
+    __onFocus() {
         this.trigger('focus');
     }
 });

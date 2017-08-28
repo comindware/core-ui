@@ -6,30 +6,32 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, moment } from 'lib';
 import { helpers, dateHelpers } from 'utils';
 import template from '../templates/timeInput.hbs';
+import DateTimeService from '../../../services/DateTimeService';
 import LocalizationService from '../../../../../services/LocalizationService';
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'allowEmptyValue');
-        this.timeEditFormat = dateHelpers.getTimeEditFormat();
+        this.hasSeconds = this.__hasSeconds(options.timeDisplayFormat);
+        this.timeEditFormat = dateHelpers.getTimeEditFormat(this.hasSeconds);
     },
 
     template: Handlebars.compile(template),
 
     ui: {
-        'input': '.js-time-input'
+        input: '.js-time-input'
     },
 
     className: 'time-view',
 
     events: {
-        'click': '__onClick',
+        click: '__onClick',
         'focus @ui.input': '__onFocus'
     },
 
@@ -39,22 +41,21 @@ export default Marionette.ItemView.extend({
         'change:enabled': '__onEnabledChange'
     },
 
-    endEditing: function () {
-        let parsedValue = this.getParsedInputValue();
+    endEditing() {
+        const parsedValue = this.getParsedInputValue();
         this.model.set('value', parsedValue);
         this.__updateDisplayValue();
     },
 
-    getParsedInputValue: function () {
-        let val = this.ui.input.val();
-        let currentValue = this.model.get('value');
+    getParsedInputValue() {
+        const val = this.ui.input.val();
+        const currentValue = this.model.get('value');
 
         if (val === '') {
             if (this.options.allowEmptyValue) {
                 return null;
-            } else {
-                return currentValue;
             }
+            return currentValue;
         }
 
         let format = this.timeEditFormat,
@@ -65,31 +66,29 @@ export default Marionette.ItemView.extend({
             if (currentValue) {
                 // Take previously selected date and new time
                 parsedDate = moment.utc(currentValue).utcOffset(this.getOption('timezoneOffset'))
-                    .hour(parsedVal.hour()).minute(parsedVal.minute()).second(0).millisecond(0).toISOString();
+                    .hour(parsedVal.hour()).minute(parsedVal.minute()).second(this.hasSeconds ? parsedVal.second() : 0).millisecond(0).toISOString();
             } else {
                 // Take current date and newly selected time
-                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).toISOString();
+                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).second(this.hasSeconds ? parsedVal.second() : 0).toISOString();
             }
         } else if (currentValue !== '' && currentValue !== null) {
             parsedDate = currentValue;
+        } else if (this.options.allowEmptyValue) {
+            parsedDate = null;
         } else {
-            if (this.options.allowEmptyValue) {
-                parsedDate = null;
-            } else {
-                parsedDate = currentValue;
-            }
+            parsedDate = currentValue;
         }
 
         return parsedDate;
     },
 
-    __onEnabledChange: function () {
+    __onEnabledChange() {
         this.setPlaceholder();
         this.setInputPermissions();
     },
 
-    setInputPermissions: function () {
-        var enabled = this.model.get('enabled'),
+    setInputPermissions() {
+        let enabled = this.model.get('enabled'),
             readonly = this.model.get('readonly');
 
         if (!enabled) {
@@ -105,33 +104,26 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    __onValueChange: function () {
+    __onValueChange() {
         this.setPlaceholder();
         this.__updateDisplayValue();
     },
 
-    onRender: function () {
+    onRender() {
         this.setPlaceholder();
         this.setInputPermissions();
         this.__updateDisplayValue();
     },
 
-    __updateDisplayValue: function () {
-        let value = this.model.get('value');
-        let formattedValue;
-        if (value === null || value === '') {
-            formattedValue = '';
-        } else {
-            if (this.options.timeDisplayFormat) {
-                formattedValue = moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.options.timeDisplayFormat);
-            } else {
-                formattedValue = dateHelpers.getDisplayTime(moment.utc(value).utcOffset(this.getOption('timezoneOffset')));
-            }
+    __updateDisplayValue() {
+        const displayValue = DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat, this.getOption('timezoneOffset'));
+        this.ui.input.val(displayValue);
+        if (this.getOption('showTitle')) {
+            this.$el.prop('title', displayValue);
         }
-        this.ui.input.val(formattedValue);
     },
 
-    setPlaceholder: function () {
+    setPlaceholder() {
         if (!this.model.get('enabled') || this.model.get('readonly')) {
             this.placeholder = '';
         } else {
@@ -141,29 +133,40 @@ export default Marionette.ItemView.extend({
         this.ui.input.prop('placeholder', this.placeholder);
     },
 
-    startEditing: function () {
-        var val = this.model.get('value'),
+    startEditing() {
+        let val = this.model.get('value'),
             format = this.timeEditFormat,
             editFormattedDate = val ? moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
 
         this.ui.input.val(editFormattedDate);
     },
 
-    __onFocus: function () {
+    __onFocus() {
         this.trigger('focus');
     },
 
-    __onClick: function () {
+    __onClick() {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.trigger('calendar:open');
         }
     },
 
-    focus: function () {
+    focus() {
         this.ui.input.focus();
         this.trigger('focus');
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.trigger('calendar:open');
+        }
+    },
+
+    __hasSeconds(format) {
+        switch (format) {
+            case 'LTS':
+            case 'HH:mm:ss':
+                return true;
+            case 'LT':
+            default:
+                return false;
         }
     }
 });

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 
@@ -21,13 +21,13 @@ import renderFullDate from './renderFullDate';
 import renderFullDateTime from './renderFullDateTime';
 import renderShortDuration from './renderShortDuration';
 
-Handlebars.registerHelper("debug", debug);
-Handlebars.registerHelper("equal", equal);
-Handlebars.registerHelper("isNull", isNull);
-Handlebars.registerHelper("highlightFragment", highlightFragment);
-Handlebars.registerHelper("localize", localize);
-Handlebars.registerHelper("localizedText", localizedText);
-Handlebars.registerHelper("renderAsHtml", renderAsHtml);
-Handlebars.registerHelper("renderFullDate", renderFullDate);
-Handlebars.registerHelper("renderFullDateTime", renderFullDateTime);
-Handlebars.registerHelper("renderShortDuration", renderShortDuration);
+Handlebars.registerHelper('debug', debug);
+Handlebars.registerHelper('equal', equal);
+Handlebars.registerHelper('isNull', isNull);
+Handlebars.registerHelper('highlightFragment', highlightFragment);
+Handlebars.registerHelper('localize', localize);
+Handlebars.registerHelper('localizedText', localizedText);
+Handlebars.registerHelper('renderAsHtml', renderAsHtml);
+Handlebars.registerHelper('renderFullDate', renderFullDate);
+Handlebars.registerHelper('renderFullDateTime', renderFullDateTime);
+Handlebars.registerHelper('renderShortDuration', renderShortDuration);

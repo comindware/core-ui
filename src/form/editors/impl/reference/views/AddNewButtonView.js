@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
@@ -17,20 +17,20 @@ import template from '../templates/addNewButton.hbs';
 import list from 'list';
 
 export default Marionette.ItemView.extend({
-    initialize: function(options) {
+    initialize(options) {
         helpers.ensureOption(options, 'reqres');
         this.reqres = options.reqres;
     },
 
     template: Handlebars.compile(template),
 
-    events:{
-        'click': '__onClick'
+    events: {
+        click: '__onClick'
     },
 
     className: 'reference-btn',
 
-    __onClick: function() {
+    __onClick() {
         this.reqres.request('add:new:item');
     }
 });

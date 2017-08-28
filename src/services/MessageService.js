@@ -11,18 +11,18 @@ import MessageView from './message/views/MessageView';
 import WindowService from './WindowService';
 import LocalizationService from './LocalizationService';
 
-let iconIds = {
+const iconIds = {
     NONE: 'none',
     QUESTION: 'question',
     ERROR: 'error'
 };
 
 export default {
-    confirm: function (description) {
+    confirm(description) {
         return this.askYesNo(description, LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.CONFIRMATION'));
     },
 
-    askYesNo: function (description, text) {
+    askYesNo(description, text) {
         return this.showMessageDialog(description, text, [
             {
                 id: true,
@@ -36,7 +36,7 @@ export default {
         ], iconIds.QUESTION);
     },
 
-    error: function (description, text) {
+    error(description, text) {
         text = text || LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.ERROR');
         return this.showMessageDialog(description, text, [
             {
@@ -47,14 +47,14 @@ export default {
         ], iconIds.ERROR);
     },
 
-    showMessageDialog: function (description, text, buttons, iconId) {
+    showMessageDialog(description, text, buttons, iconId) {
         iconId = iconId || iconIds.NONE;
         return new Promise(resolve => {
-            let view = new MessageView({
+            const view = new MessageView({
                 model: new Backbone.Model({
-                    iconId: iconId,
-                    text: text,
-                    description: description,
+                    iconId,
+                    text,
+                    description,
                     buttons: buttons || []
                 })
             });

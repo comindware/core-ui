@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import helpers from 'utils/helpers';
 
@@ -25,13 +25,13 @@ let dataProvider;
  * */
 
 export default {
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'dataProvider');
 
         dataProvider = options.dataProvider;
     },
 
-    listUsers: function () {
+    listUsers() {
         return dataProvider.listUsers();
     }
 };

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import RowView from '../../list/views/RowView';
 import NativeGridItemViewBehavior from './behaviors/NativeGridItemViewBehavior';

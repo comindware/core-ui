@@ -6,19 +6,19 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/bubble.hbs';
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.reqres = options.reqres;
     },
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             enabled: this.options.enabled
         };
@@ -37,17 +37,17 @@ export default Marionette.ItemView.extend({
         clearButton: '.js-bubble-delete'
     },
 
-    __delete: function(e) {
+    __delete(e) {
         this.reqres.request('bubble:delete', this.model);
         return false;
     },
 
-    __linkClick: function () {
+    __linkClick() {
         window.location = this.model.get('url');
         return false;
     },
 
-    updateEnabled: function (enabled) {
+    updateEnabled(enabled) {
         this.options.enabled = enabled;
         if (enabled) {
             this.ui.clearButton.show();
@@ -56,7 +56,7 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onRender: function () {
+    onRender() {
         this.updateEnabled(this.options.enabled);
     }
 });

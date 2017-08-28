@@ -31,7 +31,8 @@ const defaultOptions = {
     showEditButton: false,
     buttonView: ReferenceButtonView,
     listItemView: ReferenceListItemView,
-    textFilterDelay: 300
+    textFilterDelay: 300,
+    showTitle: true
 };
 
 /**
@@ -46,9 +47,10 @@ const defaultOptions = {
  * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
-    initialize (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -92,12 +94,13 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
 
     template: Handlebars.compile(template),
 
-    setValue (value) {
+    setValue(value) {
         this.__value(value, false);
     },
 
-    onRender () {
+    onRender() {
         // dropdown
+        const schema = this.getOption('schema');
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
@@ -114,7 +117,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 showAddNewButton: this.showAddNewButton,
                 listItemView: this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
-                textFilterDelay: this.options.textFilterDelay
+                textFilterDelay: this.options.textFilterDelay,
+                hideSearchBar: schema ? schema.hideSearchBar : false
             },
             panelPosition: 'down-over',
             autoOpen: false
@@ -129,96 +133,105 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), function (key) {
-            this.keyListener.simple_combo(key, function () {
+        _.each('down,enter,num_enter'.split(','), function(key) {
+            this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
-            }.bind(this));
+            });
         }, this);
+
+        if (this.options.showTitle) {
+            const value = this.getValue();
+            this.$el.prop('title', value && value.text ? value.text : '');
+        }
     },
 
-    __adjustValue (value) {
+    __adjustValue(value) {
         if (!value || !value.id) {
             return null;
         }
         return value;
     },
 
-    __value (value, triggerChange) {
+    __value(value, triggerChange) {
         if (this.value === value) {
             return;
         }
         this.value = this.__adjustValue(value);
         this.viewModel.get('button').set('value', this.value);
         this.viewModel.get('panel').set('value', this.value);
+
+        if (this.options.showTitle) {
+            this.$el.prop('title', value && value.text ? value.text : '');
+        }
         if (triggerChange) {
             this.__triggerChange();
         }
     },
 
-    isEmptyValue () {
-        let value = this.getValue();
+    isEmptyValue() {
+        const value = this.getValue();
         return !value || _.isEmpty(value);
     },
 
-    __onValueClear () {
+    __onValueClear() {
         this.__value(null, true);
         this.focus();
         return false;
     },
 
-    __onValueSet (model) {
-        let value = model ? model.toJSON() : null;
+    __onValueSet(model) {
+        const value = model ? model.toJSON() : null;
         this.__value(value, true);
         this.dropdownView.close();
         this.$el.focus();
     },
 
-    __onValueEdit () {
+    __onValueEdit() {
         return this.controller.edit(this.getValue());
     },
 
-    __onFilterText (options) {
-        let text = (options && options.text) || null;
+    __onFilterText(options) {
+        const text = (options && options.text) || null;
         this.text = text;
-        return this.controller.fetch(options).then(function (data) {
+        return this.controller.fetch(options).then(data => {
             if (this.text === text) {
                 this.viewModel.get('panel').get('collection').reset(data.collection);
                 this.viewModel.get('panel').set('totalCount', data.totalCount);
             }
-        }.bind(this));
+        });
     },
 
-    __onPanelOpenRequest () {
+    __onPanelOpenRequest() {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
     },
 
-    __onAddNewItem () {
+    __onAddNewItem() {
         this.dropdownView.close();
-        this.controller.addNewItem((createdValue) => {
+        this.controller.addNewItem(createdValue => {
             if (createdValue) {
                 this.__value(createdValue, true);
             }
         });
     },
 
-    __getDisplayText (value) {
+    __getDisplayText(value) {
         if (!value) {
             return '';
         }
         return value[this.options.displayAttribute] || `#${value.id}`;
     },
 
-    setReadonly (readonly) {
+    setReadonly(readonly) {
         //noinspection Eslint
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.viewModel.get('button').set('readonly', this.getReadonly());
     },
 
-    setEnabled (enabled) {
+    setEnabled(enabled) {
         //noinspection Eslint
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.viewModel.get('button').set('enabled', this.getEnabled());
@@ -229,11 +242,11 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         this.$el.prop('tabindex', readonly ? -1 : 0);
     },
 
-    focus () {
+    focus() {
         this.dropdownView.open();
     },
 
-    blur () {
+    blur() {
         this.dropdownView.close();
     },
 

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
@@ -39,7 +39,7 @@ const defaultOptions = {
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
 formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -50,10 +50,12 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.__createViewModel();
         this.__updateViewModel(this.getValue());
         this.__updateFakeInputModel();
+        this.textFilterDelay = this.options.textFilterDelay || 0;
+        this.fetchDelayId = _.uniqueId('fetch-delay-id-');
         this.value = this.getValue() || [];
     },
 
-    __bindReqres: function () {
+    __bindReqres() {
         this.reqres = new Backbone.Wreqr.RequestResponse();
         this.reqres.setHandler('member:select', this.__onMemberSelect, this);
         this.reqres.setHandler('bubble:delete', this.__onBubbleDelete, this);
@@ -72,7 +74,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         dropdownRegion: '.js-dropdown-region'
     },
 
-    onRender: function () {
+    onRender() {
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
@@ -96,7 +98,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
     },
 
-    setValue: function (value) {
+    setValue(value) {
         if (_.isUndefined(value) || value === null) {
             value = [];
         }
@@ -108,17 +110,22 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.__triggerChange();
     },
 
-    __applyFilter: function (value) {
-        this.viewModel.get('available').applyTextFilter(value);
+    __applyFilter(value, immediate) {
+        const applyFilter = () => this.viewModel.get('available').applyTextFilter(value);
+        if (immediate) {
+            applyFilter();
+        } else {
+            helpers.setUniqueTimeout(this.fetchDelayId, applyFilter, this.textFilterDelay);
+        }
     },
 
-    __onInputSearch: function (value) {
+    __onInputSearch(value) {
         this.__applyFilter(value);
         this.__onButtonClick();
     },
 
-    __onInputUp: function () {
-        var collection = this.viewModel.get('available');
+    __onInputUp() {
+        const collection = this.viewModel.get('available');
         if (collection.models[0].selected) {
             this.dropdownView.close();
             this.__focusButton();
@@ -127,7 +134,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         }
     },
 
-    __onInputDown: function () {
+    __onInputDown() {
         if (!this.dropdownView.isOpen) {
             this.dropdownView.open();
         } else {
@@ -135,82 +142,82 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         }
     },
 
-    __onBeforeDropdownOpen: function () {
-        this.__applyFilter();
+    __onBeforeDropdownOpen() {
+        this.__applyFilter(undefined, true);
     },
 
-    __onDropdownOpen: function () {
+    __onDropdownOpen() {
         this.viewModel.get('available').selectFirst();
         this.__focusButton();
         this.onFocus();
     },
 
-    __onDropdownClose: function () {
+    __onDropdownClose() {
         this.onBlur();
     },
 
-    __onButtonClick: function () {
+    __onButtonClick() {
         if (this.__canAddMember()) {
             this.dropdownView.open();
         }
     },
 
-    __sendPanelCommand: function (command, options) {
+    __sendPanelCommand(command, options) {
         if (this.dropdownView.isOpen) {
             this.dropdownView.panelView.handleCommand(command, options);
         }
     },
 
-    __createViewModel: function () {
+    __createViewModel() {
         this.viewModel = new Backbone.Model();
 
-        var membersCollection = factory.createMembersCollection();
-        var members = membersCollection.reduce(function (memo, model) {
+        const membersCollection = factory.createMembersCollection();
+        const members = membersCollection.reduce((memo, model) => {
             memo[model.id] = model.toJSON();
             return memo;
         }, {});
 
         this.viewModel.set('members', members);
-        var availableModels = new MembersCollection(new Backbone.Collection([], {
+        const availableModels = new MembersCollection(new Backbone.Collection([], {
             model: MemberModel
         }), {
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name')
         });
         this.viewModel.set('available', availableModels);
 
-        var selectedModels = new Backbone.Collection([], {
+        const selectedModels = new Backbone.Collection([], {
             model: MemberModel,
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name')
         });
         this.viewModel.set('selected', selectedModels);
     },
 
-    __updateViewModel: function (selectedValues) {
-        var members = _.clone(this.viewModel.get('members'));
-        _.each(this.options.exclude, function (id) {
+    __updateViewModel(selectedValues) {
+        const members = _.clone(this.viewModel.get('members'));
+        _.each(this.options.exclude, id => {
             if (members[id]) {
                 delete members[id];
             }
         });
-        var selectedMembers = _.map(selectedValues, function (id) {
-            var model = members[id];
+        const selectedMembers = _.map(selectedValues, id => {
+            const model = members[id];
             delete members[id];
             return model;
         });
-        var availableMembers = _.values(members);
+        const availableMembers = _.values(members);
 
-        var availableModels = this.viewModel.get('available');
+        const availableModels = this.viewModel.get('available');
         availableModels.reset(availableMembers);
-        var selectedModels = this.viewModel.get('selected');
+        const selectedModels = this.viewModel.get('selected');
         selectedModels.reset(selectedMembers);
     },
 
-    __updateFakeInputModel: function () {
-        var selectedModels = this.viewModel.get('selected');
+    __updateFakeInputModel() {
+        const selectedModels = this.viewModel.get('selected');
 
         if (this.__canAddMember() && !this.fakeInputModel) {
             this.fakeInputModel = new FakeInputModel();
-            selectedModels.add(this.fakeInputModel, {at: selectedModels.length});
+            selectedModels.add(this.fakeInputModel, { at: selectedModels.length });
         }
         if (!this.__canAddMember() && this.fakeInputModel) {
             selectedModels.remove(this.fakeInputModel);
@@ -221,24 +228,24 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         }
     },
 
-    __onMemberSelect: function () {
-        var canAddMemberOldValue = this.__canAddMember();
-        var selectedModels = this.viewModel.get('selected');
-        var availableModels = this.viewModel.get('available');
-        var selectedModel = availableModels.selected;
+    __onMemberSelect() {
+        const canAddMemberOldValue = this.__canAddMember();
+        const selectedModels = this.viewModel.get('selected');
+        const availableModels = this.viewModel.get('available');
+        const selectedModel = availableModels.selected;
         if (!selectedModel) {
             return;
         }
         this.__applyFilter();
         availableModels.deselect();
         availableModels.remove(selectedModel);
-        selectedModels.add(selectedModel, {at: selectedModels.length - 1});
+        selectedModels.add(selectedModel, { at: selectedModels.length - 1 });
         availableModels.selectFirst();
 
         this.value = this.getValue().concat(selectedModel.get('id'));
         this.__triggerChange();
 
-        var stopAddMembers = canAddMemberOldValue !== this.__canAddMember();
+        const stopAddMembers = canAddMemberOldValue !== this.__canAddMember();
         this.__updateFakeInputModel();
         if (stopAddMembers) {
             this.dropdownView.close();
@@ -248,31 +255,29 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         }
     },
 
-    __canAddMember: function () {
-        var selectedMembers = _.filter (
+    __canAddMember() {
+        const selectedMembers = _.filter(
             this.viewModel.get('selected').models,
-            function (model) {
-                return model !== this.fakeInputModel;
-            }.bind(this));
+            model => model !== this.fakeInputModel);
 
         return this.getEnabled() && !this.getReadonly() &&
             (!this.options.maxQuantitySelected || (this.options.maxQuantitySelected !== selectedMembers.length)) &&
             this.viewModel.get('available').length > 0;
     },
 
-    __onBubbleDelete: function (model) {
+    __onBubbleDelete(model) {
         if (!model) {
             return;
         }
         if (this.dropdownView) {
             this.dropdownView.close();
         }
-        var selectedModels = this.viewModel.get('selected');
-        var availableModels = this.viewModel.get('available');
+        const selectedModels = this.viewModel.get('selected');
+        const availableModels = this.viewModel.get('available');
         selectedModels.remove(model);
         availableModels.add(model, { delayed: false });
 
-        var selected = [].concat(this.getValue());
+        const selected = [].concat(this.getValue());
         selected.splice(selected.indexOf(model.get('id')), 1);
         this.value = selected;
         this.__triggerChange();
@@ -281,45 +286,45 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.__focusButton();
     },
 
-    __updateButtonInput: function () {
+    __updateButtonInput() {
         if (this.dropdownView.button) {
             this.dropdownView.button.updateInput();
         }
     },
 
-    __focusButton: function () {
+    __focusButton() {
         if (this.dropdownView.button) {
             this.dropdownView.button.focus();
         }
     },
 
-    __onBubbleDeleteLast: function () {
-        var selectedModels = this.viewModel.get('selected');
-        var model = selectedModels.models[selectedModels.models.length - 2];
+    __onBubbleDeleteLast() {
+        const selectedModels = this.viewModel.get('selected');
+        const model = selectedModels.models[selectedModels.models.length - 2];
         this.__onBubbleDelete(model);
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
-        var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
+        const isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
-        var isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
+        const isEnabled = this.getEnabled() && !this.getReadonly() && this.options.canDeleteMember;
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
     },
 
-    focus: function () {
+    focus() {
         if (this.__canAddMember()) {
             this.dropdownView.open();
         }
     },
 
-    blur: function () {
+    blur() {
         this.dropdownView.close();
     }
 });

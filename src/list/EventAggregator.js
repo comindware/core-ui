@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
@@ -29,7 +29,7 @@ import 'lib';
  */
 
 export default Marionette.Controller.extend({
-    initialize: function (options) {
+    initialize(options) {
         if (options.views === undefined) {
             throw new Error('You must pass the views you want to keep in sync (displaying the same collection) into the `views` option.');
         }
@@ -48,62 +48,52 @@ export default Marionette.Controller.extend({
         this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
         this.__updateCount(this.collection.length);
 
-        _.each(this.views, function (v) {
+        _.each(this.views, function(v) {
             this.listenTo(v, 'viewportHeightChanged', this.__handleViewportHeightChanged);
             this.listenTo(v, 'positionChanged', this.__handlePositionChanged);
         }, this);
     },
 
-    __handleCollectionAdd: function (model, collection) {
+    __handleCollectionAdd(model, collection) {
         this.__updateCount(collection.length);
     },
 
-    __handleCollectionRemove: function (model, collection) {
+    __handleCollectionRemove(model, collection) {
         this.__updateCount(collection.length);
     },
 
-    __handleCollectionReset: function (collection) {
+    __handleCollectionReset(collection) {
         this.__updateCount(collection.length);
     },
 
-    scrollTo: function (model) {
-        var modelIndex = this.collection.indexOf(model);
-        var view = _.find(this.views, function (view) {
-            return view.scrollTo;
-        });
+    scrollTo(model) {
+        const modelIndex = this.collection.indexOf(model);
+        const view = _.find(this.views, view => view.scrollTo);
         if (view) {
             view.scrollTo(modelIndex);
         }
     },
 
-    __updateCount: function (count)
-    {
+    __updateCount(count) {
         this.state.count = count;
     },
 
-    __handleViewportHeightChanged: function (sender, e) {
-        console.log('viewportHeight changed: ', e.oldViewportHeight, '->', e.viewportHeight);
-        _.chain(this.views).filter(function (v) {
-            return v !== sender;
-        }).each(function (v) {
+    __handleViewportHeightChanged(sender, e) {
+        _.chain(this.views).filter(v => v !== sender).each(v => {
             v.updateViewportHeight && v.updateViewportHeight(e.viewportHeight);
         });
         this.state.viewportHeight = e.viewportHeight;
     },
 
-    __handlePositionChanged: function (sender, e) {
-        console.log('position changed: ', e.oldPosition, '->', e.position);
-        _.chain(this.views).filter(function (v) {
-            return v !== sender;
-        }).each(function (v) {
+    __handlePositionChanged(sender, e) {
+        _.chain(this.views).filter(v => v !== sender).each(v => {
             v.updatePosition && v.updatePosition(e.position);
         });
         this.state.position = e.position;
         this.__tryMoreDataRequest();
     },
 
-    __tryMoreDataRequest: function ()
-    {
+    __tryMoreDataRequest() {
         if (this.state.position === this.__getMaxPosition()) {
             if (!this.atEnd) {
                 this.atEnd = true;
@@ -114,8 +104,7 @@ export default Marionette.Controller.extend({
         }
     },
 
-    __getMaxPosition: function ()
-    {
+    __getMaxPosition() {
         return Math.max(0, (this.state.count - 1) - this.state.viewportHeight + 1);
     }
 });

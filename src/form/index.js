@@ -50,13 +50,13 @@ import './validators/passwordValidator';
 import './validators/phoneValidator';
 import formRepository from './formRepository';
 
-var api = /** @lends module:core.form */ {
+const api = /** @lends module:core.form */ {
     /**
      * Marionette.Behavior classes useful with Backbone.Form.
      * @namespace
      * */
     behaviors: {
-        BackboneFormBehavior: BackboneFormBehavior
+        BackboneFormBehavior
     },
     /**
      * Repository that is used when an editor or validator is declared as string in form schema.
@@ -91,10 +91,10 @@ var api = /** @lends module:core.form */ {
          * @namespace
          * */
         base: {
-            BaseItemEditorView: BaseItemEditorView,
-            BaseLayoutEditorView: BaseLayoutEditorView,
-            BaseCollectionEditorView: BaseCollectionEditorView,
-            BaseCompositeEditorView: BaseCompositeEditorView
+            BaseItemEditorView,
+            BaseLayoutEditorView,
+            BaseCollectionEditorView,
+            BaseCompositeEditorView
         },
         /**
          * Avatar editor data providers and internal implementation.
@@ -106,8 +106,8 @@ var api = /** @lends module:core.form */ {
              * @namespace
              * */
             controllers: {
-                BaseAvatarEditorController: BaseAvatarEditorController,
-                DemoAvatarEditorController: DemoAvatarEditorController
+                BaseAvatarEditorController,
+                DemoAvatarEditorController
             }
         },
         /**
@@ -120,20 +120,20 @@ var api = /** @lends module:core.form */ {
              * @namespace
              * */
             controllers: {
-                DemoReferenceEditorController: DemoReferenceEditorController,
-                BaseReferenceEditorController: BaseReferenceEditorController,
+                DemoReferenceEditorController,
+                BaseReferenceEditorController,
             },
             collections: {
-                BaseReferenceCollection: BaseReferenceCollection
+                BaseReferenceCollection
             },
             models: {
-                DefaultReferenceModel: DefaultReferenceModel
+                DefaultReferenceModel
             },
             views: {
-                ReferenceListItemView: ReferenceListItemView,
-                LoadingView: LoadingView,
-                ReferenceButtonView: ReferenceButtonView,
-                ReferencePanelView: ReferencePanelView,
+                ReferenceListItemView,
+                LoadingView,
+                ReferenceButtonView,
+                ReferencePanelView,
                 UserReferenceButtonView,
                 UserReferenceListItemView
             }

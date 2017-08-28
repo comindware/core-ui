@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { moment, numeral } from 'lib';
 import { helpers } from 'utils';
@@ -18,11 +18,11 @@ numeral.language('en', numeralEn);
 numeral.language('de', numeralDe);
 numeral.language('ru', numeralRu);
 
-let global = window;
-let defaultLangCode = 'en';
+const global = window;
+const defaultLangCode = 'en';
 
 global.Localizer = {
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'langCode');
         helpers.ensureOption(options, 'localizationMap');
         helpers.ensureOption(options, 'warningAsError');
@@ -35,34 +35,34 @@ global.Localizer = {
         numeral.language(this.langCode);
     },
 
-    get: function (locId) {
+    get(locId) {
         if (!locId) {
-            throw new Error('Bad localization id: (locId = ' + locId + ')');
+            throw new Error(`Bad localization id: (locId = ${locId})`);
         }
-        var text = this.localizationMap[locId];
+        const text = this.localizationMap[locId];
         if (text === undefined) {
             if (this.warningAsError) {
-                throw new Error('Failed to find localization constant ' + locId);
+                throw new Error(`Failed to find localization constant ${locId}`);
             } else {
-                console.error('Missing localization constant: ' + locId);
+                console.error(`Missing localization constant: ${locId}`);
             }
-            return '<missing:' +  locId + '>';
+            return `<missing:${locId}>`;
         }
         return text;
     },
 
-    tryGet: function(locId) {
+    tryGet(locId) {
         if (!locId) {
-            throw new Error('Bad localization id: (locId = ' + locId + ')');
+            throw new Error(`Bad localization id: (locId = ${locId})`);
         }
-        var text = this.localizationMap[locId];
+        const text = this.localizationMap[locId];
         if (text === undefined) {
             return null;
         }
         return text;
     },
 
-    resolveLocalizedText: function (localizedText) {
+    resolveLocalizedText(localizedText) {
         if (!localizedText) {
             return '';
         }

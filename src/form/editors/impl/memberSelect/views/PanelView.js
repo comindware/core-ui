@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, keypress } from 'lib';
 import list from 'list';
@@ -25,7 +25,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
 
@@ -61,12 +61,12 @@ export default Marionette.LayoutView.extend({
         loadingRegion: '.js-loading-region'
     },
 
-    onRender: function () {
+    onRender() {
         this.__assignKeyboardShortcuts();
     },
 
-    onShow: function () {
-        var result = list.factory.createDefaultList({
+    onShow() {
+        const result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
                 childView: ListItemView,
@@ -92,58 +92,56 @@ export default Marionette.LayoutView.extend({
         this.__updateFilter();
     },
 
-    __assignKeyboardShortcuts: function ()
-    {
+    __assignKeyboardShortcuts() {
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function (value, key)
-        {
-            var keys = key.split(',');
-            _.each(keys, function (k) {
+        _.each(this.keyboardShortcuts, function(value, key) {
+            const keys = key.split(',');
+            _.each(keys, function(k) {
                 this.keyListener.simple_combo(k, value.bind(this));
             }, this);
         }, this);
     },
 
     keyboardShortcuts: {
-        'up': function () {
+        up() {
             this.listView.moveCursorBy(-1, false);
         },
-        'down': function () {
+        down() {
             this.listView.moveCursorBy(1, false);
         },
-        'enter,num_enter,tab': function () {
+        'enter,num_enter,tab'() {
             if (this.isLoading) {
                 return;
             }
-            var selectedModel = this.model.get('collection').selected;
+            const selectedModel = this.model.get('collection').selected;
             this.reqres.request('value:set', selectedModel.id);
         },
-        'esc': function () {
+        esc() {
             this.trigger('cancel');
         }
     },
 
-    __updateFilter: function () {
-        var text = (this.ui.input.val() || '').trim();
+    __updateFilter() {
+        const text = (this.ui.input.val() || '').trim();
         if (this.activeText === text) {
             return;
         }
-        helpers.setUniqueTimeout(this.fetchDelayId, function () {
+        helpers.setUniqueTimeout(this.fetchDelayId, () => {
             this.activeText = text;
-            var collection = this.model.get('collection');
+            const collection = this.model.get('collection');
             collection.deselect();
             this.reqres.request('filter:text', {
-                text: text
-            }).then(function () {
+                text
+            }).then(() => {
                 if (collection.length > 0) {
-                    var model = collection.at(0);
+                    const model = collection.at(0);
                     model.select();
                     this.eventAggregator.scrollTo(model);
                 }
-            }.bind(this));
-        }.bind(this), config.TEXT_FETCH_DELAY);
+            });
+        }, config.TEXT_FETCH_DELAY);
     }
 });

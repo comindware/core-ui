@@ -26,7 +26,7 @@ import LoadingChildView from './LoadingRowView';
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
 
-let constants = {
+const constants = {
     gridRowHeight: 32,
     gridHeaderHeight: 51
 };
@@ -54,9 +54,10 @@ let constants = {
  * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
  * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
+ * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * */
-let GridView = Marionette.LayoutView.extend({
-     initialize: function (options) {
+const GridView = Marionette.LayoutView.extend({
+    initialize(options) {
         if (this.collection === undefined) {
             throw 'You must provide a collection to display.';
         }
@@ -82,11 +83,12 @@ let GridView = Marionette.LayoutView.extend({
         }
         options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
 
-        var childView = options.childView;
+        this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
+
+        let childView = options.childView;
         if (options.useDefaultRowView) {
-            _.each(options.columns, function (column) {
-                if (column.cellView === undefined)
-                    throw 'You must specify cellView for each column (useDefaultRowView flag is true)';
+            _.each(options.columns, column => {
+                if (column.cellView === undefined) { throw 'You must specify cellView for each column (useDefaultRowView flag is true)'; }
             });
 
             childView = RowView;
@@ -95,35 +97,36 @@ let GridView = Marionette.LayoutView.extend({
             throw 'You must provide a childHeight for the child item view (in pixels).';
         }
 
-        var childViewOptions = _.extend(options.childViewOptions || {}, {
+        const childViewOptions = _.extend(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this
         });
 
         this.listView = new ListView({
             collection: this.collection,
-            childView: childView,
+            childView,
             childViewSelector: options.childViewSelector,
             emptyView: options.emptyView,
             emptyViewOptions: options.emptyViewOptions,
             noColumnsView: options.noColumnsView,
             noColumnsViewOptions: options.noColumnsViewOptions,
             childHeight: options.childHeight,
-            childViewOptions: childViewOptions,
+            childViewOptions,
             loadingChildView: options.loadingChildView || LoadingChildView,
             maxRows: options.maxRows,
-            height: options.height
+            height: options.height,
+            forbidSelection: this.forbidSelection
         });
 
-        this.listenTo(this.listView, 'all', function (eventName, view, eventArguments) {
+        this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
             if (_.string.startsWith(eventName, 'childview')) {
                 this.trigger.apply(this, [eventName, view ].concat(eventArguments));
             }
-        }.bind(this));
+        });
 
-        this.listenTo(this.listView, 'positionChanged', function (sender, args) {
+        this.listenTo(this.listView, 'positionChanged', (sender, args) => {
             this.trigger('positionChanged', this, args);
-        }.bind(this));
+        });
 
         this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
 
@@ -131,7 +134,7 @@ let GridView = Marionette.LayoutView.extend({
         if (this.collection.length) {
             this.__presortCollection(options.columns);
         }
-        this.listenTo(this.collection, 'reset', function (collection, options) {
+        this.listenTo(this.collection, 'reset', (collection, options) => {
             // fixing display:table style if there were not rows
             if (options && options.previousModels.length === 0) {
                 this.listView.visibleCollectionRegion.currentView.$el.css('display', 'none');
@@ -140,16 +143,16 @@ let GridView = Marionette.LayoutView.extend({
                 this.listView.visibleCollectionRegion.currentView.$el.css('display', 'table');
                 this.__presortCollection(this.getOption('columns'));
             }
-        }.bind(this));
+        });
     },
 
-    __updateHeight: function (sender, args) {
+    __updateHeight(sender, args) {
         args.gridHeight = args.listViewHeight + constants.gridHeaderHeight;
         this.$el.height(args.gridHeight);
         this.trigger('viewportHeightChanged', this, args);
     },
 
-    onColumnSort: function (column, comparator) {
+    onColumnSort(column, comparator) {
         this.collection.comparator = comparator;
         this.collection.sort();
     },
@@ -164,15 +167,15 @@ let GridView = Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    onShow: function () {
-        let elementWidth = this.$el.width();
+    onShow() {
+        const elementWidth = this.$el.width();
         if (this.options.columns.length === 0) {
-            var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
+            const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
         }
         this.headerRegion.show(this.headerView);
         this.contentViewRegion.show(this.listView);
-        let updatedElementWidth = this.$el.width();
+        const updatedElementWidth = this.$el.width();
         if (elementWidth !== updatedElementWidth) {
             // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
             this.headerView.handleResize();
@@ -180,52 +183,52 @@ let GridView = Marionette.LayoutView.extend({
         }
     },
 
-    onRender: function () {
-        htmlHelpers.forbidSelection(this.el);
+    onRender() {
+        if (this.forbidSelection) {
+            htmlHelpers.forbidSelection(this.el);
+        }
     },
 
-    sortBy: function (columnIndex, sorting) {
-        var column = this.options.columns[columnIndex];
+    sortBy(columnIndex, sorting) {
+        const column = this.options.columns[columnIndex];
         if (sorting) {
-            _.each(this.options.columns, function (c) {
+            _.each(this.options.columns, c => {
                 c.sorting = null;
             });
             column.sorting = sorting;
             switch (sorting) {
-            case 'asc':
-                this.collection.comparator = column.sortAsc;
-                break;
-            case 'desc':
-                this.collection.comparator = column.sortDesc;
-                break;
+                case 'asc':
+                    this.collection.comparator = column.sortAsc;
+                    break;
+                case 'desc':
+                    this.collection.comparator = column.sortDesc;
+                    break;
             }
         } else {
             sorting = column.sorting;
-            _.each(this.options.columns, function (c)
-            {
+            _.each(this.options.columns, c => {
                 c.sorting = null;
             });
-            switch (sorting)
-            {
-            case 'asc':
-                column.sorting = 'desc';
-                this.collection.comparator = column.sortDesc;
-                break;
-            case 'desc':
-                column.sorting = 'asc';
-                this.collection.comparator = column.sortAsc;
-                break;
-            default:
-                column.sorting = 'asc';
-                this.collection.comparator = column.sortAsc;
-                break;
+            switch (sorting) {
+                case 'asc':
+                    column.sorting = 'desc';
+                    this.collection.comparator = column.sortDesc;
+                    break;
+                case 'desc':
+                    column.sorting = 'asc';
+                    this.collection.comparator = column.sortAsc;
+                    break;
+                default:
+                    column.sorting = 'asc';
+                    this.collection.comparator = column.sortAsc;
+                    break;
             }
         }
         this.onColumnSort(column, this.collection.comparator);
         this.headerView.updateSorting();
     },
 
-    handleResize: function () {
+    handleResize() {
         this.headerView.handleResize();
     },
 
