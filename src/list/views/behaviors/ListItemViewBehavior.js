@@ -30,7 +30,7 @@ import { helpers, htmlHelpers } from 'utils';
     2. (!) Be sure that the text you set into html is escaped.
 */
 
-let eventBubblingIgnoreList = [
+const eventBubblingIgnoreList = [
     'before:render',
     'render',
     'dom:refresh',
@@ -41,9 +41,9 @@ let eventBubblingIgnoreList = [
 ];
 
 export default Marionette.Behavior.extend({
-    initialize: function (options, view) {
+    initialize(options, view) {
         helpers.ensureOption(view.options, 'internalListViewReqres');
-        this.listenTo(view, 'all', function (eventName) {
+        this.listenTo(view, 'all', function(eventName) {
             if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
                 return;
             }
@@ -52,19 +52,18 @@ export default Marionette.Behavior.extend({
     },
 
     modelEvents: {
-        'selected': '__handleSelection',
-        'deselected': '__handleDeselection',
-        'highlighted': '__handleHighlighting',
-        'unhighlighted': '__handleUnhighlighting'
+        selected: '__handleSelection',
+        deselected: '__handleDeselection',
+        highlighted: '__handleHighlighting',
+        unhighlighted: '__handleUnhighlighting'
     },
 
     events: {
-        'mousedown': '__handleClick'
+        mousedown: '__handleClick'
     },
 
-    onRender: function ()
-    {
-        var model = this.view.model;
+    onRender() {
+        const model = this.view.model;
         if (model.selected) {
             this.__handleSelection();
         }
@@ -73,35 +72,31 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    __handleClick: function (e)
-    {
-        var model = this.view.model;
-        var selectFn = model.collection.selectSmart || model.collection.select;
+    __handleClick(e) {
+        const model = this.view.model;
+        const selectFn = model.collection.selectSmart || model.collection.select;
         if (selectFn) {
             selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
         }
     },
 
-    __handleHighlighting: function (sender, e)
-    {
+    __handleHighlighting(sender, e) {
         this.__highlight(e.text);
     },
 
-    __highlight: function (fragment)
-    {
+    __highlight(fragment) {
         this.view.onHighlighted(fragment);
     },
 
-    __handleUnhighlighting: function ()
-    {
+    __handleUnhighlighting() {
         this.view.onUnhighlighted();
     },
 
-    __handleSelection: function () {
+    __handleSelection() {
         this.$el.addClass('selected');
     },
 
-    __handleDeselection: function () {
+    __handleDeselection() {
         this.$el.removeClass('selected');
     }
 });

@@ -83,7 +83,7 @@ const defaultOptions = {
  * */
 
 export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
-    initialize: function (options) {
+    initialize(options) {
         _.extend(this.options, _.clone(defaultOptions), options || {});
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
@@ -129,7 +129,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
      * */
     panelView: null,
 
-    onRender () {
+    onRender() {
         if (this.button) {
             this.stopListening(this.button);
         }
@@ -145,53 +145,53 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
     },
 
-    onShow () {
+    onShow() {
         this.buttonRegion.show(this.button);
         this.isShown = true;
     },
 
-    onDestroy () {
+    onDestroy() {
         if (this.isOpen) {
             WindowService.closePopup(this.popupId);
         }
     },
 
-    __adjustPosition ($panelEl) {
-        let viewportHeight = window.innerHeight;
-        let $buttonEl = this.buttonRegion.$el;
-        let buttonRect = $buttonEl.offset();
+    __adjustPosition($panelEl) {
+        const viewportHeight = window.innerHeight;
+        const $buttonEl = this.buttonRegion.$el;
+        const buttonRect = $buttonEl.offset();
         buttonRect.height = $buttonEl.outerHeight();
         buttonRect.width = $buttonEl.outerWidth();
         buttonRect.bottom = viewportHeight - buttonRect.top - buttonRect.height;
-        let panelRect = $panelEl.offset();
+        const panelRect = $panelEl.offset();
         panelRect.height = $panelEl.outerHeight();
 
         let position = this.options.panelPosition;
 
         // switching position if there is not enough space
         switch (position) {
-        case panelPosition.DOWN:
-            if (buttonRect.bottom < panelRect.height && buttonRect.top > buttonRect.bottom) {
-                position = panelPosition.UP;
-            }
-            break;
-        case panelPosition.DOWN_OVER:
-            if (buttonRect.bottom + buttonRect.height < panelRect.height && buttonRect.top > buttonRect.bottom) {
-                position = panelPosition.UP_OVER;
-            }
-            break;
-        case panelPosition.UP:
-            if (buttonRect.top < panelRect.height && buttonRect.bottom > buttonRect.top) {
-                position = panelPosition.UP;
-            }
-            break;
-        case panelPosition.UP_OVER:
-            if (buttonRect.top + buttonRect.height < panelRect.height && buttonRect.bottom > buttonRect.top) {
-                position = panelPosition.UP;
-            }
-            break;
-        default:
-            break;
+            case panelPosition.DOWN:
+                if (buttonRect.bottom < panelRect.height && buttonRect.top > buttonRect.bottom) {
+                    position = panelPosition.UP;
+                }
+                break;
+            case panelPosition.DOWN_OVER:
+                if (buttonRect.bottom + buttonRect.height < panelRect.height && buttonRect.top > buttonRect.bottom) {
+                    position = panelPosition.UP_OVER;
+                }
+                break;
+            case panelPosition.UP:
+                if (buttonRect.top < panelRect.height && buttonRect.bottom > buttonRect.top) {
+                    position = panelPosition.UP;
+                }
+                break;
+            case panelPosition.UP_OVER:
+                if (buttonRect.top + buttonRect.height < panelRect.height && buttonRect.bottom > buttonRect.top) {
+                    position = panelPosition.UP;
+                }
+                break;
+            default:
+                break;
         }
 
         // class adjustments
@@ -203,20 +203,20 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         // panel positioning
         let top;
         switch (position) {
-        case panelPosition.UP:
-            top = buttonRect.top - panelRect.height;
-            break;
-        case panelPosition.UP_OVER:
-            top = buttonRect.top + buttonRect.height - panelRect.height;
-            break;
-        case panelPosition.DOWN:
-            top = buttonRect.top + buttonRect.height;
-            break;
-        case panelPosition.DOWN_OVER:
-            top = buttonRect.top;
-            break;
-        default:
-            break;
+            case panelPosition.UP:
+                top = buttonRect.top - panelRect.height;
+                break;
+            case panelPosition.UP_OVER:
+                top = buttonRect.top + buttonRect.height - panelRect.height;
+                break;
+            case panelPosition.DOWN:
+                top = buttonRect.top + buttonRect.height;
+                break;
+            case panelPosition.DOWN_OVER:
+                top = buttonRect.top;
+                break;
+            default:
+                break;
         }
 
         // trying to fit into viewport
@@ -227,8 +227,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             top = WINDOW_BORDER_OFFSET;
         }
 
-        let panelCss = {
-            top: top,
+        const panelCss = {
+            top,
             left: buttonRect.left
         };
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
@@ -240,13 +240,13 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     /**
      * Opens the dropdown panel.
      * */
-    open () {
+    open() {
         if (this.isOpen) {
             return;
         }
         this.trigger('before:open', this);
 
-        let panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+        const panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
             parent: this
         });
         this.$el.addClass(classes.OPEN);
@@ -256,7 +256,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.triggerMethod(...args);
         });
 
-        let wrapperView = new WrapperView({
+        const wrapperView = new WrapperView({
             view: this.panelView,
             className: 'dropdown__wrp'
         });
@@ -283,7 +283,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
      * Closes the dropdown panel.
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
-    close (...args) {
+    close(...args) {
         if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
             return;
         }
@@ -304,27 +304,27 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
     },
 
-    __handleClick () {
+    __handleClick() {
         if (this.options.autoOpen) {
             this.open();
         }
     },
 
-    __isNestedInButton (testedEl) {
+    __isNestedInButton(testedEl) {
         return this.el === testedEl || $.contains(this.el, testedEl);
     },
 
-    __isNestedInPanel (testedEl) {
+    __isNestedInPanel(testedEl) {
         return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || $.contains(el, testedEl));
     },
 
-    __handleBlur () {
+    __handleBlur() {
         if (!this.__suppressHandlingBlur && !this.__isNestedInButton(document.activeElement) && !this.__isNestedInPanel(document.activeElement)) {
             this.close();
         }
     },
 
-    __handleGlobalMousedown (target) {
+    __handleGlobalMousedown(target) {
         if (this.__isNestedInPanel(target)) {
             this.__suppressHandlingBlur = true;
         } else if (!this.__isNestedInButton(target)) {
@@ -332,7 +332,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
     },
 
-    __onWindowServicePopupClose (popupId) {
+    __onWindowServicePopupClose(popupId) {
         if (this.isOpen && this.popupId === popupId) {
             this.close();
         }

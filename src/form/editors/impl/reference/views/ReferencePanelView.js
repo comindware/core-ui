@@ -23,11 +23,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize: function (options) {
-        helpers.ensureOption(options, 'model');
-        helpers.ensureOption(options, 'reqres');
-        helpers.ensureOption(options, 'getDisplayText');
-
+    initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
         this.fetchDelayId = _.uniqueId('fetch-delay-id-');
@@ -38,8 +34,8 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
-        let value = this.model.get('value');
+    templateHelpers() {
+        const value = this.model.get('value');
         return {
             text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton
@@ -66,12 +62,12 @@ export default Marionette.LayoutView.extend({
         addNewButtonRegion: '.js-add-new-button-region'
     },
 
-    onRender: function () {
+    onRender() {
         this.__assignKeyboardShortcuts();
     },
 
-    onShow: function () {
-        let result = list.factory.createDefaultList({
+    onShow() {
+        const result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
                 childView: this.options.listItemView,
@@ -92,7 +88,7 @@ export default Marionette.LayoutView.extend({
 
         if (this.showAddNewButton) {
             this.$el.addClass('dd-list_reference-button');
-            let addNewButton = new AddNewButtonView({reqres: this.reqres});
+            const addNewButton = new AddNewButtonView({ reqres: this.reqres });
             this.addNewButtonRegion.show(addNewButton);
         }
 
@@ -107,28 +103,27 @@ export default Marionette.LayoutView.extend({
         this.__updateFilter(true);
     },
 
-    __assignKeyboardShortcuts () {
+    __assignKeyboardShortcuts() {
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function (value, key)
-        {
-            let keys = key.split(',');
-            _.each(keys, function (k) {
+        _.each(this.keyboardShortcuts, function(value, key) {
+            const keys = key.split(',');
+            _.each(keys, function(k) {
                 this.keyListener.simple_combo(k, value.bind(this));
             }, this);
         }, this);
     },
 
     keyboardShortcuts: {
-        'up': function () {
+        up() {
             this.listView.moveCursorBy(-1, false);
         },
-        'down': function () {
+        down() {
             this.listView.moveCursorBy(1, false);
         },
-        'enter,num_enter,tab': function () {
+        'enter,num_enter,tab'() {
             if (this.isLoading) {
                 return;
             }
@@ -136,47 +131,47 @@ export default Marionette.LayoutView.extend({
             if (this.timeoutId) {
                 clearTimeout(this.timeoutId);
                 this.__updateFilter(true);
-                return
+                return;
             }
 
-            let selectedModel = this.model.get('collection').selected;
+            const selectedModel = this.model.get('collection').selected;
             this.reqres.request('value:set', selectedModel);
         },
-        'esc': function () {
+        esc() {
             this.trigger('cancel');
         }
     },
 
-    __clear: function () {
+    __clear() {
         this.reqres.request('value:set', null);
     },
 
-    __onTextChange () {
+    __onTextChange() {
         this.__updateFilter(false);
     },
 
-    __updateFilter: function (immediate) {
-        let text = (this.ui.input.val() || '').trim();
+    __updateFilter(immediate) {
+        const text = (this.ui.input.val() || '').trim();
         if (this.activeText === text) {
             return;
         }
-        const updateNow = function () {
+        const updateNow = function() {
             this.activeText = text;
             this.__setLoading(true);
-            let collection = this.model.get('collection');
+            const collection = this.model.get('collection');
             collection.deselect();
             this.reqres.request('filter:text', {
-                text: text
-            }).then(function () {
+                text
+            }).then(() => {
                 this.timeoutId = null;
                 if (collection.length > 0) {
                     if (!collection.contains(collection.selected)) {
-                        let model = collection.at(0);
+                        const model = collection.at(0);
                         model.select();
                     }
                 }
                 this.__setLoading(false);
-            }.bind(this));
+            });
         }.bind(this);
         if (immediate) {
             updateNow();
@@ -185,7 +180,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __setLoading (isLoading) {
+    __setLoading(isLoading) {
         if (this.isDestroyed) {
             return;
         }

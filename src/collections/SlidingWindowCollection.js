@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
@@ -21,8 +21,8 @@ import 'lib';
  * @param {Number} [options.windowSize=0] Изначальное значение размера окна (количество элементов).
  * */
 
-let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.collections.SlidingWindowCollection.prototype */ {
-    constructor: function (collection, options) //noinspection JSHint
+const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.collections.SlidingWindowCollection.prototype */ {
+    constructor(collection, options) //noinspection JSHint
     {
         options = options || {};
         this.parentCollection = collection;
@@ -42,18 +42,17 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
 
         this.listenTo(collection, 'add', this.__onAdd);
         this.listenTo(collection, 'remove', this.__onRemove);
-        this.listenTo(collection, 'reset',  this.__onReset);
-        this.listenTo(collection, 'sort',  this.__onSort);
+        this.listenTo(collection, 'reset', this.__onReset);
+        this.listenTo(collection, 'sort', this.__onSort);
 
         _.each([
             'add',
             'remove',
             'reset',
             'sort'
-        ], function (eventName)
-        {
-            this.listenTo(this.innerCollection, eventName, function () {
-                var args = _.toArray(arguments);
+        ], function(eventName) {
+            this.listenTo(this.innerCollection, eventName, function() {
+                const args = _.toArray(arguments);
                 args.unshift(eventName);
                 this.trigger.apply(this, args);
             });
@@ -62,9 +61,9 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
         this.initialize.apply(this, arguments);
     },
 
-    __rebuildModels: function (options) {
+    __rebuildModels(options) {
         options = options || {};
-        var newModels = this.parentCollection.chain().rest(this.state.position).first(this.state.windowSize).value();
+        const newModels = this.parentCollection.chain().rest(this.state.position).first(this.state.windowSize).value();
         this.innerCollection.reset(newModels, _.extend(options, { silent: true }));
         this.models = this.innerCollection.models;
         this.length = this.innerCollection.length;
@@ -74,10 +73,9 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
         }
     },
 
-    __buildModelsInternal: function (list)
-    {
-        for (var i = 0, len = list.length; i < len; i++) {
-            var model = list.at(i);
+    __buildModelsInternal(list) {
+        for (let i = 0, len = list.length; i < len; i++) {
+            const model = list.at(i);
             this.models.push(model);
             model.collection = this;
             this._byId[model.cid] = model;
@@ -90,28 +88,27 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
         this.length = this.models.length;
     },
 
-    __bindLifecycle: function (view, methodName) {
+    __bindLifecycle(view, methodName) {
         view.on(methodName, _.bind(this.stopListening, this));
     },
 
-    __onSort: function (collection, options) {
+    __onSort(collection, options) {
         this.__rebuildModels(options);
     },
 
-    __onAdd: function (model, collection, options) {
+    __onAdd(model, collection, options) {
         this.__rebuildModels(options);
     },
 
-    __onRemove: function (model, collection, options) {
+    __onRemove(model, collection, options) {
         this.__rebuildModels(options);
     },
 
-    __onReset: function (collection, options) {
+    __onReset(collection, options) {
         this.__rebuildModels(options);
     },
 
-    sort: function (options)
-    {
+    sort(options) {
         this.parentCollection.sort(options);
     },
 
@@ -119,8 +116,7 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
      * Обновить размер скользящего окна
      * @param {Number} newWindowSize Новый размер скользящего окна
      * */
-    updateWindowSize: function (newWindowSize)
-    {
+    updateWindowSize(newWindowSize) {
         if (this.state.windowSize !== newWindowSize) {
             this.state.windowSize = newWindowSize;
             this.__rebuildModels();
@@ -131,8 +127,7 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
      * Обновить позицию скользящего окна
      * @param {Number} newPosition Новая позиция скользящего окна
      * */
-    updatePosition: function (newPosition)
-    {
+    updatePosition(newPosition) {
         if (this.state.windowSize === undefined) {
             throw 'updatePosition() has been called before setting window size';
         }
@@ -142,10 +137,10 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
             return newPosition;
         }
 
-        var actualWindowSize = this.innerCollection.length;
-        var delta = newPosition - this.state.position;
-        var oldValues;
-        var newValues;
+        const actualWindowSize = this.innerCollection.length;
+        const delta = newPosition - this.state.position;
+        let oldValues;
+        let newValues;
         if (Math.abs(delta) < actualWindowSize) {
             // update collection via add/remove
             if (delta > 0) {
@@ -177,23 +172,22 @@ let SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.
         return newPosition;
     },
 
-    __normalizePosition: function (position)
-    {
-        var maxPos = Math.max(0, this.parentCollection.length - 1);
+    __normalizePosition(position) {
+        const maxPos = Math.max(0, this.parentCollection.length - 1);
         return Math.max(0, Math.min(maxPos, position));
     }
 });
 
 // methods that alter data should proxy to the parent collection
-_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'], function (methodName) {
-    SlidingWindowCollection.prototype[methodName] = function () {
+_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'], methodName => {
+    SlidingWindowCollection.prototype[methodName] = function() {
         return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
     };
 });
 
 // methods that retrieves data should proxy to the inner collection
-_.each(['each', 'at', 'get', 'filter', 'map'], function (methodName) {
-    SlidingWindowCollection.prototype[methodName] = function () {
+_.each(['each', 'at', 'get', 'filter', 'map'], methodName => {
+    SlidingWindowCollection.prototype[methodName] = function() {
         return this.innerCollection[methodName].apply(this.innerCollection, _.toArray(arguments));
     };
 });

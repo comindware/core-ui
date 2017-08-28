@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/message.hbs';
@@ -14,7 +14,7 @@ import WindowService from '../../WindowService';
 import LocalizationService from '../../LocalizationService';
 
 export default Marionette.ItemView.extend({
-    initialize: function () {
+    initialize() {
     },
 
     className: 'msg-popup',
@@ -29,15 +29,15 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    close: function (result) {
+    close(result) {
         WindowService.closePopup();
         this.trigger('close', result);
     },
 
-    __onSelect: function (e) {
-        var index = this.ui.buttons.index(e.target);
-        var buttonModel = this.model.get('buttons')[index];
-        var result = buttonModel.id;
+    __onSelect(e) {
+        const index = this.ui.buttons.index(e.target);
+        const buttonModel = this.model.get('buttons')[index];
+        const result = buttonModel.id;
         this.close(result);
     }
 });

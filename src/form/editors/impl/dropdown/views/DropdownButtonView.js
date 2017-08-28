@@ -13,7 +13,7 @@ const classes = {
 };
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.reqres = options.reqres;
     },
 
@@ -21,7 +21,7 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
+    templateHelpers() {
         const value = this.model.get('value');
         const displayAttribute = this.model.get('displayAttribute');
         return {
@@ -37,24 +37,24 @@ export default Marionette.ItemView.extend({
 
     events: {
         'click .js-clear-button': '__clear',
-        'click': '__click',
-        'focus': '__onFocus'
+        click: '__click',
+        focus: '__onFocus'
     },
 
     modelEvents: {
         'change:value': 'render'
     },
 
-    __clear () {
+    __clear() {
         this.reqres.request('value:set', null);
         return false;
     },
 
-    __click: function () {
+    __click() {
         this.reqres.request('panel:open');
     },
 
-    __onFocus: function () {
+    __onFocus() {
         this.trigger('focus');
     }
 });

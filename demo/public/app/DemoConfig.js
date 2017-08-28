@@ -171,6 +171,11 @@ define([], function () {
                         description: ''
                     },
                     {
+                        id: 'GroupView',
+                        displayName: 'Group',
+                        description: ''
+                    },
+                    {
                         id: 'Button',
                         displayName: 'Button',
                         description: ''

@@ -17,13 +17,13 @@ const defaultOptions = {
 };
 
 export default Backbone.Collection.extend({
-    constructor () {
+    constructor() {
         Backbone.Collection.prototype.constructor.apply(this, arguments);
         _.extend(this, new HighlightableBehavior(this));
         _.extend(this, new SelectableBehavior.SingleSelect(this));
     },
 
-    fetch (options) {
+    fetch(options) {
         helpers.ensureOption(options, 'data.filter');
         if (options.data.count === undefined) {
             options.data.count = defaultOptions.DEFAULT_COUNT;
@@ -34,7 +34,7 @@ export default Backbone.Collection.extend({
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
 
-    parse (response, options) {
+    parse(response, options) {
         this.totalCount = response.totalCount;
         return Backbone.Collection.prototype.parse.call(this, response.options, options);
     },

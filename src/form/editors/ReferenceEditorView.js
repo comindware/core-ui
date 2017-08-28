@@ -31,7 +31,8 @@ const defaultOptions = {
     showEditButton: false,
     buttonView: ReferenceButtonView,
     listItemView: ReferenceListItemView,
-    textFilterDelay: 300
+    textFilterDelay: 300,
+    showTitle: true
 };
 
 /**
@@ -46,6 +47,7 @@ const defaultOptions = {
  * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
+ * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize(options) {
@@ -138,6 +140,11 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 }
             });
         }, this);
+
+        if (this.options.showTitle) {
+            const value = this.getValue();
+            this.$el.prop('title', value && value.text ? value.text : '');
+        }
     },
 
     __adjustValue(value) {
@@ -154,6 +161,10 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         this.value = this.__adjustValue(value);
         this.viewModel.get('button').set('value', this.value);
         this.viewModel.get('panel').set('value', this.value);
+
+        if (this.options.showTitle) {
+            this.$el.prop('title', value && value.text ? value.text : '');
+        }
         if (triggerChange) {
             this.__triggerChange();
         }

@@ -6,31 +6,31 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/splitPanel.hbs';
 import GlobalEventService from '../services/GlobalEventService';
 
-let config = {
+const config = {
     smallSize: 550,
     largeSize: 700,
     throttleDelay: 200
 };
 
-let classes = {
-    smallPanelSize: "size-small",
-    largePanelSize: "size-large",
-    middlePanelSize: "size-middle"
+const classes = {
+    smallPanelSize: 'size-small',
+    largePanelSize: 'size-large',
+    middlePanelSize: 'size-middle'
 };
 
-let defaultOptions = {
+const defaultOptions = {
     panel1Min: 20,
     panel2Min: 20
 };
 
 export default Marionette.LayoutView.extend({
-    constructor: function () {
+    constructor() {
         Marionette.LayoutView.prototype.constructor.apply(this, arguments);
 
         _.defaults(this.options, defaultOptions);
@@ -40,12 +40,12 @@ export default Marionette.LayoutView.extend({
             '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
 
         this.listenTo(GlobalEventService, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
-        this.on('render', function () {
+        this.on('render', () => {
             this.$el.addClass('double-panels');
-        }.bind(this));
-        this.on('show', function () {
+        });
+        this.on('show', () => {
             this.__handleWindowResize();
-        }.bind(this));
+        });
     },
 
     template: Handlebars.compile(template),
@@ -65,39 +65,39 @@ export default Marionette.LayoutView.extend({
         'mousedown @ui.resizer': '__handleResizerMousedown'
     },
 
-    __handleResizerMousedown: function (event) {
+    __handleResizerMousedown(event) {
         this.__stopDragging();
         this.__startDragging(event);
         return false;
     },
 
-    __handleDocumentMouseMove: function (event) {
+    __handleDocumentMouseMove(event) {
         if (!this.dragContext) {
             return;
         }
 
-        var ctx = this.dragContext;
+        const ctx = this.dragContext;
         if (event.pageX === ctx.pageX) {
             return;
         }
 
-        var newPanel1Width = Math.min(
+        const newPanel1Width = Math.min(
             Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
-        var leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
-        var rightWidthPx = 100 - leftWidthPx;
-        this.ui.panel1.css('width', leftWidthPx + '%');
-        this.ui.resizer.css('left', leftWidthPx + '%');
-        this.ui.panel2.css('width', rightWidthPx + '%');
+        const leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
+        const rightWidthPx = 100 - leftWidthPx;
+        this.ui.panel1.css('width', `${leftWidthPx}%`);
+        this.ui.resizer.css('left', `${leftWidthPx}%`);
+        this.ui.panel2.css('width', `${rightWidthPx}%`);
         this.__handleWindowResize();
         return false;
     },
 
-    __handleDocumentMouseUp: function () {
+    __handleDocumentMouseUp() {
         this.__stopDragging();
         return false;
     },
 
-    __startDragging: function (event) {
+    __startDragging(event) {
         this.dragContext = {
             pageX: event.pageX,
             containerWidth: this.$el.width(),
@@ -106,25 +106,25 @@ export default Marionette.LayoutView.extend({
         $(document).mousemove(this.__handleDocumentMouseMove).mouseup(this.__handleDocumentMouseUp);
     },
 
-    __stopDragging: function () {
+    __stopDragging() {
         if (!this.dragContext) {
             return;
         }
 
-        var $document = $(document);
+        const $document = $(document);
         $document.unbind('mousemove', this.__handleDocumentMouseMove);
         $document.unbind('mouseup', this.__handleDocumentMouseUp);
         this.dragContext = null;
         $(window).trigger('resize');
     },
 
-    __updatePanelClasses: function($panelEl) {
-        var panelWidth = $panelEl.width();
+    __updatePanelClasses($panelEl) {
+        const panelWidth = $panelEl.width();
         if (!panelWidth) {
             return;
         }
 
-        var newClass;
+        let newClass;
         if (panelWidth < config.smallSize) {
             newClass = classes.smallPanelSize;
         } else if (panelWidth < config.largeSize) {
@@ -141,7 +141,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __handleWindowResize: function() {
+    __handleWindowResize() {
         this.__updatePanelClasses(this.ui.panel1);
         this.__updatePanelClasses(this.ui.panel2);
     }

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import PopoutView from './views/PopoutView';
 import ListPanelView from './views/ListPanelView';
@@ -33,19 +33,19 @@ export default /** @lends module:core.dropdown.factory */ {
      * @param {String} [options.text] Текст кнопки меню. Если не задан, требуется вручную установить опцию <code>buttonView</code>.
      * @returns {Backbone.View} View Меню
      * */
-    createMenu: function(options) {
+    createMenu(options) {
         options = options || {};
-        var collection = options.items;
+        let collection = options.items;
         if (!(collection instanceof Backbone.Collection)) {
             collection = new Backbone.Collection(collection);
         }
 
-        var effectiveButtonModel = options.buttonModel || new Backbone.Model({
+        let effectiveButtonModel = options.buttonModel || new Backbone.Model({
             text: options.text
         });
 
         if (!options.buttonModel) {
-            var defaultActModel = collection.findWhere({ default: true });
+            const defaultActModel = collection.findWhere({ default: true });
             if (defaultActModel) {
                 effectiveButtonModel = defaultActModel;
                 collection.remove(effectiveButtonModel);
@@ -59,7 +59,7 @@ export default /** @lends module:core.dropdown.factory */ {
             },
             panelView: MenuPanelView,
             panelViewOptions: {
-                collection: collection
+                collection
             }
         }, options));
     },
@@ -71,8 +71,8 @@ export default /** @lends module:core.dropdown.factory */ {
      * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
      * @returns {PopoutView} Экземпляр PopoutView
      * */
-    createDialogPopout: function (options) {
-        var defaults = {
+    createDialogPopout(options) {
+        const defaults = {
             fade: true,
             height: 'bottom'
         };
@@ -86,7 +86,7 @@ export default /** @lends module:core.dropdown.factory */ {
      * @param {Object} options Объект опций {@link module:core.dropdown.views.PopoutView PopoutView}
      * @returns {PopoutView} Экземпляр PopoutView
      * */
-    createPopout: function (options) {
+    createPopout(options) {
         return new PopoutView(options);
     },
 
@@ -96,7 +96,7 @@ export default /** @lends module:core.dropdown.factory */ {
      * @param {Object} options Объект опций {@link module:core.dropdown.views.DropdownView DropdownView}
      * @returns {DropdownView} Экземпляр DropdownView
      * */
-    createDropdown: function (options) {
+    createDropdown(options) {
         return new DropdownView(options);
     }
 };

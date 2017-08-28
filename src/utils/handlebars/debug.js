@@ -8,15 +8,15 @@
 
 /* global module */
 
-"use strict";
+'use strict';
 
 module.exports = function(optionalValue) {
-    console.log("Current Context");
-    console.log("====================");
+    console.log('Current Context');
+    console.log('====================');
     console.log(this);
     if (optionalValue) {
-        console.log("Value");
-        console.log("====================");
+        console.log('Value');
+        console.log('====================');
         console.log(optionalValue);
     }
 };

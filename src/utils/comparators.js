@@ -6,46 +6,44 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { objectPropertyTypes } from '../Meta';
 import { moment } from 'lib';
 
-export var stringComparator2Asc = function (a, b) {
+export var stringComparator2Asc = function(a, b) {
     if (a) {
         if (b) {
             return a.localeCompare(b);
-        } else {
-            return -1;
         }
+        return -1;
     } else if (b) {
         return 1;
     }
     return 0;
 };
 
-export var stringComparator2Desc = function (a, b) {
+export var stringComparator2Desc = function(a, b) {
     if (a) {
         if (b) {
             return -a.localeCompare(b);
-        } else {
-            return 1;
         }
+        return 1;
     } else if (b) {
         return -1;
     }
     return 0;
 };
 
-export var numberComparator2Asc = function (a, b) {
+export var numberComparator2Asc = function(a, b) {
     return a - b;
 };
 
-export var numberComparator2Desc = function (a, b) {
+export var numberComparator2Desc = function(a, b) {
     return b - a;
 };
 
-export var durationComparator2Asc = function (a, b) {
+export var durationComparator2Asc = function(a, b) {
     if (a) {
         a = moment.duration(a);
     }
@@ -55,7 +53,7 @@ export var durationComparator2Asc = function (a, b) {
     return a ? (b ? a - b : 1) : (b ? -1 : 0);
 };
 
-export var durationComparator2Desc = function (a, b) {
+export var durationComparator2Desc = function(a, b) {
     if (a) {
         a = moment.duration(a);
     }
@@ -65,22 +63,22 @@ export var durationComparator2Desc = function (a, b) {
     return b ? (a ? b - a : 1) : (a ? -1 : 0);
 };
 
-export var booleanComparator2Asc = function (a, b) {
+export var booleanComparator2Asc = function(a, b) {
     // true goes first
     return a ? (b ? 0 : -1) : (b ? 1 : 0);
 };
 
-export var dateComparator2Asc = function (a, b) {
+export var dateComparator2Asc = function(a, b) {
     if (a) {
         a = moment(a);
     }
     if (b) {
         b = moment(b);
     }
-    return a ? (b ? a - b : 1) : ( b ? -1 : 0);
+    return a ? (b ? a - b : 1) : (b ? -1 : 0);
 };
 
-export var dateComparator2Desc = function (a, b) {
+export var dateComparator2Desc = function(a, b) {
     if (a) {
         a = moment(a);
     }
@@ -90,62 +88,62 @@ export var dateComparator2Desc = function (a, b) {
     return b ? (a ? b - a : 1) : (a ? -1 : 0);
 };
 
-export var booleanComparator2Desc = function (a, b) {
+export var booleanComparator2Desc = function(a, b) {
     return a ? (b ? 0 : 1) : (b ? -1 : 0);
 };
 
 export var referenceComparator2Asc = function(a, b) {
-    var effectiveA = a ? a.name ? a.name : "" : "";
-    var effectiveB = b ? b.name ? b.name : "" : "";
+    const effectiveA = a ? a.name ? a.name : '' : '';
+    const effectiveB = b ? b.name ? b.name : '' : '';
     return stringComparator2Asc(effectiveA, effectiveB);
 };
 
 export var referenceComparator2Desc = function(a, b) {
-    var effectiveA = a ? a.name ? a.name : "" : "";
-    var effectiveB = b ? b.name ? b.name : "" : "";
+    const effectiveA = a ? a.name ? a.name : '' : '';
+    const effectiveB = b ? b.name ? b.name : '' : '';
     return stringComparator2Desc(effectiveA, effectiveB);
 };
 
-export var getComparatorByDataType = function (dataType, sorting) {
-    var comparator,
+export var getComparatorByDataType = function(dataType, sorting) {
+    let comparator,
         isDesc = sorting === 'desc';
     switch (dataType) {
-    case objectPropertyTypes.STRING:
-        comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
-        break;
-    case objectPropertyTypes.DOUBLE:
-    case objectPropertyTypes.INTEGER:
-    case objectPropertyTypes.DECIMAL:
-        comparator = isDesc ? numberComparator2Desc : numberComparator2Asc;
-        break;
-    case objectPropertyTypes.DURATION:
-        comparator = isDesc ? durationComparator2Desc : durationComparator2Asc;
-        break;
-    case objectPropertyTypes.DATETIME:
-        comparator = isDesc ? dateComparator2Desc : dateComparator2Asc;
-        break;
-    case objectPropertyTypes.BOOLEAN:
-        comparator = isDesc ? booleanComparator2Desc : booleanComparator2Asc;
-        break;
-    case objectPropertyTypes.ACCOUNT:
-    case objectPropertyTypes.INSTANCE:
-    case objectPropertyTypes.DOCUMENT:
-    case objectPropertyTypes.ENUM:
-        comparator = isDesc ? referenceComparator2Desc : referenceComparator2Asc;
-        break;
-    default:
-        comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
-        break;
+        case objectPropertyTypes.STRING:
+            comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
+            break;
+        case objectPropertyTypes.DOUBLE:
+        case objectPropertyTypes.INTEGER:
+        case objectPropertyTypes.DECIMAL:
+            comparator = isDesc ? numberComparator2Desc : numberComparator2Asc;
+            break;
+        case objectPropertyTypes.DURATION:
+            comparator = isDesc ? durationComparator2Desc : durationComparator2Asc;
+            break;
+        case objectPropertyTypes.DATETIME:
+            comparator = isDesc ? dateComparator2Desc : dateComparator2Asc;
+            break;
+        case objectPropertyTypes.BOOLEAN:
+            comparator = isDesc ? booleanComparator2Desc : booleanComparator2Asc;
+            break;
+        case objectPropertyTypes.ACCOUNT:
+        case objectPropertyTypes.INSTANCE:
+        case objectPropertyTypes.DOCUMENT:
+        case objectPropertyTypes.ENUM:
+            comparator = isDesc ? referenceComparator2Desc : referenceComparator2Asc;
+            break;
+        default:
+            comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
+            break;
     }
 
     return comparator;
 };
 
-export var stringComparator1 = function (a) {
+export var stringComparator1 = function(a) {
     return a;
 };
 
-export var emptyComparator = function () {
+export var emptyComparator = function() {
     return 0;
 };
 
@@ -154,7 +152,7 @@ export default /** @lends module:core.utils.comparators */ {
      * @param {String} a Argument A.
      * @return {String} An object to compare with simple operators (&gt;&lt;=).
      * */
-    stringComparator1: stringComparator1,
+    stringComparator1,
     /**
      * @function
      * @param {String} a Argument A.
@@ -166,7 +164,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    stringComparator2Asc: stringComparator2Asc,
+    stringComparator2Asc,
     /**
      * @function
      * @param {String} a Argument A.
@@ -178,13 +176,13 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    stringComparator2Desc: stringComparator2Desc,
+    stringComparator2Desc,
     /**
      * Empty comparator.
      * @function
      * @return {Number} Always 0 (means equals).
      * */
-    emptyComparator: emptyComparator,
+    emptyComparator,
     /**
      * @function
      * @param {Date|String|moment} a Argument A. Javascript <code>Date</code>, date string in ISO8691 or momentJS date.
@@ -196,7 +194,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    dateComparator2Asc: dateComparator2Asc,
+    dateComparator2Asc,
     /**
      * @function
      * @param {Date|String|moment} a Argument A. Javascript <code>Date</code>, date string in ISO8691 or momentJS date.
@@ -208,7 +206,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    dateComparator2Desc: dateComparator2Desc,
+    dateComparator2Desc,
     /**
      * @function
      * @param {Number} a Argument A.
@@ -220,7 +218,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    numberComparator2Asc: numberComparator2Asc,
+    numberComparator2Asc,
     /**
      * @function
      * @param {Number} a Argument A.
@@ -232,7 +230,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    numberComparator2Desc: numberComparator2Desc,
+    numberComparator2Desc,
     /**
      * @function
      * @param {String|Object} a Argument A. An ISO8601 duration string ('P1Y2M3DT4H5M6S'), a string separated by colons like '7.23:59:59.999'
@@ -246,7 +244,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    durationComparator2Asc: durationComparator2Asc,
+    durationComparator2Asc,
     /**
      * @function
      * @param {String|Object} a Argument A. An ISO8601 duration string ('P1Y2M3DT4H5M6S'), a string separated by colons like '7.23:59:59.999'
@@ -260,7 +258,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    durationComparator2Desc: durationComparator2Desc,
+    durationComparator2Desc,
     /**
      * @function
      * @param {Boolean} a Argument A.
@@ -272,7 +270,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    booleanComparator2Asc: booleanComparator2Asc,
+    booleanComparator2Asc,
     /**
      * @function
      * @param {Boolean} a Argument A.
@@ -284,7 +282,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    booleanComparator2Desc: booleanComparator2Desc,
+    booleanComparator2Desc,
     /**
      * Method to compare objects by it's <code>name</code> property.
      * @function
@@ -297,7 +295,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    referenceComparator2Asc: referenceComparator2Asc,
+    referenceComparator2Asc,
     /**
      * Method to compare objects by it's <code>name</code> property.
      * @function
@@ -310,7 +308,7 @@ export default /** @lends module:core.utils.comparators */ {
      *     <li><code>1</code> - if A &gt; B.</li>
      * </ul>
      * */
-    referenceComparator2Desc: referenceComparator2Desc,
+    referenceComparator2Desc,
     /**
      * Method returns comparator function based on type name.
      * @function
@@ -318,5 +316,5 @@ export default /** @lends module:core.utils.comparators */ {
      * @param {String} sorting What sorting do we need? Options: <ul><li><code>'asc'</code></li><li><code>'desc'</code></li></ul>
      * @return {Function} Comparator function.
      * */
-    getComparatorByDataType: getComparatorByDataType
+    getComparatorByDataType
 };

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { helpers, comparators } from 'utils';
 import VirtualCollection from '../../../../../../collections/VirtualCollection';
@@ -14,7 +14,7 @@ import HighlightableBehavior from '../../../../../../collections/behaviors/Highl
 import MemberModel from '../models/MemberModel';
 
 export default VirtualCollection.extend({
-    initialize: function () {
+    initialize() {
         helpers.applyBehavior(this, HighlightableBehavior);
     },
 
@@ -22,24 +22,22 @@ export default VirtualCollection.extend({
 
     comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name'),
 
-    applyTextFilter: function (text) {
+    applyTextFilter(text) {
         this.deselect();
         this.unhighlight();
 
-        if(!text) {
+        if (!text) {
             this.filter(null);
             this.selectFirst();
             return;
         }
         text = text.toLowerCase();
-        this.filter(function (model) {
-            return model.matchText(text);
-        });
+        this.filter(model => model.matchText(text));
         this.highlight(text);
         this.selectFirst();
     },
 
-    selectFirst: function () {
+    selectFirst() {
         if (this.length > 0) {
             this.at(0).select();
         }

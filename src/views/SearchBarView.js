@@ -6,21 +6,19 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 
-let defaultOptions = () => {
-    return {
-        placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
-        delay: 300
-    };
-};
+const defaultOptions = () => ({
+    placeholder: LocalizationService.get('CORE.VIEWS.SEARCHBAR.PLACEHOLDER'),
+    delay: 300
+});
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         _.extend(this.options, defaultOptions(), options || {});
         this.model = new Backbone.Model({
             placeholder: this.options.placeholder
@@ -42,21 +40,21 @@ export default Marionette.ItemView.extend({
         'click @ui.clear': '__clear'
     },
 
-    onRender: function () {
+    onRender() {
         this.ui.clear.toggle(!!this.ui.input.val());
     },
 
-    __search: function() {
-        var value = this.ui.input.val();
+    __search() {
+        const value = this.ui.input.val();
         this.__triggerSearch(value);
         this.ui.clear.toggle(!!value);
     },
 
-    __triggerSearch: function (value) {
+    __triggerSearch(value) {
         this.trigger('search', value);
     },
 
-    __clear: function() {
+    __clear() {
         this.ui.input.val('');
         this.__search();
         this.ui.input.focus();

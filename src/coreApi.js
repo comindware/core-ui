@@ -54,7 +54,7 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
  * @name module:core
  * */
-var core = {
+const core = {
     lib: libApi,
     /**
      * Services of general use the UI is built on.
@@ -62,25 +62,25 @@ var core = {
      * @memberof module:core
      * */
     services: {
-        RoutingServiceBase: RoutingServiceBase,
-        MessageService: MessageService,
+        RoutingServiceBase,
+        MessageService,
         /**
          * The service is responsible for displaying global windows. For example, modal dialogs (popups).
          * @namespace
          * @memberof module:core.services
          * */
-        WindowService: WindowService,
-        LocalizationService: LocalizationService,
-        AjaxService: AjaxService,
+        WindowService,
+        LocalizationService,
+        AjaxService,
         /**
          * The services provides an interface to global window events, so you could easily subscribe
          * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
          * @namespace
          * @memberof module:core.services
         * */
-        GlobalEventService: GlobalEventService,
-        PromiseService: PromiseService,
-        UserService: UserService
+        GlobalEventService,
+        PromiseService,
+        UserService
     },
     /**
      * Backbone collections of general use.
@@ -96,8 +96,8 @@ var core = {
         behaviors: {
             HighlightableBehavior: CollectionHighlightableBehavior
         },
-        SlidingWindowCollection: SlidingWindowCollection,
-        VirtualCollection: VirtualCollection
+        SlidingWindowCollection,
+        VirtualCollection
     },
     /**
      * Backbone models of general use.
@@ -106,18 +106,18 @@ var core = {
      * */
     models: {
         behaviors: {
-            CollapsibleBehavior: CollapsibleBehavior,
-            HighlightableBehavior: HighlightableBehavior,
-            SelectableBehavior: SelectableBehavior
+            CollapsibleBehavior,
+            HighlightableBehavior,
+            SelectableBehavior
         }
     },
     views: {
         behaviors: {
-            LoadingBehavior: LoadingBehavior
+            LoadingBehavior
         },
-        LoadingView: LoadingView,
-        SearchBarView: SearchBarView,
-        SplitPanelView: SplitPanelView
+        LoadingView,
+        SearchBarView,
+        SplitPanelView
     },
     /**
      * Dropdown components of general use. It may be used in menus, dropdown lists and more complex cases like displaying some fancy about-me panel.

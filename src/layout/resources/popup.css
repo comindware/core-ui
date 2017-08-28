@@ -134,3 +134,8 @@
 .layout__popup-view-header__close  svg{
     vertical-align: top;
 }
+
+.layout__popup-view-content .layout__group {
+    width: 100%;
+    margin: 22px 0;
+}

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 export default /** @lends module:core.utils.keyCode */ {
     BACKSPACE: 8,

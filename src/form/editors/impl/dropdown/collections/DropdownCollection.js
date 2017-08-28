@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import { helpers } from 'utils';
@@ -14,7 +14,7 @@ import VirtualCollection from '../../../../../collections/VirtualCollection';
 import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 
 export default VirtualCollection.extend({
-    initialize: function () {
+    initialize() {
         helpers.applyBehavior(this, HighlightableBehavior);
     }
 });
