@@ -14,11 +14,12 @@
 define([
     'comindware/core',
     'text!../templates/navBarItem.html'
-], function (core, template) {
+], (core, template) => {
     'use strict';
+
     return Marionette.ItemView.extend({
-        className: function () {
-            var result = 'demo-nav__i demo-nav__i_' + this.model.id;
+        className() {
+            let result = `demo-nav__i demo-nav__i_${this.model.id}`;
             if (this.model.get('selected')) {
                 result += ' demo-nav__i_selected';
             }

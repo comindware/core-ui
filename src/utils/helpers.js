@@ -149,7 +149,7 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     enqueueOperation(operation, queueId) {
         if (queueCache[queueId] && queueCache[queueId].isPending()) {
-            queueCache[queueId] = queueCache[queueId].then(() => _.isFunction(operation) ? operation() : operation);
+            queueCache[queueId] = queueCache[queueId].then(() => (_.isFunction(operation) ? operation() : operation));
         } else {
             queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
         }
@@ -241,7 +241,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} obj An object to get the property from.
      * */
     getPropertyOrDefault(propertyPath, obj) {
-        return [obj].concat(propertyPath.split('.')).reduce((prev, curr) => prev === undefined ? undefined : prev[curr]);
+        return [obj].concat(propertyPath.split('.')).reduce((prev, curr) => (prev === undefined ? undefined : prev[curr]));
     },
 
     /**

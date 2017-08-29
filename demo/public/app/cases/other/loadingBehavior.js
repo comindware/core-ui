@@ -1,9 +1,9 @@
 define(['comindware/core', 'demoPage/views/CanvasView'],
-    function (core, CanvasView) {
+    (core, CanvasView) => {
         'use strict';
-        return function () {
 
-            var View = Marionette.LayoutView.extend({
+        return function() {
+            const View = Marionette.LayoutView.extend({
                 template: Handlebars.compile('' +
                     '<input type="button" class="js-show_loading-btn" value="Show Loading"/>' +
                     '<input type="button" class="js-show_loading-promise-btn" style="display:block;" value="Show Loading (Promise)"/>' +
@@ -37,29 +37,29 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                 className: 'loading-behavior-view',
 
                 //You can show and hide loading region manually
-                __onShowLoadingBtnClick: function () {
+                __onShowLoadingBtnClick() {
                     this.__showLoading();
-                    setTimeout(function () {
+                    setTimeout(() => {
                         this.__hideLoading();
-                    }.bind(this), 3000);
+                    }, 3000);
                 },
 
                 //Or you can control visibility of loading with Promise
-                __onShowLoadingPromiseBtnClick: function () {
-                    this.loading.setLoading(new Promise(function (resolve) {
-                        setTimeout(function () {
+                __onShowLoadingPromiseBtnClick() {
+                    this.loading.setLoading(new Promise((resolve => {
+                        setTimeout(() => {
                             resolve();
-                        }, 3000)
-                    }))
+                        }, 3000);
+                    })));
                 },
 
                 //Show loading method
-                __showLoading: function () {
+                __showLoading() {
                     this.loading.setLoading(true);
                 },
 
                 //Hide loading method
-                __hideLoading: function () {
+                __hideLoading() {
                     this.loading.setLoading(false);
                 }
             });
@@ -70,5 +70,5 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                     height: '500px'
                 }
             });
-        }
+        };
     });

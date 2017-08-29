@@ -28,18 +28,18 @@ const config = {
     assetsDir: path.resolve(`${__dirname}/public/assets`)
 };
 
-gulp.task('clear', function () {
+gulp.task('clear', () => {
     del.sync([`${config.assetsDir}/**`]);
     mkdirp.sync(config.assetsDir);
 });
 
-gulp.task('start', function () {
-    let webpackConfig = webpackConfigFactory.build({
+gulp.task('start', () => {
+    const webpackConfig = webpackConfigFactory.build({
         env: 'development'
     });
-    let compiler = webpack(webpackConfig);
+    const compiler = webpack(webpackConfig);
 
-    startServer('node', [config.serverPath], function () {
+    startServer('node', [config.serverPath], () => {
         browserSync.init({
             proxy: {
                 target: config.server,
@@ -60,11 +60,11 @@ gulp.task('start', function () {
     });
 });
 
-gulp.task('build', ['clear'], function (callback) {
+gulp.task('build', ['clear'], callback => {
     const webpackConfig = webpackConfigFactory.build({
         env: 'production'
     });
-    webpack(webpackConfig, function (err, stats) {
+    webpack(webpackConfig, (err, stats) => {
         if (err) {
             throw new gutil.PluginError('build', err);
         }

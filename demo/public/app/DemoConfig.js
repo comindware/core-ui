@@ -11,8 +11,8 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
-define([], function () {
-    "use strict";
+define([], () => {
+    'use strict';
 
     /**
      * Case path is gonna be like: core/demo/cases/{sectionId}/{groupId}/{caseId}.js

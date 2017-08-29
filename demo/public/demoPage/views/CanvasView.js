@@ -14,11 +14,11 @@
 define([
     'comindware/core',
     'text!../templates/canvas.html'
-], function (core, template) {
+], (core, template) => {
     'use strict';
 
     return Marionette.LayoutView.extend({
-        initialize: function (options) {
+        initialize(options) {
             core.utils.helpers.ensureOption(options, 'view');
         },
 
@@ -28,15 +28,15 @@ define([
             view: '.js-view-region'
         },
 
-        onShow: function () {
+        onShow() {
             if (this.options.canvas) {
                 this.$el.css(this.options.canvas);
             }
 
             if (this.options.region) {
-                this.listenTo(this.view, 'before:show', function () {
+                this.listenTo(this.view, 'before:show', () => {
                     this.view.$el.css(this.options.region);
-                }.bind(this));
+                });
             }
 
             this.view.show(this.options.view);

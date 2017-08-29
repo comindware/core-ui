@@ -1,10 +1,10 @@
 define(['comindware/core'],
-    function (core) {
+    core => {
         'use strict';
 
-        return function () {
+        return function() {
             var PopupView = Marionette.ItemView.extend({
-                initialize: function (options) {
+                initialize(options) {
                     this.index = (options && options.index) || 1;
                 },
 
@@ -13,7 +13,7 @@ define(['comindware/core'],
                     '<input class="js-open__button msg-popup__button_default msg-popup__button" style="margin-left:140px;" type="button" value="Show popup" /> ' +
                     '<input class="js-close__button msg-popup__button_default msg-popup__button" style="margin-right:10px;" type="button" value="Close" />'),
 
-                templateHelpers: function () {
+                templateHelpers() {
                     return {
                         index: this.index
                     };
@@ -26,25 +26,25 @@ define(['comindware/core'],
                     'click .js-open__button': '__showPopup'
                 },
 
-                __closePopup: function () {
+                __closePopup() {
                     core.services.WindowService.closePopup();
                 },
 
-                __showPopup: function () {
+                __showPopup() {
                     core.services.WindowService.showPopup(new PopupView({
                         index: this.index + 1 || 1
                     }));
                 }
             });
 
-            var View = Marionette.ItemView.extend({
+            const View = Marionette.ItemView.extend({
                 template: Handlebars.compile('<input class="js-show__button" type="button" value="Show Popup"/>'),
 
                 events: {
                     'click .js-show__button': '__showPopup'
                 },
 
-                __showPopup: function () {
+                __showPopup() {
                     core.services.WindowService.showPopup(new PopupView());
                 }
             });

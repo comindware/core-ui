@@ -11,7 +11,7 @@ define(
         'comindware/core',
         'demoPage/views/CanvasView'
     ],
-    function(core, CanvasView) {
+    (core, CanvasView) => {
         'use strict';
 
         return function() {

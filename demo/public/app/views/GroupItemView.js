@@ -12,26 +12,26 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([
-        'comindware/core',
-        'text!../templates/groupItem.html'
-    ],
-    function (core, template) {
-        'use strict';
+    'comindware/core',
+    'text!../templates/groupItem.html'
+],
+(core, template) => {
+    'use strict';
 
-        var classes = {
-            selected: 'selected'
-        };
+    const classes = {
+        selected: 'selected'
+    };
 
-        return Marionette.ItemView.extend({
+    return Marionette.ItemView.extend({
 
-            template: Handlebars.compile(template),
+        template: Handlebars.compile(template),
 
-            tagName: 'li',
+        tagName: 'li',
 
-            onRender: function () {
-                this.$el.toggleClass(classes.selected, !!this.model.selected);
-            },
+        onRender() {
+            this.$el.toggleClass(classes.selected, !!this.model.selected);
+        },
 
-            className: 'demo-groups__li'
-        });
+        className: 'demo-groups__li'
     });
+});

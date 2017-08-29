@@ -1,7 +1,8 @@
-define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core, EditorCanvasView) {
+define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], (core, EditorCanvasView) => {
     'use strict';
-    return function () {
-        var model = new Backbone.Model({
+
+    return function() {
+        const model = new Backbone.Model({
             referenceValue: {
                 id: 'test.1',
                 text: 'Test Reference 1'
@@ -10,7 +11,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
 
         return new EditorCanvasView({
             editor: new core.form.editors.ReferenceEditor({
-                model: model,
+                model,
                 key: 'referenceValue',
                 autocommit: true,
                 showEditButton: true,

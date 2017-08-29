@@ -1,37 +1,37 @@
 define([
-	'comindware/core',
+    'comindware/core',
     'localizationMapEn',
     'localizationMapDe',
     'localizationMapRu',
     './ajaxMap.json',
     'demoPage/dataProvider'
-], function(core, localizationMapEn, localizationMapDe, localizationMapRu, ajaxMap, dataProvider) {
+], (core, localizationMapEn, localizationMapDe, localizationMapRu, ajaxMap, dataProvider) => {
     'use strict';
 
-    var Application = new Marionette.Application();
+    const Application = new Marionette.Application();
 
     Application.addRegions({
         headerRegion: '.js-header-region',
         contentRegion: '.js-content-region'
     });
 
-    Application.addInitializer(function() {
-        let isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
+    Application.addInitializer(() => {
+        const isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
 
-        let langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
-        let localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
+        const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
+        const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
 
         core.initialize({
             ajaxService: {
-                ajaxMap: ajaxMap
+                ajaxMap
             },
             localizationService: {
-                langCode: langCode,
-                localizationMap: localizationMap,
+                langCode,
+                localizationMap,
                 warningAsError: isProduction
             },
             userService: {
-                dataProvider: dataProvider
+                dataProvider
             }
         });
     });

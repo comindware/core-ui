@@ -1,9 +1,10 @@
 define([
     'comindware/core', 'demoPage/views/CanvasView', 'demoPage/views/DemoProfilePanelView'
-], function (core, CanvasView, DemoProfilePanelView) {
+], (core, CanvasView, DemoProfilePanelView) => {
     'use strict';
-    return function () {
-        var AnchoredButtonView = Marionette.ItemView.extend({
+
+    return function() {
+        const AnchoredButtonView = Marionette.ItemView.extend({
             template: Handlebars.compile('<span>My </span><a href="javascript:void(0);" class="js-anchor">custom</a><span> anchor</span>'),
             behaviors: {
                 CustomAnchorBehavior: {
@@ -14,7 +15,7 @@ define([
             tagName: 'div'
         });
 
-        var popout = core.dropdown.factory.createPopout({
+        const popout = core.dropdown.factory.createPopout({
             buttonView: AnchoredButtonView,
             panelView: DemoProfilePanelView,
             popoutFlow: 'right',

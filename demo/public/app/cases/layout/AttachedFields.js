@@ -10,7 +10,7 @@ define(
     [
         'comindware/core'
     ],
-    function(core) {
+    core => {
         'use strict';
 
         return function() {
@@ -25,7 +25,7 @@ define(
             const View = Marionette.ItemView.extend({
                 template: false,
 
-                regions () {
+                regions() {
                     return {
                         contentRegion: {
                             el: this.el
@@ -40,7 +40,7 @@ define(
                     BackboneFormBehavior: {
                         behaviorClass: core.form.behaviors.BackboneFormBehavior,
                         renderStrategy: 'manual',
-                        schema: function () {
+                        schema() {
                             return {
                                 title: {
                                     title: 'Title',
@@ -67,7 +67,7 @@ define(
                     }
                 },
 
-                onShow () {
+                onShow() {
                     this.contentRegion.show(new core.layout.VerticalLayout({
                         rows: [
                             core.layout.createFieldAnchor('title'),

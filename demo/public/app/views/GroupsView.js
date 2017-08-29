@@ -12,8 +12,9 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define([ './GroupItemView' ],
-    function (GroupItemView) {
+    GroupItemView => {
         'use strict';
+
         return Marionette.CollectionView.extend({
             tagName: 'ul',
 

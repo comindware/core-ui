@@ -10,7 +10,7 @@ define(
     [
         'comindware/core'
     ],
-    function(core) {
+    core => {
         'use strict';
 
         return function() {
@@ -38,7 +38,7 @@ define(
                     }),
                     new core.layout.Button({
                         text: 'Say hello!',
-                        handler () {
+                        handler() {
                             alert('Hello!');
                         }
                     })

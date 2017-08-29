@@ -10,10 +10,10 @@ define(
     [
         'comindware/core'
     ],
-    function(core) {
+    core => {
         'use strict';
 
-        return function () {
+        return function() {
             const model = new Backbone.Model({
                 title: 'New Task',
                 idealDays: 12,
@@ -51,7 +51,7 @@ define(
             };
 
             const view = new core.layout.Form({
-                model: model,
+                model,
                 schema: formSchema,
                 content: new core.layout.VerticalLayout({
                     rows: [
@@ -64,14 +64,12 @@ define(
                         }),
                         core.layout.createEditorAnchor('blocked'),
                         core.layout.createFieldAnchor('blockReason', {
-                            visible: () => {
-                                return view.getValue('blocked');
-                            }
+                            visible: () => view.getValue('blocked')
                         }),
                         core.layout.createFieldAnchor('description'),
                         new core.layout.Button({
                             text: 'Commit',
-                            handler () {
+                            handler() {
                                 view.form.commit();
                                 alert(JSON.stringify(model.toJSON(), null, 4));
                             }

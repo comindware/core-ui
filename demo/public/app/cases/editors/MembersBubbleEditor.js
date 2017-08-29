@@ -1,13 +1,14 @@
-define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core, EditorCanvasView) {
+define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], (core, EditorCanvasView) => {
     'use strict';
-    return function () {
-        var model = new Backbone.Model({
+
+    return function() {
+        const model = new Backbone.Model({
             membersValue: [ 'user.1' ]
         });
 
         return new EditorCanvasView({
             editor: new core.form.editors.MembersBubbleEditor({
-                model: model,
+                model,
                 key: 'membersValue',
                 maxQuantitySelected: 7,
                 autocommit: true

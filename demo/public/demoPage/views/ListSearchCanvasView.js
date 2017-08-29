@@ -14,10 +14,11 @@
 define([
     'comindware/core',
     'text!../templates/listSearchCanvas.html'
-], function (core, template) {
+], (core, template) => {
     'use strict';
+
     return Marionette.LayoutView.extend({
-        initialize: function () {
+        initialize() {
         },
 
         template: Handlebars.compile(template),
@@ -30,7 +31,7 @@ define([
 
         className: 'demo-list-canvas__view_search',
 
-        onShow: function () {
+        onShow() {
             this.contentRegion.show(this.options.content);
             this.scrollbarRegion.show(this.options.scrollbar);
             this.searchRegion.show(this.options.search);

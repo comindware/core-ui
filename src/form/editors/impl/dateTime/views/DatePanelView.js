@@ -65,8 +65,8 @@ export default Marionette.ItemView.extend({
                 month: momentOldDisplayedDate.month(),
                 date: momentOldDisplayedDate.date()
             });
-            const diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');               // Figure out number of days between displayed old date and entered new date
-            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();    // and apply it to stored old date to prevent transition-through-the-day bugs
+            const diff = moment.utc(date).diff(momentOldDisplayedDate, 'days'); // Figure out number of days between displayed old date and entered new date
+            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString(); // and apply it to stored old date to prevent transition-through-the-day bugs
         } else {
             newVal = moment.utc({
                 year: date.getFullYear(),

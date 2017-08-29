@@ -1,7 +1,8 @@
 define(['comindware/core', 'demoPage/views/CanvasView'],
-    function (core, CanvasView) {
+    (core, CanvasView) => {
         'use strict';
-        return function () {
+
+        return function() {
             // Step 1. Create model
             const model = new Backbone.Model({
                 boolean: true,
@@ -152,7 +153,7 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
 
             // Step 3. Build form layout
             const view = new core.layout.Form({
-                model: model,
+                model,
                 schema: formSchema,
                 content: new core.layout.VerticalLayout({
                     rows: [
@@ -175,7 +176,7 @@ define(['comindware/core', 'demoPage/views/CanvasView'],
                         core.layout.createFieldAnchor('time'),
                         new core.layout.Button({
                             text: 'Validate',
-                            handler () {
+                            handler() {
                                 view.form.validate();
                             }
                         })

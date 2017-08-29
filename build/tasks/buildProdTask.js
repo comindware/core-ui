@@ -18,13 +18,13 @@ const webpack = require('webpack');
 const gulpUtil = require('gulp-util');
 
 module.exports = uglify => callback => {
-    const webpackConfig = webpackConfigFactory.build({
+    const webpackConfig = webpackConfigFactory({
         env: 'production',
         uglify: uglify || false
     });
 
     // run webpack
-    webpack(webpackConfig, function(err, stats) {
+    webpack(webpackConfig, (err, stats) => {
         if (err) {
             throw new gulpUtil.PluginError('webpack:build:core', err);
         }

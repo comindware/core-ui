@@ -24,7 +24,7 @@ const pathResolver = require('../pathResolver');
 // This task requires Comindware Localization Tool to be installed in PATH.
 // ###
 
-module.exports = (callback) => {
+module.exports = callback => {
     const localizerBin = 'Localization.Export.exe';
     const localizationResources = 'http://comindware.com/text#core';
     const localizationSource = pathResolver.localizationSource('localization.n3');
@@ -36,7 +36,7 @@ module.exports = (callback) => {
     mkdirp.sync(pathResolver.compiled('localization/temp'));
 
     try {
-        exec(localizationCommand, function (err, stdout, stderr) {
+        exec(localizationCommand, (err, stdout, stderr) => {
             if (err) {
                 console.error(err);
                 callback();
@@ -46,11 +46,11 @@ module.exports = (callback) => {
             console.log(stderr);
 
             fs.readdirSync(pathResolver.compiled('localization/temp')).forEach(fileName => {
-                let langCode = fileName.substr(16, 2);
+                const langCode = fileName.substr(16, 2);
                 let fileContent = fs.readFileSync(pathResolver.compiled(`localization/temp/${fileName}`), 'utf8');
                 // We call Function because the fileContent still isn't a valid JSON.
                 fileContent = `return ${fileContent.substring(fileContent.indexOf('var LANGMAP') + 16)}`;
-                let data = (new Function(fileContent))(); // jshint ignore:line
+                const data = (new Function(fileContent))(); // jshint ignore:line
                 fs.writeFileSync(pathResolver.compiled(`localization/localization.${langCode}.json`), JSON.stringify(data), 'utf8');
             });
             del.sync([pathResolver.compiled('localization/temp/**')], { force: true });

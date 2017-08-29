@@ -14,11 +14,11 @@
 define([
     'comindware/core',
     'text!../templates/indexPage.html'
-], function (core, template) {
+], (core, template) => {
     'use strict';
 
     return Marionette.ItemView.extend({
-        className: "demo-welcome",
+        className: 'demo-welcome',
         
         template: Handlebars.compile(template)
     });

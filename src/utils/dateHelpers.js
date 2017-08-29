@@ -16,7 +16,7 @@ import LocalizationService from '../services/LocalizationService';
 const dateTimeFormats = {
     en: {
         shortDate: { general: 'MM/D/YYYY' /* 6/15/2009 */},
-        sateISO: { general: 'YYYY-MM-DD'  /* 2005-08-09 */},
+        sateISO: { general: 'YYYY-MM-DD' /* 2005-08-09 */},
         condensedDate: { general: 'MMM. D, YYYY' /* Jun. 15, 2009 */},
         longDate: { general: 'dddd, MMMM D, YYYY' /* Monday, June 15, 2009 */},
         monthDay: { general: 'MMMM D' /* June 15 */},
