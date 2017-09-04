@@ -12,14 +12,11 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
 define(['text!../templates/editorCanvas.html', 'comindware/core', './PresentationItemView'],
-    function (template, core, PresentationItemView) {
+    (template, core, PresentationItemView) => {
         'use strict';
 
         return Marionette.LayoutView.extend({
-            initialize: function (options) {
-                core.utils.helpers.ensureOption(options, 'editor');
-                core.utils.helpers.ensureOption(options, 'presentation');
-
+            initialize(options) {
                 this.model = new Backbone.Model({
                     editorMode: 'none'
                 });
@@ -38,21 +35,21 @@ define(['text!../templates/editorCanvas.html', 'comindware/core', './Presentatio
                 editorModeRegion: '.js-editor-mode-region'
             },
 
-            modelEvents:{
-                'change': 'updateEditorModel'
+            modelEvents: {
+                change: 'updateEditorModel'
             },
 
-            onShow: function() {
+            onShow() {
                 this.editorRegion.show(this.editor);
                 if (this.options.canvasWidth) {
-                       this.ui.editorRegion.css('width', this.options.canvasWidth);
+                    this.ui.editorRegion.css('width', this.options.canvasWidth);
                 }
 
-                var presentationView;
+                let presentationView;
                 if (_.isString(this.options.presentation)) {
                     presentationView = new PresentationItemView({
                         model: this.editor.model,
-                        template: Handlebars.compile('<span style="vertical-align: top;">model[' + this.editor.key + ']: </span><span>' + this.options.presentation + '</span>')
+                        template: Handlebars.compile(`<span style="vertical-align: top;">model[${this.editor.key}]: </span><span>${this.options.presentation}</span>`)
                     });
                 } else {
                     presentationView = new this.options.presentation({
@@ -61,7 +58,7 @@ define(['text!../templates/editorCanvas.html', 'comindware/core', './Presentatio
                 }
                 this.modelRegion.show(presentationView);
 
-                var editorModeView = new core.form.editors.RadioGroupEditor({
+                const editorModeView = new core.form.editors.RadioGroupEditor({
                     model: this.model,
                     key: 'editorMode',
                     autocommit: true,
@@ -83,21 +80,21 @@ define(['text!../templates/editorCanvas.html', 'comindware/core', './Presentatio
                 this.editorModeRegion.show(editorModeView);
             },
 
-            updateEditorModel: function() {
-                var editorMode = this.model.get('editorMode');
+            updateEditorModel() {
+                const editorMode = this.model.get('editorMode');
                 switch (editorMode) {
-                case 'none':
-                    this.editor.setEnabled(true);
-                    this.editor.setReadonly(false);
-                    break;
-                case 'disabled':
-                    this.editor.setEnabled(false);
-                    this.editor.setReadonly(false);
-                    break;
-                case 'readonly':
-                    this.editor.setEnabled(true);
-                    this.editor.setReadonly(true);
-                    break;
+                    case 'none':
+                        this.editor.setEnabled(true);
+                        this.editor.setReadonly(false);
+                        break;
+                    case 'disabled':
+                        this.editor.setEnabled(false);
+                        this.editor.setReadonly(false);
+                        break;
+                    case 'readonly':
+                        this.editor.setEnabled(true);
+                        this.editor.setReadonly(true);
+                        break;
                 }
             }
         });

@@ -1,22 +1,20 @@
 define([
     'comindware/core', 'demoPage/views/EditorCanvasView', 'demoPage/views/PresentationItemView'
-], function(core, EditorCanvasView, PresentationItemView) {
+], (core, EditorCanvasView, PresentationItemView) => {
     'use strict';
+
     return function() {
+        const selectableItems = _.times(10, index => ({
+            id: index + 1,
+            text: `Item ${index + 1}`
+        }));
 
-        var selectableItems = _.times(10, function(index) {
-            return {
-                id: index + 1,
-                text: 'Item ' + (index + 1)
-            };
-        });
-
-        var model = new Backbone.Model({
+        const model = new Backbone.Model({
             multiValue: [0, 2, 4, 6, 8, 10, 100]
         });
         
-        var editor = new core.form.editors.MultiSelectEditor({
-            model: model,
+        const editor = new core.form.editors.MultiSelectEditor({
+            model,
             key: 'multiValue',
             autocommit: true,
             collection: new Backbone.Collection(selectableItems),
@@ -25,7 +23,7 @@ define([
         });
 
         return new EditorCanvasView({
-            editor: editor,
+            editor,
             presentation: '{{#if multiValue}}[{{multiValue}}]{{else}}null{{/if}}'
         });
     };

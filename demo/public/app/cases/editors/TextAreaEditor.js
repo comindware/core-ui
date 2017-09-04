@@ -1,13 +1,14 @@
-define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core, EditorCanvasView) {
+define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], (core, EditorCanvasView) => {
     'use strict';
-    return function () {
-        var model = new Backbone.Model({
+
+    return function() {
+        const model = new Backbone.Model({
             textAreaValue: 'Some Text 1\r\nSome Text 2\r\nSome Text 3\r\nSome Text 4\r\nSome Text 5\r\nSome Text 6'
         });
 
         return new EditorCanvasView({
             editor: new core.form.editors.TextAreaEditor({
-                model: model,
+                model,
                 key: 'textAreaValue',
                 changeMode: 'keydown',
                 autocommit: true,

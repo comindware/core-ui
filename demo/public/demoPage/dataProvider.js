@@ -11,12 +11,12 @@
 
 /* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
 
-define([], function () {
+define([], () => {
     'use strict';
 
     return {
-        listUsers: function () {
-            let names = [
+        listUsers() {
+            const names = [
                 'Kerry Torres',
                 'Terry Ross',
                 'Natasha Becker',
@@ -119,15 +119,15 @@ define([], function () {
                 'Desiree Stone'
             ];
             return names.map((name, i) => {
-                let id = 'user.' + (i+1);
-                let nameSplit = name.split(' ');
+                const id = `user.${i + 1}`;
+                const nameSplit = name.split(' ');
                 return {
-                    id: id,
-                    name: name,
+                    id,
+                    name,
                     userName: (nameSplit[0][0] + nameSplit[1]).toLowerCase(),
                     abbreviation: nameSplit[0][0] + nameSplit[1][0],
-                    avatarUrl: '/avatars?id=' + id,
-                    url: '#People/' + (i+1)
+                    avatarUrl: `/avatars?id=${id}`,
+                    url: `#People/${i + 1}`
                 };
             });
         }

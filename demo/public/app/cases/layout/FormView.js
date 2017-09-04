@@ -10,7 +10,7 @@ define(
     [
         'comindware/core'
     ],
-    function(core) {
+    core => {
         'use strict';
 
         return function() {
@@ -46,7 +46,7 @@ define(
             };
 
             const view = new core.layout.Form({
-                model: model,
+                model,
                 schema: formSchema,
                 content: new core.layout.VerticalLayout({
                     rows: [
@@ -61,7 +61,7 @@ define(
                         core.layout.createEditorAnchor('blocked'),
                         new core.layout.Button({
                             text: 'Commit',
-                            handler () {
+                            handler() {
                                 view.form.commit();
                                 alert(JSON.stringify(model.toJSON(), null, 4));
                             }

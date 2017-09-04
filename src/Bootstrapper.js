@@ -9,7 +9,6 @@
 import { helpers } from 'utils';
 import { $ } from 'lib';
 import AjaxService from './services/AjaxService';
-import MessageService from './services/MessageService';
 import GlobalEventService from './services/GlobalEventService';
 import UserService from './services/UserService';
 import WindowService from './services/WindowService';

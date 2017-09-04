@@ -134,16 +134,6 @@ const GridView = Marionette.LayoutView.extend({
         if (this.collection.length) {
             this.__presortCollection(options.columns);
         }
-        this.listenTo(this.collection, 'reset', (collection, options) => {
-            // fixing display:table style if there were not rows
-            if (options && options.previousModels.length === 0) {
-                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'none');
-                // forcing browser to rebuild DOM accessing the attribute
-                this.listView.visibleCollectionRegion.currentView.$el.css('display');
-                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'table');
-                this.__presortCollection(this.getOption('columns'));
-            }
-        });
     },
 
     __updateHeight(sender, args) {

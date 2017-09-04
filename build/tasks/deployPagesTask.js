@@ -9,14 +9,9 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const execSync = require('child_process').execSync;
 const fs = require('fs-extra');
 const mkdirp = require('mkdirp');
-const del = require('del');
 
 const pathResolver = require('../pathResolver');
 
@@ -27,12 +22,12 @@ const run = (cmd, cwd) => {
     });
 };
 
-const copyDemo = (resolver) => {
+const copyDemo = resolver => {
     run('npm run build', pathResolver.demo());
     fs.copySync(pathResolver.demo('public/assets'), resolver());
 };
 
-const copyDoc = (resolver) => {
+const copyDoc = resolver => {
     fs.copySync(pathResolver.root('doc'), resolver('doc'));
 };
 

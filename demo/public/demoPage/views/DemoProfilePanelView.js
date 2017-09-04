@@ -12,22 +12,23 @@
 /* global define, require, Handlebars, Backbone, Marionette, $, _ */
 
 define([
-        'text!../templates/demoProfilePanel.html',
-        'comindware/core'
-    ],
-    function (template, core) {
-        'use strict';
-        return Marionette.LayoutView.extend({
-            className: 'nav-profile_test',
+    'text!../templates/demoProfilePanel.html',
+    'comindware/core'
+],
+(template, core) => {
+    'use strict';
 
-            regions: {
-                dateEditorRegion: '.js-date-editor-region'
-            },
+    return Marionette.LayoutView.extend({
+        className: 'nav-profile_test',
 
-            template: Handlebars.compile(template),
+        regions: {
+            dateEditorRegion: '.js-date-editor-region'
+        },
 
-            onShow: function () {
-                this.dateEditorRegion.show(new core.form.editors.DateTimeEditor());
-            }
-        });
+        template: Handlebars.compile(template),
+
+        onShow() {
+            this.dateEditorRegion.show(new core.form.editors.DateTimeEditor());
+        }
     });
+});

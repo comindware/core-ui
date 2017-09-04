@@ -11,18 +11,18 @@ define(
         'comindware/core',
         'demoPage/views/EditorCanvasView'
     ],
-    function(core, EditorCanvasView) {
+    (core, EditorCanvasView) => {
         'use strict';
         
         return function() {
-            var model = new Backbone.Model({
+            const model = new Backbone.Model({
                 //avatar: '14167968',
                 fullName: 'Foo Bar'
             });
 
             return new EditorCanvasView({
                 editor: new core.form.editors.AvatarEditor({
-                    model: model,
+                    model,
                     key: 'avatar',
                     autocommit: true,
                     fullName: model.get('fullName'),

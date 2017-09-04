@@ -229,12 +229,12 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
                 .sortBy(n => n.comparatorValue)
                 .value());
         }
-            // Applying comparator to the ultimate items
+        // Applying comparator to the ultimate items
         if (!this.comparator) {
             return new Backbone.Collection(models);
         }
 
-            // Run sort based on type of `comparator`.
+        // Run sort based on type of `comparator`.
         if (_.isString(this.comparator) || this.comparator.length === 1) {
             models = _.sortBy(models, this.comparator, this);
         } else {

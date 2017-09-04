@@ -14,7 +14,7 @@
 define([
     'comindware/core',
     'text!../templates/demoDropdownItem.html'
-], function (core, template) {
+], (core, template) => {
     'use strict';
 
     return Marionette.ItemView.extend({

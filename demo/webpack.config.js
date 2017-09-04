@@ -19,19 +19,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const _ = require('lodash');
 
 const pathResolver = {
-    client: function () {
+    client() {
         //noinspection Eslint
         return path.resolve.apply(path.resolve, [__dirname, 'public/assets'].concat(_.toArray(arguments)));
     },
-    source: function () {
+    source() {
         //noinspection Eslint
         return path.resolve.apply(path.resolve, [__dirname, 'public'].concat(_.toArray(arguments)));
     }
 };
 
-const removeBom = (text) => {
-    return text.replace(/^\uFEFF/, '');
-};
+const removeBom = text => text.replace(/^\uFEFF/, '');
 
 const readSpritesFile = () => {
     const svgSpritesFile = `${__dirname}/../dist/sprites.svg`;
@@ -39,7 +37,7 @@ const readSpritesFile = () => {
 };
 
 module.exports = {
-    build: function (options) {
+    build(options) {
         const DEVELOPMENT = options.env === 'development';
         const PRODUCTION = options.env === 'production';
         const TEST = options.env === 'test';
@@ -48,7 +46,7 @@ module.exports = {
         const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
         //noinspection JSUnresolvedFunction
-        let webpackConfig = {
+        const webpackConfig = {
             cache: true,
             entry: {
                 app: ['./public/index'],

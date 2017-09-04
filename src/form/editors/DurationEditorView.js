@@ -454,10 +454,10 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
                 // returns string like '0d 4h 32m'
                 return filledSegments.reduce((p, seg) => `${p}${data[seg.id]}${seg.text} `, '').trim();
             }
-                // returns string like '0d'
+            // returns string like '0d'
             return `0${this.focusableParts[0].text}`;
         }
-            // always returns string with all editable segments like '0 d 5 h 2 m'
+        // always returns string with all editable segments like '0 d 5 h 2 m'
         return this.focusableParts.map(seg => {
             const val = data[seg.id];
             const valStr = _.isNumber(val) ? String(val) : '';

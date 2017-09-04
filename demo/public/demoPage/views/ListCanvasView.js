@@ -14,10 +14,11 @@
 define([
     'comindware/core',
     'text!../templates/listCanvas.html'
-], function (core, template) {
+], (core, template) => {
     'use strict';
+
     return Marionette.LayoutView.extend({
-        initialize: function () {
+        initialize() {
         },
 
         template: Handlebars.compile(template),
@@ -29,7 +30,7 @@ define([
 
         className: 'demo-list-canvas__view',
 
-        onShow: function () {
+        onShow() {
             this.contentRegion.show(this.options.content);
             this.scrollbarRegion.show(this.options.scrollbar);
         }

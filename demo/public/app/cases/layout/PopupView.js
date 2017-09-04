@@ -11,7 +11,7 @@ define(
         'comindware/core',
         'demoPage/views/CanvasView'
     ],
-    function(core, CanvasView) {
+    (core, CanvasView) => {
         'use strict';
 
         return function() {
@@ -59,7 +59,7 @@ define(
                     {
                         id: true,
                         text: 'Save',
-                        handler (popup) {
+                        handler(popup) {
                             popup.content.form.commit();
                             core.services.WindowService.closePopup();
                             alert(JSON.stringify(model.toJSON(), null, 4));
@@ -68,13 +68,13 @@ define(
                     {
                         id: false,
                         text: 'Cancel',
-                        handler (popup) {
+                        handler(popup) {
                             core.services.WindowService.closePopup();
                         }
                     }
                 ],
                 content: new core.layout.Form({
-                    model: model,
+                    model,
                     schema: formSchema,
                     content: new core.layout.TabLayout({
                         tabs: [
@@ -109,7 +109,7 @@ define(
                 template: Handlebars.compile('<input class="js-show-popup" type="button" value="Show Popup" />'),
 
                 events: {
-                    'click .js-show-popup' () {
+                    'click .js-show-popup'() {
                         core.services.WindowService.showPopup(createPopup());
                     }
                 }

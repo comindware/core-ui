@@ -18,13 +18,8 @@
 *
 * */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
-const webpack = require('webpack');
 const karma = require('karma');
 
 const pathResolver = require('./pathResolver');

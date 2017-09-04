@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-
 import '../resources/styles/bootstrap-datetimepicker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
