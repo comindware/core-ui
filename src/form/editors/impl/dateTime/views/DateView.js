@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, $ } from 'lib';
 import template from '../templates/date.hbs';
@@ -15,11 +15,12 @@ import PanelView from './DatePanelView';
 import InputView from './DateInputView';
 
 export default Marionette.LayoutView.extend({
-    initialize: function () {
+    initialize() {
         this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.dateDisplayFormat = this.getOption('dateDisplayFormat');
+        this.showTitle = this.getOption('showTitle');
     },
 
     template: Handlebars.compile(template),
@@ -30,7 +31,7 @@ export default Marionette.LayoutView.extend({
         popoutRegion: '.js-popout-region'
     },
 
-    onShow: function () {
+    onShow() {
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {
@@ -38,7 +39,8 @@ export default Marionette.LayoutView.extend({
                 timezoneOffset: this.timezoneOffset,
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.allowEmptyValue,
-                dateDisplayFormat: this.dateDisplayFormat
+                dateDisplayFormat: this.dateDisplayFormat,
+                showTitle: this.showTitle
             },
             panelView: PanelView,
             panelViewOptions: {
@@ -61,39 +63,39 @@ export default Marionette.LayoutView.extend({
         this.popoutRegion.show(this.calendarDropdownView);
     },
 
-    __onBeforeClose: function () {
+    __onBeforeClose() {
         this.calendarDropdownView.button.endEditing();
         this.trigger('blur');
     },
 
-    __onOpen: function () {
+    __onOpen() {
         this.calendarDropdownView.button.startEditing();
         this.trigger('focus');
     },
 
-    __onPanelSelect: function () {
+    __onPanelSelect() {
         this.calendarDropdownView.close();
     },
 
-    __onButtonCalendarOpen: function () {
+    __onButtonCalendarOpen() {
         this.calendarDropdownView.open();
     },
 
-    __onButtonFocus: function () {
+    __onButtonFocus() {
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.calendarDropdownView.open();
         }
     },
 
-    focus: function () {
+    focus() {
         this.calendarDropdownView.button.focus();
     },
 
-    blur: function () {
+    blur() {
         this.calendarDropdownView.close();
     },
 
-    hasFocus: function () {
+    hasFocus() {
         return $.contains(this.el, document.activeElement);
     }
 });

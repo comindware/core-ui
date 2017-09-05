@@ -16,14 +16,14 @@ const classes = {
 };
 
 export default Marionette.ItemView.extend({
-    initialize (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'text');
         helpers.ensureOption(options, 'handler');
     },
 
     template: Handlebars.compile(template),
 
-    templateHelpers () {
+    templateHelpers() {
         return {
             text: this.options.text
         };
@@ -38,19 +38,19 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'click': '__onClick'
+        click: '__onClick'
     },
 
-    onShow () {
+    onShow() {
         this.__updateState();
     },
 
-    __onClick () {
+    __onClick() {
         this.trigger('click');
         this.options.handler();
     },
 
-    update () {
+    update() {
         this.__updateState();
     }
 });

@@ -17,7 +17,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'rows');
 
         this.rows = options.rows;
@@ -33,7 +33,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onShow () {
+    onShow() {
         this.__rowsCtx = [];
         this.options.rows.forEach(view => {
             view.on('change:visible', this.__handleChangeVisibility.bind(this));
@@ -52,7 +52,7 @@ export default Marionette.LayoutView.extend({
         this.__updateState();
     },
 
-    update () {
+    update() {
         this.rows.forEach(view => {
             if (view.update) {
                 view.update();
@@ -61,7 +61,7 @@ export default Marionette.LayoutView.extend({
         this.__updateState();
     },
 
-    __handleChangeVisibility (view, visible) {
+    __handleChangeVisibility(view, visible) {
         const ctx = this.__rowsCtx.find(x => x.view === view);
         ctx.$regionEl.toggleClass(classes.HIDDEN, !visible);
     }

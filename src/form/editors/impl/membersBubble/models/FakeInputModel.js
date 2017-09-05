@@ -6,12 +6,12 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
 export default Backbone.Model.extend({
-    updateEmpty: function () {
+    updateEmpty() {
         this.set('empty', this.collection.models.length === 1);
     }
 });

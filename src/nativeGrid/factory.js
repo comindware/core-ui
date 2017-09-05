@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { helpers } from 'utils';
 import NativeGridView from './views/NativeGridView';
@@ -21,7 +21,7 @@ import VirtualCollection from '../collections/VirtualCollection';
  * @returns {Object}
  * @returns {Backbone.Collection} collection Коллекция элементов списка
  * */
-let createWrappedCollection = function (collection, options) {
+const createWrappedCollection = function(collection, options) {
     if (!(collection instanceof VirtualCollection)) {
         if (_.isArray(collection)) {
             collection = new VirtualCollection(new Backbone.Collection(collection), options);
@@ -49,11 +49,11 @@ export default {
      * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка
      * @returns {Backbone.View} NativeGridView View-списка
      * */
-    createNativeGrid: function (options) {
-        var collection = createWrappedCollection(options.collection, {selectableBehavior: options.gridViewOptions.selectableBehavior});
+    createNativeGrid(options) {
+        const collection = createWrappedCollection(options.collection, { selectableBehavior: options.gridViewOptions.selectableBehavior });
 
-        var gridViewOptions = _.extend({
-            collection: collection,
+        const gridViewOptions = _.extend({
+            collection,
             onColumnSort: options.onColumnSort,
             headerView: options.headerView,
             rowView: options.rowView,

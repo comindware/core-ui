@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars, keypress } from 'lib';
 import template from '../templates/dropdownPanel.hbs';
@@ -25,7 +25,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
 
@@ -56,25 +56,25 @@ export default Marionette.LayoutView.extend({
         tabindex: 0
     },
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             enableSearch: this.options.enableSearch
         };
     },
 
-    onRender: function () {
+    onRender() {
         if (this.options.enableSearch) {
             this.$el.addClass('dd-list_search');
         }
     },
 
-    onShow: function () {
-        var displayAttribute = this.model.get('displayAttribute');
-        var virtualCollection = this.model.get('virtualCollection');
+    onShow() {
+        const displayAttribute = this.model.get('displayAttribute');
+        let virtualCollection = this.model.get('virtualCollection');
         if (!virtualCollection) {
-            var collection = this.model.get('collection');
+            const collection = this.model.get('collection');
             if (collection.comparator === undefined) {
-                collection.comparator = function (model) {
+                collection.comparator = function(model) {
                     return (_.result(model.toJSON(), displayAttribute) || '').toString().toLowerCase();
                 };
             }
@@ -82,19 +82,19 @@ export default Marionette.LayoutView.extend({
             if (collection.comparator) {
                 collection.sort();
             }
-                virtualCollection = new DropdownCollection(collection, {
+            virtualCollection = new DropdownCollection(collection, {
                 comparator: collection.comparator
             });
             this.model.set('virtualCollection', virtualCollection);
         } else {
             virtualCollection.deselect();
         }
-        var valueModel = this.model.get('value');
+        const valueModel = this.model.get('value');
         if (valueModel) {
             valueModel.select();
         }
 
-        var result = list.factory.createDefaultList({
+        const result = list.factory.createDefaultList({
             collection: virtualCollection,
             listViewOptions: {
                 childView: DefaultDropdownListItemView,
@@ -121,48 +121,47 @@ export default Marionette.LayoutView.extend({
         this.__assignKeyboardShortcuts();
     },
 
-    __assignKeyboardShortcuts: function ()
-    {
+    __assignKeyboardShortcuts() {
         if (this.keyListener) {
             this.keyListener.reset();
         }
 
-        var listShortcuts = {};
-        _.each(this.listView.keyboardShortcuts, function (v, k) {
+        const listShortcuts = {};
+        _.each(this.listView.keyboardShortcuts, (v, k) => {
             listShortcuts[k] = v.bind(this.listView);
-        }.bind(this));
-        var actualShortcuts = _.extend({}, listShortcuts, this.keyboardShortcuts);
+        });
+        const actualShortcuts = _.extend({}, listShortcuts, this.keyboardShortcuts);
 
         this.keyListener = new keypress.Listener(this.el);
-        _.each(actualShortcuts, function (value, key) {
-            var keys = key.split(',');
-            _.each(keys, function (k) {
+        _.each(actualShortcuts, function(value, key) {
+            const keys = key.split(',');
+            _.each(keys, function(k) {
                 this.keyListener.simple_combo(k, value.bind(this));
             }, this);
         }, this);
     },
 
     keyboardShortcuts: {
-        'enter,num_enter,tab': function () {
+        'enter,num_enter,tab'() {
             if (this.isLoading) {
                 return;
             }
-            var selectedModel = this.model.get('virtualCollection').selected;
+            const selectedModel = this.model.get('virtualCollection').selected;
             this.reqres.request('value:set', selectedModel);
         },
-        'esc': function () {
+        esc() {
             this.trigger('cancel');
         }
     },
 
-    onFilter: function () {
-        var text = (this.ui.input.val() || '').trim();
+    onFilter() {
+        let text = (this.ui.input.val() || '').trim();
         if (this.activeText === text) {
             return;
         }
-        helpers.setUniqueTimeout(this.fetchDelayId, function () {
+        helpers.setUniqueTimeout(this.fetchDelayId, () => {
             this.activeText = text;
-            var collection = this.model.get('virtualCollection');
+            const collection = this.model.get('virtualCollection');
             collection.deselect();
 
             text = text.toLocaleLowerCase();
@@ -170,17 +169,17 @@ export default Marionette.LayoutView.extend({
             if (text === '') {
                 collection.filter(null);
             } else {
-                collection.filter(function (model) {
-                    var itemText = (model.get(this.model.get('displayAttribute')) || '').toLocaleLowerCase();
+                collection.filter(model => {
+                    const itemText = (model.get(this.model.get('displayAttribute')) || '').toLocaleLowerCase();
                     return itemText.indexOf(text) !== -1;
-                }.bind(this));
+                });
                 collection.highlight(text);
             }
 
             if (collection.length > 0) {
-                var model = collection.at(0);
+                const model = collection.at(0);
                 model.select();
             }
-        }.bind(this), config.TEXT_FETCH_DELAY);
+        }, config.TEXT_FETCH_DELAY);
     }
 });

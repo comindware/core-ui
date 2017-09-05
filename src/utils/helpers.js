@@ -6,14 +6,14 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import LocalizationService from '../services/LocalizationService';
 
-let timeoutCache = {};
+const timeoutCache = {};
 
-let queueCache = {};
+const queueCache = {};
 
 let getPluralFormIndex = null;
 
@@ -26,14 +26,12 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Number} delay Callback delay in milliseconds.
      * @deprecated
      * */
-    setUniqueTimeout: function (someUniqueId, callback, delay)
-    {
-        var timeoutId = timeoutCache[someUniqueId];
+    setUniqueTimeout(someUniqueId, callback, delay) {
+        const timeoutId = timeoutCache[someUniqueId];
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
-        var handler = setTimeout(function ()
-        {
+        const handler = setTimeout(() => {
             callback();
             delete timeoutCache[someUniqueId];
         }, delay);
@@ -46,8 +44,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Function} callback Callback to be called when the current call stack has cleared.
      * @deprecated
      * */
-    nextTick: function (callback)
-    {
+    nextTick(callback) {
         return setTimeout(callback, 10);
     },
 
@@ -64,18 +61,17 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {String} propertyName Attribute of a Backbone.Model to which the function is mapped.
      * @return {Function} Result function.
      * */
-    comparatorFor: function (comparatorFn, propertyName) {
+    comparatorFor(comparatorFn, propertyName) {
         if (comparatorFn.length === 1) {
-            return function (a) {
+            return function(a) {
                 return comparatorFn(a.get(propertyName));
             };
         } else if (comparatorFn.length === 2) {
-            return function (a, b) {
+            return function(a, b) {
                 return comparatorFn(a.get(propertyName), b.get(propertyName));
             };
-        } else {
-            throw new Error('Invalid arguments count in comparator function.');
         }
+        throw new Error('Invalid arguments count in comparator function.');
     },
 
     /**
@@ -84,7 +80,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {String} defaultText A text that is set into each field of the resulting LocalizedText object.
      * @return {Object} LocalizedText object like <code>{ en, de, ru }</code>.
      * */
-    createLocalizedText: function (defaultText) {
+    createLocalizedText(defaultText) {
         return {
             en: defaultText,
             de: defaultText,
@@ -102,12 +98,12 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {...*} arguments Arguments that will replace the placeholders in text.
      * @return {String} Resulting string.
      * */
-    format: function(text) {
+    format(text) {
         if (!_.isString(text)) {
             return '';
         }
-        for (var i = 1; i < arguments.length; i++) {
-            var regexp = new RegExp('\\{'+(i-1)+'\\}', 'gi');
+        for (let i = 1; i < arguments.length; i++) {
+            const regexp = new RegExp(`\\{${i - 1}\\}`, 'gi');
             text = text.replace(regexp, arguments[i]);
         }
         return text;
@@ -128,10 +124,10 @@ export default /** @lends module:core.utils.helpers */ {
      * (2 word forms for en and de, 3 word forms for ru).
      * @return {String} Resulting string.
      * */
-    getPluralForm: function (n, texts) {
+    getPluralForm(n, texts) {
         if (!getPluralFormIndex) {
-            var formula = LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM');
-            getPluralFormIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
+            const formula = LocalizationService.get('CORE.SERVICES.LOCALIZATION.PLURALFORM');
+            getPluralFormIndex = new Function('n', `var r = ${formula};return typeof r !== 'boolean' ? r : r === true ? 1 : 0;`); // jshint ignore:line
         }
         return texts.split(',')[getPluralFormIndex(n)];
     },
@@ -151,11 +147,9 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Function} operation A function that triggers asynchronous operation and returns a Promise object.
      * @param {String} queueId String identifier of operations queue.
      * */
-    enqueueOperation: function (operation, queueId) {
+    enqueueOperation(operation, queueId) {
         if (queueCache[queueId] && queueCache[queueId].isPending()) {
-            queueCache[queueId] = queueCache[queueId].then(function() {
-                return _.isFunction(operation) ? operation() : operation;
-            });
+            queueCache[queueId] = queueCache[queueId].then(() => _.isFunction(operation) ? operation() : operation);
         } else {
             queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
         }
@@ -170,9 +164,9 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} target Target instance that is getting behaviors applied.
      * @param {...Function} arguments 1 or more Behavior objects (constructor functions).
      * */
-    applyBehavior: function (target) {
-        var behaviors = _.rest(arguments, 1);
-        _.each(behaviors, function (Behavior) {
+    applyBehavior(target) {
+        const behaviors = _.rest(arguments, 1);
+        _.each(behaviors, Behavior => {
             _.extend(target, new Behavior(target));
         });
     },
@@ -189,24 +183,22 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} options Options object to check.
      * @param {String} optionName Property name or dot-separated property path.
      * */
-    ensureOption: function (options, optionName) {
+    ensureOption(options, optionName) {
         if (!options) {
             this.throwError('The options object is required.', 'MissingOptionError');
         }
         if (optionName.indexOf('.') !== -1) {
-            var selector = optionName.split('.');
-            for (var i = 0, len = selector.length; i < len; i++) {
+            const selector = optionName.split('.');
+            for (let i = 0, len = selector.length; i < len; i++) {
                 optionName = selector[i];
                 if (options[optionName] === undefined) {
                     optionName = _.take(selector, i + 1).join('.');
-                    this.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
+                    this.throwError(`The option \`${optionName}\` is required.`, 'MissingOptionError');
                 }
                 options = options[optionName];
             }
-        } else {
-            if (options[optionName] === undefined) {
-                this.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
-            }
+        } else if (options[optionName] === undefined) {
+            this.throwError(`The option \`${optionName}\` is required.`, 'MissingOptionError');
         }
     },
 
@@ -219,24 +211,22 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} object An object to check.
      * @param {String} propertyName Property name or dot-separated property path.
      * */
-    ensureProperty: function (object, propertyName) {
+    ensureProperty(object, propertyName) {
         if (!object) {
             this.throwError('The object is null.', 'NullObjectError');
         }
         if (propertyName.indexOf('.') !== -1) {
-            var selector = propertyName.split('.');
-            for (var i = 0, len = selector.length; i < len; i++) {
+            const selector = propertyName.split('.');
+            for (let i = 0, len = selector.length; i < len; i++) {
                 propertyName = selector[i];
                 if (object[propertyName] === undefined) {
                     propertyName = _.take(selector, i + 1).join('.');
-                    this.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
+                    this.throwError(`The property \`${propertyName}\` is required.`, 'MissingPropertyError');
                 }
                 object = object[propertyName];
             }
-        } else {
-            if (object[propertyName] === undefined) {
-                this.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
-            }
+        } else if (object[propertyName] === undefined) {
+            this.throwError(`The property \`${propertyName}\` is required.`, 'MissingPropertyError');
         }
     },
 
@@ -250,10 +240,8 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {String} propertyPath propertyName Property name or dot-separated property path.
      * @param {Object} obj An object to get the property from.
      * */
-    getPropertyOrDefault: function (propertyPath, obj) {
-        return [obj].concat(propertyPath.split('.')).reduce(function(prev, curr) {
-            return prev === undefined ? undefined : prev[curr];
-        });
+    getPropertyOrDefault(propertyPath, obj) {
+        return [obj].concat(propertyPath.split('.')).reduce((prev, curr) => prev === undefined ? undefined : prev[curr]);
     },
 
     /**
@@ -265,9 +253,9 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {*} argumentValue Value to check.
      * @param {String} argumentName Name of the checked argument. Needs to specify in the exception text.
      * */
-    assertArgumentNotFalsy: function (argumentValue, argumentName) {
+    assertArgumentNotFalsy(argumentValue, argumentName) {
         if (!argumentValue) {
-            this.throwError('Argument `' + argumentName + '` is falsy.', 'ArgumentFalsyError');
+            this.throwError(`Argument \`${argumentName}\` is falsy.`, 'ArgumentFalsyError');
         }
     },
 
@@ -278,8 +266,8 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {String} message Error message.
      * @param {String} [name='Error'] Error name (`name` attribute of Error object).
      * */
-    throwError: function (message, name) {
-        var error = new Error(message);
+    throwError(message, name) {
+        const error = new Error(message);
         error.name = name || 'Error';
         throw error;
     },
@@ -300,7 +288,7 @@ export default /** @lends module:core.utils.helpers */ {
      * // ...
      * @param {String} [message='Invalid operation'] Error message.
      * */
-    throwInvalidOperationError: function (message) {
+    throwInvalidOperationError(message) {
         this.throwError(message || 'Invalid operation', 'InvalidOperationError');
     },
 
@@ -315,7 +303,7 @@ export default /** @lends module:core.utils.helpers */ {
      *     // Some code here ...
      * @param {String} [message='Invalid format'] Error message.
      * */
-    throwFormatError: function (message) {
+    throwFormatError(message) {
         this.throwError(message || 'Invalid format', 'FormatError');
     },
 
@@ -331,7 +319,7 @@ export default /** @lends module:core.utils.helpers */ {
      *     // Some code here ...
      * @param {String} [message='Invalid argument'] Error message.
      * */
-    throwArgumentError: function (message) {
+    throwArgumentError(message) {
         this.throwError(message || 'Invalid argument', 'ArgumentError');
     },
 
@@ -347,7 +335,7 @@ export default /** @lends module:core.utils.helpers */ {
      * }
      * @param {String} [message='The operation is not supported'] Error message.
      * */
-    throwNotSupportedError: function (message) {
+    throwNotSupportedError(message) {
         this.throwError(message || 'The operation is not supported', 'NotSupportedError');
     },
 
@@ -361,7 +349,7 @@ export default /** @lends module:core.utils.helpers */ {
      * }
      * @param {String} [message='The operation is not implemented'] Error message.
      * */
-    throwNotImplementedError: function (message) {
+    throwNotImplementedError(message) {
         this.throwError(message || 'The operation is not implemented', 'NotImplementedError');
     },
 
@@ -370,7 +358,7 @@ export default /** @lends module:core.utils.helpers */ {
      * For example: we looked up in the database and could find a person with requested id.
      * @param {String} [message='Object not found'] Error message.
      * */
-    throwNotFoundError: function (message) {
+    throwNotFoundError(message) {
         this.throwError(message || 'Object not found', 'NotFoundError');
     }
 };

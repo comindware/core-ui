@@ -6,36 +6,34 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
-let HighlightableBehavior = function () {
+const HighlightableBehavior = function() {
 };
 
 _.extend(HighlightableBehavior.prototype, {
-    highlight: function (text)
-    {
+    highlight(text) {
         if (this.highlighted) {
             return;
         }
 
         this.highlighted = true;
         this.highlightedFragment = text;
-        this.trigger("highlighted", this, {
-            text: text
+        this.trigger('highlighted', this, {
+            text
         });
     },
 
-    unhighlight: function ()
-    {
+    unhighlight() {
         if (!this.highlighted) {
             return;
         }
 
         this.highlighted = false;
         this.highlightedFragment = undefined;
-        this.trigger("unhighlighted", this);
+        this.trigger('unhighlighted', this);
     }
 });
 

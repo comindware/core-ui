@@ -8,19 +8,19 @@
 
 /* Useful and general methods for work with Date and Time put here*/
 
-"use strict";
+'use strict';
 
 import { moment } from 'lib';
 import LocalizationService from '../services/LocalizationService';
 
-let dateTimeFormats = {
+const dateTimeFormats = {
     en: {
-        shortDate: {general: 'MM/D/YYYY' /* 6/15/2009 */},
-        sateISO: {general: 'YYYY-MM-DD'  /* 2005-08-09 */},
-        condensedDate: {general: 'MMM. D, YYYY' /* Jun. 15, 2009 */},
-        longDate: {general: 'dddd, MMMM D, YYYY' /* Monday, June 15, 2009 */},
-        monthDay: {general: 'MMMM D' /* June 15 */},
-        yearMonth: {general: 'MMMM, YYYY' /* June, 2009 */},
+        shortDate: { general: 'MM/D/YYYY' /* 6/15/2009 */},
+        sateISO: { general: 'YYYY-MM-DD'  /* 2005-08-09 */},
+        condensedDate: { general: 'MMM. D, YYYY' /* Jun. 15, 2009 */},
+        longDate: { general: 'dddd, MMMM D, YYYY' /* Monday, June 15, 2009 */},
+        monthDay: { general: 'MMMM D' /* June 15 */},
+        yearMonth: { general: 'MMMM, YYYY' /* June, 2009 */},
         fullDateShortTime: {
             general: 'dddd, MMMM D, YYYY h:mm A', // Monday, June 15, 2009 1:45 PM
             date: 'dddd, MMMM D, YYYY', // Monday, June 15
@@ -51,7 +51,7 @@ let dateTimeFormats = {
             date: 'YYYY-MM-DD', // 2014-12-29
             time: 'HH:mm:ssZ' // 11:45:00+04:00
         },
-        longTime: {general: 'h:mm:ss A'}, // 1:45:30 PM
+        longTime: { general: 'h:mm:ss A' }, // 1:45:30 PM
         dateTimeISO: {
             general: 'YYYY-MM-DD HH:mm:ss', // 2005-08-09 18:31:42 its not ISO date (!) (wrong name from main tracker)
             date: 'YYYY-MM-DD', // 2005-08-09
@@ -59,12 +59,12 @@ let dateTimeFormats = {
         }
     },
     de: {
-        shortDate: {general: 'DD.MM.YYYY' /* 03.12.2014 */},
-        dateISO: {general: 'YYYY-MM-DD' /* 2005-08-09 */},
-        condensedDate: {general: 'DD. MMM YYYY' /* 03. Dez. 2014 */},
-        longDate: {general: 'dddd, DD. MMMM YYYY' /* Mittwoch, 03. Dezember 2014 */},
-        monthDay: {general: 'DD. MMMM' /* 03. Dezember */},
-        yearMonth: {general: 'MMMM YYYY' /* Dezember 2014 */},
+        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2014 */},
+        dateISO: { general: 'YYYY-MM-DD' /* 2005-08-09 */},
+        condensedDate: { general: 'DD. MMM YYYY' /* 03. Dez. 2014 */},
+        longDate: { general: 'dddd, DD. MMMM YYYY' /* Mittwoch, 03. Dezember 2014 */},
+        monthDay: { general: 'DD. MMMM' /* 03. Dezember */},
+        yearMonth: { general: 'MMMM YYYY' /* Dezember 2014 */},
         fullDateShortTime: {
             general: 'dddd, DD. MMMM YYYY HH:mm', // Mittwoch, 03. Dezember 2014 19:00
             date: 'dddd, DD. MMMM YYYY', // Mittwoch, 03. Dezember 2014
@@ -105,12 +105,12 @@ let dateTimeFormats = {
         }
     },
     ru: {
-        shortDate: {general: 'DD.MM.YYYY' /* 03.12.2009 */},
-        dateISO: {general: 'YYYY-MM-DD' /* 2005-08-09 */},
-        condensedDate: {general: 'D MMM YYYY' /* 3 Дек 2014 */},
-        longDate: {general: 'D MMMM YYYY' /* 3 декабря 2014 */},
-        monthDay: {general: 'D MMMM' /* 3 декабря */},
-        yearMonth: {general: 'MMMM YYYY' /* декабрь 2014 */},
+        shortDate: { general: 'DD.MM.YYYY' /* 03.12.2009 */},
+        dateISO: { general: 'YYYY-MM-DD' /* 2005-08-09 */},
+        condensedDate: { general: 'D MMM YYYY' /* 3 Дек 2014 */},
+        longDate: { general: 'D MMMM YYYY' /* 3 декабря 2014 */},
+        monthDay: { general: 'D MMMM' /* 3 декабря */},
+        yearMonth: { general: 'MMMM YYYY' /* декабрь 2014 */},
         fullDateShortTime: {
             general: 'D MMMM, YYYY HH:mm', /* 3 декабря 2014 19:00 */
             date: 'D MMMM, YYYY', // 3 декабря 2014
@@ -141,7 +141,7 @@ let dateTimeFormats = {
             date: 'YYYY-MM-DD', // 2014-12-29
             time: 'HH:mm:ssZ' // 11:45:00+04:00
         },
-        longTime: {general: 'h:mm:ss A' /* 1:45:30 PM */},
+        longTime: { general: 'h:mm:ss A' /* 1:45:30 PM */},
         dateTimeISO: {
             general: 'YYYY-MM-DD HH:mm:ss', // 2005-08-09 18:31:42 its not ISO date (!) (wrong name from main tracker)
             date: 'YYYY-MM-DD', // 2005-08-09
@@ -156,7 +156,7 @@ export default /** @lends module:core.utils.dateHelpers */ {
      * @param {String|Date|Object} date Date string in ISO8601 format, JavaScript or momentJS date object.
      * @return {Date} JavaScript <code>Date</code> object.
      * */
-    dateToISOString: function (date) {
+    dateToISOString(date) {
         return moment(date).toISOString();
     },
 
@@ -165,15 +165,15 @@ export default /** @lends module:core.utils.dateHelpers */ {
      * @param {String} dateIsoString Date in ISO8601 format.
      * @return {Date} JavaScript <code>Date</code> object.
      * */
-    dateISOToDate: function (dateIsoString) {
+    dateISOToDate(dateIsoString) {
         return moment(dateIsoString).toDate();
     },
 
-    durationISOToObject: function (duration) {
+    durationISOToObject(duration) {
         if (!duration) {
             return null;
         }
-        let val = moment.duration(duration);
+        const val = moment.duration(duration);
         return {
             // we don't use moment.days() here because it returns only up to 30 days
             days: Math.floor(val.asDays()),
@@ -183,69 +183,68 @@ export default /** @lends module:core.utils.dateHelpers */ {
         };
     },
 
-    getWeekStartDay: function () {
-        var startDay = 0;
+    getWeekStartDay() {
+        let startDay = 0;
 
         switch (LocalizationService.langCode) {
-        case 'ru':
-        case 'de':
-            startDay = 1;
-            break;
-        default:
-            startDay = 0;
-            break;
+            case 'ru':
+            case 'de':
+                startDay = 1;
+                break;
+            default:
+                startDay = 0;
+                break;
         }
 
         return startDay;
     },
 
-    getRelativeDate: function (val) {
-        var lang = LocalizationService.langCode,
+    getRelativeDate(val) {
+        let lang = LocalizationService.langCode,
             now = moment(),
             daysFromNow = now.diff(val, 'days');
 
         if (daysFromNow < 2) {
             return moment(val).locale(lang).calendar();
-        } else {
-            var format = dateTimeFormats[lang].condensedDate.general;
-            return moment(val).locale(lang).format(format);
         }
+        const format = dateTimeFormats[lang].condensedDate.general;
+        return moment(val).locale(lang).format(format);
     },
 
-    getDisplayDate: function (val) {
-        var lang = LocalizationService.langCode,
+    getDisplayDate(val) {
+        let lang = LocalizationService.langCode,
             format = dateTimeFormats[lang].condensedDate.general;
 
         return val ? moment(val).locale(lang).format(format) : '';
     },
 
-    getDisplayTime: function (time) {
-        var lang = LocalizationService.langCode,
+    getDisplayTime(time) {
+        let lang = LocalizationService.langCode,
             format = dateTimeFormats[lang].fullDateShortTime.time;
 
         return time.locale(lang).format(format);
     },
 
-    getTimeEditFormat: function (hasSeconds) {
+    getTimeEditFormat(hasSeconds) {
         return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
-    getDateEditFormat: function () {
+    getDateEditFormat() {
         return dateTimeFormats[LocalizationService.langCode].generalDateShortTime.date;
     },
 
-    dateToDateTimeString: function(date, formatName) {
-        var lang = LocalizationService.langCode;
+    dateToDateTimeString(date, formatName) {
+        const lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].general);
     },
 
-    dateToDateString: function (date, formatName) {
-        var lang = LocalizationService.langCode;
+    dateToDateString(date, formatName) {
+        const lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].date);
     },
 
-    dateToTimeString: function (date, formatName) {
-        var lang = LocalizationService.langCode;
+    dateToTimeString(date, formatName) {
+        const lang = LocalizationService.langCode;
         return moment(date).format(dateTimeFormats[lang][formatName].time);
     }
 };

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
  * Copyright: 2009-2016 Comindware®
@@ -10,7 +10,7 @@ import 'lib';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
-let defaultRegExp = function(options) {
+const defaultRegExp = function(options) {
     if (!options.regexp) {
         throw new Error('Missing required "regexp" option for "regexp" validator');
     }
@@ -21,10 +21,10 @@ let defaultRegExp = function(options) {
         message: 'Invalid'
     }, options);
 
-    return function regexp (value) {
+    return function regexp(value) {
         options.value = value;
 
-        let err = {
+        const err = {
             type: options.type,
             message: _.isFunction(options.message) ? options.message(options) : options.message
         };
@@ -46,9 +46,9 @@ let defaultRegExp = function(options) {
     };
 };
 
-formRepository.validators.regexp = function (options) {
-    return _.wrap(defaultRegExp(options), function (func, opts) {
-        let val = _.isObject(opts) ? opts.value : opts;
+formRepository.validators.regexp = function(options) {
+    return _.wrap(defaultRegExp(options), (func, opts) => {
+        const val = _.isObject(opts) ? opts.value : opts;
         return func(val);
     });
 };

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Developer: Krasnovskiy Denis
  * Date: 08/27/2015
  * Copyright: 2009-2016 Comindware®
@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import TextEditorView from './TextEditorView';
 import { Handlebars } from 'lib';

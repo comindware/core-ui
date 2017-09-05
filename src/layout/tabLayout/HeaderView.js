@@ -11,7 +11,7 @@ import { helpers } from 'utils';
 import HeaderItemView from './HeaderItemView';
 
 export default Marionette.CollectionView.extend({
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'collection');
     },
 
@@ -22,7 +22,7 @@ export default Marionette.CollectionView.extend({
     childView: HeaderItemView,
 
     childEvents: {
-        'select': function (view) {
+        select(view) {
             this.trigger('select', view.model);
         }
     }

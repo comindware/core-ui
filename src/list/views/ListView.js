@@ -23,23 +23,23 @@ import GlobalEventService from '../../services/GlobalEventService';
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
 
-let config = {
+const config = {
     VISIBLE_COLLECTION_RESERVE: 5,
     VISIBLE_COLLECTION_AUTOSIZE_RESERVE: 100
 };
 
-let VisibleCollectionView = Marionette.CollectionView.extend({
-    getChildView: function(child) {
+const VisibleCollectionView = Marionette.CollectionView.extend({
+    getChildView(child) {
         if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
         }
 
-        var childViewSelector = this.getOption('childViewSelector');
+        const childViewSelector = this.getOption('childViewSelector');
         if (childViewSelector) {
             return childViewSelector(child);
         }
 
-        var childView = this.getOption('childView');
+        const childView = this.getOption('childView');
         if (!childView) {
             helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
         }
@@ -47,12 +47,12 @@ let VisibleCollectionView = Marionette.CollectionView.extend({
     }
 });
 
-let heightOptions = {
+const heightOptions = {
     AUTO: 'auto',
     FIXED: 'fixed'
 };
 
-let defaultOptions = {
+const defaultOptions = {
     height: heightOptions.FIXED
 };
 
@@ -80,7 +80,7 @@ let defaultOptions = {
  * должны быть указаны cellView для каждой колонки.
  * */
 const ListView = Marionette.LayoutView.extend({
-    initialize: function (options) {
+    initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError('ListView: you must specify a \'collection\' option.');
         }
@@ -115,7 +115,7 @@ const ListView = Marionette.LayoutView.extend({
         };
 
         _.bindAll(this, 'handleResize');
-        let debouncedHandleResize = _.debounce(this.handleResize, 100);
+        const debouncedHandleResize = _.debounce(this.handleResize, 100);
         this.listenTo(GlobalEventService, 'resize', debouncedHandleResize);
         this.listenTo(this.collection, 'add remove reset', debouncedHandleResize);
 
@@ -127,13 +127,13 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     events: {
-        'mousewheel': '__mousewheel'
+        mousewheel: '__mousewheel'
     },
 
     className: 'list',
     template: Handlebars.compile(template),
 
-    onShow: function () {
+    onShow() {
         // Updating viewportHeight and rendering subviews
         this.handleResize();
         this.visibleCollectionView = new VisibleCollectionView({
@@ -151,7 +151,7 @@ const ListView = Marionette.LayoutView.extend({
         this.handleResize();
     },
 
-    onRender: function () {
+    onRender() {
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
@@ -159,52 +159,51 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     keyboardShortcuts: {
-        'up': function (e) {
+        up(e) {
             this.moveCursorBy(-1, e.shiftKey);
         },
-        'down': function (e) {
+        down(e) {
             this.moveCursorBy(+1, e.shiftKey);
         },
-        'pageup': function (e) {
-            var delta = Math.ceil(this.state.viewportHeight * 0.8);
+        pageup(e) {
+            const delta = Math.ceil(this.state.viewportHeight * 0.8);
             this.moveCursorBy(-delta, e.shiftKey);
         },
-        'pagedown': function (e) {
-            var delta = Math.ceil(this.state.viewportHeight * 0.8);
+        pagedown(e) {
+            const delta = Math.ceil(this.state.viewportHeight * 0.8);
             this.moveCursorBy(delta, e.shiftKey);
         },
-        'home': function (e) {
+        home(e) {
             this.__moveCursorTo(0, e.shiftKey);
         },
-        'end': function (e) {
+        end(e) {
             this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
         }
     },
 
-    __createReqres: function () {
+    __createReqres() {
         this.internalReqres = new Backbone.Wreqr.RequestResponse();
         this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
     },
 
-    __handleChildViewEvent: function (view, eventName, eventArguments) {
-        this.trigger.apply(this, [ 'childview:' + eventName, view ].concat(eventArguments));
+    __handleChildViewEvent(view, eventName, eventArguments) {
+        this.trigger.apply(this, [ `childview:${eventName}`, view ].concat(eventArguments));
     },
 
-    __moveCursorTo: function (newCursorIndex, shiftPressed)
-    {
-        var cid = this.collection.cursorCid;
-        var index = 0;
-        this.collection.find(function (x, i) {
+    __moveCursorTo(newCursorIndex, shiftPressed) {
+        const cid = this.collection.cursorCid;
+        let index = 0;
+        this.collection.find((x, i) => {
             if (x.cid === cid) {
                 index = i;
                 return true;
             }
         });
 
-        var nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
+        const nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
         if (nextIndex !== index) {
-            var model = this.collection.at(nextIndex);
-            var selectFn = this.collection.selectSmart || this.collection.select;
+            const model = this.collection.at(nextIndex);
+            const selectFn = this.collection.selectSmart || this.collection.select;
             if (selectFn) {
                 selectFn.call(this.collection, model, false, shiftPressed);
             }
@@ -213,21 +212,20 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
-    moveCursorBy: function (cursorIndexDelta, shiftPressed)
-    {
-        var cid = this.collection.cursorCid;
-        var index = 0;
-        this.collection.find(function (x, i) {
+    moveCursorBy(cursorIndexDelta, shiftPressed) {
+        const cid = this.collection.cursorCid;
+        let index = 0;
+        this.collection.find((x, i) => {
             if (x.cid === cid) {
                 index = i;
                 return true;
             }
         });
 
-        var nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
+        const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
         if (nextIndex !== index) {
-            var model = this.collection.at(nextIndex);
-            var selectFn = this.collection.selectSmart || this.collection.select;
+            const model = this.collection.at(nextIndex);
+            const selectFn = this.collection.selectSmart || this.collection.select;
             if (selectFn) {
                 selectFn.call(this.collection, model, false, shiftPressed);
             }
@@ -235,41 +233,37 @@ const ListView = Marionette.LayoutView.extend({
         }
     },
 
-    scrollTo: function (index)
-    {
-        var indexDelta = index - this.state.position;
-        var criticalOffset = 2;
+    scrollTo(index) {
+        const indexDelta = index - this.state.position;
+        const criticalOffset = 2;
         if (indexDelta < criticalOffset || indexDelta > this.state.viewportHeight - criticalOffset) {
-            var centerItemDelta = Math.floor(this.state.viewportHeight / 2 - 1);
-            var newPosition = this.state.position + indexDelta - centerItemDelta;
+            const centerItemDelta = Math.floor(this.state.viewportHeight / 2 - 1);
+            const newPosition = this.state.position + indexDelta - centerItemDelta;
             this.__updatePositionInternal(newPosition, true);
         }
     },
 
-    __normalizePosition: function (position)
-    {
-        var maxPos = Math.max(0, (this.collection.length - 1) - this.state.viewportHeight + 1);
+    __normalizePosition(position) {
+        const maxPos = Math.max(0, (this.collection.length - 1) - this.state.viewportHeight + 1);
         return Math.max(0, Math.min(maxPos, position));
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
-    __normalizeCollectionIndex: function (index)
-    {
+    __normalizeCollectionIndex(index) {
         return Math.max(0, Math.min(this.collection.length - 1, index));
     },
 
-    __assignKeyboardShortcuts: function ()
-    {
+    __assignKeyboardShortcuts() {
         if (this.keyListener) {
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, function (value, key) //noinspection JSHint
+        _.each(this.keyboardShortcuts, function(value, key) //noinspection JSHint
         {
             if (typeof value === 'object') {
                 this.keyListener.register_combo(_.extend({
-                    'keys': key,
-                    'this': this
+                    keys: key,
+                    this: this
                 }, value));
             } else {
                 this.keyListener.simple_combo(key, value.bind(this));
@@ -277,13 +271,11 @@ const ListView = Marionette.LayoutView.extend({
         }, this);
     },
 
-    updatePosition: function (newPosition)
-    {
+    updatePosition(newPosition) {
         this.__updatePositionInternal(newPosition, false);
     },
 
-    __updatePositionInternal: function (newPosition, triggerEvents)
-    {
+    __updatePositionInternal(newPosition, triggerEvents) {
         if (this.state.viewportHeight === undefined) {
             helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
         }
@@ -294,11 +286,11 @@ const ListView = Marionette.LayoutView.extend({
         }
 
         newPosition = this.visibleCollection.updatePosition(newPosition);
-        var oldPosition = this.state.position;
+        const oldPosition = this.state.position;
         this.state.position = newPosition;
         if (triggerEvents) {
             this.trigger('positionChanged', this, {
-                oldPosition: oldPosition,
+                oldPosition,
                 position: newPosition
             });
         }
@@ -307,12 +299,12 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     // Updates state.viewportHeight and visibleCollection.state.windowSize.
-    handleResize: function () {
+    handleResize() {
         if (this.isDestroyed) {
             return;
         }
-        var oldViewportHeight = this.state.viewportHeight;
-        var elementHeight = this.$el.height();
+        const oldViewportHeight = this.state.viewportHeight;
+        const elementHeight = this.$el.height();
 
         // Checking options consistency
         if (this.height === heightOptions.FIXED && elementHeight === 0) {
@@ -325,9 +317,9 @@ const ListView = Marionette.LayoutView.extend({
         }
 
         // Computing new elementHeight and viewportHeight
-        var adjustedElementHeight = this.getAdjustedElementHeight(elementHeight);
+        const adjustedElementHeight = this.getAdjustedElementHeight(elementHeight);
         this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
-        var visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE;
+        const visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE;
 
         // Applying the result of computation
         if (this.state.viewportHeight === oldViewportHeight && adjustedElementHeight === elementHeight) {
@@ -339,18 +331,18 @@ const ListView = Marionette.LayoutView.extend({
         this.visibleCollection.updateWindowSize(visibleCollectionSize);
 
         this.trigger('viewportHeightChanged', this, {
-            oldViewportHeight: oldViewportHeight,
+            oldViewportHeight,
             viewportHeight: this.state.viewportHeight,
             listViewHeight: adjustedElementHeight
         });
     },
 
-    getAdjustedElementHeight: function (elementHeight) {
+    getAdjustedElementHeight(elementHeight) {
         if (this.height !== heightOptions.AUTO) {
             return elementHeight;
         }
 
-        var computedViewportHeight = Math.min(this.maxRows, this.collection.length),
+        let computedViewportHeight = Math.min(this.maxRows, this.collection.length),
             minHeight = 0,
             outerBoxAdjustments = 0;
 
@@ -365,7 +357,7 @@ const ListView = Marionette.LayoutView.extend({
         return Math.max(this.childHeight * computedViewportHeight + outerBoxAdjustments, minHeight);
     },
 
-    __mousewheel: function (e) {
+    __mousewheel(e) {
         if (this.state.viewportHeight === undefined) {
             return;
         }
@@ -373,8 +365,8 @@ const ListView = Marionette.LayoutView.extend({
             return;
         }
 
-        var delta = this.state.viewportHeight;
-        var newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
+        const delta = this.state.viewportHeight;
+        const newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
         this.__updatePositionInternal(newPosition, true);
         return false;
     }
