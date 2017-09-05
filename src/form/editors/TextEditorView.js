@@ -81,7 +81,9 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     template: Handlebars.compile(template),
 
     templateHelpers() {
-        return this.options;
+        return _.extend(this.options, {
+            title: this.model.get('value') ? this.model.get('value') : ''
+        });
     },
 
     events: {
