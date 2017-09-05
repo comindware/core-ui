@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/button.hbs';
@@ -20,57 +20,54 @@ const classes = {
 };
 
 export default Marionette.CollectionView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.reqres = options.reqres;
         this.collection = this.model.get('selected');
     },
 
     template: Handlebars.compile(template),
 
-    className: function () {
+    className() {
         return classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED);
     },
 
-    getChildView: function (model) {
+    getChildView(model) {
         if (model instanceof FakeInputModel) {
             return InputView;
-        } else {
-            return this.options.bubbleView || BubbleView;
         }
+        return this.options.bubbleView || BubbleView;
     },
 
-    focus: function () {
-        var fakeInputModel = this.__findFakeInputModel();
+    focus() {
+        const fakeInputModel = this.__findFakeInputModel();
         if (!fakeInputModel) {
             return;
         }
-        var input = this.children.findByModel(fakeInputModel);
+        const input = this.children.findByModel(fakeInputModel);
         if (input && input.focus) {
             input.focus();
         }
     },
 
-    updateInput: function () {
-        var fakeInputModel = this.__findFakeInputModel();
-        var input = this.children.findByModel(fakeInputModel);
+    updateInput() {
+        const fakeInputModel = this.__findFakeInputModel();
+        const input = this.children.findByModel(fakeInputModel);
         if (input) {
             input.updateInput();
         }
     },
 
-    __findFakeInputModel: function () {
-        return _.find(this.collection.models, function (model) {
-            return (model instanceof FakeInputModel) && model;
-        });
+    __findFakeInputModel() {
+        return _.find(this.collection.models, model => (model instanceof FakeInputModel) && model);
     },
 
     events: {
-        'click': '__click'
+        click: '__click'
     },
 
     tagName: 'ul',
 
-    childViewOptions: function () {
+    childViewOptions() {
         return {
             reqres: this.reqres,
             parent: this.$el,
@@ -78,12 +75,12 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    __click: function () {
+    __click() {
         this.reqres.request('button:click');
     },
 
-    updateEnabled: function (enabled) {
-        this.children.each(function (cv) {
+    updateEnabled(enabled) {
+        this.children.each(cv => {
             if (cv.updateEnabled) {
                 cv.updateEnabled(enabled);
             }

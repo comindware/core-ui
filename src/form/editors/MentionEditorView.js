@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import template from './templates/mentionEditor.hbs';
 import { Handlebars } from 'lib';
@@ -33,7 +33,7 @@ const defaultOptions = {
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
 formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{
-    initialize: function (options) {
+    initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -43,11 +43,11 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         this.__createViewModel();
     },
 
-    __createViewModel: function () {
+    __createViewModel() {
         this.viewModel = new Backbone.Model();
-        var membersCollection = membersFactory.createMembersCollection();
+        const membersCollection = membersFactory.createMembersCollection();
         this.viewModel.set('availableMembers', membersCollection);
-        this.viewModel.set('membersByUserName', membersCollection.reduce(function (memo, value) {
+        this.viewModel.set('membersByUserName', membersCollection.reduce((memo, value) => {
             memo[value.get('userName')] = value;
             return memo;
         }, {}));
@@ -59,7 +59,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         dropdownRegion: '.js-dropdown-region'
     },
 
-    onShow: function () {
+    onShow() {
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
@@ -71,7 +71,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
                 enabled: this.getEnabled(),
                 key: this.key,
                 autocommit: this.options.autocommit,
-                emptyPlaceholder:LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER')
+                emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.MENTIONS.PLACEHOLDER')
             }),
             panelView: membersFactory.getMembersListView(),
             panelViewOptions: {
@@ -88,7 +88,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         this.listenTo(this.dropdownView, 'button:input', this.__onInput);
         this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
-        _.each(this.keyboardShortcuts, function (v, k) {
+        _.each(this.keyboardShortcuts, function(v, k) {
             this.dropdownView.button.addKeyboardListener(k, v.bind(this));
         }, this);
 
@@ -98,65 +98,65 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
     },
 
     keyboardShortcuts: {
-        'up': function () {
+        up() {
             if (!this.dropdownView.isOpen) {
                 return true;
             }
             this.__sendPanelCommand('up');
             this.__updateMentionInText();
         },
-        'down': function () {
+        down() {
             if (!this.dropdownView.isOpen) {
                 return true;
             }
             this.__sendPanelCommand('down');
             this.__updateMentionInText();
         },
-        'enter,num_enter': function () {
+        'enter,num_enter'() {
             if (!this.dropdownView.isOpen) {
                 return true;
             }
             this.__updateMentionInText();
             this.dropdownView.close();
         },
-        'escape': function () {
+        escape() {
             this.dropdownView.close();
         }
     },
 
-    __value: function (value) {
+    __value(value) {
         this.setValue(value);
         this.__triggerChange();
     },
 
-    __onTextChange: function () {
+    __onTextChange() {
         this.value = this.dropdownView.button.getValue();
         this.__triggerChange();
     },
 
-    __onFocus: function () {
+    __onFocus() {
         this.trigger('focus', this);
     },
 
-    __onBlur: function () {
+    __onBlur() {
         this.trigger('blur', this);
     },
 
-    __onInput: function (text, caret) {
+    __onInput(text, caret) {
         // 1. Open dropdown when: @ is immediately before caret, @ is at start or prepended by whitespace
         // 2. Maintain dropdown open (and filter the list) when: text between caret and @ matches username pattern [a-zA-Z0-9_\.]
         // 3. Hide dropdown when: username text doesn't match
         // 4. track caret change and hide dropdown if resulting username patters doesn't match
         // 5. hide dropdown on blur
 
-        var leftFragment = text.substring(0, caret.end);
+        const leftFragment = text.substring(0, caret.end);
 
-        var regex = /(?:\s|^)@([a-z0-9_\.]*)$/i;
-        var match = leftFragment.match(regex);
+        const regex = /(?:\s|^)@([a-z0-9_\.]*)$/i;
+        const match = leftFragment.match(regex);
         if (match) {
-            var userName = match[1];
+            const userName = match[1];
             this.dropdownView.open();
-            var collection = this.viewModel.get('availableMembers');
+            const collection = this.viewModel.get('availableMembers');
             collection.applyTextFilter(userName);
             if (collection.length === 0) {
                 this.dropdownView.close();
@@ -164,39 +164,39 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
             this.mentionState = {
                 start: caret.end - userName.length,
                 end: caret.end,
-                text: text
+                text
             };
         } else {
             this.dropdownView.close();
         }
     },
 
-    __onCaretChange: function (text, caret) {
+    __onCaretChange(text, caret) {
         if (this.dropdownView.isOpen) {
             this.__onInput(text, caret);
         }
     },
 
-    __onMemberSelect: function () {
+    __onMemberSelect() {
         this.__updateMentionInText();
         this.dropdownView.close();
     },
 
-    __updateMentionInText: function () {
-        var selectedMember = this.viewModel.get('availableMembers').selected;
+    __updateMentionInText() {
+        const selectedMember = this.viewModel.get('availableMembers').selected;
         if (!selectedMember) {
             return;
         }
 
-        var editor = this.dropdownView.button;
-        var text = this.mentionState.text;
+        const editor = this.dropdownView.button;
+        const text = this.mentionState.text;
 
-        var mention = selectedMember.get('userName') || '';
+        let mention = selectedMember.get('userName') || '';
         if (mention && !text.substring(this.mentionState.end).match(/^\s/)) {
             mention += ' ';
         }
 
-        var updatedText = text.substring(0, this.mentionState.start) +
+        const updatedText = text.substring(0, this.mentionState.start) +
             mention +
             text.substring(this.mentionState.end);
         editor.setValue(updatedText);
@@ -209,19 +209,19 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
      * Получить список пользователей, упомянутых в тексте.
      * @return {String[]} Список строковых идентификаторов пользователей, упомянутых в тексте.
      * */
-    getMentions: function () {
-        var text = this.getValue();
-        var regex = /(?:\s|^)@([a-z0-9_\.]+)/gi;
-        var members = this.viewModel.get('membersByUserName');
+    getMentions() {
+        const text = this.getValue();
+        const regex = /(?:\s|^)@([a-z0-9_\.]+)/gi;
+        const members = this.viewModel.get('membersByUserName');
 
-        var result = [];
+        const result = [];
         while (true) {
-            var matches = regex.exec(text);
+            const matches = regex.exec(text);
             if (!matches) {
                 break;
             }
-            var userName = matches[1];
-            var member = members[userName];
+            const userName = matches[1];
+            const member = members[userName];
             if (member) {
                 result.push(member.id);
             }
@@ -229,7 +229,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         return _.uniq(result);
     },
 
-    setValue: function (value) {
+    setValue(value) {
         if (this.dropdownView) {
             this.dropdownView.button.setValue(value);
             this.value = this.dropdownView.button.getValue();
@@ -238,20 +238,20 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         }
     },
 
-    __sendPanelCommand: function (command, options) {
+    __sendPanelCommand(command, options) {
         if (this.dropdownView.isOpen) {
             this.dropdownView.panelView.handleCommand(command, options);
         }
     },
 
-    __setEnabled: function (enabled) {
+    __setEnabled(enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         if (this.dropdownView) {
             this.dropdownView.button.setEnabled(enabled);
         }
     },
 
-    __setReadonly: function (readonly) {
+    __setReadonly(readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.dropdownView) {
             this.dropdownView.button.setReadonly(readonly);

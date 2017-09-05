@@ -6,12 +6,12 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import GridItemViewBehavior from './behaviors/GridItemViewBehavior';
 import GridItemBehavior from '../models/behaviors/GridItemBehavior';
 
-let defaultOptions = {
+const defaultOptions = {
     paddingLeft: 20,
     paddingRight: 10
 };
@@ -34,11 +34,11 @@ export default Marionette.ItemView.extend({
     className: 'record-row grid-row',
 
     events: {
-        'click': '__onClick',
-        'dblclick': '__onDblClick'
+        click: '__onClick',
+        dblclick: '__onDblClick'
     },
 
-    initialize: function () {
+    initialize() {
         _.defaults(this.options, defaultOptions);
         _.extend(this.model, new GridItemBehavior(this));
     },
@@ -50,15 +50,15 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    getValue: function (id) {
+    getValue(id) {
         this.model.get(id);
     },
 
-    _renderTemplate: function () {
+    _renderTemplate() {
         this.cellViews = [];
-        this.$el.append('<div class="padding js-padding" style="width: ' + this.options.paddingLeft + 'px"></div>');
-        _.each(this.options.columns, function (gridColumn) {
-            var id = gridColumn.id,
+        this.$el.append(`<div class="padding js-padding" style="width: ${this.options.paddingLeft}px"></div>`);
+        _.each(this.options.columns, function(gridColumn) {
+            let id = gridColumn.id,
                 value;
 
             if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) {
@@ -67,10 +67,10 @@ export default Marionette.ItemView.extend({
                 value = this.model.get(id);
             }
 
-            var cellView = new gridColumn.cellView({
+            const cellView = new gridColumn.cellView({
                 className: 'grid-cell js-grid-cell',
                 model: new Backbone.Model({
-                    value: value,
+                    value,
                     rowModel: this.model,
                     columnConfig: gridColumn,
                     highlightedFragment: null
@@ -81,7 +81,7 @@ export default Marionette.ItemView.extend({
             cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
             this.cellViews.push(cellView);
         }, this);
-        this.$el.append('<div class="padding js-padding" style="width: ' + this.options.paddingRight + 'px"></div>');
+        this.$el.append(`<div class="padding js-padding" style="width: ${this.options.paddingRight}px"></div>`);
     },
 
     onDestroy() {
@@ -90,25 +90,23 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onHighlighted: function (fragment)
-    {
-        _.each(this.cellViews, function (cellView) {
+    onHighlighted(fragment) {
+        _.each(this.cellViews, cellView => {
             cellView.model.set('highlightedFragment', fragment);
         });
     },
 
-    onUnhighlighted: function ()
-    {
-        _.each(this.cellViews, function (cellView) {
+    onUnhighlighted() {
+        _.each(this.cellViews, cellView => {
             cellView.model.set('highlightedFragment', null);
         });
     },
 
-    __onClick: function () {
+    __onClick() {
         this.trigger('click', this.model);
     },
 
-    __onDblClick: function () {
+    __onDblClick() {
         this.trigger('dblclick', this.model);
     }
 });

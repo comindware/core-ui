@@ -18,7 +18,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'tabs');
 
         this.__tabsCollection = options.tabs;
@@ -61,8 +61,8 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onShow () {
-        let headerView = new HeaderView({
+    onShow() {
+        const headerView = new HeaderView({
             collection: this.__tabsCollection
         });
         this.listenTo(headerView, 'select', this.__handleSelect);
@@ -84,7 +84,7 @@ export default Marionette.LayoutView.extend({
         this.__updateState();
     },
 
-    update () {
+    update() {
         Object.values(this.tabs).forEach(view => {
             if (view.update) {
                 view.update();
@@ -93,11 +93,11 @@ export default Marionette.LayoutView.extend({
         this.__updateState();
     },
 
-    getViewById (tabId) {
+    getViewById(tabId) {
         return this.__findTab(tabId).get('view');
     },
 
-    selectTab (tabId) {
+    selectTab(tabId) {
         const tab = this.__findTab(tabId);
         if (tab.get('selected')) {
             return;
@@ -109,23 +109,23 @@ export default Marionette.LayoutView.extend({
         tab.set('selected', true);
     },
 
-    setEnabled (tabId, enabled) {
+    setEnabled(tabId, enabled) {
         this.__findTab(tabId).set({
             enabled
         });
     },
 
-    setTabError (tabId, error) {
+    setTabError(tabId, error) {
         this.__findTab(tabId).set({
             error
         });
     },
 
-    __findSelectedTab () {
+    __findSelectedTab() {
         return this.__tabsCollection.find(x => x.get('selected'));
     },
 
-    __findTab (tabId) {
+    __findTab(tabId) {
         helpers.assertArgumentNotFalsy(tabId, 'tabId');
 
         const tabModel = this.__tabsCollection.find(x => x.id === tabId);
@@ -135,15 +135,15 @@ export default Marionette.LayoutView.extend({
         return tabModel;
     },
 
-    __handleSelect (model) {
+    __handleSelect(model) {
         this.selectTab(model.id);
     },
 
-    __onSelectedChanged (model) {
+    __onSelectedChanged(model) {
         this.__updateTabRegion(model);
     },
 
-    __updateTabRegion (model) {
+    __updateTabRegion(model) {
         const selected = model.get('selected');
         model.get('$regionEl').toggle(Boolean(selected));
     }

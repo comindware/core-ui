@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/emptyGrid.hbs';
@@ -23,10 +23,10 @@ import LocalizationService from '../../services/LocalizationService';
  * @param {Object} options Constructor options
  * @param {string} [options.text=Список пуст] отображаемый текст
  * */
-let EmptyListView = Marionette.ItemView.extend({
-    initialize: function (options) {
+const EmptyListView = Marionette.ItemView.extend({
+    initialize(options) {
         this.model = new Backbone.Model({
-            text: (options && options.text) || LocalizationService.get("CORE.GRID.EMPTYVIEW.EMPTY")
+            text: (options && options.text) || LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY')
         });
     },
 

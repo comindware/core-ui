@@ -6,79 +6,79 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { objectPropertyTypes } from '../Meta';
 import { helpers } from 'utils';
 import { Handlebars } from 'lib';
 
-let factory = {
-    getCellViewByDataType: function(type) {
-        var result;
+const factory = {
+    getCellViewByDataType(type) {
+        let result;
 
         switch (type) {
-        case objectPropertyTypes.STRING:
-            result = factory.getTextCellView();
-            break;
-        case objectPropertyTypes.INSTANCE:
-            result = factory.getReferenceCellView();
-            break;
-        case objectPropertyTypes.ACCOUNT:
-            result = factory.getUserCellView();
-            break;
-        case objectPropertyTypes.ENUM:
-            result = factory.getEnumCellView();
-            break;
-        case objectPropertyTypes.INTEGER:
-        case objectPropertyTypes.DOUBLE:
-        case objectPropertyTypes.DECIMAL:
-            result = factory.getNumberCellView();
-            break;
-        case objectPropertyTypes.DURATION:
-            result = factory.getDurationCellView();
-            break;
-        case objectPropertyTypes.BOOLEAN:
-            result = factory.getBooleanCellView();
-            break;
-        case objectPropertyTypes.DATETIME:
-            result = factory.getDateTimeCellView();
-            break;
-        case objectPropertyTypes.DOCUMENT:
-            result = factory.getDocumentCellView();
-            break;
-        default:
-            helpers.throwNotSupportedError('Data type' + type + 'is not supported');
-            break;
+            case objectPropertyTypes.STRING:
+                result = factory.getTextCellView();
+                break;
+            case objectPropertyTypes.INSTANCE:
+                result = factory.getReferenceCellView();
+                break;
+            case objectPropertyTypes.ACCOUNT:
+                result = factory.getUserCellView();
+                break;
+            case objectPropertyTypes.ENUM:
+                result = factory.getEnumCellView();
+                break;
+            case objectPropertyTypes.INTEGER:
+            case objectPropertyTypes.DOUBLE:
+            case objectPropertyTypes.DECIMAL:
+                result = factory.getNumberCellView();
+                break;
+            case objectPropertyTypes.DURATION:
+                result = factory.getDurationCellView();
+                break;
+            case objectPropertyTypes.BOOLEAN:
+                result = factory.getBooleanCellView();
+                break;
+            case objectPropertyTypes.DATETIME:
+                result = factory.getDateTimeCellView();
+                break;
+            case objectPropertyTypes.DOCUMENT:
+                result = factory.getDocumentCellView();
+                break;
+            default:
+                helpers.throwNotSupportedError(`Data type${type}is not supported`);
+                break;
         }
 
         return result;
     },
 
-    getTextCellView: function () {
+    getTextCellView() {
         return factory.__getSimpleView('{{highlightFragment value highlightedFragment}}');
     },
 
-    getReferenceCellView: function () {
+    getReferenceCellView() {
         return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}');
     },
 
-    getUserCellView: function () {
+    getUserCellView() {
         return factory.__getAccountView();
     },
 
-    getEnumCellView: function () {
+    getEnumCellView() {
         return factory.__getEnumView();
     },
 
-    getNumberCellView: function () {
+    getNumberCellView() {
         return factory.__getSimpleView('{{value}}');
     },
 
-    getDurationCellView: function () {
+    getDurationCellView() {
         return factory.__getSimpleView('{{renderShortDuration value}}');
     },
 
-    getBooleanCellView: function () {
+    getBooleanCellView() {
         const templateHelpers = {
             showIcon() {
                 return _.isBoolean(this.value);
@@ -92,121 +92,111 @@ let factory = {
             '{{/if}}', templateHelpers);
     },
 
-    getDateTimeCellView: function () {
+    getDateTimeCellView() {
         return factory.__getSimpleView('{{#if value}}{{renderFullDate value}}{{/if}}');
     },
 
-    getDocumentCellView: function () {
+    getDocumentCellView() {
         return factory.__getDocumentView();
     },
 
-    __getSimpleView: function (template, templateHelpers) {
+    __getSimpleView(template, templateHelpers) {
         return Marionette.ItemView.extend({
             template: Handlebars.compile(template),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'
             },
-            __handleHighlightedFragmentChange: function () {
+            __handleHighlightedFragmentChange() {
                 this.render();
             },
             className: 'grid-cell',
-            templateHelpers: templateHelpers
+            templateHelpers
         });
     },
 
-    __getAccountView: function () {
+    __getAccountView() {
         return Marionette.ItemView.extend({
             template: Handlebars.compile('{{text}}'),
-            templateHelpers: function () {
-                var value = this.model.get('value');
-                var text = '';
+            templateHelpers() {
+                const value = this.model.get('value');
+                let text = '';
                 if (value && value.length > 0) {
-                    text = _.chain(value).
-                        map(function (item) {
-                            return {
-                                id: item.id,
-                                text: item.text || item.name || item.columns && item.columns[0]
-                            };
-                        }).
-                        sortBy(function (member) {
-                            return member.text;
-                        }).
-                        reduce(function (memo, member) {
+                    text = _.chain(value)
+                        .map(item => ({
+                            id: item.id,
+                            text: item.text || item.name || item.columns && item.columns[0]
+                        }))
+                        .sortBy(member => member.text)
+                        .reduce((memo, member) => {
                             if (memo) {
-                                return memo + ', ' + member.text;
-                            } else {
-                                return member.text;
+                                return `${memo}, ${member.text}`;
                             }
-                        }, null).
-                        value();
-                }
-                else if (value && value.name) {
+                            return member.text;
+                        }, null)
+                        .value();
+                } else if (value && value.name) {
                     text = value.name;
                 }
 
                 return {
-                    text: text
+                    text
                 };
             },
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'
             },
-            __handleHighlightedFragmentChange: function () {
+            __handleHighlightedFragmentChange() {
                 this.render();
             },
             className: 'grid-cell'
         });
     },
 
-    __getDocumentView: function () {
+    __getDocumentView() {
         return Marionette.ItemView.extend({
             template: Handlebars.compile('{{#each documents}}<a href="{{url}}">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
 
-            templateHelpers: function () {
-                var value = this.model.get('value');
-                var documents = [];
+            templateHelpers() {
+                const value = this.model.get('value');
+                let documents = [];
                 if (value && value.length > 0) {
-                    documents = _.chain(value).
-                        map(function (item) {
-                            return {
-                                id: item.id,
-                                text: item.text || item.name || item.columns && item.columns[0],
-                                url: item.url || item.columns && item.columns[1]
-                            };
-                        }).
-                        sortBy(function (document) {
-                            return document.text;
-                        }).
-                        value();
+                    documents = _.chain(value)
+                        .map(item => ({
+                            id: item.id,
+                            text: item.text || item.name || item.columns && item.columns[0],
+                            url: item.url || item.columns && item.columns[1]
+                        }))
+                        .sortBy(document => document.text)
+                        .value();
                 }
 
                 return {
-                    documents: documents
+                    documents
                 };
             },
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'
             },
-            __handleHighlightedFragmentChange: function () {
+            __handleHighlightedFragmentChange() {
                 this.render();
             },
             className: 'grid-cell'
         });
     },
 
-    __getEnumView: function() {
+    __getEnumView() {
         return Marionette.ItemView.extend({
-            template: Handlebars.compile("{{#if value}}{{valueExplained}}{{/if}}"),
+            template: Handlebars.compile('{{#if value}}{{valueExplained}}{{/if}}'),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'
             },
-            __handleHighlightedFragmentChange: function () {
+            __handleHighlightedFragmentChange() {
                 this.render();
             },
-            templateHelpers: function () {
-                var value = this.model.get("value");
+            templateHelpers() {
+                const value = this.model.get('value');
                 return {
-                    value: value,
+                    value,
                     valueExplained: value.valueExplained
                 };
             },

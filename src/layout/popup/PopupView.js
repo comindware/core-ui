@@ -16,23 +16,21 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'header');
         helpers.ensureOption(options, 'buttons');
         helpers.ensureOption(options, 'content');
 
-        this.__buttons = this.options.buttons.map(x => {
-            return Object.assign({
-                id: _.uniqueId('buttonId')
-            }, x);
-        });
+        this.__buttons = this.options.buttons.map(x => Object.assign({
+            id: _.uniqueId('buttonId')
+        }, x));
 
         this.content = options.content;
     },
 
     template: Handlebars.compile(template),
 
-    templateHelpers () {
+    templateHelpers() {
         return {
             headerText: this.options.header,
             buttons: this.__buttons
@@ -65,25 +63,25 @@ export default Marionette.LayoutView.extend({
         contentRegion: '.js-content-region'
     },
 
-    onRender () {
+    onRender() {
         if (this.options.size) {
             this.ui.window.css(this.options.size);
         }
     },
 
-    onShow () {
+    onShow() {
         this.contentRegion.show(this.options.content);
         this.__updateState();
     },
 
-    update () {
+    update() {
         if (this.content.update) {
             this.content.update();
         }
         this.__updateState();
     },
 
-    __onButtonClick (e) {
+    __onButtonClick(e) {
         const id = $(e.target).data('id') || $(e.target.parentElement).data('id');
         const button = this.__buttons.find(x => x.id === id);
         button.handler(this);

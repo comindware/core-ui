@@ -11,7 +11,7 @@ import GlobalEventService from '../../services/GlobalEventService';
 const THROTTLE_DELAY = 100;
 
 export default Marionette.Behavior.extend({
-    initialize (options, view) {
+    initialize(options, view) {
         this.__observedEntities = [];
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
 
@@ -19,7 +19,7 @@ export default Marionette.Behavior.extend({
         view.stopListeningToElementMove = this.__stopListeningToElementMove.bind(this);
     },
 
-    __listenToElementMoveOnce (el, callback) {
+    __listenToElementMoveOnce(el, callback) {
         if (this.__observedEntities.length === 0) {
             this.listenTo(GlobalEventService, 'window:wheel:captured', this.__checkElements);
             this.listenTo(GlobalEventService, 'window:mouseup:captured', this.__checkElements);
@@ -27,7 +27,7 @@ export default Marionette.Behavior.extend({
         }
 
         // saving el position relative to the viewport for further check
-        let { left, top } = el.getBoundingClientRect();
+        const { left, top } = el.getBoundingClientRect();
         this.__observedEntities.push({
             anchorViewportPos: {
                 left: Math.floor(left),
@@ -38,7 +38,7 @@ export default Marionette.Behavior.extend({
         });
     },
 
-    __stopListeningToElementMove (el = null) {
+    __stopListeningToElementMove(el = null) {
         if (!el) {
             this.__observedEntities = [];
         } else {
@@ -46,13 +46,13 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    __checkElements () {
+    __checkElements() {
         setTimeout(() => {
             if (this.view.isDestroyed) {
                 return;
             }
             this.__observedEntities.forEach(x => {
-                let { left, top } = x.el.getBoundingClientRect();
+                const { left, top } = x.el.getBoundingClientRect();
                 if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
                     x.callback.call(this.view);
                 }

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
@@ -17,32 +17,31 @@ import 'lib';
         collapseButton - jquery selector string that points to the collapse/expand button. If omitted, whole view is considered the button and toggle the collapse state on click.
 */
 
-let ListGroupViewBehavior = Marionette.Behavior.extend({
-    initialize: function (options, view) {
+const ListGroupViewBehavior = Marionette.Behavior.extend({
+    initialize(options, view) {
         // mixing behavior's templateHelpers even if it's already defined in the view
         if (view.templateHelpers) {
-            var self = this;
-            var viewTemplateHelpers = view.templateHelpers.bind(view);
-            view.templateHelpers = function () {
+            const self = this;
+            const viewTemplateHelpers = view.templateHelpers.bind(view);
+            view.templateHelpers = function() {
                 return _.extend(self.templateHelpers(), viewTemplateHelpers());
             };
         }
     },
 
     events: {
-        'click': '__handleCollapseExpand'
+        click: '__handleCollapseExpand'
     },
 
-    __handleCollapseExpand: function (e)
-    {
-        var collapseButton = this.getOption('collapseButton');
-        var collapseButtonEl;
+    __handleCollapseExpand(e) {
+        const collapseButton = this.getOption('collapseButton');
+        let collapseButtonEl;
         if (!collapseButton || ((collapseButtonEl = this.$el.find(collapseButton)[0]) !== undefined && e.target === collapseButtonEl)) {
             this.view.model.toggleCollapsed();
         }
     },
 
-    templateHelpers: function () {
+    templateHelpers() {
         return {
             collapsed: this.view.model.collapsed === true
         };

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/radioButton.hbs';
@@ -22,10 +22,10 @@ export default Marionette.ItemView.extend({
     attributes() {
         return {
             title: (this.model && this.model.get('title')) || null
-        }
+        };
     },
 
-    initialize: function (options) {
+    initialize(options) {
         this.enabled = options.enabled;
     },
 
@@ -34,32 +34,32 @@ export default Marionette.ItemView.extend({
     },
 
     modelEvents: {
-        'selected': '__toggle',
-        'deselected': '__toggle'
+        selected: '__toggle',
+        deselected: '__toggle'
     },
 
     events: {
-        'click': '__changeModelSelected'
+        click: '__changeModelSelected'
     },
 
-    onRender: function () {
+    onRender() {
         if (this.model.get('id') === this.options.selected) {
             this.model.select();
         }
     },
 
-    __toggle: function () {
+    __toggle() {
         this.$el.toggleClass(this.classes.checked, this.model.selected);
     },
 
-    __changeModelSelected: function () {
+    __changeModelSelected() {
         if (!this.enabled) {
             return;
         }
         this.model.select();
     },
 
-    setEnabled: function (enabled) {
+    setEnabled(enabled) {
         this.enabled = enabled;
     }
 });

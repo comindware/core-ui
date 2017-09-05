@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Developer: Stepan Burguchev
  * Date: 1/26/2015
  * Copyright: 2009-2016 Comindware®
@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 import LocalizationService from '../../services/LocalizationService';
@@ -19,10 +19,9 @@ formRepository.validators.length = function(options) {
     }, options);
 
     return function length(value) {
-
-        var val = _.isObject(value) ? value.value : value;
+        const val = _.isObject(value) ? value.value : value;
         options.value = val;
-        var err = {
+        const err = {
             type: options.type,
             message: _.isFunction(options.message) ? options.message(options) : options.message
         };

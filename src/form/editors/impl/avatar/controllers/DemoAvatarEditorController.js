@@ -8,12 +8,12 @@
 
 'use strict';
 
-import BaseAvatarEditorController from './BaseAvatarEditorController'
+import BaseAvatarEditorController from './BaseAvatarEditorController';
 
 export default BaseAvatarEditorController.extend({
     upload(file) {
-        // Demo request        
-        var form = new FormData();
+        // Demo request
+        const form = new FormData();
         form.append('file', file);
         
         this.__uploadOperation = Ajax.sendFormData('/dev/null', form).catch(() => {

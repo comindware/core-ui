@@ -6,12 +6,12 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 
 export default {
-    getFilterViewByType: function (type) {
+    getFilterViewByType(type) {
         return Marionette.ItemView.extend({
             template: Handlebars.compile('<div class="innerDiv">PopoutView</div>'),
             className: 'native-filter-popout'

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import ListPanelView from './ListPanelView';
 import MenuItemView from './MenuItemView';
@@ -23,7 +23,7 @@ import MenuItemView from './MenuItemView';
  * */
 
 export default ListPanelView.extend({
-    initialize: function (options) {
+    initialize(options) {
         ListPanelView.prototype.initialize.apply(this, _.toArray(arguments));
     },
 
@@ -31,7 +31,7 @@ export default ListPanelView.extend({
 
     childView: MenuItemView,
 
-    getChildView: function(model){
+    getChildView(model) {
         if (model.get('customView')) {
             return model.get('customView');
         }
@@ -39,10 +39,10 @@ export default ListPanelView.extend({
     },
 
     childEvents: {
-        'execute': '__execute'
+        execute: '__execute'
     },
 
-    __execute: function (child, model) {
+    __execute(child, model) {
         this.options.parent.close();
         this.options.parent.trigger('execute', model.id, model);
     }

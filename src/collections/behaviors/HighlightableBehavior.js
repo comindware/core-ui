@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import 'lib';
 
@@ -20,7 +20,7 @@ import 'lib';
  * @constructor
  * */
 
-let HighlightableBehavior = function () {
+const HighlightableBehavior = function() {
 };
 
 _.extend(HighlightableBehavior.prototype, /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
@@ -28,9 +28,8 @@ _.extend(HighlightableBehavior.prototype, /** @lends module:core.collection.beha
      * Подсветить заданный текст во всех моделях.
      * @param {String} text Текст, который необходимо подсветить.
      * */
-    highlight: function (text)
-    {
-        this.parentCollection.each(function (record) {
+    highlight(text) {
+        this.parentCollection.each(record => {
             if (record.highlight) {
                 record.highlight(text);
             }
@@ -40,9 +39,8 @@ _.extend(HighlightableBehavior.prototype, /** @lends module:core.collection.beha
     /**
      * Снять подсветку во всех моделях.
      * */
-    unhighlight: function ()
-    {
-        this.parentCollection.each(function (record) {
+    unhighlight() {
+        this.parentCollection.each(record => {
             if (record.unhighlight) {
                 record.unhighlight();
             }

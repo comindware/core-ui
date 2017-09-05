@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
@@ -19,7 +19,7 @@ export default Marionette.CompositeView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function() {
+    templateHelpers() {
         return {
             explicitApply: this.getOption('explicitApply')
         };
@@ -27,7 +27,7 @@ export default Marionette.CompositeView.extend({
 
     childView: MultiSelectItemView,
 
-    childViewOptions: function() {
+    childViewOptions() {
         return {
             displayAttribute: this.getOption('displayAttribute')
         };
@@ -49,24 +49,24 @@ export default Marionette.CompositeView.extend({
         'click @ui.close': '__close'
     },
 
-    onShow: function() {
+    onShow() {
         this.$el.focus();
     },
 
-    initialize: function(options) {
+    initialize(options) {
         helpers.ensureOption(options, 'model');
         this.collection = this.model.get('collection');
     },
 
-    __selectAll: function() {
+    __selectAll() {
         this.trigger('select:all');
     },
 
-    __apply: function() {
+    __apply() {
         this.trigger('apply');
     },
 
-    __close: function() {
+    __close() {
         this.trigger('close');
     }
 });

@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
@@ -14,7 +14,7 @@ import list from 'list';
 import template from '../templates/defaultDropdownListItem.hbs';
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.reqres = options.reqres;
     },
 
@@ -28,28 +28,28 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers: function () {
-        var model = this.model.toJSON();
-        var displayAttribute = this.options.displayAttribute;
+    templateHelpers() {
+        const model = this.model.toJSON();
+        const displayAttribute = this.options.displayAttribute;
         return {
             text: _.result(model, displayAttribute)
         };
     },
 
     events: {
-        'click': '__select'
+        click: '__select'
     },
 
-    onHighlighted: function (fragment) {
-        var text = htmlHelpers.highlightText(this.model.get(this.options.displayAttribute), fragment);
+    onHighlighted(fragment) {
+        const text = htmlHelpers.highlightText(this.model.get(this.options.displayAttribute), fragment);
         this.$el.html(text);
     },
 
-    onUnhighlighted: function () {
+    onUnhighlighted() {
         this.$el.html(this.model.get(this.options.displayAttribute));
     },
 
-    __select: function () {
+    __select() {
         this.reqres.request('value:set', this.model);
         return false;
     }

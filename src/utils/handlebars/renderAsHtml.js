@@ -8,7 +8,7 @@
 
 /* global module */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 
@@ -16,9 +16,9 @@ module.exports = function(text) {
     if (!text) {
         return '';
     }
-    var lines = text.split(/[\r\n]+/g);
-    var result = [];
-    _.each(lines, function (line) {
+    const lines = text.split(/[\r\n]+/g);
+    const result = [];
+    _.each(lines, line => {
         result.push(Handlebars.Utils.escapeExpression(line));
     });
     return result.join('<br>');

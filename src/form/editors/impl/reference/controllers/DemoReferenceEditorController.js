@@ -15,29 +15,29 @@ const config = {
     DEFAULT_COUNT: 200
 };
 
-let createDemoData = function () {
-    return _.times(1000, function (i) {
-        let id = `task.${i + 1}`;
+const createDemoData = function() {
+    return _.times(1000, i => {
+        const id = `task.${i + 1}`;
         return {
-            id: id,
+            id,
             text: `Test Reference ${i}`
         };
     });
 };
 
-let DemoReferenceCollections = Backbone.Collection.extend({
+const DemoReferenceCollections = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
 export default Marionette.Controller.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]));
     },
 
-    fetch: function (options) {
+    fetch(options) {
         options = options || {};
-        let promise = new Promise((resolve, reject) => {
-            setTimeout(function () {
+        const promise = new Promise((resolve, reject) => {
+            setTimeout(() => {
                 if (promise !== this.fetchPromise) {
                     reject();
                     return;
@@ -45,10 +45,10 @@ export default Marionette.Controller.extend({
 
                 this.collection.reset(createDemoData());
                 if (options.text) {
-                    let filterText = options.text.trim().toUpperCase();
+                    const filterText = options.text.trim().toUpperCase();
                     if (filterText) {
-                        this.collection.filter(function (model) {
-                            let text = model.get('text');
+                        this.collection.filter(model => {
+                            const text = model.get('text');
                             if (!text) {
                                 return false;
                             }
@@ -67,17 +67,17 @@ export default Marionette.Controller.extend({
                     totalCount: this.totalCount
                 });
                 this.fetchPromise = null;
-            }.bind(this), 1000);
+            }, 1000);
         });
         this.fetchPromise = promise;
         return promise;
     },
 
-    createValueUrl (value) {
+    createValueUrl(value) {
         return `#example/${value.id}`;
     },
 
-    edit: function (value) {
+    edit(value) {
         alert(`You could edit ${value.id} here.`);
         return true;
     }

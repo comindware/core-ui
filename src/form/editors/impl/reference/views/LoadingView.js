@@ -6,13 +6,13 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/loading.hbs';
 
 export default Marionette.ItemView.extend({
-    initialize: function () {
+    initialize() {
     },
 
     className: 'l-loader',

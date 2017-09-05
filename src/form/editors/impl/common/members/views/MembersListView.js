@@ -12,7 +12,7 @@ import list from 'list';
 import template from '../templates/panel.hbs';
 import ListItemView from './MembersListItemView';
 
-let config = {
+const config = {
     CHILD_HEIGHT: 34
 };
 
@@ -21,7 +21,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize: function (options) {
+    initialize(options) {
         helpers.ensureOption(options, 'collection');
     },
 
@@ -34,7 +34,7 @@ export default Marionette.LayoutView.extend({
         scrollbarRegion: '.js-scrollbar-region'
     },
 
-    onShow: function () {
+    onShow() {
         this.listBundle = list.factory.createDefaultList({
             collection: this.collection,
             listViewOptions: {
@@ -51,22 +51,22 @@ export default Marionette.LayoutView.extend({
             }
         });
 
-        this.listenTo(this.listBundle.listView, 'childview:member:select', function (view, model) {
+        this.listenTo(this.listBundle.listView, 'childview:member:select', (view, model) => {
             this.trigger('member:select', model);
-        }.bind(this));
+        });
 
         this.listRegion.show(this.listBundle.listView);
         this.scrollbarRegion.show(this.listBundle.scrollbarView);
     },
 
-    handleCommand: function(command, options) {
+    handleCommand(command, options) {
         switch (command) {
-        case 'up':
-            this.listBundle.listView.moveCursorBy(-1, false);
-            break;
-        case 'down':
-            this.listBundle.listView.moveCursorBy(1, false);
-            break;
+            case 'up':
+                this.listBundle.listView.moveCursorBy(-1, false);
+                break;
+            case 'down':
+                this.listBundle.listView.moveCursorBy(1, false);
+                break;
         }
     }
 });

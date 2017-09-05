@@ -24,7 +24,7 @@ const classes = {
     EMPTY: 'editor_empty'
 };
 
-let onRender = function () {
+const onRender = function() {
     if (this.id) {
         this.$el.attr('id', this.id);
     }
@@ -40,7 +40,7 @@ let onRender = function () {
     this.__updateEmpty();
 };
 
-let onChange = function () {
+const onChange = function() {
     if (this.model && this.schema.autocommit) {
         this.commit();
     }
@@ -94,7 +94,7 @@ let onChange = function () {
  * */
 
 export default {
-    create: function(viewClass) {
+    create(viewClass) {
         return /** @lends module:core.form.editors.base.BaseEditorView.prototype */ {
             defaultValue: null,
 
@@ -103,7 +103,7 @@ export default {
              * */
             hasFocus: false,
 
-            constructor: function (options) {
+            constructor(options) {
                 options = options || {};
 
                 _.bindAll(this, 'onFocus', 'onBlur');
@@ -127,7 +127,7 @@ export default {
                 //Store important data
                 _.extend(this, _.pick(options, 'key', 'form'));
 
-                let schema = this.schema = options.schema || {};
+                const schema = this.schema = options.schema || {};
 
                 this.validators = options.validators || schema.validators;
                 this.__validatedOnce = false;
@@ -158,7 +158,7 @@ export default {
                 this.classes = classes;
             },
 
-            __updateEmpty () {
+            __updateEmpty() {
                 this.$el.toggleClass(classes.EMPTY, this.isEmptyValue());
             },
 
@@ -166,7 +166,7 @@ export default {
              * Manually updated editor's internal value with the value from <code>this.model.get(this.key)</code>.
              * Shouldn't be called normally. The method is called internally on model's <code>change</code> event.
              * */
-            updateValue: function () {
+            updateValue() {
                 this.setValue(this.getModelValue());
             },
 
@@ -174,18 +174,18 @@ export default {
              * Retrieves actual value of the bound attribute from the model.
              * @return {*}
              * */
-            getModelValue: function () {
+            getModelValue() {
                 return !this.model ? undefined : this.model.get(this.key);
             },
 
-            __getFocusElement: function () {
+            __getFocusElement() {
                 if (this.focusElement) {
                     return this.$el.find(this.focusElement);
                 }
                 return this.$el;
             },
 
-            __triggerChange: function (...args) {
+            __triggerChange(...args) {
                 this.trigger('change', this, ...args);
             },
 
@@ -193,7 +193,7 @@ export default {
              * Returns internal editor's value.
              * @return {*}
              */
-            getValue: function() {
+            getValue() {
                 return this.value;
             },
 
@@ -201,12 +201,11 @@ export default {
              * Sets new internal editor's value.
              * @param {*} value The new value.
              */
-            setValue: function(value) {
-
+            setValue(value) {
                 this.value = value;
             },
 
-            setPermissions: function (enabled, readonly) {
+            setPermissions(enabled, readonly) {
                 this.__setEnabled(enabled);
                 this.__setReadonly(readonly);
             },
@@ -216,8 +215,8 @@ export default {
              * It's implied that the value doesn't make sense.
              * @param {Boolean} enabled New flag value.
              */
-            setEnabled: function (enabled) {
-                let readonly = this.getReadonly();
+            setEnabled(enabled) {
+                const readonly = this.getReadonly();
                 this.setPermissions(enabled, readonly);
             },
 
@@ -225,12 +224,12 @@ export default {
              * Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.
              * @param {Boolean} readonly New flag value.
              */
-            setReadonly: function (readonly) {
-                let enabled = this.getEnabled();
+            setReadonly(readonly) {
+                const enabled = this.getEnabled();
                 this.setPermissions(enabled, readonly);
             },
 
-            __setEnabled: function (enabled) {
+            __setEnabled(enabled) {
                 this.enabled = enabled;
                 this.trigger('enabled', enabled);
                 if (!this.enabled) {
@@ -244,11 +243,11 @@ export default {
              * Returns the value of `enabled` flag.
              * @return {Boolean}
              */
-            getEnabled: function () {
+            getEnabled() {
                 return this.enabled;
             },
 
-            __setReadonly: function (readonly) {
+            __setReadonly(readonly) {
                 this.readonly = readonly;
                 this.trigger('readonly', readonly);
                 if (this.readonly && this.getEnabled()) {
@@ -262,14 +261,14 @@ export default {
              * Returns the value of `readonly` flag.
              * @return {Boolean}
              */
-            getReadonly: function () {
+            getReadonly() {
                 return this.readonly;
             },
 
             /**
              * Sets the focus onto this editor.
              */
-            focus: function() {
+            focus() {
                 this.__getFocusElement().focus();
                 this.hasFocus = true;
             },
@@ -277,7 +276,7 @@ export default {
             /**
              * Clears the focus.
              */
-            blur: function() {
+            blur() {
                 this.__getFocusElement().blur();
                 this.hasFocus = false;
             },
@@ -289,14 +288,14 @@ export default {
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails
              * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
              */
-            commit: function (options) {
+            commit(options) {
                 options = options || {};
-                var error = this.validate(true);
+                let error = this.validate(true);
                 if (error && !this.schema.forceCommit) {
                     return error;
                 }
 
-                this.listenToOnce(this.model, 'invalid', function(model, e) {
+                this.listenToOnce(this.model, 'invalid', (model, e) => {
                     error = e;
                 });
 
@@ -312,7 +311,7 @@ export default {
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
             },
 
-            isEmptyValue: function () {
+            isEmptyValue() {
                 return !this.getValue();
             },
 
@@ -320,12 +319,12 @@ export default {
              * Check validity with built-in validator functions (initially passed into constructor options).
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
              */
-            validate: function(internal) {
+            validate(internal) {
                 let error = null;
-                let value = this.getValue();
-                let formValues = this.form ? this.form.getValue() : {};
-                let validators = this.validators;
-                let getValidator = this.getValidator;
+                const value = this.getValue();
+                const formValues = this.form ? this.form.getValue() : {};
+                const validators = this.validators;
+                const getValidator = this.getValidator;
 
                 if (!internal) {
                     this.__validatedOnce = true;
@@ -333,7 +332,7 @@ export default {
 
                 if (validators) {
                     //Run through validators until an error is found
-                    _.every(validators, function(validator) {
+                    _.every(validators, validator => {
                         error = getValidator(validator)(value, formValues);
                         return !error;
                     });
@@ -342,7 +341,7 @@ export default {
                 return error;
             },
 
-            trigger: function(event) {
+            trigger(event) {
                 if (event === 'focus') {
                     this.hasFocus = true;
                 } else if (event === 'blur') {
@@ -352,8 +351,8 @@ export default {
                 return Marionette.ItemView.prototype.trigger.apply(this, arguments);
             },
 
-            getValidator: function(validator) {
-                let validators = formRepository.validators;
+            getValidator(validator) {
+                const validators = formRepository.validators;
 
                 //Convert regular expressions to validators
                 if (_.isRegExp(validator)) {
@@ -377,7 +376,7 @@ export default {
                 //Use a customised built-in validator if given an object
                 //noinspection JSUnresolvedVariable
                 if (_.isObject(validator) && validator.type) {
-                    let config = validator;
+                    const config = validator;
 
                     //noinspection JSUnresolvedVariable
                     return validators[config.type](config);
@@ -387,12 +386,12 @@ export default {
                 throw new Error(`Invalid validator: ${validator}`);
             },
 
-            onFocus: function () {
+            onFocus() {
                 this.$el.addClass(classes.FOCUSED);
                 this.trigger('focus', this);
             },
 
-            onBlur: function () {
+            onBlur() {
                 this.$el.removeClass(classes.FOCUSED);
                 this.trigger('blur', this);
             }

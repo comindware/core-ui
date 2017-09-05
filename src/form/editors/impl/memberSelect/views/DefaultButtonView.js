@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-"use strict";
+'use strict';
 
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
@@ -16,7 +16,7 @@ const classes = {
 };
 
 export default Marionette.ItemView.extend({
-    initialize: function (options) {
+    initialize(options) {
         this.enabled = options.enabled;
         this.reqres = options.reqres;
         this.options.template = Handlebars.compile(options.template || template);
@@ -39,27 +39,27 @@ export default Marionette.ItemView.extend({
     events: {
         'click @ui.clearButton': '__clear',
         'click @ui.text': '__navigate',
-        'click': '__click'
+        click: '__click'
     },
 
-    __click: function () {
+    __click() {
         this.reqres.request('panel:open');
     },
 
-    __clear: function () {
+    __clear() {
         this.reqres.request('value:clear');
         return false;
     },
 
-    __navigate: function () {
-        var member = this.model.get('member');
+    __navigate() {
+        const member = this.model.get('member');
         if (member) {
             this.reqres.request('value:navigate', member.id);
             return false;
         }
     },
 
-    updateEnabled: function () {
+    updateEnabled() {
         if (this.model.get('enabled')) {
             this.ui.clearButton.show();
         } else {
@@ -72,12 +72,12 @@ export default Marionette.ItemView.extend({
         'change:enabled': 'updateEnabled'
     },
 
-    changeMember: function() {
+    changeMember() {
         this.render();
         this.onRender();
     },
 
-    onRender: function () {
+    onRender() {
         this.updateEnabled();
     }
 });
