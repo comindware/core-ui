@@ -35,7 +35,6 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers() {
-        const value = this.model.get('value');
         return {
             text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton

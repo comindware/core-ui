@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';

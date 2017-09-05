@@ -23410,7 +23410,6 @@ exports.default = Marionette.LayoutView.extend({
     template: _lib.Handlebars.compile(_referencePanel2.default),
 
     templateHelpers: function templateHelpers() {
-        var value = this.model.get('value');
         return {
             text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton
@@ -81153,14 +81152,6 @@ module.exports = "<div class=\"js-dropdown-region\"></div>";
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Developer: Grigory Kuznetsov
- * Date: 07/16/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -81218,17 +81209,26 @@ var defaultOptions = {
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
+/**
+ * Developer: Grigory Kuznetsov
+ * Date: 07/16/2015
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
 _formRepository2.default.editors.DateTime = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.DateTimeEditorView.prototype */{
-    initialize: function initialize(options) {
-        options = options || {};
+    initialize: function initialize() {
+        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
 
-        var readonly = this.getReadonly(),
-            enabled = this.getEnabled();
+        var readonly = this.getReadonly();
+        var enabled = this.getEnabled();
 
         this.value = this.__adjustValue(this.value);
 
@@ -82239,14 +82239,6 @@ module.exports = "{{displayValue}}\n<div class=\"svg-icons-wrp\">\n    <div clas
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Developer: Oleg Verevkin
- * Date: 02/19/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -82291,6 +82283,15 @@ var defaultOptions = {
  * @param {BaseAvatarEditorController} options.controller - Data provider controller in the form of subclass of
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
+
+/**
+ * Developer: Oleg Verevkin
+ * Date: 02/19/2016
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
 _formRepository2.default.editors.Avatar = _BaseItemEditorView2.default.extend({
     className: 'user-avatar-wrp',
 
@@ -82925,14 +82926,6 @@ exports.default = _formRepository2.default.validators.required;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -82978,7 +82971,13 @@ _formRepository2.default.validators.length = function (options) {
             }
         }
     };
-};
+}; /**
+    * Developer: Stepan Burguchev
+    * Date: 1/26/2015
+    * Copyright: 2009-2016 Comindware®
+    *       All Rights Reserved
+    * Published under the MIT license
+    */
 
 exports.default = _formRepository2.default.validators.length;
 

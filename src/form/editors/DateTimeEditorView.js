@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import { Handlebars, moment, $ } from 'lib';
+import { Handlebars, moment } from 'lib';
 import template from './templates/dateTimeEditor.hbs';
 import DateTimeService from './services/DateTimeService';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -40,16 +38,15 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
-    initialize(options) {
-        options = options || {};
+    initialize(options = {}) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
             _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
         }
 
-        let readonly = this.getReadonly(),
-            enabled = this.getEnabled();
+        const readonly = this.getReadonly();
+        const enabled = this.getEnabled();
 
         this.value = this.__adjustValue(this.value);
 
