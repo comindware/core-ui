@@ -9,6 +9,8 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pathResolver = require('./pathResolver');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 
 const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
@@ -48,13 +50,12 @@ module.exports = options => {
                         loader: 'postcss-loader',
                         options: {
                             sourceMap: true,
-                            config: {
-                                ctx: {
-                                    autoprefixer: {
-                                        browsers: ['last 2 versions']
-                                    }
-                                }
-                            }
+                            plugins: () => [
+                                autoprefixer({
+                                    browsers: ['last 2 versions']
+                                }),
+                                cssnano()
+                            ]
                         }
                     }]
                 })
@@ -66,37 +67,70 @@ module.exports = options => {
                 loader: 'html-loader'
             }, {
                 test: /\.woff(\?.*)?$/,
-                loader: `url-loader?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=application/font-woff`
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-woff'
+                }
             }, {
                 test: /\.woff2(\?.*)?$/,
-                loader: `url-loader?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=application/font-woff2`
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-woff2'
+                }
             }, {
                 test: /\.otf(\?.*)?$/,
-                loader: `file-loader?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=font/opentype`
-            }, {
-                test: /\.ttf(\?.*)?$/,
-                loader: `url-loader?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=application/octet-stream`
-            }, {
-                test: /\.eot(\?.*)?$/,
-                loader: 'file-loader?prefix=fonts/&name=[path][name].[ext]'
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'font/opentype'
+                }
             }, {
                 test: /\.svg(\?.*)?$/,
-                loader: `url-loader?prefix=fonts/&name=[path][name].[ext]&limit=${GRAPHICS_LIMIT}&mimetype=image/svg+xml`
+                loader: '`url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: GRAPHICS_LIMIT,
+                    mimetype: 'image/svg+xml'
+                }
             }, {
                 test: /\.(png|jpg)$/,
-                loader: `url-loader?limit=${GRAPHICS_LIMIT}`
+                loader: 'url-loader',
+                options: {
+                    limit: GRAPHICS_LIMIT,
+                }
             }, {
                 test: /jquery-autosize/,
-                loader: 'imports-loader?jquery'
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
             }, {
                 test: /rangyinputs/,
-                loader: 'imports-loader?jquery'
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
             }, {
                 test: /jquery\.inputmask/,
-                loader: 'imports-loader?jquery'
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
             }, {
                 test: /bootstrap-datetime-picker/,
-                loader: 'imports-loader?jquery'
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
             }, {
                 test: /backbone\.marionette\.js/,
                 use: [{
@@ -191,8 +225,7 @@ module.exports = options => {
             webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
                 uglifyOptions: {
                     compress: {
-                        warnings: true,
-                        dead_code: true
+                        warnings: true
                     },
                 },
                 output: {
