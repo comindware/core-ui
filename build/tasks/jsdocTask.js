@@ -9,14 +9,8 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const gulp = require('gulp');
 const babel = require('gulp-babel');
-
-const pathResolver = require('../pathResolver');
 
 module.exports = () => {
     const jsdoc = require('gulp-jsdoc');

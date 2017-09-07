@@ -9,18 +9,14 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
-const exec = require('child_process').exec;
 const fs = require('fs');
+const exec = require('child_process').exec;
 
 const pathResolver = require('../pathResolver');
 
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
-module.exports = callback => {
+module.exports = () => {
     exec('git tag --contains HEAD', (err, stdout, stderr) => {
         if (err) {
             console.error(err);

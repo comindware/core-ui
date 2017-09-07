@@ -9,14 +9,8 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}], no-new-func: 0 */
-
-'use strict';
-
-const exec = require('child_process').exec;
 const fs = require('fs');
-const mkdirp = require('mkdirp');
-const del = require('del');
+const exec = require('child_process').exec;
 
 const pathResolver = require('../pathResolver');
 
@@ -33,7 +27,11 @@ module.exports = callback => {
     const localizationCommand = `${localizerBin} --export js --source "${localizationSource}" --destination "${localizationDestination}"` +
         ` -r ${localizationResources} --languages en ru de`;
 
-    mkdirp.sync(pathResolver.compiled('localization/temp'));
+    !fs.existsSync(pathResolver.compiled()) && fs.mkdirSync(pathResolver.compiled());
+    !fs.existsSync(pathResolver.compiled('localization')) && fs.mkdirSync(pathResolver.compiled('localization'));
+    if (!fs.existsSync(pathResolver.compiled('localization/temp'))) {
+        fs.mkdirSync(pathResolver.compiled('localization/temp'));
+    }
 
     try {
         exec(localizationCommand, (err, stdout, stderr) => {
@@ -53,7 +51,21 @@ module.exports = callback => {
                 const data = (new Function(fileContent))(); // jshint ignore:line
                 fs.writeFileSync(pathResolver.compiled(`localization/localization.${langCode}.json`), JSON.stringify(data), 'utf8');
             });
-            del.sync([pathResolver.compiled('localization/temp/**')], { force: true });
+
+            const deleteFolderRecursive = path => {
+                if (fs.existsSync(path)) {
+                    fs.readdirSync(path).forEach(file => {
+                        const curPath = `${path}/${file}`;
+                        if (fs.lstatSync(curPath).isDirectory()) {
+                            deleteFolderRecursive(curPath);
+                        } else {
+                            fs.unlinkSync(curPath);
+                        }
+                    });
+                    fs.rmdirSync(path);
+                }
+            };
+            deleteFolderRecursive(pathResolver.compiled('localization/temp/'));
 
             callback(err);
         });

@@ -9,10 +9,6 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const webpackConfigFactory = require('../webpack.config.js');
 const webpack = require('webpack');
 const gulpUtil = require('gulp-util');

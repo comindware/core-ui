@@ -6,10 +6,6 @@
  * Published under the MIT license
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const gulp = require('gulp');
 const path = require('path');
 const svgstore = require('gulp-svgstore');

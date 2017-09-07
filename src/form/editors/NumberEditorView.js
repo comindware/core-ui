@@ -202,7 +202,6 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     __keydown(event) {
         this.__start();
-        const options = this.options;
 
         switch (event.keyCode) {
             case keyCode.UP:
@@ -278,7 +277,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
                 }
                 if (this.options.format) {
                     formattedValue = numeral(value).format(this.options.format);
-                    value = numeral().unformat(formattedValue);
+                    value = numeral._.stringToNumber(formattedValue);
                 }
             } else {
                 return;
@@ -309,10 +308,10 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     __parse(val) {
         if (typeof val === 'string' && val !== '') {
-            if (numeral.languageData().delimiters.decimal !== '.') {
-                val = val.replace('.', numeral.languageData().delimiters.decimal);
+            if (numeral.localeData().delimiters.decimal !== '.') {
+                val = val.replace('.', numeral.localeData().delimiters.decimal);
             }
-            val = numeral().unformat(val);
+            val = numeral._.stringToNumber(val);
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;
             } else if (val === Number.NEGATIVE_INFINITY) {

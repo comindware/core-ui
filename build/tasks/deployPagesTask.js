@@ -9,9 +9,8 @@
  *       actual or intended publication of such source code.
  */
 
+const fs = require('fs');
 const execSync = require('child_process').execSync;
-const fs = require('fs-extra');
-const mkdirp = require('mkdirp');
 
 const pathResolver = require('../pathResolver');
 
@@ -37,7 +36,7 @@ module.exports = () => {
 
     const pagesDir = pathResolver.pages();
     const pagesResolver = pathResolver.createResolver(pagesDir);
-    mkdirp.sync(pagesDir);
+    !fs.existsSync(pagesResolver) && fs.mkdirSync(pagesResolver);
     run('git init', pagesDir);
     run('git config user.name "Travis-CI"', pagesDir);
     run('git config user.email "me@sburg.net"', pagesDir);
