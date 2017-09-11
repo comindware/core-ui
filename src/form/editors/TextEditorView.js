@@ -82,7 +82,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
 
     templateHelpers() {
         return _.extend(this.options, {
-            title: this.model.get('value') ? this.model.get('value') : ''
+            title: this.value || ''
         });
     },
 
