@@ -89,6 +89,6 @@ gulp.task('start', callback =>
 
 gulp.task('build', callback => runSequence('clean', 'localization', 'generateSprites', ['build:core:prod', 'build:core:prod:min', 'jsdoc'], callback));
 
-gulp.task('deploy', callback => runSequence('build', 'test:coverage', 'prepareToPublish', callback));
+gulp.task('deploy', callback => runSequence('prepareToPublish', 'build', 'test:coverage', callback));
 
 gulp.task('default', ['start']);
