@@ -9,15 +9,10 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import NavBarItemView from './NavBarItemView';
 
-define([
-    './NavBarItemView'
-], function (NavBarItemView) {
-    'use strict';
-    return Marionette.CollectionView.extend({
-        className: 'demo-nav',
-        
-        childView: NavBarItemView
-    });
+export default Marionette.CollectionView.extend({
+    className: 'demo-nav',
+
+    childView: NavBarItemView
 });

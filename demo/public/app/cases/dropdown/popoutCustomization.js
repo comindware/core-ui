@@ -1,27 +1,26 @@
-define([
-    'comindware/core', 'demoPage/views/CanvasView', 'demoPage/views/DemoProfilePanelView'
-], (core, CanvasView, DemoProfilePanelView) => {
-    'use strict';
 
-    return function() {
-        const DemoButtonView = Marionette.ItemView.extend({
-            template() {
-                return Handlebars.compile('Demo Button');
-            },
-            tagName: 'span'
-        });
+import core from 'comindware/core';
+import CanvasView from 'demoPage/views/CanvasView';
+import DemoProfilePanelView from 'demoPage/views/DemoProfilePanelView';
 
-        const popout = core.dropdown.factory.createPopout({
-            buttonView: DemoButtonView,
-            panelView: DemoProfilePanelView,
-            popoutFlow: 'right'
-        });
+export default function() {
+    const DemoButtonView = Marionette.ItemView.extend({
+        template() {
+            return Handlebars.compile('Demo Button');
+        },
+        tagName: 'span'
+    });
 
-        return new CanvasView({
-            view: popout,
-            canvas: {
-                height: '30px'
-            }
-        });
-    };
-});
+    const popout = core.dropdown.factory.createPopout({
+        buttonView: DemoButtonView,
+        panelView: DemoProfilePanelView,
+        popoutFlow: 'right'
+    });
+
+    return new CanvasView({
+        view: popout,
+        canvas: {
+            height: '30px'
+        }
+    });
+}

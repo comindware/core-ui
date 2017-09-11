@@ -9,29 +9,20 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import template from 'text-loader!../templates/groupItem.html';
 
-define([
-    'comindware/core',
-    'text!../templates/groupItem.html'
-],
-(core, template) => {
-    'use strict';
+const classes = {
+    selected: 'selected'
+};
 
-    const classes = {
-        selected: 'selected'
-    };
+export default Marionette.ItemView.extend({
+    template: Handlebars.compile(template),
 
-    return Marionette.ItemView.extend({
+    tagName: 'li',
 
-        template: Handlebars.compile(template),
+    onRender() {
+        this.$el.toggleClass(classes.selected, !!this.model.selected);
+    },
 
-        tagName: 'li',
-
-        onRender() {
-            this.$el.toggleClass(classes.selected, !!this.model.selected);
-        },
-
-        className: 'demo-groups__li'
-    });
+    className: 'demo-groups__li'
 });

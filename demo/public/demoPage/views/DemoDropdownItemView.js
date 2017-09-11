@@ -9,17 +9,10 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import template from 'text-loader!../templates/demoDropdownItem.html';
 
-define([
-    'comindware/core',
-    'text!../templates/demoDropdownItem.html'
-], (core, template) => {
-    'use strict';
+export default Marionette.ItemView.extend({
+    template: Handlebars.compile(template),
 
-    return Marionette.ItemView.extend({
-        template: Handlebars.compile(template),
-
-        className: 'dropdown-list__i'
-    });
+    className: 'dropdown-list__i'
 });

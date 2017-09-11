@@ -1,25 +1,25 @@
-define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], (core, EditorCanvasView) => {
-    'use strict';
 
-    return function() {
-        const possibleItems = _.times(200, n => ({
-            id: n + 1,
-            text: `Text ${n + 1}`
-        }));
+import core from 'comindware/core';
+import EditorCanvasView from 'demoPage/views/EditorCanvasView';
 
-        const model = new Backbone.Model({
-            dropdownValue: 42
-        });
+export default function() {
+    const possibleItems = _.times(200, n => ({
+        id: n + 1,
+        text: `Text ${n + 1}`
+    }));
 
-        return new EditorCanvasView({
-            editor: new core.form.editors.DropdownEditor({
-                model,
-                key: 'dropdownValue',
-                autocommit: true,
-                collection: new Backbone.Collection(possibleItems),
-                enableSearch: true
-            }),
-            presentation: '{{dropdownValue}}'
-        });
-    };
-});
+    const model = new Backbone.Model({
+        dropdownValue: 42
+    });
+
+    return new EditorCanvasView({
+        editor: new core.form.editors.DropdownEditor({
+            model,
+            key: 'dropdownValue',
+            autocommit: true,
+            collection: new Backbone.Collection(possibleItems),
+            enableSearch: true
+        }),
+        presentation: '{{dropdownValue}}'
+    });
+}

@@ -11,7 +11,7 @@
 
 import core from 'comindware/core';
 
-return Backbone.Model.extend({
+export default Backbone.Model.extend({
     initialize() {
         _.extend(this, new core.models.behaviors.SelectableBehavior.Selectable(this));
     }

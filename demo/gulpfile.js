@@ -34,7 +34,7 @@ gulp.task('clear', () => {
 });
 
 gulp.task('start', () => {
-    const webpackConfig = webpackConfigFactory.build({
+    const webpackConfig = webpackConfigFactory({
         env: 'development'
     });
     const compiler = webpack(webpackConfig);
@@ -61,7 +61,7 @@ gulp.task('start', () => {
 });
 
 gulp.task('build', ['clear'], callback => {
-    const webpackConfig = webpackConfigFactory.build({
+    const webpackConfig = webpackConfigFactory({
         env: 'production'
     });
     webpack(webpackConfig, (err, stats) => {

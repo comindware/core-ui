@@ -9,37 +9,31 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import core from 'comindware/core';
+import template from 'text-loader!../templates/canvas.html';
 
-define([
-    'comindware/core',
-    'text!../templates/canvas.html'
-], (core, template) => {
-    'use strict';
+export default Marionette.LayoutView.extend({
+    initialize(options) {
+        core.utils.helpers.ensureOption(options, 'view');
+    },
 
-    return Marionette.LayoutView.extend({
-        initialize(options) {
-            core.utils.helpers.ensureOption(options, 'view');
-        },
+    template: Handlebars.compile(template),
 
-        template: Handlebars.compile(template),
+    regions: {
+        view: '.js-view-region'
+    },
 
-        regions: {
-            view: '.js-view-region'
-        },
-
-        onShow() {
-            if (this.options.canvas) {
-                this.$el.css(this.options.canvas);
-            }
-
-            if (this.options.region) {
-                this.listenTo(this.view, 'before:show', () => {
-                    this.view.$el.css(this.options.region);
-                });
-            }
-
-            this.view.show(this.options.view);
+    onShow() {
+        if (this.options.canvas) {
+            this.$el.css(this.options.canvas);
         }
-    });
+
+        if (this.options.region) {
+            this.listenTo(this.view, 'before:show', () => {
+                this.view.$el.css(this.options.region);
+            });
+        }
+
+        this.view.show(this.options.view);
+    }
 });

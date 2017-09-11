@@ -1,21 +1,21 @@
-define(['comindware/core', 'demoPage/views/EditorCanvasView'], (core, EditorCanvasView) => {
-    'use strict';
+﻿
+import core from 'comindware/core';
+import EditorCanvasView from 'demoPage/views/EditorCanvasView';
 
-    return function() {
-        const model = new Backbone.Model({
-            textValue: 'FAX7'
-        });
+export default function() {
+    const model = new Backbone.Model({
+        textValue: 'FAX7'
+    });
 
-        return new EditorCanvasView({
-            editor: new core.form.editors.TextEditor({
-                model,
-                key: 'textValue',
-                changeMode: 'keydown',
-                autocommit: true,
-                mask: 'aa*: +9(999)999-9999',
-                maskPlaceholder: '_'
-            }),
-            presentation: "{{#isNull textValue}}null{{else}}'{{textValue}}'{{/isNull}}"
-        });
-    };
-});
+    return new EditorCanvasView({
+        editor: new core.form.editors.TextEditor({
+            model,
+            key: 'textValue',
+            changeMode: 'keydown',
+            autocommit: true,
+            mask: 'aa*: +9(999)999-9999',
+            maskPlaceholder: '_'
+        }),
+        presentation: "{{#isNull textValue}}null{{else}}'{{textValue}}'{{/isNull}}"
+    });
+}

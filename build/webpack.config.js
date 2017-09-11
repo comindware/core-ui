@@ -18,7 +18,6 @@ const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
 
 module.exports = options => {
-    const DEVELOPMENT = options.env === 'development';
     const PRODUCTION = options.env === 'production';
     const TEST_COVERAGE = options.env === 'test-coverage';
     const TEST = options.env === 'test' || TEST_COVERAGE;
@@ -32,15 +31,6 @@ module.exports = options => {
         devtool: TEST ? 'inline-source-map' : 'source-map',
         module: {
             rules: [{
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components|src\/external\/)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['latest'],
-                    cacheDirectory: true,
-                    plugins: []
-                }
-            }, {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
