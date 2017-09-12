@@ -48,8 +48,7 @@ const defaultOptions = function() {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
-    initialize(options) {
-        options = options || {};
+    initialize(options = {}) {
         const defaults = defaultOptions();
         if (options.schema) {
             _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));

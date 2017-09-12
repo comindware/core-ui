@@ -18,16 +18,21 @@ module.exports = {
         'it': true,
         'beforeEach': true,
         'afterEach': true,
-        'codemirror': true
+        'moment': true,
+        'numeral': true,
+        'arguments': true,
+        'CKEDITOR': true,
+        'Context': true,
+        'Core': true
     },
     'rules': {
-        'new-cap': ['error', { 'newIsCap': true, 'capIsNew': false }],
+        'new-cap': ['off', { 'newIsCap': true, 'capIsNew': false }],
         'quote-props': ['error', 'as-needed'],
-        'no-console': 1,
+        'no-console': ['off'],
         'arrow-parens': ["error", "as-needed"],
         'global-require': 'error',
         'no-param-reassign': ['error', { 'props': false }],
-        'no-underscore-dangle': ['error', { 'allowAfterThis': true, 'allowAfterSuper': true }],
+        //'no-underscore-dangle': ['error', { 'allowAfterThis': true, 'allowAfterSuper': true }],
         'linebreak-style': 'off',
         'indent': [2, 4, { 'SwitchCase': 1, 'VariableDeclarator': 1 }],
         'prefer-arrow-callback': 'error',
@@ -67,7 +72,7 @@ module.exports = {
         complexity: ['off', 11],
         // enforce that class methods use "this"
         // http://eslint.org/docs/rules/class-methods-use-this
-        'class-methods-use-this': ['error', {
+        'class-methods-use-this': ['off', {
             exceptMethods: [],
         }],
         // specify curly brace conventions for all control statements
@@ -85,7 +90,7 @@ module.exports = {
         // make sure for-in loops have an if statement
         'guard-for-in': 'error',
         // disallow the use of alert, confirm, and prompt
-        'no-alert': 'warn',
+        'no-alert': 'error',
         // disallow use of arguments.caller or arguments.callee
         'no-caller': 'error',
         // disallow lexical declarations in case/default clauses
@@ -120,7 +125,7 @@ module.exports = {
         // http://eslint.org/docs/rules/no-extra-label
         'no-extra-label': 'error',
         // disallow fallthrough of case statements
-        'no-fallthrough': 'error',
+        'no-fallthrough': 'off',
         // disallow reassignments of native objects or read-only globals
         // http://eslint.org/docs/rules/no-global-assign
         'no-global-assign': ['error', { exceptions: [] }],
@@ -201,8 +206,8 @@ module.exports = {
         'no-unmodified-loop-condition': 'off',
         // disallow usage of expressions in statement position
         'no-unused-expressions': ['error', {
-            allowShortCircuit: false,
-            allowTernary: false,
+            allowShortCircuit: true,
+            allowTernary: true,
             allowTaggedTemplates: false,
         }],
         // disallow unused labels
@@ -215,7 +220,7 @@ module.exports = {
         'no-useless-concat': 'error',
         // disallow unnecessary string escaping
         // http://eslint.org/docs/rules/no-useless-escape
-        'no-useless-escape': 'error',
+        'no-useless-escape': 'off',
         // disallow redundant return; keywords
         // http://eslint.org/docs/rules/no-useless-return
         'no-useless-return': 'error',
@@ -233,11 +238,11 @@ module.exports = {
         // require or disallow Yoda conditions
         yoda: 'error',
         // disallow use of constant expressions in conditions
-        'no-constant-condition': 'warn',
+        'no-constant-condition': 'off',
         // disallow control characters in regular expressions
         'no-control-regex': 'error',
         // disallow use of debugger
-        'no-debugger': 'error',
+        'no-debugger': 'warn',
         // disallow duplicate arguments in functions
         'no-dupe-args': 'error',
         // disallow duplicate keys when creating object literals
@@ -426,7 +431,7 @@ module.exports = {
         // enforce one true brace style
         'brace-style': ['error', '1tbs', { allowSingleLine: true }],
         // require camel case names
-        camelcase: ['error', { properties: 'always' }],
+        camelcase: ['off', { properties: 'always' }],
         // enforce or disallow capitalization of the first letter of a comment
         // http://eslint.org/docs/rules/capitalized-comments
         'capitalized-comments': ['off', 'never', {
@@ -524,7 +529,7 @@ module.exports = {
         'no-array-constructor': 'error',
         // disallow use of bitwise operators
         // http://eslint.org/docs/rules/no-bitwise
-        'no-bitwise': 'error',
+        'no-bitwise': 'off',
         // disallow comments inline after code
         'no-inline-comments': 'off',
         // disallow if as the only statement in an else block
@@ -534,26 +539,24 @@ module.exports = {
         // http://eslint.org/docs/rules/no-mixed-operators
         'no-mixed-operators': ['error', {
             groups: [
-                ['+', '-', '*', '/', '%', '**'],
                 ['&', '|', '^', '~', '<<', '>>', '>>>'],
                 ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
                 ['&&', '||'],
                 ['in', 'instanceof']
-            ],
-            allowSamePrecedence: false
+            ]
         }],
         // disallow mixed spaces and tabs for indentation
         'no-mixed-spaces-and-tabs': 'error',
         // disallow use of chained assignment expressions
         // http://eslint.org/docs/rules/no-multi-assign
-        'no-multi-assign': ['error'],
+        'no-multi-assign': 'off',
         // disallow multiple empty lines and only one newline at the end
         'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
         // disallow negated conditions
         // http://eslint.org/docs/rules/no-negated-condition
         'no-negated-condition': 'off',
         // disallow nested ternary expressions
-        'no-nested-ternary': 'error',
+        'no-nested-ternary': 'off',
         // disallow use of the Object constructor
         'no-new-object': 'error',
         // disallow certain syntax forms

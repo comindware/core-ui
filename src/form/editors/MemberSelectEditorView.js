@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, keypress } from 'lib';
 import { helpers, comparators } from 'utils';
 import dropdown from 'dropdown';
@@ -112,13 +110,13 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), function(key) {
+        _.each('down,enter,num_enter'.split(','), key => {
             this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
             });
-        }, this);
+        });
     },
 
     __value(value, triggerChange) {

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -30,6 +28,9 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @param {Object} options.gridEventAggregator ?
  * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
  * */
+
+/*eslint-disable*/
+
 const GridHeaderView = Marionette.ItemView.extend({
     initialize(options) {
         if (!options.columns) {
@@ -148,12 +149,10 @@ const GridHeaderView = Marionette.ItemView.extend({
         const $dragger = $(e.target);
         const $column = $dragger.parent();
 
-        const affectedColumns = _.chain($column.nextAll()).toArray().map(function(el) {
-            return {
-                $el: $(el),
-                initialWidth: this.__getElementOuterWidth(el)
-            };
-        }, this).value();
+        const affectedColumns = _.chain($column.nextAll()).toArray().map(el => ({
+            $el: $(el),
+            initialWidth: this.__getElementOuterWidth(el)
+        })).value();
         const draggedColumn = {
             $el: $column,
             initialWidth: this.__getElementOuterWidth($column),
@@ -208,9 +207,9 @@ const GridHeaderView = Marionette.ItemView.extend({
             changes[index] = this.columns[index].absWidth;
             index++;
 
-            var affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth,
-                sumDelta = 0,
-                sumGap = 0;
+            const affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth;
+            var sumDelta = 0;
+            let sumGap = 0;
 
             for (let i = 0; i < ctx.affectedColumns.length; i++) {
                 let c = ctx.affectedColumns[i],
@@ -274,9 +273,12 @@ const GridHeaderView = Marionette.ItemView.extend({
     },
 
     __handleResizeInternal() {
-        let fullWidth = this.__getFullWidth(), // Grid header's full width
-            columnWidth = fullWidth / this.columns.length, // Default column width
-            sumWidth = 0; // Columns' sum width
+        const fullWidth = this.__getFullWidth();
+        // Grid header's full width
+        const columnWidth = fullWidth / this.columns.length;
+        // Default column width
+        let sumWidth = 0;
+        // Columns' sum width
 
         // Iterate all but first columns counting their sum width
         this.ui.gridHeaderColumn.not(':first').each((i, el) => {

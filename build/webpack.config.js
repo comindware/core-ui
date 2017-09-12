@@ -40,6 +40,15 @@ module.exports = options => {
                     presets: ['latest']
                 }
             }, {
+                test: /\.js$/,
+                loader: 'eslint-loader',
+                exclude: [
+                    pathResolver.compiled()
+                ],
+                options: {
+                    failOnError: true
+                }
+            }, {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',

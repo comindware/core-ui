@@ -198,6 +198,7 @@ const ListView = Marionette.LayoutView.extend({
                 index = i;
                 return true;
             }
+            return false;
         });
 
         const nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
@@ -220,6 +221,7 @@ const ListView = Marionette.LayoutView.extend({
                 index = i;
                 return true;
             }
+            return false;
         });
 
         const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
@@ -258,8 +260,7 @@ const ListView = Marionette.LayoutView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, function(value, key) //noinspection JSHint
-        {
+        _.each(this.keyboardShortcuts, (value, key) => {
             if (typeof value === 'object') {
                 this.keyListener.register_combo(_.extend({
                     keys: key,
@@ -268,18 +269,18 @@ const ListView = Marionette.LayoutView.extend({
             } else {
                 this.keyListener.simple_combo(key, value.bind(this));
             }
-        }, this);
+        });
     },
 
     updatePosition(newPosition) {
         this.__updatePositionInternal(newPosition, false);
     },
 
-    __updatePositionInternal(newPosition, triggerEvents) {
+    __updatePositionInternal(position, triggerEvents) {
         if (this.state.viewportHeight === undefined) {
             helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
         }
-
+        let newPosition = position;
         newPosition = this.__normalizePosition(newPosition);
         if (newPosition === this.state.position) {
             return;
@@ -342,9 +343,9 @@ const ListView = Marionette.LayoutView.extend({
             return elementHeight;
         }
 
-        let computedViewportHeight = Math.min(this.maxRows, this.collection.length),
-            minHeight = 0,
-            outerBoxAdjustments = 0;
+        const computedViewportHeight = Math.min(this.maxRows, this.collection.length);
+        let minHeight = 0;
+        let outerBoxAdjustments = 0;
 
         if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
             minHeight = this.visibleCollectionView.$el.find('.empty-view').height();

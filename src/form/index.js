@@ -37,6 +37,7 @@ import IsFavoriteEditorView from './editors/IsFavoriteEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
 import SimpleNumberEditorView from './editors/SimpleNumberEditorView';
+import IconEditorComponentView from './editors/IconEditorComponentView';
 import TimeNumberEditorView from './editors/TimeNumberEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
@@ -62,6 +63,8 @@ import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
 import './validators/phoneValidator';
+import './validators/systemNameValidator';
+import './validators/emailValidator';
 import formRepository from './formRepository';
 
 const api = /** @lends module:core.form */ {
@@ -182,7 +185,8 @@ const api = /** @lends module:core.form */ {
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,
         TitleTextEditor: TitleTextEditorView,
-        WorkSpaceItemsEditor: WorkSpaceItemsEditorView
+        WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
+        IconEditor: IconEditorComponentView
     }
 };
 export default api;

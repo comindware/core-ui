@@ -200,9 +200,9 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getRelativeDate(val) {
-        let lang = LocalizationService.langCode,
-            now = moment(),
-            daysFromNow = now.diff(val, 'days');
+        const lang = LocalizationService.langCode;
+        const now = moment();
+        const daysFromNow = now.diff(val, 'days');
 
         if (daysFromNow < 2) {
             return moment(val).locale(lang).calendar();
@@ -212,21 +212,23 @@ export default /** @lends module:core.utils.dateHelpers */ {
     },
 
     getDisplayDate(val) {
-        let lang = LocalizationService.langCode,
-            format = dateTimeFormats[lang].condensedDate.general;
+        const lang = LocalizationService.langCode;
+        const format = dateTimeFormats[lang].condensedDate.general;
 
         return val ? moment(val).locale(lang).format(format) : '';
     },
 
     getDisplayTime(time) {
-        let lang = LocalizationService.langCode,
-            format = dateTimeFormats[lang].fullDateShortTime.time;
+        const lang = LocalizationService.langCode;
+        const format = dateTimeFormats[lang].fullDateShortTime.time;
 
         return time.locale(lang).format(format);
     },
 
     getTimeEditFormat(hasSeconds) {
-        return hasSeconds ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
+        return hasSeconds
+            ? dateTimeFormats[LocalizationService.langCode].generalDateLongTime.time
+            : dateTimeFormats[LocalizationService.langCode].generalDateShortTime.time;
     },
 
     getDateEditFormat() {

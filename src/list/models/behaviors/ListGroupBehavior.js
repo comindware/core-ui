@@ -6,9 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import { helpers } from 'utils';
 import CollapsibleBehavior from '../../../models/behaviors/CollapsibleBehavior';
 
 const ListGroupBehavior = function(model) {

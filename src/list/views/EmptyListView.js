@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/emptyGrid.hbs';
 import LocalizationService from '../../services/LocalizationService';
@@ -18,7 +16,8 @@ import LocalizationService from '../../services/LocalizationService';
  * @memberof module:core.list.views
  * @class EmptyListView
  * @constructor
- * @description View используемый по умолчанию для отображения пустого списка (нет строк), передавать в {@link module:core.list.views.GridView GridView options.emptyView}
+ * @description View используемый по умолчанию для отображения пустого списка (нет строк),
+ * передавать в {@link module:core.list.views.GridView GridView options.emptyView}
  * @extends Marionette.ItemView
  * @param {Object} options Constructor options
  * @param {string} [options.text=Список пуст] отображаемый текст

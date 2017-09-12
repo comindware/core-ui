@@ -14,6 +14,8 @@
  * Version: 1.2.0
  * Build date: 30 November 2014
  */
+/*eslint-disable*/
+
 (function($) {
     var UNDEF = "undefined";
     var getSelection, setSelection, deleteSelectedText, deleteText, insertText;

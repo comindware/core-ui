@@ -24,4 +24,4 @@ formRepository.validators.email = config => {
     };
 };
 
-export default formRepository.validators.length;
+export default formRepository.validators.email;

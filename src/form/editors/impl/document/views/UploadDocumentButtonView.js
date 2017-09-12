@@ -12,7 +12,6 @@
 import template from '../templates/uploadDocumentButton.html';
 
 export default Backbone.Marionette.ItemView.extend({
-
     uploadUrl: '/api/UploadAttachment',
 
     options: {
@@ -163,8 +162,8 @@ export default Backbone.Marionette.ItemView.extend({
 
     __validate(files) {
         let ext = '';
-        let incorrectFileNames = '';
         let fileFormat = this.options.fileFormat.toLowerCase();
+        let incorrectFileNames;
 
         if (!files) {
             return false;
@@ -183,6 +182,6 @@ export default Backbone.Marionette.ItemView.extend({
             }
         }
 
-        return true;
+        return incorrectFileNames;
     }
 });

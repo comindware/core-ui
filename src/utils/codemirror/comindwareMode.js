@@ -1,3 +1,4 @@
+/*eslint-disable*/
 
 const defineMode = config => {
     const lexerTokens = {

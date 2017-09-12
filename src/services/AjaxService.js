@@ -6,6 +6,8 @@
  * Published under the MIT license
  */
 
+/*eslint-disable*/
+
 import 'lib';
 import { helpers } from 'utils';
 import PromiseService from './PromiseService';
@@ -19,7 +21,7 @@ export default window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {
-            const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
+            this[actionInfo.className] || (this[actionInfo.className] = {});
 
             // The result of compilation below is something like this:
             //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {

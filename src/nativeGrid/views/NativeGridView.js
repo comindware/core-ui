@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/nativeGrid.hbs';
 import ListView from './ListView';
@@ -15,7 +13,6 @@ import RowView from './RowView';
 import HeaderView from './HeaderView';
 import ColumnHeaderView from './ColumnHeaderView';
 import NoColumnsDefaultView from '../../list/views/NoColumnsView';
-import SelectableBehavior from '../../models/behaviors/SelectableBehavior';
 import dropdownFactory from '../../dropdown/factory';
 import dropdownApi from 'dropdown';
 import { helpers } from 'utils';

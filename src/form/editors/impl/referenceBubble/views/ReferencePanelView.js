@@ -9,7 +9,6 @@
  *       actual or intended publication of such source code.
  */
 
-
 import template from '../templates/referencePanel.html';
 
 const config = {

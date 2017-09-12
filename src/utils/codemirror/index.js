@@ -13,7 +13,7 @@ import comindwareMode from './comindwareMode';
 
 codemirror.defineMode('comindware', comindwareMode);
 codemirror.defineMIME('text/comindware_expression', 'comindware');
-codemirror.extendMode("clike", {
+codemirror.extendMode('clike', {
     newlineAfterToken(type, content, next) {
         return (/[\[(;,{]/.test(content) && !/[)}\]]/.test(next.string));
     }

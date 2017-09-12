@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-disable*/
 
 import 'lib';
 import LocalizationService from '../services/LocalizationService';
@@ -63,13 +63,9 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     comparatorFor(comparatorFn, propertyName) {
         if (comparatorFn.length === 1) {
-            return function(a) {
-                return comparatorFn(a.get(propertyName));
-            };
+            return a => comparatorFn(a.get(propertyName));
         } else if (comparatorFn.length === 2) {
-            return function(a, b) {
-                return comparatorFn(a.get(propertyName), b.get(propertyName));
-            };
+            return (a, b) => comparatorFn(a.get(propertyName), b.get(propertyName));
         }
         throw new Error('Invalid arguments count in comparator function.');
     },
