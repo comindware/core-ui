@@ -10,9 +10,7 @@
  */
 
 
-import meta from '../../../../Meta';
-
-const dateTimeFormats = meta.dateTimeFormats;
+import { dateHelpers } from 'utils';
 
 export default Marionette.Object.extend({
     initialize(options = {}) {
@@ -29,7 +27,7 @@ export default Marionette.Object.extend({
             id: item.Id,
             creator: item.CreatorName,
             url: item.RevisionLink,
-            creationDate: Core.utils.dateHelpers.dateToDateTimeString(item.CreationDate, dateTimeFormats.GENERAL_DATE_SHORT_TIME),
+            creationDate: dateHelpers.dateToDateTimeString(item.CreationDate, 'generalDateShortTime'),
             version: item.RevisionIndex
         }));
     }

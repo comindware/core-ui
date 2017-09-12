@@ -1,12 +1,11 @@
-/* global _, define */
-
+import VirtualCollection from '../../../../../collections/VirtualCollection';
+import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 import ItemModel from '../model/ItemModel';
 
-
-export default Core.collections.VirtualCollection.extend({
+export default VirtualCollection.extend({
     constructor() {
-        Core.collections.VirtualCollection.prototype.constructor.apply(this, arguments);
-        _.extend(this, new Core.collections.behaviors.HighlightableBehavior());
+        VirtualCollection.prototype.constructor.apply(this, arguments);
+        _.extend(this, new HighlightableBehavior());
     },
 
     model: ItemModel

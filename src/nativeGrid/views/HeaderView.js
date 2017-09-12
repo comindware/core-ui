@@ -34,15 +34,21 @@ const HeaderView = GridHeaderView.extend({
     template: Handlebars.compile(template),
 
     onRender() {
-        const self = this;
+        if (this.__columnEls) {
+            this.__columnEls.forEach(c => c.destroy());
+        }
+        this.__columnEls = [];
+
+
         this.ui.gridHeaderColumnContent.each((i, el) => {
-            const column = self.columns[i];
-            const view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
+            const column = this.columns[i];
+            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column,
-                gridEventAggregator: self.gridEventAggregator
+                gridEventAggregator: this.gridEventAggregator
             }));
-            self.listenTo(view, 'columnSort', self.__handleColumnSort);
+            this.__columnEls.push(view);
+            this.listenTo(view, 'columnSort', this.__handleColumnSort);
             const childEl = view.render().el;
             el.appendChild(childEl);
         });

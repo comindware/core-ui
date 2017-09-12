@@ -233,6 +233,10 @@ export default {
                 {
                     id: 'nativeGrid',
                     displayName: 'Grid (With native scroll)'
+                },
+                {
+                    id: 'editableGridGrid',
+                    displayName: 'Editable Grid'
                 }
 
             ]

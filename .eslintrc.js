@@ -17,7 +17,8 @@ module.exports = {
         'describe': true,
         'it': true,
         'beforeEach': true,
-        'afterEach': true
+        'afterEach': true,
+        'codemirror': true
     },
     'rules': {
         'new-cap': ['error', { 'newIsCap': true, 'capIsNew': false }],

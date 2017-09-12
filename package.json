@@ -48,6 +48,7 @@
     "babel-preset-latest": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "chance": "^1.0.11",
+    "codemirror": "^5.29.0",
     "coveralls": "^2.11.11",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",

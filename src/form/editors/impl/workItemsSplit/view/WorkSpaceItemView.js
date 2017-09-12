@@ -1,5 +1,5 @@
-
-
+import list from 'list';
+import { htmlHelpers } from 'utils';
 import template from '../templates/workSpaceListItem.html';
 
 export default Marionette.ItemView.extend({
@@ -37,12 +37,12 @@ export default Marionette.ItemView.extend({
 
     behaviors: {
         ListItemViewBehavior: {
-            behaviorClass: Core.list.views.behaviors.ListItemViewBehavior
+            behaviorClass: list.views.behaviors.ListItemViewBehavior
         }
     },
 
     onHighlighted(fragment) {
-        const text = Core.utils.htmlHelpers.highlightText(this.model.get('name'), fragment);
+        const text = htmlHelpers.highlightText(this.model.get('name'), fragment);
         this.ui.name.html(text);
     },
 

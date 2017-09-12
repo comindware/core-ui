@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-
+import list from 'list';
 import template from '../templates/functionOverload.html';
 
 export default Marionette.ItemView.extend({
@@ -19,7 +19,7 @@ export default Marionette.ItemView.extend({
 
     behaviors: {
         ListItemViewBehavior: {
-            behaviorClass: Core.list.views.behaviors.ListItemViewBehavior
+            behaviorClass: list.views.behaviors.ListItemViewBehavior
         }
     },
 

@@ -10,7 +10,7 @@
  */
 
 import template from '../templates/context.html';
-import ContextSelectEditorView from '../../../../../../../../../WepackUpdates/src/form/editors/ContextSelectEditorView';
+import ContextSelectEditorView from '../../../ContextSelectEditorView';
 
 export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),

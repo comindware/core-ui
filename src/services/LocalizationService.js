@@ -7,7 +7,6 @@
  */
 
 import { moment, numeral } from 'lib';
-import { helpers } from 'utils';
 import numeralRu from 'numeral/locales/ru';
 import numeralEn from 'numeral/locales/en-gb';
 import numeralDe from 'numeral/locales/de';

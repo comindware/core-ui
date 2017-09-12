@@ -9,12 +9,11 @@
  *       actual or intended publication of such source code.
  */
 
-import codemirror from 'modules/codemirror';
+import { codemirror } from 'lib';
 import ToolbarView from './ToolbarView';
 import template from '../templates/codemirror.html';
-import OntologyService from '../../../../services/OntologyService';
 import MappingService from '../services/MappingService';
-import { classes, types } from '../Constants';
+import constants from '../Constants';
 
 const modes = {
     expression: 'text/comindware_expression',
@@ -25,21 +24,24 @@ const TOOLTIP_PADDING_PX = 15;
 
 const CHECK_VISIBILITY_DELAY = 200;
 
+const classes = constants.classes;
+const types = constants.types;
+
 export default Marionette.LayoutView.extend({
     initialize(options = {}) {
         _.bindAll(this, '__onBlur', '__onChange', '__showHint', '__find', '__undo', '__redo', '__format', '__cmwHint',
             '__showTooltip', '__hideTooltip', '__onMouseover', '__onMouseleave', '__onKeyDown', '__onMinimize');
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
-            OntologyService.getOntology().then(ontologyModel => {
-                this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
-                if (this.codemirror) {
-                    this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
-
-                    //retokenize codemirror with ontology model
-                    this.setValue(this.getValue());
-                }
-            });
+            // OntologyService.getOntology().then(ontologyModel => {
+            //     this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
+            //     if (this.codemirror) {
+            //         this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
+            //
+            //         //retokenize codemirror with ontology model
+            //         this.setValue(this.getValue());
+            //     }
+            // });
         }
     },
 

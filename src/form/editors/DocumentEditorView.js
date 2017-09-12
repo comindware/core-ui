@@ -151,12 +151,12 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
     },
 
     __setEnabled(enabled) {
-        formRepository.base.BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.renderUploadButton(!enabled);
     },
 
     __setReadonly(readonly) {
-        formRepository.base.BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.renderUploadButton(readonly);
         }

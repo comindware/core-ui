@@ -115,7 +115,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     ui: {
         input: '.js-input',
-        remove: '.js-duration-remove'
+        clear: '.js-clear-button'
     },
 
     regions: {
@@ -123,7 +123,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
     },
 
     events: {
-        'click @ui.remove': '__clear',
+        'click @ui.clear': '__clear',
         'focus @ui.input': '__focus',
         'click @ui.input': '__focus',
         'blur @ui.input': '__blur',
@@ -133,9 +133,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
     setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         if (enabled && !readonly) {
-            this.ui.remove.show();
+            this.ui.clear.show();
         } else {
-            this.ui.remove.hide();
+            this.ui.clear.hide();
         }
     },
 

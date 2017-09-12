@@ -25,6 +25,7 @@ import 'jquery-autosize';
 import * as keypress_ from 'keypress';
 import 'bootstrap-datetime-picker';
 import numeral_ from 'numeral';
+import codemirror_ from 'codemirror/lib/codemirror';
 
 // Replacing ES6 promise with bluebird
 window.Promise = Bluebird_;
@@ -50,14 +51,28 @@ const api = {
     _: window._,
     Backbone: backbone,
     Marionette: Marionette_,
-    numeral: numeral_
+    numeral: numeral_,
+    codemirror: codemirror_
 };
-export var keypress = api.keypress;
-export var moment = api.moment;
-export var Handlebars = api.Handlebars;
-export var $ = api.$;
-export var _ = window._;
-export var Backbone = backbone;
-export var Marionette = Marionette_;
-export var numeral = api.numeral;
+const keypress = api.keypress;
+const moment = api.moment;
+const Handlebars = api.Handlebars;
+const $ = api.$;
+const _ = window._;
+const Backbone = backbone;
+const Marionette = Marionette_;
+const numeral = api.numeral;
+const codemirror = api.codemirror;
 export default api;
+export {
+    keypress,
+    moment,
+    Handlebars,
+    $,
+    _,
+    Backbone,
+    Marionette,
+    numeral,
+    codemirror
+};
+

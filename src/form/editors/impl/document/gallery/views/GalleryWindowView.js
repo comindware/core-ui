@@ -9,8 +9,10 @@
  *       actual or intended publication of such source code.
  */
 
+import { helpers } from 'utils';
 import template from '../templates/galleryWindow.html';
 import LoadingView from './LoadingView';
+// import LoadingBehavior from '../../../../../../views/behaviors/LoadingBehavior';
 
 const classes = {
     GALLERY_WINDOW: 'js-gallery-window galleryWindow'
@@ -18,8 +20,7 @@ const classes = {
 
 export default Marionette.LayoutView.extend({
     initialize(options) {
-        Core.utils.helpers.ensureOption(options, 'reqres');
-
+        helpers.ensureOption(options, 'reqres');
         this.reqres = options.reqres;
     },
 
@@ -35,13 +36,6 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         loadingRegion: '.js-loading-region'
-    },
-
-    behaviors: {
-        LoadingBehavior: {
-            behaviorClass: Core.views.behaviors.LoadingBehavior,
-            region: 'loadingRegion'
-        }
     },
 
     events: {

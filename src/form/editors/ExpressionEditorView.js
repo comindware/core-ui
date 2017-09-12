@@ -8,13 +8,14 @@ import ValueOptionCollection from './impl/expression/collections/ValueOptionColl
 import ContextView from './impl/expression/views/ContextView';
 import defaultScriptTemplate from './impl/expression/templates/defaultScript.html';
 import formRepository from '../formRepository';
+import BaseLayoutEditorView from '../editors/base/BaseLayoutEditorView';
 import WindowService from '../../services/WindowService';
 import dropdownFactory from '../../dropdown/factory';
 
 //Value format: { type: <<value|expression|script>>, value: <<value array or single value|expression text|script text>>}
 //Example: { type: 'value', value: 'Some text' }
 
-export default formRepository.editors.Expression = formRepository.base.BaseLayoutEditorView.extend({
+export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     template: Handlebars.compile(template),
 
     options() {

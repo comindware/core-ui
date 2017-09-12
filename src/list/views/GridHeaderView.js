@@ -75,14 +75,19 @@ const GridHeaderView = Marionette.ItemView.extend({
     },
 
     onRender() {
-        const self = this;
+        if (this.__columnEls) {
+            this.__columnEls.forEach(c => c.destroy());
+        }
+        this.__columnEls = [];
+
         this.ui.gridHeaderColumnContent.each((i, el) => {
-            const column = self.columns[i];
-            const view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
+            const column = this.columns[i];
+            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column
             }));
-            self.listenTo(view, 'columnSort', self.__handleColumnSort);
+            this.__columnEls.push(view);
+            this.listenTo(view, 'columnSort', this.__handleColumnSort);
             const childEl = view.render().el;
             el.appendChild(childEl);
         });
@@ -90,6 +95,12 @@ const GridHeaderView = Marionette.ItemView.extend({
 
     onShow() {
         this.__handleResizeInternal();
+    },
+
+    onDestroy() {
+        if (this.__columnEls) {
+            this.__columnEls.forEach(c => c.destroy());
+        }
     },
 
     updateSorting() {

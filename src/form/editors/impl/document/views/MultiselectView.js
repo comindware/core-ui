@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-import lib from 'modules/lib';
+import { keypress } from 'lib';
 
 import template from '../templates/Multiselect.html';
 import MultiselectItemView from './MultiselectItemView';
@@ -94,7 +94,7 @@ export default Marionette.CompositeView.extend({
         if (this.keyListener) {
             this.keyListener.reset();
         }
-        this.keyListener = new lib.keypress.Listener(this.el);
+        this.keyListener = new keypress.Listener(this.el);
         _.each('down,enter,num_enter'.split(','), key => {
             this.keyListener.simple_combo(key, () => {
                 this.dropdownView.open();
