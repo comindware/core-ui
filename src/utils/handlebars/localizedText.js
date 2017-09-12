@@ -6,12 +6,8 @@
  * Published under the MIT license
  */
 
-/* global module */
-
-'use strict';
-
 import LocalizationService from '../../services/LocalizationService';
 
-module.exports = function(textModel) {
+export default function(textModel) {
     return LocalizationService.resolveLocalizedText(textModel);
 };

@@ -6,14 +6,10 @@
  * Published under the MIT license
  */
 
-/* global module */
-
-'use strict';
-
 import 'lib';
 import { dateHelpers } from '../index';
 
-module.exports = function(duration) {
+export default function(duration) {
     if (duration === 0) {
         return '0';
     }
@@ -32,4 +28,4 @@ module.exports = function(duration) {
         result += `${o.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
     }
     return _.string.rtrim(result);
-};
+}

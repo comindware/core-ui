@@ -31,6 +31,15 @@ module.exports = options => {
         devtool: TEST ? 'inline-source-map' : 'source-map',
         module: {
             rules: [{
+                test: /\.js$/,
+                loader: 'babel-loader',
+                include: [
+                    pathResolver.source()
+                ],
+                options: {
+                    presets: ['latest']
+                }
+            }, {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -40,12 +49,22 @@ module.exports = options => {
                         loader: 'postcss-loader',
                         options: {
                             sourceMap: true,
-                            plugins: () => [
-                                autoprefixer({
-                                    browsers: ['last 2 versions']
-                                }),
-                                cssnano()
-                            ]
+                            plugins: () => {
+                                const plugins = [
+                                    autoprefixer({
+                                        browsers: ['last 2 versions']
+                                    })];
+                                if (UGLIFY) {
+                                    plugins.push(cssnano({
+                                        preset: ['default', {
+                                            discardComments: {
+                                                removeAll: true
+                                            }
+                                        }]
+                                    }));
+                                }
+                                return plugins;
+                            }
                         }
                     }]
                 })
@@ -212,18 +231,21 @@ module.exports = options => {
         );
 
         if (UGLIFY) {
-            webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-                uglifyOptions: {
-                    compress: {
-                        warnings: true
+            webpackConfig.plugins.push(
+                new webpack.optimize.UglifyJsPlugin({
+                    uglifyOptions: {
+                        compress: {
+                            warnings: true,
+                            dead_code: true,
+                            properties: true,
+                            conditionals: true,
+                            evaluate: true,
+                            comparisons: true
+                        }
                     },
-                },
-                output: {
-                    comments: false,
-                },
-                sourceMap: true,
-                parallel: true
-            }));
+                    sourceMap: true,
+                    parallel: true
+                }));
         }
     }
 

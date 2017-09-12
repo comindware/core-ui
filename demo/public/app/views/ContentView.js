@@ -48,7 +48,7 @@ export default Marionette.LayoutView.extend({
         } else {
             path = `${this.model.get('sectionId')}/${this.model.get('groupId')}`;
         }
-        
+
         const code = requireCode(`./${path}`).default;
         const text = requireText(`./${path}`);
 
