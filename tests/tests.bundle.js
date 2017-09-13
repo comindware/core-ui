@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-"use strict";
-
-let context = require.context('./specs', true, /.+\.spec\.jsx?$/);
+const context = require.context('./specs', true, /.+\.spec\.jsx?$/);
 context.keys().forEach(context);
-module.exports = context;
+export default context;

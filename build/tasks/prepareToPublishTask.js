@@ -17,7 +17,7 @@ const pathResolver = require('../pathResolver');
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 module.exports = () => {
-    exec('git tag --contains HEAD', (err, stdout, stderr) => {
+    exec('git tag --contains origin/head', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;
@@ -30,7 +30,7 @@ module.exports = () => {
             console.log(stderr);
         }
 
-        const matchResult = /^v(.+)$/gm.exec(stdout);
+        const matchResult = /^(.+)$/gm.exec(stdout);
         if (matchResult === null) {
             console.log('PrepareToPublishTask: no tags found, skip package.json update.');
             return;

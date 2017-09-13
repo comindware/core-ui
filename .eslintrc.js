@@ -23,7 +23,9 @@ module.exports = {
         'arguments': true,
         'CKEDITOR': true,
         'Context': true,
-        'Core': true
+        'Core': true,
+        'expect': true,
+        'jasmine': true
     },
     'rules': {
         'new-cap': ['off', { 'newIsCap': true, 'capIsNew': false }],

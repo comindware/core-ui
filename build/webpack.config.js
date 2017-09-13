@@ -34,7 +34,8 @@ module.exports = options => {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 include: [
-                    pathResolver.source()
+                    pathResolver.source(),
+                    pathResolver.tests()
                 ],
                 options: {
                     presets: ['latest']
@@ -45,7 +46,8 @@ module.exports = options => {
                 exclude: [
                     pathResolver.compiled(),
                     pathResolver.node_modules(),
-                    pathResolver.source('external')
+                    pathResolver.source('external'),
+                    pathResolver.tests()
                 ],
                 options: {
                     failOnError: true

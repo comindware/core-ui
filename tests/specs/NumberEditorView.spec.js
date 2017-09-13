@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-ignore*/
 
 import core from 'coreApi';
 import { initializeCore } from '../utils/helpers';
