@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import ListPanelView from './ListPanelView';
 import MenuItemView from './MenuItemView';
 
@@ -23,7 +21,7 @@ import MenuItemView from './MenuItemView';
  * */
 
 export default ListPanelView.extend({
-    initialize(options) {
+    initialize() {
         ListPanelView.prototype.initialize.apply(this, _.toArray(arguments));
     },
 

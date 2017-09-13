@@ -1,6 +1,6 @@
 import { dateHelpers } from 'utils';
 import LocalizationService from '../../../services/LocalizationService';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export default {
     getDateDisplayValue(value, format, timezoneOffset) {

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/bubble.hbs';
 
@@ -37,7 +35,7 @@ export default Marionette.ItemView.extend({
         clearButton: '.js-bubble-delete'
     },
 
-    __delete(e) {
+    __delete() {
         this.reqres.request('bubble:delete', this.model);
         return false;
     },

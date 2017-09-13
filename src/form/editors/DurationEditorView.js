@@ -217,8 +217,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     getSegmentIndex(pos) {
         // returns the index of the segment where we are at
-        let i,
-            segmentIndex;
+        let i;
+        let segmentIndex;
+
         segmentIndex = this.focusableParts.length - 1;
         this.initSegmentStartEnd();
         for (i = 0; i < this.focusableParts.length; i++) {
@@ -376,27 +377,28 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             case keyCode.ENTER:
                 this.__blur();
                 return false;
-            case keyCode.TAB:
+            case keyCode.TAB: {
                 const delta = event.shiftKey ? -1 : 1;
                 if (this.focusableParts[index + delta]) {
                     this.setCaretPos(this.focusableParts[index + delta].start);
                     return false;
                 }
                 break;
+            }
             case keyCode.HOME:
                 this.setCaretPos(this.focusableParts[0].start);
                 return false;
             case keyCode.END:
                 this.setCaretPos(this.focusableParts[this.focusableParts.length - 1].end);
                 return false;
-            default:
-                var charValue = null;
+            default: {
+                let charValue = null;
                 if (event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) {
                     charValue = event.keyCode - keyCode.NUM_0;
                 } else if (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) {
                     charValue = event.keyCode - keyCode.NUMPAD_0;
                 }
-                var valid = charValue !== null;
+                const valid = charValue !== null;
                 if (!valid) {
                     return false;
                 }
@@ -408,6 +410,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
                 if (this.getSegmentValue(index).length >= focusablePart.maxLength) {
                     return false;
                 }
+            }
         }
     },
 

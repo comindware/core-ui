@@ -262,7 +262,8 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         this.spinning = false;
     },
 
-    __value(value, suppressRender, triggerChange, force) {
+    __value(newValue, suppressRender, triggerChange, force) {
+        let value = newValue;
         if (value === this.value && !force) {
             return;
         }

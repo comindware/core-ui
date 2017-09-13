@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-export var objectPropertyTypes = {
+export const objectPropertyTypes = {
     STRING: 'String',
     BOOLEAN: 'Boolean',
     DATETIME: 'DateTime',

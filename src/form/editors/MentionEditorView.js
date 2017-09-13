@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import template from './templates/mentionEditor.hbs';
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
@@ -88,9 +86,9 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         this.listenTo(this.dropdownView, 'button:input', this.__onInput);
         this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
-        _.each(this.keyboardShortcuts, function(v, k) {
+        _.each(this.keyboardShortcuts, (v, k) => {
             this.dropdownView.button.addKeyboardListener(k, v.bind(this));
-        }, this);
+        });
 
         // We discarded it during render phase, so we do it now.
         this.setPermissions(this.enabled, this.readonly);

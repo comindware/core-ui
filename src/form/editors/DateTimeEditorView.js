@@ -134,8 +134,8 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
-    __value(value, updateUi, triggerChange) {
-        value = this.__adjustValue(value);
+    __value(newValue, updateUi, triggerChange) {
+        const value = this.__adjustValue(newValue);
         if (this.value === value) {
             return;
         }

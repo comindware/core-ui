@@ -21,7 +21,8 @@ export default window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {
-            this[actionInfo.className] || (this[actionInfo.className] = {});
+            /* eslint-disable */
+            const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
 
             // The result of compilation below is something like this:
             //     controller[actionInfo.methodName] = function RecordTypes_List(/*optional*/ callback) {
@@ -45,7 +46,7 @@ export default window.Ajax = new (Marionette.Object.extend({
                 actionInfo.methodName,
                 actionParameters.join(', '), actionBody
             );
-            /* eslint-disable */
+
             eval(`controller[actionInfo.methodName] = ${actionFn};`);
             /* eslint-enable */
         });

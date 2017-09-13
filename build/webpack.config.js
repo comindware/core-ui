@@ -43,7 +43,9 @@ module.exports = options => {
                 test: /\.js$/,
                 loader: 'eslint-loader',
                 exclude: [
-                    pathResolver.compiled()
+                    pathResolver.compiled(),
+                    pathResolver.node_modules(),
+                    pathResolver.source('external')
                 ],
                 options: {
                     failOnError: true
