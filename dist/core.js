@@ -99765,8 +99765,6 @@ var defaultOptions = function defaultOptions() {
         emptyListText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
     };
 };
-// import cacheService from '../../services/CacheService';
-
 
 _formRepository2.default.editors.MembersSplit = _BaseLayoutEditorView2.default.extend({
     initialize: function initialize() {
@@ -99775,20 +99773,22 @@ _formRepository2.default.editors.MembersSplit = _BaseLayoutEditorView2.default.e
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         var defOps = _.extend(defaultOptions(), {
-            // users: _.map(cacheService.GetUsers(), user => ({
-            //     id: user.Id,
-            //     name: (user.Text || user.Username),
-            //     abbreviation: user.abbreviation,
-            //     userpicUri: user.userpicUri,
-            //     type: 'users'
-            // })),
-            // groups: _.map(cacheService.GetGroups(), group => ({
-            //     id: group.id,
-            //     name: group.name,
-            //     type: 'groups'
-            // }))
-            users: [],
-            groups: []
+            users: _.map(options.schema.cacheService.GetUsers(), function (user) {
+                return {
+                    id: user.Id,
+                    name: user.Text || user.Username,
+                    abbreviation: user.abbreviation,
+                    userpicUri: user.userpicUri,
+                    type: 'users'
+                };
+            }),
+            groups: _.map(options.schema.cacheService.GetGroups(), function (group) {
+                return {
+                    id: group.id,
+                    name: group.name,
+                    type: 'groups'
+                };
+            })
         });
         if (options.schema) {
             _.extend(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
@@ -100067,7 +100067,6 @@ var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import cacheService from '../../services/CacheService';
 var defaultOptions = function defaultOptions() {
     return {
         exclude: [],
@@ -100091,20 +100090,22 @@ _formRepository2.default.editors.MembersSplitPanel = _BaseLayoutEditorView2.defa
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         var defOps = _.extend(defaultOptions(), {
-            // users: _.map(cacheService.GetUsers(), user => ({
-            //     id: user.Id,
-            //     name: (user.Text || user.Username),
-            //     abbreviation: user.abbreviation,
-            //     userpicUri: user.userpicUri,
-            //     type: 'users'
-            // })),
-            // groups: _.map(cacheService.GetGroups(), group => ({
-            //     id: group.id,
-            //     name: group.name,
-            //     type: 'groups'
-            // })),
-            users: [],
-            groups: []
+            users: _.map(options.schema.cacheService.GetUsers(), function (user) {
+                return {
+                    id: user.Id,
+                    name: user.Text || user.Username,
+                    abbreviation: user.abbreviation,
+                    userpicUri: user.userpicUri,
+                    type: 'users'
+                };
+            }),
+            groups: _.map(options.schema.cacheService.GetGroups(), function (group) {
+                return {
+                    id: group.id,
+                    name: group.name,
+                    type: 'groups'
+                };
+            })
         });
         if (options.schema) {
             _.extend(this.options, defOps, _.pick(options.schema, _.keys(defOps)));

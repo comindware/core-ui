@@ -1,7 +1,6 @@
 
 import template from './templates/membersSplitPanelEditor.html';
 import MembersSplitPanelController from './impl/membersSplit/controller/MembersSplitPanelController';
-// import cacheService from '../../services/CacheService';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
@@ -22,20 +21,18 @@ const defaultOptions = () => ({
 formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         const defOps = _.extend(defaultOptions(), {
-            // users: _.map(cacheService.GetUsers(), user => ({
-            //     id: user.Id,
-            //     name: (user.Text || user.Username),
-            //     abbreviation: user.abbreviation,
-            //     userpicUri: user.userpicUri,
-            //     type: 'users'
-            // })),
-            // groups: _.map(cacheService.GetGroups(), group => ({
-            //     id: group.id,
-            //     name: group.name,
-            //     type: 'groups'
-            // })),
-            users: [],
-            groups: []
+            users: _.map(options.schema.cacheService.GetUsers(), user => ({
+                id: user.Id,
+                name: (user.Text || user.Username),
+                abbreviation: user.abbreviation,
+                userpicUri: user.userpicUri,
+                type: 'users'
+            })),
+            groups: _.map(options.schema.cacheService.GetGroups(), group => ({
+                id: group.id,
+                name: group.name,
+                type: 'groups'
+            }))
         });
         if (options.schema) {
             _.extend(this.options, defOps, _.pick(options.schema, _.keys(defOps)));

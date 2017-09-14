@@ -2,7 +2,6 @@
 import BaseSplitController from '../../splitEditor/controller/BaseSplitController';
 import MemberSplitView from '../views/MemberSplitView';
 
-
 export default BaseSplitController.extend({
     initialize() {
         BaseSplitController.prototype.initialize.apply(this, arguments);
