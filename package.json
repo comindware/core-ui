@@ -1,5 +1,5 @@
 {
-  "name": "comindware.core.ui",
+  "name": "comindware.ui",
   "version": "1.3.112",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
@@ -26,16 +26,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/comindware/core-ui.git"
+    "url": "https://github.com/stasguryev/core-ui.git"
   },
   "author": {
-    "name": "Stepan Burguchev",
-    "url": "https://github.com/xsburg"
+    "name": "Stanislav Guryev",
+    "url": "https://github.com/stasguryev"
   },
   "maintainers": [
     {
-      "name": "sburg",
-      "email": "me@sburg.net"
+      "name": "sguryev",
+      "email": "Stanislav.Guryev@comindware.com"
     }
   ],
   "devDependencies": {

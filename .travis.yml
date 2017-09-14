@@ -12,16 +12,17 @@ after_script:
   - node ./node_modules/coveralls/bin/coveralls.js -v < ./reports/report-lcov/lcov.info
 deploy:
   - provider: npm
-    email: me@sburg.net
+    email: Stanislav.Guryev@comindware.com
+    skip_cleanup: true
     api_key:
-      secure: K7YPT8VJo56HeoCPImXbBgGpnVXhO/S8L+pwMYzQesefujP5UWQkG1bFLYCBmyrom5L6stLqvZMToDAvQgE6yFBHLXSW9WVTWIAp87Uw89WBndKHMvBlUqiKEfJTVuZ0D2IE5eahA+h/C8Nd12nB2yrXI+LW3OVm8cEQxFZ6rn2ECmEKCBoQaXqH+0P2E1uaHu3vfJIgvQtAGMhk8fsEUkWnPa23uJVJklyUIm+ZKYtOL3ZROetY7lsMxL7PGTWgPg6FQnyqBaK1o5d0fIszdKGngs1KimTSOPCBxo/RGInhDfygz6C/CuOyk6FyHY8PoqKzHr9C7dVidIF117YyyfsrIKvq96qjvbishf2tZxz70xZZbXkf61CXno42RUEsFoVgFdFYeseHhfelrZvwoxWSRLsM/lQkvZKVrYVanxqoSIZXrWPb3YFy5LkJSejGBpZm1tgwBDQObiSjjMquomW6VVD8Ad4epuZtQVYjxj54hTf8gFttGcnwg/xMv/qhDdX2BkE9PbLNZz/hfY6NaGRIQzdcg+gJOfFeSTVqJjWnVesPR4EHvARPGcBhCujdDycJDxD0Njfq1OggSiCIJm/8lvrl4VeWPASsDN2zwKLYO6M71eCUdOrUdA0vwCFOtOFbqAhSn9ifPD/Hlw2B/uf3XbZ+o/OgN3PnzmMDoAU=
+      secure: Adfd8FaRWz+HKGEPf7qx3z+BA4Uc3JbZn37FH1mVutPjdyaoNZZ/ruNXFglJuK1rWJctijh/SQZX0NhyPTMvhLh37tLURI31+vV6pfQL7GLpohCjAgg32oJFw1gL9fkptReTEwNziY2CGRl5ltQNzHbevbEw+UTD/xnl469VzKX3Q164addrGGGPEkRGPTDigJAmi/vu6x8o8AH3yK8NnhT9xM32SS2GHTaTYZGQqHXAnhH51uP4yBYQotAgYRvKRsl+52qJ9uzWSq1w6LWLLlp7ECUoOhM6G41385jXS1gr1an0wXHgy+mHKjg6oTMJi4UmHhxaUFA6M5y4k/RTyFKtjcaxBBtIrCgenzQVqGuIjkEeckcxiz8n/poPW7ucuVMCWOzPGluj1Pjw0pKYRij2RoCySkg1/cceLzNkC8X0lbDJ7+ntVqJOgknU1kNNC1Kl/KsXLi2e1gXDb94Afai/Ncsq7HvVLAsnlNRHbidTYYQZbidSejlpnn2bKjjK+Ja7MHRs9QBKxDVW6QjPXtNUzZfuDbFHK6PhUlLROY+jZ6qtZN5nkFX5bBerQNmLTdmnSUQrH7Vd7Uq2fumf2yGWP5U7AMhkSSQJWME4wQobd/LCeM0wjJfCewoD/YS7t/BJ4R8XAgvPPtKoFnc/vIomfO0vtcgJQUlboPpBm9w=
     on:
       tags: true
-      repo: comindware/core-ui
+      repo: stasguryev/core-ui
       branch: master
   - provider: script
     script: npm run deploy:pages
     on:
       tags: true
-      repo: comindware/core-ui
+      repo: stasguryev/core-ui
       branch: master
