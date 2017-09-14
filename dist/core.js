@@ -55597,7 +55597,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 635 */
 /***/ (function(module, exports) {
 
-	module.exports = "<span class=\"js-text dropdown-text\">{{#if hasValue}}{{#if text}}{{text}}{{else}}&nbsp{{/if}}{{else}}{{localize 'CORE.FORM.EDITORS.DROPDOWN.NOTSET'}}{{/if}}</span>\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\r\n    </div>\r\n    {{#if allowEmptyValue}}\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n    {{/if}}\r\n</div>";
+	module.exports = "<span class=\"js-text dropdown-text\">{{#if hasValue}}{{#if text}}{{text}}{{else}}&nbsp{{/if}}{{else}}{{localize 'CORE.FORM.EDITORS.DROPDOWN.NOTSET'}}{{/if}}</span>\n<div class=\"svg-icons-wrp\">\n    <div class=\"svg-icons-wrp__empty\">\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\n    </div>\n    {{#if allowEmptyValue}}\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n    {{/if}}\n</div>";
 
 /***/ }),
 /* 636 */
@@ -55645,19 +55645,19 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 643 */
 /***/ (function(module, exports) {
 
-	module.exports = "{{displayValue}}\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\r\n    </div>\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>";
+	module.exports = "{{displayValue}}\n<div class=\"svg-icons-wrp\">\n    <div class=\"svg-icons-wrp__empty\">\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\n    </div>\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n</div>";
 
 /***/ }),
 /* 644 */
 /***/ (function(module, exports) {
 
-	module.exports = "{{text}}\r\n<span class=\"svg-icons-wrp svg-icons-wrp_multiselect\">\r\n        <svg class=\"svg-icons svg-icons_multiselect\"><use xlink:href=\"#icon-checked\" /> </svg>\r\n    </span>";
+	module.exports = "{{text}}\n<span class=\"svg-icons-wrp svg-icons-wrp_multiselect\">\n        <svg class=\"svg-icons svg-icons_multiselect\"><use xlink:href=\"#icon-checked\" /> </svg>\n    </span>";
 
 /***/ }),
 /* 645 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\r\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\r\n{{#if explicitApply}}\r\n    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>\r\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>\r\n{{else}}\r\n    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>\r\n{{/if}}\r\n</div>";
+	module.exports = "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>\n</div>\n<div class=\"js-list multiselect-panel__list\"></div>\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\n{{#if explicitApply}}\n    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>\n{{else}}\n    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>\n{{/if}}\n</div>";
 
 /***/ }),
 /* 646 */
@@ -55669,7 +55669,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 647 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div class=\"svg-icons-wrp svg-icons-wrp_add\">\r\n        <svg class=\"svg-icons svg-icons_plus\"><use xlink:href=\"#icon-plus\" /> </svg>\r\n</div>\r\n{{localize 'CORE.FORM.EDITORS.REFERENCE.ADDNEW'}}";
+	module.exports = "<div class=\"svg-icons-wrp svg-icons-wrp_add\">\n        <svg class=\"svg-icons svg-icons_plus\"><use xlink:href=\"#icon-plus\" /> </svg>\n</div>\n{{localize 'CORE.FORM.EDITORS.REFERENCE.ADDNEW'}}";
 
 /***/ }),
 /* 648 */
@@ -55827,7 +55827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 674 */
 /***/ (function(module, exports) {
 
-	module.exports = "<legend class=\"layout__group__legend\">{{name}}</legend>\r\n<div class=\"js-container-region\"></div>";
+	module.exports = "<legend class=\"layout__group__legend\">{{name}}</legend>\n<div class=\"js-container-region\"></div>";
 
 /***/ }),
 /* 675 */
