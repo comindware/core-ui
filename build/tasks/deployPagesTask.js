@@ -45,10 +45,10 @@ module.exports = () => {
     mkdirp.sync(pagesDir);
     run('git init', pagesDir);
     run('git config user.name "Travis-CI"', pagesDir);
-    run('git config user.email "me@sburg.net"', pagesDir);
+    run('git config user.email "Stanislav.Guryev@comindware.com"', pagesDir);
     copyDemo(pagesResolver);
     copyDoc(pagesResolver);
     run('git add -A', pagesDir);
     run('git commit -m "Auto-deploy to Github Pages"', pagesDir);
-    run(`git push --force --quiet "https://${token}@${ref}" master:gh-pages`, pagesDir);
+    //run(`git push --force --quiet "https://${token}@${ref}" master:gh-pages`, pagesDir);
 };
