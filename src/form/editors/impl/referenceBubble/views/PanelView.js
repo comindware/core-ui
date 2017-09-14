@@ -9,10 +9,10 @@
 import { keypress, Handlebars } from 'lib';
 import { helpers } from 'utils';
 import list from 'list';
-import template from '../templates/referenceBubblePanel.hbs';
+import template from '../templates/bubblePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
-import LoadingView from './LoadingView';
-import AddNewButtonView from './AddNewButtonView';
+import LoadingView from './../../reference/views/LoadingView';
+import AddNewButtonView from './../../reference/views/AddNewButtonView';
 //import ReferenceBubblePanelTitleView from './ReferenceBubblePanelTitleView';
 
 const config = {
@@ -27,8 +27,8 @@ export default Marionette.LayoutView.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
-        this.fetchDelayId = _.uniqueId('fetch-delay-id-');
-        this.timeoutId = null;
+        // this.fetchDelayId = _.uniqueId('fetch-delay-id-');
+        // this.timeoutId = null;
     },
 
     className: 'dd-list dd-list_reference',
@@ -41,17 +41,6 @@ export default Marionette.LayoutView.extend({
         };
     },
 
-    ui: {
-        input: '.js-input'
-    },
-
-    events: {
-        'keyup @ui.input': '__onTextChange',
-        'change @ui.input': '__onTextChange',
-        'input @ui.input': '__onTextChange',
-        'click @ui.clear': '__clear'
-    },
-
     regions: {
         listRegion: '.js-list-region',
         scrollbarRegion: '.js-scrollbar-region',
@@ -61,7 +50,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        this.__assignKeyboardShortcuts();
+        //this.__assignKeyboardShortcuts();
     },
 
     onShow() {
@@ -101,7 +90,20 @@ export default Marionette.LayoutView.extend({
 
         this.scrollbarRegion.show(result.scrollbarView);
 
-        this.__updateFilter(true);
+        this.updateFilter(null, true);
+    },
+
+    handleCommand(command) {
+        switch (command) {
+            case 'up':
+                this.listView.moveCursorBy(-1, false);
+                break;
+            case 'down':
+                this.listView.moveCursorBy(1, false);
+                break;
+            default:
+                break;
+        }
     },
 
     __assignKeyboardShortcuts() {
@@ -143,12 +145,8 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __onTextChange() {
-        this.__updateFilter(false);
-    },
-
-    __updateFilter(immediate) {
-        const text = (this.ui.input.val() || '').trim();
+    updateFilter(value, immediate) {
+        const text = (value || '').trim();
         if (this.activeText === text) {
             return;
         }
@@ -157,23 +155,25 @@ export default Marionette.LayoutView.extend({
             this.__setLoading(true);
             const collection = this.model.get('collection');
             collection.deselect();
+            //collection.unhighlight();
             this.reqres.request('filter:text', {
                 text
             }).then(() => {
-                this.timeoutId = null;
                 if (collection.length > 0) {
                     if (!collection.contains(collection.selected)) {
                         const model = collection.at(0);
                         model.select();
                     }
                 }
+                //collection.highlight(text);
                 this.__setLoading(false);
             });
         };
         if (immediate) {
             updateNow();
         } else {
-            this.timeoutId = helpers.setUniqueTimeout(this.fetchDelayId, updateNow, this.options.textFilterDelay);
+            const updateWithDelay = _.debounce(updateNow, this.options.textFilterDelay);
+            updateWithDelay();
         }
     },
 
@@ -184,9 +184,7 @@ export default Marionette.LayoutView.extend({
         this.isLoading = isLoading;
         if (isLoading) {
             this.loadingRegion.show(new LoadingView());
-            this.ui.input.blur();
         } else {
-            this.ui.input.focus();
             this.loadingRegion.reset();
         }
     }

@@ -14,7 +14,7 @@ import template from './templates/referenceBubbleEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import FakeInputModel from './impl/referenceBubble/models/FakeInputModel';
 import ButtonView from './impl/referenceBubble/views/ButtonView';
-import ReferenceBubblePanelView from './impl/reference/views/ReferenceBubblePanelView';
+import PanelView from './impl/referenceBubble/views/PanelView';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
 import formRepository from '../formRepository';
@@ -127,7 +127,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()
             },
-            panelView: ReferenceBubblePanelView,
+            panelView: PanelView,
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
@@ -206,6 +206,10 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
 
     __onValueEdit() {
         return this.controller.edit(this.getValue());
+    },
+
+    __onInputSearch(value, immediate) {
+        this.dropdownView.panelView.updateFilter(value, immediate);
     },
 
     __onFilterText(options) {
@@ -338,7 +342,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __onInputUp() {
-        const collection = this.viewModel.panel.collection;
+        const collection = this.viewModel.get('panel').get('collection');
         if (collection.models[0].selected) {
             this.dropdownView.close();
             this.__focusButton();

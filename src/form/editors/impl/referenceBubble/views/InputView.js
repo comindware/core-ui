@@ -67,12 +67,12 @@ export default Marionette.ItemView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function(value, key) {
+        _.each(this.keyboardShortcuts, (value, key) => {
             const keys = key.split(',');
-            _.each(keys, function(k) {
+            _.each(keys, k => {
                 this.keyListener.simple_combo(k, value.bind(this));
             }, this);
-        }, this);
+        });
     },
 
     keyboardShortcuts: {
@@ -114,10 +114,8 @@ export default Marionette.ItemView.extend({
             return;
         }
         this.__updateInputWidth(this.__calculateDesiredInputWidth(value || this.ui.input.attr('placeholder')));
-        helpers.setUniqueTimeout(this.fetchDelayId, () => {
-            this.filterValue = value;
-            this.reqres.request('input:search', value);
-        }, config.TEXT_FETCH_DELAY);
+        this.filterValue = value;
+        this.reqres.request('input:search', value, false);
     },
 
     __calculateDesiredInputWidth(value) {
