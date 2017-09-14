@@ -22,6 +22,7 @@ deploy:
       branch: master
   - provider: script
     script: npm run deploy:pages
+    skip_cleanup: true
     on:
       tags: true
       repo: stasguryev/core-ui
