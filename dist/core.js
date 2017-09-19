@@ -98131,7 +98131,7 @@ exports.default = _formRepository2.default.editors.Code = _BaseLayoutEditorView2
     onShow: function onShow() {
         var _this = this;
 
-        this.editor = new _CodemirrorView2.default({ mode: this.options.mode, height: this.options.height });
+        this.editor = new _CodemirrorView2.default({ mode: this.options.mode, height: this.options.height, ontologyService: this.options.ontologyService });
         this.editor.on('change', this.__change, this);
         this.editor.on('maximize', function () {
             return _this.ui.fadingPanel.show();
@@ -98249,20 +98249,22 @@ var types = _Constants2.default.types;
 
 exports.default = Marionette.LayoutView.extend({
     initialize: function initialize() {
+        var _this = this;
+
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         _.bindAll(this, '__onBlur', '__onChange', '__showHint', '__find', '__undo', '__redo', '__format', '__cmwHint', '__showTooltip', '__hideTooltip', '__onMouseover', '__onMouseleave', '__onKeyDown', '__onMinimize');
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
-            // OntologyService.getOntology().then(ontologyModel => {
-            //     this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
-            //     if (this.codemirror) {
-            //         this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
-            //
-            //         //retokenize codemirror with ontology model
-            //         this.setValue(this.getValue());
-            //     }
-            // });
+            options.ontologyService.getOntology().then(function (ontologyModel) {
+                _this.autoCompleteArray = _MappingService2.default.mapOntologyModelToAutoCompleteArray(ontologyModel);
+                if (_this.codemirror) {
+                    _this.codemirror.getMode().ontologyObjects = _this.autoCompleteArray;
+
+                    //retokenize codemirror with ontology model
+                    _this.setValue(_this.getValue());
+                }
+            });
         }
     },
 
@@ -98283,7 +98285,7 @@ exports.default = Marionette.LayoutView.extend({
     className: 'dev-codemirror',
 
     onShow: function onShow() {
-        var _this = this;
+        var _this2 = this;
 
         this.toolbar = new _ToolbarView2.default({ maximized: this.options.maximized });
         this.toolbar.on('undo', this.__undo);
@@ -98292,8 +98294,8 @@ exports.default = Marionette.LayoutView.extend({
         this.toolbar.on('show:hint', this.__showHint);
         this.toolbar.on('find', this.__find);
         this.toolbar.on('maximize', function () {
-            _this.__onMaximize();
-            _this.trigger('maximize', _this);
+            _this2.__onMaximize();
+            _this2.trigger('maximize', _this2);
         });
         this.toolbar.on('minimize', this.__onMinimize);
 
@@ -98338,9 +98340,9 @@ exports.default = Marionette.LayoutView.extend({
         this.codemirror.on('change', this.__onChange);
         this.codemirror.on('keydown', this.__onKeyDown);
         this.codemirror.on('endCompletion', function () {
-            _this.__hideTooltip();
-            _this.isExternalChange = true;
-            _this.hintIsShown = false;
+            _this2.__hideTooltip();
+            _this2.isExternalChange = true;
+            _this2.hintIsShown = false;
         });
         if (this.options.mode === 'expression') {
             $(this.codemirror.getWrapperElement()).bind('mouseover', this.__onMouseover);
@@ -98370,7 +98372,7 @@ exports.default = Marionette.LayoutView.extend({
         this.__onMaximize();
     },
     __checkVisibleAndRefresh: function __checkVisibleAndRefresh() {
-        var _this2 = this;
+        var _this3 = this;
 
         if (this.$el.height()) {
             this.codemirror.refresh();
@@ -98379,7 +98381,7 @@ exports.default = Marionette.LayoutView.extend({
             }
         } else {
             this.refreshTimerId = setTimeout(function () {
-                return _this2.__checkVisibleAndRefresh();
+                return _this3.__checkVisibleAndRefresh();
             }, CHECK_VISIBILITY_DELAY);
         }
     },

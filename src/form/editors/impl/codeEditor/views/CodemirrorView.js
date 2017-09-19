@@ -33,15 +33,15 @@ export default Marionette.LayoutView.extend({
             '__showTooltip', '__hideTooltip', '__onMouseover', '__onMouseleave', '__onKeyDown', '__onMinimize');
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
-            // OntologyService.getOntology().then(ontologyModel => {
-            //     this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
-            //     if (this.codemirror) {
-            //         this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
-            //
-            //         //retokenize codemirror with ontology model
-            //         this.setValue(this.getValue());
-            //     }
-            // });
+            options.ontologyService.getOntology().then(ontologyModel => {
+                this.autoCompleteArray = MappingService.mapOntologyModelToAutoCompleteArray(ontologyModel);
+                if (this.codemirror) {
+                    this.codemirror.getMode().ontologyObjects = this.autoCompleteArray;
+
+                    //retokenize codemirror with ontology model
+                    this.setValue(this.getValue());
+                }
+            });
         }
     },
 
