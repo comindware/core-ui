@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-/*eslint-disable*/
-
 import 'lib';
 import { helpers } from 'utils';
 import PromiseService from './PromiseService';
@@ -96,7 +94,9 @@ export default window.Ajax = new (Marionette.Object.extend({
         if (protocol === methodName.WebApi) {
             for (let i = 0; i < parameterNames.length; i++) {
                 if (url.indexOf(parameterNames[i]) !== -1) {
+                    /*eslint-disable*/
                     url = url.replace(`{${parameterNames[i]}}`, parameters[i]); // set up url parameters
+                    /* eslint-enable */
                 } else {
                     data = parameters[i]; // set up [FromBody] parameters
                 }

@@ -1,7 +1,7 @@
 
 import template from './templates/documentExpressionEditor.html';
 import NewExpressionEditorView from './NewExpressionEditorView';
-import formRepository from '../formRepository';
+import DropdownEditor from './DropdownEditorView';
 
 const defaultOptions = {
     showTemplate: true
@@ -63,7 +63,7 @@ export default NewExpressionEditorView.extend({
             text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.TEMPLATE')
         });
 
-        this.templateEditor = new formRepository.editors.DropdownEditor(_.extend(this.options.templateEditorOptions, {
+        this.templateEditor = new DropdownEditor(_.extend(this.options.templateEditorOptions, {
             value: this.value.type === valueTypes.template ? this.value.value : null,
         }));
 

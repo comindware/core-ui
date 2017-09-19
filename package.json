@@ -42,7 +42,7 @@
   "devDependencies": {
     "autoprefixer": "^7.1.3",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
@@ -52,7 +52,7 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "cssnano": "^3.10.0",
-    "eslint": "^4.6.1",
+    "eslint": "^4.7.1",
     "eslint-loader": "^1.9.0",
     "exports-loader": "^0.6.2",
     "expose-loader": "^0.7.1",
@@ -74,7 +74,7 @@
     "jasmine-core": "^2.8.0",
     "jasmine-expect": "^3.7.1",
     "jasmine-jquery": "^2.1.1",
-    "jsdoc": "3.5.4",
+    "jsdoc": "3.5.5",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.0",
@@ -88,7 +88,7 @@
     "run-sequence": "^2.1.0",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.7",
-    "webpack": "^3.5.5"
+    "webpack": "^3.6.0"
   },
   "dependencies": {
     "backbone": "^1.3.3",

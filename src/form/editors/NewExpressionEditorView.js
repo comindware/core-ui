@@ -11,6 +11,7 @@
 
 import template from './impl/newExpressionEditor/templates/newExpression.html';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import DropdownEditor from './DropdownEditorView';
 import formRepository from '../formRepository';
 
 const valueTypes = {
@@ -140,7 +141,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         if (!this.valueTypeCollection.get(this.value.type)) {
             this.value.type = this.valueTypeCollection.at(0).id;
         }
-        this.typeEditor = new formRepository.editors.DropdownEditor({
+        this.typeEditor = new DropdownEditor({
             collection: this.valueTypeCollection,
             allowEmptyValue: false
         });
