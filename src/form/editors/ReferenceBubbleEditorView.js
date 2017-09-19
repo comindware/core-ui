@@ -34,7 +34,9 @@ const defaultOptions = {
     buttonView: ButtonView,
     listItemView: ReferenceListItemView,
     textFilterDelay: 300,
-    showTitle: true
+    maxQuantitySelected: 1,
+    canDeleteMember: true
+    //showTitle: true
 };
 
 /**
@@ -49,7 +51,7 @@ const defaultOptions = {
  * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
- * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
+ //* @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize(options) {
@@ -67,7 +69,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
 
         this.reqres.setHandler('panel:open', this.__onPanelOpenRequest, this);
 
-        this.reqres.setHandler('member:select', this.__onMemberSelect, this);
+        //this.reqres.setHandler('member:select', this.__onMemberSelect, this);
         this.reqres.setHandler('bubble:delete', this.__onBubbleDelete, this);
         this.reqres.setHandler('bubble:delete:last', this.__onBubbleDeleteLast, this);
         this.reqres.setHandler('input:search', this.__onInputSearch, this);
@@ -85,10 +87,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         const selectedModels = new Backbone.Collection(this.getValue(), {
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
         });
-        this.fakeInputModel = new FakeInputModel();
-        selectedModels.add(this.fakeInputModel, { at: selectedModels.length });
-        this.fakeInputModel.updateEmpty();
-        
+
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
                 selected: selectedModels
@@ -99,6 +98,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 totalCount: this.controller.totalCount || 0
             })
         });
+        
+        this.__updateFakeInputModel();
     },
 
     regions: {
@@ -157,10 +158,10 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
             });
         }, this);
 
-        if (this.options.showTitle) {
-            const value = this.getValue();
-            this.$el.prop('title', value && value.text ? value.text : '');
-        }
+        // if (this.options.showTitle) {
+        //     const value = this.getValue();
+        //     this.$el.prop('title', value && value.text ? value.text : '');
+        // }
     },
 
     __adjustValue(value) {
@@ -171,16 +172,23 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __value(value, triggerChange) {
-        if (this.value === value) {
+        if (JSON.stringify(this.value) === JSON.stringify(value)
+            || (_.isObject(value) && _.find(this.value, v => v.id === value.id))) {
             return;
         }
-        this.value = this.__adjustValue(value);
+        const adjustedValue = this.__adjustValue(value);
+        if (this.options.maxQuantitySelected === 1) {
+            this.value = _.isArray(adjustedValue) ? adjustedValue : [ adjustedValue ];
+        } else {
+            this.value = this.getValue().concat(adjustedValue);
+        }
+        let selected = this.viewModel.get('button').get('selected');
         this.viewModel.get('button').get('selected').reset(this.value);
         this.viewModel.get('panel').set('value', this.value);
 
-        if (this.options.showTitle) {
-            this.$el.prop('title', value && value.text ? value.text : '');
-        }
+        // if (this.options.showTitle) {
+        //     this.$el.prop('title', value && value.text ? value.text : '');
+        // }
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -200,8 +208,26 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     __onValueSet(model) {
         const value = model ? model.toJSON() : null;
         this.__value(value, true);
-        this.dropdownView.close();
+        //this.dropdownView.close();
         this.$el.focus();
+        const canAddMemberOldValue = this.__canAddMember();
+        const stopAddMembers = canAddMemberOldValue !== this.__canAddMember();
+        this.__updateFakeInputModel();
+        if (stopAddMembers) {
+            this.dropdownView.close();
+        } else {
+            this.__updateButtonInput();
+            this.__focusButton();
+        }
+    },
+
+    __canAddMember() {
+        const selectedMembers = _.filter(
+            this.viewModel.get('button').get('selected').models,
+            model => model !== this.fakeInputModel);
+
+        return this.getEnabled() && !this.getReadonly() &&
+            (!this.options.maxQuantitySelected || (this.options.maxQuantitySelected !== selectedMembers.length));
     },
 
     __onValueEdit() {
@@ -336,7 +362,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __onBubbleDeleteLast() {
-        const selectedModels = this.viewModel.get('selected');
+        const selectedModels = this.viewModel.get('button').get('selected');
         const model = selectedModels.models[selectedModels.models.length - 2];
         this.__onBubbleDelete(model);
     },
