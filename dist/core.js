@@ -28046,21 +28046,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.ui.pickerInput.datetimepicker('update');
 	    },
 	    updateValue: function updateValue(date) {
-	        var oldVal = this.model.get('value'),
-	            newVal = null;
+	        var newVal = null;
 	
 	        if (date === null || date === '') {
 	            newVal = null;
-	        } else if (oldVal && this.getOption('preserveTime')) {
-	            var momentOldVal = _lib.moment.utc(oldVal);
-	            var momentOldDisplayedDate = _lib.moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
-	            momentOldDisplayedDate = (0, _lib.moment)({
-	                year: momentOldDisplayedDate.year(),
-	                month: momentOldDisplayedDate.month(),
-	                date: momentOldDisplayedDate.date()
-	            });
-	            var diff = _lib.moment.utc(date).diff(momentOldDisplayedDate, 'days'); // Figure out number of days between displayed old date and entered new date
-	            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString(); // and apply it to stored old date to prevent transition-through-the-day bugs
 	        } else {
 	            newVal = _lib.moment.utc({
 	                year: date.getFullYear(),

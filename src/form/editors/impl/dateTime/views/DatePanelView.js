@@ -52,21 +52,10 @@ export default Marionette.ItemView.extend({
     },
 
     updateValue(date) {
-        let oldVal = this.model.get('value'),
-            newVal = null;
+        let newVal = null;
 
         if (date === null || date === '') {
             newVal = null;
-        } else if (oldVal && this.getOption('preserveTime')) {
-            const momentOldVal = moment.utc(oldVal);
-            let momentOldDisplayedDate = moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
-            momentOldDisplayedDate = moment({
-                year: momentOldDisplayedDate.year(),
-                month: momentOldDisplayedDate.month(),
-                date: momentOldDisplayedDate.date()
-            });
-            const diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');               // Figure out number of days between displayed old date and entered new date
-            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();    // and apply it to stored old date to prevent transition-through-the-day bugs
         } else {
             newVal = moment.utc({
                 year: date.getFullYear(),
