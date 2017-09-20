@@ -35,7 +35,7 @@ module.exports = () => {
             console.log('PrepareToPublishTask: no tags found, skip package.json update.');
             return;
         }
-        const version = matchResult[1];
+        const version = matchResult[matchResult.length - 1];
 
         //console.log(`PrepareToPublishTask: There are tags on the build that match the version pattern. Updating package.json with version ${version}...`);
         //const packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));

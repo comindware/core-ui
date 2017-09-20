@@ -8,7 +8,7 @@ export default {
         if (value === null) {
             formattedDisplayValue = '';
         } else if (format) {
-            formattedDisplayValue = moment(value).locale(LocalizationService.langCode).format(format);
+            formattedDisplayValue = moment.utc(value).locale(LocalizationService.langCode).format(format);
         } else {
             formattedDisplayValue = dateHelpers.getDisplayDate(moment.utc(value).utcOffset(timezoneOffset));
         }
