@@ -19,11 +19,11 @@ deploy:
     on:
       tags: true
       repo: comindware/core-ui
-      branch: master
+      branch: 1.4/release
   - provider: script
     script: npm run deploy:pages
     skip_cleanup: true
     on:
       tags: true
       repo: comindware/core-ui
-      branch: master
+      branch: 1.4/release
