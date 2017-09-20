@@ -151,6 +151,12 @@ export default Marionette.LayoutView.extend({
         this.__onMaximize();
     },
 
+    setReadonly(readonly) {
+        if (this.codemirror) {
+            this.codemirror.setOption('readOnly', readonly);
+        }
+    },
+
     __checkVisibleAndRefresh() {
         if (this.$el.height()) {
             this.codemirror.refresh();
@@ -351,13 +357,13 @@ export default Marionette.LayoutView.extend({
     __onKeyDown(editor, event) {
         const charCode = event.which === null ? event.keyCode : event.which;
         this.isExternalChange = !((!event.altKey && !event.ctrlKey && !event.metaKey) &&
-            (
-                (charCode === 62) ||
-                (charCode === 36) ||
-                (charCode > 64 && charCode < 91) ||
-                (charCode > 95 && charCode < 123) ||
-                (charCode === 8)
-            ));
+        (
+            (charCode === 62) ||
+            (charCode === 36) ||
+            (charCode > 64 && charCode < 91) ||
+            (charCode > 95 && charCode < 123) ||
+            (charCode === 8)
+        ));
     },
 
     __onMouseover(e) {

@@ -1206,6 +1206,14 @@ svg.svg-icons{
     display: none;
 }
 
+.editor_readonly .dev-code-editor-toolbar_button-two_stateable {
+    pointer-events: none;
+}
+
+.grid-cell .dev-code-button-edit {
+    position: relative;
+    bottom: 2px
+}
 
 
 
