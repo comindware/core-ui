@@ -4518,7 +4518,8 @@ li.CodeMirror-hint-active {
 .layout__tab-layout__panel-region {
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 0 5px;
 }.layout__vertical-layout {
     width: 100%;

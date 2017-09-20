@@ -1,5 +1,5 @@
 
-import template from './templates/membersSplitEditor.html';
+import template from './templates/membersSplitEditor.hbs';
 
 import MemberSplitController from './impl/membersSplit/controller/MemberSplitController';
 import formRepository from '../formRepository';

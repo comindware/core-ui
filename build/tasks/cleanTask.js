@@ -17,7 +17,8 @@ module.exports = () => {
         if (fs.existsSync(path)) {
             fs.readdirSync(path).forEach(file => {
                 const curPath = `${path}/${file}`;
-                if (fs.lstatSync(curPath).isDirectory()) {
+                const isTest = process.env === 'test'; //do not delete localization folder, because travis can not in C#
+                if (fs.lstatSync(curPath).isDirectory() && (!isTest || path.indexOf('localization') === -1)) {
                     deleteFolderRecursive(curPath);
                 } else {
                     fs.unlinkSync(curPath);

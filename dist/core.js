@@ -17670,7 +17670,9 @@ _formRepository2.default.editors.Text = _BaseItemEditorView2.default.extend( /**
     template: _lib.Handlebars.compile(_textEditor2.default),
 
     templateHelpers: function templateHelpers() {
-        return this.options;
+        return _.extend(this.options, {
+            title: this.value || ''
+        });
     },
 
 
@@ -17761,7 +17763,7 @@ _formRepository2.default.editors.Text = _BaseItemEditorView2.default.extend( /**
         }
         this.value = value;
 
-        if (this.options.showTitle) {
+        if (this.getOption('showTitle')) {
             this.$el.prop('title', value);
         }
         if (updateUi) {
@@ -19341,10 +19343,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _utils = __webpack_require__(3);
 
-var _LocalizationService = __webpack_require__(11);
-
-var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-
 var _moment = __webpack_require__(2);
 
 var _moment2 = _interopRequireDefault(_moment);
@@ -19357,7 +19355,7 @@ exports.default = {
         if (value === null) {
             formattedDisplayValue = '';
         } else if (format) {
-            formattedDisplayValue = (0, _moment2.default)(value).locale(_LocalizationService2.default.langCode).format(format);
+            formattedDisplayValue = _moment2.default.utc(value).utcOffset(timezoneOffset).format(format);
         } else {
             formattedDisplayValue = _utils.dateHelpers.getDisplayDate(_moment2.default.utc(value).utcOffset(timezoneOffset));
         }
@@ -90682,7 +90680,7 @@ module.exports = "{{#if maxLength}}\r\n    <textarea class=\"textarea js-textare
 /* 708 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if maxLength}}\r\n    <input type=\"text\" class=\"input input_text js-input\" placeholder=\"{{placeholder}}\" maxlength=\"{{maxLength}}\">\r\n{{else}}\r\n    <input type=\"text\" class=\"input input_text js-input\" placeholder=\"{{placeholder}}\">\r\n{{/if}}\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_text\"><use xlink:href=\"#icon-text\" /> </svg>\r\n    </div>\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>\r\n";
+module.exports = "{{#if maxLength}}\r\n    <input type=\"text\" class=\"input input_text js-input\" placeholder=\"{{placeholder}}\" maxlength=\"{{maxLength}}\" title=\"{{title}}\">\r\n{{else}}\r\n    <input type=\"text\" class=\"input input_text js-input\" placeholder=\"{{placeholder}}\" title=\"{{title}}\">\r\n{{/if}}\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_text\"><use xlink:href=\"#icon-text\" /> </svg>\r\n    </div>\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 709 */
@@ -91036,7 +91034,7 @@ module.exports = "<div class=\"js-dropdown-region dropdown-reference\"></div>";
 /* 713 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if hasValue}}\r\n    {{#if valueUrl}}\r\n        <a class=\"js-text reference-field__txt-link btn-wrp\" href=\"{{valueUrl}}\" target=\"_blank\" tabindex=\"-1\">{{text}}</a>\r\n    {{else}}\r\n        <span class=\"js-text reference-field__txt btn-wrp\">{{text}}</span>\r\n    {{/if}}\r\n{{else}}\r\n    <span class=\"js-text reference-field__txt btn-wrp\">{{localize 'CORE.FORM.EDITORS.REFERENCE.NOTSET'}}</span>\r\n{{/if}}\r\n{{#if showEditButton}}\r\n    <div class=\"js-edit-button reference-field__edit-btn \"><svg class=\"svg-icons svg-icons_pencil\"><use xlink:href=\"#icon-pencil\" /></svg></div>\r\n{{/if}}\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\r\n    </div>\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>";
+module.exports = "{{#if hasValue}}\r\n    {{#if valueUrl}}\r\n        <a class=\"js-text reference-field__txt-link btn-wrp\" href=\"{{valueUrl}}\" target=\"_blank\" tabindex=\"-1\" title=\"{{text}}\">{{text}}</a>\r\n    {{else}}\r\n        <span class=\"js-text reference-field__txt btn-wrp\" title=\"{{text}}\">{{text}}</span>\r\n    {{/if}}\r\n{{else}}\r\n    <span class=\"js-text reference-field__txt btn-wrp\">{{localize 'CORE.FORM.EDITORS.REFERENCE.NOTSET'}}</span>\r\n{{/if}}\r\n{{#if showEditButton}}\r\n    <div class=\"js-edit-button reference-field__edit-btn \"><svg class=\"svg-icons svg-icons_pencil\"><use xlink:href=\"#icon-pencil\" /></svg></div>\r\n{{/if}}\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\r\n    </div>\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 714 */
@@ -94904,23 +94902,10 @@ exports.default = Marionette.ItemView.extend({
         this.ui.pickerInput.datetimepicker('update');
     },
     updateValue: function updateValue(date) {
-        var oldVal = this.model.get('value');
         var newVal = null;
 
         if (date === null || date === '') {
             newVal = null;
-        } else if (oldVal && this.getOption('preserveTime')) {
-            var momentOldVal = _lib.moment.utc(oldVal);
-            var momentOldDisplayedDate = _lib.moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
-            momentOldDisplayedDate = (0, _lib.moment)({
-                year: momentOldDisplayedDate.year(),
-                month: momentOldDisplayedDate.month(),
-                date: momentOldDisplayedDate.date()
-            });
-            // Figure out number of days between displayed old date and entered new date
-            var diff = _lib.moment.utc(date).diff(momentOldDisplayedDate, 'days');
-            // and apply it to stored old date to prevent transition-through-the-day bugs
-            newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();
         } else {
             newVal = _lib.moment.utc({
                 year: date.getFullYear(),
@@ -104437,9 +104422,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _workspaceItemSplitEditor = __webpack_require__(892);
+var _workSpaceItemSplitEditor = __webpack_require__(892);
 
-var _workspaceItemSplitEditor2 = _interopRequireDefault(_workspaceItemSplitEditor);
+var _workSpaceItemSplitEditor2 = _interopRequireDefault(_workSpaceItemSplitEditor);
 
 var _formRepository = __webpack_require__(4);
 
@@ -104499,7 +104484,7 @@ _formRepository2.default.editors.WorkItemsSplit = _BaseLayoutEditorView2.default
 
     className: 'work-items-editor',
 
-    template: Handlebars.compile(_workspaceItemSplitEditor2.default),
+    template: Handlebars.compile(_workSpaceItemSplitEditor2.default),
 
     setValue: function setValue(value) {
         this.__value(value, false);
@@ -104525,7 +104510,7 @@ exports.default = _formRepository2.default.editors.WorkItemsSplit;
 /* 892 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"field-toggle toggle-wrp js-workspaceitems-editor\"><span class=\"link-for-popup js-workspaceitems-text\">{{localize 'SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.EDITWORKSPACESECTIONS'}}</span></div>\n";
+module.exports = "<div class=\"field-toggle toggle-wrp js-workspaceitems-editor\">\n    <span class=\"link-for-popup js-workspaceitems-text\">{{localize 'SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.EDITWORKSPACESECTIONS'}}</span>\n</div>\n";
 
 /***/ }),
 /* 893 */
@@ -105188,7 +105173,7 @@ exports.default = _ReferenceButtonView2.default.extend({
 /* 906 */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"js-text reference-field__txt btn-wrp\">\r\n    {{#if text}}\r\n        {{text}}\r\n    {{else}}\r\n        <span class=\"member-text__empty\">{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>\r\n    {{/if}}\r\n</span>\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>";
+module.exports = "<span class=\"js-text reference-field__txt btn-wrp\" title=\"{{text}}\">\r\n    {{#if text}}\r\n        {{text}}\r\n    {{else}}\r\n        <span class=\"member-text__empty\">{{localize 'CORE.FORM.EDITORS.MEMBERSELECT.NOTSET'}}</span>\r\n    {{/if}}\r\n</span>\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 907 */
