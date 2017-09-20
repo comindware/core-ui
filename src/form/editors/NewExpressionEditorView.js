@@ -101,6 +101,9 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         this.typeEditor.setValue(value.type || valueTypes.value);
         switch (value.type) {
             case valueTypes.value:
+                if (!this.valueEditor) {
+                    return;
+                }
                 if (_.isArray(this.value.value) && this.value.value.length === 1) {
                     this.valueEditor.setValue(this.value.value[0]);
                 } else {
@@ -108,12 +111,21 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
                 }
                 break;
             case valueTypes.context:
+                if (!this.contextEditor) {
+                    return;
+                }
                 this.contextEditor.setValue(value.value);
                 break;
             case valueTypes.expression:
+                if (!this.expressionEditor) {
+                    return;
+                }
                 this.expressionEditor.setValue(value.value);
                 break;
             case valueTypes.script:
+                if (!this.scriptEditor) {
+                    return;
+                }
                 this.scriptEditor.setValue(value.value);
                 break;
             default:
@@ -275,5 +287,27 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         }
         this.value = { type, value };
         this.__triggerChange();
+    },
+
+    __setReadonly(readonly) {
+        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+
+        this.typeEditor.setReadonly(readonly);
+        switch (this.value && this.value.type) {
+            case valueTypes.value:
+                this.valueEditor.setReadonly(readonly);
+                break;
+            case valueTypes.context:
+                this.contextEditor.setReadonly(readonly);
+                break;
+            case valueTypes.expression:
+                this.expressionEditor.setReadonly(readonly);
+                break;
+            case valueTypes.script:
+                this.scriptEditor.setReadonly(readonly);
+                break;
+            default:
+                break;
+        }
     }
 });

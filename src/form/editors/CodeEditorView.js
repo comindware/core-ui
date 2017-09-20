@@ -73,7 +73,7 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         this.editor = new CodemirrorView({ mode: this.options.mode, height: this.options.height, ontologyService: this.options.ontologyService });
         this.editor.on('change', this.__change, this);
         this.editor.on('maximize', () => this.ui.fadingPanel.show());
@@ -86,12 +86,12 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
         this.editorContainer.show(this.editor);
         this.editor.setValue(this.value || '');
         this.ui.fadingPanel.hide();
-        if (this.options.showMode === showModes.normal) {
-            this.ui.editBtn.hide();
-            this.ui.clearBtn.hide();
-        } else {
+        if (this.options.showMode === showModes.button) {
             this.ui.editor.hide();
             this.$el.addClass(classes.buttonMode);
+        } else {
+            this.ui.editBtn.hide();
+            this.ui.clearBtn.hide();
         }
         this.__setEditBtnText();
     },
@@ -139,5 +139,10 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
         } else {
             this.ui.editBtn.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTY'));
         }
+    },
+
+    __setReadonly(readonly) {
+        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        this.editor.setReadonly(readonly);
     }
 });
