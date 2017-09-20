@@ -23,7 +23,7 @@
     "build": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js build",
     "deploy": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy",
     "deploy:pages": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js deploy:pages",
-    "test": "cross-env NODE_ENV=production DEBUG=false gulp --gulpfile build/gulpfile.js test:coverage"
+    "test": "cross-env NODE_ENV=test DEBUG=false gulp --gulpfile build/gulpfile.js test:coverage"
   },
   "repository": {
     "type": "git",

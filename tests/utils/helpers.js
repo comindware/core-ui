@@ -6,11 +6,9 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import core from 'coreApi';
 import { dataProvider } from './testData';
-import localizationMap from 'localizationMap';
+import localizationMap from '../../dist/localization/localization.en.json';
 import 'jasmine-jquery';
 
 const $ = core.lib.$; // jshint ignore:line
