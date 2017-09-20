@@ -33,9 +33,9 @@ module.exports = options => {
             rules: [{
                 test: /\.js$/,
                 loader: 'babel-loader',
-                include: [
-                    pathResolver.source(),
-                    pathResolver.tests()
+                exclude: [
+                    pathResolver.node_modules(),
+                    pathResolver.source('external')
                 ],
                 options: {
                     presets: ['latest']
@@ -212,7 +212,8 @@ module.exports = options => {
             alias: {
                 rangyinputs: pathResolver.source('external/rangyinputs/rangyinputs-jquery-src'),
                 keypress: pathResolver.source('external/Keypress/keypress-2.1.0.min'),
-                handlebars: 'handlebars/dist/handlebars'
+                handlebars: 'handlebars/dist/handlebars',
+                localizationMap: pathResolver.compiled('localization/localization.en.json')
             }
         },
         devServer: {
@@ -220,11 +221,7 @@ module.exports = options => {
             stats: 'minimal'
         }
     };
-
-    if (TEST) {
-        webpackConfig.resolve.alias.localizationMap = pathResolver.compiled('localization/localization.en.json');
-    }
-
+    
     if (!TEST) {
         webpackConfig.entry = ['babel-polyfill', pathResolver.source('coreApi.js')];
         webpackConfig.output = {
@@ -234,7 +231,20 @@ module.exports = options => {
             libraryTarget: 'umd'
         };
     }
-
+    /*
+        if (TEST_COVERAGE) {
+            webpackConfig.module.rules.push({
+                test: /\.js?$/,
+                enforce: 'post',
+                exclude: [
+                    pathResolver.tests(),
+                    pathResolver.node_modules(),
+                    pathResolver.source('external')
+                ],
+                loader: 'istanbul-instrumenter-loader'
+            });
+        }
+    */
     if (PRODUCTION) {
         webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
         webpackConfig.devtool = 'source-map';

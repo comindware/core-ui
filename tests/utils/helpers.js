@@ -8,7 +8,7 @@
 
 import core from 'coreApi';
 import { dataProvider } from './testData';
-import localizationMap from '../../dist/localization/localization.en.json';
+import localizationMap from 'localizationMap';
 import 'jasmine-jquery';
 
 const $ = core.lib.$; // jshint ignore:line

@@ -25,7 +25,8 @@ module.exports = function (config) {
             'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-sourcemap-loader',
-            'karma-webpack'
+            'karma-webpack',
+            'karma-coverage'
         ],
 
         // list of files / patterns to load in the browser

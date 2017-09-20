@@ -1316,13 +1316,18 @@ function skipExtendingChars(str, pos, dir) {
 }
 
 // Returns the value from the range [`from`; `to`] that satisfies
-// `pred` and is closest to `from`. Assumes that at least `to` satisfies `pred`.
+// `pred` and is closest to `from`. Assumes that at least `to`
+// satisfies `pred`. Supports `from` being greater than `to`.
 function findFirst(pred, from, to) {
+  // At any point we are certain `to` satisfies `pred`, don't know
+  // whether `from` does.
+  var dir = from > to ? -1 : 1;
   for (;;) {
-    if (Math.abs(from - to) <= 1) { return pred(from) ? from : to }
-    var mid = Math.floor((from + to) / 2);
+    if (from == to) { return from }
+    var midF = (from + to) / 2, mid = dir < 0 ? Math.ceil(midF) : Math.floor(midF);
+    if (mid == from) { return pred(mid) ? from : to }
     if (pred(mid)) { to = mid; }
-    else { from = mid; }
+    else { from = mid + dir; }
   }
 }
 
@@ -1934,12 +1939,12 @@ function findMaxLine(cm) {
 // BIDI HELPERS
 
 function iterateBidiSections(order, from, to, f) {
-  if (!order) { return f(from, to, "ltr") }
+  if (!order) { return f(from, to, "ltr", 0) }
   var found = false;
   for (var i = 0; i < order.length; ++i) {
     var part = order[i];
     if (part.from < to && part.to > from || from == to && part.to == from) {
-      f(Math.max(part.from, from), Math.min(part.to, to), part.level == 1 ? "rtl" : "ltr");
+      f(Math.max(part.from, from), Math.min(part.to, to), part.level == 1 ? "rtl" : "ltr", i);
       found = true;
     }
   }
@@ -2140,112 +2145,6 @@ function getOrder(line, direction) {
   var order = line.order;
   if (order == null) { order = line.order = bidiOrdering(line.text, direction); }
   return order
-}
-
-function moveCharLogically(line, ch, dir) {
-  var target = skipExtendingChars(line.text, ch + dir, dir);
-  return target < 0 || target > line.text.length ? null : target
-}
-
-function moveLogically(line, start, dir) {
-  var ch = moveCharLogically(line, start.ch, dir);
-  return ch == null ? null : new Pos(start.line, ch, dir < 0 ? "after" : "before")
-}
-
-function endOfLine(visually, cm, lineObj, lineNo, dir) {
-  if (visually) {
-    var order = getOrder(lineObj, cm.doc.direction);
-    if (order) {
-      var part = dir < 0 ? lst(order) : order[0];
-      var moveInStorageOrder = (dir < 0) == (part.level == 1);
-      var sticky = moveInStorageOrder ? "after" : "before";
-      var ch;
-      // With a wrapped rtl chunk (possibly spanning multiple bidi parts),
-      // it could be that the last bidi part is not on the last visual line,
-      // since visual lines contain content order-consecutive chunks.
-      // Thus, in rtl, we are looking for the first (content-order) character
-      // in the rtl chunk that is on the last line (that is, the same line
-      // as the last (content-order) character).
-      if (part.level > 0) {
-        var prep = prepareMeasureForLine(cm, lineObj);
-        ch = dir < 0 ? lineObj.text.length - 1 : 0;
-        var targetTop = measureCharPrepared(cm, prep, ch).top;
-        ch = findFirst(function (ch) { return measureCharPrepared(cm, prep, ch).top == targetTop; }, (dir < 0) == (part.level == 1) ? part.from : part.to - 1, ch);
-        if (sticky == "before") { ch = moveCharLogically(lineObj, ch, 1); }
-      } else { ch = dir < 0 ? part.to : part.from; }
-      return new Pos(lineNo, ch, sticky)
-    }
-  }
-  return new Pos(lineNo, dir < 0 ? lineObj.text.length : 0, dir < 0 ? "before" : "after")
-}
-
-function moveVisually(cm, line, start, dir) {
-  var bidi = getOrder(line, cm.doc.direction);
-  if (!bidi) { return moveLogically(line, start, dir) }
-  if (start.ch >= line.text.length) {
-    start.ch = line.text.length;
-    start.sticky = "before";
-  } else if (start.ch <= 0) {
-    start.ch = 0;
-    start.sticky = "after";
-  }
-  var partPos = getBidiPartAt(bidi, start.ch, start.sticky), part = bidi[partPos];
-  if (cm.doc.direction == "ltr" && part.level % 2 == 0 && (dir > 0 ? part.to > start.ch : part.from < start.ch)) {
-    // Case 1: We move within an ltr part in an ltr editor. Even with wrapped lines,
-    // nothing interesting happens.
-    return moveLogically(line, start, dir)
-  }
-
-  var mv = function (pos, dir) { return moveCharLogically(line, pos instanceof Pos ? pos.ch : pos, dir); };
-  var prep;
-  var getWrappedLineExtent = function (ch) {
-    if (!cm.options.lineWrapping) { return {begin: 0, end: line.text.length} }
-    prep = prep || prepareMeasureForLine(cm, line);
-    return wrappedLineExtentChar(cm, line, prep, ch)
-  };
-  var wrappedLineExtent = getWrappedLineExtent(start.sticky == "before" ? mv(start, -1) : start.ch);
-
-  if (cm.doc.direction == "rtl" || part.level == 1) {
-    var moveInStorageOrder = (part.level == 1) == (dir < 0);
-    var ch = mv(start, moveInStorageOrder ? 1 : -1);
-    if (ch != null && (!moveInStorageOrder ? ch >= part.from && ch >= wrappedLineExtent.begin : ch <= part.to && ch <= wrappedLineExtent.end)) {
-      // Case 2: We move within an rtl part or in an rtl editor on the same visual line
-      var sticky = moveInStorageOrder ? "before" : "after";
-      return new Pos(start.line, ch, sticky)
-    }
-  }
-
-  // Case 3: Could not move within this bidi part in this visual line, so leave
-  // the current bidi part
-
-  var searchInVisualLine = function (partPos, dir, wrappedLineExtent) {
-    var getRes = function (ch, moveInStorageOrder) { return moveInStorageOrder
-      ? new Pos(start.line, mv(ch, 1), "before")
-      : new Pos(start.line, ch, "after"); };
-
-    for (; partPos >= 0 && partPos < bidi.length; partPos += dir) {
-      var part = bidi[partPos];
-      var moveInStorageOrder = (dir > 0) == (part.level != 1);
-      var ch = moveInStorageOrder ? wrappedLineExtent.begin : mv(wrappedLineExtent.end, -1);
-      if (part.from <= ch && ch < part.to) { return getRes(ch, moveInStorageOrder) }
-      ch = moveInStorageOrder ? part.from : mv(part.to, -1);
-      if (wrappedLineExtent.begin <= ch && ch < wrappedLineExtent.end) { return getRes(ch, moveInStorageOrder) }
-    }
-  };
-
-  // Case 3a: Look for other bidi parts on the same visual line
-  var res = searchInVisualLine(partPos + dir, dir, wrappedLineExtent);
-  if (res) { return res }
-
-  // Case 3b: Look for other bidi parts on the next visual line
-  var nextCh = dir > 0 ? wrappedLineExtent.end : mv(wrappedLineExtent.begin, -1);
-  if (nextCh != null && !(dir > 0 && nextCh == line.text.length)) {
-    res = searchInVisualLine(dir > 0 ? 0 : bidi.length - 1, dir, getWrappedLineExtent(nextCh));
-    if (res) { return res }
-  }
-
-  // Case 4: Nowhere to move
-  return null
 }
 
 // EVENT HANDLING
@@ -3758,15 +3657,22 @@ function pageScrollY() {
   return window.pageYOffset || (document.documentElement || document.body).scrollTop
 }
 
+function widgetTopHeight(lineObj) {
+  var height = 0;
+  if (lineObj.widgets) { for (var i = 0; i < lineObj.widgets.length; ++i) { if (lineObj.widgets[i].above)
+    { height += widgetHeight(lineObj.widgets[i]); } } }
+  return height
+}
+
 // Converts a {top, bottom, left, right} box from line-local
 // coordinates into another coordinate system. Context may be one of
 // "line", "div" (display.lineDiv), "local"./null (editor), "window",
 // or "page".
 function intoCoordSystem(cm, lineObj, rect, context, includeWidgets) {
-  if (!includeWidgets && lineObj.widgets) { for (var i = 0; i < lineObj.widgets.length; ++i) { if (lineObj.widgets[i].above) {
-    var size = widgetHeight(lineObj.widgets[i]);
-    rect.top += size; rect.bottom += size;
-  } } }
+  if (!includeWidgets) {
+    var height = widgetTopHeight(lineObj);
+    rect.top += height; rect.bottom += height;
+  }
   if (context == "line") { return rect }
   if (!context) { context = "local"; }
   var yOff = heightAtLine(lineObj);
@@ -3841,7 +3747,7 @@ function cursorCoords(cm, pos, context, lineObj, preparedMeasure, varHeight) {
   if (!order) { return get(sticky == "before" ? ch - 1 : ch, sticky == "before") }
 
   function getBidi(ch, partPos, invert) {
-    var part = order[partPos], right = (part.level % 2) != 0;
+    var part = order[partPos], right = part.level == 1;
     return get(invert ? ch - 1 : ch, right != invert)
   }
   var partPos = getBidiPartAt(order, ch, sticky);
@@ -3899,77 +3805,146 @@ function coordsChar(cm, x, y) {
 }
 
 function wrappedLineExtent(cm, lineObj, preparedMeasure, y) {
-  var measure = function (ch) { return intoCoordSystem(cm, lineObj, measureCharPrepared(cm, preparedMeasure, ch), "line"); };
+  y -= widgetTopHeight(lineObj);
   var end = lineObj.text.length;
-  var begin = findFirst(function (ch) { return measure(ch - 1).bottom <= y; }, end, 0);
-  end = findFirst(function (ch) { return measure(ch).top > y; }, begin, end);
+  var begin = findFirst(function (ch) { return measureCharPrepared(cm, preparedMeasure, ch - 1).bottom <= y; }, end, 0);
+  end = findFirst(function (ch) { return measureCharPrepared(cm, preparedMeasure, ch).top > y; }, begin, end);
   return {begin: begin, end: end}
 }
 
 function wrappedLineExtentChar(cm, lineObj, preparedMeasure, target) {
+  if (!preparedMeasure) { preparedMeasure = prepareMeasureForLine(cm, lineObj); }
   var targetTop = intoCoordSystem(cm, lineObj, measureCharPrepared(cm, preparedMeasure, target), "line").top;
   return wrappedLineExtent(cm, lineObj, preparedMeasure, targetTop)
 }
 
+// Returns true if the given side of a box is after the given
+// coordinates, in top-to-bottom, left-to-right order.
+function boxIsAfter(box, x, y, left) {
+  return box.bottom <= y ? false : box.top > y ? true : (left ? box.left : box.right) > x
+}
+
 function coordsCharInner(cm, lineObj, lineNo$$1, x, y) {
+  // Move y into line-local coordinate space
   y -= heightAtLine(lineObj);
-  var begin = 0, end = lineObj.text.length;
   var preparedMeasure = prepareMeasureForLine(cm, lineObj);
-  var pos;
+  // When directly calling `measureCharPrepared`, we have to adjust
+  // for the widgets at this line.
+  var widgetHeight$$1 = widgetTopHeight(lineObj);
+  var begin = 0, end = lineObj.text.length, ltr = true;
+
   var order = getOrder(lineObj, cm.doc.direction);
+  // If the line isn't plain left-to-right text, first figure out
+  // which bidi section the coordinates fall into.
   if (order) {
-    if (cm.options.lineWrapping) {
-      var assign;
-      ((assign = wrappedLineExtent(cm, lineObj, preparedMeasure, y), begin = assign.begin, end = assign.end, assign));
-    }
-    pos = new Pos(lineNo$$1, Math.floor(begin + (end - begin) / 2));
-    var beginLeft = cursorCoords(cm, pos, "line", lineObj, preparedMeasure).left;
-    var dir = beginLeft < x ? 1 : -1;
-    var prevDiff, diff = beginLeft - x, prevPos;
-    var steps = Math.ceil((end - begin) / 4);
-    outer: do {
-      prevDiff = diff;
-      prevPos = pos;
-      var i = 0;
-      for (; i < steps; ++i) {
-        var prevPos$1 = pos;
-        pos = moveVisually(cm, lineObj, pos, dir);
-        if (pos == null || pos.ch < begin || end <= (pos.sticky == "before" ? pos.ch - 1 : pos.ch)) {
-          pos = prevPos$1;
-          break outer
-        }
-      }
-      diff = cursorCoords(cm, pos, "line", lineObj, preparedMeasure).left - x;
-      if (steps > 1) {
-        var diff_change_per_step = Math.abs(diff - prevDiff) / steps;
-        steps = Math.min(steps, Math.ceil(Math.abs(diff) / diff_change_per_step));
-        dir = diff < 0 ? 1 : -1;
-      }
-    } while (diff != 0 && (steps > 1 || ((dir < 0) != (diff < 0) && (Math.abs(diff) <= Math.abs(prevDiff)))))
-    if (Math.abs(diff) > Math.abs(prevDiff)) {
-      if ((diff < 0) == (prevDiff < 0)) { throw new Error("Broke out of infinite loop in coordsCharInner") }
-      pos = prevPos;
-    }
-  } else {
-    var ch = findFirst(function (ch) {
-      var box = intoCoordSystem(cm, lineObj, measureCharPrepared(cm, preparedMeasure, ch), "line");
-      if (box.top > y) {
-        // For the cursor stickiness
-        end = Math.min(ch, end);
-        return true
-      }
-      else if (box.bottom <= y) { return false }
-      else if (box.left > x) { return true }
-      else if (box.right < x) { return false }
-      else { return (x - box.left < box.right - x) }
-    }, begin, end);
-    ch = skipExtendingChars(lineObj.text, ch, 1);
-    pos = new Pos(lineNo$$1, ch, ch == end ? "before" : "after");
+    var part = (cm.options.lineWrapping ? coordsBidiPartWrapped : coordsBidiPart)
+                 (cm, lineObj, lineNo$$1, preparedMeasure, order, x, y);
+    ltr = part.level != 1;
+    // The awkward -1 offsets are needed because findFirst (called
+    // on these below) will treat its first bound as inclusive,
+    // second as exclusive, but we want to actually address the
+    // characters in the part's range
+    begin = ltr ? part.from : part.to - 1;
+    end = ltr ? part.to : part.from - 1;
   }
-  var coords = cursorCoords(cm, pos, "line", lineObj, preparedMeasure);
-  if (y < coords.top || coords.bottom < y) { pos.outside = true; }
-  pos.xRel = x < coords.left ? -1 : (x > coords.right ? 1 : 0);
-  return pos
+
+  // A binary search to find the first character whose bounding box
+  // starts after the coordinates. If we run across any whose box wrap
+  // the coordinates, store that.
+  var chAround = null, boxAround = null;
+  var ch = findFirst(function (ch) {
+    var box = measureCharPrepared(cm, preparedMeasure, ch);
+    box.top += widgetHeight$$1; box.bottom += widgetHeight$$1;
+    if (!boxIsAfter(box, x, y, false)) { return false }
+    if (box.top <= y && box.left <= x) {
+      chAround = ch;
+      boxAround = box;
+    }
+    return true
+  }, begin, end);
+
+  var baseX, sticky, outside = false;
+  // If a box around the coordinates was found, use that
+  if (boxAround) {
+    // Distinguish coordinates nearer to the left or right side of the box
+    var atLeft = x - boxAround.left < boxAround.right - x, atStart = atLeft == ltr;
+    ch = chAround + (atStart ? 0 : 1);
+    sticky = atStart ? "after" : "before";
+    baseX = atLeft ? boxAround.left : boxAround.right;
+  } else {
+    // (Adjust for extended bound, if necessary.)
+    if (!ltr && (ch == end || ch == begin)) { ch++; }
+    // To determine which side to associate with, get the box to the
+    // left of the character and compare it's vertical position to the
+    // coordinates
+    sticky = ch == 0 ? "after" : ch == lineObj.text.length ? "before" :
+      (measureCharPrepared(cm, preparedMeasure, ch - (ltr ? 1 : 0)).bottom + widgetHeight$$1 <= y) == ltr ?
+      "after" : "before";
+    // Now get accurate coordinates for this place, in order to get a
+    // base X position
+    var coords = cursorCoords(cm, Pos(lineNo$$1, ch, sticky), "line", lineObj, preparedMeasure);
+    baseX = coords.left;
+    outside = y < coords.top || y >= coords.bottom;
+  }
+
+  ch = skipExtendingChars(lineObj.text, ch, 1);
+  return PosWithInfo(lineNo$$1, ch, sticky, outside, x - baseX)
+}
+
+function coordsBidiPart(cm, lineObj, lineNo$$1, preparedMeasure, order, x, y) {
+  // Bidi parts are sorted left-to-right, and in a non-line-wrapping
+  // situation, we can take this ordering to correspond to the visual
+  // ordering. This finds the first part whose end is after the given
+  // coordinates.
+  var index = findFirst(function (i) {
+    var part = order[i], ltr = part.level != 1;
+    return boxIsAfter(cursorCoords(cm, Pos(lineNo$$1, ltr ? part.to : part.from, ltr ? "before" : "after"),
+                                   "line", lineObj, preparedMeasure), x, y, true)
+  }, 0, order.length - 1);
+  var part = order[index];
+  // If this isn't the first part, the part's start is also after
+  // the coordinates, and the coordinates aren't on the same line as
+  // that start, move one part back.
+  if (index > 0) {
+    var ltr = part.level != 1;
+    var start = cursorCoords(cm, Pos(lineNo$$1, ltr ? part.from : part.to, ltr ? "after" : "before"),
+                             "line", lineObj, preparedMeasure);
+    if (boxIsAfter(start, x, y, true) && start.top > y)
+      { part = order[index - 1]; }
+  }
+  return part
+}
+
+function coordsBidiPartWrapped(cm, lineObj, _lineNo, preparedMeasure, order, x, y) {
+  // In a wrapped line, rtl text on wrapping boundaries can do things
+  // that don't correspond to the ordering in our `order` array at
+  // all, so a binary search doesn't work, and we want to return a
+  // part that only spans one line so that the binary search in
+  // coordsCharInner is safe. As such, we first find the extent of the
+  // wrapped line, and then do a flat search in which we discard any
+  // spans that aren't on the line.
+  var ref = wrappedLineExtent(cm, lineObj, preparedMeasure, y);
+  var begin = ref.begin;
+  var end = ref.end;
+  var part = null, closestDist = null;
+  for (var i = 0; i < order.length; i++) {
+    var p = order[i];
+    if (p.from >= end || p.to <= begin) { continue }
+    var ltr = p.level != 1;
+    var endX = measureCharPrepared(cm, preparedMeasure, ltr ? Math.min(end, p.to) - 1 : Math.max(begin, p.from)).right;
+    // Weigh against spans ending before this, so that they are only
+    // picked if nothing ends after
+    var dist = endX < x ? x - endX + 1e9 : endX - x;
+    if (!part || closestDist > dist) {
+      part = p;
+      closestDist = dist;
+    }
+  }
+  if (!part) { part = order[order.length - 1]; }
+  // Clip the part to the wrapped line.
+  if (part.from < begin) { part = {from: begin, to: part.to, level: part.level}; }
+  if (part.to > end) { part = {from: part.from, to: end, level: part.level}; }
+  return part
 }
 
 var measureText;
@@ -4095,12 +4070,14 @@ function updateSelection(cm) {
 }
 
 function prepareSelection(cm, primary) {
+  if ( primary === void 0 ) primary = true;
+
   var doc = cm.doc, result = {};
   var curFragment = result.cursors = document.createDocumentFragment();
   var selFragment = result.selection = document.createDocumentFragment();
 
   for (var i = 0; i < doc.sel.ranges.length; i++) {
-    if (primary === false && i == doc.sel.primIndex) { continue }
+    if (!primary && i == doc.sel.primIndex) { continue }
     var range$$1 = doc.sel.ranges[i];
     if (range$$1.from().line >= cm.display.viewTo || range$$1.to().line < cm.display.viewFrom) { continue }
     var collapsed = range$$1.empty();
@@ -4131,6 +4108,8 @@ function drawSelectionCursor(cm, head, output) {
   }
 }
 
+function cmpCoords(a, b) { return a.top - b.top || a.left - b.left }
+
 // Draws the given range as a highlighted selection
 function drawSelectionRange(cm, range$$1, output) {
   var display = cm.display, doc = cm.doc;
@@ -4153,30 +4132,48 @@ function drawSelectionRange(cm, range$$1, output) {
       return charCoords(cm, Pos(line, ch), "div", lineObj, bias)
     }
 
-    iterateBidiSections(getOrder(lineObj, doc.direction), fromArg || 0, toArg == null ? lineLen : toArg, function (from, to, dir) {
-      var leftPos = coords(from, "left"), rightPos, left, right;
-      if (from == to) {
-        rightPos = leftPos;
-        left = right = leftPos.left;
-      } else {
-        rightPos = coords(to - 1, "right");
-        if (dir == "rtl") { var tmp = leftPos; leftPos = rightPos; rightPos = tmp; }
-        left = leftPos.left;
-        right = rightPos.right;
+    var order = getOrder(lineObj, doc.direction);
+    iterateBidiSections(order, fromArg || 0, toArg == null ? lineLen : toArg, function (from, to, dir, i) {
+      var fromPos = coords(from, dir == "ltr" ? "left" : "right");
+      var toPos = coords(to - 1, dir == "ltr" ? "right" : "left");
+      if (dir == "ltr") {
+        var fromLeft = fromArg == null && from == 0 ? leftSide : fromPos.left;
+        var toRight = toArg == null && to == lineLen ? rightSide : toPos.right;
+        if (toPos.top - fromPos.top <= 3) { // Single line
+          add(fromLeft, toPos.top, toRight - fromLeft, toPos.bottom);
+        } else { // Multiple lines
+          add(fromLeft, fromPos.top, null, fromPos.bottom);
+          if (fromPos.bottom < toPos.top) { add(leftSide, fromPos.bottom, null, toPos.top); }
+          add(leftSide, toPos.top, toPos.right, toPos.bottom);
+        }
+      } else if (from < to) { // RTL
+        var fromRight = fromArg == null && from == 0 ? rightSide : fromPos.right;
+        var toLeft = toArg == null && to == lineLen ? leftSide : toPos.left;
+        if (toPos.top - fromPos.top <= 3) { // Single line
+          add(toLeft, toPos.top, fromRight - toLeft, toPos.bottom);
+        } else { // Multiple lines
+          var topLeft = leftSide;
+          if (i) {
+            var topEnd = wrappedLineExtentChar(cm, lineObj, null, from).end;
+            // The coordinates returned for an RTL wrapped space tend to
+            // be complete bogus, so try to skip that here.
+            topLeft = coords(topEnd - (/\s/.test(lineObj.text.charAt(topEnd - 1)) ? 2 : 1), "left").left;
+          }
+          add(topLeft, fromPos.top, fromRight - topLeft, fromPos.bottom);
+          if (fromPos.bottom < toPos.top) { add(leftSide, fromPos.bottom, null, toPos.top); }
+          var botWidth = null;
+          if (i < order.length  - 1 || true) {
+            var botStart = wrappedLineExtentChar(cm, lineObj, null, to).begin;
+            botWidth = coords(botStart, "right").right - toLeft;
+          }
+          add(toLeft, toPos.top, botWidth, toPos.bottom);
+        }
       }
-      if (fromArg == null && from == 0) { left = leftSide; }
-      if (rightPos.top - leftPos.top > 3) { // Different lines, draw top part
-        add(left, leftPos.top, null, leftPos.bottom);
-        left = leftSide;
-        if (leftPos.bottom < rightPos.top) { add(left, leftPos.bottom, null, rightPos.top); }
-      }
-      if (toArg == null && to == lineLen) { right = rightSide; }
-      if (!start || leftPos.top < start.top || leftPos.top == start.top && leftPos.left < start.left)
-        { start = leftPos; }
-      if (!end || rightPos.bottom > end.bottom || rightPos.bottom == end.bottom && rightPos.right > end.right)
-        { end = rightPos; }
-      if (left < leftSide + 1) { left = leftSide; }
-      add(left, rightPos.top, right - left, rightPos.bottom);
+
+      if (!start || cmpCoords(fromPos, start) < 0) { start = fromPos; }
+      if (cmpCoords(toPos, start) < 0) { start = toPos; }
+      if (!end || cmpCoords(fromPos, end) < 0) { end = fromPos; }
+      if (cmpCoords(toPos, end) < 0) { end = toPos; }
     });
     return {start: start, end: end}
   }
@@ -4806,7 +4803,7 @@ function endOperation_R2(op) {
   }
 
   if (op.updatedDisplay || op.selectionChanged)
-    { op.preparedSelection = display.input.prepareSelection(op.focus); }
+    { op.preparedSelection = display.input.prepareSelection(); }
 }
 
 function endOperation_W2(op) {
@@ -4819,7 +4816,7 @@ function endOperation_W2(op) {
     cm.display.maxLineChanged = false;
   }
 
-  var takeFocus = op.focus && op.focus == activeElt() && (!document.hasFocus || document.hasFocus());
+  var takeFocus = op.focus && op.focus == activeElt();
   if (op.preparedSelection)
     { cm.display.input.showSelection(op.preparedSelection, takeFocus); }
   if (op.updatedDisplay || op.startHeight != cm.doc.height)
@@ -6419,7 +6416,8 @@ function makeChangeSingleDocInEditor(cm, change, spans) {
 
 function replaceRange(doc, code, from, to, origin) {
   if (!to) { to = from; }
-  if (cmp(to, from) < 0) { var tmp = to; to = from; from = tmp; }
+  if (cmp(to, from) < 0) { var assign;
+    (assign = [to, from], from = assign[0], to = assign[1], assign); }
   if (typeof code == "string") { code = doc.splitLines(code); }
   makeChange(doc, {from: from, to: to, text: code, origin: origin});
 }
@@ -7780,6 +7778,112 @@ function deleteNearSelection(cm, compute) {
   });
 }
 
+function moveCharLogically(line, ch, dir) {
+  var target = skipExtendingChars(line.text, ch + dir, dir);
+  return target < 0 || target > line.text.length ? null : target
+}
+
+function moveLogically(line, start, dir) {
+  var ch = moveCharLogically(line, start.ch, dir);
+  return ch == null ? null : new Pos(start.line, ch, dir < 0 ? "after" : "before")
+}
+
+function endOfLine(visually, cm, lineObj, lineNo, dir) {
+  if (visually) {
+    var order = getOrder(lineObj, cm.doc.direction);
+    if (order) {
+      var part = dir < 0 ? lst(order) : order[0];
+      var moveInStorageOrder = (dir < 0) == (part.level == 1);
+      var sticky = moveInStorageOrder ? "after" : "before";
+      var ch;
+      // With a wrapped rtl chunk (possibly spanning multiple bidi parts),
+      // it could be that the last bidi part is not on the last visual line,
+      // since visual lines contain content order-consecutive chunks.
+      // Thus, in rtl, we are looking for the first (content-order) character
+      // in the rtl chunk that is on the last line (that is, the same line
+      // as the last (content-order) character).
+      if (part.level > 0) {
+        var prep = prepareMeasureForLine(cm, lineObj);
+        ch = dir < 0 ? lineObj.text.length - 1 : 0;
+        var targetTop = measureCharPrepared(cm, prep, ch).top;
+        ch = findFirst(function (ch) { return measureCharPrepared(cm, prep, ch).top == targetTop; }, (dir < 0) == (part.level == 1) ? part.from : part.to - 1, ch);
+        if (sticky == "before") { ch = moveCharLogically(lineObj, ch, 1); }
+      } else { ch = dir < 0 ? part.to : part.from; }
+      return new Pos(lineNo, ch, sticky)
+    }
+  }
+  return new Pos(lineNo, dir < 0 ? lineObj.text.length : 0, dir < 0 ? "before" : "after")
+}
+
+function moveVisually(cm, line, start, dir) {
+  var bidi = getOrder(line, cm.doc.direction);
+  if (!bidi) { return moveLogically(line, start, dir) }
+  if (start.ch >= line.text.length) {
+    start.ch = line.text.length;
+    start.sticky = "before";
+  } else if (start.ch <= 0) {
+    start.ch = 0;
+    start.sticky = "after";
+  }
+  var partPos = getBidiPartAt(bidi, start.ch, start.sticky), part = bidi[partPos];
+  if (cm.doc.direction == "ltr" && part.level % 2 == 0 && (dir > 0 ? part.to > start.ch : part.from < start.ch)) {
+    // Case 1: We move within an ltr part in an ltr editor. Even with wrapped lines,
+    // nothing interesting happens.
+    return moveLogically(line, start, dir)
+  }
+
+  var mv = function (pos, dir) { return moveCharLogically(line, pos instanceof Pos ? pos.ch : pos, dir); };
+  var prep;
+  var getWrappedLineExtent = function (ch) {
+    if (!cm.options.lineWrapping) { return {begin: 0, end: line.text.length} }
+    prep = prep || prepareMeasureForLine(cm, line);
+    return wrappedLineExtentChar(cm, line, prep, ch)
+  };
+  var wrappedLineExtent = getWrappedLineExtent(start.sticky == "before" ? mv(start, -1) : start.ch);
+
+  if (cm.doc.direction == "rtl" || part.level == 1) {
+    var moveInStorageOrder = (part.level == 1) == (dir < 0);
+    var ch = mv(start, moveInStorageOrder ? 1 : -1);
+    if (ch != null && (!moveInStorageOrder ? ch >= part.from && ch >= wrappedLineExtent.begin : ch <= part.to && ch <= wrappedLineExtent.end)) {
+      // Case 2: We move within an rtl part or in an rtl editor on the same visual line
+      var sticky = moveInStorageOrder ? "before" : "after";
+      return new Pos(start.line, ch, sticky)
+    }
+  }
+
+  // Case 3: Could not move within this bidi part in this visual line, so leave
+  // the current bidi part
+
+  var searchInVisualLine = function (partPos, dir, wrappedLineExtent) {
+    var getRes = function (ch, moveInStorageOrder) { return moveInStorageOrder
+      ? new Pos(start.line, mv(ch, 1), "before")
+      : new Pos(start.line, ch, "after"); };
+
+    for (; partPos >= 0 && partPos < bidi.length; partPos += dir) {
+      var part = bidi[partPos];
+      var moveInStorageOrder = (dir > 0) == (part.level != 1);
+      var ch = moveInStorageOrder ? wrappedLineExtent.begin : mv(wrappedLineExtent.end, -1);
+      if (part.from <= ch && ch < part.to) { return getRes(ch, moveInStorageOrder) }
+      ch = moveInStorageOrder ? part.from : mv(part.to, -1);
+      if (wrappedLineExtent.begin <= ch && ch < wrappedLineExtent.end) { return getRes(ch, moveInStorageOrder) }
+    }
+  };
+
+  // Case 3a: Look for other bidi parts on the same visual line
+  var res = searchInVisualLine(partPos + dir, dir, wrappedLineExtent);
+  if (res) { return res }
+
+  // Case 3b: Look for other bidi parts on the next visual line
+  var nextCh = dir > 0 ? wrappedLineExtent.end : mv(wrappedLineExtent.begin, -1);
+  if (nextCh != null && !(dir > 0 && nextCh == line.text.length)) {
+    res = searchInVisualLine(dir > 0 ? 0 : bidi.length - 1, dir, getWrappedLineExtent(nextCh));
+    if (res) { return res }
+  }
+
+  // Case 4: Nowhere to move
+  return null
+}
+
 // Commands are parameter-less actions that can be performed on an
 // editor, mostly used for keybindings.
 var commands = {
@@ -8341,7 +8445,7 @@ function leftButtonSelect(cm, event, start, behavior) {
         anchor = maxPos(oldRange.to(), range$$1.head);
       }
       var ranges$1 = startSel.ranges.slice(0);
-      ranges$1[ourIndex] = new Range(clipPos(doc, anchor), head);
+      ranges$1[ourIndex] = bidiSimplify(cm, new Range(clipPos(doc, anchor), head));
       setSelection(doc, normalizeSelection(ranges$1, ourIndex), sel_mouse);
     }
   }
@@ -8393,13 +8497,52 @@ function leftButtonSelect(cm, event, start, behavior) {
   on(document, "mouseup", up);
 }
 
+// Used when mouse-selecting to adjust the anchor to the proper side
+// of a bidi jump depending on the visual position of the head.
+function bidiSimplify(cm, range$$1) {
+  var anchor = range$$1.anchor;
+  var head = range$$1.head;
+  var anchorLine = getLine(cm.doc, anchor.line);
+  if (cmp(anchor, head) == 0 && anchor.sticky == head.sticky) { return range$$1 }
+  var order = getOrder(anchorLine);
+  if (!order) { return range$$1 }
+  var index = getBidiPartAt(order, anchor.ch, anchor.sticky), part = order[index];
+  if (part.from != anchor.ch && part.to != anchor.ch) { return range$$1 }
+  var boundary = index + ((part.from == anchor.ch) == (part.level != 1) ? 0 : 1);
+  if (boundary == 0 || boundary == order.length) { return range$$1 }
+
+  // Compute the relative visual position of the head compared to the
+  // anchor (<0 is to the left, >0 to the right)
+  var leftSide;
+  if (head.line != anchor.line) {
+    leftSide = (head.line - anchor.line) * (cm.doc.direction == "ltr" ? 1 : -1) > 0;
+  } else {
+    var headIndex = getBidiPartAt(order, head.ch, head.sticky);
+    var dir = headIndex - index || (head.ch - anchor.ch) * (part.level == 1 ? -1 : 1);
+    if (headIndex == boundary - 1 || headIndex == boundary)
+      { leftSide = dir < 0; }
+    else
+      { leftSide = dir > 0; }
+  }
+
+  var usePart = order[boundary + (leftSide ? -1 : 0)];
+  var from = leftSide == (usePart.level == 1);
+  var ch = from ? usePart.from : usePart.to, sticky = from ? "after" : "before";
+  return anchor.ch == ch && anchor.sticky == sticky ? range$$1 : new Range(new Pos(anchor.line, ch, sticky), head)
+}
+
 
 // Determines whether an event happened in the gutter, and fires the
 // handlers for the corresponding event.
 function gutterEvent(cm, e, type, prevent) {
   var mX, mY;
-  try { mX = e.clientX; mY = e.clientY; }
-  catch(e) { return false }
+  if (e.touches) {
+    mX = e.touches[0].clientX;
+    mY = e.touches[0].clientY;
+  } else {
+    try { mX = e.clientX; mY = e.clientY; }
+    catch(e) { return false }
+  }
   if (mX >= Math.floor(cm.display.gutters.getBoundingClientRect().right)) { return false }
   if (prevent) { e_preventDefault(e); }
 
@@ -8737,7 +8880,7 @@ function registerEventHandlers(cm) {
     return dx * dx + dy * dy > 20 * 20
   }
   on(d.scroller, "touchstart", function (e) {
-    if (!signalDOMEvent(cm, e) && !isMouseLikeTouchEvent(e)) {
+    if (!signalDOMEvent(cm, e) && !isMouseLikeTouchEvent(e) && !clickInGutter(cm, e)) {
       d.input.ensurePolled();
       clearTimeout(touchFinished);
       var now = +new Date;
@@ -10521,7 +10664,7 @@ CodeMirror$1.fromTextArea = fromTextArea;
 
 addLegacyProps(CodeMirror$1);
 
-CodeMirror$1.version = "5.29.0";
+CodeMirror$1.version = "5.30.0";
 
 return CodeMirror$1;
 
@@ -37047,6 +37190,9 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
         this.typeEditor.setValue(value.type || valueTypes.value);
         switch (value.type) {
             case valueTypes.value:
+                if (!this.valueEditor) {
+                    return;
+                }
                 if (_.isArray(this.value.value) && this.value.value.length === 1) {
                     this.valueEditor.setValue(this.value.value[0]);
                 } else {
@@ -37054,12 +37200,21 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
                 }
                 break;
             case valueTypes.context:
+                if (!this.contextEditor) {
+                    return;
+                }
                 this.contextEditor.setValue(value.value);
                 break;
             case valueTypes.expression:
+                if (!this.expressionEditor) {
+                    return;
+                }
                 this.expressionEditor.setValue(value.value);
                 break;
             case valueTypes.script:
+                if (!this.scriptEditor) {
+                    return;
+                }
                 this.scriptEditor.setValue(value.value);
                 break;
             default:
@@ -37212,6 +37367,27 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
         }
         this.value = { type: type, value: value };
         this.__triggerChange();
+    },
+    __setReadonly: function __setReadonly(readonly) {
+        _BaseLayoutEditorView2.default.prototype.__setReadonly.call(this, readonly);
+
+        this.typeEditor.setReadonly(readonly);
+        switch (this.value && this.value.type) {
+            case valueTypes.value:
+                this.valueEditor.setReadonly(readonly);
+                break;
+            case valueTypes.context:
+                this.contextEditor.setReadonly(readonly);
+                break;
+            case valueTypes.expression:
+                this.expressionEditor.setReadonly(readonly);
+                break;
+            case valueTypes.script:
+                this.scriptEditor.setReadonly(readonly);
+                break;
+            default:
+                break;
+        }
     }
 });
 
@@ -81881,11 +82057,6 @@ var jquery = __webpack_require__(47);
 /* 640 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 /*** IMPORTS FROM imports-loader ***/
 var jquery = __webpack_require__(47);
 
@@ -81907,37 +82078,29 @@ var jquery = __webpack_require__(47);
  */
 /*eslint-disable*/
 
-(function ($) {
-    var UNDEF = 'undefined';
-    var getSelection = void 0;
-    var setSelection = void 0;
-    var deleteSelectedText = void 0;
-    var deleteText = void 0;
-    var insertText = void 0;
-    var replaceSelectedText = void 0;
-    var surroundSelectedText = void 0;
-    var extractSelectedText = void 0;
-    var collapseSelection = void 0;
-    /*eslint-disable*/
+(function($) {
+    var UNDEF = "undefined";
+    var getSelection, setSelection, deleteSelectedText, deleteText, insertText;
+    var replaceSelectedText, surroundSelectedText, extractSelectedText, collapseSelection;
 
     // Trio of isHost* functions taken from Peter Michaux's article:
     // http://peter.michaux.ca/articles/feature-detection-state-of-the-art-browser-scripting
     function isHostMethod(object, property) {
-        var t = _typeof(object[property]);
-        return t === 'function' || !!(t === 'object' && object[property]) || t === 'unknown';
+        var t = typeof object[property];
+        return t === "function" || (!!(t == "object" && object[property])) || t == "unknown";
     }
 
     function isHostProperty(object, property) {
-        return _typeof(object[property]) !== UNDEF;
+        return typeof(object[property]) != UNDEF;
     }
 
     function isHostObject(object, property) {
-        return !!(_typeof(object[property]) === 'object' && object[property]);
+        return !!(typeof(object[property]) == "object" && object[property]);
     }
 
     function fail(reason) {
         if (window.console && window.console.log) {
-            window.console.log('RangyInputs not supported in your browser. Reason: ' + reason);
+            window.console.log("RangyInputs not supported in your browser. Reason: " + reason);
         }
     }
 
@@ -81945,7 +82108,7 @@ var jquery = __webpack_require__(47);
         if (start < 0) {
             start += el.value.length;
         }
-        if ((typeof end === 'undefined' ? 'undefined' : _typeof(end)) === UNDEF) {
+        if (typeof end == UNDEF) {
             end = start;
         }
         if (end < 0) {
@@ -81964,62 +82127,58 @@ var jquery = __webpack_require__(47);
     }
 
     function getBody() {
-        return isHostObject(document, 'body') ? document.body : document.getElementsByTagName('body')[0];
+        return isHostObject(document, "body") ? document.body : document.getElementsByTagName("body")[0];
     }
 
-    $(document).ready(function () {
-        var testTextArea = document.createElement('textarea');
+    $(document).ready(function() {
+        var testTextArea = document.createElement("textarea");
 
         getBody().appendChild(testTextArea);
 
-        if (isHostProperty(testTextArea, 'selectionStart') && isHostProperty(testTextArea, 'selectionEnd')) {
-            getSelection = function getSelection(el) {
-                var start = el.selectionStart;
-                var end = el.selectionEnd;
+        if (isHostProperty(testTextArea, "selectionStart") && isHostProperty(testTextArea, "selectionEnd")) {
+            getSelection = function(el) {
+                var start = el.selectionStart, end = el.selectionEnd;
                 return makeSelection(el, start, end);
             };
 
-            setSelection = function setSelection(el, startOffset, endOffset) {
+            setSelection = function(el, startOffset, endOffset) {
                 var offsets = adjustOffsets(el, startOffset, endOffset);
                 el.selectionStart = offsets.start;
                 el.selectionEnd = offsets.end;
             };
 
-            collapseSelection = function collapseSelection(el, toStart) {
+            collapseSelection = function(el, toStart) {
                 if (toStart) {
                     el.selectionEnd = el.selectionStart;
                 } else {
                     el.selectionStart = el.selectionEnd;
                 }
             };
-        } else if (isHostMethod(testTextArea, 'createTextRange') && isHostObject(document, 'selection') && isHostMethod(document.selection, 'createRange')) {
-            getSelection = function getSelection(el) {
-                var start = 0;
-                var end = 0;
-                var normalizedValue = void 0;
-                var textInputRange = void 0;
-                var len = void 0;
-                var endRange = void 0;
+        } else if (isHostMethod(testTextArea, "createTextRange") && isHostObject(document, "selection") &&
+            isHostMethod(document.selection, "createRange")) {
+
+            getSelection = function(el) {
+                var start = 0, end = 0, normalizedValue, textInputRange, len, endRange;
                 var range = document.selection.createRange();
 
-                if (range && range.parentElement() === el) {
+                if (range && range.parentElement() == el) {
                     len = el.value.length;
 
-                    normalizedValue = el.value.replace(/\r\n/g, '\n');
+                    normalizedValue = el.value.replace(/\r\n/g, "\n");
                     textInputRange = el.createTextRange();
                     textInputRange.moveToBookmark(range.getBookmark());
                     endRange = el.createTextRange();
                     endRange.collapse(false);
-                    if (textInputRange.compareEndPoints('StartToEnd', endRange) > -1) {
+                    if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
                         start = end = len;
                     } else {
-                        start = -textInputRange.moveStart('character', -len);
-                        start += normalizedValue.slice(0, start).split('\n').length - 1;
-                        if (textInputRange.compareEndPoints('EndToEnd', endRange) > -1) {
+                        start = -textInputRange.moveStart("character", -len);
+                        start += normalizedValue.slice(0, start).split("\n").length - 1;
+                        if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
                             end = len;
                         } else {
-                            end = -textInputRange.moveEnd('character', -len);
-                            end += normalizedValue.slice(0, end).split('\n').length - 1;
+                            end = -textInputRange.moveEnd("character", -len);
+                            end += normalizedValue.slice(0, end).split("\n").length - 1;
                         }
                     }
                 }
@@ -82031,32 +82190,32 @@ var jquery = __webpack_require__(47);
             // the textarea value is two characters. This function corrects for that by converting a text offset into a
             // range character offset by subtracting one character for every line break in the textarea prior to the
             // offset
-            var offsetToRangeCharacterMove = function offsetToRangeCharacterMove(el, offset) {
-                return offset - (el.value.slice(0, offset).split('\r\n').length - 1);
+            var offsetToRangeCharacterMove = function(el, offset) {
+                return offset - (el.value.slice(0, offset).split("\r\n").length - 1);
             };
 
-            setSelection = function setSelection(el, startOffset, endOffset) {
+            setSelection = function(el, startOffset, endOffset) {
                 var offsets = adjustOffsets(el, startOffset, endOffset);
                 var range = el.createTextRange();
                 var startCharMove = offsetToRangeCharacterMove(el, offsets.start);
                 range.collapse(true);
-                if (offsets.start === offsets.end) {
-                    range.move('character', startCharMove);
+                if (offsets.start == offsets.end) {
+                    range.move("character", startCharMove);
                 } else {
-                    range.moveEnd('character', offsetToRangeCharacterMove(el, offsets.end));
-                    range.moveStart('character', startCharMove);
+                    range.moveEnd("character", offsetToRangeCharacterMove(el, offsets.end));
+                    range.moveStart("character", startCharMove);
                 }
                 range.select();
             };
 
-            collapseSelection = function collapseSelection(el, toStart) {
+            collapseSelection = function(el, toStart) {
                 var range = document.selection.createRange();
                 range.collapse(toStart);
                 range.select();
             };
         } else {
             getBody().removeChild(testTextArea);
-            fail('No means of finding text input caret position');
+            fail("No means of finding text input caret position");
             return;
         }
 
@@ -82064,9 +82223,7 @@ var jquery = __webpack_require__(47);
         getBody().removeChild(testTextArea);
 
         function getValueAfterPaste(el, text) {
-            var val = el.value;
-            var sel = getSelection(el);
-            var selStart = sel.start;
+            var val = el.value, sel = getSelection(el), selStart = sel.start;
             return {
                 value: val.slice(0, selStart) + text + val.slice(sel.end),
                 index: selStart,
@@ -82080,10 +82237,10 @@ var jquery = __webpack_require__(47);
 
             // Hack to work around incorrect delete command when deleting the last word on a line
             setSelection(el, sel.start, sel.end);
-            if (text === '') {
-                document.execCommand('delete', false, null);
+            if (text == "") {
+                document.execCommand("delete", false, null);
             } else {
-                document.execCommand('insertText', false, text);
+                document.execCommand("insertText", false, text);
             }
 
             return {
@@ -82099,104 +82256,104 @@ var jquery = __webpack_require__(47);
             return valueAfterPaste;
         }
 
-        var _pasteText = function pasteText(el, text) {
+        var pasteText = function(el, text) {
             var valueAfterPaste = getValueAfterPaste(el, text);
             try {
                 var pasteInfo = pasteTextWithCommand(el, text);
-                if (el.value === valueAfterPaste.value) {
-                    _pasteText = pasteTextWithCommand;
+                if (el.value == valueAfterPaste.value) {
+                    pasteText = pasteTextWithCommand;
                     return pasteInfo;
                 }
             } catch (ex) {
                 // Do nothing and fall back to changing the value manually
             }
-            _pasteText = pasteTextWithValueChange;
+            pasteText = pasteTextWithValueChange;
             el.value = valueAfterPaste.value;
             return valueAfterPaste;
         };
 
-        deleteText = function deleteText(el, start, end, moveSelection) {
-            if (start !== end) {
+        deleteText = function(el, start, end, moveSelection) {
+            if (start != end) {
                 setSelection(el, start, end);
-                _pasteText(el, '');
+                pasteText(el, "");
             }
             if (moveSelection) {
                 setSelection(el, start);
             }
         };
 
-        deleteSelectedText = function deleteSelectedText(el) {
-            setSelection(el, _pasteText(el, '').index);
+        deleteSelectedText = function(el) {
+            setSelection(el, pasteText(el, "").index);
         };
 
-        extractSelectedText = function extractSelectedText(el) {
-            var pasteInfo = _pasteText(el, '');
+        extractSelectedText = function(el) {
+            var pasteInfo = pasteText(el, "");
             setSelection(el, pasteInfo.index);
             return pasteInfo.replaced;
         };
 
-        var updateSelectionAfterInsert = function updateSelectionAfterInsert(el, startIndex, text, selectionBehaviour) {
+        var updateSelectionAfterInsert = function(el, startIndex, text, selectionBehaviour) {
             var endIndex = startIndex + text.length;
 
-            selectionBehaviour = typeof selectionBehaviour === 'string' ? selectionBehaviour.toLowerCase() : '';
+            selectionBehaviour = (typeof selectionBehaviour == "string") ?
+                selectionBehaviour.toLowerCase() : "";
 
-            if ((selectionBehaviour === 'collapsetoend' || selectionBehaviour === 'select') && /[\r\n]/.test(text)) {
+            if ((selectionBehaviour == "collapsetoend" || selectionBehaviour == "select") && /[\r\n]/.test(text)) {
                 // Find the length of the actual text inserted, which could vary
                 // depending on how the browser deals with line breaks
-                var normalizedText = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+                var normalizedText = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
                 endIndex = startIndex + normalizedText.length;
-                var firstLineBreakIndex = startIndex + normalizedText.indexOf('\n');
+                var firstLineBreakIndex = startIndex + normalizedText.indexOf("\n");
 
-                if (el.value.slice(firstLineBreakIndex, firstLineBreakIndex + 2) === '\r\n') {
+                if (el.value.slice(firstLineBreakIndex, firstLineBreakIndex + 2) == "\r\n") {
                     // Browser uses \r\n, so we need to account for extra \r characters
                     endIndex += normalizedText.match(/\n/g).length;
                 }
             }
 
             switch (selectionBehaviour) {
-                case 'collapsetostart':
+                case "collapsetostart":
                     setSelection(el, startIndex, startIndex);
                     break;
-                case 'collapsetoend':
+                case "collapsetoend":
                     setSelection(el, endIndex, endIndex);
                     break;
-                case 'select':
+                case "select":
                     setSelection(el, startIndex, endIndex);
-                    break;
-                default:
                     break;
             }
         };
 
-        insertText = function insertText(el, text, index, selectionBehaviour) {
+        insertText = function(el, text, index, selectionBehaviour) {
             setSelection(el, index);
-            _pasteText(el, text);
-            if (typeof selectionBehaviour === 'boolean') {
-                selectionBehaviour = selectionBehaviour ? 'collapseToEnd' : '';
+            pasteText(el, text);
+            if (typeof selectionBehaviour == "boolean") {
+                selectionBehaviour = selectionBehaviour ? "collapseToEnd" : "";
             }
             updateSelectionAfterInsert(el, index, text, selectionBehaviour);
         };
 
-        replaceSelectedText = function replaceSelectedText(el, text, selectionBehaviour) {
-            var pasteInfo = _pasteText(el, text);
-            updateSelectionAfterInsert(el, pasteInfo.index, text, selectionBehaviour || 'collapseToEnd');
+        replaceSelectedText = function(el, text, selectionBehaviour) {
+            var pasteInfo = pasteText(el, text);
+            updateSelectionAfterInsert(el, pasteInfo.index, text, selectionBehaviour || "collapseToEnd");
         };
 
-        surroundSelectedText = function surroundSelectedText(el, before, after, selectionBehaviour) {
-            if ((typeof after === 'undefined' ? 'undefined' : _typeof(after)) === UNDEF) {
+        surroundSelectedText = function(el, before, after, selectionBehaviour) {
+            if (typeof after == UNDEF) {
                 after = before;
             }
             var sel = getSelection(el);
-            var pasteInfo = _pasteText(el, before + sel.text + after);
-            updateSelectionAfterInsert(el, pasteInfo.index + before.length, sel.text, selectionBehaviour || 'select');
+            var pasteInfo = pasteText(el, before + sel.text + after);
+            updateSelectionAfterInsert(el, pasteInfo.index + before.length, sel.text, selectionBehaviour || "select");
         };
 
         function jQuerify(func, returnThis) {
-            return function () {
+            return function() {
                 var el = this.jquery ? this[0] : this;
                 var nodeName = el.nodeName.toLowerCase();
 
-                if (el.nodeType === 1 && (nodeName === 'textarea' || nodeName === 'input' && /^(?:text|email|number|search|tel|url|password)$/i.test(el.type))) {
+                if (el.nodeType == 1 && (nodeName == "textarea" ||
+                        (nodeName == "input" && /^(?:text|email|number|search|tel|url|password)$/i.test(el.type)))) {
                     var args = [el].concat(Array.prototype.slice.call(arguments));
                     var result = func.apply(this, args);
                     if (!returnThis) {
@@ -82222,6 +82379,8 @@ var jquery = __webpack_require__(47);
         });
     });
 })(jQuery);
+
+
 
 /***/ }),
 /* 641 */
@@ -82740,310 +82899,41 @@ var jquery = __webpack_require__(47);
 /* 643 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-/*eslint-disable*/
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*eslint-disable*/
 /*
   Keypress version 2.1.0 (c) 2014 David Mauro.
   Licensed under the Apache License, Version 2.0
   http://www.apache.org/licenses/LICENSE-2.0
 */
-(function () {
-  var m,
-      v,
-      y,
-      z,
-      A,
-      r,
-      w,
-      B,
-      F,
-      C,
-      G,
-      H,
-      p,
-      s,
-      q,
-      o,
-      t,
-      D,
-      I,
-      E = {}.hasOwnProperty,
-      j = [].indexOf || function (a) {
-    for (var c = 0, b = this.length; c < b; c++) {
-      if (c in this && this[c] === a) return c;
-    }return -1;
-  };r = { is_unordered: !1, is_counting: !1, is_exclusive: !1, is_solitary: !1, prevent_default: !1, prevent_repeat: !1 };D = "meta alt option ctrl shift cmd".split(" ");o = "ctrl";m = { debug: !1 };var x = function x(a) {
-    var c, b;for (c in a) {
-      E.call(a, c) && (b = a[c], !1 !== b && (this[c] = b));
-    }this.keys = this.keys || [];this.count = this.count || 0;
-  };x.prototype.allows_key_repeat = function () {
-    return !this.prevent_repeat && "function" === typeof this.on_keydown;
-  };x.prototype.reset = function () {
-    this.count = 0;return this.keyup_fired = null;
-  };var g = function g(a, c) {
-    var b, d;this.should_force_event_defaults = this.should_suppress_event_defaults = !1;this.sequence_delay = 800;this._registered_combos = [];this._keys_down = [];this._active_combos = [];this._sequence = [];this._sequence_timer = null;this._prevent_capture = !1;this._defaults = c || {};for (b in r) {
-      E.call(r, b) && (d = r[b], this._defaults[b] = this._defaults[b] || d);
-    }this.element = a || document.body;b = function b(a, _b, c) {
-      a.addEventListener ? a.addEventListener(_b, c) : a.attachEvent && a.attachEvent("on" + _b, c);return c;
-    };var e = this;this.keydown_event = b(this.element, "keydown", function (a) {
-      a = a || window.event;e._receive_input(a, !0);return e._bug_catcher(a);
-    });var f = this;this.keyup_event = b(this.element, "keyup", function (a) {
-      a = a || window.event;return f._receive_input(a, !1);
-    });var h = this;this.blur_event = b(window, "blur", function () {
-      var a, b, c, d;d = h._keys_down;b = 0;for (c = d.length; b < c; b++) {
-        a = d[b], h._key_up(a, {});
-      }return h._keys_down = [];
-    });
-  };g.prototype.destroy = function () {
-    var a;a = function a(_a, b, d) {
-      if (null != _a.removeEventListener) return _a.removeEventListener(b, d);if (null != _a.removeEvent) return _a.removeEvent("on" + b, d);
-    };a(this.element, "keydown", this.keydown_event);a(this.element, "keyup", this.keyup_event);return a(window, "blur", this.blur_event);
-  };g.prototype._bug_catcher = function (a) {
-    var c;if ("cmd" === o && 0 <= j.call(this._keys_down, "cmd") && "cmd" !== (c = z(a.keyCode)) && "shift" !== c && "alt" !== c && "caps" !== c && "tab" !== c) return this._receive_input(a, !1);
-  };g.prototype._cmd_bug_check = function (a) {
-    return "cmd" === o && 0 <= j.call(this._keys_down, "cmd") && 0 > j.call(a, "cmd") ? !1 : !0;
-  };g.prototype._prevent_default = function (a, c) {
-    if ((c || this.should_suppress_event_defaults) && !this.should_force_event_defaults) if (a.preventDefault ? a.preventDefault() : a.returnValue = !1, a.stopPropagation) return a.stopPropagation();
-  };g.prototype._get_active_combos = function (a) {
-    var c, b;c = [];b = w(this._keys_down, function (b) {
-      return b !== a;
-    });b.push(a);this._match_combo_arrays(b, function (a) {
-      return function (b) {
-        if (a._cmd_bug_check(b.keys)) return c.push(b);
-      };
-    }(this));this._fuzzy_match_combo_arrays(b, function (a) {
-      return function (b) {
-        if (!(0 <= j.call(c, b)) && !b.is_solitary && a._cmd_bug_check(b.keys)) return c.push(b);
-      };
-    }(this));return c;
-  };g.prototype._get_potential_combos = function (a) {
-    var c, b, d, e, f;b = [];f = this._registered_combos;d = 0;for (e = f.length; d < e; d++) {
-      c = f[d], c.is_sequence || 0 <= j.call(c.keys, a) && this._cmd_bug_check(c.keys) && b.push(c);
-    }return b;
-  };g.prototype._add_to_active_combos = function (a) {
-    var c, b, d, e, f, h, i, g, n, k, l;h = !1;f = !0;d = !1;if (0 <= j.call(this._active_combos, a)) return !0;if (this._active_combos.length) {
-      e = i = 0;for (k = this._active_combos.length; 0 <= k ? i < k : i > k; e = 0 <= k ? ++i : --i) {
-        if ((c = this._active_combos[e]) && c.is_exclusive && a.is_exclusive) {
-          c = c.keys;if (!h) {
-            g = 0;for (n = c.length; g < n; g++) {
-              if (b = c[g], h = !0, 0 > j.call(a.keys, b)) {
-                h = !1;break;
-              }
-            }
-          }if (f && !h) {
-            l = a.keys;g = 0;for (n = l.length; g < n; g++) {
-              if (b = l[g], f = !1, 0 > j.call(c, b)) {
-                f = !0;break;
-              }
-            }
-          }h && (d ? (c = this._active_combos.splice(e, 1)[0], null != c && c.reset()) : (c = this._active_combos.splice(e, 1, a)[0], null != c && c.reset(), d = !0), f = !1);
-        }
-      }
-    }f && this._active_combos.unshift(a);return h || f;
-  };g.prototype._remove_from_active_combos = function (a) {
-    var c, b, d, e;b = d = 0;for (e = this._active_combos.length; 0 <= e ? d < e : d > e; b = 0 <= e ? ++d : --d) {
-      if (c = this._active_combos[b], c === a) {
-        a = this._active_combos.splice(b, 1)[0];a.reset();break;
-      }
-    }
-  };g.prototype._get_possible_sequences = function () {
-    var a, c, b, d, e, f, h, i, g, n, k, l;d = [];n = this._registered_combos;f = 0;for (g = n.length; f < g; f++) {
-      a = n[f];c = h = 1;for (k = this._sequence.length; 1 <= k ? h <= k : h >= k; c = 1 <= k ? ++h : --h) {
-        if (e = this._sequence.slice(-c), a.is_sequence) {
-          if (0 > j.call(a.keys, "shift") && (e = w(e, function (a) {
-            return "shift" !== a;
-          }), !e.length)) continue;c = i = 0;for (l = e.length; 0 <= l ? i < l : i > l; c = 0 <= l ? ++i : --i) {
-            if (a.keys[c] === e[c]) b = !0;else {
-              b = !1;break;
-            }
-          }b && d.push(a);
-        }
-      }
-    }return d;
-  };g.prototype._add_key_to_sequence = function (a, c) {
-    var b, d, e, f;this._sequence.push(a);d = this._get_possible_sequences();if (d.length) {
-      e = 0;for (f = d.length; e < f; e++) {
-        b = d[e], this._prevent_default(c, b.prevent_default);
-      }this._sequence_timer && clearTimeout(this._sequence_timer);
-      -1 < this.sequence_delay && (this._sequence_timer = setTimeout(function () {
-        return this._sequence = [];
-      }, this.sequence_delay));
-    } else this._sequence = [];
-  };g.prototype._get_sequence = function (a) {
-    var c, b, d, e, f, h, i, g, n, k, l, u;k = this._registered_combos;h = 0;for (n = k.length; h < n; h++) {
-      if (c = k[h], c.is_sequence) {
-        b = i = 1;for (l = this._sequence.length; 1 <= l ? i <= l : i >= l; b = 1 <= l ? ++i : --i) {
-          if (f = w(this._sequence, function (a) {
-            return 0 <= j.call(c.keys, "shift") ? !0 : "shift" !== a;
-          }).slice(-b), c.keys.length === f.length) {
-            b = g = 0;for (u = f.length; 0 <= u ? g < u : g > u; b = 0 <= u ? ++g : --g) {
-              if (e = f[b], !(0 > j.call(c.keys, "shift") && "shift" === e) && !("shift" === a && 0 > j.call(c.keys, "shift"))) if (c.keys[b] === e) d = !0;else {
-                d = !1;break;
-              }
-            }
-          }
-        }if (d) return c;
-      }
-    }return !1;
-  };g.prototype._receive_input = function (a, c) {
-    var b;if (this._prevent_capture) this._keys_down.length && (this._keys_down = []);else if (b = z(a.keyCode), (c || this._keys_down.length || !("alt" === b || b === o)) && b) return c ? this._key_down(b, a) : this._key_up(b, a);
-  };g.prototype._fire = function (a, c, b, d) {
-    "function" === typeof c["on_" + a] && this._prevent_default(b, !0 !== c["on_" + a].call(c["this"], b, c.count, d));"release" === a && (c.count = 0);if ("keyup" === a) return c.keyup_fired = !0;
-  };g.prototype._match_combo_arrays = function (a, c) {
-    var b, d, e, f;f = this._registered_combos;d = 0;for (e = f.length; d < e; d++) {
-      b = f[d], (!b.is_unordered && y(a, b.keys) || b.is_unordered && v(a, b.keys)) && c(b);
-    }
-  };g.prototype._fuzzy_match_combo_arrays = function (a, c) {
-    var b, d, e, f;f = this._registered_combos;d = 0;for (e = f.length; d < e; d++) {
-      b = f[d], (!b.is_unordered && C(b.keys, a) || b.is_unordered && F(b.keys, a)) && c(b);
-    }
-  };g.prototype._keys_remain = function (a) {
-    var c, b, d, e;e = a.keys;b = 0;for (d = e.length; b < d; b++) {
-      if (a = e[b], 0 <= j.call(this._keys_down, a)) {
-        c = !0;break;
-      }
-    }return c;
-  };g.prototype._key_down = function (a, c) {
-    var b, d, e, f, h;(b = A(a, c)) && (a = b);this._add_key_to_sequence(a, c);(b = this._get_sequence(a)) && this._fire("keydown", b, c);for (e in t) {
-      b = t[e], c[b] && (e === a || 0 <= j.call(this._keys_down, e) || this._keys_down.push(e));
-    }for (e in t) {
-      if (b = t[e], e !== a && 0 <= j.call(this._keys_down, e) && !c[b] && !("cmd" === e && "cmd" !== o)) {
-        b = d = 0;for (f = this._keys_down.length; 0 <= f ? d < f : d > f; b = 0 <= f ? ++d : --d) {
-          this._keys_down[b] === e && this._keys_down.splice(b, 1);
-        }
-      }
-    }d = this._get_active_combos(a);e = this._get_potential_combos(a);f = 0;for (h = d.length; f < h; f++) {
-      b = d[f], this._handle_combo_down(b, e, a, c);
-    }if (e.length) {
-      d = 0;for (f = e.length; d < f; d++) {
-        b = e[d], this._prevent_default(c, b.prevent_default);
-      }
-    }0 > j.call(this._keys_down, a) && this._keys_down.push(a);
-  };g.prototype._handle_combo_down = function (a, c, b, d) {
-    var e, f, h, g, m;if (0 > j.call(a.keys, b)) return !1;this._prevent_default(d, a && a.prevent_default);e = !1;if (0 <= j.call(this._keys_down, b) && (e = !0, !a.allows_key_repeat())) return !1;h = this._add_to_active_combos(a, b);b = a.keyup_fired = !1;if (a.is_exclusive) {
-      g = 0;for (m = c.length; g < m; g++) {
-        if (f = c[g], f.is_exclusive && f.keys.length > a.keys.length) {
-          b = !0;break;
-        }
-      }
-    }if (!b && (a.is_counting && "function" === typeof a.on_keydown && (a.count += 1), h)) return this._fire("keydown", a, d, e);
-  };g.prototype._key_up = function (a, c) {
-    var b, d, e, f, h, g;b = a;(e = A(a, c)) && (a = e);e = s[b];c.shiftKey ? e && 0 <= j.call(this._keys_down, e) || (a = b) : b && 0 <= j.call(this._keys_down, b) || (a = e);(f = this._get_sequence(a)) && this._fire("keyup", f, c);if (0 > j.call(this._keys_down, a)) return !1;f = h = 0;for (g = this._keys_down.length; 0 <= g ? h < g : h > g; f = 0 <= g ? ++h : --h) {
-      if ((d = this._keys_down[f]) === a || d === e || d === b) {
-        this._keys_down.splice(f, 1);break;
-      }
-    }d = this._active_combos.length;e = [];g = this._active_combos;f = 0;for (h = g.length; f < h; f++) {
-      b = g[f], 0 <= j.call(b.keys, a) && e.push(b);
-    }f = 0;for (h = e.length; f < h; f++) {
-      b = e[f], this._handle_combo_up(b, c, a);
-    }if (1 < d) {
-      h = this._active_combos;d = 0;for (f = h.length; d < f; d++) {
-        b = h[d], void 0 === b || 0 <= j.call(e, b) || this._keys_remain(b) || this._remove_from_active_combos(b);
-      }
-    }
-  };g.prototype._handle_combo_up = function (a, c, b) {
-    var d, e;this._prevent_default(c, a && a.prevent_default);e = this._keys_remain(a);if (!a.keyup_fired && (d = this._keys_down.slice(), d.push(b), !a.is_solitary || v(d, a.keys))) this._fire("keyup", a, c), a.is_counting && "function" === typeof a.on_keyup && "function" !== typeof a.on_keydown && (a.count += 1);e || (this._fire("release", a, c), this._remove_from_active_combos(a));
-  };g.prototype.simple_combo = function (a, c) {
-    return this.register_combo({ keys: a,
-      on_keydown: c });
-  };g.prototype.counting_combo = function (a, c) {
-    return this.register_combo({ keys: a, is_counting: !0, is_unordered: !1, on_keydown: c });
-  };g.prototype.sequence_combo = function (a, c) {
-    return this.register_combo({ keys: a, on_keydown: c, is_sequence: !0 });
-  };g.prototype.register_combo = function (a) {
-    var c, b, d;"string" === typeof a.keys && (a.keys = a.keys.split(" "));d = this._defaults;for (c in d) {
-      E.call(d, c) && (b = d[c], void 0 === a[c] && (a[c] = b));
-    }a = new x(a);if (I(a)) return this._registered_combos.push(a), a;
-  };g.prototype.register_many = function (a) {
-    var c, b, d, e;e = [];b = 0;for (d = a.length; b < d; b++) {
-      c = a[b], e.push(this.register_combo(c));
-    }return e;
-  };g.prototype.unregister_combo = function (a) {
-    var c, b, d, e, f, g;if (!a) return !1;var i = this;b = function b(a) {
-      var b, c, d, e;e = [];b = c = 0;for (d = i._registered_combos.length; 0 <= d ? c < d : c > d; b = 0 <= d ? ++c : --c) {
-        if (a === i._registered_combos[b]) {
-          i._registered_combos.splice(b, 1);break;
-        } else e.push(void 0);
-      }return e;
-    };if (a instanceof x) return b(a);"string" === typeof a && (a = a.split(" "));f = this._registered_combos;g = [];d = 0;for (e = f.length; d < e; d++) {
-      c = f[d], null != c && (c.is_unordered && v(a, c.keys) || !c.is_unordered && y(a, c.keys) ? g.push(b(c)) : g.push(void 0));
-    }return g;
-  };g.prototype.unregister_many = function (a) {
-    var c, b, d, e;e = [];b = 0;for (d = a.length; b < d; b++) {
-      c = a[b], e.push(this.unregister_combo(c));
-    }return e;
-  };g.prototype.get_registered_combos = function () {
-    return this._registered_combos;
-  };g.prototype.reset = function () {
-    return this._registered_combos = [];
-  };g.prototype.listen = function () {
-    return this._prevent_capture = !1;
-  };g.prototype.stop_listening = function () {
-    return this._prevent_capture = !0;
-  };g.prototype.get_meta_key = function () {
-    return o;
-  };m.Listener = g;z = function z(a) {
-    return p[a];
-  };w = function w(a, c) {
-    var b;if (a.filter) return a.filter(c);var d, e, f;f = [];d = 0;for (e = a.length; d < e; d++) {
-      b = a[d], c(b) && f.push(b);
-    }return f;
-  };v = function v(a, c) {
-    var b, d, e;if (a.length !== c.length) return !1;d = 0;for (e = a.length; d < e; d++) {
-      if (b = a[d], !(0 <= j.call(c, b))) return !1;
-    }return !0;
-  };y = function y(a, c) {
-    var b, d, e;if (a.length !== c.length) return !1;b = d = 0;for (e = a.length; 0 <= e ? d < e : d > e; b = 0 <= e ? ++d : --d) {
-      if (a[b] !== c[b]) return !1;
-    }return !0;
-  };F = function F(a, c) {
-    var b, d, e;d = 0;for (e = a.length; d < e; d++) {
-      if (b = a[d], 0 > j.call(c, b)) return !1;
-    }return !0;
-  };B = Array.prototype.indexOf || function (a, c) {
-    var b, d, e;b = d = 0;for (e = a.length; 0 <= e ? d <= e : d >= e; b = 0 <= e ? ++d : --d) {
-      if (a[b] === c) return b;
-    }return -1;
-  };C = function C(a, c) {
-    var b, d, e, f;e = d = 0;for (f = a.length; e < f; e++) {
-      if (b = a[e], b = B.call(c, b), b >= d) d = b;else return !1;
-    }return !0;
-  };q = function q() {
-    if (m.debug) return console.log.apply(console, arguments);
-  };G = function G(a) {
-    var c, b, d;c = !1;for (d in p) {
-      if (b = p[d], a === b) {
-        c = !0;break;
-      }
-    }if (!c) for (d in s) {
-      if (b = s[d], a === b) {
-        c = !0;break;
-      }
-    }return c;
-  };I = function I(a) {
-    var c, b, d, e, f, g, i;f = !0;a.keys.length || q("You're trying to bind a combo with no keys:", a);b = g = 0;for (i = a.keys.length; 0 <= i ? g < i : g > i; b = 0 <= i ? ++g : --g) {
-      d = a.keys[b], (c = H[d]) && (d = a.keys[b] = c), "meta" === d && a.keys.splice(b, 1, o), "cmd" === d && q('Warning: use the "meta" key rather than "cmd" for Windows compatibility');
-    }i = a.keys;c = 0;for (g = i.length; c < g; c++) {
-      d = i[c], G(d) || (q('Do not recognize the key "' + d + '"'), f = !1);
-    }if (0 <= j.call(a.keys, "meta") || 0 <= j.call(a.keys, "cmd")) {
-      c = a.keys.slice();g = 0;for (i = D.length; g < i; g++) {
-        d = D[g], -1 < (b = B.call(c, d)) && c.splice(b, 1);
-      }1 < c.length && (q("META and CMD key combos cannot have more than 1 non-modifier keys", a, c), f = !1);
-    }for (e in a) {
-      "undefined" === r[e] && q("The property " + e + " is not a valid combo property. Your combo has still been registered.");
-    }return f;
-  };A = function A(a, c) {
-    var b;if (!c.shiftKey) return !1;b = s[a];return null != b ? b : !1;
-  };t = { cmd: "metaKey", ctrl: "ctrlKey", shift: "shiftKey", alt: "altKey" };H = { escape: "esc", control: "ctrl", command: "cmd", "break": "pause", windows: "cmd",
-    option: "alt", caps_lock: "caps", apostrophe: "'", semicolon: ";", tilde: "~", accent: "`", scroll_lock: "scroll", num_lock: "num" };s = { "/": "?", ".": ">", ",": "<", "'": '"', ";": ":", "[": "{", "]": "}", "\\": "|", "`": "~", "=": "+", "-": "_", 1: "!", 2: "@", 3: "#", 4: "$", 5: "%", 6: "^", 7: "&", 8: "*", 9: "(", "0": ")" };p = { "0": "\\", 8: "backspace", 9: "tab", 12: "num", 13: "enter", 16: "shift", 17: "ctrl", 18: "alt", 19: "pause", 20: "caps", 27: "esc", 32: "space", 33: "pageup", 34: "pagedown", 35: "end", 36: "home", 37: "left", 38: "up", 39: "right", 40: "down", 44: "print", 45: "insert",
-    46: "delete", 48: "0", 49: "1", 50: "2", 51: "3", 52: "4", 53: "5", 54: "6", 55: "7", 56: "8", 57: "9", 65: "a", 66: "b", 67: "c", 68: "d", 69: "e", 70: "f", 71: "g", 72: "h", 73: "i", 74: "j", 75: "k", 76: "l", 77: "m", 78: "n", 79: "o", 80: "p", 81: "q", 82: "r", 83: "s", 84: "t", 85: "u", 86: "v", 87: "w", 88: "x", 89: "y", 90: "z", 91: "cmd", 92: "cmd", 93: "cmd", 96: "num_0", 97: "num_1", 98: "num_2", 99: "num_3", 100: "num_4", 101: "num_5", 102: "num_6", 103: "num_7", 104: "num_8", 105: "num_9", 106: "num_multiply", 107: "num_add", 108: "num_enter", 109: "num_subtract", 110: "num_decimal", 111: "num_divide",
-    112: "f1", 113: "f2", 114: "f3", 115: "f4", 116: "f5", 117: "f6", 118: "f7", 119: "f8", 120: "f9", 121: "f10", 122: "f11", 123: "f12", 124: "print", 144: "num", 145: "scroll", 186: ";", 187: "=", 188: ",", 189: "-", 190: ".", 191: "/", 192: "`", 219: "[", 220: "\\", 221: "]", 222: "'", 223: "`", 224: "cmd", 225: "alt", 57392: "ctrl", 63289: "num", 59: ";", 61: "-", 173: "=" };m._keycode_dictionary = p;m._is_array_in_array_sorted = C;-1 !== navigator.userAgent.indexOf("Mac OS X") && (o = "cmd");-1 !== navigator.userAgent.indexOf("Opera") && (p["17"] = "cmd"); true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-    return m;
-  }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : "undefined" !== typeof exports && null !== exports ? exports.keypress = m : window.keypress = m;
-}).call(undefined);
+(function(){var m,v,y,z,A,r,w,B,F,C,G,H,p,s,q,o,t,D,I,E={}.hasOwnProperty,j=[].indexOf||function(a){for(var c=0,b=this.length;c<b;c++)if(c in this&&this[c]===a)return c;return-1};r={is_unordered:!1,is_counting:!1,is_exclusive:!1,is_solitary:!1,prevent_default:!1,prevent_repeat:!1};D="meta alt option ctrl shift cmd".split(" ");o="ctrl";m={debug:!1};var x=function(a){var c,b;for(c in a)E.call(a,c)&&(b=a[c],!1!==b&&(this[c]=b));this.keys=this.keys||[];this.count=this.count||0};x.prototype.allows_key_repeat=
+function(){return!this.prevent_repeat&&"function"===typeof this.on_keydown};x.prototype.reset=function(){this.count=0;return this.keyup_fired=null};var g=function(a,c){var b,d;this.should_force_event_defaults=this.should_suppress_event_defaults=!1;this.sequence_delay=800;this._registered_combos=[];this._keys_down=[];this._active_combos=[];this._sequence=[];this._sequence_timer=null;this._prevent_capture=!1;this._defaults=c||{};for(b in r)E.call(r,b)&&(d=r[b],this._defaults[b]=this._defaults[b]||d);
+this.element=a||document.body;b=function(a,b,c){a.addEventListener?a.addEventListener(b,c):a.attachEvent&&a.attachEvent("on"+b,c);return c};var e=this;this.keydown_event=b(this.element,"keydown",function(a){a=a||window.event;e._receive_input(a,!0);return e._bug_catcher(a)});var f=this;this.keyup_event=b(this.element,"keyup",function(a){a=a||window.event;return f._receive_input(a,!1)});var h=this;this.blur_event=b(window,"blur",function(){var a,b,c,d;d=h._keys_down;b=0;for(c=d.length;b<c;b++)a=d[b],
+h._key_up(a,{});return h._keys_down=[]})};g.prototype.destroy=function(){var a;a=function(a,b,d){if(null!=a.removeEventListener)return a.removeEventListener(b,d);if(null!=a.removeEvent)return a.removeEvent("on"+b,d)};a(this.element,"keydown",this.keydown_event);a(this.element,"keyup",this.keyup_event);return a(window,"blur",this.blur_event)};g.prototype._bug_catcher=function(a){var c;if("cmd"===o&&0<=j.call(this._keys_down,"cmd")&&"cmd"!==(c=z(a.keyCode))&&"shift"!==c&&"alt"!==c&&"caps"!==c&&"tab"!==
+c)return this._receive_input(a,!1)};g.prototype._cmd_bug_check=function(a){return"cmd"===o&&0<=j.call(this._keys_down,"cmd")&&0>j.call(a,"cmd")?!1:!0};g.prototype._prevent_default=function(a,c){if((c||this.should_suppress_event_defaults)&&!this.should_force_event_defaults)if(a.preventDefault?a.preventDefault():a.returnValue=!1,a.stopPropagation)return a.stopPropagation()};g.prototype._get_active_combos=function(a){var c,b;c=[];b=w(this._keys_down,function(b){return b!==a});b.push(a);this._match_combo_arrays(b,
+function(a){return function(b){if(a._cmd_bug_check(b.keys))return c.push(b)}}(this));this._fuzzy_match_combo_arrays(b,function(a){return function(b){if(!(0<=j.call(c,b))&&!b.is_solitary&&a._cmd_bug_check(b.keys))return c.push(b)}}(this));return c};g.prototype._get_potential_combos=function(a){var c,b,d,e,f;b=[];f=this._registered_combos;d=0;for(e=f.length;d<e;d++)c=f[d],c.is_sequence||0<=j.call(c.keys,a)&&this._cmd_bug_check(c.keys)&&b.push(c);return b};g.prototype._add_to_active_combos=function(a){var c,
+b,d,e,f,h,i,g,n,k,l;h=!1;f=!0;d=!1;if(0<=j.call(this._active_combos,a))return!0;if(this._active_combos.length){e=i=0;for(k=this._active_combos.length;0<=k?i<k:i>k;e=0<=k?++i:--i)if((c=this._active_combos[e])&&c.is_exclusive&&a.is_exclusive){c=c.keys;if(!h){g=0;for(n=c.length;g<n;g++)if(b=c[g],h=!0,0>j.call(a.keys,b)){h=!1;break}}if(f&&!h){l=a.keys;g=0;for(n=l.length;g<n;g++)if(b=l[g],f=!1,0>j.call(c,b)){f=!0;break}}h&&(d?(c=this._active_combos.splice(e,1)[0],null!=c&&c.reset()):(c=this._active_combos.splice(e,
+1,a)[0],null!=c&&c.reset(),d=!0),f=!1)}}f&&this._active_combos.unshift(a);return h||f};g.prototype._remove_from_active_combos=function(a){var c,b,d,e;b=d=0;for(e=this._active_combos.length;0<=e?d<e:d>e;b=0<=e?++d:--d)if(c=this._active_combos[b],c===a){a=this._active_combos.splice(b,1)[0];a.reset();break}};g.prototype._get_possible_sequences=function(){var a,c,b,d,e,f,h,i,g,n,k,l;d=[];n=this._registered_combos;f=0;for(g=n.length;f<g;f++){a=n[f];c=h=1;for(k=this._sequence.length;1<=k?h<=k:h>=k;c=1<=
+k?++h:--h)if(e=this._sequence.slice(-c),a.is_sequence){if(0>j.call(a.keys,"shift")&&(e=w(e,function(a){return"shift"!==a}),!e.length))continue;c=i=0;for(l=e.length;0<=l?i<l:i>l;c=0<=l?++i:--i)if(a.keys[c]===e[c])b=!0;else{b=!1;break}b&&d.push(a)}}return d};g.prototype._add_key_to_sequence=function(a,c){var b,d,e,f;this._sequence.push(a);d=this._get_possible_sequences();if(d.length){e=0;for(f=d.length;e<f;e++)b=d[e],this._prevent_default(c,b.prevent_default);this._sequence_timer&&clearTimeout(this._sequence_timer);
+-1<this.sequence_delay&&(this._sequence_timer=setTimeout(function(){return this._sequence=[]},this.sequence_delay))}else this._sequence=[]};g.prototype._get_sequence=function(a){var c,b,d,e,f,h,i,g,n,k,l,u;k=this._registered_combos;h=0;for(n=k.length;h<n;h++)if(c=k[h],c.is_sequence){b=i=1;for(l=this._sequence.length;1<=l?i<=l:i>=l;b=1<=l?++i:--i)if(f=w(this._sequence,function(a){return 0<=j.call(c.keys,"shift")?!0:"shift"!==a}).slice(-b),c.keys.length===f.length){b=g=0;for(u=f.length;0<=u?g<u:g>u;b=
+0<=u?++g:--g)if(e=f[b],!(0>j.call(c.keys,"shift")&&"shift"===e)&&!("shift"===a&&0>j.call(c.keys,"shift")))if(c.keys[b]===e)d=!0;else{d=!1;break}}if(d)return c}return!1};g.prototype._receive_input=function(a,c){var b;if(this._prevent_capture)this._keys_down.length&&(this._keys_down=[]);else if(b=z(a.keyCode),(c||this._keys_down.length||!("alt"===b||b===o))&&b)return c?this._key_down(b,a):this._key_up(b,a)};g.prototype._fire=function(a,c,b,d){"function"===typeof c["on_"+a]&&this._prevent_default(b,
+!0!==c["on_"+a].call(c["this"],b,c.count,d));"release"===a&&(c.count=0);if("keyup"===a)return c.keyup_fired=!0};g.prototype._match_combo_arrays=function(a,c){var b,d,e,f;f=this._registered_combos;d=0;for(e=f.length;d<e;d++)b=f[d],(!b.is_unordered&&y(a,b.keys)||b.is_unordered&&v(a,b.keys))&&c(b)};g.prototype._fuzzy_match_combo_arrays=function(a,c){var b,d,e,f;f=this._registered_combos;d=0;for(e=f.length;d<e;d++)b=f[d],(!b.is_unordered&&C(b.keys,a)||b.is_unordered&&F(b.keys,a))&&c(b)};g.prototype._keys_remain=
+function(a){var c,b,d,e;e=a.keys;b=0;for(d=e.length;b<d;b++)if(a=e[b],0<=j.call(this._keys_down,a)){c=!0;break}return c};g.prototype._key_down=function(a,c){var b,d,e,f,h;(b=A(a,c))&&(a=b);this._add_key_to_sequence(a,c);(b=this._get_sequence(a))&&this._fire("keydown",b,c);for(e in t)b=t[e],c[b]&&(e===a||0<=j.call(this._keys_down,e)||this._keys_down.push(e));for(e in t)if(b=t[e],e!==a&&0<=j.call(this._keys_down,e)&&!c[b]&&!("cmd"===e&&"cmd"!==o)){b=d=0;for(f=this._keys_down.length;0<=f?d<f:d>f;b=0<=
+f?++d:--d)this._keys_down[b]===e&&this._keys_down.splice(b,1)}d=this._get_active_combos(a);e=this._get_potential_combos(a);f=0;for(h=d.length;f<h;f++)b=d[f],this._handle_combo_down(b,e,a,c);if(e.length){d=0;for(f=e.length;d<f;d++)b=e[d],this._prevent_default(c,b.prevent_default)}0>j.call(this._keys_down,a)&&this._keys_down.push(a)};g.prototype._handle_combo_down=function(a,c,b,d){var e,f,h,g,m;if(0>j.call(a.keys,b))return!1;this._prevent_default(d,a&&a.prevent_default);e=!1;if(0<=j.call(this._keys_down,
+b)&&(e=!0,!a.allows_key_repeat()))return!1;h=this._add_to_active_combos(a,b);b=a.keyup_fired=!1;if(a.is_exclusive){g=0;for(m=c.length;g<m;g++)if(f=c[g],f.is_exclusive&&f.keys.length>a.keys.length){b=!0;break}}if(!b&&(a.is_counting&&"function"===typeof a.on_keydown&&(a.count+=1),h))return this._fire("keydown",a,d,e)};g.prototype._key_up=function(a,c){var b,d,e,f,h,g;b=a;(e=A(a,c))&&(a=e);e=s[b];c.shiftKey?e&&0<=j.call(this._keys_down,e)||(a=b):b&&0<=j.call(this._keys_down,b)||(a=e);(f=this._get_sequence(a))&&
+this._fire("keyup",f,c);if(0>j.call(this._keys_down,a))return!1;f=h=0;for(g=this._keys_down.length;0<=g?h<g:h>g;f=0<=g?++h:--h)if((d=this._keys_down[f])===a||d===e||d===b){this._keys_down.splice(f,1);break}d=this._active_combos.length;e=[];g=this._active_combos;f=0;for(h=g.length;f<h;f++)b=g[f],0<=j.call(b.keys,a)&&e.push(b);f=0;for(h=e.length;f<h;f++)b=e[f],this._handle_combo_up(b,c,a);if(1<d){h=this._active_combos;d=0;for(f=h.length;d<f;d++)b=h[d],void 0===b||0<=j.call(e,b)||this._keys_remain(b)||
+this._remove_from_active_combos(b)}};g.prototype._handle_combo_up=function(a,c,b){var d,e;this._prevent_default(c,a&&a.prevent_default);e=this._keys_remain(a);if(!a.keyup_fired&&(d=this._keys_down.slice(),d.push(b),!a.is_solitary||v(d,a.keys)))this._fire("keyup",a,c),a.is_counting&&("function"===typeof a.on_keyup&&"function"!==typeof a.on_keydown)&&(a.count+=1);e||(this._fire("release",a,c),this._remove_from_active_combos(a))};g.prototype.simple_combo=function(a,c){return this.register_combo({keys:a,
+on_keydown:c})};g.prototype.counting_combo=function(a,c){return this.register_combo({keys:a,is_counting:!0,is_unordered:!1,on_keydown:c})};g.prototype.sequence_combo=function(a,c){return this.register_combo({keys:a,on_keydown:c,is_sequence:!0})};g.prototype.register_combo=function(a){var c,b,d;"string"===typeof a.keys&&(a.keys=a.keys.split(" "));d=this._defaults;for(c in d)E.call(d,c)&&(b=d[c],void 0===a[c]&&(a[c]=b));a=new x(a);if(I(a))return this._registered_combos.push(a),a};g.prototype.register_many=
+function(a){var c,b,d,e;e=[];b=0;for(d=a.length;b<d;b++)c=a[b],e.push(this.register_combo(c));return e};g.prototype.unregister_combo=function(a){var c,b,d,e,f,g;if(!a)return!1;var i=this;b=function(a){var b,c,d,e;e=[];b=c=0;for(d=i._registered_combos.length;0<=d?c<d:c>d;b=0<=d?++c:--c)if(a===i._registered_combos[b]){i._registered_combos.splice(b,1);break}else e.push(void 0);return e};if(a instanceof x)return b(a);"string"===typeof a&&(a=a.split(" "));f=this._registered_combos;g=[];d=0;for(e=f.length;d<
+e;d++)c=f[d],null!=c&&(c.is_unordered&&v(a,c.keys)||!c.is_unordered&&y(a,c.keys)?g.push(b(c)):g.push(void 0));return g};g.prototype.unregister_many=function(a){var c,b,d,e;e=[];b=0;for(d=a.length;b<d;b++)c=a[b],e.push(this.unregister_combo(c));return e};g.prototype.get_registered_combos=function(){return this._registered_combos};g.prototype.reset=function(){return this._registered_combos=[]};g.prototype.listen=function(){return this._prevent_capture=!1};g.prototype.stop_listening=function(){return this._prevent_capture=
+!0};g.prototype.get_meta_key=function(){return o};m.Listener=g;z=function(a){return p[a]};w=function(a,c){var b;if(a.filter)return a.filter(c);var d,e,f;f=[];d=0;for(e=a.length;d<e;d++)b=a[d],c(b)&&f.push(b);return f};v=function(a,c){var b,d,e;if(a.length!==c.length)return!1;d=0;for(e=a.length;d<e;d++)if(b=a[d],!(0<=j.call(c,b)))return!1;return!0};y=function(a,c){var b,d,e;if(a.length!==c.length)return!1;b=d=0;for(e=a.length;0<=e?d<e:d>e;b=0<=e?++d:--d)if(a[b]!==c[b])return!1;return!0};F=function(a,
+c){var b,d,e;d=0;for(e=a.length;d<e;d++)if(b=a[d],0>j.call(c,b))return!1;return!0};B=Array.prototype.indexOf||function(a,c){var b,d,e;b=d=0;for(e=a.length;0<=e?d<=e:d>=e;b=0<=e?++d:--d)if(a[b]===c)return b;return-1};C=function(a,c){var b,d,e,f;e=d=0;for(f=a.length;e<f;e++)if(b=a[e],b=B.call(c,b),b>=d)d=b;else return!1;return!0};q=function(){if(m.debug)return console.log.apply(console,arguments)};G=function(a){var c,b,d;c=!1;for(d in p)if(b=p[d],a===b){c=!0;break}if(!c)for(d in s)if(b=s[d],a===b){c=
+!0;break}return c};I=function(a){var c,b,d,e,f,g,i;f=!0;a.keys.length||q("You're trying to bind a combo with no keys:",a);b=g=0;for(i=a.keys.length;0<=i?g<i:g>i;b=0<=i?++g:--g)d=a.keys[b],(c=H[d])&&(d=a.keys[b]=c),"meta"===d&&a.keys.splice(b,1,o),"cmd"===d&&q('Warning: use the "meta" key rather than "cmd" for Windows compatibility');i=a.keys;c=0;for(g=i.length;c<g;c++)d=i[c],G(d)||(q('Do not recognize the key "'+d+'"'),f=!1);if(0<=j.call(a.keys,"meta")||0<=j.call(a.keys,"cmd")){c=a.keys.slice();g=
+0;for(i=D.length;g<i;g++)d=D[g],-1<(b=B.call(c,d))&&c.splice(b,1);1<c.length&&(q("META and CMD key combos cannot have more than 1 non-modifier keys",a,c),f=!1)}for(e in a)"undefined"===r[e]&&q("The property "+e+" is not a valid combo property. Your combo has still been registered.");return f};A=function(a,c){var b;if(!c.shiftKey)return!1;b=s[a];return null!=b?b:!1};t={cmd:"metaKey",ctrl:"ctrlKey",shift:"shiftKey",alt:"altKey"};H={escape:"esc",control:"ctrl",command:"cmd","break":"pause",windows:"cmd",
+option:"alt",caps_lock:"caps",apostrophe:"'",semicolon:";",tilde:"~",accent:"`",scroll_lock:"scroll",num_lock:"num"};s={"/":"?",".":">",",":"<","'":'"',";":":","[":"{","]":"}","\\":"|","`":"~","=":"+","-":"_",1:"!",2:"@",3:"#",4:"$",5:"%",6:"^",7:"&",8:"*",9:"(","0":")"};p={"0":"\\",8:"backspace",9:"tab",12:"num",13:"enter",16:"shift",17:"ctrl",18:"alt",19:"pause",20:"caps",27:"esc",32:"space",33:"pageup",34:"pagedown",35:"end",36:"home",37:"left",38:"up",39:"right",40:"down",44:"print",45:"insert",
+46:"delete",48:"0",49:"1",50:"2",51:"3",52:"4",53:"5",54:"6",55:"7",56:"8",57:"9",65:"a",66:"b",67:"c",68:"d",69:"e",70:"f",71:"g",72:"h",73:"i",74:"j",75:"k",76:"l",77:"m",78:"n",79:"o",80:"p",81:"q",82:"r",83:"s",84:"t",85:"u",86:"v",87:"w",88:"x",89:"y",90:"z",91:"cmd",92:"cmd",93:"cmd",96:"num_0",97:"num_1",98:"num_2",99:"num_3",100:"num_4",101:"num_5",102:"num_6",103:"num_7",104:"num_8",105:"num_9",106:"num_multiply",107:"num_add",108:"num_enter",109:"num_subtract",110:"num_decimal",111:"num_divide",
+112:"f1",113:"f2",114:"f3",115:"f4",116:"f5",117:"f6",118:"f7",119:"f8",120:"f9",121:"f10",122:"f11",123:"f12",124:"print",144:"num",145:"scroll",186:";",187:"=",188:",",189:"-",190:".",191:"/",192:"`",219:"[",220:"\\",221:"]",222:"'",223:"`",224:"cmd",225:"alt",57392:"ctrl",63289:"num",59:";",61:"-",173:"="};m._keycode_dictionary=p;m._is_array_in_array_sorted=C;-1!==navigator.userAgent.indexOf("Mac OS X")&&(o="cmd");-1!==navigator.userAgent.indexOf("Opera")&&(p["17"]="cmd"); true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function(){return m}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof exports&&null!==exports?exports.keypress=m:window.keypress=m}).call(this);
+
 
 /***/ }),
 /* 644 */
@@ -87599,7 +87489,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       setTimeout(function(){cm.focus();}, 20);
     });
 
-    CodeMirror.signal(data, "select", completions[0], hints.firstChild);
+    CodeMirror.signal(data, "select", completions[this.selectedHint], hints.childNodes[this.selectedHint]);
     return true;
   }
 
@@ -87858,6 +87748,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     var state = getSearchState(cm);
     if (state.query) return findNext(cm, rev);
     var q = cm.getSelection() || state.lastQuery;
+    if (q instanceof RegExp && q.source == "x^") q = null
     if (persistent && cm.openDialog) {
       var hiding = null
       var searchNext = function(query, event) {
@@ -88184,6 +88075,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       cm.state.closeBrackets = null;
     }
     if (val) {
+      ensureBound(getOption(val, "pairs"))
       cm.state.closeBrackets = val;
       cm.addKeyMap(keyMap);
     }
@@ -88195,10 +88087,14 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     return defaults[name];
   }
 
-  var bind = defaults.pairs + "`";
   var keyMap = {Backspace: handleBackspace, Enter: handleEnter};
-  for (var i = 0; i < bind.length; i++)
-    keyMap["'" + bind.charAt(i) + "'"] = handler(bind.charAt(i));
+  function ensureBound(chars) {
+    for (var i = 0; i < chars.length; i++) {
+      var ch = chars.charAt(i), key = "'" + ch + "'"
+      if (!keyMap[key]) keyMap[key] = handler(ch)
+    }
+  }
+  ensureBound(defaults.pairs + "`")
 
   function handler(ch) {
     return function(cm) { return handleChar(cm, ch); };
@@ -98113,7 +98009,7 @@ exports.default = _formRepository2.default.editors.Code = _BaseLayoutEditorView2
             _.extend(this.options, _.pick(options.schema, _.keys(this.options)));
         }
     },
-    onShow: function onShow() {
+    onRender: function onRender() {
         var _this = this;
 
         this.editor = new _CodemirrorView2.default({ mode: this.options.mode, height: this.options.height, ontologyService: this.options.ontologyService });
@@ -98130,12 +98026,12 @@ exports.default = _formRepository2.default.editors.Code = _BaseLayoutEditorView2
         this.editorContainer.show(this.editor);
         this.editor.setValue(this.value || '');
         this.ui.fadingPanel.hide();
-        if (this.options.showMode === showModes.normal) {
-            this.ui.editBtn.hide();
-            this.ui.clearBtn.hide();
-        } else {
+        if (this.options.showMode === showModes.button) {
             this.ui.editor.hide();
             this.$el.addClass(classes.buttonMode);
+        } else {
+            this.ui.editBtn.hide();
+            this.ui.clearBtn.hide();
         }
         this.__setEditBtnText();
     },
@@ -98177,6 +98073,10 @@ exports.default = _formRepository2.default.editors.Code = _BaseLayoutEditorView2
         } else {
             this.ui.editBtn.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTY'));
         }
+    },
+    __setReadonly: function __setReadonly(readonly) {
+        _BaseLayoutEditorView2.default.prototype.__setReadonly.call(this, readonly);
+        this.editor.setReadonly(readonly);
     }
 });
 
@@ -98355,6 +98255,11 @@ exports.default = Marionette.LayoutView.extend({
     maximize: function maximize() {
         this.toolbar.maximize();
         this.__onMaximize();
+    },
+    setReadonly: function setReadonly(readonly) {
+        if (this.codemirror) {
+            this.codemirror.setOption('readOnly', readonly);
+        }
     },
     __checkVisibleAndRefresh: function __checkVisibleAndRefresh() {
         var _this3 = this;
