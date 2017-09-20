@@ -178,7 +178,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         }
         this.value = value;
 
-        if (this.options.showTitle) {
+        if (this.getOption('showTitle')) {
             this.$el.prop('title', value);
         }
         if (updateUi) {
