@@ -9,7 +9,7 @@
  *       actual or intended publication of such source code.
  */
 
-import template from './templates/booleanSwitchEditor.html';
+import template from './templates/booleanSwitchEditor.hbs';
 import formRepository from '../formRepository';
 import BooleanEditorView from '../editors/BooleanEditorView';
 

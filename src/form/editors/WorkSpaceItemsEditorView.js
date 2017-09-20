@@ -1,5 +1,5 @@
 
-import template from './templates/workspaceItemSplitEditor.html';
+import template from './templates/workSpaceItemSplitEditor.hbs';
 import formRepository from '../formRepository';
 import WorkItemsController from './impl/workItemsSplit/controller/WorkItemSplitController';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';

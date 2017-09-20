@@ -1,5 +1,4 @@
 import { dateHelpers } from 'utils';
-import LocalizationService from '../../../services/LocalizationService';
 import moment from 'moment';
 
 export default {
