@@ -83,7 +83,7 @@ export default Marionette.ItemView.extend({
             this.reqres.request('input:down');
         },
         'enter,num_enter'() {
-            this.reqres.request('member:select');
+            this.reqres.request('value:select');
         },
         backspace() {
             const value = this.__getFilterValue();
