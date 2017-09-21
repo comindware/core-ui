@@ -13,18 +13,20 @@ const fs = require('fs');
 const pathResolver = require('../pathResolver');
 
 module.exports = () => {
+    const isTest = process.env.BUILD_ENV === 'deploy'; //do not delete localization folder, because travis can not in C#
     const deleteFolderRecursive = path => {
         if (fs.existsSync(path)) {
-            fs.readdirSync(path).forEach(file => {
-                const curPath = `${path}/${file}`;
-                const isTest = process.env === 'test'; //do not delete localization folder, because travis can not in C#
-                if (fs.lstatSync(curPath).isDirectory() && (!isTest || path.indexOf('localization') === -1)) {
-                    deleteFolderRecursive(curPath);
-                } else {
-                    fs.unlinkSync(curPath);
-                }
-            });
-            fs.rmdirSync(path);
+            if (!isTest || path.indexOf('localization') === -1) {
+                fs.readdirSync(path).forEach(file => {
+                    const curPath = `${path}/${file}`;
+                    if (fs.lstatSync(curPath).isDirectory()) {
+                        deleteFolderRecursive(curPath);
+                    } else {
+                        fs.unlinkSync(curPath);
+                    }
+                });
+                fs.readdirSync(path).length === 0 && fs.rmdirSync(path);
+            }
         }
     };
     deleteFolderRecursive(pathResolver.compiled());
