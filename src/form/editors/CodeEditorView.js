@@ -41,7 +41,8 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
         return {
             mode: 'expression',
             height: 300,
-            showMode: showModes.normal
+            showMode: showModes.normal,
+            ontologyService: null
         };
     },
 
