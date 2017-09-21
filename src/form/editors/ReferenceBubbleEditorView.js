@@ -34,7 +34,7 @@ const defaultOptions = {
     buttonView: ButtonView,
     listItemView: ReferenceListItemView,
     textFilterDelay: 300,
-    maxQuantitySelected: 1,
+    maxQuantitySelected: 5,
     canDeleteMember: true
     //showTitle: true
 };
@@ -107,7 +107,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         dropdownRegion: '.js-dropdown-region'
     },
 
-    className: 'editor editor_reference',
+    className: 'editor editor_bubble',
 
     template: Handlebars.compile(template),
 
@@ -327,7 +327,9 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __onButtonClick() {
-        this.dropdownView.open();
+        if (this.__canAddMember()) {
+            this.dropdownView.open();
+        }
     },
 
     __onBubbleDelete(model) {

@@ -9,7 +9,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core,
             editor: new core.form.editors.MembersBubbleEditor({
                 model: model,
                 key: 'membersValue',
-                //maxQuantitySelected: 7,
+                maxQuantitySelected: 7,
                 autocommit: true
             }),
             presentation: '[ {{#each membersValue}}\'{{this}}\'{{#unless @last}}, {{/unless}}{{/each}} ]'
