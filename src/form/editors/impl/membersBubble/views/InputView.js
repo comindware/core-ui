@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, keypress } from 'lib';
 import { helpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
@@ -67,12 +65,12 @@ export default Marionette.ItemView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function(value, key) {
+        _.each(this.keyboardShortcuts, (value, key) => {
             const keys = key.split(',');
-            _.each(keys, function(k) {
+            _.each(keys, k => {
                 this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        }, this);
+            });
+        });
     },
 
     keyboardShortcuts: {
@@ -102,8 +100,7 @@ export default Marionette.ItemView.extend({
         return this.ui.input.val().toLowerCase().trim() || '';
     },
 
-    updateInput(value) {
-        value = value || '';
+    updateInput(value = '') {
         this.ui.input.val(value);
         this.__updateInputWidth(this.__calculateDesiredInputWidth(value));
     },
@@ -121,27 +118,24 @@ export default Marionette.ItemView.extend({
     },
 
     __calculateDesiredInputWidth(value) {
-        let div,
-            parentWidth,
-            style,
-            styleBlock,
-            styles,
-            width,
-            i;
-        styleBlock = 'position:absolute; left: -1000px; top: -1000px; display:none;';
-        styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
+        let styleBlock = 'position:absolute; left: -1000px; top: -1000px; display:none;';
+        const div = $('<div />', {
+            style: styleBlock
+        });
+        const parentWidth = this.parent.outerWidth();
+        let style;
+        const styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
+        let width;
+        let i;
+
         for (i = 0; i < styles.length; i++) {
             style = styles[i];
             styleBlock += `${style}:${this.ui.input.css(style)};`;
         }
-        div = $('<div />', {
-            style: styleBlock
-        });
         div.text(value);
         $('body').append(div);
         width = div.width() + 25;
         div.remove();
-        parentWidth = this.parent.outerWidth();
         if (parentWidth !== 0 && (width > parentWidth - 10)) {
             width = parentWidth - 10;
         }

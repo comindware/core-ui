@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 import { helpers, htmlHelpers } from 'utils';
 
@@ -33,7 +31,7 @@ export default Marionette.Behavior.extend({
         this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
         this.columns = view.options.columns;
 
-        this.listenTo(view, 'all', function(eventName) {
+        this.listenTo(view, 'all', eventName => {
             if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
                 return;
             }

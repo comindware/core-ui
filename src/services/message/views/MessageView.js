@@ -6,17 +6,11 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/message.hbs';
 import WindowService from '../../WindowService';
-import LocalizationService from '../../LocalizationService';
 
 export default Marionette.ItemView.extend({
-    initialize() {
-    },
-
     className: 'msg-popup',
 
     ui: {

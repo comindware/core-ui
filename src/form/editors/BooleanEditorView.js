@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import keyCode from '../../utils/keyCode';
 import template from './templates/booleanEditor.hbs';
@@ -97,7 +95,7 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
         return !_.isBoolean(this.getValue());
     },
 
-    __updateState(value) {
+    __updateState() {
         if (this.value) {
             this.$el.addClass(classes.CHECKED);
             this.$el.removeClass(classes.UNDEFINED);

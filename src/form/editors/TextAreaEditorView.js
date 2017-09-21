@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
@@ -115,9 +113,7 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
             helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
         }
         const keys = key.split(',');
-        _.each(keys, function(k) {
-            this.keyListener.simple_combo(k, callback);
-        }, this);
+        _.each(keys, k => this.keyListener.simple_combo(k, callback));
     },
 
     onShow() {

@@ -29,9 +29,6 @@ const classes = {
  * */
 
 export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */ {
-    initialize(options, view) {
-    },
-
     onRender() {
         let $el;
         if (this.options.anchor) {

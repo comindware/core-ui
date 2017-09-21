@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-disable*/
 
 import 'lib';
 
@@ -35,8 +35,7 @@ export default {
     },
 
     // options: replace (history), trigger (routing)
-    navigateToUrl(url, options) {
-        options = options || {};
+    navigateToUrl(url, options = {}) {
         if (options.trigger === undefined) {
             options.trigger = true;
         }

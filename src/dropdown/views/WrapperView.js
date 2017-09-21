@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import { $, Handlebars } from 'lib';
+import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 
 export default Marionette.ItemView.extend({

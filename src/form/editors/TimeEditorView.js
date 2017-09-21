@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, moment } from 'lib';
 import template from './templates/timeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -33,8 +31,7 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
 formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
-    initialize(options) {
-        options = options || {};
+    initialize(options = {}) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -107,11 +104,11 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     __value(value, updateUi, triggerChange) {
-        value = this.__adjustValue(value);
-        if (this.value === value) {
+        const newValue = this.__adjustValue(value);
+        if (this.value === newValue) {
             return;
         }
-        this.value = value;
+        this.value = newValue;
 
         if (triggerChange) {
             this.__triggerChange();

@@ -1,0 +1,15 @@
+{{#if showAll}}
+    <div class="tabs__i tabs__i_current js-all-button js-filter-button">
+        <span class="tabs__link tabs__link_current js-all-link js-filter-link">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.ALL'}}</span>
+    </div>
+{{/if}}
+{{#if showUsers}}
+    <div class="tabs__i js-users-button js-filter-button">
+        <span class="tabs__link js-users-link js-filter-link">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.PEOPLE'}}</span>
+    </div>
+{{/if}}
+{{#if showGroups}}
+    <div class="tabs__i js-groups-button js-filter-button">
+    <span class="tabs__link js-groups-link js-filter-link">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.GROUPS'}}</span>
+    </div>
+{{/if}}

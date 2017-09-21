@@ -21,9 +21,6 @@ const ReferenceCollection = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
-const classes = {
-};
-
 const defaultOptions = {
     displayAttribute: 'text',
     controller: null,
@@ -133,13 +130,13 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), function(key) {
+        _.each('down,enter,num_enter'.split(','), key => {
             this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
             });
-        }, this);
+        });
 
         if (this.options.showTitle) {
             const value = this.getValue();

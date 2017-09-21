@@ -7,7 +7,7 @@
  */
 
 import 'lib';
-import { helpers, htmlHelpers } from 'utils';
+import { helpers } from 'utils';
 
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
@@ -43,7 +43,7 @@ const eventBubblingIgnoreList = [
 export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(view.options, 'internalListViewReqres');
-        this.listenTo(view, 'all', function(eventName) {
+        this.listenTo(view, 'all', eventName => {
             if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
                 return;
             }

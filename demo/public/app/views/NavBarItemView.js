@@ -9,22 +9,16 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import template from 'text-loader!../templates/navBarItem.html';
 
-define([
-    'comindware/core',
-    'text!../templates/navBarItem.html'
-], function (core, template) {
-    'use strict';
-    return Marionette.ItemView.extend({
-        className: function () {
-            var result = 'demo-nav__i demo-nav__i_' + this.model.id;
-            if (this.model.get('selected')) {
-                result += ' demo-nav__i_selected';
-            }
-            return result;
-        },
+export default Marionette.ItemView.extend({
+    className() {
+        let result = `demo-nav__i demo-nav__i_${this.model.id}`;
+        if (this.model.get('selected')) {
+            result += ' demo-nav__i_selected';
+        }
+        return result;
+    },
 
-        template: Handlebars.compile(template)
-    });
+    template: Handlebars.compile(template)
 });

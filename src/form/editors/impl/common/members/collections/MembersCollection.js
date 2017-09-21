@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-disable*/
 
 import { helpers, comparators } from 'utils';
 import VirtualCollection from '../../../../../../collections/VirtualCollection';

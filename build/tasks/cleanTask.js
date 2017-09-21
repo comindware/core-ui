@@ -9,19 +9,25 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
-const del = require('del');
-
+const fs = require('fs');
 const pathResolver = require('../pathResolver');
 
 module.exports = () => {
-    del.sync([
-        pathResolver.compiled('**'),
-        `!${pathResolver.compiled()}`,
-        `!${pathResolver.compiled('localization')}`,
-        `!${pathResolver.compiled('localization/*.json')}`
-    ], { force: true });
+    const isTest = process.env.BUILD_ENV === 'deploy'; //do not delete localization folder, because travis can not in C#
+    const deleteFolderRecursive = path => {
+        if (fs.existsSync(path)) {
+            if (!isTest || path.indexOf('localization') === -1) {
+                fs.readdirSync(path).forEach(file => {
+                    const curPath = `${path}/${file}`;
+                    if (fs.lstatSync(curPath).isDirectory()) {
+                        deleteFolderRecursive(curPath);
+                    } else {
+                        fs.unlinkSync(curPath);
+                    }
+                });
+                fs.readdirSync(path).length === 0 && fs.rmdirSync(path);
+            }
+        }
+    };
+    deleteFolderRecursive(pathResolver.compiled());
 };

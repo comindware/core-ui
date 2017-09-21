@@ -36,7 +36,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onShow () {
+    onShow() {
         const view = this.model.get('view');
         if (view) {
             this.containerRegion.show(view);
@@ -44,11 +44,11 @@ export default Marionette.LayoutView.extend({
         this.__updateState();
     },
 
-    update () {
+    update() {
         const view = this.model.get('view');
-            if (view.update) {
-                view.update();
-            }
+        if (view.update) {
+            view.update();
+        }
         this.__updateState();
     }
 });

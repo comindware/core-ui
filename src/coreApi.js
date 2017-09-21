@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-
 import '../resources/styles/bootstrap-datetimepicker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
@@ -17,6 +15,7 @@ import '../resources/styles/form.css';
 import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
+import '../resources/styles/codemirror.css';
 
 import libApi from 'lib';
 import utilsApi from 'utils';
@@ -24,6 +23,7 @@ import dropdownApi from 'dropdown';
 import * as layoutApi from 'layout';
 import listApi from 'list';
 import nativeGridApi from './nativeGrid/nativeGridApi';
+import editableGridApi from 'editableGrid';
 import formApi from 'form';
 
 import meta_ from './Meta';
@@ -146,6 +146,12 @@ const core = {
      * */
     nativeGrid: nativeGridApi,
     /**
+     * Editable grid component without data virtualization.
+     * @namespace
+     * @memberof module:core
+     * */
+    editableGrid: editableGridApi,
+    /**
      * Combines useful helper classes, functions and constants.
      * @namespace
      * @memberof module:core
@@ -161,16 +167,17 @@ const core = {
 };
 
 export default core;
-export var lib = core.lib;
-export var layout = core.layout;
-export var services = core.services;
-export var collections = core.collections;
-export var models = core.models;
-export var views = core.views;
-export var dropdown = core.dropdown;
-export var form = core.form;
-export var list = core.list;
-export var nativeGrid = core.nativeGrid;
-export var utils = core.utils;
-export var meta = core.meta;
-export var initialize = core.initialize;
+export const lib = core.lib;
+export const layout = core.layout;
+export const services = core.services;
+export const collections = core.collections;
+export const models = core.models;
+export const views = core.views;
+export const dropdown = core.dropdown;
+export const form = core.form;
+export const list = core.list;
+export const nativeGrid = core.nativeGrid;
+export const editableGrid = core.editableGrid;
+export const utils = core.utils;
+export const meta = core.meta;
+export const initialize = core.initialize;

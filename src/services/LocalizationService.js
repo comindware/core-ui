@@ -6,33 +6,26 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { moment, numeral } from 'lib';
-import { helpers } from 'utils';
-import numeralRu from 'numeral/languages/ru';
-import numeralEn from 'numeral/languages/en-gb';
-import numeralDe from 'numeral/languages/de';
+import numeralRu from 'numeral/locales/ru';
+import numeralEn from 'numeral/locales/en-gb';
+import numeralDe from 'numeral/locales/de';
 
-numeral.language('en', numeralEn);
-numeral.language('de', numeralDe);
-numeral.language('ru', numeralRu);
+numeral.locale('en', numeralEn);
+numeral.locale('de', numeralDe);
+numeral.locale('ru', numeralRu);
 
 const global = window;
 const defaultLangCode = 'en';
 
 global.Localizer = {
     initialize(options) {
-        helpers.ensureOption(options, 'langCode');
-        helpers.ensureOption(options, 'localizationMap');
-        helpers.ensureOption(options, 'warningAsError');
-
         this.langCode = options.langCode;
         this.localizationMap = options.localizationMap;
         this.warningAsError = options.warningAsError;
 
         moment.locale(this.langCode);
-        numeral.language(this.langCode);
+        numeral.locale(this.langCode);
     },
 
     get(locId) {

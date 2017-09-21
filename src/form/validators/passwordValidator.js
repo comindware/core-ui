@@ -6,6 +6,8 @@
  * Published under the MIT license
  */
 
+/*eslint-disable*/
+
 import 'lib';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';

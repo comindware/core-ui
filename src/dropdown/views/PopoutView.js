@@ -346,18 +346,20 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
         // switching direction if there is not enough space
         switch (direction) {
-            case popoutDirection.UP:
+            case popoutDirection.UP: {
                 const topCenter = anchorRect.top + anchorRect.height / 2;
                 if (topCenter < panelRect.height && anchorRect.bottom > topCenter) {
                     direction = popoutDirection.DOWN;
                 }
                 break;
-            case popoutDirection.DOWN:
+            }
+            case popoutDirection.DOWN: {
                 const bottomCenter = anchorRect.bottom + anchorRect.height / 2;
                 if (bottomCenter < panelRect.height && anchorRect.top > bottomCenter) {
                     direction = popoutDirection.UP;
                 }
                 break;
+            }
             default:
                 break;
         }
