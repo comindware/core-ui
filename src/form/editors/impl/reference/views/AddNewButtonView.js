@@ -9,12 +9,9 @@
  *       actual or intended publication of such source code.
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 import template from '../templates/addNewButton.hbs';
-import list from 'list';
 
 export default Marionette.ItemView.extend({
     initialize(options) {

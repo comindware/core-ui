@@ -52,6 +52,8 @@ export default /** @lends module:core.utils.cookieHelpers */ {
                 case Date:
                     sExpires = `; expires=${vEnd.toUTCString()}`;
                     break;
+                default:
+                    return;
             }
         }
         document.cookie = `${encodeURIComponent(sKey)}=${encodeURIComponent(sValue)}${sExpires}${sDomain ? `; domain=${sDomain}` : ''}${sPath ? `; path=${sPath}` : ''}${bSecure ? '; secure' : ''}`;

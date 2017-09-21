@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, moment } from 'lib';
 import { helpers, dateHelpers } from 'utils';
 import template from '../templates/timeInput.hbs';
@@ -58,18 +56,25 @@ export default Marionette.ItemView.extend({
             return currentValue;
         }
 
-        let format = this.timeEditFormat,
-            parsedVal = moment.utc(val, format, true),
-            parsedDate;
+        const format = this.timeEditFormat;
+        const parsedVal = moment.utc(val, format, true);
+        let parsedDate;
 
         if (parsedVal.isValid()) {
             if (currentValue) {
                 // Take previously selected date and new time
                 parsedDate = moment.utc(currentValue).utcOffset(this.getOption('timezoneOffset'))
-                    .hour(parsedVal.hour()).minute(parsedVal.minute()).second(this.hasSeconds ? parsedVal.second() : 0).millisecond(0).toISOString();
+                    .hour(parsedVal.hour()).minute(parsedVal.minute())
+                    .second(this.hasSeconds ? parsedVal.second() : 0)
+                    .millisecond(0)
+                    .toISOString();
             } else {
                 // Take current date and newly selected time
-                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).second(this.hasSeconds ? parsedVal.second() : 0).toISOString();
+                parsedDate = moment.utc({})
+                    .hour(parsedVal.hour())
+                    .minute(parsedVal.minute() - this.getOption('timezoneOffset'))
+                    .second(this.hasSeconds ? parsedVal.second() : 0)
+                    .toISOString();
             }
         } else if (currentValue !== '' && currentValue !== null) {
             parsedDate = currentValue;
@@ -88,8 +93,8 @@ export default Marionette.ItemView.extend({
     },
 
     setInputPermissions() {
-        let enabled = this.model.get('enabled'),
-            readonly = this.model.get('readonly');
+        const enabled = this.model.get('enabled');
+        const readonly = this.model.get('readonly');
 
         if (!enabled) {
             this.ui.input.prop('disabled', true);
@@ -134,9 +139,9 @@ export default Marionette.ItemView.extend({
     },
 
     startEditing() {
-        let val = this.model.get('value'),
-            format = this.timeEditFormat,
-            editFormattedDate = val ? moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
+        const val = this.model.get('value');
+        const format = this.timeEditFormat;
+        const editFormattedDate = val ? moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
 
         this.ui.input.val(editFormattedDate);
     },

@@ -24,12 +24,11 @@ import VirtualCollection from '../collections/VirtualCollection';
 const createWrappedCollection = function(collection, options) {
     if (!(collection instanceof VirtualCollection)) {
         if (_.isArray(collection)) {
-            collection = new VirtualCollection(new Backbone.Collection(collection), options);
+            return new VirtualCollection(new Backbone.Collection(collection), options);
         } else if (collection instanceof Backbone.Collection) {
-            collection = new VirtualCollection(collection, options);
-        } else {
-            helpers.throwError('Invalid collection', 'ArgumentError');
+            return VirtualCollection(collection, options);
         }
+        helpers.throwError('Invalid collection', 'ArgumentError');
     }
     return collection;
 };

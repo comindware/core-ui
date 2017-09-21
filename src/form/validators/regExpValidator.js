@@ -7,7 +7,6 @@
  */
 
 import 'lib';
-import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 const defaultRegExp = function(options) {

@@ -9,17 +9,10 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import template from 'text-loader!../templates/indexPage.html';
 
-define([
-    'comindware/core',
-    'text!../templates/indexPage.html'
-], function (core, template) {
-    'use strict';
+export default Marionette.ItemView.extend({
+    className: 'demo-welcome',
 
-    return Marionette.ItemView.extend({
-        className: "demo-welcome",
-        
-        template: Handlebars.compile(template)
-    });
+    template: Handlebars.compile(template)
 });

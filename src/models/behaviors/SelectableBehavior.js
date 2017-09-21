@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-disable*/
 
 import 'lib';
 

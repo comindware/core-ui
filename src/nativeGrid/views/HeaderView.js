@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import template from '../templates/header.hbs';
 import { Handlebars } from 'lib';
 import GridHeaderView from '../../list/views/GridHeaderView';
@@ -25,7 +23,7 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @param {Backbone.View} options.gridColumnHeaderView View Используемый для отображения заголовка (шапки) списка
  * */
 const HeaderView = GridHeaderView.extend({
-    initialize(options) {
+    initialize() {
         GridHeaderView.prototype.initialize.apply(this, arguments);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
         this.listenTo(GlobalEventService, 'window:resize', this.__handleResizeInternal);
@@ -34,15 +32,21 @@ const HeaderView = GridHeaderView.extend({
     template: Handlebars.compile(template),
 
     onRender() {
-        const self = this;
+        if (this.__columnEls) {
+            this.__columnEls.forEach(c => c.destroy());
+        }
+        this.__columnEls = [];
+
+
         this.ui.gridHeaderColumnContent.each((i, el) => {
-            const column = self.columns[i];
-            const view = new self.gridColumnHeaderView(_.extend(self.gridColumnHeaderViewOptions || {}, {
+            const column = this.columns[i];
+            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column,
-                gridEventAggregator: self.gridEventAggregator
+                gridEventAggregator: this.gridEventAggregator
             }));
-            self.listenTo(view, 'columnSort', self.__handleColumnSort);
+            this.__columnEls.push(view);
+            this.listenTo(view, 'columnSort', this.__handleColumnSort);
             const childEl = view.render().el;
             el.appendChild(childEl);
         });
@@ -61,16 +65,17 @@ const HeaderView = GridHeaderView.extend({
     },
 
     setFitToView() {
-        let availableWidth = this.__getAvailableWidth(),
-            viewWidth = this.__getTableWidth(),
-            columnsL = this.ui.gridHeaderColumn.length,
-            fullWidth = 0,
-            sumDelta = 0,
-            sumGap = 0;
+        const availableWidth = this.__getAvailableWidth();
+        const viewWidth = this.__getTableWidth();
+        const columnsL = this.ui.gridHeaderColumn.length;
+        let fullWidth = 0;
+        let sumDelta = 0;
+        let sumGap = 0;
+        let columnWidth;
 
         this.ui.gridHeaderColumn.each((i, el) => {
             if (availableWidth !== viewWidth) {
-                var columnWidth = this.__getElementOuterWidth(el) * availableWidth / viewWidth;
+                columnWidth = this.__getElementOuterWidth(el) * availableWidth / viewWidth;
                 if (columnWidth < this.constants.MIN_COLUMN_WIDTH) {
                     sumDelta += this.constants.MIN_COLUMN_WIDTH - columnWidth;
                     columnWidth = this.constants.MIN_COLUMN_WIDTH;
@@ -199,8 +204,8 @@ const HeaderView = GridHeaderView.extend({
     },
 
     updateColumnAndNeighbourWidths(index, delta) {
-        let $current = $(this.ui.gridHeaderColumn[index]),
-            newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
+        const $current = $(this.ui.gridHeaderColumn[index]);
+        const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
         if (this.dragContext.draggedColumn.initialWidth + delta < this.constants.MIN_COLUMN_WIDTH) {
             return;
@@ -242,8 +247,8 @@ const HeaderView = GridHeaderView.extend({
     },
 
     __handleResizeInternal() {
-        let fullWidth = this.__getAvailableWidth(),
-            currentWidth = this.__getTableWidth();
+        const fullWidth = this.__getAvailableWidth();
+        const currentWidth = this.__getTableWidth();
 
         if (fullWidth > currentWidth) {
             this.$el.width(fullWidth);
@@ -253,9 +258,9 @@ const HeaderView = GridHeaderView.extend({
     },
 
     __updateColumnsWidth() {
-        let columns = this.columns,
-            needUpdate = false,
-            fullWidth = 0;
+        const columns = this.columns;
+        let needUpdate = false;
+        let fullWidth = 0;
 
         this.ui.gridHeaderColumn.each((i, el) => {
             const child = $(el);

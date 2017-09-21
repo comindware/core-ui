@@ -9,17 +9,13 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Backbone, Marionette, $, _, Localizer */
+import core from 'comindware/core';
+import GroupModel from '../models/GroupModel';
 
-define(['comindware/core', '../models/GroupModel'],
-    function (core, GroupModel) {
-        'use strict';
+export default Backbone.Collection.extend({
+    initialize() {
+        _.extend(this, new core.models.behaviors.SelectableBehavior.SingleSelect(this));
+    },
 
-        return Backbone.Collection.extend({
-            initialize: function () {
-                _.extend(this, new core.models.behaviors.SelectableBehavior.SingleSelect(this));
-            },
-
-            model: GroupModel
-        });
-    });
+    model: GroupModel
+});

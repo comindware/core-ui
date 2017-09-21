@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 const webpackConfigFactory = require('./build/webpack.config.js');
 
 module.exports = function (config) {
@@ -27,7 +25,8 @@ module.exports = function (config) {
             'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-sourcemap-loader',
-            'karma-webpack'
+            'karma-webpack',
+            'karma-coverage'
         ],
 
         // list of files / patterns to load in the browser
@@ -75,7 +74,7 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        webpack: webpackConfigFactory.build({
+        webpack: webpackConfigFactory({
             env: 'test'
         }),
 
@@ -99,7 +98,7 @@ module.exports = function (config) {
             ]
         };
 
-        result.webpack = webpackConfigFactory.build({
+        result.webpack = webpackConfigFactory({
             env: 'test-coverage'
         });
     }

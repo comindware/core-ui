@@ -6,13 +6,9 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import template from '../../list/templates/list.hbs';
 import { keypress, Handlebars } from 'lib';
-import { helpers, htmlHelpers } from 'utils';
-import GridHeaderView from '../../list/views/GridHeaderView';
-import GlobalEventService from '../../services/GlobalEventService';
+import { helpers } from 'utils';
 
 const VisibleCollectionView = Marionette.CollectionView.extend({
     getChildView(child) {
@@ -99,13 +95,9 @@ const ListView = Marionette.LayoutView.extend({
             loadingChildView: this.loadingChildView
         });
 
-        this.listenTo(this.visibleCollectionView, 'childview:click', function(child) {
-            this.trigger('row:click', child.model);
-        });
+        this.listenTo(this.visibleCollectionView, 'childview:click', child => this.trigger('row:click', child.model));
 
-        this.listenTo(this.visibleCollectionView, 'childview:dblclick', function(child) {
-            this.trigger('row:dblclick', child.model);
-        });
+        this.listenTo(this.visibleCollectionView, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
 
         this.visibleCollectionRegion.show(this.visibleCollectionView);
     },
@@ -157,13 +149,13 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __scrollToNeighbor(index) {
-        let view = this.visibleCollectionView.children.findByIndex(index),
-            $parentEl = this.$el.parent(),
-            currentScrollTop = $parentEl.scrollTop(),
-            visibleHeight = this.state.visibleHeight,
-            viewPositionTop = view.$el.position().top,
-            viewHeight = view.$el.height(),
-            viewBottomPos = viewPositionTop + viewHeight;
+        const view = this.visibleCollectionView.children.findByIndex(index);
+        const $parentEl = this.$el.parent();
+        const currentScrollTop = $parentEl.scrollTop();
+        const visibleHeight = this.state.visibleHeight;
+        const viewPositionTop = view.$el.position().top;
+        const viewHeight = view.$el.height();
+        const viewBottomPos = viewPositionTop + viewHeight;
 
         if (viewBottomPos > visibleHeight) {
             $parentEl.scrollTop(currentScrollTop + viewHeight);
@@ -173,11 +165,11 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __scrollToIndex(index, offset) {
-        let view = this.visibleCollectionView.children.findByIndex(index),
-            $parentEl = this.$el.parent(),
-            currentScrollTop = $parentEl.scrollTop(),
-            viewPositionTop = view.$el.position().top,
-            newScrollPos = offset ? currentScrollTop + viewPositionTop + offset : currentScrollTop + viewPositionTop;
+        const view = this.visibleCollectionView.children.findByIndex(index);
+        const $parentEl = this.$el.parent();
+        const currentScrollTop = $parentEl.scrollTop();
+        const viewPositionTop = view.$el.position().top;
+        const newScrollPos = offset ? currentScrollTop + viewPositionTop + offset : currentScrollTop + viewPositionTop;
 
         $parentEl.scrollTop(newScrollPos);
     },
@@ -191,8 +183,8 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __moveToNeighbor(direction, shiftPressed) {
-        let selectedIndex = this.getSelectedViewIndex(),
-            nextIndex = selectedIndex;
+        const selectedIndex = this.getSelectedViewIndex();
+        let nextIndex = selectedIndex;
 
         direction === 'top' ? nextIndex-- : nextIndex++; //jshint ignore: line
 
@@ -204,10 +196,10 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __moveToNextPage(direction, shiftPressed) {
-        let selectedIndex = this.getSelectedViewIndex(),
-            selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex),
-            selectedPositionTop = selectedView.$el.position().top,
-            nextIndex = selectedIndex;
+        const selectedIndex = this.getSelectedViewIndex();
+        const selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex);
+        const selectedPositionTop = selectedView.$el.position().top;
+        let nextIndex = selectedIndex;
 
         if (direction === 'top') {
             nextIndex = this.__getTopIndex(selectedIndex);
@@ -230,15 +222,16 @@ const ListView = Marionette.LayoutView.extend({
                 index = i;
                 return true;
             }
+            return false;
         });
 
         return index;
     },
 
     __getTopIndex(index) {
-        let cHeight = 0,
-            newIndex = index,
-            childViews = this.visibleCollectionView.children.toArray();
+        let cHeight = 0;
+        let newIndex = index;
+        const childViews = this.visibleCollectionView.children.toArray();
 
         for (let i = index - 1; i >= 0; i--) {
             const newH = cHeight + childViews[i].$el.height();
@@ -255,9 +248,9 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __getBottomIndex(index) {
-        let cHeight = 0,
-            newIndex = index,
-            childViews = this.visibleCollectionView.children.toArray();
+        let cHeight = 0;
+        let newIndex = index;
+        const childViews = this.visibleCollectionView.children.toArray();
 
         for (let i = index + 1; i < childViews.length; i++) {
             const newH = cHeight + childViews[i].$el.height();
@@ -283,8 +276,7 @@ const ListView = Marionette.LayoutView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, function(value, key) //noinspection JSHint
-        {
+        _.each(this.keyboardShortcuts, (value, key) => {
             if (typeof value === 'object') {
                 this.keyListener.register_combo(_.extend({
                     keys: key,
@@ -293,7 +285,7 @@ const ListView = Marionette.LayoutView.extend({
             } else {
                 this.keyListener.simple_combo(key, value.bind(this));
             }
-        }, this);
+        });
     },
 
     getElementHeight() {
@@ -326,8 +318,8 @@ const ListView = Marionette.LayoutView.extend({
         this.state.visibleHeight = this.$el.parent().height();
 
         setTimeout(() => {
-            let fullWidth = this.$el.parent().width(),
-                currentWidth = this.$el.width();
+            const fullWidth = this.$el.parent().width();
+            const currentWidth = this.$el.width();
 
             if (fullWidth > currentWidth) {
                 this.$el.width(fullWidth);

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
 import ListView from './views/ListView';
@@ -134,12 +132,11 @@ const factory = {
     createWrappedCollection(collection, options) {
         if (!(collection instanceof VirtualCollection)) {
             if (_.isArray(collection)) {
-                collection = new VirtualCollection(new Backbone.Collection(collection), options);
+                return new VirtualCollection(new Backbone.Collection(collection), options);
             } else if (collection instanceof Backbone.Collection) {
-                collection = new VirtualCollection(collection, options);
-            } else {
-                helpers.throwError('Invalid collection', 'ArgumentError');
+                return new VirtualCollection(collection, options);
             }
+            helpers.throwError('Invalid collection', 'ArgumentError');
         }
         return collection;
     }

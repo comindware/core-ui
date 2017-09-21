@@ -6,11 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import PopoutView from './views/PopoutView';
-import ListPanelView from './views/ListPanelView';
-import MenuItemView from './views/MenuItemView';
 import DefaultButtonView from './views/DefaultButtonView';
 import MenuPanelView from './views/MenuPanelView';
 import DropdownView from './views/DropdownView';
@@ -33,8 +29,7 @@ export default /** @lends module:core.dropdown.factory */ {
      * @param {String} [options.text] Текст кнопки меню. Если не задан, требуется вручную установить опцию <code>buttonView</code>.
      * @returns {Backbone.View} View Меню
      * */
-    createMenu(options) {
-        options = options || {};
+    createMenu(options = {}) {
         let collection = options.items;
         if (!(collection instanceof Backbone.Collection)) {
             collection = new Backbone.Collection(collection);
@@ -76,8 +71,7 @@ export default /** @lends module:core.dropdown.factory */ {
             fade: true,
             height: 'bottom'
         };
-        options = _.extend(defaults, options);
-        return this.createPopout(options);
+        return this.createPopout(_.extend(defaults, options));
     },
 
     /**

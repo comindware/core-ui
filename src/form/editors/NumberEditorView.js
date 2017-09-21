@@ -187,9 +187,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         return false;
     },
 
-    __repeat(i, steps) {
-        i = i || 500;
-
+    __repeat(i = 500, steps) {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             if (!this.isDestroyed) {
@@ -202,7 +200,6 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     __keydown(event) {
         this.__start();
-        const options = this.options;
 
         switch (event.keyCode) {
             case keyCode.UP:
@@ -217,6 +214,8 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
             case keyCode.PAGE_DOWN:
                 this.__repeat(null, -constants.PAGE, event);
                 return false;
+            default:
+                break;
         }
 
         if (event.ctrlKey === true || allowedKeys.indexOf(event.keyCode) !== -1) {
@@ -263,12 +262,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         this.spinning = false;
     },
 
-    __value(value, suppressRender, triggerChange, force) {
+    __value(newValue, suppressRender, triggerChange, force) {
+        let value = newValue;
         if (value === this.value && !force) {
             return;
         }
-        let parsed,
-            formattedValue = null;
+        let parsed;
+        let formattedValue = null;
         if (value !== '' && value !== null) {
             parsed = this.__parse(value);
             if (parsed !== null) {
@@ -278,7 +278,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
                 }
                 if (this.options.format) {
                     formattedValue = numeral(value).format(this.options.format);
-                    value = numeral().unformat(formattedValue);
+                    value = numeral._.stringToNumber(formattedValue);
                 }
             } else {
                 return;
@@ -307,12 +307,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         }
     },
 
-    __parse(val) {
+    __parse(value) {
+        let val = value;
         if (typeof val === 'string' && val !== '') {
-            if (numeral.languageData().delimiters.decimal !== '.') {
-                val = val.replace('.', numeral.languageData().delimiters.decimal);
+            if (numeral.localeData().delimiters.decimal !== '.') {
+                val = val.replace('.', numeral.localeData().delimiters.decimal);
             }
-            val = numeral().unformat(val);
+            val = numeral._.stringToNumber(val);
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;
             } else if (val === Number.NEGATIVE_INFINITY) {
@@ -358,23 +359,18 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
     },
 
     __adjustValue(value) {
-        let base;
-        let aboveMin;
         const options = this.options;
+        const base = options.min !== null ? options.min : 0;
+        let aboveMin;
 
         // make sure we're at a valid step
         // - find out where we are relative to the base (min or 0)
-        base = options.min !== null ? options.min : 0;
         aboveMin = value - base;
         // - round to the nearest step
         aboveMin = Math.round(aboveMin / constants.STEP) * constants.STEP;
         // - rounding is based on 0, so adjust back to our base
-        value = base + aboveMin;
-
         // fix precision from bad JS floating point math
-        value = parseFloat(value.toFixed(this.__precision()));
-
-        return value;
+        return parseFloat((base + aboveMin).toFixed(this.__precision()));
     },
 
     setValue(value) {

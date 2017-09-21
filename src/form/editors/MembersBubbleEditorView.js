@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
@@ -98,10 +96,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
     },
 
-    setValue(value) {
-        if (_.isUndefined(value) || value === null) {
-            value = [];
-        }
+    setValue(value = []) {
         if ((this.value === value) || (JSON.stringify(this.value) === JSON.stringify(value))) {
             return;
         }

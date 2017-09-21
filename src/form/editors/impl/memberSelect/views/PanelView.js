@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';
@@ -97,12 +95,12 @@ export default Marionette.LayoutView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function(value, key) {
+        _.each(this.keyboardShortcuts, (value, key) => {
             const keys = key.split(',');
-            _.each(keys, function(k) {
+            _.each(keys, k => {
                 this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        }, this);
+            });
+        });
     },
 
     keyboardShortcuts: {

@@ -1,0 +1,13 @@
+using System;
+using System.Linq;
+using Comindware.Data.Entity;
+
+class Script
+{
+    public static void Main(Comindware.Process.Api.Data.ScriptContext context, Comindware.Entities entities)
+    {
+        var processObject = Api.Process.ProcessObjectService.Get(context.ProcessId);
+        var businessObject = entities.<business object alias>.Where(cr => cr.id == processObject.BusinessObjectId).First();
+        throw new NotImplementedException();
+    }
+}

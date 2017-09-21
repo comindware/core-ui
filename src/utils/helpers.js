@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-disable*/
 
 import 'lib';
 import LocalizationService from '../services/LocalizationService';
@@ -63,13 +63,9 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     comparatorFor(comparatorFn, propertyName) {
         if (comparatorFn.length === 1) {
-            return function(a) {
-                return comparatorFn(a.get(propertyName));
-            };
+            return a => comparatorFn(a.get(propertyName));
         } else if (comparatorFn.length === 2) {
-            return function(a, b) {
-                return comparatorFn(a.get(propertyName), b.get(propertyName));
-            };
+            return (a, b) => comparatorFn(a.get(propertyName), b.get(propertyName));
         }
         throw new Error('Invalid arguments count in comparator function.');
     },
@@ -149,7 +145,7 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     enqueueOperation(operation, queueId) {
         if (queueCache[queueId] && queueCache[queueId].isPending()) {
-            queueCache[queueId] = queueCache[queueId].then(() => _.isFunction(operation) ? operation() : operation);
+            queueCache[queueId] = queueCache[queueId].then(() => (_.isFunction(operation) ? operation() : operation));
         } else {
             queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
         }
@@ -241,7 +237,7 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} obj An object to get the property from.
      * */
     getPropertyOrDefault(propertyPath, obj) {
-        return [obj].concat(propertyPath.split('.')).reduce((prev, curr) => prev === undefined ? undefined : prev[curr]);
+        return [obj].concat(propertyPath.split('.')).reduce((prev, curr) => (prev === undefined ? undefined : prev[curr]));
     },
 
     /**

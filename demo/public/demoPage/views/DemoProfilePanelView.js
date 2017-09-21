@@ -9,25 +9,19 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
+import core from 'comindware/core';
+import template from 'text-loader!../templates/demoProfilePanel.html';
 
-define([
-        'text!../templates/demoProfilePanel.html',
-        'comindware/core'
-    ],
-    function (template, core) {
-        'use strict';
-        return Marionette.LayoutView.extend({
-            className: 'nav-profile_test',
+export default Marionette.LayoutView.extend({
+    className: 'nav-profile_test',
 
-            regions: {
-                dateEditorRegion: '.js-date-editor-region'
-            },
+    regions: {
+        dateEditorRegion: '.js-date-editor-region'
+    },
 
-            template: Handlebars.compile(template),
+    template: Handlebars.compile(template),
 
-            onShow: function () {
-                this.dateEditorRegion.show(new core.form.editors.DateTimeEditor());
-            }
-        });
-    });
+    onShow() {
+        this.dateEditorRegion.show(new core.form.editors.DateTimeEditor());
+    }
+});

@@ -9,22 +9,18 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const webpackConfigFactory = require('../webpack.config.js');
 const webpack = require('webpack');
 const gulpUtil = require('gulp-util');
 
 module.exports = uglify => callback => {
-    const webpackConfig = webpackConfigFactory.build({
+    const webpackConfig = webpackConfigFactory({
         env: 'production',
         uglify: uglify || false
     });
 
     // run webpack
-    webpack(webpackConfig, function(err, stats) {
+    webpack(webpackConfig, (err, stats) => {
         if (err) {
             throw new gulpUtil.PluginError('webpack:build:core', err);
         }

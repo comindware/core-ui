@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-
 /*
 *
 * Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
@@ -103,9 +101,7 @@ export default {
              * */
             hasFocus: false,
 
-            constructor(options) {
-                options = options || {};
-
+            constructor(options = {}) {
                 _.bindAll(this, 'onFocus', 'onBlur');
 
                 //Set initial value
@@ -288,8 +284,7 @@ export default {
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails
              * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
              */
-            commit(options) {
-                options = options || {};
+            commit(options = {}) {
                 let error = this.validate(true);
                 if (error && !this.schema.forceCommit) {
                     return error;

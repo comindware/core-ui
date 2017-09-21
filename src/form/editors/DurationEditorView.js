@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, moment } from 'lib';
 import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
@@ -115,7 +113,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     ui: {
         input: '.js-input',
-        remove: '.js-duration-remove'
+        clear: '.js-clear-button'
     },
 
     regions: {
@@ -123,7 +121,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
     },
 
     events: {
-        'click @ui.remove': '__clear',
+        'click @ui.clear': '__clear',
         'focus @ui.input': '__focus',
         'click @ui.input': '__focus',
         'blur @ui.input': '__blur',
@@ -133,9 +131,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
     setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         if (enabled && !readonly) {
-            this.ui.remove.show();
+            this.ui.clear.show();
         } else {
-            this.ui.remove.hide();
+            this.ui.clear.hide();
         }
     },
 
@@ -219,8 +217,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     getSegmentIndex(pos) {
         // returns the index of the segment where we are at
-        let i,
-            segmentIndex;
+        let i;
+        let segmentIndex;
+
         segmentIndex = this.focusableParts.length - 1;
         this.initSegmentStartEnd();
         for (i = 0; i < this.focusableParts.length; i++) {
@@ -378,27 +377,28 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             case keyCode.ENTER:
                 this.__blur();
                 return false;
-            case keyCode.TAB:
+            case keyCode.TAB: {
                 const delta = event.shiftKey ? -1 : 1;
                 if (this.focusableParts[index + delta]) {
                     this.setCaretPos(this.focusableParts[index + delta].start);
                     return false;
                 }
                 break;
+            }
             case keyCode.HOME:
                 this.setCaretPos(this.focusableParts[0].start);
                 return false;
             case keyCode.END:
                 this.setCaretPos(this.focusableParts[this.focusableParts.length - 1].end);
                 return false;
-            default:
-                var charValue = null;
+            default: {
+                let charValue = null;
                 if (event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) {
                     charValue = event.keyCode - keyCode.NUM_0;
                 } else if (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) {
                     charValue = event.keyCode - keyCode.NUMPAD_0;
                 }
-                var valid = charValue !== null;
+                const valid = charValue !== null;
                 if (!valid) {
                     return false;
                 }
@@ -410,6 +410,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
                 if (this.getSegmentValue(index).length >= focusablePart.maxLength) {
                     return false;
                 }
+            }
         }
     },
 
@@ -454,10 +455,10 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
                 // returns string like '0d 4h 32m'
                 return filledSegments.reduce((p, seg) => `${p}${data[seg.id]}${seg.text} `, '').trim();
             }
-                // returns string like '0d'
+            // returns string like '0d'
             return `0${this.focusableParts[0].text}`;
         }
-            // always returns string with all editable segments like '0 d 5 h 2 m'
+        // always returns string with all editable segments like '0 d 5 h 2 m'
         return this.focusableParts.map(seg => {
             const val = data[seg.id];
             const valStr = _.isNumber(val) ? String(val) : '';

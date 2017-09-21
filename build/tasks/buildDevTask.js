@@ -9,10 +9,6 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}], no-new-func: 0 */
-
-'use strict';
-
 const fs = require('fs');
 const gulpUtil = require('gulp-util');
 const webpack = require('webpack');
@@ -24,25 +20,26 @@ const config = {
     writePerformanceLog: false
 };
 
-const compiler = webpack(webpackConfigFactory.build({
+const compiler = webpack(webpackConfigFactory({
     env: 'development',
     uglify: false
 }));
 
 let bundleStart = null;
-compiler.plugin('compile', function () {
+
+compiler.plugin('compile', () => {
     gulpUtil.log('[webpack:build:core]', 'Compiling...');
     bundleStart = Date.now();
 });
-compiler.plugin('done', function (stats) {
+compiler.plugin('done', stats => {
     if (config.writePerformanceLog) {
         fs.writeFileSync(pathResolver.compiled('compile-log.json'), JSON.stringify(stats.toJson()), 'utf8');
     }
     gulpUtil.log('[webpack:build:core]', `Compiled in ${Date.now() - bundleStart}ms!`);
 });
 
-module.exports = (callback) => {
-    compiler.run(function(err, stats) {
+module.exports = callback => {
+    compiler.run((err, stats) => {
         if (err) {
             throw new gulpUtil.PluginError('webpack:build:core', err);
         }

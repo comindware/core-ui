@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import GridItemViewBehavior from './behaviors/GridItemViewBehavior';
 import GridItemBehavior from '../models/behaviors/GridItemBehavior';
 
@@ -57,9 +55,9 @@ export default Marionette.ItemView.extend({
     _renderTemplate() {
         this.cellViews = [];
         this.$el.append(`<div class="padding js-padding" style="width: ${this.options.paddingLeft}px"></div>`);
-        _.each(this.options.columns, function(gridColumn) {
-            let id = gridColumn.id,
-                value;
+        _.each(this.options.columns, gridColumn => {
+            const id = gridColumn.id;
+            let value;
 
             if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) {
                 value = gridColumn.cellViewOptions.getValue.apply(this, [gridColumn]);
@@ -80,7 +78,7 @@ export default Marionette.ItemView.extend({
             cellView.render();
             cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
             this.cellViews.push(cellView);
-        }, this);
+        });
         this.$el.append(`<div class="padding js-padding" style="width: ${this.options.paddingRight}px"></div>`);
     },
 

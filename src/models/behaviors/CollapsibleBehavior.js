@@ -6,11 +6,9 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 
-const CollapsibleBehavior = function(model) {
+const CollapsibleBehavior = function() {
 };
 
 _.extend(CollapsibleBehavior.prototype, {

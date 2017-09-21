@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
+/* eslint-disable */
 
 import 'lib';
 
@@ -32,11 +32,11 @@ import 'lib';
             return !!img && visible(img);
         }
         return (/input|select|textarea|button|object/.test(nodeName) ?
-                !element.disabled :
-                nodeName === 'a' ?
+            !element.disabled :
+            nodeName === 'a' ?
                 element.href || isTabIndexNotNaN :
-                    isTabIndexNotNaN) &&
-                // the element and all of its ancestors must be visible
+                isTabIndexNotNaN) &&
+        // the element and all of its ancestors must be visible
             visible(element);
     }
 

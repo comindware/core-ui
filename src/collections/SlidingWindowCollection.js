@@ -6,10 +6,8 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
-
+/*eslint-disable*/
 /**
  * @name SlidingWindowCollection
  * @memberof module:core.collections
@@ -22,9 +20,8 @@ import 'lib';
  * */
 
 const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.collections.SlidingWindowCollection.prototype */ {
-    constructor(collection, options) //noinspection JSHint
+    constructor(collection, options = {}) //noinspection JSHint
     {
-        options = options || {};
         this.parentCollection = collection;
         this.innerCollection = new Backbone.Collection();
 
