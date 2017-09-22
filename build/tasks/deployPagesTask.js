@@ -36,7 +36,7 @@ module.exports = () => {
 
     const pagesDir = pathResolver.pages();
     const pagesResolver = pathResolver.createResolver(pagesDir);
-    !fs.existsSync(pagesResolver) && fs.mkdirSync(pagesResolver);
+    !fs.existsSync(pagesDir) && fs.mkdirSync(pagesDir);
     run('git init', pagesDir);
     run('git config user.name "Travis-CI"', pagesDir);
     run('git config user.email "me@sburg.net"', pagesDir);
