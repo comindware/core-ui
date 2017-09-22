@@ -17,7 +17,7 @@ const pathResolver = require('../pathResolver');
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 module.exports = () => {
-    exec('git tag --contains origin/head', (err, stdout, stderr) => {
+    exec('git tag -l 1.4.*', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;
@@ -37,9 +37,9 @@ module.exports = () => {
         }
         const version = matchResult[matchResult.length - 1];
 
-        //console.log(`PrepareToPublishTask: There are tags on the build that match the version pattern. Updating package.json with version ${version}...`);
-        //const packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));
-        //packageJson.version = version;
-        //fs.writeFileSync(pathResolver.root('package.json'), JSON.stringify(packageJson, null, '    '), 'utf8');
+        console.log(`PrepareToPublishTask: There are tags on the build that match the version pattern. Updating package.json with version ${version}...`);
+        const packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));
+        packageJson.version = version;
+        fs.writeFileSync(pathResolver.root('package.json'), JSON.stringify(packageJson, null, '    '), 'utf8');
     });
 };
