@@ -26,7 +26,7 @@ const createWrappedCollection = function(collection, options) {
         if (_.isArray(collection)) {
             return new VirtualCollection(new Backbone.Collection(collection), options);
         } else if (collection instanceof Backbone.Collection) {
-            return VirtualCollection(collection, options);
+            return new VirtualCollection(collection, options);
         }
         helpers.throwError('Invalid collection', 'ArgumentError');
     }
