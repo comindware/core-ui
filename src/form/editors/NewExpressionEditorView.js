@@ -41,7 +41,8 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             expressionEditorHeight: 300,
             scriptEditorHeight: 300,
             codeEditorMode: 'normal',
-            displayInline: false
+            displayInline: false,
+            ontologyService: null
         };
     },
 
