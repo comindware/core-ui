@@ -37,6 +37,7 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends m
         }
 
         this.collection = new RadioGroupCollection(this.options.radioOptions);
+        this.listenTo(this.collection, 'select:one', this.__onSelectChild);
     },
 
     className: 'fd-radio-group',
@@ -45,10 +46,6 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends m
 
     events: {
         keydown: '__onKeyDown'
-    },
-
-    collectionEvents: {
-        'select:one': '__onSelectChild'
     },
 
     childViewOptions() {
