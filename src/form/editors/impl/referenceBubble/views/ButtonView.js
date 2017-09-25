@@ -21,7 +21,6 @@ const classes = {
 
 export default Marionette.CollectionView.extend({
     initialize(options) {
-        debugger;
         this.reqres = options.reqres;
         this.collection = this.model.get('selected');
     },
@@ -73,7 +72,9 @@ export default Marionette.CollectionView.extend({
             reqres: this.reqres,
             parent: this.$el,
             enabled: this.options.enabled,
-            createValueUrl: this.options.createValueUrl
+            createValueUrl: this.options.createValueUrl,
+            showEditButton: this.options.showEditButton,
+            getDisplayText: this.options.getDisplayText
         };
     },
 

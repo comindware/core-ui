@@ -18,7 +18,6 @@ export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers() {
-        debugger;
         return {
             text: this.options.getDisplayText(this.model.get('value'))
         };

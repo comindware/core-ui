@@ -21,9 +21,12 @@ export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers() {
+        const value = this.model.attributes;
         return {
             enabled: this.options.enabled,
-            url: this.url
+            url: this.url,
+            text: this.options.getDisplayText(value),
+            showEditButton: this.options.showEditButton && Boolean(value)
         };
     },
 
@@ -32,12 +35,14 @@ export default Marionette.ItemView.extend({
     className: 'bubbles__i',
 
     events: {
-        'click .js-bubble-delete': '__delete',
+        'click @ui.clearButton': '__delete',
+        'click @ui.editButton': '__edit',
         'click .js-bubble-link': '__linkClick'
     },
 
     ui: {
-        clearButton: '.js-bubble-delete'
+        clearButton: '.js-bubble-delete',
+        editButton: '.js-edit-button'
     },
 
     __delete() {
@@ -50,6 +55,13 @@ export default Marionette.ItemView.extend({
             window.location = this.url;
         }
         return false;
+    },
+
+    __edit() {
+        if (this.reqres.request('value:edit', this.model.attributes)) {
+            return false;
+        }
+        return null;
     },
 
     updateEnabled(enabled) {
