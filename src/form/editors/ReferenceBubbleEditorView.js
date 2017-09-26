@@ -255,14 +255,14 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     setReadonly(readonly) {
-        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
     },
 
     setEnabled(enabled) {
-        BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
