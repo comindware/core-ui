@@ -6,14 +6,12 @@
  * Published under the MIT license
  */
 
-import { keypress, Handlebars } from 'lib';
-import { helpers } from 'utils';
+import { Handlebars } from 'lib';
 import list from 'list';
 import template from '../templates/bubblePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 import LoadingView from './../../reference/views/LoadingView';
 import AddNewButtonView from './../../reference/views/AddNewButtonView';
-//import ReferenceBubblePanelTitleView from './ReferenceBubblePanelTitleView';
 
 const config = {
     CHILD_HEIGHT: 25
@@ -27,8 +25,6 @@ export default Marionette.LayoutView.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
-        // this.fetchDelayId = _.uniqueId('fetch-delay-id-');
-        // this.timeoutId = null;
     },
 
     className: 'dd-list dd-list_reference',
@@ -49,18 +45,7 @@ export default Marionette.LayoutView.extend({
         listTitleRegion: '.js-list-title-region'
     },
 
-    onRender() {
-        //this.__assignKeyboardShortcuts();
-    },
-
     onShow() {
-        // const panelTitleView = new ReferenceBubblePanelTitleView({
-        //     model: this.model,
-        //     reqres: this.reqres,
-        //     getDisplayText: this.options.getDisplayText
-        // });
-        // this.listTitleRegion.show(panelTitleView);
-
         const result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
@@ -106,19 +91,6 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function(value, key) {
-            const keys = key.split(',');
-            _.each(keys, function(k) {
-                this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        }, this);
-    },
-
     keyboardShortcuts: {
         up() {
             this.listView.moveCursorBy(-1, false);
@@ -155,7 +127,6 @@ export default Marionette.LayoutView.extend({
             this.__setLoading(true);
             const collection = this.model.get('collection');
             collection.deselect();
-            //collection.unhighlight();
             this.reqres.request('filter:text', {
                 text
             }).then(() => {
@@ -165,7 +136,6 @@ export default Marionette.LayoutView.extend({
                         model.select();
                     }
                 }
-                //collection.highlight(text);
                 this.__setLoading(false);
             });
         };

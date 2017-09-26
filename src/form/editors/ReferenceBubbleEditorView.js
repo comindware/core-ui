@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import { Handlebars, keypress } from 'lib';
+import { Handlebars } from 'lib';
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
@@ -47,7 +47,8 @@ const defaultOptions = {
  * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
- //* @param {Boolean} {options.showTitle=true} Whether to show title attribute.
+ * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
+ * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
 formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize(options) {
@@ -69,7 +70,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         this.reqres.setHandler('input:up', this.__onInputUp, this);
         this.reqres.setHandler('input:down', this.__onInputDown, this);
         this.reqres.setHandler('button:click', this.__onButtonClick, this);
-        this.reqres.setHandler('value:clear', this.__onValueClear, this);
         this.reqres.setHandler('value:set', this.__onValueSet, this);
         this.reqres.setHandler('value:select', this.__onValueSelect, this);
         this.reqres.setHandler('value:edit', this.__onValueEdit, this);
@@ -133,21 +133,8 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         });
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.onBlur);
-        this.listenTo(this.dropdownView, 'panel:cancel', this.__onCancel);
-        this.dropdownRegion.show(this.dropdownView);
 
-        // hotkeys
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), key => {
-            this.keyListener.simple_combo(key, () => {
-                if (this.getEnabled() && !this.getReadonly()) {
-                    this.dropdownView.open();
-                }
-            });
-        }, this);
+        this.dropdownRegion.show(this.dropdownView);
     },
 
     __adjustValue(value) {
@@ -185,12 +172,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     isEmptyValue() {
         const value = this.getValue();
         return !value || _.isEmpty(value);
-    },
-
-    __onValueClear() {
-        this.__value(null, true);
-        this.focus();
-        return false;
     },
 
     __onValueSelect() {
@@ -231,6 +212,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     __onInputSearch(value, immediate) {
+        this.__onButtonClick();
         this.dropdownView.panelView.updateFilter(value, immediate);
     },
 
@@ -243,12 +225,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
                 this.viewModel.get('panel').set('totalCount', data.totalCount);
             }
         });
-    },
-
-    __onPanelOpenRequest() {
-        if (this.getEnabled() && !this.getReadonly()) {
-            this.dropdownView.open();
-        }
     },
 
     __onAddNewItem() {
@@ -279,7 +255,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     setReadonly(readonly) {
-        //noinspection Eslint
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
@@ -287,7 +262,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     },
 
     setEnabled(enabled) {
-        //noinspection Eslint
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
@@ -300,11 +274,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
 
     blur() {
         this.dropdownView.close();
-    },
-
-    __onCancel() {
-        this.dropdownView.close();
-        this.$el.focus();
     },
 
     __onButtonClick() {
@@ -321,9 +290,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
             this.dropdownView.close();
         }
         const selectedModels = this.viewModel.get('button').get('selected');
-        //const availableModels = this.viewModel.get('available');
         selectedModels.remove(model);
-        //availableModels.add(model, { delayed: false });
 
         const selected = [].concat(this.getValue());
         selected.splice(selected.indexOf(model.get('id')), 1);
@@ -356,12 +323,6 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
         }
     },
 
-    __focusButton() {
-        if (this.dropdownView.button) {
-            this.dropdownView.button.focus();
-        }
-    },
-
     __onBubbleDeleteLast() {
         const selectedModels = this.viewModel.get('button').get('selected');
         const model = selectedModels.models[selectedModels.models.length - 2];
@@ -370,7 +331,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
 
     __onInputUp() {
         const collection = this.viewModel.get('panel').get('collection');
-        if (collection.models[0].selected) {
+        if (collection.models.length === 0 || collection.models[0].selected) {
             this.dropdownView.close();
             this.__focusButton();
         } else {

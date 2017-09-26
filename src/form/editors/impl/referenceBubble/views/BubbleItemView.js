@@ -14,8 +14,6 @@ import template from '../templates/bubbleItem.hbs';
 export default Marionette.ItemView.extend({
     initialize(options) {
         this.reqres = options.reqres;
-
-        this.url = this.model.attributes ? this.options.createValueUrl(this.model.attributes) : false;
     },
 
     template: Handlebars.compile(template),
@@ -24,7 +22,7 @@ export default Marionette.ItemView.extend({
         const value = this.model.attributes;
         return {
             enabled: this.options.enabled,
-            url: this.url,
+            url: this.model.attributes ? this.options.createValueUrl(this.model.attributes) : false,
             text: this.options.getDisplayText(value),
             showEditButton: this.options.showEditButton && Boolean(value)
         };
@@ -37,7 +35,7 @@ export default Marionette.ItemView.extend({
     events: {
         'click @ui.clearButton': '__delete',
         'click @ui.editButton': '__edit',
-        'click .js-bubble-link': '__linkClick'
+        click: '__click'
     },
 
     ui: {
@@ -50,11 +48,10 @@ export default Marionette.ItemView.extend({
         return false;
     },
 
-    __linkClick() {
-        if (this.url) {
-            window.location = this.url;
+    __click(e) {
+        if (e.target.tagName === 'A') {
+            e.stopPropagation();
         }
-        return false;
     },
 
     __edit() {

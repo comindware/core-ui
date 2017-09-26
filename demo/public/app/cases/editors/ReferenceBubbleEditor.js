@@ -13,7 +13,7 @@ define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ],
                 model,
                 key: 'referenceBubbleValue',
                 autocommit: true,
-                showEditButton: true,
+                showEditButton: false,
                 controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
             }),
             presentation: "[ {{#each referenceBubbleValue}}{ id: '{{this.id}}', text: '{{this.text}}' }{{#unless @last}}, {{/unless}}{{/each}} ]"

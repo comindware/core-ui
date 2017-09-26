@@ -1,9 +1,9 @@
 {{#if url}}
-    <span class="bubbles__link js-bubble-link">
+    <a href="{{url}}" target="_blank" tabindex="-1" title="{{text}}">
 {{/if}}
     {{text}}
 {{#if url}}
-    </span>
+    </a>
 {{/if}}
 {{#if showEditButton}}
     <div class="js-edit-button reference-field__edit-btn "><svg class="svg-icons svg-icons_pencil"><use xlink:href="#icon-pencil" /></svg></div>

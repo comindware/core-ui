@@ -6,16 +6,9 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, keypress } from 'lib';
-import { helpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';
-
-const config = {
-    TEXT_FETCH_DELAY: 100
-};
 
 const classes = {
     EMPTY: ' empty'
