@@ -88,6 +88,10 @@ define([], function () {
                         displayName: 'Reference Editor'
                     },
                     {
+                        id: 'ReferenceBubbleEditor',
+                        displayName: 'Reference Bubble Editor'
+                    },
+                    {
                         id: 'MaskedTextEditor',
                         displayName: 'Masked Text Editor'
                     },

@@ -21,6 +21,7 @@ import ReferenceEditorView from './editors/ReferenceEditorView';
 import MemberSelectEditorView from './editors/MemberSelectEditorView';
 import DropdownEditorView from './editors/DropdownEditorView';
 import MembersBubbleEditorView from './editors/MembersBubbleEditorView';
+import ReferenceBubbleEditorView from './editors/ReferenceBubbleEditorView';
 import DurationEditorView from './editors/DurationEditorView';
 import RadioGroupEditorView from './editors/RadioGroupEditorView';
 import DateEditorView from './editors/DateEditorView';
@@ -147,6 +148,7 @@ const api = /** @lends module:core.form */ {
         MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
         MembersBubbleEditor: MembersBubbleEditorView,
+        ReferenceBubbleEditor: ReferenceBubbleEditorView,
         DurationEditor: DurationEditorView,
         RadioGroupEditor: RadioGroupEditorView,
         DateEditor: DateEditorView,
