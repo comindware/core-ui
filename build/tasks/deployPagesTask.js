@@ -25,8 +25,8 @@ const copySyncRecursive = (src, dest) => {
     if (fs.existsSync(src)) {
         !fs.existsSync(dest) && fs.mkdirSync(dest);
         fs.readdirSync(src).forEach(file => {
-            const srcPath = `${src}\\${file}`;
-            const destPath = `${dest}\\${file}`;
+            const srcPath = `${src}/${file}`;
+            const destPath = `${dest}/${file}`;
             if (fs.lstatSync(srcPath).isDirectory()) {
                 copySyncRecursive(srcPath, destPath);
             } else {
