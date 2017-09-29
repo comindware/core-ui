@@ -19,11 +19,11 @@ const constants = {
 export default Marionette.LayoutView.extend({
     initialize(options) {
         this.collection = options.collection;
+        this.collectionHeaderToolbarView = this.__createCollectionHeaderToolbarView();
+        this.listenTo(this.collectionHeaderToolbarView, 'toolbar:execute:action', this.__executeAction);
+        this.listenTo(this.collection, 'add remove reset', this.__setGridHeight);
         if (options.showSelectColumn !== false) {
             this.selectableCollection = new SelectableCollection(this.collection.map(model => ({ id: model.cid })));
-            this.collectionHeaderToolbarView = this.__createCollectionHeaderToolbarView();
-            this.listenTo(this.collectionHeaderToolbarView, 'toolbar:execute:action', this.__executeAction);
-            this.listenTo(this.collection, 'add remove reset', this.__setGridHeight);
             this.listenTo(this.collection, 'add', model => {
                 this.selectableCollection.add({ id: model.cid });
                 if (this.selectableCollection.selectedLength) {
@@ -103,16 +103,18 @@ export default Marionette.LayoutView.extend({
 
     __showGridView() {
         const columns = this.__getColumns();
-        columns.unshift({
-            id: 'selected',
-            cellView: SelectionView,
-            viewModel: new Backbone.Model({
-                displayText: '',
-                selectableCollection: this.selectableCollection,
-                isCheckboxColumn: true,
-            }),
-            width: constants.defaultCheckBoxColumnWidth
-        });
+        if (this.options.showSelectColumn !== false) {
+            columns.unshift({
+                id: 'selected',
+                cellView: SelectionView,
+                viewModel: new Backbone.Model({
+                    displayText: '',
+                    selectableCollection: this.selectableCollection,
+                    isCheckboxColumn: true,
+                }),
+                width: constants.defaultCheckBoxColumnWidth
+            });
+        }
 
         const nativeGridView = factory.createNativeGrid({
             gridViewOptions: {
