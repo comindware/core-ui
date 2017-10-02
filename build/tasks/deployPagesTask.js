@@ -54,7 +54,7 @@ module.exports = () => {
     !fs.existsSync(pagesDir) && fs.mkdirSync(pagesDir);
     run('git init', pagesDir);
     run('git config user.name "Travis-CI"', pagesDir);
-    run('git config user.email "me@sburg.net"', pagesDir);
+    run('git config user.email "bot@comindware.com"', pagesDir);
     copyDemo(pagesResolver);
     copyDoc(pagesResolver);
     run('git add -A', pagesDir);
