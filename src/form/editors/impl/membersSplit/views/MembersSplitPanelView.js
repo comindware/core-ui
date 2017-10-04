@@ -2,6 +2,7 @@
 import template from '../templates/membersSplitPanel.html';
 import MembersListItemView from './MembersListItemView';
 import MembersToolbarView from './membersToolbarView';
+import helpers from '../../../../../utils/helpers';
 
 const config = {
     CHILD_HEIGHT: 34
@@ -59,7 +60,7 @@ export default Marionette.LayoutView.extend({
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
             this.ui.maxQuantityInfo.text(
-                Core.utils.helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
+                helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
         }
 
         // Available list

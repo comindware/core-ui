@@ -24,6 +24,8 @@
 
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Datum"; l10n:isBeingTranslated true; l10n:originalData "Date"].
 
+<http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Ein Dokument hinzufügen"; l10n:originalData "addDocument"].
+
 <http://comindware.com/text/core/form/editors/dropdown#notset> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nicht spezifiziert"; l10n:isBeingTranslated true; l10n:originalData "notset"].
 
 <http://comindware.com/text/core/form/editors/dropdown#search> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Suchen..."; l10n:isBeingTranslated true; l10n:originalData "Search..."].
@@ -52,6 +54,14 @@
 
 <http://comindware.com/text/core/form/editors/memberSelect#searchPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Suchen..."; l10n:originalData "Search..."].
 
+<http://comindware.com/text/core/form/editors/memberSplit#cancel> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Abbrechen"; l10n:originalData "cancel"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#searchUsers> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nach Namen suchen"; l10n:originalData "Search by name"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#selectedUsers> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Ausgewählt"; l10n:originalData "Selected"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#users> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "{0} Personen,{0} Personen"; l10n:originalData "{0} person,{0} people"].
+
 <http://comindware.com/text/core/form/editors/mentions#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/form/editors/number#notSetPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
@@ -68,6 +78,8 @@
 
 <http://comindware.com/text/core/form/editors/reference#searchMore> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
+<http://comindware.com/text/core/form/editors/splitEditor#search> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Suche"; l10n:originalData "search"].
+
 <http://comindware.com/text/core/form/editors/textEditor#disablePlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Das Feld ist deaktiviert"; l10n:isBeingTranslated true; l10n:originalData "Field is disabled"].
 
 <http://comindware.com/text/core/form/editors/textEditor#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Text hier eingeben"; l10n:isBeingTranslated true; l10n:originalData "Enter text here"].
@@ -75,6 +87,10 @@
 <http://comindware.com/text/core/form/editors/textEditor#readonlyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
 
 <http://comindware.com/text/core/form/editors/time#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data ""; l10n:isBeingTranslated true].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#cancel> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Abbrechen"; l10n:originalData "Cancel"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#searchBySection> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Nach Namen suchen"; l10n:originalData "Search by name"].
 
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:de; l10n:data "Die Anzahl der Zeichen ist falsch."; l10n:isBeingTranslated true; l10n:originalData "Wrong number of characters."].
 

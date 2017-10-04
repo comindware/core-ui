@@ -24,7 +24,7 @@ export default {
                 const parameters = func.parameters || [];
                 item.text = func.name;
                 item.returns = func.returns;
-                item.description = HTTP_PREFIX.test(func.description) ? Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTYDESCRIPTION') : func.description;
+                item.description = HTTP_PREFIX.test(func.description) ? Localizer.get('CORE.FORM.EDITORS.CODE.EMPTYDESCRIPTION') : func.description;
                 item.className = classes.function;
                 item.type = types.function;
                 item.hint = (cm, data, completion) => {
@@ -35,7 +35,7 @@ export default {
 
                 parameters.forEach(parameter => {
                     if (HTTP_PREFIX.test(parameter.description)) {
-                        parameter.description = Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTYDESCRIPTION');
+                        parameter.description = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTYDESCRIPTION');
                     }
                 });
 

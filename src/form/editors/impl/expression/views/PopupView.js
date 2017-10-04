@@ -10,8 +10,8 @@ export default Marionette.LayoutView.extend({
         this.model = new Backbone.Model();
         this.model.set({
             titleText: this.value.type === 'expression'
-                ? Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION')
-                : Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
+                ? Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION')
+                : Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
         });
     },
 

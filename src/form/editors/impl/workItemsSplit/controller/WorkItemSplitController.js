@@ -1,7 +1,7 @@
 
-
 import BaseSplitController from '../../splitEditor/controller/BaseSplitController';
 import WorkSpaceSplitView from '../view/WorkSpaceSplitView';
+import LocalizationService from '../../../../../services/LocalizationService';
 
 const GroupingModel = Backbone.Model.extend({
     initialize() {
@@ -36,8 +36,8 @@ export default BaseSplitController.extend({
                 },
                 modelFactory(model) {
                     const displayValue = model.get('systemType') === 'cmw.workspace.SystemItem'
-                        ? Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.SYSTEMSECTIONS')
-                        : Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.RECORDTYPES');
+                        ? LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.SYSTEMSECTIONS')
+                        : LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.RECORDTYPES');
                     return new GroupingModel({
                         displayText: displayValue
                     });
@@ -83,17 +83,17 @@ export default BaseSplitController.extend({
         }, {}));
 
         this.model.set({
-            title: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.TITLE'),
+            title: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.TITLE'),
             items: workItems,
-            itemsToSelectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.AVAILABLESECTIONS'),
-            selectedItemsText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.USERSSECTIONS'),
+            itemsToSelectText: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.AVAILABLESECTIONS'),
+            selectedItemsText: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.USERSSECTIONS'),
             confirmEdit: true,
             showToolbar: false,
             maxQuantitySelected: false,
-            rejectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.CANCEL'),
-            acceptText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.UPDATE'),
-            searchPlaceholder: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.SEARCHBYSECTION'),
-            emptyListText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.EMPTYLIST')
+            rejectText: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.CANCEL'),
+            acceptText: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.UPDATE'),
+            searchPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.SEARCHBYSECTION'),
+            emptyListText: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.EMPTYLIST')
         });
     },
 

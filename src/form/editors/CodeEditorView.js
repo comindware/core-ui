@@ -13,6 +13,7 @@ import CodemirrorView from './impl/codeEditor/views/CodemirrorView';
 import template from './impl/codeEditor/templates/codeEditor.html';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import formRepository from '../formRepository';
+import LocalizationService from '../../services/LocalizationService';
 
 const showModes = {
     normal: 'normal',
@@ -135,9 +136,9 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
 
     __setEditBtnText() {
         if (this.value) {
-            this.ui.editBtn.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EDIT'));
+            this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EDIT'));
         } else {
-            this.ui.editBtn.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTY'));
+            this.ui.editBtn.text(LocalizationService.get('CORE.FORM.EDITORS.CODE.EMPTY'));
         }
     },
 
