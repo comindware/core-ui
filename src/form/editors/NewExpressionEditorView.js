@@ -42,7 +42,8 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             expressionEditorHeight: 300,
             scriptEditorHeight: 300,
             codeEditorMode: 'normal',
-            displayInline: false
+            displayInline: false,
+            ontologyService: null
         };
     },
 
@@ -231,7 +232,8 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             value: this.value.type === valueTypes.expression ? this.value.value : null,
             mode: 'expression',
             height: this.options.expressionEditorHeight,
-            showMode: this.options.codeEditorMode
+            showMode: this.options.codeEditorMode,
+            ontologyService: this.options.ontologyService
         };
 
         this.expressionEditor = new formRepository.editors.Code(expressionEditorOptionsOptions);
@@ -252,7 +254,8 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             value: this.value.type === valueTypes.script ? this.value.value : null,
             mode: 'script',
             height: this.options.scriptEditorHeight,
-            showMode: this.options.codeEditorMode
+            showMode: this.options.codeEditorMode,
+            ontologyService: this.options.ontologyService
         };
 
         this.scriptEditor = new formRepository.editors.Code(scriptEditorOptionsOptions);
