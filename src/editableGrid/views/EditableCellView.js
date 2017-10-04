@@ -14,10 +14,16 @@ export default Marionette.LayoutView.extend({
         const rowModel = this.model.get('rowModel');
         if (_.isFunction(this.schema.getReadonly)) {
             readonly = this.schema.getReadonly(rowModel);
+            this.listenTo(rowModel, 'change', () => this.editorView.editor.setReadonly(this.schema.getReadonly(rowModel)));
         }
         if (_.isFunction(this.schema.schemaExtension)) {
             schemaExtension = this.schema.schemaExtension(rowModel);
         }
+
+        if (this.schema.rerenderModelEvent) {
+            this.listenToOnce(rowModel, this.schema.rerenderModelEvent, this.render);
+        }
+
         this.editorView = new EditableGridFieldView({
             schema: Object.assign({}, this.schema, { readonly }, schemaExtension),
             key: this.schema.key,

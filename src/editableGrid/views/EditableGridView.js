@@ -19,26 +19,28 @@ const constants = {
 export default Marionette.LayoutView.extend({
     initialize(options) {
         this.collection = options.collection;
-        this.selectableCollection = new SelectableCollection(this.collection.map(model => ({ id: model.cid })));
         this.collectionHeaderToolbarView = this.__createCollectionHeaderToolbarView();
         this.listenTo(this.collectionHeaderToolbarView, 'toolbar:execute:action', this.__executeAction);
         this.listenTo(this.collection, 'add remove reset', this.__setGridHeight);
-        this.listenTo(this.collection, 'add', model => {
-            this.selectableCollection.add({ id: model.cid });
-            if (this.selectableCollection.selectedLength) {
-                this.selectableCollection.trigger('select:some');
-            }
-        });
-        this.listenTo(this.collection, 'remove', model => {
-            const modelToRemove = this.selectableCollection.get(model.cid);
-            modelToRemove.deselect();
-            this.selectableCollection.remove(this.selectableCollection.get(modelToRemove));
-        });
-        this.listenTo(this.collection, 'reset', () => {
-            this.selectableCollection.trigger('select:none');
-            this.selectableCollection.reset(this.collection.map(model => ({ id: model.cid })));
-        });
-        this.listenTo(this.selectableCollection, 'select:all select:some select:none', this.__selectionChange);
+        if (options.showSelectColumn !== false) {
+            this.selectableCollection = new SelectableCollection(this.collection.map(model => ({ id: model.cid })));
+            this.listenTo(this.collection, 'add', model => {
+                this.selectableCollection.add({ id: model.cid });
+                if (this.selectableCollection.selectedLength) {
+                    this.selectableCollection.trigger('select:some');
+                }
+            });
+            this.listenTo(this.collection, 'remove', model => {
+                const modelToRemove = this.selectableCollection.get(model.cid);
+                modelToRemove.deselect();
+                this.selectableCollection.remove(this.selectableCollection.get(modelToRemove));
+            });
+            this.listenTo(this.collection, 'reset', () => {
+                this.selectableCollection.trigger('select:none');
+                this.selectableCollection.reset(this.collection.map(model => ({ id: model.cid })));
+            });
+            this.listenTo(this.selectableCollection, 'select:all select:some select:none', this.__selectionChange);
+        }
     },
 
     ui: {
@@ -101,16 +103,18 @@ export default Marionette.LayoutView.extend({
 
     __showGridView() {
         const columns = this.__getColumns();
-        columns.unshift({
-            id: 'selected',
-            cellView: SelectionView,
-            viewModel: new Backbone.Model({
-                displayText: '',
-                selectableCollection: this.selectableCollection,
-                isCheckboxColumn: true,
-            }),
-            width: constants.defaultCheckBoxColumnWidth
-        });
+        if (this.options.showSelectColumn !== false) {
+            columns.unshift({
+                id: 'selected',
+                cellView: SelectionView,
+                viewModel: new Backbone.Model({
+                    displayText: '',
+                    selectableCollection: this.selectableCollection,
+                    isCheckboxColumn: true,
+                }),
+                width: constants.defaultCheckBoxColumnWidth
+            });
+        }
 
         const nativeGridView = factory.createNativeGrid({
             gridViewOptions: {

@@ -13,11 +13,7 @@
 import { objectPropertyTypes } from '../../../../../Meta';
 import VirtualCollection from '../../../../../collections/VirtualCollection';
 
-const ContextCollection = VirtualCollection.extend({
-    model: ContextModel
-});
-
-const ContextModel = Backbone.Model.extend({
+var ContextModel = Backbone.Model.extend({
     initialize() {
         this.set('hasChildren', Boolean(this.get('instanceTypeId')) && this.get('type') !== objectPropertyTypes.COLLECTION);
         this.collapsed = true;
@@ -171,6 +167,10 @@ const ContextModel = Backbone.Model.extend({
         checkedProperties[options.id] = false;
         return false;
     }
+});
+
+var ContextCollection = VirtualCollection.extend({
+    model: ContextModel
 });
 
 export default ContextModel;

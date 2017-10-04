@@ -9,9 +9,11 @@
  *       actual or intended publication of such source code.
  */
 
-import { classes, types } from '../Constants';
+import constants from '../Constants';
 import FunctionTooltipView from '../views/FunctionTooltipView';
 
+const types = constants.types;
+const classes = constants.classes;
 const HTTP_PREFIX = /http:\/\//;
 
 export default {
