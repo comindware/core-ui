@@ -16,6 +16,7 @@ import DocumentReferenceModel from './impl/document/models/DocumentReferenceMode
 import DocumentReferenceCollection from './impl/document/collections/DocumentReferenceCollection';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import formRepository from '../formRepository';
+import LocalizationService from '../../services/LocalizationService';
 
 const savedDocumentPrefix = 'document';
 
@@ -116,7 +117,7 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
             this.ui.addRegion.show();
             this.uploadButton = new UploadButton(
                 {
-                    displayText: Localizer.get('SUITEGENERAL.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
+                    displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
                     multiple: this.options.multiple,
                     fileFormat: this.__adjustFileFormat(this.options.fileFormat) },
                 'add-document'

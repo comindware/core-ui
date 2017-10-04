@@ -13,6 +13,7 @@ import template from './impl/newExpressionEditor/templates/newExpression.html';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DropdownEditor from './DropdownEditorView';
 import formRepository from '../formRepository';
+import LocalizationService from '../../services/LocalizationService';
 
 const valueTypes = {
     value: 'value',
@@ -176,7 +177,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         }
         this.valueTypeCollection.add({
             id: valueTypes.value,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.VALUE')
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
         });
 
         let value = this.value.value;
@@ -213,7 +214,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         this.valueTypeCollection.add({
             id: valueTypes.context,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
         });
     },
 
@@ -223,7 +224,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         }
         this.valueTypeCollection.add({
             id: valueTypes.expression,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EXPRESSION')
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
         });
 
 
@@ -246,7 +247,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         }
         this.valueTypeCollection.add({
             id: valueTypes.script,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
         });
 
         const scriptEditorOptionsOptions = {

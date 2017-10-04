@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import template from './templates/multiSelectEditor.hbs';

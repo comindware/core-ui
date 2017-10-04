@@ -14,6 +14,7 @@ import { keypress } from 'lib';
 import template from '../templates/Multiselect.html';
 import MultiselectItemView from './MultiselectItemView';
 import AttachmentsController from '../gallery/AttachmentsController';
+import LocalizationService from '../../../../../services/LocalizationService';
 
 const MultiselectAddButtonView = Marionette.ItemView.extend({
     className: 'button-sm_h3 button-sm button-sm_add',
@@ -69,7 +70,7 @@ export default Marionette.CompositeView.extend({
     renderDropdown() {
         this.dropdownModel = new Backbone.Model({
             button: new Backbone.Model({
-                text: Localizer.get('MODULES.SHARED.VIEWS.MULTISELECT.ADDNEW')
+                text: LocalizationService.get('MODULES.SHARED.VIEWS.MULTISELECT.ADDNEW')
             }),
             panel: new Backbone.Model({
                 collection: this.controller.collection,
@@ -172,14 +173,14 @@ export default Marionette.CompositeView.extend({
         if (length - visibleCounter > 0) {
             this.ui.showMore.show();
             this.ui.invisibleCount.html(length - visibleCounter);
-            this.ui.showMoreText.html(`${Localizer.get('MODULES.SHARED.VIEWS.MULTISELECT.SHOWMORE')} `);
+            this.ui.showMoreText.html(`${LocalizationService.get('MODULES.SHARED.VIEWS.MULTISELECT.SHOWMORE')} `);
         } else {
             this.ui.showMore.hide();
         }
     },
     expandShowMore() {
         this.$childViewContainer.children().show();
-        this.ui.showMoreText.html(Localizer.get('MODULES.SHARED.VIEWS.MULTISELECT.HIDE'));
+        this.ui.showMoreText.html(LocalizationService.get('MODULES.SHARED.VIEWS.MULTISELECT.HIDE'));
         this.ui.invisibleCount.html('');
     },
     onDestroy() {

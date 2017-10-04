@@ -151,7 +151,7 @@ export default Marionette.ItemView.extend({
 
     __updateInputPlaceholder() {
         const empty = this.model.get('empty');
-        const placeholder = empty ? Localizer.get('SUITEGENERAL.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
+        const placeholder = empty ? Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
         this.__updateInputWidth(this.__calculateDesiredInputWidth(placeholder));
         this.ui.input.attr({ placeholder }).toggleClass(classes.EMPTY, empty);
     }
