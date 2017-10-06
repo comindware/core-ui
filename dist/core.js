@@ -103,13 +103,13 @@ var _handlebars = __webpack_require__(578);
 
 var Handlebars_ = _interopRequireWildcard(_handlebars);
 
-__webpack_require__(65);
+__webpack_require__(66);
 
 var _underscore = __webpack_require__(581);
 
 var underscoreString = _interopRequireWildcard(_underscore);
 
-var _backbone = __webpack_require__(69);
+var _backbone = __webpack_require__(70);
 
 var _backbone2 = _interopRequireDefault(_backbone);
 
@@ -137,7 +137,7 @@ var keypress_ = _interopRequireWildcard(_keypress);
 
 __webpack_require__(644);
 
-var _numeral = __webpack_require__(89);
+var _numeral = __webpack_require__(90);
 
 var _numeral2 = _interopRequireDefault(_numeral);
 
@@ -208,7 +208,7 @@ exports.codemirror = codemirror;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var core = __webpack_require__(32);
 var hide = __webpack_require__(21);
 var redefine = __webpack_require__(22);
@@ -276,7 +276,7 @@ var _comparators = __webpack_require__(645);
 
 var _comparators2 = _interopRequireDefault(_comparators);
 
-var _helpers = __webpack_require__(91);
+var _helpers = __webpack_require__(60);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -392,7 +392,7 @@ exports.default = {
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -401,70 +401,6 @@ module.exports = function (it) {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-/**
- * Ensure some object is a coerced to a string
- **/
-module.exports = function makeString(object) {
-  if (object == null) return '';
-  return '' + object;
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(74)('wks');
-var uid = __webpack_require__(50);
-var Symbol = __webpack_require__(7).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -551,11 +487,75 @@ global.Localizer = {
 exports.default = global.Localizer;
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+/**
+ * Ensure some object is a coerced to a string
+ **/
+module.exports = function makeString(object) {
+  if (object == null) return '';
+  return '' + object;
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(75)('wks');
+var uid = __webpack_require__(50);
+var Symbol = __webpack_require__(8).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+
+/***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(8)(function () {
+module.exports = !__webpack_require__(9)(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -836,7 +836,7 @@ var _CustomAnchorBehavior = __webpack_require__(684);
 
 var _CustomAnchorBehavior2 = _interopRequireDefault(_CustomAnchorBehavior);
 
-var _factory = __webpack_require__(71);
+var _factory = __webpack_require__(72);
 
 var _factory2 = _interopRequireDefault(_factory);
 
@@ -893,7 +893,7 @@ module.exports = __webpack_require__(12) ? function (object, key, value) {
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var hide = __webpack_require__(21);
 var has = __webpack_require__(20);
 var SRC = __webpack_require__(50)('src');
@@ -931,7 +931,7 @@ __webpack_require__(32).inspectSource = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 var defined = __webpack_require__(34);
 var quot = /"/g;
 // B.2.3.2.1 CreateHTML(string, tag, attribute, value)
@@ -983,7 +983,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(66);
+var IObject = __webpack_require__(67);
 var defined = __webpack_require__(34);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -994,7 +994,7 @@ module.exports = function (it) {
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(67);
+var pIE = __webpack_require__(68);
 var createDesc = __webpack_require__(49);
 var toIObject = __webpack_require__(25);
 var toPrimitive = __webpack_require__(33);
@@ -10714,7 +10714,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 
 module.exports = function (method, arg) {
   return !!method && fails(function () {
@@ -10737,7 +10737,7 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -10780,7 +10780,7 @@ module.exports = function (it) {
 // most Object methods by ES6 should accept primitives
 var $export = __webpack_require__(1);
 var core = __webpack_require__(32);
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 module.exports = function (KEY, exec) {
   var fn = (core.Object || {})[KEY] || Object[KEY];
   var exp = {};
@@ -10801,7 +10801,7 @@ module.exports = function (KEY, exec) {
 // 5 -> Array#find
 // 6 -> Array#findIndex
 var ctx = __webpack_require__(29);
-var IObject = __webpack_require__(66);
+var IObject = __webpack_require__(67);
 var toObject = __webpack_require__(15);
 var toLength = __webpack_require__(14);
 var asc = __webpack_require__(115);
@@ -10844,13 +10844,118 @@ module.exports = function (TYPE, $create) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/**
+ * Developer: Stepan Burguchev
+ * Date: 7/6/2015
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _lib = __webpack_require__(0);
+
+var _PopupStackView = __webpack_require__(678);
+
+var _PopupStackView2 = _interopRequireDefault(_PopupStackView);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var windowService = /** @lends module:core.services.WindowService */{
+    initialize: function initialize() {
+        var _popupStackView,
+            _this = this;
+
+        this.__$popupStackRegionEl = (0, _lib.$)(document.createElement('div'));
+        this.__$popupStackRegionEl.appendTo(document.body);
+
+        var regionManager = new Marionette.RegionManager();
+        regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
+
+        var popupStackRegion = regionManager.get('popupStackRegion');
+        this.__popupStackView = new _PopupStackView2.default();
+        popupStackRegion.show(this.__popupStackView);
+
+        (_popupStackView = this.__popupStackView).on.apply(_popupStackView, ['popup:close'].concat(_toConsumableArray(function (args) {
+            return _this.trigger.apply(_this, ['popup:close'].concat(_toConsumableArray(args)));
+        })));
+    },
+
+
+    /**
+     * Shows a marionette.view as a popup. If another popup is already shown, overlaps it.
+     * The size of the view and it's location is totally the view's responsibility.
+     * @param {Marionette.View} view A Marionette.View instance to show.
+     * @returns {String} The popup id that you can use to close it.
+     * */
+    showPopup: function showPopup(view) {
+        return this.__popupStackView.showPopup(view, {
+            fadeBackground: true,
+            transient: false,
+            hostEl: null
+        });
+    },
+
+
+    /**
+     * Closes the top-level popup or does nothing if there is none.
+     * @param {string} [popupId=null]
+     * */
+    closePopup: function closePopup() {
+        var popupId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+        this.__popupStackView.closePopup(popupId);
+    },
+
+
+    /**
+     * Shows a marionette.view as a transient popup. If another popup is already shown, overlaps it.
+     * The size of the view and it's location is totally the view's responsibility.
+     * @param {Marionette.View} view A Marionette.View instance to show.
+     * @param {Object} options Options object.
+     * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
+     * */
+    showTransientPopup: function showTransientPopup(view) {
+        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { fadeBackground: false, hostEl: null };
+
+        return this.__popupStackView.showPopup(view, {
+            fadeBackground: options.fadeBackground,
+            anchorEl: options.anchorEl,
+            transient: true,
+            hostEl: options.hostEl
+        });
+    },
+    get: function get(popupId) {
+        return this.__popupStackView.get(popupId);
+    },
+    fadeBackground: function fadeBackground(fade) {
+        this.__popupStackView.fadeBackground(fade);
+    }
+};
+
+_.extend(windowService, Backbone.Events);
+
+exports.default = windowService;
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 if (__webpack_require__(12)) {
   var LIBRARY = __webpack_require__(51);
-  var global = __webpack_require__(7);
-  var fails = __webpack_require__(8);
+  var global = __webpack_require__(8);
+  var fails = __webpack_require__(9);
   var $export = __webpack_require__(1);
-  var $typed = __webpack_require__(84);
+  var $typed = __webpack_require__(85);
   var $buffer = __webpack_require__(121);
   var ctx = __webpack_require__(29);
   var anInstance = __webpack_require__(57);
@@ -10863,8 +10968,8 @@ if (__webpack_require__(12)) {
   var toAbsoluteIndex = __webpack_require__(53);
   var toPrimitive = __webpack_require__(33);
   var has = __webpack_require__(20);
-  var classof = __webpack_require__(68);
-  var isObject = __webpack_require__(9);
+  var classof = __webpack_require__(69);
+  var isObject = __webpack_require__(10);
   var toObject = __webpack_require__(15);
   var isArrayIter = __webpack_require__(112);
   var create = __webpack_require__(54);
@@ -10872,13 +10977,13 @@ if (__webpack_require__(12)) {
   var gOPN = __webpack_require__(55).f;
   var getIterFn = __webpack_require__(114);
   var uid = __webpack_require__(50);
-  var wks = __webpack_require__(10);
+  var wks = __webpack_require__(11);
   var createArrayMethod = __webpack_require__(37);
-  var createArrayIncludes = __webpack_require__(75);
-  var speciesConstructor = __webpack_require__(82);
+  var createArrayIncludes = __webpack_require__(76);
+  var speciesConstructor = __webpack_require__(83);
   var ArrayIterators = __webpack_require__(117);
-  var Iterators = __webpack_require__(63);
-  var $iterDetect = __webpack_require__(79);
+  var Iterators = __webpack_require__(64);
+  var $iterDetect = __webpack_require__(80);
   var setSpecies = __webpack_require__(56);
   var arrayFill = __webpack_require__(116);
   var arrayCopyWithin = __webpack_require__(163);
@@ -11327,12 +11432,12 @@ if (__webpack_require__(12)) {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Map = __webpack_require__(168);
 var $export = __webpack_require__(1);
-var shared = __webpack_require__(74)('metadata');
+var shared = __webpack_require__(75)('metadata');
 var store = shared.store || (shared.store = new (__webpack_require__(171))());
 
 var getOrCreateMetadataMap = function (target, targetKey, create) {
@@ -11384,10 +11489,10 @@ module.exports = {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var defaultToWhiteSpace = __webpack_require__(126);
 var nativeTrim = String.prototype.trim;
 
@@ -11398,111 +11503,6 @@ module.exports = function trim(str, characters) {
   return str.replace(new RegExp('^' + characters + '+|' + characters + '+$', 'g'), '');
 };
 
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Developer: Stepan Burguchev
- * Date: 7/6/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _lib = __webpack_require__(0);
-
-var _PopupStackView = __webpack_require__(678);
-
-var _PopupStackView2 = _interopRequireDefault(_PopupStackView);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var windowService = /** @lends module:core.services.WindowService */{
-    initialize: function initialize() {
-        var _popupStackView,
-            _this = this;
-
-        this.__$popupStackRegionEl = (0, _lib.$)(document.createElement('div'));
-        this.__$popupStackRegionEl.appendTo(document.body);
-
-        var regionManager = new Marionette.RegionManager();
-        regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
-
-        var popupStackRegion = regionManager.get('popupStackRegion');
-        this.__popupStackView = new _PopupStackView2.default();
-        popupStackRegion.show(this.__popupStackView);
-
-        (_popupStackView = this.__popupStackView).on.apply(_popupStackView, ['popup:close'].concat(_toConsumableArray(function (args) {
-            return _this.trigger.apply(_this, ['popup:close'].concat(_toConsumableArray(args)));
-        })));
-    },
-
-
-    /**
-     * Shows a marionette.view as a popup. If another popup is already shown, overlaps it.
-     * The size of the view and it's location is totally the view's responsibility.
-     * @param {Marionette.View} view A Marionette.View instance to show.
-     * @returns {String} The popup id that you can use to close it.
-     * */
-    showPopup: function showPopup(view) {
-        return this.__popupStackView.showPopup(view, {
-            fadeBackground: true,
-            transient: false,
-            hostEl: null
-        });
-    },
-
-
-    /**
-     * Closes the top-level popup or does nothing if there is none.
-     * @param {string} [popupId=null]
-     * */
-    closePopup: function closePopup() {
-        var popupId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-        this.__popupStackView.closePopup(popupId);
-    },
-
-
-    /**
-     * Shows a marionette.view as a transient popup. If another popup is already shown, overlaps it.
-     * The size of the view and it's location is totally the view's responsibility.
-     * @param {Marionette.View} view A Marionette.View instance to show.
-     * @param {Object} options Options object.
-     * @param {Boolean} [options.fadeBackground=true] Whether to fade the background behind the popup.
-     * */
-    showTransientPopup: function showTransientPopup(view) {
-        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { fadeBackground: false, hostEl: null };
-
-        return this.__popupStackView.showPopup(view, {
-            fadeBackground: options.fadeBackground,
-            anchorEl: options.anchorEl,
-            transient: true,
-            hostEl: options.hostEl
-        });
-    },
-    get: function get(popupId) {
-        return this.__popupStackView.get(popupId);
-    },
-    fadeBackground: function fadeBackground(fade) {
-        this.__popupStackView.fadeBackground(fade);
-    }
-};
-
-_.extend(windowService, Backbone.Events);
-
-exports.default = windowService;
 
 /***/ }),
 /* 42 */
@@ -11916,14 +11916,14 @@ var MultiSelect = exports.MultiSelect = SelectableBehavior.MultiSelect;
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(50)('meta');
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var has = __webpack_require__(20);
 var setDesc = __webpack_require__(13).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(8)(function () {
+var FREEZE = !__webpack_require__(9)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function (it) {
@@ -11975,7 +11975,7 @@ var meta = module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.31 Array.prototype[@@unscopables]
-var UNSCOPABLES = __webpack_require__(10)('unscopables');
+var UNSCOPABLES = __webpack_require__(11)('unscopables');
 var ArrayProto = Array.prototype;
 if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(21)(ArrayProto, UNSCOPABLES, {});
 module.exports = function (key) {
@@ -12569,10 +12569,10 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 "use strict";
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var dP = __webpack_require__(13);
 var DESCRIPTORS = __webpack_require__(12);
-var SPECIES = __webpack_require__(10)('species');
+var SPECIES = __webpack_require__(11)('species');
 
 module.exports = function (KEY) {
   var C = global[KEY];
@@ -12641,6 +12641,409 @@ module.exports = function (target, src, safe) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+__webpack_require__(0);
+
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Developer: Stepan Burguchev
+ * Date: 8/21/2014
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
+/*eslint-disable*/
+
+var timeoutCache = {};
+
+var queueCache = {};
+
+var getPluralFormIndex = null;
+
+exports.default = /** @lends module:core.utils.helpers */{
+    /**
+     * Deprecated. Use <code>_.debounce()</code> instead. Defers invoking the function until after `delay` milliseconds
+     * have elapsed since the last time it was invoked.
+     * @param {String} someUniqueId Function identifier.
+     * @param {Function} callback The function tobe called after delay.
+     * @param {Number} delay Callback delay in milliseconds.
+     * @deprecated
+     * */
+    setUniqueTimeout: function setUniqueTimeout(someUniqueId, callback, delay) {
+        var timeoutId = timeoutCache[someUniqueId];
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        var handler = setTimeout(function () {
+            callback();
+            delete timeoutCache[someUniqueId];
+        }, delay);
+        timeoutCache[someUniqueId] = handler;
+        return handler;
+    },
+
+
+    /**
+     * Deprecated. Use <code>_.defer()</code> instead. Defers invoking the function until the current call stack has cleared.
+     * @param {Function} callback Callback to be called when the current call stack has cleared.
+     * @deprecated
+     * */
+    nextTick: function nextTick(callback) {
+        return setTimeout(callback, 10);
+    },
+
+
+    /**
+     * Creates and returns a new function that maps the passed comparator onto the specified attribute of Backbone.Model.
+     * Look at the example for details.
+     * @example
+     * var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'text');
+     * var a = new Backbone.Model({ id: 2, text: '1' });
+     * var b = new Backbone.Model({ id: 1, text: '2' });
+     * // returns -1
+     * var result = referenceComparator(a, b);
+     * @param {Function} comparatorFn Wrapped comparator function. 1 or 2 arguments.
+     * @param {String} propertyName Attribute of a Backbone.Model to which the function is mapped.
+     * @return {Function} Result function.
+     * */
+    comparatorFor: function comparatorFor(comparatorFn, propertyName) {
+        if (comparatorFn.length === 1) {
+            return function (a) {
+                return comparatorFn(a.get(propertyName));
+            };
+        } else if (comparatorFn.length === 2) {
+            return function (a, b) {
+                return comparatorFn(a.get(propertyName), b.get(propertyName));
+            };
+        }
+        throw new Error('Invalid arguments count in comparator function.');
+    },
+
+
+    /**
+     * Accepts string and duplicates it into every field of LocalizedText object.
+     * The LocalizedText  looks like this: <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
+     * @param {String} defaultText A text that is set into each field of the resulting LocalizedText object.
+     * @return {Object} LocalizedText object like <code>{ en, de, ru }</code>.
+     * */
+    createLocalizedText: function createLocalizedText(defaultText) {
+        return {
+            en: defaultText,
+            de: defaultText,
+            ru: defaultText
+        };
+    },
+
+
+    /**
+     * Javascript version of the Microsoft .NET framework method <code>string.Format</code>.
+     * @example
+     * // returns 'Hello, Javascript!'
+     * core.utils.helpers.format('Hello, {0}!', 'Javascript');
+     * @param {String} text Formatted text that contains placeholders like <code>{i}</code>.
+     * Where <code>i</code> - index of the inserted argument (starts from zero).
+     * @param {...*} arguments Arguments that will replace the placeholders in text.
+     * @return {String} Resulting string.
+     * */
+    format: function format(text) {
+        if (!_.isString(text)) {
+            return '';
+        }
+        for (var i = 1; i < arguments.length; i++) {
+            var regexp = new RegExp('\\{' + (i - 1) + '\\}', 'gi');
+            text = text.replace(regexp, arguments[i]);
+        }
+        return text;
+    },
+
+
+    /**
+     * Takes a number and array of strings and then returns a valid plural form.
+     * Works with complex cases and valid for all supported languages (by default for en, de and ru).
+     * The core algorithm is located in localization text `CORE.SERVICES.LOCALIZATION.PLURALFORM`.
+     * @function
+     * @example
+     * // returns 'car'
+     * core.utils.helpers.getPluralForm(1, 'car,cars');
+     * // returns 'cars'
+     * core.utils.helpers.getPluralForm(10, 'car,cars');
+     * @param {Number} n A number which requires a correct work form.
+     * @param {String} texts Comma separated string of word forms.
+     * (2 word forms for en and de, 3 word forms for ru).
+     * @return {String} Resulting string.
+     * */
+    getPluralForm: function getPluralForm(n, texts) {
+        if (!getPluralFormIndex) {
+            var formula = _LocalizationService2.default.get('CORE.SERVICES.LOCALIZATION.PLURALFORM');
+            getPluralFormIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
+        }
+        return texts.split(',')[getPluralFormIndex(n)];
+    },
+
+
+    /**
+     * Creates a queue of asynchronous operations.
+     * New operation function is executed only after the previous function with the same id has executed.
+     * @example
+     * var save = form.save.bind(form);
+     * // Three sequential calls
+     * var promise1 = core.utils.helpers.enqueueOperation(save, 42);
+     * var promise2 = core.utils.helpers.enqueueOperation(save, 42);
+     * var promise3 = core.utils.helpers.enqueueOperation(save, 42);
+     * promise3.then(function () {
+     *     // Will be called only when all the 'save' operations has been fired and returned success.
+     * });
+     * @param {Function} operation A function that triggers asynchronous operation and returns a Promise object.
+     * @param {String} queueId String identifier of operations queue.
+     * */
+    enqueueOperation: function enqueueOperation(operation, queueId) {
+        if (queueCache[queueId] && queueCache[queueId].isPending()) {
+            queueCache[queueId] = queueCache[queueId].then(function () {
+                return _.isFunction(operation) ? operation() : operation;
+            });
+        } else {
+            queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
+        }
+        return queueCache[queueId];
+    },
+
+
+    /**
+     * Sequentially applies passed Behavior objects on to the given instance.
+     * The method has nothing to do with Marionette.Behavior.
+     * @example
+     * core.utils.helpers.applyBehavior(this, core.models.behaviors.SelectableBehavior);
+     * @param {Object} target Target instance that is getting behaviors applied.
+     * @param {...Function} arguments 1 or more Behavior objects (constructor functions).
+     * */
+    applyBehavior: function applyBehavior(target) {
+        var behaviors = _.rest(arguments, 1);
+        _.each(behaviors, function (Behavior) {
+            _.extend(target, new Behavior(target));
+        });
+    },
+
+
+    /**
+     * Allows to perform validation of input options. The method is usually used in constructor or initializer methods.
+     * Allows to check both direct and nested properties of the options object.
+     * Throws <code>MissingOptionError</code> if the attribute is undefined.
+     * @example
+     * // Checks that property options.model exists.
+     * core.utils.helpers.ensureOption(options, 'model');
+     * // Checks that property options.property1.subProperty exists.
+     * core.utils.helpers.ensureOption(options, 'property1.subProperty');
+     * @param {Object} options Options object to check.
+     * @param {String} optionName Property name or dot-separated property path.
+     * */
+    ensureOption: function ensureOption(options, optionName) {
+        if (!options) {
+            this.throwError('The options object is required.', 'MissingOptionError');
+        }
+        if (optionName.indexOf('.') !== -1) {
+            var selector = optionName.split('.');
+            for (var i = 0, len = selector.length; i < len; i++) {
+                optionName = selector[i];
+                if (options[optionName] === undefined) {
+                    optionName = _.take(selector, i + 1).join('.');
+                    this.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
+                }
+                options = options[optionName];
+            }
+        } else if (options[optionName] === undefined) {
+            this.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
+        }
+    },
+
+
+    /**
+     * Allows to perform validation of property in an object. Allows to check both direct and nested properties of the object.
+     * Throws <code>MissingOptionError</code> if the attribute is undefined.
+     * @example
+     * // Checks that property this.view.moduleRegion exists.
+     * core.utils.helpers.ensureOption(this.view, 'moduleRegion');
+     * @param {Object} object An object to check.
+     * @param {String} propertyName Property name or dot-separated property path.
+     * */
+    ensureProperty: function ensureProperty(object, propertyName) {
+        if (!object) {
+            this.throwError('The object is null.', 'NullObjectError');
+        }
+        if (propertyName.indexOf('.') !== -1) {
+            var selector = propertyName.split('.');
+            for (var i = 0, len = selector.length; i < len; i++) {
+                propertyName = selector[i];
+                if (object[propertyName] === undefined) {
+                    propertyName = _.take(selector, i + 1).join('.');
+                    this.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
+                }
+                object = object[propertyName];
+            }
+        } else if (object[propertyName] === undefined) {
+            this.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
+        }
+    },
+
+
+    /**
+     * Allows to retrieve a property (or subproperty) of an object. Does not throw any error if one of the properties along the way are missing.
+     * Doesn't throw if the object itself is undefined.
+     * @example
+     * var foo = { a: {} };
+     * // returns undefined (doesn't throw an error)
+     * core.utils.helpers.getPropertyOrDefault(foo, 'a.b.c.d');
+     * @param {String} propertyPath propertyName Property name or dot-separated property path.
+     * @param {Object} obj An object to get the property from.
+     * */
+    getPropertyOrDefault: function getPropertyOrDefault(propertyPath, obj) {
+        return [obj].concat(propertyPath.split('.')).reduce(function (prev, curr) {
+            return prev === undefined ? undefined : prev[curr];
+        });
+    },
+
+
+    /**
+     * Pre-validation helper that allows to check that function argument is not falsy.
+     * Falsy value means that the value is one of the following: <code>undefined, null, 0, '', false</code>.
+     * Throws <code>ArgumentFalsyError</code> if validation is failed.
+     * @example
+     * core.utils.helpers.assertArgumentNotFalsy(argument1, 'argument1');
+     * @param {*} argumentValue Value to check.
+     * @param {String} argumentName Name of the checked argument. Needs to specify in the exception text.
+     * */
+    assertArgumentNotFalsy: function assertArgumentNotFalsy(argumentValue, argumentName) {
+        if (!argumentValue) {
+            this.throwError('Argument `' + argumentName + '` is falsy.', 'ArgumentFalsyError');
+        }
+    },
+
+
+    /**
+     * Simplified way to throw an error. Throws an Error object with the specified name and message.
+     * @example
+     * core.utils.helpers.throwError('Request is invalid.');
+     * @param {String} message Error message.
+     * @param {String} [name='Error'] Error name (`name` attribute of Error object).
+     * */
+    throwError: function throwError(message, name) {
+        var error = new Error(message);
+        error.name = name || 'Error';
+        throw error;
+    },
+
+
+    /**
+     * Throws InvalidOperationError. The exception should be thrown when a class is in invalid state to call the checked method.
+     * @example
+     * // Inside of implementation of some Marionette.View.
+     * addKeyboardListener: function (key, callback) {
+     *     if (!this.keyListener) {
+     *         utils.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+     *     }
+     *     var keys = key.split(',');
+     *     _.each(keys, function (k) {
+     *         this.keyListener.simple_combo(k, callback);
+     *     }, this);
+     * },
+     * // ...
+     * @param {String} [message='Invalid operation'] Error message.
+     * */
+    throwInvalidOperationError: function throwInvalidOperationError(message) {
+        this.throwError(message || 'Invalid operation', 'InvalidOperationError');
+    },
+
+
+    /**
+     * Throws FormatError. The exception should be thrown when the format of an argument is invalid, or when a is not well formed.
+     * @example
+     * function (url, parameterNames, parameters, callback) {
+     *     // Some code here ...
+     *     if (parameters.Length !== parameterNames.length) {
+     *         utils.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
+     *     }
+     *     // Some code here ...
+     * @param {String} [message='Invalid format'] Error message.
+     * */
+    throwFormatError: function throwFormatError(message) {
+        this.throwError(message || 'Invalid format', 'FormatError');
+    },
+
+
+    /**
+     * Throws ArgumentError. The exception should be thrown when one of the arguments provided to a method is not valid.
+     * Should be thrown only when one particular argument is invalid. If a combination of arguments is invalid use <code>FormatError</code>.
+     * @example
+     * function (url, parameterNames, parameters, callback) {
+     *     // Some code here ...
+     *     if (parameterNames.Length !== 2) {
+     *         utils.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
+     *     }
+     *     // Some code here ...
+     * @param {String} [message='Invalid argument'] Error message.
+     * */
+    throwArgumentError: function throwArgumentError(message) {
+        this.throwError(message || 'Invalid argument', 'ArgumentError');
+    },
+
+
+    /**
+     * Throws NotSupportedError. The exception should be thrown when an invoked method is not supported.
+     * For example: some class doesn't support all the methods of the interface it implements.
+     * @example
+     * // Inside of implementation of some Stream class
+     * seek() {
+     *     // Some code here ...
+     *     utils.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
+     *     // Some code here ...
+     * }
+     * @param {String} [message='The operation is not supported'] Error message.
+     * */
+    throwNotSupportedError: function throwNotSupportedError(message) {
+        this.throwError(message || 'The operation is not supported', 'NotSupportedError');
+    },
+
+
+    /**
+     * Throws NotImplementedError. The exception should be thrown when a requested method or operation is not implemented.
+     * For example: a base class could have abstract methods that throws such error.
+     * @example
+     * // Inside of implementation of some base controller class.
+     * navigate() {
+     *     utils.this.throwNotImplementedError();
+     * }
+     * @param {String} [message='The operation is not implemented'] Error message.
+     * */
+    throwNotImplementedError: function throwNotImplementedError(message) {
+        this.throwError(message || 'The operation is not implemented', 'NotImplementedError');
+    },
+
+
+    /**
+     * Throws NotFoundError. The exception should be thrown when a requested object could not be found.
+     * For example: we looked up in the database and could find a person with requested id.
+     * @param {String} [message='Object not found'] Error message.
+     * */
+    throwNotFoundError: function throwNotFoundError(message) {
+        this.throwError(message || 'Object not found', 'NotFoundError');
+    }
+};
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Developer: Stepan Burguchev
  * Date: 10/3/2014
@@ -12672,12 +13075,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = Marionette.ItemView.extend(_MarionetteEditorPrototype2.default.create(Marionette.ItemView));
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(13).f;
 var has = __webpack_require__(20);
-var TAG = __webpack_require__(10)('toStringTag');
+var TAG = __webpack_require__(11)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -12685,12 +13088,12 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
 var defined = __webpack_require__(34);
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 var spaces = __webpack_require__(102);
 var space = '[' + spaces + ']';
 var non = '\u200b\u0085';
@@ -12721,17 +13124,17 @@ module.exports = exporter;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 module.exports = function (it, TYPE) {
   if (!isObject(it) || it._t !== TYPE) throw TypeError('Incompatible receiver, ' + TYPE + ' required!');
   return it;
@@ -12739,14 +13142,14 @@ module.exports = function (it, TYPE) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {module.exports = global["_"] = __webpack_require__(580);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -12758,19 +13161,19 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(30);
-var TAG = __webpack_require__(10)('toStringTag');
+var TAG = __webpack_require__(11)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -12794,14 +13197,14 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Backbone"] = __webpack_require__(631);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24)))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12819,7 +13222,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _helpers = __webpack_require__(91);
+var _helpers = __webpack_require__(60);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -12850,7 +13253,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12976,7 +13379,7 @@ exports.default = /** @lends module:core.dropdown.factory */{
 };
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13005,7 +13408,7 @@ exports.default = Backbone.Model.extend({
      */
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13066,10 +13469,10 @@ _.extend(HighlightableBehavior.prototype, /** @lends module:core.collection.beha
 exports.default = HighlightableBehavior;
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 module.exports = function (key) {
@@ -13078,7 +13481,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
@@ -13107,14 +13510,14 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -13125,13 +13528,13 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.8 IsRegExp(argument)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var cof = __webpack_require__(30);
-var MATCH = __webpack_require__(10)('match');
+var MATCH = __webpack_require__(11)('match');
 module.exports = function (it) {
   var isRegExp;
   return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
@@ -13139,10 +13542,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(10)('iterator');
+var ITERATOR = __webpack_require__(11)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -13167,7 +13570,7 @@ module.exports = function (exec, skipClosing) {
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13187,16 +13590,16 @@ module.exports = function () {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var hide = __webpack_require__(21);
 var redefine = __webpack_require__(22);
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 var defined = __webpack_require__(34);
-var wks = __webpack_require__(10);
+var wks = __webpack_require__(11);
 
 module.exports = function (KEY, length, exec) {
   var SYMBOL = wks(KEY);
@@ -13222,13 +13625,13 @@ module.exports = function (KEY, length, exec) {
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(5);
 var aFunction = __webpack_require__(18);
-var SPECIES = __webpack_require__(10)('species');
+var SPECIES = __webpack_require__(11)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
   var S;
@@ -13237,22 +13640,22 @@ module.exports = function (O, D) {
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var $export = __webpack_require__(1);
 var redefine = __webpack_require__(22);
 var redefineAll = __webpack_require__(59);
 var meta = __webpack_require__(45);
 var forOf = __webpack_require__(58);
 var anInstance = __webpack_require__(57);
-var isObject = __webpack_require__(9);
-var fails = __webpack_require__(8);
-var $iterDetect = __webpack_require__(79);
-var setToStringTag = __webpack_require__(61);
+var isObject = __webpack_require__(10);
+var fails = __webpack_require__(9);
+var $iterDetect = __webpack_require__(80);
+var setToStringTag = __webpack_require__(62);
 var inheritIfRequired = __webpack_require__(103);
 
 module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
@@ -13329,10 +13732,10 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var hide = __webpack_require__(21);
 var uid = __webpack_require__(50);
 var TYPED = uid('typed_array');
@@ -13363,23 +13766,23 @@ module.exports = {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // Forced replacement prototype accessors methods
-module.exports = __webpack_require__(51) || !__webpack_require__(8)(function () {
+module.exports = __webpack_require__(51) || !__webpack_require__(9)(function () {
   var K = Math.random();
   // In FF throws only define methods
   // eslint-disable-next-line no-undef, no-useless-call
   __defineSetter__.call(null, K, function () { /* empty */ });
-  delete __webpack_require__(7)[K];
+  delete __webpack_require__(8)[K];
 });
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13398,7 +13801,7 @@ module.exports = function (COLLECTION) {
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13433,10 +13836,10 @@ module.exports = function (COLLECTION) {
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var strRepeat = __webpack_require__(304);
 
 module.exports = function pad(str, length, padStr, type) {
@@ -13465,7 +13868,7 @@ module.exports = function pad(str, length, padStr, type) {
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
@@ -14488,7 +14891,7 @@ return numeral;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14525,409 +14928,6 @@ exports.default = {
 };
 
 /***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-__webpack_require__(0);
-
-var _LocalizationService = __webpack_require__(11);
-
-var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Developer: Stepan Burguchev
- * Date: 8/21/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-/*eslint-disable*/
-
-var timeoutCache = {};
-
-var queueCache = {};
-
-var getPluralFormIndex = null;
-
-exports.default = /** @lends module:core.utils.helpers */{
-    /**
-     * Deprecated. Use <code>_.debounce()</code> instead. Defers invoking the function until after `delay` milliseconds
-     * have elapsed since the last time it was invoked.
-     * @param {String} someUniqueId Function identifier.
-     * @param {Function} callback The function tobe called after delay.
-     * @param {Number} delay Callback delay in milliseconds.
-     * @deprecated
-     * */
-    setUniqueTimeout: function setUniqueTimeout(someUniqueId, callback, delay) {
-        var timeoutId = timeoutCache[someUniqueId];
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-        var handler = setTimeout(function () {
-            callback();
-            delete timeoutCache[someUniqueId];
-        }, delay);
-        timeoutCache[someUniqueId] = handler;
-        return handler;
-    },
-
-
-    /**
-     * Deprecated. Use <code>_.defer()</code> instead. Defers invoking the function until the current call stack has cleared.
-     * @param {Function} callback Callback to be called when the current call stack has cleared.
-     * @deprecated
-     * */
-    nextTick: function nextTick(callback) {
-        return setTimeout(callback, 10);
-    },
-
-
-    /**
-     * Creates and returns a new function that maps the passed comparator onto the specified attribute of Backbone.Model.
-     * Look at the example for details.
-     * @example
-     * var referenceComparator = core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'text');
-     * var a = new Backbone.Model({ id: 2, text: '1' });
-     * var b = new Backbone.Model({ id: 1, text: '2' });
-     * // returns -1
-     * var result = referenceComparator(a, b);
-     * @param {Function} comparatorFn Wrapped comparator function. 1 or 2 arguments.
-     * @param {String} propertyName Attribute of a Backbone.Model to which the function is mapped.
-     * @return {Function} Result function.
-     * */
-    comparatorFor: function comparatorFor(comparatorFn, propertyName) {
-        if (comparatorFn.length === 1) {
-            return function (a) {
-                return comparatorFn(a.get(propertyName));
-            };
-        } else if (comparatorFn.length === 2) {
-            return function (a, b) {
-                return comparatorFn(a.get(propertyName), b.get(propertyName));
-            };
-        }
-        throw new Error('Invalid arguments count in comparator function.');
-    },
-
-
-    /**
-     * Accepts string and duplicates it into every field of LocalizedText object.
-     * The LocalizedText  looks like this: <code>{ en: 'foo', de: 'foo', ru: 'foo' }</code>.
-     * @param {String} defaultText A text that is set into each field of the resulting LocalizedText object.
-     * @return {Object} LocalizedText object like <code>{ en, de, ru }</code>.
-     * */
-    createLocalizedText: function createLocalizedText(defaultText) {
-        return {
-            en: defaultText,
-            de: defaultText,
-            ru: defaultText
-        };
-    },
-
-
-    /**
-     * Javascript version of the Microsoft .NET framework method <code>string.Format</code>.
-     * @example
-     * // returns 'Hello, Javascript!'
-     * core.utils.helpers.format('Hello, {0}!', 'Javascript');
-     * @param {String} text Formatted text that contains placeholders like <code>{i}</code>.
-     * Where <code>i</code> - index of the inserted argument (starts from zero).
-     * @param {...*} arguments Arguments that will replace the placeholders in text.
-     * @return {String} Resulting string.
-     * */
-    format: function format(text) {
-        if (!_.isString(text)) {
-            return '';
-        }
-        for (var i = 1; i < arguments.length; i++) {
-            var regexp = new RegExp('\\{' + (i - 1) + '\\}', 'gi');
-            text = text.replace(regexp, arguments[i]);
-        }
-        return text;
-    },
-
-
-    /**
-     * Takes a number and array of strings and then returns a valid plural form.
-     * Works with complex cases and valid for all supported languages (by default for en, de and ru).
-     * The core algorithm is located in localization text `CORE.SERVICES.LOCALIZATION.PLURALFORM`.
-     * @function
-     * @example
-     * // returns 'car'
-     * core.utils.helpers.getPluralForm(1, 'car,cars');
-     * // returns 'cars'
-     * core.utils.helpers.getPluralForm(10, 'car,cars');
-     * @param {Number} n A number which requires a correct work form.
-     * @param {String} texts Comma separated string of word forms.
-     * (2 word forms for en and de, 3 word forms for ru).
-     * @return {String} Resulting string.
-     * */
-    getPluralForm: function getPluralForm(n, texts) {
-        if (!getPluralFormIndex) {
-            var formula = _LocalizationService2.default.get('CORE.SERVICES.LOCALIZATION.PLURALFORM');
-            getPluralFormIndex = new Function('n', 'var r = ' + formula + ';return typeof r !== \'boolean\' ? r : r === true ? 1 : 0;'); // jshint ignore:line
-        }
-        return texts.split(',')[getPluralFormIndex(n)];
-    },
-
-
-    /**
-     * Creates a queue of asynchronous operations.
-     * New operation function is executed only after the previous function with the same id has executed.
-     * @example
-     * var save = form.save.bind(form);
-     * // Three sequential calls
-     * var promise1 = core.utils.helpers.enqueueOperation(save, 42);
-     * var promise2 = core.utils.helpers.enqueueOperation(save, 42);
-     * var promise3 = core.utils.helpers.enqueueOperation(save, 42);
-     * promise3.then(function () {
-     *     // Will be called only when all the 'save' operations has been fired and returned success.
-     * });
-     * @param {Function} operation A function that triggers asynchronous operation and returns a Promise object.
-     * @param {String} queueId String identifier of operations queue.
-     * */
-    enqueueOperation: function enqueueOperation(operation, queueId) {
-        if (queueCache[queueId] && queueCache[queueId].isPending()) {
-            queueCache[queueId] = queueCache[queueId].then(function () {
-                return _.isFunction(operation) ? operation() : operation;
-            });
-        } else {
-            queueCache[queueId] = Promise.resolve(_.isFunction(operation) ? operation() : operation);
-        }
-        return queueCache[queueId];
-    },
-
-
-    /**
-     * Sequentially applies passed Behavior objects on to the given instance.
-     * The method has nothing to do with Marionette.Behavior.
-     * @example
-     * core.utils.helpers.applyBehavior(this, core.models.behaviors.SelectableBehavior);
-     * @param {Object} target Target instance that is getting behaviors applied.
-     * @param {...Function} arguments 1 or more Behavior objects (constructor functions).
-     * */
-    applyBehavior: function applyBehavior(target) {
-        var behaviors = _.rest(arguments, 1);
-        _.each(behaviors, function (Behavior) {
-            _.extend(target, new Behavior(target));
-        });
-    },
-
-
-    /**
-     * Allows to perform validation of input options. The method is usually used in constructor or initializer methods.
-     * Allows to check both direct and nested properties of the options object.
-     * Throws <code>MissingOptionError</code> if the attribute is undefined.
-     * @example
-     * // Checks that property options.model exists.
-     * core.utils.helpers.ensureOption(options, 'model');
-     * // Checks that property options.property1.subProperty exists.
-     * core.utils.helpers.ensureOption(options, 'property1.subProperty');
-     * @param {Object} options Options object to check.
-     * @param {String} optionName Property name or dot-separated property path.
-     * */
-    ensureOption: function ensureOption(options, optionName) {
-        if (!options) {
-            this.throwError('The options object is required.', 'MissingOptionError');
-        }
-        if (optionName.indexOf('.') !== -1) {
-            var selector = optionName.split('.');
-            for (var i = 0, len = selector.length; i < len; i++) {
-                optionName = selector[i];
-                if (options[optionName] === undefined) {
-                    optionName = _.take(selector, i + 1).join('.');
-                    this.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
-                }
-                options = options[optionName];
-            }
-        } else if (options[optionName] === undefined) {
-            this.throwError('The option `' + optionName + '` is required.', 'MissingOptionError');
-        }
-    },
-
-
-    /**
-     * Allows to perform validation of property in an object. Allows to check both direct and nested properties of the object.
-     * Throws <code>MissingOptionError</code> if the attribute is undefined.
-     * @example
-     * // Checks that property this.view.moduleRegion exists.
-     * core.utils.helpers.ensureOption(this.view, 'moduleRegion');
-     * @param {Object} object An object to check.
-     * @param {String} propertyName Property name or dot-separated property path.
-     * */
-    ensureProperty: function ensureProperty(object, propertyName) {
-        if (!object) {
-            this.throwError('The object is null.', 'NullObjectError');
-        }
-        if (propertyName.indexOf('.') !== -1) {
-            var selector = propertyName.split('.');
-            for (var i = 0, len = selector.length; i < len; i++) {
-                propertyName = selector[i];
-                if (object[propertyName] === undefined) {
-                    propertyName = _.take(selector, i + 1).join('.');
-                    this.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
-                }
-                object = object[propertyName];
-            }
-        } else if (object[propertyName] === undefined) {
-            this.throwError('The property `' + propertyName + '` is required.', 'MissingPropertyError');
-        }
-    },
-
-
-    /**
-     * Allows to retrieve a property (or subproperty) of an object. Does not throw any error if one of the properties along the way are missing.
-     * Doesn't throw if the object itself is undefined.
-     * @example
-     * var foo = { a: {} };
-     * // returns undefined (doesn't throw an error)
-     * core.utils.helpers.getPropertyOrDefault(foo, 'a.b.c.d');
-     * @param {String} propertyPath propertyName Property name or dot-separated property path.
-     * @param {Object} obj An object to get the property from.
-     * */
-    getPropertyOrDefault: function getPropertyOrDefault(propertyPath, obj) {
-        return [obj].concat(propertyPath.split('.')).reduce(function (prev, curr) {
-            return prev === undefined ? undefined : prev[curr];
-        });
-    },
-
-
-    /**
-     * Pre-validation helper that allows to check that function argument is not falsy.
-     * Falsy value means that the value is one of the following: <code>undefined, null, 0, '', false</code>.
-     * Throws <code>ArgumentFalsyError</code> if validation is failed.
-     * @example
-     * core.utils.helpers.assertArgumentNotFalsy(argument1, 'argument1');
-     * @param {*} argumentValue Value to check.
-     * @param {String} argumentName Name of the checked argument. Needs to specify in the exception text.
-     * */
-    assertArgumentNotFalsy: function assertArgumentNotFalsy(argumentValue, argumentName) {
-        if (!argumentValue) {
-            this.throwError('Argument `' + argumentName + '` is falsy.', 'ArgumentFalsyError');
-        }
-    },
-
-
-    /**
-     * Simplified way to throw an error. Throws an Error object with the specified name and message.
-     * @example
-     * core.utils.helpers.throwError('Request is invalid.');
-     * @param {String} message Error message.
-     * @param {String} [name='Error'] Error name (`name` attribute of Error object).
-     * */
-    throwError: function throwError(message, name) {
-        var error = new Error(message);
-        error.name = name || 'Error';
-        throw error;
-    },
-
-
-    /**
-     * Throws InvalidOperationError. The exception should be thrown when a class is in invalid state to call the checked method.
-     * @example
-     * // Inside of implementation of some Marionette.View.
-     * addKeyboardListener: function (key, callback) {
-     *     if (!this.keyListener) {
-     *         utils.helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-     *     }
-     *     var keys = key.split(',');
-     *     _.each(keys, function (k) {
-     *         this.keyListener.simple_combo(k, callback);
-     *     }, this);
-     * },
-     * // ...
-     * @param {String} [message='Invalid operation'] Error message.
-     * */
-    throwInvalidOperationError: function throwInvalidOperationError(message) {
-        this.throwError(message || 'Invalid operation', 'InvalidOperationError');
-    },
-
-
-    /**
-     * Throws FormatError. The exception should be thrown when the format of an argument is invalid, or when a is not well formed.
-     * @example
-     * function (url, parameterNames, parameters, callback) {
-     *     // Some code here ...
-     *     if (parameters.Length !== parameterNames.length) {
-     *         utils.helpers.throwFormatError('The arrays `parameters` and `parameterNames` should have identical length.');
-     *     }
-     *     // Some code here ...
-     * @param {String} [message='Invalid format'] Error message.
-     * */
-    throwFormatError: function throwFormatError(message) {
-        this.throwError(message || 'Invalid format', 'FormatError');
-    },
-
-
-    /**
-     * Throws ArgumentError. The exception should be thrown when one of the arguments provided to a method is not valid.
-     * Should be thrown only when one particular argument is invalid. If a combination of arguments is invalid use <code>FormatError</code>.
-     * @example
-     * function (url, parameterNames, parameters, callback) {
-     *     // Some code here ...
-     *     if (parameterNames.Length !== 2) {
-     *         utils.helpers.throwArgumentError('The array `parameterNames` should contain exactly 2 elements.');
-     *     }
-     *     // Some code here ...
-     * @param {String} [message='Invalid argument'] Error message.
-     * */
-    throwArgumentError: function throwArgumentError(message) {
-        this.throwError(message || 'Invalid argument', 'ArgumentError');
-    },
-
-
-    /**
-     * Throws NotSupportedError. The exception should be thrown when an invoked method is not supported.
-     * For example: some class doesn't support all the methods of the interface it implements.
-     * @example
-     * // Inside of implementation of some Stream class
-     * seek() {
-     *     // Some code here ...
-     *     utils.helpers.throwNotSupportedError('The network stream doesn't support `seek`.');
-     *     // Some code here ...
-     * }
-     * @param {String} [message='The operation is not supported'] Error message.
-     * */
-    throwNotSupportedError: function throwNotSupportedError(message) {
-        this.throwError(message || 'The operation is not supported', 'NotSupportedError');
-    },
-
-
-    /**
-     * Throws NotImplementedError. The exception should be thrown when a requested method or operation is not implemented.
-     * For example: a base class could have abstract methods that throws such error.
-     * @example
-     * // Inside of implementation of some base controller class.
-     * navigate() {
-     *     utils.this.throwNotImplementedError();
-     * }
-     * @param {String} [message='The operation is not implemented'] Error message.
-     * */
-    throwNotImplementedError: function throwNotImplementedError(message) {
-        this.throwError(message || 'The operation is not implemented', 'NotImplementedError');
-    },
-
-
-    /**
-     * Throws NotFoundError. The exception should be thrown when a requested object could not be found.
-     * For example: we looked up in the database and could find a person with requested id.
-     * @param {String} [message='Object not found'] Error message.
-     * */
-    throwNotFoundError: function throwNotFoundError(message) {
-        this.throwError(message || 'Object not found', 'NotFoundError');
-    }
-};
-
-/***/ }),
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14947,7 +14947,7 @@ var _FieldView = __webpack_require__(320);
 
 var _FieldView2 = _interopRequireDefault(_FieldView);
 
-var _BaseItemEditorView = __webpack_require__(60);
+var _BaseItemEditorView = __webpack_require__(61);
 
 var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 
@@ -15123,7 +15123,7 @@ var _BaseReferenceCollection = __webpack_require__(902);
 
 var _BaseReferenceCollection2 = _interopRequireDefault(_BaseReferenceCollection);
 
-var _DefaultReferenceModel = __webpack_require__(72);
+var _DefaultReferenceModel = __webpack_require__(73);
 
 var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 
@@ -15781,7 +15781,7 @@ var _VirtualCollection = __webpack_require__(48);
 
 var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 
-var _HighlightableBehavior = __webpack_require__(73);
+var _HighlightableBehavior = __webpack_require__(74);
 
 var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 
@@ -15838,8 +15838,8 @@ exports.default = _VirtualCollection2.default.extend({
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(9);
-var document = __webpack_require__(7).document;
+var isObject = __webpack_require__(10);
+var document = __webpack_require__(8).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -15851,7 +15851,7 @@ module.exports = function (it) {
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var core = __webpack_require__(32);
 var LIBRARY = __webpack_require__(51);
 var wksExt = __webpack_require__(148);
@@ -15866,7 +15866,7 @@ module.exports = function (name) {
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(74)('keys');
+var shared = __webpack_require__(75)('keys');
 var uid = __webpack_require__(50);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
@@ -15887,7 +15887,7 @@ module.exports = (
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(7).document;
+var document = __webpack_require__(8).document;
 module.exports = document && document.documentElement;
 
 
@@ -15897,7 +15897,7 @@ module.exports = document && document.documentElement;
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var anObject = __webpack_require__(5);
 var check = function (O, proto) {
   anObject(O);
@@ -15934,7 +15934,7 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var setPrototypeOf = __webpack_require__(101).set;
 module.exports = function (that, target, C) {
   var S = target.constructor;
@@ -16025,11 +16025,11 @@ var $export = __webpack_require__(1);
 var redefine = __webpack_require__(22);
 var hide = __webpack_require__(21);
 var has = __webpack_require__(20);
-var Iterators = __webpack_require__(63);
+var Iterators = __webpack_require__(64);
 var $iterCreate = __webpack_require__(109);
-var setToStringTag = __webpack_require__(61);
+var setToStringTag = __webpack_require__(62);
 var getPrototypeOf = __webpack_require__(27);
-var ITERATOR = __webpack_require__(10)('iterator');
+var ITERATOR = __webpack_require__(11)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -16099,11 +16099,11 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 var create = __webpack_require__(54);
 var descriptor = __webpack_require__(49);
-var setToStringTag = __webpack_require__(61);
+var setToStringTag = __webpack_require__(62);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(21)(IteratorPrototype, __webpack_require__(10)('iterator'), function () { return this; });
+__webpack_require__(21)(IteratorPrototype, __webpack_require__(11)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -16116,7 +16116,7 @@ module.exports = function (Constructor, NAME, next) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // helper for String#{startsWith, endsWith, includes}
-var isRegExp = __webpack_require__(78);
+var isRegExp = __webpack_require__(79);
 var defined = __webpack_require__(34);
 
 module.exports = function (that, searchString, NAME) {
@@ -16129,7 +16129,7 @@ module.exports = function (that, searchString, NAME) {
 /* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MATCH = __webpack_require__(10)('match');
+var MATCH = __webpack_require__(11)('match');
 module.exports = function (KEY) {
   var re = /./;
   try {
@@ -16148,8 +16148,8 @@ module.exports = function (KEY) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(63);
-var ITERATOR = __webpack_require__(10)('iterator');
+var Iterators = __webpack_require__(64);
+var ITERATOR = __webpack_require__(11)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -16176,9 +16176,9 @@ module.exports = function (object, index, value) {
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof = __webpack_require__(68);
-var ITERATOR = __webpack_require__(10)('iterator');
-var Iterators = __webpack_require__(63);
+var classof = __webpack_require__(69);
+var ITERATOR = __webpack_require__(11)('iterator');
+var Iterators = __webpack_require__(64);
 module.exports = __webpack_require__(32).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
@@ -16228,7 +16228,7 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 var addToUnscopables = __webpack_require__(46);
 var step = __webpack_require__(164);
-var Iterators = __webpack_require__(63);
+var Iterators = __webpack_require__(64);
 var toIObject = __webpack_require__(25);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -16269,7 +16269,7 @@ var ctx = __webpack_require__(29);
 var invoke = __webpack_require__(154);
 var html = __webpack_require__(100);
 var cel = __webpack_require__(96);
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var process = global.process;
 var setTask = global.setImmediate;
 var clearTask = global.clearImmediate;
@@ -16355,7 +16355,7 @@ module.exports = {
 /* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var macrotask = __webpack_require__(118).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
@@ -16456,13 +16456,13 @@ module.exports.f = function (C) {
 
 "use strict";
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var DESCRIPTORS = __webpack_require__(12);
 var LIBRARY = __webpack_require__(51);
-var $typed = __webpack_require__(84);
+var $typed = __webpack_require__(85);
 var hide = __webpack_require__(21);
 var redefineAll = __webpack_require__(59);
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 var anInstance = __webpack_require__(57);
 var toInteger = __webpack_require__(35);
 var toLength = __webpack_require__(14);
@@ -16470,7 +16470,7 @@ var toIndex = __webpack_require__(173);
 var gOPN = __webpack_require__(55).f;
 var dP = __webpack_require__(13).f;
 var arrayFill = __webpack_require__(116);
-var setToStringTag = __webpack_require__(61);
+var setToStringTag = __webpack_require__(62);
 var ARRAY_BUFFER = 'ArrayBuffer';
 var DATA_VIEW = 'DataView';
 var PROTOTYPE = 'prototype';
@@ -17080,7 +17080,7 @@ return ru;
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function capitalize(str, lowercaseRest) {
   str = makeString(str);
@@ -17110,7 +17110,7 @@ module.exports = function defaultToWhiteSpace(characters) {
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function chars(str) {
   return makeString(str).split('');
@@ -17121,7 +17121,7 @@ module.exports = function chars(str) {
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var defaultToWhiteSpace = __webpack_require__(126);
 var nativeTrimRight = String.prototype.trimRight;
 
@@ -17207,7 +17207,7 @@ var _booleanEditor = __webpack_require__(705);
 
 var _booleanEditor2 = _interopRequireDefault(_booleanEditor);
 
-var _BaseItemEditorView = __webpack_require__(60);
+var _BaseItemEditorView = __webpack_require__(61);
 
 var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 
@@ -17356,7 +17356,7 @@ var _numberEditor = __webpack_require__(706);
 
 var _numberEditor2 = _interopRequireDefault(_numberEditor);
 
-var _BaseItemEditorView = __webpack_require__(60);
+var _BaseItemEditorView = __webpack_require__(61);
 
 var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 
@@ -17718,11 +17718,11 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
-var _BaseItemEditorView = __webpack_require__(60);
+var _BaseItemEditorView = __webpack_require__(61);
 
 var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 
@@ -19449,7 +19449,7 @@ var _MembersListView = __webpack_require__(757);
 
 var _MembersListView2 = _interopRequireDefault(_MembersListView);
 
-var _UserService = __webpack_require__(70);
+var _UserService = __webpack_require__(71);
 
 var _UserService2 = _interopRequireDefault(_UserService);
 
@@ -19838,7 +19838,7 @@ exports.default = {
 /* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(12) && !__webpack_require__(8)(function () {
+module.exports = !__webpack_require__(12) && !__webpack_require__(9)(function () {
   return Object.defineProperty(__webpack_require__(96)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -19847,7 +19847,7 @@ module.exports = !__webpack_require__(12) && !__webpack_require__(8)(function ()
 /* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(10);
+exports.f = __webpack_require__(11);
 
 
 /***/ }),
@@ -19856,7 +19856,7 @@ exports.f = __webpack_require__(10);
 
 var has = __webpack_require__(20);
 var toIObject = __webpack_require__(25);
-var arrayIndexOf = __webpack_require__(75)(false);
+var arrayIndexOf = __webpack_require__(76)(false);
 var IE_PROTO = __webpack_require__(98)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -19925,14 +19925,14 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys = __webpack_require__(52);
-var gOPS = __webpack_require__(76);
-var pIE = __webpack_require__(67);
+var gOPS = __webpack_require__(77);
+var pIE = __webpack_require__(68);
 var toObject = __webpack_require__(15);
-var IObject = __webpack_require__(66);
+var IObject = __webpack_require__(67);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(8)(function () {
+module.exports = !$assign || __webpack_require__(9)(function () {
   var A = {};
   var B = {};
   // eslint-disable-next-line no-undef
@@ -19965,7 +19965,7 @@ module.exports = !$assign || __webpack_require__(8)(function () {
 "use strict";
 
 var aFunction = __webpack_require__(18);
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var invoke = __webpack_require__(154);
 var arraySlice = [].slice;
 var factories = {};
@@ -20016,8 +20016,8 @@ module.exports = function (fn, args, that) {
 /* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $parseInt = __webpack_require__(7).parseInt;
-var $trim = __webpack_require__(62).trim;
+var $parseInt = __webpack_require__(8).parseInt;
+var $trim = __webpack_require__(63).trim;
 var ws = __webpack_require__(102);
 var hex = /^[-+]?0[xX]/;
 
@@ -20031,8 +20031,8 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 /* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $parseFloat = __webpack_require__(7).parseFloat;
-var $trim = __webpack_require__(62).trim;
+var $parseFloat = __webpack_require__(8).parseFloat;
+var $trim = __webpack_require__(63).trim;
 
 module.exports = 1 / $parseFloat(__webpack_require__(102) + '-0') !== -Infinity ? function parseFloat(str) {
   var string = $trim(String(str), 3);
@@ -20057,7 +20057,7 @@ module.exports = function (it, msg) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.3 Number.isInteger(number)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var floor = Math.floor;
 module.exports = function isInteger(it) {
   return !isObject(it) && isFinite(it) && floor(it) === it;
@@ -20127,7 +20127,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 var aFunction = __webpack_require__(18);
 var toObject = __webpack_require__(15);
-var IObject = __webpack_require__(66);
+var IObject = __webpack_require__(67);
 var toLength = __webpack_require__(14);
 
 module.exports = function (that, callbackfn, aLen, memo, isRight) {
@@ -20204,7 +20204,7 @@ module.exports = function (done, value) {
 // 21.2.5.3 get RegExp.prototype.flags()
 if (__webpack_require__(12) && /./g.flags != 'g') __webpack_require__(13).f(RegExp.prototype, 'flags', {
   configurable: true,
-  get: __webpack_require__(80)
+  get: __webpack_require__(81)
 });
 
 
@@ -20226,7 +20226,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(5);
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var newPromiseCapability = __webpack_require__(120);
 
 module.exports = function (C, x) {
@@ -20246,11 +20246,11 @@ module.exports = function (C, x) {
 "use strict";
 
 var strong = __webpack_require__(169);
-var validate = __webpack_require__(64);
+var validate = __webpack_require__(65);
 var MAP = 'Map';
 
 // 23.1 Map Objects
-module.exports = __webpack_require__(83)(MAP, function (get) {
+module.exports = __webpack_require__(84)(MAP, function (get) {
   return function Map() { return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 }, {
   // 23.1.3.6 Map.prototype.get(key)
@@ -20282,7 +20282,7 @@ var step = __webpack_require__(164);
 var setSpecies = __webpack_require__(56);
 var DESCRIPTORS = __webpack_require__(12);
 var fastKey = __webpack_require__(45).fastKey;
-var validate = __webpack_require__(64);
+var validate = __webpack_require__(65);
 var SIZE = DESCRIPTORS ? '_s' : 'size';
 
 var getEntry = function (that, key) {
@@ -20423,11 +20423,11 @@ module.exports = {
 "use strict";
 
 var strong = __webpack_require__(169);
-var validate = __webpack_require__(64);
+var validate = __webpack_require__(65);
 var SET = 'Set';
 
 // 23.2 Set Objects
-module.exports = __webpack_require__(83)(SET, function (get) {
+module.exports = __webpack_require__(84)(SET, function (get) {
   return function Set() { return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 }, {
   // 23.2.3.1 Set.prototype.add(value)
@@ -20448,9 +20448,9 @@ var redefine = __webpack_require__(22);
 var meta = __webpack_require__(45);
 var assign = __webpack_require__(152);
 var weak = __webpack_require__(172);
-var isObject = __webpack_require__(9);
-var fails = __webpack_require__(8);
-var validate = __webpack_require__(64);
+var isObject = __webpack_require__(10);
+var fails = __webpack_require__(9);
+var validate = __webpack_require__(65);
 var WEAK_MAP = 'WeakMap';
 var getWeak = meta.getWeak;
 var isExtensible = Object.isExtensible;
@@ -20480,7 +20480,7 @@ var methods = {
 };
 
 // 23.3 WeakMap Objects
-var $WeakMap = module.exports = __webpack_require__(83)(WEAK_MAP, wrapper, methods, weak, true, true);
+var $WeakMap = module.exports = __webpack_require__(84)(WEAK_MAP, wrapper, methods, weak, true, true);
 
 // IE11 WeakMap frozen keys fix
 if (fails(function () { return new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7; })) {
@@ -20512,12 +20512,12 @@ if (fails(function () { return new $WeakMap().set((Object.freeze || Object)(tmp)
 var redefineAll = __webpack_require__(59);
 var getWeak = __webpack_require__(45).getWeak;
 var anObject = __webpack_require__(5);
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var anInstance = __webpack_require__(57);
 var forOf = __webpack_require__(58);
 var createArrayMethod = __webpack_require__(37);
 var $has = __webpack_require__(20);
-var validate = __webpack_require__(64);
+var validate = __webpack_require__(65);
 var arrayFind = createArrayMethod(5);
 var arrayFindIndex = createArrayMethod(6);
 var id = 0;
@@ -20617,9 +20617,9 @@ module.exports = function (it) {
 
 // all object keys, includes non-enumerable and symbols
 var gOPN = __webpack_require__(55);
-var gOPS = __webpack_require__(76);
+var gOPS = __webpack_require__(77);
 var anObject = __webpack_require__(5);
-var Reflect = __webpack_require__(7).Reflect;
+var Reflect = __webpack_require__(8).Reflect;
 module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
   var keys = gOPN.f(anObject(it));
   var getSymbols = gOPS.f;
@@ -20634,11 +20634,11 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
 "use strict";
 
 // https://tc39.github.io/proposal-flatMap/#sec-FlattenIntoArray
-var isArray = __webpack_require__(77);
-var isObject = __webpack_require__(9);
+var isArray = __webpack_require__(78);
+var isObject = __webpack_require__(10);
 var toLength = __webpack_require__(14);
 var ctx = __webpack_require__(29);
-var IS_CONCAT_SPREADABLE = __webpack_require__(10)('isConcatSpreadable');
+var IS_CONCAT_SPREADABLE = __webpack_require__(11)('isConcatSpreadable');
 
 function flattenIntoArray(target, original, source, sourceLen, start, depth, mapper, thisArg) {
   var targetIndex = start;
@@ -20701,7 +20701,7 @@ module.exports = function (that, maxLength, fillString, left) {
 
 var getKeys = __webpack_require__(52);
 var toIObject = __webpack_require__(25);
-var isEnum = __webpack_require__(67).f;
+var isEnum = __webpack_require__(68).f;
 module.exports = function (isEntries) {
   return function (it) {
     var O = toIObject(it);
@@ -20722,7 +20722,7 @@ module.exports = function (isEntries) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
-var classof = __webpack_require__(68);
+var classof = __webpack_require__(69);
 var from = __webpack_require__(179);
 module.exports = function (NAME) {
   return function toJSON() {
@@ -31700,7 +31700,7 @@ process.umask = function() { return 0; };
 /* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function isBlank(str) {
   return (/^\s*$/).test(makeString(str));
@@ -31711,7 +31711,7 @@ module.exports = function isBlank(str) {
 /* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function decapitalize(str) {
   str = makeString(str);
@@ -31723,7 +31723,7 @@ module.exports = function decapitalize(str) {
 /* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function escapeRegExp(str) {
   return makeString(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
@@ -31735,7 +31735,7 @@ module.exports = function escapeRegExp(str) {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 var from  = 'ąàáäâãåæăćčĉęèéëêĝĥìíïîĵłľńňòóöőôõðøśșşšŝťțţŭùúüűûñÿýçżźž',
   to    = 'aaaaaaaaaccceeeeeghiiiijllnnoooooooossssstttuuuuuunyyczzz';
@@ -31784,7 +31784,7 @@ module.exports = function toPositive(number) {
 /* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function adjacent(str, direction) {
   str = makeString(str);
@@ -31799,7 +31799,7 @@ module.exports = function adjacent(str, direction) {
 /* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 var decap = __webpack_require__(295);
 
 module.exports = function camelize(str, decapitalize) {
@@ -31819,7 +31819,7 @@ module.exports = function camelize(str, decapitalize) {
 /* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 
 module.exports = function underscored(str) {
   return trim(str).replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
@@ -31830,7 +31830,7 @@ module.exports = function underscored(str) {
 /* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 
 module.exports = function dasherize(str) {
   return trim(str).replace(/([A-Z])/g, '-$1').replace(/[-_\s]+/g, '-').toLowerCase();
@@ -32646,7 +32646,7 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
@@ -33476,7 +33476,7 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
@@ -34383,11 +34383,11 @@ var _textAreaEditor = __webpack_require__(707);
 
 var _textAreaEditor2 = _interopRequireDefault(_textAreaEditor);
 
-var _BaseItemEditorView = __webpack_require__(60);
+var _BaseItemEditorView = __webpack_require__(61);
 
 var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -34670,7 +34670,7 @@ var _referencePanel = __webpack_require__(728);
 
 var _referencePanel2 = _interopRequireDefault(_referencePanel);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -35008,7 +35008,7 @@ var _emptyGrid = __webpack_require__(326);
 
 var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -35078,7 +35078,7 @@ var _emptyGrid = __webpack_require__(326);
 
 var _emptyGrid2 = _interopRequireDefault(_emptyGrid);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -35715,7 +35715,14 @@ var ScrollbarView = Marionette.ItemView.extend({
             count: 0
         };
 
+        this.listenTo(this.collection, 'add', this.__handleCollectionAdd);
+        this.listenTo(this.collection, 'remove', this.__handleCollectionRemove);
+        this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
         this.__updateCount(this.collection.length);
+
+        this.listenTo(this.collection, 'add', this.__handleCollectionAdd);
+        this.listenTo(this.collection, 'remove', this.__handleCollectionRemove);
+        this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
     },
 
 
@@ -35731,12 +35738,6 @@ var ScrollbarView = Marionette.ItemView.extend({
 
     constants: {
         minDraggerHeight: 25 // in pixels
-    },
-
-    collectionEvents: {
-        add: '__handleCollectionAdd',
-        remove: '__handleCollectionRemove',
-        reset: '__handleCollectionReset'
     },
 
     events: {
@@ -36405,7 +36406,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _DefaultReferenceModel = __webpack_require__(72);
+var _DefaultReferenceModel = __webpack_require__(73);
 
 var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 
@@ -36496,7 +36497,7 @@ var _BaseLayoutEditorView = __webpack_require__(16);
 
 var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 
-var _factory = __webpack_require__(71);
+var _factory = __webpack_require__(72);
 
 var _factory2 = _interopRequireDefault(_factory);
 
@@ -37089,25 +37090,27 @@ var _formRepository = __webpack_require__(4);
 
 var _formRepository2 = _interopRequireDefault(_formRepository);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _LocalizationService = __webpack_require__(6);
 
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var valueTypes = {
     value: 'value',
     context: 'context',
     expression: 'expression',
     script: 'script'
-};
+}; /**
+    * Developer: Stanislav Guryev
+    * Date: 02.02.2017
+    * Copyright: 2009-2017 Comindware®
+    *       All Rights Reserved
+    *
+    * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
+    *       The copyright notice above does not evidence any
+    *       actual or intended publication of such source code.
+    */
 
 var classes = {
     inline: 'dev-expression-editor-field-inline'
@@ -37129,7 +37132,8 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
             expressionEditorHeight: 300,
             scriptEditorHeight: 300,
             codeEditorMode: 'normal',
-            displayInline: false
+            displayInline: false,
+            ontologyService: null
         };
     },
 
@@ -37263,7 +37267,7 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
         }
         this.valueTypeCollection.add({
             id: valueTypes.value,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.VALUE')
+            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
         });
 
         var value = this.value.value;
@@ -37297,7 +37301,7 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
 
         this.valueTypeCollection.add({
             id: valueTypes.context,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
+            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE')
         });
     },
     __showExpressionEditor: function __showExpressionEditor() {
@@ -37306,14 +37310,15 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
         }
         this.valueTypeCollection.add({
             id: valueTypes.expression,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EXPRESSION')
+            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
         });
 
         var expressionEditorOptionsOptions = {
             value: this.value.type === valueTypes.expression ? this.value.value : null,
             mode: 'expression',
             height: this.options.expressionEditorHeight,
-            showMode: this.options.codeEditorMode
+            showMode: this.options.codeEditorMode,
+            ontologyService: this.options.ontologyService
         };
 
         this.expressionEditor = new _formRepository2.default.editors.Code(expressionEditorOptionsOptions);
@@ -37326,14 +37331,15 @@ exports.default = _formRepository2.default.editors.NewExpression = _BaseLayoutEd
         }
         this.valueTypeCollection.add({
             id: valueTypes.script,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
+            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
         });
 
         var scriptEditorOptionsOptions = {
             value: this.value.type === valueTypes.script ? this.value.value : null,
             mode: 'script',
             height: this.options.scriptEditorHeight,
-            showMode: this.options.codeEditorMode
+            showMode: this.options.codeEditorMode,
+            ontologyService: this.options.ontologyService
         };
 
         this.scriptEditor = new _formRepository2.default.editors.Code(scriptEditorOptionsOptions);
@@ -37463,14 +37469,6 @@ exports.default = Marionette.Object.extend({
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Developer: Grigory Kuznetsov
- * Date: 17.08.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -37503,12 +37501,18 @@ var createWrappedCollection = function createWrappedCollection(collection, optio
         if (_.isArray(collection)) {
             return new _VirtualCollection2.default(new Backbone.Collection(collection), options);
         } else if (collection instanceof Backbone.Collection) {
-            return (0, _VirtualCollection2.default)(collection, options);
+            return new _VirtualCollection2.default(collection, options);
         }
         _utils.helpers.throwError('Invalid collection', 'ArgumentError');
     }
     return collection;
-};
+}; /**
+    * Developer: Grigory Kuznetsov
+    * Date: 17.08.2015
+    * Copyright: 2009-2016 Comindware®
+    *       All Rights Reserved
+    * Published under the MIT license
+    */
 
 exports.default = {
     /**
@@ -37578,7 +37582,7 @@ var _NoColumnsView = __webpack_require__(332);
 
 var _NoColumnsView2 = _interopRequireDefault(_NoColumnsView);
 
-var _factory = __webpack_require__(71);
+var _factory = __webpack_require__(72);
 
 var _factory2 = _interopRequireDefault(_factory);
 
@@ -37710,8 +37714,7 @@ exports.default = Marionette.LayoutView.extend({
             left: this.options.paddingLeft + 'px',
             right: this.options.paddingRight + 'px'
         });
-    },
-    onShow: function onShow() {
+
         if (this.options.columns.length === 0) {
             var noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
@@ -37877,6 +37880,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 var HeaderView = _GridHeaderView2.default.extend({
+    constants: {
+        MIN_COLUMN_WIDTH: 100
+    },
+
     initialize: function initialize() {
         _GridHeaderView2.default.prototype.initialize.apply(this, arguments);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
@@ -37905,18 +37912,14 @@ var HeaderView = _GridHeaderView2.default.extend({
             }));
             _this.__columnEls.push(view);
             _this.listenTo(view, 'columnSort', _this.__handleColumnSort);
-            var childEl = view.render().el;
-            el.appendChild(childEl);
+            el.appendChild(view.render().el);
         });
+        this.headerMinWidth = this.__getAvailableWidth();
+        this.__setInitialWidth(this.headerMinWidth);
+        this.__handleResizeInternal();
     },
-
-
-    constants: {
-        MIN_COLUMN_WIDTH: 100
-    },
-
     __getAvailableWidth: function __getAvailableWidth() {
-        return this.$el.parent().width() - 1;
+        return this.gridEventAggregator._parent.$el.width(); //todo remove this evil magic
     },
     __getElementOuterWidth: function __getElementOuterWidth(el) {
         return $(el)[0].getBoundingClientRect().width;
@@ -37949,8 +37952,7 @@ var HeaderView = _GridHeaderView2.default.extend({
         this.ui.gridHeaderColumn.each(function (i, el) {
             if (availableWidth !== viewWidth) {
                 if (_this2.columns[i].width > _this2.constants.MIN_COLUMN_WIDTH) {
-                    var delta = (_this2.columns[i].width - _this2.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-                    _this2.columns[i].width -= delta;
+                    _this2.columns[i].width -= (_this2.columns[i].width - _this2.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
                 }
             }
 
@@ -38014,11 +38016,6 @@ var HeaderView = _GridHeaderView2.default.extend({
 
         return columnWidthData;
     },
-    onShow: function onShow() {
-        this.headerMinWidth = this.__getAvailableWidth();
-        this.__setInitialWidth(this.headerMinWidth);
-        this.__handleResizeInternal();
-    },
     __startDrag: function __startDrag(e) {
         var $dragger = $(e.target);
         var $column = $dragger.parent();
@@ -38029,7 +38026,9 @@ var HeaderView = _GridHeaderView2.default.extend({
         this.dragContext.$dragger = $dragger;
 
         $dragger.addClass('active');
-        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        if (this.dragContext) {
+            this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        }
     },
     __stopDrag: function __stopDrag() {
         if (!this.dragContext) {
@@ -38044,10 +38043,6 @@ var HeaderView = _GridHeaderView2.default.extend({
         this.gridEventAggregator.trigger('columnStopDrag');
     },
     __draggerMouseMove: function __draggerMouseMove(e) {
-        if (!this.dragContext) {
-            return;
-        }
-
         var ctx = this.dragContext;
         var delta = e.pageX - ctx.pageOffsetX;
 
@@ -38060,24 +38055,20 @@ var HeaderView = _GridHeaderView2.default.extend({
         return false;
     },
     updateColumnAndNeighbourWidths: function updateColumnAndNeighbourWidths(index, delta) {
-        var $current = $(this.ui.gridHeaderColumn[index]);
         var newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
-        if (this.dragContext.draggedColumn.initialWidth + delta < this.constants.MIN_COLUMN_WIDTH) {
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
             return;
         }
 
-        $current.outerWidth(newColumnWidth);
+        $(this.ui.gridHeaderColumn[index]).outerWidth(newColumnWidth);
         this.gridEventAggregator.trigger('singleColumnResize', this, {
             index: index,
             delta: delta
         });
 
-        this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
+        this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
         this.columns[index].width = newColumnWidth;
-    },
-    __changeTableWidth: function __changeTableWidth(initialWidth, delta) {
-        this.$el.width(initialWidth + delta + 1);
     },
     updateDragContext: function updateDragContext($column, offset) {
         this.dragContext = this.dragContext || {};
@@ -38134,14 +38125,6 @@ exports.default = HeaderView;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Developer: Grigory Kuznetsov
- * Date: 17.08.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -38227,7 +38210,13 @@ var ColumnHeaderView = _GridColumnHeaderView2.default.extend({
     onRender: function onRender() {
         this.__resolveFilterClass();
     }
-});
+}); /**
+     * Developer: Grigory Kuznetsov
+     * Date: 17.08.2015
+     * Copyright: 2009-2016 Comindware®
+     *       All Rights Reserved
+     * Published under the MIT license
+     */
 
 exports.default = ColumnHeaderView;
 
@@ -38708,21 +38697,21 @@ module.exports = __webpack_require__(32);
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var has = __webpack_require__(20);
 var DESCRIPTORS = __webpack_require__(12);
 var $export = __webpack_require__(1);
 var redefine = __webpack_require__(22);
 var META = __webpack_require__(45).KEY;
-var $fails = __webpack_require__(8);
-var shared = __webpack_require__(74);
-var setToStringTag = __webpack_require__(61);
+var $fails = __webpack_require__(9);
+var shared = __webpack_require__(75);
+var setToStringTag = __webpack_require__(62);
 var uid = __webpack_require__(50);
-var wks = __webpack_require__(10);
+var wks = __webpack_require__(11);
 var wksExt = __webpack_require__(148);
 var wksDefine = __webpack_require__(97);
 var enumKeys = __webpack_require__(362);
-var isArray = __webpack_require__(77);
+var isArray = __webpack_require__(78);
 var anObject = __webpack_require__(5);
 var toIObject = __webpack_require__(25);
 var toPrimitive = __webpack_require__(33);
@@ -38855,8 +38844,8 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(55).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(67).f = $propertyIsEnumerable;
-  __webpack_require__(76).f = $getOwnPropertySymbols;
+  __webpack_require__(68).f = $propertyIsEnumerable;
+  __webpack_require__(77).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(51)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
@@ -38948,8 +38937,8 @@ setToStringTag(global.JSON, 'JSON', true);
 
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(52);
-var gOPS = __webpack_require__(76);
-var pIE = __webpack_require__(67);
+var gOPS = __webpack_require__(77);
+var pIE = __webpack_require__(68);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -39050,7 +39039,7 @@ __webpack_require__(36)('getOwnPropertyNames', function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.5 Object.freeze(O)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var meta = __webpack_require__(45).onFreeze;
 
 __webpack_require__(36)('freeze', function ($freeze) {
@@ -39065,7 +39054,7 @@ __webpack_require__(36)('freeze', function ($freeze) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.17 Object.seal(O)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var meta = __webpack_require__(45).onFreeze;
 
 __webpack_require__(36)('seal', function ($seal) {
@@ -39080,7 +39069,7 @@ __webpack_require__(36)('seal', function ($seal) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.15 Object.preventExtensions(O)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var meta = __webpack_require__(45).onFreeze;
 
 __webpack_require__(36)('preventExtensions', function ($preventExtensions) {
@@ -39095,7 +39084,7 @@ __webpack_require__(36)('preventExtensions', function ($preventExtensions) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.12 Object.isFrozen(O)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 
 __webpack_require__(36)('isFrozen', function ($isFrozen) {
   return function isFrozen(it) {
@@ -39109,7 +39098,7 @@ __webpack_require__(36)('isFrozen', function ($isFrozen) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.13 Object.isSealed(O)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 
 __webpack_require__(36)('isSealed', function ($isSealed) {
   return function isSealed(it) {
@@ -39123,7 +39112,7 @@ __webpack_require__(36)('isSealed', function ($isSealed) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.11 Object.isExtensible(O)
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 
 __webpack_require__(36)('isExtensible', function ($isExtensible) {
   return function isExtensible(it) {
@@ -39178,9 +39167,9 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(101).set });
 "use strict";
 
 // 19.1.3.6 Object.prototype.toString()
-var classof = __webpack_require__(68);
+var classof = __webpack_require__(69);
 var test = {};
-test[__webpack_require__(10)('toStringTag')] = 'z';
+test[__webpack_require__(11)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
   __webpack_require__(22)(Object.prototype, 'toString', function toString() {
     return '[object ' + classof(this) + ']';
@@ -39226,9 +39215,9 @@ NAME in FProto || __webpack_require__(12) && dP(FProto, NAME, {
 
 "use strict";
 
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var getPrototypeOf = __webpack_require__(27);
-var HAS_INSTANCE = __webpack_require__(10)('hasInstance');
+var HAS_INSTANCE = __webpack_require__(11)('hasInstance');
 var FunctionProto = Function.prototype;
 // 19.2.3.6 Function.prototype[@@hasInstance](V)
 if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(13).f(FunctionProto, HAS_INSTANCE, { value: function (O) {
@@ -39266,16 +39255,16 @@ $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $pars
 
 "use strict";
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var has = __webpack_require__(20);
 var cof = __webpack_require__(30);
 var inheritIfRequired = __webpack_require__(103);
 var toPrimitive = __webpack_require__(33);
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 var gOPN = __webpack_require__(55).f;
 var gOPD = __webpack_require__(26).f;
 var dP = __webpack_require__(13).f;
-var $trim = __webpack_require__(62).trim;
+var $trim = __webpack_require__(63).trim;
 var NUMBER = 'Number';
 var $Number = global[NUMBER];
 var Base = $Number;
@@ -39401,7 +39390,7 @@ $export($export.P + $export.F * (!!$toFixed && (
   0.9.toFixed(0) !== '1' ||
   1.255.toFixed(2) !== '1.25' ||
   1000000000000000128.0.toFixed(0) !== '1000000000000000128'
-) || !__webpack_require__(8)(function () {
+) || !__webpack_require__(9)(function () {
   // V8 ~ Android 4.3-
   $toFixed.call({});
 })), 'Number', {
@@ -39464,7 +39453,7 @@ $export($export.P + $export.F * (!!$toFixed && (
 "use strict";
 
 var $export = __webpack_require__(1);
-var $fails = __webpack_require__(8);
+var $fails = __webpack_require__(9);
 var aNumberValue = __webpack_require__(157);
 var $toPrecision = 1.0.toPrecision;
 
@@ -39498,7 +39487,7 @@ $export($export.S, 'Number', { EPSILON: Math.pow(2, -52) });
 
 // 20.1.2.2 Number.isFinite(number)
 var $export = __webpack_require__(1);
-var _isFinite = __webpack_require__(7).isFinite;
+var _isFinite = __webpack_require__(8).isFinite;
 
 $export($export.S, 'Number', {
   isFinite: function isFinite(it) {
@@ -39749,7 +39738,7 @@ var $export = __webpack_require__(1);
 var $imul = Math.imul;
 
 // some WebKit versions fails with big numbers, some has wrong arity
-$export($export.S + $export.F * __webpack_require__(8)(function () {
+$export($export.S + $export.F * __webpack_require__(9)(function () {
   return $imul(0xffffffff, 5) != -5 || $imul.length != 2;
 }), 'Math', {
   imul: function imul(x, y) {
@@ -39821,7 +39810,7 @@ var expm1 = __webpack_require__(106);
 var exp = Math.exp;
 
 // V8 near Chromium 38 has a problem with very small numbers
-$export($export.S + $export.F * __webpack_require__(8)(function () {
+$export($export.S + $export.F * __webpack_require__(9)(function () {
   return !Math.sinh(-2e-17) != -2e-17;
 }), 'Math', {
   sinh: function sinh(x) {
@@ -39924,7 +39913,7 @@ $export($export.S, 'String', {
 "use strict";
 
 // 21.1.3.25 String.prototype.trim()
-__webpack_require__(62)('trim', function ($trim) {
+__webpack_require__(63)('trim', function ($trim) {
   return function trim() {
     return $trim(this, 3);
   };
@@ -40256,7 +40245,7 @@ var $export = __webpack_require__(1);
 var toObject = __webpack_require__(15);
 var toPrimitive = __webpack_require__(33);
 
-$export($export.P + $export.F * __webpack_require__(8)(function () {
+$export($export.P + $export.F * __webpack_require__(9)(function () {
   return new Date(NaN).toJSON() !== null
     || Date.prototype.toJSON.call({ toISOString: function () { return 1; } }) !== 1;
 }), 'Date', {
@@ -40290,7 +40279,7 @@ $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'D
 "use strict";
 
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 var getTime = Date.prototype.getTime;
 var $toISOString = Date.prototype.toISOString;
 
@@ -40338,7 +40327,7 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 /* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var TO_PRIMITIVE = __webpack_require__(10)('toPrimitive');
+var TO_PRIMITIVE = __webpack_require__(11)('toPrimitive');
 var proto = Date.prototype;
 
 if (!(TO_PRIMITIVE in proto)) __webpack_require__(21)(proto, TO_PRIMITIVE, __webpack_require__(443));
@@ -40367,7 +40356,7 @@ module.exports = function (hint) {
 // 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
 var $export = __webpack_require__(1);
 
-$export($export.S, 'Array', { isArray: __webpack_require__(77) });
+$export($export.S, 'Array', { isArray: __webpack_require__(78) });
 
 
 /***/ }),
@@ -40385,7 +40374,7 @@ var toLength = __webpack_require__(14);
 var createProperty = __webpack_require__(113);
 var getIterFn = __webpack_require__(114);
 
-$export($export.S + $export.F * !__webpack_require__(79)(function (iter) { Array.from(iter); }), 'Array', {
+$export($export.S + $export.F * !__webpack_require__(80)(function (iter) { Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
   from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
     var O = toObject(arrayLike);
@@ -40424,7 +40413,7 @@ var $export = __webpack_require__(1);
 var createProperty = __webpack_require__(113);
 
 // WebKit Array.of isn't generic
-$export($export.S + $export.F * __webpack_require__(8)(function () {
+$export($export.S + $export.F * __webpack_require__(9)(function () {
   function F() { /* empty */ }
   return !(Array.of.call(F) instanceof F);
 }), 'Array', {
@@ -40452,7 +40441,7 @@ var toIObject = __webpack_require__(25);
 var arrayJoin = [].join;
 
 // fallback for not array-like strings
-$export($export.P + $export.F * (__webpack_require__(66) != Object || !__webpack_require__(31)(arrayJoin)), 'Array', {
+$export($export.P + $export.F * (__webpack_require__(67) != Object || !__webpack_require__(31)(arrayJoin)), 'Array', {
   join: function join(separator) {
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
@@ -40473,7 +40462,7 @@ var toLength = __webpack_require__(14);
 var arraySlice = [].slice;
 
 // fallback for not array-like ES3 strings and DOM objects
-$export($export.P + $export.F * __webpack_require__(8)(function () {
+$export($export.P + $export.F * __webpack_require__(9)(function () {
   if (html) arraySlice.call(html);
 }), 'Array', {
   slice: function slice(begin, end) {
@@ -40503,7 +40492,7 @@ $export($export.P + $export.F * __webpack_require__(8)(function () {
 var $export = __webpack_require__(1);
 var aFunction = __webpack_require__(18);
 var toObject = __webpack_require__(15);
-var fails = __webpack_require__(8);
+var fails = __webpack_require__(9);
 var $sort = [].sort;
 var test = [1, 2, 3];
 
@@ -40546,9 +40535,9 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 /* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(9);
-var isArray = __webpack_require__(77);
-var SPECIES = __webpack_require__(10)('species');
+var isObject = __webpack_require__(10);
+var isArray = __webpack_require__(78);
+var SPECIES = __webpack_require__(11)('species');
 
 module.exports = function (original) {
   var C;
@@ -40673,7 +40662,7 @@ $export($export.P + $export.F * !__webpack_require__(31)([].reduceRight, true), 
 "use strict";
 
 var $export = __webpack_require__(1);
-var $indexOf = __webpack_require__(75)(false);
+var $indexOf = __webpack_require__(76)(false);
 var $native = [].indexOf;
 var NEGATIVE_ZERO = !!$native && 1 / [1].indexOf(1, -0) < 0;
 
@@ -40794,12 +40783,12 @@ __webpack_require__(56)('Array');
 /* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var inheritIfRequired = __webpack_require__(103);
 var dP = __webpack_require__(13).f;
 var gOPN = __webpack_require__(55).f;
-var isRegExp = __webpack_require__(78);
-var $flags = __webpack_require__(80);
+var isRegExp = __webpack_require__(79);
+var $flags = __webpack_require__(81);
 var $RegExp = global.RegExp;
 var Base = $RegExp;
 var proto = $RegExp.prototype;
@@ -40808,8 +40797,8 @@ var re2 = /a/g;
 // "new" creates a new object, old webkit buggy here
 var CORRECT_NEW = new $RegExp(re1) !== re1;
 
-if (__webpack_require__(12) && (!CORRECT_NEW || __webpack_require__(8)(function () {
-  re2[__webpack_require__(10)('match')] = false;
+if (__webpack_require__(12) && (!CORRECT_NEW || __webpack_require__(9)(function () {
+  re2[__webpack_require__(11)('match')] = false;
   // RegExp constructor can alter flags and IsRegExp works correct with @@match
   return $RegExp(re1) != re1 || $RegExp(re2) == re2 || $RegExp(re1, 'i') != '/a/i';
 }))) {
@@ -40847,7 +40836,7 @@ __webpack_require__(56)('RegExp');
 
 __webpack_require__(165);
 var anObject = __webpack_require__(5);
-var $flags = __webpack_require__(80);
+var $flags = __webpack_require__(81);
 var DESCRIPTORS = __webpack_require__(12);
 var TO_STRING = 'toString';
 var $toString = /./[TO_STRING];
@@ -40857,7 +40846,7 @@ var define = function (fn) {
 };
 
 // 21.2.5.14 RegExp.prototype.toString()
-if (__webpack_require__(8)(function () { return $toString.call({ source: 'a', flags: 'b' }) != '/a/b'; })) {
+if (__webpack_require__(9)(function () { return $toString.call({ source: 'a', flags: 'b' }) != '/a/b'; })) {
   define(function toString() {
     var R = anObject(this);
     return '/'.concat(R.source, '/',
@@ -40876,7 +40865,7 @@ if (__webpack_require__(8)(function () { return $toString.call({ source: 'a', fl
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@match logic
-__webpack_require__(81)('match', 1, function (defined, MATCH, $match) {
+__webpack_require__(82)('match', 1, function (defined, MATCH, $match) {
   // 21.1.3.11 String.prototype.match(regexp)
   return [function match(regexp) {
     'use strict';
@@ -40892,7 +40881,7 @@ __webpack_require__(81)('match', 1, function (defined, MATCH, $match) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@replace logic
-__webpack_require__(81)('replace', 2, function (defined, REPLACE, $replace) {
+__webpack_require__(82)('replace', 2, function (defined, REPLACE, $replace) {
   // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
   return [function replace(searchValue, replaceValue) {
     'use strict';
@@ -40910,7 +40899,7 @@ __webpack_require__(81)('replace', 2, function (defined, REPLACE, $replace) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@search logic
-__webpack_require__(81)('search', 1, function (defined, SEARCH, $search) {
+__webpack_require__(82)('search', 1, function (defined, SEARCH, $search) {
   // 21.1.3.15 String.prototype.search(regexp)
   return [function search(regexp) {
     'use strict';
@@ -40926,9 +40915,9 @@ __webpack_require__(81)('search', 1, function (defined, SEARCH, $search) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@split logic
-__webpack_require__(81)('split', 2, function (defined, SPLIT, $split) {
+__webpack_require__(82)('split', 2, function (defined, SPLIT, $split) {
   'use strict';
-  var isRegExp = __webpack_require__(78);
+  var isRegExp = __webpack_require__(79);
   var _split = $split;
   var $push = [].push;
   var $SPLIT = 'split';
@@ -41005,15 +40994,15 @@ __webpack_require__(81)('split', 2, function (defined, SPLIT, $split) {
 "use strict";
 
 var LIBRARY = __webpack_require__(51);
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var ctx = __webpack_require__(29);
-var classof = __webpack_require__(68);
+var classof = __webpack_require__(69);
 var $export = __webpack_require__(1);
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var aFunction = __webpack_require__(18);
 var anInstance = __webpack_require__(57);
 var forOf = __webpack_require__(58);
-var speciesConstructor = __webpack_require__(82);
+var speciesConstructor = __webpack_require__(83);
 var task = __webpack_require__(118).set;
 var microtask = __webpack_require__(119)();
 var newPromiseCapabilityModule = __webpack_require__(120);
@@ -41032,7 +41021,7 @@ var USE_NATIVE = !!function () {
   try {
     // correct subclassing with @@species support
     var promise = $Promise.resolve(1);
-    var FakePromise = (promise.constructor = {})[__webpack_require__(10)('species')] = function (exec) {
+    var FakePromise = (promise.constructor = {})[__webpack_require__(11)('species')] = function (exec) {
       exec(empty, empty);
     };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
@@ -41219,7 +41208,7 @@ if (!USE_NATIVE) {
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-__webpack_require__(61)($Promise, PROMISE);
+__webpack_require__(62)($Promise, PROMISE);
 __webpack_require__(56)(PROMISE);
 Wrapper = __webpack_require__(32)[PROMISE];
 
@@ -41239,7 +41228,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
   }
 });
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(79)(function (iter) {
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(80)(function (iter) {
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   // 25.4.4.1 Promise.all(iterable)
@@ -41292,11 +41281,11 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(79)(function
 "use strict";
 
 var weak = __webpack_require__(172);
-var validate = __webpack_require__(64);
+var validate = __webpack_require__(65);
 var WEAK_SET = 'WeakSet';
 
 // 23.4 WeakSet Objects
-__webpack_require__(83)(WEAK_SET, function (get) {
+__webpack_require__(84)(WEAK_SET, function (get) {
   return function WeakSet() { return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 }, {
   // 23.4.3.1 WeakSet.prototype.add(value)
@@ -41313,14 +41302,14 @@ __webpack_require__(83)(WEAK_SET, function (get) {
 "use strict";
 
 var $export = __webpack_require__(1);
-var $typed = __webpack_require__(84);
+var $typed = __webpack_require__(85);
 var buffer = __webpack_require__(121);
 var anObject = __webpack_require__(5);
 var toAbsoluteIndex = __webpack_require__(53);
 var toLength = __webpack_require__(14);
-var isObject = __webpack_require__(9);
-var ArrayBuffer = __webpack_require__(7).ArrayBuffer;
-var speciesConstructor = __webpack_require__(82);
+var isObject = __webpack_require__(10);
+var ArrayBuffer = __webpack_require__(8).ArrayBuffer;
+var speciesConstructor = __webpack_require__(83);
 var $ArrayBuffer = buffer.ArrayBuffer;
 var $DataView = buffer.DataView;
 var $isView = $typed.ABV && ArrayBuffer.isView;
@@ -41337,7 +41326,7 @@ $export($export.S + $export.F * !$typed.CONSTR, ARRAY_BUFFER, {
   }
 });
 
-$export($export.P + $export.U + $export.F * __webpack_require__(8)(function () {
+$export($export.P + $export.U + $export.F * __webpack_require__(9)(function () {
   return !new $ArrayBuffer(2).slice(1, undefined).byteLength;
 }), ARRAY_BUFFER, {
   // 24.1.4.3 ArrayBuffer.prototype.slice(start, end)
@@ -41364,7 +41353,7 @@ __webpack_require__(56)(ARRAY_BUFFER);
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(1);
-$export($export.G + $export.W + $export.F * !__webpack_require__(84).ABV, {
+$export($export.G + $export.W + $export.F * !__webpack_require__(85).ABV, {
   DataView: __webpack_require__(121).DataView
 });
 
@@ -41373,7 +41362,7 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(84).ABV, {
 /* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Int8', 1, function (init) {
+__webpack_require__(39)('Int8', 1, function (init) {
   return function Int8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41384,7 +41373,7 @@ __webpack_require__(38)('Int8', 1, function (init) {
 /* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Uint8', 1, function (init) {
+__webpack_require__(39)('Uint8', 1, function (init) {
   return function Uint8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41395,7 +41384,7 @@ __webpack_require__(38)('Uint8', 1, function (init) {
 /* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Uint8', 1, function (init) {
+__webpack_require__(39)('Uint8', 1, function (init) {
   return function Uint8ClampedArray(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41406,7 +41395,7 @@ __webpack_require__(38)('Uint8', 1, function (init) {
 /* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Int16', 2, function (init) {
+__webpack_require__(39)('Int16', 2, function (init) {
   return function Int16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41417,7 +41406,7 @@ __webpack_require__(38)('Int16', 2, function (init) {
 /* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Uint16', 2, function (init) {
+__webpack_require__(39)('Uint16', 2, function (init) {
   return function Uint16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41428,7 +41417,7 @@ __webpack_require__(38)('Uint16', 2, function (init) {
 /* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Int32', 4, function (init) {
+__webpack_require__(39)('Int32', 4, function (init) {
   return function Int32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41439,7 +41428,7 @@ __webpack_require__(38)('Int32', 4, function (init) {
 /* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Uint32', 4, function (init) {
+__webpack_require__(39)('Uint32', 4, function (init) {
   return function Uint32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41450,7 +41439,7 @@ __webpack_require__(38)('Uint32', 4, function (init) {
 /* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Float32', 4, function (init) {
+__webpack_require__(39)('Float32', 4, function (init) {
   return function Float32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41461,7 +41450,7 @@ __webpack_require__(38)('Float32', 4, function (init) {
 /* 483 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(38)('Float64', 8, function (init) {
+__webpack_require__(39)('Float64', 8, function (init) {
   return function Float64Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -41476,10 +41465,10 @@ __webpack_require__(38)('Float64', 8, function (init) {
 var $export = __webpack_require__(1);
 var aFunction = __webpack_require__(18);
 var anObject = __webpack_require__(5);
-var rApply = (__webpack_require__(7).Reflect || {}).apply;
+var rApply = (__webpack_require__(8).Reflect || {}).apply;
 var fApply = Function.apply;
 // MS Edge argumentsList argument is optional
-$export($export.S + $export.F * !__webpack_require__(8)(function () {
+$export($export.S + $export.F * !__webpack_require__(9)(function () {
   rApply(function () { /* empty */ });
 }), 'Reflect', {
   apply: function apply(target, thisArgument, argumentsList) {
@@ -41499,10 +41488,10 @@ var $export = __webpack_require__(1);
 var create = __webpack_require__(54);
 var aFunction = __webpack_require__(18);
 var anObject = __webpack_require__(5);
-var isObject = __webpack_require__(9);
-var fails = __webpack_require__(8);
+var isObject = __webpack_require__(10);
+var fails = __webpack_require__(9);
 var bind = __webpack_require__(153);
-var rConstruct = (__webpack_require__(7).Reflect || {}).construct;
+var rConstruct = (__webpack_require__(8).Reflect || {}).construct;
 
 // MS Edge supports only 2 arguments and argumentsList argument is optional
 // FF Nightly sets third argument as `new.target`, but does not create `this` from it
@@ -41554,7 +41543,7 @@ var anObject = __webpack_require__(5);
 var toPrimitive = __webpack_require__(33);
 
 // MS Edge has broken Reflect.defineProperty - throwing instead of returning false
-$export($export.S + $export.F * __webpack_require__(8)(function () {
+$export($export.S + $export.F * __webpack_require__(9)(function () {
   // eslint-disable-next-line no-undef
   Reflect.defineProperty(dP.f({}, 1, { value: 1 }), 1, { value: 2 });
 }), 'Reflect', {
@@ -41631,7 +41620,7 @@ var gOPD = __webpack_require__(26);
 var getPrototypeOf = __webpack_require__(27);
 var has = __webpack_require__(20);
 var $export = __webpack_require__(1);
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 var anObject = __webpack_require__(5);
 
 function get(target, propertyKey /* , receiver */) {
@@ -41756,7 +41745,7 @@ var has = __webpack_require__(20);
 var $export = __webpack_require__(1);
 var createDesc = __webpack_require__(49);
 var anObject = __webpack_require__(5);
-var isObject = __webpack_require__(9);
+var isObject = __webpack_require__(10);
 
 function set(target, propertyKey, V /* , receiver */) {
   var receiver = arguments.length < 4 ? target : arguments[3];
@@ -41810,7 +41799,7 @@ if (setProto) $export($export.S, 'Reflect', {
 
 // https://github.com/tc39/Array.prototype.includes
 var $export = __webpack_require__(1);
-var $includes = __webpack_require__(75)(true);
+var $includes = __webpack_require__(76)(true);
 
 $export($export.P, 'Array', {
   includes: function includes(el /* , fromIndex = 0 */) {
@@ -41936,7 +41925,7 @@ $export($export.P, 'String', {
 "use strict";
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-__webpack_require__(62)('trimLeft', function ($trim) {
+__webpack_require__(63)('trimLeft', function ($trim) {
   return function trimLeft() {
     return $trim(this, 1);
   };
@@ -41950,7 +41939,7 @@ __webpack_require__(62)('trimLeft', function ($trim) {
 "use strict";
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
-__webpack_require__(62)('trimRight', function ($trim) {
+__webpack_require__(63)('trimRight', function ($trim) {
   return function trimRight() {
     return $trim(this, 2);
   };
@@ -41967,8 +41956,8 @@ __webpack_require__(62)('trimRight', function ($trim) {
 var $export = __webpack_require__(1);
 var defined = __webpack_require__(34);
 var toLength = __webpack_require__(14);
-var isRegExp = __webpack_require__(78);
-var getFlags = __webpack_require__(80);
+var isRegExp = __webpack_require__(79);
+var getFlags = __webpack_require__(81);
 var RegExpProto = RegExp.prototype;
 
 var $RegExpStringIterator = function (regexp, string) {
@@ -42078,7 +42067,7 @@ var aFunction = __webpack_require__(18);
 var $defineProperty = __webpack_require__(13);
 
 // B.2.2.2 Object.prototype.__defineGetter__(P, getter)
-__webpack_require__(12) && $export($export.P + __webpack_require__(85), 'Object', {
+__webpack_require__(12) && $export($export.P + __webpack_require__(86), 'Object', {
   __defineGetter__: function __defineGetter__(P, getter) {
     $defineProperty.f(toObject(this), P, { get: aFunction(getter), enumerable: true, configurable: true });
   }
@@ -42097,7 +42086,7 @@ var aFunction = __webpack_require__(18);
 var $defineProperty = __webpack_require__(13);
 
 // B.2.2.3 Object.prototype.__defineSetter__(P, setter)
-__webpack_require__(12) && $export($export.P + __webpack_require__(85), 'Object', {
+__webpack_require__(12) && $export($export.P + __webpack_require__(86), 'Object', {
   __defineSetter__: function __defineSetter__(P, setter) {
     $defineProperty.f(toObject(this), P, { set: aFunction(setter), enumerable: true, configurable: true });
   }
@@ -42117,7 +42106,7 @@ var getPrototypeOf = __webpack_require__(27);
 var getOwnPropertyDescriptor = __webpack_require__(26).f;
 
 // B.2.2.4 Object.prototype.__lookupGetter__(P)
-__webpack_require__(12) && $export($export.P + __webpack_require__(85), 'Object', {
+__webpack_require__(12) && $export($export.P + __webpack_require__(86), 'Object', {
   __lookupGetter__: function __lookupGetter__(P) {
     var O = toObject(this);
     var K = toPrimitive(P, true);
@@ -42142,7 +42131,7 @@ var getPrototypeOf = __webpack_require__(27);
 var getOwnPropertyDescriptor = __webpack_require__(26).f;
 
 // B.2.2.5 Object.prototype.__lookupSetter__(P)
-__webpack_require__(12) && $export($export.P + __webpack_require__(85), 'Object', {
+__webpack_require__(12) && $export($export.P + __webpack_require__(86), 'Object', {
   __lookupSetter__: function __lookupSetter__(P) {
     var O = toObject(this);
     var K = toPrimitive(P, true);
@@ -42179,7 +42168,7 @@ $export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(178)('Set') 
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-__webpack_require__(86)('Map');
+__webpack_require__(87)('Map');
 
 
 /***/ }),
@@ -42187,7 +42176,7 @@ __webpack_require__(86)('Map');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-set.of
-__webpack_require__(86)('Set');
+__webpack_require__(87)('Set');
 
 
 /***/ }),
@@ -42195,7 +42184,7 @@ __webpack_require__(86)('Set');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakmap.of
-__webpack_require__(86)('WeakMap');
+__webpack_require__(87)('WeakMap');
 
 
 /***/ }),
@@ -42203,7 +42192,7 @@ __webpack_require__(86)('WeakMap');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakset.of
-__webpack_require__(86)('WeakSet');
+__webpack_require__(87)('WeakSet');
 
 
 /***/ }),
@@ -42211,7 +42200,7 @@ __webpack_require__(86)('WeakSet');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-__webpack_require__(87)('Map');
+__webpack_require__(88)('Map');
 
 
 /***/ }),
@@ -42219,7 +42208,7 @@ __webpack_require__(87)('Map');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-set.from
-__webpack_require__(87)('Set');
+__webpack_require__(88)('Set');
 
 
 /***/ }),
@@ -42227,7 +42216,7 @@ __webpack_require__(87)('Set');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakmap.from
-__webpack_require__(87)('WeakMap');
+__webpack_require__(88)('WeakMap');
 
 
 /***/ }),
@@ -42235,7 +42224,7 @@ __webpack_require__(87)('WeakMap');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakset.from
-__webpack_require__(87)('WeakSet');
+__webpack_require__(88)('WeakSet');
 
 
 /***/ }),
@@ -42245,7 +42234,7 @@ __webpack_require__(87)('WeakSet');
 // https://github.com/tc39/proposal-global
 var $export = __webpack_require__(1);
 
-$export($export.G, { global: __webpack_require__(7) });
+$export($export.G, { global: __webpack_require__(8) });
 
 
 /***/ }),
@@ -42255,7 +42244,7 @@ $export($export.G, { global: __webpack_require__(7) });
 // https://github.com/tc39/proposal-global
 var $export = __webpack_require__(1);
 
-$export($export.S, 'System', { global: __webpack_require__(7) });
+$export($export.S, 'System', { global: __webpack_require__(8) });
 
 
 /***/ }),
@@ -42463,8 +42452,8 @@ $export($export.S, 'Math', { signbit: function signbit(x) {
 
 var $export = __webpack_require__(1);
 var core = __webpack_require__(32);
-var global = __webpack_require__(7);
-var speciesConstructor = __webpack_require__(82);
+var global = __webpack_require__(8);
+var speciesConstructor = __webpack_require__(83);
 var promiseResolve = __webpack_require__(167);
 
 $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
@@ -42504,7 +42493,7 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 /* 543 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var toMetaKey = metadata.key;
 var ordinaryDefineOwnMetadata = metadata.set;
@@ -42518,7 +42507,7 @@ metadata.exp({ defineMetadata: function defineMetadata(metadataKey, metadataValu
 /* 544 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var toMetaKey = metadata.key;
 var getOrCreateMetadataMap = metadata.map;
@@ -42539,7 +42528,7 @@ metadata.exp({ deleteMetadata: function deleteMetadata(metadataKey, target /* , 
 /* 545 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var getPrototypeOf = __webpack_require__(27);
 var ordinaryHasOwnMetadata = metadata.has;
@@ -42564,7 +42553,7 @@ metadata.exp({ getMetadata: function getMetadata(metadataKey, target /* , target
 
 var Set = __webpack_require__(170);
 var from = __webpack_require__(179);
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var getPrototypeOf = __webpack_require__(27);
 var ordinaryOwnMetadataKeys = metadata.keys;
@@ -42587,7 +42576,7 @@ metadata.exp({ getMetadataKeys: function getMetadataKeys(target /* , targetKey *
 /* 547 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var ordinaryGetOwnMetadata = metadata.get;
 var toMetaKey = metadata.key;
@@ -42602,7 +42591,7 @@ metadata.exp({ getOwnMetadata: function getOwnMetadata(metadataKey, target /* , 
 /* 548 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var ordinaryOwnMetadataKeys = metadata.keys;
 var toMetaKey = metadata.key;
@@ -42616,7 +42605,7 @@ metadata.exp({ getOwnMetadataKeys: function getOwnMetadataKeys(target /* , targe
 /* 549 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var getPrototypeOf = __webpack_require__(27);
 var ordinaryHasOwnMetadata = metadata.has;
@@ -42638,7 +42627,7 @@ metadata.exp({ hasMetadata: function hasMetadata(metadataKey, target /* , target
 /* 550 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(39);
+var metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var ordinaryHasOwnMetadata = metadata.has;
 var toMetaKey = metadata.key;
@@ -42653,7 +42642,7 @@ metadata.exp({ hasOwnMetadata: function hasOwnMetadata(metadataKey, target /* , 
 /* 551 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $metadata = __webpack_require__(39);
+var $metadata = __webpack_require__(40);
 var anObject = __webpack_require__(5);
 var aFunction = __webpack_require__(18);
 var toMetaKey = $metadata.key;
@@ -42677,7 +42666,7 @@ $metadata.exp({ metadata: function metadata(metadataKey, metadataValue) {
 // https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 var $export = __webpack_require__(1);
 var microtask = __webpack_require__(119)();
-var process = __webpack_require__(7).process;
+var process = __webpack_require__(8).process;
 var isNode = __webpack_require__(30)(process) == 'process';
 
 $export($export.G, {
@@ -42696,10 +42685,10 @@ $export($export.G, {
 
 // https://github.com/zenparsing/es-observable
 var $export = __webpack_require__(1);
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var core = __webpack_require__(32);
 var microtask = __webpack_require__(119)();
-var OBSERVABLE = __webpack_require__(10)('observable');
+var OBSERVABLE = __webpack_require__(11)('observable');
 var aFunction = __webpack_require__(18);
 var anObject = __webpack_require__(5);
 var anInstance = __webpack_require__(57);
@@ -42899,7 +42888,7 @@ __webpack_require__(56)('Observable');
 /***/ (function(module, exports, __webpack_require__) {
 
 // ie9- setTimeout & setInterval additional parameters fix
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var $export = __webpack_require__(1);
 var navigator = global.navigator;
 var slice = [].slice;
@@ -42939,10 +42928,10 @@ $export($export.G + $export.B, {
 var $iterators = __webpack_require__(117);
 var getKeys = __webpack_require__(52);
 var redefine = __webpack_require__(22);
-var global = __webpack_require__(7);
+var global = __webpack_require__(8);
 var hide = __webpack_require__(21);
-var Iterators = __webpack_require__(63);
-var wks = __webpack_require__(10);
+var Iterators = __webpack_require__(64);
+var wks = __webpack_require__(11);
 var ITERATOR = wks('iterator');
 var TO_STRING_TAG = wks('toStringTag');
 var ArrayValues = Iterators.Array;
@@ -43829,7 +43818,7 @@ var _form = __webpack_require__(92);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _Meta = __webpack_require__(90);
+var _Meta = __webpack_require__(91);
 
 var _Meta2 = _interopRequireDefault(_Meta);
 
@@ -43861,7 +43850,7 @@ var _MessageService = __webpack_require__(957);
 
 var _MessageService2 = _interopRequireDefault(_MessageService);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
@@ -43869,7 +43858,7 @@ var _GlobalEventService = __webpack_require__(42);
 
 var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -43881,7 +43870,7 @@ var _PromiseService = __webpack_require__(356);
 
 var _PromiseService2 = _interopRequireDefault(_PromiseService);
 
-var _UserService = __webpack_require__(70);
+var _UserService = __webpack_require__(71);
 
 var _UserService2 = _interopRequireDefault(_UserService);
 
@@ -43893,7 +43882,7 @@ var _VirtualCollection = __webpack_require__(48);
 
 var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 
-var _HighlightableBehavior = __webpack_require__(73);
+var _HighlightableBehavior = __webpack_require__(74);
 
 var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 
@@ -48892,7 +48881,7 @@ webpackContext.id = 574;
  * 
  */
 /**
- * bluebird build version 3.5.0
+ * bluebird build version 3.5.1
  * Features enabled: core, race, call_get, generators, map, nodeify, promisify, props, reduce, settle, some, using, timers, filter, any, each
 */
 !function(e){if(true)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Promise=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
@@ -49575,7 +49564,10 @@ Promise.prototype.suppressUnhandledRejections = function() {
 Promise.prototype._ensurePossibleRejectionHandled = function () {
     if ((this._bitField & 524288) !== 0) return;
     this._setRejectionIsUnhandled();
-    async.invokeLater(this._notifyUnhandledRejection, this, undefined);
+    var self = this;
+    setTimeout(function() {
+        self._notifyUnhandledRejection();
+    }, 1);
 };
 
 Promise.prototype._notifyUnhandledRejectionIsHandled = function () {
@@ -52365,7 +52357,7 @@ _dereq_("./synchronous_inspection")(Promise);
 _dereq_("./join")(
     Promise, PromiseArray, tryConvertToPromise, INTERNAL, async, getDomain);
 Promise.Promise = Promise;
-Promise.version = "3.5.0";
+Promise.version = "3.5.1";
 _dereq_('./map.js')(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
 _dereq_('./call_get.js')(Promise);
 _dereq_('./using.js')(Promise, apiRejection, tryConvertToPromise, createContext, INTERNAL, debug);
@@ -54329,10 +54321,11 @@ function safeToString(obj) {
 }
 
 function isError(obj) {
-    return obj !== null &&
+    return obj instanceof Error ||
+        (obj !== null &&
            typeof obj === "object" &&
            typeof obj.message === "string" &&
-           typeof obj.name === "string";
+           typeof obj.name === "string");
 }
 
 function markAsOriginatingFromRejection(e) {
@@ -61177,7 +61170,7 @@ s.stripTags        = __webpack_require__(582);
 s.capitalize       = __webpack_require__(125);
 s.decapitalize     = __webpack_require__(295);
 s.chop             = __webpack_require__(583);
-s.trim             = __webpack_require__(40);
+s.trim             = __webpack_require__(41);
 s.clean            = __webpack_require__(584);
 s.cleanDiacritics  = __webpack_require__(297);
 s.count            = __webpack_require__(585);
@@ -61208,7 +61201,7 @@ s.rtrim            = __webpack_require__(128);
 s.truncate         = __webpack_require__(606);
 s.prune            = __webpack_require__(607);
 s.words            = __webpack_require__(608);
-s.pad              = __webpack_require__(88);
+s.pad              = __webpack_require__(89);
 s.lpad             = __webpack_require__(609);
 s.rpad             = __webpack_require__(610);
 s.lrpad            = __webpack_require__(611);
@@ -61301,7 +61294,7 @@ module.exports = s;
 /* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function stripTags(str) {
   return makeString(str).replace(/<\/?[^>]+>/g, '');
@@ -61324,7 +61317,7 @@ module.exports = function chop(str, step) {
 /* 584 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 
 module.exports = function clean(str) {
   return trim(str).replace(/\s\s+/g, ' ');
@@ -61335,7 +61328,7 @@ module.exports = function clean(str) {
 /* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function(str, substr) {
   str = makeString(str);
@@ -61351,7 +61344,7 @@ module.exports = function(str, substr) {
 /* 586 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function swapCase(str) {
   return makeString(str).replace(/\S/g, function(c) {
@@ -61364,7 +61357,7 @@ module.exports = function swapCase(str) {
 /* 587 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var escapeChars = __webpack_require__(588);
 
 var regexString = '[';
@@ -61412,7 +61405,7 @@ module.exports = escapeChars;
 /* 589 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var htmlEntities = __webpack_require__(590);
 
 module.exports = function unescapeHTML(str) {
@@ -61474,7 +61467,7 @@ module.exports = function insert(str, i, substr) {
 /* 592 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function replaceAll(str, find, replace, ignorecase) {
   var flags = (ignorecase === true)?'gi':'g';
@@ -61488,7 +61481,7 @@ module.exports = function replaceAll(str, find, replace, ignorecase) {
 /* 593 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function include(str, needle) {
   if (needle === '') return true;
@@ -61500,7 +61493,7 @@ module.exports = function include(str, needle) {
 /* 594 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var slice = [].slice;
 
 module.exports = function join() {
@@ -61525,7 +61518,7 @@ module.exports = function lines(str) {
 /* 596 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 function getIndent(str) {
   var matches = str.match(/^[\s\\t]*/gm);
@@ -61570,7 +61563,7 @@ module.exports = function reverse(str) {
 /* 598 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var toPositive = __webpack_require__(299);
 
 module.exports = function startsWith(str, starts, position) {
@@ -61585,7 +61578,7 @@ module.exports = function startsWith(str, starts, position) {
 /* 599 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var toPositive = __webpack_require__(299);
 
 module.exports = function endsWith(str, ends, position) {
@@ -61626,7 +61619,7 @@ module.exports = function succ(str) {
 /* 602 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function titleize(str) {
   return makeString(str).toLowerCase().replace(/(?:^|\s|-)\S/g, function(c) {
@@ -61641,7 +61634,7 @@ module.exports = function titleize(str) {
 
 var capitalize = __webpack_require__(125);
 var camelize = __webpack_require__(301);
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function classify(str) {
   str = makeString(str);
@@ -61655,7 +61648,7 @@ module.exports = function classify(str) {
 
 var capitalize = __webpack_require__(125);
 var underscored = __webpack_require__(302);
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 
 module.exports = function humanize(str) {
   return capitalize(trim(underscored(str).replace(/_id$/, '').replace(/_/g, ' ')));
@@ -61666,7 +61659,7 @@ module.exports = function humanize(str) {
 /* 605 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var defaultToWhiteSpace = __webpack_require__(126);
 var nativeTrimLeft = String.prototype.trimLeft;
 
@@ -61682,7 +61675,7 @@ module.exports = function ltrim(str, characters) {
 /* 606 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function truncate(str, length, truncateStr) {
   str = makeString(str);
@@ -61701,7 +61694,7 @@ module.exports = function truncate(str, length, truncateStr) {
  * prune extra chars, never leaving a half-chopped word.
  * @author github.com/rwz
  */
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var rtrim = __webpack_require__(128);
 
 module.exports = function prune(str, length, pruneStr) {
@@ -61730,7 +61723,7 @@ module.exports = function prune(str, length, pruneStr) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var isBlank = __webpack_require__(294);
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 
 module.exports = function words(str, delimiter) {
   if (isBlank(str)) return [];
@@ -61742,7 +61735,7 @@ module.exports = function words(str, delimiter) {
 /* 609 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pad = __webpack_require__(88);
+var pad = __webpack_require__(89);
 
 module.exports = function lpad(str, length, padStr) {
   return pad(str, length, padStr);
@@ -61753,7 +61746,7 @@ module.exports = function lpad(str, length, padStr) {
 /* 610 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pad = __webpack_require__(88);
+var pad = __webpack_require__(89);
 
 module.exports = function rpad(str, length, padStr) {
   return pad(str, length, padStr, 'right');
@@ -61764,7 +61757,7 @@ module.exports = function rpad(str, length, padStr) {
 /* 611 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pad = __webpack_require__(88);
+var pad = __webpack_require__(89);
 
 module.exports = function lrpad(str, length, padStr) {
   return pad(str, length, padStr, 'both');
@@ -61824,7 +61817,7 @@ module.exports = function numberFormat(number, dec, dsep, tsep) {
 /* 616 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function strRight(str, sep) {
   str = makeString(str);
@@ -61838,7 +61831,7 @@ module.exports = function strRight(str, sep) {
 /* 617 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function strRightBack(str, sep) {
   str = makeString(str);
@@ -61852,7 +61845,7 @@ module.exports = function strRightBack(str, sep) {
 /* 618 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function strLeft(str, sep) {
   str = makeString(str);
@@ -61866,7 +61859,7 @@ module.exports = function strLeft(str, sep) {
 /* 619 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function strLeftBack(str, sep) {
   str = makeString(str);
@@ -61891,7 +61884,7 @@ module.exports = function toSentenceSerial(array, sep, lastSep) {
 /* 621 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 var dasherize = __webpack_require__(303);
 var cleanDiacritics = __webpack_require__(297);
 
@@ -61927,7 +61920,7 @@ module.exports = function unquote(str, quoteChar) {
 /* 624 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 var strRepeat = __webpack_require__(304);
 
 module.exports = function repeat(str, qty, separator) {
@@ -61984,7 +61977,7 @@ module.exports = function naturalCmp(str1, str2) {
 /* 626 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 /**
  * Based on the implementation here: https://github.com/hiddentao/fast-levenshtein
@@ -62042,7 +62035,7 @@ module.exports = function levenshtein(str1, str2) {
 /* 627 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(40);
+var trim = __webpack_require__(41);
 
 function boolMatch(s, matchers) {
   var i, matcher, down = s.toLowerCase();
@@ -62087,7 +62080,7 @@ module.exports = function() {
 // Wrap
 // wraps a string by a certain width
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function wrap(str, options){
   str = makeString(str);
@@ -62192,7 +62185,7 @@ module.exports = function wrap(str, options){
 /* 630 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var makeString = __webpack_require__(6);
+var makeString = __webpack_require__(7);
 
 module.exports = function(str, callback) {
   str = makeString(str);
@@ -62223,7 +62216,7 @@ module.exports = function(str, callback) {
 
   // Set up Backbone appropriately for the environment. Start with AMD.
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(65), __webpack_require__(47), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(66), __webpack_require__(47), exports], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, $, exports) {
       // Export global even in AMD case in case this script is loaded with
       // others that may still expect a global Backbone.
       root.Backbone = factory(root, exports, _, $);
@@ -73975,7 +73968,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//
 (function(root, factory) {
     // Set up Backbone-associations appropriately for the environment. Start with AMD.
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(65), __webpack_require__(69)], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, Backbone) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(66), __webpack_require__(70)], __WEBPACK_AMD_DEFINE_RESULT__ = function(_, Backbone) {
             // Export global even in AMD case in case this script is loaded with
             // others that may still expect a global Backbone.
             return factory(root, Backbone, _);
@@ -74817,7 +74810,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// MarionetteJS 
 (function(root, factory) {
 
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(69), __webpack_require__(65), __webpack_require__(637), __webpack_require__(638)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(70), __webpack_require__(66), __webpack_require__(637), __webpack_require__(638)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
       return (root.Marionette = root.Mn = factory(root, Backbone, _));
     }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -78337,7 +78330,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Backbone.Wreq
 (function(root, factory) {
 
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(69), __webpack_require__(65)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(70), __webpack_require__(66)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
       return factory(Backbone, _);
     }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -78778,7 +78771,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Backbone.Baby
 (function(root, factory) {
 
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(69), __webpack_require__(65)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(70), __webpack_require__(66)], __WEBPACK_AMD_DEFINE_RESULT__ = function(Backbone, _) {
       return factory(Backbone, _);
     }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -84927,7 +84920,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.emptyComparator = exports.stringComparator1 = exports.getComparatorByDataType = exports.referenceComparator2Desc = exports.referenceComparator2Asc = exports.booleanComparator2Desc = exports.dateComparator2Desc = exports.dateComparator2Asc = exports.booleanComparator2Asc = exports.durationComparator2Desc = exports.durationComparator2Asc = exports.numberComparator2Desc = exports.numberComparator2Asc = exports.stringComparator2Desc = exports.stringComparator2Asc = undefined;
 
-var _Meta = __webpack_require__(90);
+var _Meta = __webpack_require__(91);
 
 var _lib = __webpack_require__(0);
 
@@ -85260,7 +85253,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 (function (global, factory) {
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(89)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(90)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -85304,7 +85297,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 (function (global, factory) {
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(89)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(90)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -85349,7 +85342,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 (function (global, factory) {
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(89)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(90)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -85393,7 +85386,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _lib = __webpack_require__(0);
 
-var _UserService = __webpack_require__(70);
+var _UserService = __webpack_require__(71);
 
 var _UserService2 = _interopRequireDefault(_UserService);
 
@@ -85577,7 +85570,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _lib = __webpack_require__(0);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -86120,7 +86113,7 @@ exports.default = function (textId) {
   return _LocalizationService2.default.get(textId);
 };
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -86141,7 +86134,7 @@ exports.default = function (textModel) {
   return _LocalizationService2.default.resolveLocalizedText(textModel);
 };
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -86305,7 +86298,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(0);
 
-var _helpers = __webpack_require__(91);
+var _helpers = __webpack_require__(60);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -89997,7 +89990,7 @@ var _FieldView = __webpack_require__(320);
 
 var _FieldView2 = _interopRequireDefault(_FieldView);
 
-var _helpers = __webpack_require__(91);
+var _helpers = __webpack_require__(60);
 
 var _helpers2 = _interopRequireDefault(_helpers);
 
@@ -90670,7 +90663,7 @@ var _ReferencePanelView = __webpack_require__(323);
 
 var _ReferencePanelView2 = _interopRequireDefault(_ReferencePanelView);
 
-var _DefaultReferenceModel = __webpack_require__(72);
+var _DefaultReferenceModel = __webpack_require__(73);
 
 var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 
@@ -91467,7 +91460,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Meta = __webpack_require__(90);
+var _Meta = __webpack_require__(91);
 
 var _utils = __webpack_require__(3);
 
@@ -91765,7 +91758,7 @@ var _BaseLayoutEditorView = __webpack_require__(16);
 
 var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 
-var _UserService = __webpack_require__(70);
+var _UserService = __webpack_require__(71);
 
 var _UserService2 = _interopRequireDefault(_UserService);
 
@@ -92672,7 +92665,7 @@ var _VirtualCollection = __webpack_require__(48);
 
 var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 
-var _HighlightableBehavior = __webpack_require__(73);
+var _HighlightableBehavior = __webpack_require__(74);
 
 var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 
@@ -93336,7 +93329,7 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -93693,7 +93686,7 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -93701,7 +93694,7 @@ var _durationEditor = __webpack_require__(762);
 
 var _durationEditor2 = _interopRequireDefault(_durationEditor);
 
-var _BaseItemEditorView = __webpack_require__(60);
+var _BaseItemEditorView = __webpack_require__(61);
 
 var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 
@@ -94289,6 +94282,7 @@ _formRepository2.default.editors.RadioGroup = _BaseCollectionEditorView2.default
         }
 
         this.collection = new _RadioGroupCollection2.default(this.options.radioOptions);
+        this.listenTo(this.collection, 'select:one', this.__onSelectChild);
     },
 
 
@@ -94298,10 +94292,6 @@ _formRepository2.default.editors.RadioGroup = _BaseCollectionEditorView2.default
 
     events: {
         keydown: '__onKeyDown'
-    },
-
-    collectionEvents: {
-        'select:one': '__onSelectChild'
     },
 
     childViewOptions: function childViewOptions() {
@@ -94745,7 +94735,7 @@ var _datePanel = __webpack_require__(772);
 
 var _datePanel2 = _interopRequireDefault(_datePanel);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -94844,7 +94834,7 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -95218,7 +95208,7 @@ var _DateTimeService = __webpack_require__(143);
 
 var _DateTimeService2 = _interopRequireDefault(_DateTimeService);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -95672,7 +95662,7 @@ var _TextAreaEditorView = __webpack_require__(322);
 
 var _TextAreaEditorView2 = _interopRequireDefault(_TextAreaEditorView);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -95935,14 +95925,6 @@ module.exports = "<div class=\"js-dropdown-region dev-mention-editor__dropdown-r
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Developer: Oleg Verevkin
- * Date: 10/21/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -95999,6 +95981,14 @@ var defaultOptions = {
  * @param {String} [options.displayAttribute='text'] Имя атрибута, используемого для отображения текста.
  * @param {Boolean} [options.explicitApply=false] Для изменения значения требуется явно нажать кнопку Apply в выпадающей панели.
  * */
+/**
+ * Developer: Oleg Verevkin
+ * Date: 10/21/2015
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
+
 _formRepository2.default.editors.MultiSelect = _BaseLayoutEditorView2.default.extend( /** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
     initialize: function initialize(options) {
         if (options.schema) {
@@ -96480,7 +96470,7 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _BaseItemEditorView = __webpack_require__(60);
+var _BaseItemEditorView = __webpack_require__(61);
 
 var _BaseItemEditorView2 = _interopRequireDefault(_BaseItemEditorView);
 
@@ -96734,18 +96724,24 @@ var _formRepository = __webpack_require__(4);
 
 var _formRepository2 = _interopRequireDefault(_formRepository);
 
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var savedDocumentPrefix = 'document'; /**
-                                       * Developer: Kristina
-                                       * Date: 03/24/2014
-                                       * Copyright: 2009-2015 Comindware®
-                                       *       All Rights Reserved
-                                       *
-                                       * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
-                                       *       The copyright notice above does not evidence any
-                                       *       actual or intended publication of such source code.
-                                       */
+/**
+ * Developer: Kristina
+ * Date: 03/24/2014
+ * Copyright: 2009-2015 Comindware®
+ *       All Rights Reserved
+ *
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
+ *       The copyright notice above does not evidence any
+ *       actual or intended publication of such source code.
+ */
+
+var savedDocumentPrefix = 'document';
 
 var defaultOptions = {
     readonly: false,
@@ -96847,7 +96843,7 @@ _formRepository2.default.editors.Document = _BaseLayoutEditorView2.default.exten
         if (!isReadonly) {
             this.ui.addRegion.show();
             this.uploadButton = new _UploadDocumentButtonView2.default({
-                displayText: Localizer.get('SUITEGENERAL.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
+                displayText: _LocalizationService2.default.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
                 multiple: this.options.multiple,
                 fileFormat: this.__adjustFileFormat(this.options.fileFormat) }, 'add-document');
             this.uploadButton.on('uploaded', function (documents) {
@@ -96946,24 +96942,26 @@ var _AttachmentsController = __webpack_require__(806);
 
 var _AttachmentsController2 = _interopRequireDefault(_AttachmentsController);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _LocalizationService = __webpack_require__(6);
 
-/**
- * Developer: Kristina
- * Date: 02/24/2014
- * Copyright: 2009-2014 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MultiselectAddButtonView = Marionette.ItemView.extend({
     className: 'button-sm_h3 button-sm button-sm_add',
     tagName: 'button',
     template: Handlebars.compile('{{text}}')
-});
+}); /**
+     * Developer: Kristina
+     * Date: 02/24/2014
+     * Copyright: 2009-2014 Comindware®
+     *       All Rights Reserved
+     *
+     * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
+     *       The copyright notice above does not evidence any
+     *       actual or intended publication of such source code.
+     */
 
 exports.default = Marionette.CompositeView.extend({
     controller: null,
@@ -97015,7 +97013,7 @@ exports.default = Marionette.CompositeView.extend({
 
         this.dropdownModel = new Backbone.Model({
             button: new Backbone.Model({
-                text: Localizer.get('MODULES.SHARED.VIEWS.MULTISELECT.ADDNEW')
+                text: _LocalizationService2.default.get('MODULES.SHARED.VIEWS.MULTISELECT.ADDNEW')
             }),
             panel: new Backbone.Model({
                 collection: this.controller.collection,
@@ -97114,14 +97112,14 @@ exports.default = Marionette.CompositeView.extend({
         if (length - visibleCounter > 0) {
             this.ui.showMore.show();
             this.ui.invisibleCount.html(length - visibleCounter);
-            this.ui.showMoreText.html(Localizer.get('MODULES.SHARED.VIEWS.MULTISELECT.SHOWMORE') + ' ');
+            this.ui.showMoreText.html(_LocalizationService2.default.get('MODULES.SHARED.VIEWS.MULTISELECT.SHOWMORE') + ' ');
         } else {
             this.ui.showMore.hide();
         }
     },
     expandShowMore: function expandShowMore() {
         this.$childViewContainer.children().show();
-        this.ui.showMoreText.html(Localizer.get('MODULES.SHARED.VIEWS.MULTISELECT.HIDE'));
+        this.ui.showMoreText.html(_LocalizationService2.default.get('MODULES.SHARED.VIEWS.MULTISELECT.HIDE'));
         this.ui.invisibleCount.html('');
     },
     onDestroy: function onDestroy() {
@@ -97936,23 +97934,25 @@ var _formRepository = __webpack_require__(4);
 
 var _formRepository2 = _interopRequireDefault(_formRepository);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _LocalizationService = __webpack_require__(6);
 
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var showModes = {
     normal: 'normal',
     button: 'button'
-};
+}; /**
+    * Developer: Stanislav Guryev
+    * Date: 02.02.2017
+    * Copyright: 2009-2017 Comindware®
+    *       All Rights Reserved
+    *
+    * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
+    *       The copyright notice above does not evidence any
+    *       actual or intended publication of such source code.
+    */
 
 var classes = {
     buttonMode: 'dev-code-editor-button-mode'
@@ -97976,7 +97976,8 @@ exports.default = _formRepository2.default.editors.Code = _BaseLayoutEditorView2
         return {
             mode: 'expression',
             height: 300,
-            showMode: showModes.normal
+            showMode: showModes.normal,
+            ontologyService: null
         };
     },
 
@@ -98012,7 +98013,11 @@ exports.default = _formRepository2.default.editors.Code = _BaseLayoutEditorView2
     onRender: function onRender() {
         var _this = this;
 
-        this.editor = new _CodemirrorView2.default({ mode: this.options.mode, height: this.options.height, ontologyService: this.options.ontologyService });
+        this.editor = new _CodemirrorView2.default({
+            mode: this.options.mode,
+            height: this.options.height,
+            ontologyService: this.options.ontologyService
+        });
         this.editor.on('change', this.__change, this);
         this.editor.on('maximize', function () {
             return _this.ui.fadingPanel.show();
@@ -98069,9 +98074,9 @@ exports.default = _formRepository2.default.editors.Code = _BaseLayoutEditorView2
     },
     __setEditBtnText: function __setEditBtnText() {
         if (this.value) {
-            this.ui.editBtn.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EDIT'));
+            this.ui.editBtn.text(_LocalizationService2.default.get('CORE.FORM.EDITORS.CODE.EDIT'));
         } else {
-            this.ui.editBtn.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTY'));
+            this.ui.editBtn.text(_LocalizationService2.default.get('CORE.FORM.EDITORS.CODE.EMPTY'));
         }
     },
     __setReadonly: function __setReadonly(readonly) {
@@ -98141,15 +98146,17 @@ exports.default = Marionette.LayoutView.extend({
         _.bindAll(this, '__onBlur', '__onChange', '__showHint', '__find', '__undo', '__redo', '__format', '__cmwHint', '__showTooltip', '__hideTooltip', '__onMouseover', '__onMouseleave', '__onKeyDown', '__onMinimize');
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
-            options.ontologyService.getOntology().then(function (ontologyModel) {
-                _this.autoCompleteArray = _MappingService2.default.mapOntologyModelToAutoCompleteArray(ontologyModel);
-                if (_this.codemirror) {
-                    _this.codemirror.getMode().ontologyObjects = _this.autoCompleteArray;
+            if (options.ontologyService) {
+                options.ontologyService.getOntology().then(function (ontologyModel) {
+                    _this.autoCompleteArray = _MappingService2.default.mapOntologyModelToAutoCompleteArray(ontologyModel);
+                    if (_this.codemirror) {
+                        _this.codemirror.getMode().ontologyObjects = _this.autoCompleteArray;
 
-                    //retokenize codemirror with ontology model
-                    _this.setValue(_this.getValue());
-                }
-            });
+                        //retokenize codemirror with ontology model
+                        _this.setValue(_this.getValue());
+                    }
+                });
+            }
         }
     },
 
@@ -98601,7 +98608,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 817 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-code-editor-undo dev-code-editor-toolbar_button_container\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.UNDO'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-undo\"></div>\n</div>\n<div class=\"js-code-editor-redo dev-code-editor-toolbar_button_container\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.REDO'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-redo\"></div>\n</div>\n<div class=\"js-code-editor-format dev-code-editor-toolbar_button_container\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.FORMAT'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-format\"></div>\n</div>\n<div class=\"js-code-editor-hint dev-code-editor-toolbar_button_container\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.HINT'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-hint\"></div>\n</div>\n<div class=\"js-code-editor-find dev-code-editor-toolbar_button_container\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.FIND'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-find\"></div>\n</div>\n<div class=\"js-code-editor-maximize dev-code-editor-toolbar_button_container\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.MAXIMIZE'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-maximize\"></div>\n</div>\n<div class=\"js-code-editor-minimize dev-code-editor-toolbar_button_container\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.MINIMIZE'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-minimize\"></div>\n</div>";
+module.exports = "<div class=\"js-code-editor-undo dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.UNDO'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-undo\"></div>\n</div>\n<div class=\"js-code-editor-redo dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.REDO'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-redo\"></div>\n</div>\n<div class=\"js-code-editor-format dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.FORMAT'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-format\"></div>\n</div>\n<div class=\"js-code-editor-hint dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.HINT'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-hint\"></div>\n</div>\n<div class=\"js-code-editor-find dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.FIND'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-find\"></div>\n</div>\n<div class=\"js-code-editor-maximize dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.MAXIMIZE'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-maximize\"></div>\n</div>\n<div class=\"js-code-editor-minimize dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.MINIMIZE'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-minimize\"></div>\n</div>";
 
 /***/ }),
 /* 818 */
@@ -98622,6 +98629,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _Constants = __webpack_require__(340);
 
+var _Constants2 = _interopRequireDefault(_Constants);
+
 var _FunctionTooltipView = __webpack_require__(820);
 
 var _FunctionTooltipView2 = _interopRequireDefault(_FunctionTooltipView);
@@ -98639,6 +98648,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *       actual or intended publication of such source code.
  */
 
+var types = _Constants2.default.types;
+var classes = _Constants2.default.classes;
 var HTTP_PREFIX = /http:\/\//;
 
 exports.default = {
@@ -98651,9 +98662,9 @@ exports.default = {
                 var parameters = func.parameters || [];
                 item.text = func.name;
                 item.returns = func.returns;
-                item.description = HTTP_PREFIX.test(func.description) ? Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTYDESCRIPTION') : func.description;
-                item.className = _Constants.classes.function;
-                item.type = _Constants.types.function;
+                item.description = HTTP_PREFIX.test(func.description) ? Localizer.get('CORE.FORM.EDITORS.CODE.EMPTYDESCRIPTION') : func.description;
+                item.className = classes.function;
+                item.type = types.function;
                 item.hint = function (cm, data, completion) {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                     cm.execCommand('goCharLeft');
@@ -98662,7 +98673,7 @@ exports.default = {
 
                 parameters.forEach(function (parameter) {
                     if (HTTP_PREFIX.test(parameter.description)) {
-                        parameter.description = Localizer.get('SUITEGENERAL.FORM.EDITORS.CODE.EMPTYDESCRIPTION');
+                        parameter.description = Localizer.get('CORE.FORM.EDITORS.CODE.EMPTYDESCRIPTION');
                     }
                 });
 
@@ -98695,8 +98706,8 @@ exports.default = {
                 var item = {};
                 item.text = user.name;
                 item.syntax = user.syntax;
-                item.className = _Constants.classes.user;
-                item.type = _Constants.types.user;
+                item.className = classes.user;
+                item.type = types.user;
                 item.hint = function (cm, data, completion) {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                 };
@@ -98714,8 +98725,8 @@ exports.default = {
                 item.returns = literal.returns;
                 item.format = literal.format;
                 item.description = literal.description;
-                item.className = _Constants.classes.literal;
-                item.type = _Constants.types.literal;
+                item.className = classes.literal;
+                item.type = types.literal;
                 item.hint = function (cm, data, completion) {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                     cm.execCommand('goCharLeft');
@@ -98732,8 +98743,8 @@ exports.default = {
                 item.syntax = operator.syntax;
                 item.arguments = operator.arguments;
                 item.description = operator.description;
-                item.className = _Constants.classes.operator;
-                item.type = _Constants.types.operator;
+                item.className = classes.operator;
+                item.type = types.operator;
                 item.hint = function (cm, data, completion) {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                 };
@@ -98747,8 +98758,8 @@ exports.default = {
                 var item = {};
                 item.text = attribute.name;
                 item.syntax = attribute.syntax;
-                item.className = _Constants.classes.attribute;
-                item.type = _Constants.types.attribute;
+                item.className = classes.attribute;
+                item.type = types.attribute;
                 item.hint = function (cm, data, completion) {
                     cm.replaceRange(completion.syntax, data.from, data.to);
                 };
@@ -98760,7 +98771,7 @@ exports.default = {
     },
     getTooltipView: function getTooltipView(type) {
         switch (type) {
-            case _Constants.types.function:
+            case types.function:
                 return _FunctionTooltipView2.default;
             default:
                 return null;
@@ -98997,7 +99008,7 @@ module.exports = "<div class=\"js-function-overloads-container\"></div>\n<div cl
 /* 827 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-code-codemirror-container\"></div>\n<div class=\"js-code-button-edit dev-code-button-edit\"></div>\n<div class=\"svg-icons-wrp\">\n    <div class=\"js-code-button-clear svg-icons-wrp__remove\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.CODE.CLEAR'}}\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n</div>\n<div class=\"js-code-fading-panel dev-code-editor-fading-panel\"></div>\n";
+module.exports = "<div class=\"js-code-codemirror-container\"></div>\n<div class=\"js-code-button-edit dev-code-button-edit\"></div>\n<div class=\"svg-icons-wrp\">\n    <div class=\"js-code-button-clear svg-icons-wrp__remove\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.CLEAR'}}\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n</div>\n<div class=\"js-code-fading-panel dev-code-editor-fading-panel\"></div>\n";
 
 /***/ }),
 /* 828 */
@@ -99339,7 +99350,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _Meta = __webpack_require__(90);
+var _Meta = __webpack_require__(91);
 
 var _VirtualCollection = __webpack_require__(48);
 
@@ -99358,10 +99369,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *       actual or intended publication of such source code.
  */
 /* eslint-disable */
-
-var ContextCollection = _VirtualCollection2.default.extend({
-    model: ContextModel
-});
 
 var ContextModel = Backbone.Model.extend({
     initialize: function initialize() {
@@ -99519,6 +99526,10 @@ var ContextModel = Backbone.Model.extend({
     }
 });
 
+var ContextCollection = _VirtualCollection2.default.extend({
+    model: ContextModel
+});
+
 exports.default = ContextModel;
 
 /***/ }),
@@ -99642,9 +99653,13 @@ var _BaseLayoutEditorView = __webpack_require__(16);
 
 var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
+
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -99657,10 +99672,10 @@ var defaultOptions = function defaultOptions() {
         maxQuantitySelected: null,
         allowRemove: true,
         title: '',
-        itemsToSelectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
-        selectedItemsText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
-        searchPlaceholder: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
-        emptyListText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
+        itemsToSelectText: _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
+        selectedItemsText: _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
+        searchPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
+        emptyListText: _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
     };
 };
 
@@ -99689,9 +99704,9 @@ _formRepository2.default.editors.MembersSplit = _BaseLayoutEditorView2.default.e
             })
         });
         if (options.schema) {
-            _.extend(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
+            Object.assign(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
         } else {
-            _.extend(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
+            Object.assign(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
         }
 
         var value = this.getValue();
@@ -99777,10 +99792,19 @@ var _MemberSplitView = __webpack_require__(846);
 
 var _MemberSplitView2 = _interopRequireDefault(_MemberSplitView);
 
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
+var _helpers = __webpack_require__(60);
+
+var _helpers2 = _interopRequireDefault(_helpers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _BaseSplitController2.default.extend({
-    initialize: function initialize() {
+    initialize: function initialize(options) {
+        this.options = options;
         _BaseSplitController2.default.prototype.initialize.apply(this, arguments);
         this.__fillDisplayText();
     },
@@ -99805,8 +99829,8 @@ exports.default = _BaseSplitController2.default.extend({
             selectedItemsText: this.options.selectedItemsText,
             confirmEdit: true,
             showToolbar: true,
-            rejectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
-            acceptText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+            rejectText: _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+            acceptText: _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
             searchPlaceholder: this.options.searchPlaceholder,
             emptyListText: this.options.emptyListText
         });
@@ -99823,22 +99847,22 @@ exports.default = _BaseSplitController2.default.extend({
                 membersCount[members[id].type]++;
             }
         });
-        this.options.displayText = this.options.hideUsers ? '' : Core.utils.helpers.getPluralForm(membersCount.users, Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
+        this.options.displayText = this.options.hideUsers ? '' : _helpers2.default.getPluralForm(membersCount.users, _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
         this.options.displayText += this.options.displayText.length > 0 ? ' ' : '';
-        this.options.displayText += this.options.hideGroups ? '' : Core.utils.helpers.getPluralForm(membersCount.groups, Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        this.options.displayText += this.options.hideGroups ? '' : _helpers2.default.getPluralForm(membersCount.groups, _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
     },
     __getFullMemberSplitTitle: function __getFullMemberSplitTitle() {
         if (this.options.title) {
             switch (this.options.title) {
                 case 'Members':
-                    return Localizer.get('PROJECT.SETTINGS.WORKSPACESTAB.MEMBERSPLITTITLE');
+                    return _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE');
                 case 'Performers':
-                    return Localizer.get('PROCESS.PROCESSTEMPLATES.ACTIVITY.SETTINGS.TASK.USERTASK.MEMBERSPLITTITLE');
+                    return _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.PERFORMERSTITLE');
                 default:
                     return this.options.title;
             }
         }
-        return Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.TITLE');
+        return _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.TITLE');
     },
     createView: function createView() {
         this.view = new _MemberSplitView2.default({
@@ -99863,7 +99887,7 @@ var _VirtualCollection = __webpack_require__(48);
 
 var _VirtualCollection2 = _interopRequireDefault(_VirtualCollection);
 
-var _HighlightableBehavior = __webpack_require__(73);
+var _HighlightableBehavior = __webpack_require__(74);
 
 var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 
@@ -99906,12 +99930,16 @@ var _membersToolbarView = __webpack_require__(344);
 
 var _membersToolbarView2 = _interopRequireDefault(_membersToolbarView);
 
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _ItemSplitView2.default.extend({
     options: function options() {
         return {
-            maxQuantityText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.MAXQUANTITY'),
+            maxQuantityText: _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.MAXQUANTITY'),
             itemsToolbarView: _membersToolbarView2.default,
             itemListItemView: _MembersListItemView2.default
         };
@@ -99922,7 +99950,7 @@ exports.default = _ItemSplitView2.default.extend({
 /* 847 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mselect__h1 js-title-region\">\n    {{title}}\n</div>\n<div class=\"mselect__panel{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\n    <h3 class=\"mselect__header {{#if maxQuantitySelected}} mselect__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-available-items-toolbar-region \"> </div>{{/if}}\n    <div class=\"mselect__search js-available-search-region\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"mselect__items js-available-members-container\">\n        <div class=\"mselect-list js-available-items-list-region\"></div>\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\n    </div>\n</div>\n<div class=\"mselect__button-panel\">\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\n    {{#if allowRemove}}\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\n    {{/if}}\n</div>\n<div class=\"mselect__panel mselect__panel_selected{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\n    <h3 class=\"mselect__header{{#if maxQuantitySelected}} mselect__header_2line{{/if}} js\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-selected-items-toolbar-region\"></div>{{/if}}\n    <div class=\"mselect__search js-selected-search-region\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"js-selected-members-container mselect__selected\">\n        <div class=\"mselect-list js-selected-items-list-region\"></div>\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\n    </div>\n</div>\n{{#if confirmEdit}}\n<div class=\"mselect__buttons js-confirm-panel\">\n    <div class=\"button-txt js-accept\">{{acceptText}}</div>\n    <div class=\"button-txt js-reject\">{{rejectText}}</div>\n</div>\n{{/if}}";
+module.exports = "<div class=\"mselect__h1 js-title-region\">\n    {{title}}\n</div>\n<div class=\"mselect__panel{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\n    <h3 class=\"mselect__header {{#if maxQuantitySelected}} mselect__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-available-items-toolbar-region \"> </div>{{/if}}\n    <div class=\"mselect__search js-available-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"mselect__items js-available-members-container\">\n        <div class=\"mselect-list js-available-items-list-region\"></div>\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\n    </div>\n</div>\n<div class=\"mselect__button-panel\">\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\n    {{#if allowRemove}}\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\n    {{/if}}\n</div>\n<div class=\"mselect__panel mselect__panel_selected{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\n    <h3 class=\"mselect__header{{#if maxQuantitySelected}} mselect__header_2line{{/if}} js\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-selected-items-toolbar-region\"></div>{{/if}}\n    <div class=\"mselect__search js-selected-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"js-selected-members-container mselect__selected\">\n        <div class=\"mselect-list js-selected-items-list-region\"></div>\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\n    </div>\n</div>\n{{#if confirmEdit}}\n<div class=\"mselect__buttons js-confirm-panel\">\n    <div class=\"button-txt js-accept\">{{acceptText}}</div>\n    <div class=\"button-txt js-reject\">{{rejectText}}</div>\n</div>\n{{/if}}";
 
 /***/ }),
 /* 848 */
@@ -99974,10 +100002,10 @@ var defaultOptions = function defaultOptions() {
         maxQuantitySelected: null,
         allowRemove: true,
         title: '',
-        itemsToSelectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
-        selectedItemsText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
-        searchPlaceholder: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
-        emptyListText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
+        itemsToSelectText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
+        selectedItemsText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
+        searchPlaceholder: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
+        emptyListText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
     };
 };
 
@@ -100006,9 +100034,9 @@ _formRepository2.default.editors.MembersSplitPanel = _BaseLayoutEditorView2.defa
             })
         });
         if (options.schema) {
-            _.extend(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
+            Object.assign(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
         } else {
-            _.extend(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
+            Object.assign(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
         }
         this.options.selected = this.getValue();
 
@@ -100085,10 +100113,19 @@ var _MembersSplitPanelView = __webpack_require__(853);
 
 var _MembersSplitPanelView2 = _interopRequireDefault(_MembersSplitPanelView);
 
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
+var _helpers = __webpack_require__(60);
+
+var _helpers2 = _interopRequireDefault(_helpers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _BaseSplitController2.default.extend({
-    initialize: function initialize() {
+    initialize: function initialize(options) {
+        this.options = options;
         _BaseSplitController2.default.prototype.initialize.apply(this, arguments);
         this.__fillDisplayText();
 
@@ -100134,22 +100171,22 @@ exports.default = _BaseSplitController2.default.extend({
                 membersCount[members[id].type]++;
             }
         });
-        this.options.displayText = this.options.hideUsers ? '' : Core.utils.helpers.getPluralForm(membersCount.users, Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
+        this.options.displayText = this.options.hideUsers ? '' : _helpers2.default.getPluralForm(membersCount.users, _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
         this.options.displayText += this.options.displayText.length > 0 ? ' ' : '';
-        this.options.displayText += this.options.hideGroups ? '' : Core.utils.helpers.getPluralForm(membersCount.groups, Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        this.options.displayText += this.options.hideGroups ? '' : _helpers2.default.getPluralForm(membersCount.groups, _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
     },
     __getFullMemberSplitTitle: function __getFullMemberSplitTitle() {
         if (this.options.title) {
             switch (this.options.title) {
                 case 'Members':
-                    return Localizer.get('PROJECT.SETTINGS.WORKSPACESTAB.MEMBERSPLITTITLE');
+                    return _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE');
                 case 'Performers':
-                    return Localizer.get('PROCESS.PROCESSTEMPLATES.ACTIVITY.SETTINGS.TASK.USERTASK.MEMBERSPLITTITLE');
+                    return _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.PERFORMERSTITLE');
                 default:
                     return this.options.title;
             }
         }
-        return Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.TITLE');
+        return _LocalizationService2.default.get('CORE.FORM.EDITORS.MEMBERSPLIT.TITLE');
     },
     createView: function createView() {
         this.view = new _MembersSplitPanelView2.default({
@@ -100185,6 +100222,10 @@ var _MembersListItemView2 = _interopRequireDefault(_MembersListItemView);
 var _membersToolbarView = __webpack_require__(344);
 
 var _membersToolbarView2 = _interopRequireDefault(_membersToolbarView);
+
+var _helpers = __webpack_require__(60);
+
+var _helpers2 = _interopRequireDefault(_helpers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -100237,7 +100278,7 @@ exports.default = Marionette.LayoutView.extend({
     onShow: function onShow() {
         var maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
-            this.ui.maxQuantityInfo.text(Core.utils.helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
+            this.ui.maxQuantityInfo.text(_helpers2.default.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
         }
 
         // Available list
@@ -100362,7 +100403,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 854 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if showToolbar}}\n    <h3 class=\"columns-select__header {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\n    <h3 class=\"columns-select__header columns-select__header_right {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\n{{/if}}\n<div class=\"columns-select__panel\">\n    {{#if showToolbar}}<div class=\"js-available-items-toolbar-region \"> </div>{{/if}}\n    <div class=\"columns-select__search js-available-search-region\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"columns-select__items js-available-members-container\">\n        <div class=\"columns-select-list js-available-items-list-region\"></div>\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\n    </div>\n</div>\n<div class=\"columns-select__btn\">\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\n    {{#if allowRemove}}\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\n    {{/if}}\n</div>\n<div class=\"columns-select__panel\">\n    {{#if showToolbar}}<div class=\"js-selected-items-toolbar-region\"></div>{{/if}}\n    <div class=\"columns-select__search js-selected-search-region\" title=\"{{localize 'SUITEGENERAL.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"js-selected-members-container columns-select__items\">\n        <div class=\"columns-select-list js-selected-items-list-region\"></div>\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\n    </div>\n</div>";
+module.exports = "{{#if showToolbar}}\n    <h3 class=\"columns-select__header {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\n    <h3 class=\"columns-select__header columns-select__header_right {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\n{{/if}}\n<div class=\"columns-select__panel\">\n    {{#if showToolbar}}<div class=\"js-available-items-toolbar-region \"> </div>{{/if}}\n    <div class=\"columns-select__search js-available-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"columns-select__items js-available-members-container\">\n        <div class=\"columns-select-list js-available-items-list-region\"></div>\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\n    </div>\n</div>\n<div class=\"columns-select__btn\">\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\n    {{#if allowRemove}}\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\n    {{/if}}\n</div>\n<div class=\"columns-select__panel\">\n    {{#if showToolbar}}<div class=\"js-selected-items-toolbar-region\"></div>{{/if}}\n    <div class=\"columns-select__search js-selected-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"js-selected-members-container columns-select__items\">\n        <div class=\"columns-select-list js-selected-items-list-region\"></div>\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\n    </div>\n</div>";
 
 /***/ }),
 /* 855 */
@@ -100436,7 +100477,7 @@ var _iconEditorComponentView2 = _interopRequireDefault(_iconEditorComponentView)
 
 var _iconPalette = __webpack_require__(866);
 
-var _factory = __webpack_require__(71);
+var _factory = __webpack_require__(72);
 
 var _factory2 = _interopRequireDefault(_factory);
 
@@ -103392,13 +103433,17 @@ var _BaseLayoutEditorView = __webpack_require__(16);
 
 var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
-var _factory = __webpack_require__(71);
+var _factory = __webpack_require__(72);
 
 var _factory2 = _interopRequireDefault(_factory);
+
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -103418,7 +103463,7 @@ exports.default = _formRepository2.default.editors.Expression = _BaseLayoutEdito
             enabled: true,
             valueEditor: _formRepository2.default.editors.Text,
             valueEditorOptions: {},
-            emptyText: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
+            emptyText: Localizer.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
         };
     },
 
@@ -103486,8 +103531,8 @@ exports.default = _formRepository2.default.editors.Expression = _BaseLayoutEdito
         var initialValue = this.getValue();
         this.valueOptionCollection.add(new _ValueOptionModel2.default({
             id: 'value',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.VALUE'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.VALUEALIAS')
+            name: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.VALUE'),
+            alias: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.VALUEALIAS')
         }));
 
         this.valueEditor = new this.options.valueEditor(_.extend(this.options.valueEditorOptions, {
@@ -103504,8 +103549,8 @@ exports.default = _formRepository2.default.editors.Expression = _BaseLayoutEdito
         }
         this.valueOptionCollection.add(new _ValueOptionModel2.default({
             id: 'expression',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EXPRESSION'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EXPRESSIONALIAS')
+            name: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION'),
+            alias: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSIONALIAS')
         }));
         this.ui.expression.text(this.options.defaultExpression);
         this.ui.expression.data('value', this.options.defaultExpression);
@@ -103516,8 +103561,8 @@ exports.default = _formRepository2.default.editors.Expression = _BaseLayoutEdito
         }
         this.valueOptionCollection.add(new _ValueOptionModel2.default({
             id: 'script',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.CSHARPALIAS')
+            name: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
+            alias: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPALIAS')
         }));
         this.ui.script.text(this.defaultScriptText);
         this.ui.script.data('value', this.defaultScriptText);
@@ -103540,15 +103585,15 @@ exports.default = _formRepository2.default.editors.Expression = _BaseLayoutEdito
 
         this.valueOptionCollection.add(new _ValueOptionModel2.default({
             id: 'context',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.ATTRIBUTE'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.ATTRIBUTEALIAS')
+            name: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE'),
+            alias: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTEALIAS')
         }));
 
         this.listenTo(this.contextValueEditor, 'change', function () {
             return _this2.__updateValue(_this2.contextValueEditor.getValue(), true);
         });
 
-        this.ui.script.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EMPTYTEXT'));
+        this.ui.script.text(_LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT'));
     },
     renderValueOptionPopout: function renderValueOptionPopout() {
         var _this3 = this;
@@ -103610,7 +103655,7 @@ exports.default = _formRepository2.default.editors.Expression = _BaseLayoutEdito
     },
     updateDefaultEditor: function updateDefaultEditor() {
         this.ui[this.value.type].toggleClass('empty', _.isEmpty(this.value.value));
-        this.ui[this.value.type].text(_.isEmpty(this.value.value) ? Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EMPTYTEXT') : this.value.value);
+        this.ui[this.value.type].text(_.isEmpty(this.value.value) ? _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT') : this.value.value);
     },
     __valueTypeSelected: function __valueTypeSelected(model) {
         this.valueOptionCollection.select(model);
@@ -103764,7 +103809,7 @@ exports.default = Marionette.LayoutView.extend({
         this.value = options.value;
         this.model = new Backbone.Model();
         this.model.set({
-            titleText: this.value.type === 'expression' ? Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION') : Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
+            titleText: this.value.type === 'expression' ? Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION') : Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
         });
     },
 
@@ -104153,6 +104198,10 @@ var _DropdownEditorView = __webpack_require__(141);
 
 var _DropdownEditorView2 = _interopRequireDefault(_DropdownEditorView);
 
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var defaultOptions = {
@@ -104213,7 +104262,7 @@ exports.default = _NewExpressionEditorView2.default.extend({
         }
         this.valueTypeCollection.add({
             id: valueTypes.template,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.TEMPLATE')
+            text: _LocalizationService2.default.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
         });
 
         this.templateEditor = new _DropdownEditorView2.default(_.extend(this.options.templateEditorOptions, {
@@ -104343,7 +104392,7 @@ var _BaseLayoutEditorView = __webpack_require__(16);
 
 var _BaseLayoutEditorView2 = _interopRequireDefault(_BaseLayoutEditorView);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
@@ -104436,6 +104485,10 @@ var _WorkSpaceSplitView = __webpack_require__(894);
 
 var _WorkSpaceSplitView2 = _interopRequireDefault(_WorkSpaceSplitView);
 
+var _LocalizationService = __webpack_require__(6);
+
+var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var GroupingModel = Backbone.Model.extend({
@@ -104469,7 +104522,7 @@ exports.default = _BaseSplitController2.default.extend({
                 return model.get('systemType') === 'cmw.workspace.SystemItem';
             },
             modelFactory: function modelFactory(model) {
-                var displayValue = model.get('systemType') === 'cmw.workspace.SystemItem' ? Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.SYSTEMSECTIONS') : Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.RECORDTYPES');
+                var displayValue = model.get('systemType') === 'cmw.workspace.SystemItem' ? _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.SYSTEMSECTIONS') : _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.RECORDTYPES');
                 return new GroupingModel({
                     displayText: displayValue
                 });
@@ -104515,17 +104568,17 @@ exports.default = _BaseSplitController2.default.extend({
         });
 
         this.model.set({
-            title: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.TITLE'),
+            title: _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.TITLE'),
             items: workItems,
-            itemsToSelectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.AVAILABLESECTIONS'),
-            selectedItemsText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.USERSSECTIONS'),
+            itemsToSelectText: _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.AVAILABLESECTIONS'),
+            selectedItemsText: _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.USERSSECTIONS'),
             confirmEdit: true,
             showToolbar: false,
             maxQuantitySelected: false,
-            rejectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.CANCEL'),
-            acceptText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.UPDATE'),
-            searchPlaceholder: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.SEARCHBYSECTION'),
-            emptyListText: Localizer.get('SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.EMPTYLIST')
+            rejectText: _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.CANCEL'),
+            acceptText: _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.UPDATE'),
+            searchPlaceholder: _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.SEARCHBYSECTION'),
+            emptyListText: _LocalizationService2.default.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.EMPTYLIST')
         });
     },
     createView: function createView() {
@@ -104759,7 +104812,7 @@ var _list = __webpack_require__(17);
 
 var _list2 = _interopRequireDefault(_list);
 
-var _DefaultReferenceModel = __webpack_require__(72);
+var _DefaultReferenceModel = __webpack_require__(73);
 
 var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 
@@ -104945,7 +104998,7 @@ __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
-var _HighlightableBehavior = __webpack_require__(73);
+var _HighlightableBehavior = __webpack_require__(74);
 
 var _HighlightableBehavior2 = _interopRequireDefault(_HighlightableBehavior);
 
@@ -104953,7 +105006,7 @@ var _SelectableBehavior = __webpack_require__(44);
 
 var _SelectableBehavior2 = _interopRequireDefault(_SelectableBehavior);
 
-var _DefaultReferenceModel = __webpack_require__(72);
+var _DefaultReferenceModel = __webpack_require__(73);
 
 var _DefaultReferenceModel2 = _interopRequireDefault(_DefaultReferenceModel);
 
@@ -105093,7 +105146,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(0);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -105149,7 +105202,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(0);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -105210,7 +105263,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(0);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -105253,7 +105306,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(0);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -105387,6 +105440,10 @@ var _lib = __webpack_require__(0);
 
 var _utils = __webpack_require__(3);
 
+var _WindowService = __webpack_require__(38);
+
+var _WindowService2 = _interopRequireDefault(_WindowService);
+
 var _popup = __webpack_require__(914);
 
 var _popup2 = _interopRequireDefault(_popup);
@@ -105397,17 +105454,15 @@ var _LayoutBehavior2 = _interopRequireDefault(_LayoutBehavior);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Developer: Stepan Burguchev
- * Date: 2/28/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 var classes = {
     CLASS_NAME: 'layout__popup-view'
-};
+}; /**
+    * Developer: Stepan Burguchev
+    * Date: 2/28/2017
+    * Copyright: 2009-2017 Stepan Burguchev®
+    *       All Rights Reserved
+    * Published under the MIT license
+    */
 
 exports.default = Marionette.LayoutView.extend({
     initialize: function initialize(options) {
@@ -105450,11 +105505,8 @@ exports.default = Marionette.LayoutView.extend({
     },
 
     events: {
-        'click @ui.button': '__onButtonClick'
-    },
-
-    triggers: {
-        'click @ui.close': 'close'
+        'click @ui.button': '__onButtonClick',
+        'click @ui.close': '__close'
     },
 
     regions: {
@@ -105477,12 +105529,15 @@ exports.default = Marionette.LayoutView.extend({
         this.__updateState();
     },
     __onButtonClick: function __onButtonClick(e) {
-        var id = $(e.target).data('id') || $(e.target.parentElement).data('id');
+        var id = $(e.target).data('id') !== undefined || $(e.target.parentElement).data('id');
         var button = this.__buttons.find(function (x) {
             return x.id === id;
         });
         button.handler(this);
         this.trigger('button', id);
+    },
+    __close: function __close() {
+        _WindowService2.default.closePopup();
     }
 });
 
@@ -105815,30 +105870,6 @@ var _utils = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var VisibleCollectionView = Marionette.CollectionView.extend({
-    getChildView: function getChildView(child) {
-        if (child.get('isLoadingRowModel')) {
-            return this.getOption('loadingChildView');
-        }
-
-        var childViewSelector = this.getOption('childViewSelector');
-        if (childViewSelector) {
-            return childViewSelector(child);
-        }
-
-        var childView = this.getOption('childView');
-        if (!childView) {
-            _utils.helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
-        }
-        return childView;
-    },
-    setFitToView: function setFitToView() {
-        this.children.each(function (ch) {
-            ch.setFitToView();
-        });
-    }
-});
-
 /**
  * Some description for initializer
  * @name ListView
@@ -105853,7 +105884,7 @@ var VisibleCollectionView = Marionette.CollectionView.extend({
  * @param {Object} [options.emptyViewOptions] Опции для emptyView
  * @param {Backbone.View} options.loadingChildView View-лоадер, показывается при подгрузке строк
  * */
-var ListView = Marionette.LayoutView.extend({
+var ListView = Marionette.CollectionView.extend({
     initialize: function initialize(options) {
         _utils.helpers.ensureOption(options, 'collection');
 
@@ -105879,41 +105910,46 @@ var ListView = Marionette.LayoutView.extend({
     },
 
 
-    regions: {
-        visibleCollectionRegion: '.visible-collection-view'
-    },
+    className: 'visible-collection',
 
-    className: 'list',
     template: _lib.Handlebars.compile(_list2.default),
 
-    onShow: function onShow() {
+    getChildView: function getChildView(child) {
+        if (child.get('isLoadingRowModel')) {
+            return this.getOption('loadingChildView');
+        }
+
+        var childViewSelector = this.getOption('childViewSelector');
+        if (childViewSelector) {
+            return childViewSelector(child);
+        }
+
+        var childView = this.getOption('childView');
+        if (!childView) {
+            _utils.helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
+        }
+        return childView;
+    },
+    setFitToView: function setFitToView() {
+        this.children.each(function (ch) {
+            ch.setFitToView();
+        });
+    },
+    onRender: function onRender() {
         var _this = this;
+
+        this.__assignKeyboardShortcuts();
 
         this.state.visibleHeight = this.$el.parent().height();
         // Updating viewportHeight and rendering subviews
-        this.visibleCollectionView = new VisibleCollectionView({
-            childView: this.childView,
-            childViewSelector: this.childViewSelector,
-            className: 'visible-collection',
-            collection: this.collection,
-            emptyView: this.emptyView,
-            emptyViewOptions: this.emptyViewOptions,
-            childViewOptions: this.childViewOptions,
-            loadingChildView: this.loadingChildView
-        });
 
-        this.listenTo(this.visibleCollectionView, 'childview:click', function (child) {
+        this.listenTo(this, 'childview:click', function (child) {
             return _this.trigger('row:click', child.model);
         });
 
-        this.listenTo(this.visibleCollectionView, 'childview:dblclick', function (child) {
+        this.listenTo(this, 'childview:dblclick', function (child) {
             return _this.trigger('row:dblclick', child.model);
         });
-
-        this.visibleCollectionRegion.show(this.visibleCollectionView);
-    },
-    onRender: function onRender() {
-        this.__assignKeyboardShortcuts();
     },
 
 
@@ -105931,11 +105967,11 @@ var ListView = Marionette.LayoutView.extend({
             this.__moveToNextPage('bottom', e.shiftKey);
         },
         home: function home(e) {
-            this.__selectByIndex(this.getSelectedViewIndex(), 0, e.shiftKey);
+            this.__selectByIndex(0, e.shiftKey);
             this.__scrollToTop();
         },
         end: function end(e) {
-            this.__selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
+            this.__selectByIndex(this.collection.length - 1, e.shiftKey);
             this.__scrollToBottom();
         }
     },
@@ -105956,7 +105992,7 @@ var ListView = Marionette.LayoutView.extend({
         $parentEl.scrollTop(this.$el.height());
     },
     __scrollToNeighbor: function __scrollToNeighbor(index) {
-        var view = this.visibleCollectionView.children.findByIndex(index);
+        var view = this.children.findByIndex(index);
         var $parentEl = this.$el.parent();
         var currentScrollTop = $parentEl.scrollTop();
         var visibleHeight = this.state.visibleHeight;
@@ -105971,7 +106007,7 @@ var ListView = Marionette.LayoutView.extend({
         }
     },
     __scrollToIndex: function __scrollToIndex(index, offset) {
-        var view = this.visibleCollectionView.children.findByIndex(index);
+        var view = this.children.findByIndex(index);
         var $parentEl = this.$el.parent();
         var currentScrollTop = $parentEl.scrollTop();
         var viewPositionTop = view.$el.position().top;
@@ -105979,7 +106015,7 @@ var ListView = Marionette.LayoutView.extend({
 
         $parentEl.scrollTop(newScrollPos);
     },
-    __selectByIndex: function __selectByIndex(currentIndex, nextIndex, shiftPressed) {
+    __selectByIndex: function __selectByIndex(nextIndex, shiftPressed) {
         var model = this.collection.at(nextIndex);
         var selectFn = this.collection.selectSmart || this.collection.select;
         if (selectFn) {
@@ -105994,13 +106030,13 @@ var ListView = Marionette.LayoutView.extend({
 
         if (nextIndex !== selectedIndex) {
             nextIndex = this.__normalizeCollectionIndex(nextIndex);
-            this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+            this.__selectByIndex(nextIndex, shiftPressed);
             this.__scrollToNeighbor(nextIndex);
         }
     },
     __moveToNextPage: function __moveToNextPage(direction, shiftPressed) {
         var selectedIndex = this.getSelectedViewIndex();
-        var selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex);
+        var selectedView = this.children.findByIndex(selectedIndex);
         var selectedPositionTop = selectedView.$el.position().top;
         var nextIndex = selectedIndex;
 
@@ -106012,7 +106048,7 @@ var ListView = Marionette.LayoutView.extend({
 
         if (nextIndex !== selectedIndex) {
             nextIndex = this.__normalizeCollectionIndex(nextIndex);
-            this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+            this.__selectByIndex(nextIndex, shiftPressed);
             this.__scrollToIndex(nextIndex, -selectedPositionTop);
         }
     },
@@ -106032,7 +106068,7 @@ var ListView = Marionette.LayoutView.extend({
     __getTopIndex: function __getTopIndex(index) {
         var cHeight = 0;
         var newIndex = index;
-        var childViews = this.visibleCollectionView.children.toArray();
+        var childViews = this.children.toArray();
 
         for (var i = index - 1; i >= 0; i--) {
             var newH = cHeight + childViews[i].$el.height();
@@ -106050,7 +106086,7 @@ var ListView = Marionette.LayoutView.extend({
     __getBottomIndex: function __getBottomIndex(index) {
         var cHeight = 0;
         var newIndex = index;
-        var childViews = this.visibleCollectionView.children.toArray();
+        var childViews = this.children.toArray();
 
         for (var i = index + 1; i < childViews.length; i++) {
             var newH = cHeight + childViews[i].$el.height();
@@ -106092,10 +106128,10 @@ var ListView = Marionette.LayoutView.extend({
     getElementHeight: function getElementHeight() {
         var minHeight = 0;
 
-        if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
-            minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
+        if (this.isEmpty()) {
+            minHeight = this.$el.find('.empty-view').height();
         } else {
-            this.visibleCollectionView.children.forEach(function (view) {
+            this.children.forEach(function (view) {
                 minHeight += view.$el.height();
             });
         }
@@ -106104,9 +106140,6 @@ var ListView = Marionette.LayoutView.extend({
     },
     setWidth: function setWidth(fullWidth) {
         this.$el.width(fullWidth);
-    },
-    setFitToView: function setFitToView() {
-        this.visibleCollectionView.setFitToView();
     },
     __handleResize: function __handleResize() {
         this.__handleResizeInternal();
@@ -106134,14 +106167,6 @@ exports.default = ListView;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Developer: Grigory Kuznetsov
- * Date: 17.08.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -106155,6 +106180,14 @@ var _GridItemViewBehavior = __webpack_require__(138);
 var _GridItemViewBehavior2 = _interopRequireDefault(_GridItemViewBehavior);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Developer: Grigory Kuznetsov
+ * Date: 17.08.2015
+ * Copyright: 2009-2016 Comindware®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
 
 var NativeGridItemViewBehavior = _GridItemViewBehavior2.default.extend({
     initialize: function initialize(options, view) {
@@ -106177,7 +106210,6 @@ var NativeGridItemViewBehavior = _GridItemViewBehavior2.default.extend({
         cells.each(function (i, el) {
             _this.columnsWidth.push(_this.__getElementOuterWidth(el));
         });
-        this.initialFullWidth = this.$el.parent().width();
     },
     __onColumnStopDrag: function __onColumnStopDrag() {
         delete this.draggedColumn;
@@ -106336,30 +106368,32 @@ exports.default = Marionette.LayoutView.extend({
         var _this = this;
 
         this.collection = options.collection;
-        this.selectableCollection = new _SelectableCollection2.default(this.collection.map(function (model) {
-            return { id: model.cid };
-        }));
         this.collectionHeaderToolbarView = this.__createCollectionHeaderToolbarView();
         this.listenTo(this.collectionHeaderToolbarView, 'toolbar:execute:action', this.__executeAction);
         this.listenTo(this.collection, 'add remove reset', this.__setGridHeight);
-        this.listenTo(this.collection, 'add', function (model) {
-            _this.selectableCollection.add({ id: model.cid });
-            if (_this.selectableCollection.selectedLength) {
-                _this.selectableCollection.trigger('select:some');
-            }
-        });
-        this.listenTo(this.collection, 'remove', function (model) {
-            var modelToRemove = _this.selectableCollection.get(model.cid);
-            modelToRemove.deselect();
-            _this.selectableCollection.remove(_this.selectableCollection.get(modelToRemove));
-        });
-        this.listenTo(this.collection, 'reset', function () {
-            _this.selectableCollection.trigger('select:none');
-            _this.selectableCollection.reset(_this.collection.map(function (model) {
+        if (options.showSelectColumn !== false) {
+            this.selectableCollection = new _SelectableCollection2.default(this.collection.map(function (model) {
                 return { id: model.cid };
             }));
-        });
-        this.listenTo(this.selectableCollection, 'select:all select:some select:none', this.__selectionChange);
+            this.listenTo(this.collection, 'add', function (model) {
+                _this.selectableCollection.add({ id: model.cid });
+                if (_this.selectableCollection.selectedLength) {
+                    _this.selectableCollection.trigger('select:some');
+                }
+            });
+            this.listenTo(this.collection, 'remove', function (model) {
+                var modelToRemove = _this.selectableCollection.get(model.cid);
+                modelToRemove.deselect();
+                _this.selectableCollection.remove(_this.selectableCollection.get(modelToRemove));
+            });
+            this.listenTo(this.collection, 'reset', function () {
+                _this.selectableCollection.trigger('select:none');
+                _this.selectableCollection.reset(_this.collection.map(function (model) {
+                    return { id: model.cid };
+                }));
+            });
+            this.listenTo(this.selectableCollection, 'select:all select:some select:none', this.__selectionChange);
+        }
     },
 
 
@@ -106419,16 +106453,18 @@ exports.default = Marionette.LayoutView.extend({
     },
     __showGridView: function __showGridView() {
         var columns = this.__getColumns();
-        columns.unshift({
-            id: 'selected',
-            cellView: _SelectionView2.default,
-            viewModel: new Backbone.Model({
-                displayText: '',
-                selectableCollection: this.selectableCollection,
-                isCheckboxColumn: true
-            }),
-            width: constants.defaultCheckBoxColumnWidth
-        });
+        if (this.options.showSelectColumn !== false) {
+            columns.unshift({
+                id: 'selected',
+                cellView: _SelectionView2.default,
+                viewModel: new Backbone.Model({
+                    displayText: '',
+                    selectableCollection: this.selectableCollection,
+                    isCheckboxColumn: true
+                }),
+                width: constants.defaultCheckBoxColumnWidth
+            });
+        }
 
         var nativeGridView = _factory2.default.createNativeGrid({
             gridViewOptions: {
@@ -106872,15 +106908,25 @@ exports.default = Marionette.LayoutView.extend({
     },
 
     onRender: function onRender() {
+        var _this = this;
+
         var readonly = this.schema.readonly;
         var schemaExtension = {};
         var rowModel = this.model.get('rowModel');
         if (_.isFunction(this.schema.getReadonly)) {
             readonly = this.schema.getReadonly(rowModel);
+            this.listenTo(rowModel, 'change', function () {
+                return _this.editorView.editor.setReadonly(_this.schema.getReadonly(rowModel));
+            });
         }
         if (_.isFunction(this.schema.schemaExtension)) {
             schemaExtension = this.schema.schemaExtension(rowModel);
         }
+
+        if (this.schema.rerenderModelEvent) {
+            this.listenToOnce(rowModel, this.schema.rerenderModelEvent, this.render);
+        }
+
         this.editorView = new _EditableGridFieldView2.default({
             schema: Object.assign({}, this.schema, { readonly: readonly }, schemaExtension),
             key: this.schema.key,
@@ -107025,15 +107071,15 @@ var _GlobalEventService = __webpack_require__(42);
 
 var _GlobalEventService2 = _interopRequireDefault(_GlobalEventService);
 
-var _UserService = __webpack_require__(70);
+var _UserService = __webpack_require__(71);
 
 var _UserService2 = _interopRequireDefault(_UserService);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -107092,7 +107138,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _utils = __webpack_require__(3);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -107167,7 +107213,7 @@ var _searchBar = __webpack_require__(953);
 
 var _searchBar2 = _interopRequireDefault(_searchBar);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -107474,11 +107520,11 @@ var _MessageView = __webpack_require__(958);
 
 var _MessageView2 = _interopRequireDefault(_MessageView);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 
-var _LocalizationService = __webpack_require__(11);
+var _LocalizationService = __webpack_require__(6);
 
 var _LocalizationService2 = _interopRequireDefault(_LocalizationService);
 
@@ -107564,7 +107610,7 @@ var _message = __webpack_require__(959);
 
 var _message2 = _interopRequireDefault(_message);
 
-var _WindowService = __webpack_require__(41);
+var _WindowService = __webpack_require__(38);
 
 var _WindowService2 = _interopRequireDefault(_WindowService);
 

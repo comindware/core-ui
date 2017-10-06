@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 import GridItemViewBehavior from '../../../list/views/behaviors/GridItemViewBehavior';
 
@@ -31,7 +29,6 @@ const NativeGridItemViewBehavior = GridItemViewBehavior.extend({
         cells.each((i, el) => {
             this.columnsWidth.push(this.__getElementOuterWidth(el));
         });
-        this.initialFullWidth = this.$el.parent().width();
     },
 
     __onColumnStopDrag() {
