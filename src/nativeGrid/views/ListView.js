@@ -48,9 +48,15 @@ const ListView = Marionette.CollectionView.extend({
         _.bindAll(this, '__handleResize', '__handleResizeInternal');
         $(window).resize(this.__handleResize);
     },
-
+    /**
+     * Class for view
+     * @param {String} CSS class
+     * */
     className: 'visible-collection',
-
+    /**
+     * View template
+     * @param {HTML} HTML file
+     * */
     template: Handlebars.compile(template),
 
     getChildView(child) {

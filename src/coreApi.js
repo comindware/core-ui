@@ -29,6 +29,9 @@ import formApi from 'form';
 import meta_ from './Meta';
 import bootstrapper from './Bootstrapper';
 
+import Controller from 'controller/Controller';
+import Application from 'Application';
+
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import SearchBarView from './views/SearchBarView';
@@ -55,6 +58,9 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
  * @name module:core
  * */
 const core = {
+    Controller,
+    Application,
+
     lib: libApi,
     /**
      * Services of general use the UI is built on.

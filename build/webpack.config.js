@@ -221,7 +221,7 @@ module.exports = options => {
             stats: 'minimal'
         }
     };
-    
+
     if (!TEST) {
         webpackConfig.entry = ['babel-polyfill', pathResolver.source('coreApi.js')];
         webpackConfig.output = {
@@ -231,20 +231,22 @@ module.exports = options => {
             libraryTarget: 'umd'
         };
     }
-    /*
         if (TEST_COVERAGE) {
             webpackConfig.module.rules.push({
-                test: /\.js?$/,
+                test: /\.js$|\.jsx$/,
                 enforce: 'post',
                 exclude: [
                     pathResolver.tests(),
                     pathResolver.node_modules(),
                     pathResolver.source('external')
                 ],
-                loader: 'istanbul-instrumenter-loader'
+                  use: {
+                      loader: 'istanbul-instrumenter-loader',
+                      options: { esModules: true }
+                },
             });
         }
-    */
+
     if (PRODUCTION) {
         webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
         webpackConfig.devtool = 'source-map';

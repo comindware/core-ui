@@ -45,6 +45,10 @@ const defaultOptions = {
  * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
  * */
 export default Marionette.LayoutView.extend({
+    /**
+     * View template
+     * @param {HTML} HTML file
+    * */
     template: Handlebars.compile(template),
 
     regions: {
@@ -57,7 +61,10 @@ export default Marionette.LayoutView.extend({
     ui: {
         headerRegion: '.js-native-grid-header-region'
     },
-
+    /**
+     * Class for view
+     * @param {String} CSS class
+     * */
     className: 'native-grid',
 
     initialize(options) {
