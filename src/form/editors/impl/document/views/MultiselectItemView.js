@@ -1,4 +1,4 @@
-
+import dropdown from 'dropdown';
 import template from '../templates/MultiselectItem.html';
 import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
@@ -54,7 +54,7 @@ export default Marionette.LayoutView.extend({
 
     onShow() {
         if (this.model.get('id').indexOf(savedDocumentPrefix) > -1) {
-            this.documentRevisionPopout = new Core.dropdown.factory.createPopout({
+            this.documentRevisionPopout = new dropdown.factory.createPopout({
                 buttonView: DocumentRevisionButtonView,
                 panelView: DocumentRevisionPanelView,
                 panelViewOptions: { collection: this.revisionCollection },

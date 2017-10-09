@@ -1215,5 +1215,144 @@ svg.svg-icons{
     bottom: 2px;
 }
 
+/* Document editor */
+
+.input-upload {
+    width: 100%;
+    margin: 0;
+    -ms-filter: "alpha(opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    /*line-height: 30px;
+    font-size: 30px;*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    z-index: 99;
+}
+
+.task-links {
+    margin: 3px 0 0;
+}
+
+.l-task-links .field-documents__more {
+    display: none;
+}
+
+.l-task-links {
+    font-size: 12px;
+}
+
+.task-links_doc {
+    margin-bottom: 30px;
+}
+
+.task-links__i {
+    max-width: 100%;
+    margin: 5px 10px 5px 0;
+    padding: 0 18px 0 0;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+}
+
+.task-links__link {
+    color: #000;
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.task-links__link:hover {
+    color: #009bfe;
+}
+
+.dev-field-documents {
+    flex: 1 1 auto;
+}
+
+.document-field{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 2px;
+}
+
+.field-documents{
+    flex-grow: 1;
+    padding: 0 0 0 10px;
+}
+
+.document-field.drag-over {
+    border: 1px solid #009bfe;
+}
+
+.fr-btn{
+    display: inline-block;
+    max-width: 100%;
+    height: 30px;
+    line-height: 28px;
+    vertical-align: middle;
+    white-space: nowrap;
+    background: #f7f6f6;
+    border: 1px solid #dfe4e8;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    font-size: 0;
+}
+
+.fr-btn:hover {
+    border-color: #bfc2c4;
+    box-shadow: inset 0 2px 3px #fff;
+}
+
+.fr-btn:active {
+    box-shadow: inset 1px 1px 3px rgba(200,200,200,.7);
+}
+
+.fr-btn_attach, .fr-btn_download, .fr-btn_popup, .fr-btn_inline{
+    margin-bottom: 0;
+}
+
+.dev-btn-document-revise{
+    position: absolute;
+    right: 18px;
+    display: inline-block;
+    top: 0px;
+    margin-top: -4px;
+}
+
+.fr-collection-grid .dev-btn-document-revise{
+    margin-top: 0;
+}
+
+.dev-revision-container{
+    margin: 5px;
+}
+
+.dev-revision-container tr th{
+    padding: 5px 10px;
+    font-weight: 500;
+}
+
+.dev-revision-container tr td{
+    padding: 5px 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.dev-revision-container thead{
+    border-bottom: 1px solid;
+}
 
 
