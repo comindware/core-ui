@@ -48,6 +48,10 @@ const ScrollbarView = Marionette.ItemView.extend({
         this.listenTo(this.collection, 'remove', this.__handleCollectionRemove);
         this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
         this.__updateCount(this.collection.length);
+
+        this.listenTo(this.collection, 'add', this.__handleCollectionAdd);
+        this.listenTo(this.collection, 'remove', this.__handleCollectionRemove);
+        this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
     },
 
     className: 'scrollbar',

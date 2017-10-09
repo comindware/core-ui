@@ -23,6 +23,10 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @param {Backbone.View} options.gridColumnHeaderView View Используемый для отображения заголовка (шапки) списка
  * */
 const HeaderView = GridHeaderView.extend({
+    constants: {
+        MIN_COLUMN_WIDTH: 100
+    },
+
     initialize() {
         GridHeaderView.prototype.initialize.apply(this, arguments);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
@@ -37,7 +41,6 @@ const HeaderView = GridHeaderView.extend({
         }
         this.__columnEls = [];
 
-
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
             const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
@@ -47,17 +50,15 @@ const HeaderView = GridHeaderView.extend({
             }));
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
-            const childEl = view.render().el;
-            el.appendChild(childEl);
+            el.appendChild(view.render().el);
         });
-    },
-
-    constants: {
-        MIN_COLUMN_WIDTH: 100
+        this.headerMinWidth = this.__getAvailableWidth();
+        this.__setInitialWidth(this.headerMinWidth);
+        this.__handleResizeInternal();
     },
 
     __getAvailableWidth() {
-        return this.$el.parent().width() - 1;
+        return this.gridEventAggregator._parent.$el.width();//todo remove this evil magic
     },
 
     __getElementOuterWidth(el) {
@@ -90,8 +91,7 @@ const HeaderView = GridHeaderView.extend({
         this.ui.gridHeaderColumn.each((i, el) => {
             if (availableWidth !== viewWidth) {
                 if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
-                    const delta = (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-                    this.columns[i].width -= delta;
+                    this.columns[i].width -= (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
                 }
             }
 
@@ -154,12 +154,6 @@ const HeaderView = GridHeaderView.extend({
         return columnWidthData;
     },
 
-    onShow() {
-        this.headerMinWidth = this.__getAvailableWidth();
-        this.__setInitialWidth(this.headerMinWidth);
-        this.__handleResizeInternal();
-    },
-
     __startDrag(e) {
         const $dragger = $(e.target);
         const $column = $dragger.parent();
@@ -170,7 +164,9 @@ const HeaderView = GridHeaderView.extend({
         this.dragContext.$dragger = $dragger;
 
         $dragger.addClass('active');
-        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        if (this.dragContext) {
+            this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        }
     },
 
     __stopDrag() {
@@ -187,10 +183,6 @@ const HeaderView = GridHeaderView.extend({
     },
 
     __draggerMouseMove(e) {
-        if (!this.dragContext) {
-            return;
-        }
-
         const ctx = this.dragContext;
         const delta = e.pageX - ctx.pageOffsetX;
 
@@ -204,25 +196,20 @@ const HeaderView = GridHeaderView.extend({
     },
 
     updateColumnAndNeighbourWidths(index, delta) {
-        const $current = $(this.ui.gridHeaderColumn[index]);
         const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
 
-        if (this.dragContext.draggedColumn.initialWidth + delta < this.constants.MIN_COLUMN_WIDTH) {
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
             return;
         }
 
-        $current.outerWidth(newColumnWidth);
+        $(this.ui.gridHeaderColumn[index]).outerWidth(newColumnWidth);
         this.gridEventAggregator.trigger('singleColumnResize', this, {
             index,
             delta
         });
 
-        this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
+        this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
         this.columns[index].width = newColumnWidth;
-    },
-
-    __changeTableWidth(initialWidth, delta) {
-        this.$el.width(initialWidth + delta + 1);
     },
 
     updateDragContext($column, offset) {

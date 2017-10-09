@@ -132,9 +132,7 @@ export default Marionette.LayoutView.extend({
             left: `${this.options.paddingLeft}px`,
             right: `${this.options.paddingRight}px`
         });
-    },
 
-    onShow() {
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);

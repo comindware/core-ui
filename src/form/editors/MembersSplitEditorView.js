@@ -1,10 +1,10 @@
 
 import template from './templates/membersSplitEditor.hbs';
-
 import MemberSplitController from './impl/membersSplit/controller/MemberSplitController';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import WindowService from '../../services/WindowService';
+import LocalizationService from '../../services/LocalizationService';
 
 const defaultOptions = () => ({
     exclude: [],
@@ -14,10 +14,10 @@ const defaultOptions = () => ({
     maxQuantitySelected: null,
     allowRemove: true,
     title: '',
-    itemsToSelectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
-    selectedItemsText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
-    searchPlaceholder: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
-    emptyListText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
+    itemsToSelectText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),
+    selectedItemsText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.SELECTEDUSERS'),
+    searchPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
+    emptyListText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
 });
 
 formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
@@ -37,9 +37,9 @@ formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
             }))
         });
         if (options.schema) {
-            _.extend(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
+            Object.assign(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
         } else {
-            _.extend(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
+            Object.assign(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
         }
 
         const value = this.getValue();

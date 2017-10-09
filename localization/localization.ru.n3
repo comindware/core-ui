@@ -16,6 +16,28 @@
 
 <http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите имя..."; l10n:originalData "Enter a name..."].
 
+<http://comindware.com/text/core/form/editors/code#clear> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Очистить"; l10n:originalData "clear"].
+
+<http://comindware.com/text/core/form/editors/code#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "edit"].
+
+<http://comindware.com/text/core/form/editors/code#empty> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "empty"].
+
+<http://comindware.com/text/core/form/editors/code#emptyDescription> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Описание отсутствует"; l10n:originalData "emptyDescription"].
+
+<http://comindware.com/text/core/form/editors/code#find> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Найти"; l10n:originalData "Find"].
+
+<http://comindware.com/text/core/form/editors/code#format> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Форматировать"; l10n:originalData "Format"].
+
+<http://comindware.com/text/core/form/editors/code#hint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Автозаполнение"; l10n:originalData "Autocomplete"].
+
+<http://comindware.com/text/core/form/editors/code#maximize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Развернуть"; l10n:originalData "Maximize"].
+
+<http://comindware.com/text/core/form/editors/code#minimize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Свернуть"; l10n:originalData "Minimize"].
+
+<http://comindware.com/text/core/form/editors/code#redo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Повторить"; l10n:originalData "Redo"].
+
+<http://comindware.com/text/core/form/editors/code#undo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Undo"].
+
 <http://comindware.com/text/core/form/editors/collection#addNewItem> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить новый элемент"; l10n:originalData "Add a new item"].
 
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перед добавлением значений в таблицу необходимо создать запись"; l10n:originalData "You need to create record before adding values to the table"].
@@ -23,6 +45,10 @@
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата"; l10n:originalData "Date"].
 
 <http://comindware.com/text/core/form/editors/document#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "Add document"].
+
+<http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "addDocument"].
+
+<http://comindware.com/text/core/form/editors/document#validationError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка прервана. Следующие файлы имеют некорректное расширение: "; l10n:originalData "Uploading faild. The folowing files have incorrect extension: "].
 
 <http://comindware.com/text/core/form/editors/dropdown#notset> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "notset"].
 
@@ -48,9 +74,51 @@
 
 <http://comindware.com/text/core/form/editors/duration/workDuration/seconds#prefix> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data " "; l10n:originalData " "].
 
+<http://comindware.com/text/core/form/editors/expression#attribute> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Атрибут"; l10n:originalData "attribute"].
+
+<http://comindware.com/text/core/form/editors/expression#attributeAlias> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Атрибут"; l10n:originalData "attributeAlias"].
+
+<http://comindware.com/text/core/form/editors/expression#csharpscript> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "C# скрипт"; l10n:originalData "csharpscript"].
+
+<http://comindware.com/text/core/form/editors/expression#emptyText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
+
+<http://comindware.com/text/core/form/editors/expression#template> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Шаблон"; l10n:originalData "template"].
+
+<http://comindware.com/text/core/form/editors/expression#value> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Значение"; l10n:originalData "value"].
+
+<http://comindware.com/text/core/form/editors/expression#valueAlias> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Знач."; l10n:originalData "valueAlias"].
+
 <http://comindware.com/text/core/form/editors/memberSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
 
 <http://comindware.com/text/core/form/editors/memberSelect#searchPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск..."; l10n:originalData "Search..."].
+
+<http://comindware.com/text/core/form/editors/memberSplit#apply> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Применить"; l10n:originalData "apply"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#cancel> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отмена"; l10n:originalData "cancel"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#emptyList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Люди или группы не найдены"; l10n:originalData "No people or group found"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#emptyPeopleList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Пользователи не выбраны"; l10n:originalData "No people selected"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#groups> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "{0} группа, {0} группы, {0} групп"; l10n:originalData "{0} groups, {0} groups"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#maxQuantity> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0}"; l10n:originalData "Maximum users allowed: {0},Maximum users allowed: {0}"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#membersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Назначьте профиль навигации пользователям"; l10n:originalData "Select users to be assigned the side navigation"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#performersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей, которые могут стать ответственными по задаче"; l10n:originalData "Select users who may be task assignee"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#searchUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск по имени"; l10n:originalData "Search by name"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#selectedUsers> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрано"; l10n:originalData "Selected"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей, один из которых может стать исполнителем задачи"; l10n:originalData "Select users who may become task assignee"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#update> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить"; l10n:originalData "Save"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#users> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "{0} человек,{0} человека,{0} человек"; l10n:originalData "{0} person,{0} people"].
+
+<http://comindware.com/text/core/form/editors/memberSplit#usersToSelect> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Доступно"; l10n:originalData "Available"].
 
 <http://comindware.com/text/core/form/editors/mentions#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите текст. Используйте @, чтобы уведомить коллег"; l10n:originalData "Enter text here. To mention a user, use the @ symbol"].
 
@@ -70,6 +138,8 @@
 
 <http://comindware.com/text/core/form/editors/reference#searchMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск дополнительных элементов..."; l10n:originalData "Search for more items...\r\n"].
 
+<http://comindware.com/text/core/form/editors/splitEditor#search> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск"; l10n:originalData "search"].
+
 <http://comindware.com/text/core/form/editors/textEditor#disablePlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поле недоступно"; l10n:originalData "Field is disabled"].
 
 <http://comindware.com/text/core/form/editors/textEditor#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите текст"; l10n:originalData "Enter text here"].
@@ -77,6 +147,26 @@
 <http://comindware.com/text/core/form/editors/textEditor#readonlyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Только для чтения"; l10n:originalData "Field is read-only"].
 
 <http://comindware.com/text/core/form/editors/time#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Время"; l10n:originalData "Time"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#availableSections> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Доступно"; l10n:originalData "Available"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#cancel> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отмена"; l10n:originalData "Cancel"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#editWorkSpaceSections> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Настройка разделов боковой навигации"; l10n:originalData "Customize Side Navigation Sections"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#emptyList> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разделы не найдены"; l10n:originalData "No sections found"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#recordTypes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "ШАБЛОНЫ ЗАПИСЕЙ"; l10n:originalData "RECORD TYPES"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#searchBySection> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск по имени"; l10n:originalData "Search by name"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#systemSections> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "СИСТЕМНЫЕ РАЗДЕЛЫ"; l10n:originalData "SYSTEM SECTIONS"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите разделы, которые будут отображаться в боковой навигации"; l10n:originalData "Select sections to be shown in side navigation"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#update> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить"; l10n:originalData "Save"].
+
+<http://comindware.com/text/core/form/editors/workSpaceItemSplit#usersSections> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрано"; l10n:originalData "Selected"].
 
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неправильное количество символов."; l10n:originalData "Wrong number of characters."].
 
