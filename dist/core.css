@@ -2975,7 +2975,7 @@ svg.svg-icons{
 
 
 .visible-collection {
-    height: inherit;
+    height: 100%;
     width: 100%;
 }
 

@@ -97,7 +97,7 @@ module.exports = function (config) {
                 { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
             ],
             instrumenterOptions: {
-              istanbul: { noCompact: true, embedSource: true }
+                istanbul: { noCompact: true, embedSource: true }
             }
         };
 
