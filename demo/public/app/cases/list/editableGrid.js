@@ -14,7 +14,11 @@ export default () => {
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
             referenceCell: { name: 'Ref 1' },
             enumCell: { valueExplained: ['123'] },
-            documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }]
+            documentCell: [{
+                id: `document.${i}`,
+                name: `Document ${i}`,
+                url: `GetDocument/${i}`
+            }]
         });
     }
 

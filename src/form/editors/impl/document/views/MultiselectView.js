@@ -10,7 +10,8 @@
  */
 
 import { keypress } from 'lib';
-
+import dropdown from 'dropdown';
+import ReferencePanelView from '../../reference/views/ReferencePanelView';
 import template from '../templates/Multiselect.html';
 import MultiselectItemView from './MultiselectItemView';
 import AttachmentsController from '../gallery/AttachmentsController';
@@ -28,7 +29,8 @@ export default Marionette.CompositeView.extend({
     childView: MultiselectItemView,
     childViewContainer: '.js-collection-container',
     childViewOptions() {
-        return { attachmentsController: this.attachmentsController,
+        return {
+            attachmentsController: this.attachmentsController,
             hideRemoveBtn: this.options.hideRemoveBtn
         };
     },
@@ -70,20 +72,20 @@ export default Marionette.CompositeView.extend({
     renderDropdown() {
         this.dropdownModel = new Backbone.Model({
             button: new Backbone.Model({
-                text: LocalizationService.get('MODULES.SHARED.VIEWS.MULTISELECT.ADDNEW')
+                text: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADD')
             }),
             panel: new Backbone.Model({
                 collection: this.controller.collection,
                 totalCount: this.controller.totalCount || 0
             })
         });
-        this.dropdownView = Core.dropdown.factory.createDropdown({
+        this.dropdownView = dropdown.factory.createDropdown({
             buttonView: MultiselectAddButtonView,
             buttonViewOptions: {
                 model: this.dropdownModel.get('button'),
                 reqres: this.reqres
             },
-            panelView: Core.form.editors.reference.ReferencePanelView,
+            panelView: ReferencePanelView,
             panelViewOptions: {
                 model: this.dropdownModel.get('panel'),
                 reqres: this.reqres
@@ -173,14 +175,14 @@ export default Marionette.CompositeView.extend({
         if (length - visibleCounter > 0) {
             this.ui.showMore.show();
             this.ui.invisibleCount.html(length - visibleCounter);
-            this.ui.showMoreText.html(`${LocalizationService.get('MODULES.SHARED.VIEWS.MULTISELECT.SHOWMORE')} `);
+            this.ui.showMoreText.html(`${LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.SHOWMORE')} `);
         } else {
             this.ui.showMore.hide();
         }
     },
     expandShowMore() {
         this.$childViewContainer.children().show();
-        this.ui.showMoreText.html(LocalizationService.get('MODULES.SHARED.VIEWS.MULTISELECT.HIDE'));
+        this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },
     onDestroy() {
