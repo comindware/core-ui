@@ -45,8 +45,6 @@ export default Marionette.ItemView.extend({
         this.$document = $(document);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
         this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
-        this.listenTo(GlobalEventService, 'window:resize', this.__handleResizeInternal);
     },
     /**
      * View template
@@ -135,10 +133,7 @@ export default Marionette.ItemView.extend({
         }
 
         $(this.ui.gridHeaderColumn[index]).outerWidth(newColumnWidth);
-        this.gridEventAggregator.trigger('singleColumnResize', this, {
-            index,
-            delta
-        });
+        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
         this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
         this.columns[index].width = newColumnWidth;
@@ -154,7 +149,7 @@ export default Marionette.ItemView.extend({
         };
 
         this.dragContext.tableInitialWidth = this.__getTableWidth();
-        this.gridEventAggregator.trigger('columnStartDrag', this, draggedColumn.index);
+        this.gridEventAggregator.trigger('columnStartDrag', draggedColumn.index);
 
         this.dragContext.fullWidth = this.headerMinWidth;
         this.dragContext.draggedColumn = draggedColumn;

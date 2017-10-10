@@ -27,5 +27,9 @@ export default HeaderView.extend({
             const childEl = view.render().el;
             el.appendChild(childEl);
         });
+
+        this.headerMinWidth = this.__getAvailableWidth();
+        this.__setInitialWidth(this.headerMinWidth);
+        this.__handleResizeInternal();
     }
 });
