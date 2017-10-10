@@ -22,6 +22,11 @@ import formRepository from '../formRepository';
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * */
 formRepository.editors.Password = TextEditorView.extend(/** @lends module:core.form.editors.PasswordEditorView.prototype */{
+    initialize(options) {
+        TextEditorView.prototype.initialize.call(this, options);
+        this.options.showTitle = false;
+    },
+
     template: Handlebars.compile(template)
 });
 
