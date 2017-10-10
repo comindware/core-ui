@@ -38038,8 +38038,6 @@ exports.default = Marionette.ItemView.extend({
         this.$document = $(document);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
         this.listenTo(_GlobalEventService2.default, 'window:resize', this.handleResize);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
-        this.listenTo(_GlobalEventService2.default, 'window:resize', this.__handleResizeInternal);
     },
 
     /**
@@ -38133,10 +38131,7 @@ exports.default = Marionette.ItemView.extend({
         }
 
         $(this.ui.gridHeaderColumn[index]).outerWidth(newColumnWidth);
-        this.gridEventAggregator.trigger('singleColumnResize', this, {
-            index: index,
-            delta: delta
-        });
+        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
         this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
         this.columns[index].width = newColumnWidth;
@@ -38151,7 +38146,7 @@ exports.default = Marionette.ItemView.extend({
         };
 
         this.dragContext.tableInitialWidth = this.__getTableWidth();
-        this.gridEventAggregator.trigger('columnStartDrag', this, draggedColumn.index);
+        this.gridEventAggregator.trigger('columnStartDrag', draggedColumn.index);
 
         this.dragContext.fullWidth = this.headerMinWidth;
         this.dragContext.draggedColumn = draggedColumn;
@@ -106463,7 +106458,7 @@ var NativeGridItemViewBehavior = _GridItemViewBehavior2.default.extend({
         this.listenTo(view.options.gridEventAggregator, 'singleColumnResize', this.__onSingleColumnResize);
         this.view.setFitToView = this.setFitToView.bind(this);
     },
-    __onColumnStartDrag: function __onColumnStartDrag(sender, index) {
+    __onColumnStartDrag: function __onColumnStartDrag(index) {
         var _this = this;
 
         var cells = this.__getCellElements();
@@ -106495,8 +106490,8 @@ var NativeGridItemViewBehavior = _GridItemViewBehavior2.default.extend({
     __getElementOuterWidth: function __getElementOuterWidth(el) {
         return $(el)[0].getBoundingClientRect().width;
     },
-    __onSingleColumnResize: function __onSingleColumnResize(sender, args) {
-        this.gridCellDragger.outerWidth(this.columnsWidth[args.index] + args.delta);
+    __onSingleColumnResize: function __onSingleColumnResize(newColumnWidth) {
+        this.gridCellDragger.outerWidth(newColumnWidth);
     }
 });
 
@@ -106946,6 +106941,10 @@ exports.default = HeaderView.extend({
             var childEl = view.render().el;
             el.appendChild(childEl);
         });
+
+        this.headerMinWidth = this.__getAvailableWidth();
+        this.__setInitialWidth(this.headerMinWidth);
+        this.__handleResizeInternal();
     }
 });
 
