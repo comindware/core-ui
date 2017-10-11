@@ -45,7 +45,7 @@ export default {
         CTEventsService.initialize();
 
         if (options.webSocketConfiguration && options.webSocketConfiguration.activateOnStart) {
-            WebSocketService.initialize(options.webSocketConfiguration.url);
+            WebSocketService.initialize({ url: options.webSocketConfiguration.url });
         }
 
         // Backbone default behaviors path (obsolete because of inconsistency: we store behaviors in many different paths)

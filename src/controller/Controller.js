@@ -52,7 +52,7 @@ export default Marionette.Object.extend({
     },
 
     __handleSocketEvent(data) {
-        if (this.eventsHandlers && this.moduleId === data.id && this.eventsHandlers.onSoketMessage) {
+        if (this.eventsHandlers && this.moduleId === data.id && this.eventsHandlers.onWebSocketMessage) {
             this.eventsHandlers.onSoketMessage(data.data);
         }
     }
