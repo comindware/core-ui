@@ -100,6 +100,8 @@
 
 <http://comindware.com/text/core/form/editors/expression#emptyText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
 
+<http://comindware.com/text/core/form/editors/expression#expression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выражение"; l10n:originalData "expression"].
+
 <http://comindware.com/text/core/form/editors/expression#template> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Шаблон"; l10n:originalData "template"].
 
 <http://comindware.com/text/core/form/editors/expression#value> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Значение"; l10n:originalData "value"].
