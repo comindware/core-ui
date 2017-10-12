@@ -9,8 +9,8 @@
 export default class WebSocketService {
     static initialize(options = {}) {
         Object.assign(this, Backbone.Events);
-
-        this.socket = new WebSocket(`ws:${options.url}`);
+        this.isConnectionOpened = true;
+        this.socket = new WebSocket(options.url);
 
         this.socket.onopen = () => this.__handleSocketOpen();
         this.socket.onclose = () => this.__handleSocketClosed();
@@ -31,7 +31,11 @@ export default class WebSocketService {
     }
 
     static __handleSocketMessage(data) {
-        this.trigger('ws:message', JSON.parse(data));
+        try {
+            this.trigger('ws:message', JSON.parse(data.data));
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     static __handleSocketOpen() {
