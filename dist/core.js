@@ -92366,7 +92366,7 @@ exports.default = Marionette.ItemView.extend({
 /* 736 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"svg-icons-wrp svg-icons-wrp_add\">\n        <svg class=\"svg-icons svg-icons_plus\"><use xlink:href=\"#icon-plus\" /> </svg>\n</div>\n{{localize 'CORE.FORM.EDITORS.REFERENCE.ADDNEW'}}";
+module.exports = "<div class=\"svg-icons-wrp svg-icons-wrp_add\">\r\n        <svg class=\"svg-icons svg-icons_plus\"><use xlink:href=\"#icon-plus\" /> </svg>\r\n</div>\r\n{{localize 'CORE.FORM.EDITORS.REFERENCE.ADDNEW'}}";
 
 /***/ }),
 /* 737 */
@@ -93398,7 +93398,7 @@ exports.default = Marionette.ItemView.extend({
 /* 753 */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"js-text dropdown-text\">{{#if hasValue}}{{#if text}}{{text}}{{else}}&nbsp{{/if}}{{else}}{{localize 'CORE.FORM.EDITORS.DROPDOWN.NOTSET'}}{{/if}}</span>\n<div class=\"svg-icons-wrp\">\n    <div class=\"svg-icons-wrp__empty\">\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\n    </div>\n    {{#if allowEmptyValue}}\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n    {{/if}}\n</div>";
+module.exports = "<span class=\"js-text dropdown-text\">{{#if hasValue}}{{#if text}}{{text}}{{else}}&nbsp{{/if}}{{else}}{{localize 'CORE.FORM.EDITORS.DROPDOWN.NOTSET'}}{{/if}}</span>\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\r\n    </div>\r\n    {{#if allowEmptyValue}}\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n    {{/if}}\r\n</div>";
 
 /***/ }),
 /* 754 */
@@ -96935,7 +96935,7 @@ exports.default = Marionette.CompositeView.extend({
 /* 792 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>\n</div>\n<div class=\"js-list multiselect-panel__list\"></div>\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\n{{#if explicitApply}}\n    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>\n{{else}}\n    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>\n{{/if}}\n</div>";
+module.exports = "<div class=\"multiselect-panel__btn multiselect-panel__btn_top\">\r\n    <div class=\"js-select-all multiselect-panel-btn multiselect-panel-btn_selectall\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>\r\n</div>\r\n<div class=\"js-list multiselect-panel__list\"></div>\r\n<div class=\"multiselect-panel__btn multiselect-panel__btn_bottom\">\r\n{{#if explicitApply}}\r\n    <div class=\"js-cancel multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>\r\n    <div class=\"js-apply btn multiselect-panel-btn multiselect-panel-btn_apply\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>\r\n{{else}}\r\n    <div class=\"js-close btn multiselect-panel-btn multiselect-panel-btn_cancel\">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>\r\n{{/if}}\r\n</div>";
 
 /***/ }),
 /* 793 */
@@ -97009,7 +97009,7 @@ exports.default = Marionette.ItemView.extend({
 /* 794 */
 /***/ (function(module, exports) {
 
-module.exports = "{{text}}\n<span class=\"svg-icons-wrp svg-icons-wrp_multiselect\">\n        <svg class=\"svg-icons svg-icons_multiselect\"><use xlink:href=\"#icon-checked\" /> </svg>\n    </span>";
+module.exports = "{{text}}\r\n<span class=\"svg-icons-wrp svg-icons-wrp_multiselect\">\r\n        <svg class=\"svg-icons svg-icons_multiselect\"><use xlink:href=\"#icon-checked\" /> </svg>\r\n    </span>";
 
 /***/ }),
 /* 795 */
@@ -97096,7 +97096,7 @@ exports.default = Marionette.ItemView.extend({
 /* 796 */
 /***/ (function(module, exports) {
 
-module.exports = "{{displayValue}}\n<div class=\"svg-icons-wrp\">\n    <div class=\"svg-icons-wrp__empty\">\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\n    </div>\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n</div>";
+module.exports = "{{displayValue}}\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"svg-icons-wrp__empty\">\r\n        <svg class=\"svg-icons svg-icons_dropdown\"><use xlink:href=\"#icon-dropdown\" /> </svg>\r\n    </div>\r\n    <div class=\"js-clear-button svg-icons-wrp__remove\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 797 */
@@ -97558,7 +97558,7 @@ exports.default = _formRepository2.default.editors.Document;
 /* 800 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-add-region\"></div>\n<div class=\"js-documents-multiselect field-documents dev-field-documents\"></div>";
+module.exports = "<div class=\"js-add-region\"></div>\r\n<div class=\"js-documents-multiselect field-documents dev-field-documents\"></div>";
 
 /***/ }),
 /* 801 */
@@ -97774,7 +97774,7 @@ exports.default = Marionette.CompositeView.extend({
 /* 802 */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"task-links js-collection-container\"></ul>\n<div class=\"field-documents__more js-show-more\">\n    <span class=\"button-sm-txt js-show-more-text\">{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.SHOWMORE'}}</span>\n    <span class=\"js-invisible-count\"></span>\n</div>\n";
+module.exports = "<ul class=\"task-links js-collection-container\"></ul>\r\n<div class=\"field-documents__more js-show-more\">\r\n    <span class=\"button-sm-txt js-show-more-text\">{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.SHOWMORE'}}</span>\r\n    <span class=\"js-invisible-count\"></span>\r\n</div>\r\n";
 
 /***/ }),
 /* 803 */
@@ -97885,7 +97885,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 804 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if url}}\n<a class=\"task-links__link js-link\" target=\"_blank\" href=\"{{url}}\" title=\"{{text}}\">{{text}}</a>\n{{else}}\n<span>{{text}}</span>\n{{/if}}\n<span class=\"js-revise-button-region dev-btn-document-revise\" title=\"{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.SHOWREVISION'}}\"></span>\n<div class=\"svg-icons-wrp\">\n    <div class=\"js-remove-button svg-icons-wrp__remove\" title=\"{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.REMOVE'}}\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n</div>\n";
+module.exports = "{{#if url}}\r\n<a class=\"task-links__link js-link\" target=\"_blank\" href=\"{{url}}\" title=\"{{text}}\">{{text}}</a>\r\n{{else}}\r\n<span>{{text}}</span>\r\n{{/if}}\r\n<span class=\"js-revise-button-region dev-btn-document-revise\" title=\"{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.SHOWREVISION'}}\"></span>\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"js-remove-button svg-icons-wrp__remove\" title=\"{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.REMOVE'}}\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 805 */
@@ -98002,13 +98002,13 @@ exports.default = Marionette.ItemView.extend({
 /* 808 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#unless isSingleRevision}}<td>{{version}}</td>{{/unless}}\n<td>{{creationDate}}</td>\n<td>{{creator}}</td>\n{{#unless isSingleRevision}}\n<td><a href=\"{{url}}\" target=\"_blank\" class=\"fr-btn fr-btn_download\">\n    <span class=\"fr-btn__icon\">\n        <svg  viewBox=\"0 0 20 20\" width=\"20px\" height=\"20px\" class=\"svg-icons svg-icons_download\">\n            <polygon class=\"d-svg-icons d-svg-icons_download\" points=\"17,14 17,17 3,17 3,14 1,14 1,19 19,19 19,14 \t\"/>\n\t        <polygon class=\"d-svg-icons d-svg-icons_download\" points=\"14,10 10.8,10 10.8,1 9.3,1 9.3,10 6,10 10,15 \t\"/>\n        </svg>\n    </span>\n</a></td>\n{{/unless}}";
+module.exports = "{{#unless isSingleRevision}}<td>{{version}}</td>{{/unless}}\r\n<td>{{creationDate}}</td>\r\n<td>{{creator}}</td>\r\n{{#unless isSingleRevision}}\r\n<td><a href=\"{{url}}\" target=\"_blank\" class=\"fr-btn fr-btn_download\">\r\n    <span class=\"fr-btn__icon\">\r\n        <svg  viewBox=\"0 0 20 20\" width=\"20px\" height=\"20px\" class=\"svg-icons svg-icons_download\">\r\n            <polygon class=\"d-svg-icons d-svg-icons_download\" points=\"17,14 17,17 3,17 3,14 1,14 1,19 19,19 19,14 \t\"/>\r\n\t        <polygon class=\"d-svg-icons d-svg-icons_download\" points=\"14,10 10.8,10 10.8,1 9.3,1 9.3,10 6,10 10,15 \t\"/>\r\n        </svg>\r\n    </span>\r\n</a></td>\r\n{{/unless}}";
 
 /***/ }),
 /* 809 */
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"dev-revision-container\">\n    {{#unless isSingleRevision}}\n    <thead>\n        <tr>\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.VERSION'}}</th>\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.CREATIONDATE'}}</th>\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.AUTHOR'}}</th>\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.DOWNLOAD'}}</th>\n        </tr>\n    </thead>\n    {{/unless}}\n    <tbody class=\"js-revision-list\"></tbody>\n</table>\n";
+module.exports = "<table class=\"dev-revision-container\">\r\n    {{#unless isSingleRevision}}\r\n    <thead>\r\n        <tr>\r\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.VERSION'}}</th>\r\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.CREATIONDATE'}}</th>\r\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.AUTHOR'}}</th>\r\n            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.DOWNLOAD'}}</th>\r\n        </tr>\r\n    </thead>\r\n    {{/unless}}\r\n    <tbody class=\"js-revision-list\"></tbody>\r\n</table>\r\n";
 
 /***/ }),
 /* 810 */
@@ -98273,7 +98273,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 813 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-close galleryButton\" title=\"{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.GALLERY.CLOSE'}}\">X</div>\n<div class=\"js-image galleryImage\"></div>\n<div class=\"js-download galleryImageDownload\"><span>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.GALLERY.DOWNLOAD'}}</span></div>\n<div class=\"js-loading-region dev-l-loader-image-gallery\"></div>";
+module.exports = "<div class=\"js-close galleryButton\" title=\"{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.GALLERY.CLOSE'}}\">X</div>\r\n<div class=\"js-image galleryImage\"></div>\r\n<div class=\"js-download galleryImageDownload\"><span>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.GALLERY.DOWNLOAD'}}</span></div>\r\n<div class=\"js-loading-region dev-l-loader-image-gallery\"></div>";
 
 /***/ }),
 /* 814 */
@@ -98283,7 +98283,7 @@ module.exports = "<div class=\"js-close galleryButton\" title=\"{{localize 'MODU
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _loading = __webpack_require__(815);
@@ -98294,9 +98294,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = Marionette.ItemView.extend({
 
-  template: Handlebars.compile(_loading2.default),
+    template: Handlebars.compile(_loading2.default),
 
-  className: 'l-loader'
+    className: 'l-loader'
 }); /**
      * Developer: Ksenia Kartvelishvili
      * Date: 8/25/2017
@@ -98527,7 +98527,7 @@ exports.default = Backbone.Marionette.ItemView.extend({
 /* 817 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-file-button fr-btn fr-btn_attach\" title=\"{{displayText}}\">\n    <span class=\"fr-btn__icon\">\n        <svg  viewBox=\"0 0 20 20\" class=\"svg-icons svg-icons_attach\"><path class=\"d-svg-icons d-svg-icons_attach\" d=\"M14.2,13.3c-1.9-1.9-7-7.3-8.5-8.8C4,2.7,2,3.8,1,4.8s-1.7,2.8,0.2,4.7s5.4,5.3,5.4,5.3 c1.7,1.7,3.3,0.1,3.3,0.1c1.5-1.3-0.3-3.1-0.3-3.1c-0.2-0.2-3.7-3.7-3.7-3.7s-0.4-0.6-1-0.2c-0.1,0.2-0.4,0.5,0.2,1l3.4,3.4 c0,0,1.4,1,0.7,1.7c0,0-0.9,1.1-2-0.4c0,0-4.8-4.7-5.4-5.3S1,6.5,2.1,5.5c1.1-1.1,2.1-0.8,3.3,0.3s7.3,7.4,8.2,8.4 c0.9,1,0.4,2.1-0.7,3.3S9.7,19.3,8.4,18s-5.7-5.4-6.2-5.9s-0.7-0.5-1.2-0.2c-0.3,0.3-0.2,0.8,0.3,1.3c0,0,5.1,4.7,6.6,6.2 s4.5,0.1,5.6-1C14.8,17.3,16.2,15.1,14.2,13.3z\"/><path class=\"d-svg-icons d-svg-icons_attach\" d=\"M15.3,0h1.2v8.2h-1.2V0z\"/><path class=\"d-svg-icons d-svg-icons_attach\" d=\"M11.8,4.7V3.5H20v1.2L11.8,4.7z\"/></svg>\n    </span>\n</div>\n<form class=\"js-file-form\">\n    <input name=\"fileId\" type=\"file\" multiple=\"\" class=\"js-file-input input-upload\" accept=\"{{fileFormat}}\" style=\"display: none\">\n</form>";
+module.exports = "<div class=\"js-file-button fr-btn fr-btn_attach\" title=\"{{displayText}}\">\r\n    <span class=\"fr-btn__icon\">\r\n        <svg  viewBox=\"0 0 20 20\" class=\"svg-icons svg-icons_attach\"><path class=\"d-svg-icons d-svg-icons_attach\" d=\"M14.2,13.3c-1.9-1.9-7-7.3-8.5-8.8C4,2.7,2,3.8,1,4.8s-1.7,2.8,0.2,4.7s5.4,5.3,5.4,5.3 c1.7,1.7,3.3,0.1,3.3,0.1c1.5-1.3-0.3-3.1-0.3-3.1c-0.2-0.2-3.7-3.7-3.7-3.7s-0.4-0.6-1-0.2c-0.1,0.2-0.4,0.5,0.2,1l3.4,3.4 c0,0,1.4,1,0.7,1.7c0,0-0.9,1.1-2-0.4c0,0-4.8-4.7-5.4-5.3S1,6.5,2.1,5.5c1.1-1.1,2.1-0.8,3.3,0.3s7.3,7.4,8.2,8.4 c0.9,1,0.4,2.1-0.7,3.3S9.7,19.3,8.4,18s-5.7-5.4-6.2-5.9s-0.7-0.5-1.2-0.2c-0.3,0.3-0.2,0.8,0.3,1.3c0,0,5.1,4.7,6.6,6.2 s4.5,0.1,5.6-1C14.8,17.3,16.2,15.1,14.2,13.3z\"/><path class=\"d-svg-icons d-svg-icons_attach\" d=\"M15.3,0h1.2v8.2h-1.2V0z\"/><path class=\"d-svg-icons d-svg-icons_attach\" d=\"M11.8,4.7V3.5H20v1.2L11.8,4.7z\"/></svg>\r\n    </span>\r\n</div>\r\n<form class=\"js-file-form\">\r\n    <input name=\"fileId\" type=\"file\" multiple=\"\" class=\"js-file-input input-upload\" accept=\"{{fileFormat}}\" style=\"display: none\">\r\n</form>";
 
 /***/ }),
 /* 818 */
@@ -99251,13 +99251,13 @@ exports.default = Marionette.LayoutView.extend({
 /* 822 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-code-editor-undo dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.UNDO'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-undo\"></div>\n</div>\n<div class=\"js-code-editor-redo dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.REDO'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-redo\"></div>\n</div>\n<div class=\"js-code-editor-format dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.FORMAT'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-format\"></div>\n</div>\n<div class=\"js-code-editor-hint dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.HINT'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-hint\"></div>\n</div>\n<div class=\"js-code-editor-find dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.FIND'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-find\"></div>\n</div>\n<div class=\"js-code-editor-maximize dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.MAXIMIZE'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-maximize\"></div>\n</div>\n<div class=\"js-code-editor-minimize dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.MINIMIZE'}}\">\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-minimize\"></div>\n</div>";
+module.exports = "<div class=\"js-code-editor-undo dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.UNDO'}}\">\r\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-undo\"></div>\r\n</div>\r\n<div class=\"js-code-editor-redo dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.REDO'}}\">\r\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-redo\"></div>\r\n</div>\r\n<div class=\"js-code-editor-format dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.FORMAT'}}\">\r\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-format\"></div>\r\n</div>\r\n<div class=\"js-code-editor-hint dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.HINT'}}\">\r\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-hint\"></div>\r\n</div>\r\n<div class=\"js-code-editor-find dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.FIND'}}\">\r\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-find\"></div>\r\n</div>\r\n<div class=\"js-code-editor-maximize dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.MAXIMIZE'}}\">\r\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-maximize\"></div>\r\n</div>\r\n<div class=\"js-code-editor-minimize dev-code-editor-toolbar_button_container\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.MINIMIZE'}}\">\r\n    <div class=\"dev-code-editor-toolbar_button dev-code-editor-toolbar_button-minimize\"></div>\r\n</div>";
 
 /***/ }),
 /* 823 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-code-toolbar-container\"></div>\n<div class=\"js-code-editor-container\"></div>\n<div class=\"js-code-tooltip-container\"></div>";
+module.exports = "<div class=\"js-code-toolbar-container\"></div>\r\n<div class=\"js-code-editor-container\"></div>\r\n<div class=\"js-code-tooltip-container\"></div>";
 
 /***/ }),
 /* 824 */
@@ -99576,7 +99576,7 @@ exports.default = Marionette.ItemView.extend({
 /* 827 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if parameters}}\n    {{text}}(\n    {{#each this.parameters}}\n    <span class=\"dev-code-editor-tooltip-parameter-name\">{{this.name}}</span>:<span class=\"dev-code-editor-tooltip-parameter-type\">{{this.type}}</span>{{#unless @last}}, {{/unless}}{{#if @last}} ){{/if}}\n    {{/each}}\n    {{#if returns}}: <span class=\"dev-code-editor-tooltip-parameter-type\">{{returns}}</span>{{/if}}\n{{else}}\n    {{text}}()\n    {{#if returns}}: <span class=\"dev-code-editor-tooltip-parameter-type\">{{returns}}</span>{{/if}}\n{{/if}}\n";
+module.exports = "{{#if parameters}}\r\n    {{text}}(\r\n    {{#each this.parameters}}\r\n    <span class=\"dev-code-editor-tooltip-parameter-name\">{{this.name}}</span>:<span class=\"dev-code-editor-tooltip-parameter-type\">{{this.type}}</span>{{#unless @last}}, {{/unless}}{{#if @last}} ){{/if}}\r\n    {{/each}}\r\n    {{#if returns}}: <span class=\"dev-code-editor-tooltip-parameter-type\">{{returns}}</span>{{/if}}\r\n{{else}}\r\n    {{text}}()\r\n    {{#if returns}}: <span class=\"dev-code-editor-tooltip-parameter-type\">{{returns}}</span>{{/if}}\r\n{{/if}}\r\n";
 
 /***/ }),
 /* 828 */
@@ -99639,19 +99639,19 @@ exports.default = Marionette.ItemView.extend({
 /* 830 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#each parameters}}\n    <div>\n        <span class=\"dev-code-editor-tooltip-parameter-name\">{{this.name}}</span>: {{this.description}}\n    </div>\n{{/each}}";
+module.exports = "{{#each parameters}}\r\n    <div>\r\n        <span class=\"dev-code-editor-tooltip-parameter-name\">{{this.name}}</span>: {{this.description}}\r\n    </div>\r\n{{/each}}";
 
 /***/ }),
 /* 831 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-function-overloads-container\"></div>\n<div class=\"dev-code-editor-tooltip-row\">{{description}}</div>\n<div class=\"js-function-parameters-container\"></div>\n\n\n\n";
+module.exports = "<div class=\"js-function-overloads-container\"></div>\r\n<div class=\"dev-code-editor-tooltip-row\">{{description}}</div>\r\n<div class=\"js-function-parameters-container\"></div>\r\n\r\n\r\n\r\n";
 
 /***/ }),
 /* 832 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-code-codemirror-container\"></div>\n<div class=\"js-code-button-edit dev-code-button-edit\"></div>\n<div class=\"svg-icons-wrp\">\n    <div class=\"js-code-button-clear svg-icons-wrp__remove\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.CLEAR'}}\">\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\n    </div>\n</div>\n<div class=\"js-code-fading-panel dev-code-editor-fading-panel\"></div>\n";
+module.exports = "<div class=\"js-code-codemirror-container\"></div>\r\n<div class=\"js-code-button-edit dev-code-button-edit\"></div>\r\n<div class=\"svg-icons-wrp\">\r\n    <div class=\"js-code-button-clear svg-icons-wrp__remove\" title=\"{{localize 'CORE.FORM.EDITORS.CODE.CLEAR'}}\">\r\n        <svg class=\"svg-icons svg-icons_remove\"><use xlink:href=\"#icon-remove\" /> </svg>\r\n    </div>\r\n</div>\r\n<div class=\"js-code-fading-panel dev-code-editor-fading-panel\"></div>\r\n";
 
 /***/ }),
 /* 833 */
@@ -99752,7 +99752,7 @@ exports.default = Marionette.CompositeView.extend({
 /* 835 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if allowBlank}}<div class='data-source__text data-source__text_notset js-clear-value'>{{localize  'WIDGETS.WTABLE.EMPTYVALUE'}}</div>{{/if}}\n<div class='js-popout-panel data-source-popout'></div>\n";
+module.exports = "{{#if allowBlank}}<div class='data-source__text data-source__text_notset js-clear-value'>{{localize  'WIDGETS.WTABLE.EMPTYVALUE'}}</div>{{/if}}\r\n<div class='js-popout-panel data-source-popout'></div>\r\n";
 
 /***/ }),
 /* 836 */
@@ -99875,7 +99875,7 @@ exports.default = Marionette.CompositeView.extend({
 /* 837 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if hasChildren}}\n    <div class=\"js-item-toggle-icon data-source__icon\"></div>\n{{/if}}\n<div class=\"js-item-title data-source__text\" title=\"{{text}}\">{{text}}</div>\n{{#if hasChildren}}\n    <div class=\"js-items-container data-source__child\"></div>\n{{/if}}";
+module.exports = "{{#if hasChildren}}\r\n    <div class=\"js-item-toggle-icon data-source__icon\"></div>\r\n{{/if}}\r\n<div class=\"js-item-title data-source__text\" title=\"{{text}}\">{{text}}</div>\r\n{{#if hasChildren}}\r\n    <div class=\"js-items-container data-source__child\"></div>\r\n{{/if}}";
 
 /***/ }),
 /* 838 */
@@ -100267,7 +100267,7 @@ exports.default = _formRepository2.default.editors.IsFavourite;
 /* 846 */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"icon-favorite js-toggle-button\"></span>\n";
+module.exports = "<span class=\"icon-favorite js-toggle-button\"></span>\r\n";
 
 /***/ }),
 /* 847 */
@@ -100593,19 +100593,19 @@ exports.default = _ItemSplitView2.default.extend({
 /* 852 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mselect__h1 js-title-region\">\n    {{title}}\n</div>\n<div class=\"mselect__panel{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\n    <h3 class=\"mselect__header {{#if maxQuantitySelected}} mselect__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-available-items-toolbar-region \"> </div>{{/if}}\n    <div class=\"mselect__search js-available-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"mselect__items js-available-members-container\">\n        <div class=\"mselect-list js-available-items-list-region\"></div>\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\n    </div>\n</div>\n<div class=\"mselect__button-panel\">\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\n    {{#if allowRemove}}\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\n    {{/if}}\n</div>\n<div class=\"mselect__panel mselect__panel_selected{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\n    <h3 class=\"mselect__header{{#if maxQuantitySelected}} mselect__header_2line{{/if}} js\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-selected-items-toolbar-region\"></div>{{/if}}\n    <div class=\"mselect__search js-selected-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"js-selected-members-container mselect__selected\">\n        <div class=\"mselect-list js-selected-items-list-region\"></div>\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\n    </div>\n</div>\n{{#if confirmEdit}}\n<div class=\"mselect__buttons js-confirm-panel\">\n    <div class=\"button-txt js-accept\">{{acceptText}}</div>\n    <div class=\"button-txt js-reject\">{{rejectText}}</div>\n</div>\n{{/if}}";
+module.exports = "<div class=\"mselect__h1 js-title-region\">\r\n    {{title}}\r\n</div>\r\n<div class=\"mselect__panel{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\r\n    <h3 class=\"mselect__header {{#if maxQuantitySelected}} mselect__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\r\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-available-items-toolbar-region \"> </div>{{/if}}\r\n    <div class=\"mselect__search js-available-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\r\n    <div class=\"mselect__items js-available-members-container\">\r\n        <div class=\"mselect-list js-available-items-list-region\"></div>\r\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\r\n    </div>\r\n</div>\r\n<div class=\"mselect__button-panel\">\r\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\r\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\r\n    {{#if allowRemove}}\r\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\r\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\r\n    {{/if}}\r\n</div>\r\n<div class=\"mselect__panel mselect__panel_selected{{#if showToolbar}} mselect__panel_toolbar{{/if}}\">\r\n    <h3 class=\"mselect__header{{#if maxQuantitySelected}} mselect__header_2line{{/if}} js\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\r\n    {{#if showToolbar}}<div class=\"mselect__toolbar js-selected-items-toolbar-region\"></div>{{/if}}\r\n    <div class=\"mselect__search js-selected-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\r\n    <div class=\"js-selected-members-container mselect__selected\">\r\n        <div class=\"mselect-list js-selected-items-list-region\"></div>\r\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\r\n    </div>\r\n</div>\r\n{{#if confirmEdit}}\r\n<div class=\"mselect__buttons js-confirm-panel\">\r\n    <div class=\"button-txt js-accept\">{{acceptText}}</div>\r\n    <div class=\"button-txt js-reject\">{{rejectText}}</div>\r\n</div>\r\n{{/if}}";
 
 /***/ }),
 /* 853 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-menu-select-item list-item\">\n    {{#if userpicUri}}\n    <img src=\"{{userpicUri}}\" alt=\"\" class=\"avatar-icon avatar-icon_list\">\n    {{else}}\n    {{#if abbreviation}}\n    <div class=\"avatar-icon avatar-icon_list\">{{abbreviation}}</div>\n    {{/if}}\n    {{/if}}\n    {{#if isGroup}}\n    <span class=\"group-icon\"></span>\n    {{/if}}\n    <span class=\"js-name\">{{name}}</span>\n</div>";
+module.exports = "<div class=\"js-menu-select-item list-item\">\r\n    {{#if userpicUri}}\r\n    <img src=\"{{userpicUri}}\" alt=\"\" class=\"avatar-icon avatar-icon_list\">\r\n    {{else}}\r\n    {{#if abbreviation}}\r\n    <div class=\"avatar-icon avatar-icon_list\">{{abbreviation}}</div>\r\n    {{/if}}\r\n    {{/if}}\r\n    {{#if isGroup}}\r\n    <span class=\"group-icon\"></span>\r\n    {{/if}}\r\n    <span class=\"js-name\">{{name}}</span>\r\n</div>";
 
 /***/ }),
 /* 854 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if showAll}}\n    <div class=\"tabs__i tabs__i_current js-all-button js-filter-button\">\n        <span class=\"tabs__link tabs__link_current js-all-link js-filter-link\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.ALL'}}</span>\n    </div>\n{{/if}}\n{{#if showUsers}}\n    <div class=\"tabs__i js-users-button js-filter-button\">\n        <span class=\"tabs__link js-users-link js-filter-link\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.PEOPLE'}}</span>\n    </div>\n{{/if}}\n{{#if showGroups}}\n    <div class=\"tabs__i js-groups-button js-filter-button\">\n    <span class=\"tabs__link js-groups-link js-filter-link\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.GROUPS'}}</span>\n    </div>\n{{/if}}";
+module.exports = "{{#if showAll}}\r\n    <div class=\"tabs__i tabs__i_current js-all-button js-filter-button\">\r\n        <span class=\"tabs__link tabs__link_current js-all-link js-filter-link\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.ALL'}}</span>\r\n    </div>\r\n{{/if}}\r\n{{#if showUsers}}\r\n    <div class=\"tabs__i js-users-button js-filter-button\">\r\n        <span class=\"tabs__link js-users-link js-filter-link\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.PEOPLE'}}</span>\r\n    </div>\r\n{{/if}}\r\n{{#if showGroups}}\r\n    <div class=\"tabs__i js-groups-button js-filter-button\">\r\n    <span class=\"tabs__link js-groups-link js-filter-link\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.TOOLBAR.GROUPS'}}</span>\r\n    </div>\r\n{{/if}}";
 
 /***/ }),
 /* 855 */
@@ -101046,7 +101046,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 859 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if showToolbar}}\n    <h3 class=\"columns-select__header {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\n    <h3 class=\"columns-select__header columns-select__header_right {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\n{{/if}}\n<div class=\"columns-select__panel\">\n    {{#if showToolbar}}<div class=\"js-available-items-toolbar-region \"> </div>{{/if}}\n    <div class=\"columns-select__search js-available-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"columns-select__items js-available-members-container\">\n        <div class=\"columns-select-list js-available-items-list-region\"></div>\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\n    </div>\n</div>\n<div class=\"columns-select__btn\">\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\n    {{#if allowRemove}}\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\n    {{/if}}\n</div>\n<div class=\"columns-select__panel\">\n    {{#if showToolbar}}<div class=\"js-selected-items-toolbar-region\"></div>{{/if}}\n    <div class=\"columns-select__search js-selected-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\n    <div class=\"js-selected-members-container columns-select__items\">\n        <div class=\"columns-select-list js-selected-items-list-region\"></div>\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\n    </div>\n</div>";
+module.exports = "{{#if showToolbar}}\r\n    <h3 class=\"columns-select__header {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{itemsToSelectText}}</h3>\r\n    <h3 class=\"columns-select__header columns-select__header_right {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}\">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class=\"mselect__header-info js-max-quantity-info\"></span>{{/if}}</h3>\r\n{{/if}}\r\n<div class=\"columns-select__panel\">\r\n    {{#if showToolbar}}<div class=\"js-available-items-toolbar-region \"> </div>{{/if}}\r\n    <div class=\"columns-select__search js-available-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\r\n    <div class=\"columns-select__items js-available-members-container\">\r\n        <div class=\"columns-select-list js-available-items-list-region\"></div>\r\n        <div class=\"l-scrollbar js-available-items-scrollbar-region\"></div>\r\n    </div>\r\n</div>\r\n<div class=\"columns-select__btn\">\r\n    <div class=\"button-arrow button-arrow_right js-move-right-button\"></div>\r\n    <div class=\"button-arrow button-arrow_all-right js-move-right-all-button\"></div>\r\n    {{#if allowRemove}}\r\n    <div class=\"button-arrow button-arrow_left js-move-left-button\"></div>\r\n    <div class=\"button-arrow button-arrow_all-left js-move-left-all-button\"></div>\r\n    {{/if}}\r\n</div>\r\n<div class=\"columns-select__panel\">\r\n    {{#if showToolbar}}<div class=\"js-selected-items-toolbar-region\"></div>{{/if}}\r\n    <div class=\"columns-select__search js-selected-search-region\" title=\"{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}\"></div>\r\n    <div class=\"js-selected-members-container columns-select__items\">\r\n        <div class=\"columns-select-list js-selected-items-list-region\"></div>\r\n        <div class=\"l-scrollbar js-selected-items-scrollbar-region\"></div>\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 860 */
@@ -101424,7 +101424,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 866 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-search-input-region icons-panel__search\"></div>\n<div class=\"js-search-area ld-setting-dd-panel ld-setting-dd-panel_icons dev-setting-dd-panel_icons\" style=\"display: none\"></div>\n<div class=\"js-collection-area\"></div>";
+module.exports = "<div class=\"js-search-input-region icons-panel__search\"></div>\r\n<div class=\"js-search-area ld-setting-dd-panel ld-setting-dd-panel_icons dev-setting-dd-panel_icons\" style=\"display: none\"></div>\r\n<div class=\"js-collection-area\"></div>";
 
 /***/ }),
 /* 867 */
@@ -101484,13 +101484,13 @@ module.exports = "";
 /* 869 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"icons-panel-category__name\">{{name}}</div>\n<div class=\"js-item-palette icons-panel-category__palette\">\n    {{#each groupItems}}\n        <div data-id=\"{{this.id}}\" class=\"icons-panel-i js-icon-item\">\n            <i class=\"icons-panel-i__img fa fa-{{this.id}}\" aria-hidden=\"true\"></i>\n            <div class=\"icons-panel-i__text\" title=\"{{this.name}}\">{{this.name}}</div>\n        </div>\n    {{/each}}\n</div>\n";
+module.exports = "<div class=\"icons-panel-category__name\">{{name}}</div>\r\n<div class=\"js-item-palette icons-panel-category__palette\">\r\n    {{#each groupItems}}\r\n        <div data-id=\"{{this.id}}\" class=\"icons-panel-i js-icon-item\">\r\n            <i class=\"icons-panel-i__img fa fa-{{this.id}}\" aria-hidden=\"true\"></i>\r\n            <div class=\"icons-panel-i__text\" title=\"{{this.name}}\">{{this.name}}</div>\r\n        </div>\r\n    {{/each}}\r\n</div>\r\n";
 
 /***/ }),
 /* 870 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-icon-selector-header dev-icon-selector-header\"></div>\n<div class=\"js-delete-icon dev-delete-icon-button\" title=\"{{localize 'PROCESS.COMMON.NAVIGATION.TEMPLATES.TABS.STARTFORM.DELETEBUTTON'}}\">\n    <i class=\"dev-delete-icon-button-image fa fa-times fa-lg\" aria-hidden=\"true\"></i>\n</div>\n";
+module.exports = "<div class=\"js-icon-selector-header dev-icon-selector-header\"></div>\r\n<div class=\"js-delete-icon dev-delete-icon-button\" title=\"{{localize 'PROCESS.COMMON.NAVIGATION.TEMPLATES.TABS.STARTFORM.DELETEBUTTON'}}\">\r\n    <i class=\"dev-delete-icon-button-image fa fa-times fa-lg\" aria-hidden=\"true\"></i>\r\n</div>\r\n";
 
 /***/ }),
 /* 871 */
@@ -104023,7 +104023,7 @@ exports.default = _formRepository2.default.editors.TimeNumberEditorView;
 /* 873 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"field-time__btn field-time__btn_up js-spinner-up js-spinner-button\"></div>\n<input class=\"field-time__input js-input\" type=\"text\">\n<div class=\"field-time__btn field-time__btn_down js-spinner-down js-spinner-button\"></div>";
+module.exports = "<div class=\"field-time__btn field-time__btn_up js-spinner-up js-spinner-button\"></div>\r\n<input class=\"field-time__input js-input\" type=\"text\">\r\n<div class=\"field-time__btn field-time__btn_down js-spinner-down js-spinner-button\"></div>";
 
 /***/ }),
 /* 874 */
@@ -104420,7 +104420,7 @@ exports.default = _formRepository2.default.editors.Expression = _BaseLayoutEdito
 /* 875 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"field-expression\">\n    <div class=\"field-expression__field js-value-container\"></div>\n    <div class=\"field-expression__val field-expression__val_func js-expression-container\"></div>\n    <div class=\"field-expression__val field-expression__val_func js-script-container\"></div>\n    <div style=\"overflow: inherit\" class=\"field-expression__val dev-field-expression__val js-context-container\"></div>\n    <div class=\"type-expression js-select-type\"></div>\n</div>";
+module.exports = "<div class=\"field-expression\">\r\n    <div class=\"field-expression__field js-value-container\"></div>\r\n    <div class=\"field-expression__val field-expression__val_func js-expression-container\"></div>\r\n    <div class=\"field-expression__val field-expression__val_func js-script-container\"></div>\r\n    <div style=\"overflow: inherit\" class=\"field-expression__val dev-field-expression__val js-context-container\"></div>\r\n    <div class=\"type-expression js-select-type\"></div>\r\n</div>";
 
 /***/ }),
 /* 876 */
@@ -104498,7 +104498,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 877 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"h1-popup\">\n    <span class=\"h1-popup__txt\">{{titleText}}</span>\n</div>\n<div class=\"pp-setting-editor js-content-region\"></div>\n<div class=\"pp-buttons\">\n    <div class=\"js-accept button-txt\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.CONTROL.SETVALUE.SAVE'}}</div>\n    <div class=\"js-reject button-txt\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.CONTROL.SETVALUE.CANCEL'}}</div>\n</div>";
+module.exports = "<div class=\"h1-popup\">\r\n    <span class=\"h1-popup__txt\">{{titleText}}</span>\r\n</div>\r\n<div class=\"pp-setting-editor js-content-region\"></div>\r\n<div class=\"pp-buttons\">\r\n    <div class=\"js-accept button-txt\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.CONTROL.SETVALUE.SAVE'}}</div>\r\n    <div class=\"js-reject button-txt\">{{localize 'PROCESS.PROCESSTEMPLATES.ACTIVITY.CONTROL.SETVALUE.CANCEL'}}</div>\r\n</div>";
 
 /***/ }),
 /* 878 */
@@ -104550,7 +104550,7 @@ exports.default = Marionette.ItemView.extend({
 /* 879 */
 /***/ (function(module, exports) {
 
-module.exports = "<textarea class=\"js-expression-input\"></textarea>\n";
+module.exports = "<textarea class=\"js-expression-input\"></textarea>\r\n";
 
 /***/ }),
 /* 880 */
@@ -104604,7 +104604,7 @@ exports.default = Marionette.ItemView.extend({
 /* 881 */
 /***/ (function(module, exports) {
 
-module.exports = "<textarea wrap=\"off\" class=\"js-script-input\"></textarea>\n";
+module.exports = "<textarea wrap=\"off\" class=\"js-script-input\"></textarea>\r\n";
 
 /***/ }),
 /* 882 */
@@ -104717,7 +104717,7 @@ exports.default = Marionette.ItemView.extend({
 /* 886 */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"type-expression__name\">\n    <span class=\"type-expression__radio\"></span>\n    {{name}}\n</span>";
+module.exports = "<span class=\"type-expression__name\">\r\n    <span class=\"type-expression__radio\"></span>\r\n    {{name}}\r\n</span>";
 
 /***/ }),
 /* 887 */
@@ -104816,7 +104816,7 @@ module.exports = "<div class=\"context-wrp js-context-selector\"></div>";
 /* 890 */
 /***/ (function(module, exports) {
 
-module.exports = "using System;\nusing System.Linq;\nusing Comindware.Data.Entity;\n\nclass Script\n{\n    public static void Main(Comindware.Process.Api.Data.ScriptContext context, Comindware.Entities entities)\n    {\n        var processObject = Api.Process.ProcessObjectService.Get(context.ProcessId);\n        var businessObject = entities.<business object alias>.Where(cr => cr.id == processObject.BusinessObjectId).First();\n        throw new NotImplementedException();\n    }\n}";
+module.exports = "using System;\r\nusing System.Linq;\r\nusing Comindware.Data.Entity;\r\n\r\nclass Script\r\n{\r\n    public static void Main(Comindware.Process.Api.Data.ScriptContext context, Comindware.Entities entities)\r\n    {\r\n        var processObject = Api.Process.ProcessObjectService.Get(context.ProcessId);\r\n        var businessObject = entities.<business object alias>.Where(cr => cr.id == processObject.BusinessObjectId).First();\r\n        throw new NotImplementedException();\r\n    }\r\n}";
 
 /***/ }),
 /* 891 */
@@ -104953,13 +104953,13 @@ exports.default = _NewExpressionEditorView2.default.extend({
 /* 892 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-new-expression-type-container dev-new-expression-padding\"></div>\n<div class=\"js-new-expression-value-container\"></div>\n<div class=\"js-new-expression-context-container\"></div>\n<div class=\"js-new-expression-script-container\"></div>\n<div class=\"js-new-expression-expression-container\" ></div>\n<div class=\"js-new-expression-template-container\" ></div>";
+module.exports = "<div class=\"js-new-expression-type-container dev-new-expression-padding\"></div>\r\n<div class=\"js-new-expression-value-container\"></div>\r\n<div class=\"js-new-expression-context-container\"></div>\r\n<div class=\"js-new-expression-script-container\"></div>\r\n<div class=\"js-new-expression-expression-container\" ></div>\r\n<div class=\"js-new-expression-template-container\" ></div>";
 
 /***/ }),
 /* 893 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"js-new-expression-type-container dev-new-expression-padding\"></div>\n<div class=\"js-new-expression-value-container dev-new-expression-editor-item\"></div>\n<div class=\"js-new-expression-context-container dev-new-expression-editor-item\"></div>\n<div class=\"js-new-expression-script-container dev-new-expression-editor-item\"></div>\n<div class=\"js-new-expression-expression-container dev-new-expression-editor-item\" ></div>\n";
+module.exports = "<div class=\"js-new-expression-type-container dev-new-expression-padding\"></div>\r\n<div class=\"js-new-expression-value-container dev-new-expression-editor-item\"></div>\r\n<div class=\"js-new-expression-context-container dev-new-expression-editor-item\"></div>\r\n<div class=\"js-new-expression-script-container dev-new-expression-editor-item\"></div>\r\n<div class=\"js-new-expression-expression-container dev-new-expression-editor-item\" ></div>\r\n";
 
 /***/ }),
 /* 894 */
@@ -105107,7 +105107,7 @@ exports.default = _formRepository2.default.editors.WorkItemsSplit;
 /* 897 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"field-toggle toggle-wrp js-workspaceitems-editor\">\n    <span class=\"link-for-popup js-workspaceitems-text\">{{localize 'SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.EDITWORKSPACESECTIONS'}}</span>\n</div>\n";
+module.exports = "<div class=\"field-toggle toggle-wrp js-workspaceitems-editor\">\r\n    <span class=\"link-for-popup js-workspaceitems-text\">{{localize 'SUITEGENERAL.FORM.EDITORS.WORKSPACEITEMSPLIT.EDITWORKSPACESECTIONS'}}</span>\r\n</div>\r\n";
 
 /***/ }),
 /* 898 */
@@ -105352,7 +105352,7 @@ exports.default = Marionette.ItemView.extend({
 /* 901 */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"icons-from-nav {{className}}\"></span> \n<span class=\"js-name\">{{name}}</span>\n<span class=\"js-up list-item__step list-item__step_up\"></span>\n<span class=\"js-down list-item__step list-item__step_down\"></span>";
+module.exports = "<span class=\"icons-from-nav {{className}}\"></span> \r\n<span class=\"js-name\">{{name}}</span>\r\n<span class=\"js-up list-item__step list-item__step_up\"></span>\r\n<span class=\"js-down list-item__step list-item__step_down\"></span>";
 
 /***/ }),
 /* 902 */
@@ -105381,7 +105381,7 @@ exports.default = Marionette.ItemView.extend({
 /* 903 */
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"h3-group h3-group_mselect\">\n    {{displayText}}\n</h2>";
+module.exports = "<h2 class=\"h3-group h3-group_mselect\">\r\n    {{displayText}}\r\n</h2>";
 
 /***/ }),
 /* 904 */
@@ -106269,7 +106269,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 921 */
 /***/ (function(module, exports) {
 
-module.exports = "<legend class=\"layout__group__legend\">{{name}}</legend>\n<div class=\"js-container-region\"></div>";
+module.exports = "<legend class=\"layout__group__legend\">{{name}}</legend>\r\n<div class=\"js-container-region\"></div>";
 
 /***/ }),
 /* 922 */
@@ -107180,7 +107180,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 941 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"collection-header\">\n    <div class=\"form-label form-label_collection js-collection-name\"></div>\n    <div class=\"js-collection-header-toolbar-region\"></div>\n</div>\n<div class=\"fr-collection-grid js-grid-region\"></div>";
+module.exports = "<div class=\"collection-header\">\r\n    <div class=\"form-label form-label_collection js-collection-name\"></div>\r\n    <div class=\"js-collection-header-toolbar-region\"></div>\r\n</div>\r\n<div class=\"fr-collection-grid js-grid-region\"></div>";
 
 /***/ }),
 /* 942 */
@@ -107281,7 +107281,7 @@ exports.default = Marionette.LayoutView.extend({
 /* 943 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"collection-header__btn js-header-action_create\" title=\"{{localize 'CORE.GRID.TOOLBAR.CREATE'}}\">\n    <span class=\"collection-header-btn__icon\"><svg version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 30 30\" xml:space=\"preserve\"><g><polygon fill-rule=\"evenodd\" fill=\"#636262\" points=\"22,11 13,11 13,2 11,2 11,11 2,11 2,13 11,13 11,22 13,22 13,13 22,13   \"></polygon></g></svg></span>\n    <span class=\"collection-header-btn__text\">{{localize 'CORE.GRID.TOOLBAR.CREATE'}}</span>\n</div>\n<div class=\"collection-header__btn js-header-action_delete\" title=\"{{localize 'CORE.GRID.TOOLBAR.DELETE'}}\">\n    <span class=\"collection-header-btn__icon\"><svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 20 20\"><polygon fill=\"#ca4e30\" points=\"15,3.7 13.3,2 8.5,6.8 3.7,2 2,3.7 6.8,8.5 2,13.3 3.7,15 8.5,10.2 13.3,15 15,13.3 10.2,8.5 \"/></svg></span>\n    <span class=\"collection-header-btn__text\">{{localize 'CORE.GRID.TOOLBAR.DELETE'}}</span>\n</div>\n";
+module.exports = "<div class=\"collection-header__btn js-header-action_create\" title=\"{{localize 'CORE.GRID.TOOLBAR.CREATE'}}\">\r\n    <span class=\"collection-header-btn__icon\"><svg version=\"1.2\" baseProfile=\"tiny\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 30 30\" xml:space=\"preserve\"><g><polygon fill-rule=\"evenodd\" fill=\"#636262\" points=\"22,11 13,11 13,2 11,2 11,11 2,11 2,13 11,13 11,22 13,22 13,13 22,13   \"></polygon></g></svg></span>\r\n    <span class=\"collection-header-btn__text\">{{localize 'CORE.GRID.TOOLBAR.CREATE'}}</span>\r\n</div>\r\n<div class=\"collection-header__btn js-header-action_delete\" title=\"{{localize 'CORE.GRID.TOOLBAR.DELETE'}}\">\r\n    <span class=\"collection-header-btn__icon\"><svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 20 20\"><polygon fill=\"#ca4e30\" points=\"15,3.7 13.3,2 8.5,6.8 3.7,2 2,3.7 6.8,8.5 2,13.3 3.7,15 8.5,10.2 13.3,15 15,13.3 10.2,8.5 \"/></svg></span>\r\n    <span class=\"collection-header-btn__text\">{{localize 'CORE.GRID.TOOLBAR.DELETE'}}</span>\r\n</div>\r\n";
 
 /***/ }),
 /* 944 */
@@ -107442,7 +107442,7 @@ exports.default = ColumnHeaderView.extend({
 /* 946 */
 /***/ (function(module, exports) {
 
-module.exports = "{{#if filterView}}<span class=\"js-filter-btn filter-sort-btn\"></span>{{/if}}\n<div class=\"js-cell-content collection-grid-header\">\n    {{#if isCheckboxColumn}}\n        <div class=\"editor editor_checkbox js-header-checkbox dev-collection-header-checkbox\">\n            <span class=\"checkbox js-checkbox\">\n                <span class=\"svg-icons-wrp svg-icons-wrp_checked\">\n                    <svg class=\"svg-icons svg-icons_checked\">\n                        <use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#icon-checked\"></use>\n                    </svg>\n                </span>\n            </span>\n        </div>\n    {{else}}\n        <span class=\"collection-grid-header__title\" title=\"{{displayText}}\">{{displayText}}</span>\n        <span class=\"js-help-text-region collection-grid-header__help\"></span>\n        {{#if sortingAsc}}<span class=\"sort_down collection-grid-header__down\"></span>{{/if}}\n        {{#if sortingDesc}}<span class=\"sort_up collection-grid-header__up\"></span>{{/if}}\n    {{/if}}\n</div>\n";
+module.exports = "{{#if filterView}}<span class=\"js-filter-btn filter-sort-btn\"></span>{{/if}}\r\n<div class=\"js-cell-content collection-grid-header\">\r\n    {{#if isCheckboxColumn}}\r\n        <div class=\"editor editor_checkbox js-header-checkbox dev-collection-header-checkbox\">\r\n            <span class=\"checkbox js-checkbox\">\r\n                <span class=\"svg-icons-wrp svg-icons-wrp_checked\">\r\n                    <svg class=\"svg-icons svg-icons_checked\">\r\n                        <use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#icon-checked\"></use>\r\n                    </svg>\r\n                </span>\r\n            </span>\r\n        </div>\r\n    {{else}}\r\n        <span class=\"collection-grid-header__title\" title=\"{{displayText}}\">{{displayText}}</span>\r\n        <span class=\"js-help-text-region collection-grid-header__help\"></span>\r\n        {{#if sortingAsc}}<span class=\"sort_down collection-grid-header__down\"></span>{{/if}}\r\n        {{#if sortingDesc}}<span class=\"sort_up collection-grid-header__up\"></span>{{/if}}\r\n    {{/if}}\r\n</div>\r\n";
 
 /***/ }),
 /* 947 */
@@ -107643,7 +107643,7 @@ exports.default = _form2.default.Field.extend({
 /* 951 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group\">\n    <div class=\"form-label dev-form-label\">\n        <div class=\"js-field-error form-label__error\"></div>\n    </div>\n    <div class=\"form-editor js-editor-region dev-form-editor\"></div>\n</div>";
+module.exports = "<div class=\"form-group\">\r\n    <div class=\"form-label dev-form-label\">\r\n        <div class=\"js-field-error form-label__error\"></div>\r\n    </div>\r\n    <div class=\"form-editor js-editor-region dev-form-editor\"></div>\r\n</div>";
 
 /***/ }),
 /* 952 */
@@ -107843,7 +107843,7 @@ exports.default = Marionette.Object.extend({
     },
     __handleSocketEvent: function __handleSocketEvent(data) {
         if (this.eventsHandlers && this.moduleId === data.id && this.eventsHandlers.onWebSocketMessage) {
-            this.eventsHandlers.onSoketMessage(data.data);
+            this.eventsHandlers.onWebSocketMessage(data.data);
         }
     }
 });
