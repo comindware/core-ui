@@ -36,7 +36,7 @@ module.exports = callback => {
     try {
         exec(localizationCommand, (err, stdout, stderr) => {
             if (err) {
-                console.error(err);
+                console.error('Cannot find localization.exe. Please ensure what Localization tool have been installed.');
                 callback();
                 return;
             }

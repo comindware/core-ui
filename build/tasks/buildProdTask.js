@@ -24,10 +24,6 @@ module.exports = uglify => callback => {
         if (err) {
             throw new gulpUtil.PluginError('webpack:build:core', err);
         }
-        gulpUtil.log('[webpack:build:core]', stats.toString({
-            colors: true,
-            chunks: false
-        }));
         callback();
     });
 };
