@@ -85,9 +85,6 @@ const ListView = Marionette.CollectionView.extend({
     onRender() {
         this.__assignKeyboardShortcuts();
 
-        this.state.visibleHeight = this.$el.parent().height();
-        // Updating viewportHeight and rendering subviews
-
         this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
 
         this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
@@ -139,7 +136,7 @@ const ListView = Marionette.CollectionView.extend({
         const view = this.children.findByIndex(index);
         const $parentEl = this.$el.parent();
         const currentScrollTop = $parentEl.scrollTop();
-        const visibleHeight = this.state.visibleHeight;
+        const visibleHeight = this.$el.parent().height();
         const viewPositionTop = view.$el.position().top;
         const viewHeight = view.$el.height();
         const viewBottomPos = viewPositionTop + viewHeight;
@@ -223,7 +220,7 @@ const ListView = Marionette.CollectionView.extend({
         for (let i = index - 1; i >= 0; i--) {
             const newH = cHeight + childViews[i].$el.height();
 
-            if (newH > this.state.visibleHeight) {
+            if (newH > this.$el.parent().height()) {
                 break;
             } else {
                 newIndex = i;
@@ -242,7 +239,7 @@ const ListView = Marionette.CollectionView.extend({
         for (let i = index + 1; i < childViews.length; i++) {
             const newH = cHeight + childViews[i].$el.height();
 
-            if (newH > this.state.visibleHeight) {
+            if (newH > this.$el.parent().height()) {
                 break;
             } else {
                 newIndex = i;
