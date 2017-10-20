@@ -50,7 +50,7 @@ const defaultOptions = {
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
-formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
+formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize(options) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
@@ -150,7 +150,7 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
             return;
         }
         const adjustedValue = this.__adjustValue(value);
-        let selectedModels = this.viewModel.get('button').get('selected');
+        const selectedModels = this.viewModel.get('button').get('selected');
 
         if (this.options.maxQuantitySelected === 1) {
             const firstModel = selectedModels.first();
@@ -354,4 +354,4 @@ formRepository.editors.Reference = BaseLayoutEditorView.extend(/** @lends module
     }
 });
 
-export default formRepository.editors.Reference;
+export default formRepository.editors.ReferenceBubble;

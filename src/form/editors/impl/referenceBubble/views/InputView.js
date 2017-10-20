@@ -95,8 +95,7 @@ export default Marionette.ItemView.extend({
         return this.ui.input.val().toLowerCase().trim() || '';
     },
 
-    updateInput(value) {
-        value = value || '';
+    updateInput(value = '') {
         this.ui.input.val(value);
         this.__updateInputWidth(this.__calculateDesiredInputWidth(value));
     },
@@ -112,27 +111,23 @@ export default Marionette.ItemView.extend({
     },
 
     __calculateDesiredInputWidth(value) {
-        let div,
-            parentWidth,
-            style,
-            styleBlock,
-            styles,
-            width,
-            i;
-        styleBlock = 'position:absolute; left: -1000px; top: -1000px; display:none;';
-        styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
+        let styleBlock = 'position:absolute; left: -1000px; top: -1000px; display:none;';
+        const div = $('<div />', {
+            style: styleBlock
+        });
+        let width = div.width() + 25;
+        const parentWidth = this.parent.outerWidth();
+        const styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
+        let style;
+        let i;
+
         for (i = 0; i < styles.length; i++) {
             style = styles[i];
             styleBlock += `${style}:${this.ui.input.css(style)};`;
         }
-        div = $('<div />', {
-            style: styleBlock
-        });
         div.text(value);
         $('body').append(div);
-        width = div.width() + 25;
         div.remove();
-        parentWidth = this.parent.outerWidth();
         if (parentWidth !== 0 && (width > parentWidth - 10)) {
             width = parentWidth - 10;
         }
