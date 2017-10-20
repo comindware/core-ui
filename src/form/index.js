@@ -59,6 +59,7 @@ import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
+import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
@@ -153,6 +154,19 @@ const api = /** @lends module:core.form */ {
                 ReferencePanelView,
                 UserReferenceButtonView,
                 UserReferenceListItemView
+            }
+        },
+        /**
+         * Document editor data providers and internal implementation.
+         * @namespace
+         * */
+        document: {
+            /**
+             * Base implementation of data providers for DocumentEditorView.
+             * @namespace
+             * */
+            views: {
+                UploadDocumentButtonView
             }
         },
         BooleanEditor: BooleanEditorView,
