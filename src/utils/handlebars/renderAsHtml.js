@@ -6,13 +6,9 @@
  * Published under the MIT license
  */
 
-/* global module */
-
-'use strict';
-
 import { Handlebars } from 'lib';
 
-module.exports = function(text) {
+export default function(text) {
     if (!text) {
         return '';
     }
@@ -22,4 +18,4 @@ module.exports = function(text) {
         result.push(Handlebars.Utils.escapeExpression(line));
     });
     return result.join('<br>');
-};
+}

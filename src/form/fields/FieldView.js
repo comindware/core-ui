@@ -22,9 +22,7 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize(options) {
-        options = options || {};
-
+    initialize(options = {}) {
         this.form = options.form;
         this.key = options.key;
         this.__createSchema(options.schema);

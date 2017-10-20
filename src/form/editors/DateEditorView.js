@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, moment } from 'lib';
 import template from './templates/dateEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -33,8 +31,7 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
 formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
-    initialize(options) {
-        options = options || {};
+    initialize(options = {}) {
         if (options.schema) {
             _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
         } else {
@@ -110,8 +107,8 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
         return this.value === null ? this.value : moment(this.value).toISOString();
     },
 
-    __value(value, updateUi, triggerChange) {
-        value = this.__adjustValue(value);
+    __value(val, updateUi, triggerChange) {
+        const value = this.__adjustValue(val);
         if (this.value === value) {
             return;
         }

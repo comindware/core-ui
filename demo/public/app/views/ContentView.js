@@ -9,57 +9,51 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Prism */
+const requireCode = require.context('babel-loader!../cases', true);
+const requireText = require.context('raw-loader!../cases', true);
 
-"use strict";
+import template from 'text-loader!../templates/content.html';
+import Prism from 'prism';
+import markdown from 'markdown';
 
-var requireCode = require.context("babel!../cases", true);
-var requireText = require.context("raw!../cases", true);
+export default Marionette.LayoutView.extend({
+    modelEvents: {
+        change: 'render'
+    },
 
-define(['text!../templates/content.html', 'comindware/core', 'prism', 'markdown'],
-    function (template, core, Prism, markdown) {
-        return Marionette.LayoutView.extend({
-            initialize: function (options) {
-            },
+    template: Handlebars.compile(template),
 
-            modelEvents: {
-                'change': 'render'
-            },
+    templateHelpers() {
+        return {
+            description: markdown.toHTML(this.model.get('description') || '')
+        };
+    },
 
-            template: Handlebars.compile(template),
+    regions: {
+        caseRepresentationRegion: '.js-case-representation-region'
+    },
 
-            templateHelpers: function () {
-                return {
-                    description: markdown.toHTML(this.model.get('description') || '')
-                };
-            },
+    ui: {
+        code: '.js-code'
+    },
 
-            regions: {
-                caseRepresentationRegion: '.js-case-representation-region'
-            },
+    onRender() {
+        Prism.highlightElement(this.ui.code[0]);
+    },
 
-            ui: {
-                code: '.js-code'
-            },
+    onShow() {
+        let path;
+        if (this.model.id) {
+            path = `${this.model.get('sectionId')}/${this.model.get('groupId')}/${this.model.id}`;
+        } else {
+            path = `${this.model.get('sectionId')}/${this.model.get('groupId')}`;
+        }
 
-            onRender: function () {
-                Prism.highlightElement(this.ui.code[0]);
-            },
+        const code = requireCode(`./${path}`).default;
+        const text = requireText(`./${path}`);
 
-            onShow: function() {
-                let path;
-                if (this.model.id) {
-                    path = this.model.get('sectionId') +'/' + this.model.get('groupId') + '/' + this.model.id;
-                } else {
-                    path = this.model.get('sectionId') +'/' + this.model.get('groupId');
-                }
-
-                let code = requireCode('./' + path);
-                let text = requireText('./' + path);
-
-                this.model.set('sourceCode', text);
-                var representationView = code();
-                this.caseRepresentationRegion.show(representationView);
-            }
-        });
-    });
+        this.model.set('sourceCode', text);
+        const representationView = code();
+        this.caseRepresentationRegion.show(representationView);
+    }
+});

@@ -59,13 +59,15 @@ export default Marionette.LayoutView.extend({
         this.scrollbarRegion.show(this.listBundle.scrollbarView);
     },
 
-    handleCommand(command, options) {
+    handleCommand(command) {
         switch (command) {
             case 'up':
                 this.listBundle.listView.moveCursorBy(-1, false);
                 break;
             case 'down':
                 this.listBundle.listView.moveCursorBy(1, false);
+                break;
+            default:
                 break;
         }
     }

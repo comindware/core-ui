@@ -6,17 +6,12 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { htmlHelpers } from 'utils';
 import { Handlebars } from 'lib';
 import list from 'list';
 import template from '../templates/listItem.hbs';
 
 export default Marionette.ItemView.extend({
-    initialize(options) {
-    },
-
     template: Handlebars.compile(template),
 
     ui: {

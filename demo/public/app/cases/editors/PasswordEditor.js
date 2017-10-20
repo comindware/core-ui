@@ -1,18 +1,15 @@
-define(['comindware/core', 'demoPage/views/EditorCanvasView'],
-    function (core, EditorCanvasView) {
-        'use strict';
-        return function () {
-            var model = new Backbone.Model({
-                passwordValue: ''
-            });
+import core from 'comindware/core';
+import EditorCanvasView from 'demoPage/views/EditorCanvasView';
 
-            return new EditorCanvasView({
-                editor: new core.form.editors.PasswordEditor({
-                    model: model,
-                    key: 'passwordValue',
-                    autocommit: true
-                }),
-                presentation: "'{{passwordValue}}'"
-            });
-        }
+export default function() {
+    return new EditorCanvasView({
+        editor: new core.form.editors.PasswordEditor({
+            model: new Backbone.Model({
+                passwordValue: ''
+            }),
+            key: 'passwordValue',
+            autocommit: true
+        }),
+        presentation: "'{{passwordValue}}'"
     });
+}

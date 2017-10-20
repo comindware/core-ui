@@ -6,11 +6,8 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
-import list from 'list';
 import template from '../templates/multiSelectPanel.hbs';
 import MultiSelectItemView from './MultiSelectItemView';
 

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/scrollbar.hbs';
 
@@ -35,7 +33,7 @@ import template from '../templates/scrollbar.hbs';
 const ScrollbarView = Marionette.ItemView.extend({
     initialize() {
         if (this.collection === undefined) {
-            throw 'You must provide a collection to display.';
+            throw new Error('You must provide a collection to display.');
         }
 
         _.bindAll(this, '__documentMouseUp', '__documentMouseMove');
@@ -46,6 +44,9 @@ const ScrollbarView = Marionette.ItemView.extend({
             count: 0
         };
 
+        this.listenTo(this.collection, 'add', this.__handleCollectionAdd);
+        this.listenTo(this.collection, 'remove', this.__handleCollectionRemove);
+        this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
         this.__updateCount(this.collection.length);
 
         this.listenTo(this.collection, 'add', this.__handleCollectionAdd);
@@ -95,11 +96,11 @@ const ScrollbarView = Marionette.ItemView.extend({
 
     updateViewportHeight(newViewportHeight) {
         if (newViewportHeight === undefined) {
-            throw 'newViewportHeight is undefined';
+            throw new Error('newViewportHeight is undefined');
         }
 
         if (newViewportHeight < 1) {
-            throw 'newViewportHeight is invalid';
+            throw new Error('newViewportHeight is invalid');
         }
 
         if (!this.rendered) {
@@ -126,11 +127,11 @@ const ScrollbarView = Marionette.ItemView.extend({
 
     __updateCount(newCount) {
         if (newCount === undefined) {
-            throw 'newCount is undefined';
+            throw new Error('newCount is undefined');
         }
 
         if (newCount < 0) {
-            throw 'newCount is invalid';
+            throw new Error('newCount is invalid');
         }
 
         if (!this.rendered) {
@@ -156,7 +157,7 @@ const ScrollbarView = Marionette.ItemView.extend({
     // normalizes new position into [min,max] and updates view+state
     __updatePositionInternal(newPosition, triggerEvents) {
         if (newPosition === undefined) {
-            throw 'newPosition is undefined';
+            throw new Error('newPosition is undefined');
         }
 
         if (!this.rendered) {
@@ -164,13 +165,13 @@ const ScrollbarView = Marionette.ItemView.extend({
             return;
         }
 
-        newPosition = Math.max(0, Math.min(this.__getMaxPosition(), newPosition));
-        if (this.state.position !== newPosition) {
-            this.__updatePositionState(newPosition, triggerEvents);
+        const position = Math.max(0, Math.min(this.__getMaxPosition(), newPosition));
+        if (this.state.position !== position) {
+            this.__updatePositionState(position, triggerEvents);
             this.__updateDraggerPosition();
         }
 
-        return newPosition;
+        return position;
     },
 
     __handleCollectionAdd(model, collection) {
@@ -323,7 +324,8 @@ const ScrollbarView = Marionette.ItemView.extend({
     },
 
     // returns DOM element position relatively to the document
-    __getPosition(domElement) {
+    __getPosition(elem) {
+        let domElement = elem;
         if (domElement instanceof jQuery) {
             domElement = domElement[0];
         }

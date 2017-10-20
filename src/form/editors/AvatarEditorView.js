@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 import BaseItemEditorView from './base/BaseItemEditorView';
@@ -34,6 +32,7 @@ const defaultOptions = {
  * @param {BaseAvatarEditorController} options.controller - Data provider controller in the form of subclass of
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
+
 formRepository.editors.Avatar = BaseItemEditorView.extend({
     className: 'user-avatar-wrp',
     

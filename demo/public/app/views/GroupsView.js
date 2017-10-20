@@ -9,17 +9,12 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import GroupItemView from './GroupItemView';
 
-define([ './GroupItemView' ],
-    function (GroupItemView) {
-        'use strict';
-        return Marionette.CollectionView.extend({
-            tagName: 'ul',
+export default Marionette.CollectionView.extend({
+    tagName: 'ul',
 
-            className: 'demo-groups__ul',
+    className: 'demo-groups__ul',
 
-            childView: GroupItemView
-        });
-    });
-
+    childView: GroupItemView
+});

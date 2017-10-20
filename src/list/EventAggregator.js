@@ -48,10 +48,10 @@ export default Marionette.Controller.extend({
         this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
         this.__updateCount(this.collection.length);
 
-        _.each(this.views, function(v) {
+        _.each(this.views, v => {
             this.listenTo(v, 'viewportHeightChanged', this.__handleViewportHeightChanged);
             this.listenTo(v, 'positionChanged', this.__handlePositionChanged);
-        }, this);
+        });
     },
 
     __handleCollectionAdd(model, collection) {
@@ -68,7 +68,7 @@ export default Marionette.Controller.extend({
 
     scrollTo(model) {
         const modelIndex = this.collection.indexOf(model);
-        const view = _.find(this.views, view => view.scrollTo);
+        const view = _.find(this.views, viewTo => viewTo.scrollTo);
         if (view) {
             view.scrollTo(modelIndex);
         }

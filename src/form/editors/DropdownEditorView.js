@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';
@@ -16,9 +14,6 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DropdownPanelView from './impl/dropdown/views/DropdownPanelView';
 import DropdownButtonView from './impl/dropdown/views/DropdownButtonView';
 import formRepository from '../formRepository';
-
-const classes = {
-};
 
 const defaultOptions = {
     collection: null,
@@ -166,13 +161,13 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('enter,num_enter,down'.split(','), function(key) {
+        _.each('enter,num_enter,down'.split(','), key => {
             this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
             });
-        }, this);
+        });
         this.keyListener.simple_combo('esc', () => {
             if (this.getEnabled() && !this.getReadonly()) {
                 this.dropdownView.close();

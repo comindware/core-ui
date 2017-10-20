@@ -9,21 +9,15 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
-const exec = require('child_process').exec;
 const fs = require('fs');
+const exec = require('child_process').exec;
 
 const pathResolver = require('../pathResolver');
 
-const removeBom = (text) => {
-    return text.replace(/^\uFEFF/, '');
-};
+const removeBom = text => text.replace(/^\uFEFF/, '');
 
-module.exports = callback => {
-    exec('git tag --contains HEAD', function (err, stdout, stderr) {
+module.exports = () => {
+    exec('git tag -l 1.4.*', (err, stdout, stderr) => {
         if (err) {
             console.error(err);
             return;
@@ -36,15 +30,15 @@ module.exports = callback => {
             console.log(stderr);
         }
 
-        let matchResult = /^v(.+)$/gm.exec(stdout);
-        if (matchResult === null) {
+        const matchResult = (stdout.split('\n')).filter(i => i);
+        if (!matchResult || !matchResult.length) {
             console.log('PrepareToPublishTask: no tags found, skip package.json update.');
             return;
         }
         const version = matchResult[matchResult.length - 1];
 
         console.log(`PrepareToPublishTask: There are tags on the build that match the version pattern. Updating package.json with version ${version}...`);
-        let packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));
+        const packageJson = JSON.parse(removeBom(fs.readFileSync(pathResolver.root('package.json'), 'utf8')));
         packageJson.version = version;
         fs.writeFileSync(pathResolver.root('package.json'), JSON.stringify(packageJson, null, '    '), 'utf8');
     });

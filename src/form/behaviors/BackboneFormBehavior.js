@@ -16,15 +16,15 @@ const Form = Marionette.Object.extend({
      * @param {Object} [options.schema]
      * @param {Backbone.Model} [options.model]
      */
-    initialize(options) {
-        this.options = options = options || {};
+    initialize(options = {}) {
+        this.options = options;
 
         this.__regionManager = new Marionette.RegionManager();
         this.schema = _.result(options, 'schema');
         this.model = options.model;
 
         this.fields = {};
-        _.each(this.schema, function(fieldSchema, key) {
+        _.each(this.schema, (fieldSchema, key) => {
             const FieldType = fieldSchema.field || options.field || FieldView;
             const field = new FieldType({
                 form: this,
@@ -34,7 +34,7 @@ const Form = Marionette.Object.extend({
             });
             this.listenTo(field.editor, 'all', this.__handleEditorEvent);
             this.fields[key] = field;
-        }, this);
+        });
 
         const $target = this.options.$target;
 
@@ -73,10 +73,8 @@ const Form = Marionette.Object.extend({
      *
      * @return {Object}  Validation errors
      */
-    commit(options) {
+    commit(options = {}) {
         // Validate
-        options = options || {};
-
         const errors = this.validate({
             skipModelValidate: !options.validate
         });
@@ -155,7 +153,7 @@ const Form = Marionette.Object.extend({
         });
     },
 
-    __handleEditorEvent(event, editor, field) {
+    __handleEditorEvent(event, editor) {
         switch (event) {
             case 'change':
                 this.trigger('change', this, editor);
@@ -194,12 +192,10 @@ const Form = Marionette.Object.extend({
      * Validate the data
      * @return {Object} Validation errors
      */
-    validate(options) {
+    validate(options = {}) {
         const fields = this.fields;
         const model = this.model;
         const errors = {};
-
-        options = options || {};
 
         //Collect errors from schema validation
         _.each(fields, field => {

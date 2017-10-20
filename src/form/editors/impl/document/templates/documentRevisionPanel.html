@@ -1,0 +1,13 @@
+<table class="dev-revision-container">
+    {{#unless isSingleRevision}}
+    <thead>
+        <tr>
+            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.VERSION'}}</th>
+            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.CREATIONDATE'}}</th>
+            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.AUTHOR'}}</th>
+            <th>{{localize 'MODULES.SHARED.VIEWS.MULTISELECT.DOCUMENTREVISION.DOWNLOAD'}}</th>
+        </tr>
+    </thead>
+    {{/unless}}
+    <tbody class="js-revision-list"></tbody>
+</table>

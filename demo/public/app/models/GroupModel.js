@@ -9,15 +9,10 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Backbone, Marionette, $, _, Localizer */
+import core from 'comindware/core';
 
-define(['comindware/core'],
-    function (core) {
-        'use strict';
-
-        return Backbone.Model.extend({
-            initialize: function () {
-                _.extend(this, new core.models.behaviors.SelectableBehavior.Selectable(this));
-            }
-        });
-    });
+export default Backbone.Model.extend({
+    initialize() {
+        _.extend(this, new core.models.behaviors.SelectableBehavior.Selectable(this));
+    }
+});

@@ -30,6 +30,21 @@ import DateTimeEditorView from './editors/DateTimeEditorView';
 import MentionEditorView from './editors/MentionEditorView';
 import MultiSelectEditorView from './editors/MultiSelectEditorView';
 import AvatarEditorView from './editors/AvatarEditorView';
+import DocumentEditorView from './editors/DocumentEditorView';
+import CodeEditorView from './editors/CodeEditorView';
+import ContextSelectEditorView from './editors/ContextSelectEditorView';
+import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
+import IsFavoriteEditorView from './editors/IsFavoriteEditorView';
+import MembersSplitEditorView from './editors/MembersSplitEditorView';
+import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
+import SimpleNumberEditorView from './editors/SimpleNumberEditorView';
+import IconEditorComponentView from './editors/IconEditorComponentView';
+import TimeNumberEditorView from './editors/TimeNumberEditorView';
+import ExpressionEditorView from './editors/ExpressionEditorView';
+import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
+import NewExpressionEditorView from './editors/NewExpressionEditorView';
+import TitleTextEditorView from './editors/TitleTextEditorView';
+import WorkSpaceItemsEditorView from './editors/WorkSpaceItemsEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/common/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/common/members/collections/MembersCollection';
 import editorsImplCommonMemberModel from './editors/impl/common/members/models/MemberModel';
@@ -49,6 +64,8 @@ import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
 import './validators/phoneValidator';
+import './validators/systemNameValidator';
+import './validators/emailValidator';
 import formRepository from './formRepository';
 
 const api = /** @lends module:core.form */ {
@@ -156,10 +173,25 @@ const api = /** @lends module:core.form */ {
         DateTimeEditor: DateTimeEditorView,
         MentionEditor: MentionEditorView,
         MultiSelectEditor: MultiSelectEditorView,
-        AvatarEditor: AvatarEditorView
+        AvatarEditor: AvatarEditorView,
+        DocumentEditor: DocumentEditorView,
+        CodeEditor: CodeEditorView,
+        ContextSelectEditor: ContextSelectEditorView,
+        BooleanSwitchEditor: BooleanSwitchEditorView,
+        IsFavoriteEditor: IsFavoriteEditorView,
+        MembersSplitEditor: MembersSplitEditorView,
+        MembersSplitPanelEditor: MembersSplitPanelEditorView,
+        SimpleNumberEditor: SimpleNumberEditorView,
+        TimeNumberEditor: TimeNumberEditorView,
+        ExpressionEditor: ExpressionEditorView,
+        DocumentExpressionEditor: DocumentExpressionEditorView,
+        NewExpressionEditor: NewExpressionEditorView,
+        TitleTextEditor: TitleTextEditorView,
+        WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
+        IconEditor: IconEditorComponentView
     }
 };
 export default api;
-export var editors = api.editors;
-export var fields = api.fields;
-export var behaviors = api.behaviors;
+export const editors = api.editors;
+export const fields = api.fields;
+export const behaviors = api.behaviors;

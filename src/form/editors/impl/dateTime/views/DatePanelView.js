@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, moment } from 'lib';
 import { helpers, dateHelpers } from 'utils';
 import template from '../templates/datePanel.hbs';
@@ -22,7 +20,7 @@ export default Marionette.ItemView.extend({
 
     initialize(options) {
         helpers.ensureOption(options, 'timezoneOffset');
-        
+
         this.pickerOptions = {
             minView: 2,
             format: this.options.pickerFormat,
@@ -43,9 +41,9 @@ export default Marionette.ItemView.extend({
     },
 
     updatePickerDate() {
-        let val = this.model.get('value'),
-            format = defaultOptions.pickerFormat,
-            pickerFormattedDate = val ? moment.utc(new Date(val)).utcOffset(this.getOption('timezoneOffset')).format(format) : moment.utc({}).format(format);
+        const val = this.model.get('value');
+        const format = defaultOptions.pickerFormat;
+        const pickerFormattedDate = val ? moment.utc(new Date(val)).utcOffset(this.getOption('timezoneOffset')).format(format) : moment.utc({}).format(format);
 
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
         this.ui.pickerInput.datetimepicker('update');

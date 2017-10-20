@@ -14,6 +14,8 @@
  * Version: 1.2.0
  * Build date: 30 November 2014
  */
+/*eslint-disable*/
+
 (function($) {
     var UNDEF = "undefined";
     var getSelection, setSelection, deleteSelectedText, deleteText, insertText;
@@ -91,7 +93,7 @@
                 }
             };
         } else if (isHostMethod(testTextArea, "createTextRange") && isHostObject(document, "selection") &&
-                   isHostMethod(document.selection, "createRange")) {
+            isHostMethod(document.selection, "createRange")) {
 
             getSelection = function(el) {
                 var start = 0, end = 0, normalizedValue, textInputRange, len, endRange;
@@ -166,7 +168,7 @@
                 replaced: sel.text
             };
         }
-        
+
         function pasteTextWithCommand(el, text) {
             el.focus();
             var sel = getSelection(el);
@@ -230,7 +232,7 @@
 
         var updateSelectionAfterInsert = function(el, startIndex, text, selectionBehaviour) {
             var endIndex = startIndex + text.length;
-            
+
             selectionBehaviour = (typeof selectionBehaviour == "string") ?
                 selectionBehaviour.toLowerCase() : "";
 
@@ -240,7 +242,7 @@
                 var normalizedText = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
                 endIndex = startIndex + normalizedText.length;
                 var firstLineBreakIndex = startIndex + normalizedText.indexOf("\n");
-                
+
                 if (el.value.slice(firstLineBreakIndex, firstLineBreakIndex + 2) == "\r\n") {
                     // Browser uses \r\n, so we need to account for extra \r characters
                     endIndex += normalizedText.match(/\n/g).length;

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/defaultButton.hbs';
 
@@ -24,9 +22,6 @@ import template from '../templates/defaultButton.hbs';
  * */
 
 export default Marionette.ItemView.extend({
-    initialize(options) {
-    },
-
     tagName: 'span',
 
     template: Handlebars.compile(template),

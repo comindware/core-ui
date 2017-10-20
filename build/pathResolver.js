@@ -9,17 +9,13 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const path = require('path');
 const _ = require('underscore');
 
 const rootDir = path.resolve(__dirname, '../');
 
-const resolve = function (baseDir, nextDir, args) {
-    let pathArray = [baseDir];
+const resolve = function(baseDir, nextDir, args) {
+    const pathArray = [baseDir];
     if (nextDir) {
         pathArray.push(nextDir);
     }
@@ -27,37 +23,37 @@ const resolve = function (baseDir, nextDir, args) {
 };
 
 module.exports = {
-    createResolver: function (baseDir) {
-        return function () {
+    createResolver(baseDir) {
+        return function() {
             return resolve(baseDir, null, arguments);
         };
     },
 
-    resources: function () {
+    resources() {
         return resolve(rootDir, 'resources', arguments);
     },
-    node_modules: function () {
+    node_modules() {
         return resolve(rootDir, 'node_modules', arguments);
     },
-    compiled: function () {
+    compiled() {
         return resolve(rootDir, 'dist', arguments);
     },
-    pages: function () {
+    pages() {
         return resolve(rootDir, 'pages', arguments);
     },
-    demo: function () {
+    demo() {
         return resolve(rootDir, 'demo', arguments);
     },
-    source: function () {
+    source() {
         return resolve(rootDir, 'src', arguments);
     },
-    tests: function () {
+    tests() {
         return resolve(rootDir, 'tests', arguments);
     },
-    localizationSource: function () {
+    localizationSource() {
         return resolve(rootDir, 'localization', arguments);
     },
-    root: function () {
+    root() {
         return resolve(rootDir, null, arguments);
     }
 };

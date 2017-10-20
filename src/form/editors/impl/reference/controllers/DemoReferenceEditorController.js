@@ -7,13 +7,8 @@
  */
 
 import 'lib';
-import { helpers } from 'utils';
 import list from 'list';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
-
-const config = {
-    DEFAULT_COUNT: 200
-};
 
 const createDemoData = function() {
     return _.times(1000, i => {
@@ -30,12 +25,11 @@ const DemoReferenceCollections = Backbone.Collection.extend({
 });
 
 export default Marionette.Controller.extend({
-    initialize(options) {
+    initialize() {
         this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]));
     },
 
-    fetch(options) {
-        options = options || {};
+    fetch(options = {}) {
         const promise = new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (promise !== this.fetchPromise) {
@@ -77,8 +71,7 @@ export default Marionette.Controller.extend({
         return `#example/${value.id}`;
     },
 
-    edit(value) {
-        alert(`You could edit ${value.id} here.`);
+    edit() {
         return true;
     }
 });

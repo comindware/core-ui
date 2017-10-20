@@ -7,7 +7,6 @@
  */
 
 import 'lib';
-import { helpers } from 'utils';
 
 const classes = {
     HIDDEN: 'layout__hidden'

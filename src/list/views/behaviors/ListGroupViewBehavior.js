@@ -6,26 +6,23 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 
 /*
-    This behavior makes grouping items collapsible. To switch between the collapsed/expanded states there is a templateHelpers property 'collapsed' passed to the template model.
+    This behavior makes grouping items collapsible.
+     To switch between the collapsed/expanded states there is a templateHelpers property 'collapsed' passed to the template model.
     
     Options:
-        collapseButton - jquery selector string that points to the collapse/expand button. If omitted, whole view is considered the button and toggle the collapse state on click.
+        collapseButton - jquery selector string that points to the collapse/expand button.
+         If omitted, whole view is considered the button and toggle the collapse state on click.
 */
 
 const ListGroupViewBehavior = Marionette.Behavior.extend({
     initialize(options, view) {
         // mixing behavior's templateHelpers even if it's already defined in the view
         if (view.templateHelpers) {
-            const self = this;
             const viewTemplateHelpers = view.templateHelpers.bind(view);
-            view.templateHelpers = function() {
-                return _.extend(self.templateHelpers(), viewTemplateHelpers());
-            };
+            view.templateHelpers = () => _.extend(self.templateHelpers(), viewTemplateHelpers());
         }
     },
 

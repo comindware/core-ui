@@ -9,16 +9,9 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
-
-define([
-    'comindware/core'
-], function () {
-    'use strict';
-    return Marionette.ItemView.extend({
-        modelEvents: {
-            'change': 'render'
-        },
-        template: false
-    });
+export default Marionette.ItemView.extend({
+    modelEvents: {
+        change: 'render'
+    },
+    template: false
 });

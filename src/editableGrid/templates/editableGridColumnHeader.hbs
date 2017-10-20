@@ -1,0 +1,19 @@
+{{#if filterView}}<span class="js-filter-btn filter-sort-btn"></span>{{/if}}
+<div class="js-cell-content collection-grid-header">
+    {{#if isCheckboxColumn}}
+        <div class="editor editor_checkbox js-header-checkbox dev-collection-header-checkbox">
+            <span class="checkbox js-checkbox">
+                <span class="svg-icons-wrp svg-icons-wrp_checked">
+                    <svg class="svg-icons svg-icons_checked">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-checked"></use>
+                    </svg>
+                </span>
+            </span>
+        </div>
+    {{else}}
+        <span class="collection-grid-header__title" title="{{displayText}}">{{displayText}}</span>
+        <span class="js-help-text-region collection-grid-header__help"></span>
+        {{#if sortingAsc}}<span class="sort_down collection-grid-header__down"></span>{{/if}}
+        {{#if sortingDesc}}<span class="sort_up collection-grid-header__up"></span>{{/if}}
+    {{/if}}
+</div>

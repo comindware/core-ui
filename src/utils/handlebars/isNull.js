@@ -6,15 +6,11 @@
  * Published under the MIT license
  */
 
-/* global module */
-
-'use strict';
-
 import 'lib';
 
-module.exports = function(a, options) {
+export default function(a, options) {
     if (_.isNull(a)) {
         return options.fn(this);
     }
     return options.inverse(this);
-};
+}
