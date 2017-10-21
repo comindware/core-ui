@@ -19,23 +19,23 @@ const eventBubblingIgnoreList = [
     'destroy'
 ];
 
-const NativeGridItemViewBehavior = Marionette.Behavior.extend({
+export default Marionette.Behavior.extend({
     initialize(options, view) {
-      helpers.ensureOption(view.options, 'columns');
-      helpers.ensureOption(view.options, 'gridEventAggregator');
-      helpers.ensureOption(view.options, 'internalListViewReqres');
-      helpers.ensureOption(options, 'padding');
+        helpers.ensureOption(view.options, 'columns');
+        helpers.ensureOption(view.options, 'gridEventAggregator');
+        helpers.ensureOption(view.options, 'internalListViewReqres');
+        helpers.ensureOption(options, 'padding');
 
-      this.padding = options.padding;
-      this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
-      this.columns = view.options.columns;
+        this.padding = options.padding;
+        this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
+        this.columns = view.options.columns;
 
-      this.listenTo(view, 'all', eventName => {
-          if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-              return;
-          }
-          view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
-      });
+        this.listenTo(view, 'all', eventName => {
+            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
+                return;
+            }
+            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
+        });
 
         this.paddingLeft = view.options.paddingLeft;
         this.paddingRight = view.options.paddingRight;
@@ -46,28 +46,24 @@ const NativeGridItemViewBehavior = Marionette.Behavior.extend({
         this.view.setFitToView = this.setFitToView.bind(this);
     },
 
-        modelEvents: {
-            selected: '__handleSelection',
-            deselected: '__handleDeselection',
-            highlighted: '__handleHighlighting',
-            unhighlighted: '__handleUnhighlighting'
-        },
+    modelEvents: {
+        selected: '__handleSelection',
+        deselected: '__handleDeselection',
+        highlighted: '__handleHighlighting',
+        unhighlighted: '__handleUnhighlighting'
+    },
 
-        events: {
-            mousedown: '__handleClick'
-        },
+    events: {
+        mousedown: '__handleClick'
+    },
 
-        ui: {
-            cells: '.js-grid-cell'
-        },
+    ui: {
+        cells: '.js-grid-cell'
+    },
 
     __onColumnStartDrag(index) {
         const cells = this.__getCellElements();
-        this.gridCellDragger = $(cells[index]);
-        this.columnsWidth = [];
-        cells.each((i, el) => {
-            this.columnsWidth.push(this.__getElementOuterWidth(el));
-        });
+        this.gridCellDragger = cells[index];
     },
 
     __onColumnStopDrag() {
@@ -78,25 +74,23 @@ const NativeGridItemViewBehavior = Marionette.Behavior.extend({
         this.__setInitialWidth();
     },
 
-        onRender() {
-            const model = this.view.model;
-            if (model.selected) {
-                this.__handleSelection();
-            }
-            if (model.highlighted) {
-                this.__highlight(model.highlightedFragment);
-            }
-            if (htmlHelpers.isElementInDom(this.el)) {
-                Marionette.triggerMethodOn(this.view, 'show');
-            }
+    onRender() {
+        const model = this.view.model;
+        if (model.selected) {
+            this.__handleSelection();
+        }
+        if (model.highlighted) {
+            this.__highlight(model.highlightedFragment);
+        }
+        if (htmlHelpers.isElementInDom(this.el)) {
+            Marionette.triggerMethodOn(this.view, 'show');
+        }
 
-            this.__setInitialWidth();
-        },
+        this.__setInitialWidth();
+    },
 
     __setInitialWidth() {
-        this.__getCellElements().forEach((cell, i) => {
-          cell.css('width', this.columns[i].width);
-        });
+        this.__getCellElements().forEach((cell, i) => cell.style.width = `${this.columns[i].width}px`);
     },
 
     __getElementOuterWidth(el) {
@@ -104,15 +98,15 @@ const NativeGridItemViewBehavior = Marionette.Behavior.extend({
     },
 
     __onSingleColumnResize(newColumnWidth) {
-        this.gridCellDragger.css('width', newColumnWidth);
+        this.gridCellDragger.style.width = `${newColumnWidth}px`;
     },
 
     __getAvailableWidth() {
-        return this.el.css('wdith') - this.padding - 1; //Magic cross browser pixel, don't remove it
+        return this.el.style.width - this.padding - 1; //Magic cross browser pixel, don't remove it
     },
 
     __getCellElements() {
-        return this.$el.find('.js-grid-cell');
+        return this.el.querySelectorAll('.js-grid-cell');
     },
 
     __handleClick(e) {
@@ -131,7 +125,7 @@ const NativeGridItemViewBehavior = Marionette.Behavior.extend({
         this.view.onHighlighted(fragment);
     },
 
-    __handleUnhighlighting() {
+    __handleUnhighLighting() {
         this.view.onUnhighlighted();
     },
 
@@ -143,5 +137,3 @@ const NativeGridItemViewBehavior = Marionette.Behavior.extend({
         this.$el.removeClass('selected');
     }
 });
-
-export default NativeGridItemViewBehavior;
