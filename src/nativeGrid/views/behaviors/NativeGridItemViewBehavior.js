@@ -125,7 +125,7 @@ export default Marionette.Behavior.extend({
         this.view.onHighlighted(fragment);
     },
 
-    __handleUnhighLighting() {
+    __handleUnhighlighting() {
         this.view.onUnhighlighted();
     },
 
