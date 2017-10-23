@@ -2,6 +2,7 @@
 import template from './templates/documentExpressionEditor.html';
 import NewExpressionEditorView from './NewExpressionEditorView';
 import DropdownEditor from './DropdownEditorView';
+import LocalizationService from '../../services/LocalizationService';
 
 const defaultOptions = {
     showTemplate: true
@@ -60,7 +61,7 @@ export default NewExpressionEditorView.extend({
         }
         this.valueTypeCollection.add({
             id: valueTypes.template,
-            text: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.TEMPLATE')
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
         });
 
         this.templateEditor = new DropdownEditor(_.extend(this.options.templateEditorOptions, {

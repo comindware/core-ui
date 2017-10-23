@@ -11,6 +11,7 @@ import formRepository from '../formRepository';
 import BaseLayoutEditorView from '../editors/base/BaseLayoutEditorView';
 import WindowService from '../../services/WindowService';
 import dropdownFactory from '../../dropdown/factory';
+import LocalizationService from '../../services/LocalizationService';
 
 //Value format: { type: <<value|expression|script>>, value: <<value array or single value|expression text|script text>>}
 //Example: { type: 'value', value: 'Some text' }
@@ -28,7 +29,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
             enabled: true,
             valueEditor: formRepository.editors.Text,
             valueEditorOptions: {},
-            emptyText: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
+            emptyText: Localizer.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
         };
     },
 
@@ -94,8 +95,8 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         const initialValue = this.getValue();
         this.valueOptionCollection.add(new ValueOptionModel({
             id: 'value',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.VALUE'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.VALUEALIAS')
+            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE'),
+            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUEALIAS')
         }));
 
         this.valueEditor = new this.options.valueEditor(_.extend(this.options.valueEditorOptions, {
@@ -111,8 +112,8 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         }
         this.valueOptionCollection.add(new ValueOptionModel({
             id: 'expression',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EXPRESSION'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EXPRESSIONALIAS')
+            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION'),
+            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSIONALIAS')
         }));
         this.ui.expression.text(this.options.defaultExpression);
         this.ui.expression.data('value', this.options.defaultExpression);
@@ -124,8 +125,8 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         }
         this.valueOptionCollection.add(new ValueOptionModel({
             id: 'script',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.CSHARPALIAS')
+            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
+            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPALIAS')
         }));
         this.ui.script.text(this.defaultScriptText);
         this.ui.script.data('value', this.defaultScriptText);
@@ -149,13 +150,13 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
 
         this.valueOptionCollection.add(new ValueOptionModel({
             id: 'context',
-            name: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.ATTRIBUTE'),
-            alias: Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.ATTRIBUTEALIAS')
+            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE'),
+            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTEALIAS')
         }));
 
         this.listenTo(this.contextValueEditor, 'change', () => this.__updateValue(this.contextValueEditor.getValue(), true));
 
-        this.ui.script.text(Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EMPTYTEXT'));
+        this.ui.script.text(LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT'));
     },
 
     renderValueOptionPopout() {
@@ -218,7 +219,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     updateDefaultEditor() {
         this.ui[this.value.type].toggleClass('empty', _.isEmpty(this.value.value));
         this.ui[this.value.type].text(_.isEmpty(this.value.value)
-            ? Localizer.get('SUITEGENERAL.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
+            ? LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
             : this.value.value);
     },
 

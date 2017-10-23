@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import template from '../templates/columnHeader.hbs';
 import { Handlebars } from 'lib';
 import GridColumnHeaderView from '../../list/views/GridColumnHeaderView';
@@ -33,7 +31,10 @@ const ColumnHeaderView = GridColumnHeaderView.extend({
         }
         this.gridEventAggregator = options.gridEventAggregator;
     },
-
+    /**
+     * View template
+     * @param {HTML} HTML file
+     * */
     template: Handlebars.compile(template),
 
     ui: {

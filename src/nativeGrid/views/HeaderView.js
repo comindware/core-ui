@@ -8,7 +8,6 @@
 
 import template from '../templates/header.hbs';
 import { Handlebars } from 'lib';
-import GridHeaderView from '../../list/views/GridHeaderView';
 import GlobalEventService from '../../services/GlobalEventService';
 
 /**
@@ -16,27 +15,59 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @memberof module:core.nativeGrid.views
  * @class HeaderView
  * @description View заголовка списка
- * @extends module:core.list.views.GridHeaderView {@link module:core.list.views.GridHeaderView}
+ * @extends Marionette ItemView
  * @param {Object} options Constructor options
  * @param {Array} options.columns Массив колонок
  * @param {Object} options.gridEventAggregator ?
  * @param {Backbone.View} options.gridColumnHeaderView View Используемый для отображения заголовка (шапки) списка
  * */
-const HeaderView = GridHeaderView.extend({
-    initialize() {
-        GridHeaderView.prototype.initialize.apply(this, arguments);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort');
-        this.listenTo(GlobalEventService, 'window:resize', this.__handleResizeInternal);
+
+export default Marionette.ItemView.extend({
+    constants: {
+        MIN_COLUMN_WIDTH: 100
     },
 
+    initialize(options) {
+        if (!options.columns) {
+            throw new Error('You must provide columns definition ("columns" option)');
+        }
+        if (!options.gridEventAggregator) {
+            throw new Error('You must provide grid event aggregator ("gridEventAggregator" option)');
+        }
+        if (!options.gridColumnHeaderView) {
+            throw new Error('You must provide grid column header view ("gridColumnHeaderView" option)');
+        }
+
+        this.gridEventAggregator = options.gridEventAggregator;
+        this.gridColumnHeaderView = options.gridColumnHeaderView;
+        this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
+        this.columns = options.columns;
+        this.$document = $(document);
+        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
+        this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
+    },
+    /**
+     * View template
+     * @param {HTML} HTML file
+     * */
     template: Handlebars.compile(template),
+
+    className: 'grid-header',
+
+    ui: {
+        gridHeaderColumn: '.grid-header-column',
+        gridHeaderColumnContent: '.grid-header-column-content-view'
+    },
+
+    events: {
+        'mousedown .grid-header-dragger': '__handleDraggerMousedown'
+    },
 
     onRender() {
         if (this.__columnEls) {
             this.__columnEls.forEach(c => c.destroy());
         }
         this.__columnEls = [];
-
 
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
@@ -47,21 +78,11 @@ const HeaderView = GridHeaderView.extend({
             }));
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
-            const childEl = view.render().el;
-            el.appendChild(childEl);
+            el.appendChild(view.render().el);
         });
-    },
-
-    constants: {
-        MIN_COLUMN_WIDTH: 100
-    },
-
-    __getAvailableWidth() {
-        return this.$el.parent().width() - 1;
-    },
-
-    __getElementOuterWidth(el) {
-        return $(el)[0].getBoundingClientRect().width;
+        this.headerMinWidth = this.__getAvailableWidth();
+        this.__setInitialWidth(this.headerMinWidth);
+        this.__handleResizeInternal();
     },
 
     setFitToView() {
@@ -90,8 +111,7 @@ const HeaderView = GridHeaderView.extend({
         this.ui.gridHeaderColumn.each((i, el) => {
             if (availableWidth !== viewWidth) {
                 if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
-                    const delta = (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-                    this.columns[i].width -= delta;
+                    this.columns[i].width -= (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
                 }
             }
 
@@ -103,6 +123,70 @@ const HeaderView = GridHeaderView.extend({
             fullWidth += this.columns[i].width;
         });
         this.$el.width(Math.ceil(fullWidth));
+    },
+
+    updateColumnAndNeighbourWidths(index, delta) {
+        const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
+
+        if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
+            return;
+        }
+
+        $(this.ui.gridHeaderColumn[index]).outerWidth(newColumnWidth);
+        this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
+
+        this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
+        this.columns[index].width = newColumnWidth;
+    },
+
+    updateDragContext($column, offset) {
+        this.dragContext = this.dragContext || {};
+
+        const draggedColumn = {
+            $el: $column,
+            initialWidth: this.__getElementOuterWidth($column),
+            index: $column.index()
+        };
+
+        this.dragContext.tableInitialWidth = this.__getTableWidth();
+        this.gridEventAggregator.trigger('columnStartDrag', draggedColumn.index);
+
+        this.dragContext.fullWidth = this.headerMinWidth;
+        this.dragContext.draggedColumn = draggedColumn;
+        this.dragContext.pageOffsetX = offset;
+    },
+
+    templateHelpers() {
+        return {
+            columns: this.columns
+        };
+    },
+
+    onDestroy() {
+        if (this.__columnEls) {
+            this.__columnEls.forEach(c => c.destroy());
+        }
+    },
+
+    updateSorting() {
+        this.render();
+        this.__handleResizeInternal();
+    },
+
+    handleResize() {
+        if (this.isDestroyed) {
+            return;
+        }
+        this.__handleResizeInternal();
+        this.gridEventAggregator.trigger('columnsResize');
+    },
+
+    __getAvailableWidth() {
+        return this.gridEventAggregator._parent.$el.width();//todo remove this evil magic
+    },
+
+    __getElementOuterWidth(el) {
+        return $(el)[0].getBoundingClientRect().width;
     },
 
     __setInitialWidth(availableWidth) {
@@ -154,12 +238,6 @@ const HeaderView = GridHeaderView.extend({
         return columnWidthData;
     },
 
-    onShow() {
-        this.headerMinWidth = this.__getAvailableWidth();
-        this.__setInitialWidth(this.headerMinWidth);
-        this.__handleResizeInternal();
-    },
-
     __startDrag(e) {
         const $dragger = $(e.target);
         const $column = $dragger.parent();
@@ -170,7 +248,9 @@ const HeaderView = GridHeaderView.extend({
         this.dragContext.$dragger = $dragger;
 
         $dragger.addClass('active');
-        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        if (this.dragContext) {
+            this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        }
     },
 
     __stopDrag() {
@@ -187,10 +267,6 @@ const HeaderView = GridHeaderView.extend({
     },
 
     __draggerMouseMove(e) {
-        if (!this.dragContext) {
-            return;
-        }
-
         const ctx = this.dragContext;
         const delta = e.pageX - ctx.pageOffsetX;
 
@@ -201,45 +277,6 @@ const HeaderView = GridHeaderView.extend({
         }
 
         return false;
-    },
-
-    updateColumnAndNeighbourWidths(index, delta) {
-        const $current = $(this.ui.gridHeaderColumn[index]);
-        const newColumnWidth = this.dragContext.draggedColumn.initialWidth + delta;
-
-        if (this.dragContext.draggedColumn.initialWidth + delta < this.constants.MIN_COLUMN_WIDTH) {
-            return;
-        }
-
-        $current.outerWidth(newColumnWidth);
-        this.gridEventAggregator.trigger('singleColumnResize', this, {
-            index,
-            delta
-        });
-
-        this.__changeTableWidth(this.dragContext.tableInitialWidth, delta);
-        this.columns[index].width = newColumnWidth;
-    },
-
-    __changeTableWidth(initialWidth, delta) {
-        this.$el.width(initialWidth + delta + 1);
-    },
-
-    updateDragContext($column, offset) {
-        this.dragContext = this.dragContext || {};
-
-        const draggedColumn = {
-            $el: $column,
-            initialWidth: this.__getElementOuterWidth($column),
-            index: $column.index()
-        };
-
-        this.dragContext.tableInitialWidth = this.__getTableWidth();
-        this.gridEventAggregator.trigger('columnStartDrag', this, draggedColumn.index);
-
-        this.dragContext.fullWidth = this.headerMinWidth;
-        this.dragContext.draggedColumn = draggedColumn;
-        this.dragContext.pageOffsetX = offset;
     },
 
     __getTableWidth() {
@@ -273,7 +310,46 @@ const HeaderView = GridHeaderView.extend({
         });
 
         needUpdate && this.$el.width(fullWidth);
+    },
+
+    __handleColumnSort(sender, args) {
+        const column = args.column;
+        const sorting = column.sorting;
+        let comparator;
+        _.each(this.columns, c => {
+            c.sorting = null;
+        });
+        switch (sorting) {
+            case 'asc':
+                column.sorting = 'desc';
+                comparator = column.sortDesc;
+                break;
+            case 'desc':
+                column.sorting = 'asc';
+                comparator = column.sortAsc;
+                break;
+            default:
+                column.sorting = 'asc';
+                comparator = column.sortAsc;
+                break;
+        }
+        this.updateSorting();
+
+        this.trigger('onColumnSort', column, comparator);
+    },
+
+    __handleDraggerMousedown(e) {
+        this.__stopDrag();
+        this.__startDrag(e);
+        return false;
+    },
+
+    __draggerMouseUp() {
+        this.__stopDrag();
+        return false;
+    },
+
+    __getFullWidth() {
+        return this.$el.parent().width() - 2; // Magic cross browser pixels, don't remove them
     }
 });
-
-export default HeaderView;

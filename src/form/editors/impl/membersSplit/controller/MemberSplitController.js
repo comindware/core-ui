@@ -1,9 +1,12 @@
 
 import BaseSplitController from '../../splitEditor/controller/BaseSplitController';
 import MemberSplitView from '../views/MemberSplitView';
+import LocalizationService from '../../../../../services/LocalizationService';
+import helpers from '../../../../../utils/helpers';
 
 export default BaseSplitController.extend({
-    initialize() {
+    initialize(options) {
+        this.options = options;
         BaseSplitController.prototype.initialize.apply(this, arguments);
         this.__fillDisplayText();
     },
@@ -29,8 +32,8 @@ export default BaseSplitController.extend({
             selectedItemsText: this.options.selectedItemsText,
             confirmEdit: true,
             showToolbar: true,
-            rejectText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
-            acceptText: Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+            rejectText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+            acceptText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
             searchPlaceholder: this.options.searchPlaceholder,
             emptyListText: this.options.emptyListText
         });
@@ -48,23 +51,23 @@ export default BaseSplitController.extend({
                 membersCount[members[id].type]++;
             }
         });
-        this.options.displayText = this.options.hideUsers ? '' : Core.utils.helpers.getPluralForm(membersCount.users, Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
+        this.options.displayText = this.options.hideUsers ? '' : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
         this.options.displayText += (this.options.displayText.length > 0 ? ' ' : '');
-        this.options.displayText += this.options.hideGroups ? '' : Core.utils.helpers.getPluralForm(membersCount.groups, Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        this.options.displayText += this.options.hideGroups ? '' : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
     },
 
     __getFullMemberSplitTitle() {
         if (this.options.title) {
             switch (this.options.title) {
                 case 'Members':
-                    return Localizer.get('PROJECT.SETTINGS.WORKSPACESTAB.MEMBERSPLITTITLE');
+                    return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE');
                 case 'Performers':
-                    return Localizer.get('PROCESS.PROCESSTEMPLATES.ACTIVITY.SETTINGS.TASK.USERTASK.MEMBERSPLITTITLE');
+                    return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.PERFORMERSTITLE');
                 default:
                     return this.options.title;
             }
         }
-        return Localizer.get('SUITEGENERAL.FORM.EDITORS.MEMBERSPLIT.TITLE');
+        return LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.TITLE');
     },
 
     createView() {

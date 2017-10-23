@@ -10,31 +10,6 @@ import template from '../../list/templates/list.hbs';
 import { keypress, Handlebars } from 'lib';
 import { helpers } from 'utils';
 
-const VisibleCollectionView = Marionette.CollectionView.extend({
-    getChildView(child) {
-        if (child.get('isLoadingRowModel')) {
-            return this.getOption('loadingChildView');
-        }
-
-        const childViewSelector = this.getOption('childViewSelector');
-        if (childViewSelector) {
-            return childViewSelector(child);
-        }
-
-        const childView = this.getOption('childView');
-        if (!childView) {
-            helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
-        }
-        return childView;
-    },
-
-    setFitToView() {
-        this.children.each(ch => {
-            ch.setFitToView();
-        });
-    }
-});
-
 /**
  * Some description for initializer
  * @name ListView
@@ -49,7 +24,7 @@ const VisibleCollectionView = Marionette.CollectionView.extend({
  * @param {Object} [options.emptyViewOptions] Опции для emptyView
  * @param {Backbone.View} options.loadingChildView View-лоадер, показывается при подгрузке строк
  * */
-const ListView = Marionette.LayoutView.extend({
+const ListView = Marionette.CollectionView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'collection');
 
@@ -73,37 +48,46 @@ const ListView = Marionette.LayoutView.extend({
         _.bindAll(this, '__handleResize', '__handleResizeInternal');
         $(window).resize(this.__handleResize);
     },
-
-    regions: {
-        visibleCollectionRegion: '.visible-collection-view'
-    },
-
-    className: 'list',
+    /**
+     * Class for view
+     * @param {String} CSS class
+     * */
+    className: 'visible-collection',
+    /**
+     * View template
+     * @param {HTML} HTML file
+     * */
     template: Handlebars.compile(template),
 
-    onShow() {
-        this.state.visibleHeight = this.$el.parent().height();
-        // Updating viewportHeight and rendering subviews
-        this.visibleCollectionView = new VisibleCollectionView({
-            childView: this.childView,
-            childViewSelector: this.childViewSelector,
-            className: 'visible-collection',
-            collection: this.collection,
-            emptyView: this.emptyView,
-            emptyViewOptions: this.emptyViewOptions,
-            childViewOptions: this.childViewOptions,
-            loadingChildView: this.loadingChildView
+    getChildView(child) {
+        if (child.get('isLoadingRowModel')) {
+            return this.getOption('loadingChildView');
+        }
+
+        const childViewSelector = this.getOption('childViewSelector');
+        if (childViewSelector) {
+            return childViewSelector(child);
+        }
+
+        const childView = this.getOption('childView');
+        if (!childView) {
+            helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
+        }
+        return childView;
+    },
+
+    setFitToView() {
+        this.children.each(ch => {
+            ch.setFitToView();
         });
-
-        this.listenTo(this.visibleCollectionView, 'childview:click', child => this.trigger('row:click', child.model));
-
-        this.listenTo(this.visibleCollectionView, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
-
-        this.visibleCollectionRegion.show(this.visibleCollectionView);
     },
 
     onRender() {
         this.__assignKeyboardShortcuts();
+
+        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
+
+        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
     },
 
     keyboardShortcuts: {
@@ -120,11 +104,11 @@ const ListView = Marionette.LayoutView.extend({
             this.__moveToNextPage('bottom', e.shiftKey);
         },
         home(e) {
-            this.__selectByIndex(this.getSelectedViewIndex(), 0, e.shiftKey);
+            this.__selectByIndex(0, e.shiftKey);
             this.__scrollToTop();
         },
         end(e) {
-            this.__selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
+            this.__selectByIndex(this.collection.length - 1, e.shiftKey);
             this.__scrollToBottom();
         }
     },
@@ -149,10 +133,10 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __scrollToNeighbor(index) {
-        const view = this.visibleCollectionView.children.findByIndex(index);
+        const view = this.children.findByIndex(index);
         const $parentEl = this.$el.parent();
         const currentScrollTop = $parentEl.scrollTop();
-        const visibleHeight = this.state.visibleHeight;
+        const visibleHeight = this.$el.parent().height();
         const viewPositionTop = view.$el.position().top;
         const viewHeight = view.$el.height();
         const viewBottomPos = viewPositionTop + viewHeight;
@@ -165,7 +149,7 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __scrollToIndex(index, offset) {
-        const view = this.visibleCollectionView.children.findByIndex(index);
+        const view = this.children.findByIndex(index);
         const $parentEl = this.$el.parent();
         const currentScrollTop = $parentEl.scrollTop();
         const viewPositionTop = view.$el.position().top;
@@ -174,7 +158,7 @@ const ListView = Marionette.LayoutView.extend({
         $parentEl.scrollTop(newScrollPos);
     },
 
-    __selectByIndex(currentIndex, nextIndex, shiftPressed) {
+    __selectByIndex(nextIndex, shiftPressed) {
         const model = this.collection.at(nextIndex);
         const selectFn = this.collection.selectSmart || this.collection.select;
         if (selectFn) {
@@ -190,14 +174,14 @@ const ListView = Marionette.LayoutView.extend({
 
         if (nextIndex !== selectedIndex) {
             nextIndex = this.__normalizeCollectionIndex(nextIndex);
-            this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+            this.__selectByIndex(nextIndex, shiftPressed);
             this.__scrollToNeighbor(nextIndex);
         }
     },
 
     __moveToNextPage(direction, shiftPressed) {
         const selectedIndex = this.getSelectedViewIndex();
-        const selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex);
+        const selectedView = this.children.findByIndex(selectedIndex);
         const selectedPositionTop = selectedView.$el.position().top;
         let nextIndex = selectedIndex;
 
@@ -209,7 +193,7 @@ const ListView = Marionette.LayoutView.extend({
 
         if (nextIndex !== selectedIndex) {
             nextIndex = this.__normalizeCollectionIndex(nextIndex);
-            this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+            this.__selectByIndex(nextIndex, shiftPressed);
             this.__scrollToIndex(nextIndex, -selectedPositionTop);
         }
     },
@@ -231,12 +215,12 @@ const ListView = Marionette.LayoutView.extend({
     __getTopIndex(index) {
         let cHeight = 0;
         let newIndex = index;
-        const childViews = this.visibleCollectionView.children.toArray();
+        const childViews = this.children.toArray();
 
         for (let i = index - 1; i >= 0; i--) {
             const newH = cHeight + childViews[i].$el.height();
 
-            if (newH > this.state.visibleHeight) {
+            if (newH > this.$el.parent().height()) {
                 break;
             } else {
                 newIndex = i;
@@ -250,12 +234,12 @@ const ListView = Marionette.LayoutView.extend({
     __getBottomIndex(index) {
         let cHeight = 0;
         let newIndex = index;
-        const childViews = this.visibleCollectionView.children.toArray();
+        const childViews = this.children.toArray();
 
         for (let i = index + 1; i < childViews.length; i++) {
             const newH = cHeight + childViews[i].$el.height();
 
-            if (newH > this.state.visibleHeight) {
+            if (newH > this.$el.parent().height()) {
                 break;
             } else {
                 newIndex = i;
@@ -291,10 +275,10 @@ const ListView = Marionette.LayoutView.extend({
     getElementHeight() {
         let minHeight = 0;
 
-        if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
-            minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
+        if (this.isEmpty()) {
+            minHeight = this.$el.find('.empty-view').height();
         } else {
-            this.visibleCollectionView.children.forEach(view => {
+            this.children.forEach(view => {
                 minHeight += view.$el.height();
             });
         }
@@ -304,10 +288,6 @@ const ListView = Marionette.LayoutView.extend({
 
     setWidth(fullWidth) {
         this.$el.width(fullWidth);
-    },
-
-    setFitToView() {
-        this.visibleCollectionView.setFitToView();
     },
 
     __handleResize() {

@@ -19,6 +19,11 @@ export default Marionette.LayoutView.extend({
         if (_.isFunction(this.schema.schemaExtension)) {
             schemaExtension = this.schema.schemaExtension(rowModel);
         }
+
+        if (this.schema.rerenderModelEvent) {
+            this.listenToOnce(rowModel, this.schema.rerenderModelEvent, this.render);
+        }
+
         this.editorView = new EditableGridFieldView({
             schema: Object.assign({}, this.schema, { readonly }, schemaExtension),
             key: this.schema.key,

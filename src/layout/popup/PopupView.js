@@ -8,6 +8,7 @@
 
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
+import WindowService from 'services/WindowService';
 import template from './popup.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
@@ -52,11 +53,8 @@ export default Marionette.LayoutView.extend({
     },
 
     events: {
-        'click @ui.button': '__onButtonClick'
-    },
-
-    triggers: {
-        'click @ui.close': 'close'
+        'click @ui.button': '__onButtonClick',
+        'click @ui.close': '__close'
     },
 
     regions: {
@@ -82,9 +80,16 @@ export default Marionette.LayoutView.extend({
     },
 
     __onButtonClick(e) {
-        const id = $(e.target).data('id') || $(e.target.parentElement).data('id');
+        let id = $(e.target).data('id');
+        if (id === undefined) {
+            id = $(e.target.parentElement).data('id');
+        }
         const button = this.__buttons.find(x => x.id === id);
         button.handler(this);
         this.trigger('button', id);
+    },
+
+    __close() {
+        WindowService.closePopup();
     }
 });

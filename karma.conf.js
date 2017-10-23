@@ -95,7 +95,10 @@ module.exports = function (config) {
                 { type: 'html', subdir: 'report-html' },
                 { type: 'lcov', subdir: 'report-lcov' },
                 { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
-            ]
+            ],
+            instrumenterOptions: {
+                istanbul: { noCompact: true, embedSource: true }
+            }
         };
 
         result.webpack = webpackConfigFactory({
