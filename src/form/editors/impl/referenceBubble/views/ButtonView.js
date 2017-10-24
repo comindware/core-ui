@@ -1,16 +1,16 @@
 /**
  * Developer: Ksenia Kartvelishvili
- * Date: 16.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Date: 30.08.2017
+ * Copyright: 2009-2017 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
-import template from '../templates/button.html';
-import BubbleView from './BubbleView';
+'use strict';
+
+import { Handlebars } from 'lib';
+import template from '../templates/button.hbs';
+import BubbleItemView from './BubbleItemView';
 import InputView from './InputView';
 import FakeInputModel from '../models/FakeInputModel';
 
@@ -35,7 +35,7 @@ export default Marionette.CollectionView.extend({
         if (model instanceof FakeInputModel) {
             return InputView;
         }
-        return this.options.bubbleView || BubbleView;
+        return BubbleItemView;
     },
 
     focus() {
@@ -67,20 +67,26 @@ export default Marionette.CollectionView.extend({
 
     tagName: 'ul',
 
-    attributes: {
-        tabindex: 0
-    },
-
     childViewOptions() {
         return {
             reqres: this.reqres,
             parent: this.$el,
             enabled: this.options.enabled,
-            displayAttribute: this.options.model.get('displayAttribute')
+            createValueUrl: this.options.createValueUrl,
+            showEditButton: this.options.showEditButton,
+            getDisplayText: this.options.getDisplayText
         };
     },
 
     __click() {
         this.reqres.request('button:click');
+    },
+
+    updateEnabled(enabled) {
+        this.children.each(cv => {
+            if (cv.updateEnabled) {
+                cv.updateEnabled(enabled);
+            }
+        });
     }
 });

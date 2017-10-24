@@ -83,6 +83,10 @@ export default {
                     displayName: 'Reference Editor'
                 },
                 {
+                    id: 'ReferenceBubbleEditor',
+                    displayName: 'Reference Bubble Editor'
+                },
+                {
                     id: 'MaskedTextEditor',
                     displayName: 'Masked Text Editor'
                 },
@@ -238,7 +242,6 @@ export default {
                     id: 'editableGrid',
                     displayName: 'Editable Grid'
                 }
-
             ]
         },
         {

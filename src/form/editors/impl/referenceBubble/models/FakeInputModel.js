@@ -1,13 +1,14 @@
 /**
  * Developer: Ksenia Kartvelishvili
- * Date: 05.05.2015
- * Copyright: 2009-2015 Comindware®
+ * Date: 30.08.2017
+ * Copyright: 2009-2017 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
+
+'use strict';
+
+import 'lib';
 
 export default Backbone.Model.extend({
     updateEmpty() {

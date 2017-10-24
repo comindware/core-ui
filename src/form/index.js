@@ -21,6 +21,7 @@ import ReferenceEditorView from './editors/ReferenceEditorView';
 import MemberSelectEditorView from './editors/MemberSelectEditorView';
 import DropdownEditorView from './editors/DropdownEditorView';
 import MembersBubbleEditorView from './editors/MembersBubbleEditorView';
+import ReferenceBubbleEditorView from './editors/ReferenceBubbleEditorView';
 import DurationEditorView from './editors/DurationEditorView';
 import RadioGroupEditorView from './editors/RadioGroupEditorView';
 import DateEditorView from './editors/DateEditorView';
@@ -59,6 +60,7 @@ import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
+import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
@@ -155,6 +157,19 @@ const api = /** @lends module:core.form */ {
                 UserReferenceListItemView
             }
         },
+        /**
+         * Document editor data providers and internal implementation.
+         * @namespace
+         * */
+        document: {
+            /**
+             * Base implementation of data providers for DocumentEditorView.
+             * @namespace
+             * */
+            views: {
+                UploadDocumentButtonView
+            }
+        },
         BooleanEditor: BooleanEditorView,
         NumberEditor: NumberEditorView,
         TextAreaEditor: TextAreaEditorView,
@@ -164,6 +179,7 @@ const api = /** @lends module:core.form */ {
         MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
         MembersBubbleEditor: MembersBubbleEditorView,
+        ReferenceBubbleEditor: ReferenceBubbleEditorView,
         DurationEditor: DurationEditorView,
         RadioGroupEditor: RadioGroupEditorView,
         DateEditor: DateEditorView,

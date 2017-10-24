@@ -44,11 +44,29 @@
 
 <http://comindware.com/text/core/form/editors/date#emptyPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата"; l10n:originalData "Date"].
 
-<http://comindware.com/text/core/form/editors/document#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "Add document"].
+<http://comindware.com/text/core/form/editors/document#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить"; l10n:originalData "Add"].
 
 <http://comindware.com/text/core/form/editors/document#addDocument> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить документ"; l10n:originalData "addDocument"].
 
+<http://comindware.com/text/core/form/editors/document#download> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скачать"; l10n:originalData "Download"].
+
+<http://comindware.com/text/core/form/editors/document#hide> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Скрыть"; l10n:originalData "Hide"].
+
+<http://comindware.com/text/core/form/editors/document#remove> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Remove"].
+
+<http://comindware.com/text/core/form/editors/document#showMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отобразить больше..."; l10n:originalData "Show more..."].
+
+<http://comindware.com/text/core/form/editors/document#showRevision> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Показать историю"; l10n:originalData "Show revision"].
+
 <http://comindware.com/text/core/form/editors/document#validationError> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка прервана. Следующие файлы имеют некорректное расширение: "; l10n:originalData "Uploading faild. The folowing files have incorrect extension: "].
+
+<http://comindware.com/text/core/form/editors/document/documentRevision#author> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Автор"; l10n:originalData "Author"].
+
+<http://comindware.com/text/core/form/editors/document/documentRevision#creationDate> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Дата создания"; l10n:originalData "Creation date"].
+
+<http://comindware.com/text/core/form/editors/document/documentRevision#version> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Версия"; l10n:originalData "Version"].
+
+<http://comindware.com/text/core/form/editors/document/gallery#close> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Закрыть"; l10n:originalData "Close"].
 
 <http://comindware.com/text/core/form/editors/dropdown#notset> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "notset"].
 
@@ -81,6 +99,8 @@
 <http://comindware.com/text/core/form/editors/expression#csharpscript> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "C# скрипт"; l10n:originalData "csharpscript"].
 
 <http://comindware.com/text/core/form/editors/expression#emptyText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
+
+<http://comindware.com/text/core/form/editors/expression#expression> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выражение"; l10n:originalData "expression"].
 
 <http://comindware.com/text/core/form/editors/expression#template> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Шаблон"; l10n:originalData "template"].
 
