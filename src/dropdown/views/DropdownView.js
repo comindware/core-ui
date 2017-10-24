@@ -84,7 +84,7 @@ const defaultOptions = {
 
 export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
     initialize(options) {
-        _.extend(this.options, _.clone(defaultOptions), options || {});
+        _.defaults(this.options, _.clone(defaultOptions), options);
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
         _.bindAll(this, 'open', 'close');
