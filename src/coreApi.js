@@ -37,7 +37,7 @@ import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
 
-import RoutingServiceBase from './services/RoutingServiceBase';
+import RoutingService from './services/RoutingService';
 import MessageService from './services/MessageService';
 import WindowService from './services/WindowService';
 import GlobalEventService from './services/GlobalEventService';
@@ -60,6 +60,7 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
 const core = {
     Controller,
     Application,
+    Routing: RoutingService,
 
     lib: libApi,
     /**
@@ -68,7 +69,6 @@ const core = {
      * @memberof module:core
      * */
     services: {
-        RoutingServiceBase,
         MessageService,
         /**
          * The service is responsible for displaying global windows. For example, modal dialogs (popups).

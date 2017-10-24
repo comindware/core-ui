@@ -16,8 +16,7 @@ module.exports = () => {
     const jsdoc = require('gulp-jsdoc');
     return gulp.src('./src/**/*.js')
         .pipe(babel({
-            presets: ['es2015'],
-            plugins: ['transform-es2015-modules-commonjs']
+            presets: ['latest']
         }))
         .pipe(jsdoc.parser({}))
         .pipe(jsdoc.generator('./doc', {

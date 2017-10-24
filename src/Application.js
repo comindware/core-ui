@@ -16,6 +16,7 @@ import WindowService from 'services/WindowService';
 import LocalizationService from 'services/LocalizationService';
 import CTEventsService from 'services/CTEventsService';
 import WebSocketService from 'services/WebSocketService';
+import RoutingService from 'services/RoutingService';
 
 export default {
     start(options) {
@@ -24,6 +25,7 @@ export default {
         helpers.ensureOption(options, 'userService');
 
         const marionetteApp = new Marionette.Application();
+        window.application = marionetteApp;
 
         marionetteApp.addRegions(options.regions);
         marionetteApp.ui = options.ui;
@@ -31,6 +33,12 @@ export default {
         marionetteApp.addInitializer(options.serviceInitializer);
 
         GlobalEventService.initialize();
+
+        RoutingService.initialize({
+            defaultUrl: options.RouterConfiguration.defaultUrl,
+            modules: options.RouterConfiguration.modules
+        });
+
         UserService.initialize(options.userService);
         WindowService.initialize();
         LocalizationService.initialize(options.localizationService);
@@ -52,7 +60,6 @@ export default {
         Backbone.Marionette.Behaviors.behaviorsLookup = options.behaviors;
 
         this.initializeThirdParties();
-        window.application = marionetteApp;
         marionetteApp.start();
         return marionetteApp;
     },
