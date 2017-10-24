@@ -64,11 +64,7 @@ const defaultOptions = function() {
 formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
     initialize(options) {
         const defaults = defaultOptions();
-        if (options.schema) {
-            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
-        } else {
-            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
-        }
+        _.defaults(this.options, defaults, _.pick(options.schema ? options.schema : options, _.keys(defaults)));
 
         this.placeholder = this.options.emptyPlaceholder;
     },
