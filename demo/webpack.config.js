@@ -118,7 +118,7 @@ module.exports = options => {
                         pathResolver.source('app/cases')
                     ],
                     options: {
-                        presets: ['latest'],
+                        presets: ['env'],
                         plugins: ['transform-runtime']
                     }
                 }, {
