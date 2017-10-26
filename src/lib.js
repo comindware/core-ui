@@ -6,17 +6,28 @@
  * Published under the MIT license
  */
 
+/* Data & Datatime utils*/
 import moment_ from 'moment';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
+/* --- */
+import * as underscoreLib from 'underscore';
+window._ = underscoreLib;
+import './utils/underscore';
+/* Core.Model utils */
+import backbone from 'backbone';
+import * as Marionette_ from 'backbone.marionette';
+import 'backbone.modelbinder';
+import 'backbone-computedfields';
+import 'backbone.select';
+import 'backbone.radio';
+import 'backbone-associations';
+/* --- */
+import 'jstorage';
 import Bluebird_ from 'bluebird';
 import * as Handlebars_ from 'handlebars';
-import 'underscore';
 import * as underscoreString from 'underscore.string';
-import backbone from 'backbone';
-import 'backbone-associations';
-import * as Marionette_ from 'backbone.marionette';
 import $_ from 'jquery';
 import 'inputmask/dist/jquery.inputmask.bundle';
 import 'rangyinputs';
@@ -26,6 +37,10 @@ import * as keypress_ from 'keypress';
 import 'bootstrap-datetime-picker';
 import numeral_ from 'numeral';
 import codemirror_ from 'codemirror/lib/codemirror';
+import 'innersvg-polyfill';
+import jsencrypt from 'jsencrypt';
+import * as d3 from 'd3';
+import * as jqui from 'jquery-ui';
 
 // Replacing ES6 promise with bluebird
 window.Promise = Bluebird_;
@@ -44,6 +59,7 @@ $_.browser = {
 
 const api = {
     keypress: keypress_,
+    'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
     Bluebird: Bluebird_,
@@ -52,8 +68,11 @@ const api = {
     Backbone: backbone,
     Marionette: Marionette_,
     numeral: numeral_,
-    codemirror: codemirror_
+    codemirror: codemirror_,
+    d3,
+    JSEncrypt: jsencrypt.JSEncrypt
 };
+
 const keypress = api.keypress;
 const moment = api.moment;
 const Handlebars = api.Handlebars;

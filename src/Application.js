@@ -17,6 +17,8 @@ import LocalizationService from 'services/LocalizationService';
 import CTEventsService from 'services/CTEventsService';
 import WebSocketService from 'services/WebSocketService';
 import RoutingService from 'services/RoutingService';
+import ToastNotificationService from 'services/ToastNotificationService';
+import 'backbone.trackit';
 
 export default {
     start(options) {
@@ -38,6 +40,13 @@ export default {
             defaultUrl: options.RouterConfiguration.defaultUrl,
             modules: options.RouterConfiguration.modules
         });
+
+        if (window.application.toastNotificationRegion) {
+            ToastNotificationService.initialize({
+                toastNotificationRegion: window.application.toastNotificationRegion,
+                toastNotificationRegionEl: window.application.ui.toastNotificationRegion
+            });
+        }
 
         UserService.initialize(options.userService);
         WindowService.initialize();

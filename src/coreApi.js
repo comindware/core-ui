@@ -38,6 +38,7 @@ import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
 
 import RoutingService from './services/RoutingService';
+import ToastNotifications from './services/ToastNotificationService';
 import MessageService from './services/MessageService';
 import WindowService from './services/WindowService';
 import GlobalEventService from './services/GlobalEventService';
@@ -61,7 +62,7 @@ const core = {
     Controller,
     Application,
     Routing: RoutingService,
-
+    ToastNotifications,
     lib: libApi,
     /**
      * Services of general use the UI is built on.

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-/*eslint-disable*/
-
 import 'lib';
 import ContentLoadingView from './routing/ContentLoadingView';
 import ModuleProxy from './routing/ModuleProxy';
@@ -16,7 +14,7 @@ import ModuleProxy from './routing/ModuleProxy';
 let previousUrl;
 let activeUrl;
 const originalCheckUrl = Backbone.history.checkUrl;
-Backbone.history.checkUrl = function(e) {
+Backbone.history.checkUrl = () => {
     previousUrl = activeUrl;
     activeUrl = window.location.hash;
     originalCheckUrl.apply(this, arguments);
@@ -26,7 +24,6 @@ export default {
     initialize(options) {
         options.modules.forEach(config => {
             const moduleProxy = new ModuleProxy({ config });
-            moduleProxy.on('module:loading', this.__onModuleLoading, this);
             moduleProxy.on('module:loaded', this.__onModuleLoaded, this);
             new Marionette.AppRouter({
                 controller: moduleProxy,
@@ -71,6 +68,29 @@ export default {
     },
 
     __onModuleLoaded(callbackName, routingArgs, config, Module) {
+        this.loadingContext = {
+            config,
+            leavingPromise: null,
+            loaded: false
+        };
+        if (!this.activeModule) {
+            window.application.contentLoadingRegion.show(new ContentLoadingView());
+        } else {
+            this.loadingContext.leavingPromise = Promise.resolve(this.activeModule.leave());
+            this.loadingContext.leavingPromise.then(canLeave => {
+                if (!canLeave && this.getPreviousUrl()) {
+                    // getting back to last url
+                    this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
+                    return;
+                }
+                //clear all promises of the previous module
+                Core.services.PromiseService.cancelAll();
+                if (!this.loadingContext.loaded) {
+                    this.activeModule.view.setModuleLoading(true);
+                }
+            });
+        }
+
         // reject race condition
         if (this.loadingContext === null || this.loadingContext.config.module !== config.module) {
             return;
@@ -108,8 +128,8 @@ export default {
                 this.activeModule.onRoute.apply(this.activeModule, routingArgs);
             }
             if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
-                const config = this.activeModule.routingActions[callbackName];
-                this.activeModule.handleRouterEvent.call(this.activeModule, config, routingArgs)
+                const configuration = this.activeModule.routingActions[callbackName];
+                this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
             } else {
                 const routingCallback = this.activeModule[callbackName];
                 if (!routingCallback) {
@@ -118,30 +138,5 @@ export default {
                 routingCallback.apply(this.activeModule, routingArgs);
             }
         });
-    },
-
-    __onModuleLoading(config) {
-        this.loadingContext = {
-            config,
-            leavingPromise: null,
-            loaded: false
-        };
-        if (!this.activeModule) {
-            window.application.contentLoadingRegion.show(new ContentLoadingView());
-        } else {
-            this.loadingContext.leavingPromise = Promise.resolve(this.activeModule.leave());
-            this.loadingContext.leavingPromise.then(canLeave => {
-                if (!canLeave && this.getPreviousUrl()) {
-                    // getting back to last url
-                    this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
-                    return;
-                }
-                //clear all promises of the previous module
-                Core.services.PromiseService.cancelAll();
-                if (!this.loadingContext.loaded) {
-                    this.activeModule.view.setModuleLoading(true);
-                }
-            });
-        }
     }
 };

@@ -8,6 +8,7 @@
 
 import CTEventsService from '../services/CTEventsService';
 import WebSocketService from '../services/WebSocketService';
+import ToastNotificationService from '../services/ToastNotificationService';
 
 export default Marionette.Object.extend({
     constructor(options = {}) {
@@ -45,8 +46,17 @@ export default Marionette.Object.extend({
         WebSocketService.send(this.moduleId, data);
     },
 
-    async handleRouterEvent(configuration, callParams) { //todo call view Actions
-        const data = await this.__request(configuration, callParams);
+    async handleRouterEvent(configuration, callParams) {
+        const { data, error } = await this.__request(configuration, callParams);
+        if (error !== null) {
+            if (configuration.errorView) {
+                const view = new configuration.errorView();
+                if (configuration.viewEvents) {
+                    Object.keys(configuration.viewEvents).forEach(key => this.listenTo(view, key, configuration.viewEvents[key]));
+                }
+                this.moduleRegion.show(view);
+            }
+        }
         if (configuration.viewModel) {
             const viewModel = new configuration.viewModel(data, { parse: true });
 
@@ -59,6 +69,7 @@ export default Marionette.Object.extend({
                 if (configuration.viewEvents) {
                     Object.keys(configuration.viewEvents).forEach(key => this.listenTo(view, key, configuration.viewEvents[key]));
                 }
+                view.request = this.__handleViewResourceRequest.bind(this);
                 this.moduleRegion.show(view);
             }
         }
@@ -76,25 +87,66 @@ export default Marionette.Object.extend({
         }
     },
 
-    //toto extract view params
-    async __request(configuration, callParams) { //todo notifications
+    //todo extract view params and pass to failure
+    async __request(configuration, callParams) {
         const params = configuration.url.split('/');
-        configuration.showLoadingMask && this.view.setModuleLoading(true);
+        const showMask = configuration.showLoadingMask !== false;
+        showMask && this.view.setModuleLoading(true);
         try {
-            let data;
-            if (callParams.length === 1 && callParams[0] === null) {
-                data = await Ajax[params[0]][params[1]]();
-            } else {
-                data = await Ajax[params[0]][params[1]](callParams);
+            const requestFn = Ajax[params[0]][params[1]];
+            if (requestFn) {
+                const requestType = window.ajaxMap
+                    .find(requestTemplate => requestTemplate.className === params[0] && requestTemplate.methodName === params[1])
+                    .httpMethod;
+
+                const data = await requestFn.apply(this, callParams);
+                configuration.notifications && configuration.notifications.onSuccess && ToastNotificationService.add(configuration.notifications.onSuccess);
+                configuration.onSuccess && configuration.onSuccess.call(this, data, callParams);
+                return { data, requestType, error: null };
             }
-            //configuration.notifications && configuration.notifications.onSuccess && noti.add(configuration.notifications.onSuccess);
-            configuration.onSuccess && configuration.onSuccess.call(this, data, callParams); //todo !!!!
-            return data;
-        } catch (e) {
-            //configuration.notifications && configuration.notifications.onFailure && noti.add(configuration.notifications.onFailure);
-            configuration.onFailure && configuration.onFailure.call(this, e);
+            throw new Error('Please, provide a valid URL');
+        } catch (error) {
+            configuration.notifications && configuration.notifications.onFailure && ToastNotificationService.add(configuration.notifications.onFailure);
+            configuration.onFailure && configuration.onFailure.call(this, error);
+            return { data: null, requestType: null, error };
         } finally {
-            configuration.showLoadingMask && this.view.setModuleLoading(false);
+            showMask && this.view.setModuleLoading(false);
         }
+    },
+
+    async __handleViewResourceRequest(requestId, requestData) {
+        const requestConfig = this.requests[requestId];
+        if (requestConfig) {
+            const { data, requestType, error } = await this.__request(requestConfig, [ requestData.data ]);
+
+            if (error === null) {
+                switch (requestType) {
+                    case 'POST':
+                        if (requestData.model) {
+                            if (requestData.model.model) {
+                                const newModel = new requestData.model.model(Object.assign({ id: data }, requestData.data));
+                                requestData.model.add(newModel, { remove: false });
+                            }
+                        }
+                        break;
+                    case 'DELETE': {
+                        const callParamsDeletionItems = requestData.data;
+                        if (requestData.model) {
+                            requestData.model.remove(callParamsDeletionItems);
+                        }
+                        break;
+                    }
+                    case 'PUT': {
+                        requestData.model.set(requestData.model.get(requestData.data.id).set(requestData.data), { remove: false });
+                        break;
+                    }
+                    case 'GET':
+                        return data;
+                    default:
+                        break;
+                }
+            }
+        }
+        return null; //todo handle error
     }
 });

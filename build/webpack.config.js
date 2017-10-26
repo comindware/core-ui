@@ -47,6 +47,7 @@ module.exports = options => {
                     pathResolver.compiled(),
                     pathResolver.node_modules(),
                     pathResolver.source('external'),
+                    pathResolver.source('utils'),
                     pathResolver.tests()
                 ],
                 options: {
@@ -212,6 +213,8 @@ module.exports = options => {
             alias: {
                 rangyinputs: pathResolver.source('external/rangyinputs/rangyinputs-jquery-src'),
                 keypress: pathResolver.source('external/Keypress/keypress-2.1.0.min'),
+                'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
+                'jquery-ui': pathResolver.source('external/jquery-ui.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
             }
