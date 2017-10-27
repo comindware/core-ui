@@ -134,21 +134,20 @@ export default Backbone.Marionette.ItemView.extend({
             enctype: 'multipart/form-data',
             mimeType: 'multipart/form-data',
             success: data => {
-                window.tmp_res1 = data;
-                const retObjs = [];
-                for (let i = 0; i < window.tmp_res1.fileIds.length; i++) {
+                const tempResult = JSON.parse(data);
+                const resultObjects = [];
+                for (let i = 0; i < tempResult.fileIds.length; i++) {
                     const currFileName = files[i].name;
                     const obj = {
-                        id: window.tmp_res1.fileIds[i],
+                        id: tempResult.fileIds[i],
                         fileName: currFileName,
                         type: currFileName ? currFileName.replace(/.*\./g, '') : ''
                     };
-                    retObjs.push(obj);
+                    resultObjects.push(obj);
                 }
                 this.ui.fileUpload[0].value = null;
                 this.ui.form.trigger('reset');
-                this.trigger('uploaded', retObjs);
-                //this.save(retObjs);
+                this.trigger('uploaded', resultObjects);
             },
             error: () => {
                 this._fallback();
@@ -182,6 +181,9 @@ export default Backbone.Marionette.ItemView.extend({
             }
         }
 
-        return incorrectFileNames;
+        // TODO: show validation error
+        this.trigger('validation:error', incorrectFileNames);
+
+        return !incorrectFileNames;
     }
 });

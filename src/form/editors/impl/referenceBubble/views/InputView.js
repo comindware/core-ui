@@ -1,21 +1,14 @@
 /**
  * Developer: Ksenia Kartvelishvili
- * Date: 21.04.2015
- * Copyright: 2009-2015 Comindware®
+ * Date: 08.30.2017
+ * Copyright: 2009-2017 Comindware®
  *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
+ * Published under the MIT license
  */
 
-
-import lib from 'modules/lib';
-import template from '../templates/input.html';
-
-const config = {
-    TEXT_FETCH_DELAY: 100
-};
+import { Handlebars, keypress } from 'lib';
+import LocalizationService from '../../../../../services/LocalizationService';
+import template from '../templates/input.hbs';
 
 const classes = {
     EMPTY: ' empty'
@@ -66,13 +59,13 @@ export default Marionette.ItemView.extend({
         if (this.keyListener) {
             this.keyListener.reset();
         }
-        this.keyListener = new lib.keypress.Listener(this.ui.input[0]);
+        this.keyListener = new keypress.Listener(this.ui.input[0]);
         _.each(this.keyboardShortcuts, (value, key) => {
             const keys = key.split(',');
             _.each(keys, k => {
                 this.keyListener.simple_combo(k, value.bind(this));
             }, this);
-        }, this);
+        });
     },
 
     keyboardShortcuts: {
@@ -83,7 +76,7 @@ export default Marionette.ItemView.extend({
             this.reqres.request('input:down');
         },
         'enter,num_enter'() {
-            this.reqres.request('member:select');
+            this.reqres.request('value:select');
         },
         backspace() {
             const value = this.__getFilterValue();
@@ -113,32 +106,28 @@ export default Marionette.ItemView.extend({
             return;
         }
         this.__updateInputWidth(this.__calculateDesiredInputWidth(value || this.ui.input.attr('placeholder')));
-        Core.utils.helpers.setUniqueTimeout(this.fetchDelayId, () => {
-            this.filterValue = value;
-            this.reqres.request('input:search', value);
-        }, config.TEXT_FETCH_DELAY);
+        this.filterValue = value;
+        this.reqres.request('input:search', value, false);
     },
 
     __calculateDesiredInputWidth(value) {
-        let styleBlock;
+        let styleBlock = 'position:absolute; left: -1000px; top: -1000px; display:none;';
         const div = $('<div />', {
             style: styleBlock
         });
-        let style;
+        let width = div.width() + 25;
+        const parentWidth = this.parent.outerWidth();
         const styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
-        let width;
+        let style;
         let i;
 
-        styleBlock = 'position:absolute; left: -1000px; top: -1000px; display:none;';
         for (i = 0; i < styles.length; i++) {
             style = styles[i];
             styleBlock += `${style}:${this.ui.input.css(style)};`;
         }
         div.text(value);
         $('body').append(div);
-        width = div.width() + 25;
         div.remove();
-        const parentWidth = this.parent.outerWidth();
         if (parentWidth !== 0 && (width > parentWidth - 10)) {
             width = parentWidth - 10;
         }
@@ -151,7 +140,7 @@ export default Marionette.ItemView.extend({
 
     __updateInputPlaceholder() {
         const empty = this.model.get('empty');
-        const placeholder = empty ? Localizer.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
+        const placeholder = empty ? LocalizationService.get('CORE.FORM.EDITORS.BUBBLESELECT.NOTSET') : '';
         this.__updateInputWidth(this.__calculateDesiredInputWidth(placeholder));
         this.ui.input.attr({ placeholder }).toggleClass(classes.EMPTY, empty);
     }
