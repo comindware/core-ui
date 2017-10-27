@@ -16,7 +16,7 @@ module.exports = () => {
     const jsdoc = require('gulp-jsdoc');
     return gulp.src('./src/**/*.js')
         .pipe(babel({
-            presets: ['latest']
+            presets: ['env']
         }))
         .pipe(jsdoc.parser({}))
         .pipe(jsdoc.generator('./doc', {
