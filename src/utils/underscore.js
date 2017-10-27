@@ -1,5 +1,5 @@
 
-export default _.mixin({
+export default {
     cloneDeep: function(obj) {
         var out,
             i;
@@ -19,4 +19,4 @@ export default _.mixin({
         }
         return obj;
     }
-});
+};

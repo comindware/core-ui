@@ -36,17 +36,28 @@ export default {
 
         GlobalEventService.initialize();
 
-        RoutingService.initialize({
-            defaultUrl: options.RouterConfiguration.defaultUrl,
-            modules: options.RouterConfiguration.modules
-        });
-
         if (window.application.toastNotificationRegion) {
             ToastNotificationService.initialize({
                 toastNotificationRegion: window.application.toastNotificationRegion,
                 toastNotificationRegionEl: window.application.ui.toastNotificationRegion
             });
         }
+
+        if (options.moduleConfiguration) {
+            options.moduleConfiguration.ModuleService.initialize({ modules: options.routerConfiguration.modules });
+        }
+
+        if (options.navigationConfiguration) {
+            marionetteApp.navigationController = new options.navigationConfiguration.controller({
+                context: options.navigationConfiguration.context,
+                configurationKey: options.navigationConfiguration.configurationKey
+            });
+        }
+
+        RoutingService.initialize({
+            defaultUrl: window.application.navigationController.getDefaultUrl(),
+            modules: options.routerConfiguration.modules
+        });
 
         UserService.initialize(options.userService);
         WindowService.initialize();

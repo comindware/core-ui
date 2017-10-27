@@ -137,7 +137,7 @@ export default Marionette.Object.extend({
                         break;
                     }
                     case 'PUT': {
-                        requestData.model.set(requestData.model.get(requestData.data.id).set(requestData.data), { remove: false });
+                        requestData.model.set(new Backbone.Model(requestData.data), { remove: false });
                         break;
                     }
                     case 'GET':

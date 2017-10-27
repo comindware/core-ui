@@ -10,7 +10,6 @@
  */
 
 import NotificationCollectionView from './toastNotification/views/NotificationCollectionView';
-//import EventCenterService from './EventCenterService';
 
 const defaultTimeOfShow = 12000;
 
@@ -26,6 +25,7 @@ export default class ToastNotificationService {
             ERROR: 'Error',
             SUCCESS: 'Success'
         };
+        Object.assign(this, Backbone.Events);
     }
 
     static add(message, type, time) {
@@ -45,10 +45,10 @@ export default class ToastNotificationService {
             time: time === 0 ? time : time || defaultTimeOfShow
         }), { at: this.notificationCollection.length });
 
-        //EventCenterService.addEvents({
-        //    message: title || text,
-        //    affectedText: title ? text : '',
-        //    severity: type || 'Info'
-        //});
+        this.trigger('publish:notification', {
+            message: title || text,
+            affectedText: title ? text : '',
+            severity: type || 'Info'
+        });
     }
 }

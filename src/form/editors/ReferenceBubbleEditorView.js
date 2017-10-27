@@ -23,7 +23,7 @@ import dropdownFactory from '../../dropdown/factory';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
 const defaultOptions = {
-    controller: null,
+    controller: undefined,
     listItemView: ReferenceListItemView,
     displayAttribute: 'text'
 };

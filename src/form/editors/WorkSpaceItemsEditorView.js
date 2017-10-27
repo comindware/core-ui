@@ -7,7 +7,7 @@ import WindowService from '../../services/WindowService';
 
 const defaultOptions = {
     exclude: [],
-    maxQuantitySelected: null,
+    maxQuantitySelected: undefined,
     allowRemove: true
 };
 

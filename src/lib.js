@@ -12,9 +12,8 @@ import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
 /* --- */
-import * as underscoreLib from 'underscore';
-window._ = underscoreLib;
-import './utils/underscore';
+import underscoreLib from 'underscore';
+import mixin from './utils/underscore';
 /* Core.Model utils */
 import backbone from 'backbone';
 import * as Marionette_ from 'backbone.marionette';
@@ -50,6 +49,9 @@ window.Promise.config({
     longStackTraces: true,
     cancellation: true
 });
+
+window._ = underscoreLib;
+window._.mixin(mixin);
 
 window._.string = window._.str = underscoreString;
 

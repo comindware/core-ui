@@ -61,7 +61,7 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
 const core = {
     Controller,
     Application,
-    Routing: RoutingService,
+    RoutingService,
     ToastNotifications,
     lib: libApi,
     /**

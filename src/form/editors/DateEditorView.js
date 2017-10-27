@@ -14,7 +14,7 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    dateDisplayFormat: null,
+    dateDisplayFormat: undefined,
     showTitle: true
 };
 

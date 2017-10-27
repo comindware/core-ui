@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pathResolver = require('./pathResolver');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
@@ -233,22 +233,28 @@ module.exports = options => {
             library: 'core',
             libraryTarget: 'umd'
         };
+        webpackConfig.plugins.push(
+            new CleanWebpackPlugin([ pathResolver.compiled() ], {
+                root: pathResolver.root(),
+                verbose: false
+            })
+        );
     }
-        if (TEST_COVERAGE) {
-            webpackConfig.module.rules.push({
-                test: /\.js$|\.jsx$/,
-                enforce: 'post',
-                exclude: [
-                    pathResolver.tests(),
-                    pathResolver.node_modules(),
-                    pathResolver.source('external')
-                ],
-                  use: {
-                      loader: 'istanbul-instrumenter-loader',
-                      options: { esModules: true }
-                },
-            });
-        }
+    if (TEST_COVERAGE) {
+        webpackConfig.module.rules.push({
+            test: /\.js$|\.jsx$/,
+            enforce: 'post',
+            exclude: [
+                pathResolver.tests(),
+                pathResolver.node_modules(),
+                pathResolver.source('external')
+            ],
+            use: {
+                loader: 'istanbul-instrumenter-loader',
+                options: { esModules: true }
+            },
+        });
+    }
 
     if (PRODUCTION) {
         webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
@@ -272,7 +278,10 @@ module.exports = options => {
                         }
                     },
                     sourceMap: true,
-                    parallel: true
+                    parallel: true,
+                    output: {
+                        comments: false
+                    }
                 }));
         }
     }

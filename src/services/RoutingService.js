@@ -22,6 +22,7 @@ Backbone.history.checkUrl = () => {
 
 export default {
     initialize(options) {
+        this.defaultUrl = options.defaultUrl;
         options.modules.forEach(config => {
             const moduleProxy = new ModuleProxy({ config });
             moduleProxy.on('module:loaded', this.__onModuleLoaded, this);
@@ -35,7 +36,7 @@ export default {
             routes: {
                 '': 'defaultRoute'
             },
-            defaultRoute: () => this.navigateToUrl(options.defaultUrl, { replace: true })
+            defaultRoute: () => this.navigateToUrl(this.defaultUrl, { replace: true })
         }))();
 
         Backbone.history.start();
@@ -65,6 +66,10 @@ export default {
     refresh() {
         Backbone.history.fragment = null;
         this.navigateToUrl(activeUrl);
+    },
+
+    setDefaultUrl(newDefaultUrl) {
+        this.defaultUrl = newDefaultUrl;
     },
 
     __onModuleLoaded(callbackName, routingArgs, config, Module) {
