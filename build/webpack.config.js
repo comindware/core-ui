@@ -233,12 +233,14 @@ module.exports = options => {
             library: 'core',
             libraryTarget: 'umd'
         };
-        webpackConfig.plugins.push(
-            new CleanWebpackPlugin([ pathResolver.compiled() ], {
-                root: pathResolver.root(),
-                verbose: false
-            })
-        );
+        if (options.env !== 'deploy') {
+            webpackConfig.plugins.push(
+                new CleanWebpackPlugin([ pathResolver.compiled() ], {
+                    root: pathResolver.root(),
+                    verbose: false
+                })
+            );
+        }
     }
     if (TEST_COVERAGE) {
         webpackConfig.module.rules.push({
