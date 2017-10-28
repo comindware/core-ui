@@ -11,7 +11,7 @@ const defaultOptions = () => ({
     displayText: '',
     hideUsers: false,
     hideGroups: false,
-    maxQuantitySelected: null,
+    maxQuantitySelected: undefined,
     allowRemove: true,
     title: '',
     itemsToSelectText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERSTOSELECT'),

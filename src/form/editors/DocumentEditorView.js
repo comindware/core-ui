@@ -24,7 +24,7 @@ const defaultOptions = {
     readonly: false,
     allowDelete: true,
     multiple: true,
-    fileFormat: null,
+    fileFormat: undefined,
     createDocuments: documents => Ajax.Documents.Upload(documents, null),
     removeDocuments: () => {}
 };

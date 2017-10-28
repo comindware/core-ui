@@ -18,13 +18,13 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import dropdownFactory from '../../dropdown/factory';
 
 const defaultOptions = {
-    recordTypeId: null,
-    context: null,
-    propertyTypes: null,
+    recordTypeId: undefined,
+    context: undefined,
+    propertyTypes: undefined,
     usePropertyTypes: true,
     popoutFlow: 'left',
     allowBlank: false,
-    instanceRecordTypeId: null
+    instanceRecordTypeId: undefined
 };
 
 formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
