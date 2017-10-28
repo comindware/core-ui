@@ -58,7 +58,7 @@ const defaultOptions = {
     height: 'auto',
     autoOpen: true,
     direction: popoutDirection.DOWN,
-    displacement: null,
+    displacement: undefined,
     renderAfterClose: true
 };
 

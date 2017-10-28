@@ -15,7 +15,7 @@ import MultiSelectButtonView from './impl/multiSelect/views/MultiSelectButtonVie
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    collection: null,
+    collection: undefined,
     displayAttribute: 'text',
     allowEmptyValue: true,
     explicitApply: false
