@@ -17,7 +17,7 @@ import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    editorOptions: null
+    editorOptions: undefined
 };
 
 /**

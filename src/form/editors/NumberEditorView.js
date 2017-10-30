@@ -26,11 +26,11 @@ const constants = {
 };
 
 const defaultOptions = {
-    max: null,
+    max: undefined,
     min: 0,
     allowFloat: false,
     changeMode: changeMode.blur,
-    format: null,
+    format: undefined,
     showTitle: true
 };
 

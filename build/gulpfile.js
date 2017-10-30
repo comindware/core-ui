@@ -28,8 +28,6 @@ const pathResolver = require('./pathResolver');
 // Worker tasks
 // ###
 
-gulp.task('clean', require('./tasks/cleanTask'));
-
 gulp.task('localization', require('./tasks/localizationTask'));
 gulp.task('watch:localization', () => {
     gulp.watch(pathResolver.localizationSource('*'), [ 'localization' ]);
@@ -82,7 +80,7 @@ gulp.task('test:watch', function (done) {
 gulp.task('start', callback =>
     runSequence('localization', 'generateSprites', 'build:core:dev', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
 
-gulp.task('build', callback => runSequence('clean', 'localization', 'generateSprites', ['build:core:prod', 'build:core:prod:min', 'jsdoc'], callback));
+gulp.task('build', callback => runSequence(['build:core:prod', 'build:core:prod:min', 'jsdoc'], 'localization', 'generateSprites', callback));
 
 gulp.task('deploy', callback => runSequence('build', 'test:coverage', 'prepareToPublish', callback));
 

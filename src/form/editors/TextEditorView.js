@@ -22,8 +22,8 @@ const defaultOptions = function() {
     return {
         changeMode: 'blur',
         emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-        maxLength: null,
-        mask: null,
+        maxLength: undefined,
+        mask: undefined,
         maskPlaceholder: '_',
         maskOptions: {},
         showTitle: true
