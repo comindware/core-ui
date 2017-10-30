@@ -16,7 +16,7 @@ import DropdownButtonView from './impl/dropdown/views/DropdownButtonView';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    collection: null,
+    collection: undefined,
     displayAttribute: 'text',
     allowEmptyValue: true,
     enableSearch: false,

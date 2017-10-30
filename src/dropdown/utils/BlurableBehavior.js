@@ -10,9 +10,9 @@ import { helpers } from 'utils';
 import { $ } from 'lib';
 
 const defaultOptions = {
-    selector: null,
+    selector: undefined,
     allowNestedFocus: true,
-    onBlur: null
+    onBlur: undefined
 };
 
 export default Marionette.Behavior.extend({

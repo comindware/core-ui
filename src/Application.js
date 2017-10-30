@@ -16,6 +16,9 @@ import WindowService from 'services/WindowService';
 import LocalizationService from 'services/LocalizationService';
 import CTEventsService from 'services/CTEventsService';
 import WebSocketService from 'services/WebSocketService';
+import RoutingService from 'services/RoutingService';
+import ToastNotificationService from 'services/ToastNotificationService';
+import 'backbone.trackit';
 
 export default {
     start(options) {
@@ -24,6 +27,7 @@ export default {
         helpers.ensureOption(options, 'userService');
 
         const marionetteApp = new Marionette.Application();
+        window.application = marionetteApp;
 
         marionetteApp.addRegions(options.regions);
         marionetteApp.ui = options.ui;
@@ -31,6 +35,30 @@ export default {
         marionetteApp.addInitializer(options.serviceInitializer);
 
         GlobalEventService.initialize();
+
+        if (window.application.toastNotificationRegion) {
+            ToastNotificationService.initialize({
+                toastNotificationRegion: window.application.toastNotificationRegion,
+                toastNotificationRegionEl: window.application.ui.toastNotificationRegion
+            });
+        }
+
+        if (options.moduleConfiguration) {
+            options.moduleConfiguration.ModuleService.initialize({ modules: options.routerConfiguration.modules });
+        }
+
+        if (options.navigationConfiguration) {
+            marionetteApp.navigationController = new options.navigationConfiguration.controller({
+                context: options.navigationConfiguration.context,
+                configurationKey: options.navigationConfiguration.configurationKey
+            });
+        }
+
+        RoutingService.initialize({
+            defaultUrl: window.application.navigationController.getDefaultUrl(),
+            modules: options.routerConfiguration.modules
+        });
+
         UserService.initialize(options.userService);
         WindowService.initialize();
         LocalizationService.initialize(options.localizationService);
@@ -52,7 +80,6 @@ export default {
         Backbone.Marionette.Behaviors.behaviorsLookup = options.behaviors;
 
         this.initializeThirdParties();
-        window.application = marionetteApp;
         marionetteApp.start();
         return marionetteApp;
     },
