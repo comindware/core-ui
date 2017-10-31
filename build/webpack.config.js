@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pathResolver = require('./pathResolver');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
@@ -38,7 +38,7 @@ module.exports = options => {
                     pathResolver.source('external')
                 ],
                 options: {
-                    presets: ['latest']
+                    presets: ['env']
                 }
             }, {
                 test: /\.js$/,
@@ -47,6 +47,7 @@ module.exports = options => {
                     pathResolver.compiled(),
                     pathResolver.node_modules(),
                     pathResolver.source('external'),
+                    pathResolver.source('utils'),
                     pathResolver.tests()
                 ],
                 options: {
@@ -212,6 +213,8 @@ module.exports = options => {
             alias: {
                 rangyinputs: pathResolver.source('external/rangyinputs/rangyinputs-jquery-src'),
                 keypress: pathResolver.source('external/Keypress/keypress-2.1.0.min'),
+                'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
+                'jquery-ui': pathResolver.source('external/jquery-ui.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
             }
@@ -230,22 +233,30 @@ module.exports = options => {
             library: 'core',
             libraryTarget: 'umd'
         };
-    }
-        if (TEST_COVERAGE) {
-            webpackConfig.module.rules.push({
-                test: /\.js$|\.jsx$/,
-                enforce: 'post',
-                exclude: [
-                    pathResolver.tests(),
-                    pathResolver.node_modules(),
-                    pathResolver.source('external')
-                ],
-                  use: {
-                      loader: 'istanbul-instrumenter-loader',
-                      options: { esModules: true }
-                },
-            });
+        if (options.clean !== false) {
+            webpackConfig.plugins.push(
+                new CleanWebpackPlugin([ pathResolver.compiled() ], {
+                    root: pathResolver.root(),
+                    verbose: false
+                })
+            );
         }
+    }
+    if (TEST_COVERAGE) {
+        webpackConfig.module.rules.push({
+            test: /\.js$|\.jsx$/,
+            enforce: 'post',
+            exclude: [
+                pathResolver.tests(),
+                pathResolver.node_modules(),
+                pathResolver.source('external')
+            ],
+            use: {
+                loader: 'istanbul-instrumenter-loader',
+                options: { esModules: true }
+            },
+        });
+    }
 
     if (PRODUCTION) {
         webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
@@ -269,7 +280,10 @@ module.exports = options => {
                         }
                     },
                     sourceMap: true,
-                    parallel: true
+                    parallel: true,
+                    output: {
+                        comments: false
+                    }
                 }));
         }
     }

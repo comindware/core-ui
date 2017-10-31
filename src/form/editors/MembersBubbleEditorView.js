@@ -20,7 +20,7 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     exclude: [],
-    maxQuantitySelected: null,
+    maxQuantitySelected: undefined,
     canDeleteMember: true
 };
 

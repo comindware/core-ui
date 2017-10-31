@@ -17,8 +17,8 @@ import formRepository from '../formRepository';
 const defaultOptions = {
     allowEmptyValue: true,
     timezoneOffset: -new Date().getTimezoneOffset(),
-    dateDisplayFormat: null,
-    timeDisplayFormat: null,
+    dateDisplayFormat: undefined,
+    timeDisplayFormat: undefined,
     showTitle: true
 };
 

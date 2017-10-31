@@ -24,18 +24,15 @@ const defaultOptions = {
     readonly: false,
     allowDelete: true,
     multiple: true,
-    fileFormat: null,
+    fileFormat: undefined,
     createDocuments: documents => Ajax.Documents.Upload(documents, null),
     removeDocuments: () => {}
 };
 
 formRepository.editors.Document = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+        _.defaults(this.options, defaultOptions, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)));
+
         this.on('change', this.checkEmpty.bind(this));
     },
 

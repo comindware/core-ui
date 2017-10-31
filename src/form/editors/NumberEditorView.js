@@ -26,11 +26,11 @@ const constants = {
 };
 
 const defaultOptions = {
-    max: null,
+    max: undefined,
     min: 0,
     allowFloat: false,
     changeMode: changeMode.blur,
-    format: null,
+    format: undefined,
     showTitle: true
 };
 
@@ -77,11 +77,8 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * */
 formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
     initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+        _.defaults(this.options, defaultOptions, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)));
+
         _.bindAll(this, '__stop');
     },
 
