@@ -119,10 +119,10 @@ export default Marionette.ItemView.extend({
                 this.columns[i].width = availableWidth - fullWidth;
             }
 
-            $(el).outerWidth(this.columns[i].width);
+            el.style.width = `${this.columns[i].width}px`;
             fullWidth += this.columns[i].width;
         });
-        this.$el.width(Math.ceil(fullWidth));
+        this.el.style.width = `${Math.ceil(fullWidth)}px`;
     },
 
     updateColumnAndNeighbourWidths(index, delta) {
@@ -131,11 +131,11 @@ export default Marionette.ItemView.extend({
         if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
             return;
         }
+        this.ui.gridHeaderColumn[index].style.width = `${newColumnWidth}px`;
 
-        $(this.ui.gridHeaderColumn[index]).outerWidth(newColumnWidth);
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
-        this.$el.width(this.dragContext.tableInitialWidth + delta + 1);
+        this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
         this.columns[index].width = newColumnWidth;
     },
 
@@ -144,7 +144,7 @@ export default Marionette.ItemView.extend({
 
         const draggedColumn = {
             $el: $column,
-            initialWidth: this.__getElementOuterWidth($column),
+            initialWidth: this.__getElementOuterWidth($column[0]),
             index: $column.index()
         };
 
@@ -186,7 +186,7 @@ export default Marionette.ItemView.extend({
     },
 
     __getElementOuterWidth(el) {
-        return $(el)[0].getBoundingClientRect().width;
+        return el.getBoundingClientRect().width;
     },
 
     __setInitialWidth(availableWidth) {
@@ -200,13 +200,12 @@ export default Marionette.ItemView.extend({
             if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
                 this.columns[i].width = availableWidth - fullWidth;
             }
+            el.style.width = `${columnWidth}px`;
 
-            $(el).outerWidth(columnWidth);
             this.columns[i].width = columnWidth;
             fullWidth += columnWidth;
         });
-
-        this.$el.width(Math.ceil(fullWidth));
+        this.el.style.width = `${fullWidth}px`;
     },
 
     __getColumnsWidthData(availableWidth, columns) {
@@ -220,7 +219,7 @@ export default Marionette.ItemView.extend({
                 columnWidth = columns[i].width;
                 --nonStaticColumnsCount;
             } else {
-                columnWidth = Math.max($(el).outerWidth(), this.constants.MIN_COLUMN_WIDTH);
+                columnWidth = Math.max(el.getBoundingClientRect().width, this.constants.MIN_COLUMN_WIDTH);
             }
             availableDynamicWidth -= columnWidth;
             columnWidthData.push(columnWidth);
