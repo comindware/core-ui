@@ -50,7 +50,7 @@ const ButtonModel = Backbone.AssociatedModel.extend({
  * */
 formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
     initialize(options) {
-        _.defaults(this.options, defaultOptions, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)));
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
         _.defaults(this.options.dropdownOptions, defaultOptions.dropdownOptions);
 
