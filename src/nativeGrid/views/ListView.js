@@ -24,7 +24,7 @@ import { helpers } from 'utils';
  * @param {Object} [options.emptyViewOptions] Опции для emptyView
  * @param {Backbone.View} options.loadingChildView View-лоадер, показывается при подгрузке строк
  * */
-const ListView = Marionette.CollectionView.extend({
+export default Marionette.CollectionView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'collection');
 
@@ -272,20 +272,6 @@ const ListView = Marionette.CollectionView.extend({
         });
     },
 
-    getElementHeight() {
-        let minHeight = 0;
-
-        if (this.isEmpty()) {
-            minHeight = this.$el.find('.empty-view').height();
-        } else {
-            this.children.forEach(view => {
-                minHeight += view.$el.height();
-            });
-        }
-
-        return minHeight;
-    },
-
     setWidth(fullWidth) {
         this.$el.width(fullWidth);
     },
@@ -307,5 +293,3 @@ const ListView = Marionette.CollectionView.extend({
         }, 200);
     }
 });
-
-export default ListView;
