@@ -134,6 +134,7 @@ export default {
             }
             if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
                 const configuration = this.activeModule.routingActions[callbackName];
+                configuration.routingAction = callbackName;
                 this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
             } else {
                 const routingCallback = this.activeModule[callbackName];
