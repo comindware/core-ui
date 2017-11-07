@@ -4,6 +4,7 @@ import MembersSplitPanelController from './impl/membersSplit/controller/MembersS
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
+// used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
     exclude: [],
     displayText: '',
@@ -34,11 +35,9 @@ formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
                 type: 'groups'
             }))
         });
-        if (options.schema) {
-            Object.assign(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
-        } else {
-            Object.assign(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
-        }
+
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
+
         this.options.selected = this.getValue();
 
         this.controller = new MembersSplitPanelController(this.options);

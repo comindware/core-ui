@@ -40,7 +40,7 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
-    initialize(options) {
+    initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
         _.bindAll(this, '__onCollectionChange');

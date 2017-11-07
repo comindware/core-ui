@@ -76,7 +76,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
-    initialize(options) {
+    initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
         _.bindAll(this, '__stop');
