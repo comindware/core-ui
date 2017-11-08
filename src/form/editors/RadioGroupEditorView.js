@@ -29,7 +29,7 @@ const defaultOptions = {
  * @param {Array} options.radioOptions Массив объектов <code>{ id, displayText, displayHtml, title }</code>, описывающих радио-кнопки.
  * */
 formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
-    initialize(options) {
+    initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
         this.collection = new RadioGroupCollection(this.options.radioOptions);

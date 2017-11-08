@@ -38,11 +38,7 @@ const defaultOptions = {
  * */
 formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
     initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
         if (_.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);

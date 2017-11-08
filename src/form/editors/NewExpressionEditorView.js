@@ -26,26 +26,24 @@ const classes = {
     inline: 'dev-expression-editor-field-inline'
 };
 
+const defaultOptions = {
+    showValue: true,
+    showContext: true,
+    showExpression: true,
+    showScript: true,
+    enabled: true,
+    valueEditor: formRepository.editors.Text,
+    valueEditorOptions: {},
+    defaultType: valueTypes.value,
+    expressionEditorHeight: 300,
+    scriptEditorHeight: 300,
+    codeEditorMode: 'normal',
+    displayInline: false,
+    ontologyService: null
+};
+
 export default formRepository.editors.NewExpression = BaseLayoutEditorView.extend({
     className: 'new-expression-editor-field',
-
-    options() {
-        return {
-            showValue: true,
-            showContext: true,
-            showExpression: true,
-            showScript: true,
-            enabled: true,
-            valueEditor: formRepository.editors.Text,
-            valueEditorOptions: {},
-            defaultType: valueTypes.value,
-            expressionEditorHeight: 300,
-            scriptEditorHeight: 300,
-            codeEditorMode: 'normal',
-            displayInline: false,
-            ontologyService: null
-        };
-    },
 
     regions: {
         typeContainer: '.js-new-expression-type-container',
@@ -70,9 +68,8 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
     },
 
     initialize(options = {}) {
-        if (options.schema) {
-            _.extend(this.options, _.pick(options.schema, _.keys(this.options)));
-        }
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+
         _.extend(this, _.pick(options, 'field'));
         if (_.isString(this.options.valueEditor)) {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];

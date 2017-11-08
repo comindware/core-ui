@@ -18,7 +18,7 @@ const valueTypes = {
 
 export default NewExpressionEditorView.extend({
     initialize(options = {}) {
-        _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
         NewExpressionEditorView.prototype.initialize.call(this, options);
     },
 

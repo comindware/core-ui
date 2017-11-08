@@ -18,17 +18,16 @@ const changeMode = {
     keydown: 'keydown'
 };
 
-const defaultOptions = function() {
-    return {
-        changeMode: 'blur',
-        emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-        maxLength: undefined,
-        mask: undefined,
-        maskPlaceholder: '_',
-        maskOptions: {},
-        showTitle: true
-    };
-};
+// used as function because Localization service is not initialized yet
+const defaultOptions = () => ({
+    changeMode: 'blur',
+    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+    maxLength: undefined,
+    mask: undefined,
+    maskPlaceholder: '_',
+    maskOptions: {},
+    showTitle: true
+});
 
 /**
  * @name TextEditorView
@@ -49,12 +48,8 @@ const defaultOptions = function() {
  * */
 formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize(options = {}) {
-        const defaults = defaultOptions();
-        if (options.schema) {
-            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
-        } else {
-            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
-        }
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
 
         this.placeholder = this.options.emptyPlaceholder;
     },
@@ -145,7 +140,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         const value = this.getValue() || '';
         this.ui.input.val(value);
         if (this.options.showTitle) {
-            this.$el.prop('title', value);
+            this.ui.input.prop('title', value);
         }
         // Keyboard shortcuts listener
         if (this.keyListener) {
@@ -179,7 +174,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.value = value;
 
         if (this.getOption('showTitle')) {
-            this.$el.prop('title', value);
+            this.ui.input.prop('title', value);
         }
         if (updateUi) {
             this.ui.input.val(value);

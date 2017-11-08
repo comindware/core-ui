@@ -31,7 +31,7 @@ const defaultOptions = {
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
 formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{
-    initialize(options) {
+    initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
         this.__createViewModel();

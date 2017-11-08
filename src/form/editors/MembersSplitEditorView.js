@@ -6,6 +6,7 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import WindowService from '../../services/WindowService';
 import LocalizationService from '../../services/LocalizationService';
 
+// used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
     exclude: [],
     displayText: '',
@@ -36,11 +37,8 @@ formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
                 type: 'groups'
             }))
         });
-        if (options.schema) {
-            Object.assign(this.options, defOps, _.pick(options.schema, _.keys(defOps)));
-        } else {
-            Object.assign(this.options, defOps, _.pick(options || {}, _.keys(defOps)));
-        }
+
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
 
         const value = this.getValue();
         this.options.selected = typeof value === 'string' ? [value] : value;

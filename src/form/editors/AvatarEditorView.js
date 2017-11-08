@@ -56,12 +56,8 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
         'click @ui.remove': '__remove'
     },
     
-    initialize(options) {
-        if (options.schema) {
-            Object.assign(this.options, defaultOptions, options.schema);
-        } else {
-            Object.assign(this.options, defaultOptions, options);
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
         
         helpers.ensureOption(this.options, 'controller');
         this.controller = this.getOption('controller');
