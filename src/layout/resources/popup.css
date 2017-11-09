@@ -22,7 +22,7 @@
     flex-direction: column;
     padding: 0;
     overflow-y: hidden;
-    border: 1px solid #0575bd;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .layout__popup-view-header {
