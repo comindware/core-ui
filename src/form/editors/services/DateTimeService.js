@@ -1,28 +1,26 @@
 import { dateHelpers } from 'utils';
-import LocalizationService from '../../../services/LocalizationService';
-import * as moment from 'moment';
 
 export default {
-    getDateDisplayValue(value, format, timezoneOffset) {
+    getDateDisplayValue(value, format) {
         let formattedDisplayValue;
         if (value === null) {
             formattedDisplayValue = '';
         } else if (format) {
-            formattedDisplayValue = moment.utc(value).utcOffset(timezoneOffset).format(format);
+            formattedDisplayValue = moment(value).format(format);
         } else {
-            formattedDisplayValue = dateHelpers.getDisplayDate(moment.utc(value).utcOffset(timezoneOffset));
+            formattedDisplayValue = dateHelpers.getDisplayDate(moment(value));
         }
         return formattedDisplayValue;
     },
 
-    getTimeDisplayValue(value, format, timezoneOffset) {
+    getTimeDisplayValue(value, format) {
         let formattedValue;
         if (value === null || value === '') {
             formattedValue = '';
         } else if (format) {
-            formattedValue = moment.utc(value).utcOffset(timezoneOffset).format(format);
+            formattedValue = moment(value).format(format);
         } else {
-            formattedValue = dateHelpers.getDisplayTime(moment.utc(value).utcOffset(timezoneOffset));
+            formattedValue = dateHelpers.getDisplayTime(moment(value));
         }
         return formattedValue;
     }
