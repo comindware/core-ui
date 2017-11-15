@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import moment_ from 'moment';
+import moment_ from 'moment-timezone';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
