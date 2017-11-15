@@ -28,9 +28,11 @@ global.Localizer = {
         helpers.ensureOption(options, 'warningAsError');
 
         this.langCode = options.langCode;
+        this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
         this.warningAsError = options.warningAsError;
 
+        moment.tz.setDefault(this.timeZone);
         moment.locale(this.langCode);
         numeral.language(this.langCode);
     },

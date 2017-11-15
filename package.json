@@ -117,6 +117,7 @@
     "jquery-mousewheel": "3.1.13",
     "jquery.inputmask": "3.2.3",
     "moment": "2.11.1",
+    "moment-timezone": "^0.5.14",
     "numeral": "^1.5.3",
     "underscore": "1.6.0",
     "underscore.string": "3.2.0"
