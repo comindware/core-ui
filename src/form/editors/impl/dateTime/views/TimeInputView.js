@@ -16,7 +16,6 @@ import LocalizationService from '../../../../../services/LocalizationService';
 
 export default Marionette.ItemView.extend({
     initialize(options) {
-        helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'allowEmptyValue');
         this.hasSeconds = this.__hasSeconds(options.timeDisplayFormat);
         this.timeEditFormat = dateHelpers.getTimeEditFormat(this.hasSeconds);
@@ -65,11 +64,11 @@ export default Marionette.ItemView.extend({
         if (parsedVal.isValid()) {
             if (currentValue) {
                 // Take previously selected date and new time
-                parsedDate = moment.utc(currentValue).utcOffset(this.getOption('timezoneOffset'))
+                parsedDate = moment(currentValue)
                     .hour(parsedVal.hour()).minute(parsedVal.minute()).second(this.hasSeconds ? parsedVal.second() : 0).millisecond(0).toISOString();
             } else {
                 // Take current date and newly selected time
-                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).second(this.hasSeconds ? parsedVal.second() : 0).toISOString();
+                parsedDate = moment.now().hour(parsedVal.hour()).minute(parsedVal.minute()).second(this.hasSeconds ? parsedVal.second() : 0).toISOString();
             }
         } else if (currentValue !== '' && currentValue !== null) {
             parsedDate = currentValue;
@@ -116,7 +115,7 @@ export default Marionette.ItemView.extend({
     },
 
     __updateDisplayValue() {
-        const displayValue = DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat, this.getOption('timezoneOffset'));
+        const displayValue = DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat);
         this.ui.input.val(displayValue);
         if (this.getOption('showTitle')) {
             this.$el.prop('title', displayValue);
@@ -136,7 +135,7 @@ export default Marionette.ItemView.extend({
     startEditing() {
         let val = this.model.get('value'),
             format = this.timeEditFormat,
-            editFormattedDate = val ? moment.utc(val).utcOffset(this.getOption('timezoneOffset')).format(format) : '';
+            editFormattedDate = val ? moment(val).format(format) : '';
 
         this.ui.input.val(editFormattedDate);
     },
