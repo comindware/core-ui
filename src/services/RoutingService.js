@@ -130,10 +130,12 @@ export default {
             // navigate to new module
             this.loadingContext = null;
             if (this.activeModule.onRoute) {
+                this.activeModule.routerAction = callbackName;
                 this.activeModule.onRoute.apply(this.activeModule, routingArgs);
             }
             if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
                 const configuration = this.activeModule.routingActions[callbackName];
+                configuration.routingAction = callbackName;
                 this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
             } else {
                 const routingCallback = this.activeModule[callbackName];

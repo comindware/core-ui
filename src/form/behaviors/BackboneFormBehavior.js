@@ -7,7 +7,6 @@
  */
 
 import FieldView from '../fields/FieldView';
-import helpers from '../../utils/helpers';
 
 const Form = Marionette.Object.extend({
     /**
@@ -38,18 +37,14 @@ const Form = Marionette.Object.extend({
 
         const $target = this.options.$target;
 
-        const usedFields = {};
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => {
             const $editorRegion = $(el);
             const key = $editorRegion.attr('data-editors');
             const regionName = `${key}Region`;
-            if (usedFields[key]) {
-                helpers.throwFormatError(`Duplicated field '${key}'.`);
-            }
+
             this.__regionManager.addRegion(regionName, { el: $editorRegion });
-            this.__regionManager.get(regionName).show(this.fields[key].editor);
-            usedFields[key] = true;
+            this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key].editor);
         });
 
         //Render standalone fields
@@ -57,12 +52,9 @@ const Form = Marionette.Object.extend({
             const $fieldRegion = $(el);
             const key = $fieldRegion.attr('data-fields');
             const regionName = `${key}Region`;
-            if (usedFields[key]) {
-                helpers.throwFormatError(`Duplicated field '${key}'.`);
-            }
+
             this.__regionManager.addRegion(regionName, { el: $fieldRegion });
-            this.__regionManager.get(regionName).show(this.fields[key]);
-            usedFields[key] = true;
+            this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key]);
         });
     },
 

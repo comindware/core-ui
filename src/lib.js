@@ -45,9 +45,7 @@ import * as jqui from 'jquery-ui';
 window.Promise = Bluebird_;
 
 window.Promise.config({
-    warnings: true,
-    longStackTraces: true,
-    cancellation: true
+    warnings: false
 });
 
 window._ = underscoreLib;

@@ -23,20 +23,19 @@ const size = {
     fixed: 'fixed'
 };
 
-const defaultOptions = function() {
-    return {
-        changeMode: changeMode.blur,
-        size: size.auto,
-        emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
-        readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
-        disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
-        maxLength: null,
-        height: null,
-        minHeight: 2,
-        maxHeight: null,
-        showTitle: true
-    };
-};
+// used as function because Localization service is not initialized yet
+const defaultOptions = () => ({
+    changeMode: changeMode.blur,
+    size: size.auto,
+    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
+    readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
+    disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
+    maxLength: null,
+    height: null,
+    minHeight: 2,
+    maxHeight: null,
+    showTitle: true
+});
 
 /**
  * @name TextAreaEditorView
@@ -62,9 +61,9 @@ const defaultOptions = function() {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
-    initialize(options) {
-        const defaults = defaultOptions();
-        _.defaults(this.options, defaults, _.pick(options.schema ? options.schema : options, _.keys(defaults)));
+    initialize(options = {}) {
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
 
         this.placeholder = this.options.emptyPlaceholder;
     },

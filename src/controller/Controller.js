@@ -47,30 +47,53 @@ export default Marionette.Object.extend({
     },
 
     async handleRouterEvent(configuration, callParams) {
-        const { data, error } = await this.__request(configuration, callParams);
-        if (error !== null) {
-            if (configuration.errorView) {
-                const view = new configuration.errorView();
-                if (configuration.viewEvents) {
-                    Object.keys(configuration.viewEvents).forEach(key => this.listenTo(view, key, configuration.viewEvents[key]));
+        const { view, viewModel, additionalViewOptions, errorView, viewEvents, routingAction, urlParams } = configuration;
+        const methodParams = this.__applyCallParamsFilter(callParams, urlParams, routingAction);
+
+        if (configuration.url) {
+            const { data, error } = await this.__request(configuration, methodParams, callParams);
+            if (error !== null) {
+                if (errorView) {
+                    const presentingView = new errorView();
+                    if (viewEvents) {
+                        Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
+                    }
+                    this.moduleRegion.show(presentingView);
                 }
-                this.moduleRegion.show(view);
             }
-        }
-        if (configuration.viewModel) {
-            const viewModel = new configuration.viewModel(data, { parse: true });
+            if (viewModel) {
+                const model = new viewModel(data, { parse: true });
 
-            if (configuration.view) {
-                const viewParams = configuration.additionalViewOptions
-                    ? Object.assign({ model: viewModel }, configuration.additionalViewOptions)
-                    : { model: viewModel };
+                if (view) {
+                    const viewParams = additionalViewOptions
+                        ? Object.assign({ model }, additionalViewOptions)
+                        : { model };
 
-                const view = new configuration.view(viewParams);
-                if (configuration.viewEvents) {
-                    Object.keys(configuration.viewEvents).forEach(key => this.listenTo(view, key, configuration.viewEvents[key]));
+                    viewParams.viewState = this.currentState;
+
+                    const presentingView = new view(viewParams);
+                    if (viewEvents) {
+                        Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
+                    }
+                    presentingView.request = this.__handleViewResourceRequest.bind(this);
+                    this.moduleRegion.show(presentingView);
                 }
-                view.request = this.__handleViewResourceRequest.bind(this);
-                this.moduleRegion.show(view);
+            }
+        } else {
+            const model = new viewModel();
+
+            if (view) {
+                const viewParams = additionalViewOptions
+                    ? Object.assign({ model }, additionalViewOptions)
+                    : { model };
+
+                viewParams.currentState = callParams;
+                const presentingView = new view(viewParams);
+                if (viewEvents) {
+                    Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
+                }
+                presentingView.request = this.__handleViewResourceRequest.bind(this);
+                this.moduleRegion.show(presentingView);
             }
         }
     },
@@ -88,26 +111,32 @@ export default Marionette.Object.extend({
     },
 
     //todo extract view params and pass to failure
-    async __request(configuration, callParams) {
+    async __request(configuration, methodParams, callParams) {
+        const { notifications, onFailure, onSuccess } = configuration;
         const params = configuration.url.split('/');
         const showMask = configuration.showLoadingMask !== false;
+
         showMask && this.view.setModuleLoading(true);
         try {
             const requestFn = Ajax[params[0]][params[1]];
             if (requestFn) {
-                const requestType = window.ajaxMap
-                    .find(requestTemplate => requestTemplate.className === params[0] && requestTemplate.methodName === params[1])
-                    .httpMethod;
+                const functionSignature = window.ajaxMap
+                    .find(requestTemplate => requestTemplate.className === params[0] && requestTemplate.methodName === params[1]);
 
-                const data = await requestFn.apply(this, callParams);
-                configuration.notifications && configuration.notifications.onSuccess && ToastNotificationService.add(configuration.notifications.onSuccess);
-                configuration.onSuccess && configuration.onSuccess.call(this, data, callParams);
+                const requestType = functionSignature.httpMethod;
+                const parameters = functionSignature.parameters;
+
+                callParams && this.__applyState(callParams, parameters);
+
+                const data = await requestFn.apply(this, methodParams);
+                notifications && notifications.onSuccess && ToastNotificationService.add(notifications.onSuccess);
+                onSuccess && onSuccess.call(this, data, methodParams);
                 return { data, requestType, error: null };
             }
             throw new Error('Please, provide a valid URL');
         } catch (error) {
-            configuration.notifications && configuration.notifications.onFailure && ToastNotificationService.add(configuration.notifications.onFailure);
-            configuration.onFailure && configuration.onFailure.call(this, error);
+            notifications && notifications.onFailure && ToastNotificationService.add(notifications.onFailure);
+            onFailure && onFailure.call(this, error);
             return { data: null, requestType: null, error };
         } finally {
             showMask && this.view.setModuleLoading(false);
@@ -137,7 +166,7 @@ export default Marionette.Object.extend({
                         break;
                     }
                     case 'PUT': {
-                        requestData.model.set(new Backbone.Model(requestData.data), { remove: false });
+                        requestData.model && requestData.model.set(new Backbone.Model(requestData.data), { remove: false });
                         break;
                     }
                     case 'GET':
@@ -148,5 +177,25 @@ export default Marionette.Object.extend({
             }
         }
         return null; //todo handle error
+    },
+
+    __applyState(callParams, parameters) {
+        this.currentState = {};
+
+        parameters.forEach((param, i) => this.currentState[param.name] = callParams[i]);
+    },
+
+    __applyCallParamsFilter(callParams, urlParams, routingAction) {
+        if (routingAction && urlParams) {
+            const queryString = this.getOption('config').navigationUrl[routingAction];
+            const params = queryString.split('/');
+            const filteredParams = [];
+
+            urlParams.forEach(param => params.indexOf(param) > -1 && filteredParams.push(callParams[params.indexOf(param) / 2]));
+
+            return filteredParams;
+        }
+
+        return callParams;
     }
 });

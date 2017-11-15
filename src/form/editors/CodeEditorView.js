@@ -24,6 +24,13 @@ const classes = {
     buttonMode: 'dev-code-editor-button-mode'
 };
 
+const defaultOptions = {
+    mode: 'expression',
+    height: 300,
+    showMode: showModes.normal,
+    ontologyService: null
+};
+
 /**
  * @name NumberEditorView
  * @memberof module:Core.form.editors
@@ -37,15 +44,6 @@ const classes = {
 
 export default formRepository.editors.Code = BaseLayoutEditorView.extend({
     className: 'dev-code-editor-field',
-
-    options() {
-        return {
-            mode: 'expression',
-            height: 300,
-            showMode: showModes.normal,
-            ontologyService: null
-        };
-    },
 
     regions: {
         editorContainer: '.js-code-codemirror-container',
@@ -70,9 +68,7 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
     },
 
     initialize(options = {}) {
-        if (options.schema) {
-            _.extend(this.options, _.pick(options.schema, _.keys(this.options)));
-        }
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
     },
 
     onRender() {

@@ -16,22 +16,21 @@ import LocalizationService from '../../services/LocalizationService';
 //Value format: { type: <<value|expression|script>>, value: <<value array or single value|expression text|script text>>}
 //Example: { type: 'value', value: 'Some text' }
 
+// used as function because Localization service is not initialized yet
+const defaultOptions = () => ({
+    showExpression: true,
+    defaultExpression: '',
+    showScript: true,
+    showValue: true,
+    showContext: false,
+    enabled: true,
+    valueEditor: formRepository.editors.Text,
+    valueEditorOptions: {},
+    emptyText: Localizer.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
+});
+
 export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     template: Handlebars.compile(template),
-
-    options() {
-        return {
-            showExpression: true,
-            defaultExpression: '',
-            showScript: true,
-            showValue: true,
-            showContext: false,
-            enabled: true,
-            valueEditor: formRepository.editors.Text,
-            valueEditorOptions: {},
-            emptyText: Localizer.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
-        };
-    },
 
     regions: {
         valueContainer: '.js-value-container',
@@ -54,9 +53,9 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     defaultScriptText: Handlebars.compile(defaultScriptTemplate),
 
     initialize(options = {}) {
-        if (options.schema) {
-            _.extend(this.options, _.pick(options.schema, _.keys(this.options)));
-        }
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
+
         if (_.isString(this.options.valueEditor)) {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];
         }

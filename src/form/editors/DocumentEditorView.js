@@ -31,7 +31,7 @@ const defaultOptions = {
 
 formRepository.editors.Document = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, defaultOptions, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)));
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
         this.on('change', this.checkEmpty.bind(this));
     },
