@@ -15,7 +15,8 @@ import formRepository from '../formRepository';
 const defaultOptions = {
     removable: true,
     autoUpload: false,
-    refreshPreviewAfterUpload: false
+    refreshPreviewAfterUpload: false,
+    controller: undefined
 };
 
 /**

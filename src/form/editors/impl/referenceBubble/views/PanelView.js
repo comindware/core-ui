@@ -12,6 +12,7 @@ import template from '../templates/bubblePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 import LoadingView from './../../reference/views/LoadingView';
 import AddNewButtonView from './../../reference/views/AddNewButtonView';
+import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
 const config = {
     CHILD_HEIGHT: 25
@@ -42,7 +43,8 @@ export default Marionette.LayoutView.extend({
         scrollbarRegion: '.js-scrollbar-region',
         loadingRegion: '.js-loading-region',
         addNewButtonRegion: '.js-add-new-button-region',
-        listTitleRegion: '.js-list-title-region'
+        listTitleRegion: '.js-list-title-region',
+        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
     },
 
     onShow() {
@@ -74,6 +76,8 @@ export default Marionette.LayoutView.extend({
         this.listRegion.show(result.listView);
 
         this.scrollbarRegion.show(result.scrollbarView);
+
+        this.elementsQuantityWarningRegion.show(new ElementsQuantityWarningView());
 
         this.updateFilter(null, true);
     },
@@ -134,6 +138,7 @@ export default Marionette.LayoutView.extend({
                     if (!collection.contains(collection.selected)) {
                         const model = collection.at(0);
                         model.select();
+                        this.__toggleElementsQuantityWarning(collection.length);
                     }
                 }
                 this.__setLoading(false);
@@ -157,5 +162,11 @@ export default Marionette.LayoutView.extend({
         } else {
             this.loadingRegion.reset();
         }
+    },
+
+    __toggleElementsQuantityWarning(count) {
+        count > 100
+            ? this.elementsQuantityWarningRegion.$el.show()
+            : this.elementsQuantityWarningRegion.$el.hide();
     }
 });
