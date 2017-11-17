@@ -11,7 +11,7 @@ export default {
         schemaTree.forEach(item => {
             item.key
                 ? schemaPlain[item.key] = _.omit(item, ['key', 'cType'])
-                : this.__fillConfiguration(item.items, schemaPlain);
+                : item.cType === 'container' && this.__fillConfiguration(item.items, schemaPlain);
         });
     }
 };

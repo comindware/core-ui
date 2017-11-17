@@ -266,7 +266,7 @@ rgba(5,117,189,.5) // user avatar btn
 }
 
 .editor_empty{
-  color:#d3d5d6;
+    color:#d3d5d6;
 }
 
 .editor_focused {
@@ -594,6 +594,12 @@ input[type="checkbox"].checkbox {
     min-height: 20px;
 }
 
+.bubble_editor__elements_quantity_warning {
+    padding: 0.5rem;
+    max-width: 100%;
+    color: #FF9966;
+}
+
 .bubbles {
     width: 100%;
     height: auto;
@@ -632,9 +638,6 @@ input[type="checkbox"].checkbox {
     vertical-align: top;
     font-size: 12px;
     position: relative;
-    border: solid 1px #9fc4da;
-    border-radius: 2px;
-    background: #eaf4f9;
     flex: 0 0 auto;
 }
 
@@ -1045,6 +1048,7 @@ input[type="checkbox"].checkbox {
     width: 18px;
     height: 18px;
     visibility: hidden;
+    top: -1px;
 }
 
 .editor .bubbles__i:hover .svg-icons-wrp__remove_bubble{
@@ -1070,7 +1074,7 @@ svg.svg-icons{
 
 
 .svg-icons_remove{
-       transform: translate(6px, 5px);
+    transform: translate(6px, 5px);
 }
 .svg-icons_remove-bubble{
     transform: scale(.8) translate(4px, 4px);

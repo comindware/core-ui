@@ -130,6 +130,7 @@ export default {
             // navigate to new module
             this.loadingContext = null;
             if (this.activeModule.onRoute) {
+                this.activeModule.routerAction = callbackName;
                 this.activeModule.onRoute.apply(this.activeModule, routingArgs);
             }
             if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {

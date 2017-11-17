@@ -52,8 +52,13 @@ export default {
                         handler: child.handler
                     });
                 case 'custom':
-                default:
-                    return new child.view(_.omit(child, 'view'));
+                default: {
+                    const view = new child.view(_.omit(child, 'view'));
+                    if (child.viewEvents) {
+                        Object.keys(child.viewEvents).forEach(key => view.on(key, child.viewEvents[key]));
+                    }
+                    return view;
+                }
             }
         });
     }
