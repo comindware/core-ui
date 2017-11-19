@@ -115,10 +115,10 @@ export default Marionette.ItemView.extend({
         const div = $('<div />', {
             style: styleBlock
         });
-        let width = div.width() + 25;
         const parentWidth = this.parent.outerWidth();
-        const styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
         let style;
+        const styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
+        let width;
         let i;
 
         for (i = 0; i < styles.length; i++) {
@@ -127,6 +127,7 @@ export default Marionette.ItemView.extend({
         }
         div.text(value);
         $('body').append(div);
+        width = div.width() + 25;
         div.remove();
         if (parentWidth !== 0 && (width > parentWidth - 10)) {
             width = parentWidth - 10;

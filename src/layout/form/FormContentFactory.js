@@ -20,7 +20,8 @@ export default {
                         case 'vertical':
                             return new VerticalLayout({
                                 rows: this.__parseConfiguration(child.items),
-                                visible: child.visible
+                                visible: child.visible,
+                                title: child.title
                             });
                         case 'tab':
                             return new TabLayoutView({
@@ -37,7 +38,8 @@ export default {
                         default:
                             return new HorizontalLayout({
                                 columns: this.__parseConfiguration(child.items),
-                                visible: child.visible
+                                visible: child.visible,
+                                title: child.title
                             });
                     }
                 case 'field':

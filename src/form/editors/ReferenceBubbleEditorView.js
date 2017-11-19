@@ -103,6 +103,8 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         this.value = [];
         this.viewModel.get('button').get('selected').reset();
         this.__value(value, false);
+        delete this.fakeInputModel;
+        this.__updateFakeInputModel();
     },
 
     onRender() {
