@@ -8,7 +8,7 @@
 
 'use strict';
 
-import { Handlebars, moment } from 'lib';
+import { Handlebars } from 'lib';
 import { helpers, dateHelpers } from 'utils';
 import template from '../templates/datePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
@@ -20,9 +20,7 @@ const defaultOptions = {
 export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
-    initialize(options) {
-        helpers.ensureOption(options, 'timezoneOffset');
-        
+    initialize() {
         this.pickerOptions = {
             minView: 2,
             format: this.options.pickerFormat,
@@ -45,7 +43,7 @@ export default Marionette.ItemView.extend({
     updatePickerDate() {
         let val = this.model.get('value'),
             format = defaultOptions.pickerFormat,
-            pickerFormattedDate = val ? moment.utc(new Date(val)).utcOffset(this.getOption('timezoneOffset')).format(format) : moment.utc({}).format(format);
+            pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment.utc({}).format(format);
 
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
         this.ui.pickerInput.datetimepicker('update');
@@ -57,11 +55,11 @@ export default Marionette.ItemView.extend({
         if (date === null || date === '') {
             newVal = null;
         } else {
-            newVal = moment.utc({
+            newVal = moment({
                 year: date.getFullYear(),
                 month: date.getMonth(),
                 date: date.getDate()
-            }).minute(-this.getOption('timezoneOffset')).toISOString();
+            }).toISOString();
         }
 
         this.model.set({ value: newVal });

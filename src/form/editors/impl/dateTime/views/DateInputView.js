@@ -14,7 +14,6 @@ import template from '../templates/dateInput.hbs';
 
 export default Marionette.ItemView.extend({
     initialize(options) {
-        helpers.ensureOption(options, 'timezoneOffset');
         helpers.ensureOption(options, 'allowEmptyValue');
         this.editDateFormat = dateHelpers.getDateEditFormat();
     },
@@ -40,7 +39,7 @@ export default Marionette.ItemView.extend({
 
     startEditing() {
         const value = this.model.get('value');
-        const editableText = value ? moment.utc(value).utcOffset(this.getOption('timezoneOffset')).format(this.editDateFormat) : '';
+        const editableText = value ? moment(value).format(this.editDateFormat) : '';
         this.ui.dateInput.val(editableText);
     },
 
@@ -111,7 +110,7 @@ export default Marionette.ItemView.extend({
         if (this.isDestroyed) {
             return;
         }
-        const displayValue = DateTimeService.getDateDisplayValue(this.model.get('value'), this.options.dateDisplayFormat, this.getOption('timezoneOffset'));
+        const displayValue = DateTimeService.getDateDisplayValue(this.model.get('value'), this.options.dateDisplayFormat);
         this.ui.dateInput.val(displayValue);
         if (this.getOption('showTitle')) {
             this.$el.prop('title', displayValue);
@@ -126,7 +125,7 @@ export default Marionette.ItemView.extend({
             newVal = null;
         } else if (oldVal && this.getOption('preserveTime')) {
             const momentOldVal = moment.utc(oldVal);
-            let momentOldDisplayedDate = moment.utc(oldVal).utcOffset(this.getOption('timezoneOffset'));
+            let momentOldDisplayedDate = moment(oldVal);
             momentOldDisplayedDate = moment.utc({
                 year: momentOldDisplayedDate.year(),
                 month: momentOldDisplayedDate.month(),
@@ -137,11 +136,11 @@ export default Marionette.ItemView.extend({
             const diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');
             newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();
         } else {
-            newVal = moment.utc({
+            newVal = moment({
                 year: date.getUTCFullYear(),
                 month: date.getUTCMonth(),
                 date: date.getUTCDate()
-            }).minute(-this.getOption('timezoneOffset')).toISOString();
+            }).toISOString();
         }
 
         this.model.set({ value: newVal });

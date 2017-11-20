@@ -8,7 +8,7 @@
 
 'use strict';
 
-import { Handlebars, moment } from 'lib';
+import { Handlebars } from 'lib';
 import template from './templates/timeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
