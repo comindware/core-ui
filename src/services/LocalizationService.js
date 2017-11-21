@@ -21,9 +21,11 @@ const defaultLangCode = 'en';
 global.Localizer = {
     initialize(options) {
         this.langCode = options.langCode;
+        this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
         this.warningAsError = options.warningAsError;
 
+        moment.tz.setDefault(this.timeZone);
         moment.locale(this.langCode);
         numeral.locale(this.langCode);
     },
