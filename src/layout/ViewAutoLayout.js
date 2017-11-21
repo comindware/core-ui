@@ -16,30 +16,21 @@ export default {
         return schema.map(child => {
             switch (child.type) {
                 case 'v-container':
-                    return new VerticalLayout({
-                        rows: this.__parseConfiguration(child.items),
-                        visible: child.visible
-                    });
+                    return new VerticalLayout(Object.assign(child, {
+                        rows: this.__parseConfiguration(child.items)
+                    }));
                 case 'tab':
-                    return new TabLayoutView({
-                        tabs: this.__parseConfiguration(child.items),
-                        visible: child.visible
-                    });
+                    return new TabLayoutView(Object.assign(child, {
+                        tabs: this.__parseConfiguration(child.items)
+                    }));
                 case 'group':
-                    return new Group({
+                    return new Group(Object.assign(child, {
                         view: this.__parseConfiguration(child.items)[0],
-                        visible: child.visible,
-                        name: child.name
-                    });
+                    }));
                 case 'h-container':
-                    return new HorizontalLayout({
-                        columns: this.__parseConfiguration(child.items),
-                        visible: child.visible
-                    });
-                case 'field':
-                    return elementsFactory.createFieldAnchor(child.key);
-                case 'editor':
-                    return elementsFactory.createEditorAnchor(child.key);
+                    return new HorizontalLayout(Object.assign(child, {
+                        columns: this.__parseConfiguration(child.items)
+                    }));
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
                 case 'button':
@@ -49,6 +40,13 @@ export default {
                     });
                 case 'custom':
                 default: {
+                    if (child.type) {
+                        if (child.type.indexOf('field') !== -1) {
+                            return elementsFactory.createFieldAnchor(child.key);
+                        } else if (child.type.indexOf('editor') !== -1) {
+                            return elementsFactory.createEditorAnchor(child.key);
+                        }
+                    }
                     const view = new child.view(_.omit(child, 'view'));
                     if (child.viewEvents) {
                         Object.keys(child.viewEvents).forEach(key => view.on(key, child.viewEvents[key]));
