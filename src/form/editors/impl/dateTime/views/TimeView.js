@@ -104,10 +104,13 @@ export default Marionette.LayoutView.extend({
         if (time === null || time === '') {
             newVal = null;
         } else if (oldVal) {
-            newVal = moment(oldVal).hour(time.hour()).minute(time.minute()).second(0).millisecond(0).toISOString();
+            newVal = moment(oldVal).hour(time.hour())
+                .minute(time.minute())
+                .second(0)
+                .millisecond(0)
+                .toISOString();
         } else {
-            time = time.clone();
-            newVal = time.minute(time.minute()).toISOString();
+            newVal = time.clone().minute(time.clone().minute()).toISOString();
         }
 
         this.model.set('value', newVal);

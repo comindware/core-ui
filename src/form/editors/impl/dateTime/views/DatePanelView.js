@@ -7,7 +7,7 @@
  */
 
 import { Handlebars, moment } from 'lib';
-import { helpers, dateHelpers } from 'utils';
+import { dateHelpers } from 'utils';
 import template from '../templates/datePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 
@@ -18,7 +18,7 @@ const defaultOptions = {
 export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
-    initialize() {  
+    initialize() {
         this.pickerOptions = {
             minView: 2,
             format: this.options.pickerFormat,

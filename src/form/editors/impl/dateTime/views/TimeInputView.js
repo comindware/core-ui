@@ -69,9 +69,8 @@ export default Marionette.ItemView.extend({
                     .toISOString();
             } else {
                 // Take current date and newly selected time
-                parsedDate = moment.utc({}).hour(parsedVal.hour()).minute(parsedVal.minute() - this.getOption('timezoneOffset')).second(this.hasSeconds ? parsedVal.second() : 0).toISOString();
+                parsedDate = moment
                     .hour(parsedVal.hour())
-                    .minute(parsedVal.minute() - this.getOption('timezoneOffset'))
                     .second(this.hasSeconds ? parsedVal.second() : 0)
                     .toISOString();
             }
