@@ -5,7 +5,6 @@
  *       All Rights Reserved
  * Published under the MIT license
  */
-
 import { moment } from 'lib';
 
 export default function(date) {

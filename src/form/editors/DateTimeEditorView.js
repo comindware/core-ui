@@ -16,7 +16,6 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    timezoneOffset: -new Date().getTimezoneOffset(),
     dateDisplayFormat: undefined,
     timeDisplayFormat: undefined,
     showTitle: true
@@ -31,7 +30,6 @@ const defaultOptions = {
  * @param {Object} options Options object.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Boolean} [options.allowEmptyValue=true] - Whether to display a delete button that sets the value to <code>null</code>.
- * @param {Number} options.timezoneOffset - Number of minutes representing timezone offset.
  * E.g. for UTC+3 enter <code>180</code>. Negative values allowed. Defaults to browser timezone offset.
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
@@ -95,7 +93,6 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     onRender() {
         this.dateView = new DateView({
             model: this.dateTimeModel,
-            timezoneOffset: this.options.timezoneOffset,
             preserveTime: true,
             allowEmptyValue: this.options.allowEmptyValue,
             dateDisplayFormat: this.options.dateDisplayFormat,
@@ -106,7 +103,6 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
 
         this.timeView = new TimeView({
             model: this.dateTimeModel,
-            timezoneOffset: this.options.timezoneOffset,
             allowEmptyValue: this.options.allowEmptyValue,
             timeDisplayFormat: this.options.timeDisplayFormat,
             showTitle: false
@@ -207,8 +203,8 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     },
 
     __updateTitle() {
-        const dateDisplayValue = DateTimeService.getDateDisplayValue(this.getValue(), this.options.dateDisplayFormat, this.options.timezoneOffset);
-        const timeDisplayValue = DateTimeService.getTimeDisplayValue(this.getValue(), this.options.timeDisplayFormat, this.options.timezoneOffset);
+        const dateDisplayValue = DateTimeService.getDateDisplayValue(this.getValue(), this.options.dateDisplayFormat);
+        const timeDisplayValue = DateTimeService.getTimeDisplayValue(this.getValue(), this.options.timeDisplayFormat);
         const resultValue = `${dateDisplayValue} ${timeDisplayValue}`;
         this.$el.prop('title', resultValue);
     }

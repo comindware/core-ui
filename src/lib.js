@@ -7,7 +7,7 @@
  */
 
 /* Data & Datatime utils*/
-import moment_ from 'moment';
+import moment_ from 'moment-timezone';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
@@ -24,13 +24,11 @@ import 'backbone.radio';
 import 'backbone-associations';
 /* --- */
 import 'jstorage';
-import Bluebird_ from 'bluebird';
 import * as Handlebars_ from 'handlebars';
 import * as underscoreString from 'underscore.string';
 import $_ from 'jquery';
 import 'inputmask/dist/jquery.inputmask.bundle';
 import 'rangyinputs';
-import 'jquery-mousewheel';
 import 'jquery-autosize';
 import * as keypress_ from 'keypress';
 import 'bootstrap-datetime-picker';
@@ -40,13 +38,6 @@ import 'innersvg-polyfill';
 import jsencrypt from 'jsencrypt';
 import * as d3 from 'd3';
 import * as jqui from 'jquery-ui';
-
-// Replacing ES6 promise with bluebird
-window.Promise = Bluebird_;
-
-window.Promise.config({
-    warnings: false
-});
 
 window._ = underscoreLib;
 window._.mixin(mixin);
@@ -62,7 +53,6 @@ const api = {
     'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
-    Bluebird: Bluebird_,
     $: $_,
     _: window._,
     Backbone: backbone,
