@@ -14,3 +14,15 @@
     flex: 1;
     margin: 0 10px;
 }
+
+.layout__horizontal-layout-title {
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #384650;
+    margin-bottom: 6px;
+}

@@ -237,7 +237,8 @@ module.exports = options => {
             webpackConfig.plugins.push(
                 new CleanWebpackPlugin([ pathResolver.compiled() ], {
                     root: pathResolver.root(),
-                    verbose: false
+                    verbose: false,
+                    exclude: ['localization']
                 })
             );
         }
