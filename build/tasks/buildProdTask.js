@@ -16,8 +16,7 @@ const gulpUtil = require('gulp-util');
 module.exports = uglify => callback => {
     const webpackConfig = webpackConfigFactory({
         env: 'production',
-        uglify: uglify || false,
-        clean: false
+        uglify: uglify || false
     });
 
     // run webpack
