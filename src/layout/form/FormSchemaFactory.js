@@ -9,7 +9,7 @@ export default {
 
     __fillConfiguration(schemaTree, schemaPlain) {
         schemaTree.forEach(item => {
-            item.key
+            item.cType === 'field' || item.cType === 'editor'
                 ? schemaPlain[item.key] = _.omit(item, ['key', 'cType'])
                 : item.cType === 'container' && this.__fillConfiguration(item.items, schemaPlain);
         });

@@ -22,7 +22,8 @@ module.exports = callback => {
 
     const compiler = webpack(webpackConfigFactory({
         env: 'development',
-        uglify: false
+        uglify: false,
+        clean: false
     }));
 
     let bundleStart = null;
