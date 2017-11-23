@@ -50,7 +50,8 @@ window._.string = window._.str = underscoreString;
 window.Promise = Bluebird_;
 
 window.Promise.config({
-    cancellation: true
+    cancellation: true,
+    warnings: false
 });
 
 $_.browser = {

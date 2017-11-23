@@ -203,7 +203,11 @@ module.exports = options => {
             new ExtractTextPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.optimize.ModuleConcatenationPlugin()
+            new webpack.optimize.ModuleConcatenationPlugin(),
+            new webpack.ContextReplacementPlugin(
+                /moment[\/\\]locale$/,
+                /de|ru|en/
+            )
         ],
         resolve: {
             modules: [
