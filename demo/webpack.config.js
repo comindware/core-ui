@@ -14,6 +14,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const _ = require('lodash');
 const cssnano = require('cssnano');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const OfflinePlugin = require('offline-plugin');
 
 const pathResolver = {
     client() {
@@ -175,7 +177,15 @@ module.exports = options => {
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',
                 minChunks: Infinity
-            })
+            }),
+            new OfflinePlugin(),
+            new WebpackPwaManifest({
+                name: 'Comindware business application platform',
+                short_name: 'Comindware',
+                background_color: '#ffffff',
+                display: 'standalone',
+                theme_color: '#0575bd'
+            }),
         ],
         resolve: {
             modules: [
