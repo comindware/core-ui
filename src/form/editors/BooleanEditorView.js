@@ -33,7 +33,7 @@ const classes = {
  * @param {String} [options.title] Title attribute for the editor.
  * @param {Boolean} [options.thirdState=false] Enables third state for checkbox.
  * */
-formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
+export default formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:core.form.editors.BooleanEditorView.prototype */{
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
     },
@@ -120,5 +120,3 @@ formRepository.editors.Boolean = BaseItemEditorView.extend(/** @lends module:cor
 }, {
     classes
 });
-
-export default formRepository.editors.Boolean;

@@ -597,7 +597,11 @@ input[type="checkbox"].checkbox {
 .bubble_editor__elements_quantity_warning {
     padding: 0.5rem;
     max-width: 100%;
-    color: #FF9966;
+    text-align: center;
+}
+
+.bubble_editor__elements_quantity_warning span {
+    border-bottom: 1px solid #cb4e30;
 }
 
 .bubbles {
@@ -978,14 +982,14 @@ input[type="checkbox"].checkbox {
     border-radius: 2px;
 }
 
-.svg-icons-wrp_multiselect{
-    width: 16px;
-    height: 16px;
-    top: 5px;
-    right: 5px;
+.svg-icons-wrp_multiselect {
+    position: static;
+    width: 14px;
+    height: 14px;
     border: solid 1px #838c92;
-    opacity: .4;
-    border-radius: 50%;
+    opacity: .6;
+    border-radius: 2px;
+    margin-right: 4px;
 }
 
 .multiselect-i_selected .svg-icons-wrp_multiselect{
@@ -1096,7 +1100,7 @@ svg.svg-icons{
     transform: translate(2px, 2px);
 }
 .svg-icons_multiselect{
-    transform: scale(.9) translate(1px, 3px)
+    transform: scale(.9) translate(0, 1px)
 }
 
 .svg-icons_pencil{

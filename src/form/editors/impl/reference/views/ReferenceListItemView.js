@@ -8,34 +8,36 @@
 
 import { Handlebars } from 'lib';
 import template from '../templates/referenceListItem.hbs';
-import list from 'list';
+
+const classes = {
+    BASE: 'multiselect-i',
+    SELECTED: 'multiselect-i_selected'
+};
 
 export default Marionette.ItemView.extend({
-    initialize(options) {
-        this.reqres = options.reqres;
+    className() {
+        return `dd-list__i${this.options.showCheckboxes ? ' dev_dd-list__i_with_checkbox' : ''}`;
     },
-
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior
-        }
-    },
-
-    className: 'dd-list__i',
 
     template: Handlebars.compile(template),
 
     templateHelpers() {
         return {
-            text: this.options.getDisplayText(this.model.toJSON())
+            text: this.options.getDisplayText(this.model.toJSON()),
+            showCheckboxes: this.options.showCheckboxes
         };
     },
 
-    events: {
-        click: '__select'
+    modelEvents: {
+        select: '__markSelected',
+        deselect: '__markDeselected'
     },
 
-    __select() {
-        this.reqres.request('value:set', this.model);
+    __markSelected() {
+        this.$el.addClass(classes.SELECTED);
+    },
+
+    __markDeselected() {
+        this.$el.removeClass(classes.SELECTED);
     }
 });

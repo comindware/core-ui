@@ -421,10 +421,6 @@ svg.svg-grid-icons {
     display: flex;
 }
 
-.fr-collection-grid:empty{
-    margin: 0;
-}
-
 .fr-collection-grid .native-grid{
     height: auto;
 }

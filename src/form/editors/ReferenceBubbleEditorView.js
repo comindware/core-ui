@@ -30,6 +30,7 @@ const defaultOptions = {
     showEditButton: false,
     buttonView: ButtonView,
     listItemView: ReferenceListItemView,
+    showCheckboxes: false,
     textFilterDelay: 300,
     maxQuantitySelected: 5,
     canDeleteItem: true
@@ -66,7 +67,6 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         this.reqres.setHandler('input:up', this.__onInputUp, this);
         this.reqres.setHandler('input:down', this.__onInputDown, this);
         this.reqres.setHandler('button:click', this.__onButtonClick, this);
-        this.reqres.setHandler('value:set', this.__onValueSet, this);
         this.reqres.setHandler('value:select', this.__onValueSelect, this);
         this.reqres.setHandler('value:edit', this.__onValueEdit, this);
         this.reqres.setHandler('filter:text', this.__onFilterText, this);
@@ -76,6 +76,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         const selectedModels = new Backbone.Collection(this.getValue(), {
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
         });
+        const panelCollection = new VirtualCollection(new ReferenceCollection([]), { selectableBehavior: 'multiple' });
 
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
@@ -83,10 +84,13 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
             }),
             panel: new Backbone.Model({
                 value: this.getValue(),
-                collection: new VirtualCollection(new ReferenceCollection([])),
+                collection: panelCollection,
                 totalCount: this.controller.totalCount || 0
             })
         });
+
+        this.listenTo(panelCollection, 'select', this.__onValueSet);
+        this.listenTo(panelCollection, 'deselect', this.__onValueUnset);
 
         this.__updateFakeInputModel();
     },
@@ -125,6 +129,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
                 showAddNewButton: this.showAddNewButton,
+                showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
                 textFilterDelay: this.options.textFilterDelay
@@ -196,6 +201,10 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
             this.__updateButtonInput();
             this.__focusButton();
         }
+    },
+
+    __onValueUnset(model) {
+        this.__onBubbleDelete(model);
     },
 
     __canAddItem() {
