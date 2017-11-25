@@ -32,8 +32,6 @@ import bootstrapper from './Bootstrapper';
 import Controller from 'controller/Controller';
 import Application from 'Application';
 
-import View from './view/View';
-
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import SearchBarView from './views/SearchBarView';
@@ -63,7 +61,7 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
 const core = {
     Controller,
     Application,
-    View,
+    View: layoutApi.Form,
     RoutingService,
     ToastNotifications,
     lib: libApi,

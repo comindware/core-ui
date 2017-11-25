@@ -1,32 +1,34 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/27/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import core from 'comindware/core';
 
-export default function() {
-    return new core.layout.VerticalLayout({
-        rows: [
-            new core.form.editors.TextEditor({
-                value: 'foo'
-            }),
-            new core.form.editors.TextAreaEditor({
-                value: 'bar'
-            }),
-            new core.form.editors.NumberEditor({
-                value: 123
-            }),
-            new core.form.editors.DateTimeEditor({
-                value: '2015-07-20T10:46:37Z'
-            }),
-            new core.form.editors.BooleanEditor({
-                value: true,
-                displayText: 'Make me some tea!'
-            })
-        ]
-    });
-}
+const model = new Backbone.Model({
+    title: 'foo',
+    idealDays: 'bar',
+    dueDate: '123',
+    description: '2015-07-20T10:46:37Z',
+    blocked: true
+});
+
+export default core.View.createView({
+    model,
+    schema: [{
+        type: 'v-container',
+        items: [{
+            type: 'Text-editor',
+            key: 'title'
+        }, {
+            type: 'TextArea-editor',
+            key: 'idealDays'
+        }, {
+            type: 'Number-editor',
+            key: 'dueDate'
+        }, {
+            type: 'DateTime-editor',
+            key: 'description'
+        }, {
+            type: 'Boolean-editor',
+            key: 'blocked',
+            displayText: 'Make me some tea!'
+        }]
+    }]
+});

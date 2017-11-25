@@ -9,34 +9,38 @@ const model = new Backbone.Model({
     blocked: true
 });
 
-export default core.View.createView({
-    model,
-    schema: [{
-        type: 'v-container',
-        items: [{
-            type: 'Text-field',
-            key: 'title'
-        }, {
-            type: 'h-container',
-            items: [{
-                type: 'Number-field',
-                key: 'idealDays'
-            }, {
-                type: 'DateTime-field',
-                key: 'dueDate'
+export default class View {
+    constructor() {
+        return new core.View({
+            model,
+            schema: [{
+                type: 'v-container',
+                items: [{
+                    type: 'Text-field',
+                    key: 'title'
+                }, {
+                    type: 'h-container',
+                    items: [{
+                        type: 'Number-field',
+                        key: 'idealDays'
+                    }, {
+                        type: 'DateTime-field',
+                        key: 'dueDate'
+                    }]
+                }, {
+                    type: 'TextArea-field',
+                    key: 'description'
+                }, {
+                    type: 'Boolean-field',
+                    key: 'blocked'
+                }, {
+                    type: 'button',
+                    text: 'Commit',
+                    handler() {
+                        this.form.commit();
+                    }
+                }]
             }]
-        }, {
-            type: 'TextArea-field',
-            key: 'description'
-        }, {
-            type: 'Boolean-field',
-            key: 'blocked'
-        }, {
-            type: 'button',
-            text: 'Commit',
-            handler() {
-                this.form.commit();
-            }
-        }]
-    }]
-});
+        });
+    }
+}
