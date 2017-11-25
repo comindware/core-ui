@@ -29,6 +29,8 @@ export default Marionette.LayoutView.extend({
         };
     },
 
+    className: 'demo-content_cantainer',
+
     regions: {
         caseRepresentationRegion: '.js-case-representation-region'
     },
