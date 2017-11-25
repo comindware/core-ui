@@ -55,7 +55,7 @@ export default Marionette.LayoutView.extend({
         const text = requireText(`./${path}`);
 
         this.model.set('sourceCode', text);
-        const representationView = code();
+        const representationView = typeof code === 'function' ? code() : code;
         this.caseRepresentationRegion.show(representationView);
     }
 });
