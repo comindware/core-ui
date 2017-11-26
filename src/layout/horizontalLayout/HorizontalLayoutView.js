@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/27/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
@@ -20,7 +13,6 @@ const classes = {
 export default Marionette.LayoutView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'columns');
-
         this.columns = options.columns;
     },
 
@@ -40,7 +32,8 @@ export default Marionette.LayoutView.extend({
 
     templateHelpers() {
         return {
-            title: this.options.title
+            title: this.options.title,
+            extraClass: (this.options.breakpoints || this.options.styles) && this.__addBreakpointsAndStyles(this.options.breakpoints, this.options.styles)
         };
     },
 
@@ -75,5 +68,25 @@ export default Marionette.LayoutView.extend({
     __handleChangeVisibility(view, visible) {
         const ctx = this.__rowsCtx.find(x => x.view === view);
         ctx.$regionEl.toggleClass(classes.HIDDEN, !visible);
+    },
+
+    __addBreakpointsAndStyles(brakePoints, styles) {
+        const styleShit = document.styleSheets[0];
+
+        const newClass = `horizontalStyle${_.uniqueId()}`;
+        if (styles) {
+            styleShit.insertRule(`${newClass} ${styles}`, 0);
+        }
+        if (brakePoints) {
+            Object.keys(brakePoints).forEach(point => {
+                styleShit.insertRule(`.${newClass} { ${this.__getStringFromObject(brakePoints[point])} }`, 0);
+            });
+        }
+
+        return `${newClass} ${classes.CLASS_NAME}`;
+    },
+
+    __getStringFromObject(object) {
+        return Object.keys(object).map(key => `${key}: ${object[key]};`).join(' ');
     }
 });

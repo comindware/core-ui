@@ -14,7 +14,15 @@ export default class View {
         return new core.View({
             model,
             schema: [{
-                type: 'v-container',
+                type: 'h-container',
+                breakpoints: {
+                    'max-width: 499px': {
+                        'flex-direction': 'column'
+                    },
+                    'min-width: 500px': {
+                        'flex-direction': 'row'
+                    }
+                },
                 items: [{
                     type: 'Text-field',
                     key: 'title'
