@@ -33,7 +33,7 @@ export default Marionette.LayoutView.extend({
     templateHelpers() {
         return {
             title: this.options.title,
-            extraClass: (this.options.breakpoints || this.options.styles) && this.__addBreakpointsAndStyles(this.options.breakpoints, this.options.styles)
+            extraClass: (this.options.breakpoints || this.options.style) && this.__addBreakpointsAndStyles(this.options.breakpoints, this.options.style)
         };
     },
 
@@ -70,12 +70,12 @@ export default Marionette.LayoutView.extend({
         ctx.$regionEl.toggleClass(classes.HIDDEN, !visible);
     },
 
-    __addBreakpointsAndStyles(brakePoints, styles) {
+    __addBreakpointsAndStyles(brakePoints, style) {
         const styleShit = document.styleSheets[0];
 
         const newClass = `horizontalStyle${_.uniqueId()}`;
-        if (styles) {
-            styleShit.insertRule(`${newClass} ${styles}`, 0);
+        if (style) {
+            styleShit.insertRule(`.${newClass} { ${this.__getStringFromObject(style)} }`, 0);
         }
         if (brakePoints) {
             Object.keys(brakePoints).forEach(point => {
@@ -83,7 +83,7 @@ export default Marionette.LayoutView.extend({
             });
         }
 
-        return `${newClass} ${classes.CLASS_NAME}`;
+        return newClass;
     },
 
     __getStringFromObject(object) {
