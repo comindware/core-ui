@@ -159,7 +159,7 @@ const Form = Marionette.Object.extend({
                 break;
             case 'blur':
                 if (this.hasFocus) {
-                    const focusedField = _.find(this.fields, f => f.editor.hasFocus);
+                    const focusedField = this.fields.find(f => f.editor.hasFocus);
                     if (!focusedField) {
                         this.hasFocus = false;
                         this.trigger('blur', this);
@@ -202,7 +202,7 @@ const Form = Marionette.Object.extend({
             const modelErrors = model.validate(this.getValue());
 
             if (modelErrors) {
-                const isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+                const isDictionary = _.isObject(modelErrors) && !Array.isArray(modelErrors);
 
                 //If errors are not in object form then just store on the error object
                 if (!isDictionary) {

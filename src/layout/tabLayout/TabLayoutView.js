@@ -1,15 +1,8 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/27/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars } from 'lib';
 import { helpers } from 'utils';
-import template from './tabLayout.hbs';
+import template from './templates/tabLayout.hbs';
 import HeaderView from './HeaderView';
+import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
@@ -33,6 +26,9 @@ export default Marionette.LayoutView.extend({
         const selectedTab = this.__findSelectedTab();
         if (!selectedTab) {
             this.selectTab(this.__tabsCollection.at(0).id);
+            this.selectTabIndex = 0;
+        } else {
+            this.__getSelectedTabIndex(selectedTab);
         }
 
         this.listenTo(this.__tabsCollection, 'change:selected', this.__onSelectedChanged);
@@ -48,11 +44,19 @@ export default Marionette.LayoutView.extend({
     className: classes.CLASS_NAME,
 
     regions: {
-        headerRegion: '.js-header-region'
+        headerRegion: '.js-header-region',
+        stepperRegion: '.js-stepper-region'
     },
 
     ui: {
-        panelContainer: '.js-panel-container'
+        panelContainer: '.js-panel-container',
+        buttonMoveNext: '.js-button_move-next',
+        buttonMovePrevious: '.js-button_move-previous'
+    },
+
+    events: {
+        'click @ui.buttonMoveNext': 'moveToNextTab',
+        'click @ui.buttonMovePrevious': 'moveToPreviousTab'
     },
 
     behaviors: {
@@ -82,6 +86,11 @@ export default Marionette.LayoutView.extend({
             this.__updateTabRegion(tabModel);
         });
         this.__updateState();
+        if (this.getOption('showStepper')) {
+            const stepperView = new StepperView({ collection: this.__tabsCollection });
+            this.stepperRegion.show(stepperView);
+            this.listenTo(stepperView, 'stepper:item:selected', this.__handleStepperSelect);
+        }
     },
 
     update() {
@@ -105,8 +114,11 @@ export default Marionette.LayoutView.extend({
         const selectedTab = this.__findSelectedTab();
         if (selectedTab) {
             selectedTab.set('selected', false);
+            this.selectTabIndex = this.__getSelectedTabIndex(tab);
         }
-        tab.set('selected', true);
+        if (tab.get('enabled')) {
+            tab.set('selected', true);
+        }
     },
 
     setEnabled(tabId, enabled) {
@@ -116,13 +128,59 @@ export default Marionette.LayoutView.extend({
     },
 
     setTabError(tabId, error) {
-        this.__findTab(tabId).set({
-            error
-        });
+        this.__findTab(tabId).set({ error });
+    },
+
+    moveToNextTab() {
+        let errors = null;
+        if (this.getOption('validateBeforeTabSwitch')) {
+            const selectedTab = this.__findSelectedTab();
+            errors = !selectedTab.form || selectedTab.form.validate();
+            this.setTabError(errors);
+        }
+        if (!errors) {
+            let newIndex = this.selectTabIndex + 1;
+            if (this.__tabsCollection.length - 1 < newIndex) {
+                newIndex = 0;
+            }
+            const newTab = this.__tabsCollection.at(newIndex);
+            if (newTab.get('enabled')) {
+                this.selectTab(newTab.id);
+            } else {
+                this.selectTabIndex++;
+                this.moveToNextTab();
+            }
+        }
+    },
+
+    moveToPreviousTab() {
+        let errors = null;
+        if (this.getOption('validateBeforeTabSwitch')) {
+            const selectedTab = this.__findSelectedTab();
+            errors = !selectedTab.form || selectedTab.form.validate();
+            this.setTabError(errors);
+        }
+        if (!errors) {
+            let newIndex = this.selectTabIndex - 1;
+            if (newIndex < 0) {
+                newIndex = this.__tabsCollection.length - 1;
+            }
+            const newTab = this.__tabsCollection.at(newIndex);
+            if (newTab.get('enabled')) {
+                this.selectTab(this.__tabsCollection.at(newIndex).id);
+            } else {
+                this.selectTabIndex--;
+                this.moveToPreviousTab();
+            }
+        }
     },
 
     __findSelectedTab() {
         return this.__tabsCollection.find(x => x.get('selected'));
+    },
+
+    __getSelectedTabIndex(model) {
+        return this.__tabsCollection.indexOf(model);
     },
 
     __findTab(tabId) {
@@ -146,5 +204,9 @@ export default Marionette.LayoutView.extend({
     __updateTabRegion(model) {
         const selected = model.get('selected');
         model.get('$regionEl').toggle(Boolean(selected));
+    },
+
+    __handleStepperSelect(model) {
+        this.__handleSelect(model);
     }
 });

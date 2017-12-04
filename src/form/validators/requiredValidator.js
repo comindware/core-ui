@@ -29,7 +29,7 @@ formRepository.validators.required = function(config) {
         if (val === null || val === undefined || val === '') {
             return err;
         }
-        if (_.isArray(val) && val.length === 0) {
+        if (Array.isArray(val) && val.length === 0) {
             return err;
         }
     };

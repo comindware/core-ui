@@ -6,7 +6,6 @@
  * Published under the MIT license
  */
 
-import { helpers } from 'utils';
 import { $ } from 'lib';
 import { moment } from 'lib';
 import AjaxService from 'services/AjaxService';
@@ -22,10 +21,6 @@ import 'backbone.trackit';
 
 export default {
     start(options) {
-        helpers.ensureOption(options, 'localizationService');
-        helpers.ensureOption(options, 'ajaxService');
-        helpers.ensureOption(options, 'userService');
-
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
 
@@ -52,14 +47,14 @@ export default {
                 context: options.navigationConfiguration.context,
                 configurationKey: options.navigationConfiguration.configurationKey
             });
+
+            RoutingService.initialize({
+                defaultUrl: window.application.navigationController.getDefaultUrl(),
+                modules: options.routerConfiguration.modules
+            });
         }
 
-        RoutingService.initialize({
-            defaultUrl: window.application.navigationController.getDefaultUrl(),
-            modules: options.routerConfiguration.modules
-        });
-
-        UserService.initialize(options.userService);
+        options.userService && UserService.initialize(options.userService);
         WindowService.initialize();
         LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
@@ -81,6 +76,7 @@ export default {
 
         this.initializeThirdParties();
         marionetteApp.start();
+
         return marionetteApp;
     },
 

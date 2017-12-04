@@ -1,14 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/8/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}], no-new-func: 0 */
-
-'use strict';
 
 const gulp = require('gulp');
 const gutil = require('gulp-util');
@@ -68,8 +57,17 @@ gulp.task('build', ['clear'], callback => {
         if (err) {
             throw new gutil.PluginError('build', err);
         }
-        gutil.log('[build]', stats.toString({
-            colors: true
+        gutil.log('webpack:build:core:prod', stats.toString({
+            colors: true,
+            chunks: false,
+            source: false,
+            hash: false,
+            modules: false,
+            errorDetails: true,
+            version: false,
+            assets: false,
+            chunkModules: false,
+            children: false
         }));
         callback();
     });

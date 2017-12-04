@@ -18,12 +18,14 @@ numeral.locale('ru', numeralRu);
 const global = window;
 const defaultLangCode = 'en';
 
-global.Localizer = {
+export default global.Localizer = {
     initialize(options) {
         this.langCode = options.langCode;
+        this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
         this.warningAsError = options.warningAsError;
 
+        moment.tz.setDefault(this.timeZone);
         moment.locale(this.langCode);
         numeral.locale(this.langCode);
     },
@@ -63,5 +65,3 @@ global.Localizer = {
         return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
     }
 };
-
-export default global.Localizer;

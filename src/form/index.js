@@ -38,7 +38,6 @@ import IsFavoriteEditorView from './editors/IsFavoriteEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
 import SimpleNumberEditorView from './editors/SimpleNumberEditorView';
-import IconEditorComponentView from './editors/IconEditorComponentView';
 import TimeNumberEditorView from './editors/TimeNumberEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
@@ -48,6 +47,7 @@ import WorkSpaceItemsEditorView from './editors/WorkSpaceItemsEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/common/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/common/members/collections/MembersCollection';
 import editorsImplCommonMemberModel from './editors/impl/common/members/models/MemberModel';
+import IconEditorComponentView from './editors/impl/awesomeIconEditor/views/IconEditorComponentView';
 import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
 import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
@@ -61,6 +61,8 @@ import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonV
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
+import ColorPickerEditor from './editors/ColorPickerEditor';
+import RangeEditor from './editors/RangeEditor';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
@@ -202,7 +204,9 @@ const api = /** @lends module:core.form */ {
         NewExpressionEditor: NewExpressionEditorView,
         TitleTextEditor: TitleTextEditorView,
         WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
-        IconEditor: IconEditorComponentView
+        IconEditor: IconEditorComponentView,
+        ColorPickerEditor,
+        RangeEditor
     }
 };
 export default api;

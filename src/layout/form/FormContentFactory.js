@@ -21,12 +21,16 @@ export default {
                         case 'vertical':
                             return new VerticalLayout({
                                 rows: this.__parseConfiguration(child.items),
-                                visible: child.visible
+                                visible: child.visible,
+                                title: child.title
                             });
                         case 'tab':
                             return new TabLayoutView({
                                 tabs: this.__parseConfiguration(child.items),
-                                visible: child.visible
+                                visible: child.visible,
+                                showStepper: child.showStepper,
+                                showMoveButtons: child.showMoveButtons,
+                                validateBeforeTabSwitch: child.validateBeforeTabSwitch
                             });
                         case 'group':
                             return new Group({
@@ -38,7 +42,8 @@ export default {
                         default:
                             return new HorizontalLayout({
                                 columns: this.__parseConfiguration(child.items),
-                                visible: child.visible
+                                visible: child.visible,
+                                title: child.title
                             });
                     }
                 case 'field':

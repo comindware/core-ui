@@ -44,7 +44,7 @@ gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
 
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
 gulp.task('watch:build:core:dev', () => {
-    gulp.watch([ pathResolver.source('**/*'), pathResolver.resources('**/*') ], [ 'build:core:dev' ]);
+    gulp.watch([ pathResolver.source('**/*'), pathResolver.resources('**/*') ], [ 'build:core:dev', 'generateSprites' ]);
 });
 
 gulp.task('build:core:prod', require('./tasks/buildProdTask')(false));
@@ -78,7 +78,7 @@ gulp.task('test:watch', function (done) {
 });
 
 gulp.task('start', callback =>
-    runSequence('localization', 'generateSprites', 'build:core:dev', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
+    runSequence('localization', 'build:core:dev', 'generateSprites', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
 
 gulp.task('build', callback => runSequence(['build:core:prod', 'build:core:prod:min', 'jsdoc'], 'localization', 'generateSprites', callback));
 

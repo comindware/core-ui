@@ -14,7 +14,6 @@ import template from '../templates/time.hbs';
 
 export default Marionette.LayoutView.extend({
     initialize() {
-        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.timeDisplayFormat = this.getOption('timeDisplayFormat');
         this.showTitle = this.getOption('showTitle');
@@ -61,7 +60,6 @@ export default Marionette.LayoutView.extend({
             buttonView: TimeInputView,
             buttonViewOptions: {
                 model: this.model,
-                timezoneOffset: this.timezoneOffset,
                 allowEmptyValue: this.allowEmptyValue,
                 timeDisplayFormat: this.timeDisplayFormat,
                 showTitle: this.showTitle
@@ -106,12 +104,13 @@ export default Marionette.LayoutView.extend({
         if (time === null || time === '') {
             newVal = null;
         } else if (oldVal) {
-            newVal = moment.utc(oldVal).utcOffset(this.timezoneOffset).hour(time.hour()).minute(time.minute())
+            newVal = moment(oldVal).hour(time.hour())
+                .minute(time.minute())
                 .second(0)
                 .millisecond(0)
                 .toISOString();
         } else {
-            newVal = time.clone().minute(time.clone().minute() - this.timezoneOffset).toISOString();
+            newVal = time.clone().minute(time.clone().minute()).toISOString();
         }
 
         this.model.set('value', newVal);

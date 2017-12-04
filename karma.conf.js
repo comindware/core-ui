@@ -8,7 +8,7 @@
 
 const webpackConfigFactory = require('./build/webpack.config.js');
 
-module.exports = function (config) {
+module.exports = function(config) {
     let TEST_COVERAGE = config.coverage === true;
 
     let result = {
@@ -75,7 +75,8 @@ module.exports = function (config) {
         concurrency: Infinity,
 
         webpack: webpackConfigFactory({
-            env: 'test'
+            env: 'test',
+            clean: false
         }),
 
         webpackMiddleware: {
@@ -102,7 +103,8 @@ module.exports = function (config) {
         };
 
         result.webpack = webpackConfigFactory({
-            env: 'test-coverage'
+            env: 'test-coverage',
+            clean: false
         });
     }
 

@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, $ } from 'lib';
 import template from '../templates/date.hbs';
 import dropdown from 'dropdown';
@@ -16,7 +14,6 @@ import InputView from './DateInputView';
 
 export default Marionette.LayoutView.extend({
     initialize() {
-        this.timezoneOffset = this.getOption('timezoneOffset') || 0;
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.dateDisplayFormat = this.getOption('dateDisplayFormat');
@@ -36,7 +33,6 @@ export default Marionette.LayoutView.extend({
             buttonView: InputView,
             buttonViewOptions: {
                 model: this.model,
-                timezoneOffset: this.timezoneOffset,
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.allowEmptyValue,
                 dateDisplayFormat: this.dateDisplayFormat,
@@ -45,7 +41,6 @@ export default Marionette.LayoutView.extend({
             panelView: PanelView,
             panelViewOptions: {
                 model: this.model,
-                timezoneOffset: this.timezoneOffset,
                 preserveTime: this.preserveTime,
                 allowEmptyValue: this.allowEmptyValue
             },

@@ -1,3 +1,4 @@
+
 import core from 'comindware/core';
 import EditorCanvasView from 'demoPage/views/EditorCanvasView';
 
@@ -13,6 +14,6 @@ export default function() {
             autocommit: true,
             mode: 'code'
         }),
-        presentation: "{{#isNull timeValue}}null{{else}}'{{timeValue}}'{{/isNull}}"
+        presentation: "'{{code}}'"
     });
-};
+}

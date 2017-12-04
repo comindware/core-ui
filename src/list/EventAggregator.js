@@ -68,7 +68,7 @@ export default Marionette.Controller.extend({
 
     scrollTo(model) {
         const modelIndex = this.collection.indexOf(model);
-        const view = _.find(this.views, viewTo => viewTo.scrollTo);
+        const view = this.views.find(viewTo => viewTo.scrollTo);
         if (view) {
             view.scrollTo(modelIndex);
         }

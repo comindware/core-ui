@@ -9,39 +9,19 @@
 import 'lib';
 import { helpers, htmlHelpers } from 'utils';
 
-const eventBubblingIgnoreList = [
-    'before:render',
-    'render',
-    'dom:refresh',
-    'before:show',
-    'show',
-    'before:destroy',
-    'destroy'
-];
-
 export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(view.options, 'columns');
         helpers.ensureOption(view.options, 'gridEventAggregator');
-        helpers.ensureOption(view.options, 'internalListViewReqres');
-        helpers.ensureOption(options, 'padding');
 
         this.padding = options.padding;
         this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
         this.columns = view.options.columns;
 
-        this.listenTo(view, 'all', eventName => {
-            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-                return;
-            }
-            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
-        });
-
         this.paddingLeft = view.options.paddingLeft;
         this.paddingRight = view.options.paddingRight;
         this.padding = options.padding;
         this.listenTo(view.options.gridEventAggregator, 'columnStartDrag', this.__onColumnStartDrag);
-        this.listenTo(view.options.gridEventAggregator, 'columnStoptDrag', this.__onColumnStopDrag);
         this.listenTo(view.options.gridEventAggregator, 'singleColumnResize', this.__onSingleColumnResize);
         this.view.setFitToView = this.setFitToView.bind(this);
     },
@@ -61,15 +41,6 @@ export default Marionette.Behavior.extend({
         cells: '.js-grid-cell'
     },
 
-    __onColumnStartDrag(index) {
-        const cells = this.__getCellElements();
-        this.gridCellDragger = cells[index];
-    },
-
-    __onColumnStopDrag() {
-        delete this.draggedColumn;
-    },
-
     setFitToView() {
         this.__setInitialWidth();
     },
@@ -87,6 +58,11 @@ export default Marionette.Behavior.extend({
         }
 
         this.__setInitialWidth();
+    },
+
+    __onColumnStartDrag(index) {
+        const cells = this.__getCellElements();
+        this.gridCellDragger = cells[index];
     },
 
     __setInitialWidth() {

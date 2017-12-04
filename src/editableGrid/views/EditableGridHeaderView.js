@@ -30,6 +30,5 @@ export default HeaderView.extend({
 
         this.headerMinWidth = this.__getAvailableWidth();
         this.__setInitialWidth(this.headerMinWidth);
-        this.__handleResizeInternal();
     }
 });

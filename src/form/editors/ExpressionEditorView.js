@@ -204,7 +204,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     },
 
     updateValueEditor(editor = this.valueEditor) {
-        if (_.isArray(this.value.value) && this.value.value.length === 1) {
+        if (Array.isArray(this.value.value) && this.value.value.length === 1) {
             editor.setValue(this.value.value[0]);
         } else {
             editor.setValue(this.value.value);

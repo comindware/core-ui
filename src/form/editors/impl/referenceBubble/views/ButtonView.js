@@ -51,14 +51,16 @@ export default Marionette.CollectionView.extend({
 
     updateInput() {
         const fakeInputModel = this.__findFakeInputModel();
-        const input = this.children.findByModel(fakeInputModel);
-        if (input) {
-            input.updateInput();
+        if (fakeInputModel) {
+            const input = this.children.findByModel(fakeInputModel);
+            if (input) {
+                input.updateInput();
+            }
         }
     },
 
     __findFakeInputModel() {
-        return _.find(this.collection.models, model => (model instanceof FakeInputModel) && model);
+        return this.collection.models.find(model => (model instanceof FakeInputModel) && model);
     },
 
     events: {

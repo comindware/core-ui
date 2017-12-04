@@ -54,8 +54,7 @@ export default Marionette.ItemView.extend({
 
     _renderTemplate() {
         this.cellViews = [];
-        this.$el.append(`<div class="padding js-padding" style="width: ${this.options.paddingLeft}px"></div>`);
-        _.each(this.options.columns, gridColumn => {
+        this.options.columns.forEach(gridColumn => {
             const id = gridColumn.id;
             let value;
 
@@ -79,7 +78,6 @@ export default Marionette.ItemView.extend({
             cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
             this.cellViews.push(cellView);
         });
-        this.$el.append(`<div class="padding js-padding" style="width: ${this.options.paddingRight}px"></div>`);
     },
 
     onDestroy() {
@@ -89,13 +87,13 @@ export default Marionette.ItemView.extend({
     },
 
     onHighlighted(fragment) {
-        _.each(this.cellViews, cellView => {
+        this.cellViews.forEach(cellView => {
             cellView.model.set('highlightedFragment', fragment);
         });
     },
 
     onUnhighlighted() {
-        _.each(this.cellViews, cellView => {
+        this.cellViews.forEach(cellView => {
             cellView.model.set('highlightedFragment', null);
         });
     },
