@@ -54,7 +54,8 @@ export default Marionette.LayoutView.extend({
                 childView: this.options.listItemView,
                 childViewOptions: {
                     reqres: this.reqres,
-                    getDisplayText: this.options.getDisplayText
+                    getDisplayText: this.options.getDisplayText,
+                    showCheckboxes: this.options.showCheckboxes
                 },
                 emptyViewOptions: {
                     text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
@@ -78,7 +79,7 @@ export default Marionette.LayoutView.extend({
         this.scrollbarRegion.show(result.scrollbarView);
 
         this.elementsQuantityWarningRegion.show(new ElementsQuantityWarningView());
-
+        this.elementsQuantityWarningRegion.$el.hide();
         this.updateFilter(null, true);
     },
 
@@ -130,16 +131,16 @@ export default Marionette.LayoutView.extend({
             this.activeText = text;
             this.__setLoading(true);
             const collection = this.model.get('collection');
-            collection.deselect();
             this.reqres.request('filter:text', {
                 text
             }).then(() => {
-                if (collection.length > 0) {
-                    if (!collection.contains(collection.selected)) {
-                        const model = collection.at(0);
-                        model.select();
-                        this.__toggleElementsQuantityWarning(collection.length);
-                    }
+                if (collection.length > 0 && this.model.get('value')) {
+                    this.model.get('value').forEach(model => {
+                        if (collection.has(model.id)) {
+                            collection.get(model.id).select();
+                        }
+                    });
+                    this.__toggleElementsQuantityWarning(collection.length);
                 }
                 this.__setLoading(false);
             });

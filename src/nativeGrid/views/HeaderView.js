@@ -182,7 +182,7 @@ export default Marionette.ItemView.extend({
     },
 
     __getAvailableWidth() {
-        return this.gridEventAggregator._parent.$el.width();//todo remove this evil magic
+        return this.gridEventAggregator._parent.$el.width() - 1;//todo remove this evil magic
     },
 
     __getElementOuterWidth(el) {

@@ -4,16 +4,15 @@ import EditorCanvasView from 'demoPage/views/EditorCanvasView';
 
 export default function() {
     const model = new Backbone.Model({
-        code: 'true'
+        value: null
     });
 
     return new EditorCanvasView({
-        editor: new core.form.editors.CodeEditor({
+        editor: new core.form.editors.DocumentEditor({
             model,
-            key: 'code',
-            autocommit: true,
-            mode: 'code'
+            key: 'value',
+            autocommit: true
         }),
-        presentation: "'{{code}}'"
+        presentation: "'{{value}}'"
     });
 }

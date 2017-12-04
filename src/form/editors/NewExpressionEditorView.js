@@ -103,7 +103,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
                 if (!this.valueEditor) {
                     return;
                 }
-                if (_.isArray(this.value.value) && this.value.value.length === 1) {
+                if (Array.isArray(this.value.value) && this.value.value.length === 1) {
                     this.valueEditor.setValue(this.value.value[0]);
                 } else {
                     this.valueEditor.setValue(this.value.value);
@@ -179,7 +179,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         let value = this.value.value;
 
-        if (_.isArray(value) && value.length === 1) {
+        if (Array.isArray(value) && value.length === 1) {
             value = value[0];
             this.options.valueEditorOptions.displayAttribute = 'name';
         }

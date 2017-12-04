@@ -27,7 +27,10 @@ export default {
                         case 'tab':
                             return new TabLayoutView({
                                 tabs: this.__parseConfiguration(child.items),
-                                visible: child.visible
+                                visible: child.visible,
+                                showStepper: child.showStepper,
+                                showMoveButtons: child.showMoveButtons,
+                                validateBeforeTabSwitch: child.validateBeforeTabSwitch
                             });
                         case 'group':
                             return new Group({

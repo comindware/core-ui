@@ -81,7 +81,7 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
     template: Handlebars.compile(template),
 
     setValue(value) {
-        this.__value(_.isArray(value) ? (value.length ? value[0] : null) : value, false);
+        this.__value(Array.isArray(value) ? (value.length ? value[0] : null) : value, false);
     },
 
     onRender() {

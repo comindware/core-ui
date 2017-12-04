@@ -4,16 +4,18 @@ import EditorCanvasView from 'demoPage/views/EditorCanvasView';
 
 export default function() {
     const model = new Backbone.Model({
-        code: 'true'
+        value: '5'
     });
 
     return new EditorCanvasView({
-        editor: new core.form.editors.CodeEditor({
+        editor: new core.form.editors.RangeEditor({
             model,
-            key: 'code',
+            key: 'value',
             autocommit: true,
-            mode: 'code'
+            min: 1,
+            max: 10,
+            step: 1
         }),
-        presentation: "'{{code}}'"
+        presentation: "'{{value}}'"
     });
 }

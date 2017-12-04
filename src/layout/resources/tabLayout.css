@@ -82,3 +82,19 @@
     overflow-y: auto;
     padding: 0 5px;
 }
+
+.layout__tab-layout_move-button {
+    position: absolute;
+    height: 40px;
+    font-size: 20px;
+    right: 0;
+    line-height: 2;
+    cursor: pointer;
+    position: absolute;
+    width: 24px;
+    text-align: center;
+}
+
+.layout__tab-layout_move-button.next-layout_move-button{
+  left: 0;
+}

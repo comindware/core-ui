@@ -173,6 +173,8 @@ const core = {
     initialize: bootstrapper.initialize.bind(bootstrapper)
 };
 
+window.Core = core;
+
 export default core;
 export const lib = core.lib;
 export const layout = core.layout;

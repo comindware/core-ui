@@ -30,8 +30,9 @@ const defaultOptions = {
     showEditButton: false,
     buttonView: ButtonView,
     listItemView: ReferenceListItemView,
+    showCheckboxes: false,
     textFilterDelay: 300,
-    maxQuantitySelected: 5,
+    maxQuantitySelected: 1,
     canDeleteItem: true
 };
 
@@ -66,7 +67,6 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         this.reqres.setHandler('input:up', this.__onInputUp, this);
         this.reqres.setHandler('input:down', this.__onInputDown, this);
         this.reqres.setHandler('button:click', this.__onButtonClick, this);
-        this.reqres.setHandler('value:set', this.__onValueSet, this);
         this.reqres.setHandler('value:select', this.__onValueSelect, this);
         this.reqres.setHandler('value:edit', this.__onValueEdit, this);
         this.reqres.setHandler('filter:text', this.__onFilterText, this);
@@ -76,6 +76,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         const selectedModels = new Backbone.Collection(this.getValue(), {
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
         });
+        this.panelCollection = new VirtualCollection(new ReferenceCollection([]), { selectableBehavior: 'multi' });
 
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
@@ -83,10 +84,13 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
             }),
             panel: new Backbone.Model({
                 value: this.getValue(),
-                collection: new VirtualCollection(new ReferenceCollection([])),
+                collection: this.panelCollection,
                 totalCount: this.controller.totalCount || 0
             })
         });
+
+        this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
+        this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
 
         this.__updateFakeInputModel();
     },
@@ -108,7 +112,6 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
     },
 
     onRender() {
-        // dropdown
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
@@ -125,6 +128,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
                 showAddNewButton: this.showAddNewButton,
+                showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
                 textFilterDelay: this.options.textFilterDelay
@@ -137,6 +141,33 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         this.dropdownRegion.show(this.dropdownView);
     },
 
+    isEmptyValue() {
+        const value = this.getValue();
+        return !value || _.isEmpty(value);
+    },
+
+    setReadonly(readonly) {
+        BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
+        const isEnabled = this.getEnabled() && !this.getReadonly();
+        this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
+        this.dropdownView.button.updateEnabled(isEnabled);
+    },
+
+    setEnabled(enabled) {
+        BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
+        const isEnabled = this.getEnabled() && !this.getReadonly();
+        this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
+        this.dropdownView.button.updateEnabled(isEnabled);
+    },
+
+    focus() {
+        this.dropdownView.open();
+    },
+
+    blur() {
+        this.dropdownView.close();
+    },
+
     __adjustValue(value) {
         if (_.isUndefined(value) || value === null) {
             return [];
@@ -146,7 +177,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
 
     __value(value, triggerChange) {
         if (JSON.stringify(this.value) === JSON.stringify(value)
-            || (_.isObject(value) && _.find(this.value, v => v.id === value.id))) {
+            || (_.isObject(value) && this.value.find(v => v.id === value.id))) {
             return;
         }
         const adjustedValue = this.__adjustValue(value);
@@ -157,7 +188,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
             if (firstModel !== this.fakeInputModel) {
                 selectedModels.remove(firstModel);
             }
-            this.value = _.isArray(adjustedValue) ? adjustedValue : [ adjustedValue ];
+            this.value = Array.isArray(adjustedValue) ? adjustedValue : [ adjustedValue ];
         } else {
             this.value = this.getValue().concat(adjustedValue);
         }
@@ -167,11 +198,6 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         if (triggerChange) {
             this.__triggerChange();
         }
-    },
-
-    isEmptyValue() {
-        const value = this.getValue();
-        return !value || _.isEmpty(value);
     },
 
     __onValueSelect() {
@@ -196,6 +222,10 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
             this.__updateButtonInput();
             this.__focusButton();
         }
+    },
+
+    __onValueUnset(model) {
+        this.__onBubbleDelete(model);
     },
 
     __canAddItem() {
@@ -254,28 +284,6 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         }
     },
 
-    setReadonly(readonly) {
-        BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
-        const isEnabled = this.getEnabled() && !this.getReadonly();
-        this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
-    },
-
-    setEnabled(enabled) {
-        BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
-        const isEnabled = this.getEnabled() && !this.getReadonly();
-        this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
-    },
-
-    focus() {
-        this.dropdownView.open();
-    },
-
-    blur() {
-        this.dropdownView.close();
-    },
-
     __onButtonClick() {
         if (this.__canAddItem()) {
             this.dropdownView.open();
@@ -286,14 +294,16 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         if (!model) {
             return;
         }
-        if (this.dropdownView) {
-            this.dropdownView.close();
-        }
+        this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect();
+
         const selectedModels = this.viewModel.get('button').get('selected');
         selectedModels.remove(model);
 
         const selected = [].concat(this.getValue());
-        selected.splice(selected.indexOf(model.get('id')), 1);
+        const removingModelIndex = selected.indexOf(model.get('id'));
+        if (removingModelIndex !== -1) {
+            selected.splice(removingModelIndex, 1);
+        }
         this.value = selected;
         this.__triggerChange();
 

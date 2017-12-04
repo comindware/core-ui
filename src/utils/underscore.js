@@ -3,7 +3,7 @@ export default {
     cloneDeep: function(obj) {
         var out,
             i;
-        if (_.isArray(obj)) {
+        if (Array.isArray(obj)) {
             out = [];
             for (i = obj.length; i;) {
                 --i;

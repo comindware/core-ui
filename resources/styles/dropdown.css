@@ -12,7 +12,6 @@
     margin: 0;
     font-size: 12px;
     background: #fff;
-    border: 1px solid #c2c2c2;
     -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
@@ -229,6 +228,10 @@
 
 .dd-list__i_group:hover {
     background:transparent;
+}
+
+.dev_dd-list__i_with_checkbox {
+    padding: 0 4px;
 }
 
 .dd-list__btn{

@@ -285,7 +285,6 @@
 .demo-list-canvas__view {
     position: relative;
     height: 300px;
-    border: solid thin #64aad0;
 }
 
 .demo-list-canvas__view_search {

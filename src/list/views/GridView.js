@@ -58,7 +58,8 @@ const constants = {
  * В случае, если true — обязательно должны быть указаны cellView для каждой колонки
  * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * */
-const GridView = Marionette.LayoutView.extend({
+
+export default Marionette.LayoutView.extend({
     initialize(options) {
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
@@ -73,6 +74,7 @@ const GridView = Marionette.LayoutView.extend({
         this.headerView = new GridHeaderView({
             columns: options.columns,
             gridEventAggregator: this,
+            checkBoxPadding: options.checkBoxPadding || 0,
             gridColumnHeaderView: options.gridColumnHeaderView
         });
 
@@ -121,7 +123,7 @@ const GridView = Marionette.LayoutView.extend({
         });
 
         this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
-            if (_.string.startsWith(eventName, 'childview')) {
+            if (eventName.startsWith(eventName, 'childview')) {
                 this.trigger.apply(this, [eventName, view ].concat(eventArguments));
             }
         });
@@ -184,10 +186,9 @@ const GridView = Marionette.LayoutView.extend({
     sortBy(columnIndex, sorting) {
         const column = this.options.columns[columnIndex];
         if (sorting) {
-            _.each(this.options.columns, c => {
-                c.sorting = null;
-            });
+            this.options.columns.forEach(c => c.sorting = null);
             column.sorting = sorting;
+
             switch (sorting) {
                 case 'asc':
                     this.collection.comparator = column.sortAsc;
@@ -200,9 +201,8 @@ const GridView = Marionette.LayoutView.extend({
             }
         } else {
             sorting = column.sorting;
-            _.each(this.options.columns, c => {
-                c.sorting = null;
-            });
+            this.options.columns.forEach(c => c.sorting = null);
+
             switch (sorting) {
                 case 'asc':
                     column.sorting = 'desc';
@@ -237,5 +237,3 @@ const GridView = Marionette.LayoutView.extend({
         }
     }
 });
-
-export default GridView;

@@ -61,6 +61,8 @@ import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonV
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
+import ColorPickerEditor from './editors/ColorPickerEditor';
+import RangeEditor from './editors/RangeEditor';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
@@ -202,7 +204,9 @@ const api = /** @lends module:core.form */ {
         NewExpressionEditor: NewExpressionEditorView,
         TitleTextEditor: TitleTextEditorView,
         WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
-        IconEditor: IconEditorComponentView
+        IconEditor: IconEditorComponentView,
+        ColorPickerEditor,
+        RangeEditor
     }
 };
 export default api;
