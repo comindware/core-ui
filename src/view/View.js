@@ -1,11 +1,12 @@
 
-import coreApi from '../coreApi';
+import ViewAutoLayout from '../layout/ViewAutoLayout';
+import factory from '../layout/index';
 
 export default class View {
     constructor(options) {
-        return new coreApi.layout.Form({
+        return new factory.Form({
             model: options.model || new Backbone.Model(),
-            schema: options.schema
+            content: ViewAutoLayout.createCoreView(options.content)
         });
     }
 }

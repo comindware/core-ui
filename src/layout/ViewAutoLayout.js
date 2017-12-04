@@ -42,9 +42,9 @@ export default {
                 default: {
                     if (child.type) {
                         if (child.type.indexOf('field') !== -1) {
-                            return elementsFactory.createFieldAnchor(child.key.replace('-field', ''));
+                            return elementsFactory.createFieldAnchor(child.key);
                         } else if (child.type.indexOf('editor') !== -1) {
-                            return elementsFactory.createEditorAnchor(child.key.replace('-editor', ''));
+                            return elementsFactory.createEditorAnchor(child.key);
                         }
                     }
                     const view = new child.view(_.omit(child, 'view'));

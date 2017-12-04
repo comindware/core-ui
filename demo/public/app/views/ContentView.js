@@ -29,8 +29,6 @@ export default Marionette.LayoutView.extend({
         };
     },
 
-    className: 'demo-content_cantainer',
-
     regions: {
         caseRepresentationRegion: '.js-case-representation-region'
     },
@@ -55,7 +53,7 @@ export default Marionette.LayoutView.extend({
         const text = requireText(`./${path}`);
 
         this.model.set('sourceCode', text);
-        const representationView = new code();
+        const representationView = code();
         this.caseRepresentationRegion.show(representationView);
     }
 });

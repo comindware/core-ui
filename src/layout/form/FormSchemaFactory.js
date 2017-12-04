@@ -9,11 +9,9 @@ export default {
 
     __fillConfiguration(schemaTree, schemaPlain) {
         schemaTree.forEach(item => {
-            item.type = item.type.replace('-field', '').replace('-editor', '');
-
             item.key
-                ? schemaPlain[item.key] = _.omit(item, ['key'])
-                : item.type.indexOf('container') !== -1 && this.__fillConfiguration(item.items, schemaPlain);
+                ? schemaPlain[item.key] = _.omit(item, ['key', 'cType'])
+                : item.cType === 'container' && this.__fillConfiguration(item.items, schemaPlain);
         });
     }
 };

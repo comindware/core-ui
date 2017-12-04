@@ -40,7 +40,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
     initialize(options) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
 
-        if (_.isArray(this.options.collection)) {
+        if (Array.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);
         }
 

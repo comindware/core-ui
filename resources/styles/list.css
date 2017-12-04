@@ -92,6 +92,10 @@
     width: inherit;
 }
 
+.fr-collection-grid .grid-row .grid-cell:first-child {
+    box-shadow: inset -1px -1px #dfe4e8, inset 1px 0 #dfe4e8
+}
+
 .fr-collection-grid .record-row:nth-child(2n){
     background-color: #fcfcfc;
 }
@@ -103,8 +107,8 @@
 .grid-header-view {
     position: absolute;
     top: 0;
-    left: 20px;
-    right: 10px;
+    left: 0;
+    min-width: 100%;
     height: 51px;
     border-bottom: 1px solid #DFE4E8;
     border-collapse: collapse;
@@ -353,18 +357,13 @@ svg.svg-grid-icons {
 
 /* Editable Grid */
 .fr-collection{
-    margin: 5px -10px;
     padding: 10px 0;
     position: relative;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*height: 100%;*/
 }
 
 .collection-header{
     height: 25px;
     padding: 0 10px;
-    margin: 0 8px 0 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -416,7 +415,6 @@ svg.svg-grid-icons {
 
 
 .fr-collection-grid{
-    margin: 1px 8px 5px 10px;
     flex: 1 1 auto;
     display: flex;
 }

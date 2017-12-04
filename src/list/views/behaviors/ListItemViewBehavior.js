@@ -74,9 +74,15 @@ export default Marionette.Behavior.extend({
 
     __handleClick(e) {
         const model = this.view.model;
-        const selectFn = model.collection.selectSmart || model.collection.select;
-        if (selectFn) {
-            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
+        if (model.selected) {
+            model.deselect();
+        } else {
+            const selectFn = this.getOption('multiSelect')
+                ? model.collection.select
+                : model.collection.selectSmart || model.collection.select;
+            if (selectFn) {
+                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
+            }
         }
     },
 

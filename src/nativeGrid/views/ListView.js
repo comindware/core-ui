@@ -86,7 +86,6 @@ export default Marionette.CollectionView.extend({
         this.__assignKeyboardShortcuts();
 
         this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-
         this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
     },
 
@@ -111,6 +110,24 @@ export default Marionette.CollectionView.extend({
             this.__selectByIndex(this.collection.length - 1, e.shiftKey);
             this.__scrollToBottom();
         }
+    },
+
+    setWidth(fullWidth) {
+        this.$el.width(fullWidth);
+    },
+
+    getSelectedViewIndex() {
+        const cid = this.collection.cursorCid;
+        let index = 0;
+        this.collection.find((x, i) => {
+            if (x.cid === cid) {
+                index = i;
+                return true;
+            }
+            return false;
+        });
+
+        return index;
     },
 
     __createReqres() {
@@ -198,20 +215,6 @@ export default Marionette.CollectionView.extend({
         }
     },
 
-    getSelectedViewIndex() {
-        const cid = this.collection.cursorCid;
-        let index = 0;
-        this.collection.find((x, i) => {
-            if (x.cid === cid) {
-                index = i;
-                return true;
-            }
-            return false;
-        });
-
-        return index;
-    },
-
     __getTopIndex(index) {
         let cHeight = 0;
         let newIndex = index;
@@ -270,10 +273,6 @@ export default Marionette.CollectionView.extend({
                 this.keyListener.simple_combo(key, value.bind(this));
             }
         });
-    },
-
-    setWidth(fullWidth) {
-        this.$el.width(fullWidth);
     },
 
     __handleResize() {

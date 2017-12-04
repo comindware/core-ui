@@ -50,7 +50,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.reqres.setHandler('value:set', this.onValueSet, this);
         this.reqres.setHandler('panel:open', this.onPanelOpen, this);
 
-        if (_.isArray(this.options.collection)) {
+        if (Array.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);
         }
 

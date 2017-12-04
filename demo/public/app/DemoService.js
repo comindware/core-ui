@@ -1,20 +1,11 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/7/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
 import config from './DemoConfig';
 
 function findDefaultGroup(sectionId) {
-    const section = _.find(config.sections, section => sectionId.toLowerCase() === section.id.toLowerCase());
+    const section = config.sections.find(section => sectionId.toLowerCase() === section.id.toLowerCase());
     const defaultGroupId = section.groups[0].id;
-    return _.find(section.groups, group => defaultGroupId.toLowerCase() === group.id.toLowerCase());
+
+    return section.groups.find(group => defaultGroupId.toLowerCase() === group.id.toLowerCase());
 }
 
 export default {
@@ -56,10 +47,10 @@ export default {
     },
 
     getCases(sectionId, groupId) {
-        const section = _.find(config.sections, s => s.id === sectionId);
-        const group = _.find(section.groups, g => g.id.toLowerCase() === groupId.toLowerCase());
+        const section = config.sections.find(s => s.id === sectionId);
+        const group = section.groups.find(g => g.id.toLowerCase() === groupId.toLowerCase());
 
-        return _.map(group.cases, function(c) {
+        return group.cases && group.cases.map(c => {
             const url = this.getModuleUrlByName({
                 section: sectionId,
                 group: groupId,
@@ -73,7 +64,7 @@ export default {
                 sectionId,
                 groupId
             };
-        }, this);
+        });
     },
 
     getCase(sectionId, groupId, caseId) {

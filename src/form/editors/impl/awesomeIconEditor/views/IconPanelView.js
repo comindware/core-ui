@@ -95,8 +95,8 @@ export default Marionette.LayoutView.extend({
         this.iconGroupsCollection.each(groupItem => {
             _.each(groupItem.get('groupItems'), item => {
                 if (matchSearch(item.id) ||
-                    _.find(item.filter, filterItem => matchSearch(filterItem)) ||
-                    _.find(item.aliases, aliasesItem => matchSearch(aliasesItem))) {
+                    item.filter.find(filterItem => matchSearch(filterItem)) ||
+                    item.aliases.find(aliasesItem => matchSearch(aliasesItem))) {
                     const isItemExistInCollection = _.some(matchesItems, matchesItem => item.id === matchesItem.id);
                     if (!matchesItems.length || !isItemExistInCollection) {
                         matchesItems.push(item);

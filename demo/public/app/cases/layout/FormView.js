@@ -1,54 +1,69 @@
+/**
+ * Developer: Stepan Burguchev
+ * Date: 2/27/2017
+ * Copyright: 2009-2017 Stepan Burguchev®
+ *       All Rights Reserved
+ * Published under the MIT license
+ */
 
 import core from 'comindware/core';
 
-const model = new Backbone.Model({
-    title: 'foo',
-    idealDays: 12,
-    dueDate: '2015-07-20T10:46:37Z',
-    description: 'bar\nbaz',
-    blocked: true
-});
+export default function() {
+    const model = new Backbone.Model({
+        title: 'foo',
+        idealDays: 12,
+        dueDate: '2015-07-20T10:46:37Z',
+        description: 'bar\nbaz',
+        blocked: true
+    });
 
-export default class View {
-    constructor() {
-        return new core.View({
-            model,
-            schema: [{
-                type: 'h-container',
-                breakpoints: {
-                    'max-width: 499px': {
-                        'flex-direction': 'column'
-                    },
-                    'min-width: 500px': {
-                        'flex-direction': 'row'
-                    }
-                },
-                items: [{
-                    type: 'Text-field',
-                    key: 'title'
-                }, {
-                    type: 'h-container',
-                    items: [{
-                        type: 'Number-field',
-                        key: 'idealDays'
-                    }, {
-                        type: 'DateTime-field',
-                        key: 'dueDate'
-                    }]
-                }, {
-                    type: 'TextArea-field',
-                    key: 'description'
-                }, {
-                    type: 'Boolean-field',
-                    key: 'blocked'
-                }, {
-                    type: 'button',
+    const formSchema = {
+        title: {
+            title: 'Title',
+            type: 'Text'
+        },
+        idealDays: {
+            title: 'Ideal Days',
+            type: 'Number'
+        },
+        dueDate: {
+            title: 'Due Date',
+            type: 'DateTime'
+        },
+        description: {
+            title: 'Description',
+            type: 'TextArea'
+        },
+        blocked: {
+            type: 'Boolean',
+            displayText: 'Blocked by another task'
+        }
+    };
+
+    const view = new core.layout.Form({
+        model,
+        schema: formSchema,
+        content: new core.layout.VerticalLayout({
+            rows: [
+                core.layout.createFieldAnchor('title'),
+                new core.layout.HorizontalLayout({
+                    columns: [
+                        core.layout.createFieldAnchor('idealDays'),
+                        core.layout.createFieldAnchor('dueDate')
+                    ]
+                }),
+                core.layout.createFieldAnchor('description'),
+                core.layout.createEditorAnchor('blocked'),
+                new core.layout.Button({
                     text: 'Commit',
                     handler() {
-                        this.form.commit();
+                        view.form.commit();
+                        alert(JSON.stringify(model.toJSON(), null, 4));
                     }
-                }]
-            }]
-        });
-    }
+                })
+            ]
+        })
+    });
+
+    return view;
 }

@@ -26,7 +26,6 @@ import 'backbone-associations';
 import 'jstorage';
 import Bluebird_ from 'bluebird';
 import * as Handlebars_ from 'handlebars';
-import * as underscoreString from 'underscore.string';
 import $_ from 'jquery';
 import 'inputmask/dist/jquery.inputmask.bundle';
 import 'rangyinputs';
@@ -38,21 +37,19 @@ import codemirror_ from 'codemirror/lib/codemirror';
 import 'innersvg-polyfill';
 import 'jquery-mousewheel';
 import jsencrypt from 'jsencrypt';
-import * as d3 from 'd3';
 import * as jqui from 'jquery-ui';
 
 window._ = underscoreLib;
 window._.mixin(mixin);
 
-window._.string = window._.str = underscoreString;
-
 // Replacing ES6 promise with bluebird
 window.Promise = Bluebird_;
-
 window.Promise.config({
     cancellation: true,
     warnings: false
 });
+
+window.numeral = numeral_;
 
 $_.browser = {
     msie: (/msie|trident/i).test(navigator.userAgent)
@@ -69,7 +66,6 @@ const api = {
     Marionette: Marionette_,
     numeral: numeral_,
     codemirror: codemirror_,
-    d3,
     JSEncrypt: jsencrypt.JSEncrypt
 };
 
@@ -94,4 +90,3 @@ export {
     numeral,
     codemirror
 };
-

@@ -20,8 +20,8 @@ import { helpers } from 'utils';
 const defaultOptions = {
     headerView: HeaderView,
     rowView: RowView,
-    paddingLeft: 20,
-    paddingRight: 10
+    paddingLeft: 0,
+    paddingRight: 0
 };
 
 /**
@@ -38,8 +38,8 @@ const defaultOptions = {
  * @param {Backbone.View} [options.noColumnsView] View для отображения списка без колонок
  * @param {Object} [options.noColumnsViewOptions] Опции для noColumnsView
  * @param {Function} [options.onColumnSort] Метод, обрабатывющий событие сортировки колонок
- * @param {Number} [options.paddingLeft=10] Левый отступ
- * @param {Number} [options.paddingRight=20] Правый отступ
+ * @param {Number} [options.paddingLeft=0] Левый отступ
+ * @param {Number} [options.paddingRight=0] Правый отступ
  * @param {Backbone.View} [options.rowView={@link module:core.nativeGrid.views.RowView}] View используемый для отображения строки списка
  * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка.
  * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
@@ -116,7 +116,7 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
         this.listenTo(this, 'showFilterView', this.showFilterPopout, this);
         this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
-            if (_.string.startsWith(eventName, 'childview')) {
+            if (eventName.startsWith('childview')) {
                 this.trigger.apply(this, [eventName, view ].concat(eventArguments));
             }
         });
@@ -135,11 +135,6 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        this.ui.headerRegion.css({
-            left: `${this.options.paddingLeft}px`,
-            right: `${this.options.paddingRight}px`
-        });
-
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
@@ -179,7 +174,7 @@ export default Marionette.LayoutView.extend({
             tagName: 'div'
         });
 
-        const filterViewOptions = _.find(this.options.columns, c => c.id === options.columnHeader.options.column.id).filterViewOptions;
+        const filterViewOptions = this.options.columns.find(c => c.id === options.columnHeader.options.column.id).filterViewOptions;
 
         this.filterDropdown = dropdownFactory.createPopout({
             buttonView: AnchoredButtonView,
@@ -189,7 +184,7 @@ export default Marionette.LayoutView.extend({
         });
 
         this.listenTo(this.filterDropdown, 'all', (eventName, eventArguments) => {
-            if (_.string.startsWith(eventName, 'panel:')) {
+            if (eventName.startsWith('panel:')) {
                 this.trigger.apply(this, [`column:filter:${eventName.slice(6)}`,
                     options.columnHeader.options.column.id, this.filterDropdown.panelView ].concat(eventArguments));
             }

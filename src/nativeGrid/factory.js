@@ -21,7 +21,7 @@ import VirtualCollection from '../collections/VirtualCollection';
  * */
 const createWrappedCollection = function(collection, options) {
     if (!(collection instanceof VirtualCollection)) {
-        if (_.isArray(collection)) {
+        if (Array.isArray(collection)) {
             return new VirtualCollection(new Backbone.Collection(collection), options);
         } else if (collection instanceof Backbone.Collection) {
             return new VirtualCollection(collection, options);

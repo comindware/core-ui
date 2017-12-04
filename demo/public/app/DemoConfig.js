@@ -21,6 +21,15 @@ export default {
                 {
                     id: 'TextEditor',
                     displayName: 'Text Editor'
+                }, {
+                    id: 'CodeEditor',
+                    displayName: 'Code Editor'
+                }, {
+                    id: 'RangeEditor',
+                    displayName: 'Range Editor'
+                }, {
+                    id: 'ColorPickerEditor',
+                    displayName: 'Color Picker'
                 },
                 {
                     id: 'TextAreaEditor',
@@ -45,6 +54,10 @@ export default {
                 {
                     id: 'TimeEditor',
                     displayName: 'Time Editor'
+                },
+                {
+                    id: 'DocumentEditor',
+                    displayName: 'Document editor'
                 },
                 {
                     id: 'DurationEditor',
@@ -225,14 +238,6 @@ export default {
                 {
                     id: 'grid',
                     displayName: 'Grid'
-                },
-                {
-                    id: 'gridHeightAuto',
-                    displayName: 'Grid (Height: Auto)'
-                },
-                {
-                    id: 'gridSearchHighlight',
-                    displayName: 'Grid (Search & Highlight)'
                 },
                 {
                     id: 'nativeGrid',

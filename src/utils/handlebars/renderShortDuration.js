@@ -27,5 +27,5 @@ export default function(duration) {
     if (o.minutes) {
         result += `${o.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
     }
-    return _.string.rtrim(result);
+    return result.trimRight();
 }

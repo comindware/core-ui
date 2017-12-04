@@ -61,7 +61,6 @@ import SelectableBehavior from './models/behaviors/SelectableBehavior';
 const core = {
     Controller,
     Application,
-    View: layoutApi.Form,
     RoutingService,
     ToastNotifications,
     lib: libApi,
@@ -173,6 +172,8 @@ const core = {
     meta: meta_,
     initialize: bootstrapper.initialize.bind(bootstrapper)
 };
+
+window.Core = core;
 
 export default core;
 export const lib = core.lib;
