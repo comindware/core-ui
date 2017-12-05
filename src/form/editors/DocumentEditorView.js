@@ -25,7 +25,11 @@ const defaultOptions = {
     allowDelete: true,
     multiple: true,
     fileFormat: undefined,
-    createDocuments: documents => Ajax.Documents.Upload(documents, null),
+    createDocuments: documents => Promise.resolve([{
+        id: documents[0].id,
+        fileName: documents[0].fileName,
+        documentsId: [documents[0].id]
+    }]),
     removeDocuments: () => {}
 };
 
