@@ -173,7 +173,7 @@ rgba(5,117,189,.5) // user avatar btn
     width: 12px;
 }
 
-.form-label__error-button:before, .form-label__error:before {
+.form-label__error:before {
     content: '!';
     color: #cc5336;
     border: 1px solid #cb4e30;
@@ -191,7 +191,7 @@ rgba(5,117,189,.5) // user avatar btn
     cursor: pointer;
 }
 
-.form-label__error-button:hover:before, .form-label__error:hover:before{
+.form-label__error-button:hover:before {
     color: #b12a23;
     border-color: #b12a23;
 }
