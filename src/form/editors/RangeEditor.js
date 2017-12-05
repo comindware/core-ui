@@ -2,14 +2,6 @@
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 
-const defaultOptions = () => ({
-    changeMode: 'blur',
-    showTitle: true,
-    min: 1,
-    max: 100,
-    step: 1
-});
-
 /**
  * @name RangeView
  * @memberof module:core.form.editors
@@ -23,23 +15,6 @@ const defaultOptions = () => ({
  * */
 
 export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/** @lends module:core.form.editors.ColorPickerView.prototype */{
-    initialize(options = {}) {
-        const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
-
-        this.placeholder = this.options.emptyPlaceholder;
-    },
-
-    onShow() {
-        if (this.options.mask) {
-            this.ui.input.inputmask(_.extend({
-                mask: this.options.mask,
-                placeholder: this.options.maskPlaceholder,
-                autoUnmask: true
-            }, this.options.maskOptions || {}));
-        }
-    },
-
     tagName: 'input',
 
     template: false,
@@ -58,19 +33,6 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         mouseup: '__change'
     },
 
-    setPermissions(enabled, readonly) {
-        BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.setPlaceholder();
-    },
-
-    setPlaceholder() {
-        if (!this.getEnabled() || this.getReadonly()) {
-            this.placeholder = '';
-        } else {
-            this.placeholder = this.options.emptyPlaceholder;
-        }
-    },
-
     attributes() {
         return {
             min: this.getOption('min'),
@@ -80,16 +42,8 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         };
     },
 
-    __keyup() {
-        this.trigger('keyup', this);
-    },
-
     __change() {
         this.__value(Number(this.el.value), false, true);
-    },
-
-    __setEnabled(enabled) {
-        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
     },
 
     onRender() {

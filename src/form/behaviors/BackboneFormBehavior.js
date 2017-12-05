@@ -159,7 +159,7 @@ const Form = Marionette.Object.extend({
                 break;
             case 'blur':
                 if (this.hasFocus) {
-                    const focusedField = this.fields.find(f => f.editor.hasFocus);
+                    const focusedField = Object.values(this.fields).find(f => f.editor.hasFocus);
                     if (!focusedField) {
                         this.hasFocus = false;
                         this.trigger('blur', this);
@@ -172,7 +172,7 @@ const Form = Marionette.Object.extend({
     },
 
     setErrors(errors) {
-        _.each(errors, (value, key) => {
+        Object.entries(errors).forEach((key, value) => {
             const field = this.fields[key];
             if (field) {
                 field.setError(value);
@@ -190,7 +190,7 @@ const Form = Marionette.Object.extend({
         const errors = {};
 
         //Collect errors from schema validation
-        _.each(fields, field => {
+        Object.values(fields).forEach(field => {
             const error = field.validate(options);
             if (error) {
                 errors[field.key] = error;
@@ -229,7 +229,7 @@ const Form = Marionette.Object.extend({
             }
         }
 
-        const result = _.isEmpty(errors) ? null : errors;
+        const result = errors.length ? null : errors;
         this.trigger('form:validated', !result, result);
         return result;
     },
@@ -257,7 +257,7 @@ const Form = Marionette.Object.extend({
             return;
         }
 
-        const focusedField = _.find(this.fields, field => field.editor.hasFocus);
+        const focusedField = Object.values(this.fields).forEach(field => field.editor.hasFocus);
         if (focusedField) {
             focusedField.editor.blur();
         }

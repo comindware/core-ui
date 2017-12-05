@@ -91,6 +91,10 @@ export default Marionette.LayoutView.extend({
             this.stepperRegion.show(stepperView);
             this.listenTo(stepperView, 'stepper:item:selected', this.__handleStepperSelect);
         }
+        if (!this.getOption('showMoveButtons')) {
+            this.ui.buttonMoveNext.hide();
+            this.ui.buttonMovePrevious.hide();
+        }
     },
 
     update() {
@@ -113,6 +117,13 @@ export default Marionette.LayoutView.extend({
         }
         const selectedTab = this.__findSelectedTab();
         if (selectedTab) {
+            if (this.getOption('validateBeforeMove')) {
+                const errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
+                this.setTabError(selectedTab.id, errors);
+                if (errors) {
+                    return false;
+                }
+            }
             selectedTab.set('selected', false);
             this.selectTabIndex = this.__getSelectedTabIndex(tab);
         }
@@ -133,10 +144,10 @@ export default Marionette.LayoutView.extend({
 
     moveToNextTab() {
         let errors = null;
-        if (this.getOption('validateBeforeTabSwitch')) {
+        if (this.getOption('validateBeforeMove')) {
             const selectedTab = this.__findSelectedTab();
-            errors = !selectedTab.form || selectedTab.form.validate();
-            this.setTabError(errors);
+            errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
+            return this.setTabError(selectedTab.id, errors);
         }
         if (!errors) {
             let newIndex = this.selectTabIndex + 1;
@@ -155,10 +166,10 @@ export default Marionette.LayoutView.extend({
 
     moveToPreviousTab() {
         let errors = null;
-        if (this.getOption('validateBeforeTabSwitch')) {
+        if (this.getOption('validateBeforeMove')) {
             const selectedTab = this.__findSelectedTab();
-            errors = !selectedTab.form || selectedTab.form.validate();
-            this.setTabError(errors);
+            errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
+            return this.setTabError(selectedTab.id, errors);
         }
         if (!errors) {
             let newIndex = this.selectTabIndex - 1;
