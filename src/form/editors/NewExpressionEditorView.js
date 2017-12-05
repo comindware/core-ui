@@ -74,7 +74,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         if (_.isString(this.options.valueEditor)) {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];
         }
-        if (!this.value || _.isEmpty(this.value)) {
+        if (!this.value || !Object.keys(this.value).length) {
             this.value = {
                 type: this.options.defaultType,
                 value: null
@@ -87,7 +87,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
     setValue(oldValue) {
         let value = oldValue;
-        if (!value || _.isEmpty(this.value)) {
+        if (!value || Object.keys(this.value).length) {
             value = {
                 type: this.options.defaultType,
                 value: null

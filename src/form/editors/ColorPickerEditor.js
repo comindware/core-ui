@@ -1,26 +1,6 @@
 
-import { Handlebars, keypress } from 'lib';
-import { helpers } from 'utils';
-import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import template from './templates/colorPicker.hbs';
 import formRepository from '../formRepository';
-
-const changeMode = {
-    blur: 'blur',
-    keydown: 'keydown'
-};
-
-// used as function because Localization service is not initialized yet
-const defaultOptions = () => ({
-    changeMode: 'blur',
-    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-    maxLength: undefined,
-    mask: undefined,
-    maskPlaceholder: '_',
-    maskOptions: {},
-    showTitle: true
-});
 
 /**
  * @name ColorPickerView
@@ -41,51 +21,22 @@ const defaultOptions = () => ({
  * */
 
 export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/** @lends module:core.form.editors.ColorPickerView.prototype */{
-    initialize(options = {}) {
-        const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
+    template: false,
 
-        this.placeholder = this.options.emptyPlaceholder;
-    },
-
-    onShow() {
-        if (this.options.mask) {
-            this.ui.input.inputmask(_.extend({
-                mask: this.options.mask,
-                placeholder: this.options.maskPlaceholder,
-                autoUnmask: true
-            }, this.options.maskOptions || {}));
-        }
-    },
-
-    ui: {
-        input: '.js-input'
-    },
-
-    template: Handlebars.compile(template),
-
-    templateHelpers() {
-        return _.extend(this.options, {
-            title: this.value || ''
-        });
-    },
+    tagName: 'input',
 
     events: {
-        'keyup @ui.input': '__keyup',
-        'change @ui.input': '__change',
-        'click .js-clear-button': '__clear'
+        change: '__change'
     },
 
-    __keyup() {
-        if (this.options.changeMode === changeMode.keydown) {
-            this.__value(this.ui.input.val(), false, true);
-        }
-
-        this.trigger('keyup', this);
+    attributes() {
+        return {
+            type: 'color'
+        };
     },
 
     __change() {
-        this.__value(this.ui.input.val(), false, true);
+        this.__value(this.el.value, false, true);
     },
 
     __clear() {
@@ -98,63 +49,9 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         this.__value(value, true, false);
     },
 
-    setPermissions(enabled, readonly) {
-        BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        this.setPlaceholder();
-    },
-
-    setPlaceholder() {
-        if (!this.getEnabled() || this.getReadonly()) {
-            this.placeholder = '';
-        } else {
-            this.placeholder = this.options.emptyPlaceholder;
-        }
-
-        this.ui.input.prop('placeholder', this.placeholder);
-    },
-
-    __setEnabled(enabled) {
-        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.input.prop('disabled', !enabled);
-    },
-
-    __setReadonly(readonly) {
-        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
-        if (this.getEnabled()) {
-            this.ui.input.prop('readonly', readonly);
-            this.ui.input.prop('tabindex', readonly ? -1 : 0);
-        }
-    },
-
     onRender() {
         const value = this.getValue() || '';
-        this.ui.input.val(value);
-        if (this.options.showTitle) {
-            this.ui.input.prop('title', value);
-        }
-        // Keyboard shortcuts listener
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-    },
-
-    /**
-     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
-     * [Keypress](https://dmauro.github.io/Keypress/).
-     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
-     * Полный список с названиями клавиш указан в исходном файле плагина:
-     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
-     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
-     * */
-    addKeyboardListener(key, callback) {
-        if (!this.keyListener) {
-            helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-        }
-        const keys = key.split(',');
-        _.each(keys, k => {
-            this.keyListener.simple_combo(k, callback);
-        });
+        this.el.value = value;
     },
 
     __value(value, updateUi, triggerChange) {
@@ -166,22 +63,9 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         if (this.getOption('showTitle')) {
             this.ui.input.prop('title', value);
         }
-        if (updateUi) {
-            this.ui.input.val(value);
-        }
+
         if (triggerChange) {
             this.__triggerChange();
         }
-    },
-
-    /**
-     * Focuses the editor's input and selects all the text in it.
-     * */
-    select() {
-        this.ui.input.select();
-    },
-
-    deselect() {
-        this.ui.input.deselect();
     }
 });

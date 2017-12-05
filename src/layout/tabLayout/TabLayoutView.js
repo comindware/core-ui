@@ -118,7 +118,7 @@ export default Marionette.LayoutView.extend({
         const selectedTab = this.__findSelectedTab();
         if (selectedTab) {
             if (this.getOption('validateBeforeMove')) {
-                const errors = !selectedTab.form || selectedTab.form.validate();
+                const errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
                 this.setTabError(selectedTab.id, errors);
                 if (errors) {
                     return false;
@@ -146,7 +146,7 @@ export default Marionette.LayoutView.extend({
         let errors = null;
         if (this.getOption('validateBeforeMove')) {
             const selectedTab = this.__findSelectedTab();
-            errors = !selectedTab.form || selectedTab.form.validate();
+            errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
             return this.setTabError(selectedTab.id, errors);
         }
         if (!errors) {
@@ -168,7 +168,7 @@ export default Marionette.LayoutView.extend({
         let errors = null;
         if (this.getOption('validateBeforeMove')) {
             const selectedTab = this.__findSelectedTab();
-            errors = !selectedTab.form || selectedTab.form.validate();
+            errors = !selectedTab.get('view').form || selectedTab.get('view').form.validate();
             return this.setTabError(selectedTab.id, errors);
         }
         if (!errors) {

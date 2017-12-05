@@ -229,7 +229,7 @@ const Form = Marionette.Object.extend({
             }
         }
 
-        const result = _.isEmpty(errors) ? null : errors;
+        const result = errors.length ? null : errors;
         this.trigger('form:validated', !result, result);
         return result;
     },
@@ -257,7 +257,7 @@ const Form = Marionette.Object.extend({
             return;
         }
 
-        const focusedField = _.find(this.fields, field => field.editor.hasFocus);
+        const focusedField = Object.values(this.fields).forEach(field => field.editor.hasFocus);
         if (focusedField) {
             focusedField.editor.blur();
         }

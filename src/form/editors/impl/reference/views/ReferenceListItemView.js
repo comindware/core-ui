@@ -31,7 +31,9 @@ export default Marionette.ItemView.extend({
 
     onRender() {
         if (this.model.selected) {
-            this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').addClass(classes.SELECTED);
+            this.__markSelected();
+        } else {
+            this.__markDeselected();
         }
     },
 
