@@ -20,8 +20,7 @@ import 'lib';
  * */
 
 const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:core.collections.SlidingWindowCollection.prototype */ {
-    constructor(collection, options = {}) //noinspection JSHint
-    {
+    constructor(collection, options = {}) {
         this.parentCollection = collection;
         this.innerCollection = new Backbone.Collection();
 
@@ -42,24 +41,18 @@ const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:cor
         this.listenTo(collection, 'reset', this.__onReset);
         this.listenTo(collection, 'sort', this.__onSort);
 
-        _.each([
-            'add',
-            'remove',
-            'reset',
-            'sort'
-        ], function(eventName) {
+        [ 'add', 'remove', 'reset', 'sort' ].forEach(eventName => {
             this.listenTo(this.innerCollection, eventName, function() {
                 const args = _.toArray(arguments);
                 args.unshift(eventName);
                 this.trigger.apply(this, args);
             });
-        }, this);
+        });
 
         this.initialize.apply(this, arguments);
     },
 
-    __rebuildModels(options) {
-        options = options || {};
+    __rebuildModels(options = {}) {
         const newModels = this.parentCollection.chain().rest(this.state.position).first(this.state.windowSize).value();
         this.innerCollection.reset(newModels, _.extend(options, { silent: true }));
         this.models = this.innerCollection.models;
@@ -176,14 +169,14 @@ const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:cor
 });
 
 // methods that alter data should proxy to the parent collection
-_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'], methodName => {
+['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'].forEach(methodName => {
     SlidingWindowCollection.prototype[methodName] = function() {
         return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
     };
 });
 
 // methods that retrieves data should proxy to the inner collection
-_.each(['each', 'at', 'get', 'filter', 'map'], methodName => {
+['each', 'at', 'get', 'filter', 'map'].forEach(methodName => {
     SlidingWindowCollection.prototype[methodName] = function() {
         return this.innerCollection[methodName].apply(this.innerCollection, _.toArray(arguments));
     };

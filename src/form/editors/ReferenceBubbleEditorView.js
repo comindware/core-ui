@@ -143,7 +143,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
 
     isEmptyValue() {
         const value = this.getValue();
-        return !value || _.isEmpty(value);
+        return !value || !value.length;
     },
 
     setReadonly(readonly) {
@@ -300,11 +300,12 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         selectedModels.remove(model);
 
         const selected = [].concat(this.getValue());
-        const removingModelIndex = selected.indexOf(model.get('id'));
+        const removingModelIndex = selected.findIndex(s => s.id === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }
         this.value = selected;
+        this.viewModel.get('panel').set('value', this.value);
         this.__triggerChange();
 
         this.__updateFakeInputModel();

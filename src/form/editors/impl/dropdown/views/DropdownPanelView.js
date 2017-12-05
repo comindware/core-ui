@@ -27,6 +27,8 @@ export default Marionette.LayoutView.extend({
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
 
+        this.rowHeight = options.rowHeight || config.CHILD_HEIGHT;
+
         this.reqres = options.reqres;
     },
 
@@ -101,9 +103,9 @@ export default Marionette.LayoutView.extend({
                 emptyViewOptions: {
                     className: classes.EMPTY_VIEW
                 },
-                maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
+                maxRows: Math.floor(config.MAX_HEIGHT / this.rowHeight),
                 height: 'auto',
-                childHeight: config.CHILD_HEIGHT
+                childHeight: this.rowHeight
             }
         });
 

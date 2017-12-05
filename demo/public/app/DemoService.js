@@ -30,7 +30,7 @@ export default {
     },
 
     getGroups(sectionId) {
-        const section = _.find(config.sections, s => s.id.toLowerCase() === sectionId.toLowerCase());
+        const section = config.sections.find(s => s.id.toLowerCase() === sectionId.toLowerCase());
 
         return section.groups.map(group => {
             const url = this.getModuleUrlByName({
@@ -69,13 +69,15 @@ export default {
 
     getCase(sectionId, groupId, caseId) {
         const cases = this.getCases(sectionId, groupId);
-        const activeCase = _.find(cases, c => c.id.toLowerCase() === caseId.toLowerCase(), this);
-        if (activeCase) {
-            return activeCase;
+        if (cases) {
+            const activeCase = cases.find(c => c.id.toLowerCase() === caseId.toLowerCase());
+            if (activeCase) {
+                return activeCase;
+            }
         }
 
-        const activeSection = _.find(config.sections, section => section.id === sectionId);
-        const activeGroup = _.find(activeSection.groups, group => group.id.toLowerCase() === groupId.toLowerCase());
+        const activeSection = config.sections.find(section => section.id === sectionId);
+        const activeGroup = activeSection.groups.find(group => group.id.toLowerCase() === groupId.toLowerCase());
         const url = this.getModuleUrlByName({
             section: sectionId,
             group: groupId,

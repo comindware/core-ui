@@ -20,7 +20,8 @@ const defaultOptions = {
     displayAttribute: 'text',
     allowEmptyValue: true,
     enableSearch: false,
-    showTitle: true
+    showTitle: true,
+    rowHeight: 25
 };
 
 /**
@@ -113,7 +114,8 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
-                enableSearch: this.options.enableSearch
+                enableSearch: this.options.enableSearch,
+                rowHeight: this.getOption('rowHeight')
             },
             autoOpen: false
         });
