@@ -229,7 +229,7 @@ const Form = Marionette.Object.extend({
             }
         }
 
-        const result = Object.keys(errors).length ? null : errors;
+        const result = Object.keys(errors).length === 0 ? null : errors;
         this.trigger('form:validated', !result, result);
         
         return result;
