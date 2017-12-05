@@ -41,7 +41,9 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    className: classes.CLASS_NAME,
+    className() {
+        return `${classes.CLASS_NAME} ${this.getOption('bodyClass')}`;
+    },
 
     regions: {
         headerRegion: '.js-header-region',
@@ -67,7 +69,8 @@ export default Marionette.LayoutView.extend({
 
     onShow() {
         const headerView = new HeaderView({
-            collection: this.__tabsCollection
+            collection: this.__tabsCollection,
+            headerClass: this.getOption('headerClass')
         });
         this.listenTo(headerView, 'select', this.__handleSelect);
         this.headerRegion.show(headerView);
