@@ -4,7 +4,9 @@ import template from './templates/headerItem.hbs';
 export default Marionette.ItemView.extend({
     tagName: 'li',
 
-    className: 'layout__tab-layout__header-view-item',
+    className() {
+        return `layout__tab-layout__header-view-item ${this.model.get('tabClass')}`;
+    },
 
     template: Handlebars.compile(template),
 

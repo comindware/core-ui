@@ -9,7 +9,9 @@ export default Marionette.CollectionView.extend({
 
     tagName: 'ul',
 
-    className: 'layout__tab-layout__header-view',
+    className() {
+        return `layout__tab-layout__header-view ${this.getOption('headerClass')}`;
+    },
 
     childView: HeaderItemView,
 
