@@ -49,7 +49,7 @@ export default {
     createNativeGrid(options) {
         const collection = createWrappedCollection(options.collection, { selectableBehavior: options.gridViewOptions.selectableBehavior });
 
-        const gridViewOptions = _.extend({
+        const gridViewOptions = Object.assign({
             collection,
             onColumnSort: options.onColumnSort,
             headerView: options.headerView,

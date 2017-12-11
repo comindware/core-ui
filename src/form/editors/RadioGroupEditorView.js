@@ -30,7 +30,7 @@ const defaultOptions = {
  * */
 formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(/** @lends module:core.form.editors.RadioGroupEditorView.prototype */{
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.collection = new RadioGroupCollection(this.options.radioOptions);
         this.listenTo(this.collection, 'select:one', this.__onSelectChild);

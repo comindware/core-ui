@@ -30,7 +30,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow() {
-        this.contextSelectEditorView = new ContextSelectEditorView(_.extend(this.options));
+        this.contextSelectEditorView = new ContextSelectEditorView(Object.assign(this.options));
         this.contextSelectEditorView.on('change', this.trigger.bind(this, 'change'));
 
         //var self = this;

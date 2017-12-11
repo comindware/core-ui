@@ -54,7 +54,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
 
     initialize(options = {}) {
         const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
         if (_.isString(this.options.valueEditor)) {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];
@@ -62,7 +62,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         if (_.isEmpty(this.value)) {
             this.value = {};
         }
-        this.options.valueEditorOptions = _.extend(this.options.valueEditorOptions, {
+        this.options.valueEditorOptions = Object.assign(this.options.valueEditorOptions, {
             enabled: this.options.enabled
         });
     },
@@ -98,7 +98,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
             alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUEALIAS')
         }));
 
-        this.valueEditor = new this.options.valueEditor(_.extend(this.options.valueEditorOptions, {
+        this.valueEditor = new this.options.valueEditor(Object.assign(this.options.valueEditorOptions, {
             value: initialValue.type === 'value' ? initialValue.value : null
         }));
         this.valueContainer.show(this.valueEditor);
@@ -140,7 +140,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
             'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
 
         const initialValue = this.getValue();
-        _.extend(contextOptions, {
+        Object.assign(contextOptions, {
             value: initialValue.type === 'context' ? initialValue.value : null
         });
 

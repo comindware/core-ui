@@ -14,7 +14,7 @@ import GroupModel from '../models/GroupModel';
 
 export default Backbone.Collection.extend({
     initialize() {
-        _.extend(this, new core.models.behaviors.SelectableBehavior.SingleSelect(this));
+        Object.assign(this, new core.models.behaviors.SelectableBehavior.SingleSelect(this));
     },
 
     model: GroupModel

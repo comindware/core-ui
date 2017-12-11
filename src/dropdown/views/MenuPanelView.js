@@ -22,7 +22,7 @@ import MenuItemView from './MenuItemView';
 
 export default ListPanelView.extend({
     initialize() {
-        ListPanelView.prototype.initialize.apply(this, _.toArray(arguments));
+        ListPanelView.prototype.initialize.apply(this, Array.from(arguments));
     },
 
     className: 'popout-menu',

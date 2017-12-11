@@ -68,7 +68,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
     },
 
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.extend(this, _.pick(options, 'field'));
         if (_.isString(this.options.valueEditor)) {

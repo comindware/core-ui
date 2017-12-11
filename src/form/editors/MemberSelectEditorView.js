@@ -48,9 +48,10 @@ const ButtonModel = Backbone.AssociatedModel.extend({
  * Полезно для задания направления открытия и кастомизации кнопки. Значения по умолчанию:
  * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
  * */
-formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
+
+export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.defaults(this.options.dropdownOptions, defaultOptions.dropdownOptions);
 
@@ -86,7 +87,7 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
 
     onRender() {
         // dropdown
-        const dropdownOptions = _.extend({
+        const dropdownOptions = Object.assign({
             buttonViewOptions: {},
             panelView: PanelView,
             panelViewOptions: {
@@ -95,7 +96,7 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
             },
             autoOpen: false
         }, this.options.dropdownOptions);
-        _.extend(dropdownOptions.buttonViewOptions, {
+        Object.assign(dropdownOptions.buttonViewOptions, {
             model: this.viewModel.get('button'),
             reqres: this.reqres
         });
@@ -107,7 +108,7 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), key => {
+        'down,enter,num_enter'.split(',').forEach(key => {
             this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
@@ -195,5 +196,3 @@ formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends mod
         this.$el.focus();
     }
 });
-
-export default formRepository.editors.MemberSelect;

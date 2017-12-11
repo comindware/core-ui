@@ -29,7 +29,7 @@ const defaultOptions = {
 
 formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         const model = new ContextModel({
             instanceTypeId: this.options.recordTypeId,
@@ -107,9 +107,9 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
         if (!selectedItem || selectedItem === 'False') return '';
         let instanceTypeId = this.options.recordTypeId;
 
-        const buttonText = _.map(selectedItem, id => {
+        const buttonText = selectedItem.map(id => {
             let text = '';
-            _.each(this.options.context[instanceTypeId], context => {
+            this.options.context[instanceTypeId].forEach(context => {
                 if (context.id === id) {
                     text = context.text;
                     instanceTypeId = context.instanceTypeId;
