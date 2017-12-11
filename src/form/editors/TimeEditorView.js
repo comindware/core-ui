@@ -32,7 +32,7 @@ const defaultOptions = {
  * */
 formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.value = this.__adjustValue(this.value);
 

@@ -37,7 +37,7 @@ const defaultOptions = {
  * */
 formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         const readonly = this.getReadonly();
         const enabled = this.getEnabled();

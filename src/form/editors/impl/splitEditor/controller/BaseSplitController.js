@@ -32,7 +32,7 @@ export default Marionette.Object.extend({
     updateMembers() {
         const allSelectedModels = _.clone(this.model.get('selected'));
         allSelectedModels.filter(null);
-        this.options.selected = _.map(allSelectedModels.models, model => model.id);
+        this.options.selected = allSelectedModels.models.map(model => model.id);
         this.__fillDisplayText && this.__fillDisplayText();
         this.trigger('popup:ok');
     },
@@ -85,7 +85,7 @@ export default Marionette.Object.extend({
             }
         }
 
-        let selected = all ? [].concat(modelsFrom.models) : _.values(modelsFrom.selected);
+        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.selected);
         if (!all && !selected.length) {
             return;
         }
@@ -200,12 +200,12 @@ export default Marionette.Object.extend({
             });
 
             const self = this;
-            let selectedItems = _.map(this.options.selected, id => {
+            let selectedItems = this.options.selected.map(id => {
                 const model = items[id];
                 delete items[id];
                 return model;
             });
-            const availableItems = _.values(items);
+            const availableItems = Object.values(items);
             let i = 1;
             selectedItems = _.chain(selectedItems)
                 .filter(item => item !== undefined).map(item => {

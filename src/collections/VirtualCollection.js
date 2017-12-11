@@ -103,8 +103,7 @@ const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
  * */
 
 const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collections.VirtualCollection.prototype */ {
-    constructor(collection, options) {
-        options = options || {};
+    constructor(collection, options = {}) {
         this.options = options;
         if (options.delayedAdd === undefined) {
             options.delayedAdd = true;
@@ -386,7 +385,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     },
 
     __onChange(model, options, isPartialUpdate) {
-        const changed = _.keys(model.changedAttributes());
+        const changed = Object.keys(model.changedAttributes());
         const attrsAffectedByGrouping = [];
         this.grouping.forEach(o => {
             if (o.affectedAttributes) {
@@ -439,12 +438,12 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
 });
 
 // methods that alter data should proxy to the parent collection
-_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update'], methodName => {
+['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update'].forEach(methodName => {
     VirtualCollection.prototype[methodName] = function() {
-        return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
+        return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };
 });
 
-_.extend(VirtualCollection.prototype, Backbone.Events);
+Object.assign(VirtualCollection.prototype, Backbone.Events);
 
 export default VirtualCollection;

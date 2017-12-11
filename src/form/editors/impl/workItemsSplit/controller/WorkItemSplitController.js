@@ -51,7 +51,7 @@ export default BaseSplitController.extend({
 
     __itemUp(model) {
         const selectedItems = this.model.get('selected').models;
-        const selectedItemIds = _.map(selectedItems, item => item.id);
+        const selectedItemIds = selectedItems.map(item => item.id);
         const currModelIndex = selectedItemIds.indexOf(model.id);
         if (currModelIndex > 0) {
             const prevOrder = selectedItems[currModelIndex - 1].get('order');
@@ -63,7 +63,7 @@ export default BaseSplitController.extend({
 
     __itemDown(model) {
         const selectedItems = this.model.get('selected').models;
-        const selectedItemIds = _.map(selectedItems, item => item.id);
+        const selectedItemIds = selectedItems(item => item.id);
         const currModelIndex = selectedItemIds.indexOf(model.id);
         if (currModelIndex < selectedItems.length - 1) {
             const nextOrder = selectedItems[currModelIndex + 1].get('order');

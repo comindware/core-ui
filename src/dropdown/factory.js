@@ -47,7 +47,7 @@ export default /** @lends module:core.dropdown.factory */ {
             }
         }
 
-        return this.createPopout(_.extend({
+        return this.createPopout(Object.assign({
             buttonView: DefaultButtonView,
             buttonViewOptions: {
                 model: effectiveButtonModel
@@ -71,7 +71,7 @@ export default /** @lends module:core.dropdown.factory */ {
             fade: true,
             height: 'bottom'
         };
-        return this.createPopout(_.extend(defaults, options));
+        return this.createPopout(Object.assign(defaults, options));
     },
 
     /**

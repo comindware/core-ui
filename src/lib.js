@@ -24,7 +24,6 @@ import 'backbone.radio';
 import 'backbone-associations';
 /* --- */
 import 'jstorage';
-import Bluebird_ from 'bluebird';
 import * as Handlebars_ from 'handlebars';
 import $_ from 'jquery';
 import 'inputmask/dist/jquery.inputmask.bundle';
@@ -35,19 +34,11 @@ import 'bootstrap-datetime-picker';
 import numeral_ from 'numeral';
 import codemirror_ from 'codemirror/lib/codemirror';
 import 'innersvg-polyfill';
-import 'jquery-mousewheel';
 import jsencrypt from 'jsencrypt';
 import * as jqui from 'jquery-ui';
 
 window._ = underscoreLib;
 window._.mixin(mixin);
-
-// Replacing ES6 promise with bluebird
-window.Promise = Bluebird_;
-window.Promise.config({
-    cancellation: true,
-    warnings: false
-});
 
 window.numeral = numeral_;
 
