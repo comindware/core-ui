@@ -190,7 +190,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
             model.collection = this;
             model.level = level;
 
-            let skipChild = !this.options.showCollapsed && !model.collapsed;
+            let skipChild = !this.options.showCollapsed && model.collapsed;
             if (!skipChild && model.children) {
                 this.__buildModelsInternal(model.children, level + 1);
             }
