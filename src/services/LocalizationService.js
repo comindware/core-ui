@@ -23,7 +23,6 @@ export default global.Localizer = {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
-        this.warningAsError = options.warningAsError;
 
         moment.tz.setDefault(this.timeZone);
         moment.locale(this.langCode);
@@ -35,12 +34,10 @@ export default global.Localizer = {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
         const text = this.localizationMap[locId];
+
         if (text === undefined) {
-            if (this.warningAsError) {
-                throw new Error(`Failed to find localization constant ${locId}`);
-            } else {
-                console.error(`Missing localization constant: ${locId}`);
-            }
+            console.error(`Missing localization constant: ${locId}`);
+
             return `<missing:${locId}>`;
         }
         return text;

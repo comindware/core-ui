@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 
 /**
@@ -23,7 +21,7 @@ import 'lib';
 const HighlightableBehavior = function() {
 };
 
-_.extend(HighlightableBehavior.prototype, /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
+Object.assign(HighlightableBehavior.prototype, /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
     /**
      * Подсветить заданный текст во всех моделях.
      * @param {String} text Текст, который необходимо подсветить.

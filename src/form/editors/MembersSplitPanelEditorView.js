@@ -19,24 +19,24 @@ const defaultOptions = () => ({
     emptyListText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
 });
 
-formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
+export default formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        const defOps = _.extend(defaultOptions(), {
-            users: _.map(options.schema.cacheService.GetUsers(), user => ({
+        const defOps = Object.assign(defaultOptions(), {
+            users: options.schema.cacheService.GetUsers().map(user => ({
                 id: user.Id,
                 name: (user.Text || user.Username),
                 abbreviation: user.abbreviation,
                 userpicUri: user.userpicUri,
                 type: 'users'
             })),
-            groups: _.map(options.schema.cacheService.GetGroups(), group => ({
+            groups: options.schema.cacheService.GetGroups().map(group => ({
                 id: group.id,
                 name: group.name,
                 type: 'groups'
             }))
         });
 
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
         this.options.selected = this.getValue();
 
@@ -87,5 +87,3 @@ formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
         }
     }
 });
-
-export default formRepository.editors.MembersSplitPanel;

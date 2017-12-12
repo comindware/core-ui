@@ -30,7 +30,7 @@ export default Marionette.CollectionView.extend({
 
         this.__createReqres();
 
-        this.childViewOptions = _.extend(options.childViewOptions || {}, {
+        this.childViewOptions = Object.assign(options.childViewOptions || {}, {
             internalListViewReqres: this.internalReqres
         });
 

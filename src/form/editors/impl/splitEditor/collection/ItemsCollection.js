@@ -5,7 +5,7 @@ import ItemModel from '../model/ItemModel';
 export default VirtualCollection.extend({
     constructor() {
         VirtualCollection.prototype.constructor.apply(this, arguments);
-        _.extend(this, new HighlightableBehavior());
+        Object.assign(this, new HighlightableBehavior());
     },
 
     model: ItemModel

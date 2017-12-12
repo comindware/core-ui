@@ -1,29 +1,27 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/27/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import 'lib';
-
-const promiseQueue = [];
 
 export default {
-    registerPromise(promise) {
-        promiseQueue.push(promise);
+    canceledPromises: [],
 
-        return promise.finally(() => {
-            delete promiseQueue.splice(promiseQueue.indexOf(promise), 1);
-        });
+    promiseQueue: [],
+
+    async registerPromise(promise) {
+        promise.id = _.uniqueId('promise_');
+        this.promiseQueue.push(promise);
+        try {
+            const rejectPromise = new Promise((resolve, reject) => {
+                promise.reject = reject;
+            });
+
+            return await Promise.race([promise, rejectPromise]);
+        } finally {
+            delete this.promiseQueue.splice(this.promiseQueue.findIndex(cP => cP.id === promise.id), 1);
+            delete this.canceledPromises.splice(this.promiseQueue.findIndex(cP => cP.id === promise.id), 1);
+        }
     },
 
     cancelAll() {
-        _.each(promiseQueue, promise => {
-            promise.cancel();
+        this.promiseQueue.forEach(promise => {
+            promise.reject({ isCanceled: true });
         });
     }
 };

@@ -14,7 +14,7 @@ const defaultRegExp = function(options) {
         throw new Error('Missing required "regexp" option for "regexp" validator');
     }
 
-    options = _.extend({
+    options = Object.assign({
         type: 'regexp',
         match: true,
         message: 'Invalid'

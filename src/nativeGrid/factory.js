@@ -52,7 +52,7 @@ export default {
             showCollapsed: options.gridViewOptions.showCollapsed
         });
 
-        const gridViewOptions = _.extend({
+        const gridViewOptions = Object.assign({
             collection,
             onColumnSort: options.onColumnSort,
             headerView: options.headerView,

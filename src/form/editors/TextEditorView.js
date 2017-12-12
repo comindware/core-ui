@@ -46,17 +46,18 @@ const defaultOptions = () => ({
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
+
+export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize(options = {}) {
         const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
         this.placeholder = this.options.emptyPlaceholder;
     },
 
     onShow() {
         if (this.options.mask) {
-            this.ui.input.inputmask(_.extend({
+            this.ui.input.inputmask(Object.assign({
                 mask: this.options.mask,
                 placeholder: this.options.maskPlaceholder,
                 autoUnmask: true
@@ -195,5 +196,3 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.ui.input.deselect();
     }
 });
-
-export default formRepository.editors.Text;

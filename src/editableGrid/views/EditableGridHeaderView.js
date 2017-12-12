@@ -17,7 +17,7 @@ export default HeaderView.extend({
 
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new EditableGridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
+            const view = new EditableGridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column,
                 gridEventAggregator: this.gridEventAggregator
