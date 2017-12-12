@@ -246,6 +246,10 @@ export default {
                 {
                     id: 'editableGrid',
                     displayName: 'Editable Grid'
+                },
+                {
+                    id: 'treeGrid',
+                    displayName: 'Tree Grid'
                 }
             ]
         },

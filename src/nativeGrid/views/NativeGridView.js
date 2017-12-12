@@ -10,6 +10,7 @@ import { Handlebars } from 'lib';
 import template from '../templates/nativeGrid.hbs';
 import ListView from './ListView';
 import RowView from './RowView';
+import TreeRowView from './TreeRowView';
 import HeaderView from './HeaderView';
 import ColumnHeaderView from './ColumnHeaderView';
 import NoColumnsDefaultView from '../../list/views/NoColumnsView';
@@ -20,8 +21,10 @@ import { helpers } from 'utils';
 const defaultOptions = {
     headerView: HeaderView,
     rowView: RowView,
+    treeRowView: TreeRowView,
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    isTree: false
 };
 
 /**
@@ -71,7 +74,11 @@ export default Marionette.LayoutView.extend({
         helpers.ensureOption(options, 'collection');
         _.defaults(this.options, defaultOptions);
 
-        this.rowView = this.options.rowView;
+        if (options.isTree) {
+            this.rowView = this.options.treeRowView;
+        } else {
+            this.rowView = this.options.rowView;
+        }
         this.rowViewSelector = this.options.rowViewSelector;
         this.collection = this.options.collection;
         this.emptyView = this.options.emptyView;
@@ -86,7 +93,8 @@ export default Marionette.LayoutView.extend({
         this.headerView = new this.options.headerView({
             columns: this.options.columns,
             gridColumnHeaderView: ColumnHeaderView,
-            gridEventAggregator: this
+            gridEventAggregator: this,
+            isTree: this.options.isTree
         });
 
         if (this.options.noColumnsView) {
@@ -107,6 +115,7 @@ export default Marionette.LayoutView.extend({
             childView: this.rowView,
             collection: this.collection,
             childViewOptions,
+            gridEventAggregator: this,
             childViewSelector: this.rowViewSelector,
             emptyView: this.emptyView,
             emptyViewOptions: this.emptyViewOptions

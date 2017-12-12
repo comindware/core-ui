@@ -47,6 +47,8 @@ export default Marionette.CollectionView.extend({
 
         _.bindAll(this, '__handleResize', '__handleResizeInternal');
         $(window).resize(this.__handleResize);
+        this.gridEventAggregator = options.gridEventAggregator;
+        this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
     },
     /**
      * Class for view
@@ -87,6 +89,7 @@ export default Marionette.CollectionView.extend({
 
         this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
         this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+        this.listenTo(this, 'childview:toggle:collapse', this.__toggleCollapse);
     },
 
     keyboardShortcuts: {
@@ -290,5 +293,53 @@ export default Marionette.CollectionView.extend({
                 this.$el.width(fullWidth);
             }
         }, 200);
+    },
+
+    __toggleCollapse(child, model) {
+        let index = this.collection.indexOf(model) + 1;
+        let currentModel = this.collection.at(index);
+        while (index < this.collection.length && currentModel.level > model.level) {
+            const rowEl = this.children.findByIndex(index).$el;
+            if (model.collapsed) {
+                rowEl.slideUp();
+            } else if (!this.__getParentCollapsed(currentModel)) {
+                rowEl.slideDown();
+            }
+            index++;
+            currentModel = this.collection.at(index);
+        }
+        this.__updateCollapseAll();
+    },
+
+    __toggleCollapseAll(collapsed) {
+        for (let i = 0; i < this.children.length; i++) {
+            const row = this.children.findByIndex(i);
+            row.updateCollapsed(collapsed, external);
+        }
+    },
+
+    __getParentCollapsed(model) {
+        let collapsed = false;
+        let parent = model.parent;
+        while (parent) {
+            if (parent.collapsed !== false) {
+                collapsed = true;
+                break;
+            }
+            parent = parent.parent;
+        }
+        return collapsed;
+    },
+
+    __updateCollapseAll() {
+        let collapsed = true;
+        for (let i = 0; i < this.children.length; i++) {
+            const row = this.children.findByIndex(i);
+            if (row.model.level === 0 && row.model.collapsed === false) {
+                collapsed = false;
+                break;
+            }
+        }
+        this.gridEventAggregator.trigger('update:collapse:all', collapsed);
     }
 });

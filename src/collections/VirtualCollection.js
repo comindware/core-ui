@@ -183,14 +183,18 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
         this.__buildModelsInternal(this.index);
     },
 
-    __buildModelsInternal(list) {
+    __buildModelsInternal(list, level = 0) {
         for (let i = 0, len = list.length; i < len; i++) {
             const model = list.at(i);
             this.models.push(model);
             this._addReference(model);
             model.collection = this;
+            model.level = level;
 
-            !model.collapsed && model.children && this.__buildModelsInternal(model.children);
+            let skipChild = !this.options.showCollapsed && !model.collapsed;
+            if (!skipChild && model.children) {
+                this.__buildModelsInternal(model.children, level + 1);
+            }
         }
         this.length = this.models.length;
     },
