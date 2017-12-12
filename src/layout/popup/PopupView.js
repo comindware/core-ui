@@ -11,6 +11,7 @@ import { helpers } from 'utils';
 import WindowService from 'services/WindowService';
 import template from './popup.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
+import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view'
@@ -43,6 +44,10 @@ export default Marionette.LayoutView.extend({
     behaviors: {
         LayoutBehavior: {
             behaviorClass: LayoutBehavior
+        },
+        LoadingBehavior: {
+            behaviorClass: LoadingBehavior,
+            region: 'loadingRegion'
         }
     },
 
@@ -58,7 +63,8 @@ export default Marionette.LayoutView.extend({
     },
 
     regions: {
-        contentRegion: '.js-content-region'
+        contentRegion: '.js-content-region',
+        loadingRegion: '.js-loading-region',
     },
 
     onRender() {
@@ -91,5 +97,11 @@ export default Marionette.LayoutView.extend({
 
     __close() {
         WindowService.closePopup();
+    },
+
+    setLoading(loading) {
+        if (!this.isDestroyed) {
+            this.loading.setLoading(loading);
+        }
     }
 });
