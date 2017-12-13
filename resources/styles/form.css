@@ -635,14 +635,18 @@ input[type="checkbox"].checkbox {
 
 .bubbles__i {
     max-width: 100%;
-    margin: 0 2px 1px 0;
-    padding: 0 18px 0 10px;
+    padding: 0 45px 0 10px;
     line-height: 17px;
     display: inline-block;
     vertical-align: top;
     font-size: 12px;
     position: relative;
     flex: 0 0 auto;
+}
+
+.bubbles__i a {
+    background: #f7f6f6;
+    border: 1px solid #dfe4e8;
 }
 
 .editor_disabled .bubbles__i,
@@ -1363,4 +1367,6 @@ svg.svg-icons{
     border-bottom: 1px solid;
 }
 
-
+.audio-editor-container {
+    width: 100%;
+}

@@ -94,7 +94,8 @@ export default function() {
     return new CanvasView({
         view: nativeGridView,
         canvas: {
-            height: '250px'
+            height: '250px',
+            width: '400px'
         },
         region: {
             float: 'left'

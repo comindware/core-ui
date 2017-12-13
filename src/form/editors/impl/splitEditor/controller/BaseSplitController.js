@@ -9,7 +9,6 @@
  *       actual or intended publication of such source code.
  */
 
-
 import ItemModel from '../model/ItemModel';
 import ItemCollection from '../collection/ItemsCollection';
 
