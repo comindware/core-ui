@@ -33,6 +33,9 @@ export default function() {
                     })
                 ]
             })
-        })
+        }),
+        canvas: {
+            width: '500px'
+        }
     });
 }
