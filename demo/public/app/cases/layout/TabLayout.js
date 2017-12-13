@@ -36,7 +36,8 @@ export default function() {
             showMoveButtons: true
         }),
         canvas: {
-            height: '400px'
+            height: '400px',
+            width: '400px'
         }
     });
 }

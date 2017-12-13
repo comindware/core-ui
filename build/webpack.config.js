@@ -38,7 +38,7 @@ module.exports = options => {
                     pathResolver.source('external')
                 ],
                 options: {
-                    presets: ['env']
+                    presets: ['flow', 'env']
                 }
             }, {
                 test: /\.js$/,

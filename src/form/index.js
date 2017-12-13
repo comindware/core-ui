@@ -63,6 +63,7 @@ import ReferencePanelView from './editors/impl/reference/views/ReferencePanelVie
 import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
+import AudioEditor from './editors/AudioEditor';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
@@ -206,7 +207,8 @@ const api = /** @lends module:core.form */ {
         WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
         IconEditor: IconEditorComponentView,
         ColorPickerEditor,
-        RangeEditor
+        RangeEditor,
+        AudioEditor
     }
 };
 export default api;

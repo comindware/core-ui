@@ -17,83 +17,67 @@ export default {
         {
             id: 'editors',
             displayName: 'Editors',
-            groups: [
-                {
-                    id: 'TextEditor',
-                    displayName: 'Text Editor'
-                }, {
-                    id: 'CodeEditor',
-                    displayName: 'Code Editor'
-                }, {
-                    id: 'RangeEditor',
-                    displayName: 'Range Editor'
-                }, {
-                    id: 'ColorPickerEditor',
-                    displayName: 'Color Picker'
-                },
-                {
-                    id: 'TextAreaEditor',
-                    displayName: 'Text Area Editor'
-                },
-                {
-                    id: 'NumberEditor',
-                    displayName: 'Number Editor'
-                },
-                {
-                    id: 'BooleanEditor',
-                    displayName: 'Boolean Editor'
-                },
-                {
-                    id: 'DateEditor',
-                    displayName: 'Date Editor'
-                },
-                {
-                    id: 'DateTimeEditor',
-                    displayName: 'DateTime Editor'
-                },
-                {
-                    id: 'TimeEditor',
-                    displayName: 'Time Editor'
-                },
-                {
-                    id: 'DocumentEditor',
-                    displayName: 'Document editor'
-                },
-                {
-                    id: 'DurationEditor',
-                    displayName: 'Duration Editor'
-                },
-                {
-                    id: 'DropdownEditor',
-                    displayName: 'Dropdown Editor'
-                },
-                {
-                    id: 'MultiSelectEditor',
-                    displayName: 'MultiSelect Editor'
-                },
-                {
-                    id: 'RadioGroupEditor',
-                    displayName: 'Radio Group Editor'
-                },
-                {
-                    id: 'PasswordEditor',
-                    displayName: 'Password Editor'
-                },
+            groups: [{
+                id: 'AudioEditor',
+                displayName: 'Audio Editor'
+            }, {
+                id: 'TextEditor',
+                displayName: 'Text Editor'
+            }, {
+                id: 'CodeEditor',
+                displayName: 'Code Editor'
+            }, {
+                id: 'RangeEditor',
+                displayName: 'Range Editor'
+            }, {
+                id: 'ColorPickerEditor',
+                displayName: 'Color Picker'
+            }, {
+                id: 'TextAreaEditor',
+                displayName: 'Text Area Editor'
+            }, {
+                id: 'NumberEditor',
+                displayName: 'Number Editor'
+            }, {
+                id: 'BooleanEditor',
+                displayName: 'Boolean Editor'
+            }, {
+                id: 'DateEditor',
+                displayName: 'Date Editor'
+            }, {
+                id: 'DateTimeEditor',
+                displayName: 'DateTime Editor'
+            }, {
+                id: 'TimeEditor',
+                displayName: 'Time Editor'
+            }, {
+                id: 'DocumentEditor',
+                displayName: 'Document editor'
+            }, {
+                id: 'DurationEditor',
+                displayName: 'Duration Editor'
+            }, {
+                id: 'DropdownEditor',
+                displayName: 'Dropdown Editor'
+            }, {
+                id: 'MultiSelectEditor',
+                displayName: 'MultiSelect Editor'
+            }, {
+                id: 'RadioGroupEditor',
+                displayName: 'Radio Group Editor'
+            }, {
+                id: 'PasswordEditor',
+                displayName: 'Password Editor'
+            },
                 {
                     id: 'MemberSelectEditor',
                     displayName: 'Member Select Editor'
-                },
-                {
+                }, {
                     id: 'MembersBubbleEditor',
                     displayName: 'Members Bubble Editor'
-                },
-                {
+                }, {
                     id: 'MentionEditor',
                     displayName: 'Mention Editor'
-                },
-                {
-                    id: 'ReferenceEditor',
-                    displayName: 'Reference Editor'
                 },
                 {
                     id: 'ReferenceBubbleEditor',

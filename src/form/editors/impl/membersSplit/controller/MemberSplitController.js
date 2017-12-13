@@ -15,12 +15,9 @@ export default BaseSplitController.extend({
         const users = this.options.users;
         const groups = this.options.groups;
         const members = {};
-        _.each(users, model => {
-            members[model.id] = model;
-        });
-        _.each(groups, model => {
-            members[model.id] = model;
-        });
+
+        users.forEach(model => members[model.id] = model);
+        groups.forEach(model => members[model.id] = model);
 
         this.model.set({
             title: this.__getFullMemberSplitTitle(),
