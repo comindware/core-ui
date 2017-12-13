@@ -6,6 +6,7 @@ import TabLayoutView from '../tabLayout/TabLayoutView';
 import Group from '../group/GroupView';
 import Button from '../button/ButtonView';
 import Popup from '../popup/PopupView';
+import PlainText from '../plainText/PlainTextView';
 
 export default {
     getContentFromSchema(schema) {
@@ -46,16 +47,15 @@ export default {
                             });
                     }
                 case 'field':
-                    return elementsFactory.createFieldAnchor(child.key);
+                    return elementsFactory.createFieldAnchor(child.key, _.omit(child, ['cType', 'key']));
                 case 'editor':
-                    return elementsFactory.createEditorAnchor(child.key);
+                    return elementsFactory.createEditorAnchor(child.key, _.omit(child, ['cType', 'key']));
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
                 case 'button':
-                    return new Button({
-                        text: child.text,
-                        handler: child.handler
-                    });
+                    return new Button(_.omit(child, 'cType'));
+                case 'plainText':
+                    return new PlainText(_.omit(child, 'cType'));
                 case 'custom':
                 default: {
                     const view = new child.view(_.omit(child, 'view'));

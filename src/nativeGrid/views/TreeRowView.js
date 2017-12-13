@@ -1,0 +1,93 @@
+import RowView from './RowView';
+import CollapsibleBehavior from '../../models/behaviors/CollapsibleBehavior';
+import GridItemBehavior from '../../list/models/behaviors/GridItemBehavior';
+
+const defaultOptions = {
+    paddingLeft: 20,
+    paddingRight: 10,
+    levelPadding: 25
+};
+
+const expandedClass = 'collapsible-btn_expanded';
+
+export default RowView.extend({
+    events: {
+        click: '__onClick',
+        dblclick: '__onDblClick',
+        'click .collapsible-btn': '__toggleCollapse'
+    },
+
+    initialize() {
+        _.defaults(this.options, defaultOptions);
+        _.extend(this.model, new GridItemBehavior(this));
+        _.extend(this.model, new CollapsibleBehavior(this));
+    },
+
+    _renderTemplate() {
+        this.cellViews = [];
+        let isFirstChild = true;
+        this.options.columns.forEach(gridColumn => {
+            const id = gridColumn.id;
+            let value;
+
+            if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) {
+                value = gridColumn.cellViewOptions.getValue.apply(this, [gridColumn]);
+            } else {
+                value = this.model.get(id);
+            }
+
+            const cellView = new gridColumn.cellView({
+                className: 'grid-cell js-grid-cell',
+                model: new Backbone.Model({
+                    value,
+                    rowModel: this.model,
+                    columnConfig: gridColumn,
+                    highlightedFragment: null
+                }),
+                gridEventAggregator: this.options.gridEventAggregator
+            });
+            cellView.render();
+            if (isFirstChild) {
+                if (this.model.children && this.model.children.length) {
+                    this.collapseButton = $('<span class="collapsible-btn "></span>');
+                    cellView.$el.prepend(this.collapseButton);
+                }
+
+                if (this.model.level) {
+                    cellView.$el.css('padding-left', this.model.level * this.options.levelPadding);
+                }
+                isFirstChild = false;
+            }
+
+
+            cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
+            this.cellViews.push(cellView);
+        });
+
+        if (this.model.level) {
+            this.$el.hide();
+        }
+    },
+
+    __toggleCollapse() {
+        this.updateCollapsed(this.model.collapsed === undefined ? false : !this.model.collapsed);
+        this.trigger('toggle:collapse', this.model);
+    },
+
+    updateCollapsed(collapsed, external) {
+        if (!collapsed) {
+            this.model.expand(true);
+            if (external) {
+                this.$el.slideDown();
+            }
+        } else {
+            this.model.collapse(true);
+            if (this.model.level && external) {
+                this.$el.slideUp();
+            }
+        }
+        if (this.collapseButton) {
+            this.collapseButton.toggleClass(expandedClass, !collapsed);
+        }
+    }
+});

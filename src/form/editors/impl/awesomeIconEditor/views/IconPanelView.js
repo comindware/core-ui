@@ -17,9 +17,6 @@ import IconItemCategoryView from './IconItemCategoryView';
 export default Marionette.LayoutView.extend({
     initialize() {
         this.iconGroupsCollection = this.options.collection;
-        this.model = new Backbone.Model({
-            searchKey: ''
-        });
     },
 
     template: Handlebars.compile(template),

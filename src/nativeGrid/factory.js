@@ -47,7 +47,10 @@ export default {
      * @returns {Backbone.View} NativeGridView View-списка
      * */
     createNativeGrid(options) {
-        const collection = createWrappedCollection(options.collection, { selectableBehavior: options.gridViewOptions.selectableBehavior });
+        const collection = createWrappedCollection(options.collection, {
+            selectableBehavior: options.gridViewOptions.selectableBehavior,
+            showCollapsed: options.gridViewOptions.showCollapsed
+        });
 
         const gridViewOptions = Object.assign({
             collection,
@@ -59,5 +62,49 @@ export default {
         }, options.gridViewOptions);
 
         return new NativeGridView(gridViewOptions);
+    },
+
+    createTreeGrid(options) {
+        options.collection = this.createTree(options);
+        if (!options.gridViewOptions) {
+            options.gridViewOptions = {};
+        }
+        options.gridViewOptions.isTree = true;
+        options.gridViewOptions.showCollapsed = true;
+        return this.createNativeGrid(options);
+    },
+
+    createTree(options) {
+        const collection = options.collection;
+        const childrenAttribute = options.childrenAttribute;
+        if (!childrenAttribute) {
+            return collection;
+        }
+        const resultCollection = new Backbone.Collection();
+        const createTree = (sourceCollection, targetCollection, parent = null) => {
+            sourceCollection.forEach(item => {
+                let children;
+                let attributes;
+                if (Array.isArray(sourceCollection)) {
+                    children = item[childrenAttribute];
+                    attributes = item;
+                } else if (sourceCollection instanceof Backbone.Collection) {
+                    children = item.get(childrenAttribute);
+                    attributes = item.attributes;
+                } else {
+                    helpers.throwError('Invalid collection', 'ArgumentError');
+                }
+                const treeLeaf = new Backbone.Model(attributes);
+                treeLeaf.parent = parent;
+                treeLeaf.collapsed = true;
+                treeLeaf.children = new Backbone.Collection();
+                targetCollection.add(treeLeaf);
+                if (children && children.length) {
+                    createTree(children, treeLeaf.children, treeLeaf);
+                }
+            });
+        };
+        createTree(collection, resultCollection);
+        return resultCollection;
     }
 };

@@ -13,7 +13,7 @@
 import IconButtonView from './IconButtonView';
 import IconPanelView from './IconPanelView';
 import template from '../templates/iconEditorComponentView.html';
-import { iconPalette } from '../iconPalette';
+import iconPalette from '../iconPalette';
 
 const constants = {
     iconPropertyDefaultName: 'iconClass'
@@ -58,7 +58,10 @@ export default Marionette.LayoutView.extend({
                 model: this.model
             },
             panelViewOptions: {
-                collection: this.__getConfig()
+                collection: this.__getConfig(),
+                model: new Backbone.Model({
+                    searchKey: ''
+                })
             },
             customAnchor: true
         });
