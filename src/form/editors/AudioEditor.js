@@ -11,7 +11,7 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.ColorPicker = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ColorPickerView.prototype */{
+export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.AudioEditor.prototype */{
     tagName: 'audio',
 
     template: false,

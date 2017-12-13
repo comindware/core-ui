@@ -240,12 +240,18 @@
   .demo-content_container {
       flex-direction: row;
   }
+  .demo-content__function {
+        max-width: 50%;
+  }
 }
 
 @media screen and (max-width: 999px) {
   .demo-content_container {
       flex-direction: column;
   }
+    .demo-content__function {
+        max-width: 100%;
+    }
 }
 /*-----------
 
