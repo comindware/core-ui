@@ -107,7 +107,8 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
                 id: doc.id,
                 documentsId: documents.map(item => item.id),
                 name: doc.FileName || doc.fileName,
-                url: doc.DocumentLink || null
+                url: doc.DocumentLink || null,
+                type: documents.find(uploadDoc => uploadDoc.id === doc.id).type
             }));
             this.addItem(tDocs);
         });
