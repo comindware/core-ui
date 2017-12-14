@@ -58,6 +58,7 @@ import ReferenceListItemView from './editors/impl/reference/views/ReferenceListI
 import UserReferenceListItemView from './editors/impl/reference/views/UserReferenceListItemView';
 import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
+import ReferenceBubbleButtonView from './editors/impl/referenceBubble/views/ButtonView';
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
@@ -155,6 +156,7 @@ const api = /** @lends module:core.form */ {
                 ReferenceListItemView,
                 LoadingView,
                 ReferenceButtonView,
+                ReferenceBubbleButtonView,
                 ReferencePanelView,
                 UserReferenceButtonView,
                 UserReferenceListItemView
