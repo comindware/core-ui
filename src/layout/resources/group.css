@@ -21,3 +21,18 @@
     border: 1px solid #a5a4a4;
     box-sizing: border-box;
 }
+
+.layout__group-collapsed__button {
+    transform: rotate(-90deg);
+    margin-top: -3px;
+}
+
+.layout__group-toggle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    margin-right: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}

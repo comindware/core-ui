@@ -649,12 +649,6 @@ input[type="checkbox"].checkbox {
     border: 1px solid #dfe4e8;
 }
 
-.editor_disabled .bubbles__i,
-.editor_readonly .bubbles__i{
-    background:#f3f3f3;
-    border-color:#cccece;
-}
-
 .bubbles__link {
     text-overflow: ellipsis;
     white-space: nowrap;
