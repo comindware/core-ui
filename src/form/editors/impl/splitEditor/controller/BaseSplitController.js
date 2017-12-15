@@ -192,23 +192,25 @@ export default Marionette.Object.extend({
 
         Promise.resolve(this.model.get('items')).then(oldItems => {
             const items = _.clone(oldItems);
-            _.each(this.options.exclude, id => {
+            this.options.exclude.forEach(id => {
                 if (items[id]) {
                     delete items[id];
                 }
             });
+            const selected = this.options.selected;
+            let selectedItems = selected
+                ? this.options.selected.map(id => {
+                    const model = items[id];
+                    delete items[id];
+                    return model;
+                })
+                : [];
 
-            const self = this;
-            let selectedItems = this.options.selected.map(id => {
-                const model = items[id];
-                delete items[id];
-                return model;
-            });
             const availableItems = Object.values(items);
             let i = 1;
             selectedItems = _.chain(selectedItems)
                 .filter(item => item !== undefined).map(item => {
-                    if (self.options.orderEnabled) {
+                    if (this.options.orderEnabled) {
                         item.order = i++;
                     }
                     return item;

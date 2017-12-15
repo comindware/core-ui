@@ -87,6 +87,7 @@
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
+    display: flex;
 }
 .dropdown-list__i:hover {
     background: #edf3fb;

@@ -57,7 +57,7 @@
 .demo-nav__i > a {
     display: block;
     padding: 0 50px;
-    font-size: 13px;
+    font-size: 0.8rem;
     line-height: inherit;
     color: #fff;
     text-decoration: none;
@@ -223,7 +223,7 @@
 
 }
 .groups-link {
-    font-size: 13px;
+    font-size: 0.8rem;
     font-weight: 500;
     color: #4d4d4d;
 }
@@ -240,12 +240,18 @@
   .demo-content_container {
       flex-direction: row;
   }
+  .demo-content__function {
+        max-width: 50%;
+  }
 }
 
 @media screen and (max-width: 999px) {
   .demo-content_container {
       flex-direction: column;
   }
+    .demo-content__function {
+        max-width: 100%;
+    }
 }
 /*-----------
 
@@ -265,20 +271,20 @@
     padding: 20px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     overflow: auto;
-    margin: 1rem;
+    margin: 0.5rem;
 }
 .demo-content__description {
     font-size: 13px;
     line-height: 18px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding: 0.5rem;
-    margin: 1rem;
+    margin: 0.5rem;
 }
 .demo-content__code {
     overflow: auto;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     flex: 1;
-    margin: 1rem;
+    margin: 0.5rem;
 }
 .demo-content__code pre {
     margin: 0 !important;

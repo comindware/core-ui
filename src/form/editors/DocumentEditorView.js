@@ -103,12 +103,17 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
 
     uploadDocumentOnServer(documents) {
         this.options.createDocuments(documents).then(results => {
-            const tDocs = results.map(doc => new DocumentReferenceModel({
-                id: doc.id,
-                documentsId: documents.map(item => item.id),
-                name: doc.FileName || doc.fileName,
-                url: doc.DocumentLink || null
-            }));
+            const tDocs = results.map(doc => {
+                const mappedObject = documents.find(uploadDoc => uploadDoc.id === doc.id);
+
+                return new DocumentReferenceModel({
+                    id: doc.id,
+                    documentsId: documents.map(item => item.id),
+                    name: doc.FileName || doc.fileName, // TODO fix API
+                    url: doc.DocumentLink || null,
+                    type: mappedObject ? mappedObject.type : null // TODO fix API
+                });
+            });
             this.addItem(tDocs);
         });
     },
