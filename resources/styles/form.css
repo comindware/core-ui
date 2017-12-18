@@ -1364,3 +1364,7 @@ svg.svg-icons{
 .audio-editor-container {
     width: 100%;
 }
+
+.field-error-view_text {
+    color: #70787f;
+}
