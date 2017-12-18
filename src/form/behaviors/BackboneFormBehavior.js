@@ -1,12 +1,6 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/19/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import FieldView from '../fields/FieldView';
+import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 
 const Form = Marionette.Object.extend({
     /**
@@ -23,22 +17,30 @@ const Form = Marionette.Object.extend({
         this.model = options.model;
 
         this.fields = {};
-        _.each(this.schema, (fieldSchema, key) => {
-            const FieldType = fieldSchema.field || options.field || FieldView;
-            const field = new FieldType({
-                form: this,
-                key,
-                schema: fieldSchema,
-                model: this.model
-            });
-            this.listenTo(field.editor, 'all', this.__handleEditorEvent);
-            this.fields[key] = field;
+
+        Object.entries(this.schema).forEach(entry => {
+            const FieldType = entry[1].field || options.field || FieldView; //TODO fix api
+            let field;
+            try {
+                field = new FieldType({
+                    form: this,
+                    key: entry[0],
+                    schema: entry[1],
+                    model: this.model
+                });
+                this.listenTo(field.editor, 'all', this.__handleEditorEvent);
+            } catch (e) {
+                console.log(e); //TODO replace with error handler
+                field = new ErrorPlaceholderView(); //TODO pass error
+            } finally {
+                this.fields[entry[0]] = field;
+            }
         });
 
         const $target = this.options.$target;
 
         //Render standalone editors
-        $target.find('[data-editors]').each((i, el) => {
+        $target.find('[data-editors]').each((i, el) => { //TODO Merge with previous
             const $editorRegion = $(el);
             const key = $editorRegion.attr('data-editors');
             const regionName = `${key}Region`;
@@ -48,7 +50,7 @@ const Form = Marionette.Object.extend({
         });
 
         //Render standalone fields
-        $target.find('[data-fields]').each((i, el) => {
+        $target.find('[data-fields]').each((i, el) => { //TODO Merge with previous
             const $fieldRegion = $(el);
             const key = $fieldRegion.attr('data-fields');
             const regionName = `${key}Region`;
@@ -172,10 +174,10 @@ const Form = Marionette.Object.extend({
     },
 
     setErrors(errors) {
-        Object.entries(errors).forEach((key, value) => {
-            const field = this.fields[key];
+        Object.entries(errors).forEach(entry => {
+            const field = this.fields[entry[0]];
             if (field) {
-                field.setError(value);
+                field.setError(entry[1]);
             }
         });
     },
@@ -231,7 +233,7 @@ const Form = Marionette.Object.extend({
 
         const result = Object.keys(errors).length === 0 ? null : errors;
         this.trigger('form:validated', !result, result);
-        
+
         return result;
     },
 
