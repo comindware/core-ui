@@ -30,8 +30,8 @@ const Form = Marionette.Object.extend({
                 });
                 this.listenTo(field.editor, 'all', this.__handleEditorEvent);
             } catch (e) {
-                console.log(e); //TODO replace with error handler
-                field = new ErrorPlaceholderView(); //TODO pass error
+                field = new ErrorPlaceholderView();
+                Core.InterfaceError.logError(e, field.getId());
             } finally {
                 this.fields[entry[0]] = field;
             }

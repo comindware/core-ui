@@ -8,7 +8,8 @@ export default function() {
         '<div class="field-width" data-fields="number"></div>' +
         '<div class="field-width" data-fields="dateTime"></div>' +
         '<div class="field-width" data-fields="duration"></div>' +
-        '<div class="field-width" data-fields="dropdown"></div>';
+        '<div class="field-width" data-fields="dropdown"></div>' +
+        '<div class="field-width" data-fields="wrongInstance"></div>';
 
     // 2. Create form model
     const model = new Backbone.Model({
@@ -55,6 +56,10 @@ export default function() {
                                 id: 'd.3',
                                 text: 'Text 3'
                             }, { id: 'd.4', text: 'Text 4' }]
+                        },
+                        wrongInstance: {
+                            type: 'Dropdown',
+                            title: 'Dropdown'
                         }
                     };
                 }
