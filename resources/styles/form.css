@@ -1368,3 +1368,8 @@ svg.svg-icons{
 .field-error-view_text {
     color: #70787f;
 }
+
+.field-error-view_text .selected {
+    border: 1px solid #8f84ff;
+    border-radius: 2px;
+}

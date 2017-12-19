@@ -9,7 +9,7 @@ export default Marionette.ItemView.extend({
     templateHelpers() {
         return {
             id: this.id,
-            placeholderText: 'Something went wrong'
+            placeholderText: Localizer.get('CORE.FORM.FIELDS.ERRORFIELD')
         };
     },
 

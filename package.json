@@ -113,7 +113,7 @@
     "jquery-autosize": "^1.18.18",
     "jsencrypt": "^2.3.1",
     "jstorage": "^0.4.8",
-    "moment": "^2.20.0",
+    "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "numeral": "^2.0.6",
     "underscore": "^1.8.3"
