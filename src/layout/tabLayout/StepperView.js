@@ -3,7 +3,7 @@ import template from './templates/headerItem.hbs';
 import StepperItemView from './StepperItemView';
 
 export default Marionette.CollectionView.extend({
-    className: 'layout__tab-layout__header-view-item',
+    className: 'layout__tab-layout__stepper_container',
 
     template: Handlebars.compile(template),
 
