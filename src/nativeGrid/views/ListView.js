@@ -302,8 +302,10 @@ export default Marionette.CollectionView.extend({
             const rowEl = this.children.findByIndex(index).$el;
             if (model.collapsed) {
                 rowEl.slideUp();
+                currentModel.hidden = true;
             } else if (!this.__getParentCollapsed(currentModel)) {
                 rowEl.slideDown();
+                currentModel.hidden = false;
             }
             index++;
             currentModel = this.collection.at(index);
@@ -314,8 +316,9 @@ export default Marionette.CollectionView.extend({
     __toggleCollapseAll(collapsed) {
         for (let i = 0; i < this.children.length; i++) {
             const row = this.children.findByIndex(i);
-            row.updateCollapsed(collapsed, external);
+            row.updateCollapsed(collapsed, true);
         }
+        this.gridEventAggregator.trigger('collapse:change');
     },
 
     __getParentCollapsed(model) {
@@ -341,5 +344,6 @@ export default Marionette.CollectionView.extend({
             }
         }
         this.gridEventAggregator.trigger('update:collapse:all', collapsed);
+        this.gridEventAggregator.trigger('collapse:change');
     }
 });

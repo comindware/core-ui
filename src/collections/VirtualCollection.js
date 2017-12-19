@@ -8,6 +8,7 @@
 /*eslint-disable*/
 import 'lib';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
+import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { helpers } from 'utils';
 
 const selectableBehavior = {
@@ -166,6 +167,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
         if (SelectableBehaviorClass) {
             _.extend(this, new SelectableBehaviorClass(this));
         }
+        _.extend(this, new CheckableBehavior.CheckableCollection(this));
     },
 
     __rebuildIndex() {

@@ -969,7 +969,7 @@ input[type="checkbox"].checkbox {
 .editor_checked .svg-icons-wrp_checked{
     display: inline-block;
 }
-.editor_check_undefined .checkbox:after{
+.editor_checked_some .checkbox:after{
     content: '';
     position: absolute;
     left: 2px;
