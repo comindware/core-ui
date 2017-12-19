@@ -47,7 +47,7 @@ export default RowView.extend({
                 gridEventAggregator: this.options.gridEventAggregator
             });
             cellView.render();
-            if (isFirstChild) {
+            if (isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
                 if (this.model.children && this.model.children.length) {
                     this.collapseButton = $('<span class="collapsible-btn "></span>');
                     cellView.$el.prepend(this.collapseButton);
@@ -66,6 +66,7 @@ export default RowView.extend({
 
         if (this.model.level) {
             this.$el.hide();
+            this.model.hidden = true;
         }
     },
 
@@ -79,11 +80,13 @@ export default RowView.extend({
             this.model.expand(true);
             if (external) {
                 this.$el.slideDown();
+                this.model.hidden = false;
             }
         } else {
             this.model.collapse(true);
             if (this.model.level && external) {
                 this.$el.slideUp();
+                this.model.hidden = true;
             }
         }
         if (this.collapseButton) {

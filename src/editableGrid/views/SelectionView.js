@@ -9,21 +9,21 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        const model = this.model.get('columnConfig').viewModel.get('selectableCollection').get(this.model.get('rowModel'));
-        const selectEditor = new form.editors.BooleanEditor({
-            value: model ? model.selected : false
+        const rowModel = this.model.get('rowModel');
+        const checkedEditor = new form.editors.BooleanEditor({
+            value: rowModel ? rowModel.checked : false
         });
 
-        this.listenTo(selectEditor, 'change', editorView => {
+        this.listenTo(checkedEditor, 'change', editorView => {
             if (editorView.getValue()) {
-                model.collection.select(model);
+                rowModel.collection.check(rowModel);
             } else {
-                model.collection.deselect(model);
+                rowModel.collection.uncheck(rowModel);
             }
         });
 
-        this.listenTo(model, 'selected', () => selectEditor.setValue(true));
-        this.listenTo(model, 'deselected', () => selectEditor.setValue(false));
-        this.editorRegion.show(selectEditor);
+        this.listenTo(rowModel, 'checked', () => checkedEditor.setValue(true));
+        this.listenTo(rowModel, 'unchecked', () => checkedEditor.setValue(false));
+        this.editorRegion.show(checkedEditor);
     }
 });

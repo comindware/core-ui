@@ -31,10 +31,10 @@ export default Marionette.Object.extend({
     },
     
     showGallery(model) {
-        if (graphicFileExtensions.indexOf(model.get('extension')) > -1) {
+        if (this.__isImage(model)) {
             this.view = new GalleryWindowView({
                 reqres: this.reqres,
-                imagesCollection: new Backbone.Collection(model.collection.filter(m => graphicFileExtensions.indexOf(m.get('extension')) > -1)),
+                imagesCollection: new Backbone.Collection(model.collection.filter(m => this.__isImage(m))),
                 model
             });
             this.__togglePopupRegion(true);
@@ -67,5 +67,14 @@ export default Marionette.Object.extend({
     
     __togglePopupRegion(show) {
         window.application.ui.popupRegion.toggleClass(classes.HIDDEN, !show);
+    },
+
+    __isImage(model) {
+        let isImage = false;
+        const extension = model.get('extension');
+        if (extension && typeof extension === 'string' && graphicFileExtensions.indexOf(extension.toLowerCase()) > -1) {
+            isImage = true;
+        }
+        return isImage;
     }
 });
