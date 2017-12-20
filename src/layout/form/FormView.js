@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/28/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import 'lib';
 import { helpers, RegionBehavior } from 'utils';
@@ -22,7 +15,8 @@ export default Marionette.ItemView.extend({
         helpers.ensureOption(options, 'schema');
         helpers.ensureOption(options, 'model');
         if (!('content' in options)) {
-            this.content = FormContentFactory.getContentFromSchema(options.schema);
+            this.uniqueFormId = _.uniqueId('form-');
+            this.content = FormContentFactory.getContentFromSchema(options.schema, this.uniqueFormId);
             this.schema = FormSchemaFactory.getSchema(options.schema);
         } else {
             this.content = options.content;
@@ -31,6 +25,7 @@ export default Marionette.ItemView.extend({
 
         const model = this.options.model;
         this.model = _.isFunction(model) ? model.call(this) : model;
+        this.model.set({ uniqueFormId: this.uniqueFormId });
     },
 
     template: false,

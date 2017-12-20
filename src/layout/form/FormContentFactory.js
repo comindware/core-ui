@@ -1,3 +1,4 @@
+// @flow
 
 import * as elementsFactory from '../factory';
 import VerticalLayout from '../verticalLayout/VerticalLayoutView';
@@ -9,11 +10,14 @@ import Popup from '../popup/PopupView';
 import PlainText from '../plainText/PlainTextView';
 
 export default {
-    getContentFromSchema(schema) {
-        return this.__parseConfiguration(schema, {})[0];
+    __uniqueFormId: '',
+
+    getContentFromSchema(schema: Array, uniqueFormId: String) {
+        this.__uniqueFormId = uniqueFormId;
+        return this.__parseConfiguration(schema)[0];
     },
 
-    __parseConfiguration(schema) {
+    __parseConfiguration(schema: Array) {
         return schema.map(child => {
             switch (child.cType) {
                 case 'container':
@@ -37,9 +41,9 @@ export default {
                             }));
                     }
                 case 'field':
-                    return elementsFactory.createFieldAnchor(child.key, _.omit(child, ['cType', 'key']));
+                    return elementsFactory.createFieldAnchor(child.key, Object.assign(child, { uniqueFormId: this.__uniqueFormId }));
                 case 'editor':
-                    return elementsFactory.createEditorAnchor(child.key, _.omit(child, ['cType', 'key']));
+                    return elementsFactory.createEditorAnchor(child.key, Object.assign(child, { uniqueFormId: this.__uniqueFormId }));
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
                 case 'button':
