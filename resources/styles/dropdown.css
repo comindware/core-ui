@@ -274,6 +274,10 @@
     cursor: pointer;
 }
 
+.dd-list__list_reference + .dd-list__btn{
+    padding-top:5px;
+    height: 30px;
+}
 
 /* /dd-list */
 
