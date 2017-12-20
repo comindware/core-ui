@@ -1,4 +1,5 @@
 .layout__group__legend {
+    display: inline-block;
     max-width: calc(100% - 10px);
     white-space: nowrap;
     overflow: hidden;
