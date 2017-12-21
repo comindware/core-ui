@@ -94,6 +94,9 @@ export default Marionette.ItemView.extend({
         this.headerMinWidth = this.__getAvailableWidth();
         this.__setInitialWidth(this.headerMinWidth);
         this.__handleResizeInternal();
+        if (this.options.expandOnShow) {
+            this.__updateCollapseAll(false);
+        }
     },
 
     setFitToView() {

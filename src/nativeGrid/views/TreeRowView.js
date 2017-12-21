@@ -64,9 +64,12 @@ export default RowView.extend({
             this.cellViews.push(cellView);
         });
 
-        if (this.model.level) {
+        if (this.model.level && !this.options.expandOnShow) {
             this.$el.hide();
             this.model.hidden = true;
+        }
+        if (this.options.expandOnShow) {
+            this.updateCollapsed(false);
         }
     },
 

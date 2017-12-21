@@ -49,6 +49,9 @@ export default Marionette.CollectionView.extend({
         $(window).resize(this.__handleResize);
         this.gridEventAggregator = options.gridEventAggregator;
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
+        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
+        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+        this.listenTo(this, 'childview:toggle:collapse', this.__toggleCollapse);
     },
     /**
      * Class for view
@@ -86,10 +89,6 @@ export default Marionette.CollectionView.extend({
 
     onRender() {
         this.__assignKeyboardShortcuts();
-
-        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
-        this.listenTo(this, 'childview:toggle:collapse', this.__toggleCollapse);
     },
 
     keyboardShortcuts: {
@@ -323,13 +322,13 @@ export default Marionette.CollectionView.extend({
 
     __getParentCollapsed(model) {
         let collapsed = false;
-        let parent = model.parent;
-        while (parent) {
-            if (parent.collapsed !== false) {
+        let parentModel = model.parentModel;
+        while (parentModel) {
+            if (parentModel.collapsed !== false) {
                 collapsed = true;
                 break;
             }
-            parent = parent.parent;
+            parentModel = parentModel.parentModel;
         }
         return collapsed;
     },

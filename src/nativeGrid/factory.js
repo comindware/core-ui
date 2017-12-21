@@ -49,7 +49,7 @@ export default {
     createNativeGrid(options) {
         const collection = createWrappedCollection(options.collection, {
             selectableBehavior: options.gridViewOptions.selectableBehavior,
-            showCollapsed: options.gridViewOptions.showCollapsed
+            isTree: options.gridViewOptions.isTree
         });
 
         const gridViewOptions = Object.assign({
@@ -70,7 +70,6 @@ export default {
             options.gridViewOptions = {};
         }
         options.gridViewOptions.isTree = true;
-        options.gridViewOptions.showCollapsed = true;
         return this.createNativeGrid(options);
     },
 
@@ -81,7 +80,7 @@ export default {
             return collection;
         }
         const resultCollection = new Backbone.Collection();
-        const createTree = (sourceCollection, targetCollection, parent = null) => {
+        const createTree = (sourceCollection, targetCollection, parentModel = null) => {
             sourceCollection.forEach(item => {
                 let children;
                 let attributes;
@@ -95,7 +94,7 @@ export default {
                     helpers.throwError('Invalid collection', 'ArgumentError');
                 }
                 const treeLeaf = new Backbone.Model(attributes);
-                treeLeaf.parent = parent;
+                treeLeaf.parentModel = parentModel;
                 treeLeaf.collapsed = true;
                 treeLeaf.children = new Backbone.Collection();
                 targetCollection.add(treeLeaf);
