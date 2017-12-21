@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { $ } from 'lib';
 import PopupStackView from './window/views/PopupStackView';
 
@@ -23,7 +21,7 @@ const windowService = /** @lends module:core.services.WindowService */ {
         this.__popupStackView = new PopupStackView();
         popupStackRegion.show(this.__popupStackView);
 
-        this.__popupStackView.on('popup:close', ...args => this.trigger('popup:close', ...args));
+        this.__popupStackView.on('popup:close', popupId => this.trigger('popup:close', popupId));
     },
 
     /**
