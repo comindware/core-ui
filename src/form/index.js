@@ -17,7 +17,6 @@ import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
 import TextEditorView from './editors/TextEditorView';
 import PasswordEditorView from './editors/PasswordEditorView';
-import ReferenceEditorView from './editors/ReferenceEditorView';
 import MemberSelectEditorView from './editors/MemberSelectEditorView';
 import DropdownEditorView from './editors/DropdownEditorView';
 import MembersBubbleEditorView from './editors/MembersBubbleEditorView';
@@ -180,7 +179,6 @@ const api = /** @lends module:core.form */ {
         TextAreaEditor: TextAreaEditorView,
         TextEditor: TextEditorView,
         PasswordEditor: PasswordEditorView,
-        ReferenceEditor: ReferenceEditorView,
         MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
         MembersBubbleEditor: MembersBubbleEditorView,
