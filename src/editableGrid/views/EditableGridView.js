@@ -110,13 +110,15 @@ export default Marionette.LayoutView.extend({
                 selectableBehavior: 'multi',
                 childHeight: this.options.rowHeight,
                 paddingRight: 1,
-                paddingLeft: 1
+                paddingLeft: 1,
+                expandOnShow: this.options.expandOnShow
             },
             headerView: EditableGridHeaderView,
             collection: this.collection
         };
         if (this.options.isTree) {
             nativeGridView = factory.createTreeGrid(gridOptions);
+            this.listenTo(nativeGridView.collection, 'add remove reset', this.__setGridHeight);
         } else {
             nativeGridView = factory.createNativeGrid(gridOptions);
         }

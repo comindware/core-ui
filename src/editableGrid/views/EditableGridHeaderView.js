@@ -31,6 +31,9 @@ export default HeaderView.extend({
                 this.collapseButton = $('<span class="collapsible-btn"></span>');
                 view.$el.prepend(this.collapseButton);
                 isFirstChild = false;
+                if (this.options.expandOnShow) {
+                    this.__updateCollapseAll(false);
+                }
             }
         });
 
