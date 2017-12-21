@@ -56,14 +56,14 @@ gulp.task('build:core:prod:min', require('./tasks/buildProdTask')(true));
 
 gulp.task('deploy:pages', require('./tasks/deployPagesTask'));
 
-gulp.task('test', function (done) {
+gulp.task('test', done => {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js'),
         singleRun: true
     }, done).start();
 });
 
-gulp.task('test:coverage', function (done) {
+gulp.task('test:coverage', done => {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js'),
         singleRun: true,
@@ -71,7 +71,7 @@ gulp.task('test:coverage', function (done) {
     }, done).start();
 });
 
-gulp.task('test:watch', function (done) {
+gulp.task('test:watch', done => {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js')
     }, done).start();
