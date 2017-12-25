@@ -21,6 +21,8 @@ export default RowView.extend({
         _.defaults(this.options, defaultOptions);
         _.extend(this.model, new GridItemBehavior(this));
         _.extend(this.model, new CollapsibleBehavior(this));
+        this.listenTo(this.model, 'checked', this.__onModelChecked);
+        this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
     },
 
     _renderTemplate() {
@@ -94,6 +96,50 @@ export default RowView.extend({
         }
         if (this.collapseButton) {
             this.collapseButton.toggleClass(expandedClass, !collapsed);
+        }
+    },
+
+    __onModelChecked() {
+        this.internalCheck = true;
+        if (this.model.children && this.model.children.length) {
+            this.model.children.forEach(model => {
+                model.check();
+            });
+        }
+        this.internalCheck = false;
+        this.__updateParentChecked();
+    },
+
+    __onModelUnchecked() {
+        this.internalCheck = true;
+        if (this.model.children && this.model.children.length) {
+            this.model.children.forEach(model => {
+                model.uncheck();
+            });
+        }
+        this.internalCheck = false;
+        this.__updateParentChecked();
+    },
+
+    __updateParentChecked() {
+        if (this.internalCheck) {
+            return;
+        }
+        const parentModel = this.model.parentModel;
+        if (parentModel) {
+            let checkedChildren = 0;
+            parentModel.children.forEach(child => {
+                if (child.checked) {
+                    checkedChildren++;
+                }
+            });
+            if (checkedChildren === 0) {
+                parentModel.uncheck();
+            } else if (parentModel.children.length === checkedChildren) {
+                parentModel.check();
+            } else {
+                parentModel.checkSome();
+            }
         }
     }
 });

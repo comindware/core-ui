@@ -42,6 +42,14 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         calculateCheckedLength(this);
     },
 
+    checkSome(model) {
+        if (!this.checked[model.cid]) { return; }
+
+        delete this.checked[model.cid];
+        model.checkSome();
+        calculateCheckedLength(this);
+    },
+
     checkAll() {
         this.each(model => { model.check(); });
         calculateCheckedLength(this);
@@ -94,9 +102,8 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
 
         this.checked = null;
         this.trigger('checked:some', this);
-
         if (this.collection) {
-            this.collection.uncheck(this);
+            this.collection.checkSome(this);
         }
     },
 
