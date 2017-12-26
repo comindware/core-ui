@@ -19,7 +19,8 @@ export default Marionette.ItemView.extend({
 
     attributes() {
         return {
-            'data-editors': this.options.key
+            'data-editors': this.options.key,
+            'editor-for': this.options.uniqueFormId
         };
     },
 
