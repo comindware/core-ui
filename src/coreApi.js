@@ -46,6 +46,7 @@ import LocalizationService from './services/LocalizationService';
 import AjaxService from './services/AjaxService';
 import PromiseService from './services/PromiseService';
 import UserService from './services/UserService';
+import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 
 import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
@@ -65,6 +66,7 @@ const core = {
     RoutingService,
     ToastNotifications,
     lib: libApi,
+    InterfaceError: InterfaceErrorMessageService,
     /**
      * Services of general use the UI is built on.
      * @namespace

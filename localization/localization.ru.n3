@@ -14,6 +14,8 @@
 
 <http://comindware.com/text/core/demo/cases/other/localizationService#daysPlural> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "день,дня,дней"; l10n:originalData "day,days"].
 
+<http://comindware.com/text/core/form#fields> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data ""].
+
 <http://comindware.com/text/core/form/editors/bubbleSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Введите имя..."; l10n:originalData "Enter a name..."].
 
 <http://comindware.com/text/core/form/editors/code#clear> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Очистить"; l10n:originalData "clear"].
@@ -189,6 +191,8 @@
 <http://comindware.com/text/core/form/editors/workSpaceItemSplit#update> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сохранить"; l10n:originalData "Save"].
 
 <http://comindware.com/text/core/form/editors/workSpaceItemSplit#usersSections> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрано"; l10n:originalData "Selected"].
+
+<http://comindware.com/text/core/form/fields#errorField> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Ошибка при инициализации поля"; l10n:originalData "errorView"].
 
 <http://comindware.com/text/core/form/validation#length> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неправильное количество символов."; l10n:originalData "Wrong number of characters."].
 

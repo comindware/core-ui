@@ -13,6 +13,7 @@ import GlobalEventService from './services/GlobalEventService';
 import UserService from './services/UserService';
 import WindowService from './services/WindowService';
 import LocalizationService from './services/LocalizationService';
+import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 
 const initializeThirdParties = function() {
     $.fn.datetimepicker.dates[LocalizationService.langCode] = {
@@ -31,6 +32,8 @@ export default {
         helpers.ensureOption(options, 'localizationService');
         helpers.ensureOption(options, 'ajaxService');
         helpers.ensureOption(options, 'userService');
+
+        InterfaceErrorMessageService.initialize();
 
         GlobalEventService.initialize();
         UserService.initialize(options.userService);

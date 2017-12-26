@@ -216,7 +216,6 @@
 }
 .popout-menu__i {
     line-height: 18px;
-    display: block;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -224,6 +223,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     vertical-align: middle;
+    display: flex;
 }
 .popout-menu__i:hover {
     background: #edf3fb;
