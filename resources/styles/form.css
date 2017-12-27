@@ -669,10 +669,8 @@ input[type="checkbox"].checkbox {
     padding-right: 10px;
 }
 
-.editor_disabled .bubbles__i .reference-field__edit-btn,
-.editor_readonly .bubbles__i .reference-field__edit-btn,
 .editor_disabled .bubbles__i .svg-icons-wrp,
-.editor_readonly .bubbles__i .svg-icons-wrp{
+.editor_readonly .bubbles__i .svg-icons-wrp {
    display: none;
 }
 
