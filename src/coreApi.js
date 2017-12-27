@@ -46,6 +46,7 @@ import LocalizationService from './services/LocalizationService';
 import AjaxService from './services/AjaxService';
 import PromiseService from './services/PromiseService';
 import UserService from './services/UserService';
+import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 
 import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
@@ -53,6 +54,7 @@ import CollectionHighlightableBehavior from './collections/behaviors/Highlightab
 import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
+import CheckableBehavior from './models/behaviors/CheckableBehavior';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -64,6 +66,7 @@ const core = {
     RoutingService,
     ToastNotifications,
     lib: libApi,
+    InterfaceError: InterfaceErrorMessageService,
     /**
      * Services of general use the UI is built on.
      * @namespace
@@ -115,7 +118,8 @@ const core = {
         behaviors: {
             CollapsibleBehavior,
             HighlightableBehavior,
-            SelectableBehavior
+            SelectableBehavior,
+            CheckableBehavior
         }
     },
     views: {

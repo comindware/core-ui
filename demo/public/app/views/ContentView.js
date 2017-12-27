@@ -21,6 +21,8 @@ export default Marionette.LayoutView.extend({
         change: 'render'
     },
 
+    className: 'demo-content_wrapper',
+
     template: Handlebars.compile(template),
 
     templateHelpers() {

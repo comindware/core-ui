@@ -127,7 +127,7 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     events: {
-        mousewheel: '__mousewheel'
+        wheel: '__mousewheel'
     },
 
     className: 'list',
@@ -367,7 +367,7 @@ const ListView = Marionette.LayoutView.extend({
         }
 
         const delta = this.state.viewportHeight;
-        const newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
+        const newPosition = this.state.position + Math.sign(e.originalEvent.deltaY) * Math.max(1, Math.floor(delta / 6));
         this.__updatePositionInternal(newPosition, true);
         return false;
     }

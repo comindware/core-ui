@@ -27,7 +27,7 @@ _.extend(CollapsibleBehavior.prototype, {
     },
 
     expand(internal) {
-        if (!this.collapsed) {
+        if (this.collapsed === false) {
             return;
         }
 

@@ -35,11 +35,12 @@
 
 .demo-nav {
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: row;
     justify-content: flex-start;
     color: #fff;
     background: #0575bd;
     line-height: 36px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .demo-nav__i {
@@ -56,7 +57,7 @@
 .demo-nav__i > a {
     display: block;
     padding: 0 50px;
-    font-size: 13px;
+    font-size: 0.8rem;
     line-height: inherit;
     color: #fff;
     text-decoration: none;
@@ -186,28 +187,32 @@
 .demo-page {
     width: 100%;
     height: 100%;
-    padding: 0 250px 20px 250px;
+    display: flex;
     position: relative;
 }
 
 .demo-groups {
-    position: absolute;
     left:0;
     top:0;
-    width: 250px;
     height: 100%;
     overflow: auto;
-    padding: 15px 20px;
-    border-right: solid 1px #ced3d7
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    flex: 0 0 200px;
 }
+
 .demo-groups__li {
     height: 30px;
     line-height: 30px;
-    padding-left: 16px;
     position: relative;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    padding: 0 1rem;
+}
+.demo-groups__li:hover {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    background-color: #f5f5f5;
 }
 .demo-groups__li:before {
     content: '•';
@@ -216,10 +221,11 @@
     color: #70787f;
     font-size: 18px;
     line-height: 30px;
+    margin-left: 0.5rem;
 
 }
 .groups-link {
-    font-size: 13px;
+    font-size: 0.8rem;
     font-weight: 500;
     color: #4d4d4d;
 }
@@ -228,28 +234,70 @@
 }
 
 .demo-content {
-    width: 100%;
+    width: calc(100% - 200px);
+    display: flex;
+}
+
+@media screen and (min-width: 1000px) {
+  .demo-content_container {
+      flex-direction: row;
+  }
+  .demo-content__function {
+        max-width: 50%;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .demo-content_container {
+      flex-direction: column;
+  }
+    .demo-content__function {
+        max-width: 100%;
+    }
+}
+/*-----------
+
+
+--------------*/
+/*-----------
+
+
+--------------*/
+.demo-content_container {
     height: 100%;
-    padding: 20px;
-    overflow: auto;
+    width: 100%;
+    display: flex;
+    padding: 15px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    box-sizing: border-box;
+    justify-content: space-between;
 }
 .demo-content__function {
     position: relative;
     padding: 20px;
-    box-shadow: 0 0 3px #999;
-    margin-bottom: 10px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    overflow: auto;
+    flex: 1 1 auto;
+    max-width: 44%;
 }
 .demo-content__description {
-    padding: 5px 0;
     font-size: 13px;
     line-height: 18px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    padding: 0.5rem;
+    flex: 1 1 auto;
+    max-width: 54%;
 }
 .demo-content__code {
-    margin: 10px 0;
     overflow: auto;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    flex: 1 1 auto;
+    max-width: 54%;
 }
 .demo-content__code pre {
-    margin: 10px;
+    margin: 0 !important;
+    height: 100%;
 }
 
 .demo-cases {
@@ -285,6 +333,8 @@
 .demo-list-canvas__view {
     position: relative;
     height: 300px;
+    border: solid thin #64aad0;
+    min-width: 400px;
 }
 
 .demo-list-canvas__view_search {
@@ -377,6 +427,7 @@
     width: 100%;
     height: 100%;
     overflow: auto;
+    padding: 0 10px;
 }
 
 
@@ -496,6 +547,13 @@
 .nav-profile__logout:hover {
     color: #009bfe;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAYCAYAAAARfGZ1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAWtJREFUeNq0lkFnA0EUxzcz5BTCUkopPfUzlJyWpaT2UM2p36D0VPohSuk1HyCHSiREQwmhp1z6EUIppZQSch3t/8V/240kNZO8Pn4sM++3M7NvXlKKml9RQMjkku9kE/1jrJPHgZ7YR27BHWgFylvMs+vkMtAGh6ARKG8wr1t8QVF+A8rgBMwC5TPmWXoW5AnIwDlwG34/x/yMvh/5LbgE0y0LRPIv6JvLaxx4VKrAIXdRM9zGvXKJd0Dd8HxGynJZ/bHI98CrsvwF7Bverk9lufhikz8oy8U3FfmbbMEzybcjHsjRiPwpL3rFSOWjirwHzpTl4uuLfMyeoLX6hL6x4W26Bk1Q3VJcpUd8zhSKfsC+bDcUW+YP6FtouVfcxQOoBIorzHP0LPVzGTgFE/DMnuMTGedPmO9+63b1r3/Kpu/Y1EZsER9gh/ciYVWUecbD5Uvx91+LlCs7Yg/aBe+8eFJl/VXSPL4FGAArCkpvl7H8hwAAAABJRU5ErkJggg==);
+}
+
+.demo-content_wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
 /*-----//------*/

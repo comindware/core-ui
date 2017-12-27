@@ -106,7 +106,8 @@ export default () => {
     return new CanvasView({
         view: EditableGridView,
         canvas: {
-            height: '250px'
+            height: '250px',
+            width: '400px'
         },
         region: {
             float: 'left'

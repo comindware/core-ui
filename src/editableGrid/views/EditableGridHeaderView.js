@@ -15,9 +15,10 @@ export default HeaderView.extend({
 
         this.__columnEls = [];
 
+        let isFirstChild = true;
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new EditableGridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
+            const view = new EditableGridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column,
                 gridEventAggregator: this.gridEventAggregator
@@ -26,6 +27,14 @@ export default HeaderView.extend({
             this.__columnEls.push(view);
             const childEl = view.render().el;
             el.appendChild(childEl);
+            if (this.options.isTree && isFirstChild && !column.viewModel.get('isCheckboxColumn')) {
+                this.collapseButton = $('<span class="collapsible-btn"></span>');
+                view.$el.prepend(this.collapseButton);
+                isFirstChild = false;
+                if (this.options.expandOnShow) {
+                    this.__updateCollapseAll(false);
+                }
+            }
         });
 
         this.headerMinWidth = this.__getAvailableWidth();

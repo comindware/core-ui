@@ -35,7 +35,7 @@ const defaultOptions = {
 
 formRepository.editors.Document = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.on('change', this.checkEmpty.bind(this));
     },
@@ -103,12 +103,17 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
 
     uploadDocumentOnServer(documents) {
         this.options.createDocuments(documents).then(results => {
-            const tDocs = _.map(results, doc => new DocumentReferenceModel({
-                id: doc.id,
-                documentsId: _.map(documents, item => item.id),
-                name: doc.FileName || doc.fileName,
-                url: doc.DocumentLink || null
-            }));
+            const tDocs = results.map(doc => {
+                const mappedObject = documents.find(uploadDoc => uploadDoc.id === doc.id);
+
+                return new DocumentReferenceModel({
+                    id: doc.id,
+                    documentsId: documents.map(item => item.id),
+                    name: doc.FileName || doc.fileName, // TODO fix API
+                    url: doc.DocumentLink || null,
+                    type: mappedObject ? mappedObject.type : null // TODO fix API
+                });
+            });
             this.addItem(tDocs);
         });
     },

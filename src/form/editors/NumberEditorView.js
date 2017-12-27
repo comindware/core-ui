@@ -77,7 +77,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * */
 formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.bindAll(this, '__stop');
     },
@@ -112,13 +112,13 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         'change @ui.input'() {
             this.__value(this.ui.input.val(), false, true, false);
         },
-        'mousewheel @ui.input'(event) {
+        'wheel @ui.input'(event) {
             if (!this.getEnabled() || this.getReadonly() || !this.hasFocus) {
                 return;
             }
 
             this.__start();
-            this.__spin((event.deltaY > 0 ? 1 : -1) * constants.STEP);
+            this.__spin((Math.sign(event.originalEvent.deltaY) > 0 ? 1 : -1) * constants.STEP);
             clearTimeout(this.mousewheelTimer);
             //noinspection JSCheckFunctionSignatures
             this.mousewheelTimer = setTimeout(this.__stop, 100);

@@ -17,6 +17,7 @@ import CTEventsService from 'services/CTEventsService';
 import WebSocketService from 'services/WebSocketService';
 import RoutingService from 'services/RoutingService';
 import ToastNotificationService from 'services/ToastNotificationService';
+import InterfaceErrorMessageService from 'services/InterfaceErrorMessageService';
 import 'backbone.trackit';
 
 export default {
@@ -30,6 +31,7 @@ export default {
         marionetteApp.addInitializer(options.serviceInitializer);
 
         GlobalEventService.initialize();
+        InterfaceErrorMessageService.initialize();
 
         if (window.application.toastNotificationRegion) {
             ToastNotificationService.initialize({

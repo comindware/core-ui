@@ -38,7 +38,7 @@ const defaultOptions = {
  * */
 formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
         _.bindAll(this, '__onDropdownOpen');
         this.__bindReqres();
         this.__createViewModel();
@@ -185,19 +185,22 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
 
     __updateViewModel(selectedValues) {
         const members = _.clone(this.viewModel.get('members'));
-        _.each(this.options.exclude, id => {
+        this.options.exclude.forEach(id => {
             if (members[id]) {
                 delete members[id];
             }
         });
-        const selectedMembers = _.map(selectedValues, id => {
-            const model = members[id];
-            delete members[id];
-            return model;
-        });
-        const availableMembers = _.values(members);
+        const selectedMembers = selectedValues
+            ? selectedValues.map(id => {
+                const model = members[id];
+                delete members[id];
+                return model;
+            })
+            : [];
 
+        const availableMembers = Object.values(members);
         const availableModels = this.viewModel.get('available');
+
         availableModels.reset(availableMembers);
         const selectedModels = this.viewModel.get('selected');
         selectedModels.reset(selectedMembers);

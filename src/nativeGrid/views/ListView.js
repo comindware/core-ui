@@ -30,7 +30,7 @@ export default Marionette.CollectionView.extend({
 
         this.__createReqres();
 
-        this.childViewOptions = _.extend(options.childViewOptions || {}, {
+        this.childViewOptions = Object.assign(options.childViewOptions || {}, {
             internalListViewReqres: this.internalReqres
         });
 
@@ -47,6 +47,11 @@ export default Marionette.CollectionView.extend({
 
         _.bindAll(this, '__handleResize', '__handleResizeInternal');
         $(window).resize(this.__handleResize);
+        this.gridEventAggregator = options.gridEventAggregator;
+        this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
+        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
+        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+        this.listenTo(this, 'childview:toggle:collapse', this.__toggleCollapse);
     },
     /**
      * Class for view
@@ -84,9 +89,6 @@ export default Marionette.CollectionView.extend({
 
     onRender() {
         this.__assignKeyboardShortcuts();
-
-        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
     },
 
     keyboardShortcuts: {
@@ -290,5 +292,57 @@ export default Marionette.CollectionView.extend({
                 this.$el.width(fullWidth);
             }
         }, 200);
+    },
+
+    __toggleCollapse(child, model) {
+        let index = this.collection.indexOf(model) + 1;
+        let currentModel = this.collection.at(index);
+        while (index < this.collection.length && currentModel.level > model.level) {
+            const rowEl = this.children.findByIndex(index).$el;
+            if (model.collapsed) {
+                rowEl.slideUp();
+                currentModel.hidden = true;
+            } else if (!this.__getParentCollapsed(currentModel)) {
+                rowEl.slideDown();
+                currentModel.hidden = false;
+            }
+            index++;
+            currentModel = this.collection.at(index);
+        }
+        this.__updateCollapseAll();
+    },
+
+    __toggleCollapseAll(collapsed) {
+        for (let i = 0; i < this.children.length; i++) {
+            const row = this.children.findByIndex(i);
+            row.updateCollapsed(collapsed, true);
+        }
+        this.gridEventAggregator.trigger('collapse:change');
+    },
+
+    __getParentCollapsed(model) {
+        let collapsed = false;
+        let parentModel = model.parentModel;
+        while (parentModel) {
+            if (parentModel.collapsed !== false) {
+                collapsed = true;
+                break;
+            }
+            parentModel = parentModel.parentModel;
+        }
+        return collapsed;
+    },
+
+    __updateCollapseAll() {
+        let collapsed = true;
+        for (let i = 0; i < this.children.length; i++) {
+            const row = this.children.findByIndex(i);
+            if (row.model.level === 0 && row.model.collapsed === false) {
+                collapsed = false;
+                break;
+            }
+        }
+        this.gridEventAggregator.trigger('update:collapse:all', collapsed);
+        this.gridEventAggregator.trigger('collapse:change');
     }
 });

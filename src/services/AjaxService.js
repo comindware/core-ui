@@ -53,7 +53,7 @@ export default window.Ajax = new (Marionette.Object.extend({
     getResponse(type, url, data, options) {
         helpers.assertArgumentNotFalsy(type, 'type');
         helpers.assertArgumentNotFalsy(url, 'url');
-        const config = _.extend({
+        const config = Object.assign({
             type,
             url,
             data: data ? JSON.stringify(data) : null,
@@ -61,8 +61,8 @@ export default window.Ajax = new (Marionette.Object.extend({
             dataType: 'json',
             contentType: 'application/json'
         }, options || {});
-        const promise = Promise.resolve($.ajax(config));
-        return PromiseService.registerPromise(promise);
+
+        return PromiseService.registerPromise($.ajax(config));
     },
 
     sendFormData(url, formData) {

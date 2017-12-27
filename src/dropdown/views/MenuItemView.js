@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import template from '../templates/menuItem.hbs';
 
@@ -22,9 +20,6 @@ import template from '../templates/menuItem.hbs';
  * */
 
 export default Marionette.ItemView.extend({
-    initialize() {
-    },
-
     tagName: 'li',
 
     className: 'popout-menu__i',

@@ -113,9 +113,7 @@ const GridHeaderView = Marionette.ItemView.extend({
         const column = args.column;
         const sorting = column.sorting;
         let comparator;
-        _.each(this.columns, c => {
-            c.sorting = null;
-        });
+        this.columns.forEach(c => c.sorting = null);
         switch (sorting) {
             case 'asc':
                 column.sorting = 'desc';

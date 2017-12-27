@@ -20,12 +20,10 @@ export default BaseSplitController.extend({
         const users = this.options.users;
         const groups = this.options.groups;
         const members = {};
-        _.each(users, model => {
-            members[model.id] = model;
-        });
-        _.each(groups, model => {
-            members[model.id] = model;
-        });
+
+        users.forEach(model => members[model.id] = model);
+
+        groups.forEach(model => members[model.id] = model);
 
         this.model.set({
             title: this.__getFullMemberSplitTitle(),
@@ -49,7 +47,9 @@ export default BaseSplitController.extend({
             groups: 0
         };
 
-        _.each(this.options.selected, id => {
+        const selected = this.options.selected;
+
+        selected && selected.forEach(id => {
             if (members[id]) {
                 membersCount[members[id].type]++;
             }

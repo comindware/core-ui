@@ -29,8 +29,10 @@ export default function() {
 
     return new CanvasView({
         view: new MySplitPanel(),
+
         canvas: {
-            height: '250px'
+            height: '250px',
+            width: '400px'
         }
     });
 }

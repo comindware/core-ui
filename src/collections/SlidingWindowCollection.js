@@ -43,7 +43,7 @@ const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:cor
 
         [ 'add', 'remove', 'reset', 'sort' ].forEach(eventName => {
             this.listenTo(this.innerCollection, eventName, function() {
-                const args = _.toArray(arguments);
+                const args = Array.from(arguments);
                 args.unshift(eventName);
                 this.trigger.apply(this, args);
             });
@@ -54,7 +54,7 @@ const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:cor
 
     __rebuildModels(options = {}) {
         const newModels = this.parentCollection.chain().rest(this.state.position).first(this.state.windowSize).value();
-        this.innerCollection.reset(newModels, _.extend(options, { silent: true }));
+        this.innerCollection.reset(newModels, Object.assign(options, { silent: true }));
         this.models = this.innerCollection.models;
         this.length = this.innerCollection.length;
         this.trigger('reset', this, _.clone(options));
@@ -171,14 +171,14 @@ const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:cor
 // methods that alter data should proxy to the parent collection
 ['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch'].forEach(methodName => {
     SlidingWindowCollection.prototype[methodName] = function() {
-        return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
+        return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };
 });
 
 // methods that retrieves data should proxy to the inner collection
 ['each', 'at', 'get', 'filter', 'map'].forEach(methodName => {
     SlidingWindowCollection.prototype[methodName] = function() {
-        return this.innerCollection[methodName].apply(this.innerCollection, _.toArray(arguments));
+        return this.innerCollection[methodName].apply(this.innerCollection, Array.from(arguments));
     };
 });
 

@@ -184,7 +184,8 @@ module.exports = options => {
                 short_name: 'Comindware',
                 background_color: '#ffffff',
                 display: 'standalone',
-                theme_color: '#0575bd'
+                theme_color: '#0575bd',
+                orientation: 'landscape-secondary'
             }),
         ],
         resolve: {

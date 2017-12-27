@@ -8,6 +8,7 @@
 /*eslint-disable*/
 import 'lib';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
+import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { helpers } from 'utils';
 
 const selectableBehavior = {
@@ -103,8 +104,7 @@ const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
  * */
 
 const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.collections.VirtualCollection.prototype */ {
-    constructor(collection, options) {
-        options = options || {};
+    constructor(collection, options = {}) {
         this.options = options;
         if (options.delayedAdd === undefined) {
             options.delayedAdd = true;
@@ -167,6 +167,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
         if (SelectableBehaviorClass) {
             _.extend(this, new SelectableBehaviorClass(this));
         }
+        _.extend(this, new CheckableBehavior.CheckableCollection(this));
     },
 
     __rebuildIndex() {
@@ -183,14 +184,25 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
         this.__buildModelsInternal(this.index);
     },
 
-    __buildModelsInternal(list) {
+    __buildModelsInternal(list, level = 0) {
         for (let i = 0, len = list.length; i < len; i++) {
             const model = list.at(i);
             this.models.push(model);
             this._addReference(model);
             model.collection = this;
-
-            !model.collapsed && model.children && this.__buildModelsInternal(model.children);
+            model.level = level;
+            let skipChild = !this.options.isTree && model.collapsed;
+            if (!skipChild && model.children) {
+                if (this.options.isTree) {
+                    this.listenToOnce(model.children, 'add', this.__onAdd);
+                    this.listenToOnce(model.children, 'change', this.__onChange);
+                    this.listenToOnce(model.children, 'reset', this.__onReset);
+                    this.listenToOnce(model.children, 'sort', this.__onSort);
+                    this.listenToOnce(model.children, 'sync', this.__onSync);
+                    this.listenToOnce(model.children, 'update', this.__onUpdate);
+                }
+                this.__buildModelsInternal(model.children, level + 1);
+            }
         }
         this.length = this.models.length;
     },
@@ -386,7 +398,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     },
 
     __onChange(model, options, isPartialUpdate) {
-        const changed = _.keys(model.changedAttributes());
+        const changed = Object.keys(model.changedAttributes());
         const attrsAffectedByGrouping = [];
         this.grouping.forEach(o => {
             if (o.affectedAttributes) {
@@ -439,12 +451,12 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
 });
 
 // methods that alter data should proxy to the parent collection
-_.each(['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update'], methodName => {
+['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update'].forEach(methodName => {
     VirtualCollection.prototype[methodName] = function() {
-        return this.parentCollection[methodName].apply(this.parentCollection, _.toArray(arguments));
+        return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };
 });
 
-_.extend(VirtualCollection.prototype, Backbone.Events);
+Object.assign(VirtualCollection.prototype, Backbone.Events);
 
 export default VirtualCollection;

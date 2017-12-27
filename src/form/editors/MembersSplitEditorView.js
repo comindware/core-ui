@@ -21,24 +21,24 @@ const defaultOptions = () => ({
     emptyListText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST')
 });
 
-formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
+export default formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         const defOps = _.extend(defaultOptions(), {
-            users: _.map(options.schema.cacheService.GetUsers(), user => ({
+            users: options.schema.cacheService.GetUsers().map(user => ({
                 id: user.Id,
                 name: (user.Text || user.Username),
                 abbreviation: user.abbreviation,
                 userpicUri: user.userpicUri,
                 type: 'users'
             })),
-            groups: _.map(options.schema.cacheService.GetGroups(), group => ({
+            groups: options.schema.cacheService.GetGroups().map(group => ({
                 id: group.id,
                 name: group.name,
                 type: 'groups'
             }))
         });
 
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, _.keys(defOps)), defOps);
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
         const value = this.getValue();
         this.options.selected = typeof value === 'string' ? [value] : value;
@@ -98,5 +98,3 @@ formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
         }
     }
 });
-
-export default formRepository.editors.MembersSplit;

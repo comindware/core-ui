@@ -13,6 +13,6 @@ import core from 'comindware/core';
 
 export default Backbone.Model.extend({
     initialize() {
-        _.extend(this, new core.models.behaviors.SelectableBehavior.Selectable(this));
+        Object.assign(this, new core.models.behaviors.SelectableBehavior.Selectable(this));
     }
 });

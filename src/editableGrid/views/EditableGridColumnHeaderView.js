@@ -18,10 +18,10 @@ export default ColumnHeaderView.extend({
     initialize() {
         ColumnHeaderView.prototype.initialize.apply(this, arguments);
         if (this.model.get('isCheckboxColumn')) {
-            this.selectableCollection = this.model.get('selectableCollection');
-            this.listenTo(this.selectableCollection, 'select:all', this.__setCheckBoxAll);
-            this.listenTo(this.selectableCollection, 'select:none', this.__setCheckBoxNone);
-            this.listenTo(this.selectableCollection, 'select:some', this.__setCheckBoxSome);
+            this.collection = this.gridEventAggregator.collection;
+            this.listenTo(this.collection, 'check:all', this.__setCheckBoxAll);
+            this.listenTo(this.collection, 'check:none', this.__setCheckBoxNone);
+            this.listenTo(this.collection, 'check:some', this.__setCheckBoxSome);
         }
         this.__regionManager = new Marionette.RegionManager();
     },
@@ -41,8 +41,8 @@ export default ColumnHeaderView.extend({
     onRender() {
         ColumnHeaderView.prototype.onRender.call(this);
 
-        if (this.model.get('isCheckboxColumn') && this.selectableCollection.selectedLength) {
-            if (this.selectableCollection.selected.length === this.selectableCollection.selectedLength) {
+        if (this.model.get('isCheckboxColumn') && this.collection.checkedLength) {
+            if (this.collection.length === this.collection.checkedLength) {
                 this.__setCheckBoxAll();
             } else {
                 this.__setCheckBoxSome();
@@ -56,9 +56,9 @@ export default ColumnHeaderView.extend({
 
     __toggleSelection() {
         if (this.checkedState !== checkedState.checked) {
-            this.selectableCollection.selectAll();
+            this.collection.checkAll();
         } else {
-            this.selectableCollection.selectNone();
+            this.collection.uncheckAll();
         }
         return false;
     },

@@ -22,6 +22,8 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @param {Backbone.View} options.gridColumnHeaderView View Используемый для отображения заголовка (шапки) списка
  * */
 
+const expandedClass = 'collapsible-btn_expanded';
+
 export default Marionette.ItemView.extend({
     constants: {
         MIN_COLUMN_WIDTH: 100
@@ -44,7 +46,9 @@ export default Marionette.ItemView.extend({
         this.columns = options.columns;
         this.$document = $(document);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
+        this.collapsed = true;
         this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
+        this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
     /**
      * View template
@@ -60,7 +64,8 @@ export default Marionette.ItemView.extend({
     },
 
     events: {
-        'mousedown .grid-header-dragger': '__handleDraggerMousedown'
+        'mousedown .grid-header-dragger': '__handleDraggerMousedown',
+        'click .collapsible-btn': '__toggleCollapseAll'
     },
 
     onRender() {
@@ -69,6 +74,7 @@ export default Marionette.ItemView.extend({
         }
         this.__columnEls = [];
 
+        let isFirstChild = true;
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
             const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
@@ -79,10 +85,18 @@ export default Marionette.ItemView.extend({
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
+            if (this.options.isTree && isFirstChild && !column.viewModel.get('isCheckboxColumn')) {
+                this.collapseButton = $('<span class="collapsible-btn"></span>');
+                view.$el.prepend(this.collapseButton);
+                isFirstChild = false;
+            }
         });
         this.headerMinWidth = this.__getAvailableWidth();
         this.__setInitialWidth(this.headerMinWidth);
         this.__handleResizeInternal();
+        if (this.options.expandOnShow) {
+            this.__updateCollapseAll(false);
+        }
     },
 
     setFitToView() {
@@ -350,5 +364,17 @@ export default Marionette.ItemView.extend({
 
     __getFullWidth() {
         return this.$el.parent().width() - 2; // Magic cross browser pixels, don't remove them
+    },
+
+    __toggleCollapseAll() {
+        this.__updateCollapseAll(!this.collapsed);
+        this.gridEventAggregator.trigger('toggle:collapse:all', this.collapsed);
+    },
+
+    __updateCollapseAll(collapsed) {
+        this.collapsed = collapsed;
+        if (this.collapseButton) {
+            this.collapseButton.toggleClass(expandedClass, !collapsed);
+        }
     }
 });

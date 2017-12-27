@@ -58,11 +58,13 @@ import ReferenceListItemView from './editors/impl/reference/views/ReferenceListI
 import UserReferenceListItemView from './editors/impl/reference/views/UserReferenceListItemView';
 import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
+import ReferenceBubbleButtonView from './editors/impl/referenceBubble/views/ButtonView';
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
+import AudioEditor from './editors/AudioEditor';
 import './validators/requiredValidator';
 import './validators/lengthValidator';
 import './validators/passwordValidator';
@@ -154,6 +156,7 @@ const api = /** @lends module:core.form */ {
                 ReferenceListItemView,
                 LoadingView,
                 ReferenceButtonView,
+                ReferenceBubbleButtonView,
                 ReferencePanelView,
                 UserReferenceButtonView,
                 UserReferenceListItemView
@@ -206,7 +209,8 @@ const api = /** @lends module:core.form */ {
         WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
         IconEditor: IconEditorComponentView,
         ColorPickerEditor,
-        RangeEditor
+        RangeEditor,
+        AudioEditor
     }
 };
 export default api;
