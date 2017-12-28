@@ -140,7 +140,7 @@ export default Marionette.LayoutView.extend({
                             collection.get(model.id).select();
                         }
                     });
-                    this.__toggleElementsQuantityWarning(collection.length);
+                    this.__toggleElementsQuantityWarning(collection.totalCount);
                 }
                 this.__setLoading(false);
             });
