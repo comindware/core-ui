@@ -20,7 +20,8 @@ const classes = {
     DROPDOWN_DOWN: 'dropdown__wrp_down',
     DROPDOWN_WRP_OVER: 'dropdown__wrp_down-over',
     DROPDOWN_UP: 'dropdown__wrp_up',
-    DROPDOWN_UP_OVER: 'dropdown__wrp_up-over'
+    DROPDOWN_UP_OVER: 'dropdown__wrp_up-over',
+    VISIBLE_COLLECTION: 'visible-collection'
 };
 
 const WINDOW_BORDER_OFFSET = 10;
@@ -264,8 +265,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             hostEl: this.el
         });
         this.__adjustPosition(wrapperView.$el);
-
+        const buttonWidth = this.buttonRegion.$el.outerWidth();
+        this.panelView.$el.css({ width: buttonWidth });
+        this.panelView.$(`.${classes.VISIBLE_COLLECTION}`).css({ width: buttonWidth });
         this.listenToElementMoveOnce(this.el, this.close);
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
 
         const activeElement = document.activeElement;
@@ -301,6 +305,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.trigger('close', this, ...args);
         if (this.options.renderAfterClose) {
             this.button.render();
+        }
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.close();
         }
     },
 
