@@ -292,7 +292,6 @@
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     overflow: hidden;
-    background: #fff;
     z-index: 44;
     opacity: 0;
     transition: opacity .7s, height .1s ease-out;

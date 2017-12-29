@@ -84,7 +84,7 @@ export default () => {
         },
         {
             key: 'referenceCell',
-            type: 'Reference',
+            type: 'ReferenceBubble',
             title: 'Reference Cell',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             cellView: core.list.cellFactory.getReferenceCellView(),

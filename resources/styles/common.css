@@ -165,7 +165,6 @@ a:hover {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     border-bottom: solid 1px #ced3d7;
-    background: #fff;
     z-index: 44;
 }
 
@@ -191,7 +190,7 @@ a:hover {
     color: #333;
     border: 0;
     outline: 0;
-    background: no-repeat 6px 50% #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC);
+    background: no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC);
     display: block;
     box-sizing: border-box;
 }
