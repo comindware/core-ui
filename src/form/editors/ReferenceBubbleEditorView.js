@@ -24,7 +24,7 @@ const ReferenceCollection = Backbone.Collection.extend({
 });
 
 const defaultOptions = {
-    displayAttribute: 'text',
+    displayAttribute: 'name',
     controller: null,
     showAddNewButton: false,
     showEditButton: false,
@@ -47,7 +47,7 @@ const defaultOptions = {
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
  * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
  * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
- * @param {String} [options.displayAttribute='text'] The name of the attribute that contains display text.
+ * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text.
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
@@ -270,7 +270,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         if (!value) {
             return '';
         }
-        return value[this.options.displayAttribute] || `#${value.id}`;
+        return value[this.options.displayAttribute] || value.text || `#${value.id}`;
     },
 
     __onDropdownOpen() {

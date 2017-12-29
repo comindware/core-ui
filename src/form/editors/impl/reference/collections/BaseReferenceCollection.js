@@ -34,7 +34,9 @@ export default Backbone.Collection.extend({
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
 
-    parse(response, options) {
+    parse(responseData, options) {
+        const response = responseData.data;
+
         this.totalCount = response.totalCount;
         return Backbone.Collection.prototype.parse.call(this, response.options, options);
     },
