@@ -1,3 +1,4 @@
+
 import Application from 'Application';
 import DemoService from './app/DemoService';
 import NavBarView from './app/views/NavBarView';
@@ -6,14 +7,7 @@ import DemoPageView from './app/views/DemoPageView';
 
 export default Marionette.Object.extend({
     index() {
-        Application.headerRegion.show(new NavBarView({
-            collection: new Backbone.Collection([
-                {
-                    displayName: 'Welcome',
-                    selected: true
-                }
-            ])
-        }));
+        Application.headerRegion.$el.hide();
         Application.contentRegion.show(new IndexPageView({
             collection: new Backbone.Collection(DemoService.getSections())
         }));
@@ -22,6 +16,7 @@ export default Marionette.Object.extend({
     showCase(sectionId, groupId, caseId) {
         const sections = new Backbone.Collection(DemoService.getSections());
         sections.find(s => s.id === sectionId).set('selected', true);
+        Application.headerRegion.$el.show();
         Application.headerRegion.show(new NavBarView({
             collection: sections
         }));
