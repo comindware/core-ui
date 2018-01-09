@@ -30,15 +30,15 @@ export default Marionette.ItemView.extend({
 
     className: 'bubbles__i',
 
+    ui: {
+        clearButton: '.js-bubble-delete',
+        editButton: '.js-edit-button'
+    },
+
     events: {
         'click @ui.clearButton': '__delete',
         'click @ui.editButton': '__edit',
         click: '__click'
-    },
-
-    ui: {
-        clearButton: '.js-bubble-delete',
-        editButton: '.js-edit-button'
     },
 
     __delete() {

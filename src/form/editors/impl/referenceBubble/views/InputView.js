@@ -112,9 +112,7 @@ export default Marionette.ItemView.extend({
 
     __calculateDesiredInputWidth(value) {
         let styleBlock = 'position:absolute; left: -1000px; top: -1000px; display:none;';
-        const div = $('<div />', {
-            style: styleBlock
-        });
+
         const parentWidth = this.parent.outerWidth();
         let style;
         const styles = ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'];
@@ -125,10 +123,11 @@ export default Marionette.ItemView.extend({
             style = styles[i];
             styleBlock += `${style}:${this.ui.input.css(style)};`;
         }
-        div.text(value);
-        $('body').append(div);
-        width = div.width() + 25;
-        div.remove();
+
+        document.body.insertAdjacentHTML('beforeend', `<div id="calculation-input-reference-editor" style=${styleBlock}>${value}</div>`);
+
+        width = document.getElementById('calculation-input-reference-editor').getBoundingClientRect().width + 25;
+        document.body.removeChild(document.getElementById('calculation-input-reference-editor'));
         if (parentWidth !== 0 && (width > parentWidth - 10)) {
             width = parentWidth - 10;
         }

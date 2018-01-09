@@ -57,7 +57,6 @@ table {
 
 html, body {
     width: 100%;
-    min-width: 980px;
     height: 100%;
     overflow: hidden;
 }
@@ -66,8 +65,8 @@ body.non-selectable {
     min-width: 0px;
 }
 
-body, input, textarea, select, label {
-    font: normal 12px/1.4 'OpenSans', sans-serif;
+body, input, textarea, select {
+    font: normal 14px/1.4 'OpenSans', sans-serif;
 }
 
 .noselect {
