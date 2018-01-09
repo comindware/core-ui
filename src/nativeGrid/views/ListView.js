@@ -49,6 +49,9 @@ export default Marionette.CollectionView.extend({
         $(window).resize(this.__handleResize);
         this.gridEventAggregator = options.gridEventAggregator;
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
+        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
+        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+        this.listenTo(this, 'childview:toggle:collapse', this.__toggleCollapse);
     },
     /**
      * Class for view
@@ -86,10 +89,6 @@ export default Marionette.CollectionView.extend({
 
     onRender() {
         this.__assignKeyboardShortcuts();
-
-        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
-        this.listenTo(this, 'childview:toggle:collapse', this.__toggleCollapse);
     },
 
     keyboardShortcuts: {
@@ -302,8 +301,10 @@ export default Marionette.CollectionView.extend({
             const rowEl = this.children.findByIndex(index).$el;
             if (model.collapsed) {
                 rowEl.slideUp();
+                currentModel.hidden = true;
             } else if (!this.__getParentCollapsed(currentModel)) {
                 rowEl.slideDown();
+                currentModel.hidden = false;
             }
             index++;
             currentModel = this.collection.at(index);
@@ -314,19 +315,20 @@ export default Marionette.CollectionView.extend({
     __toggleCollapseAll(collapsed) {
         for (let i = 0; i < this.children.length; i++) {
             const row = this.children.findByIndex(i);
-            row.updateCollapsed(collapsed, external);
+            row.updateCollapsed(collapsed, true);
         }
+        this.gridEventAggregator.trigger('collapse:change');
     },
 
     __getParentCollapsed(model) {
         let collapsed = false;
-        let parent = model.parent;
-        while (parent) {
-            if (parent.collapsed !== false) {
+        let parentModel = model.parentModel;
+        while (parentModel) {
+            if (parentModel.collapsed !== false) {
                 collapsed = true;
                 break;
             }
-            parent = parent.parent;
+            parentModel = parentModel.parentModel;
         }
         return collapsed;
     },
@@ -341,5 +343,6 @@ export default Marionette.CollectionView.extend({
             }
         }
         this.gridEventAggregator.trigger('update:collapse:all', collapsed);
+        this.gridEventAggregator.trigger('collapse:change');
     }
 });

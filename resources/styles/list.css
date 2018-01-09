@@ -766,3 +766,15 @@ svg.svg-grid-icons {
 .grid-header-column-content .collapsible-btn {
     top: 18px;
 }
+
+.fr-collection .grid-cell .collapsible-btn {
+    top: 5px;
+}
+
+.fr-collection .grid-header-column-content .collapsible-btn {
+    top: 6px;
+}
+
+.fr-collection .grid-cell .editor_checkbox {
+    top: 2px;
+}

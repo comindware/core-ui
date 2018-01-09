@@ -94,7 +94,8 @@ export default Marionette.LayoutView.extend({
             columns: this.options.columns,
             gridColumnHeaderView: ColumnHeaderView,
             gridEventAggregator: this,
-            isTree: this.options.isTree
+            isTree: this.options.isTree,
+            expandOnShow: this.options.expandOnShow
         });
 
         if (this.options.noColumnsView) {
@@ -108,7 +109,9 @@ export default Marionette.LayoutView.extend({
             columns: this.options.columns,
             gridEventAggregator: this,
             paddingLeft: this.options.paddingLeft,
-            paddingRight: this.options.paddingRight
+            paddingRight: this.options.paddingRight,
+            isTree: this.options.isTree,
+            expandOnShow: this.options.expandOnShow
         });
 
         this.listView = new ListView({

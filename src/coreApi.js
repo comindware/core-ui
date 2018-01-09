@@ -54,6 +54,7 @@ import CollectionHighlightableBehavior from './collections/behaviors/Highlightab
 import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
+import CheckableBehavior from './models/behaviors/CheckableBehavior';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -117,7 +118,8 @@ const core = {
         behaviors: {
             CollapsibleBehavior,
             HighlightableBehavior,
-            SelectableBehavior
+            SelectableBehavior,
+            CheckableBehavior
         }
     },
     views: {

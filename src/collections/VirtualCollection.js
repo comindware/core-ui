@@ -8,6 +8,7 @@
 /*eslint-disable*/
 import 'lib';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
+import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { helpers } from 'utils';
 
 const selectableBehavior = {
@@ -166,6 +167,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
         if (SelectableBehaviorClass) {
             _.extend(this, new SelectableBehaviorClass(this));
         }
+        _.extend(this, new CheckableBehavior.CheckableCollection(this));
     },
 
     __rebuildIndex() {
@@ -189,9 +191,16 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
             this._addReference(model);
             model.collection = this;
             model.level = level;
-
-            let skipChild = !this.options.showCollapsed && model.collapsed;
+            let skipChild = !this.options.isTree && model.collapsed;
             if (!skipChild && model.children) {
+                if (this.options.isTree) {
+                    this.listenToOnce(model.children, 'add', this.__onAdd);
+                    this.listenToOnce(model.children, 'change', this.__onChange);
+                    this.listenToOnce(model.children, 'reset', this.__onReset);
+                    this.listenToOnce(model.children, 'sort', this.__onSort);
+                    this.listenToOnce(model.children, 'sync', this.__onSync);
+                    this.listenToOnce(model.children, 'update', this.__onUpdate);
+                }
                 this.__buildModelsInternal(model.children, level + 1);
             }
         }

@@ -85,15 +85,18 @@ export default Marionette.ItemView.extend({
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
-            if (this.options.isTree && isFirstChild) {
+            if (this.options.isTree && isFirstChild && !column.viewModel.get('isCheckboxColumn')) {
                 this.collapseButton = $('<span class="collapsible-btn"></span>');
                 view.$el.prepend(this.collapseButton);
+                isFirstChild = false;
             }
-            isFirstChild = false;
         });
         this.headerMinWidth = this.__getAvailableWidth();
         this.__setInitialWidth(this.headerMinWidth);
         this.__handleResizeInternal();
+        if (this.options.expandOnShow) {
+            this.__updateCollapseAll(false);
+        }
     },
 
     setFitToView() {

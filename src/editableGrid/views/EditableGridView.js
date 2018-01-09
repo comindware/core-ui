@@ -8,7 +8,6 @@ import EditableGridHeaderToolbarView from '../views/EditableGridHeaderToolbarVie
 import EditableGridHeaderView from '../views/EditableGridHeaderView';
 import SelectionView from '../views/SelectionView';
 import EditableGridCellViewFactory from '../services/EditableGridCellViewFactory';
-import SelectableCollection from '../collections/SelectableCollection';
 
 const constants = {
     rowHeight: 25,
@@ -22,25 +21,6 @@ export default Marionette.LayoutView.extend({
         this.collectionHeaderToolbarView = this.__createCollectionHeaderToolbarView();
         this.listenTo(this.collectionHeaderToolbarView, 'toolbar:execute:action', this.__executeAction);
         this.listenTo(this.collection, 'add remove reset', this.__setGridHeight);
-        if (options.showSelectColumn !== false) {
-            this.selectableCollection = new SelectableCollection(this.collection.map(model => ({ id: model.cid })));
-            this.listenTo(this.collection, 'add', model => {
-                this.selectableCollection.add({ id: model.cid });
-                if (this.selectableCollection.selectedLength) {
-                    this.selectableCollection.trigger('select:some');
-                }
-            });
-            this.listenTo(this.collection, 'remove', model => {
-                const modelToRemove = this.selectableCollection.get(model.cid);
-                modelToRemove.deselect();
-                this.selectableCollection.remove(this.selectableCollection.get(modelToRemove));
-            });
-            this.listenTo(this.collection, 'reset', () => {
-                this.selectableCollection.trigger('select:none');
-                this.selectableCollection.reset(this.collection.map(model => ({ id: model.cid })));
-            });
-            this.listenTo(this.selectableCollection, 'select:all select:some select:none', this.__selectionChange);
-        }
     },
 
     ui: {
@@ -80,7 +60,6 @@ export default Marionette.LayoutView.extend({
     },
 
     __onCollectionChange() {
-        this.selectableCollection.trigger('select:none');
         this.__setGridHeight();
     },
 
@@ -97,7 +76,16 @@ export default Marionette.LayoutView.extend({
     },
 
     __setGridHeight() {
-        const heightPx = this.collection.length ? ((this.collection.length * constants.rowHeight) + constants.defaultCollHeight) : 0;
+        let heightPx = this.collection.length ? constants.defaultCollHeight : 0;
+        if (this.options.isTree) {
+            this.nativeGridCollection.forEach(model => {
+                if (!model.hidden) {
+                    heightPx += constants.rowHeight;
+                }
+            });
+        } else {
+            heightPx += this.collection.length * constants.rowHeight;
+        }
         this.ui.grid.css('height', heightPx);
     },
 
@@ -109,26 +97,39 @@ export default Marionette.LayoutView.extend({
                 cellView: SelectionView,
                 viewModel: new Backbone.Model({
                     displayText: '',
-                    selectableCollection: this.selectableCollection,
                     isCheckboxColumn: true,
                 }),
                 width: constants.defaultCheckBoxColumnWidth
             });
         }
 
-        const nativeGridView = factory.createNativeGrid({
+        let nativeGridView;
+        const gridOptions = {
             gridViewOptions: {
                 columns,
                 selectableBehavior: 'multi',
                 childHeight: this.options.rowHeight,
                 paddingRight: 1,
-                paddingLeft: 1
+                paddingLeft: 1,
+                expandOnShow: this.options.expandOnShow
             },
             headerView: EditableGridHeaderView,
             collection: this.collection
-        });
-        this.listenTo(nativeGridView, 'item:show', this.__showRecord);
-        this.listenTo(nativeGridView, 'selection:change', this.__selectionChange);
+        };
+        if (this.options.isTree) {
+            nativeGridView = factory.createTreeGrid(gridOptions);
+            this.listenTo(nativeGridView.collection, 'add remove reset', this.__setGridHeight);
+        } else {
+            nativeGridView = factory.createNativeGrid(gridOptions);
+        }
+
+        this.listenTo(nativeGridView, 'collapse:change', this.__setGridHeight);
+        this.nativeGridCollection = nativeGridView.collection;
+        if (this.options.showSelectColumn !== false) {
+            this.listenTo(this.nativeGridCollection, 'check:all check:some check:none', this.__selectionChange);
+        } else {
+            this.listenTo(this.nativeGridCollection, 'select:all select:some select:none', this.__selectionChange);
+        }
         this.gridRegion.show(nativeGridView);
         this.__setGridHeight();
     },
@@ -171,12 +172,9 @@ export default Marionette.LayoutView.extend({
     },
 
     __getSelectedItems() {
-        const result = [];
-        this.selectableCollection.each(model => {
-            if (model.selected) {
-                result.push(this.collection.get(model.id));
-            }
-        });
-        return result;
+        if (this.options.showSelectColumn !== false) {
+            return Object.values(this.nativeGridCollection.checked);
+        }
+        return Object.values(this.nativeGridCollection.selected);
     }
 });
