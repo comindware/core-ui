@@ -11,7 +11,7 @@ export default function() {
     });
 
     return new EditorCanvasView({
-        editor: new core.form.editors.ReferenceEditor({
+        editor: new core.form.editors.ReferenceBubbleEditor({
             model,
             key: 'referenceValue',
             autocommit: true,

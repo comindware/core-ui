@@ -37,7 +37,7 @@ const ScrollbarView = Marionette.ItemView.extend({
         }
 
         _.bindAll(this, '__documentMouseUp', '__documentMouseMove');
-        this.$document = $(document);
+
         this.state = {
             position: 0,
             viewportHeight: 25,
@@ -55,9 +55,13 @@ const ScrollbarView = Marionette.ItemView.extend({
     },
 
     className: 'scrollbar',
+
     template: Handlebars.compile(template),
+
     model: null,
+
     state: null,
+
     dragContext: null,
 
     ui: {
@@ -310,7 +314,9 @@ const ScrollbarView = Marionette.ItemView.extend({
         };
 
         this.ui.dragger.addClass('active');
-        $(document).mousemove(this.__documentMouseMove).mouseup(this.__documentMouseUp);
+
+        window.document.addEventListener('mousemove', this.__documentMouseMove);
+        window.document.addEventListener('mouseup', this.__documentMouseUp);
     },
 
     __stopDrag() {
@@ -319,8 +325,8 @@ const ScrollbarView = Marionette.ItemView.extend({
         }
 
         this.dragContext = null;
-        this.$document.unbind('mousemove', this.__documentMouseMove);
-        this.$document.unbind('mouseup', this.__documentMouseUp);
+        window.document.removeEventListener('mousemove', this.__documentMouseMove);
+        window.document.removeEventListener('mouseup', this.__documentMouseUp);
         this.ui.dragger.removeClass('active');
     },
 

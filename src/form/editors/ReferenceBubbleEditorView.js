@@ -15,13 +15,15 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import FakeInputModel from './impl/referenceBubble/models/FakeInputModel';
 import ButtonView from './impl/referenceBubble/views/ButtonView';
 import PanelView from './impl/referenceBubble/views/PanelView';
-import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
 import formRepository from '../formRepository';
+import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
+import StaticController from './impl/referenceBubble/controllers/StaticController';
 
 const ReferenceCollection = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
+
 
 const defaultOptions = {
     displayAttribute: 'name',
@@ -51,14 +53,16 @@ const defaultOptions = {
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
-formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
+export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.bindAll(this, '__getDisplayText');
 
         this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.controller = this.options.controller;
+        this.controller = this.options.controller || new StaticController({
+            collection: options.collection
+        });
         this.showAddNewButton = this.options.showAddNewButton;
 
         this.reqres.setHandler('bubble:delete', this.__onBubbleDelete, this);
@@ -76,7 +80,7 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         const selectedModels = new Backbone.Collection(this.getValue(), {
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
         });
-        this.panelCollection = new VirtualCollection(new ReferenceCollection([]), { selectableBehavior: 'multi' });
+        this.panelCollection = new VirtualCollection(new ReferenceCollection(options.collection ? options.collection.toJSON() : []), { selectableBehavior: 'multi' });
 
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
@@ -364,5 +368,3 @@ formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends 
         }
     }
 });
-
-export default formRepository.editors.ReferenceBubble;

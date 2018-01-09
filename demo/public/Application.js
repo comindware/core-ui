@@ -19,6 +19,14 @@ Application.addInitializer(() => {
     const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
     const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
 
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceWorker.js').then(reg => {
+            console.log(`Registration succeeded. Scope is ${reg.scope}`);
+        }).catch(error => {
+            console.log(`Registration failed with ${error}`);
+        });
+    }
+
     core.initialize({
         ajaxService: {
             ajaxMap

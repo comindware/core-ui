@@ -247,20 +247,29 @@ export default {
                     description: 'Panels are resizable, drag the splitter!'
                 },
                 {
-                    id: 'messageService',
-                    displayName: 'Message Service'
+                    id: 'loadingBehavior',
+                    displayName: 'Loading Behavior'
+                }
+            ]
+        }, {
+            id: 'services',
+            displayName: 'Core services',
+            groups: [
+                {
+                    id: 'LocalizationService',
+                    displayName: 'Localization Service',
                 },
                 {
-                    id: 'windowsService',
+                    id: 'ToastNotificationsService',
+                    displayName: 'Toast notification Service'
+                },
+                {
+                    id: 'WindowsService',
                     displayName: 'Windows Service'
                 },
                 {
-                    id: 'localizationService',
-                    displayName: 'Localization Service'
-                },
-                {
-                    id: 'loadingBehavior',
-                    displayName: 'Loading Behavior'
+                    id: 'MessageService',
+                    displayName: 'Message Service'
                 }
             ]
         }
