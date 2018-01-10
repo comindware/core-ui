@@ -87,7 +87,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
 
-        let targets;
+        let targets = [];
         const popupDef = this.__stack.find(x => x.popupId === popupId);
         if (popupDef) {
             if (!popupDef.options.transient) {

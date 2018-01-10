@@ -1,22 +1,38 @@
-/*eslint-ignore*/
 
 import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 import sinon from 'sinon';
 
-describe('Editors', function() {
+const $ = core.lib.$;
+
+describe('Editors', () => {
     const findInput = function(view) {
         return view.$('.js-input');
     };
 
+    const collectionData = [{
+        id: 1,
+        name: 1
+    }, {
+        id: 2,
+        name: 2
+    }, {
+        id: 3,
+        name: 3
+    }];
+
+    let rootRegion;
+
     const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
         fetch() {
             const promise = new Promise(resolve => {
+                this.collection.reset(collectionData);
+
                 this.totalCount = 3;
 
                 return resolve({
-                    collection: this.collection.toJSON(),
+                    collection: collectionData,
                     totalCount: this.totalCount
                 });
             });
@@ -25,35 +41,28 @@ describe('Editors', function() {
         }
     });
 
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-
-        this.defaultCollection = new Backbone.Collection([{
-            id: 1,
-            name: 1
-        }, {
-            id: 2,
-            name: 2
-        }, {
-            id: 3,
-            name: 3
-        }]);
+    beforeEach(() => {
+        rootRegion = initializeCore();
     });
 
-    describe('ReferenceBubbleEditorView', function() {
-        it('should get focus when focus() is called', function() {
+    afterEach(() => {
+        core.services.WindowService.closePopup();
+    });
+
+    describe('ReferenceBubbleEditorView', () => {
+        it('should get focus when focus() is called', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
@@ -61,67 +70,66 @@ describe('Editors', function() {
             expect(view.hasFocus).toEqual(true, 'Must have focus.');
         });
 
-        it('should lose focus when blur() is called', function() {
+        it('should lose focus when blur() is called', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
             view.blur();
 
             expect(findInput(view)).not.toBeFocused();
-            expect(view.dropdownView.isOpen).toEqual(false, 'Must close dropdown on blur.');
             expect(view.hasFocus).toEqual(false, 'Must have focus.');
         });
 
-        it('should show empty model placeholder on empty value', function() {
+        it('should show empty model placeholder on empty value', () => {
             //Todo test
             expect(true).toEqual(true);
         });
 
-        it('UI should match it configuration', function() {
+        it('UI should match it configuration', () => {
             //Todo test
             expect(true).toEqual(true);
         });
 
-        it('should show error view if wrongly instantiated', function() {
+        it('should show error view if wrongly instantiated', () => {
             //Todo test
             expect(true).toEqual(true);
         });
 
-        it('should show error view with appropriate message and help text', function() {
+        it('should show error view with appropriate message and help text', () => {
             //Todo test
             expect(true).toEqual(true);
         });
 
-        it('should have `value` matched with initial value', function() {
+        it('should have `value` matched with initial value', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
         });
 
-        it('view collection should have reset on dropdown open', function() {
+        it('view collection should have reset on dropdown open', () => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -135,38 +143,38 @@ describe('Editors', function() {
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
             const dataChangeCallback = sinon.spy();
 
-            view.viewModel.get('panel').get('collection').on('reset', dataChangeCallback);
+            view.panelCollection.on('reset', dataChangeCallback);
 
             expect(dataChangeCallback.calledOnce);
-            expect(dataChangeCallback.calledWithMatch(this.defaultCollection.toJSON()));
+            expect(dataChangeCallback.calledWithMatch(collectionData));
         });
 
-        it('should have collection matched it static initial collection', function() {
+        it('should have collection matched it static initial collection', () => {
             const model = new Backbone.Model({
                 value: null
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
-            expect(view.viewModel.get('panel').get('collection').toJSON()).toEqual(this.defaultCollection.toJSON());
+            expect(view.viewModel.get('panel').get('collection').toJSON()).toEqual(collectionData);
         });
 
-        it('should have collection matched it dynamic initial collection', function() {
+        it('should have collection matched it dynamic initial collection', () => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -180,66 +188,66 @@ describe('Editors', function() {
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
-            view.viewModel.get('panel').get('collection').on('reset', function () {
-                expect(view.viewModel.get('panel').get('collection').toJSON()).toEqual(this.defaultCollection.toJSON());
+            view.panelCollection.on('reset', () => {
+                expect(view.panelCollection.toJSON()).toEqual(collectionData);
             });
         });
 
-        it('should have change value on setValue() get called', function() {
+        it('should change value on setValue() get called', () => {
             const model = new Backbone.Model({
                 value: null
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.setValue([{ id: 2, name: 2 }]);
 
             expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
         });
 
-        it('should open panel when focus input', function() {
+        it('should open panel when focus input', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
             expect(view.dropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
         });
 
-        it('should change value on panel item select', function() {
+        it('should change value on panel item select', () => {
             const model = new Backbone.Model({
                 value: null
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
@@ -250,40 +258,67 @@ describe('Editors', function() {
             expect(view.getValue()).toEqual([{ id: 2, name: 2 }]);
         });
 
-        it('should highlight or check panel items based on editor value', function() {
+        it('should highlight or check panel items based on editor value', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                collection: new Backbone.Collection(collectionData),
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
 
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             view.focus();
 
             expect(view.dropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
         });
 
-        it('should remove items on remove icon item click', function() {
+        it('should trigger change on remove icon item click', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
 
             const view = new core.form.editors.ReferenceBubbleEditor({
                 model,
-                collection: this.defaultCollection,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                }),
                 key: 'value',
-                maxQuantitySelected: Infinity
+                maxQuantitySelected: Infinity,
+                autocommit: true
             });
 
-            this.rootRegion.show(view);
+            const doneFn = jasmine.createSpy();
 
-            console.log(view.$('.js-bubble-delete').length);
+            rootRegion.show(view);
+
+            view.on('change', () => {
+                doneFn();
+            });
+
+            view.$('.js-bubble-delete')[0].click();
+
+            expect(doneFn).toHaveBeenCalled();
+        });
+
+        it('should remove items on remove icon item click', () => {
+            const model = new Backbone.Model({
+                value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
+            });
+
+            const view = new core.form.editors.ReferenceBubbleEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                maxQuantitySelected: Infinity,
+                autocommit: true
+            });
+
+            rootRegion.show(view);
 
             view.$('.js-bubble-delete')[1].click();
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
@@ -292,19 +327,87 @@ describe('Editors', function() {
             expect(view.getValue()).toEqual([]);
         });
 
-        it('should remove items on uncheck in panel', function() {
-            //Todo test
-            expect(true).toEqual(true);
+        it('should remove items on uncheck in panel', done => {
+            const model = new Backbone.Model({
+                value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
+            });
+
+            const view = new core.form.editors.ReferenceBubbleEditor({
+                model,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                }),
+                key: 'value',
+                maxQuantitySelected: Infinity,
+                autocommit: true
+            });
+
+            rootRegion.show(view);
+
+            view.focus();
+
+            view.on('change', () => {
+                expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
+                done();
+            });
+
+            view.on('view:ready', () => {
+                $('.js-core-ui__global-popup-region').find('.dd-list__i')[1].click();
+            });
         });
 
-        it('should uncheck items on remove items click', function() {
-            //Todo test
-            expect(true).toEqual(true);
+        it('should uncheck items on remove items click', done => {
+            const model = new Backbone.Model({
+                value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
+            });
+
+            const view = new core.form.editors.ReferenceBubbleEditor({
+                model,
+                controller: new dynamicController({
+                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
+                }),
+                key: 'value',
+                maxQuantitySelected: Infinity,
+                autocommit: true
+            });
+
+            rootRegion.show(view);
+
+            view.focus();
+
+            view.on('change', () => {
+                expect(view.panelCollection.at(0).selected).toEqual(false);
+                done();
+            });
+
+            view.on('view:ready', () => {
+                view.$('.js-bubble-delete')[0].click();
+            });
         });
 
-        it('should apply default parameters', function() {
-            //Todo test
-            expect(true).toEqual(true);
+        it('should use default parameters if non is passed', () => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.ReferenceBubbleEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value'
+            });
+
+            rootRegion.show(view);
+
+            expect(view.options).toEqual(jasmine.objectContaining({
+                displayAttribute: 'name',
+                controller: null,
+                showAddNewButton: false,
+                showEditButton: false,
+                showCheckboxes: false,
+                textFilterDelay: 300,
+                maxQuantitySelected: 1,
+                canDeleteItem: true
+            }));
         });
     });
 });
