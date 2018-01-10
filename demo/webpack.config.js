@@ -15,7 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const _ = require('lodash');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const OfflinePlugin = require('offline-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const pathResolver = {
     client() {
@@ -178,7 +178,6 @@ module.exports = options => {
                 name: 'vendor',
                 minChunks: Infinity
             }),
-            new OfflinePlugin(),
             new WebpackPwaManifest({
                 name: 'Comindware business application platform',
                 short_name: 'Comindware',
@@ -187,6 +186,9 @@ module.exports = options => {
                 theme_color: '#0575bd',
                 orientation: 'landscape-secondary'
             }),
+            new CopyWebpackPlugin([
+                { from: './serviceWorker.js' }
+            ], { copyUnmodified: true })
         ],
         resolve: {
             modules: [

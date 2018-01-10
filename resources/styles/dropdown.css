@@ -205,6 +205,7 @@
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
+    display: flex;
 }
 
 .dd-list__i:hover {
@@ -292,7 +293,6 @@
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     overflow: hidden;
-    background: #fff;
     z-index: 44;
     opacity: 0;
     transition: opacity .7s, height .1s ease-out;

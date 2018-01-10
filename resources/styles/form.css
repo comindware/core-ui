@@ -585,6 +585,14 @@ input[type="checkbox"].checkbox {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.dropdown_text{
+    flex:1;
+}
+
+.dropdown_subtext{
+    color: #d3d5d6;
+}
 /* /Dropdown/ */
 
 
