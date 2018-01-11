@@ -327,6 +327,33 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual([]);
         });
 
+        it('should set size for panel', function() {
+            const model = new Backbone.Model({
+                value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
+            });
+
+            const view = new core.form.editors.ReferenceBubbleEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                maxQuantitySelected: Infinity,
+                autocommit: true
+            });
+
+            rootRegion.show(view);
+
+            view.$('.js-button-region').outerWidth(70);
+            view.$('.bubbles').click();
+            let panel = $('.visible-collection');
+            expect(panel.outerWidth()).toEqual(220);
+
+            view.blur();
+            view.$('.js-button-region').outerWidth(700);
+            view.$('.bubbles').click();
+            panel = $('.visible-collection');
+            expect(panel.outerWidth()).toEqual(700);
+        });
+
         it('should remove items on uncheck in panel', done => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
