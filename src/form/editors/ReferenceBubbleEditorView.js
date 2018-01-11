@@ -24,7 +24,6 @@ const ReferenceCollection = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
-
 const defaultOptions = {
     displayAttribute: 'name',
     controller: null,
@@ -75,6 +74,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         this.reqres.setHandler('value:edit', this.__onValueEdit, this);
         this.reqres.setHandler('filter:text', this.__onFilterText, this);
         this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
+        this.reqres.setHandler('view:ready', this.__triggerReady, this);
 
         this.value = this.__adjustValue(this.value);
         const selectedModels = new Backbone.Collection(this.getValue(), {
@@ -366,5 +366,9 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         if (this.dropdownView.isOpen) {
             this.dropdownView.panelView.handleCommand(command, options);
         }
+    },
+
+    __triggerReady() {
+        this.trigger('view:ready');
     }
 });

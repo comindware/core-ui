@@ -59,7 +59,7 @@ export default Marionette.Behavior.extend({
     },
 
     events: {
-        mousedown: '__handleClick'
+        click: '__handleClick'
     },
 
     onRender() {
