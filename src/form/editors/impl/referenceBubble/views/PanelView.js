@@ -140,9 +140,12 @@ export default Marionette.LayoutView.extend({
                             collection.get(model.id).select();
                         }
                     });
-                    this.__toggleElementsQuantityWarning(collection.length);
+                    this.__toggleElementsQuantityWarning(collection.totalCount);
                 }
                 this.__setLoading(false);
+                this.reqres.request('view:ready');
+            }).catch(e => {
+                console.log(e.message);
             });
         };
         if (immediate) {
@@ -166,8 +169,10 @@ export default Marionette.LayoutView.extend({
     },
 
     __toggleElementsQuantityWarning(count) {
-        count > 100
-            ? this.elementsQuantityWarningRegion.$el.show()
-            : this.elementsQuantityWarningRegion.$el.hide();
+        if (this.elementsQuantityWarningRegion) {
+            count > 100
+                ? this.elementsQuantityWarningRegion.$el.show()
+                : this.elementsQuantityWarningRegion.$el.hide();
+        }
     }
 });

@@ -9,9 +9,9 @@
 const webpackConfigFactory = require('./build/webpack.config.js');
 
 module.exports = function(config) {
-    let TEST_COVERAGE = config.coverage === true;
+    const TEST_COVERAGE = config.coverage === true;
 
-    let result = {
+    const result = {
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
@@ -32,7 +32,8 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             'node_modules/babel-polyfill/dist/polyfill.js',
-            'tests/tests.bundle.js'
+            'tests/tests.bundle.js',
+            'dist/core.css'
         ],
 
         // list of files to exclude
@@ -82,7 +83,13 @@ module.exports = function(config) {
         webpackMiddleware: {
             noInfo: true,
             stats: 'minimal'
-        }
+        },
+
+        rules: [{
+            test: /\.js/,
+            exclude: /node_modules/,
+            loader: 'babel-loader'
+        }]
     };
 
     if (TEST_COVERAGE) {

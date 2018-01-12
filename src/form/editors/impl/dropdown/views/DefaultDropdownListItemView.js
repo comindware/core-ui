@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
 import list from 'list';
@@ -32,7 +30,8 @@ export default Marionette.ItemView.extend({
         const model = this.model.toJSON();
         const displayAttribute = this.options.displayAttribute;
         return {
-            text: _.result(model, displayAttribute)
+            text: _.result(model, displayAttribute),
+            subtext: model.subtext
         };
     },
 

@@ -205,6 +205,7 @@
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
+    display: flex;
 }
 
 .dd-list__i:hover {
@@ -292,7 +293,6 @@
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     overflow: hidden;
-    background: #fff;
     z-index: 44;
     opacity: 0;
     transition: opacity .7s, height .1s ease-out;
@@ -414,7 +414,7 @@
 
 /* multiselect */
 .multiselect-panel{
-    min-width: 160px;
+    min-width: 220px;
     max-width: 100%;
     padding: 25px 0;
     position: relative;
@@ -492,6 +492,10 @@
 .multiselect-i_selected {
     font-weight: 500;
     color:#000;
+}
+
+.datepicker_panel {
+    width: 220px !important;
 }
 
 /*-----//------*/

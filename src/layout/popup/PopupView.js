@@ -11,6 +11,7 @@ import { helpers } from 'utils';
 import WindowService from 'services/WindowService';
 import template from './popup.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
+import GlobalEventService from '../../services/GlobalEventService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 
 const classes = {
@@ -23,6 +24,7 @@ export default Marionette.LayoutView.extend({
         helpers.ensureOption(options, 'buttons');
         helpers.ensureOption(options, 'content');
 
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.__buttons = this.options.buttons.map(x => Object.assign({
             id: _.uniqueId('buttonId')
         }, x));
@@ -83,6 +85,12 @@ export default Marionette.LayoutView.extend({
             this.content.update();
         }
         this.__updateState();
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.__close();
+        }
     },
 
     __onButtonClick(e) {

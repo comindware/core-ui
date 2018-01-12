@@ -13,8 +13,6 @@ import 'lib/prism/prism.css';
 import Application from './Application';
 import AppRouter from './AppRouter';
 import AppController from './AppController';
-import * as OfflinePluginRuntime from 'offline-plugin/runtime';
-OfflinePluginRuntime.install();
 
 Application.appRouter = new AppRouter({
     controller: new AppController()

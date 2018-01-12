@@ -11,8 +11,6 @@ import { dataProvider } from './testData';
 import localizationMap from 'localizationMap';
 import 'jasmine-jquery';
 
-const $ = core.lib.$; // jshint ignore:line
-
 const at = function(collection, index) {
     return collection.at ? collection.at(index) : collection[index];
 };

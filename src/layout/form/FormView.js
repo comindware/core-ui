@@ -30,6 +30,8 @@ export default Marionette.ItemView.extend({
 
     template: false,
 
+    tagName: 'form',
+
     className: classes.CLASS_NAME,
 
     regions() {
