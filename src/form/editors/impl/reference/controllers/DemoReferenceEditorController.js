@@ -73,5 +73,12 @@ export default Marionette.Controller.extend({
 
     edit() {
         return true;
+    },
+
+    addNewItem(callback) {
+        callback({
+            id: 'test.new',
+            text: 'New Item'
+        });
     }
 });

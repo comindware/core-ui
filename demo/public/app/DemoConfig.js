@@ -68,46 +68,34 @@ export default {
             }, {
                 id: 'PasswordEditor',
                 displayName: 'Password Editor'
-            },
-                {
-                    id: 'MemberSelectEditor',
-                    displayName: 'Member Select Editor'
-                }, {
-                    id: 'MembersBubbleEditor',
-                    displayName: 'Members Bubble Editor'
-                }, {
-                    id: 'MentionEditor',
-                    displayName: 'Mention Editor'
-                },
-                {
-                    id: 'ReferenceBubbleEditor',
-                    displayName: 'Reference Bubble Editor'
-                },
-                {
-                    id: 'MaskedTextEditor',
-                    displayName: 'Masked Text Editor'
-                },
-                {
-                    id: 'AvatarEditor',
-                    displayName: 'Avatar Editor'
-                },
-                {
-                    id: 'DurationEditorWithPartialDisplay',
-                    displayName: 'Duration Editor (partial display)'
-                },
-                {
-                    id: 'ReferenceEditorWithAddNewButton',
-                    displayName: 'Reference Editor (Add new button)'
-                },
-                {
-                    id: 'Form',
-                    displayName: 'Form'
-                },
-                {
-                    id: 'FormValidation',
-                    displayName: 'Form Validation (all editors)'
-                }
-            ]
+            }, {
+                id: 'MemberSelectEditor',
+                displayName: 'Member Select Editor'
+            }, {
+                id: 'MembersBubbleEditor',
+                displayName: 'Members Bubble Editor'
+            }, {
+                id: 'MentionEditor',
+                displayName: 'Mention Editor'
+            }, {
+                id: 'ReferenceBubbleEditor',
+                displayName: 'Reference Bubble Editor'
+            }, {
+                id: 'MaskedTextEditor',
+                displayName: 'Masked Text Editor'
+            }, {
+                id: 'AvatarEditor',
+                displayName: 'Avatar Editor'
+            }, {
+                id: 'DurationEditorWithPartialDisplay',
+                displayName: 'Duration Editor (partial display)'
+            }, {
+                id: 'Form',
+                displayName: 'Form'
+            }, {
+                id: 'FormValidation',
+                displayName: 'Form Validation (all editors)'
+            }]
         },
         {
             id: 'dropdown',
