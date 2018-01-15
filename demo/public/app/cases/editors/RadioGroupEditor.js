@@ -1,14 +1,14 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
         radioValue: 'value2'
     });
 
-    return new EditorCanvasView({
-        editor: new core.form.editors.RadioGroupEditor({
+    return new CanvasView({
+        view: new core.form.editors.RadioGroupEditor({
             model,
             key: 'radioValue',
             changeMode: 'keydown',

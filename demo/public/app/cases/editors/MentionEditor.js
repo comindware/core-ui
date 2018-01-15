@@ -1,6 +1,6 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 import PresentationItemView from 'demoPage/views/PresentationItemView';
 
 export default function() {
@@ -18,7 +18,7 @@ export default function() {
         }
     });
 
-    return new EditorCanvasView({
+    return new CanvasView({
         editor,
         presentation: PresentationItemView.extend({
             template: Handlebars.compile(
