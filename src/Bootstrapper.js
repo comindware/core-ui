@@ -14,6 +14,7 @@ import UserService from './services/UserService';
 import WindowService from './services/WindowService';
 import LocalizationService from './services/LocalizationService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
+import MobileService from 'services/MobileService';
 
 const initializeThirdParties = function() {
     $.fn.datetimepicker.dates[LocalizationService.langCode] = {
@@ -40,6 +41,7 @@ export default {
         WindowService.initialize();
         LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
+        MobileService.initialize();
 
         initializeThirdParties();
     }

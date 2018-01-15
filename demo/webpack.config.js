@@ -213,8 +213,31 @@ module.exports = (options = { env: 'production' }) => {
                 text: 'html'
             }
         },
+        stats: {
+            colors: true,
+            chunks: false,
+            source: false,
+            hash: false,
+            modules: false,
+            errorDetails: true,
+            version: false,
+            assets: false,
+            chunkModules: false,
+            children: false
+        },
         devServer: {
-            stats: 'minimal',
+            stats: {
+                colors: true,
+                chunks: false,
+                source: false,
+                hash: false,
+                modules: false,
+                errorDetails: true,
+                version: false,
+                assets: false,
+                chunkModules: false,
+                children: false
+            },
             port: 3000,
             contentBase: pathResolver.client()
         }

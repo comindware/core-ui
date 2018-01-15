@@ -1,6 +1,6 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const possibleItems = _.times(200, n => ({
@@ -13,8 +13,8 @@ export default function() {
         dropdownValue: 42
     });
 
-    return new EditorCanvasView({
-        editor: new core.form.editors.ReferenceBubbleEditor({
+    return new CanvasView({
+        view: new core.form.editors.ReferenceBubbleEditor({
             model,
             key: 'dropdownValue',
             autocommit: true,

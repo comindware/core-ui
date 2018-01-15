@@ -382,3 +382,44 @@ a:hover {
     position: absolute;
 }
 /* /SplitPanelView/ */
+
+.navigationDrawer-collapse_button {
+    height: 40px;
+    width: 40px;
+    padding-top: 17px;
+    padding-left: 12px;
+    background: #0575bd;
+    color: white;
+}
+
+.navigationDrawer {
+    height: calc(100% + 40px);
+    margin-top: -40px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.navigationDrawer__ul {
+    transition: all .2s;
+}
+
+.navigationDrawer__li {
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    padding: 0 1rem;
+}
+.navigationDrawer__li:hover {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    background-color: #f5f5f5;
+}
+
+.groups-link {
+    color: #4d4d4d;
+}
+.groups-link:hover {
+    text-decoration: none;
+}

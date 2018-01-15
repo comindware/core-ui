@@ -42,7 +42,16 @@ export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(
                 new Core.layout.Button({
                     text: 'Start recording',
                     handler() {
-                        recorder.start();
+                        // get audio stream from user's mic
+                        navigator.mediaDevices.getUserMedia({
+                            audio: true
+                        }).then(stream => {
+                            recorder = new window.MediaRecorder(stream);
+                            // listen to dataavailable, which gets triggered whenever we have
+                            // an audio blob available
+                            recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
+                            recorder.start();
+                        });
                     }
                 }),
                 new Core.layout.Button({
@@ -54,16 +63,6 @@ export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(
                 })
             ]
         }));
-
-        // get audio stream from user's mic
-        navigator.mediaDevices.getUserMedia({
-            audio: true
-        }).then(stream => {
-            recorder = new window.MediaRecorder(stream);
-            // listen to dataavailable, which gets triggered whenever we have
-            // an audio blob available
-            recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
-        });
     },
 
     __onRecordingReady(e: AudioProcessingEvent, audio: AudioDestinationNode) {

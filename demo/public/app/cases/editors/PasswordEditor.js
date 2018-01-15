@@ -1,9 +1,9 @@
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
-    return new EditorCanvasView({
-        editor: new core.form.editors.PasswordEditor({
+    return new CanvasView({
+        view: new core.form.editors.PasswordEditor({
             model: new Backbone.Model({
                 passwordValue: ''
             }),
