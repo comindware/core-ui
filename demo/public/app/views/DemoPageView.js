@@ -20,7 +20,8 @@ export default Marionette.LayoutView.extend({
         this.groupsRegion.show(new Core.components.NavigationDrawer({
             collection: groups,
             active: activeCase.groupId,
-            collapsed: Core.services.MobileService.isMobile
+            collapsed: Core.services.MobileService.isMobile,
+            isAbsolute: Core.services.MobileService.isMobile
         }));
         this.contentRegion.show(new ContentView({
             model: new Backbone.Model(activeCase)
@@ -36,7 +37,8 @@ export default Marionette.LayoutView.extend({
         this.groupsRegion.show(new Core.components.NavigationDrawer({
             collection: groups,
             active: activeCase.groupId,
-            collapsed: Core.services.MobileService.isMobile
+            collapsed: Core.services.MobileService.isMobile,
+            isAbsolute: Core.services.MobileService.isMobile
         }));
 
         this.contentRegion.show(new ContentView({
