@@ -120,6 +120,24 @@ module.exports = (options = { env: 'production' }) => {
                         plugins: ['transform-runtime']
                     }
                 }, {
+                    test: /\.eot(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-eot'
+                    }
+                }, {
+                    test: /\.ttf(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-ttf'
+                    }
+                }, {
                     test: /\.woff(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
