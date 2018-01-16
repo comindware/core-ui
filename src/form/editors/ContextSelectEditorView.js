@@ -111,7 +111,7 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
             let text = '';
             this.options.context[instanceTypeId].forEach(context => {
                 if (context.id === id) {
-                    text = context.text;
+                    text = context.name;
                     instanceTypeId = context.instanceTypeId;
                     return false;
                 }

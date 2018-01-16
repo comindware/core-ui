@@ -393,12 +393,11 @@ a:hover {
 }
 
 .navigationDrawer {
-    height: calc(100% + 40px);
     margin-top: -40px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .navigationDrawer__ul {
+    height: calc(100% + 40px);
     transition: all .2s;
 }
 
@@ -415,6 +414,19 @@ a:hover {
 .navigationDrawer__li:hover {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     background-color: #f5f5f5;
+}
+
+.drawer_children-container {
+    height: 100%;
+    background-color: white;
+    position: relative;
+    z-index: 2;
+    transition: all .2s;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+}
+
+.navigationDrawer_absolute {
+    position: absolute;
 }
 
 .groups-link {
