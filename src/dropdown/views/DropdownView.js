@@ -25,6 +25,7 @@ const classes = {
 };
 
 const WINDOW_BORDER_OFFSET = 10;
+const MAX_DROPDOWN_PANEL_WIDTH = 220;
 
 const panelPosition = {
     DOWN: 'down',
@@ -232,8 +233,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             top,
             left: buttonRect.left
         };
+
+        const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelCss['min-width'] = buttonRect.width;
+            panelCss['min-width'] = panelWidth;
         }
         $panelEl.css(panelCss);
     },
@@ -266,8 +269,9 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         });
         this.__adjustPosition(wrapperView.$el);
         const buttonWidth = this.buttonRegion.$el.outerWidth();
+        const panelWidth = buttonWidth > MAX_DROPDOWN_PANEL_WIDTH ? buttonWidth : MAX_DROPDOWN_PANEL_WIDTH;
         this.panelView.$el.css({ width: buttonWidth });
-        this.panelView.$(`.${classes.VISIBLE_COLLECTION}`).css({ width: buttonWidth });
+        this.panelView.$(`.${classes.VISIBLE_COLLECTION}`).css({ width: panelWidth });
         this.listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);

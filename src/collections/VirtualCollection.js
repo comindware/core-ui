@@ -187,6 +187,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     __buildModelsInternal(list, level = 0) {
         for (let i = 0, len = list.length; i < len; i++) {
             const model = list.at(i);
+            this._removeReference(model);
             this.models.push(model);
             this._addReference(model);
             model.collection = this;
@@ -195,11 +196,8 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
             if (!skipChild && model.children) {
                 if (this.options.isTree) {
                     this.listenToOnce(model.children, 'add', this.__onAdd);
-                    this.listenToOnce(model.children, 'change', this.__onChange);
+                    this.listenToOnce(model.children, 'remove', this.__onRemove);
                     this.listenToOnce(model.children, 'reset', this.__onReset);
-                    this.listenToOnce(model.children, 'sort', this.__onSort);
-                    this.listenToOnce(model.children, 'sync', this.__onSync);
-                    this.listenToOnce(model.children, 'update', this.__onUpdate);
                 }
                 this.__buildModelsInternal(model.children, level + 1);
             }
@@ -241,6 +239,9 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
             if (model.children && !model.children.comparator) {
                 model.children.comparator = this.comparator;
                 model.children.sort();
+            }
+            if (this.index) {
+                this._removeReference(model);
             }
         });
 
