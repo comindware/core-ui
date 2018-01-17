@@ -6,6 +6,7 @@
  * Published under the MIT license
  */
 
+import '../node_modules/font-awesome/css/font-awesome.css';
 import '../../dist/core.css';
 import 'styles/demo.css';
 import 'lib/prism/prism.css';

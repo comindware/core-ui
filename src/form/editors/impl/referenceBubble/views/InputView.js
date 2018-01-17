@@ -77,17 +77,6 @@ export default Marionette.ItemView.extend({
         },
         'enter,num_enter'() {
             this.reqres.request('value:select');
-        },
-        backspace() {
-            const value = this.__getFilterValue();
-            if (value.length === 0) {
-                if (!this.options.enabled) {
-                    return;
-                }
-                this.reqres.request('bubble:delete:last');
-            } else {
-                this.updateInput(value.slice(0, value.length - 1));
-            }
         }
     },
 
@@ -100,14 +89,24 @@ export default Marionette.ItemView.extend({
         this.__updateInputWidth(this.__calculateDesiredInputWidth(value));
     },
 
-    __search() {
+    __search(e) {
         const value = this.__getFilterValue();
-        if (this.filterValue === value) {
-            return;
+
+        if (e.keyCode === 8) {
+            if (value.length === 0) {
+                if (!this.options.enabled) {
+                    return;
+                }
+                this.reqres.request('bubble:delete:last');
+            }
+        } else {
+            if (this.filterValue === value) {
+                return;
+            }
+            this.__updateInputWidth(this.__calculateDesiredInputWidth(value || this.ui.input.attr('placeholder')));
+            this.filterValue = value;
+            this.reqres.request('input:search', value, false);
         }
-        this.__updateInputWidth(this.__calculateDesiredInputWidth(value || this.ui.input.attr('placeholder')));
-        this.filterValue = value;
-        this.reqres.request('input:search', value, false);
     },
 
     __calculateDesiredInputWidth(value) {
