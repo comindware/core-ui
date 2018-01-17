@@ -1,8 +1,8 @@
 node_modules/
 .project
 .idea/
-bower_components/
 localization/.backup/
 demo/public/assets/
 reports/
-dist/
+dist/*
+dist/!localization
