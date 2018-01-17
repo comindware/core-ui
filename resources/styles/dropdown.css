@@ -414,7 +414,7 @@
 
 /* multiselect */
 .multiselect-panel{
-    min-width: 220px;
+    min-width: 200px;
     max-width: 100%;
     padding: 25px 0;
     position: relative;

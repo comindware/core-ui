@@ -345,7 +345,7 @@ describe('Editors', () => {
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
             let panel = $('.visible-collection');
-            expect(panel.outerWidth()).toEqual(220);
+            expect(panel.outerWidth()).toEqual(200);
 
             view.blur();
             view.$('.js-button-region').outerWidth(700);
