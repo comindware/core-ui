@@ -8,26 +8,23 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const fs = require('fs-extra');
+const fs = require('fs');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const _ = require('lodash');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const pathResolver = {
     client() {
-        //noinspection Eslint
-        return path.resolve.apply(path.resolve, [__dirname, 'public/assets'].concat(_.toArray(arguments)));
+        return path.resolve.apply(path.resolve, [__dirname, 'public/assets'].concat(Array.from(arguments)));
     },
     source() {
-        //noinspection Eslint
-        return path.resolve.apply(path.resolve, [__dirname, 'public'].concat(_.toArray(arguments)));
+        return path.resolve.apply(path.resolve, [__dirname, 'public'].concat(Array.from(arguments)));
     },
     node_modules() {
-        //noinspection Eslint
         return path.resolve.apply(path.resolve, [__dirname, 'node_modules']);
     }
 };
@@ -39,15 +36,14 @@ const readSpritesFile = () => {
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
-module.exports = options => {
+module.exports = (options = { env: 'production' }) => {
     const DEVELOPMENT = options.env === 'development';
     const PRODUCTION = options.env === 'production';
 
     const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
     const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
-    //noinspection JSUnresolvedFunction
-    const webpackConfig = {
+    return {
         cache: true,
         entry: {
             app: ['./public/index'],
@@ -99,7 +95,7 @@ module.exports = options => {
                         options: {
                             sourceMap: true,
                             plugins: [
-                                require('autoprefixer')({
+                                autoprefixer({
                                     browsers: ['last 2 versions']
                                 })
                             ]
@@ -122,6 +118,24 @@ module.exports = options => {
                     options: {
                         presets: ['env'],
                         plugins: ['transform-runtime']
+                    }
+                }, {
+                    test: /\.eot(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-eot'
+                    }
+                }, {
+                    test: /\.ttf(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-ttf'
                     }
                 }, {
                     test: /\.woff(\?.*)?$/,
@@ -188,7 +202,14 @@ module.exports = options => {
             }),
             new CopyWebpackPlugin([
                 { from: './serviceWorker.js' }
-            ], { copyUnmodified: true })
+            ], { copyUnmodified: true }),
+            new CleanWebpackPlugin([ pathResolver.client() ], {
+                verbose: false,
+                exclude: ['localization']
+            }),
+            new ExtractTextPlugin('[name].css'),
+            new webpack.optimize.OccurrenceOrderPlugin(),
+            new webpack.optimize.ModuleConcatenationPlugin()
         ],
         resolve: {
             modules: [
@@ -209,34 +230,34 @@ module.exports = options => {
             alias: {
                 text: 'html'
             }
+        },
+        stats: {
+            colors: true,
+            chunks: false,
+            source: false,
+            hash: false,
+            modules: false,
+            errorDetails: true,
+            version: false,
+            assets: false,
+            chunkModules: false,
+            children: false
+        },
+        devServer: {
+            stats: {
+                colors: true,
+                chunks: false,
+                source: false,
+                hash: false,
+                modules: false,
+                errorDetails: true,
+                version: false,
+                assets: false,
+                chunkModules: false,
+                children: false
+            },
+            port: 3000,
+            contentBase: pathResolver.client()
         }
     };
-
-    if (PRODUCTION) {
-        webpackConfig.cache = false;
-        webpackConfig.devtool = false;
-
-        //noinspection JSUnresolvedFunction
-        webpackConfig.plugins.push(
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                __DEV__: DEVELOPMENT
-            }),
-            new ExtractTextPlugin('[name].css'),
-            new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.optimize.ModuleConcatenationPlugin(),
-            new webpack.optimize.UglifyJsPlugin({
-                uglifyOptions: {
-                    compress: {
-                        unused: true,
-                        dead_code: true,
-                        warnings: false
-                    }
-                },
-                parallel: true
-            })
-        );
-    }
-
-    return webpackConfig;
 };

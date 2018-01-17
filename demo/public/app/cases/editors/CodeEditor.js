@@ -1,14 +1,14 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
         code: 'true'
     });
 
-    return new EditorCanvasView({
-        editor: new core.form.editors.CodeEditor({
+    return new CanvasView({
+        view: new core.form.editors.CodeEditor({
             model,
             key: 'code',
             autocommit: true,

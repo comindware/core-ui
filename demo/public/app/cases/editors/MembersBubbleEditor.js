@@ -1,14 +1,14 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
         membersValue: [ 'user.1' ]
     });
 
-    return new EditorCanvasView({
-        editor: new core.form.editors.MembersBubbleEditor({
+    return new CanvasView({
+        view: new core.form.editors.MembersBubbleEditor({
             model,
             key: 'membersValue',
             maxQuantitySelected: 7,

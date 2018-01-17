@@ -55,6 +55,8 @@ import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
 import CheckableBehavior from './models/behaviors/CheckableBehavior';
+import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
+import MobileService from './services/MobileService';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -90,7 +92,8 @@ const core = {
         * */
         GlobalEventService,
         PromiseService,
-        UserService
+        UserService,
+        MobileService
     },
     /**
      * Backbone collections of general use.
@@ -174,7 +177,10 @@ const core = {
      * @memberof module:core
      * */
     meta: meta_,
-    initialize: bootstrapper.initialize.bind(bootstrapper)
+    initialize: bootstrapper.initialize.bind(bootstrapper),
+    components: {
+        NavigationDrawer
+    }
 };
 
 window.Core = core;
