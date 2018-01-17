@@ -100,6 +100,24 @@ module.exports = options => {
                     mimetype: 'application/font-woff'
                 }
             }, {
+                test: /\.eot(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-eot'
+                }
+            }, {
+                test: /\.ttf(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-ttf'
+                }
+            }, {
                 test: /\.woff2(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
@@ -119,7 +137,7 @@ module.exports = options => {
                 }
             }, {
                 test: /\.svg(\?.*)?$/,
-                loader: '`url-loader',
+                loader: 'url-loader',
                 options: {
                     prefix: 'fonts/',
                     name: '[path][name].[ext]',

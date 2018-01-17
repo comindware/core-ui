@@ -22,14 +22,14 @@ const defaultOptions = () => ({
 export default formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         const defOps = Object.assign(defaultOptions(), {
-            users: options.schema.cacheService.GetUsers().map(user => ({
+            users: options.users || options.schema.cacheService.GetUsers().map(user => ({
                 id: user.Id,
                 name: (user.Text || user.Username),
                 abbreviation: user.abbreviation,
                 userpicUri: user.userpicUri,
                 type: 'users'
             })),
-            groups: options.schema.cacheService.GetGroups().map(group => ({
+            groups: options.groups || options.schema.cacheService.GetGroups().map(group => ({
                 id: group.id,
                 name: group.name,
                 type: 'groups'

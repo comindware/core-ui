@@ -1,12 +1,28 @@
 /* General */
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media screen and (max-width: 999px) {
+    body, input, textarea, select {
+        font: normal 16px/1.4 'OpenSans', sans-serif;
+    }
+}
+
+
 .header-container {
     width: 100%;
-    height: 36px;
+    height: 40px;
+    z-index: 3;
+    margin-left: 40px;
 }
 
 .content-container {
     height: 100%;
+    display: flex;
 }
 
 .popup-container {
@@ -40,9 +56,7 @@
     line-height: 36px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow-x: auto;
-}
-
-.demo-nav__i {
+    height: 40px;
 }
 
 .demo-nav__i:hover {
@@ -175,45 +189,10 @@
     position: relative;
 }
 
-.demo-groups {
-    left:0;
-    top:0;
-    height: 100%;
-    overflow: auto;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    flex: 0 0 200px;
-    min-width: 250px;
-}
-
-.demo-groups__ul {
-    margin-top: 1rem;
-}
-
-.demo-groups__li {
-    height: 30px;
-    line-height: 30px;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    padding: 0 1rem;
-}
-.demo-groups__li:hover {
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    background-color: #f5f5f5;
-}
-
-.groups-link {
-    color: #4d4d4d;
-}
-.groups-link:hover {
-    text-decoration: none;
-}
-
 .demo-content {
-    width: calc(100% - 200px);
     display: flex;
+    flex: 1;
+    overflow: hidden;
 }
 
 @media screen and (min-width: 1000px) {
@@ -222,6 +201,9 @@
     }
     .demo-content__function {
         max-width: 50%;
+    }
+    .demo-content__code {
+        margin-left: 15px;
     }
 }
 
@@ -232,6 +214,10 @@
     .demo-content__function {
         max-width: 100%;
     }
+    .demo-content__code {
+        margin-top: 15px;
+    }
+
 }
 /*-----------
 
@@ -257,7 +243,6 @@
     box-shadow: 0 0 3px rgba(0,0,0,0.2);
     overflow: auto;
     flex: 1 1 auto;
-    max-width: 44%;
 }
 .demo-content__description {
     font-size: 13px;
@@ -265,13 +250,11 @@
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
     padding: 0.5rem;
     flex: 1 1 auto;
-    max-width: 54%;
 }
 .demo-content__code {
     overflow: auto;
     box-shadow: 0 0 5px rgba(0,0,0,0.3);
     flex: 1 1 auto;
-    max-width: 54%;
 }
 .demo-content__code pre {
     margin: 0 !important;
@@ -311,7 +294,6 @@
 .demo-list-canvas__view {
     position: relative;
     height: 300px;
-    border: solid thin #64aad0;
     min-width: 400px;
 }
 

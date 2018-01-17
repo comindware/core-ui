@@ -10,7 +10,7 @@ import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import { Handlebars, keypress } from 'lib';
-import { keyCode, helpers, htmlHelpers } from 'utils';
+import { keyCode, helpers } from 'utils';
 import formRepository from '../formRepository';
 
 const changeMode = {
@@ -123,9 +123,6 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
                 if (this.options.maxHeight) {
                     const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
                     this.ui.textarea.css('maxHeight', maxHeight);
-                }
-                if (!htmlHelpers.isElementInDom(this.el)) {
-                    helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
                 }
                 this.ui.textarea.autosize({ append: '' });
                 break;

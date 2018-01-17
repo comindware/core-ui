@@ -1,14 +1,14 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
         textAreaValue: 'Some Text 1\r\nSome Text 2\r\nSome Text 3\r\nSome Text 4\r\nSome Text 5\r\nSome Text 6'
     });
 
-    return new EditorCanvasView({
-        editor: new core.form.editors.TextAreaEditor({
+    return new CanvasView({
+        view: new core.form.editors.TextAreaEditor({
             model,
             key: 'textAreaValue',
             changeMode: 'keydown',

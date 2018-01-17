@@ -1,6 +1,6 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
@@ -10,8 +10,8 @@ export default function() {
         }]
     });
 
-    return new EditorCanvasView({
-        editor: new core.form.editors.ReferenceBubbleEditor({
+    return new CanvasView({
+        view: new core.form.editors.ReferenceBubbleEditor({
             model,
             key: 'referenceBubbleValue',
             autocommit: true,

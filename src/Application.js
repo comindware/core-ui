@@ -18,6 +18,8 @@ import WebSocketService from 'services/WebSocketService';
 import RoutingService from 'services/RoutingService';
 import ToastNotificationService from 'services/ToastNotificationService';
 import InterfaceErrorMessageService from 'services/InterfaceErrorMessageService';
+import MobileService from 'services/MobileService';
+
 import 'backbone.trackit';
 
 export default {
@@ -68,6 +70,7 @@ export default {
         moment.locale(langCode);
 
         CTEventsService.initialize();
+        MobileService.initialize();
 
         if (options.webSocketConfiguration && options.webSocketConfiguration.activateOnStart) {
             WebSocketService.initialize({ url: options.webSocketConfiguration.url });

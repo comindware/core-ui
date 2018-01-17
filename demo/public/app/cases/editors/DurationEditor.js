@@ -1,14 +1,14 @@
 
 import core from 'comindware/core';
-import EditorCanvasView from 'demoPage/views/EditorCanvasView';
+import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
         durationValue: 'P3DT3H4M'
     });
 
-    return new EditorCanvasView({
-        editor: new core.form.editors.DurationEditor({
+    return new CanvasView({
+        view: new core.form.editors.DurationEditor({
             model,
             key: 'durationValue',
             autocommit: true
