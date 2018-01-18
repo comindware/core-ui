@@ -2,7 +2,6 @@
 import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
-import sinon from 'sinon';
 
 const $ = core.lib.$;
 
@@ -147,12 +146,11 @@ describe('Editors', () => {
 
             view.focus();
 
-            const dataChangeCallback = sinon.spy();
+            const doneFn = jasmine.createSpy();
 
-            view.panelCollection.on('reset', dataChangeCallback);
+            view.panelCollection.on('reset', () => doneFn);
 
-            expect(dataChangeCallback.calledOnce);
-            expect(dataChangeCallback.calledWithMatch(collectionData));
+            expect(doneFn.calledOnce);
         });
 
         it('should have collection matched it static initial collection', () => {
@@ -327,7 +325,7 @@ describe('Editors', () => {
             expect(view.getValue()).toEqual([]);
         });
 
-        it('should set size for panel', function() {
+        it('should set size for panel', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
@@ -435,6 +433,29 @@ describe('Editors', () => {
                 maxQuantitySelected: 1,
                 canDeleteItem: true
             }));
+        });
+
+        it('should show checkboxes and have correct style if showCheckboxes parameter set to true', done => {
+            const model = new Backbone.Model({
+                value: null
+            });
+
+            const view = new core.form.editors.ReferenceBubbleEditor({
+                model,
+                collection: new Backbone.Collection(collectionData),
+                key: 'value',
+                showCheckboxes: true
+            });
+
+            rootRegion.show(view);
+
+            view.focus();
+
+            view.on('view:ready', () => {
+                expect($('.js-core-ui__global-popup-region').find('.dd-list__i.dev_dd-list__i_with_checkbox').length).toEqual(3);
+                expect($('.js-core-ui__global-popup-region').find('.js-checkbox').length).toEqual(3);
+                done();
+            });
         });
     });
 });
