@@ -4,6 +4,7 @@
 
 export default [
     {
+        name: 'Glass',
         id: 'glass',
         filter: [
             'martini',
@@ -17,6 +18,7 @@ export default [
         ]
     },
     {
+        name: 'Music',
         id: 'music',
         filter: [
             'note',
@@ -27,6 +29,7 @@ export default [
         ]
     },
     {
+        name: 'Search',
         id: 'search',
         filter: [
             'magnify',
@@ -39,6 +42,7 @@ export default [
         ]
     },
     {
+        name: 'Envelope Outlined',
         id: 'envelope-o',
         filter: [
             'email',
@@ -54,6 +58,7 @@ export default [
         ]
     },
     {
+        name: 'Heart',
         id: 'heart',
         filter: [
             'love',
@@ -66,6 +71,7 @@ export default [
         ]
     },
     {
+        name: 'Star',
         id: 'star',
         filter: [
             'award',
@@ -80,6 +86,7 @@ export default [
         ]
     },
     {
+        name: 'Star Outlined',
         id: 'star-o',
         filter: [
             'award',
@@ -94,6 +101,7 @@ export default [
         ]
     },
     {
+        name: 'User',
         id: 'user',
         filter: [
             'person',
@@ -106,6 +114,7 @@ export default [
         ]
     },
     {
+        name: 'Film',
         id: 'film',
         filter: [
             'movie'
@@ -115,6 +124,7 @@ export default [
         ]
     },
     {
+        name: 'th-large',
         id: 'th-large',
         filter: [
             'blocks',
@@ -127,6 +137,7 @@ export default [
         ]
     },
     {
+        name: 'th',
         id: 'th',
         filter: [
             'blocks',
@@ -139,6 +150,7 @@ export default [
         ]
     },
     {
+        name: 'th-list',
         id: 'th-list',
         filter: [
             'ul',
@@ -154,6 +166,7 @@ export default [
         ]
     },
     {
+        name: 'Check',
         id: 'check',
         filter: [
             'checkmark',
@@ -170,6 +183,7 @@ export default [
         ]
     },
     {
+        name: 'Times',
         id: 'times',
         aliases: [
             'remove',
@@ -186,6 +200,7 @@ export default [
         ]
     },
     {
+        name: 'Search Plus',
         id: 'search-plus',
         filter: [
             'magnify',
@@ -198,6 +213,7 @@ export default [
         ]
     },
     {
+        name: 'Search Minus',
         id: 'search-minus',
         filter: [
             'magnify',
@@ -210,6 +226,7 @@ export default [
         ]
     },
     {
+        name: 'Power Off',
         id: 'power-off',
         filter: [
             'on'
@@ -219,6 +236,7 @@ export default [
         ]
     },
     {
+        name: 'signal',
         id: 'signal',
         filter: [
             'graph',
@@ -229,6 +247,7 @@ export default [
         ]
     },
     {
+        name: 'cog',
         id: 'cog',
         filter: [
             'settings'
@@ -242,6 +261,7 @@ export default [
         ]
     },
     {
+        name: 'Trash Outlined',
         id: 'trash-o',
         filter: [
             'garbage',
@@ -255,6 +275,7 @@ export default [
         ]
     },
     {
+        name: 'home',
         id: 'home',
         filter: [
             'main',
@@ -265,6 +286,7 @@ export default [
         ]
     },
     {
+        name: 'File Outlined',
         id: 'file-o',
         filter: [
             'new',
@@ -278,6 +300,7 @@ export default [
         ]
     },
     {
+        name: 'Clock Outlined',
         id: 'clock-o',
         filter: [
             'watch',
@@ -290,6 +313,7 @@ export default [
         ]
     },
     {
+        name: 'road',
         id: 'road',
         filter: [
             'street'
@@ -299,6 +323,7 @@ export default [
         ]
     },
     {
+        name: 'Download',
         id: 'download',
         filter: [
             'import'
@@ -308,6 +333,7 @@ export default [
         ]
     },
     {
+        name: 'Arrow Circle Outlined Down',
         id: 'arrow-circle-o-down',
         filter: [
             'download'
@@ -317,24 +343,28 @@ export default [
         ]
     },
     {
+        name: 'Arrow Circle Outlined Up',
         id: 'arrow-circle-o-up',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'inbox',
         id: 'inbox',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Play Circle Outlined',
         id: 'play-circle-o',
         categories: [
             'Video Player Icons'
         ]
     },
     {
+        name: 'Repeat',
         id: 'repeat',
         filter: [
             'redo',
@@ -348,6 +378,7 @@ export default [
         ]
     },
     {
+        name: 'refresh',
         id: 'refresh',
         filter: [
             'reload',
@@ -359,6 +390,7 @@ export default [
         ]
     },
     {
+        name: 'list-alt',
         id: 'list-alt',
         filter: [
             'ul',
@@ -374,6 +406,7 @@ export default [
         ]
     },
     {
+        name: 'lock',
         id: 'lock',
         filter: [
             'protect',
@@ -385,6 +418,7 @@ export default [
         ]
     },
     {
+        name: 'flag',
         id: 'flag',
         filter: [
             'report',
@@ -396,6 +430,7 @@ export default [
         ]
     },
     {
+        name: 'headphones',
         id: 'headphones',
         filter: [
             'sound',
@@ -408,6 +443,7 @@ export default [
         ]
     },
     {
+        name: 'volume-off',
         id: 'volume-off',
         filter: [
             'audio',
@@ -420,6 +456,7 @@ export default [
         ]
     },
     {
+        name: 'volume-down',
         id: 'volume-down',
         filter: [
             'audio',
@@ -433,6 +470,7 @@ export default [
         ]
     },
     {
+        name: 'volume-up',
         id: 'volume-up',
         filter: [
             'audio',
@@ -446,6 +484,7 @@ export default [
         ]
     },
     {
+        name: 'qrcode',
         id: 'qrcode',
         filter: [
             'scan'
@@ -455,6 +494,7 @@ export default [
         ]
     },
     {
+        name: 'barcode',
         id: 'barcode',
         filter: [
             'scan'
@@ -464,6 +504,7 @@ export default [
         ]
     },
     {
+        name: 'tag',
         id: 'tag',
         filter: [
             'label'
@@ -473,6 +514,7 @@ export default [
         ]
     },
     {
+        name: 'tags',
         id: 'tags',
         filter: [
             'labels'
@@ -482,6 +524,7 @@ export default [
         ]
     },
     {
+        name: 'book',
         id: 'book',
         filter: [
             'read',
@@ -492,6 +535,7 @@ export default [
         ]
     },
     {
+        name: 'bookmark',
         id: 'bookmark',
         filter: [
             'save'
@@ -501,12 +545,14 @@ export default [
         ]
     },
     {
+        name: 'print',
         id: 'print',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'camera',
         id: 'camera',
         filter: [
             'photo',
@@ -518,6 +564,7 @@ export default [
         ]
     },
     {
+        name: 'font',
         id: 'font',
         filter: [
             'text'
@@ -527,12 +574,14 @@ export default [
         ]
     },
     {
+        name: 'bold',
         id: 'bold',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'italic',
         id: 'italic',
         filter: [
             'italics'
@@ -542,18 +591,21 @@ export default [
         ]
     },
     {
+        name: 'text-height',
         id: 'text-height',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'text-width',
         id: 'text-width',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'align-left',
         id: 'align-left',
         filter: [
             'text'
@@ -563,6 +615,7 @@ export default [
         ]
     },
     {
+        name: 'align-center',
         id: 'align-center',
         filter: [
             'middle',
@@ -573,6 +626,7 @@ export default [
         ]
     },
     {
+        name: 'align-right',
         id: 'align-right',
         filter: [
             'text'
@@ -582,6 +636,7 @@ export default [
         ]
     },
     {
+        name: 'align-justify',
         id: 'align-justify',
         filter: [
             'text'
@@ -591,6 +646,7 @@ export default [
         ]
     },
     {
+        name: 'list',
         id: 'list',
         filter: [
             'ul',
@@ -606,6 +662,7 @@ export default [
         ]
     },
     {
+        name: 'Outdent',
         id: 'outdent',
         aliases: [
             'dedent'
@@ -615,12 +672,14 @@ export default [
         ]
     },
     {
+        name: 'Indent',
         id: 'indent',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'Video Camera',
         id: 'video-camera',
         filter: [
             'film',
@@ -632,6 +691,7 @@ export default [
         ]
     },
     {
+        name: 'Picture Outlined',
         id: 'picture-o',
         aliases: [
             'photo',
@@ -642,6 +702,7 @@ export default [
         ]
     },
     {
+        name: 'pencil',
         id: 'pencil',
         filter: [
             'write',
@@ -653,6 +714,7 @@ export default [
         ]
     },
     {
+        name: 'map-marker',
         id: 'map-marker',
         filter: [
             'map',
@@ -670,6 +732,7 @@ export default [
         ]
     },
     {
+        name: 'adjust',
         id: 'adjust',
         filter: [
             'contrast'
@@ -679,6 +742,7 @@ export default [
         ]
     },
     {
+        name: 'tint',
         id: 'tint',
         filter: [
             'raindrop',
@@ -691,6 +755,7 @@ export default [
         ]
     },
     {
+        name: 'Pencil Square Outlined',
         id: 'pencil-square-o',
         filter: [
             'write',
@@ -705,6 +770,7 @@ export default [
         ]
     },
     {
+        name: 'Share Square Outlined',
         id: 'share-square-o',
         filter: [
             'social',
@@ -716,6 +782,7 @@ export default [
         ]
     },
     {
+        name: 'Check Square Outlined',
         id: 'check-square-o',
         filter: [
             'todo',
@@ -731,6 +798,7 @@ export default [
         ]
     },
     {
+        name: 'Arrows',
         id: 'arrows',
         filter: [
             'move',
@@ -743,6 +811,7 @@ export default [
         ]
     },
     {
+        name: 'step-backward',
         id: 'step-backward',
         filter: [
             'rewind',
@@ -756,6 +825,7 @@ export default [
         ]
     },
     {
+        name: 'fast-backward',
         id: 'fast-backward',
         filter: [
             'rewind',
@@ -769,6 +839,7 @@ export default [
         ]
     },
     {
+        name: 'backward',
         id: 'backward',
         filter: [
             'rewind',
@@ -779,6 +850,7 @@ export default [
         ]
     },
     {
+        name: 'play',
         id: 'play',
         filter: [
             'start',
@@ -791,6 +863,7 @@ export default [
         ]
     },
     {
+        name: 'pause',
         id: 'pause',
         filter: [
             'wait'
@@ -800,6 +873,7 @@ export default [
         ]
     },
     {
+        name: 'stop',
         id: 'stop',
         filter: [
             'block',
@@ -811,6 +885,7 @@ export default [
         ]
     },
     {
+        name: 'forward',
         id: 'forward',
         filter: [
             'forward',
@@ -821,6 +896,7 @@ export default [
         ]
     },
     {
+        name: 'fast-forward',
         id: 'fast-forward',
         filter: [
             'next',
@@ -832,6 +908,7 @@ export default [
         ]
     },
     {
+        name: 'step-forward',
         id: 'step-forward',
         filter: [
             'next',
@@ -843,12 +920,14 @@ export default [
         ]
     },
     {
+        name: 'eject',
         id: 'eject',
         categories: [
             'Video Player Icons'
         ]
     },
     {
+        name: 'chevron-left',
         id: 'chevron-left',
         filter: [
             'bracket',
@@ -860,6 +939,7 @@ export default [
         ]
     },
     {
+        name: 'chevron-right',
         id: 'chevron-right',
         filter: [
             'bracket',
@@ -871,6 +951,7 @@ export default [
         ]
     },
     {
+        name: 'Plus Circle',
         id: 'plus-circle',
         filter: [
             'add',
@@ -883,6 +964,7 @@ export default [
         ]
     },
     {
+        name: 'Minus Circle',
         id: 'minus-circle',
         filter: [
             'delete',
@@ -895,6 +977,7 @@ export default [
         ]
     },
     {
+        name: 'Times Circle',
         id: 'times-circle',
         filter: [
             'close',
@@ -906,6 +989,7 @@ export default [
         ]
     },
     {
+        name: 'Check Circle',
         id: 'check-circle',
         filter: [
             'todo',
@@ -920,6 +1004,7 @@ export default [
         ]
     },
     {
+        name: 'Question Circle',
         id: 'question-circle',
         filter: [
             'help',
@@ -932,6 +1017,7 @@ export default [
         ]
     },
     {
+        name: 'Info Circle',
         id: 'info-circle',
         filter: [
             'help',
@@ -944,6 +1030,7 @@ export default [
         ]
     },
     {
+        name: 'Crosshairs',
         id: 'crosshairs',
         filter: [
             'picker'
@@ -953,6 +1040,7 @@ export default [
         ]
     },
     {
+        name: 'Times Circle Outlined',
         id: 'times-circle-o',
         filter: [
             'close',
@@ -964,6 +1052,7 @@ export default [
         ]
     },
     {
+        name: 'Check Circle Outlined',
         id: 'check-circle-o',
         filter: [
             'todo',
@@ -978,6 +1067,7 @@ export default [
         ]
     },
     {
+        name: 'ban',
         id: 'ban',
         filter: [
             'delete',
@@ -994,6 +1084,7 @@ export default [
         ]
     },
     {
+        name: 'arrow-left',
         id: 'arrow-left',
         filter: [
             'previous',
@@ -1004,6 +1095,7 @@ export default [
         ]
     },
     {
+        name: 'arrow-right',
         id: 'arrow-right',
         filter: [
             'next',
@@ -1014,12 +1106,14 @@ export default [
         ]
     },
     {
+        name: 'arrow-up',
         id: 'arrow-up',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'arrow-down',
         id: 'arrow-down',
         filter: [
             'download'
@@ -1029,6 +1123,7 @@ export default [
         ]
     },
     {
+        name: 'Share',
         id: 'share',
         aliases: [
             'mail-forward'
@@ -1038,6 +1133,7 @@ export default [
         ]
     },
     {
+        name: 'Expand',
         id: 'expand',
         filter: [
             'enlarge',
@@ -1049,6 +1145,7 @@ export default [
         ]
     },
     {
+        name: 'Compress',
         id: 'compress',
         filter: [
             'collapse',
@@ -1062,6 +1159,7 @@ export default [
         ]
     },
     {
+        name: 'plus',
         id: 'plus',
         filter: [
             'add',
@@ -1074,6 +1172,7 @@ export default [
         ]
     },
     {
+        name: 'minus',
         id: 'minus',
         filter: [
             'hide',
@@ -1089,6 +1188,7 @@ export default [
         ]
     },
     {
+        name: 'asterisk',
         id: 'asterisk',
         filter: [
             'details'
@@ -1098,6 +1198,7 @@ export default [
         ]
     },
     {
+        name: 'Exclamation Circle',
         id: 'exclamation-circle',
         filter: [
             'warning',
@@ -1111,6 +1212,7 @@ export default [
         ]
     },
     {
+        name: 'gift',
         id: 'gift',
         filter: [
             'present'
@@ -1120,6 +1222,7 @@ export default [
         ]
     },
     {
+        name: 'leaf',
         id: 'leaf',
         filter: [
             'eco',
@@ -1131,6 +1234,7 @@ export default [
         ]
     },
     {
+        name: 'fire',
         id: 'fire',
         filter: [
             'flame',
@@ -1142,6 +1246,7 @@ export default [
         ]
     },
     {
+        name: 'Eye',
         id: 'eye',
         filter: [
             'show',
@@ -1153,6 +1258,7 @@ export default [
         ]
     },
     {
+        name: 'Eye Slash',
         id: 'eye-slash',
         filter: [
             'toggle',
@@ -1167,6 +1273,7 @@ export default [
         ]
     },
     {
+        name: 'Exclamation Triangle',
         id: 'exclamation-triangle',
         filter: [
             'warning',
@@ -1183,6 +1290,7 @@ export default [
         ]
     },
     {
+        name: 'plane',
         id: 'plane',
         filter: [
             'travel',
@@ -1199,6 +1307,7 @@ export default [
         ]
     },
     {
+        name: 'calendar',
         id: 'calendar',
         filter: [
             'date',
@@ -1211,6 +1320,7 @@ export default [
         ]
     },
     {
+        name: 'random',
         id: 'random',
         filter: [
             'sort',
@@ -1222,6 +1332,7 @@ export default [
         ]
     },
     {
+        name: 'comment',
         id: 'comment',
         filter: [
             'speech',
@@ -1240,24 +1351,28 @@ export default [
         ]
     },
     {
+        name: 'magnet',
         id: 'magnet',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'chevron-up',
         id: 'chevron-up',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'chevron-down',
         id: 'chevron-down',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'retweet',
         id: 'retweet',
         filter: [
             'refresh',
@@ -1269,6 +1384,7 @@ export default [
         ]
     },
     {
+        name: 'shopping-cart',
         id: 'shopping-cart',
         filter: [
             'checkout',
@@ -1281,18 +1397,21 @@ export default [
         ]
     },
     {
+        name: 'Folder',
         id: 'folder',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Folder Open',
         id: 'folder-open',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Arrows Vertical',
         id: 'arrows-v',
         filter: [
             'resize'
@@ -1303,6 +1422,7 @@ export default [
         ]
     },
     {
+        name: 'Arrows Horizontal',
         id: 'arrows-h',
         filter: [
             'resize'
@@ -1313,6 +1433,7 @@ export default [
         ]
     },
     {
+        name: 'Bar Chart',
         id: 'bar-chart',
         aliases: [
             'bar-chart-o'
@@ -1327,6 +1448,7 @@ export default [
         ]
     },
     {
+        name: 'Twitter Square',
         id: 'twitter-square',
         filter: [
             'tweet',
@@ -1337,6 +1459,7 @@ export default [
         ]
     },
     {
+        name: 'Facebook Square',
         id: 'facebook-square',
         filter: [
             'social network'
@@ -1346,6 +1469,7 @@ export default [
         ]
     },
     {
+        name: 'camera-retro',
         id: 'camera-retro',
         filter: [
             'photo',
@@ -1357,6 +1481,7 @@ export default [
         ]
     },
     {
+        name: 'key',
         id: 'key',
         filter: [
             'unlock',
@@ -1367,6 +1492,7 @@ export default [
         ]
     },
     {
+        name: 'cogs',
         id: 'cogs',
         aliases: [
             'gears'
@@ -1379,6 +1505,7 @@ export default [
         ]
     },
     {
+        name: 'comments',
         id: 'comments',
         filter: [
             'speech',
@@ -1397,6 +1524,7 @@ export default [
         ]
     },
     {
+        name: 'Thumbs Up Outlined',
         id: 'thumbs-o-up',
         filter: [
             'like',
@@ -1411,6 +1539,7 @@ export default [
         ]
     },
     {
+        name: 'Thumbs Down Outlined',
         id: 'thumbs-o-down',
         filter: [
             'dislike',
@@ -1424,6 +1553,7 @@ export default [
         ]
     },
     {
+        name: 'star-half',
         id: 'star-half',
         filter: [
             'award',
@@ -1436,6 +1566,7 @@ export default [
         ]
     },
     {
+        name: 'Heart Outlined',
         id: 'heart-o',
         filter: [
             'love',
@@ -1448,6 +1579,7 @@ export default [
         ]
     },
     {
+        name: 'Sign Out',
         id: 'sign-out',
         filter: [
             'log out',
@@ -1461,12 +1593,14 @@ export default [
         ]
     },
     {
+        name: 'LinkedIn Square',
         id: 'linkedin-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Thumb Tack',
         id: 'thumb-tack',
         filter: [
             'marker',
@@ -1479,6 +1613,7 @@ export default [
         ]
     },
     {
+        name: 'External Link',
         id: 'external-link',
         filter: [
             'open',
@@ -1489,6 +1624,7 @@ export default [
         ]
     },
     {
+        name: 'Sign In',
         id: 'sign-in',
         filter: [
             'enter',
@@ -1506,6 +1642,7 @@ export default [
         ]
     },
     {
+        name: 'trophy',
         id: 'trophy',
         filter: [
             'award',
@@ -1519,6 +1656,7 @@ export default [
         ]
     },
     {
+        name: 'GitHub Square',
         id: 'github-square',
         filter: [
             'octocat'
@@ -1528,6 +1666,7 @@ export default [
         ]
     },
     {
+        name: 'Upload',
         id: 'upload',
         filter: [
             'import'
@@ -1537,6 +1676,7 @@ export default [
         ]
     },
     {
+        name: 'Lemon Outlined',
         id: 'lemon-o',
         filter: [
             'food'
@@ -1546,6 +1686,7 @@ export default [
         ]
     },
     {
+        name: 'Phone',
         id: 'phone',
         filter: [
             'call',
@@ -1560,6 +1701,7 @@ export default [
         ]
     },
     {
+        name: 'Square Outlined',
         id: 'square-o',
         filter: [
             'block',
@@ -1572,6 +1714,7 @@ export default [
         ]
     },
     {
+        name: 'Bookmark Outlined',
         id: 'bookmark-o',
         filter: [
             'save'
@@ -1581,6 +1724,7 @@ export default [
         ]
     },
     {
+        name: 'Phone Square',
         id: 'phone-square',
         filter: [
             'call',
@@ -1594,6 +1738,7 @@ export default [
         ]
     },
     {
+        name: 'Twitter',
         id: 'twitter',
         filter: [
             'tweet',
@@ -1604,6 +1749,7 @@ export default [
         ]
     },
     {
+        name: 'Facebook',
         id: 'facebook',
         aliases: [
             'facebook-f'
@@ -1616,6 +1762,7 @@ export default [
         ]
     },
     {
+        name: 'GitHub',
         id: 'github',
         filter: [
             'octocat'
@@ -1625,6 +1772,7 @@ export default [
         ]
     },
     {
+        name: 'unlock',
         id: 'unlock',
         filter: [
             'protect',
@@ -1637,6 +1785,7 @@ export default [
         ]
     },
     {
+        name: 'credit-card',
         id: 'credit-card',
         filter: [
             'money',
@@ -1652,6 +1801,7 @@ export default [
         ]
     },
     {
+        name: 'rss',
         id: 'rss',
         filter: [
             'blog'
@@ -1664,6 +1814,7 @@ export default [
         ]
     },
     {
+        name: 'HDD',
         id: 'hdd-o',
         filter: [
             'harddrive',
@@ -1676,6 +1827,7 @@ export default [
         ]
     },
     {
+        name: 'bullhorn',
         id: 'bullhorn',
         filter: [
             'announcement',
@@ -1689,6 +1841,7 @@ export default [
         ]
     },
     {
+        name: 'bell',
         id: 'bell',
         filter: [
             'alert',
@@ -1700,6 +1853,7 @@ export default [
         ]
     },
     {
+        name: 'certificate',
         id: 'certificate',
         filter: [
             'badge',
@@ -1710,6 +1864,7 @@ export default [
         ]
     },
     {
+        name: 'Hand Outlined Right',
         id: 'hand-o-right',
         filter: [
             'point',
@@ -1724,6 +1879,7 @@ export default [
         ]
     },
     {
+        name: 'Hand Outlined Left',
         id: 'hand-o-left',
         filter: [
             'point',
@@ -1738,6 +1894,7 @@ export default [
         ]
     },
     {
+        name: 'Hand Outlined Up',
         id: 'hand-o-up',
         filter: [
             'point',
@@ -1749,6 +1906,7 @@ export default [
         ]
     },
     {
+        name: 'Hand Outlined Down',
         id: 'hand-o-down',
         filter: [
             'point',
@@ -1760,6 +1918,7 @@ export default [
         ]
     },
     {
+        name: 'Arrow Circle Left',
         id: 'arrow-circle-left',
         filter: [
             'previous',
@@ -1770,6 +1929,7 @@ export default [
         ]
     },
     {
+        name: 'Arrow Circle Right',
         id: 'arrow-circle-right',
         filter: [
             'next',
@@ -1780,12 +1940,14 @@ export default [
         ]
     },
     {
+        name: 'Arrow Circle Up',
         id: 'arrow-circle-up',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'Arrow Circle Down',
         id: 'arrow-circle-down',
         filter: [
             'download'
@@ -1795,6 +1957,7 @@ export default [
         ]
     },
     {
+        name: 'Globe',
         id: 'globe',
         filter: [
             'world',
@@ -1817,6 +1980,7 @@ export default [
         ]
     },
     {
+        name: 'Wrench',
         id: 'wrench',
         filter: [
             'settings',
@@ -1829,6 +1993,7 @@ export default [
         ]
     },
     {
+        name: 'Tasks',
         id: 'tasks',
         filter: [
             'progress',
@@ -1842,6 +2007,7 @@ export default [
         ]
     },
     {
+        name: 'Filter',
         id: 'filter',
         filter: [
             'funnel',
@@ -1852,6 +2018,7 @@ export default [
         ]
     },
     {
+        name: 'Briefcase',
         id: 'briefcase',
         filter: [
             'work',
@@ -1865,6 +2032,7 @@ export default [
         ]
     },
     {
+        name: 'Arrows Alt',
         id: 'arrows-alt',
         filter: [
             'expand',
@@ -1882,6 +2050,7 @@ export default [
         ]
     },
     {
+        name: 'Users',
         id: 'users',
         filter: [
             'people',
@@ -1896,6 +2065,7 @@ export default [
         ]
     },
     {
+        name: 'Link',
         id: 'link',
         filter: [
             'chain'
@@ -1908,6 +2078,7 @@ export default [
         ]
     },
     {
+        name: 'Cloud',
         id: 'cloud',
         filter: [
             'save'
@@ -1917,6 +2088,7 @@ export default [
         ]
     },
     {
+        name: 'Flask',
         id: 'flask',
         filter: [
             'science',
@@ -1929,6 +2101,7 @@ export default [
         ]
     },
     {
+        name: 'Scissors',
         id: 'scissors',
         aliases: [
             'cut'
@@ -1938,6 +2111,7 @@ export default [
         ]
     },
     {
+        name: 'Files Outlined',
         id: 'files-o',
         filter: [
             'duplicate',
@@ -1952,6 +2126,7 @@ export default [
         ]
     },
     {
+        name: 'Paperclip',
         id: 'paperclip',
         filter: [
             'attachment'
@@ -1961,6 +2136,7 @@ export default [
         ]
     },
     {
+        name: 'Floppy Outlined',
         id: 'floppy-o',
         aliases: [
             'save'
@@ -1970,6 +2146,7 @@ export default [
         ]
     },
     {
+        name: 'Square',
         id: 'square',
         filter: [
             'block',
@@ -1981,6 +2158,7 @@ export default [
         ]
     },
     {
+        name: 'Bars',
         id: 'bars',
         aliases: [
             'navicon',
@@ -2004,6 +2182,7 @@ export default [
         ]
     },
     {
+        name: 'list-ul',
         id: 'list-ul',
         filter: [
             'ul',
@@ -2017,6 +2196,7 @@ export default [
         ]
     },
     {
+        name: 'list-ol',
         id: 'list-ol',
         filter: [
             'ul',
@@ -2032,18 +2212,21 @@ export default [
         ]
     },
     {
+        name: 'Strikethrough',
         id: 'strikethrough',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'Underline',
         id: 'underline',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'table',
         id: 'table',
         filter: [
             'data',
@@ -2055,6 +2238,7 @@ export default [
         ]
     },
     {
+        name: 'magic',
         id: 'magic',
         filter: [
             'wizard',
@@ -2066,6 +2250,7 @@ export default [
         ]
     },
     {
+        name: 'truck',
         id: 'truck',
         filter: [
             'shipping'
@@ -2076,18 +2261,21 @@ export default [
         ]
     },
     {
+        name: 'Pinterest',
         id: 'pinterest',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Pinterest Square',
         id: 'pinterest-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Google Plus Square',
         id: 'google-plus-square',
         filter: [
             'social network'
@@ -2097,6 +2285,7 @@ export default [
         ]
     },
     {
+        name: 'Google Plus',
         id: 'google-plus',
         filter: [
             'social network'
@@ -2106,6 +2295,7 @@ export default [
         ]
     },
     {
+        name: 'Money',
         id: 'money',
         filter: [
             'cash',
@@ -2121,6 +2311,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Down',
         id: 'caret-down',
         filter: [
             'more',
@@ -2134,6 +2325,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Up',
         id: 'caret-up',
         filter: [
             'triangle up',
@@ -2144,6 +2336,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Left',
         id: 'caret-left',
         filter: [
             'previous',
@@ -2156,6 +2349,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Right',
         id: 'caret-right',
         filter: [
             'next',
@@ -2168,6 +2362,7 @@ export default [
         ]
     },
     {
+        name: 'Columns',
         id: 'columns',
         filter: [
             'split',
@@ -2178,6 +2373,7 @@ export default [
         ]
     },
     {
+        name: 'Sort',
         id: 'sort',
         filter: [
             'order'
@@ -2190,6 +2386,7 @@ export default [
         ]
     },
     {
+        name: 'Sort Descending',
         id: 'sort-desc',
         filter: [
             'dropdown',
@@ -2205,6 +2402,7 @@ export default [
         ]
     },
     {
+        name: 'Sort Ascending',
         id: 'sort-asc',
         aliases: [
             'sort-up'
@@ -2217,6 +2415,7 @@ export default [
         ]
     },
     {
+        name: 'Envelope',
         id: 'envelope',
         filter: [
             'email',
@@ -2232,12 +2431,14 @@ export default [
         ]
     },
     {
+        name: 'LinkedIn',
         id: 'linkedin',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Undo',
         id: 'undo',
         filter: [
             'back'
@@ -2250,6 +2451,7 @@ export default [
         ]
     },
     {
+        name: 'Gavel',
         id: 'gavel',
         filter: [
             'judge',
@@ -2264,6 +2466,7 @@ export default [
         ]
     },
     {
+        name: 'Tachometer',
         id: 'tachometer',
         filter: [
             'speedometer',
@@ -2277,6 +2480,7 @@ export default [
         ]
     },
     {
+        name: 'comment-o',
         id: 'comment-o',
         filter: [
             'speech',
@@ -2295,6 +2499,7 @@ export default [
         ]
     },
     {
+        name: 'comments-o',
         id: 'comments-o',
         filter: [
             'speech',
@@ -2313,6 +2518,7 @@ export default [
         ]
     },
     {
+        name: 'Lightning Bolt',
         id: 'bolt',
         filter: [
             'lightning',
@@ -2326,6 +2532,7 @@ export default [
         ]
     },
     {
+        name: 'Sitemap',
         id: 'sitemap',
         filter: [
             'directory',
@@ -2337,12 +2544,14 @@ export default [
         ]
     },
     {
+        name: 'Umbrella',
         id: 'umbrella',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Clipboard',
         id: 'clipboard',
         filter: [
             'copy'
@@ -2355,6 +2564,7 @@ export default [
         ]
     },
     {
+        name: 'Lightbulb Outlined',
         id: 'lightbulb-o',
         filter: [
             'idea',
@@ -2365,6 +2575,7 @@ export default [
         ]
     },
     {
+        name: 'Exchange',
         id: 'exchange',
         filter: [
             'transfer',
@@ -2377,6 +2588,7 @@ export default [
         ]
     },
     {
+        name: 'Cloud Download',
         id: 'cloud-download',
         filter: [
             'import'
@@ -2386,6 +2598,7 @@ export default [
         ]
     },
     {
+        name: 'Cloud Upload',
         id: 'cloud-upload',
         filter: [
             'import'
@@ -2395,6 +2608,7 @@ export default [
         ]
     },
     {
+        name: 'user-md',
         id: 'user-md',
         filter: [
             'doctor',
@@ -2407,12 +2621,14 @@ export default [
         ]
     },
     {
+        name: 'Stethoscope',
         id: 'stethoscope',
         categories: [
             'Medical Icons'
         ]
     },
     {
+        name: 'Suitcase',
         id: 'suitcase',
         filter: [
             'trip',
@@ -2426,6 +2642,7 @@ export default [
         ]
     },
     {
+        name: 'Bell Outlined',
         id: 'bell-o',
         filter: [
             'alert',
@@ -2437,6 +2654,7 @@ export default [
         ]
     },
     {
+        name: 'Coffee',
         id: 'coffee',
         filter: [
             'morning',
@@ -2451,6 +2669,7 @@ export default [
         ]
     },
     {
+        name: 'Cutlery',
         id: 'cutlery',
         filter: [
             'food',
@@ -2465,6 +2684,7 @@ export default [
         ]
     },
     {
+        name: 'File Text Outlined',
         id: 'file-text-o',
         filter: [
             'new',
@@ -2478,6 +2698,7 @@ export default [
         ]
     },
     {
+        name: 'Building Outlined',
         id: 'building-o',
         filter: [
             'work',
@@ -2491,6 +2712,7 @@ export default [
         ]
     },
     {
+        name: 'hospital Outlined',
         id: 'hospital-o',
         filter: [
             'building'
@@ -2500,6 +2722,7 @@ export default [
         ]
     },
     {
+        name: 'ambulance',
         id: 'ambulance',
         filter: [
             'vehicle',
@@ -2512,6 +2735,7 @@ export default [
         ]
     },
     {
+        name: 'medkit',
         id: 'medkit',
         filter: [
             'first aid',
@@ -2525,6 +2749,7 @@ export default [
         ]
     },
     {
+        name: 'fighter-jet',
         id: 'fighter-jet',
         filter: [
             'fly',
@@ -2540,6 +2765,7 @@ export default [
         ]
     },
     {
+        name: 'beer',
         id: 'beer',
         filter: [
             'alcohol',
@@ -2554,6 +2780,7 @@ export default [
         ]
     },
     {
+        name: 'H Square',
         id: 'h-square',
         filter: [
             'hospital',
@@ -2564,6 +2791,7 @@ export default [
         ]
     },
     {
+        name: 'Plus Square',
         id: 'plus-square',
         filter: [
             'add',
@@ -2578,6 +2806,7 @@ export default [
         ]
     },
     {
+        name: 'Angle Double Left',
         id: 'angle-double-left',
         filter: [
             'laquo',
@@ -2591,6 +2820,7 @@ export default [
         ]
     },
     {
+        name: 'Angle Double Right',
         id: 'angle-double-right',
         filter: [
             'raquo',
@@ -2604,6 +2834,7 @@ export default [
         ]
     },
     {
+        name: 'Angle Double Up',
         id: 'angle-double-up',
         filter: [
             'arrows'
@@ -2613,6 +2844,7 @@ export default [
         ]
     },
     {
+        name: 'Angle Double Down',
         id: 'angle-double-down',
         filter: [
             'arrows'
@@ -2622,6 +2854,7 @@ export default [
         ]
     },
     {
+        name: 'angle-left',
         id: 'angle-left',
         filter: [
             'previous',
@@ -2633,6 +2866,7 @@ export default [
         ]
     },
     {
+        name: 'angle-right',
         id: 'angle-right',
         filter: [
             'next',
@@ -2644,6 +2878,7 @@ export default [
         ]
     },
     {
+        name: 'angle-up',
         id: 'angle-up',
         filter: [
             'arrow'
@@ -2653,6 +2888,7 @@ export default [
         ]
     },
     {
+        name: 'angle-down',
         id: 'angle-down',
         filter: [
             'arrow'
@@ -2662,6 +2898,7 @@ export default [
         ]
     },
     {
+        name: 'Desktop',
         id: 'desktop',
         filter: [
             'monitor',
@@ -2676,6 +2913,7 @@ export default [
         ]
     },
     {
+        name: 'Laptop',
         id: 'laptop',
         filter: [
             'demo',
@@ -2687,6 +2925,7 @@ export default [
         ]
     },
     {
+        name: 'tablet',
         id: 'tablet',
         filter: [
             'ipad',
@@ -2697,6 +2936,7 @@ export default [
         ]
     },
     {
+        name: 'Mobile Phone',
         id: 'mobile',
         filter: [
             'cell phone',
@@ -2715,6 +2955,7 @@ export default [
         ]
     },
     {
+        name: 'Circle Outlined',
         id: 'circle-o',
         categories: [
             'Web Application Icons',
@@ -2722,18 +2963,21 @@ export default [
         ]
     },
     {
+        name: 'quote-left',
         id: 'quote-left',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'quote-right',
         id: 'quote-right',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Spinner',
         id: 'spinner',
         filter: [
             'loading',
@@ -2745,6 +2989,7 @@ export default [
         ]
     },
     {
+        name: 'Circle',
         id: 'circle',
         filter: [
             'dot',
@@ -2756,6 +3001,7 @@ export default [
         ]
     },
     {
+        name: 'Reply',
         id: 'reply',
         aliases: [
             'mail-reply'
@@ -2765,6 +3011,7 @@ export default [
         ]
     },
     {
+        name: 'GitHub Alt',
         id: 'github-alt',
         filter: [
             'octocat'
@@ -2774,18 +3021,21 @@ export default [
         ]
     },
     {
+        name: 'Folder Outlined',
         id: 'folder-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Folder Open Outlined',
         id: 'folder-open-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Smile Outlined',
         id: 'smile-o',
         filter: [
             'face',
@@ -2800,6 +3050,7 @@ export default [
         ]
     },
     {
+        name: 'Frown Outlined',
         id: 'frown-o',
         filter: [
             'face',
@@ -2813,6 +3064,7 @@ export default [
         ]
     },
     {
+        name: 'Meh Outlined',
         id: 'meh-o',
         filter: [
             'face',
@@ -2825,6 +3077,7 @@ export default [
         ]
     },
     {
+        name: 'Gamepad',
         id: 'gamepad',
         filter: [
             'controller'
@@ -2834,6 +3087,7 @@ export default [
         ]
     },
     {
+        name: 'Keyboard Outlined',
         id: 'keyboard-o',
         filter: [
             'type',
@@ -2844,6 +3098,7 @@ export default [
         ]
     },
     {
+        name: 'Flag Outlined',
         id: 'flag-o',
         filter: [
             'report',
@@ -2854,6 +3109,7 @@ export default [
         ]
     },
     {
+        name: 'flag-checkered',
         id: 'flag-checkered',
         filter: [
             'report',
@@ -2865,6 +3121,7 @@ export default [
         ]
     },
     {
+        name: 'Terminal',
         id: 'terminal',
         filter: [
             'command',
@@ -2876,6 +3133,7 @@ export default [
         ]
     },
     {
+        name: 'Code',
         id: 'code',
         filter: [
             'html',
@@ -2886,6 +3144,7 @@ export default [
         ]
     },
     {
+        name: 'reply-all',
         id: 'reply-all',
         aliases: [
             'mail-reply-all'
@@ -2895,6 +3154,7 @@ export default [
         ]
     },
     {
+        name: 'Star Half Outlined',
         id: 'star-half-o',
         filter: [
             'award',
@@ -2911,6 +3171,7 @@ export default [
         ]
     },
     {
+        name: 'location-arrow',
         id: 'location-arrow',
         filter: [
             'map',
@@ -2925,12 +3186,14 @@ export default [
         ]
     },
     {
+        name: 'crop',
         id: 'crop',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'code-fork',
         id: 'code-fork',
         filter: [
             'git',
@@ -2947,6 +3210,7 @@ export default [
         ]
     },
     {
+        name: 'Chain Broken',
         id: 'chain-broken',
         filter: [
             'remove'
@@ -2959,6 +3223,7 @@ export default [
         ]
     },
     {
+        name: 'Question',
         id: 'question',
         filter: [
             'help',
@@ -2971,6 +3236,7 @@ export default [
         ]
     },
     {
+        name: 'Info',
         id: 'info',
         filter: [
             'help',
@@ -2983,6 +3249,7 @@ export default [
         ]
     },
     {
+        name: 'exclamation',
         id: 'exclamation',
         filter: [
             'warning',
@@ -2997,6 +3264,7 @@ export default [
         ]
     },
     {
+        name: 'superscript',
         id: 'superscript',
         filter: [
             'exponential'
@@ -3006,12 +3274,14 @@ export default [
         ]
     },
     {
+        name: 'subscript',
         id: 'subscript',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'eraser',
         id: 'eraser',
         filter: [
             'remove',
@@ -3023,6 +3293,7 @@ export default [
         ]
     },
     {
+        name: 'Puzzle Piece',
         id: 'puzzle-piece',
         filter: [
             'addon',
@@ -3034,6 +3305,7 @@ export default [
         ]
     },
     {
+        name: 'microphone',
         id: 'microphone',
         filter: [
             'record',
@@ -3045,6 +3317,7 @@ export default [
         ]
     },
     {
+        name: 'Microphone Slash',
         id: 'microphone-slash',
         filter: [
             'record',
@@ -3057,6 +3330,7 @@ export default [
         ]
     },
     {
+        name: 'shield',
         id: 'shield',
         filter: [
             'award',
@@ -3069,6 +3343,7 @@ export default [
         ]
     },
     {
+        name: 'calendar-o',
         id: 'calendar-o',
         filter: [
             'date',
@@ -3081,12 +3356,14 @@ export default [
         ]
     },
     {
+        name: 'fire-extinguisher',
         id: 'fire-extinguisher',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'rocket',
         id: 'rocket',
         filter: [
             'app'
@@ -3097,12 +3374,14 @@ export default [
         ]
     },
     {
+        name: 'MaxCDN',
         id: 'maxcdn',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Chevron Circle Left',
         id: 'chevron-circle-left',
         filter: [
             'previous',
@@ -3114,6 +3393,7 @@ export default [
         ]
     },
     {
+        name: 'Chevron Circle Right',
         id: 'chevron-circle-right',
         filter: [
             'next',
@@ -3125,6 +3405,7 @@ export default [
         ]
     },
     {
+        name: 'Chevron Circle Up',
         id: 'chevron-circle-up',
         filter: [
             'arrow'
@@ -3134,6 +3415,7 @@ export default [
         ]
     },
     {
+        name: 'Chevron Circle Down',
         id: 'chevron-circle-down',
         filter: [
             'more',
@@ -3146,6 +3428,7 @@ export default [
         ]
     },
     {
+        name: 'HTML 5 Logo',
         id: 'html5',
         code: [
             'code',
@@ -3156,6 +3439,7 @@ export default [
         ]
     },
     {
+        name: 'CSS 3 Logo',
         id: 'css3',
         filter: [
             'code'
@@ -3165,6 +3449,7 @@ export default [
         ]
     },
     {
+        name: 'Anchor',
         id: 'anchor',
         filter: [
             'link'
@@ -3174,6 +3459,7 @@ export default [
         ]
     },
     {
+        name: 'Unlock Alt',
         id: 'unlock-alt',
         filter: [
             'protect',
@@ -3186,6 +3472,7 @@ export default [
         ]
     },
     {
+        name: 'Bullseye',
         id: 'bullseye',
         filter: [
             'target'
@@ -3195,6 +3482,7 @@ export default [
         ]
     },
     {
+        name: 'Ellipsis Horizontal',
         id: 'ellipsis-h',
         filter: [
             'dots'
@@ -3204,6 +3492,7 @@ export default [
         ]
     },
     {
+        name: 'Ellipsis Vertical',
         id: 'ellipsis-v',
         filter: [
             'dots'
@@ -3213,6 +3502,7 @@ export default [
         ]
     },
     {
+        name: 'RSS Square',
         id: 'rss-square',
         filter: [
             'feed',
@@ -3223,6 +3513,7 @@ export default [
         ]
     },
     {
+        name: 'Play Circle',
         id: 'play-circle',
         filter: [
             'start',
@@ -3233,6 +3524,7 @@ export default [
         ]
     },
     {
+        name: 'Ticket',
         id: 'ticket',
         filter: [
             'movie',
@@ -3244,6 +3536,7 @@ export default [
         ]
     },
     {
+        name: 'Minus Square',
         id: 'minus-square',
         filter: [
             'hide',
@@ -3260,6 +3553,7 @@ export default [
         ]
     },
     {
+        name: 'Minus Square Outlined',
         id: 'minus-square-o',
         filter: [
             'hide',
@@ -3276,6 +3570,7 @@ export default [
         ]
     },
     {
+        name: 'Level Up',
         id: 'level-up',
         filter: [
             'arrow'
@@ -3285,6 +3580,7 @@ export default [
         ]
     },
     {
+        name: 'Level Down',
         id: 'level-down',
         filter: [
             'arrow'
@@ -3294,6 +3590,7 @@ export default [
         ]
     },
     {
+        name: 'Check Square',
         id: 'check-square',
         filter: [
             'checkmark',
@@ -3310,6 +3607,7 @@ export default [
         ]
     },
     {
+        name: 'Pencil Square',
         id: 'pencil-square',
         filter: [
             'write',
@@ -3321,6 +3619,7 @@ export default [
         ]
     },
     {
+        name: 'External Link Square',
         id: 'external-link-square',
         filter: [
             'open',
@@ -3331,6 +3630,7 @@ export default [
         ]
     },
     {
+        name: 'Share Square',
         id: 'share-square',
         filter: [
             'social',
@@ -3341,6 +3641,7 @@ export default [
         ]
     },
     {
+        name: 'Compass',
         id: 'compass',
         filter: [
             'safari',
@@ -3353,6 +3654,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Square Outlined Down',
         id: 'caret-square-o-down',
         aliases: [
             'toggle-down'
@@ -3368,6 +3670,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Square Outlined Up',
         id: 'caret-square-o-up',
         aliases: [
             'toggle-up'
@@ -3378,6 +3681,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Square Outlined Right',
         id: 'caret-square-o-right',
         filter: [
             'next',
@@ -3392,6 +3696,7 @@ export default [
         ]
     },
     {
+        name: 'Euro (EUR)',
         id: 'eur',
         aliases: [
             'euro'
@@ -3401,12 +3706,14 @@ export default [
         ]
     },
     {
+        name: 'GBP',
         id: 'gbp',
         categories: [
             'Currency Icons'
         ]
     },
     {
+        name: 'US Dollar',
         id: 'usd',
         aliases: [
             'dollar'
@@ -3416,6 +3723,7 @@ export default [
         ]
     },
     {
+        name: 'Indian Rupee (INR)',
         id: 'inr',
         aliases: [
             'rupee'
@@ -3425,6 +3733,7 @@ export default [
         ]
     },
     {
+        name: 'Japanese Yen (JPY)',
         id: 'jpy',
         aliases: [
             'cny',
@@ -3436,6 +3745,7 @@ export default [
         ]
     },
     {
+        name: 'Russian Ruble (RUB)',
         id: 'rub',
         aliases: [
             'ruble',
@@ -3446,6 +3756,7 @@ export default [
         ]
     },
     {
+        name: 'Korean Won (KRW)',
         id: 'krw',
         aliases: [
             'won'
@@ -3455,6 +3766,7 @@ export default [
         ]
     },
     {
+        name: 'Bitcoin (BTC)',
         id: 'btc',
         aliases: [
             'bitcoin'
@@ -3465,6 +3777,7 @@ export default [
         ]
     },
     {
+        name: 'File',
         id: 'file',
         filter: [
             'new',
@@ -3478,6 +3791,7 @@ export default [
         ]
     },
     {
+        name: 'File Text',
         id: 'file-text',
         filter: [
             'new',
@@ -3491,30 +3805,35 @@ export default [
         ]
     },
     {
+        name: 'Sort Alpha Ascending',
         id: 'sort-alpha-asc',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Sort Alpha Descending',
         id: 'sort-alpha-desc',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Sort Amount Ascending',
         id: 'sort-amount-asc',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Sort Amount Descending',
         id: 'sort-amount-desc',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Sort Numeric Ascending',
         id: 'sort-numeric-asc',
         filter: [
             'numbers'
@@ -3524,6 +3843,7 @@ export default [
         ]
     },
     {
+        name: 'Sort Numeric Descending',
         id: 'sort-numeric-desc',
         filter: [
             'numbers'
@@ -3533,6 +3853,7 @@ export default [
         ]
     },
     {
+        name: 'thumbs-up',
         id: 'thumbs-up',
         filter: [
             'like',
@@ -3547,6 +3868,7 @@ export default [
         ]
     },
     {
+        name: 'thumbs-down',
         id: 'thumbs-down',
         filter: [
             'dislike',
@@ -3560,6 +3882,7 @@ export default [
         ]
     },
     {
+        name: 'YouTube Square',
         id: 'youtube-square',
         filter: [
             'video',
@@ -3570,6 +3893,7 @@ export default [
         ]
     },
     {
+        name: 'YouTube',
         id: 'youtube',
         filter: [
             'video',
@@ -3580,18 +3904,21 @@ export default [
         ]
     },
     {
+        name: 'Xing',
         id: 'xing',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Xing Square',
         id: 'xing-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'YouTube Play',
         id: 'youtube-play',
         filter: [
             'start',
@@ -3603,36 +3930,42 @@ export default [
         ]
     },
     {
+        name: 'Dropbox',
         id: 'dropbox',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Stack Overflow',
         id: 'stack-overflow',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Instagram',
         id: 'instagram',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Flickr',
         id: 'flickr',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'App.net',
         id: 'adn',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Bitbucket',
         id: 'bitbucket',
         filter: [
             'git'
@@ -3642,6 +3975,7 @@ export default [
         ]
     },
     {
+        name: 'Bitbucket Square',
         id: 'bitbucket-square',
         filter: [
             'git'
@@ -3651,30 +3985,35 @@ export default [
         ]
     },
     {
+        name: 'Tumblr',
         id: 'tumblr',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Tumblr Square',
         id: 'tumblr-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Long Arrow Down',
         id: 'long-arrow-down',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'Long Arrow Up',
         id: 'long-arrow-up',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'Long Arrow Left',
         id: 'long-arrow-left',
         filter: [
             'previous',
@@ -3685,12 +4024,14 @@ export default [
         ]
     },
     {
+        name: 'Long Arrow Right',
         id: 'long-arrow-right',
         categories: [
             'Directional Icons'
         ]
     },
     {
+        name: 'Apple',
         id: 'apple',
         filter: [
             'osx',
@@ -3701,6 +4042,7 @@ export default [
         ]
     },
     {
+        name: 'Windows',
         id: 'windows',
         filter: [
             'microsoft'
@@ -3710,6 +4052,7 @@ export default [
         ]
     },
     {
+        name: 'Android',
         id: 'android',
         filter: [
             'robot'
@@ -3719,6 +4062,7 @@ export default [
         ]
     },
     {
+        name: 'Linux',
         id: 'linux',
         filter: [
             'tux'
@@ -3728,30 +4072,35 @@ export default [
         ]
     },
     {
+        name: 'Dribbble',
         id: 'dribbble',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Skype',
         id: 'skype',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Foursquare',
         id: 'foursquare',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Trello',
         id: 'trello',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Female',
         id: 'female',
         filter: [
             'woman',
@@ -3764,6 +4113,7 @@ export default [
         ]
     },
     {
+        name: 'Male',
         id: 'male',
         filter: [
             'man',
@@ -3776,6 +4126,7 @@ export default [
         ]
     },
     {
+        name: 'Gratipay (Gittip)',
         id: 'gratipay',
         aliases: [
             'gittip'
@@ -3791,6 +4142,7 @@ export default [
         ]
     },
     {
+        name: 'Sun Outlined',
         id: 'sun-o',
         filter: [
             'weather',
@@ -3804,6 +4156,7 @@ export default [
         ]
     },
     {
+        name: 'Moon Outlined',
         id: 'moon-o',
         filter: [
             'night',
@@ -3815,6 +4168,7 @@ export default [
         ]
     },
     {
+        name: 'Archive',
         id: 'archive',
         filter: [
             'box',
@@ -3825,6 +4179,7 @@ export default [
         ]
     },
     {
+        name: 'Bug',
         id: 'bug',
         filter: [
             'report',
@@ -3835,24 +4190,28 @@ export default [
         ]
     },
     {
+        name: 'VK',
         id: 'vk',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Weibo',
         id: 'weibo',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Renren',
         id: 'renren',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Pagelines',
         id: 'pagelines',
         filter: [
             'leaf',
@@ -3867,12 +4226,14 @@ export default [
         ]
     },
     {
+        name: 'Stack Exchange',
         id: 'stack-exchange',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Arrow Circle Outlined Right',
         id: 'arrow-circle-o-right',
         filter: [
             'next',
@@ -3883,6 +4244,7 @@ export default [
         ]
     },
     {
+        name: 'Arrow Circle Outlined Left',
         id: 'arrow-circle-o-left',
         filter: [
             'previous',
@@ -3893,6 +4255,7 @@ export default [
         ]
     },
     {
+        name: 'Caret Square Outlined Left',
         id: 'caret-square-o-left',
         filter: [
             'previous',
@@ -3907,6 +4270,7 @@ export default [
         ]
     },
     {
+        name: 'Dot Circle Outlined',
         id: 'dot-circle-o',
         filter: [
             'target',
@@ -3919,6 +4283,7 @@ export default [
         ]
     },
     {
+        name: 'Wheelchair',
         id: 'wheelchair',
         filter: [
             'handicap',
@@ -3932,12 +4297,14 @@ export default [
         ]
     },
     {
+        name: 'Vimeo Square',
         id: 'vimeo-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Turkish Lira (TRY)',
         id: 'try',
         aliases: [
             'turkish-lira'
@@ -3947,6 +4314,7 @@ export default [
         ]
     },
     {
+        name: 'Plus Square Outlined',
         id: 'plus-square-o',
         filter: [
             'add',
@@ -3960,6 +4328,7 @@ export default [
         ]
     },
     {
+        name: 'Space Shuttle',
         id: 'space-shuttle',
         filter: null,
         categories: [
@@ -3968,6 +4337,7 @@ export default [
         ]
     },
     {
+        name: 'Slack Logo',
         id: 'slack',
         filter: [
             'hashtag',
@@ -3979,6 +4349,7 @@ export default [
         ]
     },
     {
+        name: 'Envelope Square',
         id: 'envelope-square',
         filter: [
             'email',
@@ -3994,18 +4365,21 @@ export default [
         ]
     },
     {
+        name: 'WordPress Logo',
         id: 'wordpress',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'OpenID',
         id: 'openid',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'University',
         id: 'university',
         aliases: [
             'institution',
@@ -4016,6 +4390,7 @@ export default [
         ]
     },
     {
+        name: 'Graduation Cap',
         id: 'graduation-cap',
         aliases: [
             'mortar-board'
@@ -4030,90 +4405,105 @@ export default [
         ]
     },
     {
+        name: 'Yahoo Logo',
         id: 'yahoo',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Google Logo',
         id: 'google',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'reddit Logo',
         id: 'reddit',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'reddit Square',
         id: 'reddit-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'StumbleUpon Circle',
         id: 'stumbleupon-circle',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'StumbleUpon Logo',
         id: 'stumbleupon',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Delicious Logo',
         id: 'delicious',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Digg Logo',
         id: 'digg',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Pied Piper PP Logo (Old)',
         id: 'pied-piper-pp',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Pied Piper Alternate Logo',
         id: 'pied-piper-alt',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Drupal Logo',
         id: 'drupal',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Joomla Logo',
         id: 'joomla',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Language',
         id: 'language',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Fax',
         id: 'fax',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Building',
         id: 'building',
         filter: [
             'work',
@@ -4127,12 +4517,14 @@ export default [
         ]
     },
     {
+        name: 'Child',
         id: 'child',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Paw',
         id: 'paw',
         filter: [
             'pet'
@@ -4142,54 +4534,63 @@ export default [
         ]
     },
     {
+        name: 'spoon',
         id: 'spoon',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Cube',
         id: 'cube',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Cubes',
         id: 'cubes',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Behance',
         id: 'behance',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Behance Square',
         id: 'behance-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Steam',
         id: 'steam',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Steam Square',
         id: 'steam-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Recycle',
         id: 'recycle',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Car',
         id: 'car',
         aliases: [
             'automobile'
@@ -4203,6 +4604,7 @@ export default [
         ]
     },
     {
+        name: 'Taxi',
         id: 'taxi',
         aliases: [
             'cab'
@@ -4216,36 +4618,42 @@ export default [
         ]
     },
     {
+        name: 'Tree',
         id: 'tree',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Spotify',
         id: 'spotify',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'deviantART',
         id: 'deviantart',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'SoundCloud',
         id: 'soundcloud',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Database',
         id: 'database',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'PDF File Outlined',
         id: 'file-pdf-o',
         categories: [
             'Web Application Icons',
@@ -4253,6 +4661,7 @@ export default [
         ]
     },
     {
+        name: 'Word File Outlined',
         id: 'file-word-o',
         categories: [
             'Web Application Icons',
@@ -4260,6 +4669,7 @@ export default [
         ]
     },
     {
+        name: 'Excel File Outlined',
         id: 'file-excel-o',
         categories: [
             'Web Application Icons',
@@ -4267,6 +4677,7 @@ export default [
         ]
     },
     {
+        name: 'Powerpoint File Outlined',
         id: 'file-powerpoint-o',
         categories: [
             'Web Application Icons',
@@ -4274,6 +4685,7 @@ export default [
         ]
     },
     {
+        name: 'Image File Outlined',
         id: 'file-image-o',
         aliases: [
             'file-photo-o',
@@ -4285,6 +4697,7 @@ export default [
         ]
     },
     {
+        name: 'Archive File Outlined',
         id: 'file-archive-o',
         aliases: [
             'file-zip-o'
@@ -4295,6 +4708,7 @@ export default [
         ]
     },
     {
+        name: 'Audio File Outlined',
         id: 'file-audio-o',
         aliases: [
             'file-sound-o'
@@ -4305,6 +4719,7 @@ export default [
         ]
     },
     {
+        name: 'Video File Outlined',
         id: 'file-video-o',
         aliases: [
             'file-movie-o'
@@ -4315,6 +4730,7 @@ export default [
         ]
     },
     {
+        name: 'Code File Outlined',
         id: 'file-code-o',
         categories: [
             'Web Application Icons',
@@ -4322,24 +4738,28 @@ export default [
         ]
     },
     {
+        name: 'Vine',
         id: 'vine',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Codepen',
         id: 'codepen',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'jsFiddle',
         id: 'jsfiddle',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Life Ring',
         id: 'life-ring',
         aliases: [
             {
@@ -4354,6 +4774,7 @@ export default [
         ]
     },
     {
+        name: 'Circle Outlined Notched',
         id: 'circle-o-notch',
         categories: [
             'Web Application Icons',
@@ -4361,6 +4782,7 @@ export default [
         ]
     },
     {
+        name: 'Rebel Alliance',
         id: 'rebel',
         aliases: [
             'ra',
@@ -4371,6 +4793,7 @@ export default [
         ]
     },
     {
+        name: 'Galactic Empire',
         id: 'empire',
         aliases: [
             'ge'
@@ -4380,18 +4803,21 @@ export default [
         ]
     },
     {
+        name: 'Git Square',
         id: 'git-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Git',
         id: 'git',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Hacker News',
         id: 'hacker-news',
         aliases: [
             'y-combinator-square',
@@ -4402,18 +4828,21 @@ export default [
         ]
     },
     {
+        name: 'Tencent Weibo',
         id: 'tencent-weibo',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'QQ',
         id: 'qq',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Weixin (WeChat)',
         id: 'weixin',
         aliases: [
             'wechat'
@@ -4423,6 +4852,7 @@ export default [
         ]
     },
     {
+        name: 'Paper Plane',
         id: 'paper-plane',
         aliases: [
             'send'
@@ -4432,6 +4862,7 @@ export default [
         ]
     },
     {
+        name: 'Paper Plane Outlined',
         id: 'paper-plane-o',
         aliases: [
             'send-o'
@@ -4441,18 +4872,21 @@ export default [
         ]
     },
     {
+        name: 'History',
         id: 'history',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Circle Outlined Thin',
         id: 'circle-thin',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'header',
         id: 'header',
         filter: [
             'heading'
@@ -4462,12 +4896,14 @@ export default [
         ]
     },
     {
+        name: 'paragraph',
         id: 'paragraph',
         categories: [
             'Text Editor Icons'
         ]
     },
     {
+        name: 'Sliders',
         id: 'sliders',
         filter: [
             'settings'
@@ -4477,6 +4913,7 @@ export default [
         ]
     },
     {
+        name: 'Share Alt',
         id: 'share-alt',
         categories: [
             'Web Application Icons',
@@ -4484,6 +4921,7 @@ export default [
         ]
     },
     {
+        name: 'Share Alt Square',
         id: 'share-alt-square',
         categories: [
             'Web Application Icons',
@@ -4491,12 +4929,14 @@ export default [
         ]
     },
     {
+        name: 'Bomb',
         id: 'bomb',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Futbol Outlined',
         id: 'futbol-o',
         aliases: [
             'soccer-ball-o'
@@ -4506,6 +4946,7 @@ export default [
         ]
     },
     {
+        name: 'TTY',
         id: 'tty',
         categories: [
             'Web Application Icons',
@@ -4513,12 +4954,14 @@ export default [
         ]
     },
     {
+        name: 'Binoculars',
         id: 'binoculars',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Plug',
         id: 'plug',
         filter: [
             'power',
@@ -4529,24 +4972,28 @@ export default [
         ]
     },
     {
+        name: 'Slideshare',
         id: 'slideshare',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Twitch',
         id: 'twitch',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Yelp',
         id: 'yelp',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Newspaper Outlined',
         id: 'newspaper-o',
         filter: [
             'press'
@@ -4556,18 +5003,21 @@ export default [
         ]
     },
     {
+        name: 'WiFi',
         id: 'wifi',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Calculator',
         id: 'calculator',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Paypal',
         id: 'paypal',
         categories: [
             'Brand Icons',
@@ -4575,6 +5025,7 @@ export default [
         ]
     },
     {
+        name: 'Google Wallet',
         id: 'google-wallet',
         categories: [
             'Brand Icons',
@@ -4582,6 +5033,7 @@ export default [
         ]
     },
     {
+        name: 'Visa Credit Card',
         id: 'cc-visa',
         categories: [
             'Brand Icons',
@@ -4589,6 +5041,7 @@ export default [
         ]
     },
     {
+        name: 'MasterCard Credit Card',
         id: 'cc-mastercard',
         categories: [
             'Brand Icons',
@@ -4596,6 +5049,7 @@ export default [
         ]
     },
     {
+        name: 'Discover Credit Card',
         id: 'cc-discover',
         categories: [
             'Brand Icons',
@@ -4603,6 +5057,7 @@ export default [
         ]
     },
     {
+        name: 'American Express Credit Card',
         id: 'cc-amex',
         filter: [
             'amex'
@@ -4613,6 +5068,7 @@ export default [
         ]
     },
     {
+        name: 'Paypal Credit Card',
         id: 'cc-paypal',
         categories: [
             'Brand Icons',
@@ -4620,6 +5076,7 @@ export default [
         ]
     },
     {
+        name: 'Stripe Credit Card',
         id: 'cc-stripe',
         categories: [
             'Brand Icons',
@@ -4627,18 +5084,21 @@ export default [
         ]
     },
     {
+        name: 'Bell Slash',
         id: 'bell-slash',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Bell Slash Outlined',
         id: 'bell-slash-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Trash',
         id: 'trash',
         filter: [
             'garbage',
@@ -4651,12 +5111,14 @@ export default [
         ]
     },
     {
+        name: 'Copyright',
         id: 'copyright',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'At',
         id: 'at',
         filter: [
             'email',
@@ -4667,24 +5129,28 @@ export default [
         ]
     },
     {
+        name: 'Eyedropper',
         id: 'eyedropper',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Paint Brush',
         id: 'paint-brush',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Birthday Cake',
         id: 'birthday-cake',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Area Chart',
         id: 'area-chart',
         filter: [
             'graph',
@@ -4696,6 +5162,7 @@ export default [
         ]
     },
     {
+        name: 'Pie Chart',
         id: 'pie-chart',
         filter: [
             'graph',
@@ -4707,6 +5174,7 @@ export default [
         ]
     },
     {
+        name: 'Line Chart',
         id: 'line-chart',
         filter: [
             'graph',
@@ -4718,30 +5186,35 @@ export default [
         ]
     },
     {
+        name: 'last.fm',
         id: 'lastfm',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'last.fm Square',
         id: 'lastfm-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Toggle Off',
         id: 'toggle-off',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Toggle On',
         id: 'toggle-on',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Bicycle',
         id: 'bicycle',
         filter: [
             'vehicle',
@@ -4753,6 +5226,7 @@ export default [
         ]
     },
     {
+        name: 'Bus',
         id: 'bus',
         filter: [
             'vehicle'
@@ -4763,18 +5237,21 @@ export default [
         ]
     },
     {
+        name: 'ioxhost',
         id: 'ioxhost',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'AngelList',
         id: 'angellist',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Closed Captions',
         id: 'cc',
         categories: [
             'Web Application Icons',
@@ -4782,6 +5259,7 @@ export default [
         ]
     },
     {
+        name: 'Shekel (ILS)',
         id: 'ils',
         aliases: [
             'shekel',
@@ -4792,66 +5270,77 @@ export default [
         ]
     },
     {
+        name: 'meanpath',
         id: 'meanpath',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'BuySellAds',
         id: 'buysellads',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Connect Develop',
         id: 'connectdevelop',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'DashCube',
         id: 'dashcube',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Forumbee',
         id: 'forumbee',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Leanpub',
         id: 'leanpub',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Sellsy',
         id: 'sellsy',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Shirts in Bulk',
         id: 'shirtsinbulk',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'SimplyBuilt',
         id: 'simplybuilt',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'skyatlas',
         id: 'skyatlas',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Add to Shopping Cart',
         id: 'cart-plus',
         filter: [
             'add',
@@ -4862,6 +5351,7 @@ export default [
         ]
     },
     {
+        name: 'Shopping Cart Arrow Down',
         id: 'cart-arrow-down',
         filter: [
             'shopping'
@@ -4871,6 +5361,7 @@ export default [
         ]
     },
     {
+        name: 'Diamond',
         id: 'diamond',
         filter: [
             'gem',
@@ -4881,6 +5372,7 @@ export default [
         ]
     },
     {
+        name: 'Ship',
         id: 'ship',
         filter: [
             'boat',
@@ -4892,6 +5384,7 @@ export default [
         ]
     },
     {
+        name: 'User Secret',
         id: 'user-secret',
         filter: [
             'whisper',
@@ -4904,6 +5397,7 @@ export default [
         ]
     },
     {
+        name: 'Motorcycle',
         id: 'motorcycle',
         filter: [
             'vehicle',
@@ -4915,6 +5409,7 @@ export default [
         ]
     },
     {
+        name: 'Street View',
         id: 'street-view',
         filter: [
             'map'
@@ -4924,6 +5419,7 @@ export default [
         ]
     },
     {
+        name: 'Heartbeat',
         id: 'heartbeat',
         filter: [
             'ekg'
@@ -4934,6 +5430,7 @@ export default [
         ]
     },
     {
+        name: 'Venus',
         id: 'venus',
         filter: [
             'female'
@@ -4943,6 +5440,7 @@ export default [
         ]
     },
     {
+        name: 'Mars',
         id: 'mars',
         filter: [
             'male'
@@ -4952,6 +5450,7 @@ export default [
         ]
     },
     {
+        name: 'Mercury',
         id: 'mercury',
         filter: [
             'transgender'
@@ -4961,6 +5460,7 @@ export default [
         ]
     },
     {
+        name: 'Transgender',
         id: 'transgender',
         aliases: [
             'intersex'
@@ -4970,84 +5470,98 @@ export default [
         ]
     },
     {
+        name: 'Transgender Alt',
         id: 'transgender-alt',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Venus Double',
         id: 'venus-double',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Mars Double',
         id: 'mars-double',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Venus Mars',
         id: 'venus-mars',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Mars Stroke',
         id: 'mars-stroke',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Mars Stroke Vertical',
         id: 'mars-stroke-v',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Mars Stroke Horizontal',
         id: 'mars-stroke-h',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Neuter',
         id: 'neuter',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Genderless',
         id: 'genderless',
         categories: [
             'Gender Icons'
         ]
     },
     {
+        name: 'Facebook Official',
         id: 'facebook-official',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Pinterest P',
         id: 'pinterest-p',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: "What's App",
         id: 'whatsapp',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Server',
         id: 'server',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Add User',
         id: 'user-plus',
         filter: [
             'sign up',
@@ -5058,12 +5572,14 @@ export default [
         ]
     },
     {
+        name: 'Remove User',
         id: 'user-times',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Bed',
         id: 'bed',
         filter: [
             'travel'
@@ -5076,30 +5592,35 @@ export default [
         ]
     },
     {
+        name: 'Viacoin',
         id: 'viacoin',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Train',
         id: 'train',
         categories: [
             'Transportation Icons'
         ]
     },
     {
+        name: 'Subway',
         id: 'subway',
         categories: [
             'Transportation Icons'
         ]
     },
     {
+        name: 'Medium',
         id: 'medium',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Y Combinator',
         id: 'y-combinator',
         aliases: [
             'yc'
@@ -5109,24 +5630,28 @@ export default [
         ]
     },
     {
+        name: 'Optin Monster',
         id: 'optin-monster',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'OpenCart',
         id: 'opencart',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'ExpeditedSSL',
         id: 'expeditedssl',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Battery Full',
         id: 'battery-full',
         aliases: [
             'battery-4',
@@ -5140,6 +5665,7 @@ export default [
         ]
     },
     {
+        name: 'Battery 3/4 Full',
         id: 'battery-three-quarters',
         aliases: [
             'battery-3'
@@ -5152,6 +5678,7 @@ export default [
         ]
     },
     {
+        name: 'Battery 1/2 Full',
         id: 'battery-half',
         aliases: [
             'battery-2'
@@ -5164,6 +5691,7 @@ export default [
         ]
     },
     {
+        name: 'Battery 1/4 Full',
         id: 'battery-quarter',
         aliases: [
             'battery-1'
@@ -5176,6 +5704,7 @@ export default [
         ]
     },
     {
+        name: 'Battery Empty',
         id: 'battery-empty',
         aliases: [
             'battery-0'
@@ -5188,42 +5717,49 @@ export default [
         ]
     },
     {
+        name: 'Mouse Pointer',
         id: 'mouse-pointer',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'I Beam Cursor',
         id: 'i-cursor',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Object Group',
         id: 'object-group',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Object Ungroup',
         id: 'object-ungroup',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Sticky Note',
         id: 'sticky-note',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Sticky Note Outlined',
         id: 'sticky-note-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'JCB Credit Card',
         id: 'cc-jcb',
         categories: [
             'Brand Icons',
@@ -5231,6 +5767,7 @@ export default [
         ]
     },
     {
+        name: "Diner's Club Credit Card",
         id: 'cc-diners-club',
         categories: [
             'Brand Icons',
@@ -5238,6 +5775,7 @@ export default [
         ]
     },
     {
+        name: 'Clone',
         id: 'clone',
         filter: [
             'copy'
@@ -5247,18 +5785,21 @@ export default [
         ]
     },
     {
+        name: 'Balance Scale',
         id: 'balance-scale',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Hourglass Outlined',
         id: 'hourglass-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Hourglass Start',
         id: 'hourglass-start',
         aliases: [
             'hourglass-1'
@@ -5268,6 +5809,7 @@ export default [
         ]
     },
     {
+        name: 'Hourglass Half',
         id: 'hourglass-half',
         aliases: [
             'hourglass-2'
@@ -5277,6 +5819,7 @@ export default [
         ]
     },
     {
+        name: 'Hourglass End',
         id: 'hourglass-end',
         aliases: [
             'hourglass-3'
@@ -5286,12 +5829,14 @@ export default [
         ]
     },
     {
+        name: 'Hourglass',
         id: 'hourglass',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Rock (Hand)',
         id: 'hand-rock-o',
         aliases: [
             'hand-grab-o'
@@ -5302,6 +5847,7 @@ export default [
         ]
     },
     {
+        name: 'Paper (Hand)',
         id: 'hand-paper-o',
         aliases: [
             'hand-stop-o'
@@ -5315,6 +5861,7 @@ export default [
         ]
     },
     {
+        name: 'Scissors (Hand)',
         id: 'hand-scissors-o',
         categories: [
             'Web Application Icons',
@@ -5322,6 +5869,7 @@ export default [
         ]
     },
     {
+        name: 'Lizard (Hand)',
         id: 'hand-lizard-o',
         categories: [
             'Web Application Icons',
@@ -5329,6 +5877,7 @@ export default [
         ]
     },
     {
+        name: 'Spock (Hand)',
         id: 'hand-spock-o',
         categories: [
             'Web Application Icons',
@@ -5336,6 +5885,7 @@ export default [
         ]
     },
     {
+        name: 'Hand Pointer',
         id: 'hand-pointer-o',
         categories: [
             'Web Application Icons',
@@ -5343,6 +5893,7 @@ export default [
         ]
     },
     {
+        name: 'Hand Peace',
         id: 'hand-peace-o',
         categories: [
             'Web Application Icons',
@@ -5350,24 +5901,28 @@ export default [
         ]
     },
     {
+        name: 'Trademark',
         id: 'trademark',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Registered Trademark',
         id: 'registered',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Creative Commons',
         id: 'creative-commons',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'GG Currency',
         id: 'gg',
         categories: [
             'Currency Icons',
@@ -5375,6 +5930,7 @@ export default [
         ]
     },
     {
+        name: 'GG Currency Circle',
         id: 'gg-circle',
         categories: [
             'Currency Icons',
@@ -5382,36 +5938,42 @@ export default [
         ]
     },
     {
+        name: 'TripAdvisor',
         id: 'tripadvisor',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Odnoklassniki',
         id: 'odnoklassniki',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Odnoklassniki Square',
         id: 'odnoklassniki-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Get Pocket',
         id: 'get-pocket',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Wikipedia W',
         id: 'wikipedia-w',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Safari',
         id: 'safari',
         filter: [
             'browser'
@@ -5421,6 +5983,7 @@ export default [
         ]
     },
     {
+        name: 'Chrome',
         id: 'chrome',
         filter: [
             'browser'
@@ -5430,6 +5993,7 @@ export default [
         ]
     },
     {
+        name: 'Firefox',
         id: 'firefox',
         filter: [
             'browser'
@@ -5439,12 +6003,14 @@ export default [
         ]
     },
     {
+        name: 'Opera',
         id: 'opera',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Internet-explorer',
         id: 'internet-explorer',
         filter: [
             'browser',
@@ -5455,6 +6021,7 @@ export default [
         ]
     },
     {
+        name: 'Television',
         id: 'television',
         aliases: [
             'tv'
@@ -5469,42 +6036,49 @@ export default [
         ]
     },
     {
+        name: 'Contao',
         id: 'contao',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: '500px',
         id: '500px',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Amazon',
         id: 'amazon',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Calendar Plus Outlined',
         id: 'calendar-plus-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Calendar Minus Outlined',
         id: 'calendar-minus-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Calendar Times Outlined',
         id: 'calendar-times-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Calendar Check Outlined',
         id: 'calendar-check-o',
         filter: [
             'ok'
@@ -5514,6 +6088,7 @@ export default [
         ]
     },
     {
+        name: 'Industry',
         id: 'industry',
         filter: [
             'factory'
@@ -5523,30 +6098,35 @@ export default [
         ]
     },
     {
+        name: 'Map Pin',
         id: 'map-pin',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Map Signs',
         id: 'map-signs',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Map Outlined',
         id: 'map-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Map',
         id: 'map',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Commenting',
         id: 'commenting',
         filter: [
             'speech',
@@ -5565,6 +6145,7 @@ export default [
         ]
     },
     {
+        name: 'Commenting Outlined',
         id: 'commenting-o',
         filter: [
             'speech',
@@ -5583,36 +6164,42 @@ export default [
         ]
     },
     {
+        name: 'Houzz',
         id: 'houzz',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Vimeo',
         id: 'vimeo',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Font Awesome Black Tie',
         id: 'black-tie',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Fonticons',
         id: 'fonticons',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'reddit Alien',
         id: 'reddit-alien',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Edge Browser',
         id: 'edge',
         filter: [
             'browser',
@@ -5623,6 +6210,7 @@ export default [
         ]
     },
     {
+        name: 'Credit Card',
         id: 'credit-card-alt',
         filter: [
             'money',
@@ -5639,90 +6227,105 @@ export default [
         ]
     },
     {
+        name: 'Codie Pie',
         id: 'codiepie',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'MODX',
         id: 'modx',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Fort Awesome',
         id: 'fort-awesome',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'USB',
         id: 'usb',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Product Hunt',
         id: 'product-hunt',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Mixcloud',
         id: 'mixcloud',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Scribd',
         id: 'scribd',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Pause Circle',
         id: 'pause-circle',
         categories: [
             'Video Player Icons'
         ]
     },
     {
+        name: 'Pause Circle Outlined',
         id: 'pause-circle-o',
         categories: [
             'Video Player Icons'
         ]
     },
     {
+        name: 'Stop Circle',
         id: 'stop-circle',
         categories: [
             'Video Player Icons'
         ]
     },
     {
+        name: 'Stop Circle Outlined',
         id: 'stop-circle-o',
         categories: [
             'Video Player Icons'
         ]
     },
     {
+        name: 'Shopping Bag',
         id: 'shopping-bag',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Shopping Basket',
         id: 'shopping-basket',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Hashtag',
         id: 'hashtag',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Bluetooth',
         id: 'bluetooth',
         categories: [
             'Web Application Icons',
@@ -5730,6 +6333,7 @@ export default [
         ]
     },
     {
+        name: 'Bluetooth',
         id: 'bluetooth-b',
         categories: [
             'Web Application Icons',
@@ -5737,30 +6341,35 @@ export default [
         ]
     },
     {
+        name: 'Percent',
         id: 'percent',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'GitLab',
         id: 'gitlab',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'WPBeginner',
         id: 'wpbeginner',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'WPForms',
         id: 'wpforms',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Envira Gallery',
         id: 'envira',
         filter: [
             'leaf'
@@ -5770,6 +6379,7 @@ export default [
         ]
     },
     {
+        name: 'Universal Access',
         id: 'universal-access',
         categories: [
             'Web Application Icons',
@@ -5777,6 +6387,7 @@ export default [
         ]
     },
     {
+        name: 'Wheelchair Alt',
         id: 'wheelchair-alt',
         filter: [
             'handicap',
@@ -5790,6 +6401,7 @@ export default [
         ]
     },
     {
+        name: 'Question Circle Outlined',
         id: 'question-circle-o',
         categories: [
             'Web Application Icons',
@@ -5797,6 +6409,7 @@ export default [
         ]
     },
     {
+        name: 'Blind',
         id: 'blind',
         categories: [
             'Web Application Icons',
@@ -5804,6 +6417,7 @@ export default [
         ]
     },
     {
+        name: 'Audio Description',
         id: 'audio-description',
         categories: [
             'Web Application Icons',
@@ -5811,6 +6425,7 @@ export default [
         ]
     },
     {
+        name: 'Volume Control Phone',
         id: 'volume-control-phone',
         filter: [
             'telephone'
@@ -5821,6 +6436,7 @@ export default [
         ]
     },
     {
+        name: 'Braille',
         id: 'braille',
         categories: [
             'Web Application Icons',
@@ -5828,6 +6444,7 @@ export default [
         ]
     },
     {
+        name: 'Assistive Listening Systems',
         id: 'assistive-listening-systems',
         categories: [
             'Web Application Icons',
@@ -5835,6 +6452,7 @@ export default [
         ]
     },
     {
+        name: 'American Sign Language Interpreting',
         id: 'american-sign-language-interpreting',
         aliases: [
             'asl-interpreting'
@@ -5845,6 +6463,7 @@ export default [
         ]
     },
     {
+        name: 'Deaf',
         id: 'deaf',
         aliases: [
             'deafness',
@@ -5856,18 +6475,21 @@ export default [
         ]
     },
     {
+        name: 'Glide',
         id: 'glide',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Glide G',
         id: 'glide-g',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Sign Language',
         id: 'sign-language',
         aliases: [
             'signing'
@@ -5878,6 +6500,7 @@ export default [
         ]
     },
     {
+        name: 'Low Vision',
         id: 'low-vision',
         categories: [
             'Web Application Icons',
@@ -5885,60 +6508,70 @@ export default [
         ]
     },
     {
+        name: 'Viadeo',
         id: 'viadeo',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Viadeo Square',
         id: 'viadeo-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Snapchat',
         id: 'snapchat',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Snapchat Ghost',
         id: 'snapchat-ghost',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Snapchat Square',
         id: 'snapchat-square',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Pied Piper Logo',
         id: 'pied-piper',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'First Order',
         id: 'first-order',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Yoast',
         id: 'yoast',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'ThemeIsle',
         id: 'themeisle',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Google Plus Official',
         id: 'google-plus-official',
         aliases: [
             'google-plus-circle'
@@ -5948,6 +6581,7 @@ export default [
         ]
     },
     {
+        name: 'Font Awesome',
         id: 'font-awesome',
         aliases: [
             'fa'
@@ -5957,12 +6591,14 @@ export default [
         ]
     },
     {
+        name: 'Handshake Outlined',
         id: 'handshake-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Envelope Open',
         id: 'envelope-open',
         filter: [
             'email',
@@ -5978,6 +6614,7 @@ export default [
         ]
     },
     {
+        name: 'Envelope Open Outlined',
         id: 'envelope-open-o',
         filter: [
             'email',
@@ -5993,24 +6630,28 @@ export default [
         ]
     },
     {
+        name: 'Linode',
         id: 'linode',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Address Book',
         id: 'address-book',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Address Book Outlined',
         id: 'address-book-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Address Card',
         id: 'address-card',
         aliases: [
             'vcard'
@@ -6020,6 +6661,7 @@ export default [
         ]
     },
     {
+        name: 'Address Card Outlined',
         id: 'address-card-o',
         aliases: [
             'vcard-o'
@@ -6029,30 +6671,35 @@ export default [
         ]
     },
     {
+        name: 'User Circle',
         id: 'user-circle',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'User Circle Outlined',
         id: 'user-circle-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'User Outlined',
         id: 'user-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Identification Badge',
         id: 'id-badge',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Identification Card',
         id: 'id-card',
         aliases: [
             'drivers-license'
@@ -6062,6 +6709,7 @@ export default [
         ]
     },
     {
+        name: 'Identification Card Outlined',
         id: 'id-card-o',
         aliases: [
             'drivers-license-o'
@@ -6071,24 +6719,28 @@ export default [
         ]
     },
     {
+        name: 'Quora',
         id: 'quora',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Free Code Camp',
         id: 'free-code-camp',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Telegram',
         id: 'telegram',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Thermometer Full',
         id: 'thermometer-full',
         aliases: [
             'thermometer-4',
@@ -6099,6 +6751,7 @@ export default [
         ]
     },
     {
+        name: 'Thermometer 3/4 Full',
         id: 'thermometer-three-quarters',
         aliases: [
             'thermometer-3'
@@ -6108,6 +6761,7 @@ export default [
         ]
     },
     {
+        name: 'Thermometer 1/2 Full',
         id: 'thermometer-half',
         aliases: [
             'thermometer-2'
@@ -6117,6 +6771,7 @@ export default [
         ]
     },
     {
+        name: 'Thermometer 1/4 Full',
         id: 'thermometer-quarter',
         aliases: [
             'thermometer-1'
@@ -6126,6 +6781,7 @@ export default [
         ]
     },
     {
+        name: 'Thermometer Empty',
         id: 'thermometer-empty',
         aliases: [
             'thermometer-0'
@@ -6135,12 +6791,14 @@ export default [
         ]
     },
     {
+        name: 'Shower',
         id: 'shower',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Bath',
         id: 'bath',
         aliases: [
             'bathtub',
@@ -6151,30 +6809,35 @@ export default [
         ]
     },
     {
+        name: 'Podcast',
         id: 'podcast',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Window Maximize',
         id: 'window-maximize',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Window Minimize',
         id: 'window-minimize',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Window Restore',
         id: 'window-restore',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Window Close',
         id: 'window-close',
         aliases: [
             'times-rectangle'
@@ -6184,6 +6847,7 @@ export default [
         ]
     },
     {
+        name: 'Window Close Outline',
         id: 'window-close-o',
         aliases: [
             'times-rectangle-o'
@@ -6193,66 +6857,77 @@ export default [
         ]
     },
     {
+        name: 'Bandcamp',
         id: 'bandcamp',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Grav',
         id: 'grav',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Etsy',
         id: 'etsy',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'IMDB',
         id: 'imdb',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Ravelry',
         id: 'ravelry',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Eercast',
         id: 'eercast',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Microchip',
         id: 'microchip',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Snowflake Outlined',
         id: 'snowflake-o',
         categories: [
             'Web Application Icons'
         ]
     },
     {
+        name: 'Superpowers',
         id: 'superpowers',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'WPExplorer',
         id: 'wpexplorer',
         categories: [
             'Brand Icons'
         ]
     },
     {
+        name: 'Meetup',
         id: 'meetup',
         categories: [
             'Brand Icons'
