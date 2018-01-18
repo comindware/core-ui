@@ -18,6 +18,7 @@ export default function() {
             showEditButton: true,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
         }),
-        presentation: "{{#if referenceValue}}{ id: '{{referenceValue.id}}', text: '{{referenceValue.text}}' }{{else}}null{{/if}}"
+        presentation: "{{#if referenceValue}}{ id: '{{referenceValue.id}}', text: '{{referenceValue.text}}' }{{else}}null{{/if}}",
+        isEditor: true
     });
 }

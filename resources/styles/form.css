@@ -1236,6 +1236,10 @@ svg.svg-icons{
     pointer-events: none;
 }
 
+.editor_hidden {
+    display: none;
+}
+
 .grid-cell .dev-code-button-edit {
     position: relative;
     bottom: 2px;

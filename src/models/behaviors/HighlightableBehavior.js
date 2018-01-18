@@ -21,6 +21,7 @@ _.extend(HighlightableBehavior.prototype, {
 
         this.highlighted = true;
         this.highlightedFragment = text;
+        this.set('highlightedFragment', text);
         this.trigger('highlighted', this, {
             text
         });

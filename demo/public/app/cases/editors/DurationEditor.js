@@ -13,6 +13,7 @@ export default function() {
             key: 'durationValue',
             autocommit: true
         }),
-        presentation: "{{#isNull durationValue}}null{{else}}'{{durationValue}}'{{/isNull}}"
+        presentation: "{{#isNull durationValue}}null{{else}}'{{durationValue}}'{{/isNull}}",
+        isEditor: true
     });
 }
