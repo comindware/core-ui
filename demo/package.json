@@ -36,5 +36,8 @@
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.0",
     "webpack-pwa-manifest": "^3.4.1"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0"
   }
 }
