@@ -84,7 +84,7 @@ export default Marionette.LayoutView.extend({
                 }
             });
         } else {
-            heightPx += this.collection.length * constants.rowHeight;
+            heightPx += this.collection.length > 0 ? this.collection.length * constants.rowHeight : constants.rowHeight;
         }
         this.ui.grid.css('height', heightPx);
     },
