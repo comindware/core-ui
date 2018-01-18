@@ -236,8 +236,10 @@
     padding: 0 4px;
 }
 
-.dev_dd-list__i_with_checkbox .editor_checkbox {
+.dev_dd-list__i_with_checkbox .checkbox {
     top: 6px;
+    position: relative;
+    margin-right: 5px;
 }
 
 .dd-list__btn{
