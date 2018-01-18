@@ -14,6 +14,7 @@ export default function() {
             autocommit: true,
             allowDays: false
         }),
-        presentation: "{{#isNull durationValue}}null{{else}}'{{durationValue}}'{{/isNull}}"
+        presentation: "{{#isNull durationValue}}null{{else}}'{{durationValue}}'{{/isNull}}",
+        isEditor: true
     });
 }

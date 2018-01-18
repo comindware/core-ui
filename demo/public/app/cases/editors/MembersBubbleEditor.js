@@ -14,6 +14,7 @@ export default function() {
             maxQuantitySelected: 7,
             autocommit: true
         }),
-        presentation: '[ {{#each membersValue}}\'{{this}}\'{{#unless @last}}, {{/unless}}{{/each}} ]'
+        presentation: '[ {{#each membersValue}}\'{{this}}\'{{#unless @last}}, {{/unless}}{{/each}} ]',
+        isEditor: true
     });
 }

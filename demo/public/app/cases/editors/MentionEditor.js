@@ -37,6 +37,7 @@ export default function() {
             __getMentions() {
                 alert(JSON.stringify(editor.getMentions()));
             }
-        })
+        }),
+        isEditor: true
     });
 }

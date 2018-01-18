@@ -14,6 +14,7 @@ export default function() {
             changeMode: 'keydown',
             autocommit: true
         }),
-        presentation: '\'{{textValue}}\''
+        presentation: '\'{{textValue}}\'',
+        isEditor: true
     });
 }

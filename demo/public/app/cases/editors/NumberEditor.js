@@ -17,6 +17,7 @@ export default function() {
             max: null,
             allowFloat: true
         }),
-        presentation: '{{numberValue}}'
+        presentation: '{{numberValue}}',
+        isEditor: true
     });
 }
