@@ -88,6 +88,9 @@ export default Marionette.LayoutView.extend({
     },
 
     __onBeforeClose() {
+        if (this.dropdownView.isDestroyed) {
+            return;
+        }
         this.dropdownView.button.endEditing();
         this.trigger('blur');
     },
