@@ -399,6 +399,9 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     },
 
     __onChange(model, options, isPartialUpdate) {
+        if (this.options.skipRebuildOnChange) {
+            return;
+        }
         const changed = Object.keys(model.changedAttributes());
         const attrsAffectedByGrouping = [];
         this.grouping.forEach(o => {
