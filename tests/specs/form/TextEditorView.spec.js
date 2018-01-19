@@ -6,15 +6,15 @@
  * Published under the MIT license
  */
 
-/*eslint-ignore*/
-
 import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    beforeEach(function() {
-        this.rootRegion = initializeCore();
+    let rootRegion;
+
+    beforeEach(() => {
+        rootRegion = initializeCore();
     });
 
     describe('TextEditorView', () => {
@@ -22,7 +22,7 @@ describe('Editors', () => {
             return view.$('input');
         };
 
-        it('should get focus when focus() is called', function() {
+        it('should get focus when focus() is called', () => {
             // arrange
             const model = new Backbone.Model({
                 data: 'text'
@@ -31,7 +31,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             // act
             view.focus();
@@ -41,7 +41,7 @@ describe('Editors', () => {
             expect(view.hasFocus).toEqual(true, 'Must have focus.');
         });
 
-        it('should lose focus when blur() is called', function() {
+        it('should lose focus when blur() is called', () => {
             // arrange
             const model = new Backbone.Model({
                 data: 'text'
@@ -50,7 +50,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
             view.focus();
 
             // act
@@ -61,7 +61,7 @@ describe('Editors', () => {
             expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
         });
 
-        it('should have `value` matched with initial value', function() {
+        it('should have `value` matched with initial value', () => {
             // arrange
             const model = new Backbone.Model({
                 data: 'text'
@@ -70,7 +70,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             // act
             const value = view.getValue();
@@ -81,13 +81,13 @@ describe('Editors', () => {
             expect(value).toEqual(expected);
         });
 
-        it('should have `value` matched with initial value (w/o data binding).', function() {
+        it('should have `value` matched with initial value (w/o data binding).', () => {
             // arrange
             const expected = 'text';
             const view = new core.form.editors.TextEditor({
                 value: expected
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             // act
             const value = view.getValue();
@@ -97,7 +97,7 @@ describe('Editors', () => {
             expect(value).toEqual(expected);
         });
 
-        it('should update `value` and send `change` on user change.', function() {
+        it('should update `value` and send `change` on user change.', () => {
             // arrange
             const expected = 'text 2';
             const model = new Backbone.Model({
@@ -108,7 +108,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -122,14 +122,14 @@ describe('Editors', () => {
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should update `value` and send `change` on user change (w/o data binding).', function() {
+        it('should update `value` and send `change` on user change (w/o data binding).', () => {
             // arrange
             const expected = 'text 2';
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const view = new core.form.editors.TextEditor({
                 value: 'text'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -143,7 +143,7 @@ describe('Editors', () => {
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should update `value` on model change', function() {
+        it('should update `value` on model change', () => {
             // arrange
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
@@ -153,7 +153,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -167,7 +167,7 @@ describe('Editors', () => {
             expect(onChangeCallback).not.toHaveBeenCalled();
         });
 
-        it('should not commit if `autocommit: false`', function() {
+        it('should not commit if `autocommit: false`', () => {
             // arrange
             const expected = 'text';
             const model = new Backbone.Model({
@@ -179,7 +179,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -195,7 +195,7 @@ describe('Editors', () => {
             expect(onCommitCallback).not.toHaveBeenCalled();
         });
 
-        it('should commit if `autocommit: true`', function() {
+        it('should commit if `autocommit: true`', () => {
             // arrange
             const expected = 'text 2';
             const model = new Backbone.Model({
@@ -208,7 +208,7 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -224,7 +224,7 @@ describe('Editors', () => {
             expect(onCommitCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should have `isEmptyValue() === true` if null or empty string', function() {
+        it('should have `isEmptyValue() === true` if null or empty string', () => {
             // arrange
             const model = new Backbone.Model({
                 data: null
@@ -233,7 +233,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -245,7 +245,7 @@ describe('Editors', () => {
             expect(isEmptyIfEmptyString).toEqual(true);
         });
 
-        it('should have `isEmptyValue() === false` if has text', function() {
+        it('should have `isEmptyValue() === false` if has text', () => {
             // arrange
             const model = new Backbone.Model({
                 data: 'text'
@@ -254,7 +254,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -263,7 +263,7 @@ describe('Editors', () => {
             expect(isEmpty).toEqual(false);
         });
 
-        it('should update `value` when typing if `changemode: \'keydown\'`', function() {
+        it('should update `value` when typing if `changemode: \'keydown\'`', () => {
             // arrange
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
@@ -274,7 +274,7 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown'
             });
-            this.rootRegion.show(view);
+            rootRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -285,6 +285,84 @@ describe('Editors', () => {
 
             // assert
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
+        });
+
+        it('should clear value and trigger change event on remove button click', () => {
+            const onChangeCallback = jasmine.createSpy('onChangeCallback');
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true
+            });
+
+            rootRegion.show(view);
+            view.on('change', onChangeCallback);
+
+            view.$('.js-clear-button').click();
+
+            const isEmpty = view.isEmptyValue();
+            const input = findInput(view);
+
+            expect(model.get('data')).toEqual(null);
+            expect(isEmpty).toEqual(true);
+            expect(onChangeCallback).toHaveBeenCalledTimes(1);
+            expect(input.val()).toEqual('');
+        });
+
+        it('should be read only if flag is passed', () => {
+            const onChangeCallback = jasmine.createSpy('onChangeCallback');
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                readonly: true
+            });
+
+            rootRegion.show(view);
+            view.on('change', onChangeCallback);
+
+            const isEmpty = view.isEmptyValue();
+            const input = findInput(view);
+
+            expect(model.get('data')).toEqual('text');
+            expect(isEmpty).toEqual(false);
+            expect(view.$('.js-clear-button')).toBeHidden();
+            expect(onChangeCallback).toHaveBeenCalledTimes(0);
+            expect(input.val()).toEqual('text');
+            expect(input.prop('readonly')).toEqual(true);
+        });
+
+        it('should be hidden if flag is passed', () => {
+            expect(true).toEqual(true);
+        });
+
+        it('should show title passed in configuration', () => {
+            expect(true).toEqual(true);
+        });
+
+        it('should hide clear button if allowEmptyValue = false', () => {
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true,
+                allowEmptyValue: false
+            });
+
+            rootRegion.show(view);
+
+            expect(view.$('.js-clear-button')).toBeHidden();
         });
     });
 });

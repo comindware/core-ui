@@ -26,7 +26,8 @@ const defaultOptions = () => ({
     mask: undefined,
     maskPlaceholder: '_',
     maskOptions: {},
-    showTitle: true
+    showTitle: true,
+    allowEmptyValue: true
 });
 
 /**
@@ -68,7 +69,8 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     focusElement: '.js-input',
 
     ui: {
-        input: '.js-input'
+        input: '.js-input',
+        clearButton: '.js-clear-button'
     },
 
     className: 'editor',
@@ -84,7 +86,7 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     events: {
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
-        'click .js-clear-button': '__clear'
+        'click @ui.clearButton': '__clear'
     },
 
     __keyup() {
@@ -146,6 +148,11 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         // Keyboard shortcuts listener
         if (this.keyListener) {
             this.keyListener.reset();
+        }
+        if (!this.options.allowEmptyValue) {
+            this.ui.clearButton.hide();
+        } else {
+            this.ui.clearButton.show();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
     },

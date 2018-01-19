@@ -73,11 +73,13 @@ export default Marionette.LayoutView.extend({
         if (this.options.size) {
             this.ui.window.css(this.options.size);
         }
+        this.ui.window.css({ top: -50 });
     },
 
     onShow() {
         this.contentRegion.show(this.options.content);
         this.__updateState();
+        this.ui.window.css({ top: 'inherit' });
     },
 
     update() {
