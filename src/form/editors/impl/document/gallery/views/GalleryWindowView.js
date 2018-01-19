@@ -12,7 +12,6 @@
 import { helpers } from 'utils';
 import template from '../templates/galleryWindow.html';
 import LoadingView from './LoadingView';
-// import LoadingBehavior from '../../../../../../views/behaviors/LoadingBehavior';
 
 const classes = {
     GALLERY_WINDOW: 'js-gallery-window galleryWindow'
