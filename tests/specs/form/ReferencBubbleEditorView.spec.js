@@ -25,7 +25,7 @@ describe('Editors', () => {
 
     const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
         fetch() {
-            const promise = new Promise(resolve => {
+            return new Promise(resolve => {
                 this.collection.reset(collectionData);
 
                 this.totalCount = 3;
@@ -35,8 +35,6 @@ describe('Editors', () => {
                     totalCount: this.totalCount
                 });
             });
-
-            return promise;
         }
     });
 

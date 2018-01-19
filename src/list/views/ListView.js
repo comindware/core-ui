@@ -53,7 +53,8 @@ const heightOptions = {
 };
 
 const defaultOptions = {
-    height: heightOptions.FIXED
+    height: heightOptions.FIXED,
+    defaultElHeight: 300
 };
 
 /**
@@ -305,13 +306,11 @@ const ListView = Marionette.LayoutView.extend({
             return;
         }
         const oldViewportHeight = this.state.viewportHeight;
-        const elementHeight = this.$el.height();
+        let elementHeight = this.$el.height();
 
         // Checking options consistency
         if (this.height === heightOptions.FIXED && elementHeight === 0) {
-            helpers.throwInvalidOperationError(
-                'ListView configuration error: ' +
-                'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
+            elementHeight = defaultOptions.defaultElHeight;
         } else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
             helpers.throwInvalidOperationError(
                 'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
