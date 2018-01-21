@@ -22,6 +22,7 @@ module.exports = function(config) {
         plugins: [
             'karma-ie-launcher',
             'karma-chrome-launcher',
+            'karma-firefox-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-sourcemap-loader',
@@ -65,7 +66,14 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS', 'IE', 'FirefoxHeadless'],
+
+        customLaunchers: {
+            FirefoxHeadless: {
+                base: 'Firefox',
+                flags: [ '-headless' ]
+            }
+        },
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
