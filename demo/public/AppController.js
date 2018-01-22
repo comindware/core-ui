@@ -15,28 +15,32 @@ export default Marionette.Object.extend({
 
     showCase(sectionId, groupId, caseId) {
         const sections = new Backbone.Collection(DemoService.getSections());
-        sections.find(s => s.id === sectionId).set('selected', true);
         Application.headerRegion.$el.show();
-        if (!this.NavBarView || !this.DemoPageView) {
-            this.NavBarView = new NavBarView({
+        sections.find(s => s.id === sectionId).set('selected', true);
+
+        if (!this.navBarView || !this.demoPageView) {
+            this.navBarView = new NavBarView({
                 collection: sections,
                 collapsed: Core.services.MobileService.isMobile
             });
 
-            this.DemoPageView = new DemoPageView({
+            this.demoPageView = new DemoPageView({
                 activeSectionId: sectionId,
                 activeGroupId: groupId,
                 activeCaseId: caseId
             });
 
-            Application.headerRegion.show(this.NavBarView);
-            Application.contentRegion.show(this.DemoPageView);
+            Application.headerRegion.show(this.navBarView);
+
+            Application.contentRegion.show(this.demoPageView);
         } else {
-            this.DemoPageView.reloadView({
+            this.demoPageView.reloadView({
                 activeSectionId: sectionId,
                 activeGroupId: groupId,
                 activeCaseId: caseId
             });
+
+            this.navBarView.collection.reset(sections.models);
         }
     }
 });

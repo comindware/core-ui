@@ -20,13 +20,19 @@ export default Marionette.ItemView.extend({
         const value = this.model.attributes;
         return {
             enabled: this.options.enabled,
-            url: this.model.attributes ? this.options.createValueUrl(this.model.attributes) : false,
+            url: value ? this.options.createValueUrl(value) : false,
             text: this.options.getDisplayText(value),
             showEditButton: this.options.showEditButton && Boolean(value)
         };
     },
 
     tagName: 'li',
+
+    attributes() {
+        return {
+            draggable: true
+        };
+    },
 
     className: 'bubbles__i',
 

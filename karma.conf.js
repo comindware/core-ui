@@ -7,8 +7,9 @@
  */
 
 const webpackConfigFactory = require('./build/webpack.config.js');
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-module.exports = function(config) {
+module.exports = config => {
     const TEST_COVERAGE = config.coverage === true;
 
     const result = {
@@ -23,7 +24,6 @@ module.exports = function(config) {
             'karma-ie-launcher',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-sourcemap-loader',
             'karma-webpack',
@@ -66,7 +66,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS', 'IE', 'FirefoxHeadless'],
+        browsers: ['ChromeHeadless', 'IE', 'FirefoxHeadless'],
 
         customLaunchers: {
             FirefoxHeadless: {
