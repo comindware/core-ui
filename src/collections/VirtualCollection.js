@@ -195,9 +195,8 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
             let skipChild = !this.options.isTree && model.collapsed;
             if (!skipChild && model.children) {
                 if (this.options.isTree) {
-                    this.listenToOnce(model.children, 'add', this.__onAdd);
-                    this.listenToOnce(model.children, 'remove', this.__onRemove);
-                    this.listenToOnce(model.children, 'reset', this.__onReset);
+                    this.stopListening(model.children, 'add remove reset');
+                    this.listenToOnce(model.children, 'add remove reset', _.debounce(() => this.__delayedUpdate(), 100));
                 }
                 this.__buildModelsInternal(model.children, level + 1);
             }
@@ -449,6 +448,11 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
 
     expand(model) {
         model.expand(true);
+        this.__rebuildModels();
+        this.trigger('reset', this);
+    },
+
+    __delayedUpdate() {
         this.__rebuildModels();
         this.trigger('reset', this);
     }
