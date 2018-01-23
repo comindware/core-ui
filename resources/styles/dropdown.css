@@ -236,8 +236,10 @@
     padding: 0 4px;
 }
 
-.dev_dd-list__i_with_checkbox .editor_checkbox {
+.dev_dd-list__i_with_checkbox .checkbox {
     top: 6px;
+    position: relative;
+    margin-right: 5px;
 }
 
 .dd-list__btn{
@@ -414,7 +416,7 @@
 
 /* multiselect */
 .multiselect-panel{
-    min-width: 220px;
+    min-width: 200px;
     max-width: 100%;
     padding: 25px 0;
     position: relative;
