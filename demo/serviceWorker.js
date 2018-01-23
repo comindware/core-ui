@@ -1,3 +1,4 @@
+
 const staticCacheName = 'core-ui-cache';
 
 this.addEventListener('install', event => {
@@ -42,6 +43,7 @@ this.addEventListener('fetch', event => {
 });
 
 this.addEventListener('message', event => {
+    console.log('message');
     if (event.data.action === 'skipWaiting') {
         this.skipWaiting();
     }

@@ -21,7 +21,10 @@ Application.addInitializer(() => {
 
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('serviceWorker.js').then(reg => {
-            console.log(`Registration succeeded. Scope is ${reg.scope}`);
+            reg.addEventListener('updatefound', () => {
+                window.dispatchEvent(new CustomEvent('message', { detail: 'skipWaiting' }));
+                reg.update();
+            });
         }).catch(error => {
             console.log(`Registration failed with ${error}`);
         });
