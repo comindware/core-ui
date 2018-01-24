@@ -132,6 +132,7 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     className: 'list',
+
     template: Handlebars.compile(template),
 
     onShow() {
@@ -278,9 +279,6 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __updatePositionInternal(position, triggerEvents) {
-        if (this.state.viewportHeight === undefined) {
-            helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
-        }
         let newPosition = position;
         newPosition = this.__normalizePosition(newPosition);
         if (newPosition === this.state.position) {
