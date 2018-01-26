@@ -105,7 +105,7 @@ export default Marionette.View.extend({
         }
         this.options.noColumnsViewOptions && (this.noColumnsViewOptions = this.options.noColumnsViewOptions); // jshint ignore:line
 
-        const childViewOptions = _.extend(this.options.gridViewOptions || {}, {
+        const childViewOptions = Object.assign(this.options.gridViewOptions || {}, {
             columns: this.options.columns,
             gridEventAggregator: this,
             paddingLeft: this.options.paddingLeft,

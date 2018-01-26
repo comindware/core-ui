@@ -22,7 +22,7 @@ const ListGroupViewBehavior = Marionette.Behavior.extend({
         // mixing behavior's templateContext even if it's already defined in the view
         if (view.templateContext) {
             const viewtemplateContext = view.templateContext.bind(view);
-            view.templateContext = () => _.extend(self.templateContext(), viewtemplateContext());
+            view.templateContext = () => Object.assign(self.templateContext(), viewtemplateContext());
         }
     },
 

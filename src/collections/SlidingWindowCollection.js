@@ -182,6 +182,6 @@ const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:cor
     };
 });
 
-_.extend(SlidingWindowCollection.prototype, Backbone.Events);
+Object.assign(SlidingWindowCollection.prototype, Backbone.Events);
 
 export default SlidingWindowCollection;

@@ -60,6 +60,6 @@ const globalEventService = /** @lends module:core.services.GlobalEventService */
     }
 };
 
-_.extend(globalEventService, Backbone.Events);
+Object.assign(globalEventService, Backbone.Events);
 
 export default globalEventService;

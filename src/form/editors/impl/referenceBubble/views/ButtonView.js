@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 30.08.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import template from '../templates/button.hbs';
@@ -29,7 +22,7 @@ export default Marionette.CollectionView.extend({
         return classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED);
     },
 
-    getChildView(model) {
+    childView(model) {
         if (model instanceof FakeInputModel) {
             return InputView;
         }
@@ -57,10 +50,6 @@ export default Marionette.CollectionView.extend({
         }
     },
 
-    __findFakeInputModel() {
-        return this.collection.models.find(model => (model instanceof FakeInputModel) && model);
-    },
-
     events: {
         click: '__click'
     },
@@ -78,15 +67,19 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    __click() {
-        this.reqres.request('button:click');
-    },
-
     updateEnabled(enabled) {
         this.children.each(cv => {
             if (cv.updateEnabled) {
                 cv.updateEnabled(enabled);
             }
         });
+    },
+
+    __click() {
+        this.reqres.request('button:click');
+    },
+
+    __findFakeInputModel() {
+        return this.collection.models.find(model => (model instanceof FakeInputModel) && model);
     }
 });

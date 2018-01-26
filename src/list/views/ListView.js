@@ -21,7 +21,7 @@ const config = {
 };
 
 const VisibleCollectionView = Marionette.CollectionView.extend({
-    getChildView(child) {
+    childView(child) {
         if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
         }
@@ -85,7 +85,7 @@ const ListView = Marionette.View.extend({
 
         this.__createReqres();
 
-        this.childViewOptions = _.extend(options.childViewOptions || {}, {
+        this.childViewOptions = Object.assign(options.childViewOptions || {}, {
             internalListViewReqres: this.internalReqres
         });
 

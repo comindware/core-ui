@@ -77,7 +77,7 @@ export default Marionette.View.extend({
         let isFirstChild = true;
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
+            const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column,
                 gridEventAggregator: this.gridEventAggregator
@@ -329,9 +329,7 @@ export default Marionette.View.extend({
         const column = args.column;
         const sorting = column.sorting;
         let comparator;
-        _.each(this.columns, c => {
-            c.sorting = null;
-        });
+        this.columns.forEach(c => c.sorting = null);
         switch (sorting) {
             case 'asc':
                 column.sorting = 'desc';

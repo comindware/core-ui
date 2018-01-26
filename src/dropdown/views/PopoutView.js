@@ -174,7 +174,7 @@ export default Marionette.View.extend(/** @lends module:core.dropdown.views.Popo
         this.showChildView('buttonRegion', this.button);
 
         if (!this.options.customAnchor) {
-            this.buttonRegion.$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
+            this.getRegion('buttonRegion').$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
         }
 
         this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
@@ -518,7 +518,7 @@ export default Marionette.View.extend(/** @lends module:core.dropdown.views.Popo
         }
         this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+        const panelViewOptions = Object.assign(_.result(this.options, 'panelViewOptions') || {}, {
             parent: this
         });
         this.panelView = new this.options.panelView(panelViewOptions);

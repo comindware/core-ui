@@ -23,7 +23,7 @@ const defaultOptions = () => ({
 
 export default formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        const defOps = _.extend(defaultOptions(), {
+        const defOps = Object.assign(defaultOptions(), {
             users: options.schema.cacheService.GetUsers().map(user => ({
                 id: user.Id,
                 name: (user.Text || user.Username),

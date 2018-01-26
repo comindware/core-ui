@@ -51,7 +51,7 @@ export default Marionette.CompositeView.extend({
     collapsed: true,
 
     initialize(options) {
-        _.extend(this, options || {}); //todo wtf
+        Object.assign(this, options || {}); //todo wtf
 
         this.reqres = Backbone.Radio.channel('documentReqres');
 

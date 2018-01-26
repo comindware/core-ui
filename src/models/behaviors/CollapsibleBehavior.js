@@ -11,7 +11,7 @@ import 'lib';
 const CollapsibleBehavior = function() {
 };
 
-_.extend(CollapsibleBehavior.prototype, {
+Object.assign(CollapsibleBehavior.prototype, {
     collapse(internal) {
         if (this.collapsed) {
             return;

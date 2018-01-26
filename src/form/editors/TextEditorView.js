@@ -87,7 +87,7 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     template: Handlebars.compile(template),
 
     templateContext() {
-        return _.extend(this.options, {
+        return Object.assign(this.options, {
             title: this.value || ''
         });
     },

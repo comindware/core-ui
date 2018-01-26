@@ -13,7 +13,7 @@ import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 formRepository.validators.password = function(options) {
-    options = _.extend({
+    options = Object.assign({
         type: 'length',
         message: LocalizationService.get('CORE.FORM.VALIDATION.PASSWORD'),
         min: 8

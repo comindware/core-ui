@@ -9,10 +9,10 @@
 import CollapsibleBehavior from '../../../models/behaviors/CollapsibleBehavior';
 
 const ListGroupBehavior = function(model) {
-    _.extend(this, new CollapsibleBehavior(model));
+    Object.assign(this, new CollapsibleBehavior(model));
 };
 
-_.extend(ListGroupBehavior.prototype, {
+Object.assign(ListGroupBehavior.prototype, {
     deselect() {
     },
 

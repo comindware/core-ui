@@ -121,7 +121,7 @@ export default {
                 }
 
                 //Store important data
-                _.extend(this, _.pick(options, 'key', 'form'));
+                Object.assign(this, _.pick(options, 'key', 'form'));
 
                 const schema = this.schema = options.schema || {};
 

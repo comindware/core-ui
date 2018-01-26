@@ -38,7 +38,7 @@ export default Marionette.View.extend({
 
     initialize() {
         _.defaults(this.options, defaultOptions);
-        _.extend(this.model, new GridItemBehavior(this));
+        Object.assign(this.model, new GridItemBehavior(this));
     },
 
     behaviors: {

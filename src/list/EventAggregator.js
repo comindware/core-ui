@@ -48,7 +48,7 @@ export default Marionette.Object.extend({
         this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
         this.__updateCount(this.collection.length);
 
-        _.each(this.views, v => {
+        Object.values(this.views).forEach(v => {
             this.listenTo(v, 'viewportHeightChanged', this.__handleViewportHeightChanged);
             this.listenTo(v, 'positionChanged', this.__handlePositionChanged);
         });

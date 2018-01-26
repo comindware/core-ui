@@ -123,9 +123,8 @@ const Form = Marionette.Object.extend({
 
         // Otherwise return entire form
         const values = {};
-        _.each(this.fields, field => {
-            values[field.key] = field.getValue();
-        });
+
+        this.fields.forEach(field => values[field.key] = field.getValue());
 
         return values;
     },
@@ -218,7 +217,7 @@ const Form = Marionette.Object.extend({
 
                 //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
                 if (isDictionary) {
-                    _.each(modelErrors, (val, key) => {
+                    Object.entries(modelErrors).forEach((key, val) => {
                         //Set error on field if there isn't one already
                         if (fields[key] && !errors[key]) {
                             fields[key].setError(val);

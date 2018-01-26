@@ -46,7 +46,7 @@ const factory = {
             collection
         });
 
-        const listViewOptions = _.extend({
+        const listViewOptions = Object.assign({
             collection,
             emptyView: EmptyListView
         }, options.listViewOptions);
@@ -93,7 +93,7 @@ const factory = {
         const collection = factory.createWrappedCollection(options.collection);
 
         //noinspection JSUnresolvedVariable
-        const gridViewOptions = _.extend({
+        const gridViewOptions = Object.assign({
             gridColumnHeaderView: GridColumnHeaderView,
             collection,
             emptyView: EmptyGridView,

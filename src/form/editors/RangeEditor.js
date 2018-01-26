@@ -20,7 +20,7 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
     template: false,
 
     templateContext() {
-        return _.extend(this.options, {
+        return Object.assign(this.options, {
             title: this.value || ''
         });
     },

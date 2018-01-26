@@ -19,8 +19,8 @@ const defaultOptions = {
 export default Backbone.Collection.extend({
     constructor() {
         Backbone.Collection.prototype.constructor.apply(this, arguments);
-        _.extend(this, new HighlightableBehavior(this));
-        _.extend(this, new SelectableBehavior.SingleSelect(this));
+        Object.assign(this, new HighlightableBehavior(this));
+        Object.assign(this, new SelectableBehavior.SingleSelect(this));
     },
 
     fetch(options) {

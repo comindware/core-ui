@@ -29,7 +29,7 @@ export default ListPanelView.extend({
 
     childView: MenuItemView,
 
-    getChildView(model) {
+    childView(model) {
         if (model.get('customView')) {
             return model.get('customView');
         }

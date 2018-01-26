@@ -56,7 +56,7 @@ export default Marionette.CollectionView.extend({
      * */
     template: Handlebars.compile(template),
 
-    getChildView(child) {
+    childView(child) {
         if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
         }

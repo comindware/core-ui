@@ -91,7 +91,7 @@ export default Marionette.View.extend({
 
         let childView = options.childView;
         if (options.useDefaultRowView) {
-            _.each(options.columns, column => {
+            options.columns.each(column => {
                 if (column.cellView === undefined) { throw new Error('You must specify cellView for each column (useDefaultRowView flag is true)'); }
             });
 
@@ -101,7 +101,7 @@ export default Marionette.View.extend({
             throw new Error('You must provide a childHeight for the child item view (in pixels).');
         }
 
-        const childViewOptions = _.extend(options.childViewOptions || {}, {
+        const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this
         });

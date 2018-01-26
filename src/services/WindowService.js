@@ -71,6 +71,6 @@ const windowService = /** @lends module:core.services.WindowService */ {
     }
 };
 
-_.extend(windowService, Backbone.Events);
+Object.assign(windowService, Backbone.Events);
 
 export default windowService;

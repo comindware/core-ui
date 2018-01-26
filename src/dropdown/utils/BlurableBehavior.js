@@ -19,7 +19,7 @@ export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(options, 'onBlur');
 
-        _.extend(this.options, defaultOptions, _.pick(options || {}, Object.keys(defaultOptions)));
+        Object.assign(this.options, defaultOptions, _.pick(options || {}, Object.keys(defaultOptions)));
 
         _.bindAll(this, '__onBlur');
 

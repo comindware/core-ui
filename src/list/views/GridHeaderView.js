@@ -83,7 +83,7 @@ const GridHeaderView = Marionette.View.extend({
 
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
+            const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column
             }));

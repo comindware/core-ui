@@ -38,10 +38,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
         _.bindAll(this, '__onCollectionChange');
 
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-
-        this.reqres.setHandler('value:set', this.onValueSet, this);
-        this.reqres.setHandler('panel:open', this.onPanelOpen, this);
+        this.reqres = Backbone.Radio.channel('dropdown');
 
         if (Array.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);
@@ -51,7 +48,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
         // adding ListItem behavior to collection model
         const fixModel = function(model) {
-            _.extend(model, new list.models.behaviors.ListItemBehavior(model));
+            Object.assign(model, new list.models.behaviors.ListItemBehavior(model));
         };
         this.collection.each(fixModel);
         const oldModel = this.collection.model;
@@ -77,6 +74,13 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
                 displayAttribute: this.options.displayAttribute
             })
         });
+    },
+
+    channelName: 'dropdown',
+
+    radioEvents: {
+        'value:set': 'onValueSet',
+        'panel:open': 'onPanelOpen'
     },
 
     focusElement: '.js-dropdown-region',
