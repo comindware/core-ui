@@ -15,7 +15,7 @@ const defaultOptions = {
     pickerFormat: 'YYYY-MM-DD'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     initialize() {
@@ -63,7 +63,7 @@ export default Marionette.ItemView.extend({
         this.model.set({ value: newVal });
     },
 
-    onShow() {
+    onRender() {
         this.ui.pickerInput.datetimepicker(this.pickerOptions)
             .on('changeDate', e => {
                 this.updateValue(e.date);

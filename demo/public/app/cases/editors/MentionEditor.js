@@ -26,7 +26,7 @@ export default function() {
                 '<div style="display: inline-block">\'{{{textAreaValue}}}</div>\'' +
                 '<br/><br/><input type="button" class="js-get-mentions-button" value="getMentions()">'
             ),
-            templateHelpers() {
+            templateContext() {
                 return {
                     textAreaValue: core.utils.htmlHelpers.highlightMentions(this.model.get('textAreaValue'))
                 };

@@ -50,7 +50,7 @@ export default function() {
 
     // 5. Create child view that display list rows.
     // - you MUST implement ListItemViewBehavior
-    const ListItemView = Marionette.ItemView.extend({
+    const ListItemView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i"><span class="js-title">{{title}}</span></div>'),
 
         behaviors: {
@@ -61,7 +61,7 @@ export default function() {
     });
 
     // 5. Create child view that display grouping rows.
-    const ListGroupItemView = Marionette.ItemView.extend({
+    const ListGroupItemView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i dd-list__i_group"> {{displayText}}</div>'),
         className: 'mselect__group',
 

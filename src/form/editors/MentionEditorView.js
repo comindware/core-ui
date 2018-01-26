@@ -53,7 +53,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         dropdownRegion: '.js-dropdown-region'
     },
 
-    onShow() {
+    onRender() {
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
@@ -75,7 +75,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
             renderAfterClose: false
         });
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
         this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
         this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
         this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);

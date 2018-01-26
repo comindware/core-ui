@@ -6,7 +6,6 @@
  * Published under the MIT license
  */
 
-import { $ } from 'lib';
 import PopupStackView from './window/views/PopupStackView';
 
 const windowService = /** @lends module:core.services.WindowService */ {
@@ -14,12 +13,13 @@ const windowService = /** @lends module:core.services.WindowService */ {
         this.__$popupStackRegionEl = $(document.createElement('div'));
         this.__$popupStackRegionEl.appendTo(document.body);
 
-        const regionManager = new Marionette.RegionManager();
-        regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
+        const rootView = window.app.getView();
 
-        const popupStackRegion = regionManager.get('popupStackRegion');
+        rootView.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
+
         this.__popupStackView = new PopupStackView();
-        popupStackRegion.show(this.__popupStackView);
+
+        rootView.showChildView('popupStackRegion', this.__popupStackView);
 
         this.__popupStackView.on('popup:close', popupId => this.trigger('popup:close', popupId));
     },

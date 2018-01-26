@@ -7,7 +7,7 @@ const notificationTypes = {
     SUCCESS: 'Success'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className() {
         const sizeClass = this.model.get('title') ? 'dev-fr-alert-extended' : 'dev-fr-alert-compact';
 

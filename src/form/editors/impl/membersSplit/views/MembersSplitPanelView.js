@@ -8,9 +8,9 @@ const config = {
     CHILD_HEIGHT: 34
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     constructor(options) {
-        Marionette.LayoutView.prototype.constructor.apply(this, arguments);
+        Marionette.View.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
         _.bindAll(this,
             '__onSelectedItemsSelect',
@@ -56,7 +56,7 @@ export default Marionette.LayoutView.extend({
         selectedSearchRegion: '.js-selected-search-region'
     },
 
-    onShow() {
+    onRender() {
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
             this.ui.maxQuantityInfo.text(

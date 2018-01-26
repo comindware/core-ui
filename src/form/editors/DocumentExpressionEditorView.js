@@ -43,7 +43,7 @@ export default NewExpressionEditorView.extend({
         template: '.js-new-expression-template-container'
     },
 
-    onShow() {
+    onRender() {
         this.valueTypeCollection = new Backbone.Collection(null, { comparator: false });
 
         this.__showValueEditor();

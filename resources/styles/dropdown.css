@@ -390,6 +390,8 @@
     padding: 0;
     position: relative;
     overflow-y: auto;
+    position: absolute;
+    background-color: white;
 }
 .time-dropdown__i {
     height: 25px;
@@ -498,6 +500,8 @@
 
 .datepicker_panel {
     width: 220px !important;
+    position: absolute;
+    background-color: white;
 }
 
 /*-----//------*/

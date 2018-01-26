@@ -4,7 +4,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 import DemoProfilePanelView from 'demoPage/views/DemoProfilePanelView';
 
 export default function() {
-    const AnchoredButtonView = Marionette.ItemView.extend({
+    const AnchoredButtonView = Marionette.View.extend({
         template: Handlebars.compile('<span>My </span><a href="javascript:void(0);" class="js-anchor">custom</a><span> anchor</span>'),
         behaviors: {
             CustomAnchorBehavior: {

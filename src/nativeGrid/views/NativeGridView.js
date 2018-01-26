@@ -33,7 +33,7 @@ const defaultOptions = {
  * @memberof module:core.nativeGrid.views
  * @class NativeGridView
  * @description View используемый по умолчанию для отображения строки списка
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Backbone.Collection} options.collection Коллекция строк списка
  * @param {Backbone.View} [options.headerView={@link module:core.nativeGrid.views.HeaderView}] View, используемый для отображения заголовка списка
@@ -47,7 +47,7 @@ const defaultOptions = {
  * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка.
  * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
  * */
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     /**
      * View template
      * @param {HTML} HTML file
@@ -175,7 +175,7 @@ export default Marionette.LayoutView.extend({
     },
 
     showFilterPopout(options) {
-        const AnchoredButtonView = Marionette.ItemView.extend({
+        const AnchoredButtonView = Marionette.View.extend({
             template: Handlebars.compile('<span class="js-anchor"></span>'),
             behaviors: {
                 CustomAnchorBehavior: {

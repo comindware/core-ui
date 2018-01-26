@@ -71,7 +71,7 @@ const ColumnHeaderView = GridColumnHeaderView.extend({
         });
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             sortingAsc: this.column.sorting === 'asc',
             sortingDesc: this.column.sorting === 'desc',

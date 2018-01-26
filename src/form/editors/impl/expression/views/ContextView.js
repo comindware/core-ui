@@ -12,7 +12,7 @@
 import template from '../templates/context.html';
 import ContextSelectEditorView from '../../../ContextSelectEditorView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {
@@ -29,7 +29,7 @@ export default Marionette.LayoutView.extend({
         this.contextSelectEditorView.setValue(value);
     },
 
-    onShow() {
+    onRender() {
         this.contextSelectEditorView = new ContextSelectEditorView(Object.assign(this.options));
         this.contextSelectEditorView.on('change', this.trigger.bind(this, 'change'));
 

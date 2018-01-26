@@ -1,5 +1,4 @@
 
-import Application from 'Application';
 import DemoService from './app/DemoService';
 import NavBarView from './app/views/NavBarView';
 import IndexPageView from './app/views/IndexPageView';
@@ -7,15 +6,16 @@ import DemoPageView from './app/views/DemoPageView';
 
 export default Marionette.Object.extend({
     index() {
-        Application.headerRegion.$el.hide();
-        Application.contentRegion.show(new IndexPageView({
+        window.app.getView().getRegion('headerRegion').$el.hide();
+        window.app.getView().showChildView('contentRegion', new IndexPageView({
             collection: new Backbone.Collection(DemoService.getSections())
         }));
     },
 
     showCase(sectionId, groupId, caseId) {
         const sections = new Backbone.Collection(DemoService.getSections());
-        Application.headerRegion.$el.show();
+        window.app.getView().getRegion('headerRegion').$el.show();
+
         sections.find(s => s.id === sectionId).set('selected', true);
 
         if (!this.navBarView || !this.demoPageView) {
@@ -30,9 +30,8 @@ export default Marionette.Object.extend({
                 activeCaseId: caseId
             });
 
-            Application.headerRegion.show(this.navBarView);
-
-            Application.contentRegion.show(this.demoPageView);
+            window.app.getView().showChildView('headerRegion', this.navBarView);
+            window.app.getView().showChildView('contentRegion', this.demoPageView);
         } else {
             this.demoPageView.reloadView({
                 activeSectionId: sectionId,

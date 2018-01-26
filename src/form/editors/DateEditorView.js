@@ -95,7 +95,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     onRender() {
-        this.dateRegion.show(this.dateView);
+        this.showChildView('dateRegion', this.dateView);
         this.__updateClearButton();
     },
 

@@ -10,7 +10,7 @@ import 'lib';
 import { helpers } from 'utils';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'key');
     },
@@ -30,7 +30,7 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         this.__updateState();
     },
 

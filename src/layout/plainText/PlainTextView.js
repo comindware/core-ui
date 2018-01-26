@@ -1,6 +1,6 @@
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.text = options.text;
         this.key = options.key;
@@ -17,7 +17,7 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         if (this.model && this.key) {
             this.$el.text(this.model.get(this.key));
         } else {

@@ -16,7 +16,7 @@ export default Marionette.CompositeView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             explicitApply: this.getOption('explicitApply')
         };
@@ -46,7 +46,7 @@ export default Marionette.CompositeView.extend({
         'click @ui.close': '__close'
     },
 
-    onShow() {
+    onRender() {
         this.$el.focus();
     },
 

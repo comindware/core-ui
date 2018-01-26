@@ -15,7 +15,7 @@ const constants = {
     defaultCheckBoxColumnWidth: 30
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.collection = options.collection;
         this.collectionHeaderToolbarView = this.__createCollectionHeaderToolbarView();
@@ -49,7 +49,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         this.__updateView();
         this.ui.collectionName.text(this.getOption('title') || '');
     },

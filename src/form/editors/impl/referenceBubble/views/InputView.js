@@ -1,12 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 08.30.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars, keypress } from 'lib';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';
 
@@ -14,7 +6,7 @@ const classes = {
     EMPTY: ' empty'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.parent = options.parent;
@@ -48,27 +40,13 @@ export default Marionette.ItemView.extend({
     onRender() {
         this.updateInput();
         this.__updateInputPlaceholder();
-        this.__assignKeyboardShortcuts();
     },
 
     focus() {
         this.ui.input.focus();
     },
 
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            const keys = key.split(',');
-            _.each(keys, k => {
-                this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        });
-    },
-
-    keyboardShortcuts: {
+    keyboardShortcuts: { //todo use this
         up() {
             this.reqres.request('input:up');
         },

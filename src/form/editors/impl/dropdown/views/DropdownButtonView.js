@@ -9,7 +9,7 @@
 import { Handlebars } from 'lib';
 import template from '../templates/dropdownButton.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
@@ -18,7 +18,7 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const value = this.model.get('value');
         const displayAttribute = this.model.get('displayAttribute');
         return {

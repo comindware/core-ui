@@ -57,7 +57,7 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
         addRegion: '.js-add-region'
     },
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
@@ -97,7 +97,7 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
             hideRemoveBtn: this.options.readonly || !this.options.allowDelete
         });
         this.multiselectView.on('removeItem', this.removeItem.bind(this));
-        this.multiselect.show(this.multiselectView);
+        this.showChildView('multiselect', this.multiselectView);
         this.checkEmpty();
     },
 
@@ -137,10 +137,10 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
                 }
                 this.uploadDocumentOnServer(documents);
             });
-            this.addRegion.show(this.uploadButton);
+            this.showChildView('addRegion', this.uploadButton);
         } else {
-            if (this.addRegion.hasView()) {
-                this.addRegion.empty();
+            if (this.getRegion('addRegion').hasView()) {
+                this.getRegion('addRegion').empty();
             }
             this.ui.addRegion.hide();
         }

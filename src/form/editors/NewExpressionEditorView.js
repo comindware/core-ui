@@ -63,7 +63,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 

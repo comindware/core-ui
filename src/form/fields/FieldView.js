@@ -21,7 +21,7 @@ const classes = {
     ERROR: 'error'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options = {}) {
         this.form = options.form;
         this.key = options.key;
@@ -37,7 +37,7 @@ export default Marionette.LayoutView.extend({
         });
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.schema.title,
             fieldId: this.fieldId
@@ -52,7 +52,7 @@ export default Marionette.LayoutView.extend({
         helpTextRegion: '.js-help-text-region'
     },
 
-    onShow() {
+    onRender() {
         this.editorRegion.show(this.editor);
         const errorPopout = dropdown.factory.createPopout({
             buttonView: ErrorButtonView,

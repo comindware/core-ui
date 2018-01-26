@@ -24,7 +24,7 @@ import GlobalEventService from '../../services/GlobalEventService';
 
 const expandedClass = 'collapsible-btn_expanded';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     constants: {
         MIN_COLUMN_WIDTH: 100
     },
@@ -170,7 +170,7 @@ export default Marionette.ItemView.extend({
         this.dragContext.pageOffsetX = offset;
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             columns: this.columns
         };

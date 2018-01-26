@@ -20,7 +20,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'collection');
     },
@@ -34,7 +34,7 @@ export default Marionette.LayoutView.extend({
         scrollbarRegion: '.js-scrollbar-region'
     },
 
-    onShow() {
+    onRender() {
         this.listBundle = list.factory.createDefaultList({
             collection: this.collection,
             listViewOptions: {

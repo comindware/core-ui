@@ -13,8 +13,8 @@ import list from 'list';
 import { htmlHelpers } from 'utils';
 import template from '../templates/membersListItem.html';
 
-export default Marionette.ItemView.extend({
-    templateHelpers() {
+export default Marionette.View.extend({
+    templateContext() {
         return {
             isGroup: this.model.get('type') === 'groups'
         };

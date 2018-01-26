@@ -1,7 +1,7 @@
 
 import template from '../templates/selectButton.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'type-expression__btn',
 
     modelEvents: {

@@ -65,9 +65,6 @@ export default Marionette.Behavior.extend({
         if (htmlHelpers.isElementInDom(this.el)) {
             Marionette.triggerMethodOn(this.view, 'show');
         }
-    },
-
-    onShow() {
         this.__handleColumnsResize();
     },
 

@@ -1,7 +1,7 @@
 import template from '../templates/editableCell.hbs';
 import EditableGridFieldView from './EditableGridFieldView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {

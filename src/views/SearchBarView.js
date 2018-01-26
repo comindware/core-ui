@@ -17,7 +17,7 @@ const defaultOptions = () => ({
     delay: 300
 });
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         _.extend(this.options, defaultOptions(), options || {});
         this.model = new Backbone.Model({

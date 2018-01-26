@@ -10,12 +10,12 @@ import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 import template from '../templates/multiSelectButton.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'input input_dropdown',
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const items = this.model.get('value');
         const empty = !items || !items.length;
 

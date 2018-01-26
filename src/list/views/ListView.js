@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { keypress, Handlebars } from 'lib';
 import { helpers, htmlHelpers } from 'utils';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
@@ -64,7 +56,7 @@ const defaultOptions = {
  * @class ListView
  * @constructor
  * @description View контента списка
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.collection массив элементов списка
  * @param {Number} options.childHeight высота строки списка (childView)
@@ -80,7 +72,7 @@ const defaultOptions = {
  * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * должны быть указаны cellView для каждой колонки.
  * */
-const ListView = Marionette.LayoutView.extend({
+const ListView = Marionette.View.extend({
     initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError('ListView: you must specify a \'collection\' option.');
@@ -134,7 +126,7 @@ const ListView = Marionette.LayoutView.extend({
     className: 'list',
     template: Handlebars.compile(template),
 
-    onShow() {
+    onRender() {
         // Updating viewportHeight and rendering subviews
         this.handleResize();
         this.visibleCollectionView = new VisibleCollectionView({
@@ -150,16 +142,13 @@ const ListView = Marionette.LayoutView.extend({
 
         this.visibleCollectionRegion.show(this.visibleCollectionView);
         this.handleResize();
-    },
 
-    onRender() {
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
-        this.__assignKeyboardShortcuts();
     },
 
-    keyboardShortcuts: {
+    keyboardShortcuts: { //todo use wist list to add events
         up(e) {
             this.moveCursorBy(-1, e.shiftKey);
         },
@@ -254,23 +243,6 @@ const ListView = Marionette.LayoutView.extend({
     // normalized the index so that it fits in range [0, this.collection.length - 1]
     __normalizeCollectionIndex(index) {
         return Math.max(0, Math.min(this.collection.length - 1, index));
-    },
-
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            if (typeof value === 'object') {
-                this.keyListener.register_combo(_.extend({
-                    keys: key,
-                    this: this
-                }, value));
-            } else {
-                this.keyListener.simple_combo(key, value.bind(this));
-            }
-        });
     },
 
     updatePosition(newPosition) {

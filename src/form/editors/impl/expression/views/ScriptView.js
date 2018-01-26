@@ -11,7 +11,7 @@
 
 import template from '../templates/script.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     ui: {
@@ -31,7 +31,7 @@ export default Marionette.ItemView.extend({
         this.value = value;
     },
 
-    onShow() {
+    onRender() {
         this.ui.scriptInput.val(this.value);
     }
 });

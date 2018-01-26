@@ -95,7 +95,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     onRender() {
-        this.timeRegion.show(this.timeView);
+        this.showChildView('timeRegion', this.timeView);
         this.__updateClearButton();
     },
 

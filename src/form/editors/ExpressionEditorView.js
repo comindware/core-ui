@@ -67,7 +67,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         });
     },
 
-    onShow() {
+    onRender() {
         this.createOptionCollection();
 
         this.addValueEditor();

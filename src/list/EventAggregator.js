@@ -28,7 +28,7 @@ import 'lib';
     });
  */
 
-export default Marionette.Controller.extend({
+export default Marionette.Object.extend({
     initialize(options) {
         if (options.views === undefined) {
             throw new Error('You must pass the views you want to keep in sync (displaying the same collection) into the `views` option.');

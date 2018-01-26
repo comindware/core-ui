@@ -11,7 +11,7 @@
 
 import template from '../templates/uploadDocumentButton.html';
 
-export default Backbone.Marionette.ItemView.extend({
+export default Backbone.Marionette.View.extend({
     uploadUrl: '/api/UploadAttachment',
 
     options: {
@@ -35,7 +35,7 @@ export default Backbone.Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 

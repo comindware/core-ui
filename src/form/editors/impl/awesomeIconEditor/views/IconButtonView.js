@@ -11,7 +11,7 @@
 
 import template from '../templates/iconButton.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     triggers: {

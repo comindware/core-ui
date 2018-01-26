@@ -11,8 +11,8 @@
 import { Handlebars } from 'lib';
 import template from '../templates/loading.hbs';
 
-export default Marionette.ItemView.extend({
-    templateHelpers() {
+export default Marionette.View.extend({
+    templateContext() {
         return {
             text: this.options.text
         };

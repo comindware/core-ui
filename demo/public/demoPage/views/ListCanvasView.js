@@ -11,7 +11,7 @@
 
 import template from 'text-loader!../templates/listCanvas.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {
@@ -21,8 +21,8 @@ export default Marionette.LayoutView.extend({
 
     className: 'demo-list-canvas__view',
 
-    onShow() {
-        this.contentRegion.show(this.options.content);
-        this.scrollbarRegion.show(this.options.scrollbar);
+    onRender() {
+        this.showChildView('contentRegion', this.options.content);
+        this.showChildView('scrollbarRegion', this.options.scrollbar);
     }
 });

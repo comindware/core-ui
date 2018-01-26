@@ -9,7 +9,7 @@ export default function() {
 
     /* В реальном коде ОБЯЗАТЕЛЬНО следуйте правилу "одна View - один файл", не объявляйте их инлайном. */
 
-    const DemoDropdownItemView = Marionette.ItemView.extend({
+    const DemoDropdownItemView = Marionette.View.extend({
         template: Handlebars.compile('{{name}}'),
         className: 'dropdown-list__i'
     });
@@ -24,7 +24,7 @@ export default function() {
         }
     });
 
-    const DemoButtonView = Marionette.ItemView.extend({
+    const DemoButtonView = Marionette.View.extend({
         template() {
             return Handlebars.compile('<input type="text" class="field js-input" placeholder="Enter text here">');
         },

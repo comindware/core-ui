@@ -85,7 +85,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
             },
             autoOpen: false
         });
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
         this.listenTo(this.dropdownView, 'before:open', this.__onBeforeDropdownOpen);
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);

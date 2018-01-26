@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/28/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars, keypress } from 'lib';
 import { helpers, comparators } from 'utils';
 import dropdown from 'dropdown';
 import template from './templates/memberSelectEditor.hbs';
@@ -102,19 +94,10 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
         });
         this.dropdownView = dropdown.factory.createPopout(dropdownOptions);
         this.listenTo(this.dropdownView, 'panel:cancel', this.__onCancel);
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
         // hotkeys
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        'down,enter,num_enter'.split(',').forEach(key => {
-            this.keyListener.simple_combo(key, () => {
-                if (this.getEnabled() && !this.getReadonly()) {
-                    this.dropdownView.open();
-                }
-            });
-        });
+
+        //'down,enter,num_enter'.split(',').forEach(key => {
     },
 
     __value(value, triggerChange) {

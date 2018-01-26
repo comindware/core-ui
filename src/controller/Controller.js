@@ -58,7 +58,7 @@ export default Marionette.Object.extend({
                     if (viewEvents) {
                         Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
                     }
-                    this.moduleRegion.show(presentingView);
+                    this.showChildView('moduleRegion', presentingView);
                 }
             }
             if (viewModel) {
@@ -76,7 +76,7 @@ export default Marionette.Object.extend({
                         Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
                     }
                     presentingView.request = this.__handleViewResourceRequest.bind(this);
-                    this.moduleRegion.show(presentingView);
+                    this.showChildView('moduleRegion', presentingView);
                 }
             }
         } else {
@@ -93,7 +93,7 @@ export default Marionette.Object.extend({
                     Object.keys(viewEvents).forEach(key => this.listenTo(presentingView, key, viewEvents[key]));
                 }
                 presentingView.request = this.__handleViewResourceRequest.bind(this);
-                this.moduleRegion.show(presentingView);
+                this.showChildView('moduleRegion', presentingView);
             }
         }
     },

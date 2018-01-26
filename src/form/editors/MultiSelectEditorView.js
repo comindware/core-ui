@@ -98,7 +98,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
         this.listenTo(this.dropdownView, 'panel:close', () => this.dropdownView.close());
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
     },
 
     __onCollectionChange() {

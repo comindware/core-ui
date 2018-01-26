@@ -1,7 +1,7 @@
 
 import template from './templates/headerItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     tagName: 'li',
 
     className() {

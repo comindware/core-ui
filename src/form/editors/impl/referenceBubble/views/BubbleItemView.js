@@ -9,14 +9,14 @@
 import { Handlebars } from 'lib';
 import template from '../templates/bubbleItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const value = this.model.attributes;
         return {
             enabled: this.options.enabled,

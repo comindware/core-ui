@@ -18,11 +18,11 @@ import template from '../templates/gridcolumnheader.hbs';
  * @constructor
  * @description View используемый по умолчанию для отображения ячейки заголовка (шапки) списка, передавать в
  * {@link module:core.list.views.GridView GridView options.gridColumnHeaderView}
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.columns массив колонок
  * */
-const GridColumnHeaderView = Marionette.ItemView.extend({
+const GridColumnHeaderView = Marionette.View.extend({
     initialize(options) {
         this.column = options.column;
     },
@@ -40,7 +40,7 @@ const GridColumnHeaderView = Marionette.ItemView.extend({
         });
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             sortingAsc: this.column.sorting === 'asc',
             sortingDesc: this.column.sorting === 'desc'

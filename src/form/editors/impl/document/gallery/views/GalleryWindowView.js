@@ -17,7 +17,7 @@ const classes = {
     GALLERY_WINDOW: 'js-gallery-window galleryWindow'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'reqres');
         this.reqres = options.reqres;

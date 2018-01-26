@@ -11,7 +11,7 @@
 
 import template from '../templates/editableGridHeaderToolbar.hbs';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.allowDelete = options.allowDelete;
         this.allowCreate = options.allowCreate;
@@ -39,9 +39,6 @@ export default Marionette.LayoutView.extend({
 
     onRender() {
         this.__toggleViewClasses();
-    },
-
-    onShow() {
         this.__updateToolbar();
     },
 

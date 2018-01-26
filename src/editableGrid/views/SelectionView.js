@@ -1,7 +1,7 @@
 import form from 'form';
 import template from '../templates/editableCell.hbs';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {

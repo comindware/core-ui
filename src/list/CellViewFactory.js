@@ -77,7 +77,7 @@ const factory = {
     },
 
     getBooleanCellView() {
-        const templateHelpers = {
+        const templateContext = {
             showIcon() {
                 return _.isBoolean(this.value);
             }
@@ -87,7 +87,7 @@ const factory = {
             '{{#if showIcon}}' +
                 '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
                 '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-            '{{/if}}', templateHelpers);
+            '{{/if}}', templateContext);
     },
 
     getDateTimeCellView() {
@@ -98,8 +98,8 @@ const factory = {
         return factory.__getDocumentView();
     },
 
-    __getSimpleView(template, templateHelpers) {
-        return Marionette.ItemView.extend({
+    __getSimpleView(template, templateContext) {
+        return Marionette.View.extend({
             template: Handlebars.compile(template),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'
@@ -108,14 +108,14 @@ const factory = {
                 this.render();
             },
             className: 'grid-cell',
-            templateHelpers
+            templateContext
         });
     },
 
     __getAccountView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{text}}'),
-            templateHelpers() {
+            templateContext() {
                 const value = this.model.get('value');
                 let text = '';
                 if (value && value.length > 0) {
@@ -151,10 +151,10 @@ const factory = {
     },
 
     __getDocumentView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{#each documents}}<a href="{{url}}">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
 
-            templateHelpers() {
+            templateContext() {
                 const value = this.model.get('value');
                 let documents = [];
                 if (value && value.length > 0) {
@@ -183,7 +183,7 @@ const factory = {
     },
 
     __getEnumView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{#if value}}{{valueExplained}}{{/if}}'),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'
@@ -191,7 +191,7 @@ const factory = {
             __handleHighlightedFragmentChange() {
                 this.render();
             },
-            templateHelpers() {
+            templateContext() {
                 const value = this.model.get('value');
                 return {
                     value,

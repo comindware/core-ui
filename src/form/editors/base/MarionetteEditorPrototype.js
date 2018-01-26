@@ -343,7 +343,7 @@ export default {
                     this.hasFocus = false;
                 }
 
-                return Marionette.ItemView.prototype.trigger.apply(this, arguments);
+                return Marionette.View.prototype.trigger.apply(this, arguments);
             },
 
             getValidator(validator) {

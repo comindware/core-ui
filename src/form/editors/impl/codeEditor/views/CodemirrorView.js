@@ -27,7 +27,7 @@ const CHECK_VISIBILITY_DELAY = 200;
 const classes = constants.classes;
 const types = constants.types;
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options = {}) {
         _.bindAll(this, '__onBlur', '__onChange', '__showHint', '__find', '__undo', '__redo', '__format', '__cmwHint',
             '__showTooltip', '__hideTooltip', '__onMouseover', '__onMouseleave', '__onKeyDown', '__onMinimize');
@@ -62,7 +62,7 @@ export default Marionette.LayoutView.extend({
 
     className: 'dev-codemirror',
 
-    onShow() {
+    onRender() {
         this.toolbar = new ToolbarView({ maximized: this.options.maximized });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
@@ -75,7 +75,7 @@ export default Marionette.LayoutView.extend({
         });
         this.toolbar.on('minimize', this.__onMinimize);
 
-        this.toolbarContainer.show(this.toolbar);
+        this.showChildView('toolbarContainer', this.toolbar);
 
         this.ui.editor.css('height', this.options.height);
         this.hintIsShown = false;

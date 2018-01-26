@@ -12,7 +12,7 @@ import dropdown from 'dropdown';
 import PanelView from './DatePanelView';
 import InputView from './DateInputView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
         this.allowEmptyValue = this.getOption('allowEmptyValue');
@@ -28,7 +28,7 @@ export default Marionette.LayoutView.extend({
         popoutRegion: '.js-popout-region'
     },
 
-    onShow() {
+    onRender() {
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {
@@ -55,7 +55,7 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
 
-        this.popoutRegion.show(this.calendarDropdownView);
+        this.showChildView('popoutRegion', this.calendarDropdownView);
     },
 
     __onBeforeClose() {

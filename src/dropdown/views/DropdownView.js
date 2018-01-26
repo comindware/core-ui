@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/27/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { $, Handlebars } from 'lib';
 import { helpers } from 'utils';
@@ -13,7 +6,6 @@ import template from '../templates/dropdown.hbs';
 import BlurableBehavior from '../utils/BlurableBehavior';
 import GlobalEventService from '../../services/GlobalEventService';
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
-import WrapperView from './WrapperView';
 
 const classes = {
     OPEN: 'open',
@@ -69,7 +61,7 @@ const defaultOptions = {
  * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
  * </ul>
  * @constructor
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Options object.
  * @param {Marionette.View} options.buttonView View class for displaying the button.
  * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
@@ -84,7 +76,7 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
+export default Marionette.View.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
     initialize(options) {
         _.defaults(this.options, _.clone(defaultOptions), options);
         helpers.ensureOption(options, 'buttonView');
@@ -142,13 +134,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.triggerMethod(...args);
         });
 
-        if (this.isShown) {
-            this.buttonRegion.show(this.button);
-        }
-    },
-
-    onShow() {
-        this.buttonRegion.show(this.button);
+        this.showChildView('buttonRegion', this.button);
         this.isShown = true;
     },
 
@@ -160,7 +146,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
     __adjustPosition($panelEl) {
         const viewportHeight = window.innerHeight;
-        const $buttonEl = this.buttonRegion.$el;
+        const $buttonEl = this.getRegion('buttonRegion').$el;
         const buttonRect = $buttonEl.offset();
         buttonRect.height = $buttonEl.outerHeight();
         buttonRect.width = $buttonEl.outerWidth();
@@ -260,15 +246,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.triggerMethod(...args);
         });
 
-        const wrapperView = new WrapperView({
-            view: this.panelView,
-            className: 'dropdown__wrp'
-        });
-        this.popupId = WindowService.showTransientPopup(wrapperView, {
+        this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.el
         });
-        this.__adjustPosition(wrapperView.$el);
-        const buttonWidth = this.buttonRegion.$el.outerWidth();
+        this.__adjustPosition(this.panelView.$el);
+        const buttonWidth = this.getRegion('buttonRegion').$el.outerWidth();
         const panelWidth = buttonWidth > MAX_DROPDOWN_PANEL_WIDTH ? buttonWidth : MAX_DROPDOWN_PANEL_WIDTH;
         this.panelView.$el.css({ width: buttonWidth });
         this.panelView.$(`.${classes.VISIBLE_COLLECTION}`).css({ width: panelWidth });
