@@ -27,8 +27,6 @@ export default ListPanelView.extend({
 
     className: 'popout-menu',
 
-    childView: MenuItemView,
-
     childView(model) {
         if (model.get('customView')) {
             return model.get('customView');
@@ -45,4 +43,3 @@ export default ListPanelView.extend({
         this.options.parent.trigger('execute', model.id, model);
     }
 });
-

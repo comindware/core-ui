@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 30.08.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import VirtualCollection from '../../collections/VirtualCollection';
@@ -37,6 +30,8 @@ const defaultOptions = {
     canDeleteItem: true
 };
 
+const reqres = Backbone.Radio.channel('referenceBubble');
+
 /**
  * @name ReferenceEditorView
  * @member of module:core.form.editors
@@ -58,7 +53,6 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
 
         _.bindAll(this, '__getDisplayText');
 
-        this.reqres = Backbone.Radio.channel('referenceBubble');
         this.controller = this.options.controller || new StaticController({
             collection: options.collection
         });
@@ -124,7 +118,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
             buttonView: this.options.buttonView,
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
-                reqres: this.reqres,
+                reqres,
                 getDisplayText: this.__getDisplayText,
                 showEditButton: this.options.showEditButton,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
@@ -134,7 +128,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
             panelView: PanelView,
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
-                reqres: this.reqres,
+                reqres,
                 showAddNewButton: this.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
