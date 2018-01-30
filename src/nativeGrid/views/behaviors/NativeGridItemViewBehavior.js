@@ -82,7 +82,7 @@ export default Marionette.Behavior.extend({
     },
 
     __getCellElements() {
-        return this.el.querySelectorAll('.js-grid-cell');
+        return Array.prototype.slice.call(this.el.querySelectorAll('.js-grid-cell')); //IE11 fix
     },
 
     __handleClick(e) {
