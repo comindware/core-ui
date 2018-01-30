@@ -41,9 +41,8 @@ const Form = Marionette.Object.extend({
 
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !$(el).attr('editor-for')) || $(el).attr('editor-for') === this.model.get('uniqueFormId')) {
-                const $editorRegion = $(el);
-                const key = $editorRegion.attr('data-editors');
+            if ((!this.model.has('uniqueFormId') && !el.getAttribute('editor-for')) || el.getAttribute('editor-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-editors');
                 const regionName = `${key}Region`;
                 //todo update el
                 rootView.addRegion(regionName);
@@ -53,9 +52,8 @@ const Form = Marionette.Object.extend({
 
         //Render standalone fields
         $target.find('[data-fields]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !$(el).attr('field-for')) || $(el).attr('field-for') === this.model.get('uniqueFormId')) {
-                const $fieldRegion = $(el);
-                const key = $fieldRegion.attr('data-fields');
+            if ((!this.model.has('uniqueFormId') && !el.getAttribute('field-for')) || el.getAttribute('field-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-fields');
                 const regionName = `${key}Region`;
                 //todo update el
                 rootView.addRegion(regionName);
