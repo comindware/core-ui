@@ -6,7 +6,6 @@
  * Published under the MIT license
  */
 
-import 'lib';
 /*eslint-disable*/
 /**
  * @name SlidingWindowCollection
