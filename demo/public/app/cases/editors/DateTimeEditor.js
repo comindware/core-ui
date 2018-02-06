@@ -11,6 +11,7 @@ export default function() {
             key: 'dateTimeValue',
             autocommit: true
         }),
-        presentation: "{{#isNull dateTimeValue}}null{{else}}'{{dateTimeValue}}'{{/isNull}}"
+        presentation: "{{#isNull dateTimeValue}}null{{else}}'{{dateTimeValue}}'{{/isNull}}",
+        isEditor: true
     });
 }

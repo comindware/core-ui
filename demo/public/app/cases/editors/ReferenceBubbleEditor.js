@@ -21,6 +21,7 @@ export default function() {
             maxQuantitySelected: 5,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
         }),
-        presentation: "[ {{#each referenceBubbleValue}}{ id: '{{this.id}}', text: '{{this.text}}' }{{#unless @last}}, {{/unless}}{{/each}} ]"
+        presentation: "[ {{#each referenceBubbleValue}}{ id: '{{this.id}}', text: '{{this.text}}' }{{#unless @last}}, {{/unless}}{{/each}} ]",
+        isEditor: true
     });
 }

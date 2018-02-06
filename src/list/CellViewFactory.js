@@ -102,7 +102,9 @@ const factory = {
         return Marionette.View.extend({
             template: Handlebars.compile(template),
             modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
+                'change:highlightedFragment': '__handleHighlightedFragmentChange',
+                highlighted: '__handleHighlightedFragmentChange',
+                unhighlighted: '__handleHighlightedFragmentChange'
             },
             __handleHighlightedFragmentChange() {
                 this.render();

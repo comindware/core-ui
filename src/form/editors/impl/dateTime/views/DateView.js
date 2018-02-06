@@ -59,6 +59,9 @@ export default Marionette.View.extend({
     },
 
     __onBeforeClose() {
+        if (this.calendarDropdownView.isDestroyed) {
+            return;
+        }
         this.calendarDropdownView.button.endEditing();
         this.trigger('blur');
     },
