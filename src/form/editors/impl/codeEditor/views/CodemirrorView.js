@@ -201,16 +201,25 @@ export default Marionette.View.extend({
     },
 
     __undo() {
+        if (this.codemirror.isReadOnly()) {
+            return;
+        }
         this.codemirror.execCommand('undo');
         this.__change();
     },
 
     __redo() {
+        if (this.codemirror.isReadOnly()) {
+            return;
+        }
         this.codemirror.execCommand('redo');
         this.__change();
     },
 
     __showHint() {
+        if (this.codemirror.isReadOnly()) {
+            return;
+        }
         this.hintIsShown = true;
         this.codemirror.showHint((this.options.mode === 'expression') ? { hint: this.__cmwHint } : null);
     },
@@ -220,6 +229,9 @@ export default Marionette.View.extend({
     },
 
     __format() {
+        if (this.codemirror.isReadOnly()) {
+            return;
+        }
         const cm = this.codemirror;
         cm.execCommand('selectAll');
         const from = cm.getCursor(true);

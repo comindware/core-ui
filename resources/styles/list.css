@@ -369,6 +369,14 @@ svg.svg-grid-icons {
     background: #f7f6f6;
 }
 
+.collection-header .tr-search {
+    padding: 0;
+}
+
+.collection-right-items-region {
+    display: flex
+}
+
 .form-label_collection{
     line-height: inherit;
 }

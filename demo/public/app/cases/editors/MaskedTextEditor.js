@@ -16,6 +16,7 @@ export default function() {
             mask: 'aa*: +9(999)999-9999',
             maskPlaceholder: '_'
         }),
-        presentation: "{{#isNull textValue}}null{{else}}'{{textValue}}'{{/isNull}}"
+        presentation: "{{#isNull textValue}}null{{else}}'{{textValue}}'{{/isNull}}",
+        isEditor: true
     });
 }

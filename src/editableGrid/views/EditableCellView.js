@@ -10,11 +10,16 @@ export default Marionette.View.extend({
 
     onRender() {
         let readonly = this.schema.readonly;
+        let hidden = this.schema.hidden;
         let schemaExtension = {};
         const rowModel = this.model.get('rowModel');
         if (_.isFunction(this.schema.getReadonly)) {
             readonly = this.schema.getReadonly(rowModel);
             this.listenTo(rowModel, 'change', () => this.editorView.editor.setReadonly(this.schema.getReadonly(rowModel)));
+        }
+        if (_.isFunction(this.schema.getHidden)) {
+            hidden = this.schema.getHidden(rowModel);
+            this.listenTo(rowModel, 'change', () => this.editorView.editor.setHidden(this.schema.getHidden(rowModel)));
         }
         if (_.isFunction(this.schema.schemaExtension)) {
             schemaExtension = this.schema.schemaExtension(rowModel);
@@ -25,7 +30,7 @@ export default Marionette.View.extend({
         }
 
         this.editorView = new EditableGridFieldView({
-            schema: Object.assign({}, this.schema, { readonly }, schemaExtension),
+            schema: Object.assign({}, this.schema, { readonly, hidden }, schemaExtension),
             key: this.schema.key,
             model: this.model.get('rowModel'),
         });

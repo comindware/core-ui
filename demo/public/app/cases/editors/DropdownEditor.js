@@ -21,6 +21,7 @@ export default function() {
             collection: new Backbone.Collection(possibleItems),
             enableSearch: true
         }),
-        presentation: '{{dropdownValue}}'
+        presentation: '{{dropdownValue}}',
+        isEditor: true
     });
 }

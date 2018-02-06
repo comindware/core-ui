@@ -15,6 +15,7 @@ export default function() {
             users: Core.services.UserService.listUsers(),
             groups: new Backbone.Collection(),
         }),
-        presentation: '\'{{memberValue}}\''
+        presentation: '\'{{memberValue}}\'',
+        isEditor: true
     });
 }

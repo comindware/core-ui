@@ -19,6 +19,7 @@ export default function() {
                 { id: 'value3', displayText: 'Some Text 3' }
             ]
         }),
-        presentation: '\'{{radioValue}}\''
+        presentation: '\'{{radioValue}}\'',
+        isEditor: true
     });
 }

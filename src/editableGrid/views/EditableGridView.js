@@ -2,6 +2,8 @@
  * Created by sguryev on 13.07.2017.
  */
 import utils from 'utils';
+import SearchBarView from '../../views/SearchBarView';
+import HighlightableBehavior from '../../collections/behaviors/HighlightableBehavior';
 import factory from '../../nativeGrid/factory';
 import template from '../templates/editableGrid.hbs';
 import EditableGridHeaderToolbarView from '../views/EditableGridHeaderToolbarView';
@@ -30,7 +32,8 @@ export default Marionette.View.extend({
 
     regions: {
         gridRegion: '.js-grid-region',
-        collectionHeaderToolbarRegion: '.js-collection-header-toolbar-region'
+        collectionHeaderToolbarRegion: '.js-collection-header-toolbar-region',
+        collectionHeaderSearchRegion: '.js-collection-header-search-region'
     },
 
     className: 'fr-collection dev-collection',
@@ -57,6 +60,9 @@ export default Marionette.View.extend({
     __updateView() {
         this.__showGridView();
         this.collectionHeaderToolbarRegion.show(this.collectionHeaderToolbarView);
+        if (this.getOption('showSearch')) {
+            this.__showSearch();
+        }
     },
 
     __onCollectionChange() {
@@ -84,7 +90,7 @@ export default Marionette.View.extend({
                 }
             });
         } else {
-            heightPx += this.collection.length * constants.rowHeight;
+            heightPx += this.collection.length > 0 ? this.collection.length * constants.rowHeight : constants.rowHeight;
         }
         this.ui.grid.css('height', heightPx);
     },
@@ -176,5 +182,83 @@ export default Marionette.View.extend({
             return Object.values(this.nativeGridCollection.checked);
         }
         return Object.values(this.nativeGridCollection.selected);
+    },
+
+    __showSearch() {
+        const searchView = new SearchBarView();
+        this.collectionHeaderSearchRegion.show(searchView);
+        searchView.on('search', text => {
+            this.__collapse(this.nativeGridCollection);
+            this.__unhighlightCollection(this.nativeGridCollection);
+            this.isFiltered && this.__clearFilter(this.nativeGridCollection);
+            this.isFiltered = !!text;
+            if (text) {
+                this.__applyFilter(this.nativeGridCollection, new RegExp(text, 'i'));
+                this.__expand(this.nativeGridCollection, false);
+                this.__highlightCollection(this.nativeGridCollection, text);
+            }
+        });
+    },
+
+    __applyFilter(collection, regexp) {
+        collection.forEach(model => this.__hasChildren(model) && this.__applyFilter(model.get('children'), regexp));
+        collection.filter(model => {
+            let result = this.__hasChildren(model);
+            const searchColumns = this.getOption('searchColumns') || ['text'];
+            result = result || searchColumns.find(column => regexp.test(model.get(column)));
+            return result;
+        });
+    },
+
+    __highlightCollection(collection, text) {
+        if (!(typeof collection.highlight === 'function')) {
+            Core.utils.helpers.applyBehavior(collection, HighlightableBehavior);
+        }
+        collection.highlight(text);
+        collection.each(model => {
+            if (this.__hasChildren(model)) {
+                this.__highlightCollection(model.children, text);
+            }
+        });
+    },
+
+    __unhighlightCollection(collection) {
+        if (!(typeof collection.unhighlight === 'function')) {
+            Core.utils.helpers.applyBehavior(collection, HighlightableBehavior);
+        }
+        collection.unhighlight();
+        collection.each(model => {
+            if (this.__hasChildren(model)) {
+                this.__unhighlightCollection(model.children);
+            }
+        });
+    },
+
+    __clearFilter(collection) {
+        collection.filter(null);
+        collection.forEach(model => model.children && this.__clearFilter(model.children));
+    },
+
+
+    __collapse(collection) {
+        collection.forEach(model => {
+            if (typeof model.collapse === 'function') {
+                model.collapse();
+            }
+            this.__hasChildren(model) && this.__collapse(model.children);
+        });
+    },
+
+    __expand(collection) {
+        collection.forEach(model => {
+            if (typeof model.expand === 'function') {
+                model.expand();
+            }
+            this.__hasChildren(model) && this.__expand(model.children);
+        });
+    },
+
+    __hasChildren(model) {
+        return model.children && model.children.length > 0;
     }
 });
