@@ -25,12 +25,12 @@ import template from '../templates/scrollbar.hbs';
  * @name ScrollBarView
  * @memberof module:core.list.views
  * @class ScrollBarView
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @constructor
  * @description View Scrollbar'а
  * @param {Object} options Constructor options
  * */
-const ScrollbarView = Marionette.ItemView.extend({
+const ScrollbarView = Marionette.View.extend({
     initialize() {
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
@@ -80,15 +80,13 @@ const ScrollbarView = Marionette.ItemView.extend({
         'mousedown @ui.dragger': '__draggerMousedown'
     },
 
-    onShow() {
+    onRender() {
         this.rendered = true;
         this.__updateScrollbarVisibility();
         this.__updateScrollbarVisibility();
         this.__updateDraggerPosition();
         this.__updateDraggerHeight();
-    },
 
-    onRender() {
         function stopAndPreventDefault(e) {
             e.preventDefault();
             e.stopPropagation();

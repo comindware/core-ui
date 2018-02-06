@@ -43,7 +43,7 @@ export default NewExpressionEditorView.extend({
         template: '.js-new-expression-template-container'
     },
 
-    onShow() {
+    onRender() {
         this.valueTypeCollection = new Backbone.Collection(null, { comparator: false });
 
         this.__showValueEditor();
@@ -64,7 +64,7 @@ export default NewExpressionEditorView.extend({
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
         });
 
-        this.templateEditor = new DropdownEditor(_.extend(this.options.templateEditorOptions, {
+        this.templateEditor = new DropdownEditor(Object.assign(this.options.templateEditorOptions, {
             value: this.value.type === valueTypes.template ? this.value.value : null,
         }));
 

@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import template from './templates/field.hbs';
 import { Handlebars } from 'lib';
@@ -21,7 +14,7 @@ const classes = {
     ERROR: 'error'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options = {}) {
         this.form = options.form;
         this.key = options.key;
@@ -37,7 +30,7 @@ export default Marionette.LayoutView.extend({
         });
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.schema.title,
             fieldId: this.fieldId
@@ -52,8 +45,8 @@ export default Marionette.LayoutView.extend({
         helpTextRegion: '.js-help-text-region'
     },
 
-    onShow() {
-        this.editorRegion.show(this.editor);
+    onRender() {
+        this.showChildView('editorRegion', this.editor);
         const errorPopout = dropdown.factory.createPopout({
             buttonView: ErrorButtonView,
             panelView: TooltipPanelView,

@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/16/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars, keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';
 import template from './templates/dropdownEditor.hbs';
@@ -46,10 +38,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
         _.bindAll(this, '__onCollectionChange');
 
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-
-        this.reqres.setHandler('value:set', this.onValueSet, this);
-        this.reqres.setHandler('panel:open', this.onPanelOpen, this);
+        this.reqres = Backbone.Radio.channel('dropdown');
 
         if (Array.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);
@@ -59,7 +48,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
         // adding ListItem behavior to collection model
         const fixModel = function(model) {
-            _.extend(model, new list.models.behaviors.ListItemBehavior(model));
+            Object.assign(model, new list.models.behaviors.ListItemBehavior(model));
         };
         this.collection.each(fixModel);
         const oldModel = this.collection.model;
@@ -87,6 +76,13 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         });
     },
 
+    channelName: 'dropdown',
+
+    radioEvents: {
+        'value:set': 'onValueSet',
+        'panel:open': 'onPanelOpen'
+    },
+
     focusElement: '.js-dropdown-region',
 
     regions: {
@@ -102,7 +98,6 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
     },
 
     onRender() {
-        this.__assignKeyboardShortcuts();
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: DropdownButtonView,
             buttonViewOptions: {
@@ -121,7 +116,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         });
         this.listenTo(this.dropdownView, 'close', this.onBlur);
         this.listenTo(this.dropdownView, 'panel:cancel', this.__onCancel);
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
 
         if (this.options.showTitle) {
             const valueModel = this.__findModel(this.getValue());
@@ -152,25 +147,6 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
     __findModel(value) {
         return this.collection ? this.collection.findWhere({ id: value }) : null;
-    },
-
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each('enter,num_enter,down'.split(','), key => {
-            this.keyListener.simple_combo(key, () => {
-                if (this.getEnabled() && !this.getReadonly()) {
-                    this.dropdownView.open();
-                }
-            });
-        });
-        this.keyListener.simple_combo('esc', () => {
-            if (this.getEnabled() && !this.getReadonly()) {
-                this.dropdownView.close();
-            }
-        });
     },
 
     __setReadonly(readonly) {

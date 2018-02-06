@@ -1,10 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/18/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
+
 /*eslint-disable*/
 import 'lib';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
@@ -165,9 +159,9 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
             SelectableBehaviorClass = selectableBehavior.single;
         }
         if (SelectableBehaviorClass) {
-            _.extend(this, new SelectableBehaviorClass(this));
+            Object.assign(this, new SelectableBehaviorClass(this));
         }
-        _.extend(this, new CheckableBehavior.CheckableCollection(this));
+        Object.assign(this, new CheckableBehavior.CheckableCollection(this));
     },
 
     __rebuildIndex() {

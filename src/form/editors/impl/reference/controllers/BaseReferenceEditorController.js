@@ -25,7 +25,7 @@ import list from 'list';
  * the total count of object with the applied filter on server.
  * */
 
-export default Marionette.Controller.extend(/** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
+export default Marionette.Object.extend(/** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
     initialize(options) {
         helpers.ensureOption(options, 'collection');
 

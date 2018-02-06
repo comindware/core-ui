@@ -1,12 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 04.03.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
 
 import 'lib';
 import BaseCollectionEditorView from './base/BaseCollectionEditorView';
@@ -14,6 +5,7 @@ import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
 import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';
 import formRepository from '../formRepository';
 import keyCode from '../../utils/keyCode';
+
 const defaultOptions = {
     radioOptions: [{ id: '', displayText: '' }]
 };

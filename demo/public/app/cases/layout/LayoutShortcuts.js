@@ -17,7 +17,7 @@ export default function() {
         blocked: true
     });
 
-    const View = Marionette.LayoutView.extend({
+    const View = Marionette.View.extend({
         initialize() {
             this.model = model;
         },
@@ -59,7 +59,7 @@ export default function() {
             }
         },
 
-        onShow() {
+        onRender() {
             this.layoutRegion.show(core.layout.createFromSchema({
                 type: 'VerticalLayout',
                 rows: [

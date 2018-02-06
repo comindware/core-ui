@@ -11,7 +11,7 @@ import { Handlebars } from 'lib';
 import list from 'list';
 import template from '../templates/listItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     ui: {

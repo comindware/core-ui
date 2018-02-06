@@ -32,7 +32,7 @@ export default function() {
     // 4. Create child view that display list rows.
     // - you MUST implement ListItemViewBehavior
     // - [NEW] you MUST implement onHighlighted/onUnhighlighted methods to support text highlighting while searching
-    const ListItemView = Marionette.ItemView.extend({
+    const ListItemView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i"><span class="js-title">{{title}}</span></div>'),
 
         ui: {

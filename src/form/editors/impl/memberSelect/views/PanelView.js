@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars, keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';
 import { helpers } from 'utils';
@@ -22,7 +14,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
@@ -60,10 +52,6 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        this.__assignKeyboardShortcuts();
-    },
-
-    onShow() {
         const result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
@@ -90,20 +78,7 @@ export default Marionette.LayoutView.extend({
         this.__updateFilter();
     },
 
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            const keys = key.split(',');
-            _.each(keys, k => {
-                this.keyListener.simple_combo(k, value.bind(this));
-            });
-        });
-    },
-
-    keyboardShortcuts: {
+    keyboardShortcuts: { //todo use this
         up() {
             this.listView.moveCursorBy(-1, false);
         },

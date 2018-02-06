@@ -8,8 +8,8 @@ import editableCellField from '../templates/editableCellField.hbs';
 export default form.Field.extend({
     template: Handlebars.compile(editableCellField),
 
-    onShow() {
-        this.editorRegion.show(this.editor);
+    onRender() {
+        this.showChildView('editorRegion', this.editor);
         this.__rendered = true;
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);

@@ -123,7 +123,7 @@ export default {
                 }
 
                 //Store important data
-                _.extend(this, _.pick(options, 'key', 'form'));
+                Object.assign(this, _.pick(options, 'key', 'form'));
 
                 const schema = this.schema = options.schema || {};
 
@@ -364,7 +364,7 @@ export default {
                     this.hasFocus = false;
                 }
 
-                return Marionette.ItemView.prototype.trigger.apply(this, arguments);
+                return Marionette.View.prototype.trigger.apply(this, arguments);
             },
 
             getValidator(validator) {

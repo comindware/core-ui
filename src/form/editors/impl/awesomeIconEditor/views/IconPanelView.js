@@ -14,7 +14,7 @@ import template from '../templates/iconPanel.html';
 import IconCollectionView from './IconCollectionView';
 import IconItemCategoryView from './IconItemCategoryView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.iconGroupsCollection = this.options.collection;
     },

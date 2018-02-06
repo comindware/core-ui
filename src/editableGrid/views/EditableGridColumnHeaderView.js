@@ -1,3 +1,4 @@
+
 import nativeGridApi from '../../nativeGrid/nativeGridApi';
 import template from '../templates/editableGridColumnHeader.hbs';
 
@@ -23,7 +24,6 @@ export default ColumnHeaderView.extend({
             this.listenTo(this.collection, 'check:none', this.__setCheckBoxNone);
             this.listenTo(this.collection, 'check:some', this.__setCheckBoxSome);
         }
-        this.__regionManager = new Marionette.RegionManager();
     },
 
     template: Handlebars.compile(template),
@@ -48,10 +48,6 @@ export default ColumnHeaderView.extend({
                 this.__setCheckBoxSome();
             }
         }
-    },
-
-    onDestroy() {
-        this.__regionManager.destroy();
     },
 
     __toggleSelection() {
@@ -81,4 +77,3 @@ export default ColumnHeaderView.extend({
         this.ui.checkbox.addClass(checkBoxClasses.checkedSome);
     }
 });
-

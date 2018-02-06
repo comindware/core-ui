@@ -17,4 +17,4 @@
 import 'lib';
 import MarionetteEditorPrototype from './MarionetteEditorPrototype';
 
-export default Marionette.ItemView.extend(MarionetteEditorPrototype.create(Marionette.ItemView));
+export default Marionette.View.extend(MarionetteEditorPrototype.create(Marionette.View));

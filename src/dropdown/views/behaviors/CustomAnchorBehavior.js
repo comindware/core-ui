@@ -1,15 +1,7 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/1/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
 
 const classes = {
-    ANCHOR: 'anchor anchor_inline'
+    ANCHOR1: 'anchor',
+    ANCHOR2: 'anchor_inline'
 };
 
 /**
@@ -30,15 +22,16 @@ const classes = {
 
 export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */ {
     onRender() {
-        let $el;
+        let el;
         if (this.options.anchor) {
-            $el = this.$(this.options.anchor);
+            el = this.el.querySelector(this.options.anchor);
         } else {
-            $el = this.$el;
+            el = this.el;
         }
         if (!this.options.omitDefaultStyling) {
-            $el.addClass(classes.ANCHOR);
+            el.classList.add(classes.ANCHOR1);
+            el.classList.add(classes.ANCHOR2);
         }
-        this.view.$anchor = $el;
+        this.view.anchor = el;
     }
 });

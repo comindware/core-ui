@@ -11,7 +11,7 @@
 
 import template from '../templates/expression.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     ui: {
@@ -28,7 +28,7 @@ export default Marionette.ItemView.extend({
         this.value = value;
     },
 
-    onShow() {
+    onRender() {
         this.ui.expressionInput.val(this.value);
     }
 });

@@ -24,7 +24,7 @@ import GlobalEventService from '../../services/GlobalEventService';
 
 const expandedClass = 'collapsible-btn_expanded';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     constants: {
         MIN_COLUMN_WIDTH: 100
     },
@@ -77,7 +77,7 @@ export default Marionette.ItemView.extend({
         let isFirstChild = true;
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
+            const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column,
                 gridEventAggregator: this.gridEventAggregator
@@ -170,7 +170,7 @@ export default Marionette.ItemView.extend({
         this.dragContext.pageOffsetX = offset;
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             columns: this.columns
         };
@@ -196,7 +196,7 @@ export default Marionette.ItemView.extend({
     },
 
     __getAvailableWidth() {
-        return this.gridEventAggregator._parent.$el.width() - 1;//todo remove this evil magic
+        return this.gridEventAggregator.$el.width();
     },
 
     __getElementOuterWidth(el) {
@@ -329,9 +329,7 @@ export default Marionette.ItemView.extend({
         const column = args.column;
         const sorting = column.sorting;
         let comparator;
-        _.each(this.columns, c => {
-            c.sorting = null;
-        });
+        this.columns.forEach(c => c.sorting = null);
         switch (sorting) {
             case 'asc':
                 column.sorting = 'desc';

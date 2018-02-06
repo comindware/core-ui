@@ -2,7 +2,7 @@ import list from 'list';
 import { htmlHelpers } from 'utils';
 import template from '../templates/workSpaceListItem.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.channel = options.channel;
     },

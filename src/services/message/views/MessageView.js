@@ -10,7 +10,7 @@ import { Handlebars } from 'lib';
 import template from '../templates/message.hbs';
 import WindowService from '../../WindowService';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'msg-popup',
 
     ui: {

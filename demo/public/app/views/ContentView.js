@@ -16,7 +16,7 @@ import template from 'text-loader!../templates/content.html';
 import Prism from 'prism';
 import markdown from 'markdown';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     modelEvents: {
         change: 'render'
     },
@@ -25,7 +25,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             description: markdown.toHTML(this.model.get('description') || '')
         };
@@ -41,9 +41,7 @@ export default Marionette.LayoutView.extend({
 
     onRender() {
         Prism.highlightElement(this.ui.code[0]);
-    },
 
-    onShow() {
         let path;
         if (this.model.id) {
             path = `${this.model.get('sectionId')}/${this.model.get('groupId')}/${this.model.id}`;
@@ -56,6 +54,7 @@ export default Marionette.LayoutView.extend({
 
         this.model.set('sourceCode', text);
         const representationView = code();
-        this.caseRepresentationRegion.show(representationView);
+
+        this.showChildView('caseRepresentationRegion', representationView);
     }
 });

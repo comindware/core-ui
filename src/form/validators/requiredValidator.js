@@ -13,7 +13,7 @@ import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 formRepository.validators.required = function(config) {
-    let options = _.extend({
+    let options = Object.assign({
         type: 'required',
         message: LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED')
     }, config);

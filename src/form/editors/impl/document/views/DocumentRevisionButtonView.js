@@ -9,6 +9,6 @@
  *       actual or intended publication of such source code.
  */
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: false
 });

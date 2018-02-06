@@ -11,7 +11,7 @@
 
 import template from 'text-loader!../templates/listSearchCanvas.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {
@@ -22,9 +22,9 @@ export default Marionette.LayoutView.extend({
 
     className: 'demo-list-canvas__view_search',
 
-    onShow() {
-        this.contentRegion.show(this.options.content);
-        this.scrollbarRegion.show(this.options.scrollbar);
-        this.searchRegion.show(this.options.search);
+    onRender() {
+        this.showChildView('contentRegion', this.options.content);
+        this.showChildView('scrollbarRegion', this.options.scrollbar);
+        this.showChildView('searchRegion', this.options.search);
     }
 });

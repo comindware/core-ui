@@ -45,7 +45,7 @@ const showCustomMessageDialog = function() {
     });
 };
 
-const View = Marionette.ItemView.extend({
+const View = Marionette.View.extend({
     template: Handlebars.compile('<input class="js-confirm__button message-service__button" type="button" value="Show Confirm">' +
         '<input class="js-yes-no__button message-service__button" type="button" value="Show Ask Yes/No">' +
         '<input class="js-error__button message-service__button" type="button" value="Show Error">' +

@@ -19,8 +19,8 @@ export default RowView.extend({
 
     initialize() {
         _.defaults(this.options, defaultOptions);
-        _.extend(this.model, new GridItemBehavior(this));
-        _.extend(this.model, new CollapsibleBehavior(this));
+        Object.assign(this.model, new GridItemBehavior(this));
+        Object.assign(this.model, new CollapsibleBehavior(this));
         this.listenTo(this.model, 'checked', this.__onModelChecked);
         this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
     },

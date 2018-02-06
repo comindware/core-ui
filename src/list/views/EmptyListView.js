@@ -18,11 +18,11 @@ import LocalizationService from '../../services/LocalizationService';
  * @constructor
  * @description View используемый по умолчанию для отображения пустого списка (нет строк),
  * передавать в {@link module:core.list.views.GridView GridView options.emptyView}
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {string} [options.text=Список пуст] отображаемый текст
  * */
-const EmptyListView = Marionette.ItemView.extend({
+const EmptyListView = Marionette.View.extend({
     initialize(options) {
         this.model = new Backbone.Model({
             text: (options && options.text) || LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY')

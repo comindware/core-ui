@@ -14,7 +14,7 @@ export var UserModel = Backbone.Model.extend({});
 
 export var TaskModel = Backbone.Model.extend({
     initialize() {
-        _.extend(this, new core.list.models.behaviors.ListItemBehavior(this));
+        Object.assign(this, new core.list.models.behaviors.ListItemBehavior(this));
     }
 });
 

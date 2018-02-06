@@ -17,7 +17,7 @@ const classes = {
     HIDDEN: 'layout__hidden'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'columns');
 
@@ -38,13 +38,13 @@ export default Marionette.LayoutView.extend({
         list: '.js-list'
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.options.title
         };
     },
 
-    onShow() {
+    onRender() {
         this.__rowsCtx = [];
         this.options.columns.forEach(view => {
             view.on('change:visible', this.__handleChangeVisibility.bind(this));

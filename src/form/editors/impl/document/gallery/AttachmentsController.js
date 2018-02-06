@@ -21,13 +21,14 @@ const graphicFileExtensions = ['gif', 'png', 'bmp', 'jpg', 'jpeg', 'jfif', 'jpeg
 export default Marionette.Object.extend({
     initialize() {
         this.imagesBuffer = {};
-        this.bindReqres();
+        this.reqres = Backbone.Radio.channel('gallery');
     },
 
-    bindReqres() {
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.reqres.setHandler('close', this.__closeGallery, this);
-        this.reqres.setHandler('image:get', this.__getImage, this);
+    channelName: 'referenceBubble',
+
+    radioEvents: {
+        close: '__closeGallery',
+        'image:get': '__getImage'
     },
     
     showGallery(model) {
@@ -38,7 +39,7 @@ export default Marionette.Object.extend({
                 model
             });
             this.__togglePopupRegion(true);
-            window.application.popupRegion.show(this.view);
+            window.application.popupRegion.show(this.view); //todo wtf
             return false;
         }
         return true;

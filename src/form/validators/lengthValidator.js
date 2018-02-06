@@ -12,7 +12,7 @@ import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 formRepository.validators.length = function(options) {
-    options = _.extend({
+    options = Object.assign({
         type: 'length',
         message: LocalizationService.get('CORE.FORM.VALIDATION.LENGTH')
     }, options);

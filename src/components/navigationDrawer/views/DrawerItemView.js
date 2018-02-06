@@ -15,7 +15,7 @@ const classes = {
     selected: 'selected'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     tagName: 'li',

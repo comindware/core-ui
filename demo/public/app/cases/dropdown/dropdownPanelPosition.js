@@ -17,7 +17,7 @@ export default function() {
         comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'name')
     });
 
-    const DemoButtonView = Marionette.ItemView.extend({
+    const DemoButtonView = Marionette.View.extend({
         template() {
             return Handlebars.compile('<input type="text" class="field js-input" placeholder="Enter text here">');
         },
@@ -29,7 +29,7 @@ export default function() {
         }
     });
 
-    const DemoDropdownItemView = Marionette.ItemView.extend({
+    const DemoDropdownItemView = Marionette.View.extend({
         template: Handlebars.compile(template),
 
         className: 'dropdown-list__i'

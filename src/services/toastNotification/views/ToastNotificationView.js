@@ -1,13 +1,3 @@
-/**
- * Developer: Vladislav Smirnov
- * Date: 23.01.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
 import template from '../templates/toastNotification.html';
 
@@ -17,7 +7,7 @@ const notificationTypes = {
     SUCCESS: 'Success'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className() {
         const sizeClass = this.model.get('title') ? 'dev-fr-alert-extended' : 'dev-fr-alert-compact';
 
@@ -33,8 +23,15 @@ export default Marionette.ItemView.extend({
     },
 
     triggers: {
-        click: 'view:click'
+        click: 'view:click',
+        'click .js-handler-button': 'view:handle:handler'
     },
 
-    template: Handlebars.compile(template)
+    template: Handlebars.compile(template),
+
+    templateHelper() {
+        return {
+            handler: this.model.get('handler')
+        };
+    }
 });

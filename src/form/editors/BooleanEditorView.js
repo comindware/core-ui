@@ -59,7 +59,7 @@ export default formRepository.editors.Boolean = BaseItemEditorView.extend(/** @l
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             displayText: this.options.displayText,
             displayHtml: this.options.displayHtml

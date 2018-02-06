@@ -11,7 +11,7 @@ import HighlightableBehavior from '../../../models/behaviors/HighlightableBehavi
 import CheckableBehavior from '../../../models/behaviors/CheckableBehavior';
 
 export default function(model) {
-    _.extend(this, new SelectableBehavior.Selectable(model));
-    _.extend(this, new CheckableBehavior.CheckableModel(model));
-    _.extend(this, new HighlightableBehavior(model));
+    Object.assign(this, new SelectableBehavior.Selectable(model));
+    Object.assign(this, new CheckableBehavior.CheckableModel(model));
+    Object.assign(this, new HighlightableBehavior(model));
 }

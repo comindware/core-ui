@@ -1,13 +1,5 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 17.08.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import template from '../../list/templates/list.hbs';
-import { keypress, Handlebars } from 'lib';
 import { helpers } from 'utils';
 
 /**
@@ -16,7 +8,7 @@ import { helpers } from 'utils';
  * @memberof module:core.nativeGrid.views
  * @class ListView
  * @description View контента списка
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Backbone.View} options.childView view Строки списка
  * @param {Function} [options.childViewSelector] ?
@@ -64,7 +56,7 @@ export default Marionette.CollectionView.extend({
      * */
     template: Handlebars.compile(template),
 
-    getChildView(child) {
+    childView(child) {
         if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
         }
@@ -87,11 +79,7 @@ export default Marionette.CollectionView.extend({
         });
     },
 
-    onRender() {
-        this.__assignKeyboardShortcuts();
-    },
-
-    keyboardShortcuts: {
+    keyboardShortcuts: { //todo use wist list to add events
         up(e) {
             this.__moveToNeighbor('top', e.shiftKey);
         },
@@ -133,8 +121,8 @@ export default Marionette.CollectionView.extend({
     },
 
     __createReqres() {
-        this.internalReqres = new Backbone.Wreqr.RequestResponse();
-        this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+        //this.internalReqres = new Backbone.Wreqr.RequestResponse();
+        //this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
     },
 
     __handleChildViewEvent(view, eventName, eventArguments) {
@@ -258,23 +246,6 @@ export default Marionette.CollectionView.extend({
     // normalized the index so that it fits in range [0, this.collection.length - 1]
     __normalizeCollectionIndex(index) {
         return Math.max(0, Math.min(this.collection.length - 1, index));
-    },
-
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            if (typeof value === 'object') {
-                this.keyListener.register_combo(_.extend({
-                    keys: key,
-                    this: this
-                }, value));
-            } else {
-                this.keyListener.simple_combo(key, value.bind(this));
-            }
-        });
     },
 
     __handleResize() {

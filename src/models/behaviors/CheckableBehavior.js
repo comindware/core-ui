@@ -24,7 +24,7 @@ CheckableBehavior.CheckableCollection = function(collection) {
     });
 };
 
-_.extend(CheckableBehavior.CheckableCollection.prototype, {
+Object.assign(CheckableBehavior.CheckableCollection.prototype, {
 
     check(model) {
         if (this.checked[model.cid]) { return; }
@@ -73,7 +73,7 @@ CheckableBehavior.CheckableModel = function(model) {
     this.model = model;
 };
 
-_.extend(CheckableBehavior.CheckableModel.prototype, {
+Object.assign(CheckableBehavior.CheckableModel.prototype, {
 
     check() {
         if (this.checked) { return; }

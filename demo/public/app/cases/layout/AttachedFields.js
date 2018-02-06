@@ -17,7 +17,7 @@ export default function() {
         blocked: true
     });
 
-    const View = Marionette.ItemView.extend({
+    const View = Marionette.View.extend({
         template: false,
 
         regions() {
@@ -62,7 +62,7 @@ export default function() {
             }
         },
 
-        onShow() {
+        onRender() {
             this.contentRegion.show(new core.layout.VerticalLayout({
                 rows: [
                     core.layout.createFieldAnchor('title'),

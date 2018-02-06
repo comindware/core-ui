@@ -11,7 +11,7 @@ import { htmlHelpers } from 'utils';
 import list from 'list';
 import template from '../templates/defaultDropdownListItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
@@ -26,7 +26,7 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const model = this.model.toJSON();
         const displayAttribute = this.options.displayAttribute;
         return {

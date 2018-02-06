@@ -12,7 +12,7 @@ import dropdown from 'dropdown';
 import TimeInputView from './TimeInputView';
 import template from '../templates/time.hbs';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.timeDisplayFormat = this.getOption('timeDisplayFormat');
@@ -37,7 +37,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
     },
 
     __getDropdownView() {
@@ -71,7 +71,7 @@ export default Marionette.LayoutView.extend({
                 childEvents: {
                     select(view, time) { this.trigger('select', time); }
                 },
-                childView: Marionette.ItemView.extend({
+                childView: Marionette.View.extend({
                     tagName: 'li',
                     className: 'time-dropdown__i',
                     events: {

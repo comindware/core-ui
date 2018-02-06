@@ -1,19 +1,23 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/27/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import 'lib';
 import ContentLoadingView from './routing/ContentLoadingView';
-import ModuleProxy from './routing/ModuleProxy';
+
+const ModuleProxy = Marionette.Object.extend({
+    initialize(options) {
+        Object.values(options.config.routes).forEach(callbackName => {
+            // eslint-disable-next-line func-names
+            this[callbackName] = function() {
+                this.trigger('module:loaded', callbackName, Array.from(arguments), this.options.config, this.options.config.module);
+            };
+        });
+    }
+});
 
 // storing active url to get back to it while canceling module leave
 let previousUrl;
 let activeUrl;
 const originalCheckUrl = Backbone.history.checkUrl;
+
 Backbone.history.checkUrl = () => {
     previousUrl = activeUrl;
     activeUrl = window.location.hash;

@@ -34,14 +34,14 @@ var ContextModel = Backbone.Model.extend({
         let hasChildren = false;
         const checkedProperties = {};
 
-        _.each(this.get('context')[this.get('instanceTypeId')], attributes => {
+        this.get('context')[this.get('instanceTypeId')].forEach(attributes => {
             const propertyTypes = this.get('propertyTypes');
             const usePropertyTypes = this.get('usePropertyTypes');
 
             if (!this.checkPropertyType(attributes, true, checkedProperties)) { return; }
 
             hasChildren = true;
-            const modelAttributes = _.extend({
+            const modelAttributes = Object.assign({
                 context: this.get('context'),
                 propertyTypes,
                 usePropertyTypes,

@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/18/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 /*eslint-disable*/
 /**
@@ -181,6 +174,6 @@ const SlidingWindowCollection = Backbone.Collection.extend(/** @lends module:cor
     };
 });
 
-_.extend(SlidingWindowCollection.prototype, Backbone.Events);
+Object.assign(SlidingWindowCollection.prototype, Backbone.Events);
 
 export default SlidingWindowCollection;

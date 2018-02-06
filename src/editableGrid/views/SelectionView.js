@@ -1,7 +1,7 @@
 import form from 'form';
 import template from '../templates/editableCell.hbs';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {
@@ -26,6 +26,6 @@ export default Marionette.LayoutView.extend({
         this.listenTo(rowModel, 'checked', () => checkedEditor.setValue(true));
         this.listenTo(rowModel, 'unchecked', () => checkedEditor.setValue(false));
         this.listenTo(rowModel, 'checked:some', () => checkedEditor.setValue(null));
-        this.editorRegion.show(checkedEditor);
+        this.showChildView('editorRegion', checkedEditor);
     }
 });

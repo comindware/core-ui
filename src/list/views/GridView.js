@@ -38,7 +38,7 @@ const constants = {
  * @class GridView
  * @constructor
  * @description View-контейнер для заголовка и контента
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.collection массив элементов списка
  * @param {Array} options.columns массив колонок
@@ -59,7 +59,7 @@ const constants = {
  * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * */
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
@@ -91,7 +91,7 @@ export default Marionette.LayoutView.extend({
 
         let childView = options.childView;
         if (options.useDefaultRowView) {
-            _.each(options.columns, column => {
+            options.columns.each(column => {
                 if (column.cellView === undefined) { throw new Error('You must specify cellView for each column (useDefaultRowView flag is true)'); }
             });
 
@@ -101,7 +101,7 @@ export default Marionette.LayoutView.extend({
             throw new Error('You must provide a childHeight for the child item view (in pixels).');
         }
 
-        const childViewOptions = _.extend(options.childViewOptions || {}, {
+        const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this
         });
@@ -161,7 +161,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    onShow() {
+    onRender() {
         const elementWidth = this.$el.width();
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
@@ -175,9 +175,7 @@ export default Marionette.LayoutView.extend({
             this.headerView.handleResize();
             this.listView.handleResize();
         }
-    },
 
-    onRender() {
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }

@@ -22,7 +22,7 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @class GridHeaderView
  * @constructor
  * @description View используемый для отображения заголовка (шапки) списка
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.columns массив колонок
  * @param {Object} options.gridEventAggregator ?
@@ -31,7 +31,7 @@ import GlobalEventService from '../../services/GlobalEventService';
 
 /*eslint-disable*/
 
-const GridHeaderView = Marionette.ItemView.extend({
+const GridHeaderView = Marionette.View.extend({
     initialize(options) {
         if (!options.columns) {
             throw new Error('You must provide columns definition ("columns" option)');
@@ -69,7 +69,7 @@ const GridHeaderView = Marionette.ItemView.extend({
         MIN_COLUMN_WIDTH: 20
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             columns: this.columns
         };
@@ -83,7 +83,7 @@ const GridHeaderView = Marionette.ItemView.extend({
 
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
+            const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
                 column
             }));
@@ -94,7 +94,7 @@ const GridHeaderView = Marionette.ItemView.extend({
         });
     },
 
-    onShow() {
+    onRender() {
         this.__handleResizeInternal();
     },
 

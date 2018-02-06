@@ -18,7 +18,7 @@ import template from '../templates/functionTooltip.html';
 const FUNCTION_ITEM_HEIGHT = 25;
 const FUNCTIONS_MAX_ROWS = 10;
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     className: 'dev-code-editor-tooltip',
 
     regions: {
@@ -32,7 +32,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    onShow() {
+    onRender() {
         const collection = new Backbone.Collection(this.model.get('overloads'), {
             model: FunctionOverloadModel
         });

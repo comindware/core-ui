@@ -11,7 +11,7 @@
 
 import template from '../templates/membersToolbar.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },

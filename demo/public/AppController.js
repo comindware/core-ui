@@ -1,5 +1,4 @@
 
-import Application from 'Application';
 import DemoService from './app/DemoService';
 import NavBarView from './app/views/NavBarView';
 import IndexPageView from './app/views/IndexPageView';
@@ -7,36 +6,40 @@ import DemoPageView from './app/views/DemoPageView';
 
 export default Marionette.Object.extend({
     index() {
-        Application.headerRegion.$el.hide();
-        Application.contentRegion.show(new IndexPageView({
+        window.app.getView().getRegion('headerRegion').$el.hide();
+        window.app.getView().showChildView('contentRegion', new IndexPageView({
             collection: new Backbone.Collection(DemoService.getSections())
         }));
     },
 
     showCase(sectionId, groupId, caseId) {
         const sections = new Backbone.Collection(DemoService.getSections());
+        window.app.getView().getRegion('headerRegion').$el.show();
+
         sections.find(s => s.id === sectionId).set('selected', true);
-        Application.headerRegion.$el.show();
-        if (!this.NavBarView || !this.DemoPageView) {
-            this.NavBarView = new NavBarView({
+
+        if (!this.navBarView || !this.demoPageView) {
+            this.navBarView = new NavBarView({
                 collection: sections,
                 collapsed: Core.services.MobileService.isMobile
             });
 
-            this.DemoPageView = new DemoPageView({
+            this.demoPageView = new DemoPageView({
                 activeSectionId: sectionId,
                 activeGroupId: groupId,
                 activeCaseId: caseId
             });
 
-            Application.headerRegion.show(this.NavBarView);
-            Application.contentRegion.show(this.DemoPageView);
+            window.app.getView().showChildView('headerRegion', this.navBarView);
+            window.app.getView().showChildView('contentRegion', this.demoPageView);
         } else {
-            this.DemoPageView.reloadView({
+            this.demoPageView.reloadView({
                 activeSectionId: sectionId,
                 activeGroupId: groupId,
                 activeCaseId: caseId
             });
+
+            this.navBarView.collection.reset(sections.models);
         }
     }
 });

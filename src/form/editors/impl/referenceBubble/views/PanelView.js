@@ -22,7 +22,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
@@ -32,7 +32,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             showAddNewButton: this.showAddNewButton
         };
@@ -47,7 +47,7 @@ export default Marionette.LayoutView.extend({
         elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
     },
 
-    onShow() {
+    onRender() {
         const result = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
