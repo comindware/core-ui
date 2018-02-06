@@ -9,7 +9,7 @@ export default form.Field.extend({
     template: Handlebars.compile(editableCellField),
 
     onRender() {
-        this.editorRegion.show(this.editor);
+        this.showChildView('editorRegion', this.editor);
         this.__rendered = true;
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);

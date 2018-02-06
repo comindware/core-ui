@@ -130,7 +130,7 @@ export default Marionette.View.extend({
         } else {
             this.listenTo(this.nativeGridCollection, 'select:all select:some select:none', this.__selectionChange);
         }
-        this.gridRegion.show(nativeGridView);
+        this.showChildView('gridRegion', nativeGridView);
         this.__setGridHeight();
     },
 

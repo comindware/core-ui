@@ -121,8 +121,8 @@ export default Marionette.CollectionView.extend({
     },
 
     __createReqres() {
-        this.internalReqres = new Backbone.Wreqr.RequestResponse();
-        this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+        //this.internalReqres = new Backbone.Wreqr.RequestResponse();
+        //this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
     },
 
     __handleChildViewEvent(view, eventName, eventArguments) {

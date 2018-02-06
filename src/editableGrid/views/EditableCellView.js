@@ -29,6 +29,6 @@ export default Marionette.View.extend({
             key: this.schema.key,
             model: this.model.get('rowModel'),
         });
-        this.editorRegion.show(this.editorView);
+        this.showChildView('editorRegion', this.editorView);
     }
 });

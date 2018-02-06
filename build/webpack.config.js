@@ -16,7 +16,6 @@ const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = options => {
     const PRODUCTION = options.env === 'production';
@@ -227,10 +226,7 @@ module.exports = options => {
             new webpack.ContextReplacementPlugin(
                 /moment[\/\\]locale$/,
                 /de|ru|en/
-            ), //todo add time-zone context
-            new BundleAnalyzerPlugin({
-                analyzerMode: 'static'
-            })
+            ) //todo add time-zone context
         ],
         resolve: {
             modules: [

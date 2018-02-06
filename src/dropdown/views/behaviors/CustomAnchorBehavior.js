@@ -1,6 +1,7 @@
 
 const classes = {
-    ANCHOR: 'anchor anchor_inline'
+    ANCHOR1: 'anchor',
+    ANCHOR2: 'anchor_inline'
 };
 
 /**
@@ -23,12 +24,13 @@ export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.
     onRender() {
         let el;
         if (this.options.anchor) {
-            el = this.options.anchor;
+            el = this.el.querySelector(this.options.anchor);
         } else {
             el = this.el;
         }
         if (!this.options.omitDefaultStyling) {
-            el.classList.add(classes.ANCHOR);
+            el.classList.add(classes.ANCHOR1);
+            el.classList.add(classes.ANCHOR2);
         }
         this.view.anchor = el;
     }

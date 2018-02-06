@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
 
 import PopoutView from './views/PopoutView';
 import DropdownView from './views/DropdownView';

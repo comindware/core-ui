@@ -151,13 +151,13 @@ export default Marionette.View.extend({
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
         }
-        this.headerRegion.show(this.headerView);
-        this.listRegion.show(this.listView);
+        this.showChildView('headerRegion', this.headerView);
+        this.showChildView('listRegion', this.listView);
         this.bindListRegionScroll();
     },
 
     bindListRegionScroll() {
-        this.listRegion.$el.scroll(event => {
+        this.getRegion('listRegion').$el.scroll(event => {
             this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
         });
     },

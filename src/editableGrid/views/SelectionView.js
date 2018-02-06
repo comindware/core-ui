@@ -26,6 +26,6 @@ export default Marionette.View.extend({
         this.listenTo(rowModel, 'checked', () => checkedEditor.setValue(true));
         this.listenTo(rowModel, 'unchecked', () => checkedEditor.setValue(false));
         this.listenTo(rowModel, 'checked:some', () => checkedEditor.setValue(null));
-        this.editorRegion.show(checkedEditor);
+        this.showChildView('editorRegion', checkedEditor);
     }
 });

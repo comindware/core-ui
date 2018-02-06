@@ -30,6 +30,7 @@ const Form = Marionette.Object.extend({
                 this.listenTo(field.editor, 'all', this.__handleEditorEvent);
             } catch (e) {
                 field = new ErrorPlaceholderView();
+                field.editor = field;
                 Core.InterfaceError.logError(e, field.getId());
             } finally {
                 this.fields[entry[0]] = field;
@@ -44,9 +45,9 @@ const Form = Marionette.Object.extend({
             if ((!this.model.has('uniqueFormId') && !el.getAttribute('editor-for')) || el.getAttribute('editor-for') === this.model.get('uniqueFormId')) {
                 const key = el.getAttribute('data-editors');
                 const regionName = `${key}Region`;
-                //todo update el
-                rootView.addRegion(regionName);
-                this.fields[key] && rootView.showView(regionName, this.fields[key].editor);
+
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key].editor);
             }
         });
 
@@ -55,9 +56,9 @@ const Form = Marionette.Object.extend({
             if ((!this.model.has('uniqueFormId') && !el.getAttribute('field-for')) || el.getAttribute('field-for') === this.model.get('uniqueFormId')) {
                 const key = el.getAttribute('data-fields');
                 const regionName = `${key}Region`;
-                //todo update el
-                rootView.addRegion(regionName);
-                this.fields[key] && rootView.showView(regionName, this.fields[key].editor);
+
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key].editor);
             }
         });
     },

@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import template from './templates/field.hbs';
 import { Handlebars } from 'lib';
@@ -53,7 +46,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.editorRegion.show(this.editor);
+        this.showChildView('editorRegion', this.editor);
         const errorPopout = dropdown.factory.createPopout({
             buttonView: ErrorButtonView,
             panelView: TooltipPanelView,
