@@ -89,7 +89,8 @@ const stateModes = {
  * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
+
+export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -521,5 +522,3 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         this.$el.toggleClass(classes.FOCUSED, inEditMode);
     }
 });
-
-export default formRepository.editors.Duration;

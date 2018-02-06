@@ -13,6 +13,7 @@ export default function() {
             key: 'value'
         }),
 
-        presentation: '"{{value}}"'
+        presentation: '"{{value}}"',
+        isEditor: true
     });
 }

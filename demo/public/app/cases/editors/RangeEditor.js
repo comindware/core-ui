@@ -16,6 +16,7 @@ export default function() {
             max: 10,
             step: 1
         }),
-        presentation: "'{{value}}'"
+        presentation: "'{{value}}'",
+        isEditor: true
     });
 }

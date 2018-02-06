@@ -5,9 +5,6 @@ import PresentationItemView from './PresentationItemView';
 
 export default Marionette.LayoutView.extend({
     initialize(options) {
-        this.model = new Backbone.Model({
-            editorMode: 'none'
-        });
         this.view = options.view;
     },
 
@@ -22,10 +19,6 @@ export default Marionette.LayoutView.extend({
         editorRegion: '.js-editor-region',
         modelRegion: '.js-model-region',
         editorModeRegion: '.js-editor-mode-region'
-    },
-
-    modelEvents: {
-        change: 'updateEditorModel'
     },
 
     onRender() {
@@ -49,42 +42,55 @@ export default Marionette.LayoutView.extend({
             this.modelRegion.show(presentationView);
         }
 
-        const editorModeView = new core.form.editors.RadioGroupEditor({
-            model: this.model,
-            key: 'editorMode',
-            autocommit: true,
-            radioOptions: [
-                {
-                    id: 'none',
-                    displayText: 'Normal'
-                },
-                {
-                    id: 'readonly',
-                    displayText: 'Readonly'
-                },
-                {
-                    id: 'disabled',
-                    displayText: 'Disabled'
-                }
-            ]
-        });
-        this.editorModeRegion.show(editorModeView);
+        if (this.getOption('isEditor')) {
+            const editorModeView = new core.form.editors.RadioGroupEditor({
+                value: 'none',
+                radioOptions: [
+                    {
+                        id: 'none',
+                        displayText: 'Normal'
+                    },
+                    {
+                        id: 'readonly',
+                        displayText: 'Readonly'
+                    },
+                    {
+                        id: 'disabled',
+                        displayText: 'Disabled'
+                    },
+                    {
+                        id: 'hidden',
+                        displayText: 'Hidden'
+                    }
+                ]
+            });
+            this.editorModeRegion.show(editorModeView);
+            this.listenTo(editorModeView, 'change', this.updateEditorModel);
+        }
     },
 
-    updateEditorModel() {
-        const editorMode = this.model.get('editorMode');
+    updateEditorModel(editor) {
+        const editorMode = editor.getValue();
         switch (editorMode) {
             case 'none':
                 this.view.setEnabled(true);
                 this.view.setReadonly(false);
+                this.view.setHidden(false);
                 break;
             case 'disabled':
                 this.view.setEnabled(false);
                 this.view.setReadonly(false);
+                this.view.setHidden(false);
                 break;
             case 'readonly':
                 this.view.setEnabled(true);
                 this.view.setReadonly(true);
+                this.view.setHidden(false);
+                break;
+            case 'hidden':
+                this.view.setEnabled(true);
+                this.view.setReadonly(false);
+                this.view.setHidden(true);
                 break;
             default:
                 break;

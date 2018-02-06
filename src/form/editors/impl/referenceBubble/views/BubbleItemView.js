@@ -28,6 +28,10 @@ export default Marionette.ItemView.extend({
 
     tagName: 'li',
 
+    attributes: {
+        draggable: true
+    },
+
     className: 'bubbles__i',
 
     ui: {
@@ -38,7 +42,8 @@ export default Marionette.ItemView.extend({
     events: {
         'click @ui.clearButton': '__delete',
         'click @ui.editButton': '__edit',
-        click: '__click'
+        click: '__click',
+        drag: '__handleDrag'
     },
 
     __delete() {
@@ -70,5 +75,12 @@ export default Marionette.ItemView.extend({
 
     onRender() {
         this.updateEnabled(this.options.enabled);
+    },
+
+    __handleDrag(event) {
+        event.data = {
+            id: this.model.id,
+            type: 'reference'
+        };
     }
 });

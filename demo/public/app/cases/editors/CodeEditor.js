@@ -14,6 +14,7 @@ export default function() {
             autocommit: true,
             mode: 'code'
         }),
-        presentation: "'{{code}}'"
+        presentation: "'{{code}}'",
+        isEditor: true
     });
 }

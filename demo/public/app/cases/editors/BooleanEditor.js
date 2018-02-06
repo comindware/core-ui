@@ -15,6 +15,7 @@ export default function() {
             autocommit: true,
             displayText: 'Some Text'
         }),
-        presentation: '{{#if booleanValue}}true{{else}}false{{/if}}'
+        presentation: '{{#if booleanValue}}true{{else}}false{{/if}}',
+        isEditor: true
     });
 }

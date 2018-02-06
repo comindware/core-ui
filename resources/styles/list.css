@@ -60,7 +60,6 @@
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    height: auto;
 }
 
 .grid-row {
@@ -368,6 +367,14 @@ svg.svg-grid-icons {
     justify-content: space-between;
     align-items: center;
     background: #f7f6f6;
+}
+
+.collection-header .tr-search {
+    padding: 0;
+}
+
+.collection-right-items-region {
+    display: flex
 }
 
 .form-label_collection{

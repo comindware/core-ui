@@ -23,9 +23,7 @@
     font-size: 12px;
     position: fixed;
     background: #fff;
-    border: 1px solid #c2c2c2;
-    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
-    box-shadow: 0 0 8px rgba(0,0,0,.2);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     z-index: 600;
 }
 
@@ -202,11 +200,8 @@
     min-width: 120px;
     max-width: 300px;
     max-height: 227px;
-    padding: 1px;
     font-size: 12px;
     overflow-y: auto;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     display: none;
     text-align: left;
@@ -219,8 +214,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     vertical-align: middle;
     display: flex;

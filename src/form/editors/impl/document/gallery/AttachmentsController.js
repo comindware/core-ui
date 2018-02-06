@@ -16,7 +16,7 @@ const classes = {
     HIDDEN: 'hidden'
 };
 
-const graphicFileExtensions = ['gif', 'png', 'bmp', 'jpg', 'jpeg'];
+const graphicFileExtensions = ['gif', 'png', 'bmp', 'jpg', 'jpeg', 'jfif', 'jpeg2000', 'exif', 'tiff', 'ppm', 'pgm', 'pbm', 'pnm', 'webp', 'bpg', 'bat'];
 
 export default Marionette.Object.extend({
     initialize() {

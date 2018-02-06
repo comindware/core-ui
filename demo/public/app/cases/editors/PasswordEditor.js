@@ -10,6 +10,7 @@ export default function() {
             key: 'passwordValue',
             autocommit: true
         }),
-        presentation: "'{{passwordValue}}'"
+        presentation: "'{{passwordValue}}'",
+        isEditor: true
     });
 }
