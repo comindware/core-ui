@@ -97,8 +97,8 @@ export default Marionette.View.extend({
             availableViewOptions.listViewOptions.childViewSelector = this.options.childViewSelector;
         }
         const availableList = Core.list.factory.createDefaultList(availableViewOptions);
-        this.availableItemsListRegion.show(availableList.listView);
-        this.availableItemsScrollbarRegion.show(availableList.scrollbarView);
+        this.showChildView('availableItemsListRegion', availableList.listView);
+        this.showChildView('availableItemsScrollbarRegion', availableList.scrollbarView);
 
         if (this.eventAggregator.available) {
             this.stopListening(this.eventAggregator.available);
@@ -109,7 +109,7 @@ export default Marionette.View.extend({
         });
         // Available search
         const availableSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.availableSearchRegion.show(availableSearchView);
+        this.showChildView('availableSearchRegion', availableSearchView);
         this.listenTo(availableSearchView, 'search', this.__onAvailableSearch);
         // Selected list
         const selectedList = Core.list.factory.createDefaultList({
@@ -126,12 +126,12 @@ export default Marionette.View.extend({
                 }
             }
         });
-        this.selectedItemsListRegion.show(selectedList.listView);
-        this.selectedItemsScrollbarRegion.show(selectedList.scrollbarView);
+        this.showChildView('selectedItemsListRegion', selectedList.listView);
+        this.showChildView('selectedItemsScrollbarRegion', selectedList.scrollbarView);
 
         // Selected search
         const selectedSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.selectedSearchRegion.show(selectedSearchView);
+        this.showChildView('selectedSearchRegion', selectedSearchView);
         this.listenTo(selectedSearchView, 'search', this.__onSelectedSearch);
 
         if (this.model.get('showToolbar')) {

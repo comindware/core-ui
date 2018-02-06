@@ -149,7 +149,7 @@ export default Marionette.View.extend({
     onRender() {
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
-            this.noColumnsViewRegion.show(noColumnsView);
+            this.showChildView('noColumnsViewRegion', noColumnsView);
         }
         this.showChildView('headerRegion', this.headerView);
         this.showChildView('listRegion', this.listView);

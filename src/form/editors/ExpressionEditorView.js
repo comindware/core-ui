@@ -101,7 +101,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         this.valueEditor = new this.options.valueEditor(Object.assign(this.options.valueEditorOptions, {
             value: initialValue.type === 'value' ? initialValue.value : null
         }));
-        this.valueContainer.show(this.valueEditor);
+        this.showChildView('valueContainer', this.valueEditor);
         this.listenTo(this.valueEditor, 'change', () => this.__updateValue(this.valueEditor.getValue(), true));
     },
 
@@ -145,7 +145,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         });
 
         this.contextValueEditor = new ContextView(contextOptions);
-        this.contextContainer.show(this.contextValueEditor);
+        this.showChildView('contextContainer', this.contextValueEditor);
 
         this.valueOptionCollection.add(new ValueOptionModel({
             id: 'context',

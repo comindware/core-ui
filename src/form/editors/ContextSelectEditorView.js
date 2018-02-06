@@ -62,7 +62,7 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
 
     onRender() {
         if (!this.enabled) {
-            this.contextPopoutRegion.show(new PopoutButtonView({
+            this.showChildView('contextPopoutRegion', new PopoutButtonView({
                 model: this.viewModel.get('button')
             }));
             return;

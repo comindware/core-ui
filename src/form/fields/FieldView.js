@@ -57,7 +57,7 @@ export default Marionette.View.extend({
             popoutFlow: 'right',
             customAnchor: true
         });
-        this.errorTextRegion.show(errorPopout);
+        this.showChildView('errorTextRegion', errorPopout);
         if (this.schema.helpText) {
             const infoPopout = dropdown.factory.createPopout({
                 buttonView: InfoButtonView,
@@ -69,7 +69,7 @@ export default Marionette.View.extend({
                 popoutFlow: 'right',
                 customAnchor: true
             });
-            this.helpTextRegion.show(infoPopout);
+            this.showChildView('helpTextRegion', infoPopout);
         }
         this.__rendered = true;
         this.setRequired(this.schema.required);

@@ -334,7 +334,7 @@ export default Marionette.View.extend({
         });
         this.listenTo(this.tooltip, 'syntax:changed', syntax => token.currentSyntax = syntax);
         this.listenTo(this.tooltip, 'peek', this.__onTooltipPeek);
-        this.tooltipContainer.show(this.tooltip);
+        this.showChildView('tooltipContainer', this.tooltip);
 
         const tooltipMargin = 10;
         const hintPanel = $(hintEl).parent();
