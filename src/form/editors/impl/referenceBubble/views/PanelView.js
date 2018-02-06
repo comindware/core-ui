@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 30.08.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import list from 'list';
@@ -26,6 +19,8 @@ export default Marionette.LayoutView.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
+        this.__updateWithDelay = _.debounce(this.__updateFilterNow, this.options.textFilterDelay);
+        this.reqres.setHandler('try:value:select', this.__proxyValueSelect, this);
     },
 
     className: 'dd-list dd-list_reference',
@@ -108,9 +103,8 @@ export default Marionette.LayoutView.extend({
                 return;
             }
 
-            if (this.timeoutId) {
-                clearTimeout(this.timeoutId);
-                this.__updateFilter(true);
+            if (this.isFilterDeayed) {
+                this.updateFilter(this.newSearchText, true);
                 return;
             }
 
@@ -123,36 +117,13 @@ export default Marionette.LayoutView.extend({
     },
 
     updateFilter(value, immediate) {
-        const text = (value || '').trim();
-        if (this.activeText === text) {
-            return;
-        }
-        const updateNow = () => {
-            this.activeText = text;
-            this.__setLoading(true);
-            const collection = this.model.get('collection');
-            this.reqres.request('filter:text', {
-                text
-            }).then(() => {
-                if (collection.length > 0 && this.model.get('value')) {
-                    this.model.get('value').forEach(model => {
-                        if (collection.has(model.id)) {
-                            collection.get(model.id).select();
-                        }
-                    });
-                    this.__toggleElementsQuantityWarning(collection.totalCount);
-                }
-                this.__setLoading(false);
-                this.reqres.request('view:ready');
-            }).catch(e => {
-                console.log(e.message);
-            });
-        };
+        this.newSearchText = (value || '').trim();
+
         if (immediate) {
-            updateNow();
+            this.__updateFilterNow();
         } else {
-            const updateWithDelay = _.debounce(updateNow, this.options.textFilterDelay);
-            updateWithDelay();
+            this.isFilterDeayed = true;
+            this.__updateWithDelay();
         }
     },
 
@@ -173,6 +144,40 @@ export default Marionette.LayoutView.extend({
             count > 100
                 ? this.elementsQuantityWarningRegion.$el.show()
                 : this.elementsQuantityWarningRegion.$el.hide();
+        }
+    },
+
+    __updateFilterNow() {
+        if (this.activeText === this.newSearchText) {
+            return;
+        }
+        this.activeText = this.newSearchText;
+        this.isFilterDeayed = false;
+        this.__setLoading(true);
+        const collection = this.model.get('collection');
+        this.reqres.request('filter:text', {
+            text: this.newSearchText
+        }).then(() => {
+            if (collection.length > 0 && this.model.get('value')) {
+                this.model.get('value').forEach(model => {
+                    if (collection.has(model.id)) {
+                        collection.get(model.id).select();
+                    }
+                });
+                this.__toggleElementsQuantityWarning(collection.totalCount);
+            }
+            this.__setLoading(false);
+            this.reqres.request('view:ready');
+        }).catch(e => {
+            console.log(e.message);
+        });
+    },
+
+    __proxyValueSelect() {
+        if (this.isFilterDeayed) {
+            this.updateFilter(this.newSearchText, true);
+        } else {
+            this.reqres.request('value:select');
         }
     }
 });
