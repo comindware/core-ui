@@ -29,7 +29,7 @@ import LoadingChildView from './LoadingRowView';
 
 const constants = {
     gridRowHeight: 32,
-    gridHeaderHeight: 51
+    gridHeaderHeight: 30
 };
 
 /**
