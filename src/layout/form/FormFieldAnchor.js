@@ -19,7 +19,8 @@ export default Marionette.ItemView.extend({
 
     attributes() {
         return {
-            'data-fields': this.options.key
+            'data-fields': this.options.key,
+            'field-for': this.options.uniqueFormId
         };
     },
 

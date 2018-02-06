@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import ListPanelView from './ListPanelView';
 import MenuItemView from './MenuItemView';
 
@@ -23,8 +21,8 @@ import MenuItemView from './MenuItemView';
  * */
 
 export default ListPanelView.extend({
-    initialize(options) {
-        ListPanelView.prototype.initialize.apply(this, _.toArray(arguments));
+    initialize() {
+        ListPanelView.prototype.initialize.apply(this, Array.from(arguments));
     },
 
     className: 'popout-menu',

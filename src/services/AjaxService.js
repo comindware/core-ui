@@ -19,6 +19,7 @@ export default window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {
+            /* eslint-disable */
             const controller = this[actionInfo.className] || (this[actionInfo.className] = {});
 
             // The result of compilation below is something like this:
@@ -43,7 +44,7 @@ export default window.Ajax = new (Marionette.Object.extend({
                 actionInfo.methodName,
                 actionParameters.join(', '), actionBody
             );
-            /* eslint-disable */
+
             eval(`controller[actionInfo.methodName] = ${actionFn};`);
             /* eslint-enable */
         });
@@ -52,7 +53,7 @@ export default window.Ajax = new (Marionette.Object.extend({
     getResponse(type, url, data, options) {
         helpers.assertArgumentNotFalsy(type, 'type');
         helpers.assertArgumentNotFalsy(url, 'url');
-        const config = _.extend({
+        const config = Object.assign({
             type,
             url,
             data: data ? JSON.stringify(data) : null,
@@ -60,8 +61,8 @@ export default window.Ajax = new (Marionette.Object.extend({
             dataType: 'json',
             contentType: 'application/json'
         }, options || {});
-        const promise = Promise.resolve($.ajax(config));
-        return PromiseService.registerPromise(promise);
+
+        return PromiseService.registerPromise($.ajax(config));
     },
 
     sendFormData(url, formData) {
@@ -93,7 +94,9 @@ export default window.Ajax = new (Marionette.Object.extend({
         if (protocol === methodName.WebApi) {
             for (let i = 0; i < parameterNames.length; i++) {
                 if (url.indexOf(parameterNames[i]) !== -1) {
+                    /*eslint-disable*/
                     url = url.replace(`{${parameterNames[i]}}`, parameters[i]); // set up url parameters
+                    /* eslint-enable */
                 } else {
                     data = parameters[i]; // set up [FromBody] parameters
                 }

@@ -53,7 +53,8 @@ const heightOptions = {
 };
 
 const defaultOptions = {
-    height: heightOptions.FIXED
+    height: heightOptions.FIXED,
+    defaultElHeight: 300
 };
 
 /**
@@ -127,10 +128,11 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     events: {
-        mousewheel: '__mousewheel'
+        wheel: '__mousewheel'
     },
 
     className: 'list',
+
     template: Handlebars.compile(template),
 
     onShow() {
@@ -198,6 +200,7 @@ const ListView = Marionette.LayoutView.extend({
                 index = i;
                 return true;
             }
+            return false;
         });
 
         const nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
@@ -220,6 +223,7 @@ const ListView = Marionette.LayoutView.extend({
                 index = i;
                 return true;
             }
+            return false;
         });
 
         const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
@@ -258,8 +262,7 @@ const ListView = Marionette.LayoutView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, function(value, key) //noinspection JSHint
-        {
+        _.each(this.keyboardShortcuts, (value, key) => {
             if (typeof value === 'object') {
                 this.keyListener.register_combo(_.extend({
                     keys: key,
@@ -268,18 +271,15 @@ const ListView = Marionette.LayoutView.extend({
             } else {
                 this.keyListener.simple_combo(key, value.bind(this));
             }
-        }, this);
+        });
     },
 
     updatePosition(newPosition) {
         this.__updatePositionInternal(newPosition, false);
     },
 
-    __updatePositionInternal(newPosition, triggerEvents) {
-        if (this.state.viewportHeight === undefined) {
-            helpers.throwInvalidOperationError('ListView: updatePosition() has been called before the full initialization of the view.');
-        }
-
+    __updatePositionInternal(position, triggerEvents) {
+        let newPosition = position;
         newPosition = this.__normalizePosition(newPosition);
         if (newPosition === this.state.position) {
             return;
@@ -304,13 +304,11 @@ const ListView = Marionette.LayoutView.extend({
             return;
         }
         const oldViewportHeight = this.state.viewportHeight;
-        const elementHeight = this.$el.height();
+        let elementHeight = this.$el.height();
 
         // Checking options consistency
         if (this.height === heightOptions.FIXED && elementHeight === 0) {
-            helpers.throwInvalidOperationError(
-                'ListView configuration error: ' +
-                'fixed-height ListView (with option height: fixed) MUST be placed inside an element with computed height != 0.');
+            elementHeight = defaultOptions.defaultElHeight;
         } else if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
             helpers.throwInvalidOperationError(
                 'ListView configuration error: you have passed option height: AUTO into ListView control but didn\'t specify maxRows option.');
@@ -342,9 +340,9 @@ const ListView = Marionette.LayoutView.extend({
             return elementHeight;
         }
 
-        let computedViewportHeight = Math.min(this.maxRows, this.collection.length),
-            minHeight = 0,
-            outerBoxAdjustments = 0;
+        const computedViewportHeight = Math.min(this.maxRows, this.collection.length);
+        let minHeight = 0;
+        let outerBoxAdjustments = 0;
 
         if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
             minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
@@ -366,7 +364,7 @@ const ListView = Marionette.LayoutView.extend({
         }
 
         const delta = this.state.viewportHeight;
-        const newPosition = this.state.position - e.deltaY * Math.max(1, Math.floor(delta / 6));
+        const newPosition = this.state.position + Math.sign(e.originalEvent.deltaY) * Math.max(1, Math.floor(delta / 6));
         this.__updatePositionInternal(newPosition, true);
         return false;
     }

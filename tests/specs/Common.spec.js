@@ -6,21 +6,20 @@
  * Published under the MIT license
  */
 
-"use strict";
+/*eslint-ignore*/
 
-import core from 'coreApi';
 import { initializeCore } from '../utils/helpers';
 import 'jasmine-jquery';
 
-describe('Editors', function () {
-    beforeEach(function () {
+describe('Editors', () => {
+    beforeEach(function() {
         this.rootRegion = initializeCore();
     });
 
-    describe('Common', function () {
-        it('has polyfills', function () {
-            let localPolyfills = Object.assign({}, {a:2});
-            let globalPolyfills = "asd".includes('a');
+    describe('Common', () => {
+        it('has polyfills', () => {
+            const localPolyfills = Object.assign({}, { a: 2 });
+            const globalPolyfills = 'asd'.includes('a');
         });
     });
 });

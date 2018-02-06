@@ -6,15 +6,64 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import template from '../../list/templates/list.hbs';
 import { keypress, Handlebars } from 'lib';
-import { helpers, htmlHelpers } from 'utils';
-import GridHeaderView from '../../list/views/GridHeaderView';
-import GlobalEventService from '../../services/GlobalEventService';
+import { helpers } from 'utils';
 
-const VisibleCollectionView = Marionette.CollectionView.extend({
+/**
+ * Some description for initializer
+ * @name ListView
+ * @memberof module:core.nativeGrid.views
+ * @class ListView
+ * @description View контента списка
+ * @extends Marionette.LayoutView
+ * @param {Object} options Constructor options
+ * @param {Backbone.View} options.childView view Строки списка
+ * @param {Function} [options.childViewSelector] ?
+ * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
+ * @param {Object} [options.emptyViewOptions] Опции для emptyView
+ * @param {Backbone.View} options.loadingChildView View-лоадер, показывается при подгрузке строк
+ * */
+export default Marionette.CollectionView.extend({
+    initialize(options) {
+        helpers.ensureOption(options, 'collection');
+
+        this.__createReqres();
+
+        this.childViewOptions = Object.assign(options.childViewOptions || {}, {
+            internalListViewReqres: this.internalReqres
+        });
+
+        options.childViewOptions && (this.childViewOptions = options.childViewOptions); // jshint ignore:line
+        options.emptyView && (this.emptyView = options.emptyView); // jshint ignore:line
+        options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
+        options.childView && (this.childView = options.childView); // jshint ignore:line
+        options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
+        options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
+
+        this.state = {
+            position: 0
+        };
+
+        _.bindAll(this, '__handleResize', '__handleResizeInternal');
+        $(window).resize(this.__handleResize);
+        this.gridEventAggregator = options.gridEventAggregator;
+        this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
+        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
+        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+        this.listenTo(this, 'childview:toggle:collapse', this.__toggleCollapse);
+    },
+    /**
+     * Class for view
+     * @param {String} CSS class
+     * */
+    className: 'visible-collection',
+    /**
+     * View template
+     * @param {HTML} HTML file
+     * */
+    template: Handlebars.compile(template),
+
     getChildView(child) {
         if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
@@ -36,78 +85,6 @@ const VisibleCollectionView = Marionette.CollectionView.extend({
         this.children.each(ch => {
             ch.setFitToView();
         });
-    }
-});
-
-/**
- * Some description for initializer
- * @name ListView
- * @memberof module:core.nativeGrid.views
- * @class ListView
- * @description View контента списка
- * @extends Marionette.LayoutView
- * @param {Object} options Constructor options
- * @param {Backbone.View} options.childView view Строки списка
- * @param {Function} [options.childViewSelector] ?
- * @param {Backbone.View} options.emptyView View для отображения пустого списка (нет строк)
- * @param {Object} [options.emptyViewOptions] Опции для emptyView
- * @param {Backbone.View} options.loadingChildView View-лоадер, показывается при подгрузке строк
- * */
-const ListView = Marionette.LayoutView.extend({
-    initialize(options) {
-        helpers.ensureOption(options, 'collection');
-
-        this.__createReqres();
-
-        this.childViewOptions = _.extend(options.childViewOptions || {}, {
-            internalListViewReqres: this.internalReqres
-        });
-
-        options.childViewOptions && (this.childViewOptions = options.childViewOptions); // jshint ignore:line
-        options.emptyView && (this.emptyView = options.emptyView); // jshint ignore:line
-        options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions); // jshint ignore:line
-        options.childView && (this.childView = options.childView); // jshint ignore:line
-        options.childViewSelector && (this.childViewSelector = options.childViewSelector); // jshint ignore:line
-        options.loadingChildView && (this.loadingChildView = options.loadingChildView);// jshint ignore:line
-
-        this.state = {
-            position: 0
-        };
-
-        _.bindAll(this, '__handleResize', '__handleResizeInternal');
-        $(window).resize(this.__handleResize);
-    },
-
-    regions: {
-        visibleCollectionRegion: '.visible-collection-view'
-    },
-
-    className: 'list',
-    template: Handlebars.compile(template),
-
-    onShow() {
-        this.state.visibleHeight = this.$el.parent().height();
-        // Updating viewportHeight and rendering subviews
-        this.visibleCollectionView = new VisibleCollectionView({
-            childView: this.childView,
-            childViewSelector: this.childViewSelector,
-            className: 'visible-collection',
-            collection: this.collection,
-            emptyView: this.emptyView,
-            emptyViewOptions: this.emptyViewOptions,
-            childViewOptions: this.childViewOptions,
-            loadingChildView: this.loadingChildView
-        });
-
-        this.listenTo(this.visibleCollectionView, 'childview:click', function(child) {
-            this.trigger('row:click', child.model);
-        });
-
-        this.listenTo(this.visibleCollectionView, 'childview:dblclick', function(child) {
-            this.trigger('row:dblclick', child.model);
-        });
-
-        this.visibleCollectionRegion.show(this.visibleCollectionView);
     },
 
     onRender() {
@@ -128,13 +105,31 @@ const ListView = Marionette.LayoutView.extend({
             this.__moveToNextPage('bottom', e.shiftKey);
         },
         home(e) {
-            this.__selectByIndex(this.getSelectedViewIndex(), 0, e.shiftKey);
+            this.__selectByIndex(0, e.shiftKey);
             this.__scrollToTop();
         },
         end(e) {
-            this.__selectByIndex(this.getSelectedViewIndex(), this.collection.length - 1, e.shiftKey);
+            this.__selectByIndex(this.collection.length - 1, e.shiftKey);
             this.__scrollToBottom();
         }
+    },
+
+    setWidth(fullWidth) {
+        this.$el.width(fullWidth);
+    },
+
+    getSelectedViewIndex() {
+        const cid = this.collection.cursorCid;
+        let index = 0;
+        this.collection.find((x, i) => {
+            if (x.cid === cid) {
+                index = i;
+                return true;
+            }
+            return false;
+        });
+
+        return index;
     },
 
     __createReqres() {
@@ -157,13 +152,13 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __scrollToNeighbor(index) {
-        let view = this.visibleCollectionView.children.findByIndex(index),
-            $parentEl = this.$el.parent(),
-            currentScrollTop = $parentEl.scrollTop(),
-            visibleHeight = this.state.visibleHeight,
-            viewPositionTop = view.$el.position().top,
-            viewHeight = view.$el.height(),
-            viewBottomPos = viewPositionTop + viewHeight;
+        const view = this.children.findByIndex(index);
+        const $parentEl = this.$el.parent();
+        const currentScrollTop = $parentEl.scrollTop();
+        const visibleHeight = this.$el.parent().height();
+        const viewPositionTop = view.$el.position().top;
+        const viewHeight = view.$el.height();
+        const viewBottomPos = viewPositionTop + viewHeight;
 
         if (viewBottomPos > visibleHeight) {
             $parentEl.scrollTop(currentScrollTop + viewHeight);
@@ -173,16 +168,16 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __scrollToIndex(index, offset) {
-        let view = this.visibleCollectionView.children.findByIndex(index),
-            $parentEl = this.$el.parent(),
-            currentScrollTop = $parentEl.scrollTop(),
-            viewPositionTop = view.$el.position().top,
-            newScrollPos = offset ? currentScrollTop + viewPositionTop + offset : currentScrollTop + viewPositionTop;
+        const view = this.children.findByIndex(index);
+        const $parentEl = this.$el.parent();
+        const currentScrollTop = $parentEl.scrollTop();
+        const viewPositionTop = view.$el.position().top;
+        const newScrollPos = offset ? currentScrollTop + viewPositionTop + offset : currentScrollTop + viewPositionTop;
 
         $parentEl.scrollTop(newScrollPos);
     },
 
-    __selectByIndex(currentIndex, nextIndex, shiftPressed) {
+    __selectByIndex(nextIndex, shiftPressed) {
         const model = this.collection.at(nextIndex);
         const selectFn = this.collection.selectSmart || this.collection.select;
         if (selectFn) {
@@ -191,23 +186,23 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __moveToNeighbor(direction, shiftPressed) {
-        let selectedIndex = this.getSelectedViewIndex(),
-            nextIndex = selectedIndex;
+        const selectedIndex = this.getSelectedViewIndex();
+        let nextIndex = selectedIndex;
 
         direction === 'top' ? nextIndex-- : nextIndex++; //jshint ignore: line
 
         if (nextIndex !== selectedIndex) {
             nextIndex = this.__normalizeCollectionIndex(nextIndex);
-            this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+            this.__selectByIndex(nextIndex, shiftPressed);
             this.__scrollToNeighbor(nextIndex);
         }
     },
 
     __moveToNextPage(direction, shiftPressed) {
-        let selectedIndex = this.getSelectedViewIndex(),
-            selectedView = this.visibleCollectionView.children.findByIndex(selectedIndex),
-            selectedPositionTop = selectedView.$el.position().top,
-            nextIndex = selectedIndex;
+        const selectedIndex = this.getSelectedViewIndex();
+        const selectedView = this.children.findByIndex(selectedIndex);
+        const selectedPositionTop = selectedView.$el.position().top;
+        let nextIndex = selectedIndex;
 
         if (direction === 'top') {
             nextIndex = this.__getTopIndex(selectedIndex);
@@ -217,33 +212,20 @@ const ListView = Marionette.LayoutView.extend({
 
         if (nextIndex !== selectedIndex) {
             nextIndex = this.__normalizeCollectionIndex(nextIndex);
-            this.__selectByIndex(selectedIndex, nextIndex, shiftPressed);
+            this.__selectByIndex(nextIndex, shiftPressed);
             this.__scrollToIndex(nextIndex, -selectedPositionTop);
         }
     },
 
-    getSelectedViewIndex() {
-        const cid = this.collection.cursorCid;
-        let index = 0;
-        this.collection.find((x, i) => {
-            if (x.cid === cid) {
-                index = i;
-                return true;
-            }
-        });
-
-        return index;
-    },
-
     __getTopIndex(index) {
-        let cHeight = 0,
-            newIndex = index,
-            childViews = this.visibleCollectionView.children.toArray();
+        let cHeight = 0;
+        let newIndex = index;
+        const childViews = this.children.toArray();
 
         for (let i = index - 1; i >= 0; i--) {
             const newH = cHeight + childViews[i].$el.height();
 
-            if (newH > this.state.visibleHeight) {
+            if (newH > this.$el.parent().height()) {
                 break;
             } else {
                 newIndex = i;
@@ -255,14 +237,14 @@ const ListView = Marionette.LayoutView.extend({
     },
 
     __getBottomIndex(index) {
-        let cHeight = 0,
-            newIndex = index,
-            childViews = this.visibleCollectionView.children.toArray();
+        let cHeight = 0;
+        let newIndex = index;
+        const childViews = this.children.toArray();
 
         for (let i = index + 1; i < childViews.length; i++) {
             const newH = cHeight + childViews[i].$el.height();
 
-            if (newH > this.state.visibleHeight) {
+            if (newH > this.$el.parent().height()) {
                 break;
             } else {
                 newIndex = i;
@@ -283,8 +265,7 @@ const ListView = Marionette.LayoutView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, function(value, key) //noinspection JSHint
-        {
+        _.each(this.keyboardShortcuts, (value, key) => {
             if (typeof value === 'object') {
                 this.keyListener.register_combo(_.extend({
                     keys: key,
@@ -293,29 +274,7 @@ const ListView = Marionette.LayoutView.extend({
             } else {
                 this.keyListener.simple_combo(key, value.bind(this));
             }
-        }, this);
-    },
-
-    getElementHeight() {
-        let minHeight = 0;
-
-        if (this.visibleCollectionView && this.visibleCollectionView.isEmpty()) {
-            minHeight = this.visibleCollectionView.$el.find('.empty-view').height();
-        } else {
-            this.visibleCollectionView.children.forEach(view => {
-                minHeight += view.$el.height();
-            });
-        }
-
-        return minHeight;
-    },
-
-    setWidth(fullWidth) {
-        this.$el.width(fullWidth);
-    },
-
-    setFitToView() {
-        this.visibleCollectionView.setFitToView();
+        });
     },
 
     __handleResize() {
@@ -326,14 +285,64 @@ const ListView = Marionette.LayoutView.extend({
         this.state.visibleHeight = this.$el.parent().height();
 
         setTimeout(() => {
-            let fullWidth = this.$el.parent().width(),
-                currentWidth = this.$el.width();
+            const fullWidth = this.$el.parent().width();
+            const currentWidth = this.$el.width();
 
             if (fullWidth > currentWidth) {
                 this.$el.width(fullWidth);
             }
         }, 200);
+    },
+
+    __toggleCollapse(child, model) {
+        let index = this.collection.indexOf(model) + 1;
+        let currentModel = this.collection.at(index);
+        while (index < this.collection.length && currentModel.level > model.level) {
+            const rowEl = this.children.findByIndex(index).$el;
+            if (model.collapsed) {
+                rowEl.slideUp();
+                currentModel.hidden = true;
+            } else if (!this.__getParentCollapsed(currentModel)) {
+                rowEl.slideDown();
+                currentModel.hidden = false;
+            }
+            index++;
+            currentModel = this.collection.at(index);
+        }
+        this.__updateCollapseAll();
+    },
+
+    __toggleCollapseAll(collapsed) {
+        for (let i = 0; i < this.children.length; i++) {
+            const row = this.children.findByIndex(i);
+            row.updateCollapsed(collapsed, true);
+        }
+        this.gridEventAggregator.trigger('collapse:change');
+    },
+
+    __getParentCollapsed(model) {
+        let collapsed = false;
+        let parentModel = model.parentModel;
+        while (parentModel) {
+            if (parentModel.collapsed !== false) {
+                collapsed = true;
+                break;
+            }
+            parentModel = parentModel.parentModel;
+        }
+        return collapsed;
+    },
+
+    __updateCollapseAll() {
+        let collapsed = true;
+        for (let i = 0; i < this.children.length; i++) {
+            const row = this.children.findByIndex(i);
+            if (row.model.level === 0 && row.model.collapsed === false) {
+                collapsed = false;
+                break;
+            }
+        }
+        this.gridEventAggregator.trigger('update:collapse:all', collapsed);
+        this.gridEventAggregator.trigger('collapse:change');
     }
 });
-
-export default ListView;

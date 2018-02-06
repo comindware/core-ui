@@ -6,228 +6,312 @@
  * Published under the MIT license
  */
 
-/* global module, __dirname */
-
-'use strict';
-
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
 const webpack = require('webpack');
-const path = require('path');
-const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const _ = require('lodash');
 const pathResolver = require('./pathResolver');
-
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
 
-module.exports = {
-    build: function (options) {
-        const DEVELOPMENT = options.env === 'development';
-        const PRODUCTION = options.env === 'production';
-        const TEST_COVERAGE = options.env === 'test-coverage';
-        const TEST = options.env === 'test' || TEST_COVERAGE;
-        const UGLIFY = options.uglify || false;
+module.exports = options => {
+    const PRODUCTION = options.env === 'production';
+    const TEST_COVERAGE = options.env === 'test-coverage';
+    const TEST = options.env === 'test' || TEST_COVERAGE;
+    const UGLIFY = options.uglify || false;
 
-        const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
-        const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
+    const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
+    const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
-        let webpackConfig = {
-            cache: true,
-            devtool: TEST ? 'inline-source-map' : 'source-map',
-            debug: true,
-            module: {
-                loaders: [
-                    {
-                        test: /\.jsx?$/,
-                        exclude: /(node_modules|bower_components|src\/external\/)/,
-                        loader: 'babel-loader',
-                        query: {
-                            presets: ['es2015'],
-                            cacheDirectory: true,
-                            plugins: [
-                            ]
+    const webpackConfig = {
+        cache: true,
+        devtool: TEST ? 'inline-source-map' : 'source-map',
+        module: {
+            rules: [{
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: [
+                    pathResolver.node_modules(),
+                    pathResolver.source('external/backbone.trackit.js'),
+                    pathResolver.source('external/keypress-2.1.0.min.js'),
+                    pathResolver.source('external/rangyinputs-jquery-src.js'),
+                ],
+                options: {
+                    presets: ['flow', 'env']
+                }
+            }, {
+                test: /\.js$/,
+                loader: 'eslint-loader',
+                exclude: [
+                    pathResolver.compiled(),
+                    pathResolver.node_modules(),
+                    pathResolver.source('external'),
+                    pathResolver.source('utils'),
+                    pathResolver.tests()
+                ],
+                options: {
+                    failOnError: true
+                }
+            }, {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [{
+                        loader: 'css-loader'
+                    }, {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: true,
+                            plugins: () => {
+                                const plugins = [
+                                    autoprefixer({
+                                        browsers: ['last 2 versions']
+                                    })];
+                                if (UGLIFY) {
+                                    plugins.push(cssnano({
+                                        preset: ['default', {
+                                            discardComments: {
+                                                removeAll: true
+                                            }
+                                        }]
+                                    }));
+                                }
+                                return plugins;
+                            }
+                        }
+                    }]
+                })
+            }, {
+                test: /\.hbs$/,
+                loader: 'html-loader'
+            }, {
+                test: /\.html$/,
+                loader: 'html-loader'
+            }, {
+                test: /\.woff(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-woff'
+                }
+            }, {
+                test: /\.eot(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-eot'
+                }
+            }, {
+                test: /\.ttf(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-ttf'
+                }
+            }, {
+                test: /\.woff2(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'application/font-woff2'
+                }
+            }, {
+                test: /\.otf(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: FONT_LIMIT,
+                    mimetype: 'font/opentype'
+                }
+            }, {
+                test: /\.svg(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    prefix: 'fonts/',
+                    name: '[path][name].[ext]',
+                    limit: GRAPHICS_LIMIT,
+                    mimetype: 'image/svg+xml'
+                }
+            }, {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: GRAPHICS_LIMIT,
+                }
+            }, {
+                test: /jquery-autosize/,
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
+            }, {
+                test: /rangyinputs/,
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
+            }, {
+                test: /jquery\.inputmask/,
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
+            }, {
+                test: /bootstrap-datetime-picker/,
+                use: [{
+                    loader: 'imports-loader',
+                    options: 'jquery'
+                }]
+            }, {
+                test: /backbone\.marionette\.js/,
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Marionette'
+                }]
+            }, {
+                test: /backbone\.js/,
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Backbone'
+                }]
+            }, {
+                test: /moment\.js/,
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'moment'
+                }]
+            }, {
+                test: /handlebars\.js/,
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Handlebars'
+                }]
+            }, {
+                test: /underscore\.js/,
+                use: [{
+                    loader: 'expose-loader',
+                    options: '_'
+                }]
+            }, {
+                test: /jquery\.js/,
+                use: [{
+                    loader: 'expose-loader',
+                    options: '$'
+                }, {
+                    loader: 'expose-loader',
+                    options: 'jQuery'
+                }]
+            }]
+        },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
+                __DEV__: !PRODUCTION
+            }),
+            new ExtractTextPlugin({
+                filename: UGLIFY ? cssFileNameMin : cssFileName
+            }),
+            new webpack.optimize.ModuleConcatenationPlugin(),
+            new webpack.ContextReplacementPlugin(
+                /moment[\/\\]locale$/,
+                /de|ru|en/
+            )
+        ],
+        resolve: {
+            modules: [
+                pathResolver.source(),
+                pathResolver.node_modules()
+            ],
+            alias: {
+                rangyinputs: pathResolver.source('external/rangyinputs-jquery-src'),
+                keypress: pathResolver.source('external/keypress-2.1.0.min'),
+                'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
+                'jquery-ui': pathResolver.source('external/jquery-ui.js'),
+                handlebars: 'handlebars/dist/handlebars',
+                localizationMap: pathResolver.compiled('localization/localization.en.json')
+            }
+        },
+        devServer: {
+            noInfo: true,
+            stats: 'minimal'
+        }
+    };
+
+    if (!TEST) {
+        webpackConfig.entry = ['babel-polyfill', pathResolver.source('coreApi.js')];
+        webpackConfig.output = {
+            path: pathResolver.compiled(),
+            filename: jsFileName,
+            library: 'core',
+            libraryTarget: 'umd'
+        };
+        if (options.clean !== false) {
+            webpackConfig.plugins.push(
+                new CleanWebpackPlugin([ pathResolver.compiled() ], {
+                    root: pathResolver.root(),
+                    verbose: false,
+                    exclude: ['localization']
+                })
+            );
+        }
+    }
+    if (TEST_COVERAGE) {
+        webpackConfig.module.rules.push({
+            test: /\.js$|\.jsx$/,
+            enforce: 'post',
+            exclude: [
+                pathResolver.tests(),
+                pathResolver.node_modules(),
+                pathResolver.source('external')
+            ],
+            use: {
+                loader: 'istanbul-instrumenter-loader',
+                options: { esModules: true }
+            },
+        });
+    }
+
+    if (PRODUCTION) {
+        webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
+        webpackConfig.devtool = 'source-map';
+
+        webpackConfig.plugins.push(
+            new webpack.optimize.OccurrenceOrderPlugin()
+        );
+
+        if (UGLIFY) {
+            webpackConfig.plugins.push(
+                new webpack.optimize.UglifyJsPlugin({
+                    uglifyOptions: {
+                        compress: {
+                            warnings: true,
+                            dead_code: true,
+                            properties: true,
+                            conditionals: true,
+                            evaluate: true,
+                            comparisons: true
                         }
                     },
-                    {
-                        test: /\.css$/,
-                        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader'].join('!'))
-                    },
-                    {
-                        test: /\.scss$/,
-                        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'].join('!'))
-                    },
-                    {
-                        test: /\.hbs$/,
-                        loader: 'html'
-                    },
-                    {
-                        test: /\.html$/,
-                        loader: 'html'
-                    },
-                    {
-                        test: /\.woff(\?.*)?$/,
-                        loader: `url?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=application/font-woff`
-                    },
-                    {
-                        test: /\.woff2(\?.*)?$/,
-                        loader: `url?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=application/font-woff2`
-                    },
-                    {
-                        test: /\.otf(\?.*)?$/,
-                        loader: `file?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=font/opentype`
-                    },
-                    {
-                        test: /\.ttf(\?.*)?$/,
-                        loader: `url?prefix=fonts/&name=[path][name].[ext]&limit=${FONT_LIMIT}&mimetype=application/octet-stream`
-                    },
-                    {
-                        test: /\.eot(\?.*)?$/,
-                        loader: 'file?prefix=fonts/&name=[path][name].[ext]'
-                    },
-                    {
-                        test: /\.svg(\?.*)?$/,
-                        loader: `url?prefix=fonts/&name=[path][name].[ext]&limit=${GRAPHICS_LIMIT}&mimetype=image/svg+xml`
-                    },
-                    {
-                        test: /\.(png|jpg)$/,
-                        loader: `url?limit=${GRAPHICS_LIMIT}`
-                    },
-                    {
-                        test: /\.json$/,
-                        loader: 'json'
-                    },
-
-                    {
-                        test: /underscore\.js/,
-                        loader: 'expose?_'
-                    },
-                    {
-                        test: /jquery\.js/,
-                        loader: 'expose?jQuery!expose?$'
-                    },
-                    {
-                        test: /jquery-autosize/,
-                        loader: 'imports?jquery'
-                    },
-                    {
-                        test: /rangyinputs/,
-                        loader: 'imports?jquery'
-                    },
-                    {
-                        test: /jquery\.inputmask/,
-                        loader: 'imports?jquery'
-                    },
-                    {
-                        test: /bootstrap-datetime-picker/,
-                        loader: 'imports?jquery'
-                    },
-                    {
-                        test: /backbone\.marionette\.js/,
-                        loader: 'expose?Marionette'
-                    },
-                    {
-                        test: /backbone\.js/,
-                        loader: 'expose?Backbone'
-                    },
-                    {
-                        test: /moment\.js/,
-                        loader: 'expose?moment'
-                    },
-                    {
-                        test: /handlebars\.js/,
-                        loader: 'expose?Handlebars'
+                    sourceMap: true,
+                    parallel: true,
+                    output: {
+                        comments: false
                     }
-                ]
-            },
-            sassLoader: {
-                includePaths: [
-                    pathResolver.resources('styles')
-                ]
-            },
-            postcss: [
-                autoprefixer({
-                    browsers: ['last 2 versions']
-                })
-            ],
-            plugins: [
-                new webpack.DefinePlugin({
-                    'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                    __DEV__: !PRODUCTION
-                }),
-                new ExtractTextPlugin(UGLIFY ? cssFileNameMin : cssFileName)
-            ],
-            resolve: {
-                root: [
-                    pathResolver.source()
-                ],
-                alias: {
-                    'rangyinputs': pathResolver.source('external/rangyinputs/rangyinputs-jquery-src'),
-                    'keypress': pathResolver.source('external/Keypress/keypress-2.1.0.min'),
-                    'handlebars': 'handlebars/dist/handlebars'
-                }
-            },
-            devServer: {
-                noInfo: true,
-                stats: 'minimal'
-            }
-        };
-
-        if (TEST) {
-            webpackConfig.resolve.alias.localizationMap = pathResolver.compiled('localization/localization.en.json');
-        }
-
-        if (TEST_COVERAGE) {
-            webpackConfig.module.postLoaders = [
-                {
-                    test: /\.jsx?$/,
-                    exclude: [
-                        pathResolver.tests(),
-                        pathResolver.node_modules(),
-                        pathResolver.source('external')
-                    ],
-                    loader: 'istanbul-instrumenter'
-                }
-            ];
-        }
-
-        if (!TEST) {
-            webpackConfig.entry = [ 'babel-polyfill', pathResolver.source('coreApi.js') ];
-            webpackConfig.output = {
-                path: pathResolver.compiled(),
-                filename: jsFileName,
-                library: 'core',
-                libraryTarget: 'umd'
-            };
-        }
-
-        if (PRODUCTION) {
-            webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
-
-            webpackConfig.debug = false;
-            webpackConfig.devtool = 'source-map';
-
-            //noinspection JSUnresolvedFunction
-            webpackConfig.plugins.push(
-                new webpack.optimize.OccurrenceOrderPlugin(),
-                new webpack.optimize.DedupePlugin()
-            );
-
-            if (UGLIFY) {
-                webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-                    compress: {
-                        unused: true,
-                        dead_code: true,
-                        warnings: false
-                    },
-                    comments: false
                 }));
-            }
         }
-
-        return webpackConfig;
     }
+
+    return webpackConfig;
 };

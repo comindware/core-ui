@@ -1,62 +1,76 @@
-define([
-    'comindware/core',
-    'demoPage/views/CanvasView'
-], function (core, CanvasView) {
-    'use strict';
-    return function () {
-        var collection = new Backbone.Collection(core.services.UserService.listUsers(), {
-            comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'name')
-        });
 
-        var DemoButtonView = Marionette.ItemView.extend({
-            template: function () {
-                return Handlebars.compile('<input type="text" class="field js-input" placeholder="Enter text here">');
-            },
-            onRender: function () {
-                this.$('.js-input').css({
-                    width: '100%',
-                    'box-sizing': 'border-box'
-                });
-            }
-        });
+import core from 'comindware/core';
+import CanvasView from 'demoPage/views/CanvasView';
 
-        var DemoDropdownItemView = Marionette.ItemView.extend({
-            template: Handlebars.compile('{{name}}'),
-            className: 'dropdown-list__i'
-        });
+const template = `
+{{#if url}}
+    <a href="{{url}}" class="popout-menu__txt" title="{{getTitle}}">{{name}}</a>
+{{else}}
+    <span class="popout-menu__txt" title="{{getTitle}}">{{name}}</span>
+{{/if}}
+{{#if abbreviation}}
+    <span class="popout-menu__subtext">{{abbreviation}}</span>
+{{/if}}`;
 
-        var DemoDropdownPanelView = Marionette.CollectionView.extend({
-            childView: DemoDropdownItemView,
-            className: 'dropdown-list',
-            onRender: function () {
-                this.$el.css({
-                    'overflow-y': 'auto'
-                });
-            }
-        });
+export default function() {
+    const collection = new Backbone.Collection(core.services.UserService.listUsers(), {
+        comparator: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'name')
+    });
 
-        /*
-          Possible panelPosition values:
-             'down',
-             'down-over',
-             'up',
-             'up-over'
-        */
+    const DemoButtonView = Marionette.ItemView.extend({
+        template() {
+            return Handlebars.compile('<input type="text" class="field js-input" placeholder="Enter text here">');
+        },
+        onRender() {
+            this.$('.js-input').css({
+                width: '100%',
+                'box-sizing': 'border-box'
+            });
+        }
+    });
 
-        var dropdown = core.dropdown.factory.createDropdown({
-            buttonView: DemoButtonView,
-            panelView: DemoDropdownPanelView,
-            panelViewOptions: {
-                collection: collection
-            },
-            panelPosition: 'down-over'
-        });
+    const DemoDropdownItemView = Marionette.ItemView.extend({
+        template: Handlebars.compile(template),
 
-        return new CanvasView({
-            view: dropdown,
-            canvas: {
-                width: '300px'
-            }
-        });
-    };
-});
+        className: 'dropdown-list__i'
+    });
+
+    const DemoDropdownPanelView = Marionette.CollectionView.extend({
+        childView: DemoDropdownItemView,
+
+        className: 'dropdown-list',
+
+        onRender() {
+            this.$el.css({
+                'overflow-y': 'auto'
+            });
+        }
+    });
+
+    /*
+      Possible panelPosition values:
+         'down',
+         'down-over',
+         'up',
+         'up-over'
+    */
+
+    const dropdown = core.dropdown.factory.createDropdown({
+        buttonView: DemoButtonView,
+
+        panelView: DemoDropdownPanelView,
+
+        panelViewOptions: {
+            collection
+        },
+
+        panelPosition: 'down-over'
+    });
+
+    return new CanvasView({
+        view: dropdown,
+        canvas: {
+            width: '300px'
+        }
+    });
+}

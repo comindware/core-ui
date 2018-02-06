@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import { Handlebars, $ } from 'lib';
+import { Handlebars, moment } from 'lib';
 import template from './templates/dateTimeEditor.hbs';
 import DateTimeService from './services/DateTimeService';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -18,8 +16,8 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    dateDisplayFormat: null,
-    timeDisplayFormat: null,
+    dateDisplayFormat: undefined,
+    timeDisplayFormat: undefined,
     showTitle: true
 };
 
@@ -38,16 +36,11 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateTimeEditorView.prototype */{
-    initialize(options) {
-        options = options || {};
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        let readonly = this.getReadonly(),
-            enabled = this.getEnabled();
+        const readonly = this.getReadonly();
+        const enabled = this.getEnabled();
 
         this.value = this.__adjustValue(this.value);
 
@@ -133,8 +126,8 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
-    __value(value, updateUi, triggerChange) {
-        value = this.__adjustValue(value);
+    __value(newValue, updateUi, triggerChange) {
+        const value = this.__adjustValue(newValue);
         if (this.value === value) {
             return;
         }

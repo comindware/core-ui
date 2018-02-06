@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
@@ -22,7 +20,7 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     exclude: [],
-    maxQuantitySelected: null,
+    maxQuantitySelected: undefined,
     canDeleteMember: true
 };
 
@@ -39,12 +37,8 @@ const defaultOptions = {
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
 formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MembersBubbleEditorView.prototype */{
-    initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
         _.bindAll(this, '__onDropdownOpen');
         this.__bindReqres();
         this.__createViewModel();
@@ -98,10 +92,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
     },
 
-    setValue(value) {
-        if (_.isUndefined(value) || value === null) {
-            value = [];
-        }
+    setValue(value = []) {
         if ((this.value === value) || (JSON.stringify(this.value) === JSON.stringify(value))) {
             return;
         }
@@ -194,19 +185,22 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
 
     __updateViewModel(selectedValues) {
         const members = _.clone(this.viewModel.get('members'));
-        _.each(this.options.exclude, id => {
+        this.options.exclude.forEach(id => {
             if (members[id]) {
                 delete members[id];
             }
         });
-        const selectedMembers = _.map(selectedValues, id => {
-            const model = members[id];
-            delete members[id];
-            return model;
-        });
-        const availableMembers = _.values(members);
+        const selectedMembers = selectedValues
+            ? selectedValues.map(id => {
+                const model = members[id];
+                delete members[id];
+                return model;
+            })
+            : [];
 
+        const availableMembers = Object.values(members);
         const availableModels = this.viewModel.get('available');
+
         availableModels.reset(availableMembers);
         const selectedModels = this.viewModel.get('selected');
         selectedModels.reset(selectedMembers);

@@ -5,8 +5,7 @@
  *       All Rights Reserved
  * Published under the MIT license
  */
-
-'use strict';
+/*eslint-disable*/
 
 import 'lib';
 import LocalizationService from '../../services/LocalizationService';

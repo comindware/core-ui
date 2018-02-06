@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { moment, Handlebars, $ } from 'lib';
 import { dateHelpers } from 'utils';
 import dropdown from 'dropdown';
@@ -21,7 +19,7 @@ export default Marionette.LayoutView.extend({
         this.showTitle = this.getOption('showTitle');
 
         this.dropdownView = this.__getDropdownView();
-        
+
         this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
         this.listenTo(this.dropdownView, 'open', this.__onOpen, this);
 
@@ -90,6 +88,9 @@ export default Marionette.LayoutView.extend({
     },
 
     __onBeforeClose() {
+        if (this.dropdownView.isDestroyed) {
+            return;
+        }
         this.dropdownView.button.endEditing();
         this.trigger('blur');
     },
@@ -100,16 +101,19 @@ export default Marionette.LayoutView.extend({
     },
 
     __onPanelSelect(time) {
-        let oldVal = this.model.get('value'),
-            newVal = null;
+        const oldVal = this.model.get('value');
+        let newVal = null;
 
         if (time === null || time === '') {
             newVal = null;
         } else if (oldVal) {
-            newVal = moment(oldVal).hour(time.hour()).minute(time.minute()).second(0).millisecond(0).toISOString();
+            newVal = moment(oldVal).hour(time.hour())
+                .minute(time.minute())
+                .second(0)
+                .millisecond(0)
+                .toISOString();
         } else {
-            time = time.clone();
-            newVal = time.minute(time.minute()).toISOString();
+            newVal = time.clone().minute(time.clone().minute()).toISOString();
         }
 
         this.model.set('value', newVal);

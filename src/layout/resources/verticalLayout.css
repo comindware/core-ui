@@ -9,3 +9,15 @@
     flex: none;
     margin: 8px 0;
 }
+
+.layout__vertical-layout-title {
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #384650;
+    margin-bottom: 6px;
+}

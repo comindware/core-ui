@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';
@@ -17,15 +15,13 @@ import DropdownPanelView from './impl/dropdown/views/DropdownPanelView';
 import DropdownButtonView from './impl/dropdown/views/DropdownButtonView';
 import formRepository from '../formRepository';
 
-const classes = {
-};
-
 const defaultOptions = {
-    collection: null,
+    collection: undefined,
     displayAttribute: 'text',
     allowEmptyValue: true,
     enableSearch: false,
-    showTitle: true
+    showTitle: true,
+    rowHeight: 25
 };
 
 /**
@@ -45,12 +41,8 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
-    initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.bindAll(this, '__onCollectionChange');
 
@@ -59,7 +51,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.reqres.setHandler('value:set', this.onValueSet, this);
         this.reqres.setHandler('panel:open', this.onPanelOpen, this);
 
-        if (_.isArray(this.options.collection)) {
+        if (Array.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);
         }
 
@@ -122,7 +114,8 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
                 reqres: this.reqres,
-                enableSearch: this.options.enableSearch
+                enableSearch: this.options.enableSearch,
+                rowHeight: this.getOption('rowHeight')
             },
             autoOpen: false
         });
@@ -166,13 +159,13 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.el);
-        _.each('enter,num_enter,down'.split(','), function(key) {
+        _.each('enter,num_enter,down'.split(','), key => {
             this.keyListener.simple_combo(key, () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.dropdownView.open();
                 }
             });
-        }, this);
+        });
         this.keyListener.simple_combo('esc', () => {
             if (this.getEnabled() && !this.getReadonly()) {
                 this.dropdownView.close();

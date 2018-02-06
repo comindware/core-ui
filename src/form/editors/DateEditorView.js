@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import { Handlebars } from 'lib';
+import { Handlebars, moment } from 'lib';
 import template from './templates/dateEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
@@ -16,7 +14,7 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    dateDisplayFormat: null,
+    dateDisplayFormat: undefined,
     showTitle: true
 };
 
@@ -33,13 +31,8 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
 formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
-    initialize(options) {
-        options = options || {};
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.value = this.__adjustValue(this.value);
 
@@ -110,8 +103,8 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
         return this.value === null ? this.value : moment(this.value).toISOString();
     },
 
-    __value(value, updateUi, triggerChange) {
-        value = this.__adjustValue(value);
+    __value(val, updateUi, triggerChange) {
+        const value = this.__adjustValue(val);
         if (this.value === value) {
             return;
         }

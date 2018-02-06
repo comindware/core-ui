@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-
 /*
 *
 * Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
@@ -20,6 +18,7 @@ import formRepository from '../../formRepository';
 const classes = {
     disabled: 'editor_disabled',
     readonly: 'editor_readonly',
+    hidden: 'editor_hidden',
     FOCUSED: 'editor_focused',
     EMPTY: 'editor_empty'
 };
@@ -29,6 +28,7 @@ const onRender = function() {
         this.$el.attr('id', this.id);
     }
     this.setPermissions(this.enabled, this.readonly);
+    this.setHidden(this.hidden);
     this.setValue(this.value);
     if (this.focusElement) {
         this.$el.on('focus', this.focusElement, this.onFocus);
@@ -103,9 +103,7 @@ export default {
              * */
             hasFocus: false,
 
-            constructor(options) {
-                options = options || {};
-
+            constructor(options = {}) {
                 _.bindAll(this, 'onFocus', 'onBlur');
 
                 //Set initial value
@@ -147,6 +145,8 @@ export default {
                               (schema.enabled === undefined && options.enabled === undefined);
                 this.readonly = schema.readonly = schema.readonly || options.readonly ||
                                (schema.readonly !== undefined && options.readonly !== undefined);
+                this.hidden = schema.hidden = schema.hidden || options.hidden ||
+                               (schema.hidden !== undefined && options.hidden !== undefined);
                 schema.forceCommit = options.forceCommit || schema.forceCommit;
 
                 viewClass.prototype.constructor.apply(this, arguments);
@@ -229,6 +229,15 @@ export default {
                 this.setPermissions(enabled, readonly);
             },
 
+            /**
+             * Sets a new value of <code>hidden</code> flag.
+             * @param {Boolean} hidden New flag value.
+             */
+            setHidden(hidden) {
+                this.hidden = hidden;
+                this.$el.toggleClass(classes.hidden, hidden);
+            },
+
             __setEnabled(enabled) {
                 this.enabled = enabled;
                 this.trigger('enabled', enabled);
@@ -245,6 +254,14 @@ export default {
              */
             getEnabled() {
                 return this.enabled;
+            },
+
+            /**
+             * Returns the value of `enabled` flag.
+             * @return {Boolean}
+             */
+            getHidden() {
+                return this.hidden;
             },
 
             __setReadonly(readonly) {
@@ -288,8 +305,7 @@ export default {
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails
              * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
              */
-            commit(options) {
-                options = options || {};
+            commit(options = {}) {
                 let error = this.validate(true);
                 if (error && !this.schema.forceCommit) {
                     return error;

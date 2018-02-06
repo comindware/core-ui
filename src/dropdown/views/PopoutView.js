@@ -58,7 +58,7 @@ const defaultOptions = {
     height: 'auto',
     autoOpen: true,
     direction: popoutDirection.DOWN,
-    displacement: null,
+    displacement: undefined,
     renderAfterClose: true
 };
 
@@ -184,7 +184,14 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
     onDestroy() {
         if (this.isOpen) {
+            this.isOpen = false;
             WindowService.closePopup(this.popupId);
+        }
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.close();
         }
     },
 
@@ -346,18 +353,20 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
 
         // switching direction if there is not enough space
         switch (direction) {
-            case popoutDirection.UP:
+            case popoutDirection.UP: {
                 const topCenter = anchorRect.top + anchorRect.height / 2;
                 if (topCenter < panelRect.height && anchorRect.bottom > topCenter) {
                     direction = popoutDirection.DOWN;
                 }
                 break;
-            case popoutDirection.DOWN:
+            }
+            case popoutDirection.DOWN: {
                 const bottomCenter = anchorRect.bottom + anchorRect.height / 2;
                 if (bottomCenter < panelRect.height && anchorRect.top > bottomCenter) {
                     direction = popoutDirection.UP;
                 }
                 break;
+            }
             default:
                 break;
         }
@@ -536,6 +545,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             this.__adjustFlowPosition(wrapperView.$el);
         }
         this.listenToElementMoveOnce(this.el, this.close);
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
         const activeElement = document.activeElement;
         if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {

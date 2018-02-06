@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 
 /**
@@ -20,8 +18,5 @@ import 'lib';
  * */
 
 export default Marionette.CollectionView.extend({
-    initialize() {
-    },
-
     tagName: 'ul'
 });

@@ -6,17 +6,17 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-disable*/
 
 import 'lib';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
-formRepository.validators.required = function(options) {
-    options = _.extend({
+formRepository.validators.required = function(config) {
+    let options = _.extend({
         type: 'required',
         message: LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED')
-    }, options);
+    }, config);
 
     return function required(value) {
         const val = _.isObject(value) && _.has(value, 'value') ? value.value : value;
@@ -29,7 +29,7 @@ formRepository.validators.required = function(options) {
         if (val === null || val === undefined || val === '') {
             return err;
         }
-        if (_.isArray(val) && val.length === 0) {
+        if (Array.isArray(val) && val.length === 0) {
             return err;
         }
     };

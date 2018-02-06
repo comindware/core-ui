@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /**
  * Developer: Stepan Burguchev
  * Date: 7/7/2014
@@ -7,7 +8,7 @@
  */
 
 import { Handlebars } from 'lib';
-import { helpers, htmlHelpers } from 'utils';
+import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './ListView';
 import RowView from './RowView';
@@ -53,17 +54,19 @@ const constants = {
  * @param {Backbone.View} options.noColumnsView View для отображения списка без колонок
  * @param {Object} [options.noColumnsViewOptions] опции для noColumnsView
  * @param {Number} options.maxRows максимальное количество отображаемых строк (используется с опцией height: auto)
- * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию. В случае, если true — обязательно должны быть указаны cellView для каждой колонки
+ * @param {Boolean} options.useDefaultRowView использовать RowView по умолчанию.
+ * В случае, если true — обязательно должны быть указаны cellView для каждой колонки
  * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * */
-const GridView = Marionette.LayoutView.extend({
+
+export default Marionette.LayoutView.extend({
     initialize(options) {
         if (this.collection === undefined) {
-            throw 'You must provide a collection to display.';
+            throw new Error('You must provide a collection to display.');
         }
 
         if (options.columns === undefined) {
-            throw 'You must provide columns definition ("columns" option)';
+            throw new Error('You must provide columns definition ("columns" option)');
         }
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
@@ -71,6 +74,7 @@ const GridView = Marionette.LayoutView.extend({
         this.headerView = new GridHeaderView({
             columns: options.columns,
             gridEventAggregator: this,
+            checkBoxPadding: options.checkBoxPadding || 0,
             gridColumnHeaderView: options.gridColumnHeaderView
         });
 
@@ -88,13 +92,13 @@ const GridView = Marionette.LayoutView.extend({
         let childView = options.childView;
         if (options.useDefaultRowView) {
             _.each(options.columns, column => {
-                if (column.cellView === undefined) { throw 'You must specify cellView for each column (useDefaultRowView flag is true)'; }
+                if (column.cellView === undefined) { throw new Error('You must specify cellView for each column (useDefaultRowView flag is true)'); }
             });
 
             childView = RowView;
             options.childHeight = constants.gridRowHeight;
         } else if (options.childHeight === undefined) {
-            throw 'You must provide a childHeight for the child item view (in pixels).';
+            throw new Error('You must provide a childHeight for the child item view (in pixels).');
         }
 
         const childViewOptions = _.extend(options.childViewOptions || {}, {
@@ -119,7 +123,7 @@ const GridView = Marionette.LayoutView.extend({
         });
 
         this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
-            if (_.string.startsWith(eventName, 'childview')) {
+            if (eventName.startsWith(eventName, 'childview')) {
                 this.trigger.apply(this, [eventName, view ].concat(eventArguments));
             }
         });
@@ -134,16 +138,6 @@ const GridView = Marionette.LayoutView.extend({
         if (this.collection.length) {
             this.__presortCollection(options.columns);
         }
-        this.listenTo(this.collection, 'reset', (collection, options) => {
-            // fixing display:table style if there were not rows
-            if (options && options.previousModels.length === 0) {
-                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'none');
-                // forcing browser to rebuild DOM accessing the attribute
-                this.listView.visibleCollectionRegion.currentView.$el.css('display');
-                this.listView.visibleCollectionRegion.currentView.$el.css('display', 'table');
-                this.__presortCollection(this.getOption('columns'));
-            }
-        });
     },
 
     __updateHeight(sender, args) {
@@ -192,10 +186,9 @@ const GridView = Marionette.LayoutView.extend({
     sortBy(columnIndex, sorting) {
         const column = this.options.columns[columnIndex];
         if (sorting) {
-            _.each(this.options.columns, c => {
-                c.sorting = null;
-            });
+            this.options.columns.forEach(c => c.sorting = null);
             column.sorting = sorting;
+
             switch (sorting) {
                 case 'asc':
                     this.collection.comparator = column.sortAsc;
@@ -203,12 +196,13 @@ const GridView = Marionette.LayoutView.extend({
                 case 'desc':
                     this.collection.comparator = column.sortDesc;
                     break;
+                default:
+                    break;
             }
         } else {
             sorting = column.sorting;
-            _.each(this.options.columns, c => {
-                c.sorting = null;
-            });
+            this.options.columns.forEach(c => c.sorting = null);
+
             switch (sorting) {
                 case 'asc':
                     column.sorting = 'desc';
@@ -243,5 +237,3 @@ const GridView = Marionette.LayoutView.extend({
         }
     }
 });
-
-export default GridView;

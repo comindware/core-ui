@@ -38,6 +38,12 @@ export default Marionette.LayoutView.extend({
         list: '.js-list'
     },
 
+    templateHelpers() {
+        return {
+            title: this.options.title
+        };
+    },
+
     onShow() {
         this.__rowsCtx = [];
         this.options.columns.forEach(view => {

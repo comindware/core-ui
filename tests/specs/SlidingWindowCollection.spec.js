@@ -6,42 +6,35 @@
  * Published under the MIT license
  */
 
-"use strict";
+/*eslint-ignore*/
 
 import Chance from 'chance';
 import core from 'coreApi';
 import { expectCollectionsToBeEqual } from '../utils/helpers';
 import { addChanceMixins } from '../utils/testData';
 
-let chance = new Chance();
+const chance = new Chance();
 addChanceMixins(chance);
 
-describe('SlidingWindowCollection', function ()
-{
-    beforeEach(function () {
-        this.tasks = _.times(10, function () {
-            return chance.task();
-        });
+describe('SlidingWindowCollection', () => {
+    beforeEach(function() {
+        this.tasks = _.times(10, () => chance.task());
     });
 
-    describe('When initializing', function ()
-    {
-        it('should have position 0 and default window size', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection);
+    describe('When initializing', () => {
+        it('should have position 0 and default window size', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection);
 
             expect(windowedCollection.length).toEqual(0);
             expect(windowedCollection.models.length).toEqual(0);
         });
     });
 
-    describe('When setting window size', function ()
-    {
-        it('should have correct element count', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection);
+    describe('When setting window size', () => {
+        it('should have correct element count', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection);
 
             windowedCollection.updateWindowSize(3);
 
@@ -49,12 +42,10 @@ describe('SlidingWindowCollection', function ()
         });
     });
 
-    describe('When setting position', function ()
-    {
-        it('should have correct elements offset', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection);
+    describe('When setting position', () => {
+        it('should have correct elements offset', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection);
 
             windowedCollection.updateWindowSize(3);
             windowedCollection.updatePosition(3);
@@ -63,15 +54,13 @@ describe('SlidingWindowCollection', function ()
         });
     });
 
-    describe('When dramatically changing position', function ()
-    {
-        it('should trigger reset', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
-            var resetCallback = jasmine.createSpy('resetCallback');
-            var addCallback = jasmine.createSpy('addCallback');
-            var removeCallback = jasmine.createSpy('removeCallback');
+    describe('When dramatically changing position', () => {
+        it('should trigger reset', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
+            const resetCallback = jasmine.createSpy('resetCallback');
+            const addCallback = jasmine.createSpy('addCallback');
+            const removeCallback = jasmine.createSpy('removeCallback');
             windowedCollection.on('reset', resetCallback);
             windowedCollection.on('add', addCallback);
             windowedCollection.on('remove', removeCallback);
@@ -85,15 +74,13 @@ describe('SlidingWindowCollection', function ()
         });
     });
 
-    describe('When slightly changing position', function ()
-    {
-        it('should trigger add/remove going +1', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
-            var resetCallback = jasmine.createSpy('resetCallback');
-            var addCallback = jasmine.createSpy('addCallback');
-            var removeCallback = jasmine.createSpy('removeCallback');
+    describe('When slightly changing position', () => {
+        it('should trigger add/remove going +1', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
+            const resetCallback = jasmine.createSpy('resetCallback');
+            const addCallback = jasmine.createSpy('addCallback');
+            const removeCallback = jasmine.createSpy('removeCallback');
             windowedCollection.on('reset', resetCallback);
             windowedCollection.on('add', addCallback);
             windowedCollection.on('remove', removeCallback);
@@ -106,13 +93,12 @@ describe('SlidingWindowCollection', function ()
             expect(removeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should trigger add/remove going -1', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection, { position: 2, windowSize: 3 });
-            var resetCallback = jasmine.createSpy('resetCallback');
-            var addCallback = jasmine.createSpy('addCallback');
-            var removeCallback = jasmine.createSpy('removeCallback');
+        it('should trigger add/remove going -1', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection, { position: 2, windowSize: 3 });
+            const resetCallback = jasmine.createSpy('resetCallback');
+            const addCallback = jasmine.createSpy('addCallback');
+            const removeCallback = jasmine.createSpy('removeCallback');
             windowedCollection.on('reset', resetCallback);
             windowedCollection.on('add', addCallback);
             windowedCollection.on('remove', removeCallback);
@@ -126,12 +112,10 @@ describe('SlidingWindowCollection', function ()
         });
     });
 
-    describe('When window cannot be filled complete', function ()
-    {
-        it('should trim window if window size is too big', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 8 });
+    describe('When window cannot be filled complete', () => {
+        it('should trim window if window size is too big', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 8 });
 
             windowedCollection.updateWindowSize(11);
 
@@ -139,10 +123,9 @@ describe('SlidingWindowCollection', function ()
             expect(windowedCollection.state.position).toEqual(0);
         });
 
-        it('should return back to normal after window trimming', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 8 });
+        it('should return back to normal after window trimming', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 8 });
 
             windowedCollection.updateWindowSize(15);
             windowedCollection.updateWindowSize(3);
@@ -152,22 +135,19 @@ describe('SlidingWindowCollection', function ()
         });
     });
 
-    describe('When near the top border', function ()
-    {
-        it('should trim window if there are no items ahead', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
+    describe('When near the top border', () => {
+        it('should trim window if there are no items ahead', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
 
             windowedCollection.updatePosition(8);
 
             expectCollectionsToBeEqual(windowedCollection, collection.chain().rest(8).first(2).value());
         });
 
-        it('should return back to normal after window trimming', function ()
-        {
-            let collection = new Backbone.Collection(this.tasks);
-            let windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
+        it('should return back to normal after window trimming', function() {
+            const collection = new Backbone.Collection(this.tasks);
+            const windowedCollection = new core.collections.SlidingWindowCollection(collection, { windowSize: 3 });
 
             windowedCollection.updatePosition(8);
             windowedCollection.updatePosition(3);

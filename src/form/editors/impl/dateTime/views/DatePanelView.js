@@ -6,10 +6,8 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import { Handlebars } from 'lib';
-import { helpers, dateHelpers } from 'utils';
+import { Handlebars, moment } from 'lib';
+import { dateHelpers } from 'utils';
 import template from '../templates/datePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 
@@ -41,9 +39,9 @@ export default Marionette.ItemView.extend({
     },
 
     updatePickerDate() {
-        let val = this.model.get('value'),
-            format = defaultOptions.pickerFormat,
-            pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment.utc({}).format(format);
+        const val = this.model.get('value');
+        const format = defaultOptions.pickerFormat;
+        const pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment.utc({}).format(format);
 
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
         this.ui.pickerInput.datetimepicker('update');

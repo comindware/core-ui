@@ -1,13 +1,6 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/19/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import FieldView from '../fields/FieldView';
-import helpers from '../../utils/helpers';
+import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 
 const Form = Marionette.Object.extend({
     /**
@@ -16,53 +9,58 @@ const Form = Marionette.Object.extend({
      * @param {Object} [options.schema]
      * @param {Backbone.Model} [options.model]
      */
-    initialize(options) {
-        this.options = options = options || {};
+    initialize(options = {}) {
+        this.options = options;
 
         this.__regionManager = new Marionette.RegionManager();
         this.schema = _.result(options, 'schema');
         this.model = options.model;
 
         this.fields = {};
-        _.each(this.schema, function(fieldSchema, key) {
-            const FieldType = fieldSchema.field || options.field || FieldView;
-            const field = new FieldType({
-                form: this,
-                key,
-                schema: fieldSchema,
-                model: this.model
-            });
-            this.listenTo(field.editor, 'all', this.__handleEditorEvent);
-            this.fields[key] = field;
-        }, this);
+
+        Object.entries(this.schema).forEach(entry => {
+            const FieldType = entry[1].field || options.field || FieldView; //TODO fix api
+            let field;
+            try {
+                field = new FieldType({
+                    form: this,
+                    key: entry[0],
+                    schema: entry[1],
+                    model: this.model
+                });
+                this.listenTo(field.editor, 'all', this.__handleEditorEvent);
+            } catch (e) {
+                field = new ErrorPlaceholderView();
+                Core.InterfaceError.logError(e, field.getId());
+            } finally {
+                this.fields[entry[0]] = field;
+            }
+        });
 
         const $target = this.options.$target;
 
-        const usedFields = {};
         //Render standalone editors
-        $target.find('[data-editors]').each((i, el) => {
-            const $editorRegion = $(el);
-            const key = $editorRegion.attr('data-editors');
-            const regionName = `${key}Region`;
-            if (usedFields[key]) {
-                helpers.throwFormatError(`Duplicated field '${key}'.`);
+        $target.find('[data-editors]').each((i, el) => { //TODO Merge with previous
+            if ((!this.model.has('uniqueFormId') && !$(el).attr('editor-for')) || $(el).attr('editor-for') === this.model.get('uniqueFormId')) {
+                const $editorRegion = $(el);
+                const key = $editorRegion.attr('data-editors');
+                const regionName = `${key}Region`;
+
+                this.__regionManager.addRegion(regionName, { el: $editorRegion });
+                this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key].editor);
             }
-            this.__regionManager.addRegion(regionName, { el: $editorRegion });
-            this.__regionManager.get(regionName).show(this.fields[key].editor);
-            usedFields[key] = true;
         });
 
         //Render standalone fields
-        $target.find('[data-fields]').each((i, el) => {
-            const $fieldRegion = $(el);
-            const key = $fieldRegion.attr('data-fields');
-            const regionName = `${key}Region`;
-            if (usedFields[key]) {
-                helpers.throwFormatError(`Duplicated field '${key}'.`);
+        $target.find('[data-fields]').each((i, el) => { //TODO Merge with previous
+            if ((!this.model.has('uniqueFormId') && !$(el).attr('field-for')) || $(el).attr('field-for') === this.model.get('uniqueFormId')) {
+                const $fieldRegion = $(el);
+                const key = $fieldRegion.attr('data-fields');
+                const regionName = `${key}Region`;
+
+                this.__regionManager.addRegion(regionName, { el: $fieldRegion });
+                this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key]);
             }
-            this.__regionManager.addRegion(regionName, { el: $fieldRegion });
-            this.__regionManager.get(regionName).show(this.fields[key]);
-            usedFields[key] = true;
         });
     },
 
@@ -73,10 +71,8 @@ const Form = Marionette.Object.extend({
      *
      * @return {Object}  Validation errors
      */
-    commit(options) {
+    commit(options = {}) {
         // Validate
-        options = options || {};
-
         const errors = this.validate({
             skipModelValidate: !options.validate
         });
@@ -155,7 +151,7 @@ const Form = Marionette.Object.extend({
         });
     },
 
-    __handleEditorEvent(event, editor, field) {
+    __handleEditorEvent(event, editor) {
         switch (event) {
             case 'change':
                 this.trigger('change', this, editor);
@@ -169,7 +165,7 @@ const Form = Marionette.Object.extend({
                 break;
             case 'blur':
                 if (this.hasFocus) {
-                    const focusedField = _.find(this.fields, f => f.editor.hasFocus);
+                    const focusedField = Object.values(this.fields).find(f => f.editor.hasFocus);
                     if (!focusedField) {
                         this.hasFocus = false;
                         this.trigger('blur', this);
@@ -182,10 +178,10 @@ const Form = Marionette.Object.extend({
     },
 
     setErrors(errors) {
-        _.each(errors, (value, key) => {
-            const field = this.fields[key];
+        Object.entries(errors).forEach(entry => {
+            const field = this.fields[entry[0]];
             if (field) {
-                field.setError(value);
+                field.setError(entry[1]);
             }
         });
     },
@@ -194,15 +190,13 @@ const Form = Marionette.Object.extend({
      * Validate the data
      * @return {Object} Validation errors
      */
-    validate(options) {
+    validate(options = {}) {
         const fields = this.fields;
         const model = this.model;
         const errors = {};
 
-        options = options || {};
-
         //Collect errors from schema validation
-        _.each(fields, field => {
+        Object.values(fields).forEach(field => {
             const error = field.validate(options);
             if (error) {
                 errors[field.key] = error;
@@ -214,7 +208,7 @@ const Form = Marionette.Object.extend({
             const modelErrors = model.validate(this.getValue());
 
             if (modelErrors) {
-                const isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+                const isDictionary = _.isObject(modelErrors) && !Array.isArray(modelErrors);
 
                 //If errors are not in object form then just store on the error object
                 if (!isDictionary) {
@@ -241,8 +235,9 @@ const Form = Marionette.Object.extend({
             }
         }
 
-        const result = _.isEmpty(errors) ? null : errors;
+        const result = Object.keys(errors).length === 0 ? null : errors;
         this.trigger('form:validated', !result, result);
+
         return result;
     },
 
@@ -269,7 +264,7 @@ const Form = Marionette.Object.extend({
             return;
         }
 
-        const focusedField = _.find(this.fields, field => field.editor.hasFocus);
+        const focusedField = Object.values(this.fields).forEach(field => field.editor.hasFocus);
         if (focusedField) {
             focusedField.editor.blur();
         }

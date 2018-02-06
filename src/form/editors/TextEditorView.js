@@ -18,17 +18,17 @@ const changeMode = {
     keydown: 'keydown'
 };
 
-const defaultOptions = function() {
-    return {
-        changeMode: 'blur',
-        emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
-        maxLength: null,
-        mask: null,
-        maskPlaceholder: '_',
-        maskOptions: {},
-        showTitle: true
-    };
-};
+// used as function because Localization service is not initialized yet
+const defaultOptions = () => ({
+    changeMode: 'blur',
+    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTEDITOR.PLACEHOLDER'),
+    maxLength: undefined,
+    mask: undefined,
+    maskPlaceholder: '_',
+    maskOptions: {},
+    showTitle: true,
+    allowEmptyValue: true
+});
 
 /**
  * @name TextEditorView
@@ -47,21 +47,18 @@ const defaultOptions = function() {
  * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
+
+export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
     initialize(options = {}) {
-        const defaults = defaultOptions();
-        if (options.schema) {
-            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
-        } else {
-            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
-        }
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
         this.placeholder = this.options.emptyPlaceholder;
     },
 
     onShow() {
         if (this.options.mask) {
-            this.ui.input.inputmask(_.extend({
+            this.ui.input.inputmask(Object.assign({
                 mask: this.options.mask,
                 placeholder: this.options.maskPlaceholder,
                 autoUnmask: true
@@ -72,7 +69,8 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     focusElement: '.js-input',
 
     ui: {
-        input: '.js-input'
+        input: '.js-input',
+        clearButton: '.js-clear-button'
     },
 
     className: 'editor',
@@ -88,7 +86,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
     events: {
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
-        'click .js-clear-button': '__clear'
+        'click @ui.clearButton': '__clear'
     },
 
     __keyup() {
@@ -145,11 +143,16 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         const value = this.getValue() || '';
         this.ui.input.val(value);
         if (this.options.showTitle) {
-            this.$el.prop('title', value);
+            this.ui.input.prop('title', value);
         }
         // Keyboard shortcuts listener
         if (this.keyListener) {
             this.keyListener.reset();
+        }
+        if (!this.options.allowEmptyValue) {
+            this.ui.clearButton.hide();
+        } else {
+            this.ui.clearButton.show();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
     },
@@ -179,7 +182,7 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.value = value;
 
         if (this.getOption('showTitle')) {
-            this.$el.prop('title', value);
+            this.ui.input.prop('title', value);
         }
         if (updateUi) {
             this.ui.input.val(value);
@@ -200,5 +203,3 @@ formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.f
         this.ui.input.deselect();
     }
 });
-
-export default formRepository.editors.Text;

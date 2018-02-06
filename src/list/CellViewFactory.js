@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { objectPropertyTypes } from '../Meta';
 import { helpers } from 'utils';
 import { Handlebars } from 'lib';
@@ -104,7 +102,9 @@ const factory = {
         return Marionette.ItemView.extend({
             template: Handlebars.compile(template),
             modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange'
+                'change:highlightedFragment': '__handleHighlightedFragmentChange',
+                highlighted: '__handleHighlightedFragmentChange',
+                unhighlighted: '__handleHighlightedFragmentChange'
             },
             __handleHighlightedFragmentChange() {
                 this.render();
@@ -124,7 +124,7 @@ const factory = {
                     text = _.chain(value)
                         .map(item => ({
                             id: item.id,
-                            text: item.text || item.name || item.columns && item.columns[0]
+                            text: item.text || item.name || (item.columns && item.columns[0])
                         }))
                         .sortBy(member => member.text)
                         .reduce((memo, member) => {
@@ -163,8 +163,8 @@ const factory = {
                     documents = _.chain(value)
                         .map(item => ({
                             id: item.id,
-                            text: item.text || item.name || item.columns && item.columns[0],
-                            url: item.url || item.columns && item.columns[1]
+                            text: item.text || item.name || (item.columns && item.columns[0]),
+                            url: item.url || (item.columns && item.columns[1])
                         }))
                         .sortBy(document => document.text)
                         .value();

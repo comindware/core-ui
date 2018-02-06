@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import LoadingView from '../../views/LoadingView';
@@ -33,10 +31,9 @@ export default Marionette.Behavior.extend({
             }
         } else if (visible instanceof Promise) {
             this.setLoading(true);
-            Promise.resolve(visible).bind(this).then(function() {
-                //noinspection JSPotentiallyInvalidUsageOfThis
+            Promise.resolve(visible).then(() => {
                 this.setLoading(false);
-            }, function() {
+            }, () => {
                 //noinspection JSPotentiallyInvalidUsageOfThis
                 this.setLoading(false);
             });

@@ -38,13 +38,12 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
      * @param {Object} options.text Text filter filter to apply or <code>null</code>.
      * @return {Promise} Promise object that resolves when the data is ready.
      * */
-    fetch(options) {
-        options = options || {};
-
+    fetch(options = {}) {
         const filterText = options.text ? options.text.trim().toUpperCase() : '';
         return this.collection.fetch({ data: { filter: filterText } })
             .then(() => {
-                this.totalCount = this.collection.totalCount;
+                this.totalCount = this.collection.parentCollection ? this.collection.parentCollection.totalCount : this.collection.totalCount;
+
                 return {
                     collection: this.collection.toJSON(),
                     totalCount: this.totalCount
@@ -58,7 +57,7 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
     * */
     collection: null,
 
-    createValueUrl(value) {
+    createValueUrl() {
         return false;
     },
 
@@ -66,7 +65,7 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
      * Handles the edit request to the editor.
      * @param {Object} value Value object that describes the object to edit.
      * */
-    edit(value) {
+    edit() {
         return false;
     }
 });

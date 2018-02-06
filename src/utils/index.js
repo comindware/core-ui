@@ -15,6 +15,7 @@ import keyCode_ from './keyCode';
 import './handlebars/all';
 import './jquery/selector.focusable';
 import RegionBehavior_ from './marionette/RegionBehavior';
+import './codemirror';
 
 export const RegionBehavior = RegionBehavior_;
 export const comparators = comparators_;

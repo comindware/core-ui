@@ -9,11 +9,12 @@
 import { helpers } from 'utils';
 import { $ } from 'lib';
 import AjaxService from './services/AjaxService';
-import MessageService from './services/MessageService';
 import GlobalEventService from './services/GlobalEventService';
 import UserService from './services/UserService';
 import WindowService from './services/WindowService';
 import LocalizationService from './services/LocalizationService';
+import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
+import MobileService from 'services/MobileService';
 
 const initializeThirdParties = function() {
     $.fn.datetimepicker.dates[LocalizationService.langCode] = {
@@ -33,11 +34,14 @@ export default {
         helpers.ensureOption(options, 'ajaxService');
         helpers.ensureOption(options, 'userService');
 
+        InterfaceErrorMessageService.initialize();
+
         GlobalEventService.initialize();
         UserService.initialize(options.userService);
         WindowService.initialize();
         LocalizationService.initialize(options.localizationService);
         AjaxService.load(options.ajaxService);
+        MobileService.initialize();
 
         initializeThirdParties();
     }

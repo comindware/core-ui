@@ -6,14 +6,9 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import template from '../templates/defaultButton.hbs';
-
-const classes = {
-};
 
 export default Marionette.ItemView.extend({
     initialize(options) {

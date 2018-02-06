@@ -1,18 +1,12 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/27/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import 'lib';
-import template from './headerItem.hbs';
+import template from './templates/headerItem.hbs';
 
 export default Marionette.ItemView.extend({
     tagName: 'li',
 
-    className: 'layout__tab-layout__header-view-item',
+    className() {
+        return `layout__tab-layout__header-view-item ${this.model.get('tabClass')}`;
+    },
 
     template: Handlebars.compile(template),
 

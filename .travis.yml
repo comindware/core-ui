@@ -1,8 +1,4 @@
 language: node_js
-cache:
-  directories:
-    - node_modules
-    - demo/node_modules
 node_js:
   - '8'
 install: ./build/npm-install.sh
@@ -19,11 +15,11 @@ deploy:
     on:
       tags: true
       repo: comindware/core-ui
-      branch: master
+      branch: 1.4/release
   - provider: script
     script: npm run deploy:pages
     skip_cleanup: true
     on:
       tags: true
       repo: comindware/core-ui
-      branch: master
+      branch: 1.4/release

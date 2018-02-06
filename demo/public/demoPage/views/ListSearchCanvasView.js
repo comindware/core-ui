@@ -9,31 +9,22 @@
  *       actual or intended publication of such source code.
  */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import template from 'text-loader!../templates/listSearchCanvas.html';
 
-define([
-    'comindware/core',
-    'text!../templates/listSearchCanvas.html'
-], function (core, template) {
-    'use strict';
-    return Marionette.LayoutView.extend({
-        initialize: function () {
-        },
+export default Marionette.LayoutView.extend({
+    template: Handlebars.compile(template),
 
-        template: Handlebars.compile(template),
+    regions: {
+        searchRegion: '.js-search-region',
+        contentRegion: '.js-content-region',
+        scrollbarRegion: '.js-scrollbar-region'
+    },
 
-        regions: {
-            searchRegion: '.js-search-region',
-            contentRegion: '.js-content-region',
-            scrollbarRegion: '.js-scrollbar-region'
-        },
+    className: 'demo-list-canvas__view_search',
 
-        className: 'demo-list-canvas__view_search',
-
-        onShow: function () {
-            this.contentRegion.show(this.options.content);
-            this.scrollbarRegion.show(this.options.scrollbar);
-            this.searchRegion.show(this.options.search);
-        }
-    });
+    onShow() {
+        this.contentRegion.show(this.options.content);
+        this.scrollbarRegion.show(this.options.scrollbar);
+        this.searchRegion.show(this.options.search);
+    }
 });

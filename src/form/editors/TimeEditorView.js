@@ -6,9 +6,7 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import { Handlebars } from 'lib';
+import { Handlebars, moment } from 'lib';
 import template from './templates/timeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
@@ -16,7 +14,7 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    timeDisplayFormat: null,
+    timeDisplayFormat: undefined,
     showTitle: true
 };
 
@@ -33,13 +31,8 @@ const defaultOptions = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
 formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
-    initialize(options) {
-        options = options || {};
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.value = this.__adjustValue(this.value);
 
@@ -107,11 +100,11 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     __value(value, updateUi, triggerChange) {
-        value = this.__adjustValue(value);
-        if (this.value === value) {
+        const newValue = this.__adjustValue(value);
+        if (this.value === newValue) {
             return;
         }
-        this.value = value;
+        this.value = newValue;
 
         if (triggerChange) {
             this.__triggerChange();

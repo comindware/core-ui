@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import 'lib';
 import { helpers, htmlHelpers } from 'utils';
 
@@ -33,7 +31,7 @@ export default Marionette.Behavior.extend({
         this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
         this.columns = view.options.columns;
 
-        this.listenTo(view, 'all', function(eventName) {
+        this.listenTo(view, 'all', eventName => {
             if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
                 return;
             }
@@ -82,11 +80,11 @@ export default Marionette.Behavior.extend({
     },
 
     __handleColumnsResize() {
-        const cells = _.toArray(this.__getCellElements());
-        _.each(this.columns, (col, k) => {
+        const cells = Array.from(this.__getCellElements());
+        this.columns.forEach((col, k) => {
             const $cell = $(cells[k]);
             $cell.outerWidth(col.absWidth);
-        }, this);
+        });
     },
 
     __handleClick(e) {

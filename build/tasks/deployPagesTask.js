@@ -9,14 +9,8 @@
  *       actual or intended publication of such source code.
  */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
+const fs = require('fs');
 const execSync = require('child_process').execSync;
-const fs = require('fs-extra');
-const mkdirp = require('mkdirp');
-const del = require('del');
 
 const pathResolver = require('../pathResolver');
 
@@ -27,13 +21,28 @@ const run = (cmd, cwd) => {
     });
 };
 
-const copyDemo = (resolver) => {
-    run('npm run build', pathResolver.demo());
-    fs.copySync(pathResolver.demo('public/assets'), resolver());
+const copySyncRecursive = (src, dest) => {
+    if (fs.existsSync(src)) {
+        !fs.existsSync(dest) && fs.mkdirSync(dest);
+        fs.readdirSync(src).forEach(file => {
+            const srcPath = `${src}/${file}`;
+            const destPath = `${dest}/${file}`;
+            if (fs.lstatSync(srcPath).isDirectory()) {
+                copySyncRecursive(srcPath, destPath);
+            } else {
+                fs.copyFileSync(srcPath, destPath);
+            }
+        });
+    }
 };
 
-const copyDoc = (resolver) => {
-    fs.copySync(pathResolver.root('doc'), resolver('doc'));
+const copyDemo = resolver => {
+    run('npm run build', pathResolver.demo());
+    copySyncRecursive(pathResolver.demo('public/assets'), resolver());
+};
+
+const copyDoc = resolver => {
+    copySyncRecursive(pathResolver.root('doc'), resolver('doc'));
 };
 
 module.exports = () => {
@@ -42,10 +51,10 @@ module.exports = () => {
 
     const pagesDir = pathResolver.pages();
     const pagesResolver = pathResolver.createResolver(pagesDir);
-    mkdirp.sync(pagesDir);
+    !fs.existsSync(pagesDir) && fs.mkdirSync(pagesDir);
     run('git init', pagesDir);
     run('git config user.name "Travis-CI"', pagesDir);
-    run('git config user.email "me@sburg.net"', pagesDir);
+    run('git config user.email "bot@comindware.com"', pagesDir);
     copyDemo(pagesResolver);
     copyDoc(pagesResolver);
     run('git add -A', pagesDir);

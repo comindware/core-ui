@@ -6,9 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
-import list from 'list';
 import { Handlebars } from 'lib';
 import template from '../templates/multiSelectItem.hbs';
 
@@ -23,10 +20,8 @@ export default Marionette.ItemView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers() {
-        const displayAttribute = this.getOption('displayAttribute');
-
         return {
-            text: _.result(this.model.toJSON(), displayAttribute)
+            text: _.result(this.model.toJSON(), this.getOption('displayAttribute'))
         };
     },
 

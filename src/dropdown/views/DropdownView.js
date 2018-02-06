@@ -20,10 +20,12 @@ const classes = {
     DROPDOWN_DOWN: 'dropdown__wrp_down',
     DROPDOWN_WRP_OVER: 'dropdown__wrp_down-over',
     DROPDOWN_UP: 'dropdown__wrp_up',
-    DROPDOWN_UP_OVER: 'dropdown__wrp_up-over'
+    DROPDOWN_UP_OVER: 'dropdown__wrp_up-over',
+    VISIBLE_COLLECTION: 'visible-collection'
 };
 
 const WINDOW_BORDER_OFFSET = 10;
+const MAX_DROPDOWN_PANEL_WIDTH = 200;
 
 const panelPosition = {
     DOWN: 'down',
@@ -84,7 +86,7 @@ const defaultOptions = {
 
 export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
     initialize(options) {
-        _.extend(this.options, _.clone(defaultOptions), options || {});
+        _.defaults(this.options, _.clone(defaultOptions), options);
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
         _.bindAll(this, 'open', 'close');
@@ -231,8 +233,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             top,
             left: buttonRect.left
         };
+
+        const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelCss['min-width'] = buttonRect.width;
+            panelCss['min-width'] = panelWidth;
         }
         $panelEl.css(panelCss);
     },
@@ -264,8 +268,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             hostEl: this.el
         });
         this.__adjustPosition(wrapperView.$el);
-
+        const buttonWidth = this.buttonRegion.$el.outerWidth();
+        const panelWidth = buttonWidth > MAX_DROPDOWN_PANEL_WIDTH ? buttonWidth : MAX_DROPDOWN_PANEL_WIDTH;
+        this.panelView.$el.css({ width: panelWidth });
+        this.panelView.$(`.${classes.VISIBLE_COLLECTION}`).css({ width: panelWidth });
         this.listenToElementMoveOnce(this.el, this.close);
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
 
         const activeElement = document.activeElement;
@@ -301,6 +309,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         this.trigger('close', this, ...args);
         if (this.options.renderAfterClose) {
             this.button.render();
+        }
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.close();
         }
     },
 

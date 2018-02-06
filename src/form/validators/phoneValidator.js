@@ -6,20 +6,18 @@
  * Published under the MIT license
  */
 
-'use strict';
+/*eslint-disable*/
 
 import 'lib';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
     
 formRepository.validators.phone = function(options) {
-    options = _.extend({
+    return formRepository.validators.regexp(_.extend({
         type: 'phone',
         message: LocalizationService.get('CORE.FORM.VALIDATION.PHONE'),
         regexp: /^\+?[0-9]+[0-9\-().\s]{7,}$/
-    }, options);
-
-    return formRepository.validators.regexp(options);
+    }, options));
 };
 
 export default formRepository.validators.phone;

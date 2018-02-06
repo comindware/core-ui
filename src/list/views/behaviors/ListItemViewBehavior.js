@@ -7,7 +7,7 @@
  */
 
 import 'lib';
-import { helpers, htmlHelpers } from 'utils';
+import { helpers } from 'utils';
 
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
@@ -43,12 +43,13 @@ const eventBubblingIgnoreList = [
 export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(view.options, 'internalListViewReqres');
-        this.listenTo(view, 'all', function(eventName) {
+        this.listenTo(view, 'all', eventName => {
             if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
                 return;
             }
             view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
         });
+        this.__debounceClickHandle = _.debounce(this.__handleDebouncedClick, 300, true);
     },
 
     modelEvents: {
@@ -59,7 +60,7 @@ export default Marionette.Behavior.extend({
     },
 
     events: {
-        mousedown: '__handleClick'
+        click: '__handleClick'
     },
 
     onRender() {
@@ -73,11 +74,7 @@ export default Marionette.Behavior.extend({
     },
 
     __handleClick(e) {
-        const model = this.view.model;
-        const selectFn = model.collection.selectSmart || model.collection.select;
-        if (selectFn) {
-            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
-        }
+        this.__debounceClickHandle(e);
     },
 
     __handleHighlighting(sender, e) {
@@ -98,5 +95,19 @@ export default Marionette.Behavior.extend({
 
     __handleDeselection() {
         this.$el.removeClass('selected');
+    },
+
+    __handleDebouncedClick(e) {
+        const model = this.view.model;
+        if (model.selected) {
+            model.deselect();
+        } else {
+            const selectFn = this.getOption('multiSelect')
+                ? model.collection.select
+                : model.collection.selectSmart || model.collection.select;
+            if (selectFn) {
+                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
+            }
+        }
     }
 });

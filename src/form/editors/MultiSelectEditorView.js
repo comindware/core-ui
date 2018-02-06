@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import template from './templates/multiSelectEditor.hbs';
@@ -17,7 +15,7 @@ import MultiSelectButtonView from './impl/multiSelect/views/MultiSelectButtonVie
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    collection: null,
+    collection: undefined,
     displayAttribute: 'text',
     allowEmptyValue: true,
     explicitApply: false
@@ -40,13 +38,9 @@ const defaultOptions = {
  * */
 formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MultiSelectEditorView.prototype */{
     initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        if (_.isArray(this.options.collection)) {
+        if (Array.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);
         }
 

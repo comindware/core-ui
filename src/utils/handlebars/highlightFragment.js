@@ -6,11 +6,9 @@
  * Published under the MIT license
  */
 
-/* global module */
-
 import { htmlHelpers } from '../index';
 
-module.exports = function(text, fragment) {
+export default function(text, fragment) {
     if (!text) {
         return '';
     }
@@ -18,4 +16,4 @@ module.exports = function(text, fragment) {
         return new Handlebars.SafeString(Handlebars.escapeExpression(text));
     }
     return new Handlebars.SafeString(htmlHelpers.highlightText(text, fragment, true));
-};
+}

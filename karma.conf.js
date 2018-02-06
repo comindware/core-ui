@@ -6,14 +6,12 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 const webpackConfigFactory = require('./build/webpack.config.js');
 
-module.exports = function (config) {
-    let TEST_COVERAGE = config.coverage === true;
+module.exports = function(config) {
+    const TEST_COVERAGE = config.coverage === true;
 
-    let result = {
+    const result = {
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
 
@@ -22,18 +20,20 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         plugins: [
-            'karma-ie-launcher',
             'karma-chrome-launcher',
+            'karma-firefox-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-sourcemap-loader',
-            'karma-webpack'
+            'karma-webpack',
+            'karma-coverage'
         ],
 
         // list of files / patterns to load in the browser
         files: [
             'node_modules/babel-polyfill/dist/polyfill.js',
-            'tests/tests.bundle.js'
+            'tests/tests.bundle.js',
+            'dist/core.css'
         ],
 
         // list of files to exclude
@@ -65,7 +65,14 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS', 'FirefoxHeadless'],
+
+        customLaunchers: {
+            FirefoxHeadless: {
+                base: 'Firefox',
+                flags: [ '-headless' ]
+            }
+        },
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -75,14 +82,21 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        webpack: webpackConfigFactory.build({
-            env: 'test'
+        webpack: webpackConfigFactory({
+            env: 'test',
+            clean: false
         }),
 
         webpackMiddleware: {
             noInfo: true,
             stats: 'minimal'
-        }
+        },
+
+        rules: [{
+            test: /\.js/,
+            exclude: /node_modules/,
+            loader: 'babel-loader'
+        }]
     };
 
     if (TEST_COVERAGE) {
@@ -96,11 +110,15 @@ module.exports = function (config) {
                 { type: 'html', subdir: 'report-html' },
                 { type: 'lcov', subdir: 'report-lcov' },
                 { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
-            ]
+            ],
+            instrumenterOptions: {
+                istanbul: { noCompact: true, embedSource: true }
+            }
         };
 
-        result.webpack = webpackConfigFactory.build({
-            env: 'test-coverage'
+        result.webpack = webpackConfigFactory({
+            env: 'test-coverage',
+            clean: false
         });
     }
 

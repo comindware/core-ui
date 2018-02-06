@@ -35,7 +35,6 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     templateHelpers() {
-        const value = this.model.get('value');
         return {
             text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton
@@ -108,12 +107,12 @@ export default Marionette.LayoutView.extend({
             this.keyListener.reset();
         }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function(value, key) {
+        _.each(this.keyboardShortcuts, (value, key) => {
             const keys = key.split(',');
-            _.each(keys, function(k) {
+            _.each(keys, k => {
                 this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        }, this);
+            });
+        });
     },
 
     keyboardShortcuts: {
@@ -155,7 +154,7 @@ export default Marionette.LayoutView.extend({
         if (this.activeText === text) {
             return;
         }
-        const updateNow = function() {
+        const updateNow = () => {
             this.activeText = text;
             this.__setLoading(true);
             const collection = this.model.get('collection');
@@ -172,7 +171,7 @@ export default Marionette.LayoutView.extend({
                 }
                 this.__setLoading(false);
             });
-        }.bind(this);
+        };
         if (immediate) {
             updateNow();
         } else {

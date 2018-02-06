@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 import BaseItemEditorView from './base/BaseItemEditorView';
@@ -17,7 +15,8 @@ import formRepository from '../formRepository';
 const defaultOptions = {
     removable: true,
     autoUpload: false,
-    refreshPreviewAfterUpload: false
+    refreshPreviewAfterUpload: false,
+    controller: undefined
 };
 
 /**
@@ -34,6 +33,7 @@ const defaultOptions = {
  * @param {BaseAvatarEditorController} options.controller - Data provider controller in the form of subclass of
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
+
 formRepository.editors.Avatar = BaseItemEditorView.extend({
     className: 'user-avatar-wrp',
     
@@ -57,12 +57,8 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
         'click @ui.remove': '__remove'
     },
     
-    initialize(options) {
-        if (options.schema) {
-            Object.assign(this.options, defaultOptions, options.schema);
-        } else {
-            Object.assign(this.options, defaultOptions, options);
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
         
         helpers.ensureOption(this.options, 'controller');
         this.controller = this.getOption('controller');

@@ -18,7 +18,6 @@ export default Marionette.ItemView.extend({
     templateHelpers() {
         const items = this.model.get('value');
         const empty = !items || !items.length;
-        const collection = this.model.get('collection');
 
         let displayValue;
         if (empty) {

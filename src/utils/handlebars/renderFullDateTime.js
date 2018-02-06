@@ -5,13 +5,8 @@
  *       All Rights Reserved
  * Published under the MIT license
  */
-
-/* global module */
-
-'use strict';
-
 import { moment } from 'lib';
 
-module.exports = function(date) {
+export default function(date) {
     return moment(date).format('LLL');
-};
+}

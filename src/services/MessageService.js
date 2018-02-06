@@ -36,8 +36,7 @@ export default {
         ], iconIds.QUESTION);
     },
 
-    error(description, text) {
-        text = text || LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.ERROR');
+    error(description, text = LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.ERROR')) {
         return this.showMessageDialog(description, text, [
             {
                 id: false,
@@ -47,8 +46,7 @@ export default {
         ], iconIds.ERROR);
     },
 
-    showMessageDialog(description, text, buttons, iconId) {
-        iconId = iconId || iconIds.NONE;
+    showMessageDialog(description, text, buttons, iconId = iconIds.NONE) {
         return new Promise(resolve => {
             const view = new MessageView({
                 model: new Backbone.Model({

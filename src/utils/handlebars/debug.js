@@ -6,11 +6,7 @@
  * Published under the MIT license
  */
 
-/* global module */
-
-'use strict';
-
-module.exports = function(optionalValue) {
+export default function(optionalValue) {
     console.log('Current Context');
     console.log('====================');
     console.log(this);
@@ -19,4 +15,4 @@ module.exports = function(optionalValue) {
         console.log('====================');
         console.log(optionalValue);
     }
-};
+}

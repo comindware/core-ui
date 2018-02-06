@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import template from './templates/mentionEditor.hbs';
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
@@ -19,7 +17,7 @@ import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    editorOptions: null
+    editorOptions: undefined
 };
 
 /**
@@ -33,12 +31,8 @@ const defaultOptions = {
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
 formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{
-    initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.__createViewModel();
     },
@@ -88,9 +82,9 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         this.listenTo(this.dropdownView, 'button:input', this.__onInput);
         this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
-        _.each(this.keyboardShortcuts, function(v, k) {
+        _.each(this.keyboardShortcuts, (v, k) => {
             this.dropdownView.button.addKeyboardListener(k, v.bind(this));
-        }, this);
+        });
 
         // We discarded it during render phase, so we do it now.
         this.setPermissions(this.enabled, this.readonly);

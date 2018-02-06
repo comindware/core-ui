@@ -12,7 +12,6 @@
     margin: 0;
     font-size: 12px;
     background: #fff;
-    border: 1px solid #c2c2c2;
     -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
@@ -88,6 +87,7 @@
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
+    display: flex;
 }
 .dropdown-list__i:hover {
     background: #edf3fb;
@@ -205,6 +205,7 @@
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
+    display: flex;
 }
 
 .dd-list__i:hover {
@@ -229,6 +230,16 @@
 
 .dd-list__i_group:hover {
     background:transparent;
+}
+
+.dev_dd-list__i_with_checkbox {
+    padding: 0 4px;
+}
+
+.dev_dd-list__i_with_checkbox .checkbox {
+    top: 6px;
+    position: relative;
+    margin-right: 5px;
 }
 
 .dd-list__btn{
@@ -266,6 +277,10 @@
     cursor: pointer;
 }
 
+.dd-list__list_reference + .dd-list__btn{
+    padding-top:5px;
+    height: 30px;
+}
 
 /* /dd-list */
 
@@ -280,7 +295,6 @@
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     overflow: hidden;
-    background: #fff;
     z-index: 44;
     opacity: 0;
     transition: opacity .7s, height .1s ease-out;
@@ -402,7 +416,7 @@
 
 /* multiselect */
 .multiselect-panel{
-    min-width: 160px;
+    min-width: 200px;
     max-width: 100%;
     padding: 25px 0;
     position: relative;
@@ -480,6 +494,10 @@
 .multiselect-i_selected {
     font-weight: 500;
     color:#000;
+}
+
+.datepicker_panel {
+    width: 220px !important;
 }
 
 /*-----//------*/

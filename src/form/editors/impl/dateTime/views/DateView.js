@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, $ } from 'lib';
 import template from '../templates/date.hbs';
 import dropdown from 'dropdown';
@@ -61,6 +59,9 @@ export default Marionette.LayoutView.extend({
     },
 
     __onBeforeClose() {
+        if (this.calendarDropdownView.isDestroyed) {
+            return;
+        }
         this.calendarDropdownView.button.endEditing();
         this.trigger('blur');
     },

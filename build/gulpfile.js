@@ -18,13 +18,8 @@
 *
 * */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
-const webpack = require('webpack');
 const karma = require('karma');
 
 const pathResolver = require('./pathResolver');
@@ -32,8 +27,6 @@ const pathResolver = require('./pathResolver');
 // ###
 // Worker tasks
 // ###
-
-gulp.task('clean', require('./tasks/cleanTask'));
 
 gulp.task('localization', require('./tasks/localizationTask'));
 gulp.task('watch:localization', () => {
@@ -51,7 +44,7 @@ gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
 
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
 gulp.task('watch:build:core:dev', () => {
-    gulp.watch([ pathResolver.source('**/*'), pathResolver.resources('**/*') ], [ 'build:core:dev' ]);
+    gulp.watch([ pathResolver.source('**/*'), pathResolver.resources('**/*') ], [ 'build:core:dev', 'generateSprites' ]);
 });
 
 gulp.task('build:core:prod', require('./tasks/buildProdTask')(false));
@@ -63,14 +56,14 @@ gulp.task('build:core:prod:min', require('./tasks/buildProdTask')(true));
 
 gulp.task('deploy:pages', require('./tasks/deployPagesTask'));
 
-gulp.task('test', function (done) {
+gulp.task('test', done => {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js'),
         singleRun: true
     }, done).start();
 });
 
-gulp.task('test:coverage', function (done) {
+gulp.task('test:coverage', done => {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js'),
         singleRun: true,
@@ -78,16 +71,16 @@ gulp.task('test:coverage', function (done) {
     }, done).start();
 });
 
-gulp.task('test:watch', function (done) {
+gulp.task('test:watch', done => {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js')
     }, done).start();
 });
 
 gulp.task('start', callback =>
-    runSequence('localization', 'generateSprites', 'build:core:dev', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
+    runSequence('localization', 'build:core:dev', 'generateSprites', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
 
-gulp.task('build', callback => runSequence('clean', 'localization', 'generateSprites', ['build:core:prod', 'build:core:prod:min', 'jsdoc'], callback));
+gulp.task('build', callback => runSequence(['build:core:prod', 'build:core:prod:min', 'jsdoc'], 'localization', 'generateSprites', callback));
 
 gulp.task('deploy', callback => runSequence('build', 'test:coverage', 'prepareToPublish', callback));
 

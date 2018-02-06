@@ -9,9 +9,6 @@
 import { Handlebars } from 'lib';
 import template from '../templates/dropdownButton.hbs';
 
-const classes = {
-};
-
 export default Marionette.ItemView.extend({
     initialize(options) {
         this.reqres = options.reqres;

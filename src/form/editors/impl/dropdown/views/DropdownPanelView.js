@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { Handlebars, keypress } from 'lib';
 import template from '../templates/dropdownPanel.hbs';
 import DefaultDropdownListItemView from './DefaultDropdownListItemView';
@@ -28,6 +26,8 @@ export default Marionette.LayoutView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
+
+        this.rowHeight = options.rowHeight || config.CHILD_HEIGHT;
 
         this.reqres = options.reqres;
     },
@@ -74,9 +74,7 @@ export default Marionette.LayoutView.extend({
         if (!virtualCollection) {
             const collection = this.model.get('collection');
             if (collection.comparator === undefined) {
-                collection.comparator = function(model) {
-                    return (_.result(model.toJSON(), displayAttribute) || '').toString().toLowerCase();
-                };
+                collection.comparator = model => (_.result(model.toJSON(), displayAttribute) || '').toString().toLowerCase();
             }
 
             if (collection.comparator) {
@@ -105,9 +103,9 @@ export default Marionette.LayoutView.extend({
                 emptyViewOptions: {
                     className: classes.EMPTY_VIEW
                 },
-                maxRows: Math.floor(config.MAX_HEIGHT / config.CHILD_HEIGHT),
+                maxRows: Math.floor(config.MAX_HEIGHT / this.rowHeight),
                 height: 'auto',
-                childHeight: config.CHILD_HEIGHT
+                childHeight: this.rowHeight
             }
         });
 
@@ -133,12 +131,12 @@ export default Marionette.LayoutView.extend({
         const actualShortcuts = _.extend({}, listShortcuts, this.keyboardShortcuts);
 
         this.keyListener = new keypress.Listener(this.el);
-        _.each(actualShortcuts, function(value, key) {
+        _.each(actualShortcuts, (value, key) => {
             const keys = key.split(',');
-            _.each(keys, function(k) {
+            _.each(keys, k => {
                 this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        }, this);
+            });
+        });
     },
 
     keyboardShortcuts: {

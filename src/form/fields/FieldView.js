@@ -22,14 +22,14 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    initialize(options) {
-        options = options || {};
-
+    initialize(options = {}) {
         this.form = options.form;
         this.key = options.key;
         this.__createSchema(options.schema);
 
-        this.__createEditor();
+        this.fieldId = _.uniqueId('field-');
+
+        this.__createEditor(this.fieldId);
 
         this.__viewModel = new Backbone.Model({
             helpText: this.schema.helpText,
@@ -39,7 +39,8 @@ export default Marionette.LayoutView.extend({
 
     templateHelpers() {
         return {
-            title: this.schema.title
+            title: this.schema.title,
+            fieldId: this.fieldId
         };
     },
 
@@ -205,7 +206,8 @@ export default Marionette.LayoutView.extend({
             key: this.key,
             model: this.model,
             id: this.__createEditorId(),
-            value: this.options.value
+            value: this.options.value,
+            fieldId: this.fieldId
         });
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());

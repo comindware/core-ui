@@ -6,8 +6,6 @@
  * Published under the MIT license
  */
 
-'use strict';
-
 import { helpers } from 'utils';
 import NativeGridView from './views/NativeGridView';
 import VirtualCollection from '../collections/VirtualCollection';
@@ -21,17 +19,50 @@ import VirtualCollection from '../collections/VirtualCollection';
  * @returns {Object}
  * @returns {Backbone.Collection} collection Коллекция элементов списка
  * */
-const createWrappedCollection = function(collection, options) {
+const createWrappedCollection = (collection, options) => {
     if (!(collection instanceof VirtualCollection)) {
-        if (_.isArray(collection)) {
-            collection = new VirtualCollection(new Backbone.Collection(collection), options);
+        if (Array.isArray(collection)) {
+            return new VirtualCollection(new Backbone.Collection(collection), options);
         } else if (collection instanceof Backbone.Collection) {
-            collection = new VirtualCollection(collection, options);
-        } else {
-            helpers.throwError('Invalid collection', 'ArgumentError');
+            return new VirtualCollection(collection, options);
         }
+        helpers.throwError('Invalid collection', 'ArgumentError');
     }
     return collection;
+};
+
+const createTree = options => {
+    const collection = options.collection;
+    const childrenAttribute = options.childrenAttribute;
+    if (!childrenAttribute) {
+        return collection;
+    }
+    const resultCollection = new Backbone.Collection();
+    const createTreeNodes = (sourceCollection, targetCollection, parentModel = null) => {
+        sourceCollection.forEach(item => {
+            let children;
+            let attributes;
+            if (Array.isArray(sourceCollection)) {
+                children = item[childrenAttribute];
+                attributes = item;
+            } else if (sourceCollection instanceof Backbone.Collection) {
+                children = item.get(childrenAttribute);
+                attributes = item.attributes;
+            } else {
+                helpers.throwError('Invalid collection', 'ArgumentError');
+            }
+            const treeLeaf = new Backbone.Model(attributes);
+            treeLeaf.parentModel = parentModel;
+            treeLeaf.collapsed = true;
+            treeLeaf.children = new Backbone.Collection();
+            targetCollection.add(treeLeaf);
+            if (children && children.length) {
+                createTreeNodes(children, treeLeaf.children, treeLeaf);
+            }
+        });
+    };
+    createTreeNodes(collection, resultCollection);
+    return resultCollection;
 };
 
 export default {
@@ -50,17 +81,32 @@ export default {
      * @returns {Backbone.View} NativeGridView View-списка
      * */
     createNativeGrid(options) {
-        const collection = createWrappedCollection(options.collection, { selectableBehavior: options.gridViewOptions.selectableBehavior });
+        const collection = createWrappedCollection(options.collection, {
+            selectableBehavior: options.gridViewOptions.selectableBehavior,
+            isTree: options.gridViewOptions.isTree
+        });
 
-        const gridViewOptions = _.extend({
+        const gridViewOptions = Object.assign({
             collection,
             onColumnSort: options.onColumnSort,
             headerView: options.headerView,
             rowView: options.rowView,
+            treeRowView: options.treeRowView,
             rowViewSelector: options.rowViewSelector,
             emptyView: options.emptyView
         }, options.gridViewOptions);
 
         return new NativeGridView(gridViewOptions);
-    }
+    },
+
+    createTreeGrid(options) {
+        options.collection = createTree(options);
+        if (!options.gridViewOptions) {
+            options.gridViewOptions = {};
+        }
+        options.gridViewOptions.isTree = true;
+        return this.createNativeGrid(options);
+    },
+
+    createTree
 };

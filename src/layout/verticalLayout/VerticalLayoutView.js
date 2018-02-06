@@ -8,6 +8,7 @@
 
 import 'lib';
 import { helpers } from 'utils';
+import template from './verticalLayout.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
@@ -23,7 +24,7 @@ export default Marionette.LayoutView.extend({
         this.rows = options.rows;
     },
 
-    template: false,
+    template: Handlebars.compile(template),
 
     className: classes.CLASS_NAME,
 
@@ -33,12 +34,22 @@ export default Marionette.LayoutView.extend({
         }
     },
 
+    ui: {
+        list: '.js-list'
+    },
+
+    templateHelpers() {
+        return {
+            title: this.options.title
+        };
+    },
+
     onShow() {
         this.__rowsCtx = [];
         this.options.rows.forEach(view => {
             view.on('change:visible', this.__handleChangeVisibility.bind(this));
             const $regionEl = $('<div></div>').addClass(classes.ITEM);
-            this.$el.append($regionEl);
+            this.ui.list.append($regionEl);
             const region = this.addRegion(_.uniqueId('verticalLayoutItem'), {
                 el: $regionEl
             });
