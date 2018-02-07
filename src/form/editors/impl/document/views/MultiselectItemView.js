@@ -58,7 +58,7 @@ export default Marionette.View.extend({
                 popoutFlow: 'right',
                 autoOpen: false
             });
-            this.reviseRegion.show(this.documentRevisionPopout);
+            this.showChildView('reviseRegion', this.documentRevisionPopout);
         }
     },
 

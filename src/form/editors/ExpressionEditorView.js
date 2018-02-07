@@ -101,7 +101,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         this.valueEditor = new this.options.valueEditor(Object.assign(this.options.valueEditorOptions, {
             value: initialValue.type === 'value' ? initialValue.value : null
         }));
-        this.valueContainer.show(this.valueEditor);
+        this.showChildView('valueContainer', this.valueEditor);
         this.listenTo(this.valueEditor, 'change', () => this.__updateValue(this.valueEditor.getValue(), true));
     },
 
@@ -145,7 +145,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         });
 
         this.contextValueEditor = new ContextView(contextOptions);
-        this.contextContainer.show(this.contextValueEditor);
+        this.showChildView('contextContainer', this.contextValueEditor);
 
         this.valueOptionCollection.add(new ValueOptionModel({
             id: 'context',
@@ -177,7 +177,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         this.buttonModel = new Backbone.Model({ name: selOptionModel.get('alias') });
         if ((this.valueOptionCollection.length === 1) || (!this.options.enabled)) {
             const buttonView = new SelectButtonView({ model: this.buttonModel });
-            this.selectType.show(buttonView);
+            this.showChildView('selectType', buttonView);
         } else {
             const popoutOptions = {
                 buttonView: SelectButtonView,
@@ -191,7 +191,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
                 popoutFlow: 'left'
             };
             const popoutView = dropdownFactory.createPopout(popoutOptions);
-            this.selectType.show(popoutView);
+            this.showChildView('selectType', popoutView);
 
             this.listenTo(popoutView, 'execute', (id, model) => {
                 if (model.id === 'expression' || model.id === 'script') {

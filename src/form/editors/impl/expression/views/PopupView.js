@@ -52,6 +52,6 @@ export default Marionette.View.extend({
     onRender() {
         this.__createView();
         this.view.setValue(this.value.value);
-        this.contentRegion.show(this.view);
+        this.showChildView('contentRegion', this.view);
     }
 });

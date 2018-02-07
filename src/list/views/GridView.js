@@ -1,11 +1,4 @@
 /* eslint-disable no-param-reassign */
-/**
- * Developer: Stepan Burguchev
- * Date: 7/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
@@ -165,10 +158,10 @@ export default Marionette.View.extend({
         const elementWidth = this.$el.width();
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
-            this.noColumnsViewRegion.show(noColumnsView);
+            this.showChildView('noColumnsViewRegion', noColumnsView);
         }
-        this.headerRegion.show(this.headerView);
-        this.contentViewRegion.show(this.listView);
+        this.showChildView('headerRegion', this.headerView);
+        this.showChildView('contentViewRegion', this.listView);
         const updatedElementWidth = this.$el.width();
         if (elementWidth !== updatedElementWidth) {
             // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.

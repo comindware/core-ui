@@ -76,12 +76,12 @@ export default Marionette.View.extend({
         if (this.showAddNewButton) {
             this.$el.addClass('dd-list_reference-button');
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
-            this.addNewButtonRegion.show(addNewButton);
+            this.showChildView('addNewButtonRegion', addNewButton);
         }
 
-        this.listRegion.show(result.listView);
+        this.showChildView('listRegion', result.listView);
 
-        this.scrollbarRegion.show(result.scrollbarView);
+        this.showChildView('scrollbarRegion', result.scrollbarView);
 
         if (this.getOption('hideSearchBar')) {
             this.ui.searchBarContainer.hide();

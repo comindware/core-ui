@@ -1,13 +1,3 @@
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
 import template from './impl/newExpressionEditor/templates/newExpression.html';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -165,7 +155,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         if (this.valueTypeCollection.length === 1) {
             this.ui.type.hide();
         }
-        this.typeContainer.show(this.typeEditor);
+        this.showChildView('typeContainer', this.typeEditor);
     },
 
     __showValueEditor() {
@@ -189,7 +179,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         }));
 
         this.valueEditor.on('change', this.__updateEditorValue, this);
-        this.valueContainer.show(this.valueEditor);
+        this.showChildView('valueContainer', this.valueEditor);
     },
 
     __showContextEditor() {
@@ -207,7 +197,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         this.contextEditor = new formRepository.editors.ContextSelect(contextOptions);
         this.contextEditor.on('change', this.__updateEditorValue, this);
-        this.contextContainer.show(this.contextEditor);
+        this.showChildView('contextContainer', this.contextEditor);
 
         this.valueTypeCollection.add({
             id: valueTypes.context,
@@ -235,7 +225,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         this.expressionEditor = new formRepository.editors.Code(expressionEditorOptionsOptions);
         this.expressionEditor.on('change', this.__updateEditorValue, this);
-        this.expressionContainer.show(this.expressionEditor);
+        this.showChildView('expressionContainer', this.expressionEditor);
     },
 
     __showScriptEditor() {
@@ -257,7 +247,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
 
         this.scriptEditor = new formRepository.editors.Code(scriptEditorOptionsOptions);
         this.scriptEditor.on('change', this.__updateEditorValue, this);
-        this.scriptContainer.show(this.scriptEditor);
+        this.showChildView('scriptContainer', this.scriptEditor);
     },
 
     __updateEditorState() {

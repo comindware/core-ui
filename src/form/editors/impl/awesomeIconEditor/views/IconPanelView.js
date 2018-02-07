@@ -25,8 +25,8 @@ export default Marionette.View.extend({
 
     regions: {
         searchInputRegion: '.js-search-input-region',
-        searchArea: '.js-search-area',
-        collectionArea: '.js-collection-area'
+        searchAreaRegion: '.js-search-area',
+        collectionAreaRegion: '.js-collection-area'
     },
 
     modelEvents: {
@@ -41,13 +41,13 @@ export default Marionette.View.extend({
             autocommit: true
         });
 
-        this.searchInputRegion.show(this.search);
+        this.showChildView('searchInputRegion', this.search);
 
         const iconCollectionView = new IconCollectionView({
             collection: this.options.collection
         });
 
-        this.collectionArea.show(iconCollectionView);
+        this.collectionAreaRegion.show(iconCollectionView);
         this.listenTo(iconCollectionView, 'click:item', id => this.trigger('click:item', id));
     },
 
@@ -57,8 +57,8 @@ export default Marionette.View.extend({
             const matchesItems = this.__searchItem(value);
             this.__showSearchResult(matchesItems);
         } else {
-            this.collectionArea.$el.show();
-            this.searchArea.$el.hide();
+            this.collectionAreaRegion.$el.show();
+            this.searchAreaRegion.$el.hide();
         }
     },
 
@@ -72,9 +72,9 @@ export default Marionette.View.extend({
             model
         });
 
-        this.searchArea.show(iconItemCategoryView);
-        this.collectionArea.$el.hide();
-        this.searchArea.$el.show();
+        this.showChildView('searchAreaRegion', iconItemCategoryView);
+        this.collectionAreaRegion.$el.hide();
+        this.searchAreaRegion.$el.show();
         this.listenTo(iconItemCategoryView, 'click:item', id => this.trigger('click:item', id));
     },
 
@@ -86,11 +86,11 @@ export default Marionette.View.extend({
             }
 
             const splitName = searchStr.split('-');
-            return _.some(splitName, item => item.toLowerCase().indexOf(value) === 0);
+            return splitName.some(item => item.toLowerCase().indexOf(value) === 0);
         };
 
         this.iconGroupsCollection.each(groupItem => {
-            _.each(groupItem.get('groupItems'), item => {
+            groupItem.get('groupItems').forEach(item => {
                 if (matchSearch(item.id) ||
                     (item.filter && item.filter.find(filterItem => matchSearch(filterItem))) ||
                     (item.aliases && item.aliases.find(aliasesItem => matchSearch(aliasesItem)))) {

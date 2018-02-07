@@ -60,7 +60,7 @@ export default function() {
         },
 
         onRender() {
-            this.layoutRegion.show(core.layout.createFromSchema({
+            this.showChildView('layoutRegion', core.layout.createFromSchema({
                 type: 'VerticalLayout',
                 rows: [
                     {

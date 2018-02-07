@@ -141,7 +141,7 @@ const ListView = Marionette.View.extend({
             loadingChildView: this.loadingChildView
         });
 
-        this.visibleCollectionRegion.show(this.visibleCollectionView);
+        this.showChildView('visibleCollectionRegion', this.visibleCollectionView);
         this.handleResize();
 
         if (this.forbidSelection) {

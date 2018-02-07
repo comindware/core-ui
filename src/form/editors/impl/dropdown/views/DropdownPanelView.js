@@ -101,8 +101,8 @@ export default Marionette.View.extend({
         this.listView = result.listView;
         this.eventAggregator = result.eventAggregator;
 
-        this.listRegion.show(result.listView);
-        this.scrollbarRegion.show(result.scrollbarView);
+        this.showChildView('listRegion', result.listView);
+        this.showChildView('scrollbarRegion', result.scrollbarView);
 
         this.$el.focus();
     },

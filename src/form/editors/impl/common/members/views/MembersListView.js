@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 20.04.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { helpers } from 'utils';
 import { Handlebars } from 'lib';
@@ -55,8 +48,8 @@ export default Marionette.View.extend({
             this.trigger('member:select', model);
         });
 
-        this.listRegion.show(this.listBundle.listView);
-        this.scrollbarRegion.show(this.listBundle.scrollbarView);
+        this.showChildView('listRegion', this.listBundle.listView);
+        this.showChildView('scrollbarRegion', this.listBundle.scrollbarView);
     },
 
     handleCommand(command) {

@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 30.08.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import list from 'list';
@@ -71,15 +64,15 @@ export default Marionette.View.extend({
         if (this.showAddNewButton) {
             this.$el.addClass('dd-list_reference-button');
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
-            this.addNewButtonRegion.show(addNewButton);
+            this.showChildView('addNewButtonRegion', addNewButton);
         }
 
-        this.listRegion.show(result.listView);
+        this.showChildView('listRegion', result.listView);
 
-        this.scrollbarRegion.show(result.scrollbarView);
+        this.showChildView('scrollbarRegion', result.scrollbarView);
 
-        this.elementsQuantityWarningRegion.show(new ElementsQuantityWarningView());
-        this.elementsQuantityWarningRegion.$el.hide();
+        this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
+        this.getRegion('elementsQuantityWarningRegion').$el.hide();
         this.updateFilter(null, true);
     },
 
@@ -162,17 +155,17 @@ export default Marionette.View.extend({
         }
         this.isLoading = isLoading;
         if (isLoading) {
-            this.loadingRegion.show(new LoadingView());
+            this.showChildView('loadingRegion', new LoadingView());
         } else {
-            this.loadingRegion.reset();
+            this.getRegion('loadingRegion').reset();
         }
     },
 
     __toggleElementsQuantityWarning(count) {
         if (this.elementsQuantityWarningRegion) {
             count > 100
-                ? this.elementsQuantityWarningRegion.$el.show()
-                : this.elementsQuantityWarningRegion.$el.hide();
+                ? this.getRegion('elementsQuantityWarningRegion').$el.show()
+                : this.getRegion('elementsQuantityWarningRegion').$el.hide();
         }
     }
 });
