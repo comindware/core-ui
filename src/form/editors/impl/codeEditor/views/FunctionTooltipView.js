@@ -1,14 +1,3 @@
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 
 import FunctionOverloadView from './FunctionOverloadView';
 import FunctionOverloadModel from '../models/FunctionOverloadModel';
@@ -46,10 +35,10 @@ export default Marionette.View.extend({
             }
         }).listView;
         this.functionOverloads.on('childview:selected', child => {
-            this.functionParametersContainer.show(new FunctionParametersView(child.model));
+            this.showChildView('functionParametersContainer', new FunctionParametersView(child.model));
         });
         this.functionOverloads.on('childview:peek', () => this.trigger('peek'));
-        this.functionOverloadsContainer.show(this.functionOverloads);
+        this.showChildView('functionOverloadsContainer', this.functionOverloads);
         if (this.options.isFull) {
             collection.at(0).select();
         }

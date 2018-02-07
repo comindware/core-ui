@@ -84,8 +84,8 @@ export default Marionette.View.extend({
             availableViewOptions.listViewOptions.childViewSelector = this.options.childViewSelector;
         }
         const availableList = Core.list.factory.createDefaultList(availableViewOptions);
-        this.availableItemsListRegion.show(availableList.listView);
-        this.availableItemsScrollbarRegion.show(availableList.scrollbarView);
+        this.showChildView('availableItemsListRegion', availableList.listView);
+        this.showChildView('availableItemsScrollbarRegion', availableList.scrollbarView);
 
         if (this.eventAggregator.available) {
             this.stopListening(this.eventAggregator.available);

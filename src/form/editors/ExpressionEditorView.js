@@ -177,7 +177,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         this.buttonModel = new Backbone.Model({ name: selOptionModel.get('alias') });
         if ((this.valueOptionCollection.length === 1) || (!this.options.enabled)) {
             const buttonView = new SelectButtonView({ model: this.buttonModel });
-            this.selectType.show(buttonView);
+            this.showChildView('selectType', buttonView);
         } else {
             const popoutOptions = {
                 buttonView: SelectButtonView,
@@ -191,7 +191,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
                 popoutFlow: 'left'
             };
             const popoutView = dropdownFactory.createPopout(popoutOptions);
-            this.selectType.show(popoutView);
+            this.showChildView('selectType', popoutView);
 
             this.listenTo(popoutView, 'execute', (id, model) => {
                 if (model.id === 'expression' || model.id === 'script') {

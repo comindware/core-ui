@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';

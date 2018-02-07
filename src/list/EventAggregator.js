@@ -1,14 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import 'lib';
 
 /*
     Behavior-like controller that is responsible for synchronization between views presenting the same collection.

@@ -1,18 +1,7 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 04.03.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-'use strict';
-
-import { Handlebars } from 'lib';
 import template from '../templates/radioButton.hbs';
 
 export default Marionette.View.extend({
-
     template: Handlebars.compile(template),
 
     className: 'editor editor_radiobutton',

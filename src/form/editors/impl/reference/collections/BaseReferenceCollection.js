@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/4/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import 'lib';
 import { helpers } from 'utils';

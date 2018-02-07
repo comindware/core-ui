@@ -59,7 +59,7 @@ export default Marionette.View.extend({
 
     __updateView() {
         this.__showGridView();
-        this.collectionHeaderToolbarRegion.show(this.collectionHeaderToolbarView);
+        this.showChildView('collectionHeaderToolbarRegion', this.collectionHeaderToolbarView);
         if (this.getOption('showSearch')) {
             this.__showSearch();
         }
@@ -186,7 +186,7 @@ export default Marionette.View.extend({
 
     __showSearch() {
         const searchView = new SearchBarView();
-        this.collectionHeaderSearchRegion.show(searchView);
+        this.showChildView('collectionHeaderSearchRegion', searchView);
         searchView.on('search', text => {
             this.__collapse(this.nativeGridCollection);
             this.__unhighlightCollection(this.nativeGridCollection);

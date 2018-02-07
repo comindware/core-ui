@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 5/21/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import '../resources/styles/bootstrap-datetimepicker.css';
 import '../resources/styles/fonts.css';

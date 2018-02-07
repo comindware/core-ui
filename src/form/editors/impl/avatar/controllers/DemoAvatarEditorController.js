@@ -1,12 +1,3 @@
-/**
- * Developer: Oleg Verevkin
- * Date: 02/19/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
 
 import BaseAvatarEditorController from './BaseAvatarEditorController';
 
