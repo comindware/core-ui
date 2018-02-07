@@ -96,7 +96,7 @@ export default Marionette.View.extend({
         });
         // Available search
         const availableSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.availableSearchRegion.show(availableSearchView);
+        this.showChildView('availableSearchRegion', availableSearchView);
         this.listenTo(availableSearchView, 'search', this.__onAvailableSearch);
         // Selected list
         const selectedList = Core.list.factory.createDefaultList({
@@ -115,12 +115,12 @@ export default Marionette.View.extend({
                 maxRows: 10
             }
         });
-        this.selectedItemsListRegion.show(selectedList.listView);
-        this.selectedItemsScrollbarRegion.show(selectedList.scrollbarView);
+        this.showChildView('selectedItemsListRegion', selectedList.listView);
+        this.showChildView('selectedItemsScrollbarRegion', selectedList.scrollbarView);
 
         // Selected search
         const selectedSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.selectedSearchRegion.show(selectedSearchView);
+        this.showChildView('selectedSearchRegion', selectedSearchView);
         this.listenTo(selectedSearchView, 'search', this.__onSelectedSearch);
 
         if (this.model.get('showToolbar')) {
@@ -129,13 +129,13 @@ export default Marionette.View.extend({
                 model: this.model
             });
             this.listenTo(availableItemsToolbarView, 'select', this.__onAvailableItemsSelect);
-            this.availableItemsToolbarRegion.show(availableItemsToolbarView);
+            this.showChildView('availableItemsToolbarRegion', availableItemsToolbarView);
 
             // Selected toolbar
             const selectedMembersToolbarView = new MembersToolbarView({
                 model: this.model
             });
-            this.selectedItemsToolbarRegion.show(selectedMembersToolbarView);
+            this.showChildView('selectedItemsToolbarRegion', selectedMembersToolbarView);
             this.listenTo(selectedMembersToolbarView, 'select', this.__onSelectedItemsSelect);
         }
 

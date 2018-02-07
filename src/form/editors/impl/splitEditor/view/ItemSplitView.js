@@ -129,13 +129,13 @@ export default Marionette.View.extend({
                 model: this.model
             });
             this.listenTo(availableItemsToolbarView, 'select', this.__onAvailableItemsSelect);
-            this.availableItemsToolbarRegion.show(availableItemsToolbarView);
+            this.showChildView('availableItemsToolbarRegion', availableItemsToolbarView);
 
             // Selected toolbar
             const selectedMembersToolbarView = new this.options.itemsToolbarView({
                 model: this.model
             });
-            this.selectedItemsToolbarRegion.show(selectedMembersToolbarView);
+            this.showChildView('selectedItemsToolbarRegion', selectedMembersToolbarView);
             this.listenTo(selectedMembersToolbarView, 'select', this.__onSelectedItemsSelect);
         }
 

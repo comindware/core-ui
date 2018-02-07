@@ -43,7 +43,8 @@ export default Marionette.View.extend({
             view.on('change:visible', this.__handleChangeVisibility.bind(this));
             const $regionEl = $('<div></div>').addClass(classes.ITEM);
             this.ui.list.append($regionEl);
-            const region = this.addRegion(_.uniqueId('verticalLayoutItem'), {
+            const id = _.uniqueId('verticalLayoutItem');
+            const region = this.addRegion(id, {
                 el: $regionEl
             });
             this.__rowsCtx.push({
@@ -51,7 +52,7 @@ export default Marionette.View.extend({
                 $regionEl,
                 region
             });
-            region.show(view);
+            this.showChildView(id, view);
         });
         this.__updateState();
     },

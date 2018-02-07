@@ -1,12 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 8/2/2017
- * Copyright: 2009-2017 Ksenia Kartvelishvili®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars } from 'lib';
 import { helpers } from 'utils';
 import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';

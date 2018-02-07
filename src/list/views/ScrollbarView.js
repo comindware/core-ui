@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars } from 'lib';
 import template from '../templates/scrollbar.hbs';
 
 /*

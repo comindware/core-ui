@@ -72,7 +72,7 @@ export default Marionette.View.extend({
         this.eventAggregator = result.eventAggregator;
 
         this.showChildView('listRegion', result.listView);
-        this.scrollbarRegion.show(result.scrollbarView);
+        this.showChildView('scrollbarRegion', result.scrollbarView);
 
         this.ui.input.focus();
         this.__updateFilter();

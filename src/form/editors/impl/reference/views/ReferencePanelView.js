@@ -160,11 +160,11 @@ export default Marionette.View.extend({
         }
         this.isLoading = isLoading;
         if (isLoading) {
-            this.loadingRegion.show(new LoadingView());
+            this.showChildView('loadingRegion', new LoadingView());
             this.ui.input.blur();
         } else {
             this.ui.input.focus();
-            this.loadingRegion.reset();
+            this.getRegion('loadingRegion').reset();
         }
     }
 });
