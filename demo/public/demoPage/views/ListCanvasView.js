@@ -23,6 +23,6 @@ export default Marionette.LayoutView.extend({
 
     onShow() {
         this.contentRegion.show(this.options.content);
-        this.scrollbarRegion.show(this.options.scrollbar);
+        // this.scrollbarRegion.show(this.options.scrollbar);
     }
 });

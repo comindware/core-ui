@@ -71,11 +71,16 @@ export default Marionette.LayoutView.extend({
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
 
+        this.uniqueId = _.uniqueId('native-grid');
+        this.styleSheet = document.createElement('style');
+
         this.headerView = new GridHeaderView({
             columns: options.columns,
             gridEventAggregator: this,
             checkBoxPadding: options.checkBoxPadding || 0,
-            gridColumnHeaderView: options.gridColumnHeaderView
+            gridColumnHeaderView: options.gridColumnHeaderView,
+            styleSheet: this.styleSheet,
+            uniqueId: this.uniqueId
         });
 
         this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
@@ -103,7 +108,8 @@ export default Marionette.LayoutView.extend({
 
         const childViewOptions = _.extend(options.childViewOptions || {}, {
             columns: options.columns,
-            gridEventAggregator: this
+            gridEventAggregator: this,
+            uniqueId: this.uniqueId
         });
 
         this.listView = new ListView({
@@ -181,6 +187,18 @@ export default Marionette.LayoutView.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
+        document.body.appendChild(this.styleSheet);
+        this.__bindListRegionScroll();
+    },
+
+    __bindListRegionScroll() {
+        this.listView.$el.scroll(event => {
+            this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
+        });
+    },
+
+    onDestroy() {
+        document.body.remove(this.styleSheet);
     },
 
     sortBy(columnIndex, sorting) {
