@@ -13,7 +13,7 @@ import 'lib';
 const HighlightableBehavior = function() {
 };
 
-_.extend(HighlightableBehavior.prototype, {
+Object.assign(HighlightableBehavior.prototype, {
     highlight(text) {
         if (this.highlighted) {
             return;

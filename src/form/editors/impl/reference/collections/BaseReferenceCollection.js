@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/4/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import 'lib';
 import { helpers } from 'utils';
@@ -19,8 +12,8 @@ const defaultOptions = {
 export default Backbone.Collection.extend({
     constructor() {
         Backbone.Collection.prototype.constructor.apply(this, arguments);
-        _.extend(this, new HighlightableBehavior(this));
-        _.extend(this, new SelectableBehavior.SingleSelect(this));
+        Object.assign(this, new HighlightableBehavior(this));
+        Object.assign(this, new SelectableBehavior.SingleSelect(this));
     },
 
     fetch(options) {

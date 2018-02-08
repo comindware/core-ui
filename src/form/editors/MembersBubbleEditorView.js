@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 15.04.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
@@ -85,7 +78,7 @@ formRepository.editors.MembersBubble = BaseLayoutEditorView.extend(/** @lends mo
             },
             autoOpen: false
         });
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
         this.listenTo(this.dropdownView, 'before:open', this.__onBeforeDropdownOpen);
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);

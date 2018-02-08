@@ -1,10 +1,3 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 14.08.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import template from '../templates/nativeGrid.hbs';
@@ -33,7 +26,7 @@ const defaultOptions = {
  * @memberof module:core.nativeGrid.views
  * @class NativeGridView
  * @description View используемый по умолчанию для отображения строки списка
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Backbone.Collection} options.collection Коллекция строк списка
  * @param {Backbone.View} [options.headerView={@link module:core.nativeGrid.views.HeaderView}] View, используемый для отображения заголовка списка
@@ -47,7 +40,7 @@ const defaultOptions = {
  * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка.
  * Получает в качестве аргумента модель строки списка, должна вернуть необходимый класс View (например, {@link module:core.nativeGrid.views.RowView})
  * */
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     /**
      * View template
      * @param {HTML} HTML file
@@ -105,7 +98,7 @@ export default Marionette.LayoutView.extend({
         }
         this.options.noColumnsViewOptions && (this.noColumnsViewOptions = this.options.noColumnsViewOptions); // jshint ignore:line
 
-        const childViewOptions = _.extend(this.options.gridViewOptions || {}, {
+        const childViewOptions = Object.assign(this.options.gridViewOptions || {}, {
             columns: this.options.columns,
             gridEventAggregator: this,
             paddingLeft: this.options.paddingLeft,
@@ -149,15 +142,15 @@ export default Marionette.LayoutView.extend({
     onRender() {
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
-            this.noColumnsViewRegion.show(noColumnsView);
+            this.showChildView('noColumnsViewRegion', noColumnsView);
         }
-        this.headerRegion.show(this.headerView);
-        this.listRegion.show(this.listView);
+        this.showChildView('headerRegion', this.headerView);
+        this.showChildView('listRegion', this.listView);
         this.bindListRegionScroll();
     },
 
     bindListRegionScroll() {
-        this.listRegion.$el.scroll(event => {
+        this.getRegion('listRegion').$el.scroll(event => {
             this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
         });
     },
@@ -175,7 +168,7 @@ export default Marionette.LayoutView.extend({
     },
 
     showFilterPopout(options) {
-        const AnchoredButtonView = Marionette.ItemView.extend({
+        const AnchoredButtonView = Marionette.View.extend({
             template: Handlebars.compile('<span class="js-anchor"></span>'),
             behaviors: {
                 CustomAnchorBehavior: {
@@ -206,7 +199,7 @@ export default Marionette.LayoutView.extend({
             this.trigger('column:filter:close', options.columnHeader.options.column.id, child.panelView, closeOptions);
         });
 
-        this.popoutRegion.show(this.filterDropdown);
+        this.showChildView('popoutRegion', this.filterDropdown);
         this.filterDropdown.$el.offset(options.position);
         this.filterDropdown.open();
     }

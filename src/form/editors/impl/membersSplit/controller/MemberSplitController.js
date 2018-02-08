@@ -43,7 +43,7 @@ export default BaseSplitController.extend({
             groups: 0
         };
 
-        _.each(this.options.selected, id => {
+        this.options.selected.forEach(id => {
             if (members[id]) {
                 membersCount[members[id].type]++;
             }

@@ -1,10 +1,3 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 16.07.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars, moment } from 'lib';
 import { helpers, dateHelpers } from 'utils';
@@ -12,7 +5,7 @@ import template from '../templates/timeInput.hbs';
 import DateTimeService from '../../../services/DateTimeService';
 import LocalizationService from '../../../../../services/LocalizationService';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'allowEmptyValue');
         this.hasSeconds = this.__hasSeconds(options.timeDisplayFormat);

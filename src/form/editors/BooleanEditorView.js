@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import keyCode from '../../utils/keyCode';
@@ -59,7 +52,7 @@ export default formRepository.editors.Boolean = BaseItemEditorView.extend(/** @l
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             displayText: this.options.displayText,
             displayHtml: this.options.displayHtml

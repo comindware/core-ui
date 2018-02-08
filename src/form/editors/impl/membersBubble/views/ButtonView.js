@@ -1,12 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 16.04.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
 
 import { Handlebars } from 'lib';
 import template from '../templates/button.hbs';
@@ -31,7 +22,7 @@ export default Marionette.CollectionView.extend({
         return classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED);
     },
 
-    getChildView(model) {
+    childView(model) {
         if (model instanceof FakeInputModel) {
             return InputView;
         }

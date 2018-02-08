@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/7/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { helpers } from 'utils';
 import { $ } from 'lib';
@@ -19,7 +12,7 @@ export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(options, 'onBlur');
 
-        _.extend(this.options, defaultOptions, _.pick(options || {}, Object.keys(defaultOptions)));
+        Object.assign(this.options, defaultOptions, _.pick(options || {}, Object.keys(defaultOptions)));
 
         _.bindAll(this, '__onBlur');
 

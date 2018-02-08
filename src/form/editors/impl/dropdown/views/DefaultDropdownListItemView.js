@@ -1,17 +1,10 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/16/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
 import list from 'list';
 import template from '../templates/defaultDropdownListItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
@@ -26,7 +19,7 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const model = this.model.toJSON();
         const displayAttribute = this.options.displayAttribute;
         return {

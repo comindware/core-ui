@@ -14,12 +14,12 @@ const classes = {
     SELECTED: 'multiselect-i_selected'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: classes.BASE,
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: _.result(this.model.toJSON(), this.getOption('displayAttribute'))
         };

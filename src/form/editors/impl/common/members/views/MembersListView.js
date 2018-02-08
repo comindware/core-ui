@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 20.04.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { helpers } from 'utils';
 import { Handlebars } from 'lib';
@@ -20,7 +13,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'collection');
     },
@@ -34,7 +27,7 @@ export default Marionette.LayoutView.extend({
         scrollbarRegion: '.js-scrollbar-region'
     },
 
-    onShow() {
+    onRender() {
         this.listBundle = list.factory.createDefaultList({
             collection: this.collection,
             listViewOptions: {
@@ -55,8 +48,8 @@ export default Marionette.LayoutView.extend({
             this.trigger('member:select', model);
         });
 
-        this.listRegion.show(this.listBundle.listView);
-        this.scrollbarRegion.show(this.listBundle.scrollbarView);
+        this.showChildView('listRegion', this.listBundle.listView);
+        this.showChildView('scrollbarRegion', this.listBundle.scrollbarView);
     },
 
     handleCommand(command) {

@@ -1,10 +1,3 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 07/16/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars, moment } from 'lib';
 import template from './templates/dateTimeEditor.hbs';
@@ -70,7 +63,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
@@ -110,8 +103,9 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         this.listenTo(this.timeView, 'focus', this.onFocus);
         this.listenTo(this.timeView, 'blur', this.onTimeBlur);
 
-        this.dateRegion.show(this.dateView);
-        this.timeRegion.show(this.timeView);
+        this.showChildView('dateRegion', this.dateView);
+        this.showChildView('timeRegion', this.timeView);
+
         this.__updateClearButton();
         if (this.options.showTitle) {
             this.__updateTitle();

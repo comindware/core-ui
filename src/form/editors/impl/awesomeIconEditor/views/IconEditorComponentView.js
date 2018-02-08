@@ -1,14 +1,3 @@
-/**
- * Developer: Zaycev Ivan
- * Date: 29.06.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 
 import IconButtonView from './IconButtonView';
 import IconPanelView from './IconPanelView';
@@ -26,7 +15,7 @@ const constants = {
  * @param modelIconProperty - name of model property. 'iconClass' as default
  */
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         const modelIconProperty = options.modelIconProperty;
         if (modelIconProperty && modelIconProperty !== constants.iconPropertyDefaultName) {
@@ -72,7 +61,7 @@ export default Marionette.LayoutView.extend({
             this.trigger('click:item', id);
         });
 
-        this.iconSelectorHeader.show(this.popupPanel);
+        this.showChildView('iconSelectorHeader', this.popupPanel);
         if (!this.model.get('iconClass')) {
             this.ui.deleteIconButton.hide();
         }

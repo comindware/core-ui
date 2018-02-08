@@ -1,13 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 13.02.2015
- * Copyright: 2009-2015 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
+
 /* eslint-disable */
 
 import { objectPropertyTypes } from '../../../../../Meta';
@@ -34,14 +25,14 @@ var ContextModel = Backbone.Model.extend({
         let hasChildren = false;
         const checkedProperties = {};
 
-        _.each(this.get('context')[this.get('instanceTypeId')], attributes => {
+        this.get('context')[this.get('instanceTypeId')].forEach(attributes => {
             const propertyTypes = this.get('propertyTypes');
             const usePropertyTypes = this.get('usePropertyTypes');
 
             if (!this.checkPropertyType(attributes, true, checkedProperties)) { return; }
 
             hasChildren = true;
-            const modelAttributes = _.extend({
+            const modelAttributes = Object.assign({
                 context: this.get('context'),
                 propertyTypes,
                 usePropertyTypes,

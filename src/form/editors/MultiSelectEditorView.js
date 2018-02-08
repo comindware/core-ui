@@ -1,10 +1,3 @@
-/**
- * Developer: Oleg Verevkin
- * Date: 10/21/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
@@ -98,7 +91,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
         this.listenTo(this.dropdownView, 'panel:close', () => this.dropdownView.close());
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
     },
 
     __onCollectionChange() {

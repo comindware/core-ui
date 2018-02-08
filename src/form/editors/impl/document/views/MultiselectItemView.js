@@ -6,7 +6,7 @@ import DocumentItemController from '../controllers/DocumentItemController';
 
 const savedDocumentPrefix = 'document';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.revisionCollection = new Backbone.Collection();
         const controller = new DocumentItemController({ view: this });
@@ -23,7 +23,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.model.get('text') || this.model.get('name')
         };
@@ -50,9 +50,6 @@ export default Marionette.LayoutView.extend({
         if (this.options.hideRemoveBtn) {
             this.ui.remove.hide();
         }
-    },
-
-    onShow() {
         if (this.model.get('id').indexOf(savedDocumentPrefix) > -1) {
             this.documentRevisionPopout = new dropdown.factory.createPopout({
                 buttonView: DocumentRevisionButtonView,
@@ -61,10 +58,9 @@ export default Marionette.LayoutView.extend({
                 popoutFlow: 'right',
                 autoOpen: false
             });
-            this.reviseRegion.show(this.documentRevisionPopout);
+            this.showChildView('reviseRegion', this.documentRevisionPopout);
         }
     },
-
 
     __getDocumentRevision() {
         this.reqres.request('document:revise', this.model.get('id')).then(revisionList => {

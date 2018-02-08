@@ -13,7 +13,7 @@ import { htmlHelpers } from 'utils';
 import template from '../templates/listItem.hbs';
 import list from 'list';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
@@ -32,7 +32,7 @@ export default Marionette.ItemView.extend({
         fullName: '.js-fullName'
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.__getText()
         };

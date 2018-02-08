@@ -25,9 +25,9 @@ export default Marionette.Behavior.extend({
     setLoading(visible) {
         if (_.isBoolean(visible)) {
             if (visible) {
-                this.view[this.options.region].show(new LoadingView(this.loadingViewOptions));
+                this.view.showChildView(this.options.region, new LoadingView(this.loadingViewOptions));
             } else {
-                this.view[this.options.region].reset();
+                this.view.getRegion(this.options.region).reset();
             }
         } else if (visible instanceof Promise) {
             this.setLoading(true);

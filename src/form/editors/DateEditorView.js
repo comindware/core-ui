@@ -1,10 +1,3 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 07/15/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars, moment } from 'lib';
 import template from './templates/dateEditor.hbs';
@@ -95,7 +88,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     onRender() {
-        this.dateRegion.show(this.dateView);
+        this.showChildView('dateRegion', this.dateView);
         this.__updateClearButton();
     },
 

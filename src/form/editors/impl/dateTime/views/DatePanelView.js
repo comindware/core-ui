@@ -1,10 +1,3 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 10.09.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars, moment } from 'lib';
 import { dateHelpers } from 'utils';
@@ -15,7 +8,7 @@ const defaultOptions = {
     pickerFormat: 'YYYY-MM-DD'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     initialize() {
@@ -63,7 +56,7 @@ export default Marionette.ItemView.extend({
         this.model.set({ value: newVal });
     },
 
-    onShow() {
+    onRender() {
         this.ui.pickerInput.datetimepicker(this.pickerOptions)
             .on('changeDate', e => {
                 this.updateValue(e.date);

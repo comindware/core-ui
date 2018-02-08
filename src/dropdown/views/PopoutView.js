@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/26/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { $, Handlebars } from 'lib';
 import { helpers } from 'utils';
@@ -14,7 +7,6 @@ import BlurableBehavior from '../utils/BlurableBehavior';
 
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
 import template from '../templates/popout.hbs';
-import WrapperView from './WrapperView';
 
 const WINDOW_BORDER_OFFSET = 10;
 
@@ -85,7 +77,7 @@ const defaultOptions = {
  * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
  * </ul>
  * @constructor
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Options object.
  * @param {Marionette.View} options.buttonView View class for displaying the button.
  * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
@@ -114,7 +106,7 @@ const defaultOptions = {
  *                                       The panel grows to the left.</li></ul>
  * */
 
-export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.PopoutView.prototype */ {
+export default Marionette.View.extend(/** @lends module:core.dropdown.views.PopoutView.prototype */ {
     initialize(options) {
         _.defaults(this.options, defaultOptions);
         helpers.ensureOption(options, 'buttonView');
@@ -172,10 +164,10 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             args[0] = `button:${args[0]}`;
             this.triggerMethod(...args);
         });
-        this.buttonRegion.show(this.button);
+        this.showChildView('buttonRegion', this.button);
 
         if (!this.options.customAnchor) {
-            this.buttonRegion.$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
+            this.getRegion('buttonRegion').$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
         }
 
         this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
@@ -519,7 +511,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
         this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+        const panelViewOptions = Object.assign(_.result(this.options, 'panelViewOptions') || {}, {
             parent: this
         });
         this.panelView = new this.options.panelView(panelViewOptions);
@@ -529,20 +521,16 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         });
         this.$el.addClass(classes.OPEN);
 
-        const wrapperView = new WrapperView({
-            view: this.panelView,
-            className: 'popout__wrp'
-        });
-        this.popupId = WindowService.showTransientPopup(wrapperView, {
+        this.popupId = WindowService.showTransientPopup(this.panelView, {
             fadeBackground: this.options.fade,
             hostEl: this.el
         });
         if (this.options.displacement) {
-            this.__adjustDisplacementVerticalPosition(wrapperView.$el);
-            this.__adjustDisplacementHorizontalPosition(wrapperView.$el);
+            this.__adjustDisplacementVerticalPosition(this.panelView.$el);
+            this.__adjustDisplacementHorizontalPosition(this.panelView.$el);
         } else {
-            this.__adjustDirectionPosition(wrapperView.$el);
-            this.__adjustFlowPosition(wrapperView.$el);
+            this.__adjustDirectionPosition(this.panelView.$el);
+            this.__adjustFlowPosition(this.panelView.$el);
         }
         this.listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));

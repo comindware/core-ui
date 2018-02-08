@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/27/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
@@ -17,7 +10,7 @@ const classes = {
     HIDDEN: 'layout__hidden'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'columns');
 
@@ -38,13 +31,13 @@ export default Marionette.LayoutView.extend({
         list: '.js-list'
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.options.title
         };
     },
 
-    onShow() {
+    onRender() {
         this.__rowsCtx = [];
         this.options.columns.forEach(view => {
             view.on('change:visible', this.__handleChangeVisibility.bind(this));

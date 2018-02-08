@@ -10,7 +10,7 @@ const classes = {
     CLASS_NAME: 'layout__form-view'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'schema');
         helpers.ensureOption(options, 'model');
@@ -62,8 +62,8 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onShow() {
-        this.contentRegion.show(this.content);
+    onRender() {
+        this.showChildView('contentRegion', this.content);
         this.renderForm();
         this.__updateState();
     },

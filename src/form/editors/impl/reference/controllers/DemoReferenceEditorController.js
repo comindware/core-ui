@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/10/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import 'lib';
 import list from 'list';
@@ -24,7 +17,7 @@ const DemoReferenceCollections = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
-export default Marionette.Controller.extend({
+export default Marionette.Object.extend({
     initialize() {
         this.collection = list.factory.createWrappedCollection(new DemoReferenceCollections([]));
     },

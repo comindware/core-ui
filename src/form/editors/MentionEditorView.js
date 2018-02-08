@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import template from './templates/mentionEditor.hbs';
 import { Handlebars } from 'lib';
@@ -53,13 +46,13 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         dropdownRegion: '.js-dropdown-region'
     },
 
-    onShow() {
+    onRender() {
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: TextAreaEditorView,
-            buttonViewOptions: _.extend({}, this.options.editorOptions || {}, {
+            buttonViewOptions: Object.assign({}, this.options.editorOptions || {}, {
                 model: this.model,
                 readonly: this.getReadonly(),
                 enabled: this.getEnabled(),
@@ -75,16 +68,16 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
             renderAfterClose: false
         });
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
         this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
         this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
         this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
         this.listenTo(this.dropdownView, 'button:input', this.__onInput);
         this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
-        _.each(this.keyboardShortcuts, (v, k) => {
-            this.dropdownView.button.addKeyboardListener(k, v.bind(this));
-        });
+        //_.each(this.keyboardShortcuts, (v, k) => { //todo restore
+        //    this.dropdownView.button.addKeyboardListener(k, v.bind(this));
+        //});
 
         // We discarded it during render phase, so we do it now.
         this.setPermissions(this.enabled, this.readonly);

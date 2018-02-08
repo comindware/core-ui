@@ -28,7 +28,7 @@ SelectableBehavior.SingleSelect = function(collection) {
     this.collection = collection;
 };
 
-_.extend(SelectableBehavior.SingleSelect.prototype, {
+Object.assign(SelectableBehavior.SingleSelect.prototype, {
 
     // Select a model, deselecting any previously
     // selected model
@@ -74,7 +74,7 @@ SelectableBehavior.MultiSelect = function(collection) {
     this.selected = {};
 };
 
-_.extend(SelectableBehavior.MultiSelect.prototype, {
+Object.assign(SelectableBehavior.MultiSelect.prototype, {
 
     // Select a specified model, make sure the
     // model knows it's selected, and hold on to
@@ -176,7 +176,7 @@ SelectableBehavior.Selectable = function(model) {
     this.model = model;
 };
 
-_.extend(SelectableBehavior.Selectable.prototype, {
+Object.assign(SelectableBehavior.Selectable.prototype, {
 
     // Select this model, and tell our
     // collection that we're selected

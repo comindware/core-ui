@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/28/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import { helpers } from 'utils';
@@ -18,7 +11,7 @@ const classes = {
     CLASS_NAME: 'layout__popup-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'header');
         helpers.ensureOption(options, 'buttons');
@@ -34,7 +27,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             headerText: this.options.header,
             buttons: this.__buttons
@@ -74,10 +67,8 @@ export default Marionette.LayoutView.extend({
             this.ui.window.css(this.options.size);
         }
         this.ui.window.css({ top: -50 });
-    },
 
-    onShow() {
-        this.contentRegion.show(this.options.content);
+        this.showChildView('contentRegion', this.options.content);
         this.__updateState();
         this.ui.window.css({ top: 'inherit' });
     },

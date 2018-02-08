@@ -1,10 +1,3 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 16.07.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars, $ } from 'lib';
 import template from '../templates/date.hbs';
@@ -12,7 +5,7 @@ import dropdown from 'dropdown';
 import PanelView from './DatePanelView';
 import InputView from './DateInputView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change
         this.allowEmptyValue = this.getOption('allowEmptyValue');
@@ -28,7 +21,7 @@ export default Marionette.LayoutView.extend({
         popoutRegion: '.js-popout-region'
     },
 
-    onShow() {
+    onRender() {
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {
@@ -55,7 +48,7 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
 
-        this.popoutRegion.show(this.calendarDropdownView);
+        this.showChildView('popoutRegion', this.calendarDropdownView);
     },
 
     __onBeforeClose() {

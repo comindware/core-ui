@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars, keypress } from 'lib';
-import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
@@ -56,13 +47,24 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         this.placeholder = this.options.emptyPlaceholder;
     },
 
-    onShow() {
+    onRender() {
         if (this.options.mask) {
             this.ui.input.inputmask(Object.assign({
                 mask: this.options.mask,
                 placeholder: this.options.maskPlaceholder,
                 autoUnmask: true
             }, this.options.maskOptions || {}));
+        }
+
+        const value = this.getValue() || '';
+        this.ui.input.val(value);
+        if (this.options.showTitle) {
+            this.ui.input.prop('title', value);
+        }
+        if (!this.options.allowEmptyValue) {
+            this.ui.clearButton.hide();
+        } else {
+            this.ui.clearButton.show();
         }
     },
 
@@ -77,8 +79,8 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
-        return _.extend(this.options, {
+    templateContext() {
+        return Object.assign(this.options, {
             title: this.value || ''
         });
     },
@@ -137,42 +139,6 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
             this.ui.input.prop('readonly', readonly);
             this.ui.input.prop('tabindex', readonly ? -1 : 0);
         }
-    },
-
-    onRender() {
-        const value = this.getValue() || '';
-        this.ui.input.val(value);
-        if (this.options.showTitle) {
-            this.ui.input.prop('title', value);
-        }
-        // Keyboard shortcuts listener
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        if (!this.options.allowEmptyValue) {
-            this.ui.clearButton.hide();
-        } else {
-            this.ui.clearButton.show();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-    },
-
-    /**
-     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
-     * [Keypress](https://dmauro.github.io/Keypress/).
-     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
-     * Полный список с названиями клавиш указан в исходном файле плагина:
-     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
-     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
-     * */
-    addKeyboardListener(key, callback) {
-        if (!this.keyListener) {
-            helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-        }
-        const keys = key.split(',');
-        _.each(keys, k => {
-            this.keyListener.simple_combo(k, callback);
-        });
     },
 
     __value(value, updateUi, triggerChange) {

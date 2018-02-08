@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
@@ -46,7 +39,7 @@ const factory = {
             collection
         });
 
-        const listViewOptions = _.extend({
+        const listViewOptions = Object.assign({
             collection,
             emptyView: EmptyListView
         }, options.listViewOptions);
@@ -93,7 +86,7 @@ const factory = {
         const collection = factory.createWrappedCollection(options.collection);
 
         //noinspection JSUnresolvedVariable
-        const gridViewOptions = _.extend({
+        const gridViewOptions = Object.assign({
             gridColumnHeaderView: GridColumnHeaderView,
             collection,
             emptyView: EmptyGridView,

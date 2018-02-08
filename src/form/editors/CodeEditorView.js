@@ -1,13 +1,3 @@
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
 import CodemirrorView from './impl/codeEditor/views/CodemirrorView';
 import template from './impl/codeEditor/templates/codeEditor.html';
@@ -63,7 +53,7 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
@@ -85,7 +75,7 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
                 this.ui.editor.hide();
             }
         });
-        this.editorContainer.show(this.editor);
+        this.showChildView('editorContainer', this.editor);
         this.editor.setValue(this.value || '');
         this.ui.fadingPanel.hide();
         if (this.options.showMode === showModes.button) {

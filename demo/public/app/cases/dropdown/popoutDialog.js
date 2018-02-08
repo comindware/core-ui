@@ -4,7 +4,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 import DemoProfilePanelView from 'demoPage/views/DemoProfilePanelView';
 
 export default function() {
-    const DemoButtonView = Marionette.ItemView.extend({
+    const DemoButtonView = Marionette.View.extend({
         template() {
             return Handlebars.compile('Demo Button');
         },

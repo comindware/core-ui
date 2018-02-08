@@ -1,14 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import 'lib';
 
 /*
     Behavior-like controller that is responsible for synchronization between views presenting the same collection.
@@ -28,7 +17,7 @@ import 'lib';
     });
  */
 
-export default Marionette.Controller.extend({
+export default Marionette.Object.extend({
     initialize(options) {
         if (options.views === undefined) {
             throw new Error('You must pass the views you want to keep in sync (displaying the same collection) into the `views` option.');
@@ -48,7 +37,7 @@ export default Marionette.Controller.extend({
         this.listenTo(this.collection, 'reset', this.__handleCollectionReset);
         this.__updateCount(this.collection.length);
 
-        _.each(this.views, v => {
+        Object.values(this.views).forEach(v => {
             this.listenTo(v, 'viewportHeightChanged', this.__handleViewportHeightChanged);
             this.listenTo(v, 'positionChanged', this.__handlePositionChanged);
         });

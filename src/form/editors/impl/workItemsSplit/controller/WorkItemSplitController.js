@@ -5,7 +5,7 @@ import LocalizationService from '../../../../../services/LocalizationService';
 
 const GroupingModel = Backbone.Model.extend({
     initialize() {
-        _.extend(this, new Core.list.models.behaviors.ListGroupBehavior(this));
+        Object.assign(this, new Core.list.models.behaviors.ListGroupBehavior(this));
     }
 });
 

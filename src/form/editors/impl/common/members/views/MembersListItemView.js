@@ -1,17 +1,10 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 16.04.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { htmlHelpers } from 'utils';
 import { Handlebars } from 'lib';
 import list from 'list';
 import template from '../templates/listItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     ui: {

@@ -17,7 +17,7 @@ const constants = {
     defaultCheckBoxColumnWidth: 30
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.collection = options.collection;
         this.collectionHeaderToolbarView = this.__createCollectionHeaderToolbarView();
@@ -52,14 +52,14 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         this.__updateView();
         this.ui.collectionName.text(this.getOption('title') || '');
     },
 
     __updateView() {
         this.__showGridView();
-        this.collectionHeaderToolbarRegion.show(this.collectionHeaderToolbarView);
+        this.showChildView('collectionHeaderToolbarRegion', this.collectionHeaderToolbarView);
         if (this.getOption('showSearch')) {
             this.__showSearch();
         }
@@ -136,7 +136,7 @@ export default Marionette.LayoutView.extend({
         } else {
             this.listenTo(this.nativeGridCollection, 'select:all select:some select:none', this.__selectionChange);
         }
-        this.gridRegion.show(nativeGridView);
+        this.showChildView('gridRegion', nativeGridView);
         this.__setGridHeight();
     },
 
@@ -186,7 +186,7 @@ export default Marionette.LayoutView.extend({
 
     __showSearch() {
         const searchView = new SearchBarView();
-        this.collectionHeaderSearchRegion.show(searchView);
+        this.showChildView('collectionHeaderSearchRegion', searchView);
         searchView.on('search', text => {
             this.__collapse(this.nativeGridCollection);
             this.__unhighlightCollection(this.nativeGridCollection);

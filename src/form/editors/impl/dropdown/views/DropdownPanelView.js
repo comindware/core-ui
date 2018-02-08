@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars, keypress } from 'lib';
 import template from '../templates/dropdownPanel.hbs';
 import DefaultDropdownListItemView from './DefaultDropdownListItemView';
 import DropdownCollection from '../collections/DropdownCollection';
@@ -22,7 +14,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
@@ -56,7 +48,7 @@ export default Marionette.LayoutView.extend({
         tabindex: 0
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             enableSearch: this.options.enableSearch
         };
@@ -66,9 +58,6 @@ export default Marionette.LayoutView.extend({
         if (this.options.enableSearch) {
             this.$el.addClass('dd-list_search');
         }
-    },
-
-    onShow() {
         const displayAttribute = this.model.get('displayAttribute');
         let virtualCollection = this.model.get('virtualCollection');
         if (!virtualCollection) {
@@ -112,31 +101,10 @@ export default Marionette.LayoutView.extend({
         this.listView = result.listView;
         this.eventAggregator = result.eventAggregator;
 
-        this.listRegion.show(result.listView);
-        this.scrollbarRegion.show(result.scrollbarView);
+        this.showChildView('listRegion', result.listView);
+        this.showChildView('scrollbarRegion', result.scrollbarView);
 
         this.$el.focus();
-        this.__assignKeyboardShortcuts();
-    },
-
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-
-        const listShortcuts = {};
-        _.each(this.listView.keyboardShortcuts, (v, k) => {
-            listShortcuts[k] = v.bind(this.listView);
-        });
-        const actualShortcuts = _.extend({}, listShortcuts, this.keyboardShortcuts);
-
-        this.keyListener = new keypress.Listener(this.el);
-        _.each(actualShortcuts, (value, key) => {
-            const keys = key.split(',');
-            _.each(keys, k => {
-                this.keyListener.simple_combo(k, value.bind(this));
-            });
-        });
     },
 
     keyboardShortcuts: {

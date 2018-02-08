@@ -101,7 +101,7 @@ export default Marionette.Object.extend({
         modelsFrom.selectNone && modelsFrom.selectNone();
         modelsTo.selectNone && modelsTo.selectNone();
         const newSelectedFragment = this.collectionSearchValue[typeTo];
-        _.each(selected, model => {
+        selected.forEach(model => {
             if (!(model instanceof ItemModel)) {
                 return;
             }

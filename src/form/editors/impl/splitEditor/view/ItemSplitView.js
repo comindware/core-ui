@@ -1,14 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2014 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 
 import template from '../templates/itemsPanel.html';
 
@@ -16,9 +5,9 @@ const config = {
     CHILD_HEIGHT: 34
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     constructor(options) {
-        Marionette.LayoutView.prototype.constructor.apply(this, arguments);
+        Marionette.View.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
         _.bindAll(this,
             '__onAvailableItemsSelect',
@@ -71,7 +60,7 @@ export default Marionette.LayoutView.extend({
         selectedSearchRegion: '.js-selected-search-region'
     },
 
-    onShow() {
+    onRender() {
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
             this.ui.maxQuantityInfo.text(
@@ -97,8 +86,8 @@ export default Marionette.LayoutView.extend({
             availableViewOptions.listViewOptions.childViewSelector = this.options.childViewSelector;
         }
         const availableList = Core.list.factory.createDefaultList(availableViewOptions);
-        this.availableItemsListRegion.show(availableList.listView);
-        this.availableItemsScrollbarRegion.show(availableList.scrollbarView);
+        this.showChildView('availableItemsListRegion', availableList.listView);
+        this.showChildView('availableItemsScrollbarRegion', availableList.scrollbarView);
 
         if (this.eventAggregator.available) {
             this.stopListening(this.eventAggregator.available);
@@ -109,7 +98,7 @@ export default Marionette.LayoutView.extend({
         });
         // Available search
         const availableSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.availableSearchRegion.show(availableSearchView);
+        this.showChildView('availableSearchRegion', availableSearchView);
         this.listenTo(availableSearchView, 'search', this.__onAvailableSearch);
         // Selected list
         const selectedList = Core.list.factory.createDefaultList({
@@ -126,12 +115,12 @@ export default Marionette.LayoutView.extend({
                 }
             }
         });
-        this.selectedItemsListRegion.show(selectedList.listView);
-        this.selectedItemsScrollbarRegion.show(selectedList.scrollbarView);
+        this.showChildView('selectedItemsListRegion', selectedList.listView);
+        this.showChildView('selectedItemsScrollbarRegion', selectedList.scrollbarView);
 
         // Selected search
         const selectedSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.selectedSearchRegion.show(selectedSearchView);
+        this.showChildView('selectedSearchRegion', selectedSearchView);
         this.listenTo(selectedSearchView, 'search', this.__onSelectedSearch);
 
         if (this.model.get('showToolbar')) {

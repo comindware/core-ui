@@ -8,9 +8,9 @@ const config = {
     CHILD_HEIGHT: 34
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     constructor(options) {
-        Marionette.LayoutView.prototype.constructor.apply(this, arguments);
+        Marionette.View.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
         _.bindAll(this,
             '__onSelectedItemsSelect',
@@ -56,7 +56,7 @@ export default Marionette.LayoutView.extend({
         selectedSearchRegion: '.js-selected-search-region'
     },
 
-    onShow() {
+    onRender() {
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
             this.ui.maxQuantityInfo.text(
@@ -84,8 +84,8 @@ export default Marionette.LayoutView.extend({
             availableViewOptions.listViewOptions.childViewSelector = this.options.childViewSelector;
         }
         const availableList = Core.list.factory.createDefaultList(availableViewOptions);
-        this.availableItemsListRegion.show(availableList.listView);
-        this.availableItemsScrollbarRegion.show(availableList.scrollbarView);
+        this.showChildView('availableItemsListRegion', availableList.listView);
+        this.showChildView('availableItemsScrollbarRegion', availableList.scrollbarView);
 
         if (this.eventAggregator.available) {
             this.stopListening(this.eventAggregator.available);

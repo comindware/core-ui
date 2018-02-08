@@ -1,17 +1,7 @@
-/**
- * Developer: Kristina
- * Date: 01/25/2014
- * Copyright: 2009-2014 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
 import template from '../templates/uploadDocumentButton.html';
 
-export default Backbone.Marionette.ItemView.extend({
+export default Backbone.Marionette.View.extend({
     uploadUrl: '/api/UploadAttachment',
 
     options: {
@@ -35,12 +25,12 @@ export default Backbone.Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
     initialize(options, className) {
-        _.extend(this.options, options || {});
+        Object.assign(this.options, options || {});
         if (className) {
             this.className = className;
         }

@@ -12,7 +12,6 @@ const Form = Marionette.Object.extend({
     initialize(options = {}) {
         this.options = options;
 
-        this.__regionManager = new Marionette.RegionManager();
         this.schema = _.result(options, 'schema');
         this.model = options.model;
 
@@ -31,6 +30,7 @@ const Form = Marionette.Object.extend({
                 this.listenTo(field.editor, 'all', this.__handleEditorEvent);
             } catch (e) {
                 field = new ErrorPlaceholderView();
+                field.editor = field;
                 Core.InterfaceError.logError(e, field.getId());
             } finally {
                 this.fields[entry[0]] = field;
@@ -38,28 +38,27 @@ const Form = Marionette.Object.extend({
         });
 
         const $target = this.options.$target;
+        const rootView = window.app.getView();
 
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !$(el).attr('editor-for')) || $(el).attr('editor-for') === this.model.get('uniqueFormId')) {
-                const $editorRegion = $(el);
-                const key = $editorRegion.attr('data-editors');
+            if ((!this.model.has('uniqueFormId') && !el.getAttribute('editor-for')) || el.getAttribute('editor-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-editors');
                 const regionName = `${key}Region`;
 
-                this.__regionManager.addRegion(regionName, { el: $editorRegion });
-                this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key].editor);
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key].editor);
             }
         });
 
         //Render standalone fields
         $target.find('[data-fields]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !$(el).attr('field-for')) || $(el).attr('field-for') === this.model.get('uniqueFormId')) {
-                const $fieldRegion = $(el);
-                const key = $fieldRegion.attr('data-fields');
+            if ((!this.model.has('uniqueFormId') && !el.getAttribute('field-for')) || el.getAttribute('field-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-fields');
                 const regionName = `${key}Region`;
 
-                this.__regionManager.addRegion(regionName, { el: $fieldRegion });
-                this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key]);
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key].editor);
             }
         });
     },
@@ -123,9 +122,8 @@ const Form = Marionette.Object.extend({
 
         // Otherwise return entire form
         const values = {};
-        _.each(this.fields, field => {
-            values[field.key] = field.getValue();
-        });
+
+        this.fields.forEach(field => values[field.key] = field.getValue());
 
         return values;
     },
@@ -218,7 +216,7 @@ const Form = Marionette.Object.extend({
 
                 //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
                 if (isDictionary) {
-                    _.each(modelErrors, (val, key) => {
+                    Object.entries(modelErrors).forEach((key, val) => {
                         //Set error on field if there isn't one already
                         if (fields[key] && !errors[key]) {
                             fields[key].setError(val);
@@ -320,15 +318,7 @@ export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.
     },
 
     onRender() {
-        if (this.options.renderStrategy === constants.RENDER_STRATEGY_RENDER) {
-            this.__renderForm();
-        }
-    },
-
-    onShow() {
-        if (this.options.renderStrategy === constants.RENDER_STRATEGY_SHOW) {
-            this.__renderForm();
-        }
+        this.__renderForm();
     },
 
     onDestroy() {

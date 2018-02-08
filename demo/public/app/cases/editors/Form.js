@@ -21,7 +21,7 @@ export default function() {
     });
 
     // 3. Create view with BackboneFormBehavior and construct form scheme
-    const View = Marionette.ItemView.extend({
+    const View = Marionette.View.extend({
         initialize() {
             this.model = model;
         },

@@ -29,9 +29,9 @@ const defaultOptions = {
     panel2Min: 20
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     constructor() {
-        Marionette.LayoutView.prototype.constructor.apply(this, arguments);
+        Marionette.View.prototype.constructor.apply(this, arguments);
 
         _.defaults(this.options, defaultOptions);
 

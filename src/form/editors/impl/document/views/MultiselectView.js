@@ -1,15 +1,4 @@
-/**
- * Developer: Kristina
- * Date: 02/24/2014
- * Copyright: 2009-2014 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
-import { keypress } from 'lib';
 import dropdown from 'dropdown';
 import ReferencePanelView from '../../reference/views/ReferencePanelView';
 import template from '../templates/Multiselect.html';
@@ -17,7 +6,7 @@ import MultiselectItemView from './MultiselectItemView';
 import AttachmentsController from '../gallery/AttachmentsController';
 import LocalizationService from '../../../../../services/LocalizationService';
 
-const MultiselectAddButtonView = Marionette.ItemView.extend({
+const MultiselectAddButtonView = Marionette.View.extend({
     className: 'button-sm_h3 button-sm button-sm_add',
     tagName: 'button',
     template: Handlebars.compile('{{text}}')
@@ -25,40 +14,46 @@ const MultiselectAddButtonView = Marionette.ItemView.extend({
 
 export default Marionette.CompositeView.extend({
     controller: null,
+
     $selectButtonEl: null,
+
     childView: MultiselectItemView,
+
     childViewContainer: '.js-collection-container',
+
     childViewOptions() {
         return {
             attachmentsController: this.attachmentsController,
             hideRemoveBtn: this.options.hideRemoveBtn
         };
     },
+
     className: 'l-task-links',
+
     canAdd: true,
 
     template: Handlebars.compile(template),
+
     ui: {
         showMore: '.js-show-more',
         invisibleCount: '.js-invisible-count',
         showMoreText: '.js-show-more-text'
     },
+
     events: {
         'click @ui.showMore': 'toggleShowMore'
     },
+
     childEvents: {
         remove: 'onValueRemove'
     },
+
     collapsed: true,
 
     initialize(options) {
-        _.extend(this, options || {});
-        this.reqres = new Backbone.Wreqr.RequestResponse();
+        Object.assign(this, options || {}); //todo wtf
 
-        this.reqres.setHandler('value:set', this.onValueAdd, this);
-        this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-        this.reqres.setHandler('search:more', this.onSearchMore, this);
-        this.reqres.setHandler('filter:text', this.onFilterText, this);
+        this.reqres = Backbone.Radio.channel('documentReqres');
 
         this.attachmentsController = new AttachmentsController();
 
@@ -66,8 +61,19 @@ export default Marionette.CompositeView.extend({
             this.renderDropdown();
         }
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
+
         window.addEventListener('resize', this._windowResize);
     },
+
+    channelName: 'documentReqres',
+
+    radioEvents: {
+        'value:set': 'onValueAdd',
+        'value:navigate': 'onValueNavigate',
+        'search:more': 'onSearchMore',
+        'filter:text': 'onFilterText'
+    },
+
 
     renderDropdown() {
         this.dropdownModel = new Backbone.Model({
@@ -94,15 +100,6 @@ export default Marionette.CompositeView.extend({
         this.$selectButtonEl.html(this.dropdownView.render().$el);
         // hotkeys
         //todo
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), key => {
-            this.keyListener.simple_combo(key, () => {
-                this.dropdownView.open();
-            });
-        });
     },
 
     showDropDown() {

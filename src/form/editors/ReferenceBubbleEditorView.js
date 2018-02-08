@@ -1,10 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 30.08.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import { Handlebars } from 'lib';
 import VirtualCollection from '../../collections/VirtualCollection';
@@ -37,6 +30,8 @@ const defaultOptions = {
     canDeleteItem: true
 };
 
+const reqres = Backbone.Radio.channel('referenceBubble');
+
 /**
  * @name ReferenceEditorView
  * @member of module:core.form.editors
@@ -46,8 +41,8 @@ const defaultOptions = {
  * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance
  * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
- * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
- * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
+ * @param {Marionette.View} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
+ * @param {Marionette.View} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text.
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
@@ -58,23 +53,10 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
 
         _.bindAll(this, '__getDisplayText');
 
-        this.reqres = new Backbone.Wreqr.RequestResponse();
         this.controller = this.options.controller || new StaticController({
             collection: options.collection
         });
         this.showAddNewButton = this.options.showAddNewButton;
-
-        this.reqres.setHandler('bubble:delete', this.__onBubbleDelete, this);
-        this.reqres.setHandler('bubble:delete:last', this.__onBubbleDeleteLast, this);
-        this.reqres.setHandler('input:search', this.__onInputSearch, this);
-        this.reqres.setHandler('input:up', this.__onInputUp, this);
-        this.reqres.setHandler('input:down', this.__onInputDown, this);
-        this.reqres.setHandler('button:click', this.__onButtonClick, this);
-        this.reqres.setHandler('value:select', this.__onValueSelect, this);
-        this.reqres.setHandler('value:edit', this.__onValueEdit, this);
-        this.reqres.setHandler('filter:text', this.__onFilterText, this);
-        this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
-        this.reqres.setHandler('view:ready', this.__triggerReady, this);
 
         this.value = this.__adjustValue(this.value);
         const selectedModels = new Backbone.Collection(this.getValue(), {
@@ -103,6 +85,22 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         dropdownRegion: '.js-dropdown-region'
     },
 
+    channelName: 'referenceBubble',
+
+    radioEvents: {
+        'bubble:delete': '__onBubbleDelete',
+        'bubble:delete:last': '__onBubbleDeleteLast',
+        'input:search': '__onInputSearch',
+        'input:up': '__onInputUp',
+        'input:down': '__onInputDown',
+        'button:click': '__onButtonClick',
+        'value:select': '__onValueSelect',
+        'value:edit': '__onValueEdit',
+        'filter:text': '__onFilterText',
+        'add:new:item': '__onAddNewItem',
+        'view:ready': '__triggerReady',
+    },
+
     className: 'editor editor_bubble',
 
     template: Handlebars.compile(template),
@@ -120,7 +118,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
             buttonView: this.options.buttonView,
             buttonViewOptions: {
                 model: this.viewModel.get('button'),
-                reqres: this.reqres,
+                reqres,
                 getDisplayText: this.__getDisplayText,
                 showEditButton: this.options.showEditButton,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
@@ -130,7 +128,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
             panelView: PanelView,
             panelViewOptions: {
                 model: this.viewModel.get('panel'),
-                reqres: this.reqres,
+                reqres,
                 showAddNewButton: this.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
@@ -142,7 +140,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.onBlur);
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
     },
 
     isEmptyValue() {

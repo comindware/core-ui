@@ -1,17 +1,7 @@
-/**
- * Developer: Stanislav Guryev
- * Date: 02.02.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
 import template from '../templates/toolbar.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     className: 'dev-code-editor-toolbar',
 
     template: Handlebars.compile(template),
@@ -39,7 +29,7 @@ export default Marionette.LayoutView.extend({
         'click @ui.minimize': '__onMinimize',
     },
 
-    onShow() {
+    onRender() {
         this.ui.minimize.hide();
     },
 

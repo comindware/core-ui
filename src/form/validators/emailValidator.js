@@ -2,7 +2,7 @@
 import formRepository from '../formRepository';
 
 formRepository.validators.email = config => {
-    const options = _.extend({
+    const options = Object.assign({
         type: 'email',
         message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.EMAIL')
     }, config);
