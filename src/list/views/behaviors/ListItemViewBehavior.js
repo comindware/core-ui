@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-// import { helpers } from 'utils';
-
+import { helpers } from 'utils';
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
     

@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/22/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-'use strict';
-
-import { Handlebars } from 'lib';
 import template from '../templates/gridcolumnheader.hbs';
 
 /**

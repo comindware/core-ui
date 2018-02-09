@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
 
 import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
@@ -56,6 +47,6 @@ export default Marionette.View.extend({
     },
 
     __select() {
-        this.reqres.request('value:set', this.model.id);
+        this.reqres.trigger('value:set', this.model.id);
     }
 });

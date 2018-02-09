@@ -40,7 +40,7 @@ export default Marionette.View.extend({
     },
 
     __delete() {
-        this.reqres.request('bubble:delete', this.model);
+        this.reqres.trigger('bubble:delete', this.model);
         return false;
     },
 
@@ -51,7 +51,7 @@ export default Marionette.View.extend({
     },
 
     __edit() {
-        if (this.reqres.request('value:edit', this.model.attributes)) {
+        if (this.reqres.trigger('value:edit', this.model.attributes)) {
             return false;
         }
         return null;

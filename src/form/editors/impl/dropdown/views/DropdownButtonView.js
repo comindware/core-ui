@@ -36,12 +36,12 @@ export default Marionette.View.extend({
     },
 
     __clear() {
-        this.reqres.request('value:set', null);
+        this.reqres.trigger('value:set', null);
         return false;
     },
 
     __click() {
-        this.reqres.request('panel:open');
+        this.reqres.trigger('panel:open');
     },
 
     __onFocus() {

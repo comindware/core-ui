@@ -109,7 +109,7 @@ export default Marionette.View.extend({
             }
 
             const selectedModel = this.model.get('collection').selected;
-            this.reqres.request('value:set', selectedModel);
+            this.reqres.trigger('value:set', selectedModel);
         },
         esc() {
             this.trigger('cancel');
@@ -117,7 +117,7 @@ export default Marionette.View.extend({
     },
 
     __clear() {
-        this.reqres.request('value:set', null);
+        this.reqres.trigger('value:set', null);
     },
 
     __onTextChange() {
@@ -134,7 +134,7 @@ export default Marionette.View.extend({
             this.__setLoading(true);
             const collection = this.model.get('collection');
             collection.deselect();
-            this.reqres.request('filter:text', {
+            this.reqres.trigger('filter:text', {
                 text
             }).then(() => {
                 this.timeoutId = null;
@@ -160,11 +160,11 @@ export default Marionette.View.extend({
         }
         this.isLoading = isLoading;
         if (isLoading) {
-            this.loadingRegion.show(new LoadingView());
+            this.showChildView('loadingRegion', new LoadingView());
             this.ui.input.blur();
         } else {
             this.ui.input.focus();
-            this.loadingRegion.reset();
+            this.getRegion('loadingRegion').reset();
         }
     }
 });

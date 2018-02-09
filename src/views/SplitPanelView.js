@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/15/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-'use strict';
-
-import { Handlebars } from 'lib';
 import template from '../templates/splitPanel.hbs';
 import GlobalEventService from '../services/GlobalEventService';
 

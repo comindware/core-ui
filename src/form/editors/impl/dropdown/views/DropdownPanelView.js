@@ -113,7 +113,7 @@ export default Marionette.View.extend({
                 return;
             }
             const selectedModel = this.model.get('virtualCollection').selected;
-            this.reqres.request('value:set', selectedModel);
+            this.reqres.trigger('value:set', selectedModel);
         },
         esc() {
             this.trigger('cancel');

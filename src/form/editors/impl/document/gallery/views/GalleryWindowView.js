@@ -47,7 +47,7 @@ export default Marionette.View.extend({
     },
 
     __onClose() {
-        this.reqres.request('close');
+        this.reqres.trigger('close');
     },
 
     __onDownload() {
@@ -77,6 +77,6 @@ export default Marionette.View.extend({
     },
 
     __addImage(model) {
-        this.ui.image.empty().append(this.reqres.request('image:get', model));
+        this.ui.image.empty().append(this.reqres.trigger('image:get', model));
     }
 });

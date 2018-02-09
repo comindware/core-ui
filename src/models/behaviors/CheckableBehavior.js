@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /*eslint-disable*/
-
 
 const CheckableBehavior = {};
 

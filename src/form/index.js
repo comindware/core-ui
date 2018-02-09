@@ -12,7 +12,6 @@ import TextEditorView from './editors/TextEditorView';
 import PasswordEditorView from './editors/PasswordEditorView';
 import MemberSelectEditorView from './editors/MemberSelectEditorView';
 import DropdownEditorView from './editors/DropdownEditorView';
-import MembersBubbleEditorView from './editors/MembersBubbleEditorView';
 import ReferenceBubbleEditorView from './editors/ReferenceBubbleEditorView';
 import DurationEditorView from './editors/DurationEditorView';
 import RadioGroupEditorView from './editors/RadioGroupEditorView';
@@ -20,7 +19,6 @@ import DateEditorView from './editors/DateEditorView';
 import TimeEditorView from './editors/TimeEditorView';
 import DateTimeEditorView from './editors/DateTimeEditorView';
 import MentionEditorView from './editors/MentionEditorView';
-import MultiSelectEditorView from './editors/MultiSelectEditorView';
 import AvatarEditorView from './editors/AvatarEditorView';
 import DocumentEditorView from './editors/DocumentEditorView';
 import CodeEditorView from './editors/CodeEditorView';
@@ -29,7 +27,6 @@ import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
 import IsFavoriteEditorView from './editors/IsFavoriteEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
-import SimpleNumberEditorView from './editors/SimpleNumberEditorView';
 import TimeNumberEditorView from './editors/TimeNumberEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
@@ -174,7 +171,6 @@ const api = /** @lends module:core.form */ {
         PasswordEditor: PasswordEditorView,
         MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
-        MembersBubbleEditor: MembersBubbleEditorView,
         ReferenceBubbleEditor: ReferenceBubbleEditorView,
         DurationEditor: DurationEditorView,
         RadioGroupEditor: RadioGroupEditorView,
@@ -182,7 +178,6 @@ const api = /** @lends module:core.form */ {
         TimeEditor: TimeEditorView,
         DateTimeEditor: DateTimeEditorView,
         MentionEditor: MentionEditorView,
-        MultiSelectEditor: MultiSelectEditorView,
         AvatarEditor: AvatarEditorView,
         DocumentEditor: DocumentEditorView,
         CodeEditor: CodeEditorView,
@@ -191,7 +186,6 @@ const api = /** @lends module:core.form */ {
         IsFavoriteEditor: IsFavoriteEditorView,
         MembersSplitEditor: MembersSplitEditorView,
         MembersSplitPanelEditor: MembersSplitPanelEditorView,
-        SimpleNumberEditor: SimpleNumberEditorView,
         TimeNumberEditor: TimeNumberEditorView,
         ExpressionEditor: ExpressionEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,

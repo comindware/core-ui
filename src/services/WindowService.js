@@ -1,10 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/6/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 import PopupStackView from './window/views/PopupStackView';
 

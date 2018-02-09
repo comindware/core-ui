@@ -1,14 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
 /*eslint-disable*/
-
-import 'lib';
 
 /*
 * This is a modified version of Backbone.Picky with extended list of features related to multiselect collections
