@@ -1,6 +1,4 @@
-
 import { helpers } from 'utils';
-
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
     
@@ -21,26 +19,26 @@ import { helpers } from 'utils';
         to use for implementation. It also escapes the input text by default.
     2. (!) Be sure that the text you set into html is escaped.
 */
-
-const eventBubblingIgnoreList = [
-    'before:render',
-    'render',
-    'dom:refresh',
-    'before:show',
-    'show',
-    'before:destroy',
-    'destroy'
-];
+//
+// const eventBubblingIgnoreList = [
+//     'before:render',
+//     'render',
+//     'dom:refresh',
+//     'before:show',
+//     'show',
+//     'before:destroy',
+//     'destroy'
+// ];
 
 export default Marionette.Behavior.extend({
-    initialize(options, view) {
-        helpers.ensureOption(view.options, 'internalListViewReqres');
-        this.listenTo(view, 'all', eventName => {
-            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-                return;
-            }
-            view.options.internalListViewReqres.trigger('childViewEvent', view, eventName, _.rest(arguments, 1));
-        });
+    initialize() {
+        // helpers.ensureOption(view.options, 'internalListViewReqres');
+        // this.listenTo(view, 'all', eventName => {
+        //     if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
+        //         return;
+        //     }
+        //     view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
+        // });
         this.__debounceClickHandle = _.debounce(this.__handleDebouncedClick, 300, true);
     },
 
