@@ -12,7 +12,6 @@ import TextEditorView from './editors/TextEditorView';
 import PasswordEditorView from './editors/PasswordEditorView';
 import MemberSelectEditorView from './editors/MemberSelectEditorView';
 import DropdownEditorView from './editors/DropdownEditorView';
-import MembersBubbleEditorView from './editors/MembersBubbleEditorView';
 import ReferenceBubbleEditorView from './editors/ReferenceBubbleEditorView';
 import DurationEditorView from './editors/DurationEditorView';
 import RadioGroupEditorView from './editors/RadioGroupEditorView';
@@ -20,7 +19,6 @@ import DateEditorView from './editors/DateEditorView';
 import TimeEditorView from './editors/TimeEditorView';
 import DateTimeEditorView from './editors/DateTimeEditorView';
 import MentionEditorView from './editors/MentionEditorView';
-import MultiSelectEditorView from './editors/MultiSelectEditorView';
 import AvatarEditorView from './editors/AvatarEditorView';
 import DocumentEditorView from './editors/DocumentEditorView';
 import CodeEditorView from './editors/CodeEditorView';
@@ -174,7 +172,6 @@ const api = /** @lends module:core.form */ {
         PasswordEditor: PasswordEditorView,
         MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
-        MembersBubbleEditor: MembersBubbleEditorView,
         ReferenceBubbleEditor: ReferenceBubbleEditorView,
         DurationEditor: DurationEditorView,
         RadioGroupEditor: RadioGroupEditorView,
@@ -182,7 +179,6 @@ const api = /** @lends module:core.form */ {
         TimeEditor: TimeEditorView,
         DateTimeEditor: DateTimeEditorView,
         MentionEditor: MentionEditorView,
-        MultiSelectEditor: MultiSelectEditorView,
         AvatarEditor: AvatarEditorView,
         DocumentEditor: DocumentEditorView,
         CodeEditor: CodeEditorView,
