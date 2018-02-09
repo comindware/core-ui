@@ -64,11 +64,16 @@ export default Marionette.View.extend({
 
         options.onColumnSort && (this.onColumnSort = options.onColumnSort); //jshint ignore:line
 
+        this.uniqueId = _.uniqueId('native-grid');
+        this.styleSheet = document.createElement('style');
+
         this.headerView = new GridHeaderView({
             columns: options.columns,
             gridEventAggregator: this,
             checkBoxPadding: options.checkBoxPadding || 0,
-            gridColumnHeaderView: options.gridColumnHeaderView
+            gridColumnHeaderView: options.gridColumnHeaderView,
+            styleSheet: this.styleSheet,
+            uniqueId: this.uniqueId
         });
 
         this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
@@ -84,7 +89,7 @@ export default Marionette.View.extend({
 
         let childView = options.childView;
         if (options.useDefaultRowView) {
-            options.columns.each(column => {
+            options.columns.forEach(column => {
                 if (column.cellView === undefined) { throw new Error('You must specify cellView for each column (useDefaultRowView flag is true)'); }
             });
 
@@ -96,7 +101,8 @@ export default Marionette.View.extend({
 
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
-            gridEventAggregator: this
+            gridEventAggregator: this,
+            uniqueId: this.uniqueId
         });
 
         this.listView = new ListView({
@@ -154,6 +160,10 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
+    onAttach() {
+        document.body.appendChild(this.styleSheet);
+    },
+
     onRender() {
         const elementWidth = this.$el.width();
         if (this.options.columns.length === 0) {
@@ -172,6 +182,17 @@ export default Marionette.View.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
+        this.__bindListRegionScroll();
+    },
+
+    __bindListRegionScroll() {
+        this.listView.$el.scroll(event => {
+            this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
+        });
+    },
+
+    onDestroy() {
+        document.body.remove(this.styleSheet);
     },
 
     sortBy(columnIndex, sorting) {

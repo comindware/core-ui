@@ -77,11 +77,11 @@ export default Marionette.Behavior.extend({
     },
 
     __handleColumnsResize() {
-        const cells = Array.from(this.__getCellElements());
-        this.columns.forEach((col, k) => {
-            const $cell = $(cells[k]);
-            $cell.outerWidth(col.absWidth);
-        });
+        // const cells = Array.from(this.__getCellElements());
+        // this.columns.forEach((col, k) => {
+        //     const $cell = $(cells[k]);
+        //     $cell.outerWidth(col.absWidth);
+        // });
     },
 
     __handleClick(e) {

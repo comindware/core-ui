@@ -28,6 +28,7 @@ const GridColumnHeaderView = Marionette.View.extend({
     },
 
     template: Handlebars.compile(template),
+
     className: 'grid-header-column-content',
 
     events: {

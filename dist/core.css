@@ -2628,6 +2628,10 @@ svg.svg-icons{
     pointer-events: none;
 }
 
+.editor_hidden {
+    display: none;
+}
+
 .grid-cell .dev-code-button-edit {
     position: relative;
     bottom: 2px;
@@ -3237,7 +3241,7 @@ svg.svg-icons{
 
 /* multiselect */
 .multiselect-panel{
-    min-width: 220px;
+    min-width: 200px;
     max-width: 100%;
     padding: 25px 0;
     position: relative;
@@ -3594,13 +3598,15 @@ svg.svg-icons{
 
 .list {
     height: 100%;
-    overflow: hidden;
+    /*overflow-x: hidden;*/
+    overflow: auto;
 }
 
 
 .visible-collection {
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .visible-collection-view {
@@ -3629,15 +3635,17 @@ svg.svg-icons{
 }
 
 .grid .visible-collection {
-    display: block;
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
 }
 
 .grid-row {
-    display: block;
-    overflow: hidden;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    left: 0;
+    right: 0;
 }
 
 .grid-row:hover {
@@ -3658,6 +3666,9 @@ svg.svg-icons{
     color: #000;
     cursor: default;
     float: left;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
 }
 
 .fr-collection-grid .grid-header {
@@ -3681,15 +3692,17 @@ svg.svg-icons{
     position: absolute;
     top: 0;
     left: 0;
-    min-width: 100%;
+    width: 100%;
     height: 51px;
     border-bottom: 1px solid #DFE4E8;
     border-collapse: collapse;
+    overflow: hidden;
 }
 
 .grid-header {
-    display: block;
-    overflow: hidden;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
     position: relative;
     height: inherit;
     width: 100%;
@@ -3700,6 +3713,10 @@ svg.svg-icons{
     float: left;
     width: auto;
     position: relative;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    overflow: hidden;
 }
 
 .grid-header-column-content {
@@ -3791,7 +3808,6 @@ svg.svg-grid-icons {
 .native-grid {
     width: 100%;
     height: 100%;
-   position: relative;
 }
 
 .native-grid__header {
@@ -3955,6 +3971,16 @@ svg.svg-grid-icons {
         -ms-flex-align: center;
             align-items: center;
     background: #f7f6f6;
+}
+
+.collection-header .tr-search {
+    padding: 0;
+}
+
+.collection-right-items-region {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
 }
 
 .form-label_collection{
