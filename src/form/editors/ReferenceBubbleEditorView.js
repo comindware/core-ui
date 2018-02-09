@@ -1,5 +1,4 @@
 
-import { Handlebars } from 'lib';
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
@@ -78,27 +77,23 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
 
+        this.listenTo(reqres, 'bubble:delete', this.__onBubbleDelete);
+        this.listenTo(reqres, 'bubble:delete:last', this.__onBubbleDeleteLast);
+        this.listenTo(reqres, 'input:search', this.__onInputSearch);
+        this.listenTo(reqres, 'input:up', this.__onInputUp);
+        this.listenTo(reqres, 'input:down', this.__onInputDown);
+        this.listenTo(reqres, 'button:click', this.__onButtonClick);
+        this.listenTo(reqres, 'value:select', this.__onValueSelect);
+        this.listenTo(reqres, 'value:edit', this.__onValueEdit);
+        this.listenTo(reqres, 'filter:text', this.__onFilterText);
+        this.listenTo(reqres, 'add:new:item', this.__onAddNewItem);
+        this.listenTo(reqres, 'view:ready', this.__triggerReady);
+
         this.__updateFakeInputModel();
     },
 
     regions: {
         dropdownRegion: '.js-dropdown-region'
-    },
-
-    channelName: 'referenceBubble',
-
-    radioEvents: {
-        'bubble:delete': '__onBubbleDelete',
-        'bubble:delete:last': '__onBubbleDeleteLast',
-        'input:search': '__onInputSearch',
-        'input:up': '__onInputUp',
-        'input:down': '__onInputDown',
-        'button:click': '__onButtonClick',
-        'value:select': '__onValueSelect',
-        'value:edit': '__onValueEdit',
-        'filter:text': '__onFilterText',
-        'add:new:item': '__onAddNewItem',
-        'view:ready': '__triggerReady',
     },
 
     className: 'editor editor_bubble',

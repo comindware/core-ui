@@ -47,6 +47,6 @@ export default Marionette.View.extend({
     },
 
     __select() {
-        this.reqres.request('value:set', this.model.id);
+        this.reqres.trigger('value:set', this.model.id);
     }
 });

@@ -63,7 +63,7 @@ export default Marionette.View.extend({
     },
 
     __getDocumentRevision() {
-        this.reqres.request('document:revise', this.model.get('id')).then(revisionList => {
+        this.reqres.trigger('document:revise', this.model.get('id')).then(revisionList => {
             this.revisionCollection.reset(revisionList.sort((a, b) => a.version - b.version));
             this.documentRevisionPopout.open();
         });

@@ -28,7 +28,7 @@ export default Marionette.Behavior.extend({
             if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
                 return;
             }
-            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
+            view.options.internalListViewReqres.trigger('childViewEvent', view, eventName, _.rest(arguments, 1));
         });
     },
 

@@ -31,18 +31,18 @@ export default Marionette.View.extend({
     },
 
     __click() {
-        this.reqres.request('panel:open');
+        this.reqres.trigger('panel:open');
     },
 
     __clear() {
-        this.reqres.request('value:clear');
+        this.reqres.trigger('value:clear');
         return false;
     },
 
     __navigate() {
         const member = this.model.get('member');
         if (member) {
-            this.reqres.request('value:navigate', member.id);
+            this.reqres.trigger('value:navigate', member.id);
             return false;
         }
     },

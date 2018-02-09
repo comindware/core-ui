@@ -18,6 +18,6 @@ export default Marionette.View.extend({
     className: 'reference-btn',
 
     __onClick() {
-        this.reqres.request('add:new:item');
+        this.reqres.trigger('add:new:item');
     }
 });

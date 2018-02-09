@@ -90,7 +90,7 @@ export default Marionette.View.extend({
                 return;
             }
             const selectedModel = this.model.get('collection').selected;
-            this.reqres.request('value:set', selectedModel.id);
+            this.reqres.trigger('value:set', selectedModel.id);
         },
         esc() {
             this.trigger('cancel');
@@ -106,7 +106,7 @@ export default Marionette.View.extend({
             this.activeText = text;
             const collection = this.model.get('collection');
             collection.deselect();
-            this.reqres.request('filter:text', {
+            this.reqres.trigger('filter:text', {
                 text
             }).then(() => {
                 if (collection.length > 0) {

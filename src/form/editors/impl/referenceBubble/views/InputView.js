@@ -48,13 +48,13 @@ export default Marionette.View.extend({
 
     keyboardShortcuts: { //todo use this
         up() {
-            this.reqres.request('input:up');
+            this.reqres.trigger('input:up');
         },
         down() {
-            this.reqres.request('input:down');
+            this.reqres.trigger('input:down');
         },
         'enter,num_enter'() {
-            this.reqres.request('value:select');
+            this.reqres.trigger('value:select');
         }
     },
 
@@ -75,7 +75,7 @@ export default Marionette.View.extend({
                 if (!this.options.enabled) {
                     return;
                 }
-                this.reqres.request('bubble:delete:last');
+                this.reqres.trigger('bubble:delete:last');
             }
         } else {
             if (this.filterValue === value) {
@@ -83,7 +83,7 @@ export default Marionette.View.extend({
             }
             this.__updateInputWidth(this.__calculateDesiredInputWidth(value || this.ui.input.attr('placeholder')));
             this.filterValue = value;
-            this.reqres.request('input:search', value, false);
+            this.reqres.trigger('input:search', value, false);
         }
     },
 

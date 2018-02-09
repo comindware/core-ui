@@ -36,12 +36,12 @@ export default Marionette.View.extend({
     },
 
     __clear() {
-        this.reqres.request('value:clear');
+        this.reqres.trigger('value:clear');
         return false;
     },
 
     __edit() {
-        if (this.reqres.request('value:edit', this.model.get('value'))) {
+        if (this.reqres.trigger('value:edit', this.model.get('value'))) {
             return false;
         }
         return null;
@@ -57,7 +57,7 @@ export default Marionette.View.extend({
         if (e.target.tagName === 'A') {
             return;
         }
-        this.reqres.request('panel:open');
+        this.reqres.trigger('panel:open');
     },
 
     updateView() {

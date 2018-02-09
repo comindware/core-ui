@@ -76,7 +76,7 @@ export default Marionette.CollectionView.extend({
     },
 
     __click() {
-        this.reqres.request('button:click');
+        this.reqres.trigger('button:click');
     },
 
     __findFakeInputModel() {

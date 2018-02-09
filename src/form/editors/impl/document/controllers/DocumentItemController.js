@@ -1,13 +1,18 @@
 
 import { dateHelpers } from 'utils';
 
+const reqres = Backbone.Radio.channel('documentsChannel');
+
 export default Marionette.Object.extend({
     initialize(options = {}) {
         this.view = options.view;
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.reqres.setHandlers({
-            'document:revise': this.__getDocumentRevision.bind(this)
-        });
+        this.reqres = reqres;
+    },
+
+    channelName: 'documentsChannel',
+
+    radioEvents: {
+        'document:revise': '__getDocumentRevision'
     },
 
     async __getDocumentRevision(documentId) {

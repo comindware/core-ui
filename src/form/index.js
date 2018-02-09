@@ -27,7 +27,6 @@ import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
 import IsFavoriteEditorView from './editors/IsFavoriteEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
-import SimpleNumberEditorView from './editors/SimpleNumberEditorView';
 import TimeNumberEditorView from './editors/TimeNumberEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
@@ -187,7 +186,6 @@ const api = /** @lends module:core.form */ {
         IsFavoriteEditor: IsFavoriteEditorView,
         MembersSplitEditor: MembersSplitEditorView,
         MembersSplitPanelEditor: MembersSplitPanelEditorView,
-        SimpleNumberEditor: SimpleNumberEditorView,
         TimeNumberEditor: TimeNumberEditorView,
         ExpressionEditor: ExpressionEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,

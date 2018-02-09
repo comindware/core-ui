@@ -108,7 +108,7 @@ export default Marionette.View.extend({
             }
 
             const selectedModel = this.model.get('collection').selected;
-            this.reqres.request('value:set', selectedModel);
+            this.reqres.trigger('value:set', selectedModel);
         },
         esc() {
             this.trigger('cancel');
@@ -124,7 +124,7 @@ export default Marionette.View.extend({
             this.activeText = text;
             this.__setLoading(true);
             const collection = this.model.get('collection');
-            this.reqres.request('filter:text', {
+            this.reqres.trigger('filter:text', {
                 text
             }).then(() => {
                 if (collection.length > 0 && this.model.get('value')) {
@@ -136,7 +136,7 @@ export default Marionette.View.extend({
                     this.__toggleElementsQuantityWarning(collection.totalCount);
                 }
                 this.__setLoading(false);
-                this.reqres.request('view:ready');
+                this.reqres.trigger('view:ready');
             }).catch(e => {
                 console.log(e.message);
             });

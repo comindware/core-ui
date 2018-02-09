@@ -68,6 +68,9 @@ body.non-selectable {
 body, input, textarea, select {
     font: normal 14px/1.4 'OpenSans', sans-serif;
 }
+.app-container {
+    height: 100%;
+}
 
 .noselect {
     -webkit-touch-callout: none;
