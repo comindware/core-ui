@@ -1,4 +1,3 @@
-import { helpers } from 'utils';
 /*
     This behavior adds to an item the expect list item behaviors: selectable and highlightable.
     

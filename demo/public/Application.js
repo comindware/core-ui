@@ -12,6 +12,8 @@ const rootView = Marionette.View.extend({
 		<div class="js-content-region content-container"></div>
     `),
 
+    className: 'app-region-container',
+
     regions: {
         headerRegion: '.js-header-region',
         contentRegion: '.js-content-region'

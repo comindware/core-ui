@@ -16,6 +16,10 @@ const defaultOptions = {
     rowHeight: 25
 };
 
+const radioId = _.uniqueId('dropdown');
+
+const reqres = Backbone.Radio.channel(radioId);
+
 /**
  * @name DropdownEditorView
  * @memberof module:core.form.editors
@@ -38,11 +42,11 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
 
         _.bindAll(this, '__onCollectionChange');
 
-        this.reqres = Backbone.Radio.channel('dropdown');
-
         if (Array.isArray(this.options.collection)) {
             this.options.collection = new Backbone.Collection(this.options.collection);
         }
+
+        this.reqres = reqres;
 
         this.collection = this.options.collection;
 
@@ -63,6 +67,9 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.listenTo(this.collection, 'remove', this.__onCollectionChange);
         this.listenTo(this.collection, 'reset', this.__onCollectionChange);
 
+        this.listenTo(reqres, 'value:set', this.onValueSet);
+        this.listenTo(reqres, 'panel:open', this.onPanelOpen);
+
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
                 value: this.__findModel(this.getValue()),
@@ -74,13 +81,6 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
                 displayAttribute: this.options.displayAttribute
             })
         });
-    },
-
-    channelName: 'dropdown',
-
-    radioEvents: {
-        'value:set': 'onValueSet',
-        'panel:open': 'onPanelOpen'
     },
 
     focusElement: '.js-dropdown-region',

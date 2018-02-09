@@ -28,6 +28,9 @@ const ButtonModel = Backbone.AssociatedModel.extend({
     ]
 });
 
+const radioId = _.uniqueId('boundList');
+const reqres = Backbone.Radio.Channel(radioId);
+
 /**
  * @name MemberSelectEditorView
  * @memberof module:core.form.editors
@@ -47,12 +50,13 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
 
         _.defaults(this.options.dropdownOptions, defaultOptions.dropdownOptions);
 
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.reqres.setHandler('value:clear', this.onValueClear, this);
-        this.reqres.setHandler('value:set', this.onValueSet, this);
-        this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-        this.reqres.setHandler('filter:text', this.onFilterText, this);
-        this.reqres.setHandler('panel:open', this.onPanelOpen, this);
+        this.reqres = reqres;
+
+        this.listenTo('value:clear', this.onValueClear);
+        this.listenTo('value:set', this.onValueSet);
+        this.listenTo('value:navigate', this.onValueNavigate);
+        this.listenTo('filter:text', this.onFilterText);
+        this.listenTo('panel:open', this.onPanelOpen);
 
         this.viewModel = new Backbone.Model({
             button: new ButtonModel({

@@ -8,18 +8,18 @@ const classes = {
 
 const graphicFileExtensions = ['gif', 'png', 'bmp', 'jpg', 'jpeg', 'jfif', 'jpeg2000', 'exif', 'tiff', 'ppm', 'pgm', 'pbm', 'pnm', 'webp', 'bpg', 'bat'];
 
+const radioId = _.uniqueId('gallery');
+const reqres = Backbone.Radio.Channel(radioId);
+
 export default Marionette.Object.extend({
     initialize() {
         this.imagesBuffer = {};
-        this.reqres = Backbone.Radio.channel('gallery');
+        this.reqres = reqres;
+
+        this.listenTo('close', this.__closeGallery);
+        this.listenTo('image:get', this.__getImage);
     },
 
-    channelName: 'referenceBubble',
-
-    radioEvents: {
-        close: '__closeGallery',
-        'image:get': '__getImage'
-    },
     
     showGallery(model) {
         if (this.__isImage(model)) {
