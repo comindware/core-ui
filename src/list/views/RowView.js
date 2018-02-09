@@ -54,7 +54,7 @@ export default Marionette.View.extend({
 
     _renderTemplate() {
         this.cellViews = [];
-        this.options.columns.forEach(gridColumn => {
+        this.options.columns.forEach((gridColumn, index) => {
             const id = gridColumn.id;
             let value;
 
@@ -65,7 +65,7 @@ export default Marionette.View.extend({
             }
 
             const cellView = new gridColumn.cellView({
-                className: 'grid-cell js-grid-cell',
+                className: `grid-cell js-grid-cell ${this.getOption('uniqueId')}-column${index}`,
                 model: new Backbone.Model({
                     value,
                     rowModel: this.model,
