@@ -43,7 +43,7 @@ const windowService = /** @lends module:core.services.WindowService */ {
      * @param {string} [popupId=null]
      * */
     closePopup(popupId = null) {
-        this.__popupStackView.closePopup(popupId);
+        this.__popupStackView && this.__popupStackView.closePopup(popupId);
     },
 
     /**
