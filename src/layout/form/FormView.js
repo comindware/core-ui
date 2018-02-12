@@ -25,7 +25,7 @@ export default Marionette.ItemView.extend({
 
         const model = this.options.model;
         this.model = _.isFunction(model) ? model.call(this) : model;
-        this.model.set({ uniqueFormId: this.uniqueFormId });
+        this.model.set({ uniqueFormId: this.uniqueFormId }, { silent: true });
     },
 
     template: false,

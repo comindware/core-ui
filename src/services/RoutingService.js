@@ -9,6 +9,7 @@
 import 'lib';
 import ContentLoadingView from './routing/ContentLoadingView';
 import ModuleProxy from './routing/ModuleProxy';
+import WindowService from './WindowService';
 
 // storing active url to get back to it while canceling module leave
 let previousUrl;
@@ -73,6 +74,7 @@ export default {
     },
 
     __onModuleLoaded(callbackName, routingArgs, config, Module) {
+        WindowService.closePopup();
         this.loadingContext = {
             config,
             leavingPromise: null,
