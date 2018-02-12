@@ -774,6 +774,7 @@ a:hover {
     align-self: flex-start;
     vertical-align: top;
     z-index: 1;
+    min-width: 34px;
 }
 
 .toolbar-btn + .toolbar-btn {
@@ -880,7 +881,6 @@ a:hover {
 .toolbar-buttons_container {
     width: auto;
     max-width: 100%;
-    margin-right: 10px;
 }
 
 .toolbar-panel_container {
