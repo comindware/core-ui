@@ -106,10 +106,6 @@ const Form = Marionette.Object.extend({
         return field.editor;
     },
 
-    onDestroy() {
-        this.__regionManager.destroy();
-    },
-
     /**
      * Get all the field values as an object.
      * @param {String} [key]    Specific field value to get

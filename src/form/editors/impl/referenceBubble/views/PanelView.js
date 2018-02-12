@@ -124,22 +124,22 @@ export default Marionette.View.extend({
             this.activeText = text;
             this.__setLoading(true);
             const collection = this.model.get('collection');
-            this.reqres.trigger('filter:text', {
-                text
-            }).then(() => {
-                if (collection.length > 0 && this.model.get('value')) {
-                    this.model.get('value').forEach(model => {
-                        if (collection.has(model.id)) {
-                            collection.get(model.id).select();
-                        }
-                    });
-                    this.__toggleElementsQuantityWarning(collection.totalCount);
-                }
-                this.__setLoading(false);
-                this.reqres.trigger('view:ready');
-            }).catch(e => {
-                console.log(e.message);
-            });
+            this.reqres
+                .request('filter:text', { text })
+                .then(() => {
+                    if (collection.length > 0 && this.model.get('value')) {
+                        this.model.get('value').forEach(model => {
+                            if (collection.has(model.id)) {
+                                collection.get(model.id).select();
+                            }
+                        });
+                        this.__toggleElementsQuantityWarning(collection.totalCount);
+                    }
+                    this.__setLoading(false);
+                    this.reqres.trigger('view:ready');
+                }).catch(e => {
+                    console.log(e.message);
+                });
         };
         if (immediate) {
             updateNow();

@@ -12,6 +12,9 @@ body {
     }
 }
 
+.app-region-container {
+    height: 100%;
+}
 
 .header-container {
     width: 100%;

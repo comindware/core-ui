@@ -121,8 +121,8 @@ export default Marionette.CollectionView.extend({
     },
 
     __createReqres() {
-        //this.internalReqres = new Backbone.Wreqr.RequestResponse();
-        //this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+        this.internalReqres = Backbone.Radio.Channel(_.uniqueId('list'));
+        this.listenTo('childViewEvent', this.__handleChildViewEvent);
     },
 
     __handleChildViewEvent(view, eventName, eventArguments) {

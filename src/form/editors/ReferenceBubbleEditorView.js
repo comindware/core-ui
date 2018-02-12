@@ -85,9 +85,10 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         this.listenTo(reqres, 'button:click', this.__onButtonClick);
         this.listenTo(reqres, 'value:select', this.__onValueSelect);
         this.listenTo(reqres, 'value:edit', this.__onValueEdit);
-        this.listenTo(reqres, 'filter:text', this.__onFilterText);
         this.listenTo(reqres, 'add:new:item', this.__onAddNewItem);
         this.listenTo(reqres, 'view:ready', this.__triggerReady);
+
+        reqres.reply('filter:text', this.__onFilterText.bind(this));
 
         this.__updateFakeInputModel();
     },

@@ -142,9 +142,11 @@
     min-width: 200px;
     max-width: 100%;
     padding: 0;
-    position: relative;
+    position: fixed;
     display: flex;
     flex-direction: column;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
 }
 
 .dd-list__filter {
