@@ -7,10 +7,6 @@ const menuActionsWidth = 30;
 const itemMarginLeft = 10;
 
 export default Marionette.LayoutView.extend({
-    className: 'js-toolbar-actions toolbar-container',
-
-    template: Handlebars.compile(template),
-
     initialize() {
         this.allItemsCollection = this.options.allItemsCollection;
         this.toolbarItemsCollection = new Backbone.Collection(this.allItemsCollection.models);
@@ -23,6 +19,10 @@ export default Marionette.LayoutView.extend({
         this.listenTo(Core.services.GlobalEventService, 'window:resize', this.rebuildView);
         this.listenTo(this.allItemsCollection, 'change reset', this.rebuildView);
     },
+
+    className: 'js-toolbar-actions toolbar-container',
+
+    template: Handlebars.compile(template),
 
     regions: {
         toolbarItemsRegion: '.js-toolbar-items',

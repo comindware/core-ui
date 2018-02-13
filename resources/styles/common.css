@@ -895,4 +895,8 @@ a:hover {
     width: 100%;
 }
 
+.toolbar-container .popout__action-btn {
+    padding: 0 10px;
+}
+
 /* End Toolbar component */
