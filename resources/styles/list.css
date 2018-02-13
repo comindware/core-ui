@@ -374,7 +374,9 @@ svg.svg-grid-icons {
 }
 
 .collection-right-items-region {
-    display: flex
+    display: flex;
+    flex: 1 1 auto;
+    max-width: 50%;
 }
 
 .form-label_collection{

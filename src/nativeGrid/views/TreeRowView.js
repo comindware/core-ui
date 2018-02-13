@@ -5,7 +5,8 @@ import GridItemBehavior from '../../list/models/behaviors/GridItemBehavior';
 const defaultOptions = {
     paddingLeft: 20,
     paddingRight: 10,
-    levelPadding: 25
+    levelMargin: 15,
+    collapsibleButtonWidth: 14
 };
 
 const expandedClass = 'collapsible-btn_expanded';
@@ -48,19 +49,22 @@ export default RowView.extend({
                 }),
                 gridEventAggregator: this.options.gridEventAggregator
             });
-            cellView.render();
             if (isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
-                if (this.model.children && this.model.children.length) {
-                    this.collapseButton = $('<span class="collapsible-btn "></span>');
-                    cellView.$el.prepend(this.collapseButton);
-                }
+                const level = this.model.level || 0;
+                const margin = level * this.options.levelMargin;
+                const hasChildren = this.model.children && this.model.children.length;
+                cellView.on('render', () => {
+                    if (hasChildren) {
+                        this.collapseButton = $(`<span class="collapsible-btn" style="margin-left:${margin}px;"></span>`);
+                        cellView.$el.prepend(this.collapseButton);
+                    } else {
+                        cellView.$el.prepend($(`<span style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`));
+                    }
+                });
 
-                if (this.model.level) {
-                    cellView.$el.css('padding-left', this.model.level * this.options.levelPadding);
-                }
                 isFirstChild = false;
             }
-
+            cellView.render();
 
             cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
             this.cellViews.push(cellView);
