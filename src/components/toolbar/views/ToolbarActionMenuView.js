@@ -5,6 +5,8 @@ import ActionMenuButtonView from './ActionMenuButtonView';
 export default Marionette.ItemView.extend({
     template: false,
 
+    className: 'toolbar-btn',
+
     onRender() {
         this.menu = new Core.dropdown.factory.createPopout({
             buttonView: ActionMenuButtonView,
