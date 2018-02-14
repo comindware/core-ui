@@ -171,7 +171,10 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     },
 
     __rebuildIndex() {
-        const parentModels = this.filterFn && this.filteredModels || this.parentCollection.models;
+        let parentModels = this.parentCollection.models;
+        if (this.filterFn !== undefined && typeof this.filterFn === 'function') {
+            parentModels = this.__filterModels(this.parentCollection.models);
+        }
 
         this.index = this.__createIndexTree(parentModels, 0);
         this.__rebuildModels();
@@ -183,7 +186,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     },
 
     __buildModelsInternal(list, level = 0) {
-        for (let i = list.length - 1; i > -1; i--) {
+        for (let i = 0, len = list.length; i < len; i++) {
             const model = list.at(i);
             this._removeReference(model);
             this.models.push(model);
@@ -252,10 +255,6 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
 
     filter(filterFn) {
         this.filterFn = filterFn;
-        if (filterFn !== undefined && typeof filterFn === 'function') {
-            this.filteredModels = this.__filterModels(this.parentCollection.models);
-        }
-
         this.__rebuildIndex();
         this.trigger('reset', this, {});
     },
