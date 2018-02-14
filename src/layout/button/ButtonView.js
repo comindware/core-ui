@@ -47,7 +47,7 @@ export default Marionette.ItemView.extend({
 
     __onClick() {
         this.trigger('click');
-        this.options.handler();
+        this.options.handler(this.options.context);
     },
 
     update() {

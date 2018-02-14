@@ -140,3 +140,16 @@
     width: 100%;
     margin: 22px 0;
 }
+
+.layout__popup-view-button-list-container {
+    position: relative;
+    height: 70px;
+    bottom: -58px;
+    z-index: 1;
+}
+.layout__popup-buttons-alignment {
+    align-self: flex-end;
+    z-index: 2;
+    position: relative;
+    left: -10px;
+}
