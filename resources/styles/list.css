@@ -377,6 +377,11 @@ svg.svg-grid-icons {
     display: flex;
     flex: 1 1 auto;
     max-width: 50%;
+    justify-content: flex-end;
+}
+
+.collection-header-search {
+    flex: 1 1 auto;
 }
 
 .form-label_collection{
