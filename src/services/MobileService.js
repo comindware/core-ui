@@ -13,5 +13,11 @@ export default class MobileService {
         } else {
             this.isMobile = false;
         }
+        if (navigator.appName === 'Microsoft Internet Explorer' || !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
+            (typeof $.browser !== 'undefined' && $.browser.msie === 1)) {
+            this.isIE = true;
+        } else {
+            this.isIE = false;
+        }
     }
 }

@@ -16,6 +16,8 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
+import '../node_modules/spectrum-colorpicker/spectrum.css';
+
 
 import libApi from 'lib';
 import utilsApi from 'utils';

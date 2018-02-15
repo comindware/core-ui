@@ -117,6 +117,7 @@
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "numeral": "^2.0.6",
+    "spectrum-colorpicker": "^1.8.0",
     "underscore": "^1.8.3"
   }
 }
