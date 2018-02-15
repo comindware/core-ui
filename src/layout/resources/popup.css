@@ -59,6 +59,12 @@
     border-top: 1px solid #dfe4e8;
     text-align: right;
 }
+.layout__popup-view-button-list-transparent {
+    padding: 7px;
+    background: transparent;
+    border-top: transparent;
+    text-align: right;
+}
 
 .layout__popup-view-button {
     display: inline-block;
@@ -143,8 +149,8 @@
 
 .layout__popup-view-button-list-container {
     position: relative;
-    height: 70px;
-    bottom: -58px;
+    height: 66px;
+    bottom: -50px;
     z-index: 1;
 }
 .layout__popup-buttons-alignment {

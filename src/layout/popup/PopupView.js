@@ -99,9 +99,9 @@ export default Marionette.LayoutView.extend({
     },
 
     __createButtonsView() {
-        const buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+        this.buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
         return new core.layout.HorizontalLayout({
-            columns: buttons,
+            columns: this.buttons,
         });
     },
 
