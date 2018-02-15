@@ -40,8 +40,12 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
 
     className: 'editor editor-color',
 
-    _changedHex() {
-        this.ui.colorpicker.val(this.ui.hexcolor.val());
+    __changedHex() {
+        if (Core.services.MobileService.isIE) {
+            this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
+        } else {
+            this.ui.colorpicker.val(this.ui.hexcolor.val());
+        }
     },
 
     __changedColorPicker() {
