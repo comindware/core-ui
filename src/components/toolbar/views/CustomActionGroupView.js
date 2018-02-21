@@ -39,12 +39,17 @@ export default Marionette.CollectionView.extend({
     onRender() {
         if (this.model) {
             const iconType = this.model.get('iconType');
+            const severityType = this.model.get('severity');
+
             this.$el.addClass(severity[this.model.get('severity')].class);
             if (iconType === icons.None) {
                 this.$el.children('.js-icon-container').hide();
             } else {
                 this.$el.children('.js-icon-container').show();
                 this.$el.children('.js-icon-container').html(icons[iconType].icon);
+            }
+            if (severityType && severity[severityType]) {
+                this.$el.children('.js-icon-container').addClass(severity[severityType].class);
             }
         }
     },
