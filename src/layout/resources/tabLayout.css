@@ -71,7 +71,7 @@
 /* panel */
 
 .layout__tab-layout__panel-container {
-    flex: 1;
+    flex: 1 0 auto;
     overflow: hidden;
 }
 
