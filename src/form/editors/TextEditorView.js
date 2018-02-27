@@ -153,11 +153,6 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         if (this.keyListener) {
             this.keyListener.reset();
         }
-        if (!this.options.allowEmptyValue) {
-            this.ui.clearButton.hide();
-        } else {
-            this.ui.clearButton.show();
-        }
         this.keyListener = new keypress.Listener(this.ui.input[0]);
     },
 
@@ -208,10 +203,14 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     },
 
     __onMouseenter() {
-        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
+        if (this.options.allowEmptyValue) {
+            this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
+        }
     },
 
     __onMouseleave() {
-        this.el.lastElementChild.remove();
+        if (this.options.allowEmptyValue) {
+            this.el.lastElementChild.remove();
+        }
     }
 });
