@@ -25,8 +25,19 @@ export default Marionette.LayoutView.extend({
         mousedown: '__showEditor'
     },
 
+    modelEvents: {
+        'change:value': '__updateDisplayValue',
+    },
+
     onRender() {
-        this.el.insertAdjacentHTML('afterbegin', `<input class="input input_time" type="text" value="${
+        this.__updateDisplayValue();
+    },
+
+    __updateDisplayValue() {
+        if (this.isDropdownShown) {
+            return;
+        }
+        this.el.insertAdjacentHTML('afterbegin', `<input class="js-time-input input input_time" type="text" value="${
             DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat)}">`);
     },
 
@@ -148,11 +159,14 @@ export default Marionette.LayoutView.extend({
     },
 
     focus() {
+        this.__showEditor();
         this.dropdownView.button.focus();
     },
 
     blur() {
-        this.dropdownView.close();
+        if (this.isDropdownShown) {
+            this.dropdownView.close();
+        }
     },
 
     hasFocus() {

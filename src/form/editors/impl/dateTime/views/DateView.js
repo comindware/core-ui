@@ -34,8 +34,19 @@ export default Marionette.LayoutView.extend({
         mousedown: '__showEditor'
     },
 
-    onShow() {
-        this.el.insertAdjacentHTML('afterbegin', `<input class="input input_date" type="text" value="${
+    modelEvents: {
+        'change:value': '__updateDisplayValue',
+    },
+
+    onRender() {
+        this.__updateDisplayValue();
+    },
+
+    __updateDisplayValue() {
+        if (this.isDropdownShown) {
+            return;
+        }
+        this.el.insertAdjacentHTML('afterbegin', `<input class="js-date-input input input_date" type="text" value="${
             DateTimeService.getDateDisplayValue(this.model.get('value'), this.dateDisplayFormat)}">`);
     },
 
