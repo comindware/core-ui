@@ -8,6 +8,8 @@
 
 import { Handlebars } from 'lib';
 import template from '../templates/bubbleItem.hbs';
+import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
+import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 
 export default Marionette.ItemView.extend({
     initialize(options) {
@@ -43,7 +45,9 @@ export default Marionette.ItemView.extend({
         'click @ui.clearButton': '__delete',
         'click @ui.editButton': '__edit',
         click: '__click',
-        drag: '__handleDrag'
+        drag: '__handleDrag',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
 
     __delete() {
@@ -66,15 +70,13 @@ export default Marionette.ItemView.extend({
 
     updateEnabled(enabled) {
         this.options.enabled = enabled;
-        if (enabled) {
-            this.ui.clearButton.show();
-        } else {
-            this.ui.clearButton.hide();
-        }
     },
 
     onRender() {
         this.updateEnabled(this.options.enabled);
+        if (this.options.showEditButton && Boolean(this.model.attributes)) {
+            this.el.classList.add('bubbles__i-edit-btn');
+        }
     },
 
     __handleDrag(event) {
@@ -82,5 +84,23 @@ export default Marionette.ItemView.extend({
             id: this.model.id,
             type: 'reference'
         };
+    },
+
+    __onMouseenter() {
+        if (this.options.showEditButton && Boolean(this.model.attributes)) {
+            this.el.insertAdjacentHTML('beforeend', iconWrapPencil);
+        }
+        if (this.options.enabled) {
+            this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
+        }
+    },
+
+    __onMouseleave() {
+        if (this.options.showEditButton && Boolean(this.model.attributes)) {
+            this.el.lastElementChild.remove();
+        }
+        if (this.options.enabled) {
+            this.el.lastElementChild.remove();
+        }
     }
 });

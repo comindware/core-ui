@@ -12,6 +12,8 @@ import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
+import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
+import iconWrapText from './iconsWraps/iconWrapText.html';
 
 const changeMode = {
     blur: 'blur',
@@ -86,7 +88,9 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     events: {
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
-        'click @ui.clearButton': '__clear'
+        'click @ui.clearButton': '__clear',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
 
     __keyup() {
@@ -201,5 +205,13 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
 
     deselect() {
         this.ui.input.deselect();
+    },
+
+    __onMouseenter() {
+        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
+    },
+
+    __onMouseleave() {
+        this.el.lastElementChild.remove();
     }
 });

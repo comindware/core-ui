@@ -475,7 +475,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
 });
 
 // methods that alter data should proxy to the parent collection
-['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update'].forEach(methodName => {
+['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update', 'where', 'findWhere'].forEach(methodName => {
     VirtualCollection.prototype[methodName] = function() {
         return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };

@@ -3,6 +3,7 @@ import template from '../templates/MultiselectItem.html';
 import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
+import iconWrapRemove from '../../../iconsWraps/iconWrapRemove.html';
 
 const savedDocumentPrefix = 'document';
 
@@ -43,28 +44,10 @@ export default Marionette.LayoutView.extend({
 
     events: {
         'click @ui.revise': '__getDocumentRevision',
-        'click @ui.link': '__showPreview'
+        'click @ui.link': '__showPreview',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
-
-    onRender() {
-        if (this.options.hideRemoveBtn) {
-            this.ui.remove.hide();
-        }
-    },
-
-    onShow() {
-        if (this.model.get('id').indexOf(savedDocumentPrefix) > -1) {
-            this.documentRevisionPopout = new dropdown.factory.createPopout({
-                buttonView: DocumentRevisionButtonView,
-                panelView: DocumentRevisionPanelView,
-                panelViewOptions: { collection: this.revisionCollection },
-                popoutFlow: 'right',
-                autoOpen: false
-            });
-            this.reviseRegion.show(this.documentRevisionPopout);
-        }
-    },
-
 
     __getDocumentRevision() {
         this.reqres.request('document:revise', this.model.get('id')).then(revisionList => {
@@ -75,5 +58,33 @@ export default Marionette.LayoutView.extend({
 
     __showPreview() {
         return this.attachmentsController.showGallery(this.model);
+    },
+
+    __onMouseenter() {
+        if (!this.options.hideRemoveBtn) {
+            this.el.insertAdjacentHTML('beforeend', iconWrapRemove);
+        }
+        if (this.model.get('id').indexOf(savedDocumentPrefix) > -1) {
+            if (!this.isRevisonButtonShown) {
+                this.documentRevisionPopout = new dropdown.factory.createPopout({
+                    buttonView: DocumentRevisionButtonView,
+                    panelView: DocumentRevisionPanelView,
+                    panelViewOptions: { collection: this.revisionCollection },
+                    popoutFlow: 'right',
+                    autoOpen: false
+                });
+                this.reviseRegion.show(this.documentRevisionPopout);
+                this.isRevisonButtonShown = true;
+            } else {
+                this.ui.revise.show();
+            }
+        }
+    },
+
+    __onMouseleave() {
+        if (!this.options.hideRemoveBtn) {
+            this.el.lastElementChild.remove();
+        }
+        this.ui.revise.hide();
     }
 });
