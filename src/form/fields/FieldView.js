@@ -36,6 +36,7 @@ export default Marionette.LayoutView.extend({
             helpText: this.schema.helpText,
             errorText: null
         });
+        this.errorCollection = new Backbone.Collection();
     },
 
     templateHelpers() {
@@ -54,18 +55,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow() {
-        this.errorCollection = new Backbone.Collection();
         this.editorRegion.show(this.editor);
-        const errorPopout = dropdown.factory.createPopout({
-            buttonView: ErrorButtonView,
-            panelView: ErrosPanelView,
-            panelViewOptions: {
-                collection: this.errorCollection
-            },
-            popoutFlow: 'right',
-            customAnchor: true
-        });
-        this.errorTextRegion.show(errorPopout);
         if (this.schema.helpText) {
             const infoPopout = dropdown.factory.createPopout({
                 buttonView: InfoButtonView,
@@ -105,6 +95,19 @@ export default Marionette.LayoutView.extend({
         }
         this.$el.addClass(classes.ERROR);
         this.errorCollection.reset(errors);
+        if (!this.isErrorShown) {
+            const errorPopout = dropdown.factory.createPopout({
+                buttonView: ErrorButtonView,
+                panelView: ErrosPanelView,
+                panelViewOptions: {
+                    collection: this.errorCollection
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.errorTextRegion.show(errorPopout);
+            this.isErrorShown = true;
+        }
     },
 
     clearError() {

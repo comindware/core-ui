@@ -11,6 +11,7 @@ import template from '../templates/date.hbs';
 import dropdown from 'dropdown';
 import PanelView from './DatePanelView';
 import InputView from './DateInputView';
+import DateTimeService from '../../../services/DateTimeService';
 
 export default Marionette.LayoutView.extend({
     initialize() {
@@ -28,7 +29,21 @@ export default Marionette.LayoutView.extend({
         popoutRegion: '.js-popout-region'
     },
 
+    events: {
+        focus: '__showEditor',
+        mousedown: '__showEditor'
+    },
+
     onShow() {
+        this.el.insertAdjacentHTML('afterbegin', `<input class="input input_date" type="text" value="${
+            DateTimeService.getDateDisplayValue(this.model.get('value'), this.dateDisplayFormat)}">`);
+    },
+
+    __showEditor() {
+        if (this.isDropdownShown) {
+            return;
+        }
+        this.el.firstElementChild && this.el.firstElementChild.remove();
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {
@@ -54,8 +69,9 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.calendarDropdownView, 'button:focus', this.__onButtonFocus, this);
         this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
-
         this.popoutRegion.show(this.calendarDropdownView);
+        this.isDropdownShown = true;
+        this.calendarDropdownView.open();
     },
 
     __onBeforeClose() {
@@ -86,6 +102,7 @@ export default Marionette.LayoutView.extend({
     },
 
     focus() {
+        this.__showEditor();
         this.calendarDropdownView.button.focus();
     },
 

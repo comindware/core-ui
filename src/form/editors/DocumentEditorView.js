@@ -44,7 +44,7 @@ formRepository.editors.Document = BaseLayoutEditorView.extend({
         this.$el.toggleClass('pr-empty', this.internalValue && this.internalValue.length === 0);
     },
 
-    className: 'document-field',
+    className: 'document-field editor',
 
     template: Handlebars.compile(template),
 
