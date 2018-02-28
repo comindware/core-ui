@@ -40,8 +40,12 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
 
     className: 'editor editor-color',
 
-    _changedHex() {
-        this.ui.colorpicker.val(this.ui.hexcolor.val());
+    __changedHex() {
+        if (Core.services.MobileService.isIE) {
+            this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
+        } else {
+            this.ui.colorpicker.val(this.ui.hexcolor.val());
+        }
     },
 
     __changedColorPicker() {
@@ -71,10 +75,11 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
                 showInitial: true,
                 preferredFormat: 'hex'
             });
+            this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
         } else {
             this.ui.colorpicker.val(value);
+            this.ui.hexcolor.val(this.ui.colorpicker.val());
         }
-        this.ui.hexcolor.val(this.ui.colorpicker.val());
     },
 
     __value(value, updateUi, triggerChange) {
