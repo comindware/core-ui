@@ -13,6 +13,8 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 import TimeView from './impl/dateTime/views/TimeView';
 import formRepository from '../formRepository';
+import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
+import iconWrapDate from './iconsWraps/iconWrapDate.html';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -58,7 +60,9 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     },
 
     events: {
-        'click @ui.clearButton': '__onClear'
+        'click @ui.clearButton': '__onClear',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
 
     regions: {
@@ -207,6 +211,14 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
         const timeDisplayValue = DateTimeService.getTimeDisplayValue(this.getValue(), this.options.timeDisplayFormat);
         const resultValue = `${dateDisplayValue} ${timeDisplayValue}`;
         this.$el.prop('title', resultValue);
+    },
+
+    __onMouseenter() {
+        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapDate);
+    },
+
+    __onMouseleave() {
+        this.el.lastElementChild.remove();
     }
 });
 

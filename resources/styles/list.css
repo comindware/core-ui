@@ -377,6 +377,11 @@ svg.svg-grid-icons {
     display: flex;
     flex: 1 1 auto;
     max-width: 50%;
+    justify-content: flex-end;
+}
+
+.collection-header-search {
+    flex: 1 1 auto;
 }
 
 .form-label_collection{
@@ -647,17 +652,10 @@ svg.svg-grid-icons {
     flex: none;
 }
 
-.fr-collection-grid .document-field{
-    position: relative;
-    margin: 0;
-}
 .fr-collection-grid .field-documents{
-    margin-top: -6px;
     max-width: calc(100% - 32px);
 }
-.fr-collection-grid .field-documents .task-links{
-    margin: 0;
-}
+
 .fr-collection-grid .task-links__i{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -665,15 +663,10 @@ svg.svg-grid-icons {
     padding-right: 40px;
 }
 
-.fr-collection-grid .field-documents .svg-icons-wrp__remove{
-    top: 3px;
-}
-
 .fr-collection-grid .fr-btn_attach{
     height: 20px;
     padding: 0 5px;
     line-height: 18px;
-    margin-top: -10px;
 }
 
 .fr-collection-grid .svg-icons_attach{
@@ -701,18 +694,13 @@ svg.svg-grid-icons {
 }
 
 .fr-collection .editable-cell {
-    display: inline-block;
+    display: flex;
     width: 100%;
+    position: relative;
 }
 
-.editable-cell .form-group{
-    margin-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-.editable-cell .form-label {
-    display: inline-block;
-    position: absolute;
+.editable-grid-field {
+    width: 100%;
 }
 
 .editable-cell input {

@@ -1,11 +1,14 @@
 
 import ActionMenuPanelView from './ActionMenuPanelView';
 import ActionMenuButtonView from './ActionMenuButtonView';
+import { severity } from '../meta';
 
 export default Marionette.ItemView.extend({
     template: false,
 
-    className: 'toolbar-btn',
+    className() {
+        return this.model.has('severity') ? severity[this.model.get('severity')].class : 'toolbar-btn';
+    },
 
     onRender() {
         this.menu = new Core.dropdown.factory.createPopout({

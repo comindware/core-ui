@@ -221,7 +221,7 @@ describe('Components', () => {
             });
 
             core.services.WindowService.showPopup(popupView);
-            const buttons = $('.js-core-ui__global-popup-region').find('.js-window .js-button');
+            const buttons = $('.js-core-ui__global-popup-region').find('.js-window .layout__button-view-text');
 
             expect(buttons.length).toEqual(2);
         });

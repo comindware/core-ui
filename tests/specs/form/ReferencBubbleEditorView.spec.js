@@ -296,6 +296,8 @@ describe('Editors', () => {
                 doneFn();
             });
 
+            $(view.$('.bubbles__i')[0]).trigger('mouseenter');
+
             view.$('.js-bubble-delete')[0].click();
 
             expect(doneFn).toHaveBeenCalled();
@@ -316,8 +318,12 @@ describe('Editors', () => {
 
             rootRegion.show(view);
 
-            view.$('.js-bubble-delete')[1].click();
+            $(view.$('.bubbles__i')[1]).trigger('mouseenter');
+
+            view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
+
+            $(view.$('.bubbles__i')[0]).trigger('mouseenter');
 
             view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([]);
@@ -404,6 +410,7 @@ describe('Editors', () => {
             });
 
             view.on('view:ready', () => {
+                $(view.$('.bubbles__i')[0]).trigger('mouseenter');
                 view.$('.js-bubble-delete')[0].click();
             });
         });

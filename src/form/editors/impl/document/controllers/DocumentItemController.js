@@ -24,11 +24,11 @@ export default Marionette.Object.extend({
     async __getDocumentRevision(documentId) {
         const result = await Ajax.Documents.GetDocumentRevisions(documentId);
         return result.map(item => ({
-            id: item.Id,
-            creator: item.CreatorName,
-            url: item.RevisionLink,
-            creationDate: dateHelpers.dateToDateTimeString(item.CreationDate, 'generalDateShortTime'),
-            version: item.RevisionIndex
+            id: item.id,
+            creator: item.creatorName,
+            url: item.revisionLink,
+            creationDate: dateHelpers.dateToDateTimeString(item.creationDate, 'generalDateShortTime'),
+            version: item.revisionIndex
         }));
     }
 });

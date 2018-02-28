@@ -302,6 +302,7 @@ describe('Editors', () => {
             rootRegion.show(view);
             view.on('change', onChangeCallback);
 
+            view.$el.trigger('mouseenter');
             view.$('.js-clear-button').click();
 
             const isEmpty = view.isEmptyValue();
@@ -334,6 +335,7 @@ describe('Editors', () => {
 
             expect(model.get('data')).toEqual('text');
             expect(isEmpty).toEqual(false);
+            view.$el.trigger('mouseenter');
             expect(view.$('.js-clear-button')).toBeHidden();
             expect(onChangeCallback).toHaveBeenCalledTimes(0);
             expect(input.val()).toEqual('text');
@@ -362,7 +364,8 @@ describe('Editors', () => {
 
             rootRegion.show(view);
 
-            expect(view.$('.js-clear-button')).toBeHidden();
+            view.$el.trigger('mouseenter');
+            expect(view.$('.js-clear-button').length).toEqual(0);
         });
     });
 });

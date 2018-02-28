@@ -11,6 +11,8 @@ import template from './templates/dateEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
 import formRepository from '../formRepository';
+import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
+import iconWrapDate from './iconsWraps/iconWrapDate.html';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -66,7 +68,9 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     events: {
-        'click @ui.clearButton': '__onClear'
+        'click @ui.clearButton': '__onClear',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
 
     __change() {
@@ -149,6 +153,14 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
 
     __adjustValue(value) {
         return value === null ? value : moment(value).toISOString();
+    },
+
+    __onMouseenter() {
+        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapDate);
+    },
+
+    __onMouseleave() {
+        this.el.lastElementChild.remove();
     }
 });
 

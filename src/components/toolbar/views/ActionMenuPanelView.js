@@ -1,12 +1,12 @@
 
-import SeverityPanelChildView from './ActionPanelChildView';
+import ActionPanelChildView from './ActionPanelChildView';
 
 export default Marionette.CollectionView.extend({
     className: 'toolbar-panel_container',
 
     template: false,
 
-    childView: SeverityPanelChildView,
+    childView: ActionPanelChildView,
 
     childEvents: {
         'click:item': '__triggerChildSelect'

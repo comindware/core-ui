@@ -11,13 +11,41 @@ import { dateHelpers } from 'utils';
 import dropdown from 'dropdown';
 import TimeInputView from './TimeInputView';
 import template from '../templates/time.hbs';
+import DateTimeService from '../../../services/DateTimeService';
 
 export default Marionette.LayoutView.extend({
     initialize() {
         this.allowEmptyValue = this.getOption('allowEmptyValue');
         this.timeDisplayFormat = this.getOption('timeDisplayFormat');
         this.showTitle = this.getOption('showTitle');
+    },
 
+    events: {
+        focus: '__showEditor',
+        mousedown: '__showEditor'
+    },
+
+    modelEvents: {
+        'change:value': '__updateDisplayValue',
+    },
+
+    onRender() {
+        this.__updateDisplayValue();
+    },
+
+    __updateDisplayValue() {
+        if (this.isDropdownShown) {
+            return;
+        }
+        this.el.insertAdjacentHTML('afterbegin', `<input class="js-time-input input input_time" type="text" value="${
+            DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat)}">`);
+    },
+
+    __showEditor() {
+        if (this.isDropdownShown) {
+            return;
+        }
+        this.el.firstElementChild && this.el.firstElementChild.remove();
         this.dropdownView = this.__getDropdownView();
 
         this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
@@ -26,6 +54,9 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.dropdownView, 'button:focus', this.__onButtonFocus, this);
         this.listenTo(this.dropdownView, 'button:calendar:open', this.__onButtonCalendarOpen, this);
         this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
+        this.dropdownRegion.show(this.dropdownView);
+        this.isDropdownShown = true;
+        this.dropdownView.open();
     },
 
     className: 'time-view',
@@ -34,10 +65,6 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         dropdownRegion: '.js-dropdown-region'
-    },
-
-    onRender() {
-        this.dropdownRegion.show(this.dropdownView);
     },
 
     __getDropdownView() {
@@ -132,11 +159,14 @@ export default Marionette.LayoutView.extend({
     },
 
     focus() {
+        this.__showEditor();
         this.dropdownView.button.focus();
     },
 
     blur() {
-        this.dropdownView.close();
+        if (this.isDropdownShown) {
+            this.dropdownView.close();
+        }
     },
 
     hasFocus() {

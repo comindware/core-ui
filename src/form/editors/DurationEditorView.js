@@ -12,6 +12,8 @@ import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
+import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
+import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
 
 const focusablePartId = {
     DAYS: 'days',
@@ -122,7 +124,9 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
         'focus @ui.input': '__focus',
         'click @ui.input': '__focus',
         'blur @ui.input': '__blur',
-        'keydown @ui.input': '__keydown'
+        'keydown @ui.input': '__keydown',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
 
     setPermissions(enabled, readonly) {
@@ -520,5 +524,13 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
             this.$el.prop('title', val);
         }
         this.$el.toggleClass(classes.FOCUSED, inEditMode);
+    },
+
+    __onMouseenter() {
+        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapNumber);
+    },
+
+    __onMouseleave() {
+        this.el.lastElementChild.remove();
     }
 });

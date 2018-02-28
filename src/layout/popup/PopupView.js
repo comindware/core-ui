@@ -13,6 +13,8 @@ import template from './popup.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 import GlobalEventService from '../../services/GlobalEventService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
+import ButtonView from '../button/ButtonView';
+import core from 'coreApi';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view'
@@ -25,10 +27,6 @@ export default Marionette.LayoutView.extend({
         helpers.ensureOption(options, 'content');
 
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
-        this.__buttons = this.options.buttons.map(x => Object.assign({
-            id: _.uniqueId('buttonId')
-        }, x));
-
         this.content = options.content;
     },
 
@@ -37,7 +35,6 @@ export default Marionette.LayoutView.extend({
     templateHelpers() {
         return {
             headerText: this.options.header,
-            buttons: this.__buttons
         };
     },
 
@@ -66,6 +63,7 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         contentRegion: '.js-content-region',
+        buttonsRegion: '.js-buttons-region',
         loadingRegion: '.js-loading-region',
     },
 
@@ -78,6 +76,7 @@ export default Marionette.LayoutView.extend({
 
     onShow() {
         this.contentRegion.show(this.options.content);
+        this.buttonsRegion.show(this.__createButtonsView());
         this.__updateState();
         this.ui.window.css({ top: 'inherit' });
     },
@@ -95,18 +94,15 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __onButtonClick(e) {
-        let id = $(e.target).data('id');
-        if (id === undefined) {
-            id = $(e.target.parentElement).data('id');
-        }
-        const button = this.__buttons.find(x => x.id === id);
-        button.handler(this);
-        this.trigger('button', id);
-    },
-
     __close() {
         WindowService.closePopup();
+    },
+
+    __createButtonsView() {
+        this.buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+        return new core.layout.HorizontalLayout({
+            columns: this.buttons,
+        });
     },
 
     setLoading(loading) {

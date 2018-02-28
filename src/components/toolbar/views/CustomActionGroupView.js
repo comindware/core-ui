@@ -39,6 +39,7 @@ export default Marionette.CollectionView.extend({
     onRender() {
         if (this.model) {
             const iconType = this.model.get('iconType');
+
             this.$el.addClass(severity[this.model.get('severity')].class);
             if (iconType === icons.None) {
                 this.$el.children('.js-icon-container').hide();
