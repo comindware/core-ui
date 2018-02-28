@@ -75,10 +75,11 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
                 showInitial: true,
                 preferredFormat: 'hex'
             });
+            this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
         } else {
             this.ui.colorpicker.val(value);
+            this.ui.hexcolor.val(this.ui.colorpicker.val());
         }
-        this.ui.hexcolor.val(this.ui.colorpicker.val());
     },
 
     __value(value, updateUi, triggerChange) {
