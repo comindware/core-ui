@@ -9,6 +9,7 @@
 
 .layout__tab-layout__header-region {
     overflow: hidden;
+    height: 51px;
 }
 
 .layout__tab-layout__header-view {
@@ -71,8 +72,9 @@
 /* panel */
 
 .layout__tab-layout__panel-container {
-    flex: 1 0 auto;
-    overflow: hidden;
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .layout__tab-layout__panel-region {
