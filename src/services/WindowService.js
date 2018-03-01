@@ -66,6 +66,11 @@ const windowService = /** @lends module:core.services.WindowService */ {
         return this.__popupStackView.get(popupId);
     },
 
+    isPopupOpen() {
+        const stack = this.__popupStackView.getStack();
+        return stack.length > 0;
+    },
+
     fadeBackground(fade) {
         this.__popupStackView.fadeBackground(fade);
     }
