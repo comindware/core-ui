@@ -360,7 +360,7 @@ svg.svg-grid-icons {
     position: relative;
 }
 
-.collection-header{
+.editable-grid-header{
     height: 25px;
     padding: 0 10px;
     display: flex;
@@ -369,7 +369,7 @@ svg.svg-grid-icons {
     background: #f7f6f6;
 }
 
-.collection-header .tr-search {
+.editable-grid-header .tr-search {
     padding: 0;
 }
 
@@ -380,46 +380,46 @@ svg.svg-grid-icons {
     justify-content: flex-end;
 }
 
-.collection-header-search {
+.editable-grid-header-search {
     flex: 1 1 auto;
 }
 
-.form-label_collection{
+.form-label_editable-grid{
     line-height: inherit;
 }
 
-.collection-header-btn{
+.editable-grid-header-btn{
     margin-top: 2px;
 }
 
-.collection-header__btn{
+.editable-grid-header__btn{
     cursor: pointer;
     padding: 0 5px;
     border-radius: 2px;
     border: 1px solid transparent;
     display: inline-block;
 }
-.collection-header__btn:hover{
+.editable-grid-header__btn:hover{
     border-color: #bfc2c4;
     box-shadow: inset 0 2px 3px #fff;
 
 }
-.collection-header__btn.disabled,
-.collection-header__btn.disabled:hover{
+.editable-grid-header__btn.disabled,
+.editable-grid-header__btn.disabled:hover{
     opacity: .6;
     cursor: default;
     border-color: transparent;
     box-shadow: none;
 
 }
-.collection-header-btn__icon {
+.editable-grid-header-btn__icon {
     display: inline-block;
     vertical-align: middle;
     width: 20px;
     height: 17px;
 }
 
-.collection-header-btn__text{
+.editable-grid-header-btn__text{
     display: inline-block;
     color: #636262;
     font-size: 11px;

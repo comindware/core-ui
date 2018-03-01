@@ -31,8 +31,8 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         gridRegion: '.js-grid-region',
-        collectionHeaderToolbarRegion: '.js-collection-header-toolbar-region',
-        collectionHeaderSearchRegion: '.js-collection-header-search-region'
+        collectionHeaderToolbarRegion: '.js-editable-grid-header-toolbar-region',
+        collectionHeaderSearchRegion: '.js-editable-grid-header-search-region'
     },
 
     className: 'fr-collection dev-collection',
