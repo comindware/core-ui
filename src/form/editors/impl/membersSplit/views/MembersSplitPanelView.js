@@ -47,11 +47,9 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         availableItemsListRegion: '.js-available-items-list-region',
-        availableItemsScrollbarRegion: '.js-available-items-scrollbar-region',
         availableItemsToolbarRegion: '.js-available-items-toolbar-region',
         availableSearchRegion: '.js-available-search-region',
         selectedItemsListRegion: '.js-selected-items-list-region',
-        selectedItemsScrollbarRegion: '.js-selected-items-scrollbar-region',
         selectedItemsToolbarRegion: '.js-selected-items-toolbar-region',
         selectedSearchRegion: '.js-selected-search-region'
     },
@@ -85,7 +83,6 @@ export default Marionette.LayoutView.extend({
         }
         const availableList = Core.list.factory.createDefaultList(availableViewOptions);
         this.availableItemsListRegion.show(availableList.listView);
-        this.availableItemsScrollbarRegion.show(availableList.scrollbarView);
 
         if (this.eventAggregator.available) {
             this.stopListening(this.eventAggregator.available);
@@ -116,7 +113,6 @@ export default Marionette.LayoutView.extend({
             }
         });
         this.selectedItemsListRegion.show(selectedList.listView);
-        this.selectedItemsScrollbarRegion.show(selectedList.scrollbarView);
 
         // Selected search
         const selectedSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });

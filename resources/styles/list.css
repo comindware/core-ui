@@ -32,6 +32,11 @@
     position: relative;
 }
 
+.visible-collection.scrolled > div {
+    position: absolute;
+    width: 100%
+}
+
 .visible-collection-view {
     height: inherit;
 }
@@ -237,7 +242,7 @@ svg.svg-grid-icons {
 }
 
 .native-grid__header .grid-header {
-    display: block;
+    display: flex;
     position: relative;
     height: inherit;
     width: 100%;
@@ -270,7 +275,7 @@ svg.svg-grid-icons {
 
 .native-grid__list .grid-row {
     width: 100%;
-    display: block;
+    display: flex;
     overflow: hidden;
 }
 

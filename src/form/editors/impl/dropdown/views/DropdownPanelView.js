@@ -48,8 +48,7 @@ export default Marionette.LayoutView.extend({
     },
 
     regions: {
-        listRegion: '.js-list-region',
-        scrollbarRegion: '.js-scrollbar-region'
+        listRegion: '.js-list-region'
     },
 
     attributes: {
@@ -113,7 +112,6 @@ export default Marionette.LayoutView.extend({
         this.eventAggregator = result.eventAggregator;
 
         this.listRegion.show(result.listView);
-        this.scrollbarRegion.show(result.scrollbarView);
 
         this.$el.focus();
         this.__assignKeyboardShortcuts();

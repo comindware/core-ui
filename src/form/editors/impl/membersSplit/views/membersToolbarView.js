@@ -21,8 +21,7 @@ export default Marionette.LayoutView.extend({
     className: 'tabs tabs_columns-select',
 
     regions: {
-        listRegion: '.js-list-region',
-        scrollbarRegion: '.js-scrollbar-region'
+        listRegion: '.js-list-region'
     },
 
     ui: {

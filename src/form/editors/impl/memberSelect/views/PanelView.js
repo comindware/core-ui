@@ -55,7 +55,6 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         listRegion: '.js-list-region',
-        scrollbarRegion: '.js-scrollbar-region',
         loadingRegion: '.js-loading-region'
     },
 
@@ -84,7 +83,6 @@ export default Marionette.LayoutView.extend({
         this.eventAggregator = result.eventAggregator;
 
         this.listRegion.show(result.listView);
-        this.scrollbarRegion.show(result.scrollbarView);
 
         this.ui.input.focus();
         this.__updateFilter();
@@ -137,7 +135,6 @@ export default Marionette.LayoutView.extend({
                 if (collection.length > 0) {
                     const model = collection.at(0);
                     model.select();
-                    this.eventAggregator.scrollTo(model);
                 }
             });
         }, config.TEXT_FETCH_DELAY);

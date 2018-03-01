@@ -30,8 +30,7 @@ export default Marionette.LayoutView.extend({
     className: 'dd-list',
 
     regions: {
-        listRegion: '.js-list-region',
-        scrollbarRegion: '.js-scrollbar-region'
+        listRegion: '.js-list-region'
     },
 
     onShow() {
@@ -56,7 +55,6 @@ export default Marionette.LayoutView.extend({
         });
 
         this.listRegion.show(this.listBundle.listView);
-        this.scrollbarRegion.show(this.listBundle.scrollbarView);
     },
 
     handleCommand(command) {

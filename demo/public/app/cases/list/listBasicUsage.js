@@ -19,7 +19,7 @@ export default function() {
 
     // 3. Get some data (inline or by collection.fetch)
     const collection = new ListItemCollection();
-    collection.reset(_.times(40, i => ({
+    collection.reset(_.times(1000, i => ({
         id: i + 1,
         title: `My Task ${i + 1}`
     })));
@@ -49,7 +49,6 @@ export default function() {
 
     // 6. Show created views in corresponding regions
     return new ListCanvasView({
-        content: bundle.listView,
-        scrollbar: bundle.scrollbarView
+        content: bundle.listView
     });
 }

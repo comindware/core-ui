@@ -90,7 +90,6 @@ export default function() {
 
     // 7. Show created views in corresponding regions
     return new ListCanvasView({
-        content: bundle.listView,
-        scrollbar: bundle.scrollbarView
+        content: bundle.listView
     });
 }

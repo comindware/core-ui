@@ -56,7 +56,6 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         listRegion: '.js-list-region',
-        scrollbarRegion: '.js-scrollbar-region',
         loadingRegion: '.js-loading-region',
         addNewButtonRegion: '.js-add-new-button-region'
     },
@@ -92,8 +91,6 @@ export default Marionette.LayoutView.extend({
         }
 
         this.listRegion.show(result.listView);
-
-        this.scrollbarRegion.show(result.scrollbarView);
 
         if (this.getOption('hideSearchBar')) {
             this.ui.searchBarContainer.hide();

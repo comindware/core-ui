@@ -82,7 +82,6 @@ export default function() {
     // 7. Show created views in corresponding regions
     return new ListSearchCanvasView({
         search: searchBarView,
-        content: bundle.listView,
-        scrollbar: bundle.scrollbarView
+        content: bundle.listView
     });
 }

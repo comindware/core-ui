@@ -15,8 +15,7 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     regions: {
-        contentRegion: '.js-content-region',
-        scrollbarRegion: '.js-scrollbar-region'
+        contentRegion: '.js-content-region'
     },
 
     className: 'demo-list-canvas__view',
