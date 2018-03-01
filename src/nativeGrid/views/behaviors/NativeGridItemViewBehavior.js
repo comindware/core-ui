@@ -15,14 +15,14 @@ export default Marionette.Behavior.extend({
         helpers.ensureOption(view.options, 'gridEventAggregator');
 
         this.padding = options.padding;
-        this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
+        // this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
         this.columns = view.options.columns;
 
         this.paddingLeft = view.options.paddingLeft;
         this.paddingRight = view.options.paddingRight;
         this.padding = options.padding;
-        this.listenTo(view.options.gridEventAggregator, 'columnStartDrag', this.__onColumnStartDrag);
-        this.listenTo(view.options.gridEventAggregator, 'singleColumnResize', this.__onSingleColumnResize);
+        // this.listenTo(view.options.gridEventAggregator, 'columnStartDrag', this.__onColumnStartDrag);
+        // this.listenTo(view.options.gridEventAggregator, 'singleColumnResize', this.__onSingleColumnResize);
         this.view.setFitToView = this.setFitToView.bind(this);
     },
 
@@ -66,15 +66,15 @@ export default Marionette.Behavior.extend({
     },
 
     __setInitialWidth() {
-        this.__getCellElements().forEach((cell, i) => cell.style.width = `${this.columns[i].width}px`);
+        //this.__getCellElements().forEach((cell, i) => cell.style.width = `${this.columns[i].width}px`);
     },
 
     __getElementOuterWidth(el) {
         return $(el)[0].getBoundingClientRect().width;
     },
 
-    __onSingleColumnResize(newColumnWidth) {
-        this.gridCellDragger.style.width = `${newColumnWidth}px`;
+    __onSingleColumnResize() {
+        //this.gridCellDragger.style.width = `${newColumnWidth}px`;
     },
 
     __getAvailableWidth() {

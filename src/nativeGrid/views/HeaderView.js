@@ -44,6 +44,7 @@ export default Marionette.ItemView.extend({
         this.gridColumnHeaderView = options.gridColumnHeaderView;
         this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
         this.columns = options.columns;
+        this.styleSheet = options.styleSheet;
         this.$document = $(document);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
         this.collapsed = true;
@@ -91,6 +92,9 @@ export default Marionette.ItemView.extend({
                 isFirstChild = false;
             }
         });
+        this.ui.gridHeaderColumn.each((i, el) => {
+            el.classList.add(`${this.getOption('uniqueId')}-column${i}`);
+        });
         this.headerMinWidth = this.__getAvailableWidth();
         this.__setInitialWidth(this.headerMinWidth);
         this.__handleResizeInternal();
@@ -122,7 +126,7 @@ export default Marionette.ItemView.extend({
             this.columns[i].width = columnWidth;
         });
 
-        this.ui.gridHeaderColumn.each((i, el) => {
+        this.ui.gridHeaderColumn.each(i => {
             if (availableWidth !== viewWidth) {
                 if (this.columns[i].width > this.constants.MIN_COLUMN_WIDTH) {
                     this.columns[i].width -= (this.columns[i].width - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
@@ -133,7 +137,9 @@ export default Marionette.ItemView.extend({
                 this.columns[i].width = availableWidth - fullWidth;
             }
 
-            el.style.width = `${this.columns[i].width}px`;
+            //el.style.width = `${this.columns[i].width}px`;
+            this.styleSheet.innerHTML.replace(new RegExp(`.${this.getOption('uniqueId')}-column${i} { flex-basis: \\d+px; } `),
+                `.${this.getOption('uniqueId')}-column${i} { flex-basis: ${this.columns[i].width}px; } `);
             fullWidth += this.columns[i].width;
         });
         this.el.style.width = `${Math.ceil(fullWidth)}px`;
@@ -145,7 +151,9 @@ export default Marionette.ItemView.extend({
         if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
             return;
         }
-        this.ui.gridHeaderColumn[index].style.width = `${newColumnWidth}px`;
+        // this.ui.gridHeaderColumn[index].style.width = `${newColumnWidth}px`;
+        this.styleSheet.innerHTML = this.styleSheet.innerHTML.replace(new RegExp(`.${this.getOption('uniqueId')}-column${index} { flex-basis: \\d+px; } `),
+            `.${this.getOption('uniqueId')}-column${index} { flex-basis: ${newColumnWidth}px; } `);
 
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
@@ -208,13 +216,15 @@ export default Marionette.ItemView.extend({
         const columnWidthData = this.__getColumnsWidthData(availableWidth, this.columns);
         let fullWidth = 0;
 
-        this.ui.gridHeaderColumn.each((i, el) => {
+        this.ui.gridHeaderColumn.each(i => {
             const columnWidth = columnWidthData[i];
 
             if (i === columnsL - 1 && fullWidth + this.columns[i].width < availableWidth) {
                 this.columns[i].width = availableWidth - fullWidth;
             }
-            el.style.width = `${columnWidth}px`;
+            //el.style.width = `${columnWidth}px`;
+            this.styleSheet.innerHTML += `.${this.getOption('uniqueId')}-column${i} { flex-basis: ${columnWidth}px; } `;
+
 
             this.columns[i].width = columnWidth;
             fullWidth += columnWidth;
@@ -312,12 +322,14 @@ export default Marionette.ItemView.extend({
         let needUpdate = false;
         let fullWidth = 0;
 
-        this.ui.gridHeaderColumn.each((i, el) => {
-            const child = $(el);
+        this.ui.gridHeaderColumn.each(i => {
+            //const child = $(el);
             const col = columns[i];
             if (col.width) {
                 needUpdate = true;
-                child.outerWidth(col.width);
+                // child.outerWidth(col.width);
+                this.styleSheet.innerHTML.replace(new RegExp(`.${this.getOption('uniqueId')}-column${i} { flex-basis: \\d+px; } `),
+                    `.${this.getOption('uniqueId')}-column${i} { flex-basis: ${this.columns[i].width}px; } `);
                 fullWidth += col.width;
             }
         });
