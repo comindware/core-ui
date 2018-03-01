@@ -10,6 +10,8 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
+    className: 'editor_container',
+
     ui: {
         editorRegion: '.js-editor-region',
         collapseButton: '.js-content-collapse'

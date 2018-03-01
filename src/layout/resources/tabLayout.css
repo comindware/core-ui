@@ -74,14 +74,18 @@
 
 .layout__tab-layout__panel-container {
     flex: 1 1 auto;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    height: 100%;
 }
 
 .layout__tab-layout__panel-region {
     width: 100%;
     height: 100%;
     padding: 0 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .layout__tab-layout_move-button {
