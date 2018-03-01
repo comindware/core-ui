@@ -171,9 +171,10 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     },
 
     __rebuildIndex() {
-        const parentModels = this.filterFn
-            ? this.parentCollection.models.filter(this.filterFn)
-            : this.parentCollection.models;
+        let parentModels = this.parentCollection.models;
+        if (this.filterFn !== undefined && typeof this.filterFn === 'function') {
+            parentModels = this.__filterModels(this.parentCollection.models);
+        }
 
         this.index = this.__createIndexTree(parentModels, 0);
         this.__rebuildModels();
@@ -198,7 +199,12 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
                     this.stopListening(model.children, 'add remove reset');
                     this.listenToOnce(model.children, 'add remove reset', _.debounce(() => this.__delayedUpdate(), 100));
                 }
-                this.__buildModelsInternal(model.children, level + 1);
+                if (this.options.isTree && this.filterFn && model.filteredChildren) {
+                    this.__buildModelsInternal(new Backbone.Collection(model.filteredChildren), level + 1);
+
+                } else {
+                    this.__buildModelsInternal(model.children, level + 1);
+                }
             }
         }
         this.length = this.models.length;
@@ -248,12 +254,22 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
     },
 
     filter(filterFn) {
-        if (filterFn !== undefined) {
-            this.filterFn = filterFn;
-        }
-
+        this.filterFn = filterFn;
         this.__rebuildIndex();
         this.trigger('reset', this, {});
+    },
+
+    __filterModels(models) {
+        const result = [];
+        models.forEach(model => {
+            if (model.children && model.children.length) {
+                model.filteredChildren = this.__filterModels(model.children.models);
+            }
+            if (this.filterFn.call(models, model) || model.filteredChildren && model.filteredChildren.length) {
+                result.push(model);
+            }
+        });
+        return result;
     },
 
     group(grouping) {
@@ -459,7 +475,7 @@ const VirtualCollection = Backbone.Collection.extend(/** @lends module:core.coll
 });
 
 // methods that alter data should proxy to the parent collection
-['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update'].forEach(methodName => {
+['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update', 'where', 'findWhere'].forEach(methodName => {
     VirtualCollection.prototype[methodName] = function() {
         return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };

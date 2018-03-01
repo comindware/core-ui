@@ -210,12 +210,23 @@ rgba(5,117,189,.5) // user avatar btn
     padding: 10px;
 }
 
+.form-label__error-panel {
+    min-width: 200px;
+    max-width: 400px;
+    padding: 0 10px;
+}
+
+.form-label__error-item {
+    margin: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .required .form-label {
     padding-left: 10px;
 }
 
-.required .form-label::before {
+.required .form-label::before, .editable-grid-field.required::before {
     content: '*';
     margin: -5px 0 0;
     color: #c85e44;
@@ -226,8 +237,6 @@ rgba(5,117,189,.5) // user avatar btn
     top: 50%;
     left: 0;
 }
-
-
 
 .disabled .form-label {
     color:#70787f;
@@ -645,7 +654,7 @@ input[type="checkbox"].checkbox {
 .bubbles__i {
     max-width: 100%;
     padding: 1px 20px 1px 10px;
-    line-height: 17px;
+    line-height: 18px;
     display: inline-block;
     vertical-align: top;
     font-size: 12px;
@@ -655,6 +664,10 @@ input[type="checkbox"].checkbox {
     border: 1px solid #dfe4e8;
     margin:1px;
     border-radius: 2px;
+}
+
+.bubbles__i-edit-btn {
+    padding-right: 45px;
 }
 
 .bubbles__link {
@@ -761,6 +774,9 @@ input[type="checkbox"].checkbox {
     border-radius: 2px;
     visibility: hidden;
     transition: visibility .3s;
+    position: absolute;
+    right: 23px;
+    top: 2px;
 }
 
 .editor:hover .reference-field__edit-btn{
@@ -791,7 +807,6 @@ input[type="checkbox"].checkbox {
     height: 25px;
     background: #fff;
     line-height: 25px;
-    box-shadow: 0 0 8px rgba(0,0,0,.2);
 }
 /* /reference-field/ */
 
@@ -1310,7 +1325,6 @@ svg.svg-icons{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-top: 2px;
 }
 
 .field-documents{
@@ -1354,16 +1368,21 @@ svg.svg-icons{
     margin-bottom: 0;
 }
 
+.fr-btn__icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    vertical-align: middle;
+    color: #636262;
+}
+
 .dev-btn-document-revise{
     position: absolute;
     right: 18px;
     display: inline-block;
     top: 0px;
     margin-top: -4px;
-}
-
-.fr-collection-grid .dev-btn-document-revise{
-    margin-top: 0;
 }
 
 .dev-revision-container{

@@ -59,6 +59,11 @@
     border-top: 1px solid #dfe4e8;
     text-align: right;
 }
+.layout__popup-view-button-list >.layout__horizontal-layout  {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 -7px;
+}
 
 .layout__popup-view-button {
     display: inline-block;

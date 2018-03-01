@@ -18,7 +18,7 @@ export default Marionette.LayoutView.extend({
         this.selectedItems = [];
     },
 
-    className: 'collection-header-btn dev-collection-header-btn',
+    className: 'editable-grid-header-btn dev-editable-grid-header-btn',
 
     template: Handlebars.compile(template),
 

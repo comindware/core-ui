@@ -16,6 +16,8 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
+import '../node_modules/spectrum-colorpicker/spectrum.css';
+
 
 import libApi from 'lib';
 import utilsApi from 'utils';
@@ -55,8 +57,10 @@ import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
 import CheckableBehavior from './models/behaviors/CheckableBehavior';
-import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import MobileService from './services/MobileService';
+
+import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
+import Toolbar from './components/toolbar/ToolbarView';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -179,7 +183,8 @@ const core = {
     meta: meta_,
     initialize: bootstrapper.initialize.bind(bootstrapper),
     components: {
-        NavigationDrawer
+        NavigationDrawer,
+        Toolbar
     }
 };
 

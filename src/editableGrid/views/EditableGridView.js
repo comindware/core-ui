@@ -3,7 +3,6 @@
  */
 import utils from 'utils';
 import SearchBarView from '../../views/SearchBarView';
-import HighlightableBehavior from '../../collections/behaviors/HighlightableBehavior';
 import factory from '../../nativeGrid/factory';
 import template from '../templates/editableGrid.hbs';
 import EditableGridHeaderToolbarView from '../views/EditableGridHeaderToolbarView';
@@ -32,8 +31,8 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         gridRegion: '.js-grid-region',
-        collectionHeaderToolbarRegion: '.js-collection-header-toolbar-region',
-        collectionHeaderSearchRegion: '.js-collection-header-search-region'
+        collectionHeaderToolbarRegion: '.js-editable-grid-header-toolbar-region',
+        collectionHeaderSearchRegion: '.js-editable-grid-header-search-region'
     },
 
     className: 'fr-collection dev-collection',
@@ -120,7 +119,8 @@ export default Marionette.LayoutView.extend({
                 expandOnShow: this.options.expandOnShow
             },
             headerView: EditableGridHeaderView,
-            collection: this.collection
+            collection: this.collection,
+            childrenAttribute: this.options.childrenAttribute
         };
         if (this.options.isTree) {
             nativeGridView = factory.createTreeGrid(gridOptions);
@@ -128,6 +128,7 @@ export default Marionette.LayoutView.extend({
         } else {
             nativeGridView = factory.createNativeGrid(gridOptions);
         }
+        this.nativeGridView = nativeGridView;
 
         this.listenTo(nativeGridView, 'collapse:change', this.__setGridHeight);
         this.nativeGridCollection = nativeGridView.collection;
@@ -188,77 +189,45 @@ export default Marionette.LayoutView.extend({
         const searchView = new SearchBarView();
         this.collectionHeaderSearchRegion.show(searchView);
         searchView.on('search', text => {
-            this.__collapse(this.nativeGridCollection);
-            this.__unhighlightCollection(this.nativeGridCollection);
-            this.isFiltered && this.__clearFilter(this.nativeGridCollection);
             this.isFiltered = !!text;
             if (text) {
-                this.__applyFilter(this.nativeGridCollection, new RegExp(text, 'i'));
-                this.__expand(this.nativeGridCollection, false);
-                this.__highlightCollection(this.nativeGridCollection, text);
+                this.__applyFilter(new RegExp(text, 'i'));
+                this.__highlightCollection(text);
+            } else {
+                this.__clearFilter();
+                this.__unhighlightCollection();
+            }
+
+            if (this.options.isTree) {
+                this.__toggleCollapseAll(!this.isFiltered && !this.options.expandOnShow);
             }
         });
     },
 
-    __applyFilter(collection, regexp) {
-        collection.forEach(model => this.__hasChildren(model) && this.__applyFilter(model.get('children'), regexp));
-        collection.filter(model => {
-            let result = this.__hasChildren(model);
+    __applyFilter(regexp) {
+        this.nativeGridCollection.filter(model => {
             const searchColumns = this.getOption('searchColumns') || ['text'];
-            result = result || searchColumns.find(column => regexp.test(model.get(column)));
-            return result;
+            return searchColumns.some(column => regexp.test(model.get(column)));
         });
     },
 
-    __highlightCollection(collection, text) {
-        if (!(typeof collection.highlight === 'function')) {
-            Core.utils.helpers.applyBehavior(collection, HighlightableBehavior);
-        }
-        collection.highlight(text);
-        collection.each(model => {
-            if (this.__hasChildren(model)) {
-                this.__highlightCollection(model.children, text);
-            }
+    __clearFilter() {
+        this.nativeGridCollection.filter();
+    },
+
+    __highlightCollection(text) {
+        this.nativeGridCollection.each(model => {
+            model.highlight(text);
         });
     },
 
-    __unhighlightCollection(collection) {
-        if (!(typeof collection.unhighlight === 'function')) {
-            Core.utils.helpers.applyBehavior(collection, HighlightableBehavior);
-        }
-        collection.unhighlight();
-        collection.each(model => {
-            if (this.__hasChildren(model)) {
-                this.__unhighlightCollection(model.children);
-            }
+    __unhighlightCollection() {
+        this.nativeGridCollection.each(model => {
+            model.unhighlight();
         });
     },
 
-    __clearFilter(collection) {
-        collection.filter(null);
-        collection.forEach(model => model.children && this.__clearFilter(model.children));
-    },
-
-
-    __collapse(collection) {
-        collection.forEach(model => {
-            if (typeof model.collapse === 'function') {
-                model.collapse();
-            }
-            this.__hasChildren(model) && this.__collapse(model.children);
-        });
-    },
-
-    __expand(collection) {
-        collection.forEach(model => {
-            if (typeof model.expand === 'function') {
-                model.expand();
-            }
-            this.__hasChildren(model) && this.__expand(model.children);
-        });
-    },
-
-    __hasChildren(model) {
-        return model.children && model.children.length > 0;
+    __toggleCollapseAll(collapsed) {
+        this.nativeGridView.trigger('toggle:collapse:all', collapsed);
     }
 });

@@ -1,6 +1,9 @@
 
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
+import 'spectrum-colorpicker';
+import colorPicker from './templates/colorPicker.hbs';
+
 
 /**
  * @name ColorPickerView
@@ -21,22 +24,36 @@ import formRepository from '../formRepository';
  * */
 
 export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/** @lends module:core.form.editors.ColorPickerView.prototype */{
-    template: false,
+    template: Handlebars.compile(colorPicker),
 
-    tagName: 'input',
-
-    events: {
-        change: '__change'
+    ui: {
+        hexcolor: '.hexcolor',
+        colorpicker: '.colorpicker'
     },
 
-    attributes() {
-        return {
-            type: 'color'
-        };
+    events: {
+        change: '__change',
+        'change @ui.colorpicker': '__changedColorPicker',
+        'change @ui.hexcolor': '__changedHex'
+
+    },
+
+    className: 'editor editor-color',
+
+    __changedHex() {
+        if (Core.services.MobileService.isIE) {
+            this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
+        } else {
+            this.ui.colorpicker.val(this.ui.hexcolor.val());
+        }
+    },
+
+    __changedColorPicker() {
+        this.ui.hexcolor.val(this.ui.colorpicker.val());
     },
 
     __change() {
-        this.__value(this.el.value, false, true);
+        this.__value(this.ui.colorpicker.val(), false, true);
     },
 
     __clear() {
@@ -49,9 +66,20 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         this.__value(value, true, false);
     },
 
-    onRender() {
+    onShow() {
         const value = this.getValue() || '';
-        this.el.value = value;
+        if (Core.services.MobileService.isIE) {
+            this.ui.colorpicker.spectrum({
+                color: value.toString(),
+                showInput: true,
+                showInitial: true,
+                preferredFormat: 'hex'
+            });
+            this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
+        } else {
+            this.ui.colorpicker.val(value);
+            this.ui.hexcolor.val(this.ui.colorpicker.val());
+        }
     },
 
     __value(value, updateUi, triggerChange) {

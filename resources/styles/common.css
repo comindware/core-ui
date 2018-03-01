@@ -750,5 +750,157 @@ a:hover {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAYAAABi8KSDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NDU2QTEzQUE0RkQxMUU2ODc0NkJBOTIwQ0Y3OTIwNSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo0NDU2QTEzQkE0RkQxMUU2ODc0NkJBOTIwQ0Y3OTIwNSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjQ0NTZBMTM4QTRGRDExRTY4NzQ2QkE5MjBDRjc5MjA1IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQ0NTZBMTM5QTRGRDExRTY4NzQ2QkE5MjBDRjc5MjA1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+uMTM4wAAAIZJREFUeNpiZJj9jwENdAHxBSBehi7GhKawGogTgPgaNjEWJMF8KHYG4svYxGCKQTorgNgByVQMMZDicCBuhArehCrEJsYAcjMzlP0LyUnYxMAmg3zNA8SHoW67iUOMAebmWUDMD8R7kSQxxJBDoxtq2gEkt6KIsaCFcz3UNG8kj8HFAAIMAICVJs95qbZcAAAAAElFTkSuQmCC');
 }
 
-
 /* End Two Columns Switch */
+
+/* Toolbar component */
+
+.toolbar-btn {
+    display: inline-flex;
+    max-width: 250px;
+    height: 30px;
+    line-height: 28px;
+    white-space: nowrap;
+    background: #f7f6f6;
+    border: 1px solid #dfe4e8;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0;
+    align-items: center;
+    font-size: 0;
+    align-self: flex-start;
+    vertical-align: top;
+    z-index: 1;
+    min-width: 34px;
+}
+
+.toolbar-btn + .toolbar-btn {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.toolbar-btn:hover {
+    border-color: #bfc2c4;
+    box-shadow: inset 0 2px 3px #fff;
+}
+
+.toolbar-btn:active {
+    box-shadow: inset 1px 1px 3px rgba(200,200,200,.7);
+}
+
+.toolbar-btn__text {
+    display: inline-block;
+    max-width: 100%;
+    font-size: 11px;
+    font-weight: 500;
+    color: #636262;
+    line-height: inherit;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    padding: 0 10px;
+}
+
+.toolbar-btn:hover .toolbar-btn__text {
+    color: #000;
+}
+
+.toolbar-btn__icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    vertical-align: middle;
+    color: #636262;
+}
+
+.toolbar-btn__icon + .toolbar-btn__text {
+    margin-left: 5px;
+}
+
+.toolbar-btn_red {
+    background: #fbe2e2;
+    z-index: 2;
+}
+
+.toolbar-btn_red:hover {
+    border-color: #e06b6f;
+}
+
+.toolbar-btn_green {
+    background: #d7fdf4;
+    z-index: 2;
+}
+
+.toolbar-btn_green:hover {
+    border-color: #2fa25b;
+}
+
+.toolbar-btn_blue {
+    background: #d6f4fa;
+    z-index: 2;
+}
+
+.toolbar-btn_blue:hover {
+    border-color: #6092bb;
+}
+
+.toolbar-btn_yellow {
+    background: #f9f8c9;
+    z-index: 2;
+}
+
+.toolbar-btn_yellow:hover {
+    border-color: #c6b14d;
+}
+
+.toolbar-btn_dark {
+    background: #e1e1e1;
+    z-index: 2;
+}
+
+.toolbar-btn_dark:hover {
+    border-color: #9e9d9d;
+    box-shadow: inset 0 2px 3px #f3f3f3;
+}
+
+.toolbar-btn_dark:active {
+    box-shadow: inset 1px 1px 2px rgba(100,100,100,.3);
+}
+
+.toolbar-container {
+    width: 100%;
+    display: inline-flex;
+}
+
+.toolbar-buttons_container {
+    width: auto;
+    max-width: 100%;
+}
+
+.toolbar-panel_container {
+    padding: 5px;
+    min-width: 200px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar-panel_container .toolbar-btn {
+    width: 100%;
+}
+
+.toolbar-container .popout__action-btn {
+    padding: 0 10px;
+}
+
+.toolbar-btn .dropdown__button {
+    padding: 0;
+}
+
+/* End Toolbar component */

@@ -12,6 +12,7 @@ import dropdown from 'dropdown';
 import ErrorButtonView from './views/ErrorButtonView';
 import InfoButtonView from './views/InfoButtonView';
 import TooltipPanelView from './views/TooltipPanelView';
+import ErrosPanelView from './views/ErrosPanelView';
 import formRepository from '../formRepository';
 
 const classes = {
@@ -35,6 +36,7 @@ export default Marionette.LayoutView.extend({
             helpText: this.schema.helpText,
             errorText: null
         });
+        this.errorCollection = new Backbone.Collection();
     },
 
     templateHelpers() {
@@ -54,17 +56,6 @@ export default Marionette.LayoutView.extend({
 
     onShow() {
         this.editorRegion.show(this.editor);
-        const errorPopout = dropdown.factory.createPopout({
-            buttonView: ErrorButtonView,
-            panelView: TooltipPanelView,
-            panelViewOptions: {
-                model: this.__viewModel,
-                textAttribute: 'errorText'
-            },
-            popoutFlow: 'right',
-            customAnchor: true
-        });
-        this.errorTextRegion.show(errorPopout);
         if (this.schema.helpText) {
             const infoPopout = dropdown.factory.createPopout({
                 buttonView: InfoButtonView,
@@ -91,19 +82,32 @@ export default Marionette.LayoutView.extend({
     validate() {
         const error = this.editor.validate();
         if (error) {
-            this.setError(error.message);
+            this.setError([error]);
         } else {
             this.clearError();
         }
         return error;
     },
 
-    setError(msg) {
+    setError(errors) {
         if (!this.__checkUiReady()) {
             return;
         }
         this.$el.addClass(classes.ERROR);
-        this.__viewModel.set('errorText', msg);
+        this.errorCollection.reset(errors);
+        if (!this.isErrorShown) {
+            const errorPopout = dropdown.factory.createPopout({
+                buttonView: ErrorButtonView,
+                panelView: ErrosPanelView,
+                panelViewOptions: {
+                    collection: this.errorCollection
+                },
+                popoutFlow: 'right',
+                customAnchor: true
+            });
+            this.errorTextRegion.show(errorPopout);
+            this.isErrorShown = true;
+        }
     },
 
     clearError() {
@@ -111,7 +115,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.$el.removeClass(classes.ERROR);
-        this.__viewModel.set('errorText', null);
+        this.errorCollection.reset();
     },
 
     /**

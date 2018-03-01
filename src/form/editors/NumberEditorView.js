@@ -13,6 +13,8 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import { numeral, Handlebars } from 'lib';
 import { keyCode } from 'utils';
 import formRepository from '../formRepository';
+import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
+import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
 
 const changeMode = {
     keydown: 'keydown',
@@ -99,6 +101,8 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
         'click .js-clear-button': '__clear',
         'keydown @ui.input': '__keydown',
         'keypress @ui.input': '__keypress',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave',
         'keyup @ui.input'(event) {
             if ([keyCode.UP, keyCode.DOWN, keyCode.PAGE_UP, keyCode.PAGE_DOWN].indexOf(event.keyCode) !== -1) {
                 this.__stop();
@@ -376,6 +380,14 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
 
     isEmptyValue() {
         return !_.isNumber(this.getValue());
+    },
+
+    __onMouseenter() {
+        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapNumber);
+    },
+
+    __onMouseleave() {
+        this.el.lastElementChild.remove();
     }
 });
 

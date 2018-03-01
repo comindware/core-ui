@@ -9,6 +9,14 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
+        // _.defer(() => this.__showEditor());
+        this.__showEditor();
+    },
+
+    __showEditor() {
+        if (this.editorIsShown) {
+            return;
+        }
         let readonly = this.schema.readonly;
         let hidden = this.schema.hidden;
         let schemaExtension = {};
@@ -35,5 +43,10 @@ export default Marionette.LayoutView.extend({
             model: this.model.get('rowModel'),
         });
         this.editorRegion.show(this.editorView);
+        this.editorIsShown = true;
+    },
+
+    __onMouseLeave() {
+        this.editorRegion.reset();
     }
 });
