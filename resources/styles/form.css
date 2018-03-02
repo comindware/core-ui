@@ -255,6 +255,14 @@ rgba(5,117,189,.5) // user avatar btn
     top: 50%;
     left: 0;
 }
+.editable-grid-field.required::before {
+    margin: 0 0 0 1px;
+    top: 0;
+}
+
+.editable-cell .error.required::before {
+    display:none;
+}
 
 .disabled .form-label {
     color:#70787f;

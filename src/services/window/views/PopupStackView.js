@@ -151,6 +151,10 @@ export default Marionette.LayoutView.extend({
         return this.__stack.slice(index).map(x => x.view);
     },
 
+    getStack() {
+        return this.__stack;
+    },
+
     fadeBackground(fade) {
         this.__forceFadeBackground = fade;
         this.__toggleFadedBackground(this.__forceFadeBackground || this.__stack.find(x => x.options.fadeBackground));
