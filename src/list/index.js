@@ -17,7 +17,6 @@ import GridHeaderView from './views/GridHeaderView';
 import GridView from './views/GridView';
 import ListView from './views/ListView';
 import RowView from './views/RowView';
-import ScrollbarView from './views/ScrollbarView';
 import ListGroupViewBehavior from './views/behaviors/ListGroupViewBehavior';
 import ListItemViewBehavior from './views/behaviors/ListItemViewBehavior';
 import GridItemViewBehavior from './views/behaviors/GridItemViewBehavior';
@@ -52,7 +51,6 @@ export default /** @lends module:core.list */ {
         GridView,
         ListView,
         RowView,
-        ScrollbarView,
 
         behaviors: {
             ListGroupViewBehavior,

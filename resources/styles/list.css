@@ -21,13 +21,20 @@
 
 .list {
     height: 100%;
-    overflow: hidden;
+    /*overflow-x: hidden;*/
+    overflow: auto;
 }
 
 
 .visible-collection {
     height: 100%;
     width: 100%;
+    position: relative;
+}
+
+.visible-collection.scrolled > div {
+    position: absolute;
+    width: 100%
 }
 
 .visible-collection-view {
@@ -56,15 +63,15 @@
 }
 
 .grid .visible-collection {
-    display: block;
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
 }
 
 .grid-row {
-    display: block;
-    overflow: hidden;
+    display: inline-flex;
+    left: 0;
+    right: 0;
 }
 
 .grid-row:hover {
@@ -85,6 +92,7 @@
     color: #000;
     cursor: default;
     float: left;
+    flex: 0 0 auto;
 }
 
 .fr-collection-grid .grid-header {
@@ -107,15 +115,15 @@
     position: absolute;
     top: 0;
     left: 0;
-    min-width: 100%;
+    width: 100%;
     height: 51px;
     border-bottom: 1px solid #DFE4E8;
     border-collapse: collapse;
+    overflow: hidden;
 }
 
 .grid-header {
-    display: block;
-    overflow: hidden;
+    display: inline-flex;
     position: relative;
     height: inherit;
     width: 100%;
@@ -126,6 +134,8 @@
     float: left;
     width: auto;
     position: relative;
+    flex: 0 0 auto;
+    overflow: hidden;
 }
 
 .grid-header-column-content {
@@ -217,7 +227,6 @@ svg.svg-grid-icons {
 .native-grid {
     width: 100%;
     height: 100%;
-   position: relative;
 }
 
 .native-grid__header {
@@ -233,7 +242,7 @@ svg.svg-grid-icons {
 }
 
 .native-grid__header .grid-header {
-    display: block;
+    display: flex;
     position: relative;
     height: inherit;
     width: 100%;
@@ -266,7 +275,7 @@ svg.svg-grid-icons {
 
 .native-grid__list .grid-row {
     width: 100%;
-    display: block;
+    display: flex;
     overflow: hidden;
 }
 

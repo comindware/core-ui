@@ -16,15 +16,13 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         searchRegion: '.js-search-region',
-        contentRegion: '.js-content-region',
-        scrollbarRegion: '.js-scrollbar-region'
+        contentRegion: '.js-content-region'
     },
 
     className: 'demo-list-canvas__view_search',
 
     onShow() {
         this.contentRegion.show(this.options.content);
-        this.scrollbarRegion.show(this.options.scrollbar);
         this.searchRegion.show(this.options.search);
     }
 });

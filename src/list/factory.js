@@ -9,7 +9,6 @@
 import { helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
 import ListView from './views/ListView';
-import ScrollbarView from './views/ScrollbarView';
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
 import EventAggregator from './EventAggregator';
@@ -42,10 +41,6 @@ const factory = {
 
         const collection = factory.createWrappedCollection(options.collection, options.collectionOptions);
 
-        const scrollbarView = new ScrollbarView({
-            collection
-        });
-
         const listViewOptions = _.extend({
             collection,
             emptyView: EmptyListView
@@ -53,12 +48,11 @@ const factory = {
         const listView = new ListView(listViewOptions);
 
         const eventAggregator = new EventAggregator({
-            views: [ scrollbarView, listView ],
+            views: [ listView ],
             collection
         });
 
         return {
-            scrollbarView,
             listView,
             collection,
             eventAggregator
@@ -103,17 +97,12 @@ const factory = {
         }, options.gridViewOptions);
         const gridView = new GridView(gridViewOptions);
 
-        const scrollbarView = new ScrollbarView({
-            collection
-        });
-
         const eventAggregator = new EventAggregator({
-            views: [ scrollbarView, gridView ],
+            views: [ gridView ],
             collection
         });
 
         return {
-            scrollbarView,
             gridView,
             collection,
             eventAggregator

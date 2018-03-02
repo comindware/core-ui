@@ -99,7 +99,6 @@ export default function() {
 
     // 7. Show created views
     return new ListCanvasView({
-        content: bundle.gridView,
-        scrollbar: bundle.scrollbarView
+        content: bundle.gridView
     });
 }

@@ -131,7 +131,6 @@ export default Marionette.Object.extend({
         if (all) {
             return;
         }
-        this.view.eventAggregator[typeTo].scrollTo(modelsTo.at(Math.min.apply(0, selectedIndexTo)));
 
         const nextIndexFrom = Math.min(Math.min.apply(0, selectedIndexFrom), modelsFrom.length - 1);
         if (nextIndexFrom < 0) {
@@ -139,7 +138,6 @@ export default Marionette.Object.extend({
         }
         const selectedElemFrom = modelsFrom.at(nextIndexFrom);
         selectedElemFrom.select();
-        this.view.eventAggregator[typeFrom].scrollTo(selectedElemFrom);
     },
 
     __createCollection(type) {
