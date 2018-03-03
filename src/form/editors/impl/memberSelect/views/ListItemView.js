@@ -1,14 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
 import template from '../templates/listItem.hbs';
 import list from 'list';

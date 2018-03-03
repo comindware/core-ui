@@ -1,11 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 8/2/2017
- * Copyright: 2009-2017 Ksenia Kartvelishvili®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import core from 'comindware/core';
 import CanvasView from 'demoPage/views/CanvasView';
 

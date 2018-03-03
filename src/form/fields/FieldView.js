@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/26/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import template from './templates/field.hbs';
-import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import ErrorButtonView from './views/ErrorButtonView';
 import InfoButtonView from './views/InfoButtonView';

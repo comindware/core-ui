@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 3/1/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 const gulp = require('gulp');
 const path = require('path');
 const svgstore = require('gulp-svgstore');

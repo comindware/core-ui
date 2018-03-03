@@ -1,13 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import { numeral, Handlebars } from 'lib';

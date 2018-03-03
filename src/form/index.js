@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
 import FieldView from './fields/FieldView';
 import BaseItemEditorView from './editors/base/BaseItemEditorView';

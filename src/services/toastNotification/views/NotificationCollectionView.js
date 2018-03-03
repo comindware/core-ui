@@ -1,14 +1,3 @@
-/**
- * Developer: Vladislav Smirnov
- * Date: 23.01.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
 import ToastNotificationView from './ToastNotificationView';
 
 const maxNotification = 5;

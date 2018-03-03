@@ -1,12 +1,3 @@
-/**
- * Developer: Vladislav Smirnov
- * Date: 10.9.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { $ } from 'lib';
 import { moment } from 'lib';
 import AjaxService from 'services/AjaxService';
 import GlobalEventService from 'services/GlobalEventService';

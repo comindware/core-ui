@@ -30,8 +30,6 @@
  |*|
  \*/
 
-'use strict';
-
 export default /** @lends module:core.utils.cookieHelpers */ {
     getItem(sKey) {
         if (!sKey) { return null; }
