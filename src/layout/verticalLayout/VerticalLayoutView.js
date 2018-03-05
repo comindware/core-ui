@@ -1,6 +1,4 @@
-import 'lib';
 import { helpers } from 'utils';
-import template from './verticalLayout.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
@@ -9,14 +7,16 @@ const classes = {
     HIDDEN: 'layout__hidden'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.ItemView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'rows');
 
         this.rows = options.rows;
     },
 
-    template: Handlebars.compile(template),
+    tagName: 'div',
+
+    template: false,
 
     className: classes.CLASS_NAME,
 
@@ -24,10 +24,6 @@ export default Marionette.LayoutView.extend({
         LayoutBehavior: {
             behaviorClass: LayoutBehavior
         }
-    },
-
-    ui: {
-        list: '.js-list'
     },
 
     templateHelpers() {
@@ -39,19 +35,12 @@ export default Marionette.LayoutView.extend({
     onShow() {
         this.__rowsCtx = [];
         this.options.rows.forEach(view => {
-            view.on('change:visible', this.__handleChangeVisibility.bind(this));
-            const regionEl = document.createElement('div');
-            regionEl.setAttribute('class', classes.ITEM);
-            this.ui.list.append(regionEl);
-            const region = this.addRegion(_.uniqueId('verticalLayoutItem'), {
-                el: regionEl
-            });
+            view.on('change:visible', () => this.__handleChangeVisibility());
+
+            this.$el.append(view.render().$el);
             this.__rowsCtx.push({
-                view,
-                regionEl,
-                region
+                view
             });
-            region.show(view);
         });
         this.__updateState();
     },
