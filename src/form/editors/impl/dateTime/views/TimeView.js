@@ -29,6 +29,10 @@ export default Marionette.LayoutView.extend({
         'change:value': '__updateDisplayValue',
     },
 
+    ui: {
+        initialValue: '.js-initial-value'
+    },
+
     onRender() {
         this.__updateDisplayValue();
     },
@@ -37,8 +41,7 @@ export default Marionette.LayoutView.extend({
         if (this.isDropdownShown) {
             return;
         }
-        this.el.insertAdjacentHTML('afterbegin', `<input class="js-time-input input input_time" type="text" value="${
-            DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat)}">`);
+        this.ui.initialValue.val(DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat));
     },
 
     __showEditor() {
@@ -56,7 +59,9 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
         this.dropdownRegion.show(this.dropdownView);
         this.isDropdownShown = true;
-        this.dropdownView.open();
+        if (this.model.get('enabled') && !this.model.get('readonly')) {
+            this.dropdownView.open();
+        }
     },
 
     className: 'time-view',
