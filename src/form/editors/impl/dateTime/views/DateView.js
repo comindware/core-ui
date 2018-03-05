@@ -29,6 +29,10 @@ export default Marionette.LayoutView.extend({
         popoutRegion: '.js-popout-region'
     },
 
+    ui: {
+        initialValue: '.js-initial-value'
+    },
+
     events: {
         focus: '__showEditor',
         mousedown: '__showEditor'
@@ -46,8 +50,7 @@ export default Marionette.LayoutView.extend({
         if (this.isDropdownShown) {
             return;
         }
-        this.el.insertAdjacentHTML('afterbegin', `<input class="js-date-input input input_date" type="text" value="${
-            DateTimeService.getDateDisplayValue(this.model.get('value'), this.dateDisplayFormat)}">`);
+        this.ui.initialValue.val(DateTimeService.getDateDisplayValue(this.model.get('value'), this.dateDisplayFormat));
     },
 
     __showEditor() {
@@ -82,7 +85,9 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onPanelSelect, this);
         this.popoutRegion.show(this.calendarDropdownView);
         this.isDropdownShown = true;
-        this.calendarDropdownView.open();
+        if (this.model.get('enabled') && !this.model.get('readonly')) {
+            this.calendarDropdownView.open();
+        }
     },
 
     __onBeforeClose() {
