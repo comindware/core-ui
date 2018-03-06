@@ -1,4 +1,3 @@
-import { Handlebars } from 'lib';
 import ReferenceButtonView from './ReferenceButtonView';
 import template from '../templates/userReferenceButton.hbs';
 

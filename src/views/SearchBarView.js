@@ -1,4 +1,3 @@
-import { Handlebars } from 'lib';
 import template from '../templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 

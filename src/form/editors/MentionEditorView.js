@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import template from './templates/mentionEditor.hbs';
-import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import 'utils';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';

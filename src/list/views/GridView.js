@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 
-import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './ListView';

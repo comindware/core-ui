@@ -1,5 +1,4 @@
 
-import { Handlebars } from 'lib';
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
