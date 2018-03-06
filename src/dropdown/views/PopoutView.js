@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/26/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { $, Handlebars } from 'lib';
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';

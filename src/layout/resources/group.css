@@ -1,6 +1,6 @@
 
 .layout__group {
-    width: calc(100% + 20px);
+    width: 100%;
     min-width: 0;
     margin: 22px -10px;
     padding: 0 25px 16px;
@@ -8,6 +8,7 @@
     color: #000;
     box-sizing: border-box;
     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    border-radius: 3px;
 }
 
 .layout__group__legend {
@@ -19,7 +20,7 @@
     font-weight: 400;
     color: #70787f;
     background: #fff;
-    margin-left: -15px;
+    margin: 5px 0 5px -15px;
 }
 
 

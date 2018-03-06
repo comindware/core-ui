@@ -1,12 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 21.04.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars, keypress } from 'lib';
+import { keypress } from 'lib';
 import { helpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';

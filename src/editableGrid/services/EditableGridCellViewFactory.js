@@ -1,7 +1,3 @@
-/**
- * Created by sguryev on 14.07.2017.
- */
-
 import list from 'list';
 import EditableCellView from '../views/EditableCellView';
 

@@ -1,13 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-
 /*
     This behavior makes grouping items collapsible.
      To switch between the collapsed/expanded states there is a templateHelpers property 'collapsed' passed to the template model.

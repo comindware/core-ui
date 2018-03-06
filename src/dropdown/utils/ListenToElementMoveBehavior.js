@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/15/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import GlobalEventService from '../../services/GlobalEventService';
 
 const THROTTLE_DELAY = 100;

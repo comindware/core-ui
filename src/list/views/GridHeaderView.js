@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/20/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 

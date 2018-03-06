@@ -1,14 +1,4 @@
 /**
- * Developer: Stepan Burguchev
- * Date: 7/23/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-
-/**
  * Конструктор Behavior никогда не вызывается явно. Описанные в объекте options свойства должны
  * быть переданы как свойства behavior (см. документацию Marionette).
  * @name HighlightableBehavior
