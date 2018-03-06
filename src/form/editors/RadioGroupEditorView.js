@@ -1,9 +1,9 @@
-import 'lib';
 import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
 import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';
 import formRepository from '../formRepository';
 import keyCode from '../../utils/keyCode';
+
 const defaultOptions = {
     radioOptions: [{ id: '', displayText: '' }]
 };

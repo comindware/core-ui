@@ -1,7 +1,6 @@
 import MembersCollection from '../collections/MembersCollection';
 import MembersListView from '../views/MembersListView';
 import UserService from 'services/UserService';
-import 'lib';
 import 'utils';
 
 export default {

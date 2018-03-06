@@ -1,5 +1,4 @@
 
-import 'lib';
 import { helpers, RegionBehavior } from 'utils';
 import form from 'form';
 import LayoutBehavior from '../behaviors/LayoutBehavior';

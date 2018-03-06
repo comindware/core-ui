@@ -1,4 +1,3 @@
-import 'lib';
 import { helpers } from 'utils';
 import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
 

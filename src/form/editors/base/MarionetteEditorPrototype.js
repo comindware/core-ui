@@ -1,18 +1,9 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/2/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /*
 *
 * Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
 *
 * */
 
-import 'lib';
 import formRepository from '../../formRepository';
 
 const classes = {

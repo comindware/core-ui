@@ -26,14 +26,13 @@ export default () => {
     const columns = [
         {
             key: 'textCell',
-            type: 'String',
+            type: 'Text',
             title: 'TextCell',
             required: true,
             viewModel: new Backbone.Model({ displayText: 'TextCell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
-            sorting: 'asc',
-            readonly: true
+            sorting: 'asc'
         },
         {
             key: 'numberCell',

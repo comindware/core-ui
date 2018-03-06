@@ -1,4 +1,3 @@
-import 'lib';
 import { helpers } from 'utils';
 import VirtualCollection from '../../../../../collections/VirtualCollection';
 import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';

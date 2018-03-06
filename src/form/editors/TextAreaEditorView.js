@@ -1,15 +1,7 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
-import { Handlebars, keypress } from 'lib';
+import { keypress } from 'lib';
 import { keyCode, helpers } from 'utils';
 import formRepository from '../formRepository';
 
