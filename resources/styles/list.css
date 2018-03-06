@@ -386,6 +386,7 @@ svg.svg-grid-icons {
 
 .form-label_editable-grid{
     line-height: inherit;
+    flex: 1;
 }
 
 .editable-grid-header-btn{
