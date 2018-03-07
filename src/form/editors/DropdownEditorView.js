@@ -1,3 +1,4 @@
+// @flow
 import { keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';

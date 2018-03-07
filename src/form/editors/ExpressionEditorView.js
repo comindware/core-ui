@@ -1,4 +1,4 @@
-
+// @flow
 import template from './templates/expressionEditor.html';
 import PopupView from './impl/expression/views/PopupView';
 import SelectButtonView from './impl/expression/views/SelectButtonView';

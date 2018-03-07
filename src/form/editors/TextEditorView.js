@@ -1,3 +1,4 @@
+// @flow
 import { keypress } from 'lib';
 import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';

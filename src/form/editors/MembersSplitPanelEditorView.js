@@ -1,4 +1,4 @@
-
+// @flow
 import template from './templates/membersSplitPanelEditor.html';
 import MembersSplitPanelController from './impl/membersSplit/controller/MembersSplitPanelController';
 import formRepository from '../formRepository';

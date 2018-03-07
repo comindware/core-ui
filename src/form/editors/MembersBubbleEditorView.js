@@ -1,3 +1,4 @@
+// @flow
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
 import template from './templates/membersBubbleEditor.hbs';

@@ -1,3 +1,4 @@
+// @flow
 import template from './templates/isFavoriteEditor.html';
 import formRepository from '../formRepository';
 import BooleanEditor from '../editors/BooleanEditorView';

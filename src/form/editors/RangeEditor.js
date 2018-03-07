@@ -1,4 +1,4 @@
-
+// @flow
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 

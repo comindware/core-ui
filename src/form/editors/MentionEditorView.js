@@ -1,3 +1,4 @@
+// @flow
 import template from './templates/mentionEditor.hbs';
 import dropdown from 'dropdown';
 import 'utils';

@@ -1,3 +1,4 @@
+// @flow
 import template from './templates/booleanSwitchEditor.hbs';
 import formRepository from '../formRepository';
 import BooleanEditorView from '../editors/BooleanEditorView';

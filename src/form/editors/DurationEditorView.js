@@ -1,11 +1,4 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 26.12.2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 import { Handlebars, moment } from 'lib';
 import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';

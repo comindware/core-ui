@@ -1,3 +1,4 @@
+// @flow
 import { helpers } from 'utils';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/avatarEditor.hbs';

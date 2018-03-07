@@ -1,3 +1,4 @@
+// @flow
 import TextEditorView from './TextEditorView';
 import template from './templates/passwordEditor.hbs';
 import formRepository from '../formRepository';

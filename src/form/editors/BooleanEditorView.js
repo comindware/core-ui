@@ -1,3 +1,4 @@
+// @flow
 import keyCode from '../../utils/keyCode';
 import template from './templates/booleanEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
