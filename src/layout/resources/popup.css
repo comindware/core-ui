@@ -64,6 +64,10 @@
     margin: 0 -7px;
 }
 
+.layout__popup-view-button-list .layout__horizontal-layout-list-item {
+    flex: 1 1 auto;
+}
+
 .layout__popup-view-button {
     display: inline-block;
     max-width: 100%;

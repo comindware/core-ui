@@ -267,7 +267,7 @@ const GridHeaderView = Marionette.ItemView.extend({
     },
 
     __getFullWidth() {
-        return this.$el.parent().width() - this.getOption('checkBoxPadding');
+        return this.$el.parent().width() - this.getOption('checkBoxPadding') - 2; // Magic cross browser pixels, don't remove them;
     },
 
     __handleResizeInternal() {

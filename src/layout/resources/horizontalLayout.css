@@ -11,7 +11,7 @@
 }
 
 .layout__horizontal-layout-list-item {
-    flex: 1 0 auto;
+    flex: 1;
     margin: 0 10px;
 }
 
