@@ -101,7 +101,6 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
     template: Handlebars.compile(template),
 
     setValue(value) {
-        this.value = [];
         this.viewModel.get('button').get('selected').reset();
         this.__value(value, false);
         delete this.fakeInputModel;
