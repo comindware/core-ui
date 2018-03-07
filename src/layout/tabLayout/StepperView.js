@@ -1,4 +1,4 @@
-
+// @flow
 import template from './templates/headerItem.hbs';
 import StepperItemView from './StepperItemView';
 

@@ -1,3 +1,4 @@
+// @flow
 import { helpers } from 'utils';
 import template from './button.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';

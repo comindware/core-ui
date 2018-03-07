@@ -1,4 +1,4 @@
-
+// @flow
 import { helpers } from 'utils';
 import template from './templates/tabLayout.hbs';
 import HeaderView from './HeaderView';

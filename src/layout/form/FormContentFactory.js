@@ -1,5 +1,4 @@
 // @flow
-
 import * as elementsFactory from '../factory';
 import VerticalLayout from '../VerticalLayoutView';
 import HorizontalLayout from '../HorizontalLayoutView';

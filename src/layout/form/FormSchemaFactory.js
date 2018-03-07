@@ -1,4 +1,4 @@
-
+// @flow
 export default {
     getSchema(schema) {
         const schemaPlain = {};

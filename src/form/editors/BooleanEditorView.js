@@ -1,6 +1,6 @@
 // @flow
 import keyCode from '../../utils/keyCode';
-import template from './templates/booleanEditor.hbs';
+import template from './templates/booleanEditor.html';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 

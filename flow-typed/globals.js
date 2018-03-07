@@ -10,3 +10,7 @@ declare var Core: coreApi;
 declare var Backbone: Backbone;
 
 declare var Marionette: any;
+
+declare module TemplateHbs {
+    declare var exports: string;
+}
