@@ -30,7 +30,7 @@ export default Marionette.LayoutView.extend({
     },
 
     ui: {
-        initialValue: '.js-initial-value'
+        initialValue: '.js-date-input'
     },
 
     events: {

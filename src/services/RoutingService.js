@@ -133,7 +133,10 @@ export default {
             this.loadingContext = null;
             if (this.activeModule.onRoute) {
                 this.activeModule.routerAction = callbackName;
-                this.activeModule.onRoute.apply(this.activeModule, routingArgs);
+                const continueHandling = this.activeModule.onRoute.apply(this.activeModule, routingArgs);
+                if (continueHandling === false) {
+                    return;
+                }
             }
             if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
                 const configuration = this.activeModule.routingActions[callbackName];
