@@ -170,7 +170,7 @@ module.exports = (options = { env: 'production' }) => {
                 __DEV__: DEVELOPMENT
             }),
             new HtmlWebpackPlugin({
-                template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
+                template: pathResolver.source('index.html'),
                 hash: PRODUCTION,
                 filename: 'index.html',
                 svgSprites: readSpritesFile(),
@@ -179,10 +179,6 @@ module.exports = (options = { env: 'production' }) => {
                 minify: {
                     collapseWhitespace: false
                 }
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
-                minChunks: Infinity
             }),
             new WebpackPwaManifest({
                 name: 'Comindware business application platform',

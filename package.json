@@ -95,7 +95,8 @@
     "run-sequence": "^2.2.1",
     "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",
-    "webpack": "^3.11.0"
+    "webpack": "^3.11.0",
+    "prettier": "1.10.2"
   },
   "dependencies": {
     "backbone": "^1.3.3",

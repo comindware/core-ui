@@ -1,4 +1,4 @@
-
+//@flow
 import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
 

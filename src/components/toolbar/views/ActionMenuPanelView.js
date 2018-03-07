@@ -1,4 +1,4 @@
-
+//@flow
 import ActionPanelChildView from './ActionPanelChildView';
 
 export default Marionette.CollectionView.extend({
