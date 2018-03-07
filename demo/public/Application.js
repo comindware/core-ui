@@ -10,7 +10,8 @@ const Application = new Marionette.Application();
 
 Application.addRegions({
     headerRegion: '.js-header-region',
-    contentRegion: '.js-content-region'
+    contentRegion: '.js-content-region',
+    navigationDrawerRegion: '.js-navigation-drawer-region'
 });
 
 Application.addInitializer(() => {

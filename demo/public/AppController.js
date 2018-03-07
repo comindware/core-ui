@@ -18,6 +18,8 @@ export default Marionette.Object.extend({
         sections.find(s => s.id === sectionId).set('selected', true);
         Application.headerRegion.$el.show();
         if (!this.NavBarView || !this.DemoPageView) {
+            const groups = DemoService.getGroups(sectionId);
+
             this.NavBarView = new NavBarView({
                 collection: sections,
                 collapsed: Core.services.MobileService.isMobile
@@ -29,8 +31,15 @@ export default Marionette.Object.extend({
                 activeCaseId: caseId
             });
 
+            this.drawer = new Core.components.NavigationDrawer({
+                collection: groups,
+                collapsed: Core.services.MobileService.isMobile,
+                isAbsolute: Core.services.MobileService.isMobile
+            });
+
             Application.headerRegion.show(this.NavBarView);
             Application.contentRegion.show(this.DemoPageView);
+            Application.navigationDrawerRegion.show(this.drawer);
         } else {
             this.DemoPageView.reloadView({
                 activeSectionId: sectionId,
