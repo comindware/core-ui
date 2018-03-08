@@ -2,7 +2,6 @@
 
 body {
     display: flex;
-    flex-direction: column;
 }
 
 
@@ -520,4 +519,10 @@ body {
 .editor_container, .editor_wrap {
     height: 100%;
     width: 100%;
+}
+
+.body-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }

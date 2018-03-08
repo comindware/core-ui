@@ -385,7 +385,7 @@ a:hover {
 
 .navigationDrawer-collapse_button {
     height: 40px;
-    width: 40px;
+    width: 100%;
     padding-top: 13px;
     padding-left: 13px;
     background: #0575bd;
