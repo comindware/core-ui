@@ -346,7 +346,6 @@ body {
 }
 
 .demo-popup {
-    z-index: 555;
     position: absolute;
     margin: auto;
     top: 0;
@@ -516,7 +515,7 @@ body {
 
 /*-----//------*/
 
-.editor_container, .editor_wrap {
+.editor_container, .canvas-wrap {
     height: 100%;
     width: 100%;
 }

@@ -68,6 +68,8 @@ export default Marionette.LayoutView.extend({
             });
             this.editorModeRegion.show(editorModeView);
             this.listenTo(editorModeView, 'change', this.updateEditorModel);
+        } else {
+            this.ui.editorRegion.addClass('canvas-wrap');
         }
     },
 

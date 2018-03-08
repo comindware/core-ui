@@ -88,10 +88,10 @@ export default Marionette.ItemView.extend({
 
     __onMouseleave() {
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
         if (this.options.enabled) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
     }
 });

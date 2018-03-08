@@ -214,7 +214,7 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
 
     __onMouseleave() {
         if (this.options.allowEmptyValue) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
     }
 });

@@ -20,6 +20,7 @@ export default Marionette.LayoutView.extend({
 
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.content = options.content;
+        this.onClose = options.onClose;
     },
 
     template: Handlebars.compile(template),
@@ -86,14 +87,21 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __close() {
-        WindowService.closePopup();
+    async __close() {
+        if (this.onClose) {
+            const closeResult = await this.onClose();
+
+            closeResult && WindowService.closePopup();
+        } else {
+            WindowService.closePopup();
+        }
     },
 
     __createButtonsView() {
-        this.buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+        const buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+
         return new core.layout.HorizontalLayout({
-            columns: this.buttons,
+            columns: buttons,
         });
     },
 

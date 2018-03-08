@@ -211,7 +211,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     },
 
     __onMouseleave() {
-        this.el.lastElementChild.remove();
+        this.el.removeChild(this.el.lastElementChild);
     }
 });
 

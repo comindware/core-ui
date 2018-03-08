@@ -153,7 +153,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     __onMouseleave() {
-        this.el.lastElementChild.remove();
+        this.el.removeChild(this.el.lastElementChild);
     }
 });
 
