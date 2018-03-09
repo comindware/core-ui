@@ -3,7 +3,7 @@ import template from './templates/mentionEditor.hbs';
 import dropdown from 'dropdown';
 import 'utils';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import membersFactory from './impl/common/members/services/factory';
+import membersFactory from './impl/members/services/factory';
 import TextAreaEditorView from './TextAreaEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';

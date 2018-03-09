@@ -7,8 +7,8 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import UserService from 'services/UserService';
 import DefaultButtonView from './impl/memberSelect/views/DefaultButtonView';
 import PanelView from './impl/memberSelect/views/PanelView';
-import MemberModel from './impl/common/members/models/MemberModel';
-import MembersCollection from './impl/common/members/collections/MembersCollection';
+import MemberModel from './impl/members/models/MemberModel';
+import MembersCollection from './impl/members/collections/MembersCollection';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
