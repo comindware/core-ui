@@ -231,8 +231,9 @@ const ListView = Marionette.LayoutView.extend({
             const model = this.collection.at(nextIndex);
             const selectFn = this.collection.selectSmart || this.collection.select;
             if (selectFn) {
-                selectFn.call(this.collection, model, false, shiftPressed);
+                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
             }
+
             this.scrollTo(nextIndex);
         }
     },

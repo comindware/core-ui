@@ -59,7 +59,7 @@ export default Marionette.ItemView.extend({
         if (value === '') {
             return null;
         }
-        return moment.utc(value, this.editDateFormat, true);
+        return moment(value, this.editDateFormat, true);
     },
 
     onRender() {
@@ -124,16 +124,16 @@ export default Marionette.ItemView.extend({
         if (date === null || date === '') {
             newVal = null;
         } else if (oldVal && this.getOption('preserveTime')) {
-            const momentOldVal = moment.utc(oldVal);
+            const momentOldVal = moment(oldVal);
             let momentOldDisplayedDate = moment(oldVal);
-            momentOldDisplayedDate = moment.utc({
+            momentOldDisplayedDate = moment({
                 year: momentOldDisplayedDate.year(),
                 month: momentOldDisplayedDate.month(),
                 date: momentOldDisplayedDate.date()
             });
             // Figure out number of days between displayed old date and entered new date
             // and apply it to stored old date to prevent transition-through-the-day bugs
-            const diff = moment.utc(date).diff(momentOldDisplayedDate, 'days');
+            const diff = moment(date).diff(momentOldDisplayedDate, 'days');
             newVal = momentOldVal.date(momentOldVal.date() + (diff || 0)).toISOString();
         } else {
             newVal = moment({

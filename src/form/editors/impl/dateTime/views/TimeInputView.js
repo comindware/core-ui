@@ -56,7 +56,7 @@ export default Marionette.ItemView.extend({
         }
 
         const format = this.timeEditFormat;
-        const parsedVal = moment.utc(val, format, true);
+        const parsedVal = moment(val, format, true);
         let parsedDate;
 
         if (parsedVal.isValid()) {

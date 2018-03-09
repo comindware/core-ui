@@ -16,7 +16,8 @@ export default Marionette.ItemView.extend({
     behaviors: {
         ListItemViewBehavior: {
             behaviorClass: list.views.behaviors.ListItemViewBehavior,
-            multiSelect: true
+            multiSelect: true,
+            selectOnCursor: false
         }
     },
 
