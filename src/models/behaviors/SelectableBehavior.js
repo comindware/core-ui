@@ -79,12 +79,18 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // Select a specified model, make sure the
     // model knows it's selected, and hold on to
     // the selected model.
-    select(model) {
+    select(model, ctrlPressed, shiftPressed, selectOnCursor) {
         if (this.selected[model.cid]) { return; }
 
         this.selected[model.cid] = model;
         model.select();
         calculateSelectedLength(this);
+        if (selectOnCursor === false) {
+            this.pointOff();
+            model.pointTo();
+            this.lastPointedModel = model;
+            this.cursorCid = model.cid;
+        }
     },
 
     // Select a specified model and update selection for the whole collection according to the key modifiers

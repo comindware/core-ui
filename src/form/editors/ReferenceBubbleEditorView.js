@@ -200,7 +200,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
 
     __onValueSelect() {
         if (this.panelCollection.lastPointedModel) {
-            this.panelCollection.lastPointedModel.select();
+            this.panelCollection.lastPointedModel.toggleSelected();
         } else {
             this.__onValueSet(this.panelCollection.selected);
         }

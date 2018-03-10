@@ -116,7 +116,7 @@ export default Marionette.Behavior.extend({
                 ? model.collection.select
                 : model.collection.selectSmart || model.collection.select;
             if (selectFn) {
-                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
+                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
             }
         }
     }
