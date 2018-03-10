@@ -45,7 +45,8 @@ module.exports = options => {
                     pathResolver.tests()
                 ],
                 options: {
-                    failOnError: true
+                    failOnError: true,
+                    quiet: true
                 }
             }, {
                 test: /\.css$/,

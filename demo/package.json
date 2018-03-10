@@ -36,8 +36,8 @@
     "text-loader": "^0.0.1",
     "url-loader": "^1.0.1",
     "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^3.1.0",
+    "webpack-cli": "^2.0.11",
+    "webpack-dev-server": "^3.1.1",
     "webpack-pwa-manifest": "^3.6.1"
   },
   "dependencies": {

@@ -36,24 +36,30 @@ module.exports = {
         'new-cap': ['off', { 'newIsCap': true, 'capIsNew': false }],
         'quote-props': ['error', 'as-needed'],
         'no-console': ['warn'],
-        'arrow-parens': ['error', 'as-needed'],
+        'arrow-parens': ['warn', 'as-needed'],
         'global-require': 'error',
         'no-param-reassign': ['error', { 'props': false }],
         'linebreak-style': 'off',
-        'indent': [2, 4, { 'SwitchCase': 1, 'VariableDeclarator': 1 }],
-        'prefer-arrow-callback': 'error',
+        'indent': ['warn', 4, { 'SwitchCase': 1, 'VariableDeclarator': 1 }],
+        'operator-linebreak': ["warn", "before"],
+        'multiline-ternary': ["warn", "always-multiline"],
+        'prefer-arrow-callback': 'warn',
         'comma-dangle': 0,
-        'func-names': ['error', 'as-needed'],
+        'func-names': ['warn', 'as-needed'],
         'spaced-comment': 0,
         'prefer-const': 'error',
-        'array-bracket-spacing': 0,
-        'object-curly-spacing': ['warn', 'always'],
+        'array-bracket-spacing': ["warn", "never"],
+        'array-element-newline' : ["warn", {
+            "multiline": true,
+            "minItems": 4
+        }],
         'arrow-body-style': ['error', 'as-needed'],
+        'object-curly-spacing': ['warn', 'always'],
         'object-shorthand': ['warn', 'always'],
         'no-useless-constructor': 'error',
         'no-trailing-spaces': ['warn', { 'skipBlankLines': true }],
-        'no-unused-vars': ['error', { 'vars': 'local' }],
-        'max-len': [2, 160, 4, {
+        'no-unused-vars': ['warn', { 'vars': 'local' }],
+        'max-len': ['warn', 180, 4, {
             'ignoreUrls': true,
             'ignoreComments': false,
             'ignoreStrings': true,
@@ -615,8 +621,6 @@ module.exports = {
         // require assignment operator shorthand where possible or prohibit it entirely
         // http://eslint.org/docs/rules/operator-assignment
         'operator-assignment': ['error', 'always'],
-        // enforce operators to be placed before or after line breaks
-        'operator-linebreak': 'off',
         // enforce padding within blocks
         'padded-blocks': ['error', 'never'],
         // specify whether double or single quotes should be used
