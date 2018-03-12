@@ -207,11 +207,12 @@ module.exports = (options = { env: 'production' }) => {
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new workboxPlugin({
-                globDirectory: pathResolver.client(),
-                globPatterns: ['**/*.{html,js}'],
+                globDirectory: 'public/assets/',
+                globPatterns: ['**/*.{html,js,css,json}'],
                 swDest: pathResolver.client('sw.js'),
                 clientsClaim: true,
-                skipWaiting: true
+                skipWaiting: true,
+                importWorkboxFrom: 'local'
             })
         ],
         resolve: {
