@@ -42,7 +42,7 @@ const defaultOptions = () => ({
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextEditorView.prototype */{
+export default (formRepository.editors.Text = BaseItemEditorView.extend({
     initialize(options = {}) {
         const defOps = defaultOptions();
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
@@ -52,18 +52,22 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
 
     onShow() {
         if (this.options.mask) {
-            this.ui.input.inputmask(Object.assign({
-                mask: this.options.mask,
-                placeholder: this.options.maskPlaceholder,
-                autoUnmask: true
-            }, this.options.maskOptions || {}));
+            this.$el.inputmask(
+                Object.assign(
+                    {
+                        mask: this.options.mask,
+                        placeholder: this.options.maskPlaceholder,
+                        autoUnmask: true
+                    },
+                    this.options.maskOptions || {}
+                )
+            );
         }
     },
 
     focusElement: '.js-input',
 
     ui: {
-        input: '.js-input',
         clearButton: '.js-clear-button'
     },
 
@@ -75,8 +79,8 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         return {
             type: 'text',
             placeholder: this.model.get('placeholder'),
-            maxLength: this.model.get('placeholder') || null,
-            title: this.model.get('placeholder'),
+            maxLength: this.model.get('maxLength') || null,
+            title: this.model.get('title'),
             id: this.model.get('fieldId')
         };
     },
@@ -90,8 +94,8 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
     },
 
     events: {
-        'keyup @ui.input': '__keyup',
-        'change @ui.input': '__change',
+        keyup: '__keyup',
+        change: '__change',
         'click @ui.clearButton': '__clear',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave'
@@ -99,14 +103,14 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
 
     __keyup() {
         if (this.options.changeMode === changeMode.keydown) {
-            this.__value(this.ui.input.val(), false, true);
+            this.__value(this.$el.val(), false, true);
         }
 
         this.trigger('keyup', this);
     },
 
     __change() {
-        this.__value(this.ui.input.val(), false, true);
+        this.__value(this.$el.val(), false, true);
     },
 
     __clear() {
@@ -115,11 +119,11 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         return false;
     },
 
-    setValue(value) {
+    setValue(value: String) {
         this.__value(value, true, false);
     },
 
-    setPermissions(enabled, readonly) {
+    setPermissions(enabled: Boolean, readonly: Boolean) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
     },
@@ -131,33 +135,33 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
             this.placeholder = this.options.emptyPlaceholder;
         }
 
-        this.ui.input.prop('placeholder', this.placeholder);
+        this.$el.prop('placeholder', this.placeholder);
     },
 
     __setEnabled(enabled) {
         BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
-        this.ui.input.prop('disabled', !enabled);
+        this.$el.prop('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
-            this.ui.input.prop('readonly', readonly);
-            this.ui.input.prop('tabindex', readonly ? -1 : 0);
+            this.$el.prop('readonly', readonly);
+            this.$el.prop('tabindex', readonly ? -1 : 0);
         }
     },
 
     onRender() {
         const value = this.getValue() || '';
-        this.ui.input.val(value);
+        this.$el.val(value);
         if (this.options.showTitle) {
-            this.ui.input.prop('title', value);
+            this.$el.prop('title', value);
         }
         // Keyboard shortcuts listener
         if (this.keyListener) {
             this.keyListener.reset();
         }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
+        this.keyListener = new keypress.Listener(this.$el[0]);
     },
 
     /**
@@ -170,7 +174,7 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
      * */
     addKeyboardListener(key, callback) {
         if (!this.keyListener) {
-            helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+            helpers.throwInvalidOperationError("You must apply keyboard listener after 'render' event has happened.");
         }
         const keys = key.split(',');
         _.each(keys, k => {
@@ -178,17 +182,17 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         });
     },
 
-    __value(value, updateUi, triggerChange) {
+    __value(value: String, updateUi: Boolean, triggerChange: Boolean) {
         if (this.value === value) {
             return;
         }
         this.value = value;
 
         if (this.getOption('showTitle')) {
-            this.ui.input.prop('title', value);
+            this.$el.prop('title', value);
         }
         if (updateUi) {
-            this.ui.input.val(value);
+            this.$el.val(value);
         }
         if (triggerChange) {
             this.__triggerChange();
@@ -199,22 +203,22 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
      * Focuses the editor's input and selects all the text in it.
      * */
     select() {
-        this.ui.input.select();
+        this.$el.select();
     },
 
     deselect() {
-        this.ui.input.deselect();
+        this.$el.deselect();
     },
 
     __onMouseenter() {
         if (this.options.allowEmptyValue) {
-            this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
+            this.el.insertAdjacentHTML('afterend', this.value ? iconWrapRemove : iconWrapText);
         }
     },
 
     __onMouseleave() {
         if (this.options.allowEmptyValue) {
-            this.el.removeChild(this.el.lastElementChild);
+            this.el.parentElement.removeChild(this.el.parentElement.lastElementChild);
         }
     }
-});
+}));

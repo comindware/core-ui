@@ -212,7 +212,17 @@ module.exports = (options = { env: 'production' }) => {
                 swDest: pathResolver.client('sw.js'),
                 clientsClaim: true,
                 skipWaiting: true,
-                importWorkboxFrom: 'local'
+                importWorkboxFrom: 'local',
+                runtimeCaching: [
+                    {
+                        urlPattern: /./,
+                        handler: 'networkFirst',
+                        options: {
+                            networkTimeoutSeconds: 10,
+                            cacheName: 'my-api-cache'
+                        }
+                    }
+                ]
             })
         ],
         resolve: {

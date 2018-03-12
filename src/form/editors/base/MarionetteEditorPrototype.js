@@ -95,7 +95,7 @@ export default {
              * */
             hasFocus: false,
 
-            constructor(options = {}) {
+            constructor(options: Object = {}) {
                 _.bindAll(this, 'onFocus', 'onBlur');
 
                 //Set initial value
