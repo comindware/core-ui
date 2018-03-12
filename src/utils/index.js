@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 5/22/2015
- * Copyright: 2009-2016 Comindware
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import comparators_ from './comparators';
 import helpers_ from './helpers';
 import htmlHelpers_ from './htmlHelpers';

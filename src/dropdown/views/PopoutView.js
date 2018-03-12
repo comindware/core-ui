@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/26/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { $, Handlebars } from 'lib';
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -14,7 +5,6 @@ import BlurableBehavior from '../utils/BlurableBehavior';
 
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
 import template from '../templates/popout.hbs';
-import WrapperView from './WrapperView';
 
 const WINDOW_BORDER_OFFSET = 10;
 
@@ -529,20 +519,16 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         });
         this.$el.addClass(classes.OPEN);
 
-        const wrapperView = new WrapperView({
-            view: this.panelView,
-            className: 'popout__wrp'
-        });
-        this.popupId = WindowService.showTransientPopup(wrapperView, {
+        this.popupId = WindowService.showTransientPopup(this.panelView, {
             fadeBackground: this.options.fade,
             hostEl: this.el
         });
         if (this.options.displacement) {
-            this.__adjustDisplacementVerticalPosition(wrapperView.$el);
-            this.__adjustDisplacementHorizontalPosition(wrapperView.$el);
+            this.__adjustDisplacementVerticalPosition(this.panelView.$el);
+            this.__adjustDisplacementHorizontalPosition(this.panelView.$el);
         } else {
-            this.__adjustDirectionPosition(wrapperView.$el);
-            this.__adjustFlowPosition(wrapperView.$el);
+            this.__adjustDirectionPosition(this.panelView.$el);
+            this.__adjustFlowPosition(this.panelView.$el);
         }
         this.listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));

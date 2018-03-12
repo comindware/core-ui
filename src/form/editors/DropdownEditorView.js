@@ -1,12 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/16/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars, keypress } from 'lib';
+// @flow
+import { keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';
 import template from './templates/dropdownEditor.hbs';

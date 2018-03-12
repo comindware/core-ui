@@ -1,17 +1,9 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 import template from './templates/mentionEditor.hbs';
-import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
 import 'utils';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import membersFactory from './impl/common/members/services/factory';
+import membersFactory from './impl/members/services/factory';
 import TextAreaEditorView from './TextAreaEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';

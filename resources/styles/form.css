@@ -222,6 +222,24 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
+.form-label__error-icon{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+}
+
+.form-label__error-icon-error svg{
+    fill: rgb(216, 0, 39);
+}
+
+.form-label__error-icon-warning svg{
+    fill: rgb(255, 218, 68);
+}
+
+.form-label__error-text {
+    padding-left: 21px;
+}
+
 .required .form-label {
     padding-left: 10px;
 }
@@ -236,6 +254,14 @@ rgba(5,117,189,.5) // user avatar btn
     position: absolute;
     top: 50%;
     left: 0;
+}
+.editable-grid-field.required::before {
+    margin: 0 0 0 1px;
+    top: 0;
+}
+
+.editable-cell .error.required::before {
+    display:none;
 }
 
 .disabled .form-label {

@@ -1,4 +1,4 @@
-
+// @flow
 import template from './templates/documentExpressionEditor.html';
 import NewExpressionEditorView from './NewExpressionEditorView';
 import DropdownEditor from './DropdownEditorView';

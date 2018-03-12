@@ -1,4 +1,4 @@
-
+//@flow
 import template from '../templates/toolbarPopup.html';
 
 export default Marionette.ItemView.extend({

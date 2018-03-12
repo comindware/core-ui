@@ -1,4 +1,3 @@
-
 import core from 'comindware/core';
 import localizationMapEn from 'localizationMapEn';
 import localizationMapDe from 'localizationMapDe';
@@ -10,7 +9,8 @@ const Application = new Marionette.Application();
 
 Application.addRegions({
     headerRegion: '.js-header-region',
-    contentRegion: '.js-content-region'
+    contentRegion: '.js-content-region',
+    navigationDrawerRegion: '.js-navigation-drawer-region'
 });
 
 Application.addInitializer(() => {
@@ -20,10 +20,15 @@ Application.addInitializer(() => {
     const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
 
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('serviceWorker.js').then(reg => {
-            console.log(`Registration succeeded. Scope is ${reg.scope}`);
-        }).catch(error => {
-            console.log(`Registration failed with ${error}`);
+        window.addEventListener('load', () => {
+            navigator.serviceWorker
+                .register('sw.js')
+                .then(registration => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
         });
     }
 

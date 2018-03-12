@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/2/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /* eslint-disable */
-
-import 'lib';
 
 (function($) {
     function visible(element) {

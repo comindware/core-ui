@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/28/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
+// @flow
 import { helpers } from 'utils';
 import WindowService from 'services/WindowService';
 import template from './popup.hbs';
@@ -28,6 +20,7 @@ export default Marionette.LayoutView.extend({
 
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.content = options.content;
+        this.onClose = options.onClose;
     },
 
     template: Handlebars.compile(template),
@@ -94,14 +87,21 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __close() {
-        WindowService.closePopup();
+    async __close() {
+        if (this.onClose) {
+            const closeResult = await this.onClose();
+
+            closeResult && WindowService.closePopup();
+        } else {
+            WindowService.closePopup();
+        }
     },
 
     __createButtonsView() {
-        this.buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+        const buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
+
         return new core.layout.HorizontalLayout({
-            columns: this.buttons,
+            columns: buttons,
         });
     },
 

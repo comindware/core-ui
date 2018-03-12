@@ -1,14 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/21/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /*eslint-disable*/
 
-import 'lib';
 import LocalizationService from '../services/LocalizationService';
 
 const timeoutCache = {};

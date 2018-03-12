@@ -1,13 +1,5 @@
 /* eslint-disable no-param-reassign */
-/**
- * Developer: Stepan Burguchev
- * Date: 7/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 
-import { Handlebars } from 'lib';
 import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './ListView';

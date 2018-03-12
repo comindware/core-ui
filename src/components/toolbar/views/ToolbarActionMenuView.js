@@ -1,4 +1,4 @@
-
+//@flow
 import ActionMenuPanelView from './ActionMenuPanelView';
 import ActionMenuButtonView from './ActionMenuButtonView';
 import { severity } from '../meta';

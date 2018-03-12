@@ -1,11 +1,3 @@
-/**
- * Developer: Oleg Verevkin
- * Date: 02/20/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import { helpers } from 'utils';
 
 const defaultOptions = {

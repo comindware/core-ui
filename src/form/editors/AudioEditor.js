@@ -42,16 +42,16 @@ export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(
                 new Core.layout.Button({
                     text: 'Start recording',
                     handler() {
-                        // get audio stream from user's mic
-                        navigator.mediaDevices.getUserMedia({
-                            audio: true
-                        }).then(stream => {
-                            recorder = new window.MediaRecorder(stream);
-                            // listen to dataavailable, which gets triggered whenever we have
-                            // an audio blob available
-                            recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
-                            recorder.start();
-                        });
+                        if (navigator.mediaDevices) {
+                            navigator.mediaDevices.getUserMedia({
+                                audio: true
+                            }).then(stream => {
+                                recorder = new window.MediaRecorder(stream);
+
+                                recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
+                                recorder.start();
+                            });
+                        }
                     }
                 }),
                 new Core.layout.Button({
@@ -65,7 +65,7 @@ export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(
         }));
     },
 
-    __onRecordingReady(e: AudioProcessingEvent, audio: AudioDestinationNode) {
+    __onRecordingReady(e, audio) {
         // e.data contains a blob representing the recording
         audio.src = URL.createObjectURL(e.data);
         audio.play();

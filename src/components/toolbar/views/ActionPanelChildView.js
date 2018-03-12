@@ -1,4 +1,4 @@
-
+//@flow
 import { severity } from '../meta';
 import template from '../templates/IconColorPanelChild.html';
 

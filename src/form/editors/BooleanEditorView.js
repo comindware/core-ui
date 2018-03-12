@@ -1,14 +1,6 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
+// @flow
 import keyCode from '../../utils/keyCode';
-import template from './templates/booleanEditor.hbs';
+import template from './templates/booleanEditor.html';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 

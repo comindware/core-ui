@@ -7,7 +7,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 555;
     padding: 20px;
 }
 
@@ -63,6 +62,10 @@
     display: flex;
     justify-content: flex-end;
     margin: 0 -7px;
+}
+
+.layout__popup-view-button-list .layout__horizontal-layout-list-item {
+    flex: 1 1 auto;
 }
 
 .layout__popup-view-button {

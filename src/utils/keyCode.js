@@ -1,13 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/10/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
 export default /** @lends module:core.utils.keyCode */ {
     BACKSPACE: 8,
     COMMA: 188,

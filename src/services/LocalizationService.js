@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/4/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import { moment, numeral } from 'lib';
 import numeralRu from 'numeral/locales/ru';
 import numeralEn from 'numeral/locales/en-gb';

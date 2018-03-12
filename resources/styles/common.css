@@ -66,7 +66,7 @@ body.non-selectable {
 }
 
 body, input, textarea, select {
-    font: normal 14px/1.4 'OpenSans', sans-serif;
+    font: normal 12px/1.4 Arial, 'OpenSans', sans-serif;
 }
 
 .noselect {
@@ -385,7 +385,7 @@ a:hover {
 
 .navigationDrawer-collapse_button {
     height: 40px;
-    width: 40px;
+    width: 100%;
     padding-top: 13px;
     padding-left: 13px;
     background: #0575bd;

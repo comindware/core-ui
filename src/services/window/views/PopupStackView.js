@@ -1,16 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 9/9/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
-'use strict';
-
 import { Handlebars, $ } from 'lib';
 import template from '../templates/PopupStack.hbs';
 
@@ -149,6 +136,10 @@ export default Marionette.LayoutView.extend({
             return [];
         }
         return this.__stack.slice(index).map(x => x.view);
+    },
+
+    getStack() {
+        return this.__stack;
     },
 
     fadeBackground(fade) {

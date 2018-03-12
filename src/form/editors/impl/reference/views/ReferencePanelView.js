@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { keypress, Handlebars } from 'lib';
+import { keypress } from 'lib';
 import { helpers } from 'utils';
 import list from 'list';
 import template from '../templates/referencePanel.hbs';

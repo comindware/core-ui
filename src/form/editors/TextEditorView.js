@@ -1,16 +1,8 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars, keypress } from 'lib';
+// @flow
+import { keypress } from 'lib';
 import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapText from './iconsWraps/iconWrapText.html';
@@ -75,9 +67,21 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
         clearButton: '.js-clear-button'
     },
 
-    className: 'editor',
+    className: 'editor input input_text js-input',
 
-    template: Handlebars.compile(template),
+    tagName: 'input',
+
+    attributes() {
+        return {
+            type: 'text',
+            placeholder: this.model.get('placeholder'),
+            maxLength: this.model.get('placeholder') || null,
+            title: this.model.get('placeholder'),
+            id: this.model.get('fieldId')
+        };
+    },
+
+    template: false,
 
     templateHelpers() {
         return _.extend(this.options, {
@@ -210,7 +214,7 @@ export default formRepository.editors.Text = BaseItemEditorView.extend(/** @lend
 
     __onMouseleave() {
         if (this.options.allowEmptyValue) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
     }
 });

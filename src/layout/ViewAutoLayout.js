@@ -1,7 +1,7 @@
 
 import * as elementsFactory from './factory';
-import VerticalLayout from './verticalLayout/VerticalLayoutView';
-import HorizontalLayout from './horizontalLayout/HorizontalLayoutView';
+import VerticalLayout from './VerticalLayoutView';
+import HorizontalLayout from './HorizontalLayoutView';
 import TabLayoutView from './tabLayout/TabLayoutView';
 import Group from './group/GroupView';
 import Button from './button/ButtonView';

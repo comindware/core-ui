@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/27/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
 import ContentLoadingView from './routing/ContentLoadingView';
 import ModuleProxy from './routing/ModuleProxy';
 import WindowService from './WindowService';
@@ -133,7 +124,10 @@ export default {
             this.loadingContext = null;
             if (this.activeModule.onRoute) {
                 this.activeModule.routerAction = callbackName;
-                this.activeModule.onRoute.apply(this.activeModule, routingArgs);
+                const continueHandling = this.activeModule.onRoute.apply(this.activeModule, routingArgs);
+                if (continueHandling === false) {
+                    return;
+                }
             }
             if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
                 const configuration = this.activeModule.routingActions[callbackName];

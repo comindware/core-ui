@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/8/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /*\
  |*|
  |*|  :: cookies.js ::
@@ -29,8 +21,6 @@
  |*|  * .keys()
  |*|
  \*/
-
-'use strict';
 
 export default /** @lends module:core.utils.cookieHelpers */ {
     getItem(sKey) {

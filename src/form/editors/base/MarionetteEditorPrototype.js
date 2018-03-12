@@ -1,18 +1,10 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/2/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 /*
 *
 * Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
 *
 * */
 
-import 'lib';
 import formRepository from '../../formRepository';
 
 const classes = {
@@ -205,7 +197,7 @@ export default {
                 this.value = value;
             },
 
-            setPermissions(enabled, readonly) {
+            setPermissions(enabled: Boolean, readonly: Boolean) {
                 this.__setEnabled(enabled);
                 this.__setReadonly(readonly);
             },
@@ -215,7 +207,7 @@ export default {
              * It's implied that the value doesn't make sense.
              * @param {Boolean} enabled New flag value.
              */
-            setEnabled(enabled) {
+            setEnabled(enabled: Boolean) {
                 const readonly = this.getReadonly();
                 this.setPermissions(enabled, readonly);
             },
@@ -224,7 +216,7 @@ export default {
              * Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.
              * @param {Boolean} readonly New flag value.
              */
-            setReadonly(readonly) {
+            setReadonly(readonly: Boolean) {
                 const enabled = this.getEnabled();
                 this.setPermissions(enabled, readonly);
             },
@@ -233,12 +225,12 @@ export default {
              * Sets a new value of <code>hidden</code> flag.
              * @param {Boolean} hidden New flag value.
              */
-            setHidden(hidden) {
+            setHidden(hidden: Boolean) {
                 this.hidden = hidden;
                 this.$el.toggleClass(classes.hidden, hidden);
             },
 
-            __setEnabled(enabled) {
+            __setEnabled(enabled: Boolean) {
                 this.enabled = enabled;
                 this.trigger('enabled', enabled);
                 if (!this.enabled) {
@@ -264,7 +256,7 @@ export default {
                 return this.hidden;
             },
 
-            __setReadonly(readonly) {
+            __setReadonly(readonly: Boolean) {
                 this.readonly = readonly;
                 this.trigger('readonly', readonly);
                 if (this.readonly && this.getEnabled()) {
@@ -305,7 +297,7 @@ export default {
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails
              * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
              */
-            commit(options = {}) {
+            commit(options: Object = {}) {
                 let error = this.validate(true);
                 if (error && !this.schema.forceCommit) {
                     return error;
@@ -335,7 +327,7 @@ export default {
              * Check validity with built-in validator functions (initially passed into constructor options).
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
              */
-            validate(internal) {
+            validate(internal: Boolean) {
                 let error = null;
                 const value = this.getValue();
                 const formValues = this.form ? this.form.getValue() : {};

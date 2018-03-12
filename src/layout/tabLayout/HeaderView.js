@@ -1,4 +1,4 @@
-
+// @flow
 import { helpers } from 'utils';
 import HeaderItemView from './HeaderItemView';
 

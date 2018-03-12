@@ -1,11 +1,4 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 07/16/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 import { Handlebars, moment } from 'lib';
 import template from './templates/dateTimeEditor.hbs';
 import DateTimeService from './services/DateTimeService';
@@ -218,7 +211,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend(/** @lends module:
     },
 
     __onMouseleave() {
-        this.el.lastElementChild.remove();
+        this.el.removeChild(this.el.lastElementChild);
     }
 });
 

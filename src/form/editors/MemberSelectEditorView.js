@@ -1,12 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 1/28/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars, keypress } from 'lib';
+// @flow
+import { keypress } from 'lib';
 import { helpers, comparators } from 'utils';
 import dropdown from 'dropdown';
 import template from './templates/memberSelectEditor.hbs';
@@ -14,8 +7,8 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import UserService from 'services/UserService';
 import DefaultButtonView from './impl/memberSelect/views/DefaultButtonView';
 import PanelView from './impl/memberSelect/views/PanelView';
-import MemberModel from './impl/common/members/models/MemberModel';
-import MembersCollection from './impl/common/members/collections/MembersCollection';
+import MemberModel from './impl/members/models/MemberModel';
+import MembersCollection from './impl/members/collections/MembersCollection';
 import formRepository from '../formRepository';
 
 const defaultOptions = {

@@ -1,3 +1,4 @@
+// @flow
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 export default Marionette.ItemView.extend({

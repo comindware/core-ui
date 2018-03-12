@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/17/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
 import template from '../templates/emptyGrid.hbs';
 import LocalizationService from '../../services/LocalizationService';
 

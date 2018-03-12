@@ -1,12 +1,3 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 30.08.2017
- * Copyright: 2009-2017 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
 import template from '../templates/bubbleItem.hbs';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
@@ -97,10 +88,10 @@ export default Marionette.ItemView.extend({
 
     __onMouseleave() {
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
         if (this.options.enabled) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
     }
 });

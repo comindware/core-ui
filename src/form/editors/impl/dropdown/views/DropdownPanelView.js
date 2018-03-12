@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import { Handlebars, keypress } from 'lib';
 import template from '../templates/dropdownPanel.hbs';
 import DefaultDropdownListItemView from './DefaultDropdownListItemView';

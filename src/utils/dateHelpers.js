@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/8/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /* Useful and general methods for work with Date and Time put here*/
-
-'use strict';
 
 import { moment } from 'lib';
 import LocalizationService from '../services/LocalizationService';

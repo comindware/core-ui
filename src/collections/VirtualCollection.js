@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/18/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
 /*eslint-disable*/
-import 'lib';
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { helpers } from 'utils';

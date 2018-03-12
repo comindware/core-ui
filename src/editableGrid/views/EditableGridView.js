@@ -1,6 +1,3 @@
-/**
- * Created by sguryev on 13.07.2017.
- */
 import utils from 'utils';
 import SearchBarView from '../../views/SearchBarView';
 import factory from '../../nativeGrid/factory';

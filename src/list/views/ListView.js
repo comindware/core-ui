@@ -1,12 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { keypress, Handlebars } from 'lib';
+import { keypress } from 'lib';
 import { helpers, htmlHelpers } from 'utils';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';

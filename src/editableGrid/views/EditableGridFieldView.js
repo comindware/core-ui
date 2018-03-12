@@ -1,7 +1,3 @@
-/**
- * Created by sguryev on 05.09.2017.
- */
-
 import form from 'form';
 import template from '../templates/editableCellField.hbs';
 

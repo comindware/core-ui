@@ -1,4 +1,4 @@
-
+// @flow
 import template from './templates/workSpaceItemSplitEditor.hbs';
 import formRepository from '../formRepository';
 import WorkItemsController from './impl/workItemsSplit/controller/WorkItemSplitController';

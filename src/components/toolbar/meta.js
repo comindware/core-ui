@@ -1,4 +1,4 @@
-
+//@flow
 export const severity = {
     None: {
         class: 'toolbar-btn',
