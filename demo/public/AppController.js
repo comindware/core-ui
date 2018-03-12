@@ -17,9 +17,9 @@ export default Marionette.Object.extend({
         const sections = new Backbone.Collection(DemoService.getSections());
         sections.find(s => s.id === sectionId).set('selected', true);
         Application.headerRegion.$el.show();
-        if (!this.NavBarView || !this.DemoPageView) {
-            const groups = DemoService.getGroups(sectionId);
+        const groups = DemoService.getGroups(sectionId);
 
+        if (!this.NavBarView || !this.DemoPageView) {
             this.NavBarView = new NavBarView({
                 collection: sections,
                 collapsed: Core.services.MobileService.isMobile
@@ -46,6 +46,8 @@ export default Marionette.Object.extend({
                 activeGroupId: groupId,
                 activeCaseId: caseId
             });
+
+            this.drawer.collection.reset(groups);
         }
     }
 });

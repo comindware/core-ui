@@ -41,6 +41,7 @@
     "webpack-pwa-manifest": "^3.6.1"
   },
   "dependencies": {
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "workbox-webpack-plugin": "^2.1.3"
   }
 }

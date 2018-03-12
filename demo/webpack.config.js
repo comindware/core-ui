@@ -6,8 +6,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const workboxPlugin = require('workbox-webpack-plugin');
 
 const pathResolver = {
     client() {
@@ -39,9 +39,7 @@ module.exports = (options = { env: 'production' }) => {
         cache: true,
         entry: {
             app: ['./public/index'],
-            vendor: [
-                'comindware/core'
-            ]
+            vendor: ['comindware/core']
         },
         devtool: 'source-map',
         output: {
@@ -51,67 +49,74 @@ module.exports = (options = { env: 'production' }) => {
         },
         module: {
             rules: [
-                (PRODUCTION ? {
-                    test: /\.css$/,
-                    loader: ExtractTextPlugin.extract({
-                        fallback: 'style-loader',
-                        use: [{
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        }, {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                                plugins: () => [
-                                    autoprefixer({
-                                        browsers: ['last 2 versions']
-                                    }),
-                                    cssnano()
-                                ]
-                            }
-                        }]
-                    })
-                } : {
-                    test: /\.css$/,
-                    use: [{
-                        loader: 'style-loader'
-                    }, {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
-                    }, {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            plugins: [
-                                autoprefixer({
-                                    browsers: ['last 2 versions']
-                                })
+                PRODUCTION
+                    ? {
+                        test: /\.css$/,
+                        loader: ExtractTextPlugin.extract({
+                            fallback: 'style-loader',
+                            use: [
+                                {
+                                    loader: 'css-loader',
+                                    options: {
+                                        sourceMap: true
+                                    }
+                                },
+                                {
+                                    loader: 'postcss-loader',
+                                    options: {
+                                        sourceMap: true,
+                                        plugins: () => [
+                                            autoprefixer({
+                                                browsers: ['last 2 versions']
+                                            }),
+                                            cssnano()
+                                        ]
+                                    }
+                                }
                             ]
-                        }
-                    }]
-                }), {
+                        })
+                    }
+                    : {
+                        test: /\.css$/,
+                        use: [
+                            {
+                                loader: 'style-loader'
+                            },
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    sourceMap: true
+                                }
+                            },
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: true,
+                                    plugins: [
+                                        autoprefixer({
+                                            browsers: ['last 2 versions']
+                                        })
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                {
                     test: /core\.js$/,
                     enforce: 'pre',
                     loader: 'source-map-loader'
-                }, {
+                },
+                {
                     test: /\.js$/,
                     loader: 'babel-loader',
-                    include: [
-                        pathResolver.source()
-                    ],
-                    exclude: [
-                        pathResolver.source('lib'),
-                        pathResolver.source('app/cases')
-                    ],
+                    include: [pathResolver.source()],
+                    exclude: [pathResolver.source('lib'), pathResolver.source('app/cases')],
                     options: {
                         presets: ['env'],
                         plugins: ['transform-runtime']
                     }
-                }, {
+                },
+                {
                     test: /\.eot(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -120,7 +125,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-eot'
                     }
-                }, {
+                },
+                {
                     test: /\.ttf(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -129,7 +135,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-ttf'
                     }
-                }, {
+                },
+                {
                     test: /\.woff(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -138,7 +145,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-woff'
                     }
-                }, {
+                },
+                {
                     test: /\.woff2(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -147,7 +155,8 @@ module.exports = (options = { env: 'production' }) => {
                         limit: FONT_LIMIT,
                         mimetype: 'application/font-woff2'
                     }
-                }, {
+                },
+                {
                     test: /\.svg(\?.*)?$/,
                     loader: 'url-loader',
                     options: {
@@ -156,15 +165,21 @@ module.exports = (options = { env: 'production' }) => {
                         limit: GRAPHICS_LIMIT,
                         mimetype: 'image/svg+xml'
                     }
-                }, {
+                },
+                {
                     test: /\.(png|jpe?g|gif).*$/,
                     loader: 'url-loader',
                     options: {
                         limit: GRAPHICS_LIMIT
                     }
-                }]
+                }
+            ]
         },
         plugins: [
+            /*new CleanWebpackPlugin([pathResolver.client()], {
+                verbose: false,
+                exclude: ['localization']
+            }),*/
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
                 __DEV__: DEVELOPMENT
@@ -188,22 +203,19 @@ module.exports = (options = { env: 'production' }) => {
                 theme_color: '#0575bd',
                 orientation: 'landscape-secondary'
             }),
-            new CopyWebpackPlugin([
-                { from: './serviceWorker.js' }
-            ], { copyUnmodified: true }),
-            new CleanWebpackPlugin([ pathResolver.client() ], {
-                verbose: false,
-                exclude: ['localization']
-            }),
             new ExtractTextPlugin('[name].css'),
             new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.optimize.ModuleConcatenationPlugin()
+            new webpack.optimize.ModuleConcatenationPlugin(),
+            new workboxPlugin({
+                globDirectory: pathResolver.client(),
+                globPatterns: ['**/*.{html,js}'],
+                swDest: pathResolver.client('sw.js'),
+                clientsClaim: true,
+                skipWaiting: true
+            })
         ],
         resolve: {
-            modules: [
-                pathResolver.source(),
-                pathResolver.node_modules()
-            ],
+            modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'comindware/core': `${__dirname}/../dist/core.js`,
                 prism: `${__dirname}/public/lib/prism/prism.js`,
