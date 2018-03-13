@@ -1,4 +1,4 @@
-
+// @flow
 import ErrorPlaceholderView from './templates/ErrorPlaceholder.hbs';
 
 export default Marionette.ItemView.extend({

@@ -1,3 +1,4 @@
+// @flow
 import template from './templates/field.hbs';
 import dropdown from 'dropdown';
 import ErrorButtonView from './views/ErrorButtonView';

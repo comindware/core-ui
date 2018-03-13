@@ -385,7 +385,7 @@ a:hover {
 
 .navigationDrawer-collapse_button {
     height: 40px;
-    width: 100%;
+    width: 40px;
     padding-top: 13px;
     padding-left: 13px;
     background: #0575bd;
@@ -400,6 +400,7 @@ a:hover {
 .navigationDrawer__ul {
     height: 100%;
     transition: all .2s;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
 }
 
 .navigationDrawer__li {
@@ -423,7 +424,6 @@ a:hover {
     position: relative;
     z-index: 2;
     transition: all .2s;
-    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
     overflow-y: auto;
 }
 
@@ -436,6 +436,18 @@ a:hover {
 }
 .groups-link:hover {
     text-decoration: none;
+}
+
+.navigation-drawer_header {
+    display: flex;
+}
+
+.navigation-drawer_title {
+    background: #0575bd;
+    color: white;
+    flex: 1;
+    text-align: center;
+    line-height: 40px;
 }
 
 /*------------------ Tabs ------------------*/

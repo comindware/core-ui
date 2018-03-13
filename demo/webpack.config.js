@@ -213,15 +213,9 @@ module.exports = (options = { env: 'production' }) => {
                 clientsClaim: true,
                 skipWaiting: true,
                 importWorkboxFrom: 'local',
-                runtimeCaching: [
-                    {
-                        urlPattern: /./,
-                        handler: 'networkFirst',
-                        options: {
-                            networkTimeoutSeconds: 10,
-                            cacheName: 'my-api-cache'
-                        }
-                    }
+                directoryIndex: './index.html',
+                manifestTransforms: [
+                    entries => entries.map(entry => entry.url = `${'./'}${entry.url}`)
                 ]
             })
         ],

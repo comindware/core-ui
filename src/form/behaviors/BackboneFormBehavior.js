@@ -1,4 +1,4 @@
-
+// @flow
 import FieldView from '../fields/FieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 
