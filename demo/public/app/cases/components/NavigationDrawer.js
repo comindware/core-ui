@@ -2,7 +2,7 @@ import core from 'comindware/core';
 
 export default function() {
     return new core.components.NavigationDrawer({
-        collection: new Backbone.Collection([
+        collection: [
             {
                 id: 1,
                 displayName: 1
@@ -39,6 +39,7 @@ export default function() {
                 id: 9,
                 displayName: 1
             }
-        ])
+        ],
+        title: 'Drawer demo'
     });
 }

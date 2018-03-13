@@ -9,103 +9,112 @@ export default {
             groups: [
                 {
                     id: 'AudioEditor',
-                    displayName: 'Audio Editor'
+                    displayName: 'Audio Editor',
+                    description: 'Simple audio editor'
                 },
                 {
                     id: 'TextEditor',
-                    displayName: 'Text Editor'
+                    displayName: 'Text Editor',
+                    description: 'Simple text editor'
                 },
                 {
                     id: 'CodeEditor',
-                    displayName: 'Code Editor'
+                    displayName: 'Code Editor',
+                    description: 'Simple code editor'
                 },
                 {
                     id: 'RangeEditor',
-                    displayName: 'Range Editor'
+                    displayName: 'Range Editor',
+                    description: 'Simple range editor'
                 },
                 {
                     id: 'ColorPickerEditor',
-                    displayName: 'Color Picker'
+                    displayName: 'Color Picker',
+                    description: 'Simple color picker editor'
                 },
                 {
                     id: 'TextAreaEditor',
-                    displayName: 'Text Area Editor'
+                    displayName: 'Text Area Editor',
+                    description: 'Text area editor'
                 },
                 {
                     id: 'NumberEditor',
-                    displayName: 'Number Editor'
+                    displayName: 'Number Editor',
+                    description: 'Simple number editor'
                 },
                 {
                     id: 'BooleanEditor',
-                    displayName: 'Boolean Editor'
+                    displayName: 'Boolean Editor',
+                    description: 'Simple boolean editor'
                 },
                 {
                     id: 'DateEditor',
-                    displayName: 'Date Editor'
+                    displayName: 'Date Editor',
+                    description: 'Date editor without time'
                 },
                 {
                     id: 'DateTimeEditor',
-                    displayName: 'DateTime Editor'
+                    displayName: 'DateTime Editor',
+                    description: 'Date editor'
                 },
                 {
                     id: 'TimeEditor',
-                    displayName: 'Time Editor'
+                    displayName: 'Time Editor',
+                    description: 'Time editor without time'
                 },
                 {
                     id: 'DocumentEditor',
-                    displayName: 'Document editor'
+                    displayName: 'Document editor',
+                    description: 'Document editor'
                 },
                 {
                     id: 'DurationEditor',
-                    displayName: 'Duration Editor'
+                    displayName: 'Duration Editor',
+                    description: 'Duration editor'
                 },
                 {
                     id: 'DropdownEditor',
-                    displayName: 'Dropdown Editor'
+                    displayName: 'Dropdown Editor',
+                    description: 'Dropdown editor'
                 },
                 {
                     id: 'RadioGroupEditor',
-                    displayName: 'Radio Group Editor'
+                    displayName: 'Radio Group Editor',
+                    description: 'Radio Group Editor'
                 },
                 {
                     id: 'PasswordEditor',
-                    displayName: 'Password Editor'
+                    displayName: 'Password Editor',
+                    description: 'Text editor mimic in passwords'
                 },
                 {
                     id: 'MemberSelectEditor',
-                    displayName: 'Member Select Editor'
-                },
-                {
-                    id: 'MembersBubbleEditor',
-                    displayName: 'Members Bubble Editor'
+                    displayName: 'Member Select Editor',
+                    description: 'Simple text editor'
                 },
                 {
                     id: 'MentionEditor',
-                    displayName: 'Mention Editor'
+                    displayName: 'Mention Editor',
+                    description: 'Simple text editor'
                 },
                 {
                     id: 'ReferenceBubbleEditor',
-                    displayName: 'Reference Bubble Editor'
+                    displayName: 'Reference Bubble Editor',
+                    description: 'Data list editor with search'
                 },
                 {
                     id: 'MaskedTextEditor',
-                    displayName: 'Masked Text Editor'
+                    displayName: 'Masked Text Editor',
+                    description: 'Simple text editor'
                 },
                 {
                     id: 'AvatarEditor',
-                    displayName: 'Avatar Editor'
+                    displayName: 'Avatar Editor',
+                    description: 'Simple text editor'
                 },
                 {
                     id: 'DurationEditorWithPartialDisplay',
                     displayName: 'Duration Editor (partial display)'
-                },
-                {
-                    id: 'Form',
-                    displayName: 'Form'
-                },
-                {
-                    id: 'FormValidation',
-                    displayName: 'Form Validation (all editors)'
                 }
             ]
         },
@@ -117,9 +126,9 @@ export default {
                     id: 'actionMenu',
                     displayName: 'Action Menu',
                     description:
-                        'Для создания простого меню с командами мы используем метод core.dropdown.factory.createMenu из фабрики дропдаунов.' +
-                        '\r\n\r\n' +
-                        'Метод возвращает обычный PopoutView, настроенный для отображения меню.'
+                    'Для создания простого меню с командами мы используем метод core.dropdown.factory.createMenu из фабрики дропдаунов.' +
+                    '\r\n\r\n' +
+                    'Метод возвращает обычный PopoutView, настроенный для отображения меню.'
                 },
                 {
                     id: 'popoutCustomization',
@@ -155,37 +164,37 @@ export default {
                 {
                     id: 'TabLayout',
                     displayName: 'Tab Layout',
-                    description: ''
+                    description: 'Tab Layout'
                 },
                 {
-                    id: 'Form layout',
+                    id: 'FormLayout',
                     displayName: 'Form Layout',
-                    description: ''
+                    description: 'Form Layout'
                 },
                 {
                     id: 'GroupView',
                     displayName: 'Group',
-                    description: ''
+                    description: 'Group'
                 },
                 {
                     id: 'Button',
                     displayName: 'Button',
-                    description: ''
+                    description: 'Button'
                 },
                 {
                     id: 'PopupView',
                     displayName: 'Popup View',
-                    description: ''
+                    description: 'Popup View'
                 },
                 {
                     id: 'NavigationDrawer',
                     displayName: 'Navigation Drawer',
-                    description: ''
+                    description: 'Navigation Drawer'
                 },
                 {
                     id: 'Toolbar',
                     displayName: 'Toolbar',
-                    description: ''
+                    description: 'Toolbar'
                 }
             ]
         },
@@ -195,31 +204,33 @@ export default {
             groups: [
                 {
                     id: 'listBasicUsage',
-                    displayName: 'List (Basic Usage)'
+                    displayName: 'List (Basic Usage)',
+                    description: 'Basic use of list'
                 },
                 {
                     id: 'listSearchHighlight',
-                    displayName: 'List (Search & Highlight)'
+                    displayName: 'List (Search & Highlight)',
+                    description: 'List with search'
                 },
                 {
                     id: 'listGroupBy',
-                    displayName: 'List (Group By)'
-                },
-                {
-                    id: 'grid',
-                    displayName: 'Grid'
+                    displayName: 'List (Group By)',
+                    description: 'List with grouping'
                 },
                 {
                     id: 'nativeGrid',
-                    displayName: 'Grid (With native scroll)'
+                    displayName: 'Grid',
+                    description: 'Simple grid'
                 },
                 {
                     id: 'editableGrid',
-                    displayName: 'Editable Grid'
+                    displayName: 'Editable Grid',
+                    description: 'Grid with editable cells'
                 },
                 {
                     id: 'treeGrid',
-                    displayName: 'Tree Grid'
+                    displayName: 'Tree Grid',
+                    description: 'Tree-like Grid'
                 }
             ]
         },
