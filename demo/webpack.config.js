@@ -213,10 +213,7 @@ module.exports = (options = { env: 'production' }) => {
                 clientsClaim: true,
                 skipWaiting: true,
                 importWorkboxFrom: 'local',
-                directoryIndex: './index.html',
-                manifestTransforms: [
-                    entries => entries.map(entry => entry.url = `${'./'}${entry.url}`)
-                ]
+                directoryIndex: './index.html'
             })
         ],
         resolve: {
