@@ -119,7 +119,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         return false;
     },
 
-    setValue(value: String) {
+    setValue(value: string) {
         this.__value(value, true, false);
     },
 
@@ -182,7 +182,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         });
     },
 
-    __value(value: String, updateUi: Boolean, triggerChange: Boolean) {
+    __value(value: string, updateUi: Boolean, triggerChange: Boolean) {
         if (this.value === value) {
             return;
         }

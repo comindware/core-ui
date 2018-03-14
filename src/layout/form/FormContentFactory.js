@@ -11,7 +11,7 @@ import PlainText from '../plainText/PlainTextView';
 export default {
     __uniqueFormId: '',
 
-    getContentFromSchema(schema: Array, uniqueFormId: String) {
+    getContentFromSchema(schema: Array, uniqueFormId: string) {
         this.__uniqueFormId = uniqueFormId;
         return this.__parseConfiguration(schema)[0];
     },

@@ -22,7 +22,7 @@ export default (global.Localizer = {
         numeral.locale(this.langCode);
     },
 
-    get(locId: String) {
+    get(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -36,7 +36,7 @@ export default (global.Localizer = {
         return text;
     },
 
-    tryGet(locId: String) {
+    tryGet(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
