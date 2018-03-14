@@ -11,6 +11,12 @@ declare var Backbone: Backbone;
 
 declare var Marionette: any;
 
-declare module TemplateHbs {
-    declare var exports: string;
-}
+declare var Localizer: {
+    get(String): String,
+
+    tryGet(String): String,
+
+    resolveLocalizedText(String): String
+};
+
+

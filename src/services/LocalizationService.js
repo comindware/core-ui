@@ -1,3 +1,4 @@
+//@flow
 import { moment, numeral } from 'lib';
 import numeralRu from 'numeral/locales/ru';
 import numeralEn from 'numeral/locales/en-gb';
@@ -10,8 +11,8 @@ numeral.locale('ru', numeralRu);
 const global = window;
 const defaultLangCode = 'en';
 
-export default global.Localizer = {
-    initialize(options) {
+export default (global.Localizer = {
+    initialize(options = {}) {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
@@ -21,7 +22,7 @@ export default global.Localizer = {
         numeral.locale(this.langCode);
     },
 
-    get(locId) {
+    get(locId: String) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -35,7 +36,7 @@ export default global.Localizer = {
         return text;
     },
 
-    tryGet(locId) {
+    tryGet(locId: String) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -46,11 +47,11 @@ export default global.Localizer = {
         return text;
     },
 
-    resolveLocalizedText(localizedText) {
+    resolveLocalizedText(localizedText: Object) {
         if (!localizedText) {
             return '';
         }
 
         return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
     }
-};
+});

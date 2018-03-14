@@ -7,5 +7,6 @@
 [lints]
 
 [options]
-
+module.name_mapper.extension='html' -> '<PROJECT_ROOT>/flow-stubs/htmlDummy.js'
+module.name_mapper.extension='hbs' -> '<PROJECT_ROOT>/flow-stubs/hbsDummy.js'
 [strict]
