@@ -44,16 +44,18 @@ const defaultOptions = {
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
-export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.ReferenceEditorView.prototype */{
+export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.bindAll(this, '__getDisplayText');
 
         this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.controller = this.options.controller || new StaticController({
-            collection: options.collection
-        });
+        this.controller
+            = this.options.controller
+            || new StaticController({
+                collection: options.collection
+            });
         this.showAddNewButton = this.options.showAddNewButton;
 
         this.reqres.setHandler('bubble:delete', this.__onBubbleDelete, this);
@@ -101,7 +103,10 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
 
     setValue(value) {
         this.value = [];
-        this.viewModel.get('button').get('selected').reset();
+        this.viewModel
+            .get('button')
+            .get('selected')
+            .reset();
         this.__value(value, false);
         delete this.fakeInputModel;
         this.__updateFakeInputModel();
@@ -142,14 +147,14 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         return !value || !value.length;
     },
 
-    setReadonly(readonly) {
+    setReadonly(readonly: Boolean) {
         BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
     },
 
-    setEnabled(enabled) {
+    setEnabled(enabled: Boolean) {
         BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
@@ -172,8 +177,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
     },
 
     __value(value, triggerChange) {
-        if (JSON.stringify(this.value) === JSON.stringify(value)
-            || (_.isObject(value) && this.value.find(v => v.id === value.id))) {
+        if (JSON.stringify(this.value) === JSON.stringify(value) || (_.isObject(value) && this.value.find(v => v.id === value.id))) {
             this.viewModel.get('panel').set('value', this.value);
             return;
         }
@@ -185,7 +189,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
             if (firstModel !== this.fakeInputModel) {
                 selectedModels.remove(firstModel);
             }
-            this.value = Array.isArray(adjustedValue) ? adjustedValue : [ adjustedValue ];
+            this.value = Array.isArray(adjustedValue) ? adjustedValue : [adjustedValue];
         } else {
             this.value = this.getValue().concat(adjustedValue);
         }
@@ -201,17 +205,19 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         this.__onValueSet(this.viewModel.get('panel').get('collection').selected);
     },
 
-    __onValueSet(model) {
+    __onValueSet(model?: Backbone.Model) {
         const canAddItemOldValue = this.__canAddItem();
         const value = model ? model.toJSON() : null;
         this.__value(value, true);
         this.__updateFakeInputModel();
+
         if (this.options.maxQuantitySelected === 1) {
             this.dropdownView.close();
             this.__updateButtonInput();
             this.__focusButton();
             return;
         }
+
         const stopAddItems = canAddItemOldValue !== this.__canAddItem();
         if (stopAddItems) {
             this.dropdownView.close();
@@ -221,17 +227,14 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         }
     },
 
-    __onValueUnset(model) {
+    __onValueUnset(model: Backbone.Model) {
         this.__onBubbleDelete(model);
     },
 
     __canAddItem() {
-        const selectedItems = _.filter(
-            this.viewModel.get('button').get('selected').models,
-            model => model !== this.fakeInputModel);
+        const selectedItems = _.filter(this.viewModel.get('button').get('selected').models, model => model !== this.fakeInputModel);
 
-        return this.getEnabled() && !this.getReadonly() &&
-            (!this.options.maxQuantitySelected || (this.options.maxQuantitySelected !== selectedItems.length));
+        return this.getEnabled() && !this.getReadonly() && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
     },
 
     __onValueEdit(value) {
@@ -248,7 +251,10 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         this.text = text;
         return this.controller.fetch(options).then(data => {
             if (this.text === text) {
-                this.viewModel.get('panel').get('collection').reset(data.collection);
+                this.viewModel
+                    .get('panel')
+                    .get('collection')
+                    .reset(data.collection);
                 this.viewModel.get('panel').set('totalCount', data.totalCount);
             }
         });
@@ -364,4 +370,4 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
     __triggerReady() {
         this.trigger('view:ready');
     }
-});
+}));

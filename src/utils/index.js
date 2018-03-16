@@ -6,7 +6,7 @@ import cookieHelpers_ from './cookieHelpers';
 import keyCode_ from './keyCode';
 import './handlebars/all';
 import './jquery/selector.focusable';
-import RegionBehavior_ from './marionette/RegionBehavior';
+import RegionBehavior_ from './RegionBehavior';
 import './codemirror';
 
 export const RegionBehavior = RegionBehavior_;

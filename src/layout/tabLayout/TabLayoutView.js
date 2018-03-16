@@ -76,15 +76,16 @@ export default Marionette.LayoutView.extend({
         this.headerRegion.show(headerView);
 
         this.__tabsCollection.each(tabModel => {
-            const $regionEl = $('<div></div>').addClass(classes.PANEL_REGION);
-            this.ui.panelContainer.append($regionEl);
+            const regionEl = document.createElement('div');
+            regionEl.className = classes.PANEL_REGION;
+            this.ui.panelContainer.append(regionEl);
             const region = this.addRegion(`${tabModel.id}TabRegion`, {
-                el: $regionEl
+                el: regionEl
             });
             region.show(tabModel.get('view'));
             tabModel.set({
                 region,
-                $regionEl
+                regionEl
             });
             this.__updateTabRegion(tabModel);
         });

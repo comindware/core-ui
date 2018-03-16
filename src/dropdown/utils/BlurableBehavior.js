@@ -1,3 +1,4 @@
+// @flow
 import { helpers } from 'utils';
 
 const defaultOptions = {

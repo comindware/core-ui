@@ -1,5 +1,4 @@
 // @flow
-import { Handlebars, moment } from 'lib';
 import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';

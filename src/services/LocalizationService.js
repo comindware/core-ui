@@ -1,18 +1,19 @@
 //@flow
-import { moment, numeral } from 'lib';
-import numeralRu from 'numeral/locales/ru';
-import numeralEn from 'numeral/locales/en-gb';
-import numeralDe from 'numeral/locales/de';
-
-numeral.locale('en', numeralEn);
-numeral.locale('de', numeralDe);
-numeral.locale('ru', numeralRu);
+numeral.locale('en');
+numeral.locale('de');
+numeral.locale('ru');
 
 const global = window;
 const defaultLangCode = 'en';
 
+type locOpt = {
+    langCode?: string,
+    timeZone?: string,
+    localizationMap?: Object
+};
+
 export default (global.Localizer = {
-    initialize(options = {}) {
+    initialize(options: locOpt = {}) {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;

@@ -1,7 +1,6 @@
 // @flow
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import { numeral, Handlebars } from 'lib';
 import { keyCode } from 'utils';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';

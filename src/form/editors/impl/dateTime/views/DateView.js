@@ -6,7 +6,6 @@
  * Published under the MIT license
  */
 
-import { Handlebars, $ } from 'lib';
 import template from '../templates/date.hbs';
 import dropdown from 'dropdown';
 import PanelView from './DatePanelView';

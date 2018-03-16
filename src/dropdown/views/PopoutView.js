@@ -1,8 +1,8 @@
+// @flow
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import GlobalEventService from '../../services/GlobalEventService';
 import BlurableBehavior from '../utils/BlurableBehavior';
-
 import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
 import template from '../templates/popout.hbs';
 
@@ -104,7 +104,7 @@ const defaultOptions = {
  *                                       The panel grows to the left.</li></ul>
  * */
 
-export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.PopoutView.prototype */ {
+export default Marionette.LayoutView.extend({
     initialize(options) {
         _.defaults(this.options, defaultOptions);
         helpers.ensureOption(options, 'buttonView');
@@ -214,9 +214,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         const panelRect = $panelEl.offset();
         panelRect.width = $panelEl.outerWidth();
 
-        const css = {
-            left: '',
-            right: ''
+        const css : {
+            left: number,
+            right: number,
+        } = {
+            left: 0,
+            right: 0
         };
         switch (this.options.popoutFlow) {
             case popoutFlow.RIGHT: {
@@ -287,7 +290,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         $panelEl.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
 
         // panel positioning
-        let top;
+        let top = 0;
         switch (direction) {
             case popoutDirection.UP:
                 top = anchorRect.top - panelRect.height;
@@ -307,9 +310,12 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             top = WINDOW_BORDER_OFFSET;
         }
 
-        const css = {
+        const css: {
+            top: number,
+            bottom: number
+        } = {
             top,
-            bottom: ''
+            bottom: 0
         };
         if (this.options.height === height.BOTTOM) {
             css.bottom = WINDOW_BORDER_OFFSET;
@@ -334,8 +340,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         panelRect.width = $panelEl.outerWidth();
 
         const css = {
-            top: '',
-            bottom: ''
+            top: 0,
+            bottom: 0
         };
 
         // calculate vertical position
@@ -366,7 +372,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         $panelEl.toggleClass(classes.DIRECTION_DOWN, direction === popoutDirection.DOWN);
 
         // panel positioning
-        let top;
+        let top = 0;
         switch (direction) {
             case popoutDirection.UP:
                 top = anchorRect.top + anchorRect.height / 2 - panelRect.height;
@@ -412,8 +418,8 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         panelRect.width = $panelEl.outerWidth();
 
         const css = {
-            left: '',
-            right: ''
+            left: 0,
+            right: 0
         };
 
         let displacement = this.options.displacement;
@@ -472,11 +478,13 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     __isNestedInButton(testedEl) {
-        return this.el === testedEl || $.contains(this.el, testedEl);
+        return this.el === testedEl || this.el.contains(testedEl);
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || $.contains(el, testedEl));
+        return WindowService.get(this.popupId)
+            .map(x => x.el)
+            .some(el => el === testedEl || el.contains(testedEl));
     },
 
     __handleBlur() {
@@ -549,7 +557,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
+        if (!this.isOpen || !document.contains(this.el)) {
             return;
         }
         this.trigger('before:close', this);

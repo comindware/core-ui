@@ -1,3 +1,4 @@
+// @flow
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import template from '../templates/dropdown.hbs';

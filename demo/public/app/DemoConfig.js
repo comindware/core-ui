@@ -195,7 +195,12 @@ export default {
                     id: 'Toolbar',
                     displayName: 'Toolbar',
                     description: 'Toolbar'
-                }
+                },
+            {
+                id: 'BreadCrumbs',
+                displayName: 'BreadCrumbs',
+                description: ''
+            }
             ]
         },
         {

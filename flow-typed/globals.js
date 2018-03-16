@@ -1,22 +1,30 @@
 /* eslint-disable */
 import coreApi from '../src/coreApi';
+import momentT from 'moment';
+import Underscore from 'underscore';
+import numeralT from 'numeral';
+import backboneT from 'backbone';
 
 declare var Handlebars: any;
 
-declare var _: any;
+declare var _: Underscore;
 
 declare var Core: coreApi;
 
-declare var Backbone: Backbone;
-
 declare var Marionette: any;
 
+declare var keypress: any;
+
+declare var moment: momentT;
+
+declare var Backbone: backboneT;
+
+declare var numeral: numeralT;
+
 declare var Localizer: {
-    get(String): String,
+    get(string): string,
 
-    tryGet(String): String,
+    tryGet(string): string,
 
-    resolveLocalizedText(String): String
+    resolveLocalizedText(string): string
 };
-
-

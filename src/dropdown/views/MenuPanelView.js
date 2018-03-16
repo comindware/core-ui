@@ -1,3 +1,4 @@
+// @flow
 import ListPanelView from './ListPanelView';
 import MenuItemView from './MenuItemView';
 

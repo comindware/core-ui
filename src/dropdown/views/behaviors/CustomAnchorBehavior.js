@@ -1,3 +1,4 @@
+// @flow
 const classes = {
     ANCHOR: 'anchor anchor_inline'
 };

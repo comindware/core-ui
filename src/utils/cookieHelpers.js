@@ -1,28 +1,4 @@
-/*\
- |*|
- |*|  :: cookies.js ::
- |*|
- |*|  A complete cookies reader/writer framework with full unicode support.
- |*|
- |*|  Revision #1 - September 4, 2014
- |*|
- |*|  https://developer.mozilla.org/en-US/docs/Web/API/document.cookie
- |*|  https://developer.mozilla.org/User:fusionchess
- |*|
- |*|  This framework is released under the GNU Public License, version 3 or later.
- |*|  http://www.gnu.org/licenses/gpl-3.0-standalone.html
- |*|
- |*|  Syntaxes:
- |*|
- |*|  * .setItem(name, value[, end[, path[, domain[, secure]]]])
- |*|  * .getItem(name)
- |*|  * .removeItem(name[, path[, domain]])
- |*|  * .hasItem(name)
- |*|  * .keys()
- |*|
- \*/
-
-export default /** @lends module:core.utils.cookieHelpers */ {
+export default {
     getItem(sKey) {
         if (!sKey) { return null; }
         return decodeURIComponent(document.cookie.replace(new RegExp(`(?:(?:^|.*;)\\s*${encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, '\\$&')}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')) || null;

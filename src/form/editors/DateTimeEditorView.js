@@ -1,5 +1,4 @@
 // @flow
-import { Handlebars, moment } from 'lib';
 import template from './templates/dateTimeEditor.hbs';
 import DateTimeService from './services/DateTimeService';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
