@@ -86,7 +86,7 @@ const onChange = function() {
  * */
 
 export default {
-    create(viewClass) {
+    create(viewClass: Marionette.ItemView | Marionette.LayoutView | Marionette.CollectionView | Marionette.ComsiteView) {
         return /** @lends module:core.form.editors.base.BaseEditorView.prototype */ {
             defaultValue: null,
 
@@ -177,7 +177,7 @@ export default {
                 return this.$el;
             },
 
-            __triggerChange(...args) {
+            __triggerChange(...args: Array<any>) {
                 this.trigger('change', this, ...args);
             },
 
@@ -193,7 +193,7 @@ export default {
              * Sets new internal editor's value.
              * @param {*} value The new value.
              */
-            setValue(value) {
+            setValue(value: Number | String) {
                 this.value = value;
             },
 
@@ -349,7 +349,7 @@ export default {
                 return error;
             },
 
-            trigger(event) {
+            trigger(event: 'focus' | 'blur') {
                 if (event === 'focus') {
                     this.hasFocus = true;
                 } else if (event === 'blur') {

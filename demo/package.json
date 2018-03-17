@@ -16,7 +16,7 @@
     "babel-runtime": "^6.26.0",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
-    "css-loader": "^0.28.10",
+    "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",

@@ -11,12 +11,12 @@ import PlainText from '../plainText/PlainTextView';
 export default {
     __uniqueFormId: '',
 
-    getContentFromSchema(schema: Array, uniqueFormId: string) {
+    getContentFromSchema(schema: Array<any>, uniqueFormId: String) {
         this.__uniqueFormId = uniqueFormId;
         return this.__parseConfiguration(schema)[0];
     },
 
-    __parseConfiguration(schema) {
+    __parseConfiguration(schema: Array<any>) {
         return schema.map(child => {
             switch (child.type) {
                 case 'v-container':
@@ -85,7 +85,7 @@ export default {
         });
     },
 
-    __parseConfigurationOld(schema: Array) {
+    __parseConfigurationOld(schema: Array<any>) {
         return schema.map(child => {
             switch (child.cType) {
                 case 'container':

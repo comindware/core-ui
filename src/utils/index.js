@@ -17,7 +17,7 @@ export const dateHelpers = dateHelpers_;
 export const cookieHelpers = cookieHelpers_;
 export const keyCode = keyCode_;
 
-export default /** @lends module:core.utils */ {
+export default {
     /**
      * A set of useful comparators compatible with <code>_.sortBy()</code>.<br/><br/> The following naming convention is used:
      * <code>&lt;dataType&gt;Comparator&lt;Arguments count: 1 or 2&gt;&lt;Comparing direction: 'Asc' or 'Desc'&gt;</code>.<br/><br/>

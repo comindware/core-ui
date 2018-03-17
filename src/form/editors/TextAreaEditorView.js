@@ -53,7 +53,7 @@ const defaultOptions = () => ({
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
+export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
     initialize(options = {}) {
         const defOps = defaultOptions();
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
@@ -98,7 +98,7 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
      * */
     addKeyboardListener(key, callback) {
         if (!this.keyListener) {
-            helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
+            helpers.throwInvalidOperationError("You must apply keyboard listener after 'render' event has happened.");
         }
         const keys = key.split(',');
         _.each(keys, k => this.keyListener.simple_combo(k, callback));
@@ -201,12 +201,10 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
     },
 
     __keyup(e) {
-        if ([
-            keyCode.LEFT,
-            keyCode.RIGHT,
-            keyCode.HOME,
-            keyCode.END
-        ].indexOf(e.keyCode) === -1) {
+        if ([keyCode.LEFT,
+keyCode.RIGHT,
+keyCode.HOME,
+keyCode.END].indexOf(e.keyCode) === -1) {
             return;
         }
 
@@ -241,6 +239,4 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
     select() {
         this.ui.textarea.select();
     }
-});
-
-export default formRepository.editors.TextArea;
+}));

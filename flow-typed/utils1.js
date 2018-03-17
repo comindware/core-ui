@@ -1,5 +1,5 @@
 /* eslint-disable */
-declare module 'utils' {
+declare module 'utils1' {
     declare type helper = {
         setUniqueTimeout(someUniqueId: string, callback: () => any, delay: number): () => any,
 

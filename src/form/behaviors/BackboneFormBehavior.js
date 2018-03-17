@@ -304,7 +304,7 @@ const constants = {
  * @param {Marionette.View} view A view the behavior is applied to.
  * */
 
-export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.BackboneFormBehavior.prototype */{
+export default Marionette.Behavior.extend({
     initialize(options, view) {
         view.renderForm = this.__renderForm.bind(this);
     },
