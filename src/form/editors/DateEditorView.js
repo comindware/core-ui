@@ -111,12 +111,12 @@ formRepository.editors.Date = BaseLayoutEditorView.extend({
         }
     },
 
-    __setEnabled(enabled) {
+    __setEnabled(enabled: boolean): void {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.dateModel.set({ enabled: this.getEnabled() });
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.dateModel.set({ readonly: this.getReadonly() });
     },
@@ -126,7 +126,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend({
     /**
      * Sets the focus onto this editor.
      */
-    focus() {
+    focus(): void {
         if (this.hasFocus) {
             return;
         }
@@ -136,7 +136,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend({
     /**
      * Clears the focus.
      */
-    blur() {
+    blur(): void {
         if (!this.hasFocus) {
             return;
         }

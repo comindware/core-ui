@@ -24,7 +24,7 @@ const defaultOptions = {
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
-formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.TimeEditorView.prototype */{
+export default formRepository.editors.Time = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -111,12 +111,12 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
         return this.value === null ? this.value : moment(this.value).toISOString();
     },
 
-    __setEnabled(enabled) {
+    __setEnabled(enabled: boolean): void {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.timeModel.set({ enabled: this.getEnabled() });
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.timeModel.set({ readonly: this.getReadonly() });
     },
@@ -126,7 +126,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     /**
      * Sets the focus onto this editor.
      */
-    focus() {
+    focus(): void {
         if (this.hasFocus) {
             return;
         }
@@ -136,14 +136,14 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
     /**
      * Clears the focus.
      */
-    blur() {
+    blur(): void {
         if (!this.hasFocus) {
             return;
         }
         this.timeView.blur();
     },
 
-    __adjustValue(value) {
+    __adjustValue(value): string {
         return value === null ? value : moment(value).toISOString();
     },
 
@@ -155,5 +155,3 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
         this.el.removeChild(this.el.lastElementChild);
     }
 });
-
-export default formRepository.editors.Time;

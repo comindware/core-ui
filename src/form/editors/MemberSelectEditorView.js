@@ -42,7 +42,7 @@ const ButtonModel = Backbone.AssociatedModel.extend({
  * <code>{ buttonView: DefaultButtonView, popoutFlow: 'right', customAnchor: true }</code>
  * */
 
-export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MemberSelectEditorView.prototype */{
+export default (formRepository.editors.MemberSelect = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -59,8 +59,7 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
             button: new ButtonModel({
                 enabled: this.getEnabled() && !this.getReadonly()
             }),
-            panel: new Backbone.Model({
-            })
+            panel: new Backbone.Model({})
         });
 
         this.__initCollection();
@@ -80,15 +79,18 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
 
     onRender() {
         // dropdown
-        const dropdownOptions = Object.assign({
-            buttonViewOptions: {},
-            panelView: PanelView,
-            panelViewOptions: {
-                model: this.viewModel.get('panel'),
-                reqres: this.reqres
+        const dropdownOptions = Object.assign(
+            {
+                buttonViewOptions: {},
+                panelView: PanelView,
+                panelViewOptions: {
+                    model: this.viewModel.get('panel'),
+                    reqres: this.reqres
+                },
+                autoOpen: false
             },
-            autoOpen: false
-        }, this.options.dropdownOptions);
+            this.options.dropdownOptions
+        );
         Object.assign(dropdownOptions.buttonViewOptions, {
             model: this.viewModel.get('button'),
             reqres: this.reqres
@@ -132,11 +134,9 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
         this.$el.focus();
     },
 
-    onValueNavigate() {
-    },
+    onValueNavigate() {},
 
     onFilterText(options) {
-        const deferred = $.Deferred();
         const text = options.text.toLocaleLowerCase();
         this.collection.unhighlight();
         if (text === '') {
@@ -148,8 +148,8 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
             });
             this.collection.highlight(text);
         }
-        deferred.resolve();
-        return deferred.promise();
+
+        return new Promise.resolve();
     },
 
     onPanelOpen() {
@@ -160,11 +160,14 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
 
     __initCollection() {
         const users = UserService.listUsers();
-        this.collection = new MembersCollection(new Backbone.Collection(users, {
-            model: MemberModel
-        }), {
-            comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name')
-        });
+        this.collection = new MembersCollection(
+            new Backbone.Collection(users, {
+                model: MemberModel
+            }),
+            {
+                comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'name')
+            }
+        );
         this.viewModel.get('button').set('member', this.__findModel(this.getValue()));
         this.viewModel.get('panel').set('collection', this.collection);
     },
@@ -188,4 +191,4 @@ export default formRepository.editors.MemberSelect = BaseLayoutEditorView.extend
         this.dropdownView.close();
         this.$el.focus();
     }
-});
+}));

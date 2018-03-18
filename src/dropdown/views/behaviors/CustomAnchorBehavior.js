@@ -1,5 +1,5 @@
 // @flow
-const classes = {
+const classes: { ANCHOR: string } = {
     ANCHOR: 'anchor anchor_inline'
 };
 
@@ -19,7 +19,7 @@ const classes = {
  * @param {Marionette.View} view A view the behavior is applied to.
  * */
 
-export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */ {
+export default Marionette.Behavior.extend({
     onRender() {
         let $el;
         if (this.options.anchor) {

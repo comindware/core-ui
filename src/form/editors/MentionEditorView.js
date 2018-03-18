@@ -22,7 +22,7 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
-formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{
+export default formRepository.editors.Mention = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -33,10 +33,13 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         this.viewModel = new Backbone.Model();
         const membersCollection = membersFactory.createMembersCollection();
         this.viewModel.set('availableMembers', membersCollection);
-        this.viewModel.set('membersByUserName', membersCollection.reduce((memo, value) => {
-            memo[value.get('userName')] = value;
-            return memo;
-        }, {}));
+        this.viewModel.set(
+            'membersByUserName',
+            membersCollection.reduce((memo, value) => {
+                memo[value.get('userName')] = value;
+                return memo;
+            }, {})
+        );
     },
 
     template: Handlebars.compile(template),
@@ -110,25 +113,25 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         }
     },
 
-    __value(value) {
+    __value(value): void {
         this.setValue(value);
         this.__triggerChange();
     },
 
-    __onTextChange() {
+    __onTextChange(): void {
         this.value = this.dropdownView.button.getValue();
         this.__triggerChange();
     },
 
-    __onFocus() {
+    __onFocus(): void {
         this.trigger('focus', this);
     },
 
-    __onBlur() {
+    __onBlur(): void {
         this.trigger('blur', this);
     },
 
-    __onInput(text, caret) {
+    __onInput(text: string, caret: { start: number, end: number }): void {
         // 1. Open dropdown when: @ is immediately before caret, @ is at start or prepended by whitespace
         // 2. Maintain dropdown open (and filter the list) when: text between caret and @ matches username pattern [a-zA-Z0-9_\.]
         // 3. Hide dropdown when: username text doesn't match
@@ -163,12 +166,12 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         }
     },
 
-    __onMemberSelect() {
+    __onMemberSelect(): void {
         this.__updateMentionInText();
         this.dropdownView.close();
     },
 
-    __updateMentionInText() {
+    __updateMentionInText(): void {
         const selectedMember = this.viewModel.get('availableMembers').selected;
         if (!selectedMember) {
             return;
@@ -182,9 +185,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
             mention += ' ';
         }
 
-        const updatedText = text.substring(0, this.mentionState.start) +
-            mention +
-            text.substring(this.mentionState.end);
+        const updatedText = text.substring(0, this.mentionState.start) + mention + text.substring(this.mentionState.end);
         editor.setValue(updatedText);
         editor.setCaretPos(this.mentionState.start + mention.length);
         this.value = updatedText;
@@ -195,7 +196,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
      * Получить список пользователей, упомянутых в тексте.
      * @return {String[]} Список строковых идентификаторов пользователей, упомянутых в тексте.
      * */
-    getMentions() {
+    getMentions(): Array<any> {
         const text = this.getValue();
         const regex = /(?:\s|^)@([a-z0-9_\.]+)/gi;
         const members = this.viewModel.get('membersByUserName');
@@ -230,19 +231,17 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         }
     },
 
-    __setEnabled(enabled) {
+    __setEnabled(enabled: boolean): void {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         if (this.dropdownView) {
             this.dropdownView.button.setEnabled(enabled);
         }
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.dropdownView) {
             this.dropdownView.button.setReadonly(readonly);
         }
     }
 });
-
-export default formRepository.editors.Mention;

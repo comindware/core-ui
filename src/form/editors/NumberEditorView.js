@@ -325,11 +325,7 @@ formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __increment(i) {
-        const incremental = constants.INCREMENTAL;
-        if (incremental) {
-            return $.isFunction(incremental) ? incremental(i) : Math.floor(i * i * i / 50000 - i * i / 500 + 17 * i / 200 + 1);
-        }
-        return 1;
+        return Math.floor(i * i * i / 50000 - i * i / 500 + 17 * i / 200 + 1);
     },
 
     __adjustRange(value) {

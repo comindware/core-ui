@@ -53,12 +53,6 @@ import UploadDocumentButtonView from './editors/impl/document/views/UploadDocume
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
 import AudioEditor from './editors/AudioEditor';
-import './validators/requiredValidator';
-import './validators/lengthValidator';
-import './validators/passwordValidator';
-import './validators/phoneValidator';
-import './validators/systemNameValidator';
-import './validators/emailValidator';
 import formRepository from './formRepository';
 
 const api = /** @lends module:core.form */ {

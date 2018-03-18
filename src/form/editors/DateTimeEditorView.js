@@ -82,7 +82,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.dateTimeModel.set('value', value);
     },
 
-    getValue() {
+    getValue(): string {
         return this.value === null ? this.value : moment(this.value).toISOString();
     },
 
@@ -136,20 +136,21 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         }
     },
 
-    __setEnabled(enabled) {
+    __setEnabled(enabled: boolean): void {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.dateTimeModel.set({ enabled: this.getEnabled() });
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.dateTimeModel.set({ readonly: this.getReadonly() });
     },
 
-    __onClear(): void {
+    __onClear(): boolean {
         this.__value(null, true, true);
         this.dateTimeModel.set('value', null);
         this.focus();
+
         return false;
     },
 
@@ -158,7 +159,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     /**
      * Sets the focus onto this editor.
      */
-    focus() {
+    focus(): void {
         if (this.hasFocus) {
             return;
         }
@@ -168,7 +169,7 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     /**
      * Clears the focus.
      */
-    blur() {
+    blur(): void {
         if (!this.hasFocus) {
             return;
         }
@@ -176,29 +177,29 @@ formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.timeView.blur();
     },
 
-    onFocus() {
+    onFocus(): void {
         BaseLayoutEditorView.prototype.onFocus.call(this);
     },
 
-    onDateBlur() {
+    onDateBlur(): void {
         if (this.timeView.hasFocus()) {
             return;
         }
         this.onBlur();
     },
 
-    onTimeBlur() {
+    onTimeBlur(): void {
         if (this.dateView.hasFocus()) {
             return;
         }
         this.onBlur();
     },
 
-    __adjustValue(value) {
+    __adjustValue(value: string): string {
         return value === null ? value : moment(value).toISOString();
     },
 
-    __updateTitle() {
+    __updateTitle(): void {
         const dateDisplayValue = DateTimeService.getDateDisplayValue(this.getValue(), this.options.dateDisplayFormat);
         const timeDisplayValue = DateTimeService.getTimeDisplayValue(this.getValue(), this.options.timeDisplayFormat);
         const resultValue = `${dateDisplayValue} ${timeDisplayValue}`;

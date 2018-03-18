@@ -151,10 +151,12 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
     },
 
     __attach() {
-        if (this.getEnabled() && !this.getReadonly()) {
+        if (this.getEnabled() && !this.getReadonly() && document.body) {
             document.body.appendChild(this.fileInput);
             this.fileInput.click();
-            document.body.removeChild(this.fileInput);
+            if (document.body) {
+                document.body.removeChild(this.fileInput);
+            }
         }
     },
 
@@ -187,7 +189,7 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
             previewURL = this.__previewURL = URL.createObjectURL(image);
         }
 
-        this.ui.image.css('background-image', `url("${previewURL}")`);
+        previewURL && this.ui.image.css('background-image', `url("${previewURL}")`);
     }
 });
 

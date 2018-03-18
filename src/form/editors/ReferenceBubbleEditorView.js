@@ -12,6 +12,13 @@ import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
 import StaticController from './impl/referenceBubble/controllers/StaticController';
 
+type DataValue = {
+    id: string,
+    name?: string
+};
+
+type DatalistValue = Array<DataValue>;
+
 const ReferenceCollection = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
@@ -71,6 +78,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         this.reqres.setHandler('view:ready', this.__triggerReady, this);
 
         this.value = this.__adjustValue(this.value);
+
         const selectedModels = new Backbone.Collection(this.getValue(), {
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
         });
@@ -101,7 +109,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
 
     template: Handlebars.compile(template),
 
-    setValue(value) {
+    setValue(value):void {
         this.value = [];
         this.viewModel
             .get('button')
@@ -142,41 +150,41 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         this.dropdownRegion.show(this.dropdownView);
     },
 
-    isEmptyValue() {
+    isEmptyValue(): boolean {
         const value = this.getValue();
         return !value || !value.length;
     },
 
-    setReadonly(readonly: Boolean) {
+    setReadonly(readonly: Boolean): void {
         BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
     },
 
-    setEnabled(enabled: Boolean) {
+    setEnabled(enabled: Boolean): void {
         BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
         this.dropdownView.button.updateEnabled(isEnabled);
     },
 
-    focus() {
+    focus(): void {
         this.dropdownView.open();
     },
 
-    blur() {
+    blur(): void {
         this.dropdownView.close();
     },
 
-    __adjustValue(value) {
+    __adjustValue(value: DataValue): DataValue {
         if (_.isUndefined(value) || value === null) {
             return [];
         }
         return value;
     },
 
-    __value(value, triggerChange) {
+    __value(value: DataValue, triggerChange: boolean): void {
         if (JSON.stringify(this.value) === JSON.stringify(value) || (_.isObject(value) && this.value.find(v => v.id === value.id))) {
             this.viewModel.get('panel').set('value', this.value);
             return;
@@ -201,11 +209,11 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         }
     },
 
-    __onValueSelect() {
+    __onValueSelect(): void {
         this.__onValueSet(this.viewModel.get('panel').get('collection').selected);
     },
 
-    __onValueSet(model?: Backbone.Model) {
+    __onValueSet(model?: Backbone.Model): void {
         const canAddItemOldValue = this.__canAddItem();
         const value = model ? model.toJSON() : null;
         this.__value(value, true);
@@ -227,11 +235,11 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         }
     },
 
-    __onValueUnset(model: Backbone.Model) {
+    __onValueUnset(model: Backbone.Model): void {
         this.__onBubbleDelete(model);
     },
 
-    __canAddItem() {
+    __canAddItem(): boolean {
         const selectedItems = _.filter(this.viewModel.get('button').get('selected').models, model => model !== this.fakeInputModel);
 
         return this.getEnabled() && !this.getReadonly() && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
@@ -241,7 +249,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         return this.controller.edit(value);
     },
 
-    __onInputSearch(value, immediate) {
+    __onInputSearch(value, immediate: boolean): void {
         this.__onButtonClick();
         this.dropdownView.panelView.updateFilter(value, immediate);
     },
@@ -260,7 +268,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         });
     },
 
-    __onAddNewItem() {
+    __onAddNewItem(): void {
         this.dropdownView.close();
         this.controller.addNewItem(createdValue => {
             if (createdValue) {
@@ -276,18 +284,18 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         return value[this.options.displayAttribute] || value.text || `#${value.id}`;
     },
 
-    __onDropdownOpen() {
+    __onDropdownOpen(): void {
         this.__focusButton();
         this.onFocus();
     },
 
-    __focusButton() {
+    __focusButton(): void {
         if (this.dropdownView.button) {
             this.dropdownView.button.focus();
         }
     },
 
-    __onButtonClick() {
+    __onButtonClick(): void {
         if (this.__canAddItem()) {
             this.dropdownView.open();
         }
@@ -315,7 +323,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         this.__focusButton();
     },
 
-    __updateFakeInputModel() {
+    __updateFakeInputModel(): void {
         const selectedModels = this.viewModel.get('button').get('selected');
 
         if (this.__canAddItem() && !this.fakeInputModel) {
@@ -331,19 +339,19 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         }
     },
 
-    __updateButtonInput() {
+    __updateButtonInput(): void {
         if (this.dropdownView.button) {
             this.dropdownView.button.updateInput();
         }
     },
 
-    __onBubbleDeleteLast() {
+    __onBubbleDeleteLast(): void {
         const selectedModels = this.viewModel.get('button').get('selected');
         const model = selectedModels.models[selectedModels.models.length - 2];
         this.__onBubbleDelete(model);
     },
 
-    __onInputUp() {
+    __onInputUp(): void {
         const collection = this.viewModel.get('panel').get('collection');
         if (collection.models.length === 0 || collection.models[0].selected) {
             this.dropdownView.close();
@@ -353,7 +361,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         }
     },
 
-    __onInputDown() {
+    __onInputDown(): void {
         if (!this.dropdownView.isOpen) {
             this.dropdownView.open();
         } else {
@@ -361,7 +369,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         }
     },
 
-    __sendPanelCommand(command, options) {
+    __sendPanelCommand(command, options): void {
         if (this.dropdownView.isOpen) {
             this.dropdownView.panelView.handleCommand(command, options);
         }

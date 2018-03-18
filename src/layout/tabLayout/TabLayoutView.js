@@ -5,13 +5,17 @@ import HeaderView from './HeaderView';
 import StepperView from './StepperView';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
+type Tab = { view: any, id: string };
+
+type TabsList = Array<Tab>;
+
 const classes = {
     CLASS_NAME: 'layout__tab-layout',
     PANEL_REGION: 'layout__tab-layout__panel-region'
 };
 
 export default Marionette.LayoutView.extend({
-    initialize(options) {
+    initialize(options: { tabs: TabsList }) {
         helpers.ensureOption(options, 'tabs');
 
         this.__tabsCollection = options.tabs;
@@ -103,18 +107,18 @@ export default Marionette.LayoutView.extend({
 
     update() {
         Object.values(this.tabs).forEach(view => {
-            if (view.update) {
+            if (view && typeof view.update === 'function') {
                 view.update();
             }
         });
         this.__updateState();
     },
 
-    getViewById(tabId) {
+    getViewById(tabId: string) {
         return this.__findTab(tabId).get('view');
     },
 
-    selectTab(tabId) {
+    selectTab(tabId: string) {
         const tab = this.__findTab(tabId);
         if (tab.get('selected')) {
             return;
@@ -136,13 +140,13 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    setEnabled(tabId, enabled) {
+    setEnabled(tabId: string, enabled) {
         this.__findTab(tabId).set({
             enabled
         });
     },
 
-    setTabError(tabId, error) {
+    setTabError(tabId: string, error) {
         this.__findTab(tabId).set({ error });
     },
 
@@ -198,7 +202,7 @@ export default Marionette.LayoutView.extend({
         return this.__tabsCollection.indexOf(model);
     },
 
-    __findTab(tabId) {
+    __findTab(tabId: string): Backbone.Model {
         helpers.assertArgumentNotFalsy(tabId, 'tabId');
 
         const tabModel = this.__tabsCollection.find(x => x.id === tabId);
@@ -208,20 +212,21 @@ export default Marionette.LayoutView.extend({
         return tabModel;
     },
 
-    __handleSelect(model) {
+    __handleSelect(model: Backbone.Model): void {
         this.selectTab(model.id);
     },
 
-    __onSelectedChanged(model) {
+    __onSelectedChanged(model: Backbone.Model): void {
         this.__updateTabRegion(model);
     },
 
-    __updateTabRegion(model) {
+    __updateTabRegion(model: Backbone.Model): void {
         const selected = model.get('selected');
-        model.get('$regionEl').toggle(Boolean(selected));
+
+        model.get('$regionEl').toggle(selected);
     },
 
-    __handleStepperSelect(model) {
+    __handleStepperSelect(model: Backbone.Model): void {
         this.__handleSelect(model);
     }
 });

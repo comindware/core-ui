@@ -81,7 +81,7 @@ export default Marionette.LayoutView.extend({
         return error;
     },
 
-    setError(errors) {
+    setError(errors: Array<any>): void {
         if (!this.__checkUiReady()) {
             return;
         }
@@ -102,7 +102,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    clearError() {
+    clearError(): void {
         if (!this.__checkUiReady()) {
             return;
         }

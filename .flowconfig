@@ -26,5 +26,6 @@ module.name_mapper='^lib' -> '<PROJECT_ROOT>/src/lib.js'
 module.name_mapper='^utils' -> '<PROJECT_ROOT>/src/utils/index.js'
 module.name_mapper='^services/UserService' -> '<PROJECT_ROOT>/src/services/UserService.js'
 module.name_mapper='^dropdown' -> '<PROJECT_ROOT>/src/dropdown/index.js'
+module.name_mapper='^list' -> '<PROJECT_ROOT>/src/list/index.js'
 
 [strict]

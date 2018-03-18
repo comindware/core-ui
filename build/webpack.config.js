@@ -28,6 +28,8 @@ module.exports = options => {
                     loader: 'babel-loader',
                     exclude: [
                         pathResolver.node_modules(),
+                        pathResolver.compiled(),
+                        pathResolver.demo(),
                         pathResolver.source('external/backbone.trackit.js'),
                         pathResolver.source('external/keypress-2.1.0.min.js'),
                         pathResolver.source('external/rangyinputs-jquery-src.js')
@@ -39,11 +41,14 @@ module.exports = options => {
                 {
                     test: /\.js$/,
                     loader: 'eslint-loader',
-                    exclude: [pathResolver.compiled(),
-pathResolver.node_modules(),
-pathResolver.source('external'),
-pathResolver.source('utils'),
-pathResolver.tests()],
+                    exclude: [
+                        pathResolver.compiled(),
+                        pathResolver.node_modules(),
+                        pathResolver.source('external'),
+                        pathResolver.source('utils'),
+                        pathResolver.demo(),
+                        pathResolver.tests()
+                    ],
                     options: {
                         failOnError: true,
                         quiet: true

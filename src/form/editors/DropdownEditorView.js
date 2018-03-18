@@ -33,7 +33,7 @@ const defaultOptions = {
  * @param {Boolean} [options.enableSearch=false] Whether to display search bar in the dropdown panel.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DropdownEditorView.prototype */{
+export default formRepository.editors.Dropdown = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -143,7 +143,7 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         }
     },
 
-    __findModel(value) {
+    __findModel(value: string): Backbone.Model {
         return this.collection ? this.collection.findWhere({ id: value }) : null;
     },
 
@@ -166,14 +166,14 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         });
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.__getFocusElement().prop('tabindex', readonly ? -1 : 0);
         }
     },
 
-    __value(value, triggerChange) {
+    __value(value: string, triggerChange: boolean): void {
         if (this.value === value) {
             return;
         }
@@ -196,20 +196,18 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.focus();
     },
 
-    onPanelOpen() {
+    onPanelOpen(): void {
         if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
     },
 
-    blur() {
+    blur(): void {
         this.dropdownView.close();
     },
 
-    __onCancel() {
+    __onCancel(): void {
         this.dropdownView.close();
         this.focus();
     }
 });
-
-export default formRepository.editors.Dropdown;
