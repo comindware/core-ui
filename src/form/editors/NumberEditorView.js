@@ -1,4 +1,3 @@
-// @flow
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import { keyCode } from 'utils';

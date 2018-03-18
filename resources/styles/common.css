@@ -972,3 +972,7 @@ a:hover {
     display: flex;
     flex-direction: column;
 }
+
+.layout__tab-hidden {
+    display: none;
+}

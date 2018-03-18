@@ -30,7 +30,6 @@ import TimeNumberEditorView from './editors/TimeNumberEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
-import TitleTextEditorView from './editors/TitleTextEditorView';
 import WorkSpaceItemsEditorView from './editors/WorkSpaceItemsEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/members/collections/MembersCollection';
@@ -183,7 +182,6 @@ const api = /** @lends module:core.form */ {
         ExpressionEditor: ExpressionEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,
-        TitleTextEditor: TitleTextEditorView,
         WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
         IconEditor: IconEditorComponentView,
         ColorPickerEditor,

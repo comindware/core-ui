@@ -1,7 +1,5 @@
 
-import formRepository from '../formRepository';
-
-formRepository.validators.email = config => {
+export default config => {
     const options = _.extend({
         type: 'email',
         message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.EMAIL')
@@ -23,5 +21,3 @@ formRepository.validators.email = config => {
         }
     };
 };
-
-export default formRepository.validators.email;

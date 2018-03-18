@@ -42,8 +42,8 @@ export default Marionette.Behavior.extend({
     __focus(focusedEl) {
         if (!focusedEl) {
             this.__getFocusableEl().focus();
-        } else {
-            $(document.activeElement).one('blur', this.__onBlur);
+        } else if (document.activeElement) {
+            document.activeElement.addEventListener('blur', this.__onBlur);
         }
         this.view.isFocused = true;
     },
@@ -58,5 +58,8 @@ export default Marionette.Behavior.extend({
                 callback.call(this.view);
             }
         });
+        if (document.activeElement) {
+            document.activeElement.removeEventListener('blur', this.__onBlur);
+        }
     }
 });

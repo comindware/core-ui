@@ -11,7 +11,8 @@ type TabsList = Array<Tab>;
 
 const classes = {
     CLASS_NAME: 'layout__tab-layout',
-    PANEL_REGION: 'layout__tab-layout__panel-region'
+    PANEL_REGION: 'layout__tab-layout__panel-region',
+    HIDDEN: 'layout__tab-hidden'
 };
 
 export default Marionette.LayoutView.extend({
@@ -223,7 +224,7 @@ export default Marionette.LayoutView.extend({
     __updateTabRegion(model: Backbone.Model): void {
         const selected = model.get('selected');
 
-        model.get('$regionEl').toggle(selected);
+        model.get('regionEl').classList.toggle(classes.HIDDEN, selected);
     },
 
     __handleStepperSelect(model: Backbone.Model): void {

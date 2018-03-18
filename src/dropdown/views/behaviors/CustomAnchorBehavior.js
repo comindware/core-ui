@@ -1,4 +1,3 @@
-// @flow
 const classes: { ANCHOR: string } = {
     ANCHOR: 'anchor anchor_inline'
 };
@@ -20,7 +19,7 @@ const classes: { ANCHOR: string } = {
  * */
 
 export default Marionette.Behavior.extend({
-    onRender() {
+    onRender(): void {
         let $el;
         if (this.options.anchor) {
             $el = this.$(this.options.anchor);

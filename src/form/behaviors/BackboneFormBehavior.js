@@ -1,4 +1,3 @@
-// @flow
 import FieldView from '../fields/FieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 
@@ -41,24 +40,22 @@ const Form = Marionette.Object.extend({
 
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !$(el).attr('editor-for')) || $(el).attr('editor-for') === this.model.get('uniqueFormId')) {
-                const $editorRegion = $(el);
-                const key = $editorRegion.attr('data-editors');
+            if ((!this.model.has('uniqueFormId') && el.hasAttribute('editor-for')) || el.hasAttribute('editor-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-editors');
                 const regionName = `${key}Region`;
 
-                this.__regionManager.addRegion(regionName, { el: $editorRegion });
+                this.__regionManager.addRegion(regionName, { el });
                 this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key].editor);
             }
         });
 
         //Render standalone fields
         $target.find('[data-fields]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !$(el).attr('field-for')) || $(el).attr('field-for') === this.model.get('uniqueFormId')) {
-                const $fieldRegion = $(el);
-                const key = $fieldRegion.attr('data-fields');
+            if ((!this.model.has('uniqueFormId') && el.hasAttribute('field-for')) || el.hasAttribute('field-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-fields');
                 const regionName = `${key}Region`;
 
-                this.__regionManager.addRegion(regionName, { el: $fieldRegion });
+                this.__regionManager.addRegion(regionName, { el });
                 this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key]);
             }
         });
@@ -218,16 +215,16 @@ const Form = Marionette.Object.extend({
 
                 //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
                 if (isDictionary) {
-                    _.each(modelErrors, (val, key) => {
+                    Object.entries(modelErrors).forEach(entrie => {
                         //Set error on field if there isn't one already
-                        if (fields[key] && !errors[key]) {
-                            fields[key].setError(val);
-                            errors[key] = val;
+                        if (fields[entrie[0]] && !errors[entrie[0]]) {
+                            fields[entrie[0]].setError(entrie[1]);
+                            errors[entrie[0]] = entrie[1];
                         } else {
-                            //Otherwise add to '_others' key
+                            //Otherwise add to '_others' entrie[0]
                             errors._others = errors._others || [];
                             errors._others.push({
-                                [key]: val
+                                [entrie[0]]: entrie[1]
                             });
                         }
                     });

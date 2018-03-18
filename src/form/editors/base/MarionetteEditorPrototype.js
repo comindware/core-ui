@@ -359,7 +359,7 @@ export default {
                 return Marionette.ItemView.prototype.trigger.apply(this, arguments);
             },
 
-            getValidator(validator) {
+            getValidator(validator: string | Function) {
                 const validators = formRepository.validators;
 
                 //Convert regular expressions to validators
@@ -368,7 +368,7 @@ export default {
                 }
 
                 //Use a built-in validator if given a string
-                if (_.isString(validator)) {
+                if (typeof validator === 'string') {
                     if (!validators[validator]) {
                         throw new Error(`Validator "${validator}" not found`);
                     }
@@ -391,7 +391,7 @@ export default {
                 }
 
                 //Unknown validator type
-                throw new Error(`Invalid validator: ${validator}`);
+                throw new Error('Invalid validator');
             },
 
             onFocus() {

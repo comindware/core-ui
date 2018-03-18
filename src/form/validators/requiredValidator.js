@@ -1,9 +1,8 @@
 /*eslint-disable*/
 
 import LocalizationService from '../../services/LocalizationService';
-import formRepository from '../formRepository';
 
-formRepository.validators.required = function(config) {
+export default function(config) {
     let options = _.extend({
         type: 'required',
         message: LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED')
@@ -25,5 +24,3 @@ formRepository.validators.required = function(config) {
         }
     };
 };
-
-export default formRepository.validators.required;

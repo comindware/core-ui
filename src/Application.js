@@ -1,4 +1,3 @@
-// @flow
 import AjaxService from './services/AjaxService';
 import GlobalEventService from './services/GlobalEventService';
 import UserService from './services/UserService';

@@ -12,7 +12,23 @@ type locOpt = {
     localizationMap?: Object
 };
 
-export default (global.Localizer = {
+type LocalizationService = {
+    initialize: locOpt => void,
+
+    langCode?: string,
+
+    timeZone?: string,
+
+    localizationMap?: Object,
+
+    get(locId: string): string,
+
+    tryGet(locId: string): ?string,
+
+    resolveLocalizedText(localizedText: Object): string
+};
+
+const service: LocalizationService = {
     initialize(options: locOpt = {}) {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
@@ -55,4 +71,6 @@ export default (global.Localizer = {
 
         return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
     }
-});
+};
+
+export default global.Localizer = service;

@@ -1,6 +1,5 @@
-import formRepository from '../formRepository';
 
-export default formRepository.validators.systemName = config => {
+export default config => {
     const options = _.extend({
         type: 'invalidIdentifier',
         message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.SYSTEMNAME')
