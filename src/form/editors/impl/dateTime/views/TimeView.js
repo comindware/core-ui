@@ -72,6 +72,21 @@ export default Marionette.LayoutView.extend({
         dropdownRegion: '.js-dropdown-region'
     },
 
+    focus() {
+        this.__showEditor();
+        this.dropdownView.button.focus();
+    },
+
+    blur() {
+        if (this.isDropdownShown) {
+            this.dropdownView.close();
+        }
+    },
+
+    hasFocus() {
+        return $.contains(this.el, document.activeElement);
+    },
+
     __getDropdownView() {
         const timeArray = [];
 
@@ -161,20 +176,5 @@ export default Marionette.LayoutView.extend({
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.dropdownView.open();
         }
-    },
-
-    focus() {
-        this.__showEditor();
-        this.dropdownView.button.focus();
-    },
-
-    blur() {
-        if (this.isDropdownShown) {
-            this.dropdownView.close();
-        }
-    },
-
-    hasFocus() {
-        return $.contains(this.el, document.activeElement);
     }
 });

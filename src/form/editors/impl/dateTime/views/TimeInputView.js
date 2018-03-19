@@ -63,7 +63,8 @@ export default Marionette.ItemView.extend({
             if (currentValue) {
                 // Take previously selected date and new time
                 parsedDate = moment(currentValue)
-                    .hour(parsedVal.hour()).minute(parsedVal.minute())
+                    .hour(parsedVal.hour())
+                    .minute(parsedVal.minute())
                     .second(this.hasSeconds ? parsedVal.second() : 0)
                     .millisecond(0)
                     .toISOString();
