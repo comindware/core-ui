@@ -28,15 +28,15 @@ const readSpritesFile = () => {
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
-module.exports = (options = { env: 'production' }) => {
-    const DEVELOPMENT = options.env === 'development';
-    const PRODUCTION = options.env === 'production';
+module.exports = () => {
+    const PRODUCTION = process.argv.includes('-p');
+    const DEVELOPMENT = !PRODUCTION;
 
     const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
     const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
     return {
-        cache: true,
+        mode: PRODUCTION ? 'production' : 'development',
         entry: {
             app: ['./public/index'],
             vendor: ['comindware/core']

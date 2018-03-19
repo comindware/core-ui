@@ -44,5 +44,14 @@ module.exports = {
     },
     root() {
         return resolve(rootDir, null, arguments);
+    },
+    doc() {
+        return resolve(rootDir, 'doc', arguments);
+    },
+    flowTyped() {
+        return resolve(rootDir, 'flow-typed', arguments);
+    },
+    flowStubs() {
+        return resolve(rootDir, 'flow-stubs', arguments);
     }
 };
