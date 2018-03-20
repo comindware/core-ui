@@ -30,7 +30,6 @@ const readSpritesFile = () => {
 
 module.exports = () => {
     const PRODUCTION = process.argv.includes('-p');
-    const DEVELOPMENT = !PRODUCTION;
 
     const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
     const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
@@ -180,10 +179,6 @@ module.exports = () => {
                 verbose: false,
                 exclude: ['localization']
             }),*/
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                __DEV__: DEVELOPMENT
-            }),
             new HtmlWebpackPlugin({
                 template: pathResolver.source('index.html'),
                 hash: PRODUCTION,
@@ -204,7 +199,6 @@ module.exports = () => {
                 orientation: 'landscape-secondary'
             }),
             new ExtractTextPlugin('[name].css'),
-            new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new workboxPlugin({
                 globDirectory: 'public/assets/',
