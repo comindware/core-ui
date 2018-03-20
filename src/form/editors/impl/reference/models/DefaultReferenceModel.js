@@ -17,5 +17,6 @@ export default Backbone.Model.extend({
         if (typeof data === 'string') {
             return { name: data, id: data };
         }
+        return data;
     }
 });
