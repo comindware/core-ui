@@ -13,6 +13,7 @@ import template from '../templates/referencePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 import LoadingView from './LoadingView';
 import AddNewButtonView from './AddNewButtonView';
+import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
 const config = {
     CHILD_HEIGHT: 25
@@ -59,7 +60,8 @@ export default Marionette.LayoutView.extend({
         listRegion: '.js-list-region',
         scrollbarRegion: '.js-scrollbar-region',
         loadingRegion: '.js-loading-region',
-        addNewButtonRegion: '.js-add-new-button-region'
+        addNewButtonRegion: '.js-add-new-button-region',
+        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
     },
 
     onRender() {
@@ -99,6 +101,9 @@ export default Marionette.LayoutView.extend({
         if (this.getOption('hideSearchBar')) {
             this.ui.searchBarContainer.hide();
         }
+
+        this.elementsQuantityWarningRegion.show(new ElementsQuantityWarningView());
+        this.elementsQuantityWarningRegion.$el.hide();
 
         this.__updateFilter(true);
     },
@@ -169,6 +174,7 @@ export default Marionette.LayoutView.extend({
                         const model = collection.at(0);
                         model.select();
                     }
+                    this.__toggleElementsQuantityWarning(this.model.get('totalCount'));
                 }
                 this.__setLoading(false);
             });
@@ -191,6 +197,14 @@ export default Marionette.LayoutView.extend({
         } else {
             this.ui.input.focus();
             this.loadingRegion.reset();
+        }
+    },
+
+    __toggleElementsQuantityWarning(count) {
+        if (this.elementsQuantityWarningRegion) {
+            count > 100
+                ? this.elementsQuantityWarningRegion.$el.show()
+                : this.elementsQuantityWarningRegion.$el.hide();
         }
     }
 });

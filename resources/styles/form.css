@@ -1206,6 +1206,15 @@ svg.svg-icons{
     display: none;
 }
 
+.bubble_editor__elements_quantity_warning {
+    padding: 0 0 0.5rem;
+    max-width: 100%;
+    text-align: center;
+}
 
+.bubble_editor__elements_quantity_warning span {
+    color: #999;
+    font-size: 11px;
+}
 
 

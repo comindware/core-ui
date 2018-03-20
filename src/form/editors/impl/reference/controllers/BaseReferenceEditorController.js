@@ -44,7 +44,8 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
         const filterText = options.text ? options.text.trim().toUpperCase() : '';
         return this.collection.fetch({ data: { filter: filterText } })
             .then(() => {
-                this.totalCount = this.collection.totalCount;
+                this.totalCount = this.collection.parentCollection ? this.collection.parentCollection.totalCount : this.collection.totalCount;
+                
                 return {
                     collection: this.collection.toJSON(),
                     totalCount: this.totalCount

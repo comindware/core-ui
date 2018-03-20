@@ -64,6 +64,8 @@
 
 <http://comindware.com/text/core/form/editors/reference#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
 
+<http://comindware.com/text/core/form/editors/reference#quantityWarning> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отображены не все значения, уточните поиск"; l10n:originalData "Not all elements are shown, please, specify search query"].
+
 <http://comindware.com/text/core/form/editors/reference#search> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск..."; l10n:originalData "Search..."].
 
 <http://comindware.com/text/core/form/editors/reference#searchMore> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск дополнительных элементов..."; l10n:originalData "Search for more items...\r\n"].
