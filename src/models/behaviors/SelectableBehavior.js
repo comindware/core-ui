@@ -79,18 +79,29 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // Select a specified model, make sure the
     // model knows it's selected, and hold on to
     // the selected model.
-    select(model) {
+    select(model, ctrlPressed, shiftPressed, selectOnCursor) {
         if (this.selected[model.cid]) { return; }
 
         this.selected[model.cid] = model;
         model.select();
         calculateSelectedLength(this);
+        if (selectOnCursor === false) {
+            this.pointOff();
+            model.pointTo();
+            this.lastPointedModel = model;
+            this.cursorCid = model.cid;
+        }
     },
 
     // Select a specified model and update selection for the whole collection according to the key modifiers
-    selectSmart(model, ctrlPressed, shiftPressed) {
+    selectSmart(model, ctrlPressed, shiftPressed, selectOnCursor) {
         const collection = this;
-        if (!ctrlPressed && !shiftPressed) {
+        if (selectOnCursor === false) {
+            collection.pointOff();
+            model.pointTo();
+            collection.lastPointedModel = model;
+            collection.cursorCid = model.cid;
+        } else if (!ctrlPressed && !shiftPressed) {
             // with no hotkeys we select this item and deselect the others
             collection.selectNone();
             model.select();
@@ -155,6 +166,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
         calculateSelectedLength(this);
     },
 
+    pointOff() {
+        this.lastPointedModel && this.lastPointedModel.pointOff();
+        delete this.lastPointedModel;
+    },
+
     // Toggle select all / none. If some are selected, it
     // will select all. If all are selected, it will select
     // none. If none are selected, it will select all.
@@ -202,6 +218,16 @@ _.extend(SelectableBehavior.Selectable.prototype, {
         if (this.collection) {
             this.collection.deselect(this);
         }
+    },
+
+    pointTo() {
+        this.pointed = true;
+        this.trigger('pointed', this);
+    },
+
+    pointOff() {
+        this.pointed = false;
+        this.trigger('unpointed', this);
     },
 
     // Change selected to the opposite of what

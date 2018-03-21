@@ -381,7 +381,7 @@ describe('Editors', () => {
             });
 
             view.on('view:ready', () => {
-                $('.js-core-ui__global-popup-region').find('.dd-list__i')[1].click();
+                view.getValue().length > 1 && $('.js-core-ui__global-popup-region').find('.dd-list__i')[1].click();
             });
         });
 
