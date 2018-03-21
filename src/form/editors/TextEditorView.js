@@ -78,10 +78,10 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     attributes() {
         return {
             type: 'text',
-            placeholder: this.model.get('placeholder'),
-            maxLength: this.model.get('maxLength') || null,
-            title: this.model.get('title'),
-            id: this.model.get('fieldId')
+            placeholder: this.model && this.model.get('placeholder'),
+            maxLength: (this.model && this.model.get('maxLength')) || null,
+            title: this.model && this.model.get('title'),
+            id: this.model && this.model.get('fieldId')
         };
     },
 
