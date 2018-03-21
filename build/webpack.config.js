@@ -24,21 +24,7 @@ module.exports = options => {
         module: {
             rules: [
                 {
-                    test: /\.js$/,
-                    loader: 'babel-loader',
-                    exclude: [
-                        pathResolver.node_modules(),
-                        pathResolver.compiled(),
-                        pathResolver.demo(),
-                        pathResolver.source('external/backbone.trackit.js'),
-                        pathResolver.source('external/keypress-2.1.0.min.js'),
-                        pathResolver.source('external/rangyinputs-jquery-src.js')
-                    ],
-                    options: {
-                        presets: ['flow', 'env']
-                    }
-                },
-                {
+                    enforce: 'pre',
                     test: /\.js$/,
                     loader: 'eslint-loader',
                     exclude: [
@@ -46,12 +32,29 @@ module.exports = options => {
                         pathResolver.node_modules(),
                         pathResolver.source('external'),
                         pathResolver.source('utils'),
-                        pathResolver.demo(),
-                        pathResolver.tests()
+                        pathResolver.tests(),
+                        pathResolver.demo()
+                    ],
+                    include: [
+                        pathResolver.source()
                     ],
                     options: {
-                        failOnError: true,
-                        quiet: true
+                        quiet: true,
+                        cache: true
+                    }
+                },
+                {
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                    exclude: [
+                        pathResolver.node_modules(),
+                        pathResolver.source('external/backbone.trackit.js'),
+                        pathResolver.source('external/keypress-2.1.0.min.js'),
+                        pathResolver.source('external/rangyinputs-jquery-src.js')
+                    ],
+                    options: {
+                        presets: ['flow', 'env'],
+                        cacheDirectory: true
                     }
                 },
                 {
