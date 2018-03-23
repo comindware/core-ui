@@ -47,7 +47,9 @@ export default Marionette.Behavior.extend({
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         highlighted: '__handleHighlighting',
-        unhighlighted: '__handleUnhighlighting'
+        unhighlighted: '__handleUnhighlighting',
+        pointed: '__handlePointedOn',
+        unpointed: '__handlePointedOff'
     },
 
     events: {
@@ -81,10 +83,18 @@ export default Marionette.Behavior.extend({
     },
 
     __handleSelection() {
-        this.$el.addClass('selected');
+        this.getOption('selectOnCursor') !== false && this.$el.addClass('selected');
     },
 
     __handleDeselection() {
+        this.getOption('selectOnCursor') !== false && this.$el.removeClass('selected');
+    },
+
+    __handlePointedOn() {
+        this.$el.addClass('selected');
+    },
+
+    __handlePointedOff() {
         this.$el.removeClass('selected');
     },
 
@@ -97,7 +107,7 @@ export default Marionette.Behavior.extend({
                 ? model.collection.select
                 : model.collection.selectSmart || model.collection.select;
             if (selectFn) {
-                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
+                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
             }
         }
     }

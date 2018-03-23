@@ -71,13 +71,28 @@ export default Marionette.LayoutView.extend({
         dropdownRegion: '.js-dropdown-region'
     },
 
+    focus() {
+        this.__showEditor();
+        this.dropdownView.button.focus();
+    },
+
+    blur() {
+        if (this.isDropdownShown) {
+            this.dropdownView.close();
+        }
+    },
+
+    hasFocus() {
+        return $.contains(this.el, document.activeElement);
+    },
+
     __getDropdownView() {
         const timeArray = [];
 
         for (let h = 0; h < 24; h++) {
             for (let m = 0; m < 60; m += 15) {
                 const val = { hours: h, minutes: m };
-                const time = moment.utc(val);
+                const time = moment(val);
                 const formattedTime = dateHelpers.getDisplayTime(time);
 
                 timeArray.push({
@@ -160,20 +175,5 @@ export default Marionette.LayoutView.extend({
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.dropdownView.open();
         }
-    },
-
-    focus() {
-        this.__showEditor();
-        this.dropdownView.button.focus();
-    },
-
-    blur() {
-        if (this.isDropdownShown) {
-            this.dropdownView.close();
-        }
-    },
-
-    hasFocus() {
-        return $.contains(this.el, document.activeElement);
     }
 });

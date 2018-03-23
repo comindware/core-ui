@@ -54,6 +54,7 @@ export default Marionette.LayoutView.extend({
                     text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
                     className: classes.EMPTY_VIEW
                 },
+                selectOnCursor: false,
                 childHeight: config.CHILD_HEIGHT
             }
         });

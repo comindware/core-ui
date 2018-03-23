@@ -80,5 +80,13 @@ export default Marionette.CollectionView.extend({
                 cv.updateEnabled(enabled);
             }
         });
+    },
+
+    onAddChild() {
+        this.trigger('change:content');
+    },
+
+    onRemoveChild() {
+        this.trigger('change:content');
     }
 });

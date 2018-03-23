@@ -145,7 +145,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
             autoOpen: false
         });
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
-        this.listenTo(this.dropdownView, 'close', this.onBlur);
+        this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
 
         this.dropdownRegion.show(this.dropdownView);
     },
@@ -210,7 +210,11 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
     },
 
     __onValueSelect(): void {
-        this.__onValueSet(this.viewModel.get('panel').get('collection').selected);
+        if (this.panelCollection.lastPointedModel) {
+            this.panelCollection.lastPointedModel.toggleSelected();
+        } else {
+            this.__onValueSet(this.panelCollection.selected);
+        }
     },
 
     __onValueSet(model?: Backbone.Model): void {
@@ -259,11 +263,9 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         this.text = text;
         return this.controller.fetch(options).then(data => {
             if (this.text === text) {
-                this.viewModel
-                    .get('panel')
-                    .get('collection')
-                    .reset(data.collection);
+                this.panelCollection.reset(data.collection);
                 this.viewModel.get('panel').set('totalCount', data.totalCount);
+                this.__tryPointFirstRow();
             }
         });
     },
@@ -321,6 +323,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
 
         this.__updateFakeInputModel();
         this.__focusButton();
+        this.__onButtonClick();
     },
 
     __updateFakeInputModel(): void {
@@ -352,8 +355,9 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
     },
 
     __onInputUp(): void {
-        const collection = this.viewModel.get('panel').get('collection');
-        if (collection.models.length === 0 || collection.models[0].selected) {
+        const collection = this.panelCollection;
+
+        if (collection.indexOf(this.panelCollection.lastPointedModel) === 0) {
             this.dropdownView.close();
             this.__focusButton();
         } else {
@@ -377,5 +381,17 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
 
     __triggerReady() {
         this.trigger('view:ready');
+        this.__tryPointFirstRow();
+    },
+
+    __tryPointFirstRow() {
+        if (this.panelCollection.length) {
+            this.panelCollection.selectSmart(this.panelCollection.at(0), false, false, false);
+        }
+    },
+
+    __onDropdownClose() {
+        this.onBlur();
+        this.panelCollection.pointOff();
     }
 }));
