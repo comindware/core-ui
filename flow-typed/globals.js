@@ -25,3 +25,5 @@ declare var Backbone: backboneT;
 declare var numeral: numeralT;
 
 declare var Localizer: LocalizationService;
+
+declare var Ajax: any;

@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/groupItem.html';
 
 const classes = {

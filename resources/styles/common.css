@@ -70,11 +70,6 @@ body, input, textarea, select {
 }
 
 .noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
@@ -96,16 +91,13 @@ a:hover {
 }
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: none;
     border-radius: 0;
     background: rgba(0,0,0,0);
-    -webkit-transition: all 2.2s;
     transition: background 2.2s;
 }
 ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background: rgba(0,0,0,.1);
-    -webkit-box-shadow: none;
 }
 .wrp-scroll:hover ::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,.2);
@@ -160,8 +152,6 @@ a:hover {
     padding: 8px 0;
     display: none;
     position: relative;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     border-bottom: solid 1px #ced3d7;
     z-index: 44;
@@ -205,8 +195,6 @@ a:hover {
     color: #bcc6cf;
     cursor: text;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: block;
@@ -284,11 +272,8 @@ a:hover {
     border: solid 2px #fff;
     border-radius: 50%;
     display: block;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     background: #fff no-repeat 50% 50%;
-    -webkit-box-shadow: 0px 0px 0px 1px #d2dbe2;
     box-shadow: 0px 0px 0px 1px #d2dbe2;
 }
 .user-avatar__upload {

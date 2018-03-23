@@ -8,7 +8,8 @@ import { helpers } from 'utils';
 
 const config = {
     CHILD_HEIGHT: 25,
-    MAX_HEIGHT: 410
+    MAX_HEIGHT: 410,
+    TEXT_FETCH_DELAY: 0
 };
 
 const classes = {
@@ -34,7 +35,6 @@ export default Marionette.LayoutView.extend({
         'change @ui.input': 'onFilter',
         'input @ui.input': 'onFilter'
     },
-
 
     ui: {
         input: '.js-input'
@@ -148,27 +148,31 @@ export default Marionette.LayoutView.extend({
         if (this.activeText === text) {
             return;
         }
-        helpers.setUniqueTimeout(this.fetchDelayId, () => {
-            this.activeText = text;
-            const collection = this.model.get('virtualCollection');
-            collection.deselect();
+        helpers.setUniqueTimeout(
+            this.fetchDelayId,
+            () => {
+                this.activeText = text;
+                const collection = this.model.get('virtualCollection');
+                collection.deselect();
 
-            text = text.toLocaleLowerCase();
-            collection.unhighlight();
-            if (text === '') {
-                collection.filter(null);
-            } else {
-                collection.filter(model => {
-                    const itemText = (model.get(this.model.get('displayAttribute')) || '').toLocaleLowerCase();
-                    return itemText.indexOf(text) !== -1;
-                });
-                collection.highlight(text);
-            }
+                text = text.toLocaleLowerCase();
+                collection.unhighlight();
+                if (text === '') {
+                    collection.filter(null);
+                } else {
+                    collection.filter(model => {
+                        const itemText = (model.get(this.model.get('displayAttribute')) || '').toLocaleLowerCase();
+                        return itemText.indexOf(text) !== -1;
+                    });
+                    collection.highlight(text);
+                }
 
-            if (collection.length > 0) {
-                const model = collection.at(0);
-                model.select();
-            }
-        }, config.TEXT_FETCH_DELAY);
+                if (collection.length > 0) {
+                    const model = collection.at(0);
+                    model.select();
+                }
+            },
+            config.c
+        );
     }
 });

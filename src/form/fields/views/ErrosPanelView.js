@@ -1,3 +1,4 @@
+//@flow
 import ErrorItemView from './ErrorItemView';
 
 export default Marionette.CollectionView.extend({

@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/errorItem.hbs';
 
 export default Marionette.ItemView.extend({
