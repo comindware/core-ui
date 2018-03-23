@@ -1,3 +1,4 @@
+//@flow
 import { Handlebars, keypress } from 'lib';
 import template from '../templates/dropdownPanel.hbs';
 import DefaultDropdownListItemView from './DefaultDropdownListItemView';

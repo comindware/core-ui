@@ -1,3 +1,4 @@
+// @flow
 import template from '../templates/bubbleItem.hbs';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';

@@ -1,3 +1,4 @@
+//@flow
 import { helpers } from 'utils';
 import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
 

@@ -10,7 +10,7 @@ const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
 
 module.exports = options => {
-    const PRODUCTION = options.env === 'production';
+    const PRODUCTION = process.argv.includes('-p');
     const TEST_COVERAGE = options.env === 'test-coverage';
     const TEST = options.env === 'test' || TEST_COVERAGE;
     const UGLIFY = options.uglify || false;
@@ -19,7 +19,7 @@ module.exports = options => {
     const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
     const webpackConfig = {
-        cache: true,
+        mode: PRODUCTION ? 'production' : 'development',
         devtool: TEST ? 'inline-source-map' : 'source-map',
         module: {
             rules: [
@@ -268,14 +268,9 @@ module.exports = options => {
             ]
         },
         plugins: [
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                __DEV__: !PRODUCTION
-            }),
             new ExtractTextPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.optimize.ModuleConcatenationPlugin(),
             new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
         ],
         resolve: {

@@ -1,4 +1,4 @@
-
+// @flow
 import BaseReferenceEditorController from '../../reference/controllers/BaseReferenceEditorController';
 
 export default BaseReferenceEditorController.extend({

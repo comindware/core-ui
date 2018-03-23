@@ -1,4 +1,4 @@
-
+// @flow
 import { keypress } from 'lib';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';

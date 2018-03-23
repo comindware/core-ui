@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/dropdownButton.hbs';
 
 export default Marionette.ItemView.extend({

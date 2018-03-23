@@ -16,23 +16,23 @@ import list from 'list';
  * the total count of object with the applied filter on server.
  * */
 
-export default Marionette.Controller.extend(/** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
-    initialize(options) {
-        helpers.ensureOption(options, 'collection');
+export default Marionette.Controller.extend(
+    /** @lends module:core.form.editors.reference.controllers.BaseReferenceEditorController.prototype */ {
+        initialize(options) {
+            helpers.ensureOption(options, 'collection');
 
-        this.collection = list.factory.createWrappedCollection(options.collection);
-    },
+            this.collection = list.factory.createWrappedCollection(options.collection);
+        },
 
-    /**
-     * Requests data with a text filter applied.
-     * @param {Object} options Options object.
-     * @param {Object} options.text Text filter filter to apply or <code>null</code>.
-     * @return {Promise} Promise object that resolves when the data is ready.
-     * */
-    fetch(options = {}) {
-        const filterText = options.text ? options.text.trim().toUpperCase() : '';
-        return this.collection.fetch({ data: { filter: filterText } })
-            .then(() => {
+        /**
+         * Requests data with a text filter applied.
+         * @param {Object} options Options object.
+         * @param {Object} options.text Text filter filter to apply or <code>null</code>.
+         * @return {Promise} Promise object that resolves when the data is ready.
+         * */
+        fetch(options = {}) {
+            const filterText = options.text ? options.text.trim().toUpperCase() : '';
+            return this.collection.fetch({ data: { filter: filterText } }).then(() => {
                 this.totalCount = this.collection.parentCollection ? this.collection.parentCollection.totalCount : this.collection.totalCount;
 
                 return {
@@ -40,23 +40,24 @@ export default Marionette.Controller.extend(/** @lends module:core.form.editors.
                     totalCount: this.totalCount
                 };
             });
-    },
+        },
 
-    /*
+        /*
     * Backbone.Collection that should be used to read data. The data should not be fetched from this object directly.
     * Use the controller's <code>fetch()</code> method instead.
     * */
-    collection: null,
+        collection: null,
 
-    createValueUrl() {
-        return false;
-    },
+        createValueUrl() {
+            return false;
+        },
 
-    /**
-     * Handles the edit request to the editor.
-     * @param {Object} value Value object that describes the object to edit.
-     * */
-    edit() {
-        return false;
+        /**
+         * Handles the edit request to the editor.
+         * @param {Object} value Value object that describes the object to edit.
+         * */
+        edit() {
+            return false;
+        }
     }
-});
+);

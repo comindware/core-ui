@@ -1,3 +1,4 @@
+// @flow
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
@@ -108,7 +109,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
 
     template: Handlebars.compile(template),
 
-    setValue(value):void {
+    setValue(value): void {
         this.value = [];
         this.viewModel
             .get('button')
@@ -119,7 +120,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         this.__updateFakeInputModel();
     },
 
-    onRender() {
+    onRender(): void {
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
@@ -176,7 +177,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         this.dropdownView.close();
     },
 
-    __adjustValue(value: DataValue): DataValue {
+    __adjustValue(value: DataValue): any {
         if (_.isUndefined(value) || value === null) {
             return [];
         }
@@ -300,7 +301,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         }
     },
 
-    __onBubbleDelete(model) {
+    __onBubbleDelete(model: Backbone.Model): Backbone.Model {
         if (!model) {
             return;
         }
@@ -368,7 +369,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
         }
     },
 
-    __sendPanelCommand(command, options): void {
+    __sendPanelCommand(command: string, options: {}): void {
         if (this.dropdownView.isOpen) {
             this.dropdownView.panelView.handleCommand(command, options);
         }

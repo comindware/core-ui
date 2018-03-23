@@ -1,4 +1,4 @@
-
+// @flow
 import list from 'list';
 import template from '../templates/bubblePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';

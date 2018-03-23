@@ -1,3 +1,4 @@
+//@flow
 import { htmlHelpers } from 'utils';
 import list from 'list';
 import template from '../templates/defaultDropdownListItem.hbs';

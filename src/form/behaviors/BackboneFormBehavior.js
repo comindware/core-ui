@@ -40,7 +40,7 @@ const Form = Marionette.Object.extend({
 
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && el.hasAttribute('editor-for')) || el.hasAttribute('editor-for') === this.model.get('uniqueFormId')) {
+            if ((!this.model.has('uniqueFormId') && el.hasAttribute('editor-for')) || el.getAttribute('editor-for') === this.model.get('uniqueFormId')) {
                 const key = el.getAttribute('data-editors');
                 const regionName = `${key}Region`;
 
@@ -51,7 +51,7 @@ const Form = Marionette.Object.extend({
 
         //Render standalone fields
         $target.find('[data-fields]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && el.hasAttribute('field-for')) || el.hasAttribute('field-for') === this.model.get('uniqueFormId')) {
+            if ((!this.model.has('uniqueFormId') && el.hasAttribute('field-for')) || el.getAttribute('field-for') === this.model.get('uniqueFormId')) {
                 const key = el.getAttribute('data-fields');
                 const regionName = `${key}Region`;
 

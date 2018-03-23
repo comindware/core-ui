@@ -1,3 +1,4 @@
+//@flow
 import BackboneFormBehavior from './behaviors/BackboneFormBehavior';
 import FieldView from './fields/FieldView';
 import BaseItemEditorView from './editors/base/BaseItemEditorView';
@@ -9,7 +10,6 @@ import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
 import TextEditorView from './editors/TextEditorView';
 import PasswordEditorView from './editors/PasswordEditorView';
-import MemberSelectEditorView from './editors/MemberSelectEditorView';
 import DropdownEditorView from './editors/DropdownEditorView';
 import ReferenceBubbleEditorView from './editors/ReferenceBubbleEditorView';
 import DurationEditorView from './editors/DurationEditorView';
@@ -23,10 +23,8 @@ import DocumentEditorView from './editors/DocumentEditorView';
 import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
-import IsFavoriteEditorView from './editors/IsFavoriteEditorView';
 import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
-import TimeNumberEditorView from './editors/TimeNumberEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
@@ -161,7 +159,6 @@ const api = /** @lends module:core.form */ {
         TextAreaEditor: TextAreaEditorView,
         TextEditor: TextEditorView,
         PasswordEditor: PasswordEditorView,
-        MemberSelectEditor: MemberSelectEditorView,
         DropdownEditor: DropdownEditorView,
         ReferenceBubbleEditor: ReferenceBubbleEditorView,
         DurationEditor: DurationEditorView,
@@ -175,10 +172,8 @@ const api = /** @lends module:core.form */ {
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
         BooleanSwitchEditor: BooleanSwitchEditorView,
-        IsFavoriteEditor: IsFavoriteEditorView,
         MembersSplitEditor: MembersSplitEditorView,
         MembersSplitPanelEditor: MembersSplitPanelEditorView,
-        TimeNumberEditor: TimeNumberEditorView,
         ExpressionEditor: ExpressionEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,
@@ -191,5 +186,4 @@ const api = /** @lends module:core.form */ {
 };
 export default api;
 export const editors = api.editors;
-export const fields = api.fields;
 export const behaviors = api.behaviors;

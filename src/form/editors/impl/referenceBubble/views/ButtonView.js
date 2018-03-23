@@ -1,3 +1,4 @@
+// @flow
 import template from '../templates/button.hbs';
 import BubbleItemView from './BubbleItemView';
 import InputView from './InputView';
