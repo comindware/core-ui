@@ -1,3 +1,4 @@
+// @flow
 import FormFieldAnchor from './form/FormFieldAnchor';
 import FormEditorAnchor from './form/FormEditorAnchor';
 

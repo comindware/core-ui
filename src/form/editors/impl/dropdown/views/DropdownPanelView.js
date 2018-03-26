@@ -172,7 +172,7 @@ export default Marionette.LayoutView.extend({
                     model.select();
                 }
             },
-            config.c
+            config.TEXT_FETCH_DELAY
         );
     }
 });

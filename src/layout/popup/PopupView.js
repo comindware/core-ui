@@ -26,7 +26,7 @@ export default Marionette.LayoutView.extend({
 
     templateHelpers() {
         return {
-            headerText: this.options.header,
+            headerText: this.options.header
         };
     },
 
@@ -56,7 +56,7 @@ export default Marionette.LayoutView.extend({
     regions: {
         contentRegion: '.js-content-region',
         buttonsRegion: '.js-buttons-region',
-        loadingRegion: '.js-loading-region',
+        loadingRegion: '.js-loading-region'
     },
 
     onRender() {
@@ -100,7 +100,7 @@ export default Marionette.LayoutView.extend({
         const buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
 
         return new Core.layout.HorizontalLayout({
-            columns: buttons,
+            columns: buttons
         });
     },
 
