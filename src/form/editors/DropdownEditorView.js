@@ -21,7 +21,8 @@ const defaultOptions = {
     allowEmptyValue: true,
     enableSearch: false,
     showTitle: true,
-    rowHeight: 25
+    rowHeight: 25,
+    placeholder: undefined
 };
 
 /**
@@ -77,7 +78,8 @@ formRepository.editors.Dropdown = BaseLayoutEditorView.extend(/** @lends module:
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
                 value: this.__findModel(this.getValue()),
-                displayAttribute: this.options.displayAttribute
+                displayAttribute: this.options.displayAttribute,
+                placeholder: this.options.placeholder
             }),
             panel: new Backbone.Model({
                 collection: this.collection,

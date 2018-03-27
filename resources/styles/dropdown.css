@@ -162,10 +162,6 @@
     align-content: stretch;
 }
 
-.dd-list__list_reference {
-    height: 410px;
-}
-
 .dd-list__title {
     max-width: 90%;
     padding: 3px 20px 3px 5px;

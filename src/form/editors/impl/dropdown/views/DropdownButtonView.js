@@ -21,6 +21,7 @@ export default Marionette.ItemView.extend({
     templateHelpers() {
         const value = this.model.get('value');
         const displayAttribute = this.model.get('displayAttribute');
+
         return {
             hasValue: Boolean(value),
             text: value ? _.result(value.toJSON(), displayAttribute) : null,

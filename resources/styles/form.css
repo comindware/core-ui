@@ -633,7 +633,7 @@ input[type="checkbox"].checkbox {
 
 .dropdown-text{
     display: inline-block;
-    max-width: calc(100% - 16px);
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
