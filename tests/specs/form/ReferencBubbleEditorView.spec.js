@@ -457,7 +457,7 @@ describe('Editors', () => {
             view.focus();
 
             view.on('view:ready', () => {
-                expect($('.js-core-ui__global-popup-region').find('.dd-list__i.dev_dd-list__i_with_checkbox').length).toEqual(3);
+                expect($('.js-core-ui__global-popup-region').find('.dd-list__i.dd-list__i_checkbox').length).toEqual(3);
                 expect($('.js-core-ui__global-popup-region').find('.js-checkbox').length).toEqual(3);
                 done();
             });
