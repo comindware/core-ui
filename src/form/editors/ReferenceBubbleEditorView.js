@@ -198,9 +198,12 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         }
     },
 
-    __onValueSelect() {
+    __onValueSelect(value) {
         if (this.panelCollection.lastPointedModel) {
             this.panelCollection.lastPointedModel.toggleSelected();
+        } else if (this.options.createBySelect) {
+            this.__onValueSet(new Backbone.Model({ name: value, id: value }));
+            this.__onFilterText('');
         } else {
             this.__onValueSet(this.panelCollection.selected);
         }
@@ -255,7 +258,7 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
             if (this.text === text) {
                 this.panelCollection.reset(data.collection);
                 this.viewModel.get('panel').set('totalCount', data.totalCount);
-                this.__tryPointFirstRow();
+                this.__tryRemovePointer();
             }
         });
     },
@@ -378,6 +381,10 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
         if (this.panelCollection.length) {
             this.panelCollection.selectSmart(this.panelCollection.at(0), false, false, false);
         }
+    },
+
+    __tryRemovePointer() {
+        this.panelCollection.pointOff();
     },
 
     __onDropdownClose() {

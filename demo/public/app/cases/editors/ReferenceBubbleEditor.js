@@ -18,6 +18,7 @@ export default function() {
             showEditButton: true,
             showAddNewButton: true,
             showCheckboxes: true,
+            createBySelect: true,
             maxQuantitySelected: 5,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
         }),

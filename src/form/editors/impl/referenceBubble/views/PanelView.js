@@ -175,10 +175,10 @@ export default Marionette.LayoutView.extend({
     },
 
     __proxyValueSelect() {
-        if (this.isFilterDeayed) {
+        if (this.isFilterDeayed && !this.options.createBySelect) {
             this.updateFilter(this.newSearchText, true);
         } else {
-            this.reqres.request('value:select');
+            this.reqres.request('value:select', this.newSearchText);
         }
     }
 });
