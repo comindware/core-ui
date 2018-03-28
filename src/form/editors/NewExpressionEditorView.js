@@ -1,7 +1,7 @@
 // @flow
 import template from './impl/newExpressionEditor/templates/newExpression.html';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import DropdownEditor from './DropdownEditorView';
+import DatalistEditorView from './DatalistEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 
@@ -142,7 +142,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         if (!this.valueTypeCollection.get(this.value.type)) {
             this.value.type = this.valueTypeCollection.at(0).id;
         }
-        this.typeEditor = new DropdownEditor({
+        this.typeEditor = new DatalistEditorView({
             collection: this.valueTypeCollection,
             allowEmptyValue: false
         });

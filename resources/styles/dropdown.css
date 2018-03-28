@@ -132,7 +132,8 @@
     min-width: 200px;
     max-width: 100%;
     padding: 0;
-    position: relative;
+    position: fixed;
+    background-color: white;
     display: flex;
     flex-direction: column;
 }

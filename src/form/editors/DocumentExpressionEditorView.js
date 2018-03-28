@@ -1,7 +1,7 @@
 // @flow
 import template from './templates/documentExpressionEditor.html';
 import NewExpressionEditorView from './NewExpressionEditorView';
-import DropdownEditor from './DropdownEditorView';
+import DatalistEditorView from './DatalistEditorView';
 import LocalizationService from '../../services/LocalizationService';
 
 const defaultOptions = {
@@ -64,7 +64,7 @@ export default NewExpressionEditorView.extend({
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
         });
 
-        this.templateEditor = new DropdownEditor(_.extend(this.options.templateEditorOptions, {
+        this.templateEditor = new DatalistEditorView(_.extend(this.options.templateEditorOptions, {
             value: this.value.type === valueTypes.template ? this.value.value : null,
         }));
 

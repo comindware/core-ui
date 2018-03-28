@@ -10,8 +10,7 @@ import NumberEditorView from './editors/NumberEditorView';
 import TextAreaEditorView from './editors/TextAreaEditorView';
 import TextEditorView from './editors/TextEditorView';
 import PasswordEditorView from './editors/PasswordEditorView';
-import DropdownEditorView from './editors/DropdownEditorView';
-import ReferenceBubbleEditorView from './editors/ReferenceBubbleEditorView';
+import ReferenceBubbleEditorView from './editors/DatalistEditorView';
 import DurationEditorView from './editors/DurationEditorView';
 import RadioGroupEditorView from './editors/RadioGroupEditorView';
 import DateEditorView from './editors/DateEditorView';
@@ -159,7 +158,6 @@ const api = /** @lends module:core.form */ {
         TextAreaEditor: TextAreaEditorView,
         TextEditor: TextEditorView,
         PasswordEditor: PasswordEditorView,
-        DropdownEditor: DropdownEditorView,
         ReferenceBubbleEditor: ReferenceBubbleEditorView,
         DurationEditor: DurationEditorView,
         RadioGroupEditor: RadioGroupEditorView,
