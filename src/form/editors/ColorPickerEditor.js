@@ -1,9 +1,8 @@
 
-import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 import 'spectrum-colorpicker';
 import colorPicker from './templates/colorPicker.hbs';
-
+import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
 /**
  * @name ColorPickerView
@@ -23,19 +22,22 @@ import colorPicker from './templates/colorPicker.hbs';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/** @lends module:core.form.editors.ColorPickerView.prototype */{
+export default formRepository.editors.ColorPicker = BaseLayoutEditorView.extend({
     template: Handlebars.compile(colorPicker),
+
+    focusElement: '.hexcolor',
 
     ui: {
         hexcolor: '.hexcolor',
-        colorpicker: '.colorpicker'
+        colorpicker: '.colorpicker',
+        clearButton: '.js-clear-button'
     },
 
     events: {
         change: '__change',
         'change @ui.colorpicker': '__changedColorPicker',
-        'change @ui.hexcolor': '__changedHex'
-
+        'change @ui.hexcolor': '__changedHex',
+        'click @ui.clearButton': '__clear',
     },
 
     className: 'editor editor_color',
@@ -57,13 +59,29 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
     },
 
     __clear() {
-        this.__value(null, true, true);
+        this.__value(null, false, true);
+        this.ui.hexcolor.val(null);
+        if (Core.services.MobileService.isIE) {
+            this.ui.colorpicker.spectrum('set', null);
+        } else {
+            this.ui.colorpicker.val(null);
+        }
         this.focus();
         return false;
     },
 
     setValue(value) {
         this.__value(value, true, false);
+    },
+
+    setPlaceholder() {
+        if (!this.getEnabled() || this.getReadonly()) {
+            this.placeholder = '';
+        } else {
+            this.placeholder = this.options.emptyPlaceholder;
+        }
+
+        this.ui.hexcolor.prop('placeholder', this.placeholder);
     },
 
     onShow() {
@@ -82,6 +100,27 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         }
     },
 
+    __setReadonly(readonly) {
+        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        if (this.getEnabled() && this.getReadonly()) {
+            if (Core.services.MobileService.isIE) {
+                this.ui.colorpicker.spectrum('disable');
+            } else {
+                this.ui.colorpicker.prop('disabled', readonly);
+            }
+        }
+        this.ui.hexcolor.prop('readonly', readonly);
+    },
+
+    __setEnabled(enabled) {
+        BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+        if (enabled && Core.services.MobileService.isIE) {
+            this.ui.colorpicker.spectrum('enable');
+        } else {
+            this.ui.colorpicker.prop('disabled', !enabled);
+        }
+    },
+
     __value(value, updateUi, triggerChange) {
         if (this.value === value) {
             return;
@@ -97,3 +136,4 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         }
     }
 });
+

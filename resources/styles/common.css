@@ -904,3 +904,11 @@ a:hover {
 }
 
 /* End Toolbar component */
+
+/* Colorpicker */
+
+input[type=color].dev-colorpicker:disabled {
+    cursor: default
+}
+
+/* End Colorpicker */
