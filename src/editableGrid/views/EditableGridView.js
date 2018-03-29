@@ -31,8 +31,8 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         gridRegion: '.js-grid-region',
-        collectionHeaderToolbarRegion: '.js-collection-header-toolbar-region',
-        collectionHeaderSearchRegion: '.js-collection-header-search-region'
+        collectionHeaderToolbarRegion: '.js-editable-grid-header-toolbar-region',
+        collectionHeaderSearchRegion: '.js-editable-grid-header-search-region'
     },
 
     className: 'fr-collection dev-collection',
@@ -58,9 +58,12 @@ export default Marionette.LayoutView.extend({
 
     __updateView() {
         this.__showGridView();
-        this.collectionHeaderToolbarRegion.show(this.collectionHeaderToolbarView);
-        if (this.getOption('showSearch')) {
-            this.__showSearch();
+        if (this.getOption('hideToolbar') !== true) {
+            this.collectionHeaderToolbarRegion.show(this.collectionHeaderToolbarView);
+
+            if (this.getOption('showSearch')) {
+                this.__showSearch();
+            }
         }
     },
 
@@ -82,14 +85,15 @@ export default Marionette.LayoutView.extend({
 
     __setGridHeight() {
         let heightPx = this.collection.length ? constants.defaultCollHeight : 0;
+        const heightIncrement = this.options.rowHeight || constants.rowHeight;
         if (this.options.isTree) {
             this.nativeGridCollection.forEach(model => {
                 if (!model.hidden) {
-                    heightPx += constants.rowHeight;
+                    heightPx += heightIncrement;
                 }
             });
         } else {
-            heightPx += this.collection.length > 0 ? this.collection.length * constants.rowHeight : constants.rowHeight;
+            heightPx += this.collection.length > 0 ? this.collection.length * heightIncrement : heightIncrement;
         }
         this.ui.grid.css('height', heightPx);
     },
@@ -116,7 +120,8 @@ export default Marionette.LayoutView.extend({
                 childHeight: this.options.rowHeight,
                 paddingRight: 1,
                 paddingLeft: 1,
-                expandOnShow: this.options.expandOnShow
+                expandOnShow: this.options.expandOnShow,
+                hideHeader: this.options.hideHeader
             },
             headerView: EditableGridHeaderView,
             collection: this.collection,

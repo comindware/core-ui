@@ -51,7 +51,7 @@ export default Marionette.LayoutView.extend({
     /**
      * View template
      * @param {HTML} HTML file
-    * */
+     * */
     template: Handlebars.compile(template),
 
     regions: {
@@ -156,6 +156,12 @@ export default Marionette.LayoutView.extend({
         this.bindListRegionScroll();
     },
 
+    onShow() {
+        if (this.options.hideHeader === true) {
+            this.headerRegion.$el.hide();
+        }
+    },
+
     bindListRegionScroll() {
         this.listRegion.$el.scroll(event => {
             this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
@@ -168,9 +174,13 @@ export default Marionette.LayoutView.extend({
     },
 
     setFitToView() {
+        this.headerRegion.$el.show();
         this.headerView.setFitToView();
         if (this.collection.length > 0) {
             this.listView.setFitToView();
+        }
+        if (this.options.hideHeader === true) {
+            this.headerRegion.$el.hide();
         }
     },
 

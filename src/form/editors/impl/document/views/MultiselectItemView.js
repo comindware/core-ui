@@ -83,7 +83,7 @@ export default Marionette.LayoutView.extend({
 
     __onMouseleave() {
         if (!this.options.hideRemoveBtn) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
         this.ui.revise.hide();
     }

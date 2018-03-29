@@ -10,6 +10,8 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
+    className: 'editor_container',
+
     ui: {
         editorRegion: '.js-editor-region',
         collapseButton: '.js-content-collapse'
@@ -66,6 +68,8 @@ export default Marionette.LayoutView.extend({
             });
             this.editorModeRegion.show(editorModeView);
             this.listenTo(editorModeView, 'change', this.updateEditorModel);
+        } else {
+            this.ui.editorRegion.addClass('canvas-wrap');
         }
     },
 

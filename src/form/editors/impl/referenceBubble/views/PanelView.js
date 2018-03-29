@@ -56,6 +56,7 @@ export default Marionette.LayoutView.extend({
                     text: LocalizationService.get('CORE.FORM.EDITORS.REFERENCE.NOITEMS'),
                     className: classes.EMPTY_VIEW
                 },
+                selectOnCursor: false,
                 childHeight: config.CHILD_HEIGHT
             }
         });
@@ -174,10 +175,10 @@ export default Marionette.LayoutView.extend({
     },
 
     __proxyValueSelect() {
-        if (this.isFilterDeayed) {
+        if (this.isFilterDeayed && !this.options.createBySelect) {
             this.updateFilter(this.newSearchText, true);
         } else {
-            this.reqres.request('value:select');
+            this.reqres.request('value:select', this.newSearchText);
         }
     }
 });

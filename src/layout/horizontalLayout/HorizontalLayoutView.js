@@ -75,6 +75,6 @@ export default Marionette.LayoutView.extend({
 
     __handleChangeVisibility(view, visible) {
         const ctx = this.__rowsCtx.find(x => x.view === view);
-        ctx.regionEl.classList.toggle(classes.HIDDEN, !visible);
+        ctx.region.$el.toggleClass(classes.HIDDEN, !visible);
     }
 });

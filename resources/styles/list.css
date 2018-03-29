@@ -161,7 +161,7 @@
 }
 
 .record-row {
-    font-family: 'OpenSans', sans-serif;
+    font-family: Arial, 'OpenSans', sans-serif;
 }
 
 .record-row:hover,
@@ -360,7 +360,7 @@ svg.svg-grid-icons {
     position: relative;
 }
 
-.collection-header{
+.editable-grid-header{
     height: 25px;
     padding: 0 10px;
     display: flex;
@@ -369,7 +369,7 @@ svg.svg-grid-icons {
     background: #f7f6f6;
 }
 
-.collection-header .tr-search {
+.editable-grid-header .tr-search {
     padding: 0;
 }
 
@@ -380,46 +380,47 @@ svg.svg-grid-icons {
     justify-content: flex-end;
 }
 
-.collection-header-search {
+.editable-grid-header-search {
     flex: 1 1 auto;
 }
 
-.form-label_collection{
+.form-label_editable-grid{
     line-height: inherit;
+    flex: 1;
 }
 
-.collection-header-btn{
+.editable-grid-header-btn{
     margin-top: 2px;
 }
 
-.collection-header__btn{
+.editable-grid-header__btn{
     cursor: pointer;
     padding: 0 5px;
     border-radius: 2px;
     border: 1px solid transparent;
     display: inline-block;
 }
-.collection-header__btn:hover{
+.editable-grid-header__btn:hover{
     border-color: #bfc2c4;
     box-shadow: inset 0 2px 3px #fff;
 
 }
-.collection-header__btn.disabled,
-.collection-header__btn.disabled:hover{
+.editable-grid-header__btn.disabled,
+.editable-grid-header__btn.disabled:hover{
     opacity: .6;
     cursor: default;
     border-color: transparent;
     box-shadow: none;
 
 }
-.collection-header-btn__icon {
+.editable-grid-header-btn__icon {
     display: inline-block;
     vertical-align: middle;
     width: 20px;
     height: 17px;
 }
 
-.collection-header-btn__text{
+.editable-grid-header-btn__text{
     display: inline-block;
     color: #636262;
     font-size: 11px;
@@ -667,6 +668,7 @@ svg.svg-grid-icons {
     height: 20px;
     padding: 0 5px;
     line-height: 18px;
+    margin-top:-2px;
 }
 
 .fr-collection-grid .svg-icons_attach{
@@ -689,18 +691,56 @@ svg.svg-grid-icons {
 
 .fr-collection .record-row .grid-cell {
     padding: 0 5px;
-    height: 25px;
-    line-height: 25px;
+    height: 24px;
+    line-height: 24px;
 }
 
 .fr-collection .editable-cell {
     display: flex;
-    width: 100%;
+    width: calc(100% + 10px);
+    height: 100%;
+    margin: 0 -5px;
     position: relative;
 }
 
 .editable-grid-field {
     width: 100%;
+}
+
+.editable-grid-field .form-editor{
+    width: 100%;
+    height: 100%;
+}
+
+.editable-grid-field .editor {
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+    color: #000;
+    padding: 0 5px;
+    border-bottom: none;
+}
+
+.editable-grid-field .editor:after {
+    display: none;
+    background: transparent;
+}
+
+.editable-grid-field.error .editor{
+    outline: 1px solid #e61212;
+    outline-offset: -1px;
+}
+
+.editable-grid-field.error .editor_focused,
+.editable-grid-field .editor_focused{
+    outline: 1px solid #0575bd;
+    outline-offset: -1px;
+}
+
+.editable-grid-field.readonly .editor,
+.editable-grid-field.disabled .editor,
+.editable-grid-field .editor_checkbox{
+    outline: none;
 }
 
 .editable-cell input {
@@ -720,15 +760,55 @@ svg.svg-grid-icons {
     display: none !important;
 }
 
-.editable-cell .error .form-label__error{
+.editable-grid-field.error .form-label__error{
     position: absolute;
-    left: -5px;
-    top: 3px;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 8px;
+    margin:0;
+}
+.editable-grid-field .form-label__error:before {
+    content: '';
+    border: 4px solid transparent;
+    border-top: 4px solid #e61212;
+    border-left: 4px solid #e61212;
+    background: transparent;
+    border-radius: 0;
+    top: 1px;
+    left: 1px;
+    width: auto;
+    height: auto;
 }
 
-.required .dev-form-editor {
-    margin-left: 15px;
+.editable-grid-field .form-label__error-button {
+    height: 8px;
+    width: 8px;
+    vertical-align: top;
 }
+
+.editable-grid-field .form-label__error-button-anchor {
+    width: 8px;
+    height: 8px;
+    top: 0;
+    left: 0;
+    bottom: auto;
+}
+
+.editable-grid-field .date-view,
+.editable-grid-field .time-view {
+    height: 24px;
+}
+
+.editable-grid-field .editor .date-time,
+.editable-grid-field .editor .input_date{
+    width: 100%;
+}
+
+.editable-grid-field .svg-icons-wrp:not(.svg-icons-wrp_checked){
+    margin-top: 2px;
+}
+
 /* /Editable Grid */
 
 .collapsible-btn{
@@ -773,5 +853,10 @@ svg.svg-grid-icons {
 }
 
 .fr-collection .grid-cell .editor_checkbox {
-    top: 2px;
+    top: 5px;
+    left: 5px;
+}
+
+.fr-collection .task-links {
+    margin: 0;
 }

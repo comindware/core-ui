@@ -162,10 +162,6 @@
     align-content: stretch;
 }
 
-.dd-list__list_reference {
-    height: 410px;
-}
-
 .dd-list__title {
     max-width: 90%;
     padding: 3px 20px 3px 5px;
@@ -232,14 +228,15 @@
     background:transparent;
 }
 
-.dev_dd-list__i_with_checkbox {
+.dd-list__i_checkbox {
     padding: 0 4px;
 }
 
-.dev_dd-list__i_with_checkbox .checkbox {
+.dd-list__i_checkbox .checkbox {
     top: 6px;
     position: relative;
     margin-right: 5px;
+    flex:none;
 }
 
 .dd-list__btn{
@@ -280,6 +277,14 @@
 .dd-list__list_reference + .dd-list__btn{
     padding-top:5px;
     height: 30px;
+}
+
+.dd-list-text{
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* /dd-list */

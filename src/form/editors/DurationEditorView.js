@@ -531,6 +531,6 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
     },
 
     __onMouseleave() {
-        this.el.lastElementChild.remove();
+        this.el.removeChild(this.el.lastElementChild);
     }
 });

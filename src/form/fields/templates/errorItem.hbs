@@ -1,1 +1,12 @@
-{{message}}
+{{#if severity}}
+    <div class="form-label__error-icon form-label__error-icon-{{severity}}">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+        <g>
+            <path d="M503.479,391.66L302.065,58.86c-23.2-38.67-79.44-39.1-103.04,0.26L8.575,391.52c-23.88,40.04,4.95,90.75,51.53,90.75    h391.764C498.759,482.27,527.159,431.1,503.479,391.66z M250.624,422.27c-16.54,0-30-13.46-30-30c0-16.54,13.46-30,30-30    c16.53,0,30,13.46,30,30C280.624,408.81,267.154,422.27,250.624,422.27z M281.024,272.27c0,16.54-13.87,30-30.4,30    c-16.54,0-29.8-13.46-29.8-30v-120c0-16.54,13.26-30,29.8-30c16.53,0,30.4,13.46,30.4,30V272.27z"></path>
+        </g>
+    </svg>
+    </div>
+    <span class="form-label__error-text">{{message}}</span>
+{{else}}
+    {{message}}
+{{/if}}

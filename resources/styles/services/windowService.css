@@ -12,7 +12,6 @@
     left: 0;
     right: 0;
     background: #fff;
-    z-index: 555;
 }
 
 .fadingPanel {
@@ -32,5 +31,10 @@
 }
 
 .popup-fade {
-    z-index: 101
+    z-index: 101;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
