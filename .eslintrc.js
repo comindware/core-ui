@@ -7,7 +7,8 @@ module.exports = {
         'jquery': true
     },
     'plugins': [
-        'prettier'
+        "prettier",
+        "flowtype-errors"
     ],
     'globals': {
         '__DEV__': true,
@@ -32,6 +33,9 @@ module.exports = {
         "prettier"
     ],
     'rules': {
+        "flowtype-errors/enforce-min-coverage": [2, 25],
+        "flowtype-errors/show-errors": 2,
+        "flowtype-errors/show-warnings": 1,
         'prettier/prettier': 'warn',
         'new-cap': ['off', { 'newIsCap': true, 'capIsNew': false }],
         'quote-props': ['error', 'as-needed'],

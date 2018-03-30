@@ -1,9 +1,8 @@
 /*eslint-disable*/
 
 import LocalizationService from '../../services/LocalizationService';
-import formRepository from '../formRepository';
 
-formRepository.validators.length = function(options) {
+export default function(options) {
     options = _.extend({
         type: 'length',
         message: LocalizationService.get('CORE.FORM.VALIDATION.LENGTH')
@@ -31,5 +30,3 @@ formRepository.validators.length = function(options) {
         }
     };
 };
-
-export default formRepository.validators.length;

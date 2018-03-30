@@ -1,6 +1,5 @@
 /* Useful and general methods for work with Date and Time put here*/
 
-import { moment } from 'lib';
 import LocalizationService from '../services/LocalizationService';
 
 const dateTimeFormats = {

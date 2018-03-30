@@ -1,4 +1,3 @@
-import { Handlebars, $ } from 'lib';
 import template from '../templates/PopupStack.hbs';
 
 const classes = {

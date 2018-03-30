@@ -28,15 +28,14 @@ const readSpritesFile = () => {
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
-module.exports = (options = { env: 'production' }) => {
-    const DEVELOPMENT = options.env === 'development';
-    const PRODUCTION = options.env === 'production';
+module.exports = () => {
+    const PRODUCTION = process.argv.includes('-p');
 
     const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
     const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
 
     return {
-        cache: true,
+        mode: PRODUCTION ? 'production' : 'development',
         entry: {
             app: ['./public/index'],
             vendor: ['comindware/core']
@@ -180,10 +179,6 @@ module.exports = (options = { env: 'production' }) => {
                 verbose: false,
                 exclude: ['localization']
             }),*/
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': PRODUCTION ? '"production"' : '"development"',
-                __DEV__: DEVELOPMENT
-            }),
             new HtmlWebpackPlugin({
                 template: pathResolver.source('index.html'),
                 hash: PRODUCTION,
@@ -204,7 +199,6 @@ module.exports = (options = { env: 'production' }) => {
                 orientation: 'landscape-secondary'
             }),
             new ExtractTextPlugin('[name].css'),
-            new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new workboxPlugin({
                 globDirectory: 'public/assets/',
@@ -212,7 +206,8 @@ module.exports = (options = { env: 'production' }) => {
                 swDest: pathResolver.client('sw.js'),
                 clientsClaim: true,
                 skipWaiting: true,
-                importWorkboxFrom: 'local'
+                importWorkboxFrom: 'local',
+                directoryIndex: './index.html'
             })
         ],
         resolve: {

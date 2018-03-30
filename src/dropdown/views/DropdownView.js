@@ -1,3 +1,4 @@
+// @flow
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import template from '../templates/dropdown.hbs';
@@ -74,7 +75,7 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
+export default Marionette.LayoutView.extend({
     initialize(options) {
         _.defaults(this.options, _.clone(defaultOptions), options);
         helpers.ensureOption(options, 'buttonView');
@@ -193,7 +194,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         $panelEl.toggleClass(classes.DROPDOWN_UP_OVER, position === panelPosition.UP_OVER);
 
         // panel positioning
-        let top;
+        let top: number = 0;
         switch (position) {
             case panelPosition.UP:
                 top = buttonRect.top - panelRect.height;
@@ -219,7 +220,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
             top = WINDOW_BORDER_OFFSET;
         }
 
-        const panelCss = {
+        const panelCss: { top: number, left: number, 'min-width'?: number } = {
             top,
             left: buttonRect.left
         };
@@ -278,7 +279,7 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
+        if (!this.isOpen || !document.contains(this.el)) {
             return;
         }
         this.trigger('before:close', this);
@@ -311,11 +312,11 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     __isNestedInButton(testedEl) {
-        return this.el === testedEl || $.contains(this.el, testedEl);
+        return this.el === testedEl || this.el.contains(testedEl);
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || $.contains(el, testedEl));
+        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || this.el.contains(testedEl));
     },
 
     __handleBlur() {

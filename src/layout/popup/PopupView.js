@@ -6,7 +6,6 @@ import LayoutBehavior from '../behaviors/LayoutBehavior';
 import GlobalEventService from '../../services/GlobalEventService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import ButtonView from '../button/ButtonView';
-import core from 'coreApi';
 
 const classes = {
     CLASS_NAME: 'layout__popup-view'
@@ -100,7 +99,7 @@ export default Marionette.LayoutView.extend({
     __createButtonsView() {
         const buttons = this.options.buttons.map(item => new ButtonView(Object.assign({ context: this }, item)));
 
-        return new core.layout.HorizontalLayout({
+        return new Core.layout.HorizontalLayout({
             columns: buttons,
         });
     },

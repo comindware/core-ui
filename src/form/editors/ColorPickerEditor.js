@@ -22,7 +22,7 @@ import colorPicker from './templates/colorPicker.hbs';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/** @lends module:core.form.editors.ColorPickerView.prototype */{
+export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
     template: Handlebars.compile(colorPicker),
 
     ui: {
@@ -34,7 +34,6 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         change: '__change',
         'change @ui.colorpicker': '__changedColorPicker',
         'change @ui.hexcolor': '__changedHex'
-
     },
 
     className: 'editor editor-color',
@@ -61,7 +60,7 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         return false;
     },
 
-    setValue(value) {
+    setValue(value: String) {
         this.__value(value, true, false);
     },
 
@@ -81,7 +80,7 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
         }
     },
 
-    __value(value, updateUi, triggerChange) {
+    __value(value: String, updateUi: Boolean, triggerChange: Boolean) {
         if (this.value === value) {
             return;
         }
@@ -95,4 +94,4 @@ export default formRepository.editors.ColorPicker = BaseItemEditorView.extend(/*
             this.__triggerChange();
         }
     }
-});
+}));

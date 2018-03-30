@@ -1,3 +1,4 @@
+// @flow
 import GlobalEventService from '../../services/GlobalEventService';
 
 const THROTTLE_DELAY = 100;

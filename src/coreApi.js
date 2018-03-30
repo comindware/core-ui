@@ -52,6 +52,8 @@ import CheckableBehavior from './models/behaviors/CheckableBehavior';
 import MobileService from './services/MobileService';
 
 import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
+import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
+
 import Toolbar from './components/toolbar/ToolbarView';
 
 /**
@@ -176,7 +178,8 @@ const core = {
     initialize: bootstrapper.initialize.bind(bootstrapper),
     components: {
         NavigationDrawer,
-        Toolbar
+        Toolbar,
+        BreadCrumbs
     }
 };
 

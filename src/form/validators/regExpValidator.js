@@ -1,4 +1,4 @@
-import formRepository from '../formRepository';
+/*eslint-disable*/
 
 const defaultRegExp = function(options) {
     if (!options.regexp) {
@@ -36,11 +36,9 @@ const defaultRegExp = function(options) {
     };
 };
 
-formRepository.validators.regexp = function(options) {
+export default function(options) {
     return _.wrap(defaultRegExp(options), (func, opts) => {
         const val = _.isObject(opts) ? opts.value : opts;
         return func(val);
     });
 };
-
-export default formRepository.validators.regexp;

@@ -1,17 +1,17 @@
 // @flow
 export default {
-    getSchema(schema) {
+    getSchema(schema: Array<any>) {
         const schemaPlain = {};
         this.__fillConfiguration(schema, schemaPlain);
 
         return schemaPlain;
     },
 
-    __fillConfiguration(schemaTree, schemaPlain) {
+    __fillConfiguration(schemaTree: Array<any>, schemaPlain: Object) {
         schemaTree.forEach(item => {
-            item.cType === 'field' || item.cType === 'editor'
-                ? schemaPlain[item.key] = _.omit(item, ['key', 'cType'])
-                : item.cType === 'container' && this.__fillConfiguration(item.items, schemaPlain);
+            item.type.includes('container')
+                ? this.__fillConfiguration(item.items, schemaPlain)
+                : schemaPlain[item.key] = Object.assign(_.omit(item, ['key']), { type: item.type.replace('-field', '').replace('-editor', '') });
         });
     }
 };

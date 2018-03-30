@@ -1,17 +1,35 @@
-import { moment, numeral } from 'lib';
-import numeralRu from 'numeral/locales/ru';
-import numeralEn from 'numeral/locales/en-gb';
-import numeralDe from 'numeral/locales/de';
-
-numeral.locale('en', numeralEn);
-numeral.locale('de', numeralDe);
-numeral.locale('ru', numeralRu);
+//@flow
+numeral.locale('en');
+numeral.locale('de');
+numeral.locale('ru');
 
 const global = window;
 const defaultLangCode = 'en';
 
-export default global.Localizer = {
-    initialize(options) {
+type locOpt = {
+    langCode?: string,
+    timeZone?: string,
+    localizationMap?: Object
+};
+
+type LocalizationService = {
+    initialize: locOpt => void,
+
+    langCode?: string,
+
+    timeZone?: string,
+
+    localizationMap?: Object,
+
+    get(locId: string): string,
+
+    tryGet(locId: string): ?string,
+
+    resolveLocalizedText(localizedText: Object): string
+};
+
+const service: LocalizationService = {
+    initialize(options: locOpt = {}) {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
@@ -21,7 +39,7 @@ export default global.Localizer = {
         numeral.locale(this.langCode);
     },
 
-    get(locId) {
+    get(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -35,7 +53,7 @@ export default global.Localizer = {
         return text;
     },
 
-    tryGet(locId) {
+    tryGet(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -46,7 +64,7 @@ export default global.Localizer = {
         return text;
     },
 
-    resolveLocalizedText(localizedText) {
+    resolveLocalizedText(localizedText: Object) {
         if (!localizedText) {
             return '';
         }
@@ -54,3 +72,5 @@ export default global.Localizer = {
         return localizedText[this.langCode] || localizedText[defaultLangCode] || '';
     }
 };
+
+export default global.Localizer = service;

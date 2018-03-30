@@ -1,3 +1,4 @@
+// @flow
 /**
  * @name ListPanelView
  * @memberof module:core.dropdown.views

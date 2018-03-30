@@ -1,3 +1,4 @@
+// @flow
 /*eslint-disable*/
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';

@@ -1,5 +1,4 @@
 // @flow
-import { Handlebars, moment } from 'lib';
 import template from './templates/dateEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import DateView from './impl/dateTime/views/DateView';
@@ -25,7 +24,7 @@ const defaultOptions = {
  * @param {String} [options.dateDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'M/D/YYYY' etc.).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
-formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.DateEditorView.prototype */{
+formRepository.editors.Date = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -112,12 +111,12 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
         }
     },
 
-    __setEnabled(enabled) {
+    __setEnabled(enabled: boolean): void {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.dateModel.set({ enabled: this.getEnabled() });
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.dateModel.set({ readonly: this.getReadonly() });
     },
@@ -127,7 +126,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
     /**
      * Sets the focus onto this editor.
      */
-    focus() {
+    focus(): void {
         if (this.hasFocus) {
             return;
         }
@@ -137,7 +136,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
     /**
      * Clears the focus.
      */
-    blur() {
+    blur(): void {
         if (!this.hasFocus) {
             return;
         }

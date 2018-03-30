@@ -11,7 +11,7 @@ import BaseLayoutEditorView from './base/BaseLayoutEditorView';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.AudioEditor.prototype */{
+export default (formRepository.editors.AudioEditor = BaseLayoutEditorView.extend({
     tagName: 'audio',
 
     template: false,
@@ -32,37 +32,42 @@ export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(
     onShow() {
         const audio: AudioNode = this.el;
         let recorder = {};
-        const $regionEl = $('<div class=\'js-button-region\'></div>');
-        this.$el.parent().append($regionEl);
+        const regionEl = document.createElement('div');
+        regionEl.className = 'js-button-region';
+        this.$el.parent().append(regionEl);
         const region = this.addRegion('js-button-region', {
-            el: $regionEl
+            el: regionEl
         });
-        region.show(new Core.layout.HorizontalLayout({
-            columns: [
-                new Core.layout.Button({
-                    text: 'Start recording',
-                    handler() {
-                        if (navigator.mediaDevices) {
-                            navigator.mediaDevices.getUserMedia({
-                                audio: true
-                            }).then(stream => {
-                                recorder = new window.MediaRecorder(stream);
+        region.show(
+            new Core.layout.HorizontalLayout({
+                columns: [
+                    new Core.layout.Button({
+                        text: 'Start recording',
+                        handler() {
+                            if (navigator.mediaDevices) {
+                                navigator.mediaDevices
+                                    .getUserMedia({
+                                        audio: true
+                                    })
+                                    .then(stream => {
+                                        recorder = new window.MediaRecorder(stream);
 
-                                recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
-                                recorder.start();
-                            });
+                                        recorder.addEventListener('dataavailable', e => this.__onRecordingReady(e, audio));
+                                        recorder.start();
+                                    });
+                            }
                         }
-                    }
-                }),
-                new Core.layout.Button({
-                    text: 'Stop recording',
-                    handler() {
-                        // Stopping the recorder will eventually trigger the `dataavailable` event and we can complete the recording process
-                        recorder.stop();
-                    }
-                })
-            ]
-        }));
+                    }),
+                    new Core.layout.Button({
+                        text: 'Stop recording',
+                        handler() {
+                            // Stopping the recorder will eventually trigger the `dataavailable` event and we can complete the recording process
+                            recorder.stop();
+                        }
+                    })
+                ]
+            })
+        );
     },
 
     __onRecordingReady(e, audio) {
@@ -70,4 +75,4 @@ export default formRepository.editors.AudioEditor = BaseLayoutEditorView.extend(
         audio.src = URL.createObjectURL(e.data);
         audio.play();
     }
-});
+}));

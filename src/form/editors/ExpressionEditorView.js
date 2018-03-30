@@ -3,8 +3,6 @@ import template from './templates/expressionEditor.html';
 import PopupView from './impl/expression/views/PopupView';
 import SelectButtonView from './impl/expression/views/SelectButtonView';
 import OptionItemCollectionView from './impl/expression/views/OptionItemCollectionView';
-import ValueOptionModel from './impl/expression/models/ValueOptionModel';
-import ValueOptionCollection from './impl/expression/collections/ValueOptionCollection';
 import ContextView from './impl/expression/views/ContextView';
 import defaultScriptTemplate from './impl/expression/templates/defaultScript.html';
 import formRepository from '../formRepository';
@@ -84,7 +82,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     },
 
     createOptionCollection() {
-        this.valueOptionCollection = new ValueOptionCollection();
+        this.valueOptionCollection = new Backbone.Collection();
     },
 
     addValueEditor() {
@@ -92,7 +90,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
             return;
         }
         const initialValue = this.getValue();
-        this.valueOptionCollection.add(new ValueOptionModel({
+        this.valueOptionCollection.add(new Backbone.Model({
             id: 'value',
             name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE'),
             alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUEALIAS')
@@ -109,7 +107,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         if (!this.options.showExpression) {
             return;
         }
-        this.valueOptionCollection.add(new ValueOptionModel({
+        this.valueOptionCollection.add(new Backbone.Model({
             id: 'expression',
             name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION'),
             alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSIONALIAS')
@@ -122,7 +120,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         if (!this.options.showScript) {
             return;
         }
-        this.valueOptionCollection.add(new ValueOptionModel({
+        this.valueOptionCollection.add(new Backbone.Model({
             id: 'script',
             name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
             alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPALIAS')
@@ -147,7 +145,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         this.contextValueEditor = new ContextView(contextOptions);
         this.contextContainer.show(this.contextValueEditor);
 
-        this.valueOptionCollection.add(new ValueOptionModel({
+        this.valueOptionCollection.add(new Backbone.Model({
             id: 'context',
             name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE'),
             alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTEALIAS')

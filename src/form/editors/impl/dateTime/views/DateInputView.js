@@ -6,7 +6,6 @@
  * Published under the MIT license
  */
 
-import { Handlebars, moment } from 'lib';
 import { helpers, dateHelpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import DateTimeService from '../../../services/DateTimeService';

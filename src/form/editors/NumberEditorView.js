@@ -1,7 +1,5 @@
-// @flow
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import { numeral, Handlebars } from 'lib';
 import { keyCode } from 'utils';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
@@ -68,7 +66,7 @@ const ALLOWED_CHARS = '0123456789+-.,Ee';
  * @param {String} [options.format=null] A [NumeralJS](http://numeraljs.com/) format string (e.g. '$0,0.00' etc.).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core.form.editors.NumberEditorView.prototype */{
+formRepository.editors.Number = BaseItemEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -142,11 +140,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
     },
 
     __setActive(el, isActive) {
-        if (isActive) {
-            $(el).addClass('ui-state-active');
-        } else {
-            $(el).removeClass('ui-state-active');
-        }
+        el.classList.toggle('ui-state-active', isActive);
     },
 
     setPermissions(enabled, readonly) {
@@ -214,7 +208,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
             return true;
         }
     },
-    
+
     __keypress(event) {
         const code = event.which == null /* check for IE */ ? event.keyCode : event.charCode;
         return ALLOWED_CHARS.indexOf(String.fromCharCode(code)) !== -1;
@@ -330,13 +324,7 @@ formRepository.editors.Number = BaseItemEditorView.extend(/** @lends module:core
     },
 
     __increment(i) {
-        const incremental = constants.INCREMENTAL;
-        if (incremental) {
-            return $.isFunction(incremental) ?
-                incremental(i) :
-                Math.floor(i * i * i / 50000 - i * i / 500 + 17 * i / 200 + 1);
-        }
-        return 1;
+        return Math.floor(i * i * i / 50000 - i * i / 500 + 17 * i / 200 + 1);
     },
 
     __adjustRange(value) {

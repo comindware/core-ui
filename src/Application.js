@@ -1,15 +1,14 @@
-import { moment } from 'lib';
-import AjaxService from 'services/AjaxService';
-import GlobalEventService from 'services/GlobalEventService';
-import UserService from 'services/UserService';
-import WindowService from 'services/WindowService';
-import LocalizationService from 'services/LocalizationService';
-import CTEventsService from 'services/CTEventsService';
-import WebSocketService from 'services/WebSocketService';
-import RoutingService from 'services/RoutingService';
-import ToastNotificationService from 'services/ToastNotificationService';
-import InterfaceErrorMessageService from 'services/InterfaceErrorMessageService';
-import MobileService from 'services/MobileService';
+import AjaxService from './services/AjaxService';
+import GlobalEventService from './services/GlobalEventService';
+import UserService from './services/UserService';
+import WindowService from './services/WindowService';
+import LocalizationService from './services/LocalizationService';
+import CTEventsService from './services/CTEventsService';
+import WebSocketService from './services/WebSocketService';
+import RoutingService from './services/RoutingService';
+import ToastNotificationService from './services/ToastNotificationService';
+import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
+import MobileService from './services/MobileService';
 
 import 'backbone.trackit';
 

@@ -3,10 +3,10 @@ import template from './templates/booleanSwitchEditor.hbs';
 import formRepository from '../formRepository';
 import BooleanEditorView from '../editors/BooleanEditorView';
 
-formRepository.editors.BooleanSwitch = BooleanEditorView.extend({
+const config: { template: Function, className: string } = {
     template: Handlebars.compile(template),
 
     className: 'boolean-switch-editor__view'
-});
+};
 
-export default formRepository.editors.BooleanSwitch;
+export default formRepository.editors.BooleanSwitch = BooleanEditorView.extend(config);

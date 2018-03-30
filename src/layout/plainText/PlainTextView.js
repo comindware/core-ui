@@ -1,8 +1,14 @@
 // @flow
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
+type optionsT = {
+    text: string,
+    model?: Backbone.Model,
+    key?: string
+};
+
 export default Marionette.ItemView.extend({
-    initialize(options) {
+    initialize(options: optionsT) {
         this.text = options.text;
         this.key = options.key;
         if (this.model && this.key) {

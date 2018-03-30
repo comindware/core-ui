@@ -40,8 +40,7 @@ gulp.task('watch:build:core:dev', () => {
 });
 
 gulp.task('build:core:prod', require('./tasks/buildProdTask')(false));
-gulp.task('build:core:prod:min', require('./tasks/buildProdTask')(true));
-
+gulp.task('build:core:deploy', require('./tasks/buildProdTask')(true));
 // ###
 // Public tasks
 // ###
@@ -72,8 +71,8 @@ gulp.task('test:watch', done => {
 gulp.task('start', callback =>
     runSequence('localization', 'build:core:dev', 'generateSprites', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
 
-gulp.task('build', callback => runSequence(['build:core:prod', 'build:core:prod:min', 'jsdoc'], 'localization', 'generateSprites', callback));
+gulp.task('build', callback => runSequence(['build:core:prod', 'jsdoc'], 'localization', 'generateSprites', callback));
 
-gulp.task('deploy', callback => runSequence('build', 'test:coverage', 'prepareToPublish', callback));
+gulp.task('deploy', callback => runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'test:coverage', 'prepareToPublish', callback));
 
 gulp.task('default', ['start']);

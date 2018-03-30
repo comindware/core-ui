@@ -6,7 +6,6 @@
  * Published under the MIT license
  */
 
-import { moment, Handlebars, $ } from 'lib';
 import { dateHelpers } from 'utils';
 import dropdown from 'dropdown';
 import TimeInputView from './TimeInputView';

@@ -19,10 +19,10 @@ export default Marionette.Object.extend({
         Application.headerRegion.$el.show();
         const groups = DemoService.getGroups(sectionId);
 
-        if (!this.NavBarView || !this.DemoPageView) {
-            this.NavBarView = new NavBarView({
+        if (!this.navBarView || !this.DemoPageView) {
+            this.navBarView = new NavBarView({
                 collection: sections,
-                collapsed: Core.services.MobileService.isMobile
+                activeSectionId: sectionId
             });
 
             this.DemoPageView = new DemoPageView({
@@ -34,10 +34,11 @@ export default Marionette.Object.extend({
             this.drawer = new Core.components.NavigationDrawer({
                 collection: groups,
                 collapsed: Core.services.MobileService.isMobile,
-                isAbsolute: Core.services.MobileService.isMobile
+                isAbsolute: Core.services.MobileService.isMobile,
+                title: 'Comindware Core-UI Demo'
             });
 
-            Application.headerRegion.show(this.NavBarView);
+            Application.headerRegion.show(this.navBarView);
             Application.contentRegion.show(this.DemoPageView);
             Application.navigationDrawerRegion.show(this.drawer);
         } else {
@@ -48,6 +49,7 @@ export default Marionette.Object.extend({
             });
 
             this.drawer.collection.reset(groups);
+            this.navBarView.collection.reset(sections.models);
         }
     }
 });

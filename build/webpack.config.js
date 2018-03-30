@@ -22,191 +22,250 @@ module.exports = options => {
         cache: true,
         devtool: TEST ? 'inline-source-map' : 'source-map',
         module: {
-            rules: [{
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: [
-                    pathResolver.node_modules(),
-                    pathResolver.source('external/backbone.trackit.js'),
-                    pathResolver.source('external/keypress-2.1.0.min.js'),
-                    pathResolver.source('external/rangyinputs-jquery-src.js'),
-                ],
-                options: {
-                    presets: ['flow', 'env']
-                }
-            }, {
-                test: /\.js$/,
-                loader: 'eslint-loader',
-                exclude: [
-                    pathResolver.compiled(),
-                    pathResolver.node_modules(),
-                    pathResolver.source('external'),
-                    pathResolver.source('utils'),
-                    pathResolver.tests()
-                ],
-                options: {
-                    failOnError: true,
-                    quiet: true
-                }
-            }, {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [{
-                        loader: 'css-loader'
-                    }, {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            plugins: () => {
-                                const plugins = [
-                                    autoprefixer({
-                                        browsers: ['last 2 versions']
-                                    })];
-                                if (UGLIFY) {
-                                    plugins.push(cssnano({
-                                        preset: ['default', {
-                                            discardComments: {
-                                                removeAll: true
-                                            }
-                                        }]
-                                    }));
+            rules: [
+                {
+                    enforce: 'pre',
+                    test: /\.js$/,
+                    loader: 'eslint-loader',
+                    exclude: [
+                        pathResolver.compiled(),
+                        pathResolver.node_modules(),
+                        pathResolver.source('external'),
+                        pathResolver.source('utils'),
+                        pathResolver.tests(),
+                        pathResolver.demo()
+                    ],
+                    include: [
+                        pathResolver.source()
+                    ],
+                    options: {
+                        quiet: true,
+                        cache: true
+                    }
+                },
+                {
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                    exclude: [
+                        pathResolver.node_modules(),
+                        pathResolver.source('external/backbone.trackit.js'),
+                        pathResolver.source('external/keypress-2.1.0.min.js'),
+                        pathResolver.source('external/rangyinputs-jquery-src.js')
+                    ],
+                    options: {
+                        presets: ['flow', 'env'],
+                        cacheDirectory: true
+                    }
+                },
+                {
+                    test: /\.css$/,
+                    use: ExtractTextPlugin.extract({
+                        fallback: 'style-loader',
+                        use: [
+                            {
+                                loader: 'css-loader'
+                            },
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: true,
+                                    plugins: () => {
+                                        const plugins = [
+                                            autoprefixer({
+                                                browsers: ['last 2 versions']
+                                            })
+                                        ];
+                                        if (UGLIFY) {
+                                            plugins.push(
+                                                cssnano({
+                                                    preset: [
+                                                        'default',
+                                                        {
+                                                            discardComments: {
+                                                                removeAll: true
+                                                            }
+                                                        }
+                                                    ]
+                                                })
+                                            );
+                                        }
+                                        return plugins;
+                                    }
                                 }
-                                return plugins;
                             }
+                        ]
+                    })
+                },
+                {
+                    test: /\.hbs$/,
+                    loader: 'html-loader'
+                },
+                {
+                    test: /\.html$/,
+                    loader: 'html-loader'
+                },
+                {
+                    test: /\.woff(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-woff'
+                    }
+                },
+                {
+                    test: /\.eot(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-eot'
+                    }
+                },
+                {
+                    test: /\.ttf(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-ttf'
+                    }
+                },
+                {
+                    test: /\.woff2(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'application/font-woff2'
+                    }
+                },
+                {
+                    test: /\.otf(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: FONT_LIMIT,
+                        mimetype: 'font/opentype'
+                    }
+                },
+                {
+                    test: /\.svg(\?.*)?$/,
+                    loader: 'url-loader',
+                    options: {
+                        prefix: 'fonts/',
+                        name: '[path][name].[ext]',
+                        limit: GRAPHICS_LIMIT,
+                        mimetype: 'image/svg+xml'
+                    }
+                },
+                {
+                    test: /\.(png|jpg)$/,
+                    loader: 'url-loader',
+                    options: {
+                        limit: GRAPHICS_LIMIT
+                    }
+                },
+                {
+                    test: /jquery-autosize/,
+                    use: [
+                        {
+                            loader: 'imports-loader',
+                            options: 'jquery'
                         }
-                    }]
-                })
-            }, {
-                test: /\.hbs$/,
-                loader: 'html-loader'
-            }, {
-                test: /\.html$/,
-                loader: 'html-loader'
-            }, {
-                test: /\.woff(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    prefix: 'fonts/',
-                    name: '[path][name].[ext]',
-                    limit: FONT_LIMIT,
-                    mimetype: 'application/font-woff'
+                    ]
+                },
+                {
+                    test: /rangyinputs/,
+                    use: [
+                        {
+                            loader: 'imports-loader',
+                            options: 'jquery'
+                        }
+                    ]
+                },
+                {
+                    test: /jquery\.inputmask/,
+                    use: [
+                        {
+                            loader: 'imports-loader',
+                            options: 'jquery'
+                        }
+                    ]
+                },
+                {
+                    test: /bootstrap-datetime-picker/,
+                    use: [
+                        {
+                            loader: 'imports-loader',
+                            options: 'jquery'
+                        }
+                    ]
+                },
+                {
+                    test: /backbone\.marionette\.js/,
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: 'Marionette'
+                        }
+                    ]
+                },
+                {
+                    test: /backbone\.js/,
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: 'Backbone'
+                        }
+                    ]
+                },
+                {
+                    test: /moment\.js/,
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: 'moment'
+                        }
+                    ]
+                },
+                {
+                    test: /handlebars\.js/,
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: 'Handlebars'
+                        }
+                    ]
+                },
+                {
+                    test: /underscore\.js/,
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: '_'
+                        }
+                    ]
+                },
+                {
+                    test: /jquery\.js/,
+                    use: [
+                        {
+                            loader: 'expose-loader',
+                            options: '$'
+                        },
+                        {
+                            loader: 'expose-loader',
+                            options: 'jQuery'
+                        }
+                    ]
                 }
-            }, {
-                test: /\.eot(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    prefix: 'fonts/',
-                    name: '[path][name].[ext]',
-                    limit: FONT_LIMIT,
-                    mimetype: 'application/font-eot'
-                }
-            }, {
-                test: /\.ttf(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    prefix: 'fonts/',
-                    name: '[path][name].[ext]',
-                    limit: FONT_LIMIT,
-                    mimetype: 'application/font-ttf'
-                }
-            }, {
-                test: /\.woff2(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    prefix: 'fonts/',
-                    name: '[path][name].[ext]',
-                    limit: FONT_LIMIT,
-                    mimetype: 'application/font-woff2'
-                }
-            }, {
-                test: /\.otf(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    prefix: 'fonts/',
-                    name: '[path][name].[ext]',
-                    limit: FONT_LIMIT,
-                    mimetype: 'font/opentype'
-                }
-            }, {
-                test: /\.svg(\?.*)?$/,
-                loader: 'url-loader',
-                options: {
-                    prefix: 'fonts/',
-                    name: '[path][name].[ext]',
-                    limit: GRAPHICS_LIMIT,
-                    mimetype: 'image/svg+xml'
-                }
-            }, {
-                test: /\.(png|jpg)$/,
-                loader: 'url-loader',
-                options: {
-                    limit: GRAPHICS_LIMIT,
-                }
-            }, {
-                test: /jquery-autosize/,
-                use: [{
-                    loader: 'imports-loader',
-                    options: 'jquery'
-                }]
-            }, {
-                test: /rangyinputs/,
-                use: [{
-                    loader: 'imports-loader',
-                    options: 'jquery'
-                }]
-            }, {
-                test: /jquery\.inputmask/,
-                use: [{
-                    loader: 'imports-loader',
-                    options: 'jquery'
-                }]
-            }, {
-                test: /bootstrap-datetime-picker/,
-                use: [{
-                    loader: 'imports-loader',
-                    options: 'jquery'
-                }]
-            }, {
-                test: /backbone\.marionette\.js/,
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'Marionette'
-                }]
-            }, {
-                test: /backbone\.js/,
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'Backbone'
-                }]
-            }, {
-                test: /moment\.js/,
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'moment'
-                }]
-            }, {
-                test: /handlebars\.js/,
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'Handlebars'
-                }]
-            }, {
-                test: /underscore\.js/,
-                use: [{
-                    loader: 'expose-loader',
-                    options: '_'
-                }]
-            }, {
-                test: /jquery\.js/,
-                use: [{
-                    loader: 'expose-loader',
-                    options: '$'
-                }, {
-                    loader: 'expose-loader',
-                    options: 'jQuery'
-                }]
-            }]
+            ]
         },
         plugins: [
             new webpack.DefinePlugin({
@@ -217,16 +276,10 @@ module.exports = options => {
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
             new webpack.optimize.ModuleConcatenationPlugin(),
-            new webpack.ContextReplacementPlugin(
-                /moment[\/\\]locale$/,
-                /de|ru|en/
-            )
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
         ],
         resolve: {
-            modules: [
-                pathResolver.source(),
-                pathResolver.node_modules()
-            ],
+            modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 rangyinputs: pathResolver.source('external/rangyinputs-jquery-src'),
                 keypress: pathResolver.source('external/keypress-2.1.0.min'),
@@ -252,7 +305,7 @@ module.exports = options => {
         };
         if (options.clean !== false) {
             webpackConfig.plugins.push(
-                new CleanWebpackPlugin([ pathResolver.compiled() ], {
+                new CleanWebpackPlugin([pathResolver.compiled()], {
                     root: pathResolver.root(),
                     verbose: false,
                     exclude: ['localization']
@@ -264,15 +317,11 @@ module.exports = options => {
         webpackConfig.module.rules.push({
             test: /\.js$|\.jsx$/,
             enforce: 'post',
-            exclude: [
-                pathResolver.tests(),
-                pathResolver.node_modules(),
-                pathResolver.source('external')
-            ],
+            exclude: [pathResolver.tests(), pathResolver.node_modules(), pathResolver.source('external')],
             use: {
                 loader: 'istanbul-instrumenter-loader',
                 options: { esModules: true }
-            },
+            }
         });
     }
 
@@ -280,9 +329,7 @@ module.exports = options => {
         webpackConfig.output.filename = UGLIFY ? jsFileNameMin : jsFileName;
         webpackConfig.devtool = 'source-map';
 
-        webpackConfig.plugins.push(
-            new webpack.optimize.OccurrenceOrderPlugin()
-        );
+        webpackConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
 
         if (UGLIFY) {
             webpackConfig.plugins.push(
@@ -302,7 +349,8 @@ module.exports = options => {
                     output: {
                         comments: false
                     }
-                }));
+                })
+            );
         }
     }
 

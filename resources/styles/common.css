@@ -385,7 +385,7 @@ a:hover {
 
 .navigationDrawer-collapse_button {
     height: 40px;
-    width: 100%;
+    width: 40px;
     padding-top: 13px;
     padding-left: 13px;
     background: #0575bd;
@@ -400,6 +400,7 @@ a:hover {
 .navigationDrawer__ul {
     height: 100%;
     transition: all .2s;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
 }
 
 .navigationDrawer__li {
@@ -423,7 +424,6 @@ a:hover {
     position: relative;
     z-index: 2;
     transition: all .2s;
-    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
     overflow-y: auto;
 }
 
@@ -436,6 +436,18 @@ a:hover {
 }
 .groups-link:hover {
     text-decoration: none;
+}
+
+.navigation-drawer_header {
+    display: flex;
+}
+
+.navigation-drawer_title {
+    background: #0575bd;
+    color: white;
+    flex: 1;
+    text-align: center;
+    line-height: 40px;
 }
 
 /*------------------ Tabs ------------------*/
@@ -904,3 +916,63 @@ a:hover {
 }
 
 /* End Toolbar component */
+
+.breadCrumbs {
+    background: #0575bd;
+    display: flex;
+    flex-direction: row;
+    height: 44px;
+    overflow: hidden;
+}
+
+.crumbs_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.crumb_view {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.crumb_view a {
+    color: white;
+}
+
+.crumb-subtitle {
+    font-size: 11px;
+    line-height: 11px;
+    margin-top: 30px;
+}
+
+.crumb-title {
+    margin-top: 8px;
+}
+
+.crumb-separator {
+    margin-left: 5px;
+    line-height: 34px;
+    font-size: 18px;
+    width: 8px;
+    font-weight: 700;
+}
+
+.crumb-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.crumb-naming {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout__tab-hidden {
+    display: none;
+}
