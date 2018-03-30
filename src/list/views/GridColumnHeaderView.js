@@ -24,7 +24,10 @@ const GridColumnHeaderView = Marionette.ItemView.extend({
         click: '__handleSorting'
     },
 
-    __handleSorting() {
+    __handleSorting(e) {
+        if (e.target.className.includes('js-collapsible-button')) {
+            return;
+        }
         this.trigger('columnSort', this, {
             column: this.column
         });

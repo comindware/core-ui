@@ -22,14 +22,16 @@ export default Marionette.Object.extend({
     },
 
     async __getDocumentRevision(documentId) {
-        const result = await Ajax.Documents.GetDocumentRevisions(documentId);
-        return result.map(item => ({
-            id: item.id,
-            creator: item.creatorName,
-            url: item.revisionLink,
-            creationDate: dateHelpers.dateToDateTimeString(item.creationDate, 'generalDateShortTime'),
-            version: item.revisionIndex
-        }));
+        if (Ajax && Ajax.Documents) {
+            const result = await Ajax.Documents.GetDocumentRevisions(documentId);
+            return result.map(item => ({
+                id: item.id,
+                creator: item.creatorName,
+                url: item.revisionLink,
+                creationDate: dateHelpers.dateToDateTimeString(item.creationDate, 'generalDateShortTime'),
+                version: item.revisionIndex
+            }));
+        }
     }
 });
 

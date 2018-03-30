@@ -18,8 +18,6 @@ export default Marionette.Behavior.extend({
         helpers.ensureOption(options, 'padding');
 
         this.padding = options.padding;
-        _.bindAll(this, '__handleColumnsResize');
-        this.listenTo(view.options.gridEventAggregator, 'columnsResize', this.__handleColumnsResize);
         this.columns = view.options.columns;
 
         this.listenTo(view, 'all', eventName => {
@@ -58,24 +56,8 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    onShow() {
-        this.__handleColumnsResize();
-    },
-
     __getAvailableWidth() {
         return this.$el.width() - this.padding - 1; //Magic cross browser pixel, don't remove it
-    },
-
-    __getCellElements() {
-        return this.$el.find('.js-grid-cell');
-    },
-
-    __handleColumnsResize() {
-        // const cells = Array.from(this.__getCellElements());
-        // this.columns.forEach((col, k) => {
-        //     const $cell = $(cells[k]);
-        //     $cell.outerWidth(col.absWidth);
-        // });
     },
 
     __handleClick(e) {
