@@ -1,10 +1,9 @@
 import factory from './factory';
 import filterViewFactory from './filterViewFactory';
-import RowView from './views/RowView';
-import TreeRowView from './views/TreeRowView';
-import HeaderView from './views/HeaderView';
-import ColumnHeaderView from './views/ColumnHeaderView';
-import NativeGridView from './views/NativeGridView';
+import RowView from '../list/views/RowView';
+import HeaderView from '../list/views/GridHeaderView';
+import ColumnHeaderView from '../list/views/GridColumnHeaderView';
+import NativeGridView from '../list/views/GridView';
 
 export default {
     /**
@@ -23,7 +22,6 @@ export default {
      * */
     views: {
         RowView,
-        TreeRowView,
         HeaderView,
         ColumnHeaderView,
         NativeGridView

@@ -89,6 +89,7 @@ export default Marionette.LayoutView.extend({
             heightPx += this.collection.length > 0 ? this.collection.length * constants.rowHeight : constants.rowHeight;
         }
         this.ui.grid.css('height', heightPx);
+        this.ui.grid.css('height', 500);
     },
 
     __showGridView() {

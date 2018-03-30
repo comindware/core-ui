@@ -1,3 +1,4 @@
+import GridColumnHeaderView from './GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 
@@ -22,6 +23,10 @@ import GlobalEventService from '../../services/GlobalEventService';
 
 /*eslint-disable*/
 
+const classes = {
+    expanded: 'collapsible-btn_expanded'
+};
+
 const GridHeaderView = Marionette.ItemView.extend({
     initialize(options) {
         if (!options.columns) {
@@ -30,18 +35,16 @@ const GridHeaderView = Marionette.ItemView.extend({
         if (!options.gridEventAggregator) {
             throw new Error('You must provide grid event aggregator ("gridEventAggregator" option)');
         }
-        if (!options.gridColumnHeaderView) {
-            throw new Error('You must provide grid column header view ("gridColumnHeaderView" option)');
-        }
 
         this.gridEventAggregator = options.gridEventAggregator;
-        this.gridColumnHeaderView = options.gridColumnHeaderView;
+        this.gridColumnHeaderView = options.gridColumnHeaderView || GridColumnHeaderView;
         this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
         this.columns = options.columns;
         this.$document = $(document);
         this.styleSheet = options.styleSheet;
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
         this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
+        this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
 
     template: Handlebars.compile(template),
@@ -54,7 +57,8 @@ const GridHeaderView = Marionette.ItemView.extend({
     },
 
     events: {
-        'mousedown .grid-header-dragger': '__handleDraggerMousedown'
+        'mousedown .grid-header-dragger': '__handleDraggerMousedown',
+        'click .js-collapsible-button': '__toggleCollapseAll'
     },
 
     constants: {
@@ -73,23 +77,33 @@ const GridHeaderView = Marionette.ItemView.extend({
         }
         this.__columnEls = [];
 
+        let isFirstChild = true;
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
             const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
                 model: column.viewModel,
-                column
+                column,
+                gridEventAggregator: this.gridEventAggregator
             }));
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
-            const childEl = view.render().el;
-            el.appendChild(childEl);
+            el.appendChild(view.render().el);
+            if (this.options.isTree && isFirstChild && !column.viewModel.get('isCheckboxColumn')) {
+                view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button"></span>`);
+                isFirstChild = false;
+            }
         });
         this.ui.gridHeaderColumn.each((i, el) => {
             el.classList.add(`${this.getOption('uniqueId')}-column${i}`);
         });
+        this.__handleResizeInternal();
+        // if (this.options.expandOnShow) {
+        //     this.__updateCollapseAll(false);
+        // }
+        this.collapsed = !this.getOption('expandOnShow');
     },
 
-    onShow() {
+    onAttach() {
         this.__handleResizeInternal();
     },
 
@@ -194,72 +208,6 @@ const GridHeaderView = Marionette.ItemView.extend({
         }
 
         return false;
-
-        // const ctx = this.dragContext;
-        // let delta = e.pageX - ctx.pageOffsetX;
-        // if (delta !== 0) {
-        //     const draggedColumn = ctx.draggedColumn;
-        //     let index = ctx.draggedColumn.index;
-        //     const changes = {};
-        //
-        //     this.columns[index].absWidth = Math.min(ctx.maxColumnWidth, Math.max(this.constants.MIN_COLUMN_WIDTH, draggedColumn.initialWidth + delta));
-        //     delta = this.columns[index].absWidth - draggedColumn.initialWidth;
-        //     // draggedColumn.$el.outerWidth(this.columns[index].absWidth);
-        //     this.__setFlexBasis(index, this.columns[index].absWidth);
-        //     var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
-        //     this.columns[index].width = newColumnWidthPc;
-        //     changes[index] = this.columns[index].absWidth;
-        //     index++;
-        //
-        //     const affectedColumnsWidth = ctx.fullWidth - ctx.unaffectedWidth - draggedColumn.initialWidth;
-        //     var sumDelta = 0;
-        //     let sumGap = 0;
-        //
-        //     for (let i = 0; i < ctx.affectedColumns.length; i++) {
-        //         let c = ctx.affectedColumns[i],
-        //             newColumnWidth = c.initialWidth - delta * c.initialWidth / affectedColumnsWidth;
-        //
-        //         if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
-        //             sumDelta += this.constants.MIN_COLUMN_WIDTH - newColumnWidth;
-        //             newColumnWidth = this.constants.MIN_COLUMN_WIDTH;
-        //         } else {
-        //             sumGap += newColumnWidth - this.constants.MIN_COLUMN_WIDTH;
-        //         }
-        //
-        //         this.columns[index].absWidth = newColumnWidth;
-        //         index++;
-        //     }
-        //
-        //     let fullSum = 0;
-        //     index = ctx.draggedColumn.index + 1;
-        //     for (let i = 0; i < ctx.affectedColumns.length; i++) {
-        //         const c = ctx.affectedColumns[i];
-        //         if (sumDelta > 0 && this.columns[index].absWidth > this.constants.MIN_COLUMN_WIDTH) {
-        //             const delta = (this.columns[index].absWidth - this.constants.MIN_COLUMN_WIDTH) * sumDelta / sumGap;
-        //             this.columns[index].absWidth -= delta;
-        //         }
-        //
-        //         fullSum += this.columns[index].absWidth;
-        //
-        //         if (i === ctx.affectedColumns.length - 1) {
-        //             var sumDelta = ctx.fullWidth - ctx.unaffectedWidth - this.columns[ctx.draggedColumn.index].absWidth - fullSum;
-        //             this.columns[index].absWidth += sumDelta;
-        //         }
-        //
-        //         var newColumnWidthPc = this.columns[index].absWidth / ctx.fullWidth;
-        //         this.columns[index].width = newColumnWidthPc;
-        //         // c.$el.outerWidth(this.columns[index].absWidth);
-        //         this.__setFlexBasis(index, this.columns[index].absWidth);
-        //         changes[index] = this.columns[index].absWidth;
-        //         index++;
-        //     }
-        //
-        //     // this.$el.width(this.$el.width() + delta);
-        //
-        //     this.gridEventAggregator.trigger('columnsResize');
-        // }
-
-        // return false;
     },
 
     __draggerMouseUp() {
@@ -274,44 +222,55 @@ const GridHeaderView = Marionette.ItemView.extend({
         this.__handleResizeInternal();
         this.gridEventAggregator.trigger('columnsResize');
     },
+    //
+    // __getFullWidth() {
+    //     return this.$el.parent().width() - this.getOption('checkBoxPadding') - 2; // Magic cross browser pixels, don't remove them;
+    // },
 
     __getFullWidth() {
-        return this.$el.parent().width() - this.getOption('checkBoxPadding') - 2; // Magic cross browser pixels, don't remove them;
+        return this.el.parentElement ? this.el.parentElement.offsetWidth : 0;
     },
 
     __handleResizeInternal() {
+        // Grid header's full width
         const fullWidth = this.__getFullWidth();
-        if (!fullWidth) {
+        if (fullWidth < 1) {
             _.delay(() => this.__handleResizeInternal(), 100);
             return;
         }
-        // Grid header's full width
-        const columnWidth = fullWidth / this.columns.length;
+        const columnsWithDefinedWidth = this.columns.filter(column => column.width);
+
+        let definedSumWidth = 0;
+        columnsWithDefinedWidth.forEach(col => {
+            col.absWidth = Math.floor(col.width > 1 ? col.width : col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
+            definedSumWidth += col.absWidth;
+        });
         // Default column width
+        const defaultColumnWidth = (fullWidth - definedSumWidth) / (this.columns.length - columnsWithDefinedWidth.length);
         let sumWidth = 0;
         // Columns' sum width
 
         // this.$el.width(fullWidth);
 
+
         // Iterate all but first columns counting their sum width
-        this.ui.gridHeaderColumn.not(':first').each(i => {
+        this.ui.gridHeaderColumn.not(':last').each(i => {
             //const child = $(el);
-            const col = this.columns[i + 1];
-            if (col.width) { // If column has it's custom width
-                col.absWidth = Math.floor(col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
-            } else {
-                col.absWidth = Math.floor(columnWidth); // Otherwise take default column width (rounding it down)
+            const col = this.columns[i];
+            if (!col.width) {
+                col.absWidth = Math.floor(defaultColumnWidth); // Otherwise take default column width (rounding it down)
+                sumWidth += col.absWidth; // And add it to columns' sum width
             }
             // child.outerWidth(col.absWidth); // Set absolute column width
-            this.__setFlexBasis(i, col.absWidth);
-            sumWidth += col.absWidth; // And add it to columns' sum width
+            this.__setColumnWidth(i, col.absWidth);
         });
         
         // Take remaining (or only) first column to calculate it's absolute width as difference between grid header's full width and
         // other columns' sum width. This logic is necessary because other columns' widths may have been rounded down during calculations
         if (this.columns.length) {
-            this.columns[0].absWidth = Math.floor(fullWidth - sumWidth); // Calculate remainig (or only) first column's absolute width);
-            this.__setFlexBasis(0, this.columns[0].absWidth);
+            const lastIndex = this.columns.length - 1;
+            this.columns[lastIndex].absWidth = Math.floor(fullWidth - definedSumWidth - sumWidth); // Calculate remainig (or only) first column's absolute width);
+            this.__setColumnWidth(lastIndex, this.columns[lastIndex].absWidth);
         }
     },
 
@@ -322,7 +281,7 @@ const GridHeaderView = Marionette.ItemView.extend({
             return;
         }
         // this.ui.gridHeaderColumn[index].style.width = `${newColumnWidth}px`;
-        this.__setFlexBasis(index, newColumnWidth);
+        this.__setColumnWidth(index, newColumnWidth);
 
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
@@ -330,19 +289,29 @@ const GridHeaderView = Marionette.ItemView.extend({
         this.columns[index].width = newColumnWidth;
     },
 
-    __setFlexBasis(index, width) {
+    __setColumnWidth(index, width) {
         if (!width) {
             return;
         }
         let style = this.styleSheet;
         const selector = `.${this.getOption('uniqueId')}-column${index}`;
-        const regexp = new RegExp(`${selector} { flex-basis: [+, -]?\\d+\\.?\\d*px; } `);
-        const newValue = `${selector} { flex-basis: ${width}px; } `;
+        const regexp = new RegExp(`${selector} { width: [+, -]?\\d+\\.?\\d*px; } `);
+        const newValue = `${selector} { width: ${width}px; } `;
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);
         } else {
             style.innerHTML += newValue;
         }
+    },
+
+    __toggleCollapseAll() {
+        this.__updateCollapseAll(!this.collapsed);
+        this.gridEventAggregator.trigger('toggle:collapse:all', this.collapsed);
+    },
+
+    __updateCollapseAll(collapsed) {
+        this.collapsed = collapsed;
+        this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
     }
 });
 

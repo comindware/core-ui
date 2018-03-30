@@ -7,7 +7,8 @@
  */
 
 import { helpers } from 'utils';
-import NativeGridView from './views/NativeGridView';
+import NativeGridView from '../list/views/GridView';
+// import NativeGridView from './views/NativeGridView';
 import VirtualCollection from '../collections/VirtualCollection';
 
 /**
@@ -53,7 +54,7 @@ const createTree = options => {
             }
             const treeLeaf = new Backbone.Model(attributes);
             treeLeaf.parentModel = parentModel;
-            treeLeaf.collapsed = true;
+            treeLeaf.collapsed = !options.expandOnShow;
             treeLeaf.children = new Backbone.Collection();
             targetCollection.add(treeLeaf);
             if (children && children.length) {
@@ -83,18 +84,22 @@ export default {
     createNativeGrid(options) {
         const collection = createWrappedCollection(options.collection, {
             selectableBehavior: options.gridViewOptions.selectableBehavior,
-            isTree: options.gridViewOptions.isTree
+            isTree: options.gridViewOptions.isTree,
+            expandOnShow: options.gridViewOptions.expandOnShow
         });
 
-        const gridViewOptions = Object.assign({
-            collection,
-            onColumnSort: options.onColumnSort,
-            headerView: options.headerView,
-            rowView: options.rowView,
-            treeRowView: options.treeRowView,
-            rowViewSelector: options.rowViewSelector,
-            emptyView: options.emptyView
-        }, options.gridViewOptions);
+        const gridViewOptions = Object.assign(
+            {
+                collection,
+                onColumnSort: options.onColumnSort,
+                headerView: options.headerView,
+                rowView: options.rowView,
+                treeRowView: options.treeRowView,
+                rowViewSelector: options.rowViewSelector,
+                emptyView: options.emptyView
+            },
+            options.gridViewOptions
+        );
 
         return new NativeGridView(gridViewOptions);
     },
