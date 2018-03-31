@@ -32,6 +32,7 @@ module.exports = options => {
                         pathResolver.node_modules(),
                         pathResolver.source('external'),
                         pathResolver.source('utils'),
+                        pathResolver.source('form/editors/impl/dateTime/views/DateWidget.js'),
                         pathResolver.tests(),
                         pathResolver.demo()
                     ],
