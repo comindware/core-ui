@@ -201,8 +201,6 @@ module.exports = () => {
             new ExtractTextPlugin('[name].css'),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new GenerateSW({
-                globDirectory: 'public/assets/',
-                globPatterns: ['**/*.{html,js,css,json}'],
                 swDest: pathResolver.client('sw.js'),
                 clientsClaim: true,
                 skipWaiting: true,

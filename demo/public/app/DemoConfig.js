@@ -4,8 +4,59 @@
 export default {
     sections: [
         {
+            id: 'components',
+            displayName: 'Components',
+            groups: [
+                {
+                    id: 'TabLayout',
+                    displayName: 'Tab Layout',
+                    description: 'Tab Layout'
+                },
+                {
+                    id: 'FormLayout',
+                    displayName: 'Form Layout',
+                    description: 'Form Layout'
+                },
+                {
+                    id: 'GroupView',
+                    displayName: 'Group',
+                    description: 'Group'
+                },
+                {
+                    id: 'Button',
+                    displayName: 'Button',
+                    description: 'Button'
+                },
+                {
+                    id: 'PopupView',
+                    displayName: 'Popup View',
+                    description: 'Popup View'
+                },
+                {
+                    id: 'NavigationDrawer',
+                    displayName: 'Navigation Drawer',
+                    description: 'Navigation Drawer'
+                },
+                {
+                    id: 'Toolbar',
+                    displayName: 'Toolbar',
+                    description: 'Toolbar'
+                },
+                {
+                    id: 'Dropdown',
+                    displayName: 'Dropdown',
+                    description: 'Dropdown'
+                },
+                {
+                    id: 'BreadCrumbs',
+                    displayName: 'BreadCrumbs',
+                    description: ''
+                }
+            ]
+        },
+        {
             id: 'editors',
-            displayName: 'Editors',
+            displayName: 'From and editors',
             groups: [
                 {
                     id: 'AudioEditor',
@@ -119,93 +170,8 @@ export default {
             ]
         },
         {
-            id: 'dropdown',
-            displayName: 'Dropdown & Popout',
-            groups: [
-                {
-                    id: 'actionMenu',
-                    displayName: 'Action Menu',
-                    description:
-                    'Для создания простого меню с командами мы используем метод core.dropdown.factory.createMenu из фабрики дропдаунов.' +
-                    '\r\n\r\n' +
-                    'Метод возвращает обычный PopoutView, настроенный для отображения меню.'
-                },
-                {
-                    id: 'popoutCustomization',
-                    displayName: 'Popout (Custom Views)',
-                    description: ''
-                },
-                {
-                    id: 'popoutCustomAnchor',
-                    displayName: 'Popout (Custom Anchor)',
-                    description: ''
-                },
-                {
-                    id: 'popoutDialog',
-                    displayName: 'Popout (Dialog)',
-                    description: ''
-                },
-                {
-                    id: 'dropdownCustomization',
-                    displayName: 'Dropdown (Customization)',
-                    description: ''
-                },
-                {
-                    id: 'dropdownPanelPosition',
-                    displayName: 'Dropdown (Panel Position)',
-                    description: ''
-                }
-            ]
-        },
-        {
-            id: 'components',
-            displayName: 'Components',
-            groups: [
-                {
-                    id: 'TabLayout',
-                    displayName: 'Tab Layout',
-                    description: 'Tab Layout'
-                },
-                {
-                    id: 'FormLayout',
-                    displayName: 'Form Layout',
-                    description: 'Form Layout'
-                },
-                {
-                    id: 'GroupView',
-                    displayName: 'Group',
-                    description: 'Group'
-                },
-                {
-                    id: 'Button',
-                    displayName: 'Button',
-                    description: 'Button'
-                },
-                {
-                    id: 'PopupView',
-                    displayName: 'Popup View',
-                    description: 'Popup View'
-                },
-                {
-                    id: 'NavigationDrawer',
-                    displayName: 'Navigation Drawer',
-                    description: 'Navigation Drawer'
-                },
-                {
-                    id: 'Toolbar',
-                    displayName: 'Toolbar',
-                    description: 'Toolbar'
-                },
-            {
-                id: 'BreadCrumbs',
-                displayName: 'BreadCrumbs',
-                description: ''
-            }
-            ]
-        },
-        {
             id: 'list',
-            displayName: 'List & Grid',
+            displayName: 'Grid and list',
             groups: [
                 {
                     id: 'listBasicUsage',

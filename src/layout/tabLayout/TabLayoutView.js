@@ -224,7 +224,7 @@ export default Marionette.LayoutView.extend({
     __updateTabRegion(model: Backbone.Model): void {
         const selected = model.get('selected');
 
-        model.get('regionEl').classList.toggle(classes.HIDDEN, selected);
+        model.get('regionEl').classList.toggle(classes.HIDDEN, !selected);
     },
 
     __handleStepperSelect(model: Backbone.Model): void {

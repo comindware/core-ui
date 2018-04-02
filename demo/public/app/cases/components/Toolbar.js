@@ -53,7 +53,7 @@ export default function() {
                 type: 'Checkbox',
                 isShowAliases: false,
                 id: 'setDef',
-                name: Localizer.get('PROCESS.THEMES.TOOLBARR.SETDEF'),
+                name: 'Check the checkbox',
                 severity: 'None',
                 defaultTheme: true
             }

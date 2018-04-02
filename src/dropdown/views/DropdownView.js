@@ -320,7 +320,7 @@ export default Marionette.LayoutView.extend({
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId).map(x => x.el).some(el => el.hasChildNodes(testedEl) || this.el.contains(testedEl));
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl));
     },
 
     __handleBlur() {
