@@ -36,7 +36,7 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
         'change @ui.hexcolor': '__changedHex'
     },
 
-    className: 'editor editor-color',
+    className: 'editor editor_color',
 
     __changedHex() {
         if (Core.services.MobileService.isIE) {

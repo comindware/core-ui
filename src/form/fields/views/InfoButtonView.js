@@ -1,3 +1,4 @@
+//@flow
 import dropdown from 'dropdown';
 import template from '../templates/infoButton.hbs';
 

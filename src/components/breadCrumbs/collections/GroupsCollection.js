@@ -1,3 +1,4 @@
+//@flow
 import SelectableBehavior from '../../../models/behaviors/SelectableBehavior';
 import GroupModel from '../models/GroupModel';
 

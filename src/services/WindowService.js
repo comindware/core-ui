@@ -1,7 +1,9 @@
 import PopupStackView from './window/views/PopupStackView';
 
-const windowService = /** @lends module:core.services.WindowService */ {
+export default {
     initialize() {
+        Object.assign(this, Backbone.Events);
+
         this.__$popupStackRegionEl = $(document.createElement('div'));
         this.__$popupStackRegionEl.appendTo(document.body);
 
@@ -66,7 +68,3 @@ const windowService = /** @lends module:core.services.WindowService */ {
         this.__popupStackView.fadeBackground(fade);
     }
 };
-
-_.extend(windowService, Backbone.Events);
-
-export default windowService;

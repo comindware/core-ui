@@ -136,6 +136,8 @@ export default Marionette.LayoutView.extend({
         if (this.isShown) {
             this.buttonRegion.show(this.button);
         }
+
+        this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
     },
 
     onShow() {
@@ -254,7 +256,9 @@ export default Marionette.LayoutView.extend({
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.el
         });
-        this.__adjustPosition(this.panelView.$el);
+        this.panelEl = this.panelView.$el;
+
+        this.__adjustPosition(this.panelEl);
         const buttonWidth = this.buttonRegion.$el.outerWidth();
         const panelWidth = buttonWidth > MAX_DROPDOWN_PANEL_WIDTH ? buttonWidth : MAX_DROPDOWN_PANEL_WIDTH;
         this.panelView.$el.css({ width: panelWidth });
@@ -316,7 +320,7 @@ export default Marionette.LayoutView.extend({
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || this.el.contains(testedEl));
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl));
     },
 
     __handleBlur() {

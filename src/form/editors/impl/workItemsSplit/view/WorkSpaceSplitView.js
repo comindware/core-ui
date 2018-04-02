@@ -1,4 +1,4 @@
-
+//@flow
 import ItemSplitView from '../../splitEditor/view/ItemSplitView';
 import WorkSpaceItemView from './WorkSpaceItemView';
 import WorkSpaceGroupView from './WorkSpaceGroupView';

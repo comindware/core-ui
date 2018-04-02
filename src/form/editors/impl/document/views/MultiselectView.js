@@ -1,14 +1,4 @@
-/**
- * Developer: Kristina
- * Date: 02/24/2014
- * Copyright: 2009-2014 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
-
+//@flow
 import { keypress } from 'lib';
 import dropdown from 'dropdown';
 import ReferencePanelView from '../../reference/views/ReferencePanelView';
@@ -154,18 +144,19 @@ export default Marionette.CompositeView.extend({
         }
     },
     collapseShowMore() {
-        if (!this.$childViewContainer ||
-            !this.$childViewContainer.children() ||
-            !this.$childViewContainer.children().length) { return; }
+        if (!this.$childViewContainer || !this.$childViewContainer.children() || !this.$childViewContainer.children().length) {
+            return;
+        }
         const affordabletWidth = this.$el.width();
         const childViews = this.$childViewContainer.children();
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
         const length = this.collection.length;
         // visible children
-        while (visibleCounter < length &&
-        visibleWidth + $(childViews[visibleCounter]).width() < affordabletWidth) {
-            visibleWidth += $(childViews[visibleCounter]).show().width();
+        while (visibleCounter < length && visibleWidth + $(childViews[visibleCounter]).width() < affordabletWidth) {
+            visibleWidth += $(childViews[visibleCounter])
+                .show()
+                .width();
             visibleCounter++;
         }
         // invisible children

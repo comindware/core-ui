@@ -1,4 +1,4 @@
-
+//@flow
 import BaseSplitController from '../../splitEditor/controller/BaseSplitController';
 import WorkSpaceSplitView from '../view/WorkSpaceSplitView';
 import LocalizationService from '../../../../../services/LocalizationService';

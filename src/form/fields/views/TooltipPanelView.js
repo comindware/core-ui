@@ -1,3 +1,4 @@
+//@flow
 export default Marionette.ItemView.extend({
     modelEvents: {
         change: 'onChangeText'

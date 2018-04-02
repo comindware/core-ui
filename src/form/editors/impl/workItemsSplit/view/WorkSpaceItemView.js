@@ -1,3 +1,4 @@
+//@flow
 import list from 'list';
 import { htmlHelpers } from 'utils';
 import template from '../templates/workSpaceListItem.html';

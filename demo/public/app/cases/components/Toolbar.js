@@ -13,13 +13,19 @@ export default function() {
                 context: 'Void'
             },
             {
-                iconClass: 'plus',
-                id: 'read',
-                name: 'Read',
-                type: 'Action',
-                severity: 'Normal',
-                resultType: 'CustomClientAction',
-                context: 'Void'
+                iconType: 'Undefined',
+                id: 'themePicker',
+                name: 'name',
+                severity: 'None',
+                defaultTheme: true,
+                type: 'Popup',
+                options: {
+                    collection: new Backbone.Collection(),
+                    diagramId: '1',
+                    solutionId: '2',
+                    buttonView: Marionette.ItemView,
+                    panelView: Marionette.ItemView
+                }
             },
             {
                 iconClass: 'plus',
@@ -31,6 +37,9 @@ export default function() {
                 context: 'Void'
             },
             {
+                type: 'Splitter'
+            },
+            {
                 iconClass: 'plus',
                 id: 'delete',
                 name: 'Delete',
@@ -38,6 +47,15 @@ export default function() {
                 severity: 'Normal',
                 resultType: 'CustomClientAction',
                 context: 'Void'
+            },
+            {
+                iconType: 'Undefined',
+                type: 'Checkbox',
+                isShowAliases: false,
+                id: 'setDef',
+                name: 'Check the checkbox',
+                severity: 'None',
+                defaultTheme: true
             }
         ])
     });

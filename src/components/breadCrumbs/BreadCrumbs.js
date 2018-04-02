@@ -1,4 +1,4 @@
-
+//@flow
 import CrumbTextView from './views/CrumbTextView';
 import GroupsCollection from './collections/GroupsCollection';
 import template from './templates/navigationDrawer.html';

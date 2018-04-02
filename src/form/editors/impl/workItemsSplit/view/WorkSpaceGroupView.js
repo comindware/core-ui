@@ -1,4 +1,4 @@
-
+//@flow
 import template from '../templates/workSpaceItemGroup.html';
 
 export default Marionette.ItemView.extend({

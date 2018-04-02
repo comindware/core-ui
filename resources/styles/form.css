@@ -285,6 +285,7 @@ rgba(5,117,189,.5) // user avatar btn
     color:#384650;
 }
 
+
 .editor:after {
     content: '';
     position: absolute;
@@ -306,6 +307,21 @@ rgba(5,117,189,.5) // user avatar btn
 
 .editor_focused {
     color:#384650;
+}
+
+.editor_color{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.editor.editor_color:after {
+    left: 38px;
+}
+.editor_focused.editor_color:after {
+    width: calc(100% - 38px);
 }
 
 .editor_readonly:after,
@@ -334,6 +350,8 @@ rgba(5,117,189,.5) // user avatar btn
 .editor_disabled div.date-view {
     pointer-events: auto;
 }
+
+
 
 /* checkbox */
 input[type="checkbox"].checkbox {
@@ -1001,6 +1019,53 @@ input[type="checkbox"].checkbox {
 }
 
 /* /Member editor/ */
+
+
+/*------------------ Input Color ------------------*/
+input[type="color"], .colorpicker{
+    height: 28px;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 35px;
+    background: transparent;
+    margin: -4px 5px 0 -2px;
+    border: none;
+    cursor: pointer;
+    flex: none;
+}
+
+.sp-replacer{
+    height: 20px;
+    padding: 0 !important;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 35px;
+    background: transparent !important;
+    margin: 0 5px 0 0;
+    border: none !important;
+    cursor: pointer;
+    flex: none;
+}
+
+.sp-preview{
+    height: 20px;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 35px;
+    background: transparent;
+    margin: 0;
+    border: 1px solid #777 !important;
+    cursor: pointer;
+    flex: none;
+}
+
+.sp-dd{
+    display:none;
+}
+/*-------------// Input Color // -------------*/
+
 
 
 /* svg icons */

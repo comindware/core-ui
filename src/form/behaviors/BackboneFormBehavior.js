@@ -10,7 +10,6 @@ const Form = Marionette.Object.extend({
      */
     initialize(options = {}) {
         this.options = options;
-
         this.__regionManager = new Marionette.RegionManager();
         this.schema = _.result(options, 'schema');
         this.model = options.model;
@@ -39,8 +38,9 @@ const Form = Marionette.Object.extend({
         const $target = this.options.$target;
 
         //Render standalone editors
-        $target.find('[data-editors]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && el.hasAttribute('editor-for')) || el.hasAttribute('editor-for') === this.model.get('uniqueFormId')) {
+        $target.find('[data-editors]').each((i, el) => {
+            //TODO Merge with previous
+            if ((!this.model.has('uniqueFormId') && !el.hasAttribute('editor-for')) || el.getAttribute('editor-for') === this.model.get('uniqueFormId')) {
                 const key = el.getAttribute('data-editors');
                 const regionName = `${key}Region`;
 
@@ -50,8 +50,9 @@ const Form = Marionette.Object.extend({
         });
 
         //Render standalone fields
-        $target.find('[data-fields]').each((i, el) => { //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && el.hasAttribute('field-for')) || el.hasAttribute('field-for') === this.model.get('uniqueFormId')) {
+        $target.find('[data-fields]').each((i, el) => {
+            //TODO Merge with previous
+            if ((!this.model.has('uniqueFormId') && !el.hasAttribute('field-for')) || el.getAttribute('field-for') === this.model.get('uniqueFormId')) {
                 const key = el.getAttribute('data-fields');
                 const regionName = `${key}Region`;
 
@@ -79,11 +80,14 @@ const Form = Marionette.Object.extend({
 
         // Commit
         let modelError = null;
-        const setOptions = Object.assign({
-            error(model, e) {
-                modelError = e;
-            }
-        }, options);
+        const setOptions = Object.assign(
+            {
+                error(model, e) {
+                    modelError = e;
+                }
+            },
+            options
+        );
 
         this.model.set(this.getValue(), setOptions);
         return modelError;

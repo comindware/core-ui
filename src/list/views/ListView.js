@@ -237,11 +237,12 @@ const ListView = Marionette.CompositeView.extend({
 
         const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
         if (nextIndex !== index) {
-            const model = this.parentCollection.at(nextIndex);
-            const selectFn = this.parentCollection.selectSmart || this.parentCollection.select;
+            const model = this.collection.at(nextIndex);
+            const selectFn = this.collection.selectSmart || this.collection.select;
             if (selectFn) {
-                selectFn.call(this.parentCollection, model, false, shiftPressed);
+                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
             }
+
             this.scrollTo(nextIndex);
         }
     },

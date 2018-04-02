@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const workboxPlugin = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 const pathResolver = {
     client() {
@@ -200,9 +200,7 @@ module.exports = () => {
             }),
             new ExtractTextPlugin('[name].css'),
             new webpack.optimize.ModuleConcatenationPlugin(),
-            new workboxPlugin({
-                globDirectory: 'public/assets/',
-                globPatterns: ['**/*.{html,js,css,json}'],
+            new GenerateSW({
                 swDest: pathResolver.client('sw.js'),
                 clientsClaim: true,
                 skipWaiting: true,

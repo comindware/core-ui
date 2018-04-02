@@ -1,3 +1,4 @@
+// @flow
 import './resources/layout.css';
 import './resources/tabLayout.css';
 import './resources/verticalLayout.css';

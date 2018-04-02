@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/21/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /* Data & Datatime utils*/
 import moment_ from 'moment-timezone';
 import 'moment/locale/ru';
@@ -29,7 +21,6 @@ import 'inputmask/dist/jquery.inputmask.bundle';
 import 'rangyinputs';
 import 'jquery-autosize';
 import * as keypress_ from 'keypress';
-import 'bootstrap-datetime-picker';
 import numeral_ from 'numeral';
 import codemirror_ from 'codemirror/lib/codemirror';
 import 'innersvg-polyfill';
