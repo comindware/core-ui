@@ -21,7 +21,6 @@
 
 .list {
     height: 100%;
-    /*overflow-x: hidden;*/
     overflow: auto;
 }
 
@@ -91,8 +90,8 @@
     font-size: 12px;
     color: #000;
     cursor: default;
-    float: left;
     flex: 0 0 auto;
+    min-width: 30px;
 }
 
 .fr-collection-grid .grid-header {
@@ -439,8 +438,8 @@ svg.svg-grid-icons {
 
 
 .fr-collection-grid{
-    flex: 1 1 auto;
-    display: flex;
+    /*flex: 1 1 auto;*/
+    /*display: flex;*/
 }
 
 .fr-collection-grid .native-grid{
@@ -835,7 +834,6 @@ svg.svg-grid-icons {
     background: 50% 50% no-repeat url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAICAYAAAAx8TU7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2NTBCNDc1NEI4QUQxMUU2QTRBOUIxQkM0MTgwQzg0OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo2NTBCNDc1NUI4QUQxMUU2QTRBOUIxQkM0MTgwQzg0OCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjY1MEI0NzUyQjhBRDExRTZBNEE5QjFCQzQxODBDODQ4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjY1MEI0NzUzQjhBRDExRTZBNEE5QjFCQzQxODBDODQ4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+cSFqBAAAAGFJREFUeNpibO6ZNIOBgSEfiH8yQAETEKcD8T4glkIWDAViZSA+DcRWMME1QKwNVQ3CaUxQHcxAzAPEjCDMAiQCgHgmEP8FYkcgPgZSuR6I7wKxCUgAZuZsqIpnMNsBAgwAqeEQbrvfz04AAAAASUVORK5CYII=');
     align-self: center;
     float: left;
-    top: 10px;
 }
 
 .collapsible-btn:hover{
@@ -853,12 +851,12 @@ svg.svg-grid-icons {
     top: 18px;
 }
 
-.fr-collection .grid-cell .collapsible-btn {
-    top: 5px;
-}
-
 .fr-collection .grid-header-column-content .collapsible-btn {
     top: 6px;
+}
+
+.grid-cell .collapsible-btn {
+    top: calc(50% - 7px);
 }
 
 .fr-collection .grid-cell .editor_checkbox {

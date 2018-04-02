@@ -4,6 +4,7 @@ import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './ListView';
 import RowView from './RowView';
+// import TreeRowView from '../../nativeGrid/views/TreeRowView';
 import GridHeaderView from './GridHeaderView';
 import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
@@ -72,7 +73,8 @@ export default Marionette.LayoutView.extend({
             checkBoxPadding: options.checkBoxPadding || 0,
             gridColumnHeaderView: options.gridColumnHeaderView,
             styleSheet: this.styleSheet,
-            uniqueId: this.uniqueId
+            uniqueId: this.uniqueId,
+            isTree: this.options.isTree
         });
 
         this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
@@ -86,26 +88,26 @@ export default Marionette.LayoutView.extend({
 
         this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
 
-        let childView = options.childView;
-        if (options.useDefaultRowView) {
-            _.each(options.columns, column => {
-                if (column.cellView === undefined) { throw new Error('You must specify cellView for each column (useDefaultRowView flag is true)'); }
-            });
-
-            childView = RowView;
-            options.childHeight = constants.gridRowHeight;
-        } else if (options.childHeight === undefined) {
-            throw new Error('You must provide a childHeight for the child item view (in pixels).');
-        }
+        const childView = options.childView || RowView;
+        // if (options.useDefaultRowView) {
+        //     _.each(options.columns, column => {
+        //         if (column.cellView === undefined) { throw new Error('You must specify cellView for each column (useDefaultRowView flag is true)'); }
+        //     });
+        //
+        //     childView = RowView;
+        //     options.childHeight = constants.gridRowHeight;
+        // }
 
         const childViewOptions = _.extend(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this,
-            uniqueId: this.uniqueId
+            uniqueId: this.uniqueId,
+            isTree: this.options.isTree
         });
 
         this.listView = new ListView({
             collection: this.collection,
+            gridEventAggregator: this,
             childView,
             childViewSelector: options.childViewSelector,
             emptyView: options.emptyView,
@@ -175,7 +177,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onRender() {
+    onAttach() {
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
@@ -190,7 +192,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onDestroy() {
-        document.body.remove(this.styleSheet);
+        document.body.removeChild(this.styleSheet);
     },
 
     sortBy(columnIndex, sorting) {
