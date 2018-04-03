@@ -1,5 +1,4 @@
 // @flow
-import { keypress } from 'lib';
 import LocalizationService from '../../../../../services/LocalizationService';
 import template from '../templates/input.hbs';
 
@@ -41,40 +40,19 @@ export default Marionette.ItemView.extend({
     onRender() {
         this.updateInput();
         this.__updateInputPlaceholder();
-        this.__assignKeyboardShortcuts();
     },
 
     focus() {
         this.ui.input.focus();
     },
 
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            const keys = key.split(',');
-            _.each(keys, k => {
-                this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        });
-    },
-
-    keyboardShortcuts: {
-        up() {
-            this.reqres.request('input:up');
-        },
-        down() {
-            this.reqres.request('input:down');
-        },
-        'enter,num_enter'() {
-            this.reqres.request('try:value:select');
-        }
-    },
-
     __getFilterValue() {
-        return this.ui.input.val().toLowerCase().trim() || '';
+        return (
+            this.ui.input
+                .val()
+                .toLowerCase()
+                .trim() || ''
+        );
     },
 
     updateInput(value = '') {
@@ -83,20 +61,35 @@ export default Marionette.ItemView.extend({
 
     __search(e) {
         const value = this.__getFilterValue();
-
-        if (e.keyCode === 8) {
-            if (value.length === 0) {
-                if (!this.options.enabled) {
+        switch (e.keyCode) {
+            case 8: {
+                if (value.length === 0) {
+                    if (!this.options.enabled) {
+                        return;
+                    }
+                    this.reqres.request('bubble:delete:last');
+                }
+                break;
+            }
+            case 13: {
+                this.reqres.request('try:value:select');
+                break;
+            }
+            case 38: {
+                this.reqres.request('input:up');
+                break;
+            }
+            case 40: {
+                this.reqres.request('input:down');
+                break;
+            }
+            default: {
+                if (this.filterValue === value) {
                     return;
                 }
-                this.reqres.request('bubble:delete:last');
+                this.filterValue = value;
+                this.reqres.request('input:search', value, false);
             }
-        } else {
-            if (this.filterValue === value) {
-                return;
-            }
-            this.filterValue = value;
-            this.reqres.request('input:search', value, false);
         }
     },
 

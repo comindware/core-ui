@@ -1,5 +1,4 @@
 //@flow
-import { keypress } from 'lib';
 import dropdown from 'dropdown';
 import ReferencePanelView from '../../reference/views/ReferencePanelView';
 import template from '../templates/Multiselect.html';
@@ -14,33 +13,6 @@ const MultiselectAddButtonView = Marionette.ItemView.extend({
 });
 
 export default Marionette.CompositeView.extend({
-    controller: null,
-    $selectButtonEl: null,
-    childView: MultiselectItemView,
-    childViewContainer: '.js-collection-container',
-    childViewOptions() {
-        return {
-            attachmentsController: this.attachmentsController,
-            hideRemoveBtn: this.options.hideRemoveBtn
-        };
-    },
-    className: 'l-task-links',
-    canAdd: true,
-
-    template: Handlebars.compile(template),
-    ui: {
-        showMore: '.js-show-more',
-        invisibleCount: '.js-invisible-count',
-        showMoreText: '.js-show-more-text'
-    },
-    events: {
-        'click @ui.showMore': 'toggleShowMore'
-    },
-    childEvents: {
-        remove: 'onValueRemove'
-    },
-    collapsed: true,
-
     initialize(options) {
         _.extend(this, options || {});
         this.reqres = new Backbone.Wreqr.RequestResponse();
@@ -58,6 +30,44 @@ export default Marionette.CompositeView.extend({
         this._windowResize = _.throttle(this.update.bind(this), 100, true);
         window.addEventListener('resize', this._windowResize);
     },
+
+    controller: null,
+
+    $selectButtonEl: null,
+
+    childView: MultiselectItemView,
+
+    childViewContainer: '.js-collection-container',
+
+    childViewOptions() {
+        return {
+            attachmentsController: this.attachmentsController,
+            hideRemoveBtn: this.options.hideRemoveBtn
+        };
+    },
+
+    className: 'l-task-links',
+
+    canAdd: true,
+
+    template: Handlebars.compile(template),
+
+    ui: {
+        showMore: '.js-show-more',
+        invisibleCount: '.js-invisible-count',
+        showMoreText: '.js-show-more-text'
+    },
+
+    events: {
+        'click @ui.showMore': 'toggleShowMore',
+        keydown: '__handleKeydown'
+    },
+
+    childEvents: {
+        remove: 'onValueRemove'
+    },
+
+    collapsed: true,
 
     renderDropdown() {
         this.dropdownModel = new Backbone.Model({
@@ -82,17 +92,6 @@ export default Marionette.CompositeView.extend({
             }
         });
         this.$selectButtonEl.html(this.dropdownView.render().$el);
-        // hotkeys
-        //todo
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each('down,enter,num_enter'.split(','), key => {
-            this.keyListener.simple_combo(key, () => {
-                this.dropdownView.open();
-            });
-        });
     },
 
     showDropDown() {
@@ -127,10 +126,12 @@ export default Marionette.CompositeView.extend({
     onFilterText(options) {
         return this.controller.fetch(options).then(() => this.dropdownModel.get('panel').set('totalCount', this.controller.totalCount));
     },
+
     toggleShowMore() {
         this.collapsed = !this.collapsed;
         this.renderShowMore();
     },
+
     renderShowMore() {
         if (this.collapsed) {
             this.collapseShowMore();
@@ -138,11 +139,13 @@ export default Marionette.CompositeView.extend({
             this.expandShowMore();
         }
     },
+
     update() {
         if (this.collapsed) {
             this.collapseShowMore();
         }
     },
+
     collapseShowMore() {
         if (!this.$childViewContainer || !this.$childViewContainer.children() || !this.$childViewContainer.children().length) {
             return;
@@ -171,12 +174,25 @@ export default Marionette.CompositeView.extend({
             this.ui.showMore.hide();
         }
     },
+
     expandShowMore() {
         this.$childViewContainer.children().show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },
+
     onDestroy() {
         window.removeEventListener('resize', this._windowResize, true);
+    },
+
+    __handleKeydown(e) {
+        switch (e.keyCode) {
+            case 13:
+            case 40:
+                this.dropdownView.open();
+                break;
+            default:
+                break;
+        }
     }
 });

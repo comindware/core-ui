@@ -74,6 +74,11 @@ export default {
                     description: 'Simple code editor'
                 },
                 {
+                    id: 'ContextEditor',
+                    displayName: 'Context Editor',
+                    description: 'Context editor'
+                },
+                {
                     id: 'RangeEditor',
                     displayName: 'Range Editor',
                     description: 'Simple range editor'

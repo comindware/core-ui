@@ -58,7 +58,7 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
             return;
         }
 
-        this.popoutView = dropdownFactory.createPopout({
+        this.popoutView = dropdownFactory.createDropdown({
             panelView: PopoutPanelView,
             panelViewOptions: {
                 model: this.viewModel.get('panel')
