@@ -10,7 +10,7 @@ export default BaseSplitController.extend({
         BaseSplitController.prototype.initialize.apply(this, arguments);
         this.__fillDisplayText();
 
-        this.channel = new Backbone.Radio.Channel();
+        this.channel = new Backbone.Radio.channel(_.uniqueId('membersSplitPanel'));
         this.channel.on('items:select', this.selectItemsByToolbar, this);
         this.channel.on('items:search', this.selectItemsByFilter, this);
         this.channel.on('items:move', this.__onItemsMove, this);

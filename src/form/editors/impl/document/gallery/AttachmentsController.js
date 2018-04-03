@@ -15,9 +15,9 @@ export default Marionette.Object.extend({
     },
 
     bindReqres() {
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.reqres.setHandler('close', this.__closeGallery, this);
-        this.reqres.setHandler('image:get', this.__getImage, this);
+        this.reqres = Backbone.Radio.channel(_.uniqueId('attachC'));
+        this.reqres.reply('close', this.__closeGallery, this);
+        this.reqres.reply('image:get', this.__getImage, this);
     },
 
     showGallery(model) {

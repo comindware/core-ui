@@ -50,7 +50,6 @@ module.exports = options => {
                     exclude: [
                         pathResolver.node_modules(),
                         pathResolver.source('external/backbone.trackit.js'),
-                        pathResolver.source('external/keypress-2.1.0.min.js'),
                         pathResolver.source('external/rangyinputs-jquery-src.js')
                     ],
                     options: {
@@ -278,7 +277,6 @@ module.exports = options => {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 rangyinputs: pathResolver.source('external/rangyinputs-jquery-src'),
-                keypress: pathResolver.source('external/keypress-2.1.0.min'),
                 'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
                 'jquery-ui': pathResolver.source('external/jquery-ui.js'),
                 handlebars: 'handlebars/dist/handlebars',

@@ -3,7 +3,7 @@ import ItemCollection from '../collection/ItemsCollection';
 
 export default Marionette.Object.extend({
     initialize() {
-        this.channel = new Backbone.Radio.Channel();
+        this.channel = new Backbone.Radio.channel(_.uniqueId('splitC'));
         this.channel.on('items:select', this.selectItemsByToolbar, this);
         this.channel.on('items:search', this.selectItemsByFilter, this);
         this.channel.on('items:move', this.moveItems, this);

@@ -133,7 +133,6 @@ const ListView = Marionette.CompositeView.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
-        this.__assignKeyboardShortcuts();
         this.ui.visibleCollection.addClass(classses.scrolled);
     },
 
@@ -193,8 +192,8 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     __createReqres() {
-        this.internalReqres = new Backbone.Wreqr.RequestResponse();
-        this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+        this.internalReqres = Backbone.Radio.channel(_.uniqueId('listV'));
+        this.internalReqres.reply('childViewEvent', this.__handleChildViewEvent, this);
     },
 
     __handleChildViewEvent(view, eventName, eventArguments) {

@@ -12,7 +12,6 @@ declare var Handlebars: {
 
 
 declare var Marionette: any; //todo ad types
-declare var keypress: any; //todo ad types
 
 declare var _: Underscore;
 

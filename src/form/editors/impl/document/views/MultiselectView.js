@@ -15,12 +15,12 @@ const MultiselectAddButtonView = Marionette.ItemView.extend({
 export default Marionette.CompositeView.extend({
     initialize(options) {
         _.extend(this, options || {});
-        this.reqres = new Backbone.Wreqr.RequestResponse();
+        this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
-        this.reqres.setHandler('value:set', this.onValueAdd, this);
-        this.reqres.setHandler('value:navigate', this.onValueNavigate, this);
-        this.reqres.setHandler('search:more', this.onSearchMore, this);
-        this.reqres.setHandler('filter:text', this.onFilterText, this);
+        this.reqres.reply('value:set', this.onValueAdd, this);
+        this.reqres.reply('value:navigate', this.onValueNavigate, this);
+        this.reqres.reply('search:more', this.onSearchMore, this);
+        this.reqres.reply('filter:text', this.onFilterText, this);
 
         this.attachmentsController = new AttachmentsController();
 
