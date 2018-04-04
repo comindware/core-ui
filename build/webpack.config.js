@@ -10,14 +10,13 @@ const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
 
 module.exports = options => {
-    const PRODUCTION = process.argv.includes('-p');
+    const PRODUCTION = options.uglify;
     const TEST_COVERAGE = options.env === 'test-coverage';
     const TEST = options.env === 'test' || TEST_COVERAGE;
     const UGLIFY = options.uglify || false;
 
     const FONT_LIMIT = PRODUCTION ? 10000 : 1000000;
     const GRAPHICS_LIMIT = PRODUCTION ? 10000 : 1000000;
-
     const webpackConfig = {
         mode: PRODUCTION ? 'production' : 'development',
         devtool: TEST ? 'inline-source-map' : 'source-map',
@@ -49,7 +48,6 @@ module.exports = options => {
                     loader: 'babel-loader',
                     exclude: [
                         pathResolver.node_modules(),
-                        pathResolver.source('external/backbone.trackit.js'),
                         pathResolver.source('external/rangyinputs-jquery-src.js')
                     ],
                     options: {
@@ -324,28 +322,6 @@ module.exports = options => {
         webpackConfig.devtool = 'source-map';
 
         webpackConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
-
-        if (UGLIFY) {
-            webpackConfig.plugins.push(
-                new webpack.optimize.UglifyJsPlugin({
-                    uglifyOptions: {
-                        compress: {
-                            warnings: true,
-                            dead_code: true,
-                            properties: true,
-                            conditionals: true,
-                            evaluate: true,
-                            comparisons: true
-                        }
-                    },
-                    sourceMap: true,
-                    parallel: true,
-                    output: {
-                        comments: false
-                    }
-                })
-            );
-        }
     }
 
     return webpackConfig;

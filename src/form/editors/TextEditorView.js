@@ -64,8 +64,6 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         }
     },
 
-    focusElement: '.js-input',
-
     ui: {
         clearButton: '.js-clear-button'
     },

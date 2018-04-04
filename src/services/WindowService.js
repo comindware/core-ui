@@ -4,8 +4,8 @@ export default {
     initialize() {
         Object.assign(this, Backbone.Events);
 
-        this.__$popupStackRegionEl = $(document.createElement('div'));
-        this.__$popupStackRegionEl.appendTo(document.body);
+        this.__$popupStackRegionEl = document.createElement('div');
+        document.body.appendChild(this.__$popupStackRegionEl);
 
         const regionManager = new Marionette.RegionManager();
         regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });

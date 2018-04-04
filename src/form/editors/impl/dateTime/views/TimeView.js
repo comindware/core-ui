@@ -83,7 +83,7 @@ export default Marionette.LayoutView.extend({
     },
 
     hasFocus() {
-        return $.contains(this.el, document.activeElement);
+        return this.el.contains(document.activeElement);
     },
 
     __getDropdownView() {
