@@ -6,7 +6,6 @@ const selectionTypes = {
 };
 
 const classes = {
-    SELECTION_ALL: 'grid-selection-cell-all',
     CHECKED: 'editor_checked',
     CHECKED_SOME: 'editor_checked_some'
 };
@@ -34,9 +33,6 @@ export default Marionette.ItemView.extend({
     },
 
     onRender() {
-        if (this.options.selectionType === selectionTypes.all) {
-            this.el.classList.add(classes.SELECTION_ALL);
-        }
         this.__updateState();
     },
 

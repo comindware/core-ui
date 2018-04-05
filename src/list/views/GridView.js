@@ -9,6 +9,9 @@ import SelectionCellView from './SelectionCellView';
 import GridHeaderView from './GridHeaderView';
 import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
+import ToolbarView from '../../components/toolbar/ToolbarView';
+import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
+import SearchBarView from '../../views/SearchBarView';
 
 /*
     Public interface:
@@ -90,14 +93,6 @@ export default Marionette.LayoutView.extend({
         this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
 
         const childView = options.childView || RowView;
-        // if (options.useDefaultRowView) {
-        //     _.each(options.columns, column => {
-        //         if (column.cellView === undefined) { throw new Error('You must specify cellView for each column (useDefaultRowView flag is true)'); }
-        //     });
-        //
-        //     childView = RowView;
-        //     options.childHeight = constants.gridRowHeight;
-        // }
 
         const childViewOptions = _.extend(options.childViewOptions || {}, {
             columns: options.columns,
@@ -124,7 +119,7 @@ export default Marionette.LayoutView.extend({
         });
 
         this.selectionPanelView = new SelectionPanelView({
-            collection: this.collection,
+            collection: this.listView.collection,
             gridEventAggregator: this
         });
 
@@ -136,7 +131,7 @@ export default Marionette.LayoutView.extend({
 
         this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
             if (eventName.startsWith(eventName, 'childview')) {
-                this.trigger.apply(this, [eventName, view ].concat(eventArguments));
+                this.trigger.apply(this, [eventName, view].concat(eventArguments));
             }
         });
 
@@ -149,6 +144,18 @@ export default Marionette.LayoutView.extend({
         this.updatePosition = this.listView.updatePosition.bind(this.listView);
         if (this.collection.length) {
             this.__presortCollection(options.columns);
+        }
+        this.collection = options.collection;
+
+        if (options.showToolbar) {
+            this.toolbarView = new ToolbarView({
+                allItemsCollection: options.actions || new Backbone.Collection()
+            });
+            this.listenTo(this.toolbarView, 'command:execute', this.__executeAction);
+        }
+        if (options.showSearch) {
+            this.searchView = new SearchBarView();
+            this.listenTo(this.searchView, 'search', this.__onSearch);
         }
     },
 
@@ -168,12 +175,28 @@ export default Marionette.LayoutView.extend({
         contentRegion: '.js-grid-content-view',
         selectionPanelRegion: '.js-grid-selection-panel-view',
         selectionHeaderRegion: '.js-grid-selection-header-view',
-        noColumnsViewRegion: '.js-nocolumns-view-region'
+        noColumnsViewRegion: '.js-nocolumns-view-region',
+        toolbarRegion: '.js-grid-tools-toolbar-region',
+        searchRegion: '.js-grid-tools-search-region',
+        loadingRegion: '.js-loading-region'
     },
 
-    className: 'grid',
+    ui: {
+        title: '.js-grid-title',
+        tools: '.js-grid-tools',
+        header: '.js-grid-header'
+    },
+
+    className: 'fr-collection',
 
     template: Handlebars.compile(template),
+
+    behaviors: {
+        LoadingBehavior: {
+            behaviorClass: LoadingBehavior,
+            region: 'loadingRegion'
+        }
+    },
 
     onRender() {
         const elementWidth = this.$el.width();
@@ -181,15 +204,31 @@ export default Marionette.LayoutView.extend({
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
         }
-        this.headerRegion.show(this.headerView);
         this.contentRegion.show(this.listView);
-        this.selectionPanelRegion.show(this.selectionPanelView);
-        this.selectionHeaderRegion.show(this.selectionHeaderView);
+        this.headerRegion.show(this.headerView);
+        if (this.options.showSelection) {
+            this.selectionHeaderRegion.show(this.selectionHeaderView);
+            this.selectionPanelRegion.show(this.selectionPanelView);
+        }
+        if (this.options.showToolbar) {
+            this.toolbarRegion.show(this.toolbarView);
+        }
+        if (this.options.showSearch) {
+            this.searchRegion.show(this.searchView);
+        }
+        if (!(this.options.showToolbar || this.options.showSearch)) {
+            this.ui.tools.hide();
+        }
         const updatedElementWidth = this.$el.width();
         if (elementWidth !== updatedElementWidth) {
             // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
             this.headerView.handleResize();
             this.listView.handleResize();
+        }
+        if (this.getOption('title')) {
+            this.ui.title.text(this.getOption('title') || '');
+        } else {
+            this.ui.title.hide();
         }
     },
 
@@ -199,6 +238,17 @@ export default Marionette.LayoutView.extend({
         }
         document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
+    },
+
+    __executeAction(actionKind) {
+        this.trigger('execute:action', actionKind);
+    },
+
+    __onSearch(text) {
+        this.trigger('search', text);
+        if (this.options.isTree) {
+            this.nativeGridView.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
+        }
     },
 
     __bindListRegionScroll() {
@@ -215,7 +265,7 @@ export default Marionette.LayoutView.extend({
     sortBy(columnIndex, sorting) {
         const column = this.options.columns[columnIndex];
         if (sorting) {
-            this.options.columns.forEach(c => c.sorting = null);
+            this.options.columns.forEach(c => (c.sorting = null));
             column.sorting = sorting;
 
             switch (sorting) {
@@ -230,7 +280,7 @@ export default Marionette.LayoutView.extend({
             }
         } else {
             sorting = column.sorting;
-            this.options.columns.forEach(c => c.sorting = null);
+            this.options.columns.forEach(c => (c.sorting = null));
 
             switch (sorting) {
                 case 'asc':

@@ -24,7 +24,6 @@
     overflow: auto;
 }
 
-
 .visible-collection {
     height: 100%;
     width: 100%;
@@ -46,48 +45,38 @@
 
 .grid {
     height: 100%;
+    width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .grid-content-wrp {
-    position: absolute;
-    top: 0;
-    left: 30px;
-    bottom: 0;
-    right: 0;
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.grid-header-wrp {
+    display: flex;
+    flex: 0 0 auto;
 }
 
 .grid-content-view {
-    position: absolute;
-    top: 51px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-
-.grid-selection-panel-wrp {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 30px;
-    overflow: hidden;
+    position: relative;
+    flex: 1 1 auto;
 }
 
 .grid-selection-panel-region {
-    position: absolute;
-    top: 51px;
-    bottom: 0;
-    width: 30px;
+    position: relative;
     overflow: hidden;
 }
 
 .grid-selection-panel {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
-    bottom: 0;
-    top: 0;
-    left: 0;
+    width: 30px;
 }
 
 .grid-content-view > .list-view {
@@ -135,7 +124,13 @@
 }
 
 .grid-selection-cell-all {
-    height: 51px;
+    height: 31px;
+}
+
+.grid-selection-cell-all .grid-selection-cell{
+    height: 31px;
+    position: relative;
+    border-bottom: 1px solid #DFE4E8;
 }
 
 .grid-selection-cell .checkbox {
@@ -160,11 +155,9 @@
 }
 
 .grid-header-view {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    height: 51px;
+    height: 31px;
     border-bottom: 1px solid #DFE4E8;
     border-collapse: collapse;
     overflow: hidden;
@@ -415,6 +408,9 @@ svg.svg-grid-icons {
 .fr-collection{
     padding: 10px 0;
     position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .editable-grid-header{
@@ -464,6 +460,8 @@ svg.svg-grid-icons {
 .form-label_editable-grid{
     line-height: inherit;
     flex: 1;
+    position: absolute;
+    margin-top: -14px;
 }
 
 .editable-grid-header-btn{
@@ -507,8 +505,10 @@ svg.svg-grid-icons {
 
 
 .fr-collection-grid{
-    /*flex: 1 1 auto;*/
-    /*display: flex;*/
+    flex: 1 1 auto;
+    display: flex;
+    position: relative;
+    height: 100%;
 }
 
 .fr-collection-grid .native-grid{

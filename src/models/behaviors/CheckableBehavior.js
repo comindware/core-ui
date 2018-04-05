@@ -19,7 +19,7 @@ CheckableBehavior.CheckableCollection = function(collection) {
 _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
     check(model) {
-        if (this.checked[model.cid]) { return; }
+        if (this.internalCheck || this.checked[model.cid]) { return; }
 
         this.checked[model.cid] = model;
         model.check();
@@ -27,7 +27,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     uncheck(model) {
-        if (!this.checked[model.cid]) { return; }
+        if (this.internalCheck || !this.checked[model.cid]) { return; }
 
         delete this.checked[model.cid];
         model.uncheck();
@@ -43,12 +43,22 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     checkAll() {
-        this.each(model => { model.check(); });
+        this.internalCheck = true;
+        this.each(model => {
+            this.checked[model.cid] = model;
+            model.check();
+        });
+        this.internalCheck = false;
         calculateCheckedLength(this);
     },
 
     uncheckAll() {
-        this.each(model => { model.uncheck(); });
+        this.internalCheck = true;
+        this.each(model => {
+            delete this.checked[model.cid];
+            model.uncheck();
+        });
+        this.internalCheck = false;
         calculateCheckedLength(this);
     },
 

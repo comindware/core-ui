@@ -1,9 +1,9 @@
 import utils from 'utils';
-import CommonGridView from '../views/CommonGridView';
+import GridView from '../views/GridView';
 import meta from '../meta';
-import EditableGridCellViewFactory from '../services/EditableGridCellViewFactory';
+import CellViewFactory from '../CellViewFactory';
 import VirtualCollection from '../../collections/VirtualCollection';
-import factory from '../../nativeGrid/factory';
+import factory from '../factory';
 
 /*
  * @param {Array} options.excludeActions Array of strings. Example: <code>[ 'archive', 'delete' ]</code>.
@@ -20,17 +20,17 @@ export default Marionette.Object.extend({
 
     __createModel() {
         this.allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
-        this.collection = factory.createTree({ collection: this.getOption('collection') });
+        this.collection = factory.createWrappedCollection(this.options);
         this.columns = this.__getColumns();
-        if (this.options.showSelectColumn !== false) {
-            this.listenTo(this.nativeGridCollection, 'check:all check:some check:none', this.__updateActions);
+        if (this.options.showSelection) {
+            this.listenTo(this.collection, 'check:all check:some check:none', this.__updateActions);
         } else {
-            this.listenTo(this.nativeGridCollection, 'select:all select:some select:none', this.__updateActions);
+            this.listenTo(this.collection, 'select:all select:some select:none', this.__updateActions);
         }
     },
 
     __createView() {
-        this.view = new CommonGridView(
+        this.view = new GridView(
             Object.assign(this.options, {
                 actions: this.allToolbarActions,
                 collection: this.collection,
@@ -40,8 +40,8 @@ export default Marionette.Object.extend({
         this.listenTo(this.view, 'show', this.__updateActions);
         this.listenTo(this.view, 'search', this.__onSearch);
         this.listenTo(this.view, 'execute:action', this.__executeAction);
-        this.listenTo(this.view, 'item:click', this.__onItemClick);
-        this.listenTo(this.view, 'item:dblclick', this.__onItemDblClick);
+        this.listenTo(this.view, 'childview:click', this.__onItemClick);
+        this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
     },
 
     __onSearch(text) {
@@ -191,7 +191,7 @@ export default Marionette.Object.extend({
     __getColumns() {
         return this.getOption('columns').map(column => ({
             id: column.key,
-            cellView: column.cellView || column.customizeCellView || EditableGridCellViewFactory.getCellViewForColumn(column),
+            cellView: column.cellView || column.customizeCellView || CellViewFactory.getCellViewForColumn(column),
             viewModel: new Backbone.Model({ displayText: column.title || column.displayText }),
             sortAsc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'asc'), column.key),
             sortDesc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'desc'), column.key),

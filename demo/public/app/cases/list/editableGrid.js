@@ -89,12 +89,15 @@ export default () => {
 
     // 3. Create grid
     const EditableGridView = new core.editableGrid.views.EditableGridView({
+    const commonGridController = new core.list.controllers.CommonGridController({
         columns,
         selectableBehavior: 'multi',
-        collection: new Backbone.Collection(dataArray),
-        title: 'Editable grid',
+        showToolbar: true,
         showSearch: true,
-        searchColumns: ['textCell']
+        showSelection: true,
+        showHeader: false,
+        collection: new Backbone.Collection(dataArray),
+        title: 'Editable grid'
     });
 
     // 4. Show created views

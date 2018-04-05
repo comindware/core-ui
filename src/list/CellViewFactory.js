@@ -1,7 +1,16 @@
 import { objectPropertyTypes } from '../Meta';
 import { helpers } from 'utils';
+import EditableCellView from './views/EditableCellView';
 
 const factory = {
+    getCellViewForColumn(column) {
+        if (!column.readonly || column.editable) {
+            return EditableCellView.extend({
+                schema: column
+            });
+        }
+        return this.getCellViewByDataType(column.type);
+    },
     getCellViewByDataType(type) {
         let result;
 
@@ -73,12 +82,14 @@ const factory = {
                 return _.isBoolean(this.value);
             }
         };
-        
+
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
                 '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
                 '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-            '{{/if}}', templateHelpers);
+                '{{/if}}',
+            templateHelpers
+        );
     },
 
     getDateTimeCellView() {

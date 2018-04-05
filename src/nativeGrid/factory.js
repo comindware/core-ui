@@ -35,7 +35,6 @@ const createWrappedCollection = (collection, options) => {
 const createTree = options => {
     const collection = options.collection;
     const childrenAttribute = options.childrenAttribute;
-    const resultCollection = new Backbone.Collection();
     const createTreeNodes = (sourceCollection, targetCollection, parentModel = null) => {
         sourceCollection.forEach(item => {
             let children;
@@ -58,8 +57,8 @@ const createTree = options => {
         });
     };
     if (childrenAttribute) {
-        createTreeNodes(collection, resultCollection);
-        return new VirtualCollection(resultCollection);
+        createTreeNodes(collection, collection);
+        return new VirtualCollection(collection);
     }
     return createWrappedCollection(options.collection, options);
 };
@@ -92,7 +91,6 @@ export default {
                 onColumnSort: options.onColumnSort,
                 headerView: options.headerView,
                 rowView: options.rowView,
-                treeRowView: options.treeRowView,
                 rowViewSelector: options.rowViewSelector,
                 emptyView: options.emptyView
             },

@@ -1,7 +1,7 @@
-import form from 'form';
+import FieldView from '../../form/fields/FieldView';
 import template from '../templates/editableCellField.hbs';
 
-export default form.Field.extend({
+export default FieldView.extend({
     template: Handlebars.compile(template),
 
     className: 'editable-grid-field',

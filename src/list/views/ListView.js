@@ -1,5 +1,4 @@
-import { keypress } from 'lib';
-import { helpers, htmlHelpers } from 'utils';
+import { keyCode, helpers, htmlHelpers } from 'utils';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -110,7 +109,8 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     events: {
-        scroll: '__onScroll'
+        scroll: '__onScroll',
+        keydown: '__handleKeydown'
     },
 
     className: 'list',
@@ -121,8 +121,6 @@ const ListView = Marionette.CompositeView.extend({
         // Updating viewportHeight and rendering subviews
         this.collection.updateWindowSize(1);
         this.handleResize();
-        this.cachedChildren = this.collection.length;
-        // _.defer(() => this.__cacheVirtualChildren());
     },
 
     onRender() {
@@ -148,41 +146,87 @@ const ListView = Marionette.CompositeView.extend({
         return childView;
     },
 
-    keyboardShortcuts: {
-        up(e) {
-            this.moveCursorBy(-1, e.shiftKey);
-        },
-        down(e) {
-            this.moveCursorBy(+1, e.shiftKey);
-        },
-        pageup(e) {
-            const delta = Math.ceil(this.state.viewportHeight * 0.8);
-            this.moveCursorBy(-delta, e.shiftKey);
-        },
-        pagedown(e) {
-            const delta = Math.ceil(this.state.viewportHeight * 0.8);
-            this.moveCursorBy(delta, e.shiftKey);
-        },
-        home(e) {
-            this.__moveCursorTo(0, e.shiftKey);
-        },
-        end(e) {
-            this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
-        }
+    // keyboardShortcuts: {
+    //     up(e) {
+    //         this.moveCursorBy(-1, e.shiftKey);
+    //     },
+    //     down(e) {
+    //         this.moveCursorBy(+1, e.shiftKey);
+    //     },
+    //     pageup(e) {
+    //         const delta = Math.ceil(this.state.viewportHeight * 0.8);
+    //         this.moveCursorBy(-delta, e.shiftKey);
+    //     },
+    //     pagedown(e) {
+    //         const delta = Math.ceil(this.state.viewportHeight * 0.8);
+    //         this.moveCursorBy(delta, e.shiftKey);
+    //     },
+    //     home(e) {
+    //         this.__moveCursorTo(0, e.shiftKey);
+    //     },
+    //     end(e) {
+    //         this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
+    //     }
+    // },
+
+    up(e) {
+        this.moveCursorBy(-1, e.shiftKey);
+    },
+    down(e) {
+        this.moveCursorBy(+1, e.shiftKey);
+    },
+    pageup(e) {
+        const delta = Math.ceil(this.state.viewportHeight * 0.8);
+        this.moveCursorBy(-delta, e.shiftKey);
+    },
+    pagedown(e) {
+        const delta = Math.ceil(this.state.viewportHeight * 0.8);
+        this.moveCursorBy(delta, e.shiftKey);
+    },
+    home(e) {
+        this.__moveCursorTo(0, e.shiftKey);
+    },
+    end(e) {
+        this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
     },
 
-    __cacheVirtualChildren() {
-        const pageSize = this.collection.length;
-        let i;
-        for (i = this.cachedChildren - 1; i < this.cachedChildren + pageSize && i < this.parentCollection.length; i++) {
-            const childModel = this.parentCollection.at(i);
-            const childView = this.buildChildView(childModel, this.getChildView(childModel), this.childViewOptions);
-            childView.render();
-            this.rowsPull[childModel.cid] = childView;
+    __handleKeydown(e) {
+        let delta;
+        if (e.target.tagName === 'INPUT') {
+            return;
         }
-        this.cachedChildren = i;
-        if (i < this.parentCollection.length) {
-            _.defer(() => this.__cacheVirtualChildren());
+        switch (event.keyCode) {
+            case keyCode.UP:
+                this.moveCursorBy(-1, e.shiftKey);
+                return false;
+            case keyCode.DOWN:
+                this.moveCursorBy(+1, e.shiftKey);
+                return false;
+            case keyCode.PAGE_UP:
+                delta = Math.ceil(this.state.viewportHeight * 0.8);
+                this.moveCursorBy(-delta, e.shiftKey);
+                return false;
+            case keyCode.PAGE_DOWN:
+                delta = Math.ceil(this.state.viewportHeight * 0.8);
+                this.moveCursorBy(delta, e.shiftKey);
+                return false;
+            case keyCode.LEFT:
+            case keyCode.RIGHT:
+            case keyCode.DELETE:
+            case keyCode.BACKSPACE:
+            case keyCode.ESCAPE:
+            case keyCode.ENTER:
+            case keyCode.TAB: {
+                break;
+            }
+            case keyCode.HOME:
+                this.__moveCursorTo(0, e.shiftKey);
+                return false;
+            case keyCode.END:
+                this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
+                return false;
+            default:
+                break;
         }
     },
 
@@ -231,10 +275,10 @@ const ListView = Marionette.CompositeView.extend({
 
         const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
         if (nextIndex !== index) {
-            const model = this.collection.at(nextIndex);
-            const selectFn = this.collection.selectSmart || this.collection.select;
+            const model = this.parentCollection.at(nextIndex);
+            const selectFn = this.parentCollection.selectSmart || this.parentCollection.select;
             if (selectFn) {
-                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
+                selectFn.call(this.parentCollection, model, false, shiftPressed, this.getOption('selectOnCursor'));
             }
 
             this.scrollTo(nextIndex);
@@ -259,28 +303,6 @@ const ListView = Marionette.CompositeView.extend({
     // normalized the index so that it fits in range [0, this.collection.length - 1]
     __normalizeCollectionIndex(index) {
         return Math.max(0, Math.min(this.parentCollection.length - 1, index));
-    },
-
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            if (typeof value === 'object') {
-                this.keyListener.register_combo(
-                    _.extend(
-                        {
-                            keys: key,
-                            this: this
-                        },
-                        value
-                    )
-                );
-            } else {
-                this.keyListener.simple_combo(key, value.bind(this));
-            }
-        });
     },
 
     __onScroll() {
