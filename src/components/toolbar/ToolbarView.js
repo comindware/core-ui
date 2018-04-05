@@ -29,7 +29,7 @@ export default Marionette.LayoutView.extend({
         popupMenuRegion: '.js-menu-actions-region'
     },
 
-    onShow() {
+    onAttach() {
         this.rebuildView();
     },
 

@@ -10,7 +10,10 @@ export default Marionette.ItemView.extend({
     },
 
     onRender() {
-        this.$el.addClass(severity[this.model.get('severity')].class);
+        const severityLevel = this.model.get('severity');
+        const severityItem = severity[severityLevel] || severity.None;
+
+        this.$el.addClass(severityItem.class);
         if (this.model.get('type') === 'Splitter') {
             this.$el.css({ height: '1px', pointerEvents: 'none' });
         }
