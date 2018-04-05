@@ -32,10 +32,6 @@ const defaultOptions = {
     useSlidingWindow: true
 };
 
-const classses = {
-    scrolled: 'scrolled'
-};
-
 /**
  * Some description for initializer
  * @name ListView
@@ -77,8 +73,8 @@ const ListView = Marionette.CompositeView.extend({
         options.childViewSelector && (this.childViewSelector = options.childViewSelector);
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
-        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+        // this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
+        // this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
         this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
@@ -134,7 +130,6 @@ const ListView = Marionette.CompositeView.extend({
             htmlHelpers.forbidSelection(this.el);
         }
         this.__assignKeyboardShortcuts();
-        this.ui.visibleCollection.addClass(classses.scrolled);
     },
 
     getChildView(child) {
@@ -259,7 +254,7 @@ const ListView = Marionette.CompositeView.extend({
 
     __normalizePosition(position) {
         const maxPos = Math.max(0, this.parentCollection.length - this.state.visibleCollectionSize);
-        return Math.max(0, Math.min(maxPos, position));
+        return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE / 2));
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
@@ -289,6 +284,14 @@ const ListView = Marionette.CompositeView.extend({
         });
     },
 
+    __onScroll() {
+        if (this.state.viewportHeight === undefined || this.parentCollection.length <= this.state.viewportHeight || this.internalScroll) {
+            return;
+        }
+        const newPosition = Math.max(0, Math.floor(this.el.scrollTop / this.childHeight));
+        this.__updatePositionInternal(newPosition, false);
+    },
+
     updatePosition(newPosition) {
         this.__updatePositionInternal(newPosition, false);
     },
@@ -300,7 +303,7 @@ const ListView = Marionette.CompositeView.extend({
             return;
         }
 
-        newPosition = this.collection.updatePosition(newPosition);
+        newPosition = this.collection.updatePosition(Math.max(0, newPosition));
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
@@ -338,6 +341,9 @@ const ListView = Marionette.CompositeView.extend({
         this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE);
         this.ui.visibleCollection.height(this.childHeight * this.parentCollection.length);
+        if (this.gridEventAggregator) {
+            this.gridEventAggregator.trigger('update:height');
+        }
 
         // Applying the result of computation
         if (this.state.viewportHeight === oldViewportHeight && adjustedElementHeight === elementHeight) {
@@ -392,26 +398,25 @@ const ListView = Marionette.CompositeView.extend({
         return adjustedElementHeight;
     },
 
-    __onScroll() {
-        if (this.state.viewportHeight === undefined || this.parentCollection.length <= this.state.viewportHeight || this.internalScroll) {
-            return;
-        }
-        const newPosition = Math.max(0, Math.floor(this.el.scrollTop / this.childHeight));
-        this.__updatePositionInternal(newPosition, false);
-    },
-
     addChild(child, ChildView, index) {
         let view = this.rowsPull[child.cid];
         if (view) {
-            this._updateIndices(view, true, index);
-            this.children.add(view);
-            this.attachHtml(this, view, index);
-            view.delegateEvents();
+            requestAnimationFrame(() => {
+                this._updateIndices(view, true, index);
+                this.children.add(view);
+                this.attachHtml(this, view, index);
+                view.delegateEvents();
+            });
         } else {
             view = Marionette.CompositeView.prototype.addChild.apply(this, arguments);
             this.rowsPull[child.cid] = view;
         }
-        view.el.style.top = `${this.parentCollection.indexOf(child) * this.childHeight}px`;
+        requestAnimationFrame(() => {
+            const top = `${this.parentCollection.indexOf(child) * this.childHeight}px`;
+            view.el.style.top = top;
+            child.trigger('update:top', top);
+        });
+        // view.el.style.top = `${this.parentCollection.indexOf(child) * this.childHeight}px`;
         return view;
     },
 

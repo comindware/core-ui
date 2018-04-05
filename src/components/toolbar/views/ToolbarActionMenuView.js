@@ -7,7 +7,10 @@ export default Marionette.ItemView.extend({
     template: false,
 
     className() {
-        return this.model.has('severity') ? severity[this.model.get('severity')].class : 'toolbar-btn';
+        const severityLevel = this.model.get('severity');
+        const severityItem = severity[severityLevel] || severity.None;
+
+        return this.model.has('severity') ? severityItem.class : 'toolbar-btn';
     },
 
     onRender() {

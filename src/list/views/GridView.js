@@ -4,7 +4,8 @@ import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
 import ListView from './ListView';
 import RowView from './RowView';
-// import TreeRowView from '../../nativeGrid/views/TreeRowView';
+import SelectionPanelView from './SelectionPanelView';
+import SelectionCellView from './SelectionCellView';
 import GridHeaderView from './GridHeaderView';
 import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
@@ -122,6 +123,17 @@ export default Marionette.LayoutView.extend({
             forbidSelection: this.forbidSelection
         });
 
+        this.selectionPanelView = new SelectionPanelView({
+            collection: this.collection,
+            gridEventAggregator: this
+        });
+
+        this.selectionHeaderView = new SelectionCellView({
+            collection: this.collection,
+            selectionType: 'all',
+            gridEventAggregator: this
+        });
+
         this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
             if (eventName.startsWith(eventName, 'childview')) {
                 this.trigger.apply(this, [eventName, view ].concat(eventArguments));
@@ -152,8 +164,10 @@ export default Marionette.LayoutView.extend({
     },
 
     regions: {
-        headerRegion: '.grid-header-view',
-        contentViewRegion: '.grid-content-view',
+        headerRegion: '.js-grid-header-view',
+        contentRegion: '.js-grid-content-view',
+        selectionPanelRegion: '.js-grid-selection-panel-view',
+        selectionHeaderRegion: '.js-grid-selection-header-view',
         noColumnsViewRegion: '.js-nocolumns-view-region'
     },
 
@@ -161,14 +175,16 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    onShow() {
+    onRender() {
         const elementWidth = this.$el.width();
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
         }
         this.headerRegion.show(this.headerView);
-        this.contentViewRegion.show(this.listView);
+        this.contentRegion.show(this.listView);
+        this.selectionPanelRegion.show(this.selectionPanelView);
+        this.selectionHeaderRegion.show(this.selectionHeaderView);
         const updatedElementWidth = this.$el.width();
         if (elementWidth !== updatedElementWidth) {
             // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
@@ -188,6 +204,7 @@ export default Marionette.LayoutView.extend({
     __bindListRegionScroll() {
         this.listView.$el.scroll(event => {
             this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
+            this.selectionPanelRegion.$el.scrollTop(event.currentTarget.scrollTop);
         });
     },
 

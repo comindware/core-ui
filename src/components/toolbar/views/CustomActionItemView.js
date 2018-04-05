@@ -9,7 +9,10 @@ export default Marionette.ItemView.extend({
 
     onRender() {
         const iconClass = this.model.get('iconClass');
-        this.$el.addClass(severity[this.model.get('severity')].class);
+        const severityLevel = this.model.get('severity');
+        const severityItem = severity[severityLevel] || severity.None;
+
+        this.$el.addClass(severityItem.class);
         if (iconClass) {
             const icon = `<i class="fa fa-${iconClass}" aria-hidden="true"></i>`;
             this.$el.children('.js-icon-container').html(icon);

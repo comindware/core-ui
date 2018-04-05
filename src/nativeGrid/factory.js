@@ -35,9 +35,6 @@ const createWrappedCollection = (collection, options) => {
 const createTree = options => {
     const collection = options.collection;
     const childrenAttribute = options.childrenAttribute;
-    if (!childrenAttribute) {
-        return collection;
-    }
     const resultCollection = new Backbone.Collection();
     const createTreeNodes = (sourceCollection, targetCollection, parentModel = null) => {
         sourceCollection.forEach(item => {
@@ -49,8 +46,6 @@ const createTree = options => {
             } else if (sourceCollection instanceof Backbone.Collection) {
                 children = item.get(childrenAttribute);
                 attributes = item.attributes;
-            } else {
-                helpers.throwError('Invalid collection', 'ArgumentError');
             }
             const treeLeaf = new Backbone.Model(attributes);
             treeLeaf.parentModel = parentModel;
@@ -62,8 +57,11 @@ const createTree = options => {
             }
         });
     };
-    createTreeNodes(collection, resultCollection);
-    return resultCollection;
+    if (childrenAttribute) {
+        createTreeNodes(collection, resultCollection);
+        return new VirtualCollection(resultCollection);
+    }
+    return createWrappedCollection(options.collection, options);
 };
 
 export default {

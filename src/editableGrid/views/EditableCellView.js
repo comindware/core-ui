@@ -9,7 +9,6 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        // _.defer(() => this.__showEditor());
         this.__showEditor();
     },
 

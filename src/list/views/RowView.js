@@ -50,12 +50,44 @@ export default Marionette.ItemView.extend({
 
     initialize() {
         _.defaults(this.options, defaultOptions);
-        this.listenTo(this.model, 'checked', this.__onModelChecked);
-        this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
+
+        // TODO: think about implementation in tree or grouped grids
+        // this.listenTo(this.model, 'checked', this.__onModelChecked);
+        // this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
     },
 
     getValue(id) {
         this.model.get(id);
+    },
+
+    onRender() {
+        const model = this.model;
+        if (model.selected) {
+            this.__handleSelection();
+        }
+        if (model.highlighted) {
+            this.__handleHighlight(model.highlightedFragment);
+        }
+    },
+
+    onDestroy() {
+        if (this.cellViews) {
+            this.cellViews.forEach(x => x.destroy());
+        }
+    },
+
+    updateCollapsed(collapsed, external) {
+        if (!collapsed) {
+            this.model.expand();
+            if (external) {
+                this.model.hidden = false;
+            }
+        } else {
+            this.model.collapse();
+            if (this.model.level && external) {
+                this.model.hidden = true;
+            }
+        }
     },
 
     _renderTemplate() {
@@ -87,8 +119,10 @@ export default Marionette.ItemView.extend({
                 const hasChildren = this.model.children && this.model.children.length;
                 cellView.on('render', () => {
                     if (hasChildren) {
-                        cellView.el.insertAdjacentHTML('afterbegin',
-                            `<span class="collapsible-btn js-collapsible-button ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></span>`);
+                        cellView.el.insertAdjacentHTML(
+                            'afterbegin',
+                            `<span class="collapsible-btn js-collapsible-button ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></span>`
+                        );
                     } else {
                         cellView.el.insertAdjacentHTML('afterbegin', `<span style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
                     }
@@ -101,12 +135,6 @@ export default Marionette.ItemView.extend({
             cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
             this.cellViews.push(cellView);
         });
-    },
-
-    onDestroy() {
-        if (this.cellViews) {
-            this.cellViews.forEach(x => x.destroy());
-        }
     },
 
     __handleHighlight(fragment) {
@@ -138,16 +166,6 @@ export default Marionette.ItemView.extend({
         this.__setInitialWidth();
     },
 
-    onRender() {
-        const model = this.model;
-        if (model.selected) {
-            this.__handleSelection();
-        }
-        if (model.highlighted) {
-            this.__highlight(model.highlightedFragment);
-        }
-    },
-
     __handleSelection() {
         this.el.classList.add(classes.selected);
     },
@@ -160,20 +178,6 @@ export default Marionette.ItemView.extend({
         this.updateCollapsed(this.model.collapsed === undefined ? false : !this.model.collapsed);
         this.trigger('toggle:collapse', this.model);
         return false;
-    },
-
-    updateCollapsed(collapsed, external) {
-        if (!collapsed) {
-            this.model.expand();
-            if (external) {
-                this.model.hidden = false;
-            }
-        } else {
-            this.model.collapse();
-            if (this.model.level && external) {
-                this.model.hidden = true;
-            }
-        }
     },
 
     __onModelChecked() {

@@ -31,7 +31,7 @@
     position: relative;
 }
 
-.visible-collection.scrolled > div {
+.visible-collection > div {
     position: absolute;
     width: 100%
 }
@@ -49,12 +49,45 @@
     position: relative;
 }
 
+.grid-content-wrp {
+    position: absolute;
+    top: 0;
+    left: 30px;
+    bottom: 0;
+    right: 0;
+}
+
 .grid-content-view {
     position: absolute;
     top: 51px;
     left: 0;
     bottom: 0;
     right: 0;
+}
+
+.grid-selection-panel-wrp {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    overflow: hidden;
+}
+
+.grid-selection-panel-region {
+    position: absolute;
+    top: 51px;
+    bottom: 0;
+    width: 30px;
+    overflow: hidden;
+}
+
+.grid-selection-panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    top: 0;
+    left: 0;
 }
 
 .grid-content-view > .list-view {
@@ -92,6 +125,22 @@
     cursor: default;
     flex: 0 0 auto;
     min-width: 30px;
+}
+
+.grid-selection-cell {
+    display: inline-block;
+    height: 25px;
+    width: 30px;
+    position: absolute;
+}
+
+.grid-selection-cell-all {
+    height: 51px;
+}
+
+.grid-selection-cell .checkbox {
+    top: calc(50% - 7px);
+    left: calc(50% - 7px);
 }
 
 .fr-collection-grid .grid-header {
@@ -369,12 +418,32 @@ svg.svg-grid-icons {
 }
 
 .editable-grid-header{
-    height: 25px;
+    height: 38px;
     padding: 0 10px;
+    white-space: nowrap;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
     background: #f7f6f6;
+    color: #636262;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid #dfe4e8;
 }
 
 .editable-grid-header .tr-search {
