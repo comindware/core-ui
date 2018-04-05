@@ -1,4 +1,3 @@
-import { keypress } from 'lib';
 import list from 'list';
 import dropdown from 'dropdown';
 import { helpers } from 'utils';
@@ -80,55 +79,54 @@ export default Marionette.LayoutView.extend({
         this.__updateFilter();
     },
 
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            const keys = key.split(',');
-            _.each(keys, k => {
-                this.keyListener.simple_combo(k, value.bind(this));
-            });
-        });
-    },
-
-    keyboardShortcuts: {
-        up() {
-            this.listView.moveCursorBy(-1, false);
-        },
-        down() {
-            this.listView.moveCursorBy(1, false);
-        },
-        'enter,num_enter,tab'() {
-            if (this.isLoading) {
-                return;
+    __updateFilter(e) {
+        switch (e.keyCode) {
+            case 9:
+            case 8: {
+                if (this.isLoading) {
+                    return;
+                }
+                const selectedModel = this.model.get('collection').selected;
+                this.reqres.request('value:set', selectedModel.id);
+                break;
             }
-            const selectedModel = this.model.get('collection').selected;
-            this.reqres.request('value:set', selectedModel.id);
-        },
-        esc() {
-            this.trigger('cancel');
+            case 27: {
+                this.trigger('cancel');
+                break;
+            }
+            case 38: {
+                this.listView.moveCursorBy(-1, false);
+                break;
+            }
+            case 40: {
+                this.listView.moveCursorBy(1, false);
+                break;
+            }
+            default:
+                break;
         }
-    },
-
-    __updateFilter() {
         const text = (this.ui.input.val() || '').trim();
         if (this.activeText === text) {
             return;
         }
-        helpers.setUniqueTimeout(this.fetchDelayId, () => {
-            this.activeText = text;
-            const collection = this.model.get('collection');
-            collection.deselect();
-            this.reqres.request('filter:text', {
-                text
-            }).then(() => {
-                if (collection.length > 0) {
-                    const model = collection.at(0);
-                    model.select();
-                }
-            });
-        }, config.TEXT_FETCH_DELAY);
+        helpers.setUniqueTimeout(
+            this.fetchDelayId,
+            () => {
+                this.activeText = text;
+                const collection = this.model.get('collection');
+                collection.deselect();
+                this.reqres
+                    .request('filter:text', {
+                        text
+                    })
+                    .then(() => {
+                        if (collection.length > 0) {
+                            const model = collection.at(0);
+                            model.select();
+                        }
+                    });
+            },
+            config.TEXT_FETCH_DELAY
+        );
     }
 });

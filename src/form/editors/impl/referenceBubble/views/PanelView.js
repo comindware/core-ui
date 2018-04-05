@@ -19,7 +19,7 @@ export default Marionette.LayoutView.extend({
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
         this.__updateWithDelay = _.debounce(this.__updateFilterNow, this.options.textFilterDelay);
-        this.reqres.setHandler('try:value:select', this.__proxyValueSelect, this);
+        this.reqres.reply('try:value:select', this.__proxyValueSelect, this);
     },
 
     className: 'dd-list dd-list_reference',

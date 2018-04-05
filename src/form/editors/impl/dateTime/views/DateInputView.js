@@ -1,11 +1,3 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 10.09.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import { helpers, dateHelpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import DateTimeService from '../../../services/DateTimeService';

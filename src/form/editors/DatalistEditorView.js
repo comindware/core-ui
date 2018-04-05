@@ -57,7 +57,7 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
 
         _.bindAll(this, '__getDisplayText');
 
-        this.reqres = new Backbone.Wreqr.RequestResponse();
+        this.reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
         this.controller
             = this.options.controller
             || new StaticController({
@@ -65,17 +65,17 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
             });
         this.showAddNewButton = this.options.showAddNewButton;
 
-        this.reqres.setHandler('bubble:delete', this.__onBubbleDelete, this);
-        this.reqres.setHandler('bubble:delete:last', this.__onBubbleDeleteLast, this);
-        this.reqres.setHandler('input:search', this.__onInputSearch, this);
-        this.reqres.setHandler('input:up', this.__onInputUp, this);
-        this.reqres.setHandler('input:down', this.__onInputDown, this);
-        this.reqres.setHandler('button:click', this.__onButtonClick, this);
-        this.reqres.setHandler('value:select', this.__onValueSelect, this);
-        this.reqres.setHandler('value:edit', this.__onValueEdit, this);
-        this.reqres.setHandler('filter:text', this.__onFilterText, this);
-        this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
-        this.reqres.setHandler('view:ready', this.__triggerReady, this);
+        this.reqres.reply('bubble:delete', this.__onBubbleDelete, this);
+        this.reqres.reply('bubble:delete:last', this.__onBubbleDeleteLast, this);
+        this.reqres.reply('input:search', this.__onInputSearch, this);
+        this.reqres.reply('input:up', this.__onInputUp, this);
+        this.reqres.reply('input:down', this.__onInputDown, this);
+        this.reqres.reply('button:click', this.__onButtonClick, this);
+        this.reqres.reply('value:select', this.__onValueSelect, this);
+        this.reqres.reply('value:edit', this.__onValueEdit, this);
+        this.reqres.reply('filter:text', this.__onFilterText, this);
+        this.reqres.reply('add:new:item', this.__onAddNewItem, this);
+        this.reqres.reply('view:ready', this.__triggerReady, this);
 
         this.value = this.__adjustValue(this.value);
 

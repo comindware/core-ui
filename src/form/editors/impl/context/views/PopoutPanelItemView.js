@@ -20,7 +20,7 @@ export default Marionette.CompositeView.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'data-source',
+    className: 'left-menu__list-g',
 
     ui: {
         itemIcon: '.js-item-toggle-icon',

@@ -1,3 +1,4 @@
+import { $ } from 'lib';
 import { helpers } from 'utils';
 import AjaxService from './services/AjaxService';
 import GlobalEventService from './services/GlobalEventService';
