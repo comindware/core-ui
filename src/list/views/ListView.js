@@ -141,7 +141,7 @@ const ListView = Marionette.CompositeView.extend({
 
         const childView = this.getOption('childView');
         if (!childView) {
-            helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
+            helpers.throwInvalidOperationError("ListView: you must specify either 'childView' or 'childViewSelector' option.");
         }
         return childView;
     },
@@ -195,6 +195,7 @@ const ListView = Marionette.CompositeView.extend({
         if (e.target.tagName === 'INPUT') {
             return;
         }
+        const selectedModels = this.parentCollection.selected instanceof Backbone.Model ? [this.parentCollection.selected] : Object.values(this.parentCollection.selected);
         switch (event.keyCode) {
             case keyCode.UP:
                 this.moveCursorBy(-1, e.shiftKey);
@@ -210,12 +211,24 @@ const ListView = Marionette.CompositeView.extend({
                 delta = Math.ceil(this.state.viewportHeight * 0.8);
                 this.moveCursorBy(delta, e.shiftKey);
                 return false;
+            case keyCode.ENTER:
+                selectedModels.forEach(model => model.toggleChecked());
+                return false;
             case keyCode.LEFT:
+                if (this.options.isTree) {
+                    selectedModels.forEach(model => model.collapse());
+                    return false;
+                }
+                break;
             case keyCode.RIGHT:
+                if (this.options.isTree) {
+                    selectedModels.forEach(model => model.expand());
+                    return false;
+                }
+                break;
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
             case keyCode.ESCAPE:
-            case keyCode.ENTER:
             case keyCode.TAB: {
                 break;
             }
@@ -361,9 +374,10 @@ const ListView = Marionette.CompositeView.extend({
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE);
-        this.ui.visibleCollection.height(this.childHeight * this.parentCollection.length);
+        const allItemsHegiht = this.childHeight * this.parentCollection.length;
+        this.ui.visibleCollection.height(allItemsHegiht);
         if (this.gridEventAggregator) {
-            this.gridEventAggregator.trigger('update:height');
+            this.gridEventAggregator.trigger('update:height', allItemsHegiht);
         }
 
         // Applying the result of computation

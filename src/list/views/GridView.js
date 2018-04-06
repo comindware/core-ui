@@ -115,7 +115,8 @@ export default Marionette.LayoutView.extend({
             loadingChildView: options.loadingChildView || LoadingChildView,
             maxRows: options.maxRows,
             height: options.height,
-            forbidSelection: this.forbidSelection
+            forbidSelection: this.forbidSelection,
+            isTree: this.options.isTree
         });
 
         this.selectionPanelView = new SelectionPanelView({

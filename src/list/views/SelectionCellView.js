@@ -7,7 +7,8 @@ const selectionTypes = {
 
 const classes = {
     CHECKED: 'editor_checked',
-    CHECKED_SOME: 'editor_checked_some'
+    CHECKED_SOME: 'editor_checked_some',
+    SELECTED: 'selected'
 };
 
 export default Marionette.ItemView.extend({
@@ -29,7 +30,9 @@ export default Marionette.ItemView.extend({
     },
 
     modelEvents: {
-        'update:top': '__updateTop'
+        'update:top': '__updateTop',
+        selected: '__handleSelection',
+        deselected: '__handleDeselection'
     },
 
     onRender() {
@@ -46,6 +49,14 @@ export default Marionette.ItemView.extend({
 
     __updateTop(top) {
         this.el.style.top = top;
+    },
+
+    __handleSelection() {
+        this.el.classList.add(classes.SELECTED);
+    },
+
+    __handleDeselection() {
+        this.el.classList.remove(classes.SELECTED);
     },
 
     __updateState() {

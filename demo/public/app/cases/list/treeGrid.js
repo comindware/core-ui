@@ -104,13 +104,14 @@ export default function() {
     ];
 
     // 3. Create grid
-    const nativeGridView = core.nativeGrid.factory.createTreeGrid({
+    const nativeGridView = core.list.factory.createNativeGrid({
         gridViewOptions: {
             columns,
-            selectableBehavior: 'multi'
+            selectableBehavior: 'multi',
+            isTree: true,
+            childrenAttribute: 'children'
         },
         collection: data,
-        childrenAttribute: 'children'
     });
 
     // 4. Show created views

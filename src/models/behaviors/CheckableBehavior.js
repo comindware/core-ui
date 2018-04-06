@@ -118,7 +118,7 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
     }
 });
 
-const calculateCheckedLength = function(collection) {
+const calculateCheckedLength = _.debounce(collection => {
     collection.checkedLength = _.filter(collection.models, model => model.checked).length;
 
     const checkedLength = collection.checkedLength;
@@ -137,7 +137,7 @@ const calculateCheckedLength = function(collection) {
     if (checkedLength > 0 && checkedLength < length) {
         collection.trigger('check:some', collection);
     }
-};
+});
 
 export default CheckableBehavior;
 export const CheckableCollection = CheckableBehavior.CheckableCollection;
