@@ -190,9 +190,9 @@ export default Marionette.Object.extend({
 
     __getColumns() {
         return this.getOption('columns').map(column => ({
-            id: column.key,
+            id: column.key || column.id,
             cellView: column.cellView || column.customizeCellView || CellViewFactory.getCellViewForColumn(column),
-            viewModel: new Backbone.Model({ displayText: column.title || column.displayText }),
+            viewModel: column.viewModel || new Backbone.Model({ displayText: column.title}),
             sortAsc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'asc'), column.key),
             sortDesc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'desc'), column.key),
             width: column.width || 0

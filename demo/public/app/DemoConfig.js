@@ -194,9 +194,14 @@ export default {
                     description: 'List with grouping'
                 },
                 {
-                    id: 'nativeGrid',
+                    id: 'grid',
                     displayName: 'Grid',
                     description: 'Simple grid'
+                },
+                {
+                    id: 'gridSearchAndSelection',
+                    displayName: 'Grid (Search & Selection)',
+                    description: 'Grid with search and selection'
                 },
                 {
                     id: 'editableGrid',
