@@ -188,15 +188,6 @@ module.exports = options => {
                     ]
                 },
                 {
-                    test: /jquery\.inputmask/,
-                    use: [
-                        {
-                            loader: 'imports-loader',
-                            options: 'jquery'
-                        }
-                    ]
-                },
-                {
                     test: /bootstrap-datetime-picker/,
                     use: [
                         {

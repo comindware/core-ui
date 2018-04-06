@@ -1,5 +1,4 @@
 // @flow
-import { helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
@@ -35,9 +34,6 @@ const defaultOptions = () => ({
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
  * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
- * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
- * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
- * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
@@ -47,25 +43,6 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
         this.placeholder = this.options.emptyPlaceholder;
-    },
-
-    onShow() {
-        if (this.options.mask) {
-            this.$el.inputmask(
-                Object.assign(
-                    {
-                        mask: this.options.mask,
-                        placeholder: this.options.maskPlaceholder,
-                        autoUnmask: true
-                    },
-                    this.options.maskOptions || {}
-                )
-            );
-        }
-    },
-
-    ui: {
-        clearButton: '.js-clear-button'
     },
 
     className: 'editor input input_text js-input',
@@ -93,7 +70,6 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     events: {
         keyup: '__keyup',
         change: '__change',
-        'click @ui.clearButton': '__clear',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave'
     },
@@ -142,9 +118,10 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
 
     __setReadonly(readonly) {
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+
         if (this.getEnabled()) {
-            this.$el.prop('readonly', readonly);
-            this.$el.prop('tabindex', readonly ? -1 : 0);
+            this.el.setAttribute('readonly', readonly);
+            this.el.setAttribute('tabindex', readonly ? -1 : 0);
         }
     },
 
@@ -173,9 +150,6 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         }
     },
 
-    /**
-     * Focuses the editor's input and selects all the text in it.
-     * */
     select() {
         this.$el.select();
     },
@@ -187,12 +161,14 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     __onMouseenter() {
         if (this.options.allowEmptyValue) {
             this.el.insertAdjacentHTML('afterend', this.value ? iconWrapRemove : iconWrapText);
+            this.$el.closest('.js-clear-button').on('click', this.__clear());
         }
     },
 
     __onMouseleave() {
         if (this.options.allowEmptyValue) {
             this.el.parentElement.removeChild(this.el.parentElement.lastElementChild);
+            this.$el.closest('.js-clear-button').off('click', this.__clear());
         }
     }
 }));

@@ -15,10 +15,6 @@ import colorPicker from './templates/colorPicker.hbs';
  *     <li><code>'keydown'</code> - при нажатии клавиши.</li>
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
- * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
- * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
- * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
- * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
