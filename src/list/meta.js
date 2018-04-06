@@ -15,8 +15,8 @@ export const columnTypes = {
 
 export const defaultActions = [
     {
-        id: 'addNew',
-        name: 'addNew',
+        id: 'add',
+        name: 'add',
         iconClass: 'plus'
     },
     {

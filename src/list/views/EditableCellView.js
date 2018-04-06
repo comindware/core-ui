@@ -36,9 +36,10 @@ export default Marionette.LayoutView.extend({
             this.listenToOnce(rowModel, this.schema.rerenderModelEvent, this.render);
         }
 
+        const editorType = this.schema.editor || 'Text';
         this.editorView = new EditableGridFieldView({
-            schema: Object.assign({}, this.schema, { readonly, hidden }, schemaExtension),
-            key: this.schema.key,
+            schema: Object.assign({}, this.schema, { readonly, hidden, type: editorType }, schemaExtension),
+            key: this.schema.key || this.schema.id,
             model: this.model.get('rowModel'),
         });
         this.editorRegion.show(this.editorView);

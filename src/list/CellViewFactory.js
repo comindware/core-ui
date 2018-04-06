@@ -4,7 +4,7 @@ import EditableCellView from './views/EditableCellView';
 
 const factory = {
     getCellViewForColumn(column) {
-        if (!column.readonly || column.editable) {
+        if (column.editable) {
             return EditableCellView.extend({
                 schema: column
             });

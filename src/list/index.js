@@ -16,11 +16,11 @@ import GridItemBehavior from './models/behaviors/GridItemBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
 import EditableGridFieldView from './views/EditableGridFieldView';
-import CommonGridController from './controllers/GridController';
+import GridController from './controllers/GridController';
 
 export default /** @lends module:core.list */ {
     controllers: {
-        CommonGridController
+        GridController
     },
 
     EventAggregator,
