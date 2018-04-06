@@ -211,7 +211,7 @@ const ListView = Marionette.CompositeView.extend({
                 delta = Math.ceil(this.state.viewportHeight * 0.8);
                 this.moveCursorBy(delta, e.shiftKey);
                 return false;
-            case keyCode.ENTER:
+            case keyCode.SPACE:
                 selectedModels.forEach(model => model.toggleChecked());
                 return false;
             case keyCode.LEFT:
@@ -226,6 +226,7 @@ const ListView = Marionette.CompositeView.extend({
                     return false;
                 }
                 break;
+            case keyCode.ENTER:
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
             case keyCode.ESCAPE:
@@ -373,7 +374,7 @@ const ListView = Marionette.CompositeView.extend({
 
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
-        const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE);
+        const visibleCollectionSize = this.state.visibleCollectionSize = this.state.viewportHeight;
         const allItemsHegiht = this.childHeight * this.parentCollection.length;
         this.ui.visibleCollection.height(allItemsHegiht);
         if (this.gridEventAggregator) {
@@ -387,7 +388,7 @@ const ListView = Marionette.CompositeView.extend({
         }
 
         this.$el.height(adjustedElementHeight);
-        this.collection.updateWindowSize(visibleCollectionSize);
+        this.collection.updateWindowSize(visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE);
         _.defer(() => this.__updatePadding());
     },
 
@@ -433,62 +434,13 @@ const ListView = Marionette.CompositeView.extend({
         return adjustedElementHeight;
     },
 
-    addChild(child, ChildView, index) {
-        let view = this.rowsPull[child.cid];
-        if (view) {
-            requestAnimationFrame(() => {
-                this._updateIndices(view, true, index);
-                this.children.add(view);
-                this.attachHtml(this, view, index);
-                view.delegateEvents();
-            });
-        } else {
-            view = Marionette.CompositeView.prototype.addChild.apply(this, arguments);
-            this.rowsPull[child.cid] = view;
-        }
+    onAddChild(child) {
         requestAnimationFrame(() => {
-            const top = `${this.parentCollection.indexOf(child) * this.childHeight}px`;
-            view.el.style.top = top;
-            child.trigger('update:top', top);
+            const childModel = child.model;
+            const top = `${this.parentCollection.indexOf(childModel) * this.childHeight}px`;
+            child.el.style.top = top;
+            childModel.trigger('update:top', top);
         });
-        // view.el.style.top = `${this.parentCollection.indexOf(child) * this.childHeight}px`;
-        return view;
-    },
-
-    removeChildView(view) {
-        if (!view) {
-            return view;
-        }
-
-        this.triggerMethod('before:remove:child', view);
-
-        if (!view.supportsDestroyLifecycle) {
-            Marionette.triggerMethodOn(view, 'before:destroy', view);
-        }
-        // call 'destroy' or 'remove', depending on which is found
-        if (this.rowsPull[view.model.cid]) {
-            this.children.remove(view);
-            view.$el.remove();
-            return;
-        }
-        if (view.destroy) {
-            view.destroy();
-        } else {
-            view.remove();
-        }
-        if (!view.supportsDestroyLifecycle) {
-            Marionette.triggerMethodOn(view, 'destroy', view);
-        }
-
-        delete view._parent;
-        // this.stopListening(view);
-        this.children.remove(view);
-        this.triggerMethod('remove:child', view);
-
-        // decrement the index of views after this one
-        this._updateIndices(view, false);
-
-        return view;
     },
 
     __toggleCollapseAll(collapsed) {
