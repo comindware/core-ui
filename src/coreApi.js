@@ -17,7 +17,6 @@ import dropdownApi from 'dropdown';
 import * as layoutApi from 'layout';
 import formApi from 'form';
 import listApi from 'list';
-import nativeGridApi from './nativeGrid/nativeGridApi';
 
 import meta_ from './Meta';
 import bootstrapper from './Bootstrapper';
@@ -150,12 +149,6 @@ const core = {
      * @memberof module:core
      * */
     list: listApi,
-    /**
-     * List and Grid components without data virtualization.
-     * @namespace
-     * @memberof module:core
-     * */
-    nativeGrid: nativeGridApi,
     /**
      * Combines useful helper classes, functions and constants.
      * @namespace
