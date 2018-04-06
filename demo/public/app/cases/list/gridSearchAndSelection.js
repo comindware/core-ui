@@ -64,8 +64,7 @@ export default function() {
         selectableBehavior: 'multi',
         showSearch: true,
         showSelection: true,
-        collection: new Backbone.Collection(dataArray),
-        title: 'Editable grid'
+        collection: new Backbone.Collection(dataArray)
     });
 
     // 4. Show created views
