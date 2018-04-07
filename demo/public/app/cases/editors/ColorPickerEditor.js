@@ -4,7 +4,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     const model = new Backbone.Model({
-        value: '#ffffff'
+        value: null
     });
 
     return new CanvasView({

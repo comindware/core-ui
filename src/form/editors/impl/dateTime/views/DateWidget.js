@@ -1,5 +1,3 @@
-/*eslint-ignore*/
-
 (function(factory) {
     /*eslint-ignore*/
     if (typeof define === 'function' && define.amd) define(['jquery'], factory);
@@ -8,7 +6,7 @@
 })($ => {
     let DPGlobal;
     let dates;
-    /*eslint-ignore*/
+
     const old = $.fn.datetimepicker;
 
     // Add timezone abbreviation support for ie6+, Chrome, Firefox
@@ -40,13 +38,7 @@
 
     // Picker object
     const Datetimepicker = function(element, options) {
-        const that = this;
-
         this.element = $(element);
-
-        // add container for single page application
-        // when page switch the datetimepicker div will be removed also.
-        this.container = options.container || 'body';
 
         this.language = options.language || this.element.data('date-language') || 'en';
         this.language = this.language in dates ? this.language : this.language.split('-')[0]; // fr-CA fallback to fr
@@ -57,44 +49,19 @@
             options.format || this.element.data('date-format') || dates[this.language].format || DPGlobal.getDefaultFormat(this.formatType, 'input'),
             this.formatType
         );
-        this.isInline = false;
-        this.isVisible = false;
-        this.isInput = this.element.is('input');
-        this.fontAwesome = options.fontAwesome || this.element.data('font-awesome') || false;
 
-        this.component = this.element.is('.date')
-            ? this.element.find('.add-on .icon-th, .add-on .icon-time, .add-on .icon-calendar, .add-on .fa-calendar, .add-on .fa-clock-o').parent()
-            : false;
-
-        this.componentReset = this.element.is('.date') ? this.element.find('.add-on .icon-remove, .add-on .fa-times').parent() : false;
-
-        this.hasInput = this.component && this.element.find('input').length;
-        if (this.component && this.component.length === 0) {
-            this.component = false;
-        }
-        this.linkField = options.linkField || this.element.data('link-field') || false;
-        this.linkFormat = DPGlobal.parseFormat(options.linkFormat || this.element.data('link-format') || DPGlobal.getDefaultFormat(this.formatType, 'link'), this.formatType);
-        this.minuteStep = 5;
-        this.pickerPosition = options.pickerPosition || this.element.data('picker-position') || 'bottom-right';
-        this.initialDate = options.initialDate || new Date();
+        this.initialDate = new Date();
         this.zIndex = options.zIndex || this.element.data('z-index') || undefined;
         this.title = typeof options.title === 'undefined' ? false : options.title;
         this.timezone = options.timezone || timeZoneAbbreviation();
 
         this.icons = {
-            leftArrow: this.fontAwesome ? 'fa-arrow-left' : 'icon-arrow-left',
-            rightArrow: this.fontAwesome ? 'fa-arrow-right' : 'icon-arrow-right'
+            leftArrow: 'icon-arrow-left',
+            rightArrow: 'icon-arrow-right'
         };
-        this.icontype = this.fontAwesome ? 'fa' : 'glyphicon';
+        this.icontype = 'glyphicon';
 
         this._attachEvents();
-
-        this.clickedOutside = function(e) {
-            // Clicked outside the datetimepicker, hide it
-            if ($(e.target).closest('.datetimepicker').length === 0) {
-                that.hide();
-            }
-        };
 
         this.formatViewType = 'datetime';
         if ('formatViewType' in options) {
@@ -103,67 +70,15 @@
             this.formatViewType = this.element.data('formatViewType');
         }
 
-        this.minView = 0;
-        if ('minView' in options) {
-            this.minView = options.minView;
-        } else if ('minView' in this.element.data()) {
-            this.minView = this.element.data('min-view');
-        }
-        this.minView = DPGlobal.convertViewMode(this.minView);
+        this.minView = DPGlobal.convertViewMode(2);
 
-        this.maxView = DPGlobal.modes.length - 1;
-        if ('maxView' in options) {
-            this.maxView = options.maxView;
-        } else if ('maxView' in this.element.data()) {
-            this.maxView = this.element.data('max-view');
-        }
-        this.maxView = DPGlobal.convertViewMode(this.maxView);
+        this.maxView = DPGlobal.convertViewMode(DPGlobal.modes.length - 1);
 
-        this.wheelViewModeNavigation = false;
-        if ('wheelViewModeNavigation' in options) {
-            this.wheelViewModeNavigation = options.wheelViewModeNavigation;
-        } else if ('wheelViewModeNavigation' in this.element.data()) {
-            this.wheelViewModeNavigation = this.element.data('view-mode-wheel-navigation');
-        }
+        this.startViewMode = DPGlobal.convertViewMode(2);
 
-        this.wheelViewModeNavigationInverseDirection = false;
-
-        if ('wheelViewModeNavigationInverseDirection' in options) {
-            this.wheelViewModeNavigationInverseDirection = options.wheelViewModeNavigationInverseDirection;
-        } else if ('wheelViewModeNavigationInverseDirection' in this.element.data()) {
-            this.wheelViewModeNavigationInverseDirection = this.element.data('view-mode-wheel-navigation-inverse-dir');
-        }
-
-        this.wheelViewModeNavigationDelay = 100;
-        if ('wheelViewModeNavigationDelay' in options) {
-            this.wheelViewModeNavigationDelay = options.wheelViewModeNavigationDelay;
-        } else if ('wheelViewModeNavigationDelay' in this.element.data()) {
-            this.wheelViewModeNavigationDelay = this.element.data('view-mode-wheel-navigation-delay');
-        }
-
-        this.startViewMode = 2;
-        if ('startView' in options) {
-            this.startViewMode = options.startView;
-        } else if ('startView' in this.element.data()) {
-            this.startViewMode = this.element.data('start-view');
-        }
-        this.startViewMode = DPGlobal.convertViewMode(this.startViewMode);
         this.viewMode = this.startViewMode;
 
-        this.viewSelect = this.minView;
-        if ('viewSelect' in options) {
-            this.viewSelect = options.viewSelect;
-        } else if ('viewSelect' in this.element.data()) {
-            this.viewSelect = this.element.data('view-select');
-        }
-        this.viewSelect = DPGlobal.convertViewMode(this.viewSelect);
-
-        this.forceParse = true;
-        if ('forceParse' in options) {
-            this.forceParse = options.forceParse;
-        } else if ('dateForceParse' in this.element.data()) {
-            this.forceParse = this.element.data('date-force-parse');
-        }
+        this.viewSelect = DPGlobal.convertViewMode(this.minView);
 
         let template = DPGlobal.template;
 
@@ -177,25 +92,14 @@
             template = template.replace('{rightArrow}', this.icons.rightArrow);
         }
         this.picker = $(template)
-            .appendTo(this.isInline ? this.element : this.container)
+            .appendTo(this.element)
             .on({
                 click: $.proxy(this.click, this),
                 mousedown: $.proxy(this.mousedown, this)
             });
 
-        if (this.wheelViewModeNavigation) {
-            if ($.fn.mousewheel) {
-                this.picker.on({ mousewheel: $.proxy(this.mousewheel, this) });
-            } else {
-                console.log('Mouse Wheel event is not supported. Please include the jQuery Mouse Wheel plugin before enabling this option');
-            }
-        }
+        this.picker.addClass('datetimepicker-inline');
 
-        if (this.isInline) {
-            this.picker.addClass('datetimepicker-inline');
-        } else {
-            this.picker.addClass(`datetimepicker-dropdown-${this.pickerPosition} dropdown-menu`);
-        }
         if (this.isRTL) {
             this.picker.addClass('datetimepicker-rtl');
             const selector = '.prev i, .next i';
@@ -203,24 +107,6 @@
         }
 
         $(document).on('mousedown touchend', this.clickedOutside);
-
-        this.autoclose = false;
-        if ('autoclose' in options) {
-            this.autoclose = options.autoclose;
-        } else if ('dateAutoclose' in this.element.data()) {
-            this.autoclose = this.element.data('date-autoclose');
-        }
-
-        this.keyboardNavigation = true;
-        if ('keyboardNavigation' in options) {
-            this.keyboardNavigation = options.keyboardNavigation;
-        } else if ('dateKeyboardNavigation' in this.element.data()) {
-            this.keyboardNavigation = this.element.data('date-keyboard-navigation');
-        }
-
-        this.todayBtn = options.todayBtn || this.element.data('date-today-btn') || false;
-        this.clearBtn = options.clearBtn || this.element.data('date-clear-btn') || false;
-        this.todayHighlight = options.todayHighlight || this.element.data('date-today-highlight') || false;
 
         this.weekStart = 0;
         if (typeof options.weekStart !== 'undefined') {
@@ -243,33 +129,7 @@
             const res = ['day'];
             return res.concat(render || []);
         };
-        this.onRenderHour = function(date) {
-            let render = (options.onRenderHour ||
-                function() {
-                    return [];
-                })(date);
-            const res = ['hour'];
-            if (typeof render === 'string') {
-                render = [render];
-            }
-            return res.concat(render || []);
-        };
-        this.onRenderMinute = function(date) {
-            let render = (options.onRenderMinute ||
-                function() {
-                    return [];
-                })(date);
-            const res = ['minute'];
-            if (typeof render === 'string') {
-                render = [render];
-            }
-            if (date < this.startDate || date > this.endDate) {
-                res.push('disabled');
-            } else if (Math.floor(this.date.getUTCMinutes() / this.minuteStep) === Math.floor(date.getUTCMinutes() / this.minuteStep)) {
-                res.push('active');
-            }
-            return res.concat(render || []);
-        };
+
         this.onRenderYear = function(date) {
             let render = (options.onRenderYear ||
                 function() {
@@ -304,20 +164,16 @@
         this.endDate = new Date(8639968443048000);
         this.datesDisabled = [];
         this.daysOfWeekDisabled = [];
-        this.setStartDate(options.startDate || this.element.data('date-startdate'));
-        this.setEndDate(options.endDate || this.element.data('date-enddate'));
-        this.setDatesDisabled(options.datesDisabled || this.element.data('date-dates-disabled'));
-        this.setDaysOfWeekDisabled(options.daysOfWeekDisabled || this.element.data('date-days-of-week-disabled'));
-        this.setMinutesDisabled(options.minutesDisabled || this.element.data('date-minute-disabled'));
-        this.setHoursDisabled(options.hoursDisabled || this.element.data('date-hour-disabled'));
+        this.setStartDate(options.startDate);
+        this.setEndDate(options.endDate);
+        this.setDatesDisabled(options.datesDisabled);
+        this.setDaysOfWeekDisabled(options.daysOfWeekDisabled);
         this.fillDow();
         this.fillMonths();
         this.update();
         this.showMode();
 
-        if (this.isInline) {
-            this.show();
-        }
+        this.show();
     };
 
     Datetimepicker.prototype = {
@@ -326,54 +182,8 @@
         _events: [],
         _attachEvents() {
             this._detachEvents();
-            if (this.isInput) {
-                // single input
-                this._events = [
-                    [
-                        this.element,
-                        {
-                            focus: $.proxy(this.show, this),
-                            keyup: $.proxy(this.update, this),
-                            keydown: $.proxy(this.keydown, this)
-                        }
-                    ]
-                ];
-            } else if (this.component && this.hasInput) {
-                // component: input + button
-                this._events = [
-                    // For components that are not readonly, allow keyboard nav
-                    [
-                        this.element.find('input'),
-                        {
-                            focus: $.proxy(this.show, this),
-                            keyup: $.proxy(this.update, this),
-                            keydown: $.proxy(this.keydown, this)
-                        }
-                    ],
-                    [
-                        this.component,
-                        {
-                            click: $.proxy(this.show, this)
-                        }
-                    ]
-                ];
-                if (this.componentReset) {
-                    this._events.push([this.componentReset, { click: $.proxy(this.reset, this) }]);
-                }
-            } else if (this.element.is('div')) {
-                // inline datetimepicker
-                this.isInline = true;
-            } else {
-                this._events = [
-                    [
-                        this.element,
-                        {
-                            click: $.proxy(this.show, this)
-                        }
-                    ]
-                ];
-            }
-            for (var i = 0, el, ev; i < this._events.length; i++) {
+
+            for (let i = 0, el, ev; i < this._events.length; i++) {
                 el = this._events[i][0];
                 ev = this._events[i][1];
                 el.on(ev);
@@ -381,7 +191,7 @@
         },
 
         _detachEvents() {
-            for (var i = 0, el, ev; i < this._events.length; i++) {
+            for (let i = 0, el, ev; i < this._events.length; i++) {
                 el = this._events[i][0];
                 ev = this._events[i][1];
                 el.off(ev);
@@ -391,41 +201,19 @@
 
         show(e) {
             this.picker.show();
-            this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
-            if (this.forceParse) {
-                this.update();
-            }
-            this.place();
-            $(window).on('resize', $.proxy(this.place, this));
+            this.height = this.element.outerHeight();
+
             if (e) {
                 e.stopPropagation();
                 e.preventDefault();
             }
-            this.isVisible = true;
+
             this.element.trigger({
                 type: 'show',
                 date: this.date
             });
         },
 
-        hide() {
-            if (!this.isVisible) return;
-            if (this.isInline) return;
-            this.picker.hide();
-            $(window).off('resize', this.place);
-            this.viewMode = this.startViewMode;
-            this.showMode();
-            if (!this.isInput) {
-                $(document).off('mousedown', this.hide);
-            }
-
-            if (this.forceParse && ((this.isInput && this.element.val()) || (this.hasInput && this.element.find('input').val()))) this.setValue();
-            this.isVisible = false;
-            this.element.trigger({
-                type: 'hide',
-                date: this.date
-            });
-        },
 
         remove() {
             this._detachEvents();
@@ -478,29 +266,14 @@
         setFormat(format) {
             this.format = DPGlobal.parseFormat(format, this.formatType);
             let element;
-            if (this.isInput) {
-                element = this.element;
-            } else if (this.component) {
-                element = this.element.find('input');
-            }
+
             if (element && element.val()) {
                 this.setValue();
             }
         },
 
         setValue() {
-            const formatted = this.getFormattedDate();
-            if (!this.isInput) {
-                if (this.component) {
-                    this.element.find('input').val(formatted);
-                }
-                this.element.data('date', formatted);
-            } else {
-                this.element.val(formatted);
-            }
-            if (this.linkField) {
-                $(`#${this.linkField}`).val(this.getFormattedDate(this.linkFormat));
-            }
+            this.element.data('date', this.getFormattedDate());
         },
 
         getFormattedDate(format = this.format) {
@@ -553,85 +326,6 @@
             this.updateNavArrows();
         },
 
-        setMinutesDisabled(minutesDisabled) {
-            this.minutesDisabled = minutesDisabled || [];
-            if (!$.isArray(this.minutesDisabled)) {
-                this.minutesDisabled = this.minutesDisabled.split(/,\s*/);
-            }
-            this.minutesDisabled = $.map(this.minutesDisabled, d => parseInt(d, 10));
-            this.update();
-            this.updateNavArrows();
-        },
-
-        setHoursDisabled(hoursDisabled) {
-            this.hoursDisabled = hoursDisabled || [];
-            if (!$.isArray(this.hoursDisabled)) {
-                this.hoursDisabled = this.hoursDisabled.split(/,\s*/);
-            }
-            this.hoursDisabled = $.map(this.hoursDisabled, d => parseInt(d, 10));
-            this.update();
-            this.updateNavArrows();
-        },
-
-        place() {
-            if (this.isInline) return;
-
-            if (!this.zIndex) {
-                let index_highest = 0;
-                $('div').each(function() {
-                    const index_current = parseInt($(this).css('zIndex'), 10);
-                    if (index_current > index_highest) {
-                        index_highest = index_current;
-                    }
-                });
-                this.zIndex = index_highest + 10;
-            }
-
-            let offset;
-            let top;
-            let left;
-            let containerOffset;
-            if (this.container instanceof $) {
-                containerOffset = this.container.offset();
-            } else {
-                containerOffset = $(this.container).offset();
-            }
-
-            if (this.component) {
-                offset = this.component.offset();
-                left = offset.left;
-                if (this.pickerPosition === 'bottom-left' || this.pickerPosition === 'top-left') {
-                    left += this.component.outerWidth() - this.picker.outerWidth();
-                }
-            } else {
-                offset = this.element.offset();
-                left = offset.left;
-                if (this.pickerPosition === 'bottom-left' || this.pickerPosition === 'top-left') {
-                    left += this.element.outerWidth() - this.picker.outerWidth();
-                }
-            }
-
-            const bodyWidth = document.body.clientWidth || window.innerWidth;
-            if (left + 220 > bodyWidth) {
-                left = bodyWidth - 220;
-            }
-
-            if (this.pickerPosition === 'top-left' || this.pickerPosition === 'top-right') {
-                top = offset.top - this.picker.outerHeight();
-            } else {
-                top = offset.top + this.height;
-            }
-
-            top -= containerOffset.top;
-            left -= containerOffset.left;
-
-            this.picker.css({
-                top,
-                left,
-                zIndex: this.zIndex
-            });
-        },
-
         hour_minute: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]',
 
         update() {
@@ -641,7 +335,7 @@
                 date = arguments[0];
                 fromArgs = true;
             } else {
-                date = (this.isInput ? this.element.val() : this.element.find('input').val()) || this.element.data('date') || this.initialDate;
+                date = (this.element.find('input').val()) || this.element.data('date') || this.initialDate;
                 if (typeof date === 'string') {
                     date = date.replace(/^\s+|\s+$/g, '');
                 }
@@ -700,8 +394,6 @@
             let d = new Date(this.viewDate);
             let year = d.getUTCFullYear();
             const month = d.getUTCMonth();
-            const dayMonth = d.getUTCDate();
-            const hours = d.getUTCHours();
             const startYear = this.startDate.getUTCFullYear();
             const startMonth = this.startDate.getUTCMonth();
             const endYear = this.endDate.getUTCFullYear();
@@ -714,15 +406,11 @@
             this.picker
                 .find('tfoot th.today')
                 .text(dates[this.language].today || dates.en.today)
-                .toggle(this.todayBtn !== false);
-            this.picker
-                .find('tfoot th.clear')
-                .text(dates[this.language].clear || dates.en.clear)
-                .toggle(this.clearBtn !== false);
+
             this.updateNavArrows();
             this.fillMonths();
-            let prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
-            let day = DPGlobal.getDaysInMonth(prevMonth.getUTCFullYear(), prevMonth.getUTCMonth());
+            const prevMonth = UTCDate(year, month - 1, 28, 0, 0, 0, 0);
+            const day = DPGlobal.getDaysInMonth(prevMonth.getUTCFullYear(), prevMonth.getUTCMonth());
             prevMonth.setUTCDate(day);
             prevMonth.setUTCDate(day - (prevMonth.getUTCDay() - this.weekStart + 7) % 7);
             let nextMonth = new Date(prevMonth);
@@ -742,8 +430,7 @@
                 }
                 // Compare internal UTC date with local today, not UTC today
                 if (
-                    this.todayHighlight
-                    && prevMonth.getUTCFullYear() === today.getFullYear()
+                    prevMonth.getUTCFullYear() === today.getFullYear()
                     && prevMonth.getUTCMonth() === today.getMonth()
                     && prevMonth.getUTCDate() === today.getDate()
                 ) {
@@ -770,39 +457,6 @@
                 .find('.datetimepicker-days tbody')
                 .empty()
                 .append(html.join(''));
-
-            html = [];
-            let txt = '';
-            const hoursDisabled = this.hoursDisabled || [];
-            d = new Date(this.viewDate);
-            for (var i = 0; i < 24; i++) {
-                d.setUTCHours(i);
-                classes = this.onRenderHour(d);
-                if (hoursDisabled.indexOf(i) !== -1) {
-                    classes.push('disabled');
-                }
-                const actual = UTCDate(year, month, dayMonth, i);
-                // We want the previous hour for the startDate
-                if (actual.valueOf() + 3600000 <= this.startDate || actual.valueOf() > this.endDate) {
-                    classes.push('disabled');
-                } else if (hours === i) {
-                    classes.push('active');
-                }
-                txt = `${i}:00`;
-                html.push(`<span class="${classes.join(' ')}">${txt}</span>`);
-            }
-
-            html = [];
-            const minutesDisabled = this.minutesDisabled || [];
-            d = new Date(this.viewDate);
-            for (var i = 0; i < 60; i += this.minuteStep) {
-                if (minutesDisabled.indexOf(i) !== -1) continue;
-                d.setUTCMinutes(i);
-                d.setUTCSeconds(0);
-                classes = this.onRenderMinute(d);
-                txt = `${i}:00`;
-                html.push(`<span class="${classes.join(' ')}">${hours}:${i < 10 ? `0${i}` : i}</span>`);
-            }
 
             const currentYear = this.date.getUTCFullYear();
             const months = this.setTitle('.datetimepicker-months', year)
@@ -831,7 +485,7 @@
                 .find('td');
             year -= 1;
             d = new Date(this.viewDate);
-            for (var i = -1; i < 11; i++) {
+            for (let i = -1; i < 11; i++) {
                 d.setUTCFullYear(year);
                 classes = this.onRenderYear(d);
                 if (i === -1 || i === 10) {
@@ -841,7 +495,6 @@
                 year += 1;
             }
             yearCont.html(html);
-            this.place();
         },
 
         updateNavArrows() {
@@ -911,34 +564,6 @@
             }
         },
 
-        mousewheel(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (this.wheelPause) {
-                return;
-            }
-
-            this.wheelPause = true;
-
-            const originalEvent = e.originalEvent;
-            const delta = originalEvent.wheelDelta;
-            let mode = delta > 0 ? 1 : delta === 0 ? 0 : -1;
-
-            if (this.wheelViewModeNavigationInverseDirection) {
-                mode = -mode;
-            }
-
-            this.showMode(mode);
-
-            setTimeout(
-                $.proxy(function() {
-                    this.wheelPause = false;
-                }, this),
-                this.wheelViewModeNavigationDelay
-            );
-        },
-
         click(e) {
             e.stopPropagation();
             e.preventDefault();
@@ -965,8 +590,8 @@
                                 this.showMode(1);
                                 break;
                             case 'prev':
-                            case 'next':
-                                var dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className === 'prev' ? -1 : 1);
+                            case 'next': {
+                                const dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className === 'prev' ? -1 : 1);
                                 switch (this.viewMode) {
                                     case 0:
                                         this.viewDate = this.moveHour(this.viewDate, dir);
@@ -981,6 +606,8 @@
                                     case 4:
                                         this.viewDate = this.moveYear(this.viewDate, dir);
                                         break;
+                                    default:
+                                        break;
                                 }
                                 this.fill();
                                 this.element.trigger({
@@ -990,14 +617,12 @@
                                     endDate: this.endDate
                                 });
                                 break;
+                            }
                             case 'clear':
                                 this.reset();
-                                if (this.autoclose) {
-                                    this.hide();
-                                }
                                 break;
-                            case 'today':
-                                var date = new Date();
+                            case 'today': {
+                                let date = new Date();
                                 date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0);
 
                                 // Respect startDate and endDate.
@@ -1008,20 +633,20 @@
                                 this.showMode(0);
                                 this._setDate(date);
                                 this.fill();
-                                if (this.autoclose) {
-                                    this.hide();
-                                }
+                                break;
+                            }
+                            default:
                                 break;
                         }
                         break;
                     case 'span':
                         if (!target.is('.disabled')) {
-                            var year = this.viewDate.getUTCFullYear();
-                            var month = this.viewDate.getUTCMonth();
-                            var day = this.viewDate.getUTCDate();
-                            var hours = this.viewDate.getUTCHours();
-                            var minutes = this.viewDate.getUTCMinutes();
-                            var seconds = this.viewDate.getUTCSeconds();
+                            let year = this.viewDate.getUTCFullYear();
+                            let month = this.viewDate.getUTCMonth();
+                            let day = this.viewDate.getUTCDate();
+                            const hours = this.viewDate.getUTCHours();
+                            const minutes = this.viewDate.getUTCMinutes();
+                            const seconds = this.viewDate.getUTCSeconds();
 
                             if (target.is('.month')) {
                                 this.viewDate.setUTCDate(1);
@@ -1051,28 +676,21 @@
                                 }
                             }
                             if (this.viewMode !== 0) {
-                                var oldViewMode = this.viewMode;
                                 this.showMode(-1);
                                 this.fill();
-                                if (oldViewMode === this.viewMode && this.autoclose) {
-                                    this.hide();
-                                }
                             } else {
                                 this.fill();
-                                if (this.autoclose) {
-                                    this.hide();
-                                }
                             }
                         }
                         break;
                     case 'td':
                         if (target.is('.day') && !target.is('.disabled')) {
-                            var day = parseInt(target.text(), 10) || 1;
-                            var year = this.viewDate.getUTCFullYear();
-                            var month = this.viewDate.getUTCMonth();
-                            var hours = this.viewDate.getUTCHours();
-                            var minutes = this.viewDate.getUTCMinutes();
-                            var seconds = this.viewDate.getUTCSeconds();
+                            const day = parseInt(target.text(), 10) || 1;
+                            let year = this.viewDate.getUTCFullYear();
+                            let month = this.viewDate.getUTCMonth();
+                            const hours = this.viewDate.getUTCHours();
+                            const minutes = this.viewDate.getUTCMinutes();
+                            const seconds = this.viewDate.getUTCSeconds();
 
                             if (target.is('.old')) {
                                 if (month === 0) {
@@ -1099,12 +717,8 @@
                                 this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
                             }
                         }
-                        var oldViewMode = this.viewMode;
                         this.showMode(-1);
                         this.fill();
-                        if (oldViewMode === this.viewMode && this.autoclose) {
-                            this.hide();
-                        }
                         break;
                     default:
                         break;
@@ -1118,11 +732,7 @@
             this.fill();
             this.setValue();
             let element;
-            if (this.isInput) {
-                element = this.element;
-            } else if (this.component) {
-                element = this.element.find('input');
-            }
+
             if (element) {
                 element.change();
             }
@@ -1137,7 +747,7 @@
             if (!dir) return date;
             const new_date = new Date(date.valueOf());
             //dir = dir > 0 ? 1 : -1;
-            new_date.setUTCMinutes(new_date.getUTCMinutes() + dir * this.minuteStep);
+            new_date.setUTCMinutes(new_date.getUTCMinutes() + dir * 5);
             return new_date;
         },
 
@@ -1221,9 +831,7 @@
             if (this.picker.is(':not(:visible)')) {
                 if (e.keyCode === 27) {
                     // allow escape to hide and re-show picker
-                    {
-                        this.show();
-                    }
+                    this.show();
                     return;
                 }
                 let dateChanged = false;
@@ -1232,14 +840,12 @@
                 let newViewDate;
                 switch (e.keyCode) {
                     case 27: // escape
-                        this.hide();
                         e.preventDefault();
                         break;
                     case 37: // left
-                    case 39: // right
-                        if (!this.keyboardNavigation) break;
+                    case 39: { // right
                         dir = e.keyCode === 37 ? -1 : 1;
-                        var viewMode = this.viewMode;
+                        let viewMode = this.viewMode;
                         if (e.ctrlKey) {
                             viewMode += 2;
                         } else if (e.shiftKey) {
@@ -1270,9 +876,9 @@
                             dateChanged = true;
                         }
                         break;
+                    }
                     case 38: // up
                     case 40: // down
-                        if (!this.keyboardNavigation) break;
                         dir = e.keyCode === 38 ? -1 : 1;
                         viewMode = this.viewMode;
                         if (e.ctrlKey) {
@@ -1307,33 +913,19 @@
                         break;
                     case 13: // enter
                         if (this.viewMode !== 0) {
-                            const oldViewMode = this.viewMode;
                             this.showMode(-1);
                             this.fill();
-                            if (oldViewMode === this.viewMode && this.autoclose) {
-                                this.hide();
-                            }
                         } else {
                             this.fill();
-                            if (this.autoclose) {
-                                this.hide();
-                            }
                         }
                         e.preventDefault();
-                        break;
-                    case 9: // tab
-                        this.hide();
                         break;
                     default:
                         break;
                 }
                 if (dateChanged) {
                     let element;
-                    if (this.isInput) {
-                        element = this.element;
-                    } else if (this.component) {
-                        element = this.element.find('input');
-                    }
+
                     if (element) {
                         element.change();
                     }
@@ -1537,7 +1129,7 @@ DPGlobal.isLeapYear(year) ? 29 : 28,
                 parts = date.match(/([-+]\d+)([dmwy])/g);
                 let dir;
                 date = new Date();
-                for (var i = 0; i < parts.length; i++) {
+                for (let i = 0; i < parts.length; i++) {
                     part = part_re.exec(parts[i]);
                     dir = parseInt(part[1]);
                     switch (part[2]) {
@@ -1644,7 +1236,7 @@ DPGlobal.isLeapYear(year) ? 29 : 28,
             setters_map.Z = setters_map.z;
             date = UTCDate(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
             if (parts.length === format.parts.length) {
-                for (var i = 0, cnt = format.parts.length; i < cnt; i++) {
+                for (let i = 0, cnt = format.parts.length; i < cnt; i++) {
                     val = parseInt(parts[i], 10);
                     part = format.parts[i];
                     if (isNaN(val)) {
@@ -1671,15 +1263,14 @@ DPGlobal.isLeapYear(year) ? 29 : 28,
                                 break;
                             case 'z':
                             case 'Z':
-                                timezone;
-                                break;
+                                return timezone;
                             default:
                                 break;
                         }
                     }
                     parsed[part] = val;
                 }
-                for (var i = 0, s; i < setters_order.length; i++) {
+                for (let i = 0, s; i < setters_order.length; i++) {
                     s = setters_order[i];
                     if (s in parsed && !isNaN(parsed[s])) setters_map[s](date, parsed[s]);
                 }
@@ -1785,33 +1376,27 @@ DPGlobal.isLeapYear(year) ? 29 : 28,
             }
             return date.join('');
         },
+
         convertViewMode(viewMode) {
             switch (viewMode) {
                 case 4:
                 case 'decade':
-                    viewMode = 4;
-                    break;
+                    return viewMode = 4;
                 case 3:
                 case 'year':
-                    viewMode = 3;
-                    break;
+                    return viewMode = 3;
                 case 2:
                 case 'month':
-                    viewMode = 2;
-                    break;
+                    return viewMode = 2;
                 case 1:
                 case 'day':
-                    viewMode = 1;
-                    break;
+                    return viewMode = 1;
                 case 0:
                 case 'hour':
-                    viewMode = 0;
-                    break;
+                    return viewMode = 0;
                 default:
                     break;
             }
-
-            return viewMode;
         },
         headTemplate:
             '<thead>' +
@@ -1822,7 +1407,7 @@ DPGlobal.isLeapYear(year) ? 29 : 28,
             '</tr>' +
             '</thead>',
         contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
-        footTemplate: '<tfoot>' + '<tr><th colspan="7" class="today"></th></tr>' + '<tr><th colspan="7" class="clear"></th></tr>' + '</tfoot>'
+        footTemplate: '<tfoot><tr><th colspan=\"7\" class=\"today\"></th></tr><tr><th colspan=\"7\" class=\"clear\"></th></tr></tfoot>'
     };
     DPGlobal.template = `<div class="datetimepicker">
 <div class="datetimepicker-days">
