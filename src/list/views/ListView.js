@@ -117,7 +117,7 @@ const ListView = Marionette.LayoutView.extend({
 
         _.bindAll(this, 'handleResize');
         const debouncedHandleResize = _.debounce(this.handleResize, 100);
-        this.listenTo(GlobalEventService, 'resize', debouncedHandleResize);
+        this.listenTo(GlobalEventService, 'window:resize', debouncedHandleResize);
         this.listenTo(this.collection, 'add remove reset', debouncedHandleResize);
 
         this.visibleCollection = new SlidingWindowCollection(this.collection);
@@ -135,9 +135,12 @@ const ListView = Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    onShow() {
-        // Updating viewportHeight and rendering subviews
-        this.handleResize();
+    onRender() {
+        if (this.forbidSelection) {
+            htmlHelpers.forbidSelection(this.el);
+        }
+        this.__assignKeyboardShortcuts();
+
         this.visibleCollectionView = new VisibleCollectionView({
             childView: this.childView,
             childViewSelector: this.childViewSelector,
@@ -150,14 +153,10 @@ const ListView = Marionette.LayoutView.extend({
         });
 
         this.visibleCollectionRegion.show(this.visibleCollectionView);
-        this.handleResize();
     },
 
-    onRender() {
-        if (this.forbidSelection) {
-            htmlHelpers.forbidSelection(this.el);
-        }
-        this.__assignKeyboardShortcuts();
+    onShow() {
+        this.handleResize();
     },
 
     keyboardShortcuts: {
