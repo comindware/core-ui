@@ -48,7 +48,10 @@ export default Marionette.LayoutView.extend({
         if (this.isDropdownShown) {
             return;
         }
-        this.el.firstElementChild && this.el.firstElementChild.remove();
+        const firstElementChild = this.el.firstElementChild;
+
+        firstElementChild && this.el.removeChild(firstElementChild);
+
         this.dropdownView = this.__getDropdownView();
 
         this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
