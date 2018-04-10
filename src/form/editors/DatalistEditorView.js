@@ -2,15 +2,15 @@
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
-import template from './templates/referenceBubbleEditor.hbs';
+import template from './templates/datalistEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import FakeInputModel from './impl/referenceBubble/models/FakeInputModel';
-import ButtonView from './impl/referenceBubble/views/ButtonView';
-import PanelView from './impl/referenceBubble/views/PanelView';
+import FakeInputModel from './impl/datalist/models/FakeInputModel';
+import ButtonView from './impl/datalist/views/ButtonView';
+import PanelView from './impl/datalist/views/PanelView';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
 import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
-import StaticController from './impl/referenceBubble/controllers/StaticController';
+import StaticController from './impl/datalist/controllers/StaticController';
 
 type DataValue = {
     id: string,
@@ -33,11 +33,12 @@ const defaultOptions = {
     showCheckboxes: false,
     textFilterDelay: 300,
     maxQuantitySelected: 1,
-    canDeleteItem: true
+    canDeleteItem: true,
+    collection: null
 };
 
 /**
- * @name ReferenceEditorView
+ * @name DatalistView
  * @member of module:core.form.editors
  * @class Editor to select object in the format <code>{ id, text }</code>, using async fetch for 'options collection'.
  * @extends module:core.form.editors.base.BaseEditorView
@@ -51,7 +52,7 @@ const defaultOptions = {
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
-export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 

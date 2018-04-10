@@ -14,7 +14,7 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.ReferenceBubbleEditor({
+        view: new core.form.editors.DatalistEditor({
             model,
             key: 'dropdownValue',
             autocommit: true,

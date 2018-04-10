@@ -15,7 +15,6 @@ import ListItemBehavior from './models/behaviors/ListItemBehavior';
 import GridItemBehavior from './models/behaviors/GridItemBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
-import EditableGridFieldView from './views/EditableGridFieldView';
 import GridController from './controllers/GridController';
 
 export default /** @lends module:core.list */ {
@@ -46,7 +45,6 @@ export default /** @lends module:core.list */ {
         GridView,
         ListView,
         RowView,
-        EditableGridFieldView,
 
         behaviors: {
             ListGroupViewBehavior,

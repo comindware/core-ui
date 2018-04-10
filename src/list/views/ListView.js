@@ -84,7 +84,7 @@ const ListView = Marionette.CompositeView.extend({
             this.height = defaultOptions.height;
         }
 
-        this.childHeight = options.childHeight;
+        this.childHeight = options.childHeight || 25;
         this.state = {
             position: 0
         };
@@ -119,7 +119,7 @@ const ListView = Marionette.CompositeView.extend({
 
     onAttach() {
         // Updating viewportHeight and rendering subviews
-        this.collection.updateWindowSize(1);
+        //this.collection.updateWindowSize(1);
         this.handleResize();
     },
 
@@ -357,15 +357,16 @@ const ListView = Marionette.CompositeView.extend({
         if (this.isDestroyed) {
             return;
         }
+
         const oldViewportHeight = this.state.viewportHeight;
-        const elementHeight = this.$el.height();
+        const elementHeight = this.el.clientHeight;
+
         if (this.children && this.children.length && !this.isEmpty()) {
             const firstChild = this.children.first().el;
             if (firstChild && firstChild.offsetHeight) {
                 this.childHeight = firstChild.offsetHeight;
             }
         }
-        const adjustedElementHeight = this.getAdjustedElementHeight(elementHeight);
 
         // Checking options consistency
         if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
@@ -373,7 +374,7 @@ const ListView = Marionette.CompositeView.extend({
         }
 
         // Computing new elementHeight and viewportHeight
-        this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
+        this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
         const visibleCollectionSize = this.state.visibleCollectionSize = this.state.viewportHeight;
         const allItemsHegiht = this.childHeight * this.parentCollection.length;
         this.ui.visibleCollection.height(allItemsHegiht);
@@ -382,12 +383,12 @@ const ListView = Marionette.CompositeView.extend({
         }
 
         // Applying the result of computation
-        if (this.state.viewportHeight === oldViewportHeight && adjustedElementHeight === elementHeight) {
+        if (this.state.viewportHeight === oldViewportHeight) {
             // nothing changed
             return;
         }
 
-        this.$el.height(adjustedElementHeight);
+        //this.el.style.height = `${adjustedElementHeight}px`;
         this.collection.updateWindowSize(visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE);
         _.defer(() => this.__updatePadding());
     },

@@ -2,9 +2,9 @@
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
 import template from '../templates/dropdown.hbs';
-import BlurableBehavior from '../utils/BlurableBehavior';
 import GlobalEventService from '../../services/GlobalEventService';
-import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
+
+const THROTTLE_DELAY = 100;
 
 const classes = {
     OPEN: 'open',
@@ -20,9 +20,7 @@ const MAX_DROPDOWN_PANEL_WIDTH = 200;
 
 const panelPosition = {
     DOWN: 'down',
-    DOWN_OVER: 'down-over',
-    UP: 'up',
-    UP_OVER: 'up-over'
+    UP: 'up'
 };
 
 const panelMinWidth = {
@@ -34,7 +32,8 @@ const defaultOptions = {
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
-    panelMinWidth: panelMinWidth.BUTTON_WIDTH
+    panelMinWidth: panelMinWidth.BUTTON_WIDTH,
+    allowNestedFocus: true
 };
 
 /**
@@ -77,12 +76,17 @@ const defaultOptions = {
 
 export default Marionette.LayoutView.extend({
     initialize(options) {
-        _.defaults(this.options, _.clone(defaultOptions), options);
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
-        _.bindAll(this, 'open', 'close');
+
+        _.defaults(this.options, _.clone(defaultOptions), options);
+
+        _.bindAll(this, 'open', 'close', '__onBlur');
 
         this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
+
+        this.__observedEntities = [];
+        this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
     },
 
     template: Handlebars.compile(template),
@@ -98,17 +102,8 @@ export default Marionette.LayoutView.extend({
     },
 
     events: {
-        'click @ui.button': '__handleClick'
-    },
-
-    behaviors: {
-        BlurableBehavior: {
-            behaviorClass: BlurableBehavior,
-            onBlur: '__handleBlur'
-        },
-        ListenToElementMoveBehavior: {
-            behaviorClass: ListenToElementMoveBehavior
-        }
+        'click @ui.button': '__handleClick',
+        blur: '__onBlur'
     },
 
     /**
@@ -138,6 +133,8 @@ export default Marionette.LayoutView.extend({
         }
 
         this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
+
+        this.$el.attr('tabindex', -1);
     },
 
     onShow() {
@@ -151,49 +148,27 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __adjustPosition($panelEl) {
+    __adjustPosition(panelEl) {
         const viewportHeight = window.innerHeight;
-        const $buttonEl = this.buttonRegion.$el;
-        const buttonRect = $buttonEl.offset();
-        buttonRect.height = $buttonEl.outerHeight();
-        buttonRect.width = $buttonEl.outerWidth();
-        buttonRect.bottom = viewportHeight - buttonRect.top - buttonRect.height;
-        const panelRect = $panelEl.offset();
-        panelRect.height = $panelEl.outerHeight();
+        const buttonEl = this.buttonRegion.el;
+        const buttonRect = buttonEl.getBoundingClientRect();
+
+        const bottom = viewportHeight - buttonRect.top - buttonRect.height;
+
+        const panelRect = panelEl.offsetHeight;
+        //panelRect.height = panelEl.outerHeight(); todo
 
         let position = this.options.panelPosition;
 
-        // switching position if there is not enough space
-        switch (position) {
-            case panelPosition.DOWN:
-                if (buttonRect.bottom < panelRect.height && buttonRect.top > buttonRect.bottom) {
-                    position = panelPosition.UP;
-                }
-                break;
-            case panelPosition.DOWN_OVER:
-                if (buttonRect.bottom + buttonRect.height < panelRect.height && buttonRect.top > buttonRect.bottom) {
-                    position = panelPosition.UP_OVER;
-                }
-                break;
-            case panelPosition.UP:
-                if (buttonRect.top < panelRect.height && buttonRect.bottom > buttonRect.top) {
-                    position = panelPosition.UP;
-                }
-                break;
-            case panelPosition.UP_OVER:
-                if (buttonRect.top + buttonRect.height < panelRect.height && buttonRect.bottom > buttonRect.top) {
-                    position = panelPosition.UP;
-                }
-                break;
-            default:
-                break;
+        if (position === panelPosition.DOWN && bottom < panelRect.height && buttonRect.top > bottom) {
+            position = panelPosition.UP;
+        } else if (position === panelPosition.UP && buttonRect.top < panelRect.height && bottom > buttonRect.top) {
+            position = panelPosition.DOWN;
         }
 
         // class adjustments
-        $panelEl.toggleClass(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
-        $panelEl.toggleClass(classes.DROPDOWN_WRP_OVER, position === panelPosition.DOWN_OVER);
-        $panelEl.toggleClass(classes.DROPDOWN_UP, position === panelPosition.UP);
-        $panelEl.toggleClass(classes.DROPDOWN_UP_OVER, position === panelPosition.UP_OVER);
+        panelEl.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
+        panelEl.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
 
         // panel positioning
         let top: number = 0;
@@ -201,14 +176,8 @@ export default Marionette.LayoutView.extend({
             case panelPosition.UP:
                 top = buttonRect.top - panelRect.height;
                 break;
-            case panelPosition.UP_OVER:
-                top = buttonRect.top + buttonRect.height - panelRect.height;
-                break;
             case panelPosition.DOWN:
                 top = buttonRect.top + buttonRect.height;
-                break;
-            case panelPosition.DOWN_OVER:
-                top = buttonRect.top;
                 break;
             default:
                 break;
@@ -222,16 +191,14 @@ export default Marionette.LayoutView.extend({
             top = WINDOW_BORDER_OFFSET;
         }
 
-        const panelCss: { top: number, left: number, 'min-width'?: number } = {
-            top,
-            left: buttonRect.left
-        };
-
         const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
+
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelCss['min-width'] = panelWidth;
+            panelEl.style.minWidth = `${panelWidth}px`;
         }
-        $panelEl.css(panelCss);
+
+        panelEl.style.top = `${top}px`;
+        panelEl.style.left = `${buttonRect.left}px`;
     },
 
     /**
@@ -246,7 +213,7 @@ export default Marionette.LayoutView.extend({
         const panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
             parent: this
         });
-        this.$el.addClass(classes.OPEN);
+        this.el.classList.add(classes.OPEN);
         this.panelView = new this.options.panelView(panelViewOptions);
         this.panelView.on('all', (...args) => {
             args[0] = `panel:${args[0]}`;
@@ -256,22 +223,24 @@ export default Marionette.LayoutView.extend({
         this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.el
         });
-        this.panelEl = this.panelView.$el;
+        this.panelEl = this.panelView.el;
 
         this.__adjustPosition(this.panelEl);
-        const buttonWidth = this.buttonRegion.$el.outerWidth();
+        const buttonWidth = this.buttonRegion.el.getBoundingClientRect().width;
         const panelWidth = buttonWidth > MAX_DROPDOWN_PANEL_WIDTH ? buttonWidth : MAX_DROPDOWN_PANEL_WIDTH;
-        this.panelView.$el.css({ width: panelWidth });
-        this.panelView.$(`.${classes.VISIBLE_COLLECTION}`).css({ width: panelWidth });
-        this.listenToElementMoveOnce(this.el, this.close);
+
+        this.panelView.el.style.width = `${panelWidth}px`;
+        //this.panelView.el.getElementsByClassName(classes.VISIBLE_COLLECTION)[0].style.width = `${panelWidth}`;
+
+        this.__listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
 
         const activeElement = document.activeElement;
         if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {
-            this.panelView.$el.focus();
+            //this.panelView.$el.focus(); todo
         } else {
-            this.focus(activeElement);
+            this.__focus(activeElement);
         }
         this.__suppressHandlingBlur = false;
         this.isOpen = true;
@@ -288,11 +257,11 @@ export default Marionette.LayoutView.extend({
         }
         this.trigger('before:close', this);
 
-        this.$el.removeClass(classes.OPEN);
+        this.el.classList.remove(classes.OPEN);
 
         WindowService.closePopup(this.popupId);
 
-        this.stopListeningToElementMove();
+        this.__stopListeningToElementMove();
         this.stopListening(GlobalEventService);
         this.button.$el.focus();
         this.isOpen = false;
@@ -341,5 +310,65 @@ export default Marionette.LayoutView.extend({
         if (this.isOpen && this.popupId === popupId) {
             this.close();
         }
+    },
+
+    __focus(focusedEl) {
+        if (!focusedEl) {
+            this.__getFocusableEl().focus();
+        } else if (document.activeElement) {
+            document.activeElement.addEventListener('blur', this.__onBlur);
+        }
+        this.isFocused = true;
+    },
+
+    __onBlur() {
+        _.defer(() => {
+            this.isFocused = false;
+            this.__handleBlur();
+        });
+        if (document.activeElement) {
+            document.activeElement.removeEventListener('blur', this.__onBlur);
+        }
+    },
+
+    __listenToElementMoveOnce(el, callback) {
+        if (this.__observedEntities.length === 0) {
+            this.listenTo(GlobalEventService, 'window:wheel:captured', this.__checkElements);
+            this.listenTo(GlobalEventService, 'window:mouseup:captured', this.__checkElements);
+            this.listenTo(GlobalEventService, 'window:keydown:captured', this.__checkElements);
+        }
+
+        // saving el position relative to the viewport for further check
+        const { left, top } = el.getBoundingClientRect();
+        this.__observedEntities.push({
+            anchorViewportPos: {
+                left: Math.floor(left),
+                top: Math.floor(top)
+            },
+            el,
+            callback
+        });
+    },
+
+    __stopListeningToElementMove(el = null) {
+        if (!el) {
+            this.__observedEntities = [];
+        } else {
+            this.__observedEntities.splice(this.__observedEntities.findIndex(x => x.el === el), 1);
+        }
+    },
+
+    __checkElements() {
+        setTimeout(() => {
+            if (this.isDestroyed) {
+                return;
+            }
+            this.__observedEntities.forEach(x => {
+                const { left, top } = x.el.getBoundingClientRect();
+                if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
+                    x.callback.call(this);
+                }
+            });
+        }, 50);
     }
 });

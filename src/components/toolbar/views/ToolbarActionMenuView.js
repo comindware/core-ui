@@ -14,7 +14,7 @@ export default Marionette.ItemView.extend({
     },
 
     onRender() {
-        this.menu = new Core.dropdown.factory.createPopout({
+        this.menu = new Core.dropdown.factory.createDropdown({
             buttonView: ActionMenuButtonView,
             panelView: ActionMenuPanelView,
             panelViewOptions: {
@@ -22,8 +22,7 @@ export default Marionette.ItemView.extend({
             },
             buttonViewOptions: {
                 model: this.model
-            },
-            customAnchor: true
+            }
         });
 
         this.listenTo(this.menu, 'panel:click:item', this.__handleSeveritySelect);

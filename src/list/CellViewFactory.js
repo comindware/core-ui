@@ -1,12 +1,26 @@
 import { objectPropertyTypes } from '../Meta';
 import { helpers } from 'utils';
-import EditableCellView from './views/EditableCellView';
+import FieldView from '../form/fields/FieldView';
+import template from './templates/editableCellField.hbs';
 
 const factory = {
     getCellViewForColumn(column) {
         if (column.editable) {
-            return EditableCellView.extend({
-                schema: column
+            if (this.editorIsShown) {
+                return;
+            }
+
+            return FieldView.extend({
+                template: Handlebars.compile(template),
+
+                className: 'editable-grid-field',
+
+                onRender() {
+                    this.editorRegion.show(this.editor);
+                    this.__rendered = true;
+                    this.setRequired(column.required);
+                    this.__updateEditorState(column.readonly, column.enabled);
+                }
             });
         }
         return this.getCellViewByDataType(column.type);
@@ -100,9 +114,9 @@ const factory = {
         return factory.__getDocumentView();
     },
 
-    __getSimpleView(template, templateHelpers) {
+    __getSimpleView(simpleTemplate, templateHelpers) {
         return Marionette.ItemView.extend({
-            template: Handlebars.compile(template),
+            template: Handlebars.compile(simpleTemplate),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange',
                 highlighted: '__handleHighlightedFragmentChange',

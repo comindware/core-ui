@@ -70,7 +70,7 @@ describe('SimpleGrid', () => {
             },
             {
                 key: 'referenceCell',
-                type: 'ReferenceBubble',
+                type: 'Datalist',
                 title: 'Reference Cell',
                 controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
                 cellView: core.list.cellFactory.getReferenceCellView(),

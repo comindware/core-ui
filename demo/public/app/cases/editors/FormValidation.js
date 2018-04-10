@@ -72,8 +72,8 @@ export default function() {
             ]
         },
         reference: {
-            type: 'ReferenceBubble',
-            title: 'ReferenceBubble',
+            type: 'Datalist',
+            title: 'Datalist',
             validators: [ 'required' ],
             required: true, // to display the asterisk left from title
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()

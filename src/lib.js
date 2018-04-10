@@ -17,7 +17,6 @@ import 'backbone-associations';
 import 'jstorage';
 import * as Handlebars_ from 'handlebars';
 import $_ from 'jquery';
-import 'inputmask/dist/jquery.inputmask.bundle';
 import 'rangyinputs';
 import 'jquery-autosize';
 import numeral_ from 'numeral';

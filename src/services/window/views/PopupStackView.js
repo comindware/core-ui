@@ -35,7 +35,7 @@ export default Marionette.LayoutView.extend({
         let parentPopupId = null;
 
         if (hostEl) {
-            parentPopup = hostEl.closest('.js-core-ui__global-popup-region');
+            parentPopup = hostEl.closest && hostEl.closest('.js-core-ui__global-popup-region');
             parentPopupId = parentPopup ? parentPopup.getAttribute('popup-id') : null;
         }
         const config = {

@@ -92,9 +92,12 @@ export default Marionette.ItemView.extend({
 
     _renderTemplate() {
         this.cellViews = [];
+        this.cellViewsEl = [];
         let isFirstChild = true;
+
         this.options.columns.forEach((gridColumn, index) => {
             const id = gridColumn.id;
+
             let value;
 
             if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) {
@@ -103,20 +106,43 @@ export default Marionette.ItemView.extend({
                 value = this.model.get(id);
             }
 
+            this.model.set({ value }, { silent: true });
+
+            /*
+            let schemaExtension;
+
+            if (_.isFunction(gridColumn.schemaExtension)) {
+                schemaExtension = gridColumn.schemaExtension(this.model);
+            }
+            const rowModel = this.model.get('rowModel');
+
+            if (_.isFunction(gridColumn.getReadonly)) {
+                readonly = gridColumn.getReadonly(rowModel);
+                this.listenTo(rowModel, 'change', () => this.editorView.editor.setReadonly(gridColumn.getReadonly(rowModel)));
+            }
+
+            if (_.isFunction(gridColumn.getHidden)) {
+                hidden = gridColumn.getHidden(rowModel);
+                this.listenTo(rowModel, 'change', () => this.editorView.editor.setHidden(gridColumn.getHidden(rowModel)));
+            }
+
+            if (_.isFunction(gridColumn.schemaExtension)) {
+                schemaExtension = gridColumn.schemaExtension(rowModel);
+            }
+            */
+
             const cellView = new gridColumn.cellView({
-                className: `grid-cell ${this.getOption('uniqueId')}-column${index} ${gridColumn.cellView.prototype.className}`,
-                model: new Backbone.Model({
-                    value,
-                    rowModel: this.model,
-                    columnConfig: gridColumn,
-                    highlightedFragment: null
-                }),
-                gridEventAggregator: this.options.gridEventAggregator
+                className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
+                schema: gridColumn,
+                model: this.model,
+                key: gridColumn.key || gridColumn.id
             });
+
             if (this.getOption('isTree') && isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
                 const level = this.model.level || 0;
                 const margin = level * this.options.levelMargin;
                 const hasChildren = this.model.children && this.model.children.length;
+
                 cellView.on('render', () => {
                     if (hasChildren) {
                         cellView.el.insertAdjacentHTML(
@@ -132,9 +158,10 @@ export default Marionette.ItemView.extend({
             }
             cellView.render();
 
-            cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
             this.cellViews.push(cellView);
+            this.cellViewsEl.push(cellView.$el);
         });
+        this.$el.append(this.cellViewsEl);
     },
 
     __handleHighlight(fragment) {

@@ -154,7 +154,7 @@ export default {
                     description: 'Simple text editor'
                 },
                 {
-                    id: 'ReferenceBubbleEditor',
+                    id: 'DatalistEditor',
                     displayName: 'Reference Bubble Editor',
                     description: 'Data list editor with search'
                 },
