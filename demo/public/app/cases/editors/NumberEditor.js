@@ -13,9 +13,10 @@ export default function() {
             key: 'numberValue',
             changeMode: 'keydown',
             autocommit: true,
-            min: null,
-            max: null,
-            allowFloat: true
+            min: -300,
+            max: 300,
+            step: 3,
+            allowFloat: false
         }),
         presentation: '{{numberValue}}',
         isEditor: true

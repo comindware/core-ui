@@ -3,7 +3,7 @@ import core from 'comindware/core';
 export default function() {
     return new core.layout.VerticalLayout({
         rows: [
-            new core.form.editors.ReferenceBubbleEditor({
+            new core.form.editors.DatalistEditor({
                 name: 'Say hello!',
                 collection: new Backbone.Collection([
                     {

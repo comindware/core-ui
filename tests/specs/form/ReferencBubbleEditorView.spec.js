@@ -46,13 +46,13 @@ describe('Editors', () => {
         core.services.WindowService.closePopup();
     });
 
-    describe('ReferenceBubbleEditorView', () => {
+    describe('DatalistEditorView', () => {
         it('should get focus when focus() is called', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -72,7 +72,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -114,7 +114,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -131,7 +131,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 controller: new dynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
@@ -156,7 +156,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -175,7 +175,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 controller: new dynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
@@ -198,7 +198,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -217,7 +217,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -236,7 +236,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -259,7 +259,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -278,7 +278,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 controller: new dynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
@@ -305,7 +305,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -331,7 +331,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',
@@ -352,7 +352,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 controller: new dynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
@@ -381,7 +381,7 @@ describe('Editors', () => {
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 controller: new dynamicController({
                     collection: new core.form.editors.reference.collections.BaseReferenceCollection()
@@ -410,7 +410,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value'
@@ -435,7 +435,7 @@ describe('Editors', () => {
                 value: null
             });
 
-            const view = new core.form.editors.ReferenceBubbleEditor({
+            const view = new core.form.editors.DatalistEditor({
                 model,
                 collection: new Backbone.Collection(collectionData),
                 key: 'value',

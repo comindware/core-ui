@@ -1,4 +1,3 @@
-import dropdown from 'dropdown';
 import template from '../templates/defaultButton.hbs';
 
 export default Marionette.ItemView.extend({
@@ -6,13 +5,6 @@ export default Marionette.ItemView.extend({
         this.enabled = options.enabled;
         this.reqres = options.reqres;
         this.options.template = Handlebars.compile(options.template || template);
-    },
-
-    behaviors: {
-        CustomAnchorBehavior: {
-            behaviorClass: dropdown.views.behaviors.CustomAnchorBehavior,
-            anchor: '.js-anchor'
-        }
     },
 
     className: 'popout-field-user',

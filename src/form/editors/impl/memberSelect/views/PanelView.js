@@ -1,5 +1,4 @@
 import list from 'list';
-import dropdown from 'dropdown';
 import { helpers } from 'utils';
 import template from '../templates/panel.hbs';
 import ListItemView from './ListItemView';
@@ -29,13 +28,6 @@ export default Marionette.LayoutView.extend({
 
     ui: {
         input: '.js-input'
-    },
-
-    behaviors: {
-        CustomAnchorBehavior: {
-            behaviorClass: dropdown.views.behaviors.CustomAnchorBehavior,
-            anchor: '.js-anchor'
-        }
     },
 
     events: {

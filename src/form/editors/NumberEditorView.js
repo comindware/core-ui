@@ -1,6 +1,5 @@
 import template from './templates/numberEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
-import { keyCode } from 'utils';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
@@ -8,12 +7,6 @@ import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
 const changeMode = {
     keydown: 'keydown',
     blur: 'blur'
-};
-
-const constants = {
-    STEP: 1,
-    PAGE: 10,
-    INCREMENTAL: true
 };
 
 const defaultOptions = {
@@ -75,6 +68,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     onRender() {
+        this.__setInputOptions();
         this.__value(this.value, false, false, true);
     },
 
@@ -119,7 +113,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         if (value !== '' && value !== null) {
             parsed = this.__parse(value);
             if (parsed !== null) {
-                value = this.__adjustRange(parsed);
                 if (!this.options.allowFloat) {
                     value = Math.floor(value);
                 }
@@ -156,6 +149,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     __parse(value) {
         let val = value;
+
         if (typeof val === 'string' && val !== '') {
             if (numeral.localeData().delimiters.decimal !== '.') {
                 val = val.replace('.', numeral.localeData().delimiters.decimal);
@@ -167,51 +161,8 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
                 val = Number.MIN_VALUE;
             }
         }
+
         return val === '' || isNaN(val) ? null : val;
-    },
-
-    __precision() {
-        let precision = this.__precisionOf(constants.STEP);
-        if (this.options.min !== null) {
-            precision = Math.max(precision, this.__precisionOf(this.options.min));
-        }
-        return precision;
-    },
-
-    __precisionOf(num) {
-        const str = num.toString();
-        const decimal = str.indexOf('.');
-        return decimal === -1 ? 0 : str.length - decimal - 1;
-    },
-
-    __increment(i) {
-        return Math.floor(i * i * i / 50000 - i * i / 500 + 17 * i / 200 + 1);
-    },
-
-    __adjustRange(value) {
-        const options = this.options;
-        if (options.max !== null && value > options.max) {
-            return options.max;
-        }
-        if (options.min !== null && value < options.min) {
-            return options.min;
-        }
-        return value;
-    },
-
-    __adjustValue(value) {
-        const options = this.options;
-        const base = options.min !== null ? options.min : 0;
-        let aboveMin;
-
-        // make sure we're at a valid step
-        // - find out where we are relative to the base (min or 0)
-        aboveMin = value - base;
-        // - round to the nearest step
-        aboveMin = Math.round(aboveMin / constants.STEP) * constants.STEP;
-        // - rounding is based on 0, so adjust back to our base
-        // fix precision from bad JS floating point math
-        return parseFloat((base + aboveMin).toFixed(this.__precision()));
     },
 
     __onMouseenter() {
@@ -220,5 +171,11 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     __onMouseleave() {
         this.el.removeChild(this.el.lastElementChild);
+    },
+
+    __setInputOptions() {
+        this.ui.input[0].setAttribute('min', this.options.min);
+        this.ui.input[0].setAttribute('max', this.options.max);
+        this.ui.input[0].setAttribute('step', this.options.step);
     }
 }));

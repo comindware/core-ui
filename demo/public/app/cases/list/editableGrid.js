@@ -93,7 +93,7 @@ export default () => {
         {
             key: 'referenceCell',
             type: 'Instance',
-            editor: 'ReferenceBubble',
+            editor: 'Datalist',
             title: 'Reference Cell',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
