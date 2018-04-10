@@ -73,6 +73,8 @@ export default Marionette.LayoutView.extend({
 
     __createDropdownActionsView() {
         return Core.dropdown.factory.createDropdown({
+            buttonView: Marionette.ItemView.extend({ template: false }),
+            panelView: Marionette.ItemView.extend({ template: false }),
             text: actionsMenuLabel,
             items: this.menuItemsCollection
         });

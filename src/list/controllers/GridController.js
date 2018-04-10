@@ -195,7 +195,9 @@ export default Marionette.Object.extend({
             viewModel: column.viewModel || new Backbone.Model({ displayText: column.title}),
             sortAsc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'asc'), column.key),
             sortDesc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'desc'), column.key),
-            width: column.width || 0
+            width: column.width || 0,
+            type: column.editor || 'Text',
+            collection: new Backbone.Collection()
         }));
     },
 

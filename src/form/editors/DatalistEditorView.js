@@ -33,7 +33,8 @@ const defaultOptions = {
     showCheckboxes: false,
     textFilterDelay: 300,
     maxQuantitySelected: 1,
-    canDeleteItem: true
+    canDeleteItem: true,
+    collection: null
 };
 
 /**
