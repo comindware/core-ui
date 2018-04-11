@@ -32,17 +32,16 @@ export default (formRepository.editors.Boolean = BaseItemEditorView.extend(
         },
 
         ui: {
-            toggleButton: '.js-toggle-button',
             displayText: '.js-display-text'
         },
 
         events: {
-            'click @ui.toggleButton': '__toggle',
+            click: '__toggle',
             'click @ui.displayText': '__toggle',
             keydown: '__onKeyDown'
         },
 
-        className: 'editor editor_checkbox checkbox js-toggle-button',
+        className: 'editor editor_checkbox checkbox',
 
         attributes() {
             return {
