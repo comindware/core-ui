@@ -93,28 +93,11 @@ export default Marionette.ItemView.extend({
 
     _renderTemplate() {
         this.cellViews = [];
-        this.cellViewsEl = [];
         let isFirstChild = true;
 
-        this.options.columns.forEach((gridColumn, index) => {
-            const id = gridColumn.id;
-
-            let value;
-
-            if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) { //todo WTF
-                value = gridColumn.cellViewOptions.getValue.apply(this, [gridColumn]);
-            } else {
-                value = this.model.get(id);
-            }
-
-            this.model.set({ value }, { silent: true });
-
-            /*
-            let schemaExtension;
-
-            if (_.isFunction(gridColumn.schemaExtension)) {
-                schemaExtension = gridColumn.schemaExtension(this.model);
-            }
+        this.$el.append(
+            this.options.columns.map((gridColumn, index) => {
+                /*
             const rowModel = this.model.get('rowModel');
 
             if (_.isFunction(gridColumn.getReadonly)) {
@@ -126,43 +109,41 @@ export default Marionette.ItemView.extend({
                 hidden = gridColumn.getHidden(rowModel);
                 this.listenTo(rowModel, 'change', () => this.editorView.editor.setHidden(gridColumn.getHidden(rowModel)));
             }
-
-            if (_.isFunction(gridColumn.schemaExtension)) {
-                schemaExtension = gridColumn.schemaExtension(rowModel);
-            }
             */
 
-            const cellView = new (CellViewFactory.getCellViewForColumn(gridColumn))({
-                className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
-                schema: gridColumn,
-                model: this.model,
-                key: gridColumn.key || gridColumn.id
-            });
-
-            if (this.getOption('isTree') && isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
-                const level = this.model.level || 0;
-                const margin = level * this.options.levelMargin;
-                const hasChildren = this.model.children && this.model.children.length;
-
-                cellView.on('render', () => {
-                    if (hasChildren) {
-                        cellView.el.insertAdjacentHTML(
-                            'afterbegin',
-                            `<span class="collapsible-btn js-collapsible-button ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></span>`
-                        );
-                    } else {
-                        cellView.el.insertAdjacentHTML('afterbegin', `<span style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
-                    }
+                const cellView = new (CellViewFactory.getCellViewForColumn(gridColumn))({
+                    className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
+                    schema: gridColumn,
+                    model: this.model,
+                    key: gridColumn.key
                 });
 
-                isFirstChild = false;
-            }
-            cellView.render();
+                if (this.getOption('isTree') && isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
+                    const level = this.model.level || 0;
+                    const margin = level * this.options.levelMargin;
+                    const hasChildren = this.model.children && this.model.children.length;
 
-            this.cellViews.push(cellView);
-            this.cellViewsEl.push(cellView.$el);
-        });
-        this.$el.append(this.cellViewsEl);
+                    cellView.on('render', () => {
+                        if (hasChildren) {
+                            cellView.el.insertAdjacentHTML(
+                                'afterbegin',
+                                `<span class="collapsible-btn js-collapsible-button ${
+                                    this.model.collapsed === false ? classes.expanded : ''
+                                }" style="margin-left:${margin}px;"></span>`
+                            );
+                        } else {
+                            cellView.el.insertAdjacentHTML('afterbegin', `<span style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
+                        }
+                    });
+
+                    isFirstChild = false;
+                }
+                cellView.render();
+
+                this.cellViews.push(cellView);
+                return cellView.$el;
+            })
+        );
     },
 
     __handleHighlight(fragment) {

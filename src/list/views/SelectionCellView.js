@@ -23,7 +23,7 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'grid-selection-cell',
+    className: 'checkbox svg-icons-wrp',
 
     events: {
         click: '__handleClick'

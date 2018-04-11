@@ -570,6 +570,7 @@ input[type="checkbox"].checkbox {
 .editor_date-time {
     padding-right: 16px;
     border-bottom: 1px solid #edeff0;
+    display: flex;
 }
 
 .editor_date-time:hover {

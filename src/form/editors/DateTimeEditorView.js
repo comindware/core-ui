@@ -49,9 +49,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     ui: {
         clearButton: '.js-clear-button',
         timeInput: '.js-time-input',
-        dateInput: '.js-date-input',
-        dateRegion: '.js-date-region',
-        timeRegion: '.js-time-region'
+        dateInput: '.js-date-input'
     },
 
     events: {
@@ -196,9 +194,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             return;
         }
 
-        const firstEl = this.ui.dateRegion[0].firstElementChild;
-
-        firstEl && this.ui.dateRegion[0].removeChild(firstEl);
+        this.ui.dateInput[0] && this.ui.dateInput[0].remove();
 
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: DateInputView,
@@ -273,7 +269,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     __updateDisplayValue() {
         if (!this.isTimeDropdownShown) {
-            this.ui.timeInput.val(DateTimeService.getDateDisplayValue(this.value, this.dateDisplayFormat));
+            this.ui.timeInput.val(DateTimeService.getTimeDisplayValue(this.value, this.dateDisplayFormat));
         }
         if (!this.isDateDropdownShown) {
             this.ui.dateInput.val(DateTimeService.getDateDisplayValue(this.value, this.dateDisplayFormat));
@@ -285,9 +281,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             return;
         }
 
-        const firstEl = this.ui.timeRegion[0].firstElementChild;
-
-        firstEl && this.ui.timeRegion[0].removeChild(firstEl);
+        this.ui.timeInput[0] && this.ui.timeInput[0].remove();
 
         this.timeDropdownView = this.__getTimeDropdownView();
 
