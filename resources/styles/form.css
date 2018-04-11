@@ -360,7 +360,7 @@ input[type="checkbox"].checkbox {
 .editor_checkbox {
     display: inline-block;
     max-width: 100%;
-    padding: 0 0 0 20px;
+    padding: 0 0 0 23px;
     height: 14px;
     line-height: 14px;
 }
@@ -374,14 +374,14 @@ input[type="checkbox"].checkbox {
 }
 
 .checkbox {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
     border-radius: 2px;
     margin: 0;
     overflow: hidden;
     display: block;
     position: absolute;
-    top: 0;
+    top: -2px;
     left: 0;
     border: solid 1px #838c92;
     cursor: pointer;
@@ -1221,7 +1221,7 @@ svg.svg-icons{
     transform: translate(2px, 1px);
 }
 .svg-icons_checked{
-    transform: translate(2px, 2px);
+    transform: scale(1.2) translate(1px, 4px);
 }
 .svg-icons_multiselect{
     transform: scale(.9) translate(0, 1px)
@@ -1260,67 +1260,6 @@ svg.svg-icons{
     width: 220px;
 }
 
-.datetimepicker table{
-    width: 100%;
-    border-collapse: inherit;
-}
-
-.datetimepicker th.switch {
-    width: inherit;
-}
-
-.datetimepicker table tr td span {
-    display: block;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 0;
-}
-
-.datetimepicker td, .datetimepicker th{
-    text-align: center;
-    height: 26px;
-    vertical-align: middle;
-    border-radius: 0;
-    border: 1px solid transparent;
-    font-size: 11px;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
-
-.datetimepicker .table-condensed thead tr:first-child{
-    height: 32px;
-}
-.datetimepicker th.switch{
-    position: absolute;
-    left:32px;
-    right:32px;
-    font-size: 14px;
-    line-height: 26px;
-}
-.datetimepicker th.prev,
-.datetimepicker th.next{
-    position: absolute;
-    width: 32px;
-    line-height: 28px;
-    left:0;
-}
-.datetimepicker th.next{
-    left:auto;
-    right:0;
-}
-
-.datetimepicker .icon-arrow-left{
-    display: inline-block;
-    border-top:5px solid transparent;
-    border-bottom:5px solid transparent;
-    border-right:8px solid #0575bd;
-}
-.datetimepicker .icon-arrow-right{
-    display: inline-block;
-    border-top:5px solid transparent;
-    border-bottom:5px solid transparent;
-    border-left:8px solid #0575bd;
-}
 
 /*-----//------*/
 
