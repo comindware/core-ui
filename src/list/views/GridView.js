@@ -247,9 +247,9 @@ export default Marionette.LayoutView.extend({
     },
 
     __bindListRegionScroll() {
-        this.listView.$el.scroll(event => {
-            this.headerRegion.$el.scrollLeft(event.currentTarget.scrollLeft);
-            this.selectionPanelRegion.$el.scrollTop(event.currentTarget.scrollTop);
+        this.listView.el.addEventListener('scroll', event => {
+            this.headerRegion.el.scrollLeft = event.currentTarget.scrollLeft;
+            this.selectionPanelRegion.el.scrollTop = event.currentTarget.scrollTop;
         });
     },
 

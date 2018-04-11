@@ -37,17 +37,21 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.readonly = this.getReadonly();
-        this.enabled = this.getEnabled();
-        this.value = this.__adjustValue(this.value);
+        this.model.set({
+            readonly: this.getReadonly(),
+            enabled: this.getEnabled(),
+            value: this.__adjustValue(this.value)
+        }, { silent: true });
 
-        this.listenTo(this.dateTimeModel, 'change:value', this.__change, this);
+        this.value = this.__adjustValue(this.value);
     },
 
     ui: {
         clearButton: '.js-clear-button',
         timeInput: '.js-time-input',
-        dateInput: '.js-date-input'
+        dateInput: '.js-date-input',
+        dateRegion: '.js-date-region',
+        timeRegion: '.js-time-region'
     },
 
     events: {
@@ -61,7 +65,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     regions: {
-        dateRegion: '.js-date-region',
         timeDropdownRegion: '.js-time-dropdown-region',
         dateDropdownRegion: '.js-date-dropdown-region'
     },
@@ -75,7 +78,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __change(): void {
-        this.__value(this.value, true, true);
+        this.__value(this.model.get('value'), true, true);
         if (!this.isDestroyed) {
             this.__updateClearButton();
         }
@@ -91,7 +94,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     modelEvents: {
-        'change:value': '__updateDisplayValue'
+        'change:value': '__change'
     },
 
     onRender(): void {
@@ -169,20 +172,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         BaseLayoutEditorView.prototype.onFocus.call(this);
     },
 
-    onDateBlur(): void {
-        if (this.timeView.hasFocus()) {
-            return;
-        }
-        this.onBlur();
-    },
-
-    onTimeBlur(): void {
-        if (this.dateView.hasFocus()) {
-            return;
-        }
-        this.onBlur();
-    },
-
     __adjustValue(value: string): string {
         return value === null ? value : moment(value).toISOString();
     },
@@ -206,6 +195,11 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.isDateDropdownShown) {
             return;
         }
+
+        const firstEl = this.ui.dateRegion[0].firstElementChild;
+
+        firstEl && this.ui.dateRegion[0].removeChild(firstEl);
+
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: DateInputView,
             buttonViewOptions: {
@@ -244,7 +238,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             return;
         }
         this.calendarDropdownView.button.endEditing();
-        this.isDateDropdownShown = false;
     },
 
     __onDateOpen() {
@@ -291,6 +284,11 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.isTimeDropdownShown) {
             return;
         }
+
+        const firstEl = this.ui.timeRegion[0].firstElementChild;
+
+        firstEl && this.ui.timeRegion[0].removeChild(firstEl);
+
         this.timeDropdownView = this.__getTimeDropdownView();
 
         this.listenTo(this.timeDropdownView, 'before:close', this.__onTimeBeforeClose, this);
@@ -377,7 +375,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             return;
         }
         this.timeDropdownView.button.endEditing();
-        this.isTimeDropdownShown = false;
     },
 
     __onTimeOpen() {
