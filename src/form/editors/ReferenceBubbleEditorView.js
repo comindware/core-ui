@@ -128,7 +128,8 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
-                textFilterDelay: this.options.textFilterDelay
+                textFilterDelay: this.options.textFilterDelay,
+                createBySelect: this.options.createBySelect
             },
             autoOpen: false
         });
@@ -203,7 +204,6 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
             this.panelCollection.lastPointedModel.toggleSelected();
         } else if (this.options.createBySelect) {
             this.__onValueSet(new Backbone.Model({ name: value, id: value }));
-            this.__onFilterText('');
         } else {
             this.__onValueSet(this.panelCollection.selected);
         }
@@ -374,7 +374,6 @@ export default formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ext
 
     __triggerReady() {
         this.trigger('view:ready');
-        this.__tryPointFirstRow();
     },
 
     __tryPointFirstRow() {

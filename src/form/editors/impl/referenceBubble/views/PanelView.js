@@ -154,30 +154,41 @@ export default Marionette.LayoutView.extend({
         }
         this.activeText = this.newSearchText;
         this.isFilterDeayed = false;
-        this.__setLoading(true);
         const collection = this.model.get('collection');
-        this.reqres.request('filter:text', {
-            text: this.newSearchText
-        }).then(() => {
-            if (collection.length > 0 && this.model.get('value')) {
-                this.model.get('value').forEach(model => {
-                    if (collection.has(model.id)) {
-                        collection.get(model.id).select();
-                    }
-                });
-                this.__toggleElementsQuantityWarning(collection.totalCount);
-            }
-            this.__setLoading(false);
-            this.reqres.request('view:ready');
-        }).catch(e => {
-            console.log(e.message);
-        });
+        if (!this.isCanceled) {
+            this.__setLoading(true);
+            this.reqres.request('filter:text', {
+                text: this.newSearchText
+            }).then(() => {
+                if (collection.length > 0 && this.model.get('value')) {
+                    this.model.get('value').forEach(model => {
+                        if (collection.has(model.id)) {
+                            collection.get(model.id).select();
+                        }
+                    });
+                    this.__toggleElementsQuantityWarning(collection.totalCount);
+                }
+                this.__setLoading(false);
+                this.reqres && this.reqres.request('view:ready');
+            }).catch(e => {
+                console.log(e);
+            });
+        } else {
+            this.isCanceled = false;
+            this.newSearchText = null;
+            this.__updateFilterNow();
+        }
     },
 
     __proxyValueSelect() {
         if (this.isFilterDeayed && !this.options.createBySelect) {
             this.updateFilter(this.newSearchText, true);
         } else {
+            if (this.isFilterDeayed) {
+                this.isCanceled = true;
+            } else {
+                this.activeText && this.__updateFilterNow();
+            }
             this.reqres.request('value:select', this.newSearchText);
         }
     }

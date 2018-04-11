@@ -179,6 +179,7 @@
 .dd-list__wrp {
     height: 100%;
     flex-grow: 1;
+    max-width: calc(100% - 12px);
 }
 
 .dd-list__scrollbar {
