@@ -2,6 +2,7 @@
 
 import GridItemBehavior from '../models/behaviors/GridItemBehavior';
 import CollapsibleBehavior from '../../models/behaviors/CollapsibleBehavior';
+import CellViewFactory from '../CellViewFactory';
 
 const classes = {
     selected: 'selected',
@@ -50,63 +51,99 @@ export default Marionette.ItemView.extend({
 
     initialize() {
         _.defaults(this.options, defaultOptions);
-        this.listenTo(this.model, 'checked', this.__onModelChecked);
-        this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
+
+        // TODO: think about implementation in tree or grouped grids
+        // this.listenTo(this.model, 'checked', this.__onModelChecked);
+        // this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
     },
 
     getValue(id) {
         this.model.get(id);
     },
 
-    _renderTemplate() {
-        this.cellViews = [];
-        let isFirstChild = true;
-        this.options.columns.forEach((gridColumn, index) => {
-            const id = gridColumn.id;
-            let value;
-
-            if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) {
-                value = gridColumn.cellViewOptions.getValue.apply(this, [gridColumn]);
-            } else {
-                value = this.model.get(id);
-            }
-
-            const cellView = new gridColumn.cellView({
-                className: `grid-cell ${this.getOption('uniqueId')}-column${index} ${gridColumn.cellView.prototype.className}`,
-                model: new Backbone.Model({
-                    value,
-                    rowModel: this.model,
-                    columnConfig: gridColumn,
-                    highlightedFragment: null
-                }),
-                gridEventAggregator: this.options.gridEventAggregator
-            });
-            if (this.getOption('isTree') && isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
-                const level = this.model.level || 0;
-                const margin = level * this.options.levelMargin;
-                const hasChildren = this.model.children && this.model.children.length;
-                cellView.on('render', () => {
-                    if (hasChildren) {
-                        cellView.el.insertAdjacentHTML('afterbegin',
-                            `<span class="collapsible-btn js-collapsible-button ${this.model.collapsed === false ? classes.expanded : ''}" style="margin-left:${margin}px;"></span>`);
-                    } else {
-                        cellView.el.insertAdjacentHTML('afterbegin', `<span style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
-                    }
-                });
-
-                isFirstChild = false;
-            }
-            cellView.render();
-
-            cellView.$el.addClass('js-grid-cell').appendTo(this.$el);
-            this.cellViews.push(cellView);
-        });
+    onRender() {
+        const model = this.model;
+        if (model.selected) {
+            this.__handleSelection();
+        }
+        if (model.highlighted) {
+            this.__handleHighlight(model.highlightedFragment);
+        }
     },
 
     onDestroy() {
         if (this.cellViews) {
             this.cellViews.forEach(x => x.destroy());
         }
+    },
+
+    updateCollapsed(collapsed, external) {
+        if (!collapsed) {
+            this.model.expand();
+            if (external) {
+                this.model.hidden = false;
+            }
+        } else {
+            this.model.collapse();
+            if (this.model.level && external) {
+                this.model.hidden = true;
+            }
+        }
+    },
+
+    _renderTemplate() {
+        this.cellViews = [];
+        let isFirstChild = true;
+
+        this.$el.append(
+            this.options.columns.map((gridColumn, index) => {
+                /*
+            const rowModel = this.model.get('rowModel');
+
+            if (_.isFunction(gridColumn.getReadonly)) {
+                readonly = gridColumn.getReadonly(rowModel);
+                this.listenTo(rowModel, 'change', () => this.editorView.editor.setReadonly(gridColumn.getReadonly(rowModel)));
+            }
+
+            if (_.isFunction(gridColumn.getHidden)) {
+                hidden = gridColumn.getHidden(rowModel);
+                this.listenTo(rowModel, 'change', () => this.editorView.editor.setHidden(gridColumn.getHidden(rowModel)));
+            }
+            */
+
+                const cellView = new (CellViewFactory.getCellViewForColumn(gridColumn))({
+                    className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
+                    schema: gridColumn,
+                    model: this.model,
+                    key: gridColumn.key
+                });
+
+                if (this.getOption('isTree') && isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
+                    const level = this.model.level || 0;
+                    const margin = level * this.options.levelMargin;
+                    const hasChildren = this.model.children && this.model.children.length;
+
+                    cellView.on('render', () => {
+                        if (hasChildren) {
+                            cellView.el.insertAdjacentHTML(
+                                'afterbegin',
+                                `<span class="collapsible-btn js-collapsible-button ${
+                                    this.model.collapsed === false ? classes.expanded : ''
+                                }" style="margin-left:${margin}px;"></span>`
+                            );
+                        } else {
+                            cellView.el.insertAdjacentHTML('afterbegin', `<span style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
+                        }
+                    });
+
+                    isFirstChild = false;
+                }
+                cellView.render();
+
+                this.cellViews.push(cellView);
+                return cellView.$el;
+            })
+        );
     },
 
     __handleHighlight(fragment) {
@@ -138,16 +175,6 @@ export default Marionette.ItemView.extend({
         this.__setInitialWidth();
     },
 
-    onRender() {
-        const model = this.model;
-        if (model.selected) {
-            this.__handleSelection();
-        }
-        if (model.highlighted) {
-            this.__highlight(model.highlightedFragment);
-        }
-    },
-
     __handleSelection() {
         this.el.classList.add(classes.selected);
     },
@@ -160,20 +187,6 @@ export default Marionette.ItemView.extend({
         this.updateCollapsed(this.model.collapsed === undefined ? false : !this.model.collapsed);
         this.trigger('toggle:collapse', this.model);
         return false;
-    },
-
-    updateCollapsed(collapsed, external) {
-        if (!collapsed) {
-            this.model.expand();
-            if (external) {
-                this.model.hidden = false;
-            }
-        } else {
-            this.model.collapse();
-            if (this.model.level && external) {
-                this.model.hidden = true;
-            }
-        }
     },
 
     __onModelChecked() {

@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/27/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import core from 'coreApi';
 import { dataProvider } from './testData';
 import localizationMap from 'localizationMap';

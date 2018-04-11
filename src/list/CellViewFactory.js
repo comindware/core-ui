@@ -1,7 +1,28 @@
 import { objectPropertyTypes } from '../Meta';
 import { helpers } from 'utils';
+import FieldView from '../form/fields/FieldView';
+import template from './templates/editableCellField.hbs';
 
 const factory = {
+    getCellViewForColumn(column) {
+        if (column.editable) {
+            return FieldView.extend({
+                template: Handlebars.compile(template),
+
+                className: 'editable-grid-field',
+
+                onRender() {
+                    this.editorRegion.show(this.editor);
+                    this.__rendered = true;
+                    this.setRequired(column.required);
+                    this.__updateEditorState(column.readonly, column.enabled);
+                }
+            });
+        }
+
+        return this.getCellViewByDataType(column.type);
+    },
+
     getCellViewByDataType(type) {
         let result;
 
@@ -73,12 +94,14 @@ const factory = {
                 return _.isBoolean(this.value);
             }
         };
-        
+
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
                 '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
                 '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-            '{{/if}}', templateHelpers);
+                '{{/if}}',
+            templateHelpers
+        );
     },
 
     getDateTimeCellView() {
@@ -89,9 +112,9 @@ const factory = {
         return factory.__getDocumentView();
     },
 
-    __getSimpleView(template, templateHelpers) {
+    __getSimpleView(simpleTemplate, templateHelpers) {
         return Marionette.ItemView.extend({
-            template: Handlebars.compile(template),
+            template: Handlebars.compile(simpleTemplate),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange',
                 highlighted: '__handleHighlightedFragmentChange',
@@ -151,14 +174,13 @@ const factory = {
                 const value = this.model.get('value');
                 let documents = [];
                 if (value && value.length > 0) {
-                    documents = _.chain(value)
+                    documents = value
                         .map(item => ({
                             id: item.id,
                             text: item.text || item.name || (item.columns && item.columns[0]),
                             url: item.url || (item.columns && item.columns[1])
                         }))
-                        .sortBy(document => document.text)
-                        .value();
+                        .sort((a, b) => a.text > b.text);
                 }
 
                 return {

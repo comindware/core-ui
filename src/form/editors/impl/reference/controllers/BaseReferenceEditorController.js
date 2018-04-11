@@ -21,7 +21,7 @@ export default Marionette.Controller.extend(
         initialize(options) {
             helpers.ensureOption(options, 'collection');
 
-            this.collection = list.factory.createWrappedCollection(options.collection);
+            this.collection = list.factory.createWrappedCollection(options);
         },
 
         /**

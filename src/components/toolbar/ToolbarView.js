@@ -13,7 +13,7 @@ export default Marionette.LayoutView.extend({
         this.menuItemsCollection = new Backbone.Collection();
 
         this.toolbarActions = this.__createActionsGroupsView();
-        this.popupMenu = this.__createMenuActionsView(this.menuItemsCollection);
+        this.popupMenu = this.__createDropdownActionsView(this.menuItemsCollection);
         this.listenTo(this.toolbarActions, 'actionSelected', action => this.trigger('command:execute', action));
         this.listenTo(this.popupMenu, 'execute', (action, model) => this.trigger('command:execute', model));
         this.listenTo(Core.services.GlobalEventService, 'window:resize', this.rebuildView);
@@ -29,7 +29,7 @@ export default Marionette.LayoutView.extend({
         popupMenuRegion: '.js-menu-actions-region'
     },
 
-    onShow() {
+    onAttach() {
         this.rebuildView();
     },
 
@@ -71,12 +71,12 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    __createMenuActionsView() {
-        return Core.dropdown.factory.createMenu({
+    __createDropdownActionsView() {
+        return Core.dropdown.factory.createDropdown({
+            buttonView: Marionette.ItemView.extend({ template: false }),
+            panelView: Marionette.ItemView.extend({ template: false }),
             text: actionsMenuLabel,
-            items: this.menuItemsCollection,
-            popoutFlow: 'right',
-            customAnchor: true
+            items: this.menuItemsCollection
         });
     }
 });

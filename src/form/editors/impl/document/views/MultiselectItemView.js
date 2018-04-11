@@ -67,7 +67,7 @@ export default Marionette.LayoutView.extend({
         }
         if (this.model.get('id').indexOf(savedDocumentPrefix) > -1) {
             if (!this.isRevisonButtonShown) {
-                this.documentRevisionPopout = new dropdown.factory.createPopout({
+                this.documentRevisionPopout = new dropdown.factory.createDropdown({
                     buttonView: DocumentRevisionButtonView,
                     panelView: DocumentRevisionPanelView,
                     panelViewOptions: { collection: this.revisionCollection },

@@ -19,7 +19,7 @@ CheckableBehavior.CheckableCollection = function(collection) {
 _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
     check(model) {
-        if (this.checked[model.cid]) { return; }
+        if (this.internalCheck || this.checked[model.cid]) { return; }
 
         this.checked[model.cid] = model;
         model.check();
@@ -27,7 +27,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     uncheck(model) {
-        if (!this.checked[model.cid]) { return; }
+        if (this.internalCheck || !this.checked[model.cid]) { return; }
 
         delete this.checked[model.cid];
         model.uncheck();
@@ -43,12 +43,22 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     checkAll() {
-        this.each(model => { model.check(); });
+        this.internalCheck = true;
+        this.each(model => {
+            this.checked[model.cid] = model;
+            model.check();
+        });
+        this.internalCheck = false;
         calculateCheckedLength(this);
     },
 
     uncheckAll() {
-        this.each(model => { model.uncheck(); });
+        this.internalCheck = true;
+        this.each(model => {
+            delete this.checked[model.cid];
+            model.uncheck();
+        });
+        this.internalCheck = false;
         calculateCheckedLength(this);
     },
 
@@ -108,7 +118,7 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
     }
 });
 
-const calculateCheckedLength = function(collection) {
+const calculateCheckedLength = _.debounce(collection => {
     collection.checkedLength = _.filter(collection.models, model => model.checked).length;
 
     const checkedLength = collection.checkedLength;
@@ -127,7 +137,7 @@ const calculateCheckedLength = function(collection) {
     if (checkedLength > 0 && checkedLength < length) {
         collection.trigger('check:some', collection);
     }
-};
+});
 
 export default CheckableBehavior;
 export const CheckableCollection = CheckableBehavior.CheckableCollection;

@@ -80,8 +80,8 @@ const GridHeaderView = Marionette.ItemView.extend({
         let isFirstChild = true;
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
-                model: column.viewModel,
+            const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
+                title: column.title,
                 column,
                 gridEventAggregator: this.gridEventAggregator
             }));
@@ -96,7 +96,7 @@ const GridHeaderView = Marionette.ItemView.extend({
         this.ui.gridHeaderColumn.each((i, el) => {
             el.classList.add(`${this.getOption('uniqueId')}-column${i}`);
         });
-        this.__handleResizeInternal();
+
         // if (this.options.expandOnShow) {
         //     this.__updateCollapseAll(false);
         // }
@@ -222,56 +222,16 @@ const GridHeaderView = Marionette.ItemView.extend({
         this.__handleResizeInternal();
         this.gridEventAggregator.trigger('columnsResize');
     },
-    //
-    // __getFullWidth() {
-    //     return this.$el.parent().width() - this.getOption('checkBoxPadding') - 2; // Magic cross browser pixels, don't remove them;
-    // },
 
     __getFullWidth() {
-        return this.el.parentElement ? this.el.parentElement.offsetWidth : 0;
+        return this.el.clientWidth;
     },
 
     __handleResizeInternal() {
-        // Grid header's full width
-        const fullWidth = this.__getFullWidth();
-        if (fullWidth < 1) {
-            _.delay(() => this.__handleResizeInternal(), 100);
-            return;
-        }
-        const columnsWithDefinedWidth = this.columns.filter(column => column.width);
-
-        let definedSumWidth = 0;
-        columnsWithDefinedWidth.forEach(col => {
-            col.absWidth = Math.floor(col.width > 1 ? col.width : col.width * fullWidth); // Calculate absolute custom column width (rounding it down)
-            definedSumWidth += col.absWidth;
-        });
-        // Default column width
-        const defaultColumnWidth = (fullWidth - definedSumWidth) / (this.columns.length - columnsWithDefinedWidth.length);
-        let sumWidth = 0;
-        // Columns' sum width
-
-        // this.$el.width(fullWidth);
-
-
-        // Iterate all but first columns counting their sum width
-        this.ui.gridHeaderColumn.not(':last').each(i => {
-            //const child = $(el);
-            const col = this.columns[i];
-            if (!col.width) {
-                col.absWidth = Math.floor(defaultColumnWidth); // Otherwise take default column width (rounding it down)
-                sumWidth += col.absWidth; // And add it to columns' sum width
-            }
+        this.ui.gridHeaderColumn.each(i => {
             // child.outerWidth(col.absWidth); // Set absolute column width
-            this.__setColumnWidth(i, col.absWidth);
+            this.__setColumnWidth(i, this.columns[i].width || 1);
         });
-        
-        // Take remaining (or only) first column to calculate it's absolute width as difference between grid header's full width and
-        // other columns' sum width. This logic is necessary because other columns' widths may have been rounded down during calculations
-        if (this.columns.length) {
-            const lastIndex = this.columns.length - 1;
-            this.columns[lastIndex].absWidth = Math.floor(fullWidth - definedSumWidth - sumWidth); // Calculate remainig (or only) first column's absolute width);
-            this.__setColumnWidth(lastIndex, this.columns[lastIndex].absWidth);
-        }
     },
 
     updateColumnAndNeighbourWidths(index, delta) {
@@ -290,13 +250,11 @@ const GridHeaderView = Marionette.ItemView.extend({
     },
 
     __setColumnWidth(index, width) {
-        if (!width) {
-            return;
-        }
-        let style = this.styleSheet;
+        const style = this.styleSheet;
         const selector = `.${this.getOption('uniqueId')}-column${index}`;
-        const regexp = new RegExp(`${selector} { width: [+, -]?\\d+\\.?\\d*px; } `);
-        const newValue = `${selector} { width: ${width}px; } `;
+        const regexp = new RegExp(`${selector} { flex: [+, -]?\\S+\\.?\\S* 0 0; } `);
+        const newValue = `${selector} { flex: ${width}${width > 1 ? 'px' : ''} 0 0; } `;
+
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);
         } else {

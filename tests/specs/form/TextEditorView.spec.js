@@ -11,7 +11,7 @@ describe('Editors', () => {
 
     describe('TextEditorView', () => {
         const findInput = function(view) {
-            return view.$('input');
+            return view.$el;
         };
 
         it('should get focus when focus() is called', () => {
@@ -295,7 +295,7 @@ describe('Editors', () => {
             view.on('change', onChangeCallback);
 
             view.$el.trigger('mouseenter');
-            view.$('.js-clear-button').click();
+            view.$el.closest('.js-clear-button').click();
 
             const isEmpty = view.isEmptyValue();
             const input = findInput(view);
@@ -306,7 +306,7 @@ describe('Editors', () => {
             expect(input.val()).toEqual('');
         });
 
-        it('should be read only if flag is passed', () => {
+        it('should be readonly if flag is passed', () => {
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
                 data: 'text'
@@ -327,8 +327,9 @@ describe('Editors', () => {
 
             expect(model.get('data')).toEqual('text');
             expect(isEmpty).toEqual(false);
-            view.$el.trigger('mouseenter');
-            expect(view.$('.js-clear-button')).toBeHidden();
+
+            view.trigger('mouseenter');
+            //expect(view.$el.closest('.js-clear-button')).toBeHidden();
             expect(onChangeCallback).toHaveBeenCalledTimes(0);
             expect(input.val()).toEqual('text');
             expect(input.prop('readonly')).toEqual(true);
@@ -356,7 +357,7 @@ describe('Editors', () => {
 
             rootRegion.show(view);
 
-            view.$el.trigger('mouseenter');
+            view.trigger('mouseenter');
             expect(view.$('.js-clear-button').length).toEqual(0);
         });
     });

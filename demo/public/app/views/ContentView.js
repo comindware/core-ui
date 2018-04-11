@@ -4,6 +4,7 @@ const requireText = require.context('raw-loader!../cases', true);
 import template from 'text-loader!../templates/content.html';
 import Prism from 'prism';
 import markdown from 'markdown';
+import core from 'comindware/core';
 
 export default Marionette.LayoutView.extend({
     modelEvents: {
@@ -21,7 +22,8 @@ export default Marionette.LayoutView.extend({
     },
 
     regions: {
-        caseRepresentationRegion: '.js-case-representation-region'
+        caseRepresentationRegion: '.js-case-representation-region',
+        attributesConfigurationRegion: '.js-attributes-configuration-region'
     },
 
     ui: {
@@ -46,5 +48,44 @@ export default Marionette.LayoutView.extend({
         this.model.set('sourceCode', text);
         const representationView = code();
         this.caseRepresentationRegion.show(representationView);
+
+        const attributesConfig = this.model.get('attributesConfig');
+
+        if (attributesConfig) {
+            this.attributesConfigurationRegion.show(this.__createAttributesConfigurationView(attributesConfig));
+        }
+    },
+
+    __createAttributesConfigurationView() {
+        const columns = [
+            {
+                key: 'textCell',
+                type: 'Text',
+                title: 'TextCell',
+                required: true,
+                viewModel: new Backbone.Model({ displayText: 'TextCell' }),
+                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
+                sorting: 'asc'
+            },
+            {
+                key: 'numberCell',
+                type: 'Number',
+                title: 'Number Cell',
+                getReadonly: model => model.get('numberCell') % 2,
+                viewModel: new Backbone.Model({ displayText: 'Number Cell' }),
+                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell')
+            }
+        ];
+
+        return new core.editableGrid.views.EditableGridView({
+            columns,
+            selectableBehavior: 'multi',
+            collection: new Backbone.Collection([]),
+            title: 'Attributes configuration',
+            showSearch: true,
+            searchColumns: ['textCell']
+        });
     }
 });

@@ -17,10 +17,8 @@ import 'backbone-associations';
 import 'jstorage';
 import * as Handlebars_ from 'handlebars';
 import $_ from 'jquery';
-import 'inputmask/dist/jquery.inputmask.bundle';
 import 'rangyinputs';
 import 'jquery-autosize';
-import * as keypress_ from 'keypress';
 import numeral_ from 'numeral';
 import codemirror_ from 'codemirror/lib/codemirror';
 import 'innersvg-polyfill';
@@ -37,7 +35,6 @@ $_.browser = {
 };
 
 const api = {
-    keypress: keypress_,
     'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
@@ -50,7 +47,6 @@ const api = {
     JSEncrypt: jsencrypt.JSEncrypt
 };
 
-const keypress = api.keypress;
 const moment = api.moment;
 const Handlebars = api.Handlebars;
 const $ = api.$;
@@ -61,7 +57,6 @@ const numeral = api.numeral;
 const codemirror = api.codemirror;
 export default api;
 export {
-    keypress,
     moment,
     Handlebars,
     $,

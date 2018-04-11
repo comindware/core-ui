@@ -27,10 +27,16 @@ export default Marionette.LayoutView.extend({
         }
 
         const popupId = _.uniqueId(POPUP_ID_PREFIX);
-        const regionEl = $(`<div data-popup-id="${popupId}" class="js-core-ui__global-popup-region">`);
+        const regionEl = document.createElement('div');
+        regionEl.setAttribute('data-popup-id', popupId);
+        regionEl.classList.add('js-core-ui__global-popup-region');
+
+        let parentPopup;
         let parentPopupId = null;
+
         if (hostEl) {
-            parentPopupId = $(hostEl).closest('.js-core-ui__global-popup-region').data('popup-id') || null;
+            parentPopup = hostEl.closest && hostEl.closest('.js-core-ui__global-popup-region');
+            parentPopupId = parentPopup ? parentPopup.getAttribute('popup-id') : null;
         }
         const config = {
             view,
@@ -61,7 +67,7 @@ export default Marionette.LayoutView.extend({
             } else {
                 this.__toggleFadedBackground(true);
             }
-            regionEl.addClass(classes.POPUP_FADE);
+            regionEl.classList.add(classes.POPUP_FADE);
         }
 
         this.__stack.push(config);
@@ -110,7 +116,7 @@ export default Marionette.LayoutView.extend({
 
         const lastFaded = _.last(this.__stack.filter(x => x.options.fadeBackground));
         if (lastFaded) {
-            lastFaded.regionEl.addClass(classes.POPUP_FADE);
+            lastFaded.regionEl.classList.add(classes.POPUP_FADE);
         } else {
             this.__toggleFadedBackground(this.__forceFadeBackground);
         }

@@ -36,15 +36,13 @@ export default function() {
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell'),
             sorting: 'asc',
-            filterView: core.nativeGrid.filterViewFactory.getFilterViewByType()
         },
         {
             id: 'dateTimeCell',
             cellView: core.list.cellFactory.getDateTimeCellView(),
             viewModel: new Backbone.Model({ displayText: 'DateTime Cell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Asc, 'dateTimeCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell'),
-            filterView: core.nativeGrid.filterViewFactory.getFilterViewByType()
+            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell')
         },
         {
             id: 'durationCell',

@@ -15,8 +15,13 @@ import ListItemBehavior from './models/behaviors/ListItemBehavior';
 import GridItemBehavior from './models/behaviors/GridItemBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
+import GridController from './controllers/GridController';
 
 export default /** @lends module:core.list */ {
+    controllers: {
+        GridController
+    },
+
     EventAggregator,
     /**
      * Фабрика списков

@@ -1,5 +1,4 @@
-import { keypress } from 'lib';
-import { helpers, htmlHelpers } from 'utils';
+import { keyCode, helpers, htmlHelpers } from 'utils';
 import template from '../templates/list.hbs';
 import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -30,10 +29,6 @@ const defaultOptions = {
     maxRows: 100,
     defaultElHeight: 300,
     useSlidingWindow: true
-};
-
-const classses = {
-    scrolled: 'scrolled'
 };
 
 /**
@@ -77,8 +72,8 @@ const ListView = Marionette.CompositeView.extend({
         options.childViewSelector && (this.childViewSelector = options.childViewSelector);
         options.loadingChildView && (this.loadingChildView = options.loadingChildView);
         this.listenTo(this.gridEventAggregator, 'toggle:collapse:all', this.__toggleCollapseAll);
-        this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
-        this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
+        // this.listenTo(this, 'childview:click', child => this.trigger('row:click', child.model));
+        // this.listenTo(this, 'childview:dblclick', child => this.trigger('row:dblclick', child.model));
         this.listenTo(this, 'childview:toggle:collapse', this.__updateCollapseAll);
         this.maxRows = options.maxRows || defaultOptions.maxRows;
         this.useSlidingWindow = options.useSlidingWindow || defaultOptions.useSlidingWindow;
@@ -89,7 +84,7 @@ const ListView = Marionette.CompositeView.extend({
             this.height = defaultOptions.height;
         }
 
-        this.childHeight = options.childHeight;
+        this.childHeight = options.childHeight || 25;
         this.state = {
             position: 0
         };
@@ -114,7 +109,8 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     events: {
-        scroll: '__onScroll'
+        scroll: '__onScroll',
+        keydown: '__handleKeydown'
     },
 
     className: 'list',
@@ -122,19 +118,15 @@ const ListView = Marionette.CompositeView.extend({
     template: Handlebars.compile(template),
 
     onAttach() {
-        // Updating viewportHeight and rendering subviews
-        this.collection.updateWindowSize(1);
+        // Updating viewportHeight and dom:refreshrendering subviews
+        //this.collection.updateWindowSize(1);
         this.handleResize();
-        this.cachedChildren = this.collection.length;
-        // _.defer(() => this.__cacheVirtualChildren());
     },
 
     onRender() {
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
-        this.__assignKeyboardShortcuts();
-        this.ui.visibleCollection.addClass(classses.scrolled);
     },
 
     getChildView(child) {
@@ -149,52 +141,112 @@ const ListView = Marionette.CompositeView.extend({
 
         const childView = this.getOption('childView');
         if (!childView) {
-            helpers.throwInvalidOperationError('ListView: you must specify either \'childView\' or \'childViewSelector\' option.');
+            helpers.throwInvalidOperationError("ListView: you must specify either 'childView' or 'childViewSelector' option.");
         }
         return childView;
     },
 
-    keyboardShortcuts: {
-        up(e) {
-            this.moveCursorBy(-1, e.shiftKey);
-        },
-        down(e) {
-            this.moveCursorBy(+1, e.shiftKey);
-        },
-        pageup(e) {
-            const delta = Math.ceil(this.state.viewportHeight * 0.8);
-            this.moveCursorBy(-delta, e.shiftKey);
-        },
-        pagedown(e) {
-            const delta = Math.ceil(this.state.viewportHeight * 0.8);
-            this.moveCursorBy(delta, e.shiftKey);
-        },
-        home(e) {
-            this.__moveCursorTo(0, e.shiftKey);
-        },
-        end(e) {
-            this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
-        }
+    // keyboardShortcuts: {
+    //     up(e) {
+    //         this.moveCursorBy(-1, e.shiftKey);
+    //     },
+    //     down(e) {
+    //         this.moveCursorBy(+1, e.shiftKey);
+    //     },
+    //     pageup(e) {
+    //         const delta = Math.ceil(this.state.viewportHeight * 0.8);
+    //         this.moveCursorBy(-delta, e.shiftKey);
+    //     },
+    //     pagedown(e) {
+    //         const delta = Math.ceil(this.state.viewportHeight * 0.8);
+    //         this.moveCursorBy(delta, e.shiftKey);
+    //     },
+    //     home(e) {
+    //         this.__moveCursorTo(0, e.shiftKey);
+    //     },
+    //     end(e) {
+    //         this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
+    //     }
+    // },
+
+    up(e) {
+        this.moveCursorBy(-1, e.shiftKey);
+    },
+    down(e) {
+        this.moveCursorBy(+1, e.shiftKey);
+    },
+    pageup(e) {
+        const delta = Math.ceil(this.state.viewportHeight * 0.8);
+        this.moveCursorBy(-delta, e.shiftKey);
+    },
+    pagedown(e) {
+        const delta = Math.ceil(this.state.viewportHeight * 0.8);
+        this.moveCursorBy(delta, e.shiftKey);
+    },
+    home(e) {
+        this.__moveCursorTo(0, e.shiftKey);
+    },
+    end(e) {
+        this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
     },
 
-    __cacheVirtualChildren() {
-        const pageSize = this.collection.length;
-        let i;
-        for (i = this.cachedChildren - 1; i < this.cachedChildren + pageSize && i < this.parentCollection.length; i++) {
-            const childModel = this.parentCollection.at(i);
-            const childView = this.buildChildView(childModel, this.getChildView(childModel), this.childViewOptions);
-            childView.render();
-            this.rowsPull[childModel.cid] = childView;
+    __handleKeydown(e) {
+        let delta;
+        if (e.target.tagName === 'INPUT') {
+            return;
         }
-        this.cachedChildren = i;
-        if (i < this.parentCollection.length) {
-            _.defer(() => this.__cacheVirtualChildren());
+        const selectedModels = this.parentCollection.selected instanceof Backbone.Model ? [this.parentCollection.selected] : Object.values(this.parentCollection.selected);
+        switch (event.keyCode) {
+            case keyCode.UP:
+                this.moveCursorBy(-1, e.shiftKey);
+                return false;
+            case keyCode.DOWN:
+                this.moveCursorBy(+1, e.shiftKey);
+                return false;
+            case keyCode.PAGE_UP:
+                delta = Math.ceil(this.state.viewportHeight * 0.8);
+                this.moveCursorBy(-delta, e.shiftKey);
+                return false;
+            case keyCode.PAGE_DOWN:
+                delta = Math.ceil(this.state.viewportHeight * 0.8);
+                this.moveCursorBy(delta, e.shiftKey);
+                return false;
+            case keyCode.SPACE:
+                selectedModels.forEach(model => model.toggleChecked());
+                return false;
+            case keyCode.LEFT:
+                if (this.options.isTree) {
+                    selectedModels.forEach(model => model.collapse());
+                    return false;
+                }
+                break;
+            case keyCode.RIGHT:
+                if (this.options.isTree) {
+                    selectedModels.forEach(model => model.expand());
+                    return false;
+                }
+                break;
+            case keyCode.ENTER:
+            case keyCode.DELETE:
+            case keyCode.BACKSPACE:
+            case keyCode.ESCAPE:
+            case keyCode.TAB: {
+                break;
+            }
+            case keyCode.HOME:
+                this.__moveCursorTo(0, e.shiftKey);
+                return false;
+            case keyCode.END:
+                this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
+                return false;
+            default:
+                break;
         }
     },
 
     __createReqres() {
-        this.internalReqres = new Backbone.Wreqr.RequestResponse();
-        this.internalReqres.setHandler('childViewEvent', this.__handleChildViewEvent, this);
+        this.internalReqres = Backbone.Radio.channel(_.uniqueId('listV'));
+        this.internalReqres.reply('childViewEvent', this.__handleChildViewEvent, this);
     },
 
     __handleChildViewEvent(view, eventName, eventArguments) {
@@ -237,10 +289,10 @@ const ListView = Marionette.CompositeView.extend({
 
         const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
         if (nextIndex !== index) {
-            const model = this.collection.at(nextIndex);
-            const selectFn = this.collection.selectSmart || this.collection.select;
+            const model = this.parentCollection.at(nextIndex);
+            const selectFn = this.parentCollection.selectSmart || this.parentCollection.select;
             if (selectFn) {
-                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
+                selectFn.call(this.parentCollection, model, false, shiftPressed, this.getOption('selectOnCursor'));
             }
 
             this.scrollTo(nextIndex);
@@ -259,7 +311,7 @@ const ListView = Marionette.CompositeView.extend({
 
     __normalizePosition(position) {
         const maxPos = Math.max(0, this.parentCollection.length - this.state.visibleCollectionSize);
-        return Math.max(0, Math.min(maxPos, position));
+        return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE / 2));
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
@@ -267,26 +319,12 @@ const ListView = Marionette.CompositeView.extend({
         return Math.max(0, Math.min(this.parentCollection.length - 1, index));
     },
 
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
+    __onScroll() {
+        if (this.state.viewportHeight === undefined || this.parentCollection.length <= this.state.viewportHeight || this.internalScroll) {
+            return;
         }
-        this.keyListener = new keypress.Listener(this.el);
-        _.each(this.keyboardShortcuts, (value, key) => {
-            if (typeof value === 'object') {
-                this.keyListener.register_combo(
-                    _.extend(
-                        {
-                            keys: key,
-                            this: this
-                        },
-                        value
-                    )
-                );
-            } else {
-                this.keyListener.simple_combo(key, value.bind(this));
-            }
-        });
+        const newPosition = Math.max(0, Math.floor(this.el.scrollTop / this.childHeight));
+        this.__updatePositionInternal(newPosition, false);
     },
 
     updatePosition(newPosition) {
@@ -300,7 +338,7 @@ const ListView = Marionette.CompositeView.extend({
             return;
         }
 
-        newPosition = this.collection.updatePosition(newPosition);
+        newPosition = this.collection.updatePosition(Math.max(0, newPosition));
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
@@ -319,15 +357,17 @@ const ListView = Marionette.CompositeView.extend({
         if (this.isDestroyed) {
             return;
         }
+
         const oldViewportHeight = this.state.viewportHeight;
-        const elementHeight = this.$el.height();
+
+        const elementHeight = this.el.clientHeight;
+
         if (this.children && this.children.length && !this.isEmpty()) {
             const firstChild = this.children.first().el;
             if (firstChild && firstChild.offsetHeight) {
                 this.childHeight = firstChild.offsetHeight;
             }
         }
-        const adjustedElementHeight = this.getAdjustedElementHeight(elementHeight);
 
         // Checking options consistency
         if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
@@ -335,18 +375,23 @@ const ListView = Marionette.CompositeView.extend({
         }
 
         // Computing new elementHeight and viewportHeight
-        this.state.viewportHeight = Math.max(1, Math.floor(adjustedElementHeight / this.childHeight));
-        const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight + config.VISIBLE_COLLECTION_RESERVE);
-        this.ui.visibleCollection.height(this.childHeight * this.parentCollection.length);
+        this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
+        const visibleCollectionSize = this.state.visibleCollectionSize = this.state.viewportHeight;
+        const allItemsHeight = this.childHeight * this.parentCollection.length;
+
+        this.ui.visibleCollection.height(allItemsHeight);
+        if (this.gridEventAggregator) {
+            this.gridEventAggregator.trigger('update:height', allItemsHeight);
+        }
 
         // Applying the result of computation
-        if (this.state.viewportHeight === oldViewportHeight && adjustedElementHeight === elementHeight) {
+        if (this.state.viewportHeight === oldViewportHeight) {
             // nothing changed
             return;
         }
 
-        this.$el.height(adjustedElementHeight);
-        this.collection.updateWindowSize(visibleCollectionSize);
+        //this.el.style.height = `${adjustedElementHeight}px`;
+        this.collection.updateWindowSize(visibleCollectionSize + config.VISIBLE_COLLECTION_RESERVE);
         _.defer(() => this.__updatePadding());
     },
 
@@ -392,63 +437,13 @@ const ListView = Marionette.CompositeView.extend({
         return adjustedElementHeight;
     },
 
-    __onScroll() {
-        if (this.state.viewportHeight === undefined || this.parentCollection.length <= this.state.viewportHeight || this.internalScroll) {
-            return;
-        }
-        const newPosition = Math.max(0, Math.floor(this.el.scrollTop / this.childHeight));
-        this.__updatePositionInternal(newPosition, false);
-    },
-
-    addChild(child, ChildView, index) {
-        let view = this.rowsPull[child.cid];
-        if (view) {
-            this._updateIndices(view, true, index);
-            this.children.add(view);
-            this.attachHtml(this, view, index);
-            view.delegateEvents();
-        } else {
-            view = Marionette.CompositeView.prototype.addChild.apply(this, arguments);
-            this.rowsPull[child.cid] = view;
-        }
-        view.el.style.top = `${this.parentCollection.indexOf(child) * this.childHeight}px`;
-        return view;
-    },
-
-    removeChildView(view) {
-        if (!view) {
-            return view;
-        }
-
-        this.triggerMethod('before:remove:child', view);
-
-        if (!view.supportsDestroyLifecycle) {
-            Marionette.triggerMethodOn(view, 'before:destroy', view);
-        }
-        // call 'destroy' or 'remove', depending on which is found
-        if (this.rowsPull[view.model.cid]) {
-            this.children.remove(view);
-            view.$el.remove();
-            return;
-        }
-        if (view.destroy) {
-            view.destroy();
-        } else {
-            view.remove();
-        }
-        if (!view.supportsDestroyLifecycle) {
-            Marionette.triggerMethodOn(view, 'destroy', view);
-        }
-
-        delete view._parent;
-        // this.stopListening(view);
-        this.children.remove(view);
-        this.triggerMethod('remove:child', view);
-
-        // decrement the index of views after this one
-        this._updateIndices(view, false);
-
-        return view;
+    onAddChild(child) {
+        requestAnimationFrame(() => {
+            const childModel = child.model;
+            const top = `${this.parentCollection.indexOf(childModel) * this.childHeight}px`;
+            child.el.style.top = top;
+            childModel.trigger('update:top', top);
+        });
     },
 
     __toggleCollapseAll(collapsed) {

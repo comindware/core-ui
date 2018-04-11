@@ -4,10 +4,8 @@ import { dateHelpers } from 'utils';
 export default Marionette.Object.extend({
     initialize(options = {}) {
         this.view = options.view;
-        this.reqres = new Backbone.Wreqr.RequestResponse();
-        this.reqres.setHandlers({
-            'document:revise': this.__getDocumentRevision.bind(this)
-        });
+        this.reqres = Backbone.Radio.channel(_.uniqueId('documentController'));
+        this.reqres.reply('document:revise', this.__getDocumentRevision.bind(this));
     },
 
     async __getDocumentRevision(documentId) {

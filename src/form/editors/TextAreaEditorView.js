@@ -2,7 +2,6 @@
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
-import { keypress } from 'lib';
 import { keyCode, helpers } from 'utils';
 import formRepository from '../formRepository';
 
@@ -78,30 +77,6 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
 
     templateHelpers() {
         return this.options;
-    },
-
-    onRender() {
-        // Keyboard shortcuts listener
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.textarea[0]);
-    },
-
-    /**
-     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
-     * [Keypress](https://dmauro.github.io/Keypress/).
-     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
-     * Полный список с названиями клавиш указан в исходном файле плагина:
-     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
-     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
-     * */
-    addKeyboardListener(key, callback) {
-        if (!this.keyListener) {
-            helpers.throwInvalidOperationError("You must apply keyboard listener after 'render' event has happened.");
-        }
-        const keys = key.split(',');
-        _.each(keys, k => this.keyListener.simple_combo(k, callback));
     },
 
     onShow() {

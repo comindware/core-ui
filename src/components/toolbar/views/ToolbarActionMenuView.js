@@ -7,11 +7,14 @@ export default Marionette.ItemView.extend({
     template: false,
 
     className() {
-        return this.model.has('severity') ? severity[this.model.get('severity')].class : 'toolbar-btn';
+        const severityLevel = this.model.get('severity');
+        const severityItem = severity[severityLevel] || severity.None;
+
+        return this.model.has('severity') ? severityItem.class : 'toolbar-btn';
     },
 
     onRender() {
-        this.menu = new Core.dropdown.factory.createPopout({
+        this.menu = new Core.dropdown.factory.createDropdown({
             buttonView: ActionMenuButtonView,
             panelView: ActionMenuPanelView,
             panelViewOptions: {
@@ -19,8 +22,7 @@ export default Marionette.ItemView.extend({
             },
             buttonViewOptions: {
                 model: this.model
-            },
-            customAnchor: true
+            }
         });
 
         this.listenTo(this.menu, 'panel:click:item', this.__handleSeveritySelect);

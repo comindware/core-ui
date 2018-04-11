@@ -188,7 +188,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
                 },
                 popoutFlow: 'left'
             };
-            const popoutView = dropdownFactory.createPopout(popoutOptions);
+            const popoutView = dropdownFactory.createDropdown(popoutOptions);
             this.selectType.show(popoutView);
 
             this.listenTo(popoutView, 'execute', (id, model) => {

@@ -26,7 +26,7 @@ export default Marionette.ItemView.extend({
         const reqres = this.getOption('reqres');
         const options = this.model.get('options');
 
-        this.popup = Core.dropdown.factory.createPopout({
+        this.popup = Core.dropdown.factory.createDropdown({
             customAnchor: true,
             buttonView: options.buttonView,
             panelView: options.panelView,

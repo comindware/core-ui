@@ -73,6 +73,8 @@ gulp.task('start', callback =>
 
 gulp.task('build', callback => runSequence(['build:core:prod', 'jsdoc'], 'localization', 'generateSprites', callback));
 
+gulp.task('build:min', callback => runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', callback));
+
 gulp.task('deploy', callback => runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'test:coverage', 'prepareToPublish', callback));
 
 gulp.task('default', ['start']);

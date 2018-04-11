@@ -2,15 +2,15 @@
 import VirtualCollection from '../../collections/VirtualCollection';
 import dropdown from 'dropdown';
 import { helpers, comparators } from 'utils';
-import template from './templates/referenceBubbleEditor.hbs';
+import template from './templates/datalistEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import FakeInputModel from './impl/referenceBubble/models/FakeInputModel';
-import ButtonView from './impl/referenceBubble/views/ButtonView';
-import PanelView from './impl/referenceBubble/views/PanelView';
+import FakeInputModel from './impl/datalist/models/FakeInputModel';
+import ButtonView from './impl/datalist/views/ButtonView';
+import PanelView from './impl/datalist/views/PanelView';
 import ReferenceListItemView from './impl/reference/views/ReferenceListItemView';
 import formRepository from '../formRepository';
 import DefaultReferenceModel from './impl/reference/models/DefaultReferenceModel';
-import StaticController from './impl/referenceBubble/controllers/StaticController';
+import StaticController from './impl/datalist/controllers/StaticController';
 
 type DataValue = {
     id: string,
@@ -33,11 +33,12 @@ const defaultOptions = {
     showCheckboxes: false,
     textFilterDelay: 300,
     maxQuantitySelected: 1,
-    canDeleteItem: true
+    canDeleteItem: true,
+    collection: null
 };
 
 /**
- * @name ReferenceEditorView
+ * @name DatalistView
  * @member of module:core.form.editors
  * @class Editor to select object in the format <code>{ id, text }</code>, using async fetch for 'options collection'.
  * @extends module:core.form.editors.base.BaseEditorView
@@ -51,13 +52,13 @@ const defaultOptions = {
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
  * */
-export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         _.bindAll(this, '__getDisplayText');
 
-        this.reqres = new Backbone.Wreqr.RequestResponse();
+        this.reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
         this.controller
             = this.options.controller
             || new StaticController({
@@ -65,17 +66,17 @@ export default (formRepository.editors.ReferenceBubble = BaseLayoutEditorView.ex
             });
         this.showAddNewButton = this.options.showAddNewButton;
 
-        this.reqres.setHandler('bubble:delete', this.__onBubbleDelete, this);
-        this.reqres.setHandler('bubble:delete:last', this.__onBubbleDeleteLast, this);
-        this.reqres.setHandler('input:search', this.__onInputSearch, this);
-        this.reqres.setHandler('input:up', this.__onInputUp, this);
-        this.reqres.setHandler('input:down', this.__onInputDown, this);
-        this.reqres.setHandler('button:click', this.__onButtonClick, this);
-        this.reqres.setHandler('value:select', this.__onValueSelect, this);
-        this.reqres.setHandler('value:edit', this.__onValueEdit, this);
-        this.reqres.setHandler('filter:text', this.__onFilterText, this);
-        this.reqres.setHandler('add:new:item', this.__onAddNewItem, this);
-        this.reqres.setHandler('view:ready', this.__triggerReady, this);
+        this.reqres.reply('bubble:delete', this.__onBubbleDelete, this);
+        this.reqres.reply('bubble:delete:last', this.__onBubbleDeleteLast, this);
+        this.reqres.reply('input:search', this.__onInputSearch, this);
+        this.reqres.reply('input:up', this.__onInputUp, this);
+        this.reqres.reply('input:down', this.__onInputDown, this);
+        this.reqres.reply('button:click', this.__onButtonClick, this);
+        this.reqres.reply('value:select', this.__onValueSelect, this);
+        this.reqres.reply('value:edit', this.__onValueEdit, this);
+        this.reqres.reply('filter:text', this.__onFilterText, this);
+        this.reqres.reply('add:new:item', this.__onAddNewItem, this);
+        this.reqres.reply('view:ready', this.__triggerReady, this);
 
         this.value = this.__adjustValue(this.value);
 

@@ -74,6 +74,11 @@ export default {
                     description: 'Simple code editor'
                 },
                 {
+                    id: 'ContextEditor',
+                    displayName: 'Context Editor',
+                    description: 'Context editor'
+                },
+                {
                     id: 'RangeEditor',
                     displayName: 'Range Editor',
                     description: 'Simple range editor'
@@ -149,7 +154,7 @@ export default {
                     description: 'Simple text editor'
                 },
                 {
-                    id: 'ReferenceBubbleEditor',
+                    id: 'DatalistEditor',
                     displayName: 'Reference Bubble Editor',
                     description: 'Data list editor with search'
                 },
@@ -189,9 +194,14 @@ export default {
                     description: 'List with grouping'
                 },
                 {
-                    id: 'nativeGrid',
+                    id: 'grid',
                     displayName: 'Grid',
                     description: 'Simple grid'
+                },
+                {
+                    id: 'gridSearchAndSelection',
+                    displayName: 'Grid (Search & Selection)',
+                    description: 'Grid with search and selection'
                 },
                 {
                     id: 'editableGrid',
