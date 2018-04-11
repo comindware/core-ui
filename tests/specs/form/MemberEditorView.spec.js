@@ -9,17 +9,18 @@ describe('Editors', () => {
         this.rootRegion = initializeCore();
     });
 
-    describe('DocumentEditorView', () => {
-        it('should initialize', function() {
+    describe('CodeEditorView', () => {
+        it('should initialize', function () {
             const model = new Backbone.Model({
-                code: 'true'
+                selected: [],
             });
 
-            const view = new core.form.editors.DocumentEditor({
+            const view = new core.form.editors.MembersSplitPanelEditor({
                 model,
-                key: 'code',
+                key: 'selected',
                 autocommit: true,
-                mode: 'code'
+                users: Core.services.UserService.listUsers(),
+                groups: new Backbone.Collection()
             });
 
             this.rootRegion.show(view);
