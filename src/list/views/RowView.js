@@ -2,6 +2,7 @@
 
 import GridItemBehavior from '../models/behaviors/GridItemBehavior';
 import CollapsibleBehavior from '../../models/behaviors/CollapsibleBehavior';
+import CellViewFactory from '../CellViewFactory';
 
 const classes = {
     selected: 'selected',
@@ -100,7 +101,7 @@ export default Marionette.ItemView.extend({
 
             let value;
 
-            if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) {
+            if (gridColumn.cellViewOptions && gridColumn.cellViewOptions.getValue) { //todo WTF
                 value = gridColumn.cellViewOptions.getValue.apply(this, [gridColumn]);
             } else {
                 value = this.model.get(id);
@@ -131,7 +132,7 @@ export default Marionette.ItemView.extend({
             }
             */
 
-            const cellView = new gridColumn.cellView({
+            const cellView = new (CellViewFactory.getCellViewForColumn(gridColumn))({
                 className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
                 schema: gridColumn,
                 model: this.model,

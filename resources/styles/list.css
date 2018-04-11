@@ -22,6 +22,8 @@
 .list {
     height: 100%;
     overflow: auto;
+    display: flex;
+    flex: 1;
 }
 
 .visible-collection {
@@ -65,6 +67,7 @@
 .grid-content-view {
     position: relative;
     flex: 1 1 auto;
+    display: flex;
 }
 
 .grid-selection-panel-region {
@@ -112,8 +115,7 @@
     font-size: 12px;
     color: #000;
     cursor: default;
-    flex: 0 0 auto;
-    min-width: 30px;
+    min-width: 100px;
 }
 
 .grid-selection-cell {
@@ -172,11 +174,9 @@
 
 .grid-header-column {
     display: inline-block;
-    float: left;
-    width: auto;
     position: relative;
-    flex: 0 0 auto;
     overflow: hidden;
+    min-width: 100px;
 }
 
 .grid-header-column-content {
@@ -411,6 +411,7 @@ svg.svg-grid-icons {
     height: 100%;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .editable-grid-header{

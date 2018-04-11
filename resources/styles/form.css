@@ -380,7 +380,6 @@ input[type="checkbox"].checkbox {
     margin: 0;
     overflow: hidden;
     display: block;
-    position: absolute;
     top: 0;
     left: 0;
     border: solid 1px #838c92;

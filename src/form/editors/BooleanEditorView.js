@@ -42,7 +42,7 @@ export default (formRepository.editors.Boolean = BaseItemEditorView.extend(
             keydown: '__onKeyDown'
         },
 
-        className: 'editor editor_checkbox',
+        className: 'editor editor_checkbox checkbox js-toggle-button',
 
         attributes() {
             return {

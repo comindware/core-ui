@@ -90,11 +90,11 @@ export default Marionette.LayoutView.extend({
         }
         options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
 
-        this.forbidSelection = _.isBoolean(options.forbidSelection) ? options.forbidSelection : true;
+        this.forbidSelection = typeof options.forbidSelection === 'boolean' ? options.forbidSelection : true;
 
         const childView = options.childView || RowView;
 
-        const childViewOptions = _.extend(options.childViewOptions || {}, {
+        const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this,
             uniqueId: this.uniqueId,
@@ -144,7 +144,7 @@ export default Marionette.LayoutView.extend({
 
         this.updatePosition = this.listView.updatePosition.bind(this.listView);
         if (this.collection.length) {
-            this.__presortCollection(options.columns);
+            //this.__presortCollection(options.columns); TODO WFT
         }
         this.collection = options.collection;
 
@@ -200,7 +200,6 @@ export default Marionette.LayoutView.extend({
     },
 
     onRender() {
-        const elementWidth = this.$el.width();
         if (this.options.columns.length === 0) {
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
@@ -220,12 +219,7 @@ export default Marionette.LayoutView.extend({
         if (!(this.options.showToolbar || this.options.showSearch)) {
             this.ui.tools.hide();
         }
-        const updatedElementWidth = this.$el.width();
-        if (elementWidth !== updatedElementWidth) {
-            // A native scrollbar was displayed after we showed the content, which triggered width change and requires from us to recalculate the columns.
-            this.headerView.handleResize();
-            this.listView.handleResize();
-        }
+
         if (this.getOption('title')) {
             this.ui.title.text(this.getOption('title') || '');
         } else {

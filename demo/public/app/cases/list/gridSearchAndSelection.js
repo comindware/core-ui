@@ -24,37 +24,38 @@ export default function() {
         {
             id: 'textCell',
             type: 'String',
-            viewModel: new Backbone.Model({ displayText: 'TextCell' })
+            title: 'TextCell'
         },
         {
             id: 'numberCell',
             type: 'Integer',
-            viewModel: new Backbone.Model({ displayText: 'Number Cell' })
+            title: 'Number Cell'
         },
         {
             id: 'dateTimeCell',
             type: 'DateTime',
-            viewModel: new Backbone.Model({ displayText: 'DateTime Cell' })
+            title: 'DateTime Cell'
 
         },
         {
             id: 'durationCell',
             type: 'Duration',
+            title: 'Duration Cell'
         },
         {
             id: 'booleanCell',
             type: 'Boolean',
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' })
+            title: 'Boolean Cell'
         },
         {
             id: 'referenceCell',
             type: 'Instance',
-            viewModel: new Backbone.Model({ displayText: 'Reference Cell' })
+            title: 'Reference Cell'
         },
         {
             id: 'documentCell',
             type: 'Document',
-            viewModel: new Backbone.Model({ displayText: 'Document Cell' })
+            title: 'Document Cell'
         }
     ];
 

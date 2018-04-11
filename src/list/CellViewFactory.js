@@ -6,10 +6,6 @@ import template from './templates/editableCellField.hbs';
 const factory = {
     getCellViewForColumn(column) {
         if (column.editable) {
-            if (this.editorIsShown) {
-                return;
-            }
-
             return FieldView.extend({
                 template: Handlebars.compile(template),
 
@@ -23,8 +19,10 @@ const factory = {
                 }
             });
         }
+
         return this.getCellViewByDataType(column.type);
     },
+
     getCellViewByDataType(type) {
         let result;
 
@@ -176,14 +174,13 @@ const factory = {
                 const value = this.model.get('value');
                 let documents = [];
                 if (value && value.length > 0) {
-                    documents = _.chain(value)
+                    documents = value
                         .map(item => ({
                             id: item.id,
                             text: item.text || item.name || (item.columns && item.columns[0]),
                             url: item.url || (item.columns && item.columns[1])
                         }))
-                        .sortBy(document => document.text)
-                        .value();
+                        .sort((a, b) => a.text > b.text);
                 }
 
                 return {
