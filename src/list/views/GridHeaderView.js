@@ -80,8 +80,8 @@ const GridHeaderView = Marionette.ItemView.extend({
         let isFirstChild = true;
         this.ui.gridHeaderColumnContent.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(_.extend(this.gridColumnHeaderViewOptions || {}, {
-                model: column.viewModel,
+            const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
+                title: column.title,
                 column,
                 gridEventAggregator: this.gridEventAggregator
             }));
@@ -252,8 +252,8 @@ const GridHeaderView = Marionette.ItemView.extend({
     __setColumnWidth(index, width) {
         const style = this.styleSheet;
         const selector = `.${this.getOption('uniqueId')}-column${index}`;
-        const regexp = new RegExp(`${selector} { flex: [+, -]?\\d+\\.?\\d*; } `);
-        const newValue = `${selector} { flex: ${width}${width > 1 ? 'px' : ''}; } `;
+        const regexp = new RegExp(`${selector} { flex: [+, -]?\\S+\\.?\\S* 0 0; } `);
+        const newValue = `${selector} { flex: ${width}${width > 1 ? 'px' : ''} 0 0; } `;
 
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);

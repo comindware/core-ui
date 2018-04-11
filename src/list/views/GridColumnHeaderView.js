@@ -11,7 +11,8 @@ import template from '../templates/gridcolumnheader.hbs';
  * @param {Object} options Constructor options
  * @param {Array} options.columns массив колонок
  * */
-const GridColumnHeaderView = Marionette.ItemView.extend({
+
+export default Marionette.ItemView.extend({
     initialize(options) {
         this.column = options.column;
     },
@@ -36,9 +37,8 @@ const GridColumnHeaderView = Marionette.ItemView.extend({
     templateHelpers() {
         return {
             sortingAsc: this.column.sorting === 'asc',
-            sortingDesc: this.column.sorting === 'desc'
+            sortingDesc: this.column.sorting === 'desc',
+            displayText: this.options.title
         };
     }
 });
-
-export default GridColumnHeaderView;

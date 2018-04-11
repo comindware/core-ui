@@ -118,7 +118,7 @@ const ListView = Marionette.CompositeView.extend({
     template: Handlebars.compile(template),
 
     onAttach() {
-        // Updating viewportHeight and rendering subviews
+        // Updating viewportHeight and dom:refreshrendering subviews
         //this.collection.updateWindowSize(1);
         this.handleResize();
     },
@@ -359,6 +359,7 @@ const ListView = Marionette.CompositeView.extend({
         }
 
         const oldViewportHeight = this.state.viewportHeight;
+
         const elementHeight = this.el.clientHeight;
 
         if (this.children && this.children.length && !this.isEmpty()) {
@@ -376,10 +377,11 @@ const ListView = Marionette.CompositeView.extend({
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
         const visibleCollectionSize = this.state.visibleCollectionSize = this.state.viewportHeight;
-        const allItemsHegiht = this.childHeight * this.parentCollection.length;
-        this.ui.visibleCollection.height(allItemsHegiht);
+        const allItemsHeight = this.childHeight * this.parentCollection.length;
+
+        this.ui.visibleCollection.height(allItemsHeight);
         if (this.gridEventAggregator) {
-            this.gridEventAggregator.trigger('update:height', allItemsHegiht);
+            this.gridEventAggregator.trigger('update:height', allItemsHeight);
         }
 
         // Applying the result of computation

@@ -28,11 +28,9 @@ export default () => {
     const columns = [
         {
             key: 'textCell',
-            type: 'String',
-            editor: 'Text',
+            type: 'Text',
             title: 'TextCell',
             required: true,
-            viewModel: new Backbone.Model({ displayText: 'TextCell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
             sorting: 'asc',
@@ -40,11 +38,9 @@ export default () => {
         },
         {
             key: 'numberCell',
-            type: 'Integer',
-            editor: 'Number',
+            type: 'Number',
             title: 'Number Cell',
             getReadonly: model => model.get('numberCell') % 2,
-            viewModel: new Backbone.Model({ displayText: 'Number Cell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell'),
             editable: true
@@ -52,10 +48,8 @@ export default () => {
         {
             key: 'dateTimeCell',
             type: 'DateTime',
-            editor: 'DateTime',
             title: 'DateTime Cell',
             getHidden: model => model.get('numberCell') % 2,
-            viewModel: new Backbone.Model({ displayText: 'DateTime Cell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Asc, 'dateTimeCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell'),
             editable: true
@@ -63,9 +57,7 @@ export default () => {
         {
             key: 'durationCell',
             type: 'Duration',
-            editor: 'Duration',
             title: 'Duration Cell',
-            viewModel: new Backbone.Model({ displayText: 'Duration Cell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Asc, 'durationCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Desc, 'durationCell'),
             editable: true
@@ -73,9 +65,7 @@ export default () => {
         {
             key: 'booleanCell',
             type: 'Boolean',
-            editor: 'Boolean',
             title: 'Boolean Cell',
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'booleanCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'booleanCell'),
             editable: true
@@ -83,20 +73,16 @@ export default () => {
         {
             key: 'documentCell',
             type: 'Document',
-            editor: 'Document',
             title: 'Document',
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'documentCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'documentCell'),
             editable: true
         },
         {
             key: 'referenceCell',
-            type: 'Instance',
-            editor: 'Datalist',
+            type: 'Datalist',
             title: 'Reference Cell',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'referenceCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'referenceCell'),
             editable: true

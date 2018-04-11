@@ -5,7 +5,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 // 1. Get some data
 export default function() {
     const dataArray = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 50000; i++) {
         dataArray.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -22,39 +22,39 @@ export default function() {
     // 2. Create columns
     const columns = [
         {
-            id: 'textCell',
+            key: 'textCell',
             type: 'String',
-            viewModel: new Backbone.Model({ displayText: 'TextCell' })
+            title: 'TextCell'
         },
         {
-            id: 'numberCell',
+            key: 'numberCell',
             type: 'Integer',
-            viewModel: new Backbone.Model({ displayText: 'Number Cell' })
+            title: 'Number Cell'
         },
         {
-            id: 'dateTimeCell',
+            key: 'dateTimeCell',
             type: 'DateTime',
-            viewModel: new Backbone.Model({ displayText: 'DateTime Cell' })
-
+            title: 'DateTime Cell'
         },
         {
-            id: 'durationCell',
+            key: 'durationCell',
             type: 'Duration',
+            title: 'Duration Cell'
         },
         {
-            id: 'booleanCell',
+            key: 'booleanCell',
             type: 'Boolean',
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' })
+            title: 'Boolean Cell'
         },
         {
-            id: 'referenceCell',
+            key: 'referenceCell',
             type: 'Instance',
-            viewModel: new Backbone.Model({ displayText: 'Reference Cell' })
+            title: 'Reference Cell'
         },
         {
-            id: 'documentCell',
+            key: 'documentCell',
             type: 'Document',
-            viewModel: new Backbone.Model({ displayText: 'Document Cell' })
+            title: 'Document Cell'
         }
     ];
 

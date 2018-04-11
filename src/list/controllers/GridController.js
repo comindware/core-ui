@@ -1,3 +1,4 @@
+//@flow
 import utils from 'utils';
 import GridView from '../views/GridView';
 import meta from '../meta';
@@ -13,44 +14,42 @@ import factory from '../factory';
  */
 
 export default Marionette.Object.extend({
-    initialize() {
-        this.__createModel();
-        this.__createView();
+    initialize(options) {
+        this.__createView(options);
     },
 
-    __createModel() {
-        this.allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
-        this.collection = factory.createWrappedCollection(this.options);
-        this.columns = this.__getColumns();
-        if (this.options.showSelection) {
-            this.listenTo(this.collection, 'check:all check:some check:none', this.__updateActions);
+    __createView(options) {
+        const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
+        const collection = factory.createWrappedCollection(this.options);
+
+        if (options.showSelection) {
+            this.listenTo(collection, 'check:all check:some check:none', function () { this.__updateActions(allToolbarActions, collection); });
         } else {
-            this.listenTo(this.collection, 'select:all select:some select:none', this.__updateActions);
+            this.listenTo(collection, 'select:all select:some select:none', function () { this.__updateActions(allToolbarActions, collection); });
         }
-    },
 
-    __createView() {
         this.view = new GridView(
             Object.assign(this.options, {
-                actions: this.allToolbarActions,
-                collection: this.collection,
-                columns: this.columns
+                actions: allToolbarActions,
+                collection,
+                columns: options.columns
             })
         );
-        this.listenTo(this.view, 'show', this.__updateActions);
-        this.listenTo(this.view, 'search', this.__onSearch);
+
+        this.listenTo(this.view, 'show', function () { this.__updateActions(allToolbarActions, collection); });
+        this.listenTo(this.view, 'search', function (text) { this.__onSearch(text, options.columns, collection); });
         this.listenTo(this.view, 'execute:action', this.__executeAction);
         this.listenTo(this.view, 'childview:click', this.__onItemClick);
         this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
     },
 
-    __onSearch(text) {
+    __onSearch(text, columns, collection) {
         if (text) {
-            this.__applyFilter(new RegExp(text, 'i'));
-            this.__highlightCollection(text);
+            this.__applyFilter(new RegExp(text, 'i'), columns, collection);
+            this.__highlightCollection(text, collection);
         } else {
-            this.__clearFilter();
-            this.__unhighlightCollection();
+            this.__clearFilter(collection);
+            this.__unhighlightCollection(collection);
         }
 
         if (this.options.isTree) {
@@ -58,10 +57,10 @@ export default Marionette.Object.extend({
         }
     },
 
-    __applyFilter(regexp) {
-        this.collection.filter(model => {
+    __applyFilter(regexp, columns, collection) {
+        collection.filter(model => {
             let result = false;
-            const searchableColumns = this.columns.filter(column => column.searchable !== false).map(column => column.id || column.key);
+            const searchableColumns = columns.filter(column => column.searchable !== false).map(column => column.id || column.key);
             searchableColumns.forEach(column => {
                 const values = model.get(column);
                 const testValueFunction = value => {
@@ -83,18 +82,18 @@ export default Marionette.Object.extend({
         });
     },
 
-    __clearFilter() {
-        this.collection.filter();
+    __clearFilter(collection) {
+        collection.filter();
     },
 
-    __highlightCollection(text) {
-        this.collection.each(model => {
+    __highlightCollection(text, collection) {
+        collection.each(model => {
             model.highlight(text);
         });
     },
 
-    __unhighlightCollection() {
-        this.collection.each(model => {
+    __unhighlightCollection(collection) {
+        collection.each(model => {
             model.unhighlight();
         });
     },
@@ -104,7 +103,7 @@ export default Marionette.Object.extend({
         if (!this.options.excludeActions) {
             toolbarActions = meta.defaultActions;
         } else if (this.options.excludeActions !== 'all') {
-            toolbarActions = _.filter(this.actions, action => this.options.excludeActions.indexOf(action.id) === -1);
+            toolbarActions = this.actions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
         }
         if (this.options.additionalActions) {
             toolbarActions = toolbarActions.concat(this.options.additionalActions);
@@ -112,9 +111,10 @@ export default Marionette.Object.extend({
         return toolbarActions;
     },
 
-    __updateActions() {
-        const checkedLength = this.__getSelectedItems().length;
-        this.allToolbarActions.filter(action => {
+    __updateActions(allToolbarActions, collection) {
+        const checkedLength = this.__getSelectedItems(collection).length;
+
+        allToolbarActions.filter(action => {
             switch (action.get('contextType')) {
                 case 'void':
                     return true;
@@ -128,11 +128,11 @@ export default Marionette.Object.extend({
         });
     },
 
-    __getSelectedItems() {
+    __getSelectedItems(collection) {
         if (this.options.showSelectColumn !== false) {
-            return Object.values(this.collection.checked);
+            return Object.values(collection.checked);
         }
-        return Object.values(this.collection.selected);
+        return Object.values(collection.selected);
     },
 
     __executeAction(model) {
