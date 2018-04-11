@@ -15,20 +15,14 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
+    schema: {},
+
     initialize(options = {}) {
-        this.form = options.form;
-        this.key = options.key;
-        this.__createSchema(options.schema);
+        this.schema.type = formRepository.editors[options.schema.type];
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(this.fieldId);
-
-        this.__viewModel = new Backbone.Model({
-            helpText: this.schema.helpText,
-            errorText: null
-        });
-        this.errorCollection = new Backbone.Collection();
+        this.__createEditor(options, this.fieldId);
     },
 
     templateHelpers() {
@@ -49,6 +43,11 @@ export default Marionette.LayoutView.extend({
     onShow() {
         this.editorRegion.show(this.editor);
         if (this.schema.helpText) {
+            this.__viewModel = new Backbone.Model({
+                helpText: this.schema.helpText,
+                errorText: null
+            });
+
             const infoPopout = dropdown.factory.createPopout({
                 buttonView: InfoButtonView,
                 panelView: TooltipPanelView,
@@ -85,8 +84,9 @@ export default Marionette.LayoutView.extend({
         if (!this.__checkUiReady()) {
             return;
         }
+
         this.$el.addClass(classes.ERROR);
-        this.errorCollection.reset(errors);
+        this.errorCollection ? (this.errorCollection = new Backbone.Collection(errors)) : this.errorCollection.reset(errors);
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
                 buttonView: ErrorButtonView,
@@ -107,7 +107,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.$el.removeClass(classes.ERROR);
-        this.errorCollection.reset();
+        this.errorCollection && this.errorCollection.reset();
     },
 
     /**
@@ -166,16 +166,6 @@ export default Marionette.LayoutView.extend({
         this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
     },
 
-    __createSchema(schema) {
-        // Resolving editor type declared as string
-        const type = _.isString(schema.type) ? formRepository.editors[schema.type] : schema.type || 'Text';
-        this.schema = Object.assign({
-            title: this.__createDefaultTitle(),
-            required: false
-        }, schema);
-        this.schema.type = type;
-    },
-
     /*
      * Create the default field title (label text) from the key name.
      * (Converts 'camelCase' to 'Camel Case')
@@ -193,17 +183,18 @@ export default Marionette.LayoutView.extend({
         return str;
     },
 
-    __createEditor() {
+    __createEditor(options, fieldId) {
         const ConstructorFn = this.schema.type;
+
         this.editor = new ConstructorFn({
             schema: this.schema,
-            form: this.form,
+            form: options.form,
             field: this,
-            key: this.key,
+            key: options.key,
             model: this.model,
-            id: this.__createEditorId(),
+            id: this.__createEditorId(fieldId),
             value: this.options.value,
-            fieldId: this.fieldId
+            fieldId
         });
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());

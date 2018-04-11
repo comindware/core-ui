@@ -84,7 +84,7 @@ const stateModes = {
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
+export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -198,7 +198,7 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
         const focusablePart2 = this.focusableParts[index + 1];
         if (pos >= focusablePart1.start && pos <= focusablePart1.end) {
             resultPosition = pos;
-        } else if (pos > focusablePart1.end && (focusablePart2 ? (pos < focusablePart2.start) : true)) {
+        } else if (pos > focusablePart1.end && (focusablePart2 ? pos < focusablePart2.start : true)) {
             resultPosition = focusablePart1.end;
         }
         return resultPosition !== undefined ? resultPosition : focusablePart1.start;
@@ -226,7 +226,7 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
             if (focusablePart2) {
                 if (focusablePart1.end < pos && pos < focusablePart2.start) {
                     const whitespaceLength = 1;
-                    if (pos < (focusablePart2.start - whitespaceLength)) {
+                    if (pos < focusablePart2.start - whitespaceLength) {
                         // the position is at '1 <here>d 2 h' >> first fragment
                         segmentIndex = i;
                     } else {
@@ -253,7 +253,7 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
 
     setSegmentValue(index, value, replace) {
         let val = this.getSegmentValue(index);
-        val = !replace ? (parseInt(val) + value) : value;
+        val = !replace ? parseInt(val) + value : value;
         if (val < 0) {
             return false;
         }
@@ -268,12 +268,12 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
 
     atSegmentEnd(position) {
         const index = this.getSegmentIndex(position);
-        return (position) === this.focusableParts[index].end;
+        return position === this.focusableParts[index].end;
     },
 
     atSegmentStart(position) {
         const index = this.getSegmentIndex(position);
-        return (position) === this.focusableParts[index].start;
+        return position === this.focusableParts[index].start;
     },
 
     __value(value, triggerChange) {
@@ -452,11 +452,13 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
             return `0${this.focusableParts[0].text}`;
         }
         // always returns string with all editable segments like '0 d 5 h 2 m'
-        return this.focusableParts.map(seg => {
-            const val = data[seg.id];
-            const valStr = _.isNumber(val) ? String(val) : '';
-            return valStr + seg.text;
-        }).join(' ');
+        return this.focusableParts
+            .map(seg => {
+                const val = data[seg.id];
+                const valStr = _.isNumber(val) ? String(val) : '';
+                return valStr + seg.text;
+            })
+            .join(' ');
     },
 
     __normalizeDuration(value) {
@@ -494,9 +496,8 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
         // updates inner state variables
         // updates UI
 
-        if (!newState.mode ||
-            (newState.mode === stateModes.EDIT && newState.displayValue !== undefined)) {
-            helpers.throwInvalidOperationError('The operation is inconsistent or isn\'t supported by this logic.');
+        if (!newState.mode || (newState.mode === stateModes.EDIT && newState.displayValue !== undefined)) {
+            helpers.throwInvalidOperationError("The operation is inconsistent or isn't supported by this logic.");
         }
 
         if (this.state.mode === newState.mode && newState.mode === stateModes.EDIT) {
@@ -525,4 +526,4 @@ export default formRepository.editors.Duration = BaseItemEditorView.extend(/** @
     __onMouseleave() {
         this.el.removeChild(this.el.lastElementChild);
     }
-});
+}));
