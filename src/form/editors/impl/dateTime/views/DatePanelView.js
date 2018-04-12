@@ -41,7 +41,7 @@ export default Marionette.ItemView.extend({
     updatePickerDate() {
         const val = this.model.get('value');
         const format = defaultOptions.pickerFormat;
-        const pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment.utc({}).format(format);
+        const pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment({}).format(format);
 
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
         this.ui.pickerInput.datetimepicker('update');

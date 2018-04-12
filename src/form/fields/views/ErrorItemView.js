@@ -5,5 +5,12 @@ export default Marionette.ItemView.extend({
 
     className: 'form-label__error-item',
 
-    template: Handlebars.compile(template)
+    template: Handlebars.compile(template),
+
+    templateHelpers() {
+        const severity = this.model.get('severity');
+        return {
+            severity: severity && severity.toLowerCase(),
+        };
+    }
 });

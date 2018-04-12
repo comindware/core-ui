@@ -14,11 +14,17 @@ import WindowService from './WindowService';
 // storing active url to get back to it while canceling module leave
 let previousUrl;
 let activeUrl;
+let shouldCheckUrl = true;
+
 const originalCheckUrl = Backbone.history.checkUrl;
 Backbone.history.checkUrl = () => {
     previousUrl = activeUrl;
     activeUrl = window.location.hash;
-    originalCheckUrl.apply(this, arguments);
+
+    if (shouldCheckUrl) {
+        originalCheckUrl.apply(this, arguments);
+    }
+    shouldCheckUrl = true;
 };
 
 export default {
@@ -57,6 +63,7 @@ export default {
         if (options.trigger === undefined) {
             options.trigger = true;
         }
+        shouldCheckUrl = options.trigger || activeUrl === url;
         Backbone.history.navigate(url, options);
     },
 
@@ -133,7 +140,10 @@ export default {
             this.loadingContext = null;
             if (this.activeModule.onRoute) {
                 this.activeModule.routerAction = callbackName;
-                this.activeModule.onRoute.apply(this.activeModule, routingArgs);
+                const continueHandling = this.activeModule.onRoute.apply(this.activeModule, routingArgs);
+                if (continueHandling === false) {
+                    return;
+                }
             }
             if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
                 const configuration = this.activeModule.routingActions[callbackName];

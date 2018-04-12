@@ -160,7 +160,7 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
     },
 
     __onMouseleave() {
-        this.el.lastElementChild.remove();
+        this.el.removeChild(this.el.lastElementChild);
     }
 });
 

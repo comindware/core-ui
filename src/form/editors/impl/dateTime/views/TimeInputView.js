@@ -56,14 +56,15 @@ export default Marionette.ItemView.extend({
         }
 
         const format = this.timeEditFormat;
-        const parsedVal = moment.utc(val, format, true);
+        const parsedVal = moment(val, format, true);
         let parsedDate;
 
         if (parsedVal.isValid()) {
             if (currentValue) {
                 // Take previously selected date and new time
                 parsedDate = moment(currentValue)
-                    .hour(parsedVal.hour()).minute(parsedVal.minute())
+                    .hour(parsedVal.hour())
+                    .minute(parsedVal.minute())
                     .second(this.hasSeconds ? parsedVal.second() : 0)
                     .millisecond(0)
                     .toISOString();

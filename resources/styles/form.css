@@ -222,6 +222,24 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
+.form-label__error-icon{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+}
+
+.form-label__error-icon-error svg{
+    fill: rgb(216, 0, 39);
+}
+
+.form-label__error-icon-warning svg{
+    fill: rgb(255, 218, 68);
+}
+
+.form-label__error-text {
+    padding-left: 21px;
+}
+
 .required .form-label {
     padding-left: 10px;
 }
@@ -236,6 +254,14 @@ rgba(5,117,189,.5) // user avatar btn
     position: absolute;
     top: 50%;
     left: 0;
+}
+.editable-grid-field.required::before {
+    margin: 0 0 0 1px;
+    top: 0;
+}
+
+.editable-cell .error.required::before {
+    display:none;
 }
 
 .disabled .form-label {
@@ -259,6 +285,7 @@ rgba(5,117,189,.5) // user avatar btn
     color:#384650;
 }
 
+
 .editor:after {
     content: '';
     position: absolute;
@@ -280,6 +307,21 @@ rgba(5,117,189,.5) // user avatar btn
 
 .editor_focused {
     color:#384650;
+}
+
+.editor_color{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.editor.editor_color:after {
+    left: 38px;
+}
+.editor_focused.editor_color:after {
+    width: calc(100% - 38px);
 }
 
 .editor_readonly:after,
@@ -308,6 +350,8 @@ rgba(5,117,189,.5) // user avatar btn
 .editor_disabled div.date-view {
     pointer-events: auto;
 }
+
+
 
 /* checkbox */
 input[type="checkbox"].checkbox {
@@ -589,7 +633,7 @@ input[type="checkbox"].checkbox {
 
 .dropdown-text{
     display: inline-block;
-    max-width: calc(100% - 16px);
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -975,6 +1019,53 @@ input[type="checkbox"].checkbox {
 }
 
 /* /Member editor/ */
+
+
+/*------------------ Input Color ------------------*/
+input[type="color"], .colorpicker{
+    height: 28px;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 35px;
+    background: transparent;
+    margin: -4px 5px 0 -2px;
+    border: none;
+    cursor: pointer;
+    flex: none;
+}
+
+.sp-replacer{
+    height: 20px;
+    padding: 0 !important;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 35px;
+    background: transparent !important;
+    margin: 0 5px 0 0;
+    border: none !important;
+    cursor: pointer;
+    flex: none;
+}
+
+.sp-preview{
+    height: 20px;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 35px;
+    background: transparent;
+    margin: 0;
+    border: 1px solid #777 !important;
+    cursor: pointer;
+    flex: none;
+}
+
+.sp-dd{
+    display:none;
+}
+/*-------------// Input Color // -------------*/
+
 
 
 /* svg icons */

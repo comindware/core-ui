@@ -29,6 +29,10 @@ export default Marionette.LayoutView.extend({
         'change:value': '__updateDisplayValue',
     },
 
+    ui: {
+        initialValue: '.js-time-input'
+    },
+
     onRender() {
         this.__updateDisplayValue();
     },
@@ -37,15 +41,17 @@ export default Marionette.LayoutView.extend({
         if (this.isDropdownShown) {
             return;
         }
-        this.el.insertAdjacentHTML('afterbegin', `<input class="js-time-input input input_time" type="text" value="${
-            DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat)}">`);
+        this.ui.initialValue.val(DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat));
     },
 
     __showEditor() {
         if (this.isDropdownShown) {
             return;
         }
-        this.el.firstElementChild && this.el.firstElementChild.remove();
+        const firstElementChild = this.el.firstElementChild;
+
+        firstElementChild && this.el.removeChild(firstElementChild);
+
         this.dropdownView = this.__getDropdownView();
 
         this.listenTo(this.dropdownView, 'before:close', this.__onBeforeClose, this);
@@ -56,7 +62,9 @@ export default Marionette.LayoutView.extend({
         this.listenTo(this.dropdownView, 'panel:select', this.__onPanelSelect, this);
         this.dropdownRegion.show(this.dropdownView);
         this.isDropdownShown = true;
-        this.dropdownView.open();
+        if (this.model.get('enabled') && !this.model.get('readonly')) {
+            this.dropdownView.open();
+        }
     },
 
     className: 'time-view',
@@ -67,13 +75,28 @@ export default Marionette.LayoutView.extend({
         dropdownRegion: '.js-dropdown-region'
     },
 
+    focus() {
+        this.__showEditor();
+        this.dropdownView.button.focus();
+    },
+
+    blur() {
+        if (this.isDropdownShown) {
+            this.dropdownView.close();
+        }
+    },
+
+    hasFocus() {
+        return $.contains(this.el, document.activeElement);
+    },
+
     __getDropdownView() {
         const timeArray = [];
 
         for (let h = 0; h < 24; h++) {
             for (let m = 0; m < 60; m += 15) {
                 const val = { hours: h, minutes: m };
-                const time = moment.utc(val);
+                const time = moment(val);
                 const formattedTime = dateHelpers.getDisplayTime(time);
 
                 timeArray.push({
@@ -156,20 +179,5 @@ export default Marionette.LayoutView.extend({
         if (this.model.get('enabled') && !this.model.get('readonly')) {
             this.dropdownView.open();
         }
-    },
-
-    focus() {
-        this.__showEditor();
-        this.dropdownView.button.focus();
-    },
-
-    blur() {
-        if (this.isDropdownShown) {
-            this.dropdownView.close();
-        }
-    },
-
-    hasFocus() {
-        return $.contains(this.el, document.activeElement);
     }
 });

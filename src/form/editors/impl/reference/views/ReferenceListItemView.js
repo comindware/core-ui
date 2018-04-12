@@ -10,13 +10,14 @@ const classes = {
 
 export default Marionette.ItemView.extend({
     className() {
-        return `dd-list__i${this.options.showCheckboxes ? ' dev_dd-list__i_with_checkbox' : ''}`;
+        return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
     },
 
     behaviors: {
         ListItemViewBehavior: {
             behaviorClass: list.views.behaviors.ListItemViewBehavior,
-            multiSelect: true
+            multiSelect: true,
+            selectOnCursor: false
         }
     },
 
