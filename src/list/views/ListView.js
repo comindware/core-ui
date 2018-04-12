@@ -1,6 +1,5 @@
 import { keyCode, helpers, htmlHelpers } from 'utils';
 import template from '../templates/list.hbs';
-import SlidingWindowCollection from '../../collections/SlidingWindowCollection';
 import GlobalEventService from '../../services/GlobalEventService';
 
 /*
@@ -92,10 +91,8 @@ const ListView = Marionette.CompositeView.extend({
         const debouncedHandleResize = _.debounce(() => this.handleResize(), 100);
         this.listenTo(GlobalEventService, 'resize', debouncedHandleResize);
         this.parentCollection = this.collection;
-        this.listenTo(this.parentCollection, 'add remove reset', debouncedHandleResize);
-        this.listenTo(this.parentCollection, 'add remove reset', () => (this.rowsPull = {}));
-        this.collection = new SlidingWindowCollection(this.collection);
-        this.rowsPull = {};
+        this.listenTo(this.collection.parentCollection, 'add remove reset ', debouncedHandleResize);
+        this.listenTo(this.collection, 'add remove reset ', debouncedHandleResize);
     },
 
     regions: {
@@ -127,6 +124,17 @@ const ListView = Marionette.CompositeView.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
+        this.listenTo(this.parentCollection, 'update:child:top', model => this.__updateChildTop(this.children.findByModel(model)));
+    },
+
+    showCollection() {
+        let ChildView;
+
+        const models = this.collection.visibleModels;
+        models.forEach((child, index) => {
+            ChildView = this.getChildView(child);
+            this.addChild(child, ChildView, index);
+        });
     },
 
     getChildView(child) {
@@ -146,46 +154,28 @@ const ListView = Marionette.CompositeView.extend({
         return childView;
     },
 
-    // keyboardShortcuts: {
-    //     up(e) {
-    //         this.moveCursorBy(-1, e.shiftKey);
-    //     },
-    //     down(e) {
-    //         this.moveCursorBy(+1, e.shiftKey);
-    //     },
-    //     pageup(e) {
-    //         const delta = Math.ceil(this.state.viewportHeight * 0.8);
-    //         this.moveCursorBy(-delta, e.shiftKey);
-    //     },
-    //     pagedown(e) {
-    //         const delta = Math.ceil(this.state.viewportHeight * 0.8);
-    //         this.moveCursorBy(delta, e.shiftKey);
-    //     },
-    //     home(e) {
-    //         this.__moveCursorTo(0, e.shiftKey);
-    //     },
-    //     end(e) {
-    //         this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
-    //     }
-    // },
-
     up(e) {
         this.moveCursorBy(-1, e.shiftKey);
     },
+
     down(e) {
         this.moveCursorBy(+1, e.shiftKey);
     },
+
     pageup(e) {
         const delta = Math.ceil(this.state.viewportHeight * 0.8);
         this.moveCursorBy(-delta, e.shiftKey);
     },
+
     pagedown(e) {
         const delta = Math.ceil(this.state.viewportHeight * 0.8);
         this.moveCursorBy(delta, e.shiftKey);
     },
+
     home(e) {
         this.__moveCursorTo(0, e.shiftKey);
     },
+
     end(e) {
         this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
     },
@@ -195,7 +185,7 @@ const ListView = Marionette.CompositeView.extend({
         if (e.target.tagName === 'INPUT') {
             return;
         }
-        const selectedModels = this.parentCollection.selected instanceof Backbone.Model ? [this.parentCollection.selected] : Object.values(this.parentCollection.selected);
+        const selectedModels = this.parentCollection.selected instanceof Backbone.Model ? [this.parentCollection.selected] : Object.values(this.parentCollection.selected || {});
         switch (event.keyCode) {
             case keyCode.UP:
                 this.moveCursorBy(-1, e.shiftKey);
@@ -435,9 +425,19 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     onAddChild(child) {
+        this.__updateChildTop(child);
+    },
+
+    __updateChildTop(child) {
+        if (!child) {
+            return;
+        }
         requestAnimationFrame(() => {
             const childModel = child.model;
-            const top = `${this.parentCollection.indexOf(childModel) * this.childHeight}px`;
+            const top = `${this.parentCollection.indexOf(childModel) * child.el.offsetHeight}px`;
+            if (child.el.style.top === top) {
+                return;
+            }
             child.el.style.top = top;
             childModel.trigger('update:top', top);
         });

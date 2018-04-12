@@ -2,6 +2,7 @@ import comparators_ from './comparators';
 import helpers_ from './helpers';
 import htmlHelpers_ from './htmlHelpers';
 import dateHelpers_ from './dateHelpers';
+import diffHelper_ from './diffHelper';
 import cookieHelpers_ from './cookieHelpers';
 import keyCode_ from './keyCode';
 import './handlebars/all';
@@ -16,6 +17,7 @@ export const htmlHelpers = htmlHelpers_;
 export const dateHelpers = dateHelpers_;
 export const cookieHelpers = cookieHelpers_;
 export const keyCode = keyCode_;
+export const diffHelper = diffHelper_;
 
 export default {
     /**
@@ -52,5 +54,7 @@ export default {
      * */
     keyCode,
 
-    RegionBehavior
+    RegionBehavior,
+
+    diffHelper
 };

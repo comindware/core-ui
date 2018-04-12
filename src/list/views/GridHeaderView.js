@@ -1,3 +1,4 @@
+import { comparators, helpers } from 'utils';
 import GridColumnHeaderView from './GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
@@ -120,26 +121,17 @@ const GridHeaderView = Marionette.ItemView.extend({
 
     __handleColumnSort(sender, args) {
         const column = args.column;
-        const sorting = column.sorting;
-        let comparator;
+        const sorting = column.sorting === 'asc' ? 'desc' : 'asc';
         this.columns.forEach(c => c.sorting = null);
-        switch (sorting) {
-            case 'asc':
-                column.sorting = 'desc';
-                comparator = column.sortDesc;
-                break;
-            case 'desc':
-                column.sorting = 'asc';
-                comparator = column.sortAsc;
-                break;
-            default:
-                column.sorting = 'asc';
-                comparator = column.sortAsc;
-                break;
+        column.sorting = sorting;
+        let comparator = sorting === 'desc' ? column.sortDesc : column.sortAsc;
+        if (!comparator) {
+            comparator = helpers.comparatorFor(comparators.getComparatorByDataType(column.type, sorting), column.key);
         }
-        this.updateSorting();
-
-        this.trigger('onColumnSort', column, comparator);
+        if (comparator) {
+            this.updateSorting();
+            this.trigger('onColumnSort', column, comparator);
+        }
     },
 
     __handleDraggerMousedown(e) {

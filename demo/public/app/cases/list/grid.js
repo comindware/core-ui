@@ -22,55 +22,40 @@ export default function() {
     // 2. Create columns
     const columns = [
         {
-            id: 'textCell',
+            key: 'textCell',
             type: 'String',
-            viewModel: new Backbone.Model({ displayText: 'TextCell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
-            sorting: 'asc'
+            title: 'Text Cell',
+            sorting: 'desc'
         },
         {
-            id: 'numberCell',
+            key: 'numberCell',
             type: 'Double',
-            viewModel: new Backbone.Model({ displayText: 'Number Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell'),
-            sorting: 'asc',
+            title: 'Number Cell'
         },
         {
-            id: 'dateTimeCell',
+            key: 'dateTimeCell',
             type: 'DateTime',
-            viewModel: new Backbone.Model({ displayText: 'DateTime Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Asc, 'dateTimeCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell')
+            title: 'DateTime Cell'
         },
         {
-            id: 'durationCell',
+            key: 'durationCell',
             type: 'Duration',
-            viewModel: new Backbone.Model({ displayText: 'Duration Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Asc, 'durationCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Desc, 'durationCell')
+            title: 'Duration Cell'
         },
         {
-            id: 'booleanCell',
+            key: 'booleanCell',
             type: 'Boolean',
-            viewModel: new Backbone.Model({ displayText: 'Boolean Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'booleanCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'booleanCell')
+            title: 'Boolean Cell'
         },
         {
-            id: 'referenceCell',
+            key: 'referenceCell',
             type: 'Instance',
-            viewModel: new Backbone.Model({ displayText: 'Reference Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Asc, 'referenceCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Desc, 'referenceCell')
+            title: 'Reference Cell'
         },
         {
-            id: 'documentCell',
+            key: 'documentCell',
             type: 'Document',
-            viewModel: new Backbone.Model({ displayText: 'Document Cell' }),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Asc, 'documentCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Desc, 'documentCell')
+            title: 'Document Cell'
         }
     ];
 

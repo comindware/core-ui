@@ -39,8 +39,6 @@ export default function() {
             key: 'textCell',
             type: 'String',
             title: 'TextCell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
             sorting: 'asc',
             width: 300
         },
@@ -48,49 +46,36 @@ export default function() {
             key: 'numberCell',
             type: 'Double',
             title: 'Number Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell'),
-            sorting: 'asc',
             width: 100
         },
         {
             key: 'dateTimeCell',
             type: 'DateTime',
             title: 'DateTime Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Asc, 'dateTimeCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell'),
             width: 100
         },
         {
             key: 'durationCell',
             type: 'Duration',
             title: 'Duration Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Asc, 'durationCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Desc, 'durationCell'),
             width: 100
         },
         {
             key: 'booleanCell',
             type: 'Boolean',
             title: 'Boolean Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'booleanCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'booleanCell'),
             width: 100
         },
         {
             key: 'referenceCell',
             type: 'Instance',
             title: 'Reference Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Asc, 'referenceCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Desc, 'referenceCell'),
             width: 100
         },
         {
             key: 'documentCell',
             type: 'Document',
             title: 'Document Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Asc, 'documentCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Desc, 'documentCell'),
             width: 100
         }
     ];

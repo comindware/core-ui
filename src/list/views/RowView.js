@@ -6,7 +6,8 @@ import CellViewFactory from '../CellViewFactory';
 
 const classes = {
     selected: 'selected',
-    expanded: 'collapsible-btn_expanded'
+    expanded: 'collapsible-btn_expanded',
+    collapsible: 'js-collapsible-button'
 };
 
 const defaultOptions = {
@@ -78,15 +79,22 @@ export default Marionette.ItemView.extend({
     },
 
     updateCollapsed(collapsed, external) {
+        const collaspibleButtons = this.el.getElementsByClassName(classes.collapsible);
         if (!collapsed) {
             this.model.expand();
             if (external) {
                 this.model.hidden = false;
             }
+            if (collaspibleButtons.length) {
+                collaspibleButtons[0].classList.add(classes.expanded);
+            }
         } else {
             this.model.collapse();
             if (this.model.level && external) {
                 this.model.hidden = true;
+            }
+            if (collaspibleButtons.length) {
+                collaspibleButtons[0].classList.remove(classes.expanded);
             }
         }
     },
@@ -111,7 +119,8 @@ export default Marionette.ItemView.extend({
             }
             */
 
-                const cellView = new (CellViewFactory.getCellViewForColumn(gridColumn))({
+                const CellView = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn);
+                const cellView = new CellView({
                     className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
                     schema: gridColumn,
                     model: this.model,
@@ -127,7 +136,7 @@ export default Marionette.ItemView.extend({
                         if (hasChildren) {
                             cellView.el.insertAdjacentHTML(
                                 'afterbegin',
-                                `<span class="collapsible-btn js-collapsible-button ${
+                                `<span class="collapsible-btn ${classes.collapsible} ${
                                     this.model.collapsed === false ? classes.expanded : ''
                                 }" style="margin-left:${margin}px;"></span>`
                             );
