@@ -23,6 +23,9 @@ export default Marionette.LayoutView.extend({
         this.fieldId = _.uniqueId('field-');
 
         this.__createEditor(options, this.fieldId);
+        if (this.schema.getReadonly || this.schema.getHidden) {
+            this.listenTo(this.model, 'change', this.__updateExternalChange);
+        }
     },
 
     templateHelpers() {
@@ -164,6 +167,15 @@ export default Marionette.LayoutView.extend({
         }
         this.$el.toggleClass(classes.READONLY, Boolean(readonly));
         this.$el.toggleClass(classes.DISABLED, Boolean(readonly || !enabled));
+    },
+
+    __updateExternalChange() {
+        if (_.isFunction(this.schema.getReadonly)) {
+            this.editor.setReadonly(this.schema.getReadonly(this.model));
+        }
+        if (_.isFunction(this.schema.getHidden)) {
+            this.editor.setHidden(this.schema.getHidden(this.model));
+        }
     },
 
     /*
