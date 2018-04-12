@@ -31,7 +31,7 @@ window._.mixin(mixin);
 window.numeral = numeral_;
 
 $_.browser = {
-    msie: (/msie|trident/i).test(navigator.userAgent)
+    msie: /msie|trident/i.test(navigator.userAgent)
 };
 
 const api = {
@@ -56,13 +56,4 @@ const Marionette = Marionette_;
 const numeral = api.numeral;
 const codemirror = api.codemirror;
 export default api;
-export {
-    moment,
-    Handlebars,
-    $,
-    _,
-    Backbone,
-    Marionette,
-    numeral,
-    codemirror
-};
+export { moment, Handlebars, $, _, Backbone, Marionette, numeral, codemirror };

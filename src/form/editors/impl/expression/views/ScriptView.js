@@ -7,8 +7,7 @@ export default Marionette.ItemView.extend({
         scriptInput: '.js-script-input'
     },
 
-    regions: {
-    },
+    regions: {},
 
     className: 'pp-setting__textarea',
 

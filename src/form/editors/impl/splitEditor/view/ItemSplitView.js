@@ -8,7 +8,8 @@ export default Marionette.LayoutView.extend({
     constructor(options) {
         Marionette.LayoutView.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
-        _.bindAll(this,
+        _.bindAll(
+            this,
             '__onAvailableItemsSelect',
             '__onAvailableSearch',
             '__onSelectedItemsSelect',
@@ -60,8 +61,7 @@ export default Marionette.LayoutView.extend({
     onShow() {
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
-            this.ui.maxQuantityInfo.text(
-                Core.utils.helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
+            this.ui.maxQuantityInfo.text(Core.utils.helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
         }
 
         // Available list

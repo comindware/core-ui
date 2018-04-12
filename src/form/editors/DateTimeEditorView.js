@@ -37,11 +37,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.model.set({
-            readonly: this.getReadonly(),
-            enabled: this.getEnabled(),
-            value: this.__adjustValue(this.value)
-        }, { silent: true });
+        this.model.set(
+            {
+                readonly: this.getReadonly(),
+                enabled: this.getEnabled(),
+                value: this.__adjustValue(this.value)
+            },
+            { silent: true }
+        );
 
         this.value = this.__adjustValue(this.value);
     },

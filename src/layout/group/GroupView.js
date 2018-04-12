@@ -35,7 +35,7 @@ export default Marionette.LayoutView.extend({
     },
 
     ui: {
-        toggleCollapseButton: '.js-toggle',
+        toggleCollapseButton: '.js-toggle'
     },
 
     events: {

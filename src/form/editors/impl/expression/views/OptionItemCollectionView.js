@@ -1,4 +1,3 @@
-
 import OptionItemView from './OptionItemView';
 
 export default Marionette.CollectionView.extend({

@@ -8,7 +8,7 @@ export default Marionette.ItemView.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
-    
+
     template: Handlebars.compile(template),
 
     templateHelpers() {

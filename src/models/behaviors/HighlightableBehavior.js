@@ -1,5 +1,4 @@
-const HighlightableBehavior = function() {
-};
+const HighlightableBehavior = function() {};
 
 _.extend(HighlightableBehavior.prototype, {
     highlight(text) {

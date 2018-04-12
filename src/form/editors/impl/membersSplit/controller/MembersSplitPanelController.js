@@ -1,4 +1,3 @@
-
 import BaseSplitController from '../../splitEditor/controller/BaseSplitController';
 import MembersSplitPanelView from '../views/MembersSplitPanelView';
 import LocalizationService from '../../../../../services/LocalizationService';
@@ -21,9 +20,9 @@ export default BaseSplitController.extend({
         const groups = this.options.groups;
         const members = {};
 
-        users.forEach(model => members[model.id] = model);
+        users.forEach(model => (members[model.id] = model));
 
-        groups.forEach(model => members[model.id] = model);
+        groups.forEach(model => (members[model.id] = model));
 
         this.model.set({
             title: this.__getFullMemberSplitTitle(),
@@ -49,14 +48,19 @@ export default BaseSplitController.extend({
 
         const selected = this.options.selected;
 
-        selected && selected.forEach(id => {
-            if (members[id]) {
-                membersCount[members[id].type]++;
-            }
-        });
-        this.options.displayText = this.options.hideUsers ? '' : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
-        this.options.displayText += (this.options.displayText.length > 0 ? ' ' : '');
-        this.options.displayText += this.options.hideGroups ? '' : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        selected
+            && selected.forEach(id => {
+                if (members[id]) {
+                    membersCount[members[id].type]++;
+                }
+            });
+        this.options.displayText = this.options.hideUsers
+            ? ''
+            : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
+        this.options.displayText += this.options.displayText.length > 0 ? ' ' : '';
+        this.options.displayText += this.options.hideGroups
+            ? ''
+            : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
     },
 
     __getFullMemberSplitTitle() {

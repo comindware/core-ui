@@ -124,7 +124,7 @@ const api = /** @lends module:core.form */ {
              * */
             controllers: {
                 DemoReferenceEditorController,
-                BaseReferenceEditorController,
+                BaseReferenceEditorController
             },
             collections: {
                 BaseReferenceCollection

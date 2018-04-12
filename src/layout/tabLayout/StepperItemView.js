@@ -8,5 +8,5 @@ export default Marionette.ItemView.extend({
 
     triggers: {
         click: 'step:selected'
-    },
+    }
 });

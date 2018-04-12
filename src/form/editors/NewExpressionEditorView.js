@@ -32,7 +32,7 @@ const defaultOptions = {
     ontologyService: null
 };
 
-export default formRepository.editors.NewExpression = BaseLayoutEditorView.extend({
+export default (formRepository.editors.NewExpression = BaseLayoutEditorView.extend({
     className: 'new-expression-editor-field',
 
     regions: {
@@ -174,9 +174,11 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             this.options.valueEditorOptions.displayAttribute = 'name';
         }
 
-        this.valueEditor = new this.options.valueEditor(_.extend(this.options.valueEditorOptions, {
-            value: this.value.type === valueTypes.value ? value : null
-        }));
+        this.valueEditor = new this.options.valueEditor(
+            _.extend(this.options.valueEditorOptions, {
+                value: this.value.type === valueTypes.value ? value : null
+            })
+        );
 
         this.valueEditor.on('change', this.__updateEditorValue, this);
         this.valueContainer.show(this.valueEditor);
@@ -187,9 +189,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             return;
         }
 
-        const contextOptions = _.pick(
-            this.options.schema || this.options,
-            'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
+        const contextOptions = _.pick(this.options.schema || this.options, 'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
 
         _.extend(contextOptions, {
             value: this.value.type === valueTypes.context ? this.value.value : null
@@ -214,7 +214,6 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION')
         });
 
-
         const expressionEditorOptionsOptions = {
             value: this.value.type === valueTypes.expression ? this.value.value : null,
             mode: 'expression',
@@ -234,7 +233,7 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
         }
         this.valueTypeCollection.add({
             id: valueTypes.script,
-            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
+            text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT')
         });
 
         const scriptEditorOptionsOptions = {
@@ -301,4 +300,4 @@ export default formRepository.editors.NewExpression = BaseLayoutEditorView.exten
                 break;
         }
     }
-});
+}));

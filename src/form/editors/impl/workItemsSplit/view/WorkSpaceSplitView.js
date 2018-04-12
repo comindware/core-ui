@@ -8,7 +8,9 @@ export default ItemSplitView.extend({
     options: {
         itemListItemView: WorkSpaceItemView,
         childViewSelector(model) {
-            if (model instanceof ItemModel) { return WorkSpaceItemView; }
+            if (model instanceof ItemModel) {
+                return WorkSpaceItemView;
+            }
 
             return WorkSpaceGroupView;
         }

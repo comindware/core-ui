@@ -38,4 +38,3 @@ export default ListPanelView.extend({
         this.options.parent.trigger('execute', model.id, model);
     }
 });
-

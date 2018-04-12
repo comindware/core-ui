@@ -2,7 +2,6 @@
 import template from '../templates/radioButton.hbs';
 
 export default Marionette.ItemView.extend({
-
     template: Handlebars.compile(template),
 
     className: 'editor editor_radiobutton',

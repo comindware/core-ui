@@ -67,16 +67,20 @@ export default Marionette.Controller.extend({
     },
 
     __handleViewportHeightChanged(sender, e) {
-        _.chain(this.views).filter(v => v !== sender).each(v => {
-            v.updateViewportHeight && v.updateViewportHeight(e.viewportHeight);
-        });
+        _.chain(this.views)
+            .filter(v => v !== sender)
+            .each(v => {
+                v.updateViewportHeight && v.updateViewportHeight(e.viewportHeight);
+            });
         this.state.viewportHeight = e.viewportHeight;
     },
 
     __handlePositionChanged(sender, e) {
-        _.chain(this.views).filter(v => v !== sender).each(v => {
-            v.updatePosition && v.updatePosition(e.position);
-        });
+        _.chain(this.views)
+            .filter(v => v !== sender)
+            .each(v => {
+                v.updatePosition && v.updatePosition(e.position);
+            });
         this.state.position = e.position;
         this.__tryMoreDataRequest();
     },
@@ -93,6 +97,6 @@ export default Marionette.Controller.extend({
     },
 
     __getMaxPosition() {
-        return Math.max(0, (this.state.count - 1) - this.state.viewportHeight + 1);
+        return Math.max(0, this.state.count - 1 - this.state.viewportHeight + 1);
     }
 });

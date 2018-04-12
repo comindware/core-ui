@@ -214,9 +214,9 @@ export default Marionette.LayoutView.extend({
         const panelRect = $panelEl.offset();
         panelRect.width = $panelEl.outerWidth();
 
-        const css : {
+        const css: {
             left: number,
-            right: number,
+            right: number
         } = {
             left: 0,
             right: 0

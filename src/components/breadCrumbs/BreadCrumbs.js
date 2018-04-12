@@ -17,7 +17,7 @@ export default Marionette.CompositeView.extend({
     },
 
     events: {
-        'click @ui.collapseButton': '__toggleCollapse',
+        'click @ui.collapseButton': '__toggleCollapse'
     },
 
     className: 'breadCrumbs',

@@ -66,20 +66,32 @@ export default Marionette.LayoutView.extend({
     },
 
     __onMouseEnter() {
-        this.ui.title.animate({
-            marginTop: 0
-        }, 150);
-        this.ui.subtitle.animate({
-            marginTop: 0
-        }, 150);
+        this.ui.title.animate(
+            {
+                marginTop: 0
+            },
+            150
+        );
+        this.ui.subtitle.animate(
+            {
+                marginTop: 0
+            },
+            150
+        );
     },
 
     __onMouseLeave() {
-        this.ui.title.animate({
-            marginTop: '8px'
-        }, 150);
-        this.ui.subtitle.animate({
-            marginTop: '30px'
-        }, 150);
+        this.ui.title.animate(
+            {
+                marginTop: '8px'
+            },
+            150
+        );
+        this.ui.subtitle.animate(
+            {
+                marginTop: '30px'
+            },
+            150
+        );
     }
 });

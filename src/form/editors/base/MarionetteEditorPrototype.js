@@ -75,7 +75,7 @@ const onChange = function() {
  *                                           Can be changed later on by calling <code>setReadonly()</code> method.
  * @param {Boolean} [options.model] A model which contains an attributes edited by this editor.
  *                                  Can only be used if the editor is created standalone (without a form).
-*                                   Must be used together with  <code>key</code> options.
+ *                                   Must be used together with  <code>key</code> options.
  * @param {Boolean} [options.key] The name of an attribute in <code>options.model</code> edited by this editor.
  *                                Can only be used if the editor is created standalone (without a form).
  *                                Must be used together with  <code>model</code> options.
@@ -117,7 +117,7 @@ export default {
                 //Store important data
                 _.extend(this, _.pick(options, 'key', 'form', 'field'));
 
-                const schema = this.schema = options.schema || {};
+                const schema = (this.schema = options.schema || {});
 
                 this.validators = options.validators || schema.validators;
                 this.__validatedOnce = false;
@@ -133,12 +133,9 @@ export default {
 
                 schema.autocommit = schema.autocommit || options.autocommit;
 
-                this.enabled = schema.enabled = schema.enabled || options.enabled ||
-                              (schema.enabled === undefined && options.enabled === undefined);
-                this.readonly = schema.readonly = schema.readonly || options.readonly ||
-                               (schema.readonly !== undefined && options.readonly !== undefined);
-                this.hidden = schema.hidden = schema.hidden || options.hidden ||
-                               (schema.hidden !== undefined && options.hidden !== undefined);
+                this.enabled = schema.enabled = schema.enabled || options.enabled || (schema.enabled === undefined && options.enabled === undefined);
+                this.readonly = schema.readonly = schema.readonly || options.readonly || (schema.readonly !== undefined && options.readonly !== undefined);
+                this.hidden = schema.hidden = schema.hidden || options.hidden || (schema.hidden !== undefined && options.hidden !== undefined);
                 schema.forceCommit = options.forceCommit || schema.forceCommit;
 
                 viewClass.prototype.constructor.apply(this, arguments);

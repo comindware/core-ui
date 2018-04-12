@@ -1,4 +1,3 @@
-
 import template from '../templates/referenceListItem.hbs';
 import list from 'list';
 

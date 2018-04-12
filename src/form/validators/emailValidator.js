@@ -1,9 +1,11 @@
-
 export default config => {
-    const options = _.extend({
-        type: 'email',
-        message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.EMAIL')
-    }, config);
+    const options = _.extend(
+        {
+            type: 'email',
+            message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.EMAIL')
+        },
+        config
+    );
 
     return function email(value) {
         options.value = value;

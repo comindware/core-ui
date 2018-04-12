@@ -18,8 +18,23 @@ const types = constants.types;
 
 export default Marionette.LayoutView.extend({
     initialize(options = {}) {
-        _.bindAll(this, '__onBlur', '__onChange', '__showHint', '__find', '__undo', '__redo', '__format', '__cmwHint',
-            '__showTooltip', '__hideTooltip', '__onMouseover', '__onMouseleave', '__onKeyDown', '__onMinimize');
+        _.bindAll(
+            this,
+            '__onBlur',
+            '__onChange',
+            '__showHint',
+            '__find',
+            '__undo',
+            '__redo',
+            '__format',
+            '__cmwHint',
+            '__showTooltip',
+            '__hideTooltip',
+            '__onMouseover',
+            '__onMouseleave',
+            '__onKeyDown',
+            '__onMinimize'
+        );
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
             if (options.ontologyService) {
@@ -210,7 +225,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.hintIsShown = true;
-        this.codemirror.showHint((this.options.mode === 'expression') ? { hint: this.__cmwHint } : null);
+        this.codemirror.showHint(this.options.mode === 'expression' ? { hint: this.__cmwHint } : null);
     },
 
     __find() {
@@ -252,8 +267,7 @@ export default Marionette.LayoutView.extend({
                     out += cur;
                     atStartOfLine = false;
                 }
-                if (!atStartOfLine && mode.newlineAfterToken &&
-                    mode.newlineAfterToken(style, cur, next, stream.string.slice(stream.pos) || text[i + 1] || '', mode.state)) {
+                if (!atStartOfLine && mode.newlineAfterToken && mode.newlineAfterToken(style, cur, next, stream.string.slice(stream.pos) || text[i + 1] || '', mode.state)) {
                     newline();
                 }
             }
@@ -333,7 +347,7 @@ export default Marionette.LayoutView.extend({
             model: tooltipModel,
             isFull: true
         });
-        this.listenTo(this.tooltip, 'syntax:changed', syntax => token.currentSyntax = syntax);
+        this.listenTo(this.tooltip, 'syntax:changed', syntax => (token.currentSyntax = syntax));
         this.listenTo(this.tooltip, 'peek', this.__onTooltipPeek);
         this.tooltipContainer.show(this.tooltip);
 
@@ -359,14 +373,12 @@ export default Marionette.LayoutView.extend({
 
     __onKeyDown(editor, event) {
         const charCode = event.which === null ? event.keyCode : event.which;
-        this.isExternalChange = !((!event.altKey && !event.ctrlKey && !event.metaKey) &&
-        (
-            (charCode === 62) ||
-            (charCode === 36) ||
-            (charCode > 64 && charCode < 91) ||
-            (charCode > 95 && charCode < 123) ||
-            (charCode === 8)
-        ));
+        this.isExternalChange = !(
+            !event.altKey
+            && !event.ctrlKey
+            && !event.metaKey
+            && (charCode === 62 || charCode === 36 || (charCode > 64 && charCode < 91) || (charCode > 95 && charCode < 123) || charCode === 8)
+        );
     },
 
     __onMouseover(e) {

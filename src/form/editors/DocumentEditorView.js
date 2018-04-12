@@ -14,16 +14,19 @@ const defaultOptions = {
     allowDelete: true,
     multiple: true,
     fileFormat: undefined,
-    createDocuments: documents => Promise.resolve([{
-        id: documents[0].id,
-        fileName: documents[0].fileName,
-        documentsId: [documents[0].id]
-    }]),
+    createDocuments: documents =>
+        Promise.resolve([
+            {
+                id: documents[0].id,
+                fileName: documents[0].fileName,
+                documentsId: [documents[0].id]
+            }
+        ]),
     removeDocuments: () => {},
     displayText: ''
 };
 
-export default formRepository.editors.Document = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -54,7 +57,7 @@ export default formRepository.editors.Document = BaseLayoutEditorView.extend({
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
             multiple: this.options.multiple,
-            fileFormat: this.__adjustFileFormat(this.options.fileFormat),
+            fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
     },
 
@@ -332,4 +335,4 @@ export default formRepository.editors.Document = BaseLayoutEditorView.extend({
 
         return !incorrectFileNames;
     }
-});
+}));

@@ -23,9 +23,13 @@ export default Marionette.Object.extend({
         const collection = factory.createWrappedCollection(this.options);
 
         if (options.showSelection) {
-            this.listenTo(collection, 'check:all check:some check:none', function () { this.__updateActions(allToolbarActions, collection); });
+            this.listenTo(collection, 'check:all check:some check:none', function() {
+                this.__updateActions(allToolbarActions, collection);
+            });
         } else {
-            this.listenTo(collection, 'select:all select:some select:none', function () { this.__updateActions(allToolbarActions, collection); });
+            this.listenTo(collection, 'select:all select:some select:none', function() {
+                this.__updateActions(allToolbarActions, collection);
+            });
         }
 
         this.view = new GridView(
@@ -36,8 +40,12 @@ export default Marionette.Object.extend({
             })
         );
 
-        this.listenTo(this.view, 'show', function () { this.__updateActions(allToolbarActions, collection); });
-        this.listenTo(this.view, 'search', function (text) { this.__onSearch(text, options.columns, collection); });
+        this.listenTo(this.view, 'show', function() {
+            this.__updateActions(allToolbarActions, collection);
+        });
+        this.listenTo(this.view, 'search', function(text) {
+            this.__onSearch(text, options.columns, collection);
+        });
         this.listenTo(this.view, 'execute:action', this.__executeAction);
         this.listenTo(this.view, 'childview:click', this.__onItemClick);
         this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
@@ -192,7 +200,7 @@ export default Marionette.Object.extend({
         return this.getOption('columns').map(column => ({
             id: column.key || column.id,
             cellView: column.cellView || column.customizeCellView || CellViewFactory.getCellViewForColumn(column),
-            viewModel: column.viewModel || new Backbone.Model({ displayText: column.title}),
+            viewModel: column.viewModel || new Backbone.Model({ displayText: column.title }),
             sortAsc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'asc'), column.key),
             sortDesc: utils.helpers.comparatorFor(utils.comparators.getComparatorByDataType(column.type, 'desc'), column.key),
             width: column.width || 0,

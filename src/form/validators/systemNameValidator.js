@@ -1,9 +1,11 @@
-
 export default config => {
-    const options = _.extend({
-        type: 'invalidIdentifier',
-        message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.SYSTEMNAME')
-    }, config);
+    const options = _.extend(
+        {
+            type: 'invalidIdentifier',
+            message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.SYSTEMNAME')
+        },
+        config
+    );
 
     return function systemName(value) {
         options.value = value;

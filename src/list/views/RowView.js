@@ -118,7 +118,7 @@ export default Marionette.ItemView.extend({
                     key: gridColumn.key
                 });
 
-                if (this.getOption('isTree') && isFirstChild && !gridColumn.viewModel.get('isCheckboxColumn')) {
+                if (this.getOption('isTree') && isFirstChild) {
                     const level = this.model.level || 0;
                     const margin = level * this.options.levelMargin;
                     const hasChildren = this.model.children && this.model.children.length;

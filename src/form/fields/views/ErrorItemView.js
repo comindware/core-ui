@@ -11,7 +11,7 @@ export default Marionette.ItemView.extend({
     templateHelpers() {
         const severity = this.model.get('severity');
         return {
-            severity: severity && severity.toLowerCase(),
+            severity: severity && severity.toLowerCase()
         };
     }
 });

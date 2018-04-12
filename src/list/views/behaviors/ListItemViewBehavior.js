@@ -21,15 +21,13 @@ import { helpers } from 'utils';
     2. (!) Be sure that the text you set into html is escaped.
 */
 
-const eventBubblingIgnoreList = [
-    'before:render',
-    'render',
-    'dom:refresh',
-    'before:show',
-    'show',
-    'before:destroy',
-    'destroy'
-];
+const eventBubblingIgnoreList = ['before:render',
+'render',
+'dom:refresh',
+'before:show',
+'show',
+'before:destroy',
+'destroy'];
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
@@ -103,9 +101,7 @@ export default Marionette.Behavior.extend({
         if (model.selected) {
             model.deselect();
         } else {
-            const selectFn = this.getOption('multiSelect')
-                ? model.collection.select
-                : model.collection.selectSmart || model.collection.select;
+            const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
             if (selectFn) {
                 selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
             }

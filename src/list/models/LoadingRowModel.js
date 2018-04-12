@@ -8,8 +8,7 @@
  * @extends Backbone.Model
  * */
 export default Backbone.Model.extend({
-    initialize() {
-    },
+    initialize() {},
 
     defaults: {
         isLoadingRowModel: true

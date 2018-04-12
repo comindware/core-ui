@@ -1,4 +1,3 @@
-
 import template from '../templates/optionItem.html';
 
 export default Marionette.ItemView.extend({

@@ -376,7 +376,7 @@ const ListView = Marionette.CompositeView.extend({
 
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(elementHeight / this.childHeight));
-        const visibleCollectionSize = this.state.visibleCollectionSize = this.state.viewportHeight;
+        const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
         const allItemsHeight = this.childHeight * this.parentCollection.length;
 
         this.ui.visibleCollection.height(allItemsHeight);

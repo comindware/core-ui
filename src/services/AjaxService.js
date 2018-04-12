@@ -6,7 +6,7 @@ const methodName = {
     WebApi: 'WebApi'
 };
 
-export default window.Ajax = new (Marionette.Object.extend({
+export default (window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
         options.ajaxMap.forEach(actionInfo => {
@@ -44,14 +44,17 @@ export default window.Ajax = new (Marionette.Object.extend({
     getResponse(type, url, data, options) {
         helpers.assertArgumentNotFalsy(type, 'type');
         helpers.assertArgumentNotFalsy(url, 'url');
-        const config = Object.assign({
-            type,
-            url,
-            data: data ? JSON.stringify(data) : null,
-            traditional: true,
-            dataType: 'json',
-            contentType: 'application/json'
-        }, options || {});
+        const config = Object.assign(
+            {
+                type,
+                url,
+                data: data ? JSON.stringify(data) : null,
+                traditional: true,
+                dataType: 'json',
+                contentType: 'application/json'
+            },
+            options || {}
+        );
 
         return PromiseService.registerPromise($.ajax(config));
     },
@@ -59,13 +62,15 @@ export default window.Ajax = new (Marionette.Object.extend({
     sendFormData(url, formData) {
         helpers.assertArgumentNotFalsy(url, 'url');
         helpers.assertArgumentNotFalsy(formData, 'formData');
-        return Promise.resolve($.ajax({
-            url,
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false
-        }));
+        return Promise.resolve(
+            $.ajax({
+                url,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false
+            })
+        );
     },
 
     getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol, callback) {
@@ -74,11 +79,7 @@ export default window.Ajax = new (Marionette.Object.extend({
         }
         const parametersLength = _.last(parameters) === callback && callback !== undefined ? parameters.length - 1 : parameters.length;
         if (parametersLength < parameterNames.length) {
-            helpers.throwFormatError(
-                helpers.format(
-                    'Invalid request parameters: expected {0} parameters, actual: {1}.',
-                    parameterNames.length,
-                    parametersLength));
+            helpers.throwFormatError(helpers.format('Invalid request parameters: expected {0} parameters, actual: {1}.', parameterNames.length, parametersLength));
         }
         const successCallback = callback || null;
         let data;
@@ -123,4 +124,4 @@ export default window.Ajax = new (Marionette.Object.extend({
             return result ? result.data : result;
         });
     }
-}))();
+}))());

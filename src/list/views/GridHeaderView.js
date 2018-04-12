@@ -88,7 +88,7 @@ const GridHeaderView = Marionette.ItemView.extend({
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
-            if (this.options.isTree && isFirstChild && !column.viewModel.get('isCheckboxColumn')) {
+            if (this.options.isTree && isFirstChild) {
                 view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button"></span>`);
                 isFirstChild = false;
             }

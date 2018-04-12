@@ -138,9 +138,7 @@ export default Marionette.LayoutView.extend({
 
     __toggleElementsQuantityWarning(count) {
         if (this.elementsQuantityWarningRegion) {
-            count > 100
-                ? this.elementsQuantityWarningRegion.$el.show()
-                : this.elementsQuantityWarningRegion.$el.hide();
+            count > 100 ? this.elementsQuantityWarningRegion.$el.show() : this.elementsQuantityWarningRegion.$el.hide();
         }
     },
 
@@ -152,22 +150,25 @@ export default Marionette.LayoutView.extend({
         this.isFilterDeayed = false;
         this.__setLoading(true);
         const collection = this.model.get('collection');
-        this.reqres.request('filter:text', {
-            text: this.newSearchText
-        }).then(() => {
-            if (collection.length > 0 && this.model.get('value')) {
-                this.model.get('value').forEach(model => {
-                    if (collection.has(model.id)) {
-                        collection.get(model.id).select();
-                    }
-                });
-                this.__toggleElementsQuantityWarning(collection.totalCount);
-            }
-            this.__setLoading(false);
-            this.reqres.request('view:ready');
-        }).catch(e => {
-            console.log(e.message);
-        });
+        this.reqres
+            .request('filter:text', {
+                text: this.newSearchText
+            })
+            .then(() => {
+                if (collection.length > 0 && this.model.get('value')) {
+                    this.model.get('value').forEach(model => {
+                        if (collection.has(model.id)) {
+                            collection.get(model.id).select();
+                        }
+                    });
+                    this.__toggleElementsQuantityWarning(collection.totalCount);
+                }
+                this.__setLoading(false);
+                this.reqres.request('view:ready');
+            })
+            .catch(e => {
+                console.log(e.message);
+            });
     },
 
     __proxyValueSelect() {

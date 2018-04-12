@@ -24,7 +24,6 @@ export default NewExpressionEditorView.extend({
 
     template: Handlebars.compile(template),
 
-
     regions: {
         typeContainer: '.js-new-expression-type-container',
         valueContainer: '.js-new-expression-value-container',
@@ -64,9 +63,11 @@ export default NewExpressionEditorView.extend({
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.TEMPLATE')
         });
 
-        this.templateEditor = new DatalistEditorView(_.extend(this.options.templateEditorOptions, {
-            value: this.value.type === valueTypes.template ? this.value.value : null,
-        }));
+        this.templateEditor = new DatalistEditorView(
+            _.extend(this.options.templateEditorOptions, {
+                value: this.value.type === valueTypes.template ? this.value.value : null
+            })
+        );
 
         this.listenTo(this.templateEditor, 'change', this.__updateEditorValue);
         this.templateContainer.show(this.templateEditor);

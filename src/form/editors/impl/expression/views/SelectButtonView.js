@@ -1,4 +1,3 @@
-
 import template from '../templates/selectButton.html';
 
 export default Marionette.ItemView.extend({

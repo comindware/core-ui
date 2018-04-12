@@ -1,4 +1,3 @@
-
 import template from '../templates/popup.html';
 
 import ExpressionView from '../views/ExpressionView';
@@ -9,9 +8,8 @@ export default Marionette.LayoutView.extend({
         this.value = options.value;
         this.model = new Backbone.Model();
         this.model.set({
-            titleText: this.value.type === 'expression'
-                ? Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION')
-                : Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
+            titleText:
+                this.value.type === 'expression' ? Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINEEXPRESSION') : Localizer.get('CORE.FORM.EDITORS.EXPRESSION.DEFINESCRIPT')
         });
     },
 
