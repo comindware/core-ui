@@ -7,8 +7,8 @@ module.exports = {
         'jquery': true
     },
     'plugins': [
-        "prettier"//,
-        //"flowtype-errors"
+        "prettier",
+        "flowtype-errors"
     ],
     'globals': {
         '__DEV__': true,

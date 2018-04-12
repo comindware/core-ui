@@ -37,7 +37,7 @@ export default function() {
     const columns = [
         {
             key: 'textCell',
-            type: 'Text',
+            type: 'String',
             title: 'TextCell',
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
@@ -46,7 +46,7 @@ export default function() {
         },
         {
             key: 'numberCell',
-            type: 'Number',
+            type: 'Double',
             title: 'Number Cell',
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell'),
@@ -79,7 +79,7 @@ export default function() {
         },
         {
             key: 'referenceCell',
-            type: 'Datalist',
+            type: 'Instance',
             title: 'Reference Cell',
             sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Asc, 'referenceCell'),
             sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.referenceComparator2Desc, 'referenceCell'),

@@ -125,8 +125,12 @@ export default Marionette.LayoutView.extend({
             this.hintIsShown = false;
         });
         if (this.options.mode === 'expression') {
-            $(this.codemirror.getWrapperElement()).bind('mouseover', this.__onMouseover);
-            $(this.codemirror.getWrapperElement()).bind('mouseleave', this.__onMouseleave);
+            const wrapperElement = this.codemirror.getWrapperElement();
+
+            if (wrapperElement) {
+                wrapperElement.addEventListener('mouseover', this.__onMouseover);
+                wrapperElement.addEventListener('mouseleave', this.__onMouseleave);
+            }
         }
     },
 

@@ -17,7 +17,7 @@ const classes = {
 
 const onRender = function() {
     if (this.id) {
-        this.$el.attr('id', this.id);
+        this.el.setAttribute('id', this.id);
     }
     this.setPermissions(this.enabled, this.readonly);
     this.setHidden(this.hidden);
@@ -100,10 +100,6 @@ export default {
 
                 //Set initial value
                 if (options.model) {
-                    if (!options.key) {
-                        throw new Error("Missing option: 'key'");
-                    }
-
                     this.model = options.model;
                     this.value = this.model.get(options.key);
                 } else if (options.value !== undefined) {
@@ -114,8 +110,11 @@ export default {
                     this.value = this.defaultValue;
                 }
 
-                //Store important data
-                _.extend(this, _.pick(options, 'key', 'form', 'field'));
+                Object.assign(this, {
+                    key: options.key,
+                    form: options.form,
+                    field: options.field
+                });
 
                 const schema = (this.schema = options.schema || {});
 
