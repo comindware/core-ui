@@ -54,6 +54,14 @@ gulp.task('test', done => {
     }, done).start();
 });
 
+gulp.task('test:watch', done => {
+    new karma.Server({
+        configFile: pathResolver.root('karma.conf.js'),
+        singleRun: false,
+        coverage: false
+    }, done).start();
+});
+
 gulp.task('test:coverage', done => {
     new karma.Server({
         configFile: pathResolver.root('karma.conf.js'),
@@ -69,7 +77,7 @@ gulp.task('test:watch', done => {
 });
 
 gulp.task('start', callback =>
-    runSequence('localization', 'build:core:dev', 'generateSprites', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
+    runSequence('localization', 'build:core:dev', 'generateSprites', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites', 'test:watch'], callback));
 
 gulp.task('build', callback => runSequence(['build:core:prod', 'jsdoc'], 'localization', 'generateSprites', callback));
 
