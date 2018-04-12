@@ -1,18 +1,16 @@
-/*eslint-ignore*/
-
 import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
-/*eslint-ignore*/
+
 describe('Editors', () => {
     beforeEach(function () {
         this.rootRegion = initializeCore();
     });
 
-    describe('CodeEditorView', () => {
+    describe('MemberEditorView', () => {
         it('should initialize', function () {
             const model = new Backbone.Model({
-                selected: [],
+                selected: []
             });
 
             const view = new core.form.editors.MembersSplitPanelEditor({

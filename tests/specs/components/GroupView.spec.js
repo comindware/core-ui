@@ -1,14 +1,14 @@
-//import core from 'coreApi';
+import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    beforeEach(() => {
+    beforeEach(function () {
         this.rootRegion = initializeCore();
     });
 
     describe('GroupView', () => {
-        it('should initialize', () => {
+        it('should initialize', function () {
             const view = new core.layout.Group({
                 name: 'Group',
                 collapsible: true,

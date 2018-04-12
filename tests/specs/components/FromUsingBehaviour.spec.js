@@ -1,5 +1,4 @@
-
-//import core from 'coreApi';
+import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 

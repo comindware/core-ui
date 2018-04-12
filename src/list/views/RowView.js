@@ -97,20 +97,6 @@ export default Marionette.ItemView.extend({
 
         this.$el.append(
             this.options.columns.map((gridColumn, index) => {
-                /*
-            const rowModel = this.model.get('rowModel');
-
-            if (_.isFunction(gridColumn.getReadonly)) {
-                readonly = gridColumn.getReadonly(rowModel);
-                this.listenTo(rowModel, 'change', () => this.editorView.editor.setReadonly(gridColumn.getReadonly(rowModel)));
-            }
-
-            if (_.isFunction(gridColumn.getHidden)) {
-                hidden = gridColumn.getHidden(rowModel);
-                this.listenTo(rowModel, 'change', () => this.editorView.editor.setHidden(gridColumn.getHidden(rowModel)));
-            }
-            */
-
                 const cellView = new (CellViewFactory.getCellViewForColumn(gridColumn))({
                     className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
                     schema: gridColumn,

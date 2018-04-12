@@ -1,9 +1,7 @@
-/*eslint-ignore*/
-
 import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
-/*eslint-ignore*/
+
 describe('Editors', () => {
     beforeEach(function () {
         this.rootRegion = initializeCore();
