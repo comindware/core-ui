@@ -21,7 +21,6 @@ const Form = Marionette.Object.extend({
             let field;
             try {
                 field = new FieldType({
-                    form: this,
                     key: entry[0],
                     schema: entry[1],
                     model: this.model

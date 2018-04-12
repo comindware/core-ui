@@ -15,14 +15,12 @@ const classes = {
 };
 
 export default Marionette.LayoutView.extend({
-    schema: {},
-
     initialize(options = {}) {
-        this.schema.type = formRepository.editors[options.schema.type];
+        this.schema = options.schema;
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(options, this.fieldId);
+        this.__createEditor(options, this.fieldId, formRepository.editors[options.schema.type]);
         if (this.schema.getReadonly || this.schema.getHidden) {
             this.listenTo(this.model, 'change', this.__updateExternalChange);
         }
@@ -195,12 +193,9 @@ export default Marionette.LayoutView.extend({
         return str;
     },
 
-    __createEditor(options, fieldId) {
-        const ConstructorFn = this.schema.type;
-
+    __createEditor(options, fieldId, ConstructorFn) {
         this.editor = new ConstructorFn({
             schema: this.schema,
-            form: options.form,
             field: this,
             key: options.key,
             model: this.model,

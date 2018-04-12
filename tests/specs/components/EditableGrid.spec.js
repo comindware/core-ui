@@ -8,7 +8,7 @@ describe('Components', () => {
     });
 
     const data = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 5000; i++) {
         data.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
