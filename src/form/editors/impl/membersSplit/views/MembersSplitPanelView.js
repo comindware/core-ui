@@ -1,4 +1,3 @@
-
 import template from '../templates/membersSplitPanel.html';
 import MembersListItemView from './MembersListItemView';
 import MembersToolbarView from './membersToolbarView';
@@ -12,14 +11,7 @@ export default Marionette.LayoutView.extend({
     constructor(options) {
         Marionette.LayoutView.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
-        _.bindAll(this,
-            '__onSelectedItemsSelect',
-            '__onSelectedSearch',
-            '__moveRight',
-            '__moveLeft',
-            '__moveRightAll',
-            '__moveLeftAll'
-        );
+        _.bindAll(this, '__onSelectedItemsSelect', '__onSelectedSearch', '__moveRight', '__moveLeft', '__moveRightAll', '__moveLeftAll');
         this.eventAggregator = [];
 
         this.model.set('isDisplayedAvailable', false);
@@ -57,8 +49,7 @@ export default Marionette.LayoutView.extend({
     onShow() {
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
-            this.ui.maxQuantityInfo.text(
-                helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
+            this.ui.maxQuantityInfo.text(helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
         }
 
         // Available list

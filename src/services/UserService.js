@@ -2,7 +2,6 @@ import helpers from 'utils/helpers';
 
 let dataProvider;
 
-
 /**
  * @name UserService
  * @memberof module:core.services

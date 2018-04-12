@@ -27,7 +27,7 @@ const defaultOptions = () => ({
     emptyText: Localizer.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
 });
 
-export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Expression = BaseLayoutEditorView.extend({
     template: Handlebars.compile(template),
 
     regions: {
@@ -90,15 +90,19 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
             return;
         }
         const initialValue = this.getValue();
-        this.valueOptionCollection.add(new Backbone.Model({
-            id: 'value',
-            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE'),
-            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUEALIAS')
-        }));
+        this.valueOptionCollection.add(
+            new Backbone.Model({
+                id: 'value',
+                name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE'),
+                alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUEALIAS')
+            })
+        );
 
-        this.valueEditor = new this.options.valueEditor(Object.assign(this.options.valueEditorOptions, {
-            value: initialValue.type === 'value' ? initialValue.value : null
-        }));
+        this.valueEditor = new this.options.valueEditor(
+            Object.assign(this.options.valueEditorOptions, {
+                value: initialValue.type === 'value' ? initialValue.value : null
+            })
+        );
         this.valueContainer.show(this.valueEditor);
         this.listenTo(this.valueEditor, 'change', () => this.__updateValue(this.valueEditor.getValue(), true));
     },
@@ -107,11 +111,13 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         if (!this.options.showExpression) {
             return;
         }
-        this.valueOptionCollection.add(new Backbone.Model({
-            id: 'expression',
-            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION'),
-            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSIONALIAS')
-        }));
+        this.valueOptionCollection.add(
+            new Backbone.Model({
+                id: 'expression',
+                name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSION'),
+                alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EXPRESSIONALIAS')
+            })
+        );
         this.ui.expression.text(this.options.defaultExpression);
         this.ui.expression.data('value', this.options.defaultExpression);
     },
@@ -120,11 +126,13 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         if (!this.options.showScript) {
             return;
         }
-        this.valueOptionCollection.add(new Backbone.Model({
-            id: 'script',
-            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
-            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPALIAS')
-        }));
+        this.valueOptionCollection.add(
+            new Backbone.Model({
+                id: 'script',
+                name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPSCRIPT'),
+                alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.CSHARPALIAS')
+            })
+        );
         this.ui.script.text(this.defaultScriptText);
         this.ui.script.data('value', this.defaultScriptText);
     },
@@ -133,9 +141,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         if (!this.options.showContext) {
             return;
         }
-        const contextOptions = _.pick(
-            this.options.schema || this.options,
-            'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
+        const contextOptions = _.pick(this.options.schema || this.options, 'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
 
         const initialValue = this.getValue();
         Object.assign(contextOptions, {
@@ -145,11 +151,13 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         this.contextValueEditor = new ContextView(contextOptions);
         this.contextContainer.show(this.contextValueEditor);
 
-        this.valueOptionCollection.add(new Backbone.Model({
-            id: 'context',
-            name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE'),
-            alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTEALIAS')
-        }));
+        this.valueOptionCollection.add(
+            new Backbone.Model({
+                id: 'context',
+                name: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTE'),
+                alias: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.ATTRIBUTEALIAS')
+            })
+        );
 
         this.listenTo(this.contextValueEditor, 'change', () => this.__updateValue(this.contextValueEditor.getValue(), true));
 
@@ -173,7 +181,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
         this.__updateValueType(selOptionModel.id);
 
         this.buttonModel = new Backbone.Model({ name: selOptionModel.get('alias') });
-        if ((this.valueOptionCollection.length === 1) || (!this.options.enabled)) {
+        if (this.valueOptionCollection.length === 1 || !this.options.enabled) {
             const buttonView = new SelectButtonView({ model: this.buttonModel });
             this.selectType.show(buttonView);
         } else {
@@ -215,9 +223,7 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
 
     updateDefaultEditor() {
         this.ui[this.value.type].toggleClass('empty', _.isEmpty(this.value.value));
-        this.ui[this.value.type].text(_.isEmpty(this.value.value)
-            ? LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT')
-            : this.value.value);
+        this.ui[this.value.type].text(_.isEmpty(this.value.value) ? LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.EMPTYTEXT') : this.value.value);
     },
 
     __valueTypeSelected(model) {
@@ -248,10 +254,12 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
 
     __showPopup(model) {
         if (this.options.enabled) {
-            const value = model ? {
-                type: model.id,
-                value: this.ui[model.id].data('value')
-            } : _.clone(this.value);
+            const value = model
+                ? {
+                    type: model.id,
+                    value: this.ui[model.id].data('value')
+                }
+                : _.clone(this.value);
 
             const popupView = new PopupView({
                 value
@@ -283,7 +291,9 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     },
 
     __showValueType() {
-        if (!this.el.innerText) { return; }
+        if (!this.el.innerText) {
+            return;
+        }
         this.ui.value.toggleClass('hidden', this.value.type !== 'value');
         this.ui.expression.toggleClass('hidden', this.value.type !== 'expression');
         this.ui.script.toggleClass('hidden', this.value.type !== 'script');
@@ -323,7 +333,9 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
     },
 
     __showEditorValue() {
-        if (!this.el.innerText) { return; }
+        if (!this.el.innerText) {
+            return;
+        }
         this.ui[this.value.type].data('value', this.value.value);
         if (this.value.type === 'value') {
             this.updateValueEditor();
@@ -333,4 +345,4 @@ export default formRepository.editors.Expression = BaseLayoutEditorView.extend({
             this.updateDefaultEditor();
         }
     }
-});
+}));

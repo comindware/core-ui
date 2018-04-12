@@ -21,21 +21,25 @@ const defaultOptions = () => ({
     groups: undefined
 });
 
-export default formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
+export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         const defOps = Object.assign(defaultOptions(), {
-            users: options.users || options.schema.cacheService.GetUsers().map(user => ({
-                id: user.Id,
-                name: (user.Text || user.Username),
-                abbreviation: user.abbreviation,
-                userpicUri: user.userpicUri,
-                type: 'users'
-            })),
-            groups: options.groups || options.schema.cacheService.GetGroups().map(group => ({
-                id: group.id,
-                name: group.name,
-                type: 'groups'
-            }))
+            users:
+                options.users
+                || options.schema.cacheService.GetUsers().map(user => ({
+                    id: user.Id,
+                    name: user.Text || user.Username,
+                    abbreviation: user.abbreviation,
+                    userpicUri: user.userpicUri,
+                    type: 'users'
+                })),
+            groups:
+                options.groups
+                || options.schema.cacheService.GetGroups().map(group => ({
+                    id: group.id,
+                    name: group.name,
+                    type: 'groups'
+                }))
         });
 
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
@@ -88,4 +92,4 @@ export default formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.e
             this.__triggerChange();
         }
     }
-});
+}));

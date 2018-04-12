@@ -1,5 +1,4 @@
-const CollapsibleBehavior = function() {
-};
+const CollapsibleBehavior = function() {};
 
 _.extend(CollapsibleBehavior.prototype, {
     collapse(internal) {

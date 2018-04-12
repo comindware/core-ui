@@ -40,6 +40,7 @@ module.exports = options => {
                     ],
                     options: {
                         quiet: true,
+                        //fix: true,
                         cache: true
                     }
                 },

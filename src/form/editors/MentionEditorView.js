@@ -22,7 +22,7 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
-export default formRepository.editors.Mention = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -244,4 +244,4 @@ export default formRepository.editors.Mention = BaseLayoutEditorView.extend({
             this.dropdownView.button.setReadonly(readonly);
         }
     }
-});
+}));

@@ -35,9 +35,10 @@ export default BaseSplitController.extend({
                     return model.get('systemType') === 'cmw.workspace.SystemItem';
                 },
                 modelFactory(model) {
-                    const displayValue = model.get('systemType') === 'cmw.workspace.SystemItem'
-                        ? LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.SYSTEMSECTIONS')
-                        : LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.RECORDTYPES');
+                    const displayValue
+                        = model.get('systemType') === 'cmw.workspace.SystemItem'
+                            ? LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.SYSTEMSECTIONS')
+                            : LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.RECORDTYPES');
                     return new GroupingModel({
                         displayText: displayValue
                     });
@@ -67,20 +68,24 @@ export default BaseSplitController.extend({
         const currModelIndex = selectedItemIds.indexOf(model.id);
         if (currModelIndex < selectedItems.length - 1) {
             const nextOrder = selectedItems[currModelIndex + 1].get('order');
-            const nextNextOrder = (currModelIndex < selectedItems.length - 2) ? selectedItems[currModelIndex + 2].get('order') : nextOrder + 2;
+            const nextNextOrder = currModelIndex < selectedItems.length - 2 ? selectedItems[currModelIndex + 2].get('order') : nextOrder + 2;
             model.set('order', (nextOrder + nextNextOrder) / 2);
         }
         this.model.get('selected').sort();
     },
 
     __fillInModel() {
-        const workItems = Promise.resolve(this.options.schema.allWorkItems).then(allWorkItems => _.reduce(allWorkItems, (hash, item) => {
-            item.className = item.systemType === 'cmw.object.App'
-                ? 'icons-from-nav_recordtype'
-                : itemClassHash[item.id];
-            hash[item.id] = item;
-            return hash;
-        }, {}));
+        const workItems = Promise.resolve(this.options.schema.allWorkItems).then(allWorkItems =>
+            _.reduce(
+                allWorkItems,
+                (hash, item) => {
+                    item.className = item.systemType === 'cmw.object.App' ? 'icons-from-nav_recordtype' : itemClassHash[item.id];
+                    hash[item.id] = item;
+                    return hash;
+                },
+                {}
+            )
+        );
 
         this.model.set({
             title: LocalizationService.get('CORE.FORM.EDITORS.WORKSPACEITEMSPLIT.TITLE'),

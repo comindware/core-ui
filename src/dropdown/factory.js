@@ -27,9 +27,11 @@ export default /** @lends module:core.dropdown.factory */ {
             collection = new Backbone.Collection(collection);
         }
 
-        let effectiveButtonModel = options.buttonModel || new Backbone.Model({
-            text: options.text
-        });
+        let effectiveButtonModel
+            = options.buttonModel
+            || new Backbone.Model({
+                text: options.text
+            });
 
         if (!options.buttonModel) {
             const defaultActModel = collection.findWhere({ default: true });
@@ -39,16 +41,21 @@ export default /** @lends module:core.dropdown.factory */ {
             }
         }
 
-        return this.createPopout(Object.assign({
-            buttonView: DefaultButtonView,
-            buttonViewOptions: {
-                model: effectiveButtonModel
-            },
-            panelView: MenuPanelView,
-            panelViewOptions: {
-                collection
-            }
-        }, options));
+        return this.createPopout(
+            Object.assign(
+                {
+                    buttonView: DefaultButtonView,
+                    buttonViewOptions: {
+                        model: effectiveButtonModel
+                    },
+                    panelView: MenuPanelView,
+                    panelViewOptions: {
+                        collection
+                    }
+                },
+                options
+            )
+        );
     },
 
     /**

@@ -9,4 +9,4 @@ const config: { template: Function, className: string } = {
     className: 'boolean-switch-editor__view'
 };
 
-export default formRepository.editors.BooleanSwitch = BooleanEditorView.extend(config);
+export default (formRepository.editors.BooleanSwitch = BooleanEditorView.extend(config));

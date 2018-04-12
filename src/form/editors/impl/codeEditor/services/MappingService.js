@@ -44,7 +44,7 @@ export default {
                     item.overloads.push({
                         parameters,
                         text: func.name,
-                        returns: func.returns,
+                        returns: func.returns
                     });
                     autoCompleteArray.push(item);
                 }

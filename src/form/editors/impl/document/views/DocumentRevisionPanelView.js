@@ -15,4 +15,3 @@ export default Marionette.CompositeView.extend({
 
     childViewContainer: '.js-revision-list'
 });
-

@@ -73,4 +73,4 @@ const service: LocalizationService = {
     }
 };
 
-export default global.Localizer = service;
+export default (global.Localizer = service);

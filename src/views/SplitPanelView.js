@@ -24,9 +24,7 @@ export default Marionette.LayoutView.extend({
 
         _.defaults(this.options, defaultOptions);
 
-        _.bindAll(this,
-            '__startDragging', '__stopDragging', '__handleDocumentMouseMove',
-            '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
+        _.bindAll(this, '__startDragging', '__stopDragging', '__handleDocumentMouseMove', '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
 
         this.listenTo(GlobalEventService, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
         this.on('render', () => {
@@ -70,8 +68,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
 
-        const newPanel1Width = Math.min(
-            Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
+        const newPanel1Width = Math.min(Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
         const leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
         const rightWidthPx = 100 - leftWidthPx;
         this.ui.panel1.css('width', `${leftWidthPx}%`);
@@ -92,7 +89,9 @@ export default Marionette.LayoutView.extend({
             containerWidth: this.$el.width(),
             panel1InitialWidth: this.ui.panel1.width()
         };
-        $(document).mousemove(this.__handleDocumentMouseMove).mouseup(this.__handleDocumentMouseUp);
+        $(document)
+            .mousemove(this.__handleDocumentMouseMove)
+            .mouseup(this.__handleDocumentMouseUp);
     },
 
     __stopDragging() {

@@ -156,7 +156,7 @@ export default Marionette.LayoutView.extend({
         if (this.button) {
             this.stopListening(this.button);
         }
-        this.button = new this.options.buttonView(_.result(this.options, 'buttonViewOptions'));
+        this.button = new this.options.buttonView(this.options.buttonViewOptions);
         this.buttonView = this.button;
         this.listenTo(this.button, 'all', (...args) => {
             args[0] = `button:${args[0]}`;
@@ -214,9 +214,9 @@ export default Marionette.LayoutView.extend({
         const panelRect = $panelEl.offset();
         panelRect.width = $panelEl.outerWidth();
 
-        const css : {
+        const css: {
             left: number,
-            right: number,
+            right: number
         } = {
             left: 0,
             right: 0
@@ -517,7 +517,7 @@ export default Marionette.LayoutView.extend({
         }
         this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+        const panelViewOptions = _.extend(this.options.panelViewOptions || {}, {
             parent: this
         });
         this.panelView = new this.options.panelView(panelViewOptions);

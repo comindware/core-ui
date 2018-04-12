@@ -65,14 +65,16 @@ export default {
                                 )
                             );
                         } else if (child.type.includes('editor') !== -1) {
-                            return elementsFactory.createEditorAnchor(child.key,
+                            return elementsFactory.createEditorAnchor(
+                                child.key,
                                 Object.assign(
                                     child,
                                     {
                                         type: child.type.replace('-editor', '')
                                     },
                                     { uniqueFormId: this.__uniqueFormId }
-                                ));
+                                )
+                            );
                         }
                     }
                     const view = new child.view(_.omit(child, 'view'));

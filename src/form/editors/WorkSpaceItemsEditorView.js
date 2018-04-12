@@ -11,7 +11,7 @@ const defaultOptions = {
     allowRemove: true
 };
 
-export default formRepository.editors.WorkItemsSplit = BaseLayoutEditorView.extend({
+export default (formRepository.editors.WorkItemsSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -57,4 +57,4 @@ export default formRepository.editors.WorkItemsSplit = BaseLayoutEditorView.exte
             this.__triggerChange();
         }
     }
-});
+}));

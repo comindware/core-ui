@@ -45,7 +45,9 @@ export default Marionette.CompositeView.extend({
     },
 
     onDomRefresh() {
-        _.delay(() => { this.trigger('scrollTo', this.$el.find(this.classes.itemTitleSelected)); }, 5);
+        _.delay(() => {
+            this.trigger('scrollTo', this.$el.find(this.classes.itemTitleSelected));
+        }, 5);
     },
 
     __onChildItemTitleSelect(view, selected) {

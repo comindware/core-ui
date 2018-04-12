@@ -32,18 +32,18 @@ const defaultOptions = {
  * @param {Number} [options.height=150] Высота редактора в пикселях.
  * */
 
-export default formRepository.editors.Code = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
     className: 'dev-code-editor-field',
 
     regions: {
-        editorContainer: '.js-code-codemirror-container',
+        editorContainer: '.js-code-codemirror-container'
     },
 
     ui: {
         editor: '.js-code-codemirror-container',
         editBtn: '.js-code-button-edit',
         clearBtn: '.js-code-button-clear',
-        fadingPanel: '.js-code-fading-panel',
+        fadingPanel: '.js-code-fading-panel'
     },
 
     events: {
@@ -137,4 +137,4 @@ export default formRepository.editors.Code = BaseLayoutEditorView.extend({
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.editor.setReadonly(readonly);
     }
-});
+}));

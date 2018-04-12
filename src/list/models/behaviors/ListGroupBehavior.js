@@ -5,11 +5,9 @@ const ListGroupBehavior = function(model) {
 };
 
 _.extend(ListGroupBehavior.prototype, {
-    deselect() {
-    },
+    deselect() {},
 
-    select() {
-    }
+    select() {}
 });
 
 export default ListGroupBehavior;

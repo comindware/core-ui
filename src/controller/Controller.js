@@ -57,9 +57,7 @@ export default Marionette.Object.extend({
                 const model = new viewModel(data, { parse: true });
 
                 if (view) {
-                    const viewParams = additionalViewOptions
-                        ? Object.assign({ model }, additionalViewOptions)
-                        : { model };
+                    const viewParams = additionalViewOptions ? Object.assign({ model }, additionalViewOptions) : { model };
 
                     viewParams.viewState = this.currentState;
 
@@ -75,9 +73,7 @@ export default Marionette.Object.extend({
             const model = new viewModel();
 
             if (view) {
-                const viewParams = additionalViewOptions
-                    ? Object.assign({ model }, additionalViewOptions)
-                    : { model };
+                const viewParams = additionalViewOptions ? Object.assign({ model }, additionalViewOptions) : { model };
 
                 viewParams.currentState = callParams;
                 const presentingView = new view(viewParams);
@@ -112,8 +108,7 @@ export default Marionette.Object.extend({
         try {
             const requestFn = Ajax[params[0]][params[1]];
             if (requestFn) {
-                const functionSignature = window.ajaxMap
-                    .find(requestTemplate => requestTemplate.className === params[0] && requestTemplate.methodName === params[1]);
+                const functionSignature = window.ajaxMap.find(requestTemplate => requestTemplate.className === params[0] && requestTemplate.methodName === params[1]);
 
                 const requestType = functionSignature.httpMethod;
                 const parameters = functionSignature.parameters;
@@ -138,7 +133,7 @@ export default Marionette.Object.extend({
     async __handleViewResourceRequest(requestId, requestData) {
         const requestConfig = this.requests[requestId];
         if (requestConfig) {
-            const { data, requestType, error } = await this.__request(requestConfig, [ requestData.data ]);
+            const { data, requestType, error } = await this.__request(requestConfig, [requestData.data]);
 
             if (error === null) {
                 switch (requestType) {
@@ -174,7 +169,7 @@ export default Marionette.Object.extend({
     __applyState(callParams, parameters) {
         this.currentState = {};
 
-        parameters.forEach((param, i) => this.currentState[param.name] = callParams[i]);
+        parameters.forEach((param, i) => (this.currentState[param.name] = callParams[i]));
     },
 
     __applyCallParamsFilter(callParams, urlParams, routingAction) {

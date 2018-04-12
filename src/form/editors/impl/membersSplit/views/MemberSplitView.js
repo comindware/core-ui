@@ -1,4 +1,3 @@
-
 import ItemSplitView from '../../splitEditor/view/ItemSplitView';
 import MembersListItemView from './MembersListItemView';
 import MembersToolbarView from './membersToolbarView';

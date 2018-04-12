@@ -5,9 +5,11 @@ const defaultTimeOfShow = 12000;
 export default class ToastNotificationService {
     static initialize(options = {}) {
         this.notificationCollection = new Backbone.Collection();
-        options.toastNotificationRegion.show(new NotificationCollectionView({
-            collection: this.notificationCollection
-        }));
+        options.toastNotificationRegion.show(
+            new NotificationCollectionView({
+                collection: this.notificationCollection
+            })
+        );
         options.toastNotificationRegionEl.show();
         this.notificationTypes = {
             INFO: 'Info',
@@ -27,12 +29,15 @@ export default class ToastNotificationService {
             text = message.text;
             title = message.title;
         }
-        this.notificationCollection.add(new Backbone.Model({
-            type,
-            title,
-            text,
-            time: time === 0 ? time : time || defaultTimeOfShow
-        }), { at: this.notificationCollection.length });
+        this.notificationCollection.add(
+            new Backbone.Model({
+                type,
+                title,
+                text,
+                time: time === 0 ? time : time || defaultTimeOfShow
+            }),
+            { at: this.notificationCollection.length }
+        );
 
         this.trigger('publish:notification', {
             message: title || text,

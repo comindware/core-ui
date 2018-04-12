@@ -9,32 +9,34 @@
  * @constructor
  * */
 
-const HighlightableBehavior = function() {
-};
+const HighlightableBehavior = function() {};
 
-Object.assign(HighlightableBehavior.prototype, /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
-    /**
-     * Подсветить заданный текст во всех моделях.
-     * @param {String} text Текст, который необходимо подсветить.
-     * */
-    highlight(text) {
-        this.parentCollection.each(record => {
-            if (record.highlight) {
-                record.highlight(text);
-            }
-        });
-    },
+Object.assign(
+    HighlightableBehavior.prototype,
+    /** @lends module:core.collection.behaviors.HighlightableBehavior.prototype */ {
+        /**
+         * Подсветить заданный текст во всех моделях.
+         * @param {String} text Текст, который необходимо подсветить.
+         * */
+        highlight(text) {
+            this.parentCollection.each(record => {
+                if (record.highlight) {
+                    record.highlight(text);
+                }
+            });
+        },
 
-    /**
-     * Снять подсветку во всех моделях.
-     * */
-    unhighlight() {
-        this.parentCollection.each(record => {
-            if (record.unhighlight) {
-                record.unhighlight();
-            }
-        });
+        /**
+         * Снять подсветку во всех моделях.
+         * */
+        unhighlight() {
+            this.parentCollection.each(record => {
+                if (record.unhighlight) {
+                    record.unhighlight();
+                }
+            });
+        }
     }
-});
+);
 
 export default HighlightableBehavior;

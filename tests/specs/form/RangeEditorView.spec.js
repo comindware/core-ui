@@ -9,17 +9,19 @@ describe('Editors', () => {
         this.rootRegion = initializeCore();
     });
 
-    describe('DocumentEditorView', () => {
-        it('should initialize', function() {
+    describe('CodeEditorView', () => {
+        it('should initialize', function () {
             const model = new Backbone.Model({
-                code: 'true'
+                value: '5'
             });
 
-            const view = new core.form.editors.DocumentEditor({
+            const view = new core.form.editors.RangeEditor({
                 model,
-                key: 'code',
+                key: 'value',
                 autocommit: true,
-                mode: 'code'
+                min: 1,
+                max: 10,
+                step: 1
             });
 
             this.rootRegion.show(view);

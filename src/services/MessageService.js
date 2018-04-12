@@ -14,27 +14,37 @@ export default {
     },
 
     askYesNo(description, text) {
-        return this.showMessageDialog(description, text, [
-            {
-                id: true,
-                text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES')
-            },
-            {
-                id: false,
-                text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO'),
-                default: true
-            }
-        ], iconIds.QUESTION);
+        return this.showMessageDialog(
+            description,
+            text,
+            [
+                {
+                    id: true,
+                    text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.YES')
+                },
+                {
+                    id: false,
+                    text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.NO'),
+                    default: true
+                }
+            ],
+            iconIds.QUESTION
+        );
     },
 
     error(description, text = LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.ERROR')) {
-        return this.showMessageDialog(description, text, [
-            {
-                id: false,
-                text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.OK'),
-                default: true
-            }
-        ], iconIds.ERROR);
+        return this.showMessageDialog(
+            description,
+            text,
+            [
+                {
+                    id: false,
+                    text: LocalizationService.get('CORE.SERVICES.MESSAGE.BUTTONS.OK'),
+                    default: true
+                }
+            ],
+            iconIds.ERROR
+        );
     },
 
     showMessageDialog(description, text, buttons, iconId = iconIds.NONE) {

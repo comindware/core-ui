@@ -38,7 +38,7 @@ describe('Editors', () => {
 
             // assert
             expect(findDateInput(view)).toBeFocused();
-            expect(view.dateView.calendarDropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
+            expect(view.calendarDropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
             expect(view.hasFocus).toEqual(true, 'Must have focus.');
         });
 
@@ -197,7 +197,6 @@ describe('Editors', () => {
         });
 
         it('should commit if `autocommit: true`', function() {
-            // arrange
             const expected = '2016-01-01T00:00:06.000Z';
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -213,11 +212,9 @@ describe('Editors', () => {
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
-            // act
             view.focus();
             selectTodayOnOpenPanel(view);
 
-            // assert
             expect(view.getValue()).toEqual(model.get('data'));
             expect(core.lib.moment(view.getValue()).year()).toEqual(core.lib.moment().year());
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
@@ -252,7 +249,7 @@ describe('Editors', () => {
                 key: 'data'
             });
             this.rootRegion.show(view);
-
+            console.log(view.model.attributes);
             // act
             const isEmpty = view.isEmptyValue();
 

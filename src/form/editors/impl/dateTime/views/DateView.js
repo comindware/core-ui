@@ -8,7 +8,6 @@
 
 import template from '../templates/date.hbs';
 
-
 export default Marionette.LayoutView.extend({
     initialize() {
         this.preserveTime = !!this.getOption('preserveTime'); // If false (default), drop time components on date change

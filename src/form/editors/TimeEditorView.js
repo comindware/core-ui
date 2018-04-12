@@ -24,7 +24,7 @@ const defaultOptions = {
  * @param {String} [options.timeDisplayFormat=null] - A [MomentJS](http://momentjs.com/docs/#/displaying/format/) format string (e.g. 'LTS' etc.).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute
  * */
-export default formRepository.editors.Time = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Time = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -154,4 +154,4 @@ export default formRepository.editors.Time = BaseLayoutEditorView.extend({
     __onMouseleave() {
         this.el.removeChild(this.el.lastElementChild);
     }
-});
+}));

@@ -89,7 +89,7 @@ export default Marionette.LayoutView.extend({
             // Important: we collect only logical children because another popup might have been opened at the same level already.
             // e.g.: focus-blur events (usually focus comes first) - one popup is opened on focus and the previous one is closed on blur.
             if (this.__stack.includes(popupDef)) {
-                targets = [ popupDef ];
+                targets = [popupDef];
                 const handleChildren = pId => {
                     const children = this.__stack.filter(x => x.parentPopupId === pId);
                     targets.push(...children);
@@ -107,7 +107,7 @@ export default Marionette.LayoutView.extend({
             this.__removeTransientPopups();
             const topMostNonTransient = _.last(this.__stack);
             if (topMostNonTransient) {
-                targets = [ topMostNonTransient ];
+                targets = [topMostNonTransient];
             }
         }
         targets.reverse().forEach(pd => {
@@ -123,9 +123,12 @@ export default Marionette.LayoutView.extend({
     },
 
     __removeTransientPopups() {
-        this.__stack.filter(x => x.options.transient).reverse().forEach(popupDef => {
-            this.__removePopup(popupDef);
-        });
+        this.__stack
+            .filter(x => x.options.transient)
+            .reverse()
+            .forEach(popupDef => {
+                this.__removePopup(popupDef);
+            });
     },
 
     __removePopup(popupDef) {

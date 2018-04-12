@@ -1,14 +1,12 @@
 import { helpers, htmlHelpers } from 'utils';
 
-const eventBubblingIgnoreList = [
-    'before:render',
-    'render',
-    'dom:refresh',
-    'before:show',
-    'show',
-    'before:destroy',
-    'destroy'
-];
+const eventBubblingIgnoreList = ['before:render',
+'render',
+'dom:refresh',
+'before:show',
+'show',
+'before:destroy',
+'destroy'];
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {

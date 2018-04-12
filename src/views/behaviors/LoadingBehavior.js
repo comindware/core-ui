@@ -23,12 +23,15 @@ export default Marionette.Behavior.extend({
             }
         } else if (visible instanceof Promise) {
             this.setLoading(true);
-            Promise.resolve(visible).then(() => {
-                this.setLoading(false);
-            }, () => {
-                //noinspection JSPotentiallyInvalidUsageOfThis
-                this.setLoading(false);
-            });
+            Promise.resolve(visible).then(
+                () => {
+                    this.setLoading(false);
+                },
+                () => {
+                    //noinspection JSPotentiallyInvalidUsageOfThis
+                    this.setLoading(false);
+                }
+            );
         } else {
             helpers.throwError('Invalid argument format.', 'FormatError');
         }

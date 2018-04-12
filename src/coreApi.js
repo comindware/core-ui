@@ -10,7 +10,6 @@ import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
 
-
 import libApi from 'lib';
 import utilsApi from 'utils';
 import dropdownApi from 'dropdown';
@@ -85,7 +84,7 @@ const core = {
          * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
          * @namespace
          * @memberof module:core.services
-        * */
+         * */
         GlobalEventService,
         PromiseService,
         UserService,

@@ -19,12 +19,10 @@ export default Marionette.LayoutView.extend({
         this.showTitle = this.getOption('showTitle');
     },
 
-    events: {
-
-    },
+    events: {},
 
     modelEvents: {
-        'change:value': '__updateDisplayValue',
+        'change:value': '__updateDisplayValue'
     },
 
     ui: {
@@ -40,7 +38,5 @@ export default Marionette.LayoutView.extend({
             return;
         }
         this.ui.initialValue.val(DateTimeService.getTimeDisplayValue(this.model.get('value'), this.options.timeDisplayFormat));
-    },
-
-
+    }
 });

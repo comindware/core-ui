@@ -55,11 +55,10 @@ export default Marionette.ItemView.extend({
     },
 
     onShow() {
-        this.ui.pickerInput.datetimepicker(this.pickerOptions)
-            .on('changeDate', e => {
-                this.updateValue(e.date);
-                this.trigger('select');
-            });
+        this.ui.pickerInput.datetimepicker(this.pickerOptions).on('changeDate', e => {
+            this.updateValue(e.date);
+            this.trigger('select');
+        });
         this.updatePickerDate();
     }
 });

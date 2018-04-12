@@ -25,7 +25,7 @@ export default Marionette.LayoutView.extend({
 
     events: {
         'click @ui.maximize': '__onMaximize',
-        'click @ui.minimize': '__onMinimize',
+        'click @ui.minimize': '__onMinimize'
     },
 
     onShow() {
@@ -49,4 +49,3 @@ export default Marionette.LayoutView.extend({
         this.trigger('minimize');
     }
 });
-

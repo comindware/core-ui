@@ -50,56 +50,56 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                        test: /\.css$/,
-                        loader: ExtractTextPlugin.extract({
-                            fallback: 'style-loader',
-                            use: [
-                                {
-                                    loader: 'css-loader',
-                                    options: {
-                                        sourceMap: true
-                                    }
-                                },
-                                {
-                                    loader: 'postcss-loader',
-                                    options: {
-                                        sourceMap: true,
-                                        plugins: () => [
-                                            autoprefixer({
-                                                browsers: ['last 2 versions']
-                                            }),
-                                            cssnano()
-                                        ]
-                                    }
-                                }
-                            ]
-                        })
-                    }
+                          test: /\.css$/,
+                          loader: ExtractTextPlugin.extract({
+                              fallback: 'style-loader',
+                              use: [
+                                  {
+                                      loader: 'css-loader',
+                                      options: {
+                                          sourceMap: true
+                                      }
+                                  },
+                                  {
+                                      loader: 'postcss-loader',
+                                      options: {
+                                          sourceMap: true,
+                                          plugins: () => [
+                                              autoprefixer({
+                                                  browsers: ['last 2 versions']
+                                              }),
+                                              cssnano()
+                                          ]
+                                      }
+                                  }
+                              ]
+                          })
+                      }
                     : {
-                        test: /\.css$/,
-                        use: [
-                            {
-                                loader: 'style-loader'
-                            },
-                            {
-                                loader: 'css-loader',
-                                options: {
-                                    sourceMap: true
-                                }
-                            },
-                            {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: [
-                                        autoprefixer({
-                                            browsers: ['last 2 versions']
-                                        })
-                                    ]
-                                }
-                            }
-                        ]
-                    },
+                          test: /\.css$/,
+                          use: [
+                              {
+                                  loader: 'style-loader'
+                              },
+                              {
+                                  loader: 'css-loader',
+                                  options: {
+                                      sourceMap: true
+                                  }
+                              },
+                              {
+                                  loader: 'postcss-loader',
+                                  options: {
+                                      sourceMap: true,
+                                      plugins: [
+                                          autoprefixer({
+                                              browsers: ['last 2 versions']
+                                          })
+                                      ]
+                                  }
+                              }
+                          ]
+                      },
                 {
                     test: /core\.js$/,
                     enforce: 'pre',

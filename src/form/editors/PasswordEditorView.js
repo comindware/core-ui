@@ -11,11 +11,11 @@ import formRepository from '../formRepository';
  * @param {Object} options Options object. Doesn't have it's own options.
  * All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * */
-export default formRepository.editors.Password = TextEditorView.extend({
+export default (formRepository.editors.Password = TextEditorView.extend({
     initialize(options) {
         TextEditorView.prototype.initialize.call(this, options);
         this.options.showTitle = false;
     },
 
     template: Handlebars.compile(template)
-});
+}));

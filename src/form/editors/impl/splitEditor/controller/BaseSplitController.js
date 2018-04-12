@@ -54,8 +54,7 @@ export default Marionette.Object.extend({
         this.collection.filter(model => {
             const modelType = model.get('type');
             const modelName = model.get('name');
-            return (filterValue ? modelType && modelType === filterValue : true)
-                && (searchValue ? modelName && modelName.toLowerCase().indexOf(searchValue) !== -1 : true);
+            return (filterValue ? modelType && modelType === filterValue : true) && (searchValue ? modelName && modelName.toLowerCase().indexOf(searchValue) !== -1 : true);
         });
         searchValue && this.collection.highlight(searchValue);
     },
@@ -79,8 +78,8 @@ export default Marionette.Object.extend({
         }
 
         if (maxQuantitySelected && typeTo === 'selected' && allSelectedModels) {
-            if ((allSelectedModels.length + selected.length) > maxQuantitySelected) {
-                selected = selected.slice(0, (maxQuantitySelected - allSelectedModels.length));
+            if (allSelectedModels.length + selected.length > maxQuantitySelected) {
+                selected = selected.slice(0, maxQuantitySelected - allSelectedModels.length);
             }
         }
 
@@ -90,32 +89,34 @@ export default Marionette.Object.extend({
         modelsFrom.selectNone && modelsFrom.selectNone();
         modelsTo.selectNone && modelsTo.selectNone();
         const newSelectedFragment = this.collectionSearchValue[typeTo];
-        _.each(selected, model => {
-            if (!(model instanceof ItemModel)) {
-                return;
-            }
-            if (this.options.orderEnabled) {
-                if (typeTo === 'selected') {
-                    const newOrder = modelsTo.length
-                        ? modelsTo.at(modelsTo.length - 1).get('order') + 1
-                        : 1;
-                    model.set('order', newOrder);
-                } else {
-                    model.unset('order');
+        _.each(
+            selected,
+            model => {
+                if (!(model instanceof ItemModel)) {
+                    return;
                 }
-            }
-            !all && selectedIndexFrom.push(modelsFrom.indexOf(model));
-            modelsFrom.remove(model);
-            modelsTo.add(model, { delayed: false });
-            model.unhighlight();
-            if (newSelectedFragment) {
-                model.highlight(newSelectedFragment);
-            }
-            if (!all) {
-                selectedIndexTo.push(modelsTo.indexOf(model));
-                model.select();
-            }
-        }, this);
+                if (this.options.orderEnabled) {
+                    if (typeTo === 'selected') {
+                        const newOrder = modelsTo.length ? modelsTo.at(modelsTo.length - 1).get('order') + 1 : 1;
+                        model.set('order', newOrder);
+                    } else {
+                        model.unset('order');
+                    }
+                }
+                !all && selectedIndexFrom.push(modelsFrom.indexOf(model));
+                modelsFrom.remove(model);
+                modelsTo.add(model, { delayed: false });
+                model.unhighlight();
+                if (newSelectedFragment) {
+                    model.highlight(newSelectedFragment);
+                }
+                if (!all) {
+                    selectedIndexTo.push(modelsTo.indexOf(model));
+                    model.select();
+                }
+            },
+            this
+        );
 
         if (all) {
             return;
@@ -140,12 +141,15 @@ export default Marionette.Object.extend({
     __createModel() {
         this.model = new Backbone.Model();
 
-        const availableModels = new ItemCollection(new Backbone.Collection([], {
-            model: ItemModel
-        }), {
-            selectableBehavior: 'multi',
-            comparator: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name')
-        });
+        const availableModels = new ItemCollection(
+            new Backbone.Collection([], {
+                model: ItemModel
+            }),
+            {
+                selectableBehavior: 'multi',
+                comparator: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name')
+            }
+        );
         if (this.groupConfig) {
             availableModels.group(this.groupConfig);
         }
@@ -155,12 +159,15 @@ export default Marionette.Object.extend({
             ? Core.utils.helpers.comparatorFor(Core.utils.comparators.numberComparator2Asc, 'order')
             : Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name');
 
-        const selectedModels = new ItemCollection(new Backbone.Collection([], {
-            model: ItemModel
-        }), {
-            selectableBehavior: 'multi',
-            comparator: selectedComparator
-        });
+        const selectedModels = new ItemCollection(
+            new Backbone.Collection([], {
+                model: ItemModel
+            }),
+            {
+                selectableBehavior: 'multi',
+                comparator: selectedComparator
+            }
+        );
         this.model.set('selected', selectedModels);
 
         this.model.set({
@@ -196,12 +203,14 @@ export default Marionette.Object.extend({
             const availableItems = Object.values(items);
             let i = 1;
             selectedItems = _.chain(selectedItems)
-                .filter(item => item !== undefined).map(item => {
+                .filter(item => item !== undefined)
+                .map(item => {
                     if (this.options.orderEnabled) {
                         item.order = i++;
                     }
                     return item;
-                }).value();
+                })
+                .value();
 
             this.model.get('available').reset(availableItems);
             this.model.get('selected').reset(selectedItems);
