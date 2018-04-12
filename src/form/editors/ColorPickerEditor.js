@@ -1,4 +1,4 @@
-
+﻿
 import formRepository from '../formRepository';
 import 'spectrum-colorpicker';
 import colorPicker from './templates/colorPicker.hbs';
@@ -43,11 +43,7 @@ export default formRepository.editors.ColorPicker = BaseLayoutEditorView.extend(
     className: 'editor editor_color',
 
     __changedHex() {
-        if (Core.services.MobileService.isIE) {
-            this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
-        } else {
-            this.ui.colorpicker.val(this.ui.hexcolor.val());
-        }
+        this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
     },
 
     __changedColorPicker() {
@@ -61,11 +57,7 @@ export default formRepository.editors.ColorPicker = BaseLayoutEditorView.extend(
     __clear() {
         this.__value(null, false, true);
         this.ui.hexcolor.val(null);
-        if (Core.services.MobileService.isIE) {
-            this.ui.colorpicker.spectrum('set', null);
-        } else {
-            this.ui.colorpicker.val(null);
-        }
+        this.ui.colorpicker.spectrum('set', null);
         this.focus();
         return false;
     },
@@ -80,45 +72,32 @@ export default formRepository.editors.ColorPicker = BaseLayoutEditorView.extend(
         } else {
             this.placeholder = this.options.emptyPlaceholder;
         }
-
         this.ui.hexcolor.prop('placeholder', this.placeholder);
     },
 
     onShow() {
         const value = this.getValue() || '';
-        if (Core.services.MobileService.isIE) {
-            this.ui.colorpicker.spectrum({
-                color: value.toString(),
-                showInput: true,
-                showInitial: true,
-                preferredFormat: 'hex'
-            });
-            this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
-        } else {
-            this.ui.colorpicker.val(value);
-            this.ui.hexcolor.val(this.ui.colorpicker.val());
-        }
+        this.ui.colorpicker.spectrum({
+            color: value.toString(),
+            showInput: true,
+            allowEmpty: true,
+            showInitial: true,
+            preferredFormat: 'hex'
+        });
+        this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
     },
 
     __setReadonly(readonly) {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled() && this.getReadonly()) {
-            if (Core.services.MobileService.isIE) {
-                this.ui.colorpicker.spectrum('disable');
-            } else {
-                this.ui.colorpicker.prop('disabled', readonly);
-            }
+            this.ui.colorpicker.spectrum('disable');
         }
         this.ui.hexcolor.prop('readonly', readonly);
     },
 
     __setEnabled(enabled) {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
-        if (enabled && Core.services.MobileService.isIE) {
-            this.ui.colorpicker.spectrum('enable');
-        } else {
-            this.ui.colorpicker.prop('disabled', !enabled);
-        }
+        this.ui.colorpicker.spectrum('enable');
     },
 
     __value(value, updateUi, triggerChange) {
@@ -136,4 +115,3 @@ export default formRepository.editors.ColorPicker = BaseLayoutEditorView.extend(
         }
     }
 });
-
