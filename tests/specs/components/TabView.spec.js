@@ -1,9 +1,9 @@
-//import core from 'coreApi';
+import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    beforeEach(() => {
+    beforeEach(function () {
         this.rootRegion = initializeCore();
     });
 

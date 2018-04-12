@@ -37,16 +37,24 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        this.model.set(
-            {
-                readonly: this.getReadonly(),
-                enabled: this.getEnabled(),
-                value: this.__adjustValue(this.value)
-            },
-            { silent: true }
-        );
-
         this.value = this.__adjustValue(this.value);
+        this.enabled = this.getEnabled();
+        this.readonly = this.getReadonly();
+
+        this.model
+            ? this.model.set(
+                  {
+                      readonly: this.readonly,
+                      enabled: this.enabled,
+                      value: this.value
+                  },
+                  { silent: true }
+              )
+            : (this.model = new Backbone.Model({
+                  readonly: this.readonly,
+                  enabled: this.enabled,
+                  value: this.value
+              }));
     },
 
     ui: {
@@ -83,6 +91,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (!this.isDestroyed) {
             this.__updateClearButton();
         }
+        this.__updateDisplayValue();
     },
 
     setValue(value: String): void {
@@ -152,9 +161,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
      * Sets the focus onto this editor.
      */
     focus(): void {
-        if (this.hasFocus) {
-            return;
-        }
         this.__dateFocus();
     },
 
@@ -162,9 +168,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
      * Clears the focus.
      */
     blur(): void {
-        if (!this.hasFocus) {
-            return;
-        }
         this.__dateBlur();
         this.__timeBlur();
     },

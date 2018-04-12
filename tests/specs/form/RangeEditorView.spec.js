@@ -1,15 +1,13 @@
-/*eslint-ignore*/
-
 import core from 'coreApi';
 import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
-/*eslint-ignore*/
+
 describe('Editors', () => {
     beforeEach(function () {
         this.rootRegion = initializeCore();
     });
 
-    describe('CodeEditorView', () => {
+    describe('RangeEditorView', () => {
         it('should initialize', function () {
             const model = new Backbone.Model({
                 value: '5'

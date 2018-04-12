@@ -11,7 +11,7 @@ describe('Editors', () => {
 
     describe('BooleanEditorView', () => {
         const findButton = function(view) {
-            return view.$('.js-toggle-button');
+            return view.$el;
         };
 
         it('should get focus when focus() is called', function() {

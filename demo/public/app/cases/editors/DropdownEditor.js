@@ -10,7 +10,7 @@ export default function() {
     }));
 
     const model = new Backbone.Model({
-        dropdownValue: 42
+        dropdownValue: { name: 'Some large data', id: 667 }
     });
 
     return new CanvasView({
@@ -19,7 +19,7 @@ export default function() {
             key: 'dropdownValue',
             autocommit: true,
             collection: new Backbone.Collection(possibleItems),
-            enableSearch: true
+            createBySelect: true
         }),
         presentation: '{{dropdownValue}}',
         isEditor: true
