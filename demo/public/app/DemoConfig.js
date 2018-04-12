@@ -139,18 +139,8 @@ export default {
                     description: 'Radio Group Editor'
                 },
                 {
-                    id: 'PasswordEditor',
-                    displayName: 'Password Editor',
-                    description: 'Text editor mimic in passwords'
-                },
-                {
                     id: 'MemberSelectEditor',
                     displayName: 'Member Select Editor',
-                    description: 'Simple text editor'
-                },
-                {
-                    id: 'MentionEditor',
-                    displayName: 'Mention Editor',
                     description: 'Simple text editor'
                 },
                 {
@@ -159,18 +149,9 @@ export default {
                     description: 'Data list editor with search'
                 },
                 {
-                    id: 'MaskedTextEditor',
-                    displayName: 'Masked Text Editor',
-                    description: 'Simple text editor'
-                },
-                {
                     id: 'AvatarEditor',
                     displayName: 'Avatar Editor',
                     description: 'Simple text editor'
-                },
-                {
-                    id: 'DurationEditorWithPartialDisplay',
-                    displayName: 'Duration Editor (partial display)'
                 }
             ]
         },

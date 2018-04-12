@@ -3,10 +3,8 @@ import helpers_ from './helpers';
 import htmlHelpers_ from './htmlHelpers';
 import dateHelpers_ from './dateHelpers';
 import diffHelper_ from './diffHelper';
-import cookieHelpers_ from './cookieHelpers';
 import keyCode_ from './keyCode';
 import './handlebars/all';
-import './jquery/selector.focusable';
 import RegionBehavior_ from './RegionBehavior';
 import './codemirror';
 
@@ -15,7 +13,6 @@ export const comparators = comparators_;
 export const helpers = helpers_;
 export const htmlHelpers = htmlHelpers_;
 export const dateHelpers = dateHelpers_;
-export const cookieHelpers = cookieHelpers_;
 export const keyCode = keyCode_;
 export const diffHelper = diffHelper_;
 
@@ -43,11 +40,6 @@ export default {
      * @namespace
      * */
     dateHelpers,
-    /**
-     * Methods to manipulate cookies data.
-     * @namespace
-     * */
-    cookieHelpers,
     /**
      * Enumeration of key codes used in keyboard events.
      * @namespace
