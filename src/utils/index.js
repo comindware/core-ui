@@ -3,7 +3,6 @@ import helpers_ from './helpers';
 import htmlHelpers_ from './htmlHelpers';
 import dateHelpers_ from './dateHelpers';
 import diffHelper_ from './diffHelper';
-import cookieHelpers_ from './cookieHelpers';
 import keyCode_ from './keyCode';
 import './handlebars/all';
 import RegionBehavior_ from './RegionBehavior';
