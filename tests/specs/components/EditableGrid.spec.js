@@ -96,7 +96,6 @@ describe('Components', () => {
         it('should initialize', function () {
             const collection = new Backbone.Collection(data);
 
-            // 3. Create grid
             const gridController = new core.list.controllers.GridController({
                 columns,
                 selectableBehavior: 'multi',
@@ -109,7 +108,7 @@ describe('Components', () => {
             });
 
             this.rootRegion.show(gridController.view);
-            // assert
+
             expect(true).toBe(true);
         });
     });
