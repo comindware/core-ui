@@ -40,7 +40,7 @@ const GridHeaderView = Marionette.ItemView.extend({
         this.gridColumnHeaderView = options.gridColumnHeaderView || GridColumnHeaderView;
         this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
         this.columns = options.columns;
-        this.$document = $(document);
+
         this.styleSheet = options.styleSheet;
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
         this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
@@ -149,37 +149,29 @@ const GridHeaderView = Marionette.ItemView.extend({
     },
 
     __getElementOuterWidth(el) {
-        return $(el)[0].getBoundingClientRect().width;
+        return el.getBoundingClientRect().width;
     },
 
     __startDrag(e) {
-        const $dragger = $(e.target);
-        const $column = $dragger.parent();
+        const dragger = e.target;
+        const column = dragger.parentNode;
 
-        const affectedColumns = _.chain($column.nextAll()).toArray().map(el => ({
-            $el: $(el),
-            initialWidth: this.__getElementOuterWidth(el)
-        })).value();
         const draggedColumn = {
-            $el: $column,
-            initialWidth: this.__getElementOuterWidth($column),
-            index: $column.index()
+            el: column,
+            initialWidth: this.__getElementOuterWidth(column),
+            index: Array.prototype.indexOf.call(column.parentNode.children, column)
         };
-        const unaffectedWidth = _.reduce($column.prevAll(), (m, v) => m + this.__getElementOuterWidth(v), 0);
-        const fullWidth = this.__getFullWidth();
 
         this.dragContext = {
             pageOffsetX: e.pageX,
-            $dragger,
-            fullWidth,
-            unaffectedWidth,
-            draggedColumn,
-            affectedColumns,
-            maxColumnWidth: fullWidth - affectedColumns.length * this.constants.MIN_COLUMN_WIDTH - unaffectedWidth
+            dragger,
+            draggedColumn
         };
 
-        $dragger.addClass('active');
-        this.$document.mousemove(this.__draggerMouseMove).mouseup(this.__draggerMouseUp);
+        dragger.classList.add('active');
+
+        document.addEventListener('mousemove', this.__draggerMouseMove);
+        document.addEventListener('mouseup', this.__draggerMouseUp);
     },
 
     __stopDrag() {
@@ -187,10 +179,11 @@ const GridHeaderView = Marionette.ItemView.extend({
             return;
         }
 
-        this.dragContext.$dragger.removeClass('active');
+        this.dragContext.dragger.classList.remove('active');
         this.dragContext = null;
-        this.$document.unbind('mousemove', this.__draggerMouseMove);
-        this.$document.unbind('mouseup', this.__draggerMouseUp);
+
+        document.removeEventListener('mousemove', this.__draggerMouseMove);
+        document.removeEventListener('mouseup', this.__draggerMouseUp);
     },
 
     __draggerMouseMove(e) {
@@ -229,7 +222,6 @@ const GridHeaderView = Marionette.ItemView.extend({
 
     __handleResizeInternal() {
         this.ui.gridHeaderColumn.each(i => {
-            // child.outerWidth(col.absWidth); // Set absolute column width
             this.__setColumnWidth(i, this.columns[i].width || 1);
         });
     },
