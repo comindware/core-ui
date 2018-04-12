@@ -429,8 +429,7 @@ const VirtualCollection = Backbone.Collection.extend(
                 return;
             }
 
-            this.__rebuildIndex();
-            this.trigger('reset', this, options);
+            this.__rebuildIndex(options);
         },
 
         __onSync(collection, resp, options) {
@@ -573,7 +572,7 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         __onReset(collection, options) {
-            this.__rebuildIndex(options);
+            this.__rebuildIndex(options, true);
         },
 
         sort(options) {
