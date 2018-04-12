@@ -19,9 +19,7 @@ describe('VirtualCollection', () => {
         iterator(model) {
             return model.get('assignee').get('name');
         },
-        affectedAttributes: [
-            'assignee'
-        ]
+        affectedAttributes: ['assignee']
     };
 
     function generateTask(attributes) {
@@ -61,7 +59,7 @@ describe('VirtualCollection', () => {
                 })
             ]);
             const { collection, virtualCollection } = createFixture(tasks, {
-                grouping: [ assigneeGrouping ],
+                grouping: [assigneeGrouping],
                 comparator(model) {
                     return model.get('title');
                 }
@@ -91,7 +89,7 @@ describe('VirtualCollection', () => {
     describe('When grouping plain list', () => {
         it('should group by iterator', () => {
             const { collection, virtualCollection } = createFixture(generateTaskArray(4, n => ({ assignee: repository.users[n % 2] })), {
-                grouping: [ assigneeGrouping ]
+                grouping: [assigneeGrouping]
             });
 
             expectCollectionsToBeEqual(virtualCollection, [
@@ -129,15 +127,18 @@ describe('VirtualCollection', () => {
 
         it('should sort items within a group with comparator function', () => {
             const count = 4;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`,
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ],
-                comparator(model) {
-                    return model.get('title');
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`,
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping],
+                    comparator(model) {
+                        return model.get('title');
+                    }
                 }
-            });
+            );
 
             expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
@@ -151,21 +152,24 @@ describe('VirtualCollection', () => {
 
         it('should accept group iterator as a model attrubute name', () => {
             const count = 2;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`
-            })), {
-                grouping: [
-                    {
-                        modelFactory(model) {
-                            return new Backbone.Model({ title: model.get('title') });
-                        },
-                        comparator(model) {
-                            return model.get('title');
-                        },
-                        iterator: 'title'
-                    }
-                ]
-            });
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`
+                })),
+                {
+                    grouping: [
+                        {
+                            modelFactory(model) {
+                                return new Backbone.Model({ title: model.get('title') });
+                            },
+                            comparator(model) {
+                                return model.get('title');
+                            },
+                            iterator: 'title'
+                        }
+                    ]
+                }
+            );
 
             expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
@@ -177,19 +181,22 @@ describe('VirtualCollection', () => {
 
         it('should accept group comparator as a model attrubute name', () => {
             const count = 2;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`
-            })), {
-                grouping: [
-                    {
-                        modelFactory(model) {
-                            return new Backbone.Model({ title: model.get('title') });
-                        },
-                        comparator: 'title',
-                        iterator: 'title'
-                    }
-                ]
-            });
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`
+                })),
+                {
+                    grouping: [
+                        {
+                            modelFactory(model) {
+                                return new Backbone.Model({ title: model.get('title') });
+                            },
+                            comparator: 'title',
+                            iterator: 'title'
+                        }
+                    ]
+                }
+            );
 
             expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
@@ -201,17 +208,20 @@ describe('VirtualCollection', () => {
 
         it('should accept group modelFactory as a model attrubute name', () => {
             const count = 2;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`
-            })), {
-                grouping: [
-                    {
-                        modelFactory: 'title',
-                        comparator: 'title',
-                        iterator: 'title'
-                    }
-                ]
-            });
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`
+                })),
+                {
+                    grouping: [
+                        {
+                            modelFactory: 'title',
+                            comparator: 'title',
+                            iterator: 'title'
+                        }
+                    ]
+                }
+            );
 
             expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
@@ -225,15 +235,18 @@ describe('VirtualCollection', () => {
 
         it('should be able to omit modelFactory and comparator', () => {
             const count = 2;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`
-            })), {
-                grouping: [
-                    {
-                        iterator: 'title'
-                    }
-                ]
-            });
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`
+                })),
+                {
+                    grouping: [
+                        {
+                            iterator: 'title'
+                        }
+                    ]
+                }
+            );
 
             expectCollectionsToBeEqual(virtualCollection, [
                 virtualCollection.at(0),
@@ -245,161 +258,175 @@ describe('VirtualCollection', () => {
             expect(virtualCollection.at(0).get('groupingModel')).toEqual(true);
         });
 
-        it('should compute affected attributes from field based options', () => {
+        it('should compute affected attributes from field based options', done => {
             const count = 2;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`
-            })), {
-                grouping: [
-                    {
-                        iterator: 'title'
-                    }
-                ]
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`
+                })),
+                {
+                    grouping: [
+                        {
+                            iterator: 'title'
+                        }
+                    ]
+                }
+            );
+
+            virtualCollection.on('add remove', () => {
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(0),
+                    virtualCollection.at(2),
+                    collection.at(1)
+                ]);
+                done();
             });
 
             collection.at(0).set('title', 'synthetic title 0');
-
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                virtualCollection.at(2),
-                collection.at(1)
-            ]);
         });
     });
 
     describe('When changing a model', () => {
-        it('should update grouping on affected attribute change', () => {
+        it('should update grouping on affected attribute change', done => {
             const count = 4;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ]
-            });
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping]
+                }
+            );
             const resetCallback = jasmine.createSpy('resetCallback');
             const addCallback = jasmine.createSpy('addCallback');
             const removeCallback = jasmine.createSpy('removeCallback');
             virtualCollection.on('reset', resetCallback);
             virtualCollection.on('add', addCallback);
             virtualCollection.on('remove', removeCallback);
+
+            virtualCollection.on('add remove', () => {
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(2),
+                    virtualCollection.at(2),
+                    collection.at(0),
+                    collection.at(1),
+                    collection.at(3)
+                ]);
+                expect(resetCallback).not.toHaveBeenCalled();
+                done();
+            });
 
             collection.at(0).set('assignee', repository.users[1]);
-
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(2),
-                virtualCollection.at(2),
-                collection.at(0),
-                collection.at(1),
-                collection.at(3)
-            ]);
-            expect(resetCallback).toHaveBeenCalledTimes(1);
-            expect(addCallback).not.toHaveBeenCalled();
-            expect(removeCallback).not.toHaveBeenCalled();
         });
 
-        it('should update sorting on affected attribute change', () => {
+        it('should update sorting on affected attribute change', done => {
             const count = 4;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`,
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ],
-                comparator(model) {
-                    return model.get('title');
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`,
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping],
+                    comparator(model) {
+                        return model.get('title');
+                    }
                 }
-            });
+            );
             const resetCallback = jasmine.createSpy('resetCallback');
-            const addCallback = jasmine.createSpy('addCallback');
-            const removeCallback = jasmine.createSpy('removeCallback');
             virtualCollection.on('reset', resetCallback);
-            virtualCollection.on('add', addCallback);
-            virtualCollection.on('remove', removeCallback);
+            virtualCollection.on('add remove', () => {
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(0),
+                    collection.at(2),
+                    virtualCollection.at(3),
+                    collection.at(3),
+                    collection.at(1)
+                ]);
+                expect(resetCallback).not.toHaveBeenCalled();
+                done();
+            });
 
             collection.at(0).set('title', 'synthetic title 0');
-
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                collection.at(2),
-                virtualCollection.at(3),
-                collection.at(3),
-                collection.at(1)
-            ]);
-            expect(resetCallback).toHaveBeenCalledTimes(1);
-            expect(addCallback).not.toHaveBeenCalled();
-            expect(removeCallback).not.toHaveBeenCalled();
         });
     });
 
     describe('When resetting parent collection', () => {
-        it('should reflect the changes', () => {
+        it('should reflect the changes', done => {
             // Fixture setup
-            const { collection, virtualCollection } = createFixture(generateTaskArray(4, n => ({
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ]
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(4, n => ({
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping]
+                }
+            );
+            expectCollectionsToBeEqual(virtualCollection, [
+                virtualCollection.at(0),
+                collection.at(0),
+                collection.at(2),
+                virtualCollection.at(3),
+                collection.at(1),
+                collection.at(3)
+            ]);
+
+            virtualCollection.on('add remove', () => {
+                // Verify outcome
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(0),
+                    collection.at(2),
+                    virtualCollection.at(3),
+                    collection.at(1),
+                    collection.at(3)
+                ]);
+                done();
             });
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                collection.at(2),
-                virtualCollection.at(3),
-                collection.at(1),
-                collection.at(3)
-            ]);
-
             // Exercise system
-            collection.reset(generateTaskArray(4, n => ({
-                assignee: repository.users[n % 2]
-            })));
-
-            // Verify outcome
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                collection.at(2),
-                virtualCollection.at(3),
-                collection.at(1),
-                collection.at(3)
-            ]);
+            collection.reset(
+                generateTaskArray(4, n => ({
+                    assignee: repository.users[n % 2]
+                }))
+            );
         });
     });
 
     describe('When changing parent collection order', () => {
-        it('should reflect the changes on leaf level', () => {
+        it('should reflect the changes on leaf level', done => {
             // Fixture setup
             const count = 4;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                assignee: repository.users[n % 2],
-                title: `some title ${count - n}`
-            })), {
-                grouping: [ assigneeGrouping ]
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    assignee: repository.users[n % 2],
+                    title: `some title ${count - n}`
+                })),
+                {
+                    grouping: [assigneeGrouping]
+                }
+            );
+
+            virtualCollection.on('add remove', () => {
+                // Verify outcome
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(1),
+                    collection.at(3),
+                    virtualCollection.at(3),
+                    collection.at(0),
+                    collection.at(2)
+                ]);
+                done();
             });
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                collection.at(2),
-                virtualCollection.at(3),
-                collection.at(1),
-                collection.at(3)
-            ]);
 
             // Exercise system
             collection.comparator = function(model) {
                 return model.get('title');
             };
             collection.sort();
-
-            // Verify outcome
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(1),
-                collection.at(3),
-                virtualCollection.at(3),
-                collection.at(0),
-                collection.at(2)
-            ]);
         });
     });
 
@@ -407,28 +434,27 @@ describe('VirtualCollection', () => {
         it('should filter grouped list', () => {
             // Fixture setup and system exercise
             const count = 4;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ],
-                filter(model) {
-                    return model.get('assignee') === repository.users[1];
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping],
+                    filter(model) {
+                        return model.get('assignee') === repository.users[1];
+                    }
                 }
-            });
+            );
 
             // Verify outcome
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(1),
-                collection.at(3)
-            ]);
+            expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(1), collection.at(3)]);
         });
     });
 
     describe('When getting single value', () => {
         it('should return it by id index', () => {
             const { collection, virtualCollection } = createFixture(generateTaskArray(10), {
-                grouping: [ assigneeGrouping ]
+                grouping: [assigneeGrouping]
             });
 
             const expectedModel = collection.at(0);
@@ -439,7 +465,7 @@ describe('VirtualCollection', () => {
     });
 
     describe('When removing item', () => {
-        it('should remove item with full reset', () => {
+        it('should remove item without reset and add', done => {
             const { collection, virtualCollection } = createFixture(generateTaskArray(3));
             const resetCallback = jasmine.createSpy('resetCallback');
             const addCallback = jasmine.createSpy('addCallback');
@@ -447,53 +473,64 @@ describe('VirtualCollection', () => {
             virtualCollection.on('reset', resetCallback);
             virtualCollection.on('add', addCallback);
             virtualCollection.on('remove', removeCallback);
-
-            collection.remove(collection.at(1));
-
-            expectToHaveSameMembers(virtualCollection.models, collection.models);
-            expect(resetCallback).toHaveBeenCalledTimes(1);
-            expect(addCallback).not.toHaveBeenCalled();
-            expect(removeCallback).not.toHaveBeenCalled();
-        });
-
-        it('should remove empty parent groups', () => {
-            const { collection, virtualCollection } = createFixture(generateTaskArray(3, n => ({
-                assignee: repository.users[n]
-            })), {
-                grouping: [ assigneeGrouping ]
+            virtualCollection.on('remove', () => {
+                expectToHaveSameMembers(virtualCollection.models, collection.models);
+                expect(addCallback).not.toHaveBeenCalled();
+                expect(resetCallback).not.toHaveBeenCalled();
+                done();
             });
 
-            collection.remove(collection.at(1));
-
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                virtualCollection.at(2),
-                collection.at(1)
-            ]);
+            collection.remove(collection.at(0));
         });
 
-        it('should not remove parent groups if it is not empty', () => {
-            const { collection, virtualCollection } = createFixture(generateTaskArray(4, n => ({
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ]
+        it('should remove empty parent groups', done => {
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(3, n => ({
+                    assignee: repository.users[n]
+                })),
+                {
+                    grouping: [assigneeGrouping]
+                }
+            );
+
+            virtualCollection.on('remove', () => {
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(0),
+                    virtualCollection.at(2),
+                    collection.at(1)
+                ]);
+                done();
             });
-
             collection.remove(collection.at(1));
+        });
 
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                collection.at(1),
-                virtualCollection.at(3),
-                collection.at(2)
-            ]);
+        it('should not remove parent groups if it is not empty', done => {
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(4, n => ({
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping]
+                }
+            );
+
+            virtualCollection.on('remove', () => {
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(0),
+                    collection.at(1),
+                    virtualCollection.at(3),
+                    collection.at(2)
+                ]);
+                done();
+            });
+            collection.remove(collection.at(1));
         });
     });
 
     describe('When adding item', () => {
-        it('should add item with full reset', () => {
+        it('should add item with without reset and remove', done => {
             const { collection, virtualCollection } = createFixture(generateTaskArray(3), { delayedAdd: false });
             const newTask = generateTask();
             const resetCallback = jasmine.createSpy('resetCallback');
@@ -502,48 +539,58 @@ describe('VirtualCollection', () => {
             virtualCollection.on('reset', resetCallback);
             virtualCollection.on('add', addCallback);
             virtualCollection.on('remove', removeCallback);
+            virtualCollection.on('add', () => {
+                expectToHaveSameMembers(virtualCollection.models, collection.models);
+                expect(resetCallback).not.toHaveBeenCalled();
+                expect(removeCallback).not.toHaveBeenCalled();
+                done();
+            });
 
             collection.add(newTask);
-
-            expectToHaveSameMembers(virtualCollection.models, collection.models);
-            expect(resetCallback).toHaveBeenCalledTimes(1);
-            expect(addCallback).not.toHaveBeenCalled();
-            expect(removeCallback).not.toHaveBeenCalled();
         });
 
-        it('should add missing parent groups', () => {
-            const { collection, virtualCollection } = createFixture(generateTaskArray(2, n => ({
-                assignee: repository.users[n]
-            })), {
-                grouping: [ assigneeGrouping ],
-                delayedAdd: false
-            });
+        it('should add missing parent groups', done => {
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(2, n => ({
+                    assignee: repository.users[n]
+                })),
+                {
+                    grouping: [assigneeGrouping],
+                    delayedAdd: false
+                }
+            );
             const newTask = generateTask({ assignee: repository.users[2] });
 
-            collection.add(newTask);
+            virtualCollection.on('add', () => {
+                expectCollectionsToBeEqual(virtualCollection, [
+                    virtualCollection.at(0),
+                    collection.at(0),
+                    virtualCollection.at(2),
+                    collection.at(1),
+                    virtualCollection.at(4),
+                    collection.at(2)
+                ]);
+                done();
+            });
 
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(0),
-                virtualCollection.at(2),
-                collection.at(1),
-                virtualCollection.at(4),
-                collection.at(2)
-            ]);
+            collection.add(newTask);
         });
 
         it('should add item at exact position', () => {
             const count = 4;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`,
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ],
-                comparator(model) {
-                    return model.get('title');
-                },
-                delayedAdd: false
-            });
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`,
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping],
+                    comparator(model) {
+                        return model.get('title');
+                    },
+                    delayedAdd: false
+                }
+            );
 
             const newTask = generateTask({
                 assignee: repository.users[0],
@@ -564,16 +611,19 @@ describe('VirtualCollection', () => {
 
         it('should update internal index while adding item at exact position', () => {
             const count = 4;
-            const { collection, virtualCollection } = createFixture(generateTaskArray(count, n => ({
-                title: `synthetic title ${count - n}`,
-                assignee: repository.users[n % 2]
-            })), {
-                grouping: [ assigneeGrouping ],
-                comparator(model) {
-                    return model.get('title');
-                },
-                delayedAdd: false
-            });
+            const { collection, virtualCollection } = createFixture(
+                generateTaskArray(count, n => ({
+                    title: `synthetic title ${count - n}`,
+                    assignee: repository.users[n % 2]
+                })),
+                {
+                    grouping: [assigneeGrouping],
+                    comparator(model) {
+                        return model.get('title');
+                    },
+                    delayedAdd: false
+                }
+            );
 
             const newTask = generateTask({
                 assignee: repository.users[0],

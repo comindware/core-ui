@@ -13,23 +13,25 @@ import factory from '../factory';
  * @param {Boolean} options.disableMultiSelection show or hide checkbox
  */
 
+const defaultOptions = {
+    isSliding: true
+};
+
 export default Marionette.Object.extend({
-    initialize(options) {
-        this.__createView(options);
+    initialize(options = {}) {
+        this.options = Object.assign({}, defaultOptions, options);
+        this.__createView(this.options);
     },
 
     __createView(options) {
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
         const collection = factory.createWrappedCollection(this.options);
 
-        if (options.showSelection) {
-            this.listenTo(collection, 'check:all check:some check:none', function() {
-                this.__updateActions(allToolbarActions, collection);
-            });
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection));
+        if (this.options.showSelection) {
+            this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
         } else {
-            this.listenTo(collection, 'select:all select:some select:none', function() {
-                this.__updateActions(allToolbarActions, collection);
-            });
+            this.listenTo(this.collection, 'select:all select:some select:none', debounceUpdateAction);
         }
 
         this.view = new GridView(
@@ -40,12 +42,7 @@ export default Marionette.Object.extend({
             })
         );
 
-        this.listenTo(this.view, 'show', function() {
-            this.__updateActions(allToolbarActions, collection);
-        });
-        this.listenTo(this.view, 'search', function(text) {
-            this.__onSearch(text, options.columns, collection);
-        });
+        this.listenTo(this.view, 'search', text => this.__onSearch(text, options.columns, collection));
         this.listenTo(this.view, 'execute:action', this.__executeAction);
         this.listenTo(this.view, 'childview:click', this.__onItemClick);
         this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
@@ -137,10 +134,9 @@ export default Marionette.Object.extend({
     },
 
     __getSelectedItems(collection) {
-        if (this.options.showSelectColumn !== false) {
-            return Object.values(collection.checked);
-        }
-        return Object.values(collection.selected);
+        const selected = (this.options.showSelection ? collection.checked : collection.selected) || {};
+
+        return Object.values(selected);
     },
 
     __executeAction(model) {

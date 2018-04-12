@@ -16,8 +16,9 @@ export default Marionette.LayoutView.extend({
         this.popupMenu = this.__createDropdownActionsView(this.menuItemsCollection);
         this.listenTo(this.toolbarActions, 'actionSelected', action => this.trigger('command:execute', action));
         this.listenTo(this.popupMenu, 'execute', (action, model) => this.trigger('command:execute', model));
-        this.listenTo(Core.services.GlobalEventService, 'window:resize', this.rebuildView);
-        this.listenTo(this.allItemsCollection, 'change reset', this.rebuildView);
+        const debounceRebuild = _.debounce(() => this.rebuildView(), 100);
+        this.listenTo(Core.services.GlobalEventService, 'window:resize', debounceRebuild);
+        this.listenTo(this.allItemsCollection, 'change add remove reset', debounceRebuild);
     },
 
     className: 'js-toolbar-actions toolbar-container',

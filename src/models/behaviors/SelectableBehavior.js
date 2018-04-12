@@ -237,7 +237,7 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 // Calculate the number of selected items in a collection
 // and update the collection with that length. Trigger events
 // from the collection based on the number of selected items.
-const calculateSelectedLength = function(collection) {
+const calculateSelectedLength = _.debounce((collection) => {
     collection.selectedLength = _.filter(collection.models, model => model.selected).length;
 
     const selectedLength = collection.selectedLength;
@@ -256,7 +256,7 @@ const calculateSelectedLength = function(collection) {
     if (selectedLength > 0 && selectedLength < length) {
         collection.trigger('select:some', collection);
     }
-};
+}, 100);
 
 export default SelectableBehavior;
 export var Selectable = SelectableBehavior.Selectable;

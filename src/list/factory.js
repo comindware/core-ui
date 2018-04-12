@@ -64,7 +64,13 @@ const factory = {
         }
         helpers.ensureOption(options, 'listViewOptions.childHeight');
 
-        const collection = factory.createWrappedCollection(Object.assign({}, { collection: options.collection }, options.collectionOptions));
+        const collection = factory.createWrappedCollection(Object.assign(
+            {},
+            {
+                collection: options.collection,
+                isSliding: true
+            },
+            options.collectionOptions));
 
         const listViewOptions = _.extend(
             {
@@ -111,6 +117,7 @@ const factory = {
         if (!options.gridViewOptions.useDefaultRowView) {
             helpers.ensureOption(options, 'gridViewOptions.childView');
         }
+        options.isSliding = true;
 
         const collection = factory.createWrappedCollection(options);
 
@@ -160,7 +167,8 @@ const factory = {
             childrenAttribute: options.gridViewOptions.childrenAttribute,
             selectableBehavior: options.gridViewOptions.selectableBehavior,
             isTree: options.gridViewOptions.isTree,
-            expandOnShow: options.gridViewOptions.expandOnShow
+            expandOnShow: options.gridViewOptions.expandOnShow,
+            isSliding: true
         });
 
         const gridViewOptions = Object.assign(

@@ -4,7 +4,7 @@ import CanvasView from 'demoPage/views/CanvasView';
 export default () => {
     // 1. Get some data
     const dataArray = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 1000; i++) {
         dataArray.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -31,8 +31,6 @@ export default () => {
             type: 'Text',
             title: 'TextCell',
             required: true,
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
             sorting: 'asc',
             editable: true
         },
@@ -41,8 +39,6 @@ export default () => {
             type: 'Number',
             title: 'Number Cell',
             getReadonly: model => model.get('numberCell') % 2,
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell'),
             editable: true
         },
         {
@@ -50,32 +46,24 @@ export default () => {
             type: 'DateTime',
             title: 'DateTime Cell',
             getHidden: model => model.get('numberCell') % 2,
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Asc, 'dateTimeCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.dateComparator2Desc, 'dateTimeCell'),
             editable: true
         },
         {
             key: 'durationCell',
             type: 'Duration',
             title: 'Duration Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Asc, 'durationCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.durationComparator2Desc, 'durationCell'),
             editable: true
         },
         {
             key: 'booleanCell',
             type: 'Boolean',
             title: 'Boolean Cell',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'booleanCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'booleanCell'),
             editable: true
         },
         {
             key: 'documentCell',
             type: 'Document',
             title: 'Document',
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'documentCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'documentCell'),
             editable: true
         },
         {
@@ -83,8 +71,6 @@ export default () => {
             type: 'Datalist',
             title: 'Reference Cell',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
-            sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Asc, 'referenceCell'),
-            sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.booleanComparator2Desc, 'referenceCell'),
             editable: true
         }
     ];

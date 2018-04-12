@@ -19,7 +19,7 @@ export default function() {
 
     // 3. Get some data (inline or by collection.fetch)
     const collection = new ListItemCollection();
-    collection.reset(_.times(1000, i => ({
+    collection.reset(_.times(10000, i => ({
         id: i + 1,
         title: `My Task ${i + 1}`
     })));
