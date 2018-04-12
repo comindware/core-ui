@@ -23,7 +23,7 @@ export default function() {
     });
 
     // 3. Get some data (inline or by collection.fetch)
-    const collection = new ListItemCollection();
+    const collection = new ListItemCollection(undefined, { isSliding: true });
     collection.reset(_.times(1000, i => ({
         id: i + 1,
         title: `My Task ${i + 1}`

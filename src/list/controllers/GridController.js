@@ -108,7 +108,7 @@ export default Marionette.Object.extend({
         if (!this.options.excludeActions) {
             toolbarActions = meta.defaultActions;
         } else if (this.options.excludeActions !== 'all') {
-            toolbarActions = this.actions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
+            toolbarActions = meta.defaultActions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
         }
         if (this.options.additionalActions) {
             toolbarActions = toolbarActions.concat(this.options.additionalActions);
