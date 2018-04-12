@@ -1,6 +1,6 @@
-// @flow
 import LocalizationService from '../../services/LocalizationService';
 import BaseItemEditorView from './base/BaseItemEditorView';
+import template from './templates/textEditor.hbs';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapText from './iconsWraps/iconWrapText.html';
@@ -34,6 +34,9 @@ const defaultOptions = () => ({
  *     <li><code>'blur'</code> - при потери фокуса.</li></ul>
  * @param {String} [options.emptyPlaceholder='Field is empty'] Текст placeholder.
  * @param {String} [options.mask=null] Если установлено, строка используется как опция <code>mask</code> плагина
+ * [jquery.inputmask](https://github.com/RobinHerbots/jquery.inputmask).
+ * @param {String} [options.maskPlaceholder='_'] При установленной опции <code>mask</code>, используется как опция placeholder плагина.
+ * @param {Object} [options.maskOptions={}] При установленной опции <code>mask</code>, используется для передачи дополнительных опций плагина.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
@@ -45,21 +48,31 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         this.placeholder = this.options.emptyPlaceholder;
     },
 
-    className: 'editor input input_text js-input',
-
-    tagName: 'input',
-
-    attributes() {
-        return {
-            type: 'text',
-            placeholder: this.model && this.model.get('placeholder'),
-            maxLength: (this.model && this.model.get('maxLength')) || null,
-            title: this.model && this.model.get('title'),
-            id: this.model && this.model.get('fieldId')
-        };
+    onShow() {
+        if (this.options.mask) {
+            this.ui.input.inputmask(
+                Object.assign(
+                    {
+                        mask: this.options.mask,
+                        placeholder: this.options.maskPlaceholder,
+                        autoUnmask: true
+                    },
+                    this.options.maskOptions || {}
+                )
+            );
+        }
     },
 
-    template: false,
+    focusElement: '.js-input',
+
+    ui: {
+        input: '.js-input',
+        clearButton: '.js-clear-button'
+    },
+
+    className: 'editor',
+
+    template: Handlebars.compile(template),
 
     templateHelpers() {
         return _.extend(this.options, {
@@ -68,22 +81,23 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     events: {
-        keyup: '__keyup',
-        change: '__change',
+        'keyup @ui.input': '__keyup',
+        'change @ui.input': '__change',
+        'click @ui.clearButton': '__clear',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave'
     },
 
     __keyup() {
         if (this.options.changeMode === changeMode.keydown) {
-            this.__value(this.$el.val(), false, true);
+            this.__value(this.ui.input.val(), false, true);
         }
 
         this.trigger('keyup', this);
     },
 
     __change() {
-        this.__value(this.$el.val(), false, true);
+        this.__value(this.ui.input.val(), false, true);
     },
 
     __clear() {
@@ -92,11 +106,11 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         return false;
     },
 
-    setValue(value: string) {
+    setValue(value) {
         this.__value(value, true, false);
     },
 
-    setPermissions(enabled: Boolean, readonly: Boolean) {
+    setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
     },
@@ -108,67 +122,67 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
             this.placeholder = this.options.emptyPlaceholder;
         }
 
-        this.$el.prop('placeholder', this.placeholder);
+        this.ui.input.prop('placeholder', this.placeholder);
     },
 
     __setEnabled(enabled) {
         BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
-        this.$el.prop('disabled', !enabled);
+        this.ui.input.prop('disabled', !enabled);
     },
 
     __setReadonly(readonly) {
         BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
-
         if (this.getEnabled()) {
-            this.el.setAttribute('readonly', readonly);
-            this.el.setAttribute('tabindex', readonly ? -1 : 0);
+            this.ui.input.prop('readonly', readonly);
+            this.ui.input.prop('tabindex', readonly ? -1 : 0);
         }
     },
 
     onRender() {
         const value = this.getValue() || '';
-        this.$el.val(value);
+        this.ui.input.val(value);
         if (this.options.showTitle) {
-            this.$el.prop('title', value);
+            this.ui.input.prop('title', value);
         }
     },
 
-    __value(value: string, updateUi: Boolean, triggerChange: Boolean) {
+    __value(value, updateUi, triggerChange) {
         if (this.value === value) {
             return;
         }
         this.value = value;
 
         if (this.getOption('showTitle')) {
-            this.$el.prop('title', value);
+            this.ui.input.prop('title', value);
         }
         if (updateUi) {
-            this.$el.val(value);
+            this.ui.input.val(value);
         }
         if (triggerChange) {
             this.__triggerChange();
         }
     },
 
+    /**
+     * Focuses the editor's input and selects all the text in it.
+     * */
     select() {
-        this.$el.select();
+        this.ui.input.select();
     },
 
     deselect() {
-        this.$el.deselect();
+        this.ui.input.deselect();
     },
 
     __onMouseenter() {
         if (this.options.allowEmptyValue) {
-            this.el.insertAdjacentHTML('afterend', this.value ? iconWrapRemove : iconWrapText);
-            this.$el.closest('.js-clear-button').on('click', this.__clear());
+            this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
         }
     },
 
     __onMouseleave() {
         if (this.options.allowEmptyValue) {
-            this.el.parentElement.removeChild(this.el.parentElement.lastElementChild);
-            this.$el.closest('.js-clear-button').off('click', this.__clear());
+            this.el.lastElementChild.remove();
         }
     }
 }));
