@@ -10,6 +10,13 @@ export default Marionette.CollectionView.extend({
 
     childView: SelectionCellView,
 
+    showCollection() {
+        const models = this.collection.visibleModels;
+        models.forEach((child, index) => {
+            this.addChild(child, SelectionCellView, index);
+        });
+    },
+
     __updateHeight(height) {
         this.$el.height(height);
     }
