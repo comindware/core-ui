@@ -88,11 +88,14 @@ const ListView = Marionette.CompositeView.extend({
             position: 0
         };
 
+        if (this.collection.getState().position !== 0) {
+            this.collection.updatePosition(0);
+        }
+
         const debouncedHandleResize = _.debounce(() => this.handleResize(), 100);
         this.listenTo(GlobalEventService, 'resize', debouncedHandleResize);
-        this.parentCollection = this.collection;
         this.listenTo(this.collection.parentCollection, 'add remove reset ', debouncedHandleResize);
-        this.listenTo(this.collection, 'add remove reset ', debouncedHandleResize);
+        // this.on('render', this.__onRender);
     },
 
     regions: {
@@ -114,12 +117,12 @@ const ListView = Marionette.CompositeView.extend({
 
     template: Handlebars.compile(template),
 
-    onRender() {
+    onAttach() {
         this.handleResize();
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
-        this.listenTo(this.parentCollection, 'update:child:top', model => this.__updateChildTop(this.children.findByModel(model)));
+        this.listenTo(this.collection, 'update:child:top', model => this.__updateChildTop(this.children.findByModel(model)));
     },
 
     showCollection() {
@@ -172,7 +175,7 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     end(e) {
-        this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
+        this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
     },
 
     __handleKeydown(e) {
@@ -180,7 +183,7 @@ const ListView = Marionette.CompositeView.extend({
         if (e.target.tagName === 'INPUT') {
             return;
         }
-        const selectedModels = this.parentCollection.selected instanceof Backbone.Model ? [this.parentCollection.selected] : Object.values(this.parentCollection.selected || {});
+        const selectedModels = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
         switch (event.keyCode) {
             case keyCode.UP:
                 this.moveCursorBy(-1, e.shiftKey);
@@ -222,7 +225,7 @@ const ListView = Marionette.CompositeView.extend({
                 this.__moveCursorTo(0, e.shiftKey);
                 return false;
             case keyCode.END:
-                this.__moveCursorTo(this.parentCollection.length - 1, e.shiftKey);
+                this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
                 return false;
             default:
                 break;
@@ -239,9 +242,9 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     __moveCursorTo(newCursorIndex, shiftPressed) {
-        const cid = this.parentCollection.cursorCid;
+        const cid = this.collection.cursorCid;
         let index = 0;
-        this.parentCollection.find((x, i) => {
+        this.collection.find((x, i) => {
             if (x.cid === cid) {
                 index = i;
                 return true;
@@ -251,10 +254,10 @@ const ListView = Marionette.CompositeView.extend({
 
         const nextIndex = this.__normalizeCollectionIndex(newCursorIndex);
         if (nextIndex !== index) {
-            const model = this.parentCollection.at(nextIndex);
-            const selectFn = this.parentCollection.selectSmart || this.parentCollection.select;
+            const model = this.collection.at(nextIndex);
+            const selectFn = this.collection.selectSmart || this.collection.select;
             if (selectFn) {
-                selectFn.call(this.parentCollection, model, false, shiftPressed);
+                selectFn.call(this.collection, model, false, shiftPressed);
             }
             this.scrollTo(nextIndex);
         }
@@ -262,9 +265,9 @@ const ListView = Marionette.CompositeView.extend({
 
     // Move the cursor to a new position [cursorIndex + positionDelta] (like when user changes selected item using keyboard)
     moveCursorBy(cursorIndexDelta, shiftPressed) {
-        const cid = this.parentCollection.cursorCid;
+        const cid = this.collection.cursorCid;
         let index = 0;
-        this.parentCollection.find((x, i) => {
+        this.collection.find((x, i) => {
             if (x.cid === cid) {
                 index = i;
                 return true;
@@ -274,10 +277,10 @@ const ListView = Marionette.CompositeView.extend({
 
         const nextIndex = this.__normalizeCollectionIndex(index + cursorIndexDelta);
         if (nextIndex !== index) {
-            const model = this.parentCollection.at(nextIndex);
-            const selectFn = this.parentCollection.selectSmart || this.parentCollection.select;
+            const model = this.collection.at(nextIndex);
+            const selectFn = this.collection.selectSmart || this.collection.select;
             if (selectFn) {
-                selectFn.call(this.parentCollection, model, false, shiftPressed, this.getOption('selectOnCursor'));
+                selectFn.call(this.collection, model, false, shiftPressed, this.getOption('selectOnCursor'));
             }
 
             this.scrollTo(nextIndex);
@@ -295,17 +298,17 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     __normalizePosition(position) {
-        const maxPos = Math.max(0, this.parentCollection.length - this.state.visibleCollectionSize);
+        const maxPos = Math.max(0, this.collection.length - this.state.visibleCollectionSize);
         return Math.max(0, Math.min(maxPos, position - config.VISIBLE_COLLECTION_RESERVE / 2));
     },
 
     // normalized the index so that it fits in range [0, this.collection.length - 1]
     __normalizeCollectionIndex(index) {
-        return Math.max(0, Math.min(this.parentCollection.length - 1, index));
+        return Math.max(0, Math.min(this.collection.length - 1, index));
     },
 
     __onScroll() {
-        if (this.state.viewportHeight === undefined || this.parentCollection.length <= this.state.viewportHeight || this.internalScroll) {
+        if (this.state.viewportHeight === undefined || this.collection.length <= this.state.viewportHeight || this.internalScroll) {
             return;
         }
         const newPosition = Math.max(0, Math.floor(this.el.scrollTop / this.childHeight));
@@ -328,7 +331,7 @@ const ListView = Marionette.CompositeView.extend({
         if (triggerEvents) {
             this.internalScroll = true;
             const scrollTop
-                = Math.max(0, newPosition > (this.parentCollection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
+                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
                 * this.childHeight;
             this.el.scrollTop = scrollTop;
             _.delay(() => (this.internalScroll = false), 100);
@@ -362,7 +365,7 @@ const ListView = Marionette.CompositeView.extend({
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(elementHeight, window.innerHeight) / this.childHeight));
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
-        const allItemsHeight = this.state.allItemsHeight = this.childHeight * this.parentCollection.length;
+        const allItemsHeight = this.state.allItemsHeight = this.childHeight * this.collection.length;
 
         if (allItemsHeight !== oldAllItemsHeight) {
             this.ui.visibleCollection.height(allItemsHeight);
@@ -406,7 +409,7 @@ const ListView = Marionette.CompositeView.extend({
                 adjustedElementHeight = contentHeight || defaultOptions.defaultElHeight;
             }
         } else {
-            const computedViewportHeight = Math.min(this.maxRows, this.parentCollection.length);
+            const computedViewportHeight = Math.min(this.maxRows, this.collection.length);
             let minHeight = 0;
             let outerBoxAdjustments = 0;
 
@@ -431,7 +434,7 @@ const ListView = Marionette.CompositeView.extend({
         }
         requestAnimationFrame(() => {
             const childModel = child.model;
-            const top = `${this.parentCollection.indexOf(childModel) * child.el.offsetHeight}px`;
+            const top = `${this.collection.indexOf(childModel) * child.el.offsetHeight}px`;
             if (child.el.style.top === top) {
                 return;
             }
@@ -441,14 +444,14 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     __toggleCollapseAll(collapsed) {
-        this.__updateTreeCollapse(this.parentCollection, collapsed);
+        this.__updateTreeCollapse(this.collection, collapsed);
         //todo: find better way to rebuild models
-        if (this.parentCollection.length) {
-            const firstModel = this.parentCollection.at(0);
+        if (this.collection.length) {
+            const firstModel = this.collection.at(0);
             if (collapsed) {
-                this.parentCollection.collapse(firstModel);
+                this.collection.collapse(firstModel);
             } else {
-                this.parentCollection.expand(firstModel);
+                this.collection.expand(firstModel);
             }
         }
 

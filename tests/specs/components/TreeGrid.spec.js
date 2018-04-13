@@ -99,7 +99,7 @@ describe('Components', () => {
 
     describe('EditableGrid', () => {
         it('should initialize', function () {
-            const gridController = core.list.factory.createNativeGrid({
+            const gridController = core.list.factory.createDefaultGrid({
                 gridViewOptions: {
                     columns,
                     selectableBehavior: 'multi',
