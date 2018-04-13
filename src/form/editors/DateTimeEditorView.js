@@ -112,6 +112,12 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.options.showTitle) {
             this.__updateTitle();
         }
+        if (this.options.showDate === false) {
+            this.ui.dateInput.hide();
+        }
+        if (this.options.showTime === false) {
+            this.ui.timeInput.hide();
+        }
         this.__updateDisplayValue();
     },
 
