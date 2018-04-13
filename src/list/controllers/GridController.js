@@ -28,10 +28,13 @@ export default Marionette.Object.extend({
         const collection = factory.createWrappedCollection(this.options);
 
         const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection));
-        if (this.options.showSelection) {
-            this.listenTo(this.collection, 'check:all check:some check:none', debounceUpdateAction);
-        } else {
-            this.listenTo(this.collection, 'select:all select:some select:none', debounceUpdateAction);
+        this.__updateActions(allToolbarActions, collection);
+        if (this.options.showToolbar) {
+            if (this.options.showSelection) {
+                this.listenTo(collection, 'check:all check:some check:none', debounceUpdateAction);
+            } else {
+                this.listenTo(collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
+            }
         }
 
         this.view = new GridView(
@@ -43,7 +46,7 @@ export default Marionette.Object.extend({
         );
 
         this.listenTo(this.view, 'search', text => this.__onSearch(text, options.columns, collection));
-        this.listenTo(this.view, 'execute:action', this.__executeAction);
+        this.listenTo(this.view, 'execute:action', model => this.__executeAction(model, collection));
         this.listenTo(this.view, 'childview:click', this.__onItemClick);
         this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
     },
@@ -117,16 +120,16 @@ export default Marionette.Object.extend({
     },
 
     __updateActions(allToolbarActions, collection) {
-        const checkedLength = this.__getSelectedItems(collection).length;
+        const selected = this.__getSelectedItems(collection).length;
 
         allToolbarActions.filter(action => {
             switch (action.get('contextType')) {
                 case 'void':
                     return true;
                 case 'one':
-                    return checkedLength === 1;
+                    return selected === 1;
                 case 'any':
-                    return checkedLength;
+                    return selected;
                 default:
                     return true;
             }
@@ -135,11 +138,14 @@ export default Marionette.Object.extend({
 
     __getSelectedItems(collection) {
         const selected = (this.options.showSelection ? collection.checked : collection.selected) || {};
-
+        if (selected instanceof Backbone.Model) {
+            return [ selected ];
+        }
         return Object.values(selected);
     },
 
-    __executeAction(model) {
+    __executeAction(model, collection) {
+        const selected = this.__getSelectedItems(collection);
         switch (model.get('id')) {
             case 'delete':
                 this.__confirmUserAction(
@@ -149,7 +155,7 @@ export default Marionette.Object.extend({
                     Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
-                        this.__triggerAction(model);
+                        this.__triggerAction(model, selected);
                     }
                 });
                 break;
@@ -161,7 +167,7 @@ export default Marionette.Object.extend({
                     Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
-                        this.__triggerAction(model);
+                        this.__triggerAction(model, selected);
                     }
                 });
                 break;
@@ -173,13 +179,13 @@ export default Marionette.Object.extend({
                     Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
-                        this.__triggerAction(model);
+                        this.__triggerAction(model, selected);
                     }
                 });
                 break;
             case 'addNew':
             default:
-                this.__triggerAction(model);
+                this.__triggerAction(model, selected);
                 break;
         }
     },
@@ -188,8 +194,8 @@ export default Marionette.Object.extend({
         return Core.services.MessageService.showMessageDialog(text || '', title || '', [{ id: true, text: yesButtonText || 'Yes' }, { id: false, text: noButtonText || 'No' }]);
     },
 
-    __triggerAction(model) {
-        this.trigger('execute', model, this.__getSelectedItems());
+    __triggerAction(model, selected) {
+        this.trigger('execute', model, selected);
     },
 
     __getColumns() {
@@ -205,11 +211,11 @@ export default Marionette.Object.extend({
         }));
     },
 
-    __onItemClick(model) {
+    __onItemClick(childView, model) {
         this.trigger('click', model);
     },
 
-    __onItemDblClick(model) {
+    __onItemDblClick(childView, model) {
         this.trigger('dblclick', model);
     }
 });
