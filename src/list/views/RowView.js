@@ -1,7 +1,4 @@
 //@flow
-
-import GridItemBehavior from '../models/behaviors/GridItemBehavior';
-import CollapsibleBehavior from '../../models/behaviors/CollapsibleBehavior';
 import CellViewFactory from '../CellViewFactory';
 
 const classes = {
