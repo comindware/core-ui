@@ -57,7 +57,7 @@ const factory = {
                 result = factory.getDocumentCellView();
                 break;
             default:
-                helpers.throwNotSupportedError(`Data type${type}is not supported`);
+                result = factory.getHtmlCellView();
                 break;
         }
 
@@ -152,18 +152,23 @@ const factory = {
     },
 
     __getSimpleView(simpleTemplate, extention) {
-        return Marionette.ItemView.extend(Object.assign({
-            template: Handlebars.compile(simpleTemplate),
-            modelEvents: {
-                'change:highlightedFragment': '__handleHighlightedFragmentChange',
-                highlighted: '__handleHighlightedFragmentChange',
-                unhighlighted: '__handleHighlightedFragmentChange'
-            },
-            __handleHighlightedFragmentChange() {
-                this.render();
-            },
-            className: 'grid-cell'
-        }, extention));
+        return Marionette.ItemView.extend(
+            Object.assign(
+                {
+                    template: Handlebars.compile(simpleTemplate),
+                    modelEvents: {
+                        'change:highlightedFragment': '__handleHighlightedFragmentChange',
+                        highlighted: '__handleHighlightedFragmentChange',
+                        unhighlighted: '__handleHighlightedFragmentChange'
+                    },
+                    __handleHighlightedFragmentChange() {
+                        this.render();
+                    },
+                    className: 'grid-cell'
+                },
+                extention
+            )
+        );
     },
 
     __getAccountView() {
@@ -253,6 +258,17 @@ const factory = {
             },
             className: 'grid-cell'
         });
+    },
+
+    getHtmlCellView() {
+        const extention = {
+            templateHelpers() {
+                return {
+                    value: this.model.get(this.options.key)
+                };
+            }
+        };
+        return factory.__getSimpleView('{{{value}}}', extention);
     }
 };
 export default factory;

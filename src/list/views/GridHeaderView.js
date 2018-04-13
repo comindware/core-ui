@@ -236,8 +236,16 @@ const GridHeaderView = Marionette.ItemView.extend({
     __setColumnWidth(index, width) {
         const style = this.styleSheet;
         const selector = `.${this.getOption('uniqueId')}-column${index}`;
-        const regexp = new RegExp(`${selector} { flex: [+, -]?\\S+\\.?\\S* 0 0; } `);
-        const newValue = `${selector} { flex: ${width}${width > 1 ? 'px' : ''} 0 0; } `;
+        const regexp = new RegExp(`${selector} { flex: 0 0 [+, -]?\\S+\\.?\\S*; } `);
+        let basis = 'auto';
+        if (width > 0) {
+            if (width < 1) {
+                basis = `${width * 100}%`;
+            } else {
+                basis = `${width}px`;
+            }
+        }
+        const newValue = `${selector} { flex: 0 0 ${basis}; } `;
 
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);
