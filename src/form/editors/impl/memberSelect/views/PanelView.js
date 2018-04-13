@@ -46,7 +46,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow() {
-        const result = list.factory.createDefaultList({
+        this.listView = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
                 childView: ListItemView,
@@ -62,10 +62,7 @@ export default Marionette.LayoutView.extend({
             }
         });
 
-        this.listView = result.listView;
-        this.eventAggregator = result.eventAggregator;
-
-        this.listRegion.show(result.listView);
+        this.listRegion.show(this.listView);
 
         this.ui.input.focus();
         this.__updateFilter();

@@ -56,7 +56,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow() {
-        const result = list.factory.createDefaultList({
+        this.listView = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
                 childView: this.options.listItemView,
@@ -72,16 +72,13 @@ export default Marionette.LayoutView.extend({
             }
         });
 
-        this.listView = result.listView;
-        this.eventAggregator = result.eventAggregator;
-
         if (this.showAddNewButton) {
             this.$el.addClass('dd-list_reference-button');
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
             this.addNewButtonRegion.show(addNewButton);
         }
 
-        this.listRegion.show(result.listView);
+        this.listRegion.show(this.listView);
 
         if (this.getOption('hideSearchBar')) {
             this.ui.searchBarContainer.hide();

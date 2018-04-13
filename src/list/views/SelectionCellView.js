@@ -48,7 +48,7 @@ export default Marionette.ItemView.extend({
     },
 
     __updateTop(top) {
-        this.el.style.top = top;
+        requestAnimationFrame(() => this.el.style.top = top);
     },
 
     __handleSelection() {

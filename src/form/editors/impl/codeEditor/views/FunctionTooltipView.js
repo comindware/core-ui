@@ -32,7 +32,7 @@ export default Marionette.LayoutView.extend({
                 height: 'auto',
                 maxRows: FUNCTIONS_MAX_ROWS
             }
-        }).listView;
+        });
         this.functionOverloads.on('childview:selected', child => {
             this.functionParametersContainer.show(new FunctionParametersView(child.model));
         });

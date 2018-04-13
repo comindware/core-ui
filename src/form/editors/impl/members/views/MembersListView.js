@@ -25,7 +25,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow() {
-        this.listBundle = list.factory.createDefaultList({
+        this.listView = list.factory.createDefaultList({
             collection: this.collection,
             listViewOptions: {
                 childView: ListItemView,
@@ -41,20 +41,20 @@ export default Marionette.LayoutView.extend({
             }
         });
 
-        this.listenTo(this.listBundle.listView, 'childview:member:select', (view, model) => {
+        this.listenTo(this.listView, 'childview:member:select', (view, model) => {
             this.trigger('member:select', model);
         });
 
-        this.listRegion.show(this.listBundle.listView);
+        this.listRegion.show(this.listView);
     },
 
     handleCommand(command) {
         switch (command) {
             case 'up':
-                this.listBundle.listView.moveCursorBy(-1, false);
+                this.listView.moveCursorBy(-1, false);
                 break;
             case 'down':
-                this.listBundle.listView.moveCursorBy(1, false);
+                this.listView.moveCursorBy(1, false);
                 break;
             default:
                 break;

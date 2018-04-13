@@ -3,7 +3,6 @@ import VirtualCollection from '../collections/VirtualCollection';
 import ListView from './views/ListView';
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
-import EventAggregator from './EventAggregator';
 import GridView from './views/GridView';
 import GridColumnHeaderView from './views/GridColumnHeaderView';
 
@@ -50,11 +49,7 @@ const factory = {
      * @param {Object} options.collectionOptions Опции коллекции
      * @param {Object} options.listViewOptions Опции списка
      * @param {Backbone.View} options.listViewOptions.childView View элемента списка
-     * @returns {Object}
-     * @returns {Backbone.View} scrollbarView Скроллбар
-     * @returns {Backbone.View} gridView View-списка
-     * @returns {Backbone.Collection} collection Коллекция элементов списка
-     * @returns eventAggregator
+     * @returns {Backbone.View} listView View-списка
      * */
     createDefaultList(options) {
         helpers.ensureOption(options, 'collection');
@@ -64,13 +59,16 @@ const factory = {
         }
         helpers.ensureOption(options, 'listViewOptions.childHeight');
 
-        const collection = factory.createWrappedCollection(Object.assign(
-            {},
-            {
-                collection: options.collection,
-                isSliding: true
-            },
-            options.collectionOptions));
+        const collection = factory.createWrappedCollection(
+            Object.assign(
+                {},
+                {
+                    collection: options.collection,
+                    isSliding: true
+                },
+                options.collectionOptions
+            )
+        );
 
         const listViewOptions = _.extend(
             {
@@ -79,72 +77,8 @@ const factory = {
             },
             options.listViewOptions
         );
-        const listView = new ListView(listViewOptions);
 
-        const eventAggregator = new EventAggregator({
-            views: [listView],
-            collection
-        });
-
-        return {
-            listView,
-            collection,
-            eventAggregator
-        };
-    },
-
-    /**
-     * @memberof module:core.list.factory
-     * @method createDefaultGrid
-     * @description Метод для создания grid'а
-     * @param {Object} options Constructor options
-     * @param {number} options.childHeight Высота строки
-     * @param {Backbone.View} options.childView View-строки списка
-     * @param {Array} options.collection Массив элементов списка
-     * @param {Object} options.collectionOptions Опции коллекции
-     * @param {Object} options.gridViewOptions Опции списка
-     * @param {Object} options.gridViewOptions.columns Колонки списка
-     * @returns {Object}
-     * @returns {Backbone.View} scrollbarView Скроллбар
-     * @returns {Backbone.View} gridView View-списка
-     * @returns {Backbone.Collection} collection Коллекция элементов списка
-     * @returns eventAggregator
-     * */
-    createDefaultGrid(options) {
-        helpers.ensureOption(options, 'collection');
-        helpers.ensureOption(options, 'gridViewOptions.columns');
-        helpers.ensureOption(options, 'gridViewOptions.childHeight');
-        if (!options.gridViewOptions.useDefaultRowView) {
-            helpers.ensureOption(options, 'gridViewOptions.childView');
-        }
-        options.isSliding = true;
-
-        const collection = factory.createWrappedCollection(options);
-
-        //noinspection JSUnresolvedVariable
-        const gridViewOptions = _.extend(
-            {
-                gridColumnHeaderView: GridColumnHeaderView,
-                collection,
-                emptyView: EmptyGridView,
-                emptyViewOptions: {
-                    text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
-                }
-            },
-            options.gridViewOptions
-        );
-        const gridView = new GridView(gridViewOptions);
-
-        const eventAggregator = new EventAggregator({
-            views: [gridView],
-            collection
-        });
-
-        return {
-            gridView,
-            collection,
-            eventAggregator
-        };
+        return new ListView(listViewOptions);
     },
 
     /**
@@ -161,7 +95,7 @@ const factory = {
      * @param {Function} [options.rowViewSelector] Функция для разрешения (resolve) View, используемого для отображения строки списка
      * @returns {Backbone.View} NativeGridView View-списка
      * */
-    createNativeGrid(options) {
+    createDefaultGrid(options) {
         const collection = createWrappedCollection({
             collection: options.collection,
             childrenAttribute: options.gridViewOptions.childrenAttribute,
@@ -176,9 +110,13 @@ const factory = {
                 collection,
                 onColumnSort: options.onColumnSort,
                 headerView: options.headerView,
-                rowView: options.rowView,
-                rowViewSelector: options.rowViewSelector,
-                emptyView: options.emptyView
+                childView: options.childView,
+                childViewSelector: options.childViewSelector,
+                gridColumnHeaderView: GridColumnHeaderView,
+                emptyView: EmptyGridView,
+                emptyViewOptions: {
+                    text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
+                }
             },
             options.gridViewOptions
         );
