@@ -22,7 +22,7 @@ export default Marionette.LayoutView.extend({
         this.reqres.reply('try:value:select', this.__proxyValueSelect, this);
     },
 
-    className: 'dd-list dd-list_reference',
+    className: 'dropdown__wrp dropdown__wrp_reference',
 
     template: Handlebars.compile(template),
 
@@ -60,7 +60,7 @@ export default Marionette.LayoutView.extend({
         });
 
         if (this.showAddNewButton) {
-            this.$el.addClass('dd-list_reference-button');
+            this.$el.addClass('dropdown__wrp_reference-button');
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
             this.addNewButtonRegion.show(addNewButton);
         }

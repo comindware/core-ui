@@ -698,7 +698,7 @@ input[type="checkbox"].checkbox {
 
 .bubbles__i {
     max-width: 100%;
-    padding: 1px 20px 1px 10px;
+    padding: 2px 20px 0 10px;
     line-height: 18px;
     display: inline-block;
     vertical-align: top;
@@ -712,7 +712,7 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles__i-edit-btn {
-    padding-right: 45px;
+    padding-right: 43px;
 }
 
 .bubbles__link {
@@ -1144,6 +1144,9 @@ input[type="color"], .colorpicker{
     overflow: hidden;
     width: 20px;
     height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
     visibility: hidden;
     transition: visibility .3s ease-in-out;
 
@@ -1151,14 +1154,17 @@ input[type="color"], .colorpicker{
 .editor_empty:hover .svg-icons-wrp__empty {
     visibility: visible;
 }
+.editor_readonly .svg-icons-wrp__empty,
+.editor_readonly:hover .svg-icons-wrp__empty,
+.editor_disabled .svg-icons-wrp__empty,
+.editor_disabled:hover .svg-icons-wrp__empty{
+    visibility: hidden;
+}
 
 .svg-icons-wrp__remove{
     overflow: hidden;
     width: 20px;
     height: 20px;
-    position: absolute;
-    left: 0;
-    top: 0;
     cursor: pointer;
     visibility: hidden;
     transition: visibility .3s ease-in-out;
@@ -1206,7 +1212,7 @@ svg.svg-icons{
     transform: translate(6px, 5px);
 }
 .svg-icons_remove-bubble{
-    transform: scale(.8) translate(4px, 4px);
+    transform: scale(0.9) translate(5px, 5px);
 }
 
 .svg-icons_date{
@@ -1222,15 +1228,34 @@ svg.svg-icons{
     transform: translate(2px, 1px);
 }
 .svg-icons_checked{
-    transform: scale(1.2) translate(1px, 4px);
+    transform: scale(1.2) translate(3px, 4px);
+    visibility: hidden;
 }
+.editor_checked .svg-icons_checked{
+    visibility: visible;
+    transform: scale(1.2) translate(3px, 4px);
+}
+.editor_checked .svg-icons_checked-reference{
+    transform: scale(1.1) translate(2px, 3px);
+}
+
 .svg-icons_multiselect{
     transform: scale(.9) translate(0, 1px)
 }
 
-.svg-icons_pencil{
-    margin-top: -2px;
+.svg-icons-wrp_edit-reference{
+    display: inline-block;
+    position: absolute;
+    top:0;
+    right: 18px;
+    z-index: 10;
+    cursor: pointer;
 }
+.editor_readonly .svg-icons-wrp_edit-reference,
+.editor_disabled .svg-icons-wrp_edit-reference{
+    display: none;
+}
+
 
 .d-svg-icons{
     fill: #8d8888;

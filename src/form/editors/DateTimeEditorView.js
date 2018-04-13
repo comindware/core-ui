@@ -348,7 +348,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(timeArray),
                 tagName: 'ul',
-                className: 'time-dropdown',
+                className: 'dropdown__wrp dropdown__wrp_time',
                 childEvents: {
                     select(view, time) {
                         this.trigger('select', time);
