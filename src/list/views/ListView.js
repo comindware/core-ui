@@ -114,13 +114,8 @@ const ListView = Marionette.CompositeView.extend({
 
     template: Handlebars.compile(template),
 
-    onAttach() {
-        // Updating viewportHeight and dom:refreshrendering subviews
-        //this.collection.updateWindowSize(1);
-        this.handleResize();
-    },
-
     onRender() {
+        this.handleResize();
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
@@ -342,7 +337,6 @@ const ListView = Marionette.CompositeView.extend({
         return newPosition;
     },
 
-    // Updates state.viewportHeight and visibleCollection.state.windowSize.
     handleResize() {
         if (this.isDestroyed) {
             return;
