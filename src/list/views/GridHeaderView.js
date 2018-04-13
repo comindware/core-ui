@@ -53,8 +53,7 @@ const GridHeaderView = Marionette.ItemView.extend({
     className: 'grid-header',
 
     ui: {
-        gridHeaderColumn: '.grid-header-column',
-        gridHeaderColumnContent: '.grid-header-column-content-view'
+        gridHeaderColumn: '.grid-header-column'
     },
 
     events: {
@@ -79,7 +78,7 @@ const GridHeaderView = Marionette.ItemView.extend({
         this.__columnEls = [];
 
         let isFirstChild = true;
-        this.ui.gridHeaderColumnContent.each((i, el) => {
+        this.ui.gridHeaderColumn.each((i, el) => {
             const column = this.columns[i];
             const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
                 title: column.title,
@@ -93,8 +92,6 @@ const GridHeaderView = Marionette.ItemView.extend({
                 view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button"></span>`);
                 isFirstChild = false;
             }
-        });
-        this.ui.gridHeaderColumn.each((i, el) => {
             el.classList.add(`${this.getOption('uniqueId')}-column${i}`);
         });
 
