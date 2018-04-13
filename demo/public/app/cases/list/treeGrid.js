@@ -81,7 +81,7 @@ export default function() {
     ];
 
     // 3. Create grid
-    const nativeGridView = core.list.factory.createNativeGrid({
+    const nativeGridView = core.list.factory.createDefaultGrid({
         gridViewOptions: {
             columns,
             selectableBehavior: 'multi',

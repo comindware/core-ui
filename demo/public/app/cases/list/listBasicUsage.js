@@ -25,7 +25,7 @@ export default function() {
     });
 
     // 5. At last, create list view bundle (ListView and ScrollbarView)
-    const bundle = core.list.factory.createDefaultList({
+    const listView = core.list.factory.createDefaultList({
         collection: data, // Take a note that in simple scenario you can pass in
         // a regular Backbone.Collection or even plain javascript array
         listViewOptions: {
@@ -36,6 +36,6 @@ export default function() {
 
     // 6. Show created views in corresponding regions
     return new ListCanvasView({
-        content: bundle.listView
+        content: listView
     });
 }

@@ -71,7 +71,9 @@ export default Marionette.LayoutView.extend({
         this.uniqueId = _.uniqueId('native-grid');
         this.styleSheet = document.createElement('style');
 
-        this.headerView = new GridHeaderView({
+        const HeaderView = this.options.headerView || GridHeaderView;
+
+        this.headerView = new HeaderView({
             columns: options.columns,
             gridEventAggregator: this,
             checkBoxPadding: options.checkBoxPadding || 0,
@@ -119,16 +121,18 @@ export default Marionette.LayoutView.extend({
             isTree: this.options.isTree
         });
 
-        this.selectionPanelView = new SelectionPanelView({
-            collection: this.listView.collection,
-            gridEventAggregator: this
-        });
+        if (this.options.showSelection) {
+            this.selectionPanelView = new SelectionPanelView({
+                collection: this.listView.collection,
+                gridEventAggregator: this
+            });
 
-        this.selectionHeaderView = new SelectionCellView({
-            collection: this.collection,
-            selectionType: 'all',
-            gridEventAggregator: this
-        });
+            this.selectionHeaderView = new SelectionCellView({
+                collection: this.collection,
+                selectionType: 'all',
+                gridEventAggregator: this
+            });
+        }
 
         this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
             if (eventName.startsWith(eventName, 'childview')) {

@@ -41,7 +41,7 @@ export default Marionette.LayoutView.extend({
         helpTextRegion: '.js-help-text-region'
     },
 
-    onShow() {
+    onRender() {
         this.editorRegion.show(this.editor);
         if (this.schema.helpText) {
             this.__viewModel = new Backbone.Model({

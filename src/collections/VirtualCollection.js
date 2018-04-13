@@ -587,6 +587,10 @@ const VirtualCollection = Backbone.Collection.extend(
         expand(model) {
             model.expand(true);
             this.__rebuildIndex();
+        },
+
+        getState() {
+            return this.state;
         }
     }
 );

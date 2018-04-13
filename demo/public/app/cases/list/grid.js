@@ -64,7 +64,7 @@ export default function() {
     collection.reset(dataArray);
 
     // 4. Create grid
-    const bundle = core.list.factory.createDefaultGrid({
+    const gridView = core.list.factory.createDefaultGrid({
         gridViewOptions: {
             columns,
             childHeight: 40,
@@ -75,6 +75,6 @@ export default function() {
 
     // 7. Show created views
     return new ListCanvasView({
-        content: bundle.gridView
+        content: gridView
     });
 }

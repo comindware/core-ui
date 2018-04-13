@@ -73,15 +73,7 @@ export default Marionette.LayoutView.extend({
             availableViewOptions.listViewOptions.childViewSelector = this.options.childViewSelector;
         }
         const availableList = Core.list.factory.createDefaultList(availableViewOptions);
-        this.availableItemsListRegion.show(availableList.listView);
-
-        if (this.eventAggregator.available) {
-            this.stopListening(this.eventAggregator.available);
-        }
-        this.eventAggregator.available = new Core.list.EventAggregator({
-            views: [availableList.scrollbarView, availableList.listView],
-            collection: this.model.get('available')
-        });
+        this.availableItemsListRegion.show(availableList);
         // Available search
         const availableSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
         this.availableSearchRegion.show(availableSearchView);
@@ -103,7 +95,7 @@ export default Marionette.LayoutView.extend({
                 maxRows: 10
             }
         });
-        this.selectedItemsListRegion.show(selectedList.listView);
+        this.selectedItemsListRegion.show(selectedList);
 
         // Selected search
         const selectedSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
@@ -125,14 +117,6 @@ export default Marionette.LayoutView.extend({
             this.selectedItemsToolbarRegion.show(selectedMembersToolbarView);
             this.listenTo(selectedMembersToolbarView, 'select', this.__onSelectedItemsSelect);
         }
-
-        if (this.eventAggregator.selected) {
-            this.stopListening(this.eventAggregator.selected);
-        }
-        this.eventAggregator.selected = new Core.list.EventAggregator({
-            views: [selectedList.scrollbarView, selectedList.listView],
-            collection: this.model.get('selected')
-        });
     },
 
     __moveRight() {

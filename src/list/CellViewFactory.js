@@ -1,23 +1,11 @@
 import { objectPropertyTypes } from '../Meta';
 import { helpers } from 'utils';
-import FieldView from '../form/fields/FieldView';
-import template from './templates/editableCellField.hbs';
+import EditableGridFieldView from './views/EditableGridFieldView';
 
 const factory = {
     getCellViewForColumn(column) {
         if (column.editable) {
-            return FieldView.extend({
-                template: Handlebars.compile(template),
-
-                className: 'editable-grid-field',
-
-                onRender() {
-                    this.editorRegion.show(this.editor);
-                    this.__rendered = true;
-                    this.setRequired(column.required);
-                    this.__updateEditorState(column.readonly, column.enabled);
-                }
-            });
+            return EditableGridFieldView;
         }
 
         return this.getCellViewByDataType(column.type);
