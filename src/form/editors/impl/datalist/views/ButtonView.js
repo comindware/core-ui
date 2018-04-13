@@ -12,7 +12,7 @@ const classes = {
 export default Marionette.CollectionView.extend({
     initialize(options) {
         this.reqres = options.reqres;
-        this.collection = this.model.get('selected');
+        this.collection = this.model.selected;
     },
 
     template: Handlebars.compile(template),
