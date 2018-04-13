@@ -167,7 +167,7 @@ describe('Editors', () => {
 
             view.focus();
 
-            expect(view.viewModel.get('panel').get('collection').toJSON()).toEqual(collectionData);
+            expect(view.viewModel.panel.get('collection').toJSON()).toEqual(collectionData);
         });
 
         it('should have collection matched it dynamic initial collection', () => {

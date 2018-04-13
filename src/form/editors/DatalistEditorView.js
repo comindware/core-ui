@@ -32,9 +32,9 @@ const defaultOptions = {
     listItemView: ReferenceListItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
+    collection: null,
     maxQuantitySelected: 1,
-    canDeleteItem: true,
-    collection: null
+    canDeleteItem: true
 };
 
 /**
