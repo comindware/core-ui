@@ -176,30 +176,13 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    /*
-     * Create the default field title (label text) from the key name.
-     * (Converts 'camelCase' to 'Camel Case')
-     */
-    __createDefaultTitle() {
-        let str = this.key;
-        if (!str) {
-            return '';
-        }
-
-        //Add spaces
-        str = str.replace(/([A-Z])/g, ' $1');
-        //Uppercase first character
-        str = str.replace(/^./, x => x.toUpperCase());
-        return str;
-    },
-
     __createEditor(options, fieldId, ConstructorFn) {
         this.editor = new ConstructorFn({
             schema: this.schema,
             field: this,
             key: options.key,
             model: this.model,
-            id: this.__createEditorId(fieldId),
+            id: this.__createEditorId(options.key),
             value: this.options.value,
             fieldId
         });
@@ -211,20 +194,15 @@ export default Marionette.LayoutView.extend({
         });
     },
 
-    __createEditorId() {
-        if (!this.key) {
+    __createEditorId(key) {
+        if (!key) {
             return null;
         }
 
-        let id = this.key;
-
-        //Replace periods with underscores
-        id = id.replace(/\./g, '_');
-        //Otherwise, if there is a model use it's CID to avoid conflicts when multiple forms are on the page
         if (this.model) {
-            return `${this.model.cid}_${id}`;
+            return `${this.model.cid}_${key}`;
         }
-        return id;
+        return key;
     },
 
     __checkUiReady() {
