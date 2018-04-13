@@ -32,9 +32,9 @@ const defaultOptions = {
     listItemView: ReferenceListItemView,
     showCheckboxes: false,
     textFilterDelay: 300,
+    collection: null,
     maxQuantitySelected: 1,
-    canDeleteItem: true,
-    collection: null
+    canDeleteItem: true
 };
 
 /**
@@ -59,12 +59,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         _.bindAll(this, '__getDisplayText');
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
+
         this.controller
             = this.options.controller
             || new StaticController({
                 collection: options.collection
             });
-        this.showAddNewButton = this.options.showAddNewButton;
 
         this.reqres.reply('bubble:delete', this.__onBubbleDelete, this);
         this.reqres.reply('bubble:delete:last', this.__onBubbleDeleteLast, this);
@@ -78,23 +78,24 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.reqres.reply('add:new:item', this.__onAddNewItem, this);
         this.reqres.reply('view:ready', this.__triggerReady, this);
 
+        this.panelCollection = new VirtualCollection(new ReferenceCollection(options.collection ? options.collection.toJSON() : []), { selectableBehavior: 'multi' });
+
         this.value = this.__adjustValue(this.value);
 
         const selectedModels = new Backbone.Collection(this.getValue(), {
             comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
         });
-        this.panelCollection = new VirtualCollection(new ReferenceCollection(options.collection ? options.collection.toJSON() : []), { selectableBehavior: 'multi' });
 
-        this.viewModel = new Backbone.Model({
-            button: new Backbone.Model({
+        this.viewModel = {
+            button: {
                 selected: selectedModels
-            }),
+            },
             panel: new Backbone.Model({
                 value: this.getValue(),
                 collection: this.panelCollection,
                 totalCount: this.controller.totalCount || 0
             })
-        });
+        };
 
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
@@ -113,8 +114,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     setValue(value): void {
         this.value = [];
         this.viewModel
-            .get('button')
-            .get('selected')
+            .button
+            .selected
             .reset();
         this.__value(value, false);
         delete this.fakeInputModel;
@@ -125,7 +126,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
-                model: this.viewModel.get('button'),
+                model: this.viewModel.button,
                 reqres: this.reqres,
                 getDisplayText: this.__getDisplayText,
                 showEditButton: this.options.showEditButton,
@@ -135,9 +136,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             },
             panelView: PanelView,
             panelViewOptions: {
-                model: this.viewModel.get('panel'),
+                model: this.viewModel.panel,
                 reqres: this.reqres,
-                showAddNewButton: this.showAddNewButton,
+                showAddNewButton: this.options.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
                 getDisplayText: this.__getDisplayText,
@@ -179,6 +180,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __adjustValue(value: DataValue): any {
+        if (typeof value === 'string' && value) {
+            return this.panelCollection.get(value) || [];
+        }
         if (_.isUndefined(value) || value === null) {
             return [];
         }
@@ -187,11 +191,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __value(value: DataValue, triggerChange: boolean): void {
         if (JSON.stringify(this.value) === JSON.stringify(value) || (_.isObject(value) && this.value.find(v => v.id === value.id))) {
-            this.viewModel.get('panel').set('value', this.value);
+            this.viewModel.panel.set('value', this.value);
             return;
         }
         const adjustedValue = this.__adjustValue(value);
-        const selectedModels = this.viewModel.get('button').get('selected');
+        const selectedModels = this.viewModel.button.selected;
 
         if (this.options.maxQuantitySelected === 1) {
             const firstModel = selectedModels.first();
@@ -203,7 +207,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             this.value = this.getValue().concat(adjustedValue);
         }
         selectedModels.add(value, { at: selectedModels.length - 1 });
-        this.viewModel.get('panel').set('value', this.value);
+        this.viewModel.panel.set('value', this.value);
 
         if (triggerChange) {
             this.__triggerChange();
@@ -245,7 +249,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const selectedItems = _.filter(this.viewModel.get('button').get('selected').models, model => model !== this.fakeInputModel);
+        const selectedItems = _.filter(this.viewModel.button.selected.models, model => model !== this.fakeInputModel);
 
         return this.getEnabled() && !this.getReadonly() && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
     },
@@ -265,7 +269,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         return this.controller.fetch(options).then(data => {
             if (this.text === text) {
                 this.panelCollection.reset(data.collection);
-                this.viewModel.get('panel').set('totalCount', data.totalCount);
+                this.viewModel.panel.set('totalCount', data.totalCount);
                 this.__tryPointFirstRow();
             }
         });
@@ -310,7 +314,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
         this.panelCollection.get(model.id) && this.panelCollection.get(model.id).deselect();
 
-        const selectedModels = this.viewModel.get('button').get('selected');
+        const selectedModels = this.viewModel.button.selected;
         selectedModels.remove(model);
 
         const selected = [].concat(this.getValue());
@@ -319,7 +323,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selected.splice(removingModelIndex, 1);
         }
         this.value = selected;
-        this.viewModel.get('panel').set('value', this.value);
+        this.viewModel.panel.set('value', this.value);
         this.__triggerChange();
 
         this.__updateFakeInputModel();
@@ -328,7 +332,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __updateFakeInputModel(): void {
-        const selectedModels = this.viewModel.get('button').get('selected');
+        const selectedModels = this.viewModel.button.selected;
 
         if (this.__canAddItem() && !this.fakeInputModel) {
             this.fakeInputModel = new FakeInputModel();
@@ -350,7 +354,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onBubbleDeleteLast(): void {
-        const selectedModels = this.viewModel.get('button').get('selected');
+        const selectedModels = this.viewModel.button.selected;
         const model = selectedModels.models[selectedModels.models.length - 2];
         this.__onBubbleDelete(model);
     },

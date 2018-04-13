@@ -1,4 +1,4 @@
-// @flow
+﻿// @flow
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 import 'spectrum-colorpicker';
@@ -35,11 +35,7 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
     className: 'editor editor_color',
 
     __changedHex() {
-        if (Core.services.MobileService.isIE) {
-            this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
-        } else {
-            this.ui.colorpicker.val(this.ui.hexcolor.val());
-        }
+        this.ui.colorpicker.spectrum('set', this.ui.hexcolor.val());
     },
 
     __changedColorPicker() {
@@ -51,7 +47,9 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
     },
 
     __clear() {
-        this.__value(null, true, true);
+        this.__value(null, false, true);
+        this.ui.hexcolor.val(null);
+        this.ui.colorpicker.spectrum('set', null);
         this.focus();
         return false;
     },
@@ -62,18 +60,27 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
 
     onShow() {
         const value = this.getValue() || '';
-        if (Core.services.MobileService.isIE) {
-            this.ui.colorpicker.spectrum({
-                color: value.toString(),
-                showInput: true,
-                showInitial: true,
-                preferredFormat: 'hex'
-            });
-            this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
-        } else {
-            this.ui.colorpicker.val(value);
-            this.ui.hexcolor.val(this.ui.colorpicker.val());
+        this.ui.colorpicker.spectrum({
+            color: value.toString(),
+            showInput: true,
+            allowEmpty: true,
+            showInitial: true,
+            preferredFormat: 'hex'
+        });
+        this.ui.hexcolor.val(this.ui.colorpicker.spectrum('get'));
+    },
+
+    __setReadonly(readonly) {
+        BaseItemEditorView.prototype.__setReadonly.call(this, readonly);
+        if (this.getEnabled() && this.getReadonly()) {
+            this.ui.colorpicker.spectrum('disable');
         }
+        this.ui.hexcolor.prop('readonly', readonly);
+    },
+
+    __setEnabled(enabled) {
+        BaseItemEditorView.prototype.__setEnabled.call(this, enabled);
+        this.ui.colorpicker.spectrum('enable');
     },
 
     __value(value: String, updateUi: Boolean, triggerChange: Boolean) {

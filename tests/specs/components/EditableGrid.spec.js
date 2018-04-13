@@ -8,7 +8,7 @@ describe('Components', () => {
     });
 
     const data = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 5000; i++) {
         data.push({
             textCell: `Text Cell ${i}`,
             numberCell: i + 1,
@@ -110,6 +110,67 @@ describe('Components', () => {
             this.rootRegion.show(gridController.view);
 
             expect(true).toBe(true);
+        });
+
+        it('should search when typing in search box', function (done) {
+            const collection = new Backbone.Collection(data);
+
+            const gridController = new core.list.controllers.GridController({
+                columns,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showSelection: true,
+                showHeader: false,
+                collection,
+                title: 'Editable grid'
+            });
+
+            this.rootRegion.show(gridController.view);
+
+            gridController.view.listView.collection.on('change', () => {
+                expect(gridController.view.listView.collection.length).toEqual(1111);
+                done();
+            });
+
+            const searchInput = document.getElementsByClassName('js-search-input')[0];
+
+            searchInput.value = 'Text Cell 1';
+
+            gridController.view.$(searchInput).trigger('keyup');
+        });
+
+        it('should update toolbar on row checkbox select', function (done) {
+            const collection = new Backbone.Collection(data);
+
+            const gridController = new core.list.controllers.GridController({
+                columns,
+                selectableBehavior: 'multi',
+                showToolbar: true,
+                showSearch: true,
+                showSelection: true,
+                showHeader: false,
+                collection,
+                title: 'Editable grid'
+            });
+
+            this.rootRegion.show(gridController.view);
+
+            const firstChechbox = gridController.view.$('.checkbox:eq(0)');
+
+            const observer = new MutationObserver(() => {
+                expect(firstChechbox[0].classList.contains('editor_checked')).toBe(true);
+                done();
+            });
+
+            observer.observe(firstChechbox[0], {
+                attributes: true,
+                attributeFilter: ['class'],
+                childList: false,
+                characterData: false
+            });
+
+            firstChechbox.click();
         });
     });
 });

@@ -8,6 +8,11 @@ export default {
             displayName: 'Components',
             groups: [
                 {
+                    id: 'Form',
+                    displayName: 'Form using form behaviour',
+                    description: 'Form using form behaviour'
+                },
+                {
                     id: 'TabLayout',
                     displayName: 'Tab Layout',
                     description: 'Tab Layout'

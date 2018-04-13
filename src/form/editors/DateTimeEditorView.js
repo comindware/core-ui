@@ -112,6 +112,12 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.options.showTitle) {
             this.__updateTitle();
         }
+        if (this.options.showDate === false) {
+            this.ui.dateInput.hide();
+        }
+        if (this.options.showTime === false) {
+            this.ui.timeInput.hide();
+        }
         this.__updateDisplayValue();
     },
 
@@ -157,16 +163,10 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     focusElement: null,
 
-    /**
-     * Sets the focus onto this editor.
-     */
     focus(): void {
         this.__dateFocus();
     },
 
-    /**
-     * Clears the focus.
-     */
     blur(): void {
         this.__dateBlur();
         this.__timeBlur();

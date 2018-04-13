@@ -10,7 +10,7 @@ export default function() {
     }));
 
     const model = new Backbone.Model({
-        dropdownValue: { name: 'Some large data', id: 667 }
+        dropdownValue: '120'
     });
 
     return new CanvasView({

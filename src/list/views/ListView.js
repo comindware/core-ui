@@ -375,7 +375,7 @@ const ListView = Marionette.CompositeView.extend({
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             }
-        };
+        }
 
         if (this.state.viewportHeight === oldViewportHeight) {
             return;

@@ -11,7 +11,7 @@ describe('Editors', () => {
 
     describe('TextEditorView', () => {
         const findInput = function(view) {
-            return view.$el;
+            return view.$('input');
         };
 
         it('should get focus when focus() is called', () => {
@@ -295,7 +295,7 @@ describe('Editors', () => {
             view.on('change', onChangeCallback);
 
             view.$el.trigger('mouseenter');
-            view.$el.closest('.js-clear-button').click();
+            view.$('.js-clear-button').click();
 
             const isEmpty = view.isEmptyValue();
             const input = findInput(view);
