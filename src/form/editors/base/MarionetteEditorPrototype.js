@@ -87,12 +87,15 @@ const onChange = function() {
 
 export default {
     create(viewClass: Marionette.ItemView | Marionette.LayoutView | Marionette.CollectionView | Marionette.ComsiteView) {
-        return /** @lends module:core.form.editors.base.BaseEditorView.prototype */ {
-            defaultValue: null,
+        return {
+            classes: {
+                disabled: 'editor_disabled',
+                readonly: 'editor_readonly',
+                hidden: 'editor_hidden',
+                FOCUSED: 'editor_focused',
+                EMPTY: 'editor_empty'
+            },
 
-            /**
-             * Indicates whether the editor has focus.
-             * */
             hasFocus: false,
 
             constructor(options: Object = {}) {
@@ -107,14 +110,12 @@ export default {
                 }
 
                 if (this.value === undefined) {
-                    this.value = this.defaultValue;
+                    this.value = null;
                 }
 
-                Object.assign(this, {
-                    key: options.key,
-                    form: options.form,
-                    field: options.field
-                });
+                this.key = options.key;
+                this.form = options.form;
+                this.field = options.field;
 
                 const schema = (this.schema = options.schema || {});
 
@@ -142,8 +143,6 @@ export default {
                     this.listenTo(this.model, `change:${this.key}`, this.updateValue);
                     this.listenTo(this.model, 'sync', this.updateValue);
                 }
-
-                this.classes = classes;
             },
 
             __updateEmpty() {
@@ -336,7 +335,7 @@ export default {
 
                 if (validators) {
                     //Run through validators until an error is found
-                    _.every(validators, validator => {
+                    validators.every(validator => {
                         error = getValidator(validator)(value, formValues);
                         return !error;
                     });

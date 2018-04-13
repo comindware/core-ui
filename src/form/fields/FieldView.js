@@ -179,7 +179,6 @@ export default Marionette.LayoutView.extend({
     __createEditor(options, fieldId, ConstructorFn) {
         this.editor = new ConstructorFn({
             schema: this.schema,
-            field: this,
             key: options.key,
             model: this.model,
             id: this.__createEditorId(options.key),
@@ -195,10 +194,6 @@ export default Marionette.LayoutView.extend({
     },
 
     __createEditorId(key) {
-        if (!key) {
-            return null;
-        }
-
         if (this.model) {
             return `${this.model.cid}_${key}`;
         }
