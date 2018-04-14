@@ -87,20 +87,21 @@ describe('Components', () => {
             expect(true).toBe(true);
         });
 
-        it('should correctly validate', function() {
+        it('should correctly use required validator', function() {
+            const model = new Backbone.Model({
+                1: null,
+                2: null,
+                3: null,
+                4: null,
+                5: null,
+                6: null,
+                7: null,
+                8: null,
+                9: null,
+                10: null
+            });
             const form = new core.layout.Form({
-                model: new Backbone.Model({
-                    1: 'bar',
-                    2: 123,
-                    3: 'foo',
-                    4: '2015-07-20T10:46:37Z',
-                    5: true,
-                    6: 'aaa',
-                    7: 456,
-                    8: '2015-07-20T10:46:37Z',
-                    9: 'dddddddddddddd',
-                    10: 789
-                }),
+                model,
                 schema: [
                     {
                         type: 'v-container',
@@ -109,16 +110,6 @@ describe('Components', () => {
                                 type: 'Text-editor',
                                 key: 1,
                                 validators: ['required']
-                            },
-                            {
-                                type: 'Text-editor',
-                                key: 11,
-                                validators: ['required', 'systemName']
-                            },
-                            {
-                                type: 'Text-editor',
-                                key: 12,
-                                validators: ['required', 'email']
                             },
                             {
                                 type: 'TextArea-editor',
@@ -182,9 +173,179 @@ describe('Components', () => {
             });
 
             this.rootRegion.show(form);
-            form.form.validate();
-            // assert
-            expect(true).toBe(true);
+
+            expect(Object.keys(form.form.validate()).length).toEqual(10);
+
+            model.set({
+                1: 'bar',
+                2: '123123',
+                3: 123,
+                4: '2015-07-20T10:46:37Z',
+                5: true,
+                6: 'aaa',
+                7: 456,
+                8: '2015-07-20T10:46:37Z',
+                9: 'dddddddddddddd',
+                10: 789
+            });
+
+            expect(form.form.validate()).toEqual(null);
+        });
+
+        it('should correctly use length validator', function() {
+            const model = new Backbone.Model({
+                1: null
+            });
+            const form = new core.layout.Form({
+                model,
+                schema: [
+                    {
+                        type: 'Datalist-editor',
+                        key: 1,
+                        validators: ['required', core.form.repository.validators.length({ min: 3, max: 3 })]
+                    }
+                ]
+            });
+
+            this.rootRegion.show(form);
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: [{ id: 1, name: 1 }, { id: 2, name: 2 }, { id: 3, name: 3 }]
+            });
+
+            expect(form.form.validate()).toEqual(null);
+        });
+
+        it('should correctly use password validator', function() {
+            const model = new Backbone.Model({
+                1: null
+            });
+            const form = new core.layout.Form({
+                model,
+                schema: [
+                    {
+                        type: 'v-container',
+                        items: [
+                            {
+                                type: 'Password-editor',
+                                key: 1,
+                                validators: ['required', 'password']
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            this.rootRegion.show(form);
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: '123'
+            });
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: '123456789'
+            });
+
+            expect(form.form.validate()).toEqual(null);
+        });
+
+        it('should correctly use system name validator', function() {
+            const model = new Backbone.Model({
+                1: null
+            });
+            const form = new core.layout.Form({
+                model,
+                schema: [
+                    {
+                        type: 'v-container',
+                        items: [
+                            {
+                                type: 'Text-editor',
+                                key: 1,
+                                validators: ['required', 'systemName']
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            this.rootRegion.show(form);
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: 'русский язык и пробелы'
+            });
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: '123 numbers and spaces'
+            });
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: '123NumbersBeforeName'
+            });
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: 'correctSystemName'
+            });
+
+            expect(form.form.validate()).toEqual(null);
+        });
+
+        it('should correctly use email validator', function() {
+            const model = new Backbone.Model({
+                1: null
+            });
+            const form = new core.layout.Form({
+                model,
+                schema: [
+                    {
+                        type: 'v-container',
+                        items: [
+                            {
+                                type: 'Text-editor',
+                                key: 1,
+                                validators: ['required', 'email']
+                            }
+                        ]
+                    }
+                ]
+            });
+
+            this.rootRegion.show(form);
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: '2112312213.com'
+            });
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+
+            model.set({
+                1: 'sdfsdfsf@gmail'
+            });
+
+            expect(Object.keys(form.form.validate()).length).toEqual(1);
+            
+
+            model.set({
+                1: 'correctemail@gmail.com'
+            });
+
+            expect(form.form.validate()).toEqual(null);
         });
     });
 });

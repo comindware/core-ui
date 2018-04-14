@@ -185,6 +185,7 @@ export default Marionette.LayoutView.extend({
             value: this.options.value,
             fieldId
         });
+        this.key = options.key;
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());
         });

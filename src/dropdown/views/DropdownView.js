@@ -74,7 +74,7 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-export default Marionette.LayoutView.extend({
+export default Marionette.ItemView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
