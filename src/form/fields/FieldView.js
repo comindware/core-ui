@@ -87,7 +87,7 @@ export default Marionette.LayoutView.extend({
         }
 
         this.$el.addClass(classes.ERROR);
-        this.errorCollection ? (this.errorCollection = new Backbone.Collection(errors)) : this.errorCollection.reset(errors);
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
                 buttonView: ErrorButtonView,

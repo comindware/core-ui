@@ -1,4 +1,3 @@
-import EventAggregator from './EventAggregator';
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
 import GridColumnHeaderView from './views/GridColumnHeaderView';
@@ -18,12 +17,11 @@ import factory from './factory';
 import cellFactory from './CellViewFactory';
 import GridController from './controllers/GridController';
 
-export default /** @lends module:core.list */ {
+export default {
     controllers: {
         GridController
     },
 
-    EventAggregator,
     /**
      * Фабрика списков
      * @namespace
