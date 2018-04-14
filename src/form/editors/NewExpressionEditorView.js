@@ -151,11 +151,11 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
             this.__updateEditorState();
         });
 
-        this.typeEditor.setValue(this.value.type);
         if (this.valueTypeCollection.length === 1) {
             this.ui.type.hide();
         }
         this.typeContainer.show(this.typeEditor);
+        this.typeEditor.setValue(this.value.type);
     },
 
     __showValueEditor() {

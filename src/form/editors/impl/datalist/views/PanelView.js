@@ -41,7 +41,7 @@ export default Marionette.LayoutView.extend({
     },
 
     onShow() {
-        this.listView  = list.factory.createDefaultList({
+        this.listView = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
                 childView: this.options.listItemView,

@@ -54,53 +54,20 @@ const defaultOptions = {
  * */
 export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+        _.defaults(this.options, options.schema || options, defaultOptions);
 
-        _.bindAll(this, '__getDisplayText');
-
-        this.reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
-
-        this.controller
-            = this.options.controller
-            || new StaticController({
+        this.controller =
+            this.options.controller ||
+            new StaticController({
                 collection: options.collection
             });
-
-        this.reqres.reply('bubble:delete', this.__onBubbleDelete, this);
-        this.reqres.reply('bubble:delete:last', this.__onBubbleDeleteLast, this);
-        this.reqres.reply('input:search', this.__onInputSearch, this);
-        this.reqres.reply('input:up', this.__onInputUp, this);
-        this.reqres.reply('input:down', this.__onInputDown, this);
-        this.reqres.reply('button:click', this.__onButtonClick, this);
-        this.reqres.reply('value:select', this.__onValueSelect, this);
-        this.reqres.reply('value:edit', this.__onValueEdit, this);
-        this.reqres.reply('filter:text', this.__onFilterText, this);
-        this.reqres.reply('add:new:item', this.__onAddNewItem, this);
-        this.reqres.reply('view:ready', this.__triggerReady, this);
 
         this.panelCollection = new VirtualCollection(new ReferenceCollection(options.collection ? options.collection.toJSON() : []), { selectableBehavior: 'multi' });
 
         this.value = this.__adjustValue(this.value);
 
-        const selectedModels = new Backbone.Collection(this.getValue(), {
-            comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
-        });
-
-        this.viewModel = {
-            button: {
-                selected: selectedModels
-            },
-            panel: new Backbone.Model({
-                value: this.getValue(),
-                collection: this.panelCollection,
-                totalCount: this.controller.totalCount || 0
-            })
-        };
-
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
-
-        this.__updateFakeInputModel();
     },
 
     regions: {
@@ -113,22 +80,48 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     setValue(value): void {
         this.value = [];
-        this.viewModel
-            .button
-            .selected
-            .reset();
+        this.viewModel.button.selected.reset();
         this.__value(value, false);
         delete this.fakeInputModel;
         this.__updateFakeInputModel();
     },
 
     onRender(): void {
+        const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
+
+        this.viewModel = {
+            button: {
+                selected: new Backbone.Collection(this.value, {
+                    comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
+                })
+            },
+            panel: new Backbone.Model({
+                value: this.value,
+                collection: this.panelCollection,
+                totalCount: this.controller.totalCount || 0
+            })
+        };
+
+        reqres.reply({
+            'bubble:delete': this.__onBubbleDelete.bind(this),
+            'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
+            'input:search': this.__onInputSearch.bind(this),
+            'input:up': this.__onInputUp.bind(this),
+            'input:down': this.__onInputDown.bind(this),
+            'button:click': this.__onButtonClick.bind(this),
+            'value:select': this.__onValueSelect.bind(this),
+            'value:edit': this.__onValueEdit.bind(this),
+            'filter:text': this.__onFilterText.bind(this),
+            'add:new:item': this.__onAddNewItem.bind(this),
+            'view:ready': this.__triggerReady.bind(this)
+        });
+
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: this.options.buttonView,
             buttonViewOptions: {
                 model: this.viewModel.button,
-                reqres: this.reqres,
-                getDisplayText: this.__getDisplayText,
+                reqres,
+                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
@@ -137,11 +130,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             panelView: PanelView,
             panelViewOptions: {
                 model: this.viewModel.panel,
-                reqres: this.reqres,
+                reqres,
                 showAddNewButton: this.options.showAddNewButton,
                 showCheckboxes: this.options.showCheckboxes,
                 listItemView: this.options.listItemView,
-                getDisplayText: this.__getDisplayText,
+                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 textFilterDelay: this.options.textFilterDelay
             },
             autoOpen: false
@@ -150,6 +143,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
 
         this.dropdownRegion.show(this.dropdownView);
+
+        this.__updateFakeInputModel();
     },
 
     isEmptyValue(): boolean {
@@ -284,11 +279,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         });
     },
 
-    __getDisplayText(value) {
+    __getDisplayText(value, displayAttribute) {
         if (!value) {
             return '';
         }
-        return value[this.options.displayAttribute] || value.text || `#${value.id}`;
+        return value[displayAttribute] || value.text || `#${value.id}`;
     },
 
     __onDropdownOpen(): void {
