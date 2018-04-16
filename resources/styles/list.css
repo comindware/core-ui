@@ -406,7 +406,6 @@ svg.svg-grid-icons {
 
 /* Editable Grid */
 .fr-collection{
-    padding: 10px 0;
     position: relative;
     height: 100%;
     display: flex;
@@ -529,11 +528,6 @@ svg.svg-grid-icons {
 
 .fr-collection-grid .grid-header-column:first-child{
     box-shadow: inset -1px -1px #dfe4e8, inset 1px 1px #dfe4e8;
-}
-
-
-.fr-allow-select .fr-collection-grid .grid-header-column:first-child .grid-header-column-content{
-    color:transparent;
 }
 
 .fr-collection-grid .native-grid__list{

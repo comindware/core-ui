@@ -211,7 +211,7 @@ const GridHeaderView = Marionette.ItemView.extend({
 
     __handleResizeInternal() {
         this.ui.gridHeaderColumn.each(i => {
-            this.__setColumnWidth(i, this.columns[i].width || 1);
+            this.__setColumnWidth(i, this.columns[i].width);
         });
     },
 

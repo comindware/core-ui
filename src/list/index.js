@@ -17,6 +17,7 @@ import GridItemBehavior from './models/behaviors/GridItemBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
 import GridController from './controllers/GridController';
+import meta from './meta';
 
 export default /** @lends module:core.list */ {
     controllers: {
@@ -65,5 +66,7 @@ export default /** @lends module:core.list */ {
             ListItemBehavior,
             GridItemBehavior
         }
-    }
+    },
+
+    meta
 };
