@@ -19,8 +19,7 @@ export default Backbone.Marionette.ItemView.extend({
     },
 
     events: {
-        'change @ui.fileUpload': 'onSelectFiles',
-        'click @ui.fileUploadButton': '__onItemClick'
+        'change @ui.fileUpload': 'onSelectFiles'
     },
 
     template: Handlebars.compile(template),
@@ -34,10 +33,6 @@ export default Backbone.Marionette.ItemView.extend({
         if (className) {
             this.className = className;
         }
-    },
-
-    __onItemClick() {
-        this.ui.fileUpload.click();
     },
 
     onSelectFiles(e) {

@@ -1,5 +1,4 @@
 // @flow
-import template from '../templates/bubbleItem.hbs';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 
@@ -8,22 +7,22 @@ export default Marionette.ItemView.extend({
         this.reqres = options.reqres;
     },
 
-    template: Handlebars.compile(template),
+    template: false,
 
-    templateHelpers() {
-        const value = this.model.attributes;
-        return {
-            enabled: this.options.enabled,
-            url: this.model.attributes ? this.options.createValueUrl(this.model.attributes) : false,
-            text: this.options.getDisplayText(value),
-            showEditButton: this.options.showEditButton && Boolean(value)
-        };
+    tagName() {
+        return this.url ? 'a' : 'li';
     },
 
-    tagName: 'li',
-
-    attributes: {
-        draggable: true
+    attributes() {
+        const text = this.options.getDisplayText();
+        return {
+            draggable: true,
+            title: text,
+            target: '_blank',
+            tabindex: '-1',
+            href: this.options.createValueUrl(this.model.attributes),
+            text
+        };
     },
 
     className: 'bubbles__i',

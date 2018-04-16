@@ -1,11 +1,20 @@
 // @flow
 import template from './templates/documentEditor.html';
-import MultiselectView from './impl/document/views/MultiselectView';
 import DocumentReferenceModel from './impl/document/models/DocumentReferenceModel';
 import DocumentReferenceCollection from './impl/document/collections/DocumentReferenceCollection';
-import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import BaseCompositeEditorView from './base/BaseCompositeEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
+import dropdown from 'dropdown';
+import ReferencePanelView from './impl/reference/views/ReferencePanelView';
+import MultiselectItemView from './impl/document/views/MultiselectItemView';
+import AttachmentsController from './impl/document/gallery/AttachmentsController';
+
+const MultiselectAddButtonView = Marionette.ItemView.extend({
+    className: 'button-sm_h3 button-sm button-sm_add',
+    tagName: 'button',
+    template: Handlebars.compile('{{text}}')
+});
 
 const savedDocumentPrefix = 'document';
 
@@ -26,31 +35,59 @@ const defaultOptions = {
     displayText: ''
 };
 
-export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
+export default (formRepository.editors.Document = BaseCompositeEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.on('change', this.checkEmpty.bind(this));
+
+        this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
+
+        this.reqres.reply('value:set', this.onValueAdd, this);
+        this.reqres.reply('value:navigate', this.onValueNavigate, this);
+        this.reqres.reply('search:more', this.onSearchMore, this);
+        this.reqres.reply('filter:text', this.onFilterText, this);
+
+        this.attachmentsController = new AttachmentsController();
+
+        if (this.canAdd) {
+            this.renderDropdown();
+        }
+        this._windowResize = _.throttle(this.update.bind(this), 100, true);
+        window.addEventListener('resize', this._windowResize);
     },
 
     checkEmpty() {
         this.$el.toggleClass('pr-empty', this.internalValue && this.internalValue.length === 0);
     },
 
+    canAdd: false,
+
     className: 'document-field editor',
 
     template: Handlebars.compile(template),
 
-    regions: {
-        addRegion: '.js-add-region',
-        multiselect: '.js-documents-multiselect'
+    childView: MultiselectItemView,
+
+    childViewContainer: '.js-collection-container',
+
+    childViewOptions() {
+        return {
+            attachmentsController: this.attachmentsController,
+            hideRemoveBtn: this.options.hideRemoveBtn
+        };
     },
+
+    collapsed: true,
 
     ui: {
         addRegion: '.js-add-region',
         fileUploadButton: '.js-file-button',
         fileUpload: '.js-file-input',
-        form: '.js-file-form'
+        form: '.js-file-form',
+        showMore: '.js-show-more',
+        invisibleCount: '.js-invisible-count',
+        showMoreText: '.js-show-more-text'
     },
 
     templateHelpers() {
@@ -59,6 +96,17 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
             multiple: this.options.multiple,
             fileFormat: this.__adjustFileFormat(this.options.fileFormat)
         });
+    },
+
+    events: {
+        'click @ui.showMore': 'toggleShowMore',
+        keydown: '__handleKeydown',
+        'change @ui.fileUpload': 'onSelectFiles',
+        'click @ui.fileUploadButton': '__onItemClick'
+    },
+
+    childEvents: {
+        remove: 'onValueRemove'
     },
 
     setValue(value) {
@@ -72,7 +120,6 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
 
     onRender() {
         this.renderUploadButton(this.options.readonly);
-        this.renderMultiselect();
     },
 
     initInternalValue() {
@@ -84,21 +131,7 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
     },
 
     syncValue() {
-        this.value = this.internalValue.toJSON();
-    },
-
-    renderMultiselect() {
-        if (!this.internalValue) {
-            this.initInternalValue();
-        }
-        this.multiselectView = new MultiselectView({
-            collection: this.internalValue,
-            canAdd: false,
-            hideRemoveBtn: this.options.readonly || !this.options.allowDelete
-        });
-        this.multiselectView.on('removeItem', this.removeItem.bind(this));
-        this.multiselect.show(this.multiselectView);
-        this.checkEmpty();
+        this.value = this.internalValue ? this.internalValue.toJSON() : [];
     },
 
     uploadDocumentOnServer(documents) {
@@ -124,7 +157,7 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
 
             this.on('uploaded', documents => {
                 if (this.options.multiple === false) {
-                    this.multiselectView.collection.reset();
+                    this.internalValue.reset();
                     if (this.value && this.value.length && this.value[0].id.indexOf(savedDocumentPrefix) > -1) {
                         documents[0].documentId = this.value[0].id;
                     }
@@ -137,7 +170,7 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
     },
 
     addItem(items) {
-        this.multiselectView.onValueAdd(items);
+        this.onValueAdd(items);
         this.__triggerChange();
     },
 
@@ -148,12 +181,12 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
     },
 
     __setEnabled(enabled) {
-        BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
+        BaseCompositeEditorView.prototype.__setEnabled.call(this, enabled);
         this.renderUploadButton(!enabled);
     },
 
     __setReadonly(readonly) {
-        BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
+        BaseCompositeEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.getEnabled()) {
             this.renderUploadButton(readonly);
         }
@@ -187,11 +220,6 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
     },
 
     uploadUrl: '/api/UploadAttachment',
-
-    events: {
-        'change @ui.fileUpload': 'onSelectFiles',
-        'click @ui.fileUploadButton': '__onItemClick'
-    },
 
     __onItemClick() {
         this.ui.fileUpload.click();
@@ -334,5 +362,132 @@ export default (formRepository.editors.Document = BaseLayoutEditorView.extend({
         this.trigger('validation:error', incorrectFileNames);
 
         return !incorrectFileNames;
+    },
+
+    renderDropdown() {
+        this.dropdownModel = {
+            button: {
+                text: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADD')
+            },
+            panel: {
+                collection: this.controller.collection,
+                totalCount: this.controller.totalCount || 0
+            }
+        };
+        this.dropdownView = dropdown.factory.createDropdown({
+            buttonView: MultiselectAddButtonView,
+            buttonViewOptions: {
+                model: this.dropdownModel.button,
+                reqres: this.reqres
+            },
+            panelView: ReferencePanelView,
+            panelViewOptions: {
+                model: this.dropdownModel.panel,
+                reqres: this.reqres
+            }
+        });
+        this.$selectButtonEl.html(this.dropdownView.render().$el);
+    },
+
+    showDropDown() {
+        this.dropdownView.open();
+    },
+
+    onDomRefresh() {
+        this.renderShowMore();
+    },
+
+    onValueRemove(view, options) {
+        this.trigger('removeItem', options.model);
+    },
+
+    onValueAdd(model) {
+        this.internalValue.add(model);
+        this.trigger('valueAdded', model);
+        this.dropdownView && this.dropdownView.close();
+        this.renderShowMore();
+    },
+
+    onValueNavigate() {
+        //todo
+        this.controller.navigate(this.getValue());
+    },
+
+    onSearchMore() {
+        // TODO: Not implemented in Release 1
+        this.dropdownView.close();
+    },
+
+    onFilterText(options) {
+        return this.controller.fetch(options).then(() => this.dropdownModel.get('panel').set('totalCount', this.controller.totalCount));
+    },
+
+    toggleShowMore() {
+        this.collapsed = !this.collapsed;
+        this.renderShowMore();
+    },
+
+    renderShowMore() {
+        if (this.collapsed) {
+            this.collapseShowMore();
+        } else {
+            this.expandShowMore();
+        }
+    },
+
+    update() {
+        if (this.collapsed) {
+            this.collapseShowMore();
+        }
+    },
+
+    collapseShowMore() {
+        if (!this.$childViewContainer || !this.$childViewContainer.children() || !this.$childViewContainer.children().length) {
+            return;
+        }
+        const affordabletWidth = this.$el.width();
+        const childViews = this.$childViewContainer.children();
+        let visibleCounter = 1;
+        let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
+        const length = this.internalValue.length;
+        // visible children
+        while (visibleCounter < length && visibleWidth + $(childViews[visibleCounter]).width() < affordabletWidth) {
+            visibleWidth += $(childViews[visibleCounter])
+                .show()
+                .width();
+            visibleCounter++;
+        }
+        // invisible children
+        for (let i = visibleCounter; i < length; i++) {
+            childViews[i].style.display = 'none';
+        }
+        if (length - visibleCounter > 0) {
+            this.ui.showMore.show();
+            this.ui.invisibleCount.html(length - visibleCounter);
+            this.ui.showMoreText.html(`${LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.SHOWMORE')} `);
+        } else {
+            this.ui.showMore.hide();
+        }
+    },
+
+    expandShowMore() {
+        this.$childViewContainer.children().show();
+        this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
+        this.ui.invisibleCount.html('');
+    },
+
+    onDestroy() {
+        window.removeEventListener('resize', this._windowResize, true);
+    },
+
+    __handleKeydown(e) {
+        switch (e.keyCode) {
+            case 13:
+            case 40:
+                this.dropdownView.open();
+                break;
+            default:
+                break;
+        }
     }
 }));
