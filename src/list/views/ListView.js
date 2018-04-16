@@ -440,6 +440,9 @@ const ListView = Marionette.CompositeView.extend({
             }
             child.el.style.top = top;
             childModel.trigger('update:top', top);
+            if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
+                child.insertFirstCellHtml();
+            }
         });
     },
 

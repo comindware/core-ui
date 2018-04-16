@@ -32,46 +32,53 @@ export default () => {
             title: 'TextCell',
             required: true,
             sorting: 'asc',
-            editable: true
+            editable: true,
+            autocommit: true
         },
         {
             key: 'numberCell',
             type: 'Number',
             title: 'Number Cell',
             getReadonly: model => model.get('numberCell') % 2,
-            editable: true
+            editable: true,
+            autocommit: true
         },
         {
             key: 'dateTimeCell',
             type: 'DateTime',
             title: 'DateTime Cell',
             getHidden: model => model.get('numberCell') % 2,
-            editable: true
+            editable: true,
+            autocommit: true
         },
         {
             key: 'durationCell',
             type: 'Duration',
             title: 'Duration Cell',
-            editable: true
+            editable: true,
+            autocommit: true
         },
         {
             key: 'booleanCell',
             type: 'Boolean',
             title: 'Boolean Cell',
-            editable: true
+            editable: true,
+            autocommit: true
         },
         {
             key: 'documentCell',
             type: 'Document',
             title: 'Document',
-            editable: true
+            editable: true,
+            autocommit: true
         },
         {
             key: 'referenceCell',
             type: 'Datalist',
             title: 'Reference Cell',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
-            editable: true
+            editable: true,
+            autocommit: true
         }
     ];
 
@@ -102,7 +109,8 @@ export default () => {
             default:
                 break;
         }
-    }
+    };
+
     gridController.on('execute', handleAction);
 
     // 4. Show created views
