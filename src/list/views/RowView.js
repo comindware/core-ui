@@ -44,7 +44,8 @@ export default Marionette.ItemView.extend({
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         highlighted: '__handleHighlight',
-        unhighlighted: '__handleUnhighlight'
+        unhighlighted: '__handleUnhighlight',
+        change: '__handleChange'
     },
 
     initialize() {
@@ -98,44 +99,47 @@ export default Marionette.ItemView.extend({
 
     _renderTemplate() {
         this.cellViews = [];
-        let isFirstChild = true;
+        this.columnClasses = [];
 
-        this.$el.append(
-            this.options.columns.map((gridColumn, index) => {
-                const CellView = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn);
-                const cellView = new CellView({
-                    className: `grid-cell ${this.getOption('uniqueId')}-column${index}`,
+        this.options.columns.forEach((gridColumn, index) => {
+            const columnClass = `${this.getOption('uniqueId')}-column${index}`;
+            const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model);
+            if (typeof cell !== 'string') {
+                const cellView = new cell({
+                    className: `grid-cell ${columnClass}`,
                     schema: gridColumn,
                     model: this.model,
                     key: gridColumn.key
                 });
-
-                if (this.getOption('isTree') && isFirstChild) {
-                    const level = this.model.level || 0;
-                    const margin = level * this.options.levelMargin;
-                    const hasChildren = this.model.children && this.model.children.length;
-
-                    cellView.on('render', () => {
-                        if (hasChildren) {
-                            cellView.el.insertAdjacentHTML(
-                                'afterbegin',
-                                `<span class="collapsible-btn ${classes.collapsible} ${
-                                    this.model.collapsed === false ? classes.expanded : ''
-                                }" style="margin-left:${margin}px;"></span>`
-                            );
-                        } else {
-                            cellView.el.insertAdjacentHTML('afterbegin', `<span style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
-                        }
-                    });
-
-                    isFirstChild = false;
+                if (this.getOption('isTree') && index === 0) {
+                    cellView.on('render', () => this.insertFirstCellHtml());
                 }
                 cellView.render();
+                this.el.insertAdjacentElement('beforeend', cellView.el);
 
                 this.cellViews.push(cellView);
-                return cellView.$el;
-            })
-        );
+            } else {
+                this.el.insertAdjacentHTML('beforeend', `<div class="grid-cell ${columnClass}">${cell}</div>`);
+                if (this.getOption('isTree') && index === 0) {
+                    this.insertFirstCellHtml();
+                }
+            }
+            this.columnClasses.push(columnClass);
+        });
+    },
+
+    __handleChange() {
+        const changed = this.model.changedAttributes();
+        if (changed) {
+            this.getOption('columns').forEach((column, index) => {
+                if (changed[column.key] && !column.cellView) {
+                    const elements = this.el.getElementsByClassName(this.columnClasses[index]);
+                    if (elements.length) {
+                        elements[0].innerHTML = CellViewFactory.getCellHtml(column, this.model);
+                    }
+                }
+            });
+        }
     },
 
     __handleHighlight(fragment) {
@@ -148,6 +152,37 @@ export default Marionette.ItemView.extend({
         this.cellViews.forEach(cellView => {
             cellView.model.set('highlightedFragment', null);
         });
+    },
+
+    insertFirstCellHtml() {
+        if (this.isRendered) {
+            const elements = this.el.getElementsByClassName(this.columnClasses[0]);
+            if (elements.length) {
+                const el = elements[0];
+                const level = this.model.level || 0;
+                const margin = level * this.options.levelMargin;
+                const hasChildren = this.model.children && this.model.children.length;
+                this.lastHasChildren = hasChildren;
+                const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
+                if (treeFirstCell) {
+                    if (this.lastHasChildren === hasChildren) {
+                        return;
+                    }
+
+                    el.removeChild(treeFirstCell);
+                }
+                if (hasChildren) {
+                    el.insertAdjacentHTML(
+                        'afterbegin',
+                        `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
+                            this.model.collapsed === false ? classes.expanded : ''
+                            }" style="margin-left:${margin}px;"></span>`
+                    );
+                } else {
+                    el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
+                }
+            }
+        }
     },
 
     __onClick(e) {
