@@ -74,7 +74,7 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-export default Marionette.LayoutView.extend({
+export default Marionette.ItemView.extend({
     initialize(options) {
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
@@ -89,13 +89,9 @@ export default Marionette.LayoutView.extend({
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
     },
 
-    template: Handlebars.compile(template),
+    template: false,
 
     className: 'dropdown',
-
-    regions: {
-        buttonRegion: '.js-button-region'
-    },
 
     ui: {
         button: '.js-button-region'
@@ -128,21 +124,15 @@ export default Marionette.LayoutView.extend({
             this.triggerMethod(...args);
         });
 
-        if (this.isShown) {
-            this.buttonRegion.show(this.button);
-        }
-
+        this.$el.append(this.button.render().$el);
+        this.isShown = true;
         this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
 
         this.$el.attr('tabindex', -1);
     },
 
-    onShow() {
-        this.buttonRegion.show(this.button);
-        this.isShown = true;
-    },
-
     onDestroy() {
+        this.button.destroy();
         if (this.isOpen) {
             WindowService.closePopup(this.popupId);
         }
@@ -150,7 +140,7 @@ export default Marionette.LayoutView.extend({
 
     __adjustPosition(panelEl) {
         const viewportHeight = window.innerHeight;
-        const buttonEl = this.buttonRegion.el;
+        const buttonEl = this.button.el;
         const buttonRect = buttonEl.getBoundingClientRect();
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
@@ -226,7 +216,7 @@ export default Marionette.LayoutView.extend({
         this.panelEl = this.panelView.el;
 
         this.__adjustPosition(this.panelEl);
-        const buttonWidth = this.buttonRegion.el.getBoundingClientRect().width;
+        const buttonWidth = this.button.el.getBoundingClientRect().width;
         const panelWidth = buttonWidth > MAX_DROPDOWN_PANEL_WIDTH ? buttonWidth : MAX_DROPDOWN_PANEL_WIDTH;
 
         this.panelView.el.style.width = `${panelWidth}px`;

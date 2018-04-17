@@ -64,6 +64,11 @@ export default {
             displayName: 'From and editors',
             groups: [
                 {
+                    id: 'MultiEditorEditor',
+                    displayName: 'Multi-editor editor',
+                    description: 'Multi-editor editor'
+                },
+                {
                     id: 'AudioEditor',
                     displayName: 'Audio Editor',
                     description: 'Simple audio editor'

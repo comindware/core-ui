@@ -436,3 +436,8 @@
 	border-bottom:5px solid transparent;
 	border-left:8px solid #0575bd;
 }
+
+.datetimepicker th.clear,
+.datetimepicker td.clear{
+	display: none;
+}

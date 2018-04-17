@@ -8,11 +8,11 @@ import EmailValidator from './validators/emailValidator';
 export default {
     editors: {},
     validators: {
-        RequiredValidator,
-        LengthValidator,
-        PasswordValidator,
-        PhoneValidator,
-        SystemNameValidator,
-        EmailValidator
+        required: RequiredValidator,
+        length: LengthValidator,
+        password: PasswordValidator,
+        phone: PhoneValidator,
+        systemName: SystemNameValidator,
+        email: EmailValidator
     }
 };

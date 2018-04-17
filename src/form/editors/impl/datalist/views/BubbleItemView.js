@@ -1,5 +1,4 @@
 // @flow
-import template from '../templates/bubbleItem.hbs';
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
 
@@ -8,22 +7,23 @@ export default Marionette.ItemView.extend({
         this.reqres = options.reqres;
     },
 
-    template: Handlebars.compile(template),
+    template: false,
 
-    templateHelpers() {
-        const value = this.model.attributes;
-        return {
-            enabled: this.options.enabled,
-            url: this.model.attributes ? this.options.createValueUrl(this.model.attributes) : false,
-            text: this.options.getDisplayText(value),
-            showEditButton: this.options.showEditButton && Boolean(value)
-        };
+    tagName() {
+        return this.url ? 'a' : 'li';
     },
 
-    tagName: 'li',
+    attributes() {
+        this.text = this.options.getDisplayText(this.options.model.attributes);
 
-    attributes: {
-        draggable: true
+        return {
+            draggable: true,
+            title: this.text,
+            target: '_blank',
+            tabindex: '-1',
+            href: this.options.createValueUrl(this.model.attributes),
+            text: this.text
+        };
     },
 
     className: 'bubbles__i',
@@ -69,6 +69,8 @@ export default Marionette.ItemView.extend({
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
             this.el.classList.add('bubbles__i-edit-btn');
         }
+
+        this.$el.html(this.text);
     },
 
     __handleDrag(event) {

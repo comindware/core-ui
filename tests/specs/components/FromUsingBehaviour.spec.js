@@ -122,11 +122,6 @@ describe('Components', () => {
                                         text: 'Text 3'
                                     }, { id: 'd.4', text: 'Text 4' }],
                                     helpText: 'Some help information'
-                                },
-                                wrongInstance: {
-                                    type: 'Dropdown',
-                                    title: 'Dropdown',
-                                    helpText: 'Some help information'
                                 }
                             };
                         }

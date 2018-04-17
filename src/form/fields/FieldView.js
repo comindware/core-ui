@@ -87,7 +87,7 @@ export default Marionette.LayoutView.extend({
         }
 
         this.$el.addClass(classes.ERROR);
-        this.errorCollection ? (this.errorCollection = new Backbone.Collection(errors)) : this.errorCollection.reset(errors);
+        this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
             const errorPopout = dropdown.factory.createPopout({
                 buttonView: ErrorButtonView,
@@ -179,13 +179,13 @@ export default Marionette.LayoutView.extend({
     __createEditor(options, fieldId, ConstructorFn) {
         this.editor = new ConstructorFn({
             schema: this.schema,
-            field: this,
             key: options.key,
             model: this.model,
             id: this.__createEditorId(options.key),
             value: this.options.value,
             fieldId
         });
+        this.key = options.key;
         this.editor.on('readonly', readonly => {
             this.__updateEditorState(readonly, this.editor.getEnabled());
         });
@@ -195,10 +195,6 @@ export default Marionette.LayoutView.extend({
     },
 
     __createEditorId(key) {
-        if (!key) {
-            return null;
-        }
-
         if (this.model) {
             return `${this.model.cid}_${key}`;
         }

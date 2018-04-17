@@ -19,7 +19,7 @@ export default Marionette.ItemView.extend({
         };
     },
 
-    className: 'datepicker_panel',
+    className: 'dropdown__wrp dropdown__wrp_datepicker',
 
     modelEvents: {
         'change:value': 'updatePickerDate'

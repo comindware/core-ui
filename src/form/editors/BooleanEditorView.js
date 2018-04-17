@@ -41,7 +41,7 @@ export default (formRepository.editors.Boolean = BaseItemEditorView.extend(
             keydown: '__onKeyDown'
         },
 
-        className: 'editor editor_checkbox checkbox',
+        className: 'editor editor_checkbox',
 
         attributes() {
             return {
