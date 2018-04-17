@@ -372,7 +372,7 @@ const VirtualCollection = Backbone.Collection.extend(
             const diff = new diffHelper(oldModels, this.visibleModels);
             diff.compose();
             const diffObject = diff.getses();
-            Object.values(diffObject).forEach(object => {
+            Object.values(diffObject).sort((a, b) => a.t - b.t).forEach(object => {
                 switch (object.t) {
                     case 0:
                         this.trigger('update:child:top', object.elem);

@@ -93,7 +93,7 @@ const ListView = Marionette.CompositeView.extend({
         }
 
         const debouncedHandleResize = _.debounce(() => this.handleResize(), 100);
-        this.listenTo(GlobalEventService, 'resize', debouncedHandleResize);
+        this.listenTo(GlobalEventService, 'window:resize', debouncedHandleResize);
         this.listenTo(this.collection.parentCollection, 'add remove reset ', debouncedHandleResize);
         // this.on('render', this.__onRender);
     },

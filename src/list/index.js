@@ -16,6 +16,7 @@ import GridItemBehavior from './models/behaviors/GridItemBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
 import GridController from './controllers/GridController';
+import meta from './meta';
 
 export default {
     controllers: {
@@ -63,5 +64,7 @@ export default {
             ListItemBehavior,
             GridItemBehavior
         }
-    }
+    },
+
+    meta
 };

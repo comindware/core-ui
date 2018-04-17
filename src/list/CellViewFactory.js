@@ -262,8 +262,8 @@ const factory = {
     getCellHtml(column, model) {
         let result = '';
         const type = column.type;
-        const value = model.get(column.key) || '';
-        if (!value) {
+        const value = model.get(column.key);
+        if (value === null || value === undefined) {
             return result;
         }
         switch (type) {
@@ -298,7 +298,7 @@ const factory = {
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                result = value.toString();
+                result = value ? value.toString() : '';
                 break;
             case objectPropertyTypes.DURATION: {
                 if (value === 0) {
@@ -323,7 +323,7 @@ const factory = {
             case objectPropertyTypes.BOOLEAN:
                 if (value === true) {
                     result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
-                } else if (value === true) {
+                } else if (value === false) {
                     result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
                 }
                 break;
