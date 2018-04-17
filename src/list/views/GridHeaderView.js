@@ -230,19 +230,23 @@ const GridHeaderView = Marionette.ItemView.extend({
         this.columns[index].width = newColumnWidth;
     },
 
-    __setColumnWidth(index, width) {
+    __setColumnWidth(index, width = 0) {
         const style = this.styleSheet;
         const selector = `.${this.getOption('uniqueId')}-column${index}`;
-        const regexp = new RegExp(`${selector} { flex: 0 0 [+, -]?\\S+\\.?\\S*; } `);
-        let basis = 'auto';
+        const regexp = new RegExp(`${selector} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
+        let basis;
         if (width > 0) {
             if (width < 1) {
                 basis = `${width * 100}%`;
             } else {
                 basis = `${width}px`;
             }
+        } else {
+            basis = '0%';
         }
-        const newValue = `${selector} { flex: 0 0 ${basis}; } `;
+
+        const grow = width > 0 ? 0 : 1;
+        const newValue = `${selector} { flex: ${grow} 0 ${basis}; } `;
 
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);

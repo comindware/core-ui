@@ -60,7 +60,7 @@ describe('Components', () => {
         }
     ];
 
-    describe('EditableGrid', () => {
+    describe('Simple grid', () => {
         it('should initialize', function () {
             const gridController = new core.list.controllers.GridController({
                 columns,
