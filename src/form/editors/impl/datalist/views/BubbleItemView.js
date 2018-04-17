@@ -14,14 +14,15 @@ export default Marionette.ItemView.extend({
     },
 
     attributes() {
-        const text = this.options.getDisplayText();
+        this.text = this.options.getDisplayText(this.options.model.attributes);
+
         return {
             draggable: true,
-            title: text,
+            title: this.text,
             target: '_blank',
             tabindex: '-1',
             href: this.options.createValueUrl(this.model.attributes),
-            text
+            text: this.text
         };
     },
 
@@ -68,6 +69,8 @@ export default Marionette.ItemView.extend({
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
             this.el.classList.add('bubbles__i-edit-btn');
         }
+
+        this.$el.html(this.text);
     },
 
     __handleDrag(event) {
