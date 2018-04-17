@@ -52,7 +52,7 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         });
     },
 
-    className: 'member-split-panel-editor__view',
+    className: 'member-split',
 
     focusElement: null,
 
