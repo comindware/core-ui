@@ -1,7 +1,7 @@
 //@flow
 import template from '../templates/documentRevisionItem.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     tagName: 'tr',

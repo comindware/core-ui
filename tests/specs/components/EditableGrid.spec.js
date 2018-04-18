@@ -1,12 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     const data = [];
     for (let i = 0; i < 5000; i++) {
         data.push({
@@ -107,7 +102,7 @@ describe('Components', () => {
                 title: 'Editable grid'
             });
 
-            this.rootRegion.show(gridController.view);
+            window.application.contentRegion.show(gridController.view);
 
             expect(true).toBe(true);
         });
@@ -126,7 +121,7 @@ describe('Components', () => {
                 title: 'Editable grid'
             });
 
-            this.rootRegion.show(gridController.view);
+            window.application.contentRegion.show(gridController.view);
 
             gridController.view.listView.collection.on('change', () => {
                 expect(gridController.view.listView.collection.length).toEqual(1111);
@@ -154,7 +149,7 @@ describe('Components', () => {
                 title: 'Editable grid'
             });
 
-            this.rootRegion.show(gridController.view);
+            window.application.contentRegion.show(gridController.view);
 
             const firstChechbox = gridController.view.$('.checkbox:eq(0)');
 

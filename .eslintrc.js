@@ -7,8 +7,7 @@ module.exports = {
         'jquery': true
     },
     'plugins': [
-        "prettier",
-        "flowtype-errors"
+        'prettier'
     ],
     'globals': {
         '__DEV__': true,
@@ -29,13 +28,10 @@ module.exports = {
         'Context': true,
         'Core': true
     },
-    "extends": [
-        "prettier"
+    'extends': [
+        'prettier'
     ],
     'rules': {
-        //"flowtype-errors/enforce-min-coverage": [2, 25],
-        //"flowtype-errors/show-errors": 2,
-        //"flowtype-errors/show-warnings": 1,
         'prettier/prettier': 'warn',
         'new-cap': ['off', { 'newIsCap': true, 'capIsNew': false }],
         'quote-props': ['error', 'as-needed'],
@@ -45,17 +41,17 @@ module.exports = {
         'no-param-reassign': ['error', { 'props': false }],
         'linebreak-style': 'off',
         'indent': ['warn', 4, { 'SwitchCase': 1, 'VariableDeclarator': 1 }],
-        'operator-linebreak': ["warn", "before"],
-        'multiline-ternary': ["warn", "always-multiline"],
+        'operator-linebreak': ['warn', 'before'],
+        'multiline-ternary': ['warn', 'always-multiline'],
         'prefer-arrow-callback': 'warn',
         'comma-dangle': 0,
         'func-names': ['warn', 'as-needed'],
         'spaced-comment': 0,
         'prefer-const': 'error',
-        'array-bracket-spacing': ["warn", "never"],
-        'array-element-newline' : ["warn", {
-            "multiline": true,
-            "minItems": 4
+        'array-bracket-spacing': ['warn', 'never'],
+        'array-element-newline' : ['warn', {
+            'multiline': true,
+            'minItems': 4
         }],
         'arrow-body-style': ['error', 'as-needed'],
         'object-curly-spacing': ['warn', 'always'],

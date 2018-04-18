@@ -79,7 +79,7 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
         return this.options;
     },
 
-    onShow() {
+    onRender() {
         const value = this.getValue() || '';
         this.ui.textarea.val(value);
         if (this.options.showTitle) {

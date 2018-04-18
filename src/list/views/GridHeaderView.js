@@ -15,7 +15,7 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @class GridHeaderView
  * @constructor
  * @description View используемый для отображения заголовка (шапки) списка
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.columns массив колонок
  * @param {Object} options.gridEventAggregator ?
@@ -28,7 +28,7 @@ const classes = {
     expanded: 'collapsible-btn_expanded'
 };
 
-const GridHeaderView = Marionette.ItemView.extend({
+const GridHeaderView = Marionette.View.extend({
     initialize(options) {
         if (!options.columns) {
             throw new Error('You must provide columns definition ("columns" option)');

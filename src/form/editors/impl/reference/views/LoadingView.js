@@ -1,6 +1,6 @@
 import template from '../templates/loading.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize() {},
 
     className: 'l-loader',

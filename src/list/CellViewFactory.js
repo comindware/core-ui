@@ -140,7 +140,7 @@ const factory = {
     },
 
     __getSimpleView(simpleTemplate, extention) {
-        return Marionette.ItemView.extend(
+        return Marionette.View.extend(
             Object.assign(
                 {
                     template: Handlebars.compile(simpleTemplate),
@@ -160,7 +160,7 @@ const factory = {
     },
 
     __getAccountView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{text}}'),
             templateHelpers() {
                 const value = this.model.get(this.options.key);
@@ -198,7 +198,7 @@ const factory = {
     },
 
     __getDocumentView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{#each documents}}<a href="{{url}}">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
 
             templateHelpers() {
@@ -229,7 +229,7 @@ const factory = {
     },
 
     __getEnumView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{#if value}}{{valueExplained}}{{/if}}'),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'

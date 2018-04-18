@@ -1,12 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     describe('MemberEditorView', () => {
         it('should initialize', function () {
             const model = new Backbone.Model({
@@ -21,7 +16,7 @@ describe('Editors', () => {
                 groups: new Backbone.Collection()
             });
 
-            this.rootRegion.show(view);
+            window.application.contentRegion.show(view);
             // assert
             expect(true).toBe(true);
         });

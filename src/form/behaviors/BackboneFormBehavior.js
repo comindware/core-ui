@@ -10,7 +10,7 @@ const Form = Marionette.Object.extend({
      */
     initialize(options = {}) {
         this.options = options;
-        this.__regionManager = new Marionette.RegionManager();
+
         this.schema = _.result(options, 'schema');
         this.model = options.model;
 
@@ -35,6 +35,7 @@ const Form = Marionette.Object.extend({
         });
 
         const $target = this.options.$target;
+        const rootView = window.app.getView();
 
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => {
@@ -43,8 +44,8 @@ const Form = Marionette.Object.extend({
                 const key = el.getAttribute('data-editors');
                 const regionName = `${key}Region`;
 
-                this.__regionManager.addRegion(regionName, { el });
-                this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key].editor);
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key].editor);
             }
         });
 
@@ -55,8 +56,8 @@ const Form = Marionette.Object.extend({
                 const key = el.getAttribute('data-fields');
                 const regionName = `${key}Region`;
 
-                this.__regionManager.addRegion(regionName, { el });
-                this.fields[key] && this.__regionManager.get(regionName).show(this.fields[key]);
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key]);
             }
         });
     },
@@ -105,10 +106,6 @@ const Form = Marionette.Object.extend({
             throw new Error(`Field not found: ${key}`);
         }
         return field.editor;
-    },
-
-    onDestroy() {
-        this.__regionManager.destroy();
     },
 
     /**
@@ -320,15 +317,7 @@ export default Marionette.Behavior.extend({
     },
 
     onRender() {
-        if (this.options.renderStrategy === constants.RENDER_STRATEGY_RENDER) {
-            this.__renderForm();
-        }
-    },
-
-    onShow() {
-        if (this.options.renderStrategy === constants.RENDER_STRATEGY_SHOW) {
-            this.__renderForm();
-        }
+        this.__renderForm();
     },
 
     onDestroy() {

@@ -2,7 +2,7 @@
 import core from 'comindware/core';
 
 export default function() {
-    var PopupView = Marionette.ItemView.extend({
+    var PopupView = Marionette.View.extend({
         initialize(options) {
             this.index = (options && options.index) || 1;
         },
@@ -36,7 +36,7 @@ export default function() {
         }
     });
 
-    const View = Marionette.ItemView.extend({
+    const View = Marionette.View.extend({
         template: Handlebars.compile('<input class="js-show__button" type="button" value="Show Popup"/>'),
 
         events: {

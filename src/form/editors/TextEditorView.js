@@ -48,7 +48,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         this.placeholder = this.options.emptyPlaceholder;
     },
 
-    onShow() {
+    onAttach() {
         if (this.options.mask) {
             this.ui.input.inputmask(
                 Object.assign(

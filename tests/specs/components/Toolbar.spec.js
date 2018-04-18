@@ -1,12 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     describe('CodeEditorView', () => {
         it('should initialize', function () {
             const view = new core.components.Toolbar({
@@ -31,8 +26,8 @@ describe('Editors', () => {
                             collection: new Backbone.Collection(),
                             diagramId: '1',
                             solutionId: '2',
-                            buttonView: Marionette.ItemView,
-                            panelView: Marionette.ItemView
+                            buttonView: Marionette.View.extend({ template: false }),
+                            panelView: Marionette.View.extend({ template: false })
                         }
                     },
                     {
@@ -68,7 +63,7 @@ describe('Editors', () => {
                 ])
             });
 
-            this.rootRegion.show(view);
+            window.application.contentRegion.show(view);
             // assert
             expect(true).toBe(true);
         });

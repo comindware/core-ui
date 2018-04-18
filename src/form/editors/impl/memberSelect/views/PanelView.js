@@ -1,7 +1,7 @@
 import list from 'list';
 import { helpers } from 'utils';
 import template from '../templates/panel.hbs';
-import ListItemView from './ListItemView';
+import ListView from './ListView';
 
 const config = {
     CHILD_HEIGHT: 34,
@@ -12,7 +12,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'model');
         helpers.ensureOption(options, 'reqres');
@@ -45,11 +45,11 @@ export default Marionette.LayoutView.extend({
         this.__assignKeyboardShortcuts();
     },
 
-    onShow() {
+    onRender() {
         this.listView = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
-                childView: ListItemView,
+                childView: ListView,
                 childViewOptions: {
                     reqres: this.reqres
                 },
@@ -62,7 +62,7 @@ export default Marionette.LayoutView.extend({
             }
         });
 
-        this.listRegion.show(this.listView);
+        this.showChildView('listRegion', this.listView);
 
         this.ui.input.focus();
         this.__updateFilter();

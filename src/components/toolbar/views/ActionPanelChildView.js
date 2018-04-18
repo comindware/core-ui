@@ -2,7 +2,7 @@
 import { severity } from '../meta';
 import template from '../templates/IconColorPanelChild.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     triggers: {

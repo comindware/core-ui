@@ -15,7 +15,7 @@ const DemoReferenceCollections = Backbone.Collection.extend({
     model: DefaultReferenceModel
 });
 
-export default Marionette.Controller.extend({
+export default Marionette.Object.extend({
     initialize() {
         this.collection = list.factory.createWrappedCollection({ collection: new DemoReferenceCollections([]) });
     },

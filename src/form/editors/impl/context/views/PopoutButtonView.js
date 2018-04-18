@@ -4,7 +4,7 @@ const classes = {
     EMPTY: 'dev-context-editor__empty'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     tagName: 'span',
 
     className: 'source-text',

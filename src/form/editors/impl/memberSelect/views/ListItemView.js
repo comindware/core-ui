@@ -2,16 +2,12 @@ import { htmlHelpers } from 'utils';
 import template from '../templates/listItem.hbs';
 import list from 'list';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
 
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior
-        }
-    },
+    behaviors: [ list.views.behaviors.ListItemViewBehavior ],
 
     className: 'dd-list__i',
 

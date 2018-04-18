@@ -42,7 +42,7 @@ export default NewExpressionEditorView.extend({
         template: '.js-new-expression-template-container'
     },
 
-    onShow() {
+    onAttach() {
         this.valueTypeCollection = new Backbone.Collection(null, { comparator: false });
 
         this.__showValueEditor();
@@ -70,7 +70,7 @@ export default NewExpressionEditorView.extend({
         );
 
         this.listenTo(this.templateEditor, 'change', this.__updateEditorValue);
-        this.templateContainer.show(this.templateEditor);
+        this.showChildView('templateContainer', this.templateEditor);
     },
 
     __updateEditorState() {

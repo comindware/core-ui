@@ -2,7 +2,7 @@
 
 import { htmlHelpers } from 'utils';
 import template from '../templates/grid.hbs';
-import ListView from './ListView';
+import ListView from './CollectionView';
 import RowView from './RowView';
 import SelectionPanelView from './SelectionPanelView';
 import SelectionCellView from './SelectionCellView';
@@ -35,7 +35,7 @@ const constants = {
  * @class GridView
  * @constructor
  * @description View-контейнер для заголовка и контента
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.collection массив элементов списка
  * @param {Array} options.columns массив колонок
@@ -56,7 +56,7 @@ const constants = {
  * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * */
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         if (this.collection === undefined) {
             throw new Error('You must provide a collection to display.');
@@ -134,11 +134,11 @@ export default Marionette.LayoutView.extend({
             });
         }
 
-        this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
-            if (eventName.startsWith(eventName, 'childview')) {
-                this.trigger.apply(this, [eventName, view].concat(eventArguments));
-            }
-        });
+        //this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
+        //    if (eventName.startsWith(eventName, 'childview')) {
+        //        this.trigger.apply(this, [eventName, view].concat(eventArguments));
+        //    }
+        //});
 
         this.listenTo(this.listView, 'positionChanged', (sender, args) => {
             this.trigger('positionChanged', this, args);
@@ -146,7 +146,6 @@ export default Marionette.LayoutView.extend({
 
         this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
 
-        this.updatePosition = this.listView.updatePosition.bind(this.listView);
         if (this.collection.length) {
             //this.__presortCollection(options.columns); TODO WFT
         }
@@ -208,17 +207,20 @@ export default Marionette.LayoutView.extend({
             const noColumnsView = new this.noColumnsView(this.noColumnsViewOptions);
             this.noColumnsViewRegion.show(noColumnsView);
         }
-        this.contentRegion.show(this.listView);
-        this.headerRegion.show(this.headerView);
+
+        this.showChildView('contentRegion', this.listView);
+        this.showChildView('headerRegion', this.headerView);
+
         if (this.options.showSelection) {
-            this.selectionHeaderRegion.show(this.selectionHeaderView);
-            this.selectionPanelRegion.show(this.selectionPanelView);
+            //this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
+            //this.showChildView('selectionPanelRegion', this.selectionPanelView);
         }
+
         if (this.options.showToolbar) {
-            this.toolbarRegion.show(this.toolbarView);
+            this.showChildView('toolbarRegion', this.toolbarView);
         }
         if (this.options.showSearch) {
-            this.searchRegion.show(this.searchView);
+            this.showChildView('searchRegion', this.searchView);
         }
         if (!(this.options.showToolbar || this.options.showSearch)) {
             this.ui.tools.hide();
@@ -229,6 +231,7 @@ export default Marionette.LayoutView.extend({
         } else {
             this.ui.title.hide();
         }
+        this.updatePosition = this.listView.updatePosition.bind(this.listView.collectionView);
     },
 
     onAttach() {
@@ -251,16 +254,20 @@ export default Marionette.LayoutView.extend({
     },
 
     __bindListRegionScroll() {
+        const headerRegionEl = this.getRegion('headerRegion').el;
+        const selectionPanelRegionEl = this.options.showSelection && this.getRegion('selectionPanelRegion').el;
+
         this.listView.el.addEventListener('scroll', event => {
-            this.headerRegion.el.scrollLeft = event.currentTarget.scrollLeft;
-            if (this.options.showSelection) {
-                this.selectionPanelRegion.el.scrollTop = event.currentTarget.scrollTop;
+            headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
+            if (selectionPanelRegionEl) {
+                selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
             }
         });
     },
 
     onDestroy() {
-        document.body.removeChild(this.styleSheet);
+        //console.log(this.styleSheet);
+        //this.styleSheet && document.body.removeChild(this.styleSheet);
     },
 
     sortBy(columnIndex, sorting) {

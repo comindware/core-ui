@@ -3,7 +3,7 @@ import EmptyGridView from './views/EmptyGridView';
 import GridColumnHeaderView from './views/GridColumnHeaderView';
 import GridHeaderView from './views/GridHeaderView';
 import GridView from './views/GridView';
-import ListView from './views/ListView';
+import ListView from './views/CollectionView';
 import RowView from './views/RowView';
 import EditableGridFieldView from './views/EditableGridFieldView';
 import ListGroupViewBehavior from './views/behaviors/ListGroupViewBehavior';

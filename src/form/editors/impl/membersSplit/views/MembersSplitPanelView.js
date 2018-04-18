@@ -7,9 +7,9 @@ const config = {
     CHILD_HEIGHT: 34
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     constructor(options) {
-        Marionette.LayoutView.prototype.constructor.apply(this, arguments);
+        Marionette.View.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
         _.bindAll(this, '__onSelectedItemsSelect', '__onSelectedSearch', '__moveRight', '__moveLeft', '__moveRightAll', '__moveLeftAll');
         this.eventAggregator = [];
@@ -46,7 +46,7 @@ export default Marionette.LayoutView.extend({
         selectedSearchRegion: '.js-selected-search-region'
     },
 
-    onShow() {
+    onRender() {
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
         if (maxQuantitySelected) {
             this.ui.maxQuantityInfo.text(helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
@@ -73,10 +73,10 @@ export default Marionette.LayoutView.extend({
             availableViewOptions.listViewOptions.childViewSelector = this.options.childViewSelector;
         }
         const availableList = Core.list.factory.createDefaultList(availableViewOptions);
-        this.availableItemsListRegion.show(availableList);
+        this.showChildView('availableItemsListRegion', availableList);
         // Available search
         const availableSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.availableSearchRegion.show(availableSearchView);
+        this.showChildView('availableSearchRegion', availableSearchView);
         this.listenTo(availableSearchView, 'search', this.__onAvailableSearch);
         // Selected list
         const selectedList = Core.list.factory.createDefaultList({
@@ -95,11 +95,11 @@ export default Marionette.LayoutView.extend({
                 maxRows: 10
             }
         });
-        this.selectedItemsListRegion.show(selectedList);
+        this.showChildView('selectedItemsListRegion', selectedList);
 
         // Selected search
         const selectedSearchView = new Core.views.SearchBarView({ placeholder: this.model.get('searchPlaceholder') });
-        this.selectedSearchRegion.show(selectedSearchView);
+        this.showChildView('selectedSearchRegion', selectedSearchView);
         this.listenTo(selectedSearchView, 'search', this.__onSelectedSearch);
 
         if (this.model.get('showToolbar')) {
@@ -108,13 +108,13 @@ export default Marionette.LayoutView.extend({
                 model: this.model
             });
             this.listenTo(availableItemsToolbarView, 'select', this.__onAvailableItemsSelect);
-            this.availableItemsToolbarRegion.show(availableItemsToolbarView);
+            this.showChildView('availableItemsToolbarRegion', availableItemsToolbarView);
 
             // Selected toolbar
             const selectedMembersToolbarView = new MembersToolbarView({
                 model: this.model
             });
-            this.selectedItemsToolbarRegion.show(selectedMembersToolbarView);
+            this.showChildView('selectedItemsToolbarRegion', selectedMembersToolbarView);
             this.listenTo(selectedMembersToolbarView, 'select', this.__onSelectedItemsSelect);
         }
     },

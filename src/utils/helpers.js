@@ -1,11 +1,8 @@
-/*eslint-disable*/
-
+/*eslint-ignore*/
 import LocalizationService from '../services/LocalizationService';
 
 const timeoutCache = {};
-
 const queueCache = {};
-
 let getPluralFormIndex = null;
 
 export default /** @lends module:core.utils.helpers */ {
@@ -174,15 +171,17 @@ export default /** @lends module:core.utils.helpers */ {
         if (!options) {
             this.throwError('The options object is required.', 'MissingOptionError');
         }
+        let recursiveOptions = options;
+
         if (optionName.indexOf('.') !== -1) {
             const selector = optionName.split('.');
             for (let i = 0, len = selector.length; i < len; i++) {
-                optionName = selector[i];
-                if (options[optionName] === undefined) {
-                    optionName = _.take(selector, i + 1).join('.');
-                    this.throwError(`The option \`${optionName}\` is required.`, 'MissingOptionError');
+                let name = selector[i];
+                if (recursiveOptions[name] === undefined) {
+                    name = _.take(selector, i + 1).join('.');
+                    this.throwError(`The option \`${name}\` is required.`, 'MissingOptionError');
                 }
-                options = options[optionName];
+                recursiveOptions = recursiveOptions[name];
             }
         } else if (options[optionName] === undefined) {
             this.throwError(`The option \`${optionName}\` is required.`, 'MissingOptionError');
@@ -198,22 +197,24 @@ export default /** @lends module:core.utils.helpers */ {
      * @param {Object} object An object to check.
      * @param {String} propertyName Property name or dot-separated property path.
      * */
-    ensureProperty(object, propertyName) {
-        if (!object) {
-            this.throwError('The object is null.', 'NullObjectError');
+    ensureProperty(options, optionName) {
+        if (!options) {
+            this.throwError('The options object is required.', 'MissingOptionError');
         }
-        if (propertyName.indexOf('.') !== -1) {
-            const selector = propertyName.split('.');
+        let recursiveOptions = options;
+
+        if (optionName.indexOf('.') !== -1) {
+            const selector = optionName.split('.');
             for (let i = 0, len = selector.length; i < len; i++) {
-                propertyName = selector[i];
-                if (object[propertyName] === undefined) {
-                    propertyName = _.take(selector, i + 1).join('.');
-                    this.throwError(`The property \`${propertyName}\` is required.`, 'MissingPropertyError');
+                let name = selector[i];
+                if (recursiveOptions[name] === undefined) {
+                    name = _.take(selector, i + 1).join('.');
+                    this.throwError(`The option \`${name}\` is required.`, 'MissingOptionError');
                 }
-                object = object[propertyName];
+                recursiveOptions = recursiveOptions[name];
             }
-        } else if (object[propertyName] === undefined) {
-            this.throwError(`The property \`${propertyName}\` is required.`, 'MissingPropertyError');
+        } else if (options[optionName] === undefined) {
+            this.throwError(`The option \`${optionName}\` is required.`, 'MissingOptionError');
         }
     },
 
@@ -256,7 +257,7 @@ export default /** @lends module:core.utils.helpers */ {
     throwError(message, name) {
         const error = new Error(message);
         error.name = name || 'Error';
-        throw error;
+        Core.InterfaceError.logError(error);
     },
 
     /**

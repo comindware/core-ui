@@ -3,7 +3,7 @@ import list from 'list';
 import { htmlHelpers } from 'utils';
 import template from '../templates/workSpaceListItem.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.channel = options.channel;
     },
@@ -36,11 +36,7 @@ export default Marionette.ItemView.extend({
 
     className: 'js-menu-select-item menu-bselect__item',
 
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior
-        }
-    },
+    behaviors: [ list.views.behaviors.ListItemViewBehavior],
 
     onHighlighted(fragment) {
         const text = htmlHelpers.highlightText(this.model.get('name'), fragment);

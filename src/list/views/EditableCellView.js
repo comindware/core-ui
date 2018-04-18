@@ -1,7 +1,7 @@
 import template from '../templates/editableCell.hbs';
 import EditableGridFieldView from './EditableGridFieldView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {
@@ -42,7 +42,7 @@ export default Marionette.LayoutView.extend({
             key: this.schema.key || this.schema.id,
             model: this.model.get('rowModel'),
         });
-        this.editorRegion.show(this.editorView);
+        this.showChildView('editorRegion', this.editorView);
         this.editorIsShown = true;
     },
 

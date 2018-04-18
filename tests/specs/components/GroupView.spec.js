@@ -1,12 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     describe('GroupView', () => {
         it('should initialize', function () {
             const view = new core.layout.Group({
@@ -33,7 +28,7 @@ describe('Components', () => {
                     ]
                 })
             });
-            this.rootRegion.show(view);
+            window.application.contentRegion.show(view);
             // assert
             expect(true).toBe(true);
         });

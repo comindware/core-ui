@@ -14,7 +14,7 @@ const constants = {
  * @param modelIconProperty - name of model property. 'iconClass' as default
  */
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         const modelIconProperty = options.modelIconProperty;
         if (modelIconProperty && modelIconProperty !== constants.iconPropertyDefaultName) {

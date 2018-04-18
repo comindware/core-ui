@@ -46,8 +46,8 @@ const defaultOptions = {
  * @param {BaseReferenceEditorController} [options.controller=null] Data provider, instance
  * {@link module:core.form.editors.reference.controllers.BaseReferenceEditorController BaseReferenceEditorController}.
  * @param {Boolean} [options.showAddNewButton=false] responsible for displaying button, which providing to user adding new elements.
- * @param {Marionette.ItemView} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
- * @param {Marionette.ItemView} [options.listItemView=ReferenceListItemView] view to display item in the dropdown list.
+ * @param {Marionette.View} [options.buttonView=ReferenceButtonView] view to display button (what we click on to show dropdown).
+ * @param {Marionette.View} [options.listView=ReferenceListView] view to display item in the dropdown list.
  * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text.
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
@@ -142,7 +142,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
 
         this.__updateFakeInputModel();
     },

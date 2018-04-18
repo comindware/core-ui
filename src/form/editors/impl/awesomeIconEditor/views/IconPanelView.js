@@ -2,7 +2,7 @@ import template from '../templates/iconPanel.html';
 import IconCollectionView from './IconCollectionView';
 import IconItemCategoryView from './IconItemCategoryView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.iconGroupsCollection = this.options.collection;
     },
@@ -29,7 +29,7 @@ export default Marionette.LayoutView.extend({
             autocommit: true
         });
 
-        this.searchInputRegion.show(this.search);
+        this.showChildView('searchInputRegion', this.search);
 
         const iconCollectionView = new IconCollectionView({
             collection: this.options.collection

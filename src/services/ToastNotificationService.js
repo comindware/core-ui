@@ -10,7 +10,7 @@ export default class ToastNotificationService {
                 collection: this.notificationCollection
             })
         );
-        options.toastNotificationRegionEl.show();
+
         this.notificationTypes = {
             INFO: 'Info',
             ERROR: 'Error',

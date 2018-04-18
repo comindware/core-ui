@@ -86,7 +86,7 @@ const onChange = function() {
  * */
 
 export default {
-    create(viewClass: Marionette.ItemView | Marionette.LayoutView | Marionette.CollectionView | Marionette.ComsiteView) {
+    create(viewClass: Marionette.View | Marionette.View | Marionette.CollectionView | Marionette.ComsiteView) {
         return {
             classes: {
                 disabled: 'editor_disabled',
@@ -351,7 +351,7 @@ export default {
                     this.hasFocus = false;
                 }
 
-                return Marionette.ItemView.prototype.trigger.apply(this, arguments);
+                return Marionette.View.prototype.trigger.apply(this, arguments);
             },
 
             getValidator(validator: string | Function) {

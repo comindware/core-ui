@@ -18,7 +18,6 @@ import formApi from 'form';
 import listApi from 'list';
 
 import meta_ from './Meta';
-import bootstrapper from './Bootstrapper';
 
 import Controller from 'controller/Controller';
 import Application from 'Application';
@@ -160,7 +159,6 @@ const core = {
      * @memberof module:core
      * */
     meta: meta_,
-    initialize: bootstrapper.initialize.bind(bootstrapper),
     components: {
         NavigationDrawer,
         Toolbar,

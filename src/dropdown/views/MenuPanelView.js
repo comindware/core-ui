@@ -20,16 +20,14 @@ export default ListPanelView.extend({
 
     className: 'popout-menu',
 
-    childView: MenuItemView,
-
-    getChildView(model) {
+    childView(model) {
         if (model.get('customView')) {
             return model.get('customView');
         }
         return MenuItemView;
     },
 
-    childEvents: {
+    childViewEvents: {
         execute: '__execute'
     },
 

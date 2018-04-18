@@ -1,7 +1,7 @@
 //@flow
 import template from '../templates/errorItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     tagName: 'li',
 
     className: 'form-label__error-item',

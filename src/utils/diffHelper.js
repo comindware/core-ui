@@ -1,4 +1,11 @@
-export const Diff = function(a_, b_) {
+//@flow
+
+type diffObject = {
+    elem: {},
+    t: -1 | 0 | 1
+};
+
+export default function(a_: Array<any>, b_: Array<any>) {
     let a = a_;
     let b = b_;
     let m = a.length;
@@ -8,7 +15,7 @@ export const Diff = function(a_, b_) {
     let offset = m + 1;
     const path = [];
     const pathposi = [];
-    const ses = [];
+    const ses: Array<diffObject> = [];
     let lcs = '';
     const SES_DELETE = -1;
     const SES_COMMON = 0;
@@ -155,6 +162,4 @@ export const Diff = function(a_, b_) {
             recordseq(epc);
         }
     };
-};
-
-export default Diff;
+}

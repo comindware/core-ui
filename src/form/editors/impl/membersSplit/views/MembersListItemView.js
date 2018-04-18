@@ -2,7 +2,7 @@ import list from 'list';
 import { htmlHelpers } from 'utils';
 import template from '../templates/membersListItem.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     templateHelpers() {
         return {
             isGroup: this.model.get('type') === 'groups'
@@ -13,11 +13,7 @@ export default Marionette.ItemView.extend({
         name: '.js-name'
     },
 
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior
-        }
-    },
+    behaviors: [ list.views.behaviors.ListItemViewBehavior],
 
     onHighlighted(fragment) {
         const text = htmlHelpers.highlightText(this.model.get('name'), fragment);
