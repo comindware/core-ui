@@ -7,7 +7,7 @@ const classes = {
 
 export default Marionette.ItemView.extend({
     initialize() {
-        this.isShowAliases = this.options.model.get('isShowAliases');
+        this.isActive = this.options.model.get('isActive');
     },
 
     className: 'toolbar-btn',
@@ -19,7 +19,7 @@ export default Marionette.ItemView.extend({
     },
 
     onRender() {
-        if (this.isShowAliases) {
+        if (this.isActive) {
             this.ui.check.toggleClass(classes.CHECKED);
         }
     },
@@ -29,7 +29,7 @@ export default Marionette.ItemView.extend({
     },
 
     __handleClick() {
-        this.isShowAliases = !this.isShowAliases;
+        this.isActive = !this.isActive;
         this.ui.check.toggleClass(classes.CHECKED);
         this.trigger('action:click', this.model);
     }
