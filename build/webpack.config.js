@@ -265,7 +265,7 @@ module.exports = options => {
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
             new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
-            new FlowWebpackPlugin()
+            //new FlowWebpackPlugin()
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

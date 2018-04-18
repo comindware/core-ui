@@ -180,9 +180,9 @@ module.exports = () => {
                 exclude: ['localization']
             }),*/
             new HtmlWebpackPlugin({
-                template: pathResolver.source('index.html'),
-                hash: PRODUCTION,
                 filename: 'index.html',
+                template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
+                hash: PRODUCTION,
                 svgSprites: readSpritesFile(),
                 inject: 'body',
                 chunks: ['vendor', 'app'],
