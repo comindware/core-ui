@@ -1,4 +1,3 @@
-
 import template from '../templates/toolbarCheckboxItem.html';
 
 const classes = {
@@ -6,10 +5,6 @@ const classes = {
 };
 
 export default Marionette.ItemView.extend({
-    initialize() {
-        this.isShowAliases = this.options.model.get('isShowAliases');
-    },
-
     className: 'toolbar-btn',
 
     template: Handlebars.compile(template),
@@ -19,7 +14,7 @@ export default Marionette.ItemView.extend({
     },
 
     onRender() {
-        if (this.isShowAliases) {
+        if (this.model.get('isChecked')) {
             this.ui.check.toggleClass(classes.CHECKED);
         }
     },
@@ -29,7 +24,8 @@ export default Marionette.ItemView.extend({
     },
 
     __handleClick() {
-        this.isShowAliases = !this.isShowAliases;
+        const oldState = this.model.get('isChecked');
+        this.model.set('isChecked', !oldState);
         this.ui.check.toggleClass(classes.CHECKED);
         this.trigger('action:click', this.model);
     }
