@@ -24,9 +24,8 @@ export default Marionette.ItemView.extend({
     },
 
     __handleClick() {
-        const oldState = this.model.get('isChecked');
-        this.model.set('isChecked', !oldState);
-        this.ui.check.toggleClass(classes.CHECKED);
-        this.trigger('action:click', this.model);
+        const newState = !this.model.get('isChecked');
+        this.trigger('action:click', this.model, newState);
+        this.model.set('isChecked', newState);
     }
 });
