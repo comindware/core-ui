@@ -8,7 +8,7 @@ import iconWrapRemove from '../../../iconsWraps/iconWrapRemove.html';
 
 const savedDocumentPrefix = 'document';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.revisionCollection = new Backbone.Collection();
         const controller = new DocumentItemController({ view: this });
@@ -25,7 +25,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.model.get('text') || this.model.get('name')
         };
@@ -74,7 +74,7 @@ export default Marionette.LayoutView.extend({
                     popoutFlow: 'right',
                     autoOpen: false
                 });
-                this.reviseRegion.show(this.documentRevisionPopout);
+                this.showChildView('reviseRegion', this.documentRevisionPopout);
                 this.isRevisonButtonShown = true;
             } else {
                 this.ui.revise.show();

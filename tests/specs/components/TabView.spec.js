@@ -1,12 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     describe('TabView', () => {
         it('should initialize', function() {
             const model = new Backbone.Model({
@@ -98,8 +93,8 @@ describe('Components', () => {
                 showStepper: true,
                 showMoveButtons: true
             });
-
-            this.rootRegion.show(view);
+            console.log(window.application.contentRegion);
+            window.application.contentRegion.show(view);
             // assert
             expect(true).toBe(true);
         });

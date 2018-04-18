@@ -1,6 +1,6 @@
 import template from '../templates/defaultButton.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.enabled = options.enabled;
         this.reqres = options.reqres;

@@ -4,7 +4,15 @@ body {
     display: flex;
 }
 
-
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.app-region-container {
+    display: flex;
+    width: 100%;
+}
 @media screen and (max-width: 999px) {
     body, input, textarea, select {
         font: normal 16px/1.4 'OpenSans', sans-serif;
@@ -288,6 +296,7 @@ body {
     top: 0;
     right: 0;
     height: 100%;
+    overflow-y: auto;
 }
 
 .demo-list-canvas__view {
@@ -339,6 +348,7 @@ body {
     top: 0;
     right: 0;
     bottom: 0;
+    overflow-y: auto;
 }
 
 

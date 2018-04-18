@@ -1,61 +1,51 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Application', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
+
 
     describe('Controller', () => {
         it('should initialize', function () {
-            /*
-            const view = Core.Controller.extend({
+            const view = core.Controller.extend({
                 routingActions: {
                     list: {
                         url: 'SolutionConfigurationApi/List',
-                        viewModel: solutions.SolutionsCollection,
-                        view: solutions.SolutionGridView,
+                        viewModel: Backbone.Collection,
+                        view: Marionette.View.extend({ template: false }),
                         viewEvents: {
-                            'dblclick:row'(model) {
-                                this.__navigate(ModuleService.getModuleUrlByName('administration', ModuleService.modules.SOLUTIONS, { appId: model.id }));
-                            }
+
                         }
                     },
                     rolesList: {
                         url: 'RolesCollectionApi/List',
-                        viewModel: solutions.RolesListCollection,
-                        view: solutions.RolesGridView,
+                        viewModel: Backbone.Collection,
+                        view: Marionette.View.extend({ template: false }),
                         viewEvents: {
                             'dblclick:row'(roleId) {
-                                const appId = this.currentState.solution;
 
-                                this.__navigate(ModuleService.getModuleUrlByName('role', ModuleService.modules.SOLUTIONS, { appId, roleId }));
                             },
                             navigateToNewRole() {
-                                const appId = this.currentState.solution;
 
-                                this.__navigate(ModuleService.getModuleUrlByName('newRole', ModuleService.modules.SOLUTIONS, { appId }));
                             }
                         }
                     },
                     role: {
                         urlParams: ['Roles'],
                         url: 'RolesCollectionApi/Get',
-                        viewModel: solutions.RolesListModel,
-                        view: solutions.RoleViewPresenter,
+                        viewModel: Backbone.Collection,
+                        view: Marionette.View.extend({ template: false }),
                         viewEvents: {
-                            'update:role:name'(name) {
-                                this.__updateRoleName(name);
+                            'update:role:name'() {
+
                             }
                         }
                     },
                     newRole: {
-                        viewModel: solutions.RolesListModel,
-                        view: solutions.RoleViewPresenter,
+                        viewModel: Backbone.Collection,
+                        view: Marionette.View.extend({ template: false }),
                         viewEvents: {
-                            'update:role:name'(name) {
-                                this.__updateRoleName(name);
+                            'update:role:name'() {
+
                             }
                         }
                     }
@@ -184,9 +174,13 @@ describe('Application', () => {
                 }
             });
 
-            this.rootRegion.show(view);
+            const controller = new view({
+                config: { id: 'my:module'},
+                region: window.application.contentRegion
+            });
+
+            //window.application.contentRegion.show(view);
             // assert
-            */
             expect(true).toBe(true);
         });
     });

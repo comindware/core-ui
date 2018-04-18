@@ -631,6 +631,15 @@ a:hover {
 
 
 /* mselect new */
+.member-split{
+    width: 100%;
+    height: 100%;
+}
+
+.member-split__wrp{
+    width: 100%;
+    height: 100%;
+}
 
 .columns-select {
     width: 100%;
@@ -639,7 +648,7 @@ a:hover {
     justify-content: space-between;
     border-top: 1px solid #CED3D7;
     border-bottom: 1px solid #CED3D7;
-    margin-top: 40px;
+    margin-top: 0;
 }
 
 .columns-select__header {

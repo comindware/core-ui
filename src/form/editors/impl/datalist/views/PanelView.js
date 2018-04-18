@@ -14,7 +14,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
@@ -26,21 +26,24 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             showAddNewButton: this.showAddNewButton
         };
     },
 
     regions: {
-        listRegion: '.js-list-region',
+        listRegion: {
+            el: '.js-list-region',
+            replaceElement: true
+        },
         loadingRegion: '.js-loading-region',
         addNewButtonRegion: '.js-add-new-button-region',
         listTitleRegion: '.js-list-title-region',
         elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
     },
 
-    onShow() {
+    onAttach() {
         this.listView = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
@@ -62,13 +65,13 @@ export default Marionette.LayoutView.extend({
         if (this.showAddNewButton) {
             this.$el.addClass('dropdown__wrp_reference-button');
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
-            this.addNewButtonRegion.show(addNewButton);
+            this.showChildView('addNewButtonRegion', addNewButton);
         }
 
-        this.listRegion.show(this.listView);
+        this.showChildView('listRegion', this.listView);
 
-        this.elementsQuantityWarningRegion.show(new ElementsQuantityWarningView());
-        this.elementsQuantityWarningRegion.$el.hide();
+        this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
+        this.getRegion('elementsQuantityWarningRegion').$el.hide();
         this.updateFilter(null, true);
     },
 
@@ -127,7 +130,7 @@ export default Marionette.LayoutView.extend({
         }
         this.isLoading = isLoading;
         if (isLoading) {
-            this.loadingRegion.show(new LoadingView());
+            this.showChildView('loadingRegion', new LoadingView());
         } else {
             this.loadingRegion.reset();
         }
@@ -135,7 +138,7 @@ export default Marionette.LayoutView.extend({
 
     __toggleElementsQuantityWarning(count) {
         if (this.elementsQuantityWarningRegion) {
-            count > 100 ? this.elementsQuantityWarningRegion.$el.show() : this.elementsQuantityWarningRegion.$el.hide();
+            count > 100 ? this.getRegion('elementsQuantityWarningRegion').$el.show() : this.getRegion('elementsQuantityWarningRegion').$el.hide();
         }
     },
 

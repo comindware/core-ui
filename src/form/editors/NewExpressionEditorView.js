@@ -53,7 +53,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
@@ -154,7 +154,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         if (this.valueTypeCollection.length === 1) {
             this.ui.type.hide();
         }
-        this.typeContainer.show(this.typeEditor);
+        this.showChildView('typeContainer', this.typeEditor);
         this.typeEditor.setValue(this.value.type);
     },
 
@@ -181,7 +181,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         );
 
         this.valueEditor.on('change', this.__updateEditorValue, this);
-        this.valueContainer.show(this.valueEditor);
+        this.showChildView('valueContainer', this.valueEditor);
     },
 
     __showContextEditor() {
@@ -197,7 +197,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
 
         this.contextEditor = new formRepository.editors.ContextSelect(contextOptions);
         this.contextEditor.on('change', this.__updateEditorValue, this);
-        this.contextContainer.show(this.contextEditor);
+        this.showChildView('contextContainer', this.contextEditor);
 
         this.valueTypeCollection.add({
             id: valueTypes.context,
@@ -224,7 +224,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
 
         this.expressionEditor = new formRepository.editors.Code(expressionEditorOptionsOptions);
         this.expressionEditor.on('change', this.__updateEditorValue, this);
-        this.expressionContainer.show(this.expressionEditor);
+        this.showChildView('expressionContainer', this.expressionEditor);
     },
 
     __showScriptEditor() {
@@ -246,7 +246,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
 
         this.scriptEditor = new formRepository.editors.Code(scriptEditorOptionsOptions);
         this.scriptEditor.on('change', this.__updateEditorValue, this);
-        this.scriptContainer.show(this.scriptEditor);
+        this.showChildView('scriptContainer', this.scriptEditor);
     },
 
     __updateEditorState() {

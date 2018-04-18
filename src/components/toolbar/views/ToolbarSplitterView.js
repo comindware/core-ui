@@ -1,5 +1,5 @@
 //@flow
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'btn-separator toolbar-btn__icon',
 
     template: false

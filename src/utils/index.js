@@ -5,10 +5,8 @@ import dateHelpers_ from './dateHelpers';
 import diffHelper_ from './diffHelper';
 import keyCode_ from './keyCode';
 import './handlebars/all';
-import RegionBehavior_ from './RegionBehavior';
 import './codemirror';
 
-export const RegionBehavior = RegionBehavior_;
 export const comparators = comparators_;
 export const helpers = helpers_;
 export const htmlHelpers = htmlHelpers_;
@@ -45,8 +43,6 @@ export default {
      * @namespace
      * */
     keyCode,
-
-    RegionBehavior,
 
     diffHelper
 };

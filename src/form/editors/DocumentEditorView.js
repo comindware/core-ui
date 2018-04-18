@@ -10,7 +10,7 @@ import ReferencePanelView from './impl/reference/views/ReferencePanelView';
 import MultiselectItemView from './impl/document/views/MultiselectItemView';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
 
-const MultiselectAddButtonView = Marionette.ItemView.extend({
+const MultiselectAddButtonView = Marionette.View.extend({
     className: 'button-sm_h3 button-sm button-sm_add',
     tagName: 'button',
     template: Handlebars.compile('{{text}}')
@@ -39,6 +39,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
+        this.initcollection();
+
         this.on('change', this.checkEmpty.bind(this));
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
@@ -58,7 +60,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     checkEmpty() {
-        this.$el.toggleClass('pr-empty', this.internalValue && this.internalValue.length === 0);
+        this.$el.toggleClass('pr-empty', this.collection && this.collection.length === 0);
     },
 
     canAdd: false,
@@ -90,7 +92,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         showMoreText: '.js-show-more-text'
     },
 
-    templateHelpers() {
+    templateContext() {
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
             multiple: this.options.multiple,
@@ -105,7 +107,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         'click @ui.fileUploadButton': '__onItemClick'
     },
 
-    childEvents: {
+    childViewEvents: {
         remove: 'onValueRemove'
     },
 
@@ -122,16 +124,16 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.renderUploadButton(this.options.readonly);
     },
 
-    initInternalValue() {
+    initcollection() {
         if (!this.value) {
-            this.internalValue = new DocumentReferenceCollection();
+            this.collection = new DocumentReferenceCollection();
         } else {
-            this.internalValue = new DocumentReferenceCollection(this.value);
+            this.collection = new DocumentReferenceCollection(this.value);
         }
     },
 
     syncValue() {
-        this.value = this.internalValue ? this.internalValue.toJSON() : [];
+        this.value = this.collection ? this.collection.toJSON() : [];
     },
 
     uploadDocumentOnServer(documents) {
@@ -153,11 +155,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     renderUploadButton(isReadonly) {
         if (!isReadonly) {
-            this.ui.addRegion.show();
-
             this.on('uploaded', documents => {
                 if (this.options.multiple === false) {
-                    this.internalValue.reset();
+                    this.collection.reset();
                     if (this.value && this.value.length && this.value[0].id.indexOf(savedDocumentPrefix) > -1) {
                         documents[0].documentId = this.value[0].id;
                     }
@@ -175,7 +175,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     removeItem(model) {
-        this.internalValue.remove(model);
+        this.collection.remove(model);
         this.options.removeDocuments([model.get('id')]);
         this.__triggerChange();
     },
@@ -197,7 +197,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             return;
         }
         this.value = value;
-        this.internalValue.set(value);
+        this.collection.set(value);
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -402,7 +402,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     onValueAdd(model) {
-        this.internalValue.add(model);
+        this.collection.add(model);
         this.trigger('valueAdded', model);
         this.dropdownView && this.dropdownView.close();
         this.renderShowMore();
@@ -449,9 +449,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         const childViews = this.$childViewContainer.children();
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
-        const length = this.internalValue.length;
+        const length = this.collection.length;
         // visible children
-        while (visibleCounter < length && visibleWidth + $(childViews[visibleCounter]).width() < affordabletWidth) {
+        while (visibleCounter < length && visibleWidth + childViews[visibleCounter].clientWidth < affordabletWidth) {
             visibleWidth += $(childViews[visibleCounter])
                 .show()
                 .width();

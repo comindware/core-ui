@@ -5,11 +5,11 @@ import template from '../templates/loadingRow.hbs';
  * @name LoadingRowView
  * @memberof module:core.list.views
  * @class LoadingRowView
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @constructor
  * @description View показывает loader при подгрузке контента
  * */
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'dev-loading-row',
 
     template: Handlebars.compile(template)

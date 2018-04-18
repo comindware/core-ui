@@ -3,7 +3,7 @@ import ActionMenuPanelView from './ActionMenuPanelView';
 import ActionMenuButtonView from './ActionMenuButtonView';
 import { severity } from '../meta';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: false,
 
     className() {

@@ -12,7 +12,7 @@ const classes = {
     COLLAPSED_CLASS: 'layout__group-collapsed__button'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'view');
 
@@ -42,10 +42,10 @@ export default Marionette.LayoutView.extend({
         'click @ui.toggleCollapseButton': '__toggleCollapse'
     },
 
-    onShow() {
+    onRender() {
         const view = this.model.get('view');
         if (view) {
-            this.containerRegion.show(view);
+            this.showChildView('containerRegion', view);
         }
         this.__updateState();
     },

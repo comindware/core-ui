@@ -1,14 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    let rootRegion;
-
-    beforeEach(() => {
-        rootRegion = initializeCore();
-    });
-
     describe('TextEditorView', () => {
         const findInput = function(view) {
             return view.$('input');
@@ -23,7 +16,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             // act
             view.focus();
@@ -42,7 +35,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.focus();
 
             // act
@@ -62,7 +55,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             // act
             const value = view.getValue();
@@ -79,7 +72,7 @@ describe('Editors', () => {
             const view = new core.form.editors.TextEditor({
                 value: expected
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             // act
             const value = view.getValue();
@@ -100,10 +93,9 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
 
-            // act
             view.focus();
             const input = findInput(view);
             input.val(expected);
@@ -115,13 +107,12 @@ describe('Editors', () => {
         });
 
         it('should update `value` and send `change` on user change (w/o data binding).', () => {
-            // arrange
             const expected = 'text 2';
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const view = new core.form.editors.TextEditor({
                 value: 'text'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -130,13 +121,11 @@ describe('Editors', () => {
             input.val(expected);
             input.change();
 
-            // assert
             expect(view.getValue()).toEqual(expected);
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
         it('should update `value` on model change', () => {
-            // arrange
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
                 data: 'text'
@@ -145,7 +134,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -171,7 +160,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -200,7 +189,7 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -225,7 +214,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -246,7 +235,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -266,7 +255,7 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown'
             });
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -291,7 +280,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
 
             view.$el.trigger('mouseenter');
@@ -319,7 +308,7 @@ describe('Editors', () => {
                 readonly: true
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.on('change', onChangeCallback);
 
             const isEmpty = view.isEmptyValue();
@@ -355,7 +344,7 @@ describe('Editors', () => {
                 allowEmptyValue: false
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.trigger('mouseenter');
             expect(view.$('.js-clear-button').length).toEqual(0);

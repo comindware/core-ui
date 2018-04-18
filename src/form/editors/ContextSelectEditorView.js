@@ -71,7 +71,7 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
             },
             popoutFlow: this.options.popoutFlow
         });
-        this.contextPopoutRegion.show(this.popoutView);
+        this.showChildView('contextPopoutRegion', this.popoutView);
         this.listenTo(this.popoutView, 'before:open', () => {
             const model = this.viewModel.get('panel');
             model.populateChildren();

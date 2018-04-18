@@ -13,7 +13,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
@@ -25,7 +25,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton
@@ -55,11 +55,11 @@ export default Marionette.LayoutView.extend({
         this.__assignKeyboardShortcuts();
     },
 
-    onShow() {
+    onAttach() {
         this.listView = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
-                childView: this.options.listItemView,
+                childView: this.options.listView,
                 childViewOptions: {
                     reqres: this.reqres,
                     getDisplayText: this.options.getDisplayText
@@ -75,10 +75,10 @@ export default Marionette.LayoutView.extend({
         if (this.showAddNewButton) {
             this.$el.addClass('dropdown__wrp_reference-button');
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
-            this.addNewButtonRegion.show(addNewButton);
+            this.showChildView('addNewButtonRegion', addNewButton);
         }
 
-        this.listRegion.show(this.listView);
+        this.showChildView('listRegion', this.listView);
 
         if (this.getOption('hideSearchBar')) {
             this.ui.searchBarContainer.hide();
@@ -165,7 +165,7 @@ export default Marionette.LayoutView.extend({
         }
         this.isLoading = isLoading;
         if (isLoading) {
-            this.loadingRegion.show(new LoadingView());
+            this.showChildView('loadingRegion', new LoadingView());
             this.ui.input.blur();
         } else {
             this.ui.input.focus();

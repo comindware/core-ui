@@ -7,7 +7,7 @@ const classes = {
 
 const POPUP_ID_PREFIX = 'popup-region-';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.__stack = [];
         this.__forceFadeBackground = false;

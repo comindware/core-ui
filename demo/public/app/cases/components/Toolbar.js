@@ -23,8 +23,8 @@ export default function() {
                     collection: new Backbone.Collection(),
                     diagramId: '1',
                     solutionId: '2',
-                    buttonView: Marionette.ItemView,
-                    panelView: Marionette.ItemView
+                    buttonView: Marionette.View.extend({ template: false }),
+                    panelView: Marionette.View.extend({ template: false })
                 }
             },
             {

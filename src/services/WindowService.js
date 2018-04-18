@@ -4,15 +4,17 @@ export default {
     initialize() {
         Object.assign(this, Backbone.Events);
 
-        this.__$popupStackRegionEl = document.createElement('div');
-        document.body.appendChild(this.__$popupStackRegionEl);
+        const __popupStackRegionEl = document.createElement('div');
 
-        const regionManager = new Marionette.RegionManager();
-        regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
+        document.body.appendChild(__popupStackRegionEl);
 
-        const popupStackRegion = regionManager.get('popupStackRegion');
+        const rootView = window.app.getView();
+
+        rootView.addRegion('popupStackRegion', { el: __popupStackRegionEl });
+
         this.__popupStackView = new PopupStackView();
-        popupStackRegion.show(this.__popupStackView);
+
+        rootView.showChildView('popupStackRegion', this.__popupStackView);
 
         this.__popupStackView.on('popup:close', popupId => this.trigger('popup:close', popupId));
     },

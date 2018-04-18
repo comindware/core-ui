@@ -69,7 +69,7 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             displayText: this.options.displayText
         };

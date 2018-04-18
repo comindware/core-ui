@@ -6,22 +6,20 @@ const classes = {
     SELECTED: 'editor_checked'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className() {
         return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
     },
 
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior,
-            multiSelect: true,
-            selectOnCursor: false
-        }
-    },
+    behaviors: [{
+        behaviorClass: list.views.behaviors.ListItemViewBehavior,
+        multiSelect: true,
+        selectOnCursor: false
+    }],
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.options.getDisplayText(this.model.toJSON()),
             showCheckboxes: this.options.showCheckboxes

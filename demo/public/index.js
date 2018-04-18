@@ -10,6 +10,6 @@ import AppController from './AppController';
 Application.appRouter = new AppRouter({
     controller: new AppController()
 });
-
-Application.start();
-Backbone.history.start();
+const app = new Application();
+window.app = app;
+app.start();

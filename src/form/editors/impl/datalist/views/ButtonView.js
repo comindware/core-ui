@@ -21,7 +21,7 @@ export default Marionette.CollectionView.extend({
         return classes.CLASS_NAME + (this.options.enabled ? '' : classes.DISABLED);
     },
 
-    getChildView(model) {
+    childView(model) {
         if (model instanceof FakeInputModel) {
             return InputView;
         }

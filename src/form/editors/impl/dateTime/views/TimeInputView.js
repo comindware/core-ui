@@ -3,7 +3,7 @@ import template from '../templates/timeInput.hbs';
 import DateTimeService from '../../../services/DateTimeService';
 import LocalizationService from '../../../../../services/LocalizationService';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'allowEmptyValue');
         this.hasSeconds = this.__hasSeconds(options.timeDisplayFormat);

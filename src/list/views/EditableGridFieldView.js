@@ -7,7 +7,7 @@ export default FieldView.extend({
     className: 'editable-grid-field',
 
     onRender() {
-        this.editorRegion.show(this.editor);
+        this.showChildView('editorRegion', this.editor);
         this.__rendered = true;
         this.setRequired(this.schema.required);
         this.__updateEditorState(this.schema.readonly, this.schema.enabled);

@@ -52,7 +52,7 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         });
     },
 
-    className: 'member-split-panel-editor__view',
+    className: 'member-split',
 
     focusElement: null,
 
@@ -71,7 +71,7 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             displayText: this.options.displayText
         };
@@ -81,9 +81,9 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         this.__value(value, false);
     },
 
-    onShow() {
+    onRender() {
         this.controller.initItems();
-        this.splitPanelRegion.show(this.controller.view);
+        this.showChildView('splitPanelRegion', this.controller.view);
     },
 
     __value(value, triggerChange) {

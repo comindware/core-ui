@@ -54,7 +54,7 @@ const factory = {
 
     getTextCellView() {
         const extention = {
-            templateHelpers() {
+            templateContext() {
                 return {
                     value: this.model.get(this.options.key)
                 };
@@ -65,7 +65,7 @@ const factory = {
 
     getReferenceCellView() {
         const extention = {
-            templateHelpers() {
+            templateContext() {
                 return {
                     value: this.model.get(this.options.key)
                 };
@@ -84,7 +84,7 @@ const factory = {
 
     getNumberCellView() {
         const extention = {
-            templateHelpers() {
+            templateContext() {
                 return {
                     value: this.model.get(this.options.key)
                 };
@@ -95,7 +95,7 @@ const factory = {
 
     getDurationCellView() {
         const extention = {
-            templateHelpers() {
+            templateContext() {
                 return {
                     value: this.model.get(this.options.key)
                 };
@@ -106,7 +106,7 @@ const factory = {
 
     getBooleanCellView() {
         const extention = {
-            templateHelpers() {
+            templateContext() {
                 const value = this.model.get(this.options.key);
                 return {
                     value,
@@ -126,7 +126,7 @@ const factory = {
 
     getDateTimeCellView() {
         const extention = {
-            templateHelpers() {
+            templateContext() {
                 return {
                     value: this.model.get(this.options.key)
                 };
@@ -140,7 +140,7 @@ const factory = {
     },
 
     __getSimpleView(simpleTemplate, extention) {
-        return Marionette.ItemView.extend(
+        return Marionette.View.extend(
             Object.assign(
                 {
                     template: Handlebars.compile(simpleTemplate),
@@ -160,9 +160,9 @@ const factory = {
     },
 
     __getAccountView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{text}}'),
-            templateHelpers() {
+            templateContext() {
                 const value = this.model.get(this.options.key);
                 let text = '';
                 if (value && value.length > 0) {
@@ -198,10 +198,10 @@ const factory = {
     },
 
     __getDocumentView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{#each documents}}<a href="{{url}}">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
 
-            templateHelpers() {
+            templateContext() {
                 const value = this.model.get(this.options.key);
                 let documents = [];
                 if (value && value.length > 0) {
@@ -229,7 +229,7 @@ const factory = {
     },
 
     __getEnumView() {
-        return Marionette.ItemView.extend({
+        return Marionette.View.extend({
             template: Handlebars.compile('{{#if value}}{{valueExplained}}{{/if}}'),
             modelEvents: {
                 'change:highlightedFragment': '__handleHighlightedFragmentChange'
@@ -237,7 +237,7 @@ const factory = {
             __handleHighlightedFragmentChange() {
                 this.render();
             },
-            templateHelpers() {
+            templateContext() {
                 const value = this.model.get(this.options.key);
                 return {
                     value,
@@ -250,7 +250,7 @@ const factory = {
 
     getHtmlCellView() {
         const extention = {
-            templateHelpers() {
+            templateContext() {
                 return {
                     value: this.model.get(this.options.key)
                 };

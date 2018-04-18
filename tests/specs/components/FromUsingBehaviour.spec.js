@@ -1,5 +1,4 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 const template = '<div class="field-width" data-fields="text"></div>' +
@@ -18,13 +17,9 @@ const model = new Backbone.Model({
 });
 
 describe('Components', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     describe('FormUsingBehaviour', () => {
         it('should initialize', function () {
-            const View = Marionette.ItemView.extend({
+            const View = Marionette.View.extend({
                 initialize() {
                     this.model = model;
                 },
@@ -76,13 +71,13 @@ describe('Components', () => {
                 }
             });
 
-            this.rootRegion.show(new View());
+            window.application.contentRegion.show(new View());
             // assert
             expect(true).toBe(true);
         });
 
         it('should show all help texts ', function () {
-            const view = new (Marionette.ItemView.extend({
+            const view = new (Marionette.View.extend({
                 initialize() {
                     this.model = model;
                 },
@@ -129,7 +124,7 @@ describe('Components', () => {
                 }
             }))();
 
-            this.rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             const helpTexts = view.$('.form-label__info-button');
 

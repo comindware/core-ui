@@ -8,12 +8,12 @@ import template from '../templates/defaultButton.hbs';
  * The <code>text</code> attribute of the passed model is displayed.
  * Factory method {@link module:core.dropdown.factory createMenu} uses this view to display menu button.
  * @constructor
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Options object.
  * @param {Backbone.Model} options.model Data model. Must contain <code>text</code> attribute.
  * */
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     tagName: 'span',
 
     template: Handlebars.compile(template),

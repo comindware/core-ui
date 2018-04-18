@@ -1,17 +1,13 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<title>Core UI demo page</title>
-	</head>
-	<body>
-        <div class="visually-hidden">
-			<%= htmlWebpackPlugin.options.svgSprites %>
-        </div>
-		<div class="js-navigation-drawer-region"></div>
-		<div class="body-container">
-			<div class="js-header-region header-container"></div>
-			<div class="js-content-region content-container"></div>
-		</div>
-	</body>
+<head>
+	<meta charset="UTF-8" />
+	<title>Core UI demo page</title>
+</head>
+<body>
+<div class="visually-hidden">
+	{{{htmlWebpackPlugin.options.svgSprites}}}
+</div>
+<div class="js-app-region app-container"></div>
+</body>
 </html>

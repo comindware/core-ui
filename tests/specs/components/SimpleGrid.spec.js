@@ -1,12 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     const data = [];
     for (let i = 0; i < 5000; i++) {
         data.push({
@@ -70,7 +65,7 @@ describe('Components', () => {
                 collection: new Backbone.Collection(data)
             });
 
-            this.rootRegion.show(gridController.view);
+            window.application.contentRegion.show(gridController.view);
 
             expect(true).toBe(true);
         });

@@ -82,7 +82,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
@@ -227,7 +227,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.listenTo(this.calendarDropdownView, 'button:focus', this.__onDateButtonFocus, this);
         this.listenTo(this.calendarDropdownView, 'button:calendar:open', this.__onDateButtonCalendarOpen, this);
         this.listenTo(this.calendarDropdownView, 'panel:select', this.__onDatePanelSelect, this);
-        this.dateDropdownRegion.show(this.calendarDropdownView);
+        this.showChildView('dateDropdownRegion', this.calendarDropdownView);
         this.isDateDropdownShown = true;
 
         if (this.enabled && !this.readonly) {
@@ -297,7 +297,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
         this.listenTo(this.timeDropdownView, 'button:calendar:open', this.__onTimeButtonCalendarOpen, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
-        this.timeDropdownRegion.show(this.timeDropdownView);
+        this.showChildView('timeDropdownRegion', this.timeDropdownView);
 
         this.isTimeDropdownShown = true;
 
@@ -349,12 +349,12 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 collection: new Backbone.Collection(timeArray),
                 tagName: 'ul',
                 className: 'dropdown__wrp dropdown__wrp_time',
-                childEvents: {
+                childViewEvents: {
                     select(view, time) {
                         this.trigger('select', time);
                     }
                 },
-                childView: Marionette.ItemView.extend({
+                childView: Marionette.View.extend({
                     tagName: 'li',
                     className: 'time-dropdown__i',
                     events: {

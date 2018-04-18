@@ -14,13 +14,12 @@ import formRepository from '../formRepository';
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
 
-export default (formRepository.editors.RangeEditor = BaseItemEditorView.extend(
-    /** @lends module:core.form.editors.ColorPickerView.prototype */ {
+export default (formRepository.editors.RangeEditor = BaseItemEditorView.extend({
         tagName: 'input',
 
         template: false,
 
-        templateHelpers() {
+        templateContext() {
             return _.extend(this.options, {
                 title: this.value || ''
             });

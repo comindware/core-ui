@@ -2,7 +2,7 @@
 import FormFieldAnchor from './form/FormFieldAnchor';
 import FormEditorAnchor from './form/FormEditorAnchor';
 
-export function createEditorAnchor(key, options = {}) {
+export function createEditorAnchor(key: string, options: {} = {}) {
     return new FormEditorAnchor(
         Object.assign(
             {
@@ -13,7 +13,7 @@ export function createEditorAnchor(key, options = {}) {
     );
 }
 
-export function createFieldAnchor(key, options = {}) {
+export function createFieldAnchor(key: string, options: {} = {}) {
     return new FormFieldAnchor(
         Object.assign(
             {

@@ -1,7 +1,7 @@
 // @flow
 import template from './templates/headerItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     tagName: 'li',
 
     className() {
@@ -28,7 +28,7 @@ export default Marionette.ItemView.extend({
 
     __onClick() {
         if (this.model.get('enabled')) {
-            this.trigger('select');
+            this.trigger('select', this.model);
         }
     }
 });

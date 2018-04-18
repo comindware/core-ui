@@ -1,15 +1,15 @@
 // @flow
 import template from './templates/headerItem.hbs';
-import StepperItemView from './StepperItemView';
+import StepperView from './StepperItemView';
 
 export default Marionette.CollectionView.extend({
     className: 'layout__tab-layout__stepper_container',
 
     template: Handlebars.compile(template),
 
-    childView: StepperItemView,
+    childView: StepperView,
 
-    childEvents: {
+    childViewEvents: {
         'step:selected': '__handleStepSelect'
     },
 

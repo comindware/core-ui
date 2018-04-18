@@ -14,7 +14,7 @@ const classes = {
     ERROR: 'error'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options = {}) {
         this.schema = options.schema;
 
@@ -26,7 +26,7 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.schema.title,
             fieldId: this.fieldId
@@ -36,13 +36,16 @@ export default Marionette.LayoutView.extend({
     template: Handlebars.compile(template),
 
     regions: {
-        editorRegion: '.js-editor-region',
+        editorRegion: {
+            el: '.js-editor-region',
+            replaceElement: true
+        },
         errorTextRegion: '.js-error-text-region',
         helpTextRegion: '.js-help-text-region'
     },
 
     onRender() {
-        this.editorRegion.show(this.editor);
+        this.showChildView('editorRegion', this.editor);
         if (this.schema.helpText) {
             this.__viewModel = new Backbone.Model({
                 helpText: this.schema.helpText,
@@ -59,7 +62,7 @@ export default Marionette.LayoutView.extend({
                 popoutFlow: 'right',
                 customAnchor: true
             });
-            this.helpTextRegion.show(infoPopout);
+            this.showChildView('helpTextRegion', infoPopout);
         }
         this.__rendered = true;
         this.setRequired(this.schema.required);
@@ -98,7 +101,7 @@ export default Marionette.LayoutView.extend({
                 popoutFlow: 'right',
                 customAnchor: true
             });
-            this.errorTextRegion.show(errorPopout);
+            this.showChildView('errorTextRegion', errorPopout);
             this.isErrorShown = true;
         }
     },

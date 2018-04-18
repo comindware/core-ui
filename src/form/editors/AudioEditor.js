@@ -16,7 +16,7 @@ export default (formRepository.editors.AudioEditor = BaseLayoutEditorView.extend
 
     template: false,
 
-    templateHelpers() {
+    templateContext() {
         return Object.assign(this.options, {
             title: this.value || ''
         });
@@ -29,7 +29,7 @@ export default (formRepository.editors.AudioEditor = BaseLayoutEditorView.extend
         };
     },
 
-    onShow() {
+    onRender() {
         const audio: AudioNode = this.el;
         let recorder = {};
         const regionEl = document.createElement('div');

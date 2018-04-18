@@ -3,7 +3,7 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import DateTimeService from '../../../services/DateTimeService';
 import template from '../templates/dateInput.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'allowEmptyValue');
         this.editDateFormat = dateHelpers.getDateEditFormat();

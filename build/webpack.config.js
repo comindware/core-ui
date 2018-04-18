@@ -8,6 +8,7 @@ const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
+const FlowWebpackPlugin = require('flow-webpack-plugin');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -30,6 +31,8 @@ module.exports = options => {
                         pathResolver.compiled(),
                         pathResolver.node_modules(),
                         pathResolver.source('external'),
+                        pathResolver.source('collections'),
+                        pathResolver.source('Meta.js'),
                         pathResolver.source('utils'),
                         pathResolver.source('form/editors/impl/dateTime/views/DateWidget.js'),
                         pathResolver.tests(),
@@ -261,7 +264,8 @@ module.exports = options => {
             new ExtractTextPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
+            new FlowWebpackPlugin()
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

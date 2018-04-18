@@ -1,17 +1,9 @@
-
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 const $ = core.lib.$;
 
 describe('Components', () => {
-    let rootRegion;
-
-    beforeEach(() => {
-        rootRegion = initializeCore();
-    });
-
     afterEach(() => {
         core.services.WindowService.closePopup();
     });

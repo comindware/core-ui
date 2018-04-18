@@ -1,12 +1,7 @@
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     const data = [];
     const childLength = 3;
     const treeHeight = 4;
@@ -109,7 +104,7 @@ describe('Components', () => {
                 collection: data
             });
 
-            this.rootRegion.show(gridController);
+            window.application.contentRegion.show(gridController);
 
             expect(true).toBe(true);
         });
