@@ -763,11 +763,11 @@ a:hover {
 .toolbar-btn {
     display: inline-flex;
     max-width: 250px;
-    height: 30px;
+    height: 36px;
     line-height: 28px;
     white-space: nowrap;
     background: #f7f6f6;
-    border: 1px solid #dfe4e8;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);;
     border-radius: 2px;
     position: relative;
     overflow: hidden;
@@ -781,27 +781,23 @@ a:hover {
     vertical-align: top;
     z-index: 1;
     min-width: 34px;
-}
-
-.toolbar-btn + .toolbar-btn {
-    margin-left: -1px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    transition: box-shadow .2s;
 }
 
 .toolbar-btn:hover {
-    border-color: #bfc2c4;
-    box-shadow: inset 0 2px 3px #fff;
+    transition: box-shadow .2s;
+    box-shadow: 0 3px 4px -1px rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
 }
 
 .toolbar-btn:active {
-    box-shadow: inset 1px 1px 3px rgba(200,200,200,.7);
+    box-shadow: none;
+    transition: box-shadow .2s;
 }
 
 .toolbar-btn__text {
     display: inline-block;
     max-width: 100%;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 500;
     color: #636262;
     line-height: inherit;
@@ -834,17 +830,9 @@ a:hover {
     z-index: 2;
 }
 
-.toolbar-btn_red:hover {
-    border-color: #e06b6f;
-}
-
 .toolbar-btn_green {
     background: #d7fdf4;
     z-index: 2;
-}
-
-.toolbar-btn_green:hover {
-    border-color: #2fa25b;
 }
 
 .toolbar-btn_blue {
@@ -852,31 +840,14 @@ a:hover {
     z-index: 2;
 }
 
-.toolbar-btn_blue:hover {
-    border-color: #6092bb;
-}
-
 .toolbar-btn_yellow {
     background: #f9f8c9;
     z-index: 2;
 }
 
-.toolbar-btn_yellow:hover {
-    border-color: #c6b14d;
-}
-
 .toolbar-btn_dark {
     background: #e1e1e1;
     z-index: 2;
-}
-
-.toolbar-btn_dark:hover {
-    border-color: #9e9d9d;
-    box-shadow: inset 0 2px 3px #f3f3f3;
-}
-
-.toolbar-btn_dark:active {
-    box-shadow: inset 1px 1px 2px rgba(100,100,100,.3);
 }
 
 .toolbar-container {
