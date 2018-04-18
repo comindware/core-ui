@@ -14,7 +14,7 @@ export default Marionette.ItemView.extend({
     },
 
     onRender() {
-        if (this.model.get('isActive')) {
+        if (this.model.get('isChecked')) {
             this.ui.check.toggleClass(classes.CHECKED);
         }
     },
@@ -24,8 +24,8 @@ export default Marionette.ItemView.extend({
     },
 
     __handleClick() {
-        const oldState = this.model.get('isActive');
-        this.model.set('isActive', !oldState);
+        const oldState = this.model.get('isChecked');
+        this.model.set('isChecked', !oldState);
         this.ui.check.toggleClass(classes.CHECKED);
         this.trigger('action:click', this.model);
     }
