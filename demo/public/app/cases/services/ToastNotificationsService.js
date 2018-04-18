@@ -1,6 +1,6 @@
 
 export default function() {
-    const View = Marionette.ItemView.extend({
+    const View = Marionette.View.extend({
         template: Handlebars.compile('<div>NOT IMPLEMENTED</div>')
     });
 

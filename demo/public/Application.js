@@ -1,3 +1,4 @@
+
 import core from 'comindware/core';
 import localizationMapEn from 'localizationMapEn';
 import localizationMapDe from 'localizationMapDe';
@@ -5,46 +6,63 @@ import localizationMapRu from 'localizationMapRu';
 import ajaxMap from './ajaxMap.json';
 import dataProvider from 'demoPage/dataProvider';
 
-const Application = new Marionette.Application();
+const rootView = Marionette.View.extend({
+    template: Handlebars.compile(`
+        <div class="js-navigation-drawer-region"></div>
+        <div class="wrapper">
+            <div class="js-header-region header-container"></div>
+		    <div class="js-content-region content-container"></div>
+		</div>
+    `),
 
-Application.addRegions({
-    headerRegion: '.js-header-region',
-    contentRegion: '.js-content-region',
-    navigationDrawerRegion: '.js-navigation-drawer-region'
-});
+    className: 'app-region-container',
 
-Application.addInitializer(() => {
-    const isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
-
-    const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
-    const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
-
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker
-                .register('sw.js')
-                .then(registration => {
-                    console.log('SW registered: ', registration);
-                })
-                .catch(registrationError => {
-                    console.log('SW registration failed: ', registrationError);
-                });
-        });
+    regions: {
+        headerRegion: '.js-header-region',
+        contentRegion: '.js-content-region',
+        navigationDrawerRegion: '.js-navigation-drawer-region'
     }
-
-    core.initialize({
-        ajaxService: {
-            ajaxMap
-        },
-        localizationService: {
-            langCode,
-            localizationMap,
-            warningAsError: isProduction
-        },
-        userService: {
-            dataProvider
-        }
-    });
 });
 
-export default Application;
+export default Marionette.Application.extend({
+    region: {
+        el: '.js-app-region',
+        replaceElement: true
+    },
+
+    onStart() {
+        const isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
+
+        const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
+        const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('serviceWorker.js').then(reg => {
+                reg.addEventListener('updatefound', () => {
+                    window.dispatchEvent(new CustomEvent('message', { detail: 'skipWaiting' }));
+                    reg.update();
+                });
+            }).catch(error => {
+                console.log(`Registration failed with ${error}`);
+            });
+        }
+
+        this.showView(new rootView());
+
+        core.Application.start({
+            ajaxService: {
+                ajaxMap
+            },
+            localizationService: {
+                langCode,
+                localizationMap,
+                warningAsError: isProduction
+            },
+            userService: {
+                dataProvider
+            }
+        });
+
+        Backbone.history.start();
+    }
+});

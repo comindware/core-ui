@@ -1,7 +1,7 @@
 // @flow
 import ErrorPlaceholderView from './templates/ErrorPlaceholder.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.id = _.uniqueId('failed-view_');
     },

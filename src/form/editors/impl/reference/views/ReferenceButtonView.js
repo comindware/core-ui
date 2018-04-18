@@ -4,7 +4,7 @@ const classes = {
     ARROW_BUTTON: 'input_dropdown'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },

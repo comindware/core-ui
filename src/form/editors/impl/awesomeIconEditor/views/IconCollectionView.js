@@ -8,7 +8,7 @@ export default Marionette.CollectionView.extend({
 
     childView: IconItemCategoryView,
 
-    childEvents: {
+    childViewEvents: {
         'click:item': '__triggerChildSelect'
     },
 

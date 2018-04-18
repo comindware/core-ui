@@ -81,9 +81,9 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         this.__value(value, false);
     },
 
-    onShow() {
+    onRender() {
         this.controller.initItems();
-        this.splitPanelRegion.show(this.controller.view);
+        this.showChildView('splitPanelRegion', this.controller.view);
     },
 
     __value(value, triggerChange) {

@@ -17,7 +17,7 @@ const defaultOptions = {
  * @name RowView
  * @memberof module:core.list.views
  * @class RowView
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @constructor
  * @description View используемый по умолчанию для отображения строки списка
  * @param {Object} options Constructor options
@@ -26,7 +26,7 @@ const defaultOptions = {
  * @param {Number} [options.paddingLeft=20] Левый отступ
  * @param {Number} [options.paddingRight=10] Правый отступ
  * */
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'record-row grid-row',
 
     ui: {

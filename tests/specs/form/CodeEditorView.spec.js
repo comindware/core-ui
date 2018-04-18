@@ -1,14 +1,9 @@
 /*eslint-ignore*/
 
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     describe('CodeEditorView', () => {
         it('should initialize', function () {
             const model = new Backbone.Model({
@@ -21,7 +16,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            this.rootRegion.show(view);
+            window.application.contentRegion.show(view);
             // assert
             expect(true).toBe(true);
         });

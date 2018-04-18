@@ -14,14 +14,10 @@ export default function() {
     // 4. Create child view that display list rows.
     // - you MUST implement ListItemViewBehavior
     // - you CAN implement onHighlighted/onUnhighlighted methods to support text highlighting while searching
-    const ListItemView = Marionette.ItemView.extend({
+    const ListView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i">{{title}}</div>'),
 
-        behaviors: {
-            ListItemViewBehavior: {
-                behaviorClass: core.list.views.behaviors.ListItemViewBehavior
-            }
-        }
+        behaviors: [ core.list.views.behaviors.ListItemViewBehavior]
     });
 
     // 5. At last, create list view bundle (ListView and ScrollbarView)
@@ -29,7 +25,7 @@ export default function() {
         collection: data, // Take a note that in simple scenario you can pass in
         // a regular Backbone.Collection or even plain javascript array
         listViewOptions: {
-            childView: ListItemView,
+            childView: ListView,
             childHeight: 34
         }
     });

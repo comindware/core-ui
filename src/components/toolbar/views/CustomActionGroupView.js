@@ -13,7 +13,7 @@ export default Marionette.CollectionView.extend({
 
     template: Handlebars.compile(template),
 
-    getChildView(model) {
+    childView(model) {
         switch (model.get('type')) {
             case meta.toolbarItemType.ACTION:
                 return CustomActionItemView;
@@ -52,7 +52,7 @@ export default Marionette.CollectionView.extend({
         }
     },
 
-    childEvents: {
+    childViewEvents: {
         'action:click': '__handleClick'
     },
 

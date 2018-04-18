@@ -1,6 +1,6 @@
 import { helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
-import ListView from './views/ListView';
+import ListView from './views/CollectionView';
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
 import GridView from './views/GridView';

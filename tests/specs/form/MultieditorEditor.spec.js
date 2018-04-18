@@ -1,14 +1,9 @@
 /*eslint-ignore*/
 
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    beforeEach(function () {
-        this.rootRegion = initializeCore();
-    });
-
     describe('Multieditor editor', () => {
         it('should initialize', function () {
             const view = new core.form.editors.NewExpressionEditor({
@@ -190,7 +185,7 @@ describe('Editors', () => {
                 ontologyService: null
             });
 
-            this.rootRegion.show(view);
+            window.application.contentRegion.show(view);
             // assert
             expect(true).toBe(true);
         });

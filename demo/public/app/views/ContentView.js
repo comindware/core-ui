@@ -6,7 +6,7 @@ import Prism from 'prism';
 import markdown from 'markdown';
 import core from 'comindware/core';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     modelEvents: {
         change: 'render'
     },
@@ -32,9 +32,6 @@ export default Marionette.LayoutView.extend({
 
     onRender() {
         Prism.highlightElement(this.ui.code[0]);
-    },
-
-    onShow() {
         let path;
         if (this.model.id) {
             path = `${this.model.get('sectionId')}/${this.model.get('groupId')}/${this.model.id}`;
@@ -47,12 +44,12 @@ export default Marionette.LayoutView.extend({
 
         this.model.set('sourceCode', text);
         const representationView = code();
-        this.caseRepresentationRegion.show(representationView);
+        this.showChildView('caseRepresentationRegion', representationView);
 
         const attributesConfig = this.model.get('attributesConfig');
 
         if (attributesConfig) {
-            this.attributesConfigurationRegion.show(this.__createAttributesConfigurationView(attributesConfig));
+            this.showChildViewv('attributesConfigurationRegion', this.__createAttributesConfigurationView(attributesConfig));
         }
     },
 

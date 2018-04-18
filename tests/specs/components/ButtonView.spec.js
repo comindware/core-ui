@@ -1,14 +1,8 @@
 
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 describe('Components', () => {
-    let rootRegion;
-    beforeEach(() => {
-        rootRegion = initializeCore();
-    });
-
     describe('ButtonView', () => {
         it('should set text', () => {
             const button = new core.layout.Button({
@@ -16,7 +10,7 @@ describe('Components', () => {
                 handler: () => { }
             });
 
-            rootRegion.show(button);
+            window.application.contentRegion.show(button);
 
             expect(button.$('.layout__button-view-text').html()).toEqual('Button text');
         });
@@ -32,7 +26,7 @@ describe('Components', () => {
                 }
             });
 
-            rootRegion.show(button);
+            window.application.contentRegion.show(button);
 
             button.$el.click();
 

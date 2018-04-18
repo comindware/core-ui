@@ -2,16 +2,16 @@
 import template from '../templates/menuItem.hbs';
 
 /**
- * @name MenuItemView
+ * @name MenuView
  * @memberof module:core.dropdown.views
  * @class Single menu item used by MenuPanelView to display a list of menu items.
  * Factory method {@link module:core.dropdown.factory createMenu} uses it indirectly.
  * {@link module:core.dropdown.factory createMenu}.
  * @constructor
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * */
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     tagName: 'li',
 
     className: 'popout-menu__i',

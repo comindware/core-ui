@@ -6,7 +6,7 @@ const actionsMenuLabel = '⋮';
 const menuActionsWidth = 30;
 const itemMarginLeft = 10;
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.allItemsCollection = this.options.allItemsCollection;
         this.toolbarItemsCollection = new Backbone.Collection(this.allItemsCollection.models);
@@ -30,14 +30,11 @@ export default Marionette.LayoutView.extend({
         popupMenuRegion: '.js-menu-actions-region'
     },
 
-    onAttach() {
-        this.rebuildView();
-    },
-
     onRender() {
-        this.toolbarItemsRegion.show(this.toolbarActions);
-        this.popupMenuRegion.show(this.popupMenu);
-        this.popupMenuRegion.$el.hide();
+        this.showChildView('toolbarItemsRegion', this.toolbarActions);
+        this.showChildView('popupMenuRegion', this.popupMenu);
+        this.getRegion('popupMenuRegion').$el.hide();
+        this.rebuildView();
     },
 
     __createActionsGroupsView() {
@@ -48,7 +45,7 @@ export default Marionette.LayoutView.extend({
 
     rebuildView() {
         this.toolbarItemsCollection.reset(this.allItemsCollection.models);
-        const toolbarActions = this.toolbarItemsRegion.$el.children().children();
+        const toolbarActions = this.getRegion('toolbarItemsRegion').$el.children().children();
         if (toolbarActions.length === 0) {
             return;
         }
@@ -64,18 +61,18 @@ export default Marionette.LayoutView.extend({
         });
 
         if (findingItem >= 0) {
-            this.popupMenuRegion.$el.show();
+            this.getRegion('popupMenuRegion').$el.show();
             this.menuItemsCollection.reset(this.allItemsCollection.slice(findingItem));
             this.toolbarItemsCollection.reset(this.allItemsCollection.slice(0, findingItem));
         } else {
-            this.popupMenuRegion.$el.hide();
+            this.getRegion('popupMenuRegion').$el.hide();
         }
     },
 
     __createDropdownActionsView() {
         return Core.dropdown.factory.createDropdown({
-            buttonView: Marionette.ItemView.extend({ template: false }),
-            panelView: Marionette.ItemView.extend({ template: false }),
+            buttonView: Marionette.View.extend({ template: false }),
+            panelView: Marionette.View.extend({ template: false }),
             text: actionsMenuLabel,
             items: this.menuItemsCollection
         });

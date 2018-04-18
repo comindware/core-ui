@@ -11,7 +11,7 @@ const classes = {
     SELECTED: 'selected'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         if (options.selectionType === selectionTypes.all) {
             this.collection = options.collection;

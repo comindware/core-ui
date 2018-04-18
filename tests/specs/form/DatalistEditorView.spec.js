@@ -1,6 +1,5 @@
 
 import core from 'coreApi';
-import { initializeCore } from '../../utils/helpers';
 import 'jasmine-jquery';
 
 const $ = core.lib.$;
@@ -21,8 +20,6 @@ describe('Editors', () => {
         name: 3
     }];
 
-    let rootRegion;
-
     const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
         fetch() {
             return new Promise(resolve => {
@@ -36,10 +33,6 @@ describe('Editors', () => {
                 });
             });
         }
-    });
-
-    beforeEach(() => {
-        rootRegion = initializeCore();
     });
 
     afterEach(() => {
@@ -59,7 +52,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -79,7 +72,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -121,7 +114,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
         });
@@ -140,7 +133,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -163,7 +156,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -184,7 +177,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -205,7 +198,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.setValue([{ id: 2, name: 2 }]);
 
@@ -224,7 +217,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -243,7 +236,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -266,7 +259,7 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 
@@ -288,7 +281,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.on('change', () => {
                 expect(true).toEqual(true);
@@ -313,7 +306,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             $('.bubbles__i:eq(1)').trigger('mouseenter');
 
@@ -339,7 +332,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
@@ -372,7 +365,7 @@ describe('Editors', () => {
                 $('.dd-list__i')[0].click();
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.focus();
         });
         */
@@ -401,7 +394,7 @@ describe('Editors', () => {
                 $('.js-bubble-delete')[0].click();
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
             view.focus();
         });
 
@@ -416,7 +409,7 @@ describe('Editors', () => {
                 key: 'value'
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             expect(view.options).toEqual(jasmine.objectContaining({
                 displayAttribute: 'name',
@@ -442,7 +435,7 @@ describe('Editors', () => {
                 showCheckboxes: true
             });
 
-            rootRegion.show(view);
+            window.application.contentRegion.show(view);
 
             view.focus();
 

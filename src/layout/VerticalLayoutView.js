@@ -8,7 +8,7 @@ const classes = {
     HIDDEN: 'layout__hidden'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'rows');
 

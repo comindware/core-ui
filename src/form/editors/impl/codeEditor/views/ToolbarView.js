@@ -1,6 +1,6 @@
 import template from '../templates/toolbar.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     className: 'dev-code-editor-toolbar',
 
     template: Handlebars.compile(template),
@@ -28,7 +28,7 @@ export default Marionette.LayoutView.extend({
         'click @ui.minimize': '__onMinimize'
     },
 
-    onShow() {
+    onAttach() {
         this.ui.minimize.hide();
     },
 

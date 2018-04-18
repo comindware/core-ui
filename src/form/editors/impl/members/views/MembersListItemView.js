@@ -2,7 +2,7 @@ import { htmlHelpers } from 'utils';
 import list from 'list';
 import template from '../templates/listItem.hbs';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     ui: {
@@ -11,11 +11,7 @@ export default Marionette.ItemView.extend({
 
     className: 'dd-list__i',
 
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior
-        }
-    },
+    behaviors: [ list.views.behaviors.ListItemViewBehavior],
 
     events: {
         click: '__select'

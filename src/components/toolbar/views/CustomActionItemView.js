@@ -2,7 +2,7 @@
 import { severity } from '../meta';
 import template from '../templates/customActionItemView.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'toolbar-btn',
 
     template: Handlebars.compile(template),

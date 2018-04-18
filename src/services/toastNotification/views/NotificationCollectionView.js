@@ -3,7 +3,7 @@ import ToastNotificationView from './ToastNotificationView';
 const maxNotification = 5;
 
 export default Marionette.CollectionView.extend({
-    childEvents: {
+    childViewEvents: {
         'view:click': '__hideView'
     },
 

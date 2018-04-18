@@ -1,5 +1,4 @@
 import { keyCode, helpers, htmlHelpers } from 'utils';
-import template from '../templates/list.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 
 /*
@@ -37,7 +36,7 @@ const defaultOptions = {
  * @class ListView
  * @constructor
  * @description View контента списка
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.collection массив элементов списка
  * @param {Number} options.childHeight высота строки списка (childView)
@@ -53,7 +52,7 @@ const defaultOptions = {
  * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * должны быть указаны cellView для каждой колонки.
  * */
-const ListView = Marionette.CompositeView.extend({
+const ListView = Marionette.CollectionView.extend({
     initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError("ListView: you must specify a 'collection' option.");
@@ -98,26 +97,14 @@ const ListView = Marionette.CompositeView.extend({
         // this.on('render', this.__onRender);
     },
 
-    regions: {
-        visibleCollectionRegion: '.visible-collection-view'
-    },
-
-    childViewContainer: '.js-visible-collection-container',
-
-    ui: {
-        visibleCollection: '.js-visible-collection-container'
-    },
-
     events: {
         scroll: '__onScroll',
         keydown: '__handleKeydown'
     },
 
-    className: 'list',
+    className: 'visible-collection',
 
-    template: Handlebars.compile(template),
-
-    onAttach() {
+    onBeforeAttach() {
         this.handleResize();
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
@@ -125,17 +112,16 @@ const ListView = Marionette.CompositeView.extend({
         this.listenTo(this.collection, 'update:child:top', model => this.__updateChildTop(this.children.findByModel(model)));
     },
 
-    showCollection() {
-        let ChildView;
-
+    _showCollection() {
         const models = this.collection.visibleModels;
+        
         models.forEach((child, index) => {
-            ChildView = this.getChildView(child);
-            this.addChild(child, ChildView, index);
+            this._addChild(child, index);
         });
+        this.children._updateLength();
     },
 
-    getChildView(child) {
+    childView(child) {
         if (child.get('isLoadingRowModel')) {
             return this.getOption('loadingChildView');
         }
@@ -341,21 +327,17 @@ const ListView = Marionette.CompositeView.extend({
     },
 
     handleResize() {
-        if (this.isDestroyed) {
-            return;
-        }
-
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const elementHeight = this.el.clientHeight;
+        const elementHeight = 700;
 
-        if (this.children && this.children.length && !this.isEmpty()) {
-            const firstChild = this.children.first().el;
-            if (firstChild && firstChild.offsetHeight) {
-                this.childHeight = firstChild.offsetHeight;
-            }
-        }
+        //if (this.children && this.children.length && !this.isEmpty()) {
+        //    const firstChild = this.children.first().el;
+        //    if (firstChild && firstChild.offsetHeight) {
+        //        this.childHeight = firstChild.offsetHeight;
+        //    }
+        //}
 
         // Checking options consistency
         if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
@@ -368,7 +350,7 @@ const ListView = Marionette.CompositeView.extend({
         const allItemsHeight = this.state.allItemsHeight = this.childHeight * this.collection.length;
 
         if (allItemsHeight !== oldAllItemsHeight) {
-            this.ui.visibleCollection.height(allItemsHeight);
+            this.$el.height(allItemsHeight);
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             }
@@ -424,7 +406,7 @@ const ListView = Marionette.CompositeView.extend({
         return adjustedElementHeight;
     },
 
-    onAddChild(child) {
+    onAddChild(view, child) {
         this.__updateChildTop(child);
     },
 
@@ -434,7 +416,7 @@ const ListView = Marionette.CompositeView.extend({
         }
         requestAnimationFrame(() => {
             const childModel = child.model;
-            const top = `${this.collection.indexOf(childModel) * child.el.offsetHeight}px`;
+            const top = `${this.collection.indexOf(childModel) * this.childHeight}px`;
             if (child.el.style.top === top) {
                 return;
             }

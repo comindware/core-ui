@@ -1,7 +1,7 @@
 //@flow
 import template from '../templates/navigationText.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     templateHelpers() {
@@ -30,12 +30,12 @@ export default Marionette.LayoutView.extend({
         const collection = this.model.get('collection');
         if (collection) {
             this.menuView = Core.dropdown.factory.createDropdown({
-                buttonView: Marionette.ItemView.extend({
+                buttonView: Marionette.View.extend({
                     template: false
                 }),
 
                 panelView: Marionette.CollectionView.extend({
-                    childView: Marionette.ItemView.extend({
+                    childView: Marionette.View.extend({
                         template: false
                     }),
 
@@ -49,7 +49,7 @@ export default Marionette.LayoutView.extend({
                 panelPosition: 'down'
             });
 
-            this.menuRegion.show(this.menuView);
+            this.showChildView('menuRegion', this.menuView);
         }
     },
 

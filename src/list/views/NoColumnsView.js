@@ -5,11 +5,11 @@ import template from '../templates/noColumns.hbs';
  * @name NoColumnsView
  * @memberof module:core.list.views
  * @class NoColumnsView
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @constructor
  * @description View используемый по умолчанию для отображения списка без колонок
  * */
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     className: 'dev-no-columns-view',
     template: Handlebars.compile(template)
 });

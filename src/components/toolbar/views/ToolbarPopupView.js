@@ -1,7 +1,7 @@
 //@flow
 import template from '../templates/toolbarPopup.html';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     className: 'toolbar-btn dev-form-designer-copy-button',

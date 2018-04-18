@@ -11,7 +11,7 @@ const classes = {
     CLASS_NAME: 'layout__popup-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'header');
         helpers.ensureOption(options, 'buttons');
@@ -64,11 +64,8 @@ export default Marionette.LayoutView.extend({
             this.ui.window.css(this.options.size);
         }
         this.ui.window.css({ top: -50 });
-    },
-
-    onShow() {
-        this.contentRegion.show(this.options.content);
-        this.buttonsRegion.show(this.__createButtonsView());
+        this.showChildView('contentRegion', this.options.content);
+        this.showChildView('buttonsRegion', this.__createButtonsView());
         this.__updateState();
         this.ui.window.css({ top: 'inherit' });
     },

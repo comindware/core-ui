@@ -50,26 +50,18 @@ export default function() {
 
     // 5. Create child view that display list rows.
     // - you MUST implement ListItemViewBehavior
-    const ListItemView = Marionette.ItemView.extend({
+    const ListView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i"><span class="js-title">{{title}}</span></div>'),
 
-        behaviors: {
-            ListItemViewBehavior: {
-                behaviorClass: core.list.views.behaviors.ListItemViewBehavior
-            }
-        }
+        behaviors: [core.list.views.behaviors.ListItemViewBehavior]
     });
 
     // 5. Create child view that display grouping rows.
-    const ListGroupItemView = Marionette.ItemView.extend({
+    const ListGroupView = Marionette.View.extend({
         template: Handlebars.compile('<div class="dd-list__i dd-list__i_group"> {{displayText}}</div>'),
         className: 'mselect__group',
 
-        behaviors: {
-            ListItemViewBehavior: {
-                behaviorClass: core.list.views.behaviors.ListItemViewBehavior
-            }
-        }
+        behaviors: [ core.list.views.behaviors.ListItemViewBehavior]
     });
 
     // 6. At last, create list view bundle (ListView and ScrollbarView)
@@ -80,9 +72,9 @@ export default function() {
             childViewSelector(model) {
                 // We use different views based on is it grouping row or a regular one
                 if (model instanceof ListItemModel) {
-                    return ListItemView;
+                    return ListView;
                 }
-                return ListGroupItemView;
+                return ListGroupView;
             },
             childHeight: 34
         }

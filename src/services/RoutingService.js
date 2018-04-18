@@ -79,7 +79,7 @@ export default {
             loaded: false
         };
         if (!this.activeModule) {
-            window.application.contentLoadingRegion.show(new ContentLoadingView());
+            window.app.getView().getRegion('contentLoadingRegion').show(new ContentLoadingView());
         } else {
             this.loadingContext.leavingPromise = Promise.resolve(this.activeModule.leave());
             this.loadingContext.leavingPromise.then(canLeave => {
@@ -108,7 +108,7 @@ export default {
             }
 
             // reset loading region
-            window.application.contentLoadingRegion.reset();
+            window.app.getView().getRegion('contentLoadingRegion').reset();
             if (this.activeModule) {
                 this.activeModule.view.setModuleLoading(false);
             }
@@ -123,7 +123,7 @@ export default {
             if (!this.activeModule || movingOut) {
                 this.activeModule = new Module({
                     config,
-                    region: window.application.contentRegion
+                    region: window.app.getView().getRegion('contentRegion')
                 });
             }
 

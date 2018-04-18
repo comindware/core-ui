@@ -19,7 +19,7 @@ let single = 1,
     singularText = `${single} ${core.utils.helpers.getPluralForm(single, 'car,cars')}`,
     pluralText = `${many} ${core.utils.helpers.getPluralForm(many, 'car,cars')}`;
 
-const View = Marionette.ItemView.extend({
+const View = Marionette.View.extend({
     template: Handlebars.compile(`${'<div class="localization__header">Get localized text in JS:</div>' +
         '<div><span class="l-item">Localized Text: </span>'}${localizedText}</div>` +
         `<div><span class="l-item">Resolved Text: </span>${resolvedText}</div>` +

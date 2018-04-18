@@ -3,7 +3,7 @@ import template from 'text-loader!../templates/demoPage.html';
 import DemoService from '../DemoService';
 import ContentView from './ContentView';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     className: 'demo-page',
 
     template: Handlebars.compile(template),
@@ -15,7 +15,7 @@ export default Marionette.LayoutView.extend({
     onRender() {
         const activeCase = DemoService.getCase(this.options.activeSectionId, this.options.activeGroupId, this.options.activeCaseId);
 
-        this.contentRegion.show(new ContentView({
+        this.showChildView('contentRegion', new ContentView({
             model: new Backbone.Model(activeCase)
         }));
     },
@@ -25,7 +25,7 @@ export default Marionette.LayoutView.extend({
 
         const activeCase = DemoService.getCase(activeSectionId, activeGroupId, activeCaseId);
 
-        this.contentRegion.show(new ContentView({
+        this.showChildView('contentRegion', new ContentView({
             model: new Backbone.Model(activeCase)
         }));
     }

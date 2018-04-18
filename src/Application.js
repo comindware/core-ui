@@ -17,10 +17,8 @@ export default {
         const marionetteApp = new Marionette.Application();
         window.application = marionetteApp;
 
-        marionetteApp.addRegions(options.regions);
         marionetteApp.ui = options.ui;
         marionetteApp.registerAppModule = options.registerAppModule;
-        marionetteApp.addInitializer(options.serviceInitializer);
 
         GlobalEventService.initialize();
         InterfaceErrorMessageService.initialize();
@@ -55,7 +53,7 @@ export default {
         marionetteApp.defaultContentView = options.contentView;
         marionetteApp.options = options;
 
-        const langCode = window.Context.langCode;
+        const langCode = options.localizationService.langCode;
 
         moment.locale(langCode);
 
@@ -69,8 +67,10 @@ export default {
         // Backbone default behaviors path (obsolete because of inconsistency: we store behaviors in many different paths)
         Backbone.Marionette.Behaviors.behaviorsLookup = options.behaviors;
 
-        this.initializeThirdParties();
+        //this.initializeThirdParties();
         marionetteApp.start();
+
+        options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
 
         return marionetteApp;
     },

@@ -5,7 +5,7 @@ const classes = {
     CHECKED: 'editor_checked'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize() {
         this.isShowAliases = this.options.model.get('isShowAliases');
     },

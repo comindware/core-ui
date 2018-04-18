@@ -3,7 +3,7 @@ import OptionItemView from './OptionItemView';
 export default Marionette.CollectionView.extend({
     childView: OptionItemView,
 
-    childEvents: {
+    childViewEvents: {
         execute: '__execute'
     },
 

@@ -1,5 +1,5 @@
 //@flow
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     modelEvents: {
         change: 'onChangeText'
     },

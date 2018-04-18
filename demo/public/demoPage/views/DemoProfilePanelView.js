@@ -1,7 +1,7 @@
 import core from 'comindware/core';
 import template from 'text-loader!../templates/demoProfilePanel.html';
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     className: 'nav-profile_test',
 
     regions: {
@@ -10,7 +10,7 @@ export default Marionette.LayoutView.extend({
 
     template: Handlebars.compile(template),
 
-    onShow() {
-        this.dateEditorRegion.show(new core.form.editors.DateTimeEditor());
+    onRender() {
+        this.showChildView('dateEditorRegion', new core.form.editors.DateTimeEditor());
     }
 });

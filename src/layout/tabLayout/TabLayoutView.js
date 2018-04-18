@@ -15,7 +15,7 @@ const classes = {
     HIDDEN: 'layout__tab-hidden'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options: { tabs: TabsList }) {
         helpers.ensureOption(options, 'tabs');
 
@@ -72,13 +72,13 @@ export default Marionette.LayoutView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         const headerView = new HeaderView({
             collection: this.__tabsCollection,
             headerClass: this.getOption('headerClass')
         });
         this.listenTo(headerView, 'select', this.__handleSelect);
-        this.headerRegion.show(headerView);
+        this.showChildView('headerRegion', headerView);
 
         this.__tabsCollection.each(tabModel => {
             const regionEl = document.createElement('div');
@@ -97,7 +97,7 @@ export default Marionette.LayoutView.extend({
         this.__updateState();
         if (this.getOption('showStepper')) {
             const stepperView = new StepperView({ collection: this.__tabsCollection });
-            this.stepperRegion.show(stepperView);
+            this.showChildView('stepperRegion', stepperView);
             this.listenTo(stepperView, 'stepper:item:selected', this.__handleStepperSelect);
         }
         if (!this.getOption('showMoveButtons')) {

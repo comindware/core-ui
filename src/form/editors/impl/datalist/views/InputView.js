@@ -6,7 +6,7 @@ const classes = {
     EMPTY: ' empty'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.parent = options.parent;

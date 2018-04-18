@@ -7,12 +7,12 @@ import template from '../templates/gridcolumnheader.hbs';
  * @constructor
  * @description View используемый по умолчанию для отображения ячейки заголовка (шапки) списка, передавать в
  * {@link module:core.list.views.GridView GridView options.gridColumnHeaderView}
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {Array} options.columns массив колонок
  * */
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.column = options.column;
     },
