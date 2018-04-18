@@ -92,7 +92,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         showMoreText: '.js-show-more-text'
     },
 
-    templateHelpers() {
+    templateContext() {
         return Object.assign(this.options, {
             displayText: LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.ADDDOCUMENT'),
             multiple: this.options.multiple,

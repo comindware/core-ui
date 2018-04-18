@@ -98,18 +98,18 @@ const ListView = Marionette.CollectionView.extend({
     },
 
     events: {
-        scroll: '__onScroll',
         keydown: '__handleKeydown'
     },
 
     className: 'visible-collection',
 
-    onBeforeAttach() {
+    onAttach() {
         this.handleResize();
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
         this.listenTo(this.collection, 'update:child:top', model => this.__updateChildTop(this.children.findByModel(model)));
+        this.$el.parent().on('scroll', this.__onScroll.bind(this));
     },
 
     _showCollection() {
@@ -297,7 +297,7 @@ const ListView = Marionette.CollectionView.extend({
         if (this.state.viewportHeight === undefined || this.collection.length <= this.state.viewportHeight || this.internalScroll) {
             return;
         }
-        const newPosition = Math.max(0, Math.floor(this.el.scrollTop / this.childHeight));
+        const newPosition = Math.max(0, Math.floor(this.el.parentElement.scrollTop / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
     },
 
@@ -330,16 +330,15 @@ const ListView = Marionette.CollectionView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const elementHeight = 700;
+        const elementHeight = this.el.clientHeight || window.innerHeight;
 
-        //if (this.children && this.children.length && !this.isEmpty()) {
-        //    const firstChild = this.children.first().el;
-        //    if (firstChild && firstChild.offsetHeight) {
-        //        this.childHeight = firstChild.offsetHeight;
-        //    }
-        //}
+        if (this.children && this.children.length && !this.isEmpty()) {
+            const firstChild = this.children.first().el;
+            if (firstChild && firstChild.offsetHeight) {
+                this.childHeight = firstChild.offsetHeight;
+            }
+        }
 
-        // Checking options consistency
         if (this.height === heightOptions.AUTO && !_.isFinite(this.maxRows)) {
             helpers.throwInvalidOperationError("ListView configuration error: you have passed option height: AUTO into ListView control but didn't specify maxRows option.");
         }

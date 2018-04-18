@@ -53,7 +53,7 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 

@@ -30,7 +30,7 @@ const View = Marionette.View.extend({
         '<div class="localization__header">Get localized text in template:</div>' +
         '<div><span class="l-item">Localized Text:</span> {{localize "CORE.DEMO.CASES.OTHER.LOCALIZATIONSERVICE"}}</div>' +
         '<div><span class="l-item">Resolved Text:</span> {{localizedText multilangMsg}}</div>'),
-    templateHelpers() {
+    templateContext() {
         return {
             multilangMsg
         };

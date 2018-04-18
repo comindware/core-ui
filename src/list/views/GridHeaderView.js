@@ -65,7 +65,7 @@ const GridHeaderView = Marionette.View.extend({
         MIN_COLUMN_WIDTH: 50
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             columns: this.columns
         };

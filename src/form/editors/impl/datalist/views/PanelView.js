@@ -26,14 +26,17 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             showAddNewButton: this.showAddNewButton
         };
     },
 
     regions: {
-        listRegion: '.js-list-region',
+        listRegion: {
+            el: '.js-list-region',
+            replaceElement: true
+        },
         loadingRegion: '.js-loading-region',
         addNewButtonRegion: '.js-add-new-button-region',
         listTitleRegion: '.js-list-title-region',

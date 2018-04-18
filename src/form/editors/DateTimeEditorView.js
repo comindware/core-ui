@@ -82,7 +82,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 

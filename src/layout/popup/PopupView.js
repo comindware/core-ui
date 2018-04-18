@@ -24,7 +24,7 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             headerText: this.options.header
         };

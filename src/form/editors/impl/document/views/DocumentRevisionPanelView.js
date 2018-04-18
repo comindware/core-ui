@@ -5,7 +5,7 @@ import template from '../templates/documentRevisionPanel.html';
 export default Marionette.CompositeView.extend({
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             isSingleRevision: this.collection.length === 1
         };

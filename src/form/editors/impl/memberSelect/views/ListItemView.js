@@ -17,7 +17,7 @@ export default Marionette.View.extend({
         fullName: '.js-fullName'
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.__getText()
         };

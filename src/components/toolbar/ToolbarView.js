@@ -34,6 +34,9 @@ export default Marionette.View.extend({
         this.showChildView('toolbarItemsRegion', this.toolbarActions);
         this.showChildView('popupMenuRegion', this.popupMenu);
         this.getRegion('popupMenuRegion').$el.hide();
+    },
+
+    onAttach() {
         this.rebuildView();
     },
 

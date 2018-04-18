@@ -16,7 +16,7 @@ export default (formRepository.editors.AudioEditor = BaseLayoutEditorView.extend
 
     template: false,
 
-    templateHelpers() {
+    templateContext() {
         return Object.assign(this.options, {
             title: this.value || ''
         });

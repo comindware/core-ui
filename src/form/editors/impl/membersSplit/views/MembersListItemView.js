@@ -3,7 +3,7 @@ import { htmlHelpers } from 'utils';
 import template from '../templates/membersListItem.html';
 
 export default Marionette.View.extend({
-    templateHelpers() {
+    templateContext() {
         return {
             isGroup: this.model.get('type') === 'groups'
         };

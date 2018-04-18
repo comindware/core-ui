@@ -24,7 +24,7 @@ export default Backbone.Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 

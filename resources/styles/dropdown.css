@@ -414,6 +414,7 @@
 .dropdown__wrp_list{
     height: 410px;
     position: relative;
+    overflow-y: auto;
 }
 
 

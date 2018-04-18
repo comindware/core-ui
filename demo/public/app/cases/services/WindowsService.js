@@ -12,7 +12,7 @@ export default function() {
             '<input class="js-open__button msg-popup__button_default msg-popup__button" style="margin-left:140px;" type="button" value="Show popup" /> ' +
             '<input class="js-close__button msg-popup__button_default msg-popup__button" style="margin-right:10px;" type="button" value="Close" />'),
 
-        templateHelpers() {
+        templateContext() {
             return {
                 index: this.index
             };

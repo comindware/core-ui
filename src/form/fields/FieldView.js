@@ -26,7 +26,7 @@ export default Marionette.View.extend({
         }
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.schema.title,
             fieldId: this.fieldId
@@ -36,7 +36,10 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     regions: {
-        editorRegion: '.js-editor-region',
+        editorRegion: {
+            el: '.js-editor-region',
+            replaceElement: true
+        },
         errorTextRegion: '.js-error-text-region',
         helpTextRegion: '.js-help-text-region'
     },

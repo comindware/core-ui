@@ -8,7 +8,7 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const severity = this.model.get('severity');
         return {
             severity: severity && severity.toLowerCase()

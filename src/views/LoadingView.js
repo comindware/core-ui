@@ -1,7 +1,7 @@
 import template from '../templates/loading.hbs';
 
 export default Marionette.View.extend({
-    templateHelpers() {
+    templateContext() {
         return {
             text: this.options.text
         };

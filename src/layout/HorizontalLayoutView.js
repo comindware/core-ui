@@ -27,7 +27,7 @@ export default Marionette.View.extend({
         }
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.options.title
         };

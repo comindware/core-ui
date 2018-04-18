@@ -6,7 +6,7 @@ export default Marionette.View.extend({
         this.id = _.uniqueId('failed-view_');
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             id: this.id,
             placeholderText: Localizer.get('CORE.FORM.FIELDS.ERRORFIELD')

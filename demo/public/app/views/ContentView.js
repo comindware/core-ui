@@ -15,7 +15,7 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             description: markdown.toHTML(this.model.get('description') || '')
         };

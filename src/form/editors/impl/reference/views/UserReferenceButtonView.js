@@ -6,7 +6,7 @@ export default ReferenceButtonView.extend({
 
     className: 'popout-field-user',
 
-    templateHelpers() {
+    templateContext() {
         const value = this.model.get('value');
         return {
             text: this.options.getDisplayText(value)

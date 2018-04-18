@@ -296,6 +296,7 @@ body {
     top: 0;
     right: 0;
     height: 100%;
+    overflow-y: auto;
 }
 
 .demo-list-canvas__view {
@@ -347,6 +348,7 @@ body {
     top: 0;
     right: 0;
     bottom: 0;
+    overflow-y: auto;
 }
 
 

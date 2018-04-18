@@ -4,7 +4,7 @@ import template from '../templates/navigationText.html';
 export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const isChild = this.model.collection.indexOf(this.model) >= 0;
         return { isChild };
     },

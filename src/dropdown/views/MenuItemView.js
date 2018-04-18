@@ -18,7 +18,7 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             getTitle: this.model.has('tooltip') ? this.model.get('tooltip') : this.model.get('name')
         };

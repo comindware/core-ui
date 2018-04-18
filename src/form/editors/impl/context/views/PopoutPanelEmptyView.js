@@ -5,7 +5,7 @@ export default Marionette.View.extend({
 
     className: 'popout-panel-empty',
 
-    templateHelpers() {
+    templateContext() {
         return {
             text: Localizer.get('PROCESS.COMMON.VIEW.GRID.EMPTY')
         };

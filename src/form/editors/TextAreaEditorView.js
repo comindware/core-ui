@@ -75,7 +75,7 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 

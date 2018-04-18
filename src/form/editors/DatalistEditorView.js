@@ -71,7 +71,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     regions: {
-        dropdownRegion: '.js-dropdown-region'
+        dropdownRegion: {
+            el: '.js-dropdown-region',
+            replaceElement: true
+        }
     },
 
     className: 'editor editor_bubble',

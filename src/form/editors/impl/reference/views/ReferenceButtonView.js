@@ -11,7 +11,7 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const value = this.model.get('value');
         return {
             hasValue: Boolean(value),

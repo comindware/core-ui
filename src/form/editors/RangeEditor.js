@@ -19,7 +19,7 @@ export default (formRepository.editors.RangeEditor = BaseItemEditorView.extend({
 
         template: false,
 
-        templateHelpers() {
+        templateContext() {
             return _.extend(this.options, {
                 title: this.value || ''
             });

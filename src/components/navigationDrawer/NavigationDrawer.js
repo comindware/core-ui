@@ -25,7 +25,7 @@ export default Marionette.CompositeView.extend({
         return `navigationDrawer__ul ${this.options.isAbsolute ? 'navigationDrawer_absolute' : ''}`;
     },
 
-    templateHelpers() {
+    templateContext() {
         return {
             title: this.options.title
         };

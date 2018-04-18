@@ -71,7 +71,7 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
             displayText: this.options.displayText
         };
