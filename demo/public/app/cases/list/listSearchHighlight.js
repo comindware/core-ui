@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import ListSearchCanvasView from 'demoPage/views/ListSearchCanvasView';
 
 // Most of this steps came from 'Basic Usage' example.

@@ -37,8 +37,7 @@ module.exports = () => {
     return {
         mode: PRODUCTION ? 'production' : 'development',
         entry: {
-            app: ['./public/index'],
-            vendor: ['comindware/core']
+            app: ['./public/index']
         },
         devtool: 'source-map',
         output: {
@@ -109,10 +108,13 @@ module.exports = () => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     include: [pathResolver.source()],
-                    exclude: [pathResolver.source('lib'), pathResolver.source('app/cases')],
+                    exclude: [
+                        pathResolver.source('lib'),
+                        pathResolver.source('app/cases'),
+                        pathResolver.node_modules(),
+                    ],
                     options: {
-                        presets: ['env'],
-                        plugins: ['transform-runtime']
+                        presets: ['env']
                     }
                 },
                 {
@@ -185,7 +187,7 @@ module.exports = () => {
                 hash: PRODUCTION,
                 svgSprites: readSpritesFile(),
                 inject: 'body',
-                chunks: ['vendor', 'app'],
+                chunks: ['app'],
                 minify: {
                     collapseWhitespace: false
                 }

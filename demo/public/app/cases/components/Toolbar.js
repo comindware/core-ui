@@ -1,20 +1,20 @@
-import core from 'comindware/core';
+
 
 export default function() {
     return new core.components.Toolbar({
         allItemsCollection: new Backbone.Collection([
             {
                 iconClass: 'plus',
-                id: 'create',
+                id: '1',
                 name: 'Create',
                 type: 'Action',
-                severity: 'Normal',
+                severity: 'Low',
                 resultType: 'CustomClientAction',
                 context: 'Void'
             },
             {
                 iconType: 'Undefined',
-                id: 'themePicker',
+                id: '2',
                 name: 'name',
                 severity: 'None',
                 defaultTheme: true,
@@ -29,7 +29,7 @@ export default function() {
             },
             {
                 iconClass: 'plus',
-                id: 'update',
+                id: '3',
                 name: 'Update',
                 type: 'Action',
                 severity: 'Normal',
@@ -41,21 +41,33 @@ export default function() {
             },
             {
                 iconClass: 'plus',
-                id: 'delete',
+                id: '4',
                 name: 'Delete',
                 type: 'Action',
-                severity: 'Normal',
+                severity: 'Major',
                 resultType: 'CustomClientAction',
                 context: 'Void'
             },
             {
                 iconType: 'Undefined',
-                type: 'Checkbox',
-                isShowAliases: false,
-                id: 'setDef',
+                type: 'Action',
+                id: '5',
                 name: 'Check the checkbox',
-                severity: 'None',
-                defaultTheme: true
+                severity: 'Critical'
+            },
+            {
+                iconType: 'Undefined',
+                type: 'Checkbox',
+                id: '5',
+                name: 'Check the checkbox',
+                severity: 'Critical'
+            },
+            {
+                iconType: 'Undefined',
+                type: 'Action',
+                id: '6',
+                name: 'Check the checkbox',
+                severity: 'Fatal'
             }
         ])
     });

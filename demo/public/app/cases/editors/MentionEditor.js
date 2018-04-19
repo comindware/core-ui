@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import CanvasView from 'demoPage/views/CanvasView';
 import PresentationItemView from 'demoPage/views/PresentationItemView';
 

@@ -1,5 +1,4 @@
 
-import core from 'comindware/core';
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {

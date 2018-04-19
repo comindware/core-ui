@@ -698,21 +698,23 @@ input[type="checkbox"].checkbox {
 
 .bubbles__i {
     max-width: 100%;
-    padding: 2px 20px 0 10px;
     line-height: 18px;
     display: inline-block;
     vertical-align: top;
     font-size: 12px;
     position: relative;
     flex: 0 0 auto;
-    background: #f7f6f6;
-    border: 1px solid #dfe4e8;
     margin:1px;
-    border-radius: 2px;
+    background: #f0f0f0;
+    color: rgba(0,0,0,.87);
+    border-radius: 28px;
+    padding: 4px 9px;
+    transition: padding-right .2s;
 }
 
-.bubbles__i-edit-btn {
+.bubbles__i-edit-btn:hover {
     padding-right: 43px;
+    transition: padding-right .2s;
 }
 
 .bubbles__link {

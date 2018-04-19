@@ -1,5 +1,3 @@
-import core from 'comindware/core';
-
 // Show Confirmation dialog
 const showConfirm = function() {
     const description = 'Confirm Message';

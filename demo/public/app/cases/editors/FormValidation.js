@@ -1,6 +1,4 @@
 
-import core from 'comindware/core';
-
 export default function() {
     // Step 1. Create model
     const model = new Backbone.Model({
