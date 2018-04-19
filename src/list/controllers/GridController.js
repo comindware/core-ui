@@ -49,6 +49,7 @@ export default Marionette.Object.extend({
         this.listenTo(this.view, 'execute:action', model => this.__executeAction(model, collection));
         this.listenTo(this.view, 'childview:click', this.__onItemClick);
         this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
+        this.listenTo(this.view, 'drag:drop', this.__onItemMoved);
     },
 
     __onSearch(text, columns, collection) {
@@ -198,11 +199,15 @@ export default Marionette.Object.extend({
         this.trigger('execute', model, selected);
     },
 
-    __onItemClick(childView, model) {
+    __onItemClick( model) {
         this.trigger('click', model);
     },
 
-    __onItemDblClick(childView, model) {
+    __onItemDblClick(model) {
         this.trigger('dblclick', model);
+    },
+
+    __onItemMoved(...args) {
+        this.trigger('move', ...args);
     }
 });

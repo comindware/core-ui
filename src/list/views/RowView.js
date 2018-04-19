@@ -4,7 +4,8 @@ import CellViewFactory from '../CellViewFactory';
 const classes = {
     selected: 'selected',
     expanded: 'collapsible-btn_expanded',
-    collapsible: 'js-collapsible-button'
+    collapsible: 'js-collapsible-button',
+    dragover: 'dragover'
 };
 
 const defaultOptions = {
@@ -37,7 +38,10 @@ export default Marionette.View.extend({
     events: {
         click: '__onClick',
         dblclick: '__onDblClick',
-        'click @ui.collapsibleButton': '__toggleCollapse'
+        'click @ui.collapsibleButton': '__toggleCollapse',
+        dragover: '__handleDragOver',
+        dragleave: '__handleDragLeave',
+        drop: '__handleDrop'
     },
 
     modelEvents: {
@@ -45,7 +49,10 @@ export default Marionette.View.extend({
         deselected: '__handleDeselection',
         highlighted: '__handleHighlight',
         unhighlighted: '__handleUnhighlight',
-        change: '__handleChange'
+        change: '__handleChange',
+        dragover: '__handleModelDragOver',
+        dragleave: '__handleModelDragLeave',
+        drop: '__handleModelDrop'
     },
 
     initialize() {
@@ -140,6 +147,34 @@ export default Marionette.View.extend({
                 }
             });
         }
+    },
+
+    __handleDragOver(event) {
+        if (!this.model.collection.dragginModel) {
+            return;
+        }
+        this.model.trigger('dragover', event);
+        event.preventDefault();
+    },
+
+    __handleModelDragOver() {
+        this.el.classList.add(classes.dragover);
+    },
+
+    __handleDragLeave(event) {
+        this.model.trigger('dragleave', event);
+    },
+
+    __handleModelDragLeave() {
+        this.el.classList.remove(classes.dragover);
+    },
+
+    __handleDrop(event) {
+        this.model.trigger('drop', event);
+    },
+
+    __handleModelDrop() {
+        this.el.classList.remove(classes.dragover);
     },
 
     __handleHighlight(fragment) {

@@ -25,7 +25,8 @@ import GlobalEventService from '../../services/GlobalEventService';
 /*eslint-disable*/
 
 const classes = {
-    expanded: 'collapsible-btn_expanded'
+    expanded: 'collapsible-btn_expanded',
+    dragover: 'dragover'
 };
 
 const GridHeaderView = Marionette.View.extend({
@@ -41,8 +42,12 @@ const GridHeaderView = Marionette.View.extend({
         this.gridColumnHeaderView = options.gridColumnHeaderView || GridColumnHeaderView;
         this.gridColumnHeaderViewOptions = options.gridColumnHeaderViewOptions;
         this.columns = options.columns;
+        this.collection = options.gridEventAggregator.collection;
 
         this.styleSheet = options.styleSheet;
+        this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
+        this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
+        this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
         _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
         this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
@@ -58,7 +63,10 @@ const GridHeaderView = Marionette.View.extend({
 
     events: {
         'mousedown .grid-header-dragger': '__handleDraggerMousedown',
-        'click .js-collapsible-button': '__toggleCollapseAll'
+        'click .js-collapsible-button': '__toggleCollapseAll',
+        dragover: '__handleDragOver',
+        dragleave: '__handleDragLeave',
+        drop: '__handleDrop'
     },
 
     constants: {
@@ -263,7 +271,38 @@ const GridHeaderView = Marionette.View.extend({
     __updateCollapseAll(collapsed) {
         this.collapsed = collapsed;
         this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
-    }
+    },
+    __handleDragOver(event) {
+        if (!this.collection.dragginModel) {
+            return;
+        }
+        this.collection.trigger('dragover:head', event);
+        event.preventDefault();
+    },
+
+    __handleModelDragOver() {
+        this.el.classList.add(classes.dragover);
+    },
+
+    __handleDragLeave(event) {
+        this.collection.trigger('dragleave:head', event);
+    },
+
+    __handleModelDragLeave() {
+        this.el.classList.remove(classes.dragover);
+    },
+
+    __handleDrop(event) {
+        this.collection.trigger('drop:head', event);
+    },
+
+    __handleModelDrop() {
+        this.el.classList.remove(classes.dragover);
+        if (this.collection.dragginModel) {
+            this.trigger('drag:drop', this.collection.dragginModel, this.model);
+        }
+    },
+
 });
 
 export default GridHeaderView;

@@ -64,7 +64,9 @@ export default function() {
         selectableBehavior: 'multi',
         showSearch: true,
         showSelection: true,
-        collection: new Backbone.Collection(dataArray)
+        collection: new Backbone.Collection(dataArray),
+        draggable: true,
+        showRowIndex: true
     });
 
     // 4. Show created views

@@ -10,11 +10,20 @@ export default Marionette.CollectionView.extend({
 
     childView: SelectionCellView,
 
-    showCollection() {
+    _showCollection() {
         const models = this.collection.visibleModels;
+
         models.forEach((child, index) => {
-            this.addChild(child, SelectionCellView, index);
+            this._addChild(child, index);
         });
+        this.children._updateLength();
+    },
+
+    onRender() {
+        // todo: find way to remove it
+        if (this.options.showRowIndex) {
+            this.el.classList.add('grid-selection-index');
+        }
     },
 
     __updateHeight(height) {
