@@ -1,1 +1,17 @@
-<svg class="svg-icons-wrp_checked svg-icons svg-icons_checked"><use xlink:href="#icon-checked" /> </svg>
+<div class="checkbox svg-icons-wrp js-checkbox">
+    <svg class="svg-icons-wrp_checked svg-icons svg-icons_checked"><use xlink:href="#icon-checked" /> </svg>
+</div>
+{{#if draggable}}
+    <div class="js-dots selection-cell-dots" draggable="true">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
+            <circle cx="2" cy="5" r="1.5"></circle>
+            <circle cx="2" cy="10" r="1.5"></circle>
+            <circle cx="2" cy="15" r="1.5"></circle>
+        </svg>
+    </div>
+{{/if}}
+{{#if index}}
+    <span class="js-index selection-cell-index">
+        {{index}}
+    </span>
+{{/if}}

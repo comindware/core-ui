@@ -26,7 +26,7 @@ export default function() {
         // a regular Backbone.Collection or even plain javascript array
         listViewOptions: {
             childView: ListView,
-            childHeight: 34
+            childHeight: 25
         }
     });
 

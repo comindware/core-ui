@@ -140,7 +140,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
             this.state = {
                 position: options.position || 0,
-                windowSize: options.windowSize || 0
+                windowSize: options.windowSize || 1
             };
             this.visibleModels = [];
 
@@ -220,8 +220,15 @@ const VirtualCollection = Backbone.Collection.extend(
             this._addReference(model);
         },
 
-        __removeModel(model, options) {
-            this.trigger('remove', model, this, options);
+        __removeModels(removed, options) {
+            this.trigger('update', this, Object.assign({}, options,
+                {
+                changes: {
+                    removed,
+                    added: [],
+                    merged: []
+                },
+            }));
         },
 
         __buildModelsInternal(list, level = 0) {
@@ -327,33 +334,23 @@ const VirtualCollection = Backbone.Collection.extend(
             if (Math.abs(delta) < actualWindowSize) {
                 // update collection via add/remove
                 if (delta > 0) {
-                    // oldValues = this.innerCollection.first(delta);
                     oldValues = this.visibleModels.splice(0, delta);
                     this.visibleLength -= oldValues.length;
-                    // this.innerCollection.remove(oldValues);
-                    // oldValues.forEach(value => this.trigger('remove', value, this));
-                    // newValues = this.parentCollection.chain().rest(this.state.position + actualWindowSize).first(delta).value();
                     newValues = this.models.slice(this.state.position + actualWindowSize, this.state.position + actualWindowSize + delta);
                     this.visibleLength += newValues.length;
-                    // newValues.forEach(value => this.trigger('add', value, this));
                     this.visibleModels.push(...newValues);
-                    // this.innerCollection.add(newValues);
                 } else {
                     if (this.visibleLength >= this.state.windowSize) {
                         // oldValues = this.innerCollection.last(-delta);
                         oldValues = this.visibleModels.splice(this.visibleModels.length + delta, this.visibleModels.length);
                         this.visibleLength -= oldValues.length;
-                        // this.innerCollection.remove(oldValues);
                     }
 
                     newValues = this.models.slice(newPosition, newPosition - delta);
                     this.visibleLength += newValues.length;
                     this.visibleModels.unshift(...newValues);
-                    // this.innerCollection.add(newValues, {
-                    //     at: 0
-                    // });
                 }
-                oldValues.forEach(value => this.trigger('remove', value, this));
+                this.__removeModels(oldValues);
                 newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0} : {}));
                 this.state.position = newPosition;
                 this.visibleLength = this.visibleModels.length;
@@ -372,19 +369,26 @@ const VirtualCollection = Backbone.Collection.extend(
             const diff = new diffHelper(oldModels, this.visibleModels);
             diff.compose();
             const diffObject = diff.getses();
+            const added = [];
+            const removed = [];
+
             Object.values(diffObject).sort((a, b) => a.t - b.t).forEach(object => {
                 switch (object.t) {
                     case 0:
                         this.trigger('update:child:top', object.elem);
                         break;
                     case -1:
-                        this.__removeModel(object.elem, options);
+                        removed.push(object.elem);
                         break;
                     case 1:
-                        this.__addModel(object.elem, options);
+                        added.push(object.elem);
                         break;
                 }
-            })
+            });
+
+            // it's important remove items before add
+            this.__removeModels(removed, options);
+            added.forEach(model => this.__addModel(model, options));
         },
 
         __normalizePosition(position) {

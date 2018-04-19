@@ -92,8 +92,9 @@ export default Marionette.View.extend({
         }
         options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
 
-        this.forbidSelection = typeof options.forbidSelection === 'boolean' ? options.forbidSelection : true;
-
+        if (!options.draggable) {
+            this.forbidSelection = typeof options.forbidSelection === 'boolean' ? options.forbidSelection : true;
+        }
         const childView = options.childView || RowView;
 
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
@@ -122,23 +123,37 @@ export default Marionette.View.extend({
         });
 
         if (this.options.showSelection) {
+            const draggable = this.getOption('draggable');
+            const showRowIndex = this.getOption('showRowIndex');
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
-                gridEventAggregator: this
+                gridEventAggregator: this,
+                showRowIndex: this.options.showRowIndex,
+                childViewOptions: {
+                    draggable,
+                    showRowIndex
+                }
             });
+
 
             this.selectionHeaderView = new SelectionCellView({
                 collection: this.collection,
                 selectionType: 'all',
-                gridEventAggregator: this
+                gridEventAggregator: this,
+                showRowIndex
             });
+
+            if (draggable) {
+                this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
+                this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
+            }
         }
 
-        //this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
-        //    if (eventName.startsWith(eventName, 'childview')) {
-        //        this.trigger.apply(this, [eventName, view].concat(eventArguments));
-        //    }
-        //});
+        this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
+           if (eventName.startsWith('childview')) {
+               this.trigger.apply(this, [eventName, view].concat(eventArguments));
+           }
+        });
 
         this.listenTo(this.listView, 'positionChanged', (sender, args) => {
             this.trigger('positionChanged', this, args);
@@ -212,8 +227,11 @@ export default Marionette.View.extend({
         this.showChildView('headerRegion', this.headerView);
 
         if (this.options.showSelection) {
-            //this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
-            //this.showChildView('selectionPanelRegion', this.selectionPanelView);
+            this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
+            this.showChildView('selectionPanelRegion', this.selectionPanelView);
+            if (this.getOption('draggable')) {
+                this.getRegion('selectionHeaderRegion').el.classList.add('grid-selection-index');
+            }
         }
 
         if (this.options.showToolbar) {
@@ -257,7 +275,7 @@ export default Marionette.View.extend({
         const headerRegionEl = this.getRegion('headerRegion').el;
         const selectionPanelRegionEl = this.options.showSelection && this.getRegion('selectionPanelRegion').el;
 
-        this.listView.el.addEventListener('scroll', event => {
+        this.getRegion('contentRegion').el.addEventListener('scroll', event => {
             headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
             if (selectionPanelRegionEl) {
                 selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
