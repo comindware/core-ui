@@ -1,5 +1,3 @@
-
-
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
@@ -14,12 +12,13 @@ export default function() {
     });
 
     return new CanvasView({
-        view: new core.form.editors.DatalistEditor({
+        view: new Core.form.editors.DatalistEditor({
             model,
             key: 'dropdownValue',
             autocommit: true,
-            collection: new Backbone.Collection(possibleItems),
-            createBySelect: true
+            collection: possibleItems,
+            createBySelect: true,
+            valueType: 'id'
         }),
         presentation: '{{dropdownValue}}',
         isEditor: true

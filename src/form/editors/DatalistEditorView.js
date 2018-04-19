@@ -34,7 +34,8 @@ const defaultOptions = {
     textFilterDelay: 300,
     collection: null,
     maxQuantitySelected: 1,
-    canDeleteItem: true
+    canDeleteItem: true,
+    valueType: 'normal'
 };
 
 /**
@@ -51,10 +52,12 @@ const defaultOptions = {
  * @param {String} [options.displayAttribute='name'] The name of the attribute that contains display text.
  * @param {Boolean} [options.canDeleteItem=true] Возможно ли удалять добавленные бабблы.
  * @param {Number} [options.maxQuantitySelected] Максимальное количество пользователей, которое можно выбрать.
+ * @param {String} [options.valueType = 'normal'] type of value (id or [{ id, name }]).
  * */
 export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, options.schema || options, defaultOptions);
+
 
         this.controller =
             this.options.controller ||
@@ -62,7 +65,15 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 collection: options.collection
             });
 
-        this.panelCollection = new VirtualCollection(new ReferenceCollection(options.collection ? options.collection.toJSON() : []), { selectableBehavior: 'multi' });
+        let collection = [];
+        if (options.collection) {
+            if (Array.isArray(options.collection)) {
+                collection = options.collection;
+            } else {
+                collection = options.collection.toJSON();
+            }
+        }
+        this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
 
         this.value = this.__adjustValue(this.value);
 
@@ -152,7 +163,17 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     isEmptyValue(): boolean {
         const value = this.getValue();
+        if (this.getOption('valueType') === 'id') {
+            return !value;
+        }
         return !value || !value.length;
+    },
+
+    getValue() {
+        if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') === 1) {
+            return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
+        }
+        return this.value;
     },
 
     setReadonly(readonly: Boolean): void {
@@ -178,7 +199,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __adjustValue(value: DataValue): any {
-        if (typeof value === 'string' && value) {
+        if ((typeof value === 'string' || typeof value === 'number') && value) {
             return this.panelCollection.get(value) || [];
         }
         if (_.isUndefined(value) || value === null) {
@@ -204,7 +225,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         } else {
             this.value = this.getValue().concat(adjustedValue);
         }
-        selectedModels.add(value, { at: selectedModels.length - 1 });
+
+        selectedModels.add(this.value, { at: selectedModels.length - 1 });
         this.viewModel.panel.set('value', this.value);
 
         if (triggerChange) {
@@ -315,8 +337,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         const selectedModels = this.viewModel.button.selected;
         selectedModels.remove(model);
 
-        const selected = [].concat(this.getValue());
-        const removingModelIndex = selected.findIndex(s => s.id === model.get('id'));
+        const selected = [].concat(this.getValue() || []);
+        const removingModelIndex = selected.findIndex(s => (s ? s.id : s) === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }

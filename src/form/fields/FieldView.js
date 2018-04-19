@@ -205,6 +205,6 @@ export default Marionette.View.extend({
     },
 
     __checkUiReady() {
-        return this.__rendered && !this.isDestroyed;
+        return this.__rendered && !this.isDestroyed();
     }
 });

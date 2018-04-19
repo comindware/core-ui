@@ -206,7 +206,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     handleResize() {
-        if (this.isDestroyed) {
+        if (this.isDestroyed()) {
             return;
         }
         this.__handleResizeInternal();

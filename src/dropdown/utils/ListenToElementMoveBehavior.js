@@ -41,7 +41,7 @@ export default Marionette.Behavior.extend({
 
     __checkElements() {
         setTimeout(() => {
-            if (this.view.isDestroyed) {
+            if (this.view.isDestroyed()) {
                 return;
             }
             this.__observedEntities.forEach(x => {

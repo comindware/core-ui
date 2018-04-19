@@ -18,7 +18,7 @@ export default Marionette.View.extend({
         this.listenTo(this.popupMenu, 'execute', (action, model) => this.trigger('command:execute', model));
         const debounceRebuild = _.debounce(() => this.rebuildView(), 100);
         this.listenTo(Core.services.GlobalEventService, 'window:resize', debounceRebuild);
-        this.listenTo(this.allItemsCollection, 'change add remove reset', debounceRebuild);
+        this.listenTo(this.allItemsCollection, 'change add remove reset update', debounceRebuild);
     },
 
     className: 'js-toolbar-actions toolbar-container',
