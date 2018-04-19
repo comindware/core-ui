@@ -23,6 +23,10 @@ export default Marionette.Object.extend({
         this.__createView(this.options);
     },
 
+    setLoading(state) {
+        this.view.setLoading(state);
+    },
+
     __createView(options) {
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
         const collection = factory.createWrappedCollection(this.options);

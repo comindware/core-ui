@@ -88,7 +88,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     __change(): void {
         this.__value(this.model.get('value'), true, true);
-        if (!this.isDestroyed) {
+        if (!this.isDestroyed()) {
             this.__updateClearButton();
         }
         this.__updateDisplayValue();
@@ -236,7 +236,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onDateBeforeClose() {
-        if (this.calendarDropdownView.isDestroyed) {
+        if (this.calendarDropdownView.isDestroyed()) {
             return;
         }
         this.calendarDropdownView.button.endEditing();
@@ -371,7 +371,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onTimeBeforeClose() {
-        if (this.timeDropdownView.isDestroyed) {
+        if (this.timeDropdownView.isDestroyed()) {
             return;
         }
         this.timeDropdownView.button.endEditing();

@@ -331,6 +331,12 @@ export default Marionette.View.extend({
         this.headerView.handleResize();
     },
 
+    setLoading(state) {
+        if (!this.isDestroyed()) {
+            this.loading.setLoading(state);
+        }
+    },
+
     __presortCollection(columns) {
         const sortingColumn = columns.find(column => column.sorting);
         if (sortingColumn) {

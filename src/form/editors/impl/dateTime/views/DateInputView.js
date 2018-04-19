@@ -100,7 +100,7 @@ export default Marionette.View.extend({
     },
 
     updateDisplayValue() {
-        if (this.isDestroyed) {
+        if (this.isDestroyed()) {
             return;
         }
         const displayValue = DateTimeService.getDateDisplayValue(this.model.get('value'), this.options.dateDisplayFormat);
