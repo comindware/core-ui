@@ -17,7 +17,7 @@ const defaultOptions = {
     instanceRecordTypeId: undefined
 };
 
-formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
+export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
@@ -118,6 +118,4 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
         this.popoutView.close();
         this.__value(selected, true);
     }
-});
-
-export default formRepository.editors.ContextSelect;
+}));

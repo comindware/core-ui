@@ -63,7 +63,7 @@ export default Marionette.View.extend({
         if (fadeBackground) {
             const lastFaded = _.last(this.__stack.filter(x => x.options.fadeBackground));
             if (lastFaded) {
-                lastFaded.regionEl.removeClass(classes.POPUP_FADE);
+                lastFaded.regionEl.classList.remove(classes.POPUP_FADE);
             } else {
                 this.__toggleFadedBackground(true);
             }

@@ -4,7 +4,6 @@ const requireText = require.context('raw-loader!../cases', true);
 import template from 'text-loader!../templates/content.html';
 import Prism from 'prism';
 import markdown from 'markdown';
-import core from 'comindware/core';
 
 export default Marionette.View.extend({
     modelEvents: {

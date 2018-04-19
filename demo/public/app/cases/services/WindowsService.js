@@ -1,6 +1,4 @@
 
-import core from 'comindware/core';
-
 export default function() {
     var PopupView = Marionette.View.extend({
         initialize(options) {

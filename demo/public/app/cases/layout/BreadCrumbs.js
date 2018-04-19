@@ -6,7 +6,7 @@
  * Published under the MIT license
  */
 
-import core from 'comindware/core';
+
 
 export default function() {
     return new core.components.BreadCrumbs({

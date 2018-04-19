@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import ListCanvasView from 'demoPage/views/ListCanvasView';
 
 export default function() {

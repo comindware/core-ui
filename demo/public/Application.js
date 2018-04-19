@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import localizationMapEn from 'localizationMapEn';
 import localizationMapDe from 'localizationMapDe';
 import localizationMapRu from 'localizationMapRu';

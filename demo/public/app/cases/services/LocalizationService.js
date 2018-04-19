@@ -1,5 +1,3 @@
-import core from 'comindware/core';
-
 //Get Localized by localization constant
 const localizedText = Localizer.get('CORE.DEMO.CASES.OTHER.LOCALIZATIONSERVICE');
 
