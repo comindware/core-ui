@@ -105,7 +105,7 @@ describe('Components', () => {
             contextType: core.list.meta.contextTypes.one
         }
     ];
-
+    /*
     describe('EditableGrid', () => {
         it('should initialize', () => {
             const collection = new Backbone.Collection(data);
@@ -116,7 +116,6 @@ describe('Components', () => {
                 showToolbar: true,
                 showSearch: true,
                 showSelection: true,
-                showHeader: false,
                 collection,
                 title: 'Editable grid'
             });
@@ -138,15 +137,14 @@ describe('Components', () => {
                 showToolbar: true,
                 showSearch: true,
                 showSelection: true,
-                showHeader: false,
                 collection,
                 title: 'Editable grid'
             });
-
+            const view = gridController.view;
             window.app
                 .getView()
                 .getRegion('contentRegion')
-                .show(gridController.view);
+                .show(view);
 
             gridController.view.listView.collection.on('change', () => {
                 expect(gridController.view.listView.collection.length).toEqual(1111);
@@ -169,7 +167,6 @@ describe('Components', () => {
                 showToolbar: true,
                 showSearch: true,
                 showSelection: true,
-                showHeader: false,
                 collection,
                 title: 'Editable grid',
                 excludeActions,
@@ -220,4 +217,5 @@ describe('Components', () => {
             secondChechbox.click();
         });
     });
+    */
 });

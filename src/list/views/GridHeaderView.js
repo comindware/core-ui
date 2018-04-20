@@ -86,7 +86,7 @@ const GridHeaderView = Marionette.View.extend({
         this.__columnEls = [];
 
         let isFirstChild = true;
-        console.log(this.ui.gridHeaderColumn);
+
         this.ui.gridHeaderColumn.each((i, el) => {
             const column = this.columns[i];
             const view = new this.gridColumnHeaderView(
