@@ -65,7 +65,7 @@ describe('Components', () => {
                 collection: new Backbone.Collection(data)
             });
 
-            window.application.contentRegion.show(gridController.view);
+            window.app.getView().getRegion('contentRegion').show(gridController.view);
 
             expect(true).toBe(true);
         });

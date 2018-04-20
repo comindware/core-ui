@@ -71,7 +71,7 @@ describe('Components', () => {
                 }
             });
 
-            window.application.contentRegion.show(new View());
+            window.app.getView().getRegion('contentRegion').show(new View());
             // assert
             expect(true).toBe(true);
         });
@@ -124,7 +124,7 @@ describe('Components', () => {
                 }
             }))();
 
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             const helpTexts = view.$('.form-label__info-button');
 

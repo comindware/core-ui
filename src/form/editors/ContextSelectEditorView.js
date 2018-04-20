@@ -1,7 +1,7 @@
 // @flow
 import template from './templates/contextSelectEditor.html';
-import PopoutPanelView from './impl/context/views/PopoutPanelView';
 import PopoutButtonView from './impl/context/views/PopoutButtonView';
+import PopoutWrapperView from './impl/context/views/PopoutWrapperView';
 import ContextModel from './impl/context/models/ContextModel';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
@@ -12,7 +12,6 @@ const defaultOptions = {
     context: undefined,
     propertyTypes: undefined,
     usePropertyTypes: true,
-    popoutFlow: 'left',
     allowBlank: false,
     instanceRecordTypeId: undefined
 };
@@ -61,7 +60,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         }
 
         this.popoutView = dropdownFactory.createDropdown({
-            panelView: PopoutPanelView,
+            panelView: PopoutWrapperView,
             panelViewOptions: {
                 model: this.viewModel.get('panel')
             },
@@ -69,8 +68,9 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
             buttonViewOptions: {
                 model: this.viewModel.get('button')
             },
-            popoutFlow: this.options.popoutFlow
+            autoOpen: true
         });
+
         this.showChildView('contextPopoutRegion', this.popoutView);
         this.listenTo(this.popoutView, 'before:open', () => {
             const model = this.viewModel.get('panel');

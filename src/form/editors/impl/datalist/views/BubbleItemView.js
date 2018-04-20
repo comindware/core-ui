@@ -10,7 +10,7 @@ export default Marionette.View.extend({
     template: false,
 
     tagName() {
-        return this.url ? 'a' : 'li';
+        return this.options.createValueUrl(this.model.attributes) ? 'a' : 'li';
     },
 
     attributes() {

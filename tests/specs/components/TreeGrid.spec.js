@@ -104,7 +104,7 @@ describe('Components', () => {
                 collection: data
             });
 
-            window.application.contentRegion.show(gridController);
+            window.app.getView().getRegion('contentRegion').show(gridController);
 
             expect(true).toBe(true);
         });

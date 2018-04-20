@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Components', () => {
     describe('TabView', () => {
-        it('should initialize', function() {
+        it('should initialize', () => {
             const model = new Backbone.Model({
                 title: 'foo',
                 idealDays: 12,
@@ -93,8 +93,11 @@ describe('Components', () => {
                 showStepper: true,
                 showMoveButtons: true
             });
-            console.log(window.application.contentRegion);
-            window.application.contentRegion.show(view);
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

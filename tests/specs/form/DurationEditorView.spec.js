@@ -15,7 +15,7 @@ describe('Editors', function() {
                 model,
                 key: 'value'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             view.focus();
@@ -37,7 +37,7 @@ describe('Editors', function() {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.focus();
 
             // act
@@ -57,7 +57,7 @@ describe('Editors', function() {
                 model,
                 key: 'value'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const value = view.getValue();

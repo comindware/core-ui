@@ -14,7 +14,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             // assert
             expect(true).toBe(true);
         });

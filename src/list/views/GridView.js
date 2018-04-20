@@ -135,7 +135,6 @@ export default Marionette.View.extend({
                 }
             });
 
-
             this.selectionHeaderView = new SelectionCellView({
                 collection: this.collection,
                 selectionType: 'all',
@@ -150,9 +149,9 @@ export default Marionette.View.extend({
         }
 
         this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
-           if (eventName.startsWith('childview')) {
-               this.trigger.apply(this, [eventName, view].concat(eventArguments));
-           }
+            if (eventName.startsWith('childview')) {
+                this.trigger.apply(this, [eventName, view].concat(eventArguments));
+            }
         });
 
         this.listenTo(this.listView, 'positionChanged', (sender, args) => {
@@ -224,7 +223,10 @@ export default Marionette.View.extend({
         }
 
         this.showChildView('contentRegion', this.listView);
-        this.showChildView('headerRegion', this.headerView);
+
+        if (this.options.showHeader) {
+            this.showChildView('headerRegion', this.headerView);
+        }
 
         if (this.options.showSelection) {
             this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
@@ -284,7 +286,6 @@ export default Marionette.View.extend({
     },
 
     onDestroy() {
-        //console.log(this.styleSheet);
         //this.styleSheet && document.body.removeChild(this.styleSheet);
     },
 

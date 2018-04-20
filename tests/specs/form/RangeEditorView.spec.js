@@ -17,7 +17,7 @@ describe('Editors', () => {
                 step: 1
             });
 
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             // assert
             expect(true).toBe(true);
         });

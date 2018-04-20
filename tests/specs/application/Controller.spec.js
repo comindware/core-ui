@@ -176,10 +176,10 @@ describe('Application', () => {
 
             const controller = new view({
                 config: { id: 'my:module'},
-                region: window.application.contentRegion
+                region: window.app.getView().getRegion('contentRegion')
             });
 
-            //window.application.contentRegion.show(view);
+            //window.app.getView().getRegion('contentRegion').show(view);
             // assert
             expect(true).toBe(true);
         });

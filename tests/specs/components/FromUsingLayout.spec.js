@@ -4,7 +4,7 @@ import 'jasmine-jquery';
 describe('Components', () => {
     describe('Form Layout', () => {
         it('should initialize', function() {
-            window.application.contentRegion.show(
+            window.app.getView().getRegion('contentRegion').show(
                 new core.layout.Form({
                     model: new Backbone.Model({
                         1: 'bar',
@@ -167,7 +167,7 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app.getView().getRegion('contentRegion').show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(10);
 
@@ -202,7 +202,7 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app.getView().getRegion('contentRegion').show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
@@ -233,7 +233,7 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app.getView().getRegion('contentRegion').show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
@@ -270,7 +270,7 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app.getView().getRegion('contentRegion').show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
@@ -319,7 +319,7 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app.getView().getRegion('contentRegion').show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
