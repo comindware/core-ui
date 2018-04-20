@@ -22,12 +22,12 @@ export default Marionette.View.extend({
     },
 
     events: {
-        click: '__hideView'
+        click: 'hideView'
     },
 
     template: Handlebars.compile(template),
 
-    __hideView() {
+    hideView() {
         this.$el.fadeOut(300, () => this.model.collection.remove(this.model));
     }
 });

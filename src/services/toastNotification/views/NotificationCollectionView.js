@@ -12,8 +12,8 @@ export default Marionette.CollectionView.extend({
         if (this.collection.length > maxNotification) {
             this.collection.remove(this.children.findByIndex(0).model);
         } else if (this.collection.length > maxNotification - 1) {
-            this.__hideView(this.children.findByIndex(0));
+            this.children.findByIndex(0).hideView();
         }
-        child.hideTimeout = setTimeout(() => this.__hideView(child), child.model.get('time'));
+        child.hideTimeout = setTimeout(() => child.hideView(), child.model.get('time'));
     }
 });
