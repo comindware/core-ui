@@ -1,10 +1,9 @@
-
-
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
     // 1. Create form template
-    const template = '<div class="field-width" data-fields="text"></div>' +
+    const template =
+        '<div class="field-width" data-fields="text"></div>' +
         '<div class="field-width" data-fields="number"></div>' +
         '<div class="field-width" data-fields="dateTime"></div>' +
         '<div class="field-width" data-fields="duration"></div>' +
@@ -54,16 +53,21 @@ export default function() {
                             helpText: 'Some help information'
                         },
                         dropdown: {
-                            type: 'Dropdown',
+                            type: 'Datalist',
                             title: 'Dropdown',
-                            collection: [{ id: 'd.1', text: 'Text 1' }, { id: 'd.2', text: 'Text 2' }, {
-                                id: 'd.3',
-                                text: 'Text 3'
-                            }, { id: 'd.4', text: 'Text 4' }],
+                            collection: [
+                                { id: 'd.1', text: 'Text 1' },
+                                { id: 'd.2', text: 'Text 2' },
+                                {
+                                    id: 'd.3',
+                                    text: 'Text 3'
+                                },
+                                { id: 'd.4', text: 'Text 4' }
+                            ],
                             helpText: 'Some help information'
                         },
                         wrongInstance: {
-                            type: 'Dropdown',
+                            type: 'Datalist',
                             title: 'Dropdown',
                             helpText: 'Some help information'
                         }

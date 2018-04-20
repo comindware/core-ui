@@ -1,4 +1,3 @@
-
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default function() {
@@ -54,7 +53,7 @@ export default function() {
                                     },
                                     {
                                         text: 'Commit',
-                                        type: 'button',
+                                        type: 'Button',
                                         handler() {
                                             view.form.commit();
                                             alert(JSON.stringify(model.toJSON(), null, 4));

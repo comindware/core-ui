@@ -1,4 +1,3 @@
-
 export default function() {
     // Step 1. Create model
     const model = new Backbone.Model({
@@ -26,72 +25,66 @@ export default function() {
         boolean: {
             type: 'Boolean',
             title: 'Boolean',
-            validators: [ 'required' ],
-            required: true, // to display the asterisk left from title
+            validators: ['required'],
+            required: true // to display the asterisk left from title
         },
         dropdown: {
-            type: 'Dropdown',
+            type: 'Datalist',
             title: 'Dropdown',
             enabled: false,
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true, // to display the asterisk left from title
-            collection: [
-                { id: 'id.1', text: 'Item 1' },
-                { id: 'id.2', text: 'Item 2' }
-            ]
+            collection: [{ id: 'id.1', text: 'Item 1' }, { id: 'id.2', text: 'Item 2' }]
         },
         membersBubble: {
             type: 'MembersBubble',
             title: 'MembersBubble',
-            validators: [ 'required' ],
-            required: true, // to display the asterisk left from title
+            validators: ['required'],
+            required: true // to display the asterisk left from title
         },
         memberSelect: {
             type: 'MemberSelect',
             title: 'MemberSelect',
-            validators: [ 'required' ],
-            required: true, // to display the asterisk left from title
+            validators: ['required'],
+            required: true // to display the asterisk left from title
         },
         number: {
             type: 'Number',
             title: 'Number',
             helpText: 'This text is really helpful',
-            validators: [ 'required' ],
-            required: true, // to display the asterisk left from title
+            validators: ['required'],
+            required: true // to display the asterisk left from title
         },
         radioGroup: {
             type: 'RadioGroup',
             title: 'RadioGroup',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true, // to display the asterisk left from title
-            radioOptions: [
-                { id: 'id.1', displayText: 'Option 1' },
-                { id: 'id.2', displayText: 'Option 2' }
-            ]
+            radioOptions: [{ id: 'id.1', displayText: 'Option 1' }, { id: 'id.2', displayText: 'Option 2' }]
         },
         reference: {
             type: 'Datalist',
             title: 'Datalist',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true, // to display the asterisk left from title
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController()
         },
         textArea: {
             type: 'TextArea',
             title: 'TextArea',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         },
         text: {
             type: 'Text',
             title: 'Text',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         },
         avatar: {
             type: 'Avatar',
             title: 'Avatar',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true, // to display the asterisk left from title
             fullName: 'Foo Bar',
             autoUpload: true,
@@ -103,47 +96,44 @@ export default function() {
         date: {
             type: 'Date',
             title: 'Date',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         },
         dateTime: {
             type: 'DateTime',
             title: 'DateTime',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         },
         duration: {
             type: 'Duration',
             title: 'Duration',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         },
         mention: {
             type: 'Mention',
             title: 'Mention',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         },
         multiSelect: {
             type: 'MultiSelect',
             title: 'MultiSelect',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true, // to display the asterisk left from title
-            collection: [
-                { id: 'id.1', text: 'Item 1' },
-                { id: 'id.2', text: 'Item 2' }
-            ]
+            collection: [{ id: 'id.1', text: 'Item 1' }, { id: 'id.2', text: 'Item 2' }]
         },
         password: {
             type: 'Password',
             title: 'Password',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         },
         time: {
             type: 'Time',
             title: 'Time',
-            validators: [ 'required' ],
+            validators: ['required'],
             required: true // to display the asterisk left from title
         }
     };

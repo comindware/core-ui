@@ -55,7 +55,7 @@ describe('Components', () => {
                                         },
                                         {
                                             text: 'Commit',
-                                            type: 'button',
+                                            type: 'Button',
                                             handler() {
                                                 view.form.commit();
                                                 alert(JSON.stringify(model.toJSON(), null, 4));
