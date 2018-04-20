@@ -24,7 +24,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             view.focus();
@@ -44,7 +44,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.focus();
 
             // act
@@ -66,7 +66,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const value = view.getValue();
@@ -84,7 +84,7 @@ describe('Editors', () => {
             const view = new core.form.editors.DateTimeEditor({
                 value: expected
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const value = view.getValue();
@@ -106,7 +106,7 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -128,7 +128,7 @@ describe('Editors', () => {
                 value: expected,
                 autocommit: true
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -153,7 +153,7 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
 
             model.set('data', '2016-01-01T00:00:06.000Z');
@@ -178,7 +178,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -204,7 +204,7 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
@@ -228,7 +228,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -246,7 +246,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             // act
             const isEmpty = view.isEmptyValue();
 

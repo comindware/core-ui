@@ -86,13 +86,16 @@ const GridHeaderView = Marionette.View.extend({
         this.__columnEls = [];
 
         let isFirstChild = true;
+        console.log(this.ui.gridHeaderColumn);
         this.ui.gridHeaderColumn.each((i, el) => {
             const column = this.columns[i];
-            const view = new this.gridColumnHeaderView(Object.assign(this.gridColumnHeaderViewOptions || {}, {
-                title: column.title,
-                column,
-                gridEventAggregator: this.gridEventAggregator
-            }));
+            const view = new this.gridColumnHeaderView(
+                Object.assign(this.gridColumnHeaderViewOptions || {}, {
+                    title: column.title,
+                    column,
+                    gridEventAggregator: this.gridEventAggregator
+                })
+            );
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
@@ -127,7 +130,7 @@ const GridHeaderView = Marionette.View.extend({
     __handleColumnSort(sender, args) {
         const column = args.column;
         const sorting = column.sorting === 'asc' ? 'desc' : 'asc';
-        this.columns.forEach(c => c.sorting = null);
+        this.columns.forEach(c => (c.sorting = null));
         column.sorting = sorting;
         let comparator = sorting === 'desc' ? column.sortDesc : column.sortAsc;
         if (!comparator) {
@@ -301,8 +304,7 @@ const GridHeaderView = Marionette.View.extend({
         if (this.collection.dragginModel) {
             this.trigger('drag:drop', this.collection.dragginModel, this.model);
         }
-    },
-
+    }
 });
 
 export default GridHeaderView;

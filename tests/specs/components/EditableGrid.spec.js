@@ -107,7 +107,7 @@ describe('Components', () => {
     ];
 
     describe('EditableGrid', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const collection = new Backbone.Collection(data);
 
             const gridController = new core.list.controllers.GridController({
@@ -121,12 +121,15 @@ describe('Components', () => {
                 title: 'Editable grid'
             });
 
-            window.application.contentRegion.show(gridController.view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
 
             expect(true).toBe(true);
         });
 
-        it('should search when typing in search box', function (done) {
+        it('should search when typing in search box', done => {
             const collection = new Backbone.Collection(data);
 
             const gridController = new core.list.controllers.GridController({
@@ -140,7 +143,10 @@ describe('Components', () => {
                 title: 'Editable grid'
             });
 
-            window.application.contentRegion.show(gridController.view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
 
             gridController.view.listView.collection.on('change', () => {
                 expect(gridController.view.listView.collection.length).toEqual(1111);
@@ -154,7 +160,7 @@ describe('Components', () => {
             gridController.view.$(searchInput).trigger('keyup');
         });
 
-        it('should update toolbar on row checkbox select', function (done) {
+        it('should update toolbar on row checkbox select', done => {
             const collection = new Backbone.Collection(data);
 
             const gridController = new core.list.controllers.GridController({
@@ -170,7 +176,10 @@ describe('Components', () => {
                 additionalActions
             });
 
-            window.application.contentRegion.show(gridController.view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(gridController.view);
 
             const firstChechbox = gridController.view.$('.checkbox:eq(1)');
             const secondChechbox = gridController.view.$('.checkbox:eq(2)');
@@ -178,7 +187,6 @@ describe('Components', () => {
             const allItemsCollection = gridController.view.toolbarView.allItemsCollection;
             const checkSomeCallback = jasmine.createSpy('checkSomeCallback');
             gridCollection.on('check:some', checkSomeCallback);
-
 
             const firstObserver = new MutationObserver(() => {
                 expect(firstChechbox[0].classList.contains('editor_checked')).toBe(true);

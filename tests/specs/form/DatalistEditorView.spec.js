@@ -1,4 +1,3 @@
-
 import core from 'coreApi';
 import 'jasmine-jquery';
 
@@ -9,16 +8,20 @@ describe('Editors', () => {
         return view.$('.js-input');
     };
 
-    const collectionData = [{
-        id: 1,
-        name: 1
-    }, {
-        id: 2,
-        name: 2
-    }, {
-        id: 3,
-        name: 3
-    }];
+    const collectionData = [
+        {
+            id: 1,
+            name: 1
+        },
+        {
+            id: 2,
+            name: 2
+        },
+        {
+            id: 3,
+            name: 3
+        }
+    ];
 
     const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
         fetch() {
@@ -52,7 +55,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -72,7 +78,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -114,7 +123,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
         });
@@ -133,7 +145,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -156,7 +171,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -177,7 +195,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -198,7 +219,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.setValue([{ id: 2, name: 2 }]);
 
@@ -217,7 +241,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -236,7 +263,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -259,7 +289,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -281,7 +314,10 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.on('change', () => {
                 expect(true).toEqual(true);
@@ -306,7 +342,10 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             $('.bubbles__i:eq(1)').trigger('mouseenter');
 
@@ -332,7 +371,10 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
@@ -361,11 +403,10 @@ describe('Editors', () => {
             });
 
             view.on('view:ready', () => {
-                console.log(1);
                 $('.dd-list__i')[0].click();
             });
 
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.focus();
         });
         */
@@ -394,7 +435,10 @@ describe('Editors', () => {
                 $('.js-bubble-delete')[0].click();
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.focus();
         });
 
@@ -409,18 +453,23 @@ describe('Editors', () => {
                 key: 'value'
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
-            expect(view.options).toEqual(jasmine.objectContaining({
-                displayAttribute: 'name',
-                controller: null,
-                showAddNewButton: false,
-                showEditButton: false,
-                showCheckboxes: false,
-                textFilterDelay: 300,
-                maxQuantitySelected: 1,
-                canDeleteItem: true
-            }));
+            expect(view.options).toEqual(
+                jasmine.objectContaining({
+                    displayAttribute: 'name',
+                    controller: null,
+                    showAddNewButton: false,
+                    showEditButton: false,
+                    showCheckboxes: false,
+                    textFilterDelay: 300,
+                    maxQuantitySelected: 1,
+                    canDeleteItem: true
+                })
+            );
         });
 
         it('should show checkboxes and have correct style if showCheckboxes parameter set to true', done => {
@@ -435,7 +484,10 @@ describe('Editors', () => {
                 showCheckboxes: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 

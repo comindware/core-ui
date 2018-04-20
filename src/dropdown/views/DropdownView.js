@@ -98,7 +98,6 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click @ui.button': '__handleClick',
         blur: '__onBlur'
     },
 
@@ -123,10 +122,13 @@ export default Marionette.View.extend({
             args[0] = `button:${args[0]}`;
             this.triggerMethod(...args);
         });
+        const el = this.button.render().$el;
+        this.$el.append(el);
 
-        this.$el.append(this.button.render().$el);
         this.isShown = true;
         this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
+
+        el.on('click', this.__handleClick.bind(this));
 
         this.$el.attr('tabindex', -1);
     },

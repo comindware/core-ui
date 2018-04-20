@@ -18,7 +18,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             view.focus();
@@ -37,7 +37,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.focus();
 
             // act
@@ -57,7 +57,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const value = view.getValue();
@@ -74,7 +74,7 @@ describe('Editors', () => {
             const view = new core.form.editors.TextAreaEditor({
                 value: expected
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const value = view.getValue();
@@ -95,7 +95,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -116,7 +116,7 @@ describe('Editors', () => {
             const view = new core.form.editors.TextAreaEditor({
                 value: 'text'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -140,7 +140,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -166,7 +166,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -195,7 +195,7 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -220,7 +220,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -241,7 +241,7 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -261,7 +261,7 @@ describe('Editors', () => {
                 key: 'data',
                 changeMode: 'keydown'
             });
-            window.application.contentRegion.show(view);
+            window.app.getView().getRegion('contentRegion').show(view);
             view.on('change', onChangeCallback);
 
             // act

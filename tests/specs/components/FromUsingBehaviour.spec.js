@@ -1,7 +1,8 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 
-const template = '<div class="field-width" data-fields="text"></div>' +
+const template =
+    '<div class="field-width" data-fields="text"></div>' +
     '<div class="field-width" data-fields="number"></div>' +
     '<div class="field-width" data-fields="dateTime"></div>' +
     '<div class="field-width" data-fields="duration"></div>' +
@@ -18,7 +19,7 @@ const model = new Backbone.Model({
 
 describe('Components', () => {
     describe('FormUsingBehaviour', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const View = Marionette.View.extend({
                 initialize() {
                     this.model = model;
@@ -52,17 +53,17 @@ describe('Components', () => {
                                     helpText: 'Some help information'
                                 },
                                 dropdown: {
-                                    type: 'Dropdown',
+                                    type: 'Datalist',
                                     title: 'Dropdown',
-                                    collection: [{ id: 'd.1', text: 'Text 1' }, { id: 'd.2', text: 'Text 2' }, {
-                                        id: 'd.3',
-                                        text: 'Text 3'
-                                    }, { id: 'd.4', text: 'Text 4' }],
-                                    helpText: 'Some help information'
-                                },
-                                wrongInstance: {
-                                    type: 'Dropdown',
-                                    title: 'Dropdown',
+                                    collection: [
+                                        { id: 'd.1', text: 'Text 1' },
+                                        { id: 'd.2', text: 'Text 2' },
+                                        {
+                                            id: 'd.3',
+                                            text: 'Text 3'
+                                        },
+                                        { id: 'd.4', text: 'Text 4' }
+                                    ],
                                     helpText: 'Some help information'
                                 }
                             };
@@ -71,12 +72,15 @@ describe('Components', () => {
                 }
             });
 
-            window.application.contentRegion.show(new View());
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(new View());
             // assert
             expect(true).toBe(true);
         });
 
-        it('should show all help texts ', function () {
+        it('should show all help texts ', () => {
             const view = new (Marionette.View.extend({
                 initialize() {
                     this.model = model;
@@ -110,12 +114,17 @@ describe('Components', () => {
                                     helpText: 'Some help information'
                                 },
                                 dropdown: {
-                                    type: 'Dropdown',
+                                    type: 'Datalist',
                                     title: 'Dropdown',
-                                    collection: [{ id: 'd.1', text: 'Text 1' }, { id: 'd.2', text: 'Text 2' }, {
-                                        id: 'd.3',
-                                        text: 'Text 3'
-                                    }, { id: 'd.4', text: 'Text 4' }],
+                                    collection: [
+                                        { id: 'd.1', text: 'Text 1' },
+                                        { id: 'd.2', text: 'Text 2' },
+                                        {
+                                            id: 'd.3',
+                                            text: 'Text 3'
+                                        },
+                                        { id: 'd.4', text: 'Text 4' }
+                                    ],
                                     helpText: 'Some help information'
                                 }
                             };
@@ -124,7 +133,10 @@ describe('Components', () => {
                 }
             }))();
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             const helpTexts = view.$('.form-label__info-button');
 

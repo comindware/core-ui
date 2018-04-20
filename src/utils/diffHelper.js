@@ -74,12 +74,9 @@ export default function(a_: Array<any>, b_: Array<any>) {
     };
 
     const recordseq = function(epc) {
-        let x_idx;
-        let y_idx;
         let px_idx;
         let py_idx;
         let i;
-        x_idx = y_idx = 1;
         px_idx = py_idx = 0;
         for (i = epc.length - 1; i >= 0; --i) {
             while (px_idx < epc[i].x || py_idx < epc[i].y) {
@@ -89,7 +86,6 @@ export default function(a_: Array<any>, b_: Array<any>) {
                     } else {
                         ses[ses.length] = new seselem(b[py_idx], SES_ADD);
                     }
-                    ++y_idx;
                     ++py_idx;
                 } else if (epc[i].y - epc[i].x < py_idx - px_idx) {
                     if (reverse) {
@@ -97,13 +93,10 @@ export default function(a_: Array<any>, b_: Array<any>) {
                     } else {
                         ses[ses.length] = new seselem(a[px_idx], SES_DELETE);
                     }
-                    ++x_idx;
                     ++px_idx;
                 } else {
                     ses[ses.length] = new seselem(a[px_idx], SES_COMMON);
                     lcs += a[px_idx];
-                    ++x_idx;
-                    ++y_idx;
                     ++px_idx;
                     ++py_idx;
                 }

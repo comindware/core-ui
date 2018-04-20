@@ -43,8 +43,10 @@ export default {
                             columns: this.__parseConfiguration(child.items)
                         })
                     );
+                case 'Popup':
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
+                case 'Button':
                 case 'button':
                     return new Button({
                         text: child.text,
@@ -125,6 +127,7 @@ export default {
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
                 case 'button':
+                case 'Button':
                     return new Button(_.omit(child, 'cType'));
                 case 'plainText':
                     return new PlainText(_.omit(child, 'cType'));

@@ -297,18 +297,14 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 form.append(`file${i + 1}`, files[i]);
             }
         }
-
-        $.ajax({
-            url: this.uploadUrl,
-            data: form,
-            processData: false,
-            type: 'POST',
-            contentType: false,
+        fetch(this.uploadUrl, {
+            method: 'POST',
             encoding: 'multipart/form-data',
             enctype: 'multipart/form-data',
-            mimeType: 'multipart/form-data',
-            success: data => {
-                const tempResult = JSON.parse(data);
+            mimeType: 'multipart/form-data'
+        })
+            .then(response => response.json())
+            .then(tempResult => {
                 const resultObjects = [];
                 for (let i = 0; i < tempResult.fileIds.length; i++) {
                     const currFileName = files[i].name;
@@ -322,11 +318,10 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 this.ui.fileUpload[0].value = null;
                 this.ui.form.trigger('reset');
                 this.trigger('uploaded', resultObjects);
-            },
-            error: () => {
+            })
+            .catch(e => {
                 this._fallback();
-            }
-        });
+            });
     },
 
     _fallback() {
