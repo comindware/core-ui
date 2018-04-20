@@ -13,8 +13,8 @@ export default Marionette.View.extend({
 
     regions: {
         searchInputRegion: '.js-search-input-region',
-        searchArea: '.js-search-area',
-        collectionArea: '.js-collection-area'
+        searchAreaRegion: '.js-search-area',
+        collectionAreaRegion: '.js-collection-area'
     },
 
     modelEvents: {
@@ -35,7 +35,8 @@ export default Marionette.View.extend({
             collection: this.options.collection
         });
 
-        this.collectionArea.show(iconCollectionView);
+        this.showChildView('collectionAreaRegion', iconCollectionView);
+
         this.listenTo(iconCollectionView, 'click:item', id => this.trigger('click:item', id));
     },
 
@@ -60,9 +61,10 @@ export default Marionette.View.extend({
             model
         });
 
-        this.searchArea.show(iconItemCategoryView);
-        this.collectionArea.$el.hide();
-        this.searchArea.$el.show();
+        const searchAreaRegion = this.getRegion('searchAreaRegion');
+        searchAreaRegion.show(iconItemCategoryView);
+        searchAreaRegion.$el.hide();
+        this.getRegion('searchArea').$el.show();
         this.listenTo(iconItemCategoryView, 'click:item', id => this.trigger('click:item', id));
     },
 

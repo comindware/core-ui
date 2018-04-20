@@ -97,6 +97,12 @@ const ListView = Marionette.CollectionView.extend({
         // this.on('render', this.__onRender);
     },
 
+    attributes() {
+        return {
+            tabindex: 1
+        };
+    },
+
     events: {
         keydown: '__handleKeydown'
     },
@@ -319,7 +325,9 @@ const ListView = Marionette.CollectionView.extend({
             const scrollTop
                 = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
                 * this.childHeight;
-            this.el.scrollTop = scrollTop;
+            if (this.el.parentNode) {
+                this.$el.parent().scrollTop(scrollTop);
+            }
             _.delay(() => (this.internalScroll = false), 100);
         }
 

@@ -392,8 +392,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.renderShowMore();
     },
 
-    onValueRemove(view, options) {
-        this.trigger('removeItem', options.model);
+    onValueRemove(model) {
+        this.trigger('removeItem', model);
     },
 
     onValueAdd(model) {

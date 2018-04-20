@@ -32,7 +32,7 @@ import WorkSpaceItemsEditorView from './editors/WorkSpaceItemsEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/members/collections/MembersCollection';
 import editorsImplCommonMemberModel from './editors/impl/members/models/MemberModel';
-import IconEditorComponentView from './editors/impl/awesomeIconEditor/views/IconEditorComponentView';
+import IconEditorView from './editors/IconEditorView';
 import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAvatarEditorController';
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
 import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
@@ -178,7 +178,7 @@ const api = /** @lends module:core.form */ {
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,
         WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
-        IconEditor: IconEditorComponentView,
+        IconEditor: IconEditorView,
         ColorPickerEditor,
         RangeEditor,
         AudioEditor

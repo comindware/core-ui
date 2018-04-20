@@ -350,7 +350,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 tagName: 'ul',
                 className: 'dropdown__wrp dropdown__wrp_time',
                 childViewEvents: {
-                    select(view, time) {
+                    select(time) {
                         this.trigger('select', time);
                     }
                 },
