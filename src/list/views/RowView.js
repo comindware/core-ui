@@ -58,10 +58,6 @@ export default Marionette.View.extend({
         drop: '__handleModelDrop'
     },
 
-    __handleKeydown() {
-        console.log('1');
-    },
-
     initialize() {
         _.defaults(this.options, defaultOptions);
 
