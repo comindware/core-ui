@@ -21,9 +21,13 @@ export default Marionette.View.extend({
         }
     },
 
-    triggers: {
-        click: 'view:click'
+    events: {
+        click: '__hideView'
     },
 
-    template: Handlebars.compile(template)
+    template: Handlebars.compile(template),
+
+    __hideView() {
+        this.$el.fadeOut(300, () => this.model.collection.remove(this.model));
+    }
 });

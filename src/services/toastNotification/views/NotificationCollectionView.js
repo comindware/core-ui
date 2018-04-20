@@ -3,9 +3,6 @@ import ToastNotificationView from './ToastNotificationView';
 const maxNotification = 5;
 
 export default Marionette.CollectionView.extend({
-    childViewEvents: {
-        'view:click': '__hideView'
-    },
 
     className: 'dev-notification-container',
 
@@ -18,9 +15,5 @@ export default Marionette.CollectionView.extend({
             this.__hideView(this.children.findByIndex(0));
         }
         view.hideTimeout = setTimeout(() => this.__hideView(view), view.model.get('time'));
-    },
-
-    __hideView(view) {
-        view.$el.fadeOut(300, () => this.collection.remove(view.model));
     }
 });

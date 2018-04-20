@@ -84,6 +84,11 @@ export default {
                     description: 'Simple code editor'
                 },
                 {
+                    id: 'IconEditor',
+                    displayName: 'Icon Editor',
+                    description: 'Icon editor'
+                },
+                {
                     id: 'ContextEditor',
                     displayName: 'Context Editor',
                     description: 'Context editor'

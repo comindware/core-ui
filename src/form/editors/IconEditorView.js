@@ -1,7 +1,7 @@
-import IconButtonView from './IconButtonView';
-import IconPanelView from './IconPanelView';
-import template from '../templates/iconEditorComponentView.html';
-import iconPalette from '../iconPalette';
+import IconButtonView from './impl/iconEditor/views/IconButtonView';
+import IconPanelView from './impl/iconEditor/views/IconPanelView';
+import template from './impl/iconEditor/templates/iconEditorComponentView.html';
+import iconPalette from './impl/iconEditor/iconPalette';
 
 const constants = {
     iconPropertyDefaultName: 'iconClass'
@@ -27,7 +27,7 @@ export default Marionette.View.extend({
     className: 'icon-editor-wrp',
 
     regions: {
-        iconSelectorHeader: '.js-icon-selector-header'
+        iconSelectorHeaderRegion: '.js-icon-selector-header'
     },
 
     ui: {
@@ -59,7 +59,7 @@ export default Marionette.View.extend({
             this.trigger('click:item', id);
         });
 
-        this.iconSelectorHeader.show(this.popupPanel);
+        this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
         if (!this.model.get('iconClass')) {
             this.ui.deleteIconButton.hide();
         }
