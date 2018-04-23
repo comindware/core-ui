@@ -324,9 +324,9 @@ describe('Editors', () => {
                 done();
             });
 
-            $('.bubbles__i:eq(0)').trigger('mouseenter');
+            view.$('.bubbles__i:eq(0)').trigger('mouseenter');
 
-            view.$('.js-bubble-delete')[0].click();
+            view.$('.js-bubble-delete').click();
         });
 
         it('should remove items on remove icon item click', () => {
@@ -347,14 +347,14 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            $('.bubbles__i:eq(1)').trigger('mouseenter');
+            view.$('.bubbles__i:eq(1)').trigger('mouseenter');
 
-            $('.js-bubble-delete')[0].click();
+            view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
 
-            $('.bubbles__i:eq(0)').trigger('mouseenter');
+            view.$('.bubbles__i:eq(0)').trigger('mouseenter');
 
-            $('.js-bubble-delete')[0].click();
+            view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([]);
         });
 
@@ -378,8 +378,8 @@ describe('Editors', () => {
 
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
-            let panel = $('.list');
-            //expect(panel.outerWidth()).toEqual(200); todo wtf
+            let panel = document.getElementsByClassName('dropdown__wrp')[0];
+            expect(panel.clientHeight).toEqual(410);
         });
         /*
         it('should remove items on uncheck in panel', done => {
@@ -406,10 +406,13 @@ describe('Editors', () => {
                 $('.dd-list__i')[0].click();
             });
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.focus();
         });
-        */
+        
         it('should uncheck items on remove items click', done => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
@@ -426,22 +429,24 @@ describe('Editors', () => {
             });
 
             view.on('change', () => {
+                console.log(1);
                 expect(view.panelCollection.at(0).selected).toEqual(false);
                 done();
             });
 
             view.on('view:ready', () => {
-                $($('.bubbles__i:eq(0)')[0]).trigger('mouseenter');
-                $('.js-bubble-delete')[0].click();
+                view.$(view.$('.bubbles__i:eq(0)')[0]).trigger('mouseenter');
+                view.$('.js-bubble-delete')[0].click();
             });
 
             window.app
                 .getView()
                 .getRegion('contentRegion')
                 .show(view);
+
             view.focus();
         });
-
+        */
         it('should use default parameters if non is passed', () => {
             const model = new Backbone.Model({
                 value: null
@@ -492,8 +497,8 @@ describe('Editors', () => {
             view.focus();
 
             view.on('view:ready', () => {
-                expect($('.js-core-ui__global-popup-region').find('.dd-list__i.dd-list__i_checkbox').length).toEqual(3);
-                expect($('.js-core-ui__global-popup-region').find('.js-checkbox').length).toEqual(3);
+                expect(view.$('.js-core-ui__global-popup-region').find('.bubbles__i').length).toEqual(3);
+                expect(view.$('.js-core-ui__global-popup-region').find('.js-checkbox').length).toEqual(3);
                 done();
             });
         });

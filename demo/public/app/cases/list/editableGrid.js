@@ -1,4 +1,3 @@
-
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default () => {
@@ -91,7 +90,6 @@ export default () => {
         showToolbar: true,
         showSearch: true,
         showSelection: true,
-        showHeader: false,
         collection,
         title: 'Editable grid'
     });

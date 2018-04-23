@@ -36,16 +36,13 @@ describe('Components', () => {
         });
 
         it('should update visible models on scroll', done => {
-            // document.body.style.height = '1000px';
-            // document.body.appendChild(window.app.getView().getRegion('contentRegion').$el[0]);
-
             window.app
                 .getView()
                 .getRegion('contentRegion')
                 .$el.css({
                     height: 1000,
                     width: 1000,
-                    overflow: 'hidden',
+                    overflow: 'auto',
                     position: 'relative'
                 });
 
@@ -71,8 +68,9 @@ describe('Components', () => {
 
             listView.on('attach', () => {
                 expect(listView.collection.visibleLength).toBe(60, 'Visible models: items on page + buffer');
-                expect(listView.el.clientHeight).toBe(1000);
-                listView.el.scrollTop = 1000;
+                expect(listView.el.clientHeight).toBe(250000);
+                expect(listView.el.parentElement.clientHeight).toBe(1000);
+                listView.el.parentElement.scrollTop = 1000;
             });
             window.app
                 .getView()

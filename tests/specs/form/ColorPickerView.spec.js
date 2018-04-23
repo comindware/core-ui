@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('ColorPickerEditorView', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -14,7 +14,10 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

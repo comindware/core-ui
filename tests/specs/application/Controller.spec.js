@@ -2,31 +2,23 @@ import core from 'coreApi';
 import 'jasmine-jquery';
 
 describe('Application', () => {
-
-
     describe('Controller', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const view = core.Controller.extend({
                 routingActions: {
                     list: {
                         url: 'SolutionConfigurationApi/List',
                         viewModel: Backbone.Collection,
                         view: Marionette.View.extend({ template: false }),
-                        viewEvents: {
-
-                        }
+                        viewEvents: {}
                     },
                     rolesList: {
                         url: 'RolesCollectionApi/List',
                         viewModel: Backbone.Collection,
                         view: Marionette.View.extend({ template: false }),
                         viewEvents: {
-                            'dblclick:row'(roleId) {
-
-                            },
-                            navigateToNewRole() {
-
-                            }
+                            'dblclick:row'(roleId) {},
+                            navigateToNewRole() {}
                         }
                     },
                     role: {
@@ -35,18 +27,14 @@ describe('Application', () => {
                         viewModel: Backbone.Collection,
                         view: Marionette.View.extend({ template: false }),
                         viewEvents: {
-                            'update:role:name'() {
-
-                            }
+                            'update:role:name'() {}
                         }
                     },
                     newRole: {
                         viewModel: Backbone.Collection,
                         view: Marionette.View.extend({ template: false }),
                         viewEvents: {
-                            'update:role:name'() {
-
-                            }
+                            'update:role:name'() {}
                         }
                     }
                 },
@@ -57,9 +45,7 @@ describe('Application', () => {
                         notifications: {
                             onSuccess: Localizer.get('PROCESS.COMMON.SOLUTIONS.NOTIFICATIONS.CREATED')
                         },
-                        onSuccess() {
-
-                        }
+                        onSuccess() {}
                     },
                     'get:app': {
                         url: 'SolutionConfigurationApi/Get'
@@ -69,9 +55,7 @@ describe('Application', () => {
                         notifications: {
                             onSuccess: Localizer.get('PROCESS.COMMON.SOLUTIONS.NOTIFICATIONS.EDITED')
                         },
-                        onSuccess() {
-
-                        }
+                        onSuccess() {}
                     },
                     'delete:apps': {
                         url: 'SolutionConfigurationApi/Delete',
@@ -79,18 +63,14 @@ describe('Application', () => {
                             onSuccess: Localizer.get('PROCESS.COMMON.SOLUTIONS.NOTIFICATIONS.DELETED'),
                             onFailure: Localizer.get('PROCESS.COMMON.SOLUTIONS.NOTIFICATIONS.NOTSELECTED')
                         },
-                        onSuccess() {
-
-                        }
+                        onSuccess() {}
                     },
                     'create:role': {
                         url: 'RolesCollectionApi/Post',
                         notifications: {
                             onSuccess: Localizer.get('SUITEGENERAL.APP.SETTINGS.ROLES.NOTIFICATIONS.CREATED')
                         },
-                        onSuccess() {
-
-                        }
+                        onSuccess() {}
                     },
                     'edit:role': {
                         url: 'RolesCollectionApi/Put',
@@ -115,12 +95,8 @@ describe('Application', () => {
                     },
                     'get:session': {
                         url: 'SynchronizationApi/GetSession',
-                        onSuccess() {
-
-                        },
-                        onFailure() {
-
-                        }
+                        onSuccess() {},
+                        onFailure() {}
                     },
                     'getContext:integration': {
                         url: 'SynchronizationApi/GetSolutionContext'
@@ -133,9 +109,7 @@ describe('Application', () => {
                         notifications: {
                             onSuccess: Localizer.get('PROCESS.COMMON.SOLUTIONS.NOTIFICATIONS.EDITED')
                         },
-                        onSuccess() {
-
-                        }
+                        onSuccess() {}
                     },
                     'delete:integrations': {
                         url: 'SynchronizationApi/Delete',
@@ -175,7 +149,7 @@ describe('Application', () => {
             });
 
             const controller = new view({
-                config: { id: 'my:module'},
+                config: { id: 'my:module' },
                 region: window.app.getView().getRegion('contentRegion')
             });
 

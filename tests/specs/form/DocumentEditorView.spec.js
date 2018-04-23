@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('DocumentEditorView', () => {
-        it('should initialize', function() {
+        it('should initialize', () => {
             const model = new Backbone.Model({
                 code: 'true'
             });
@@ -15,7 +15,10 @@ describe('Editors', () => {
                 mode: 'code'
             });
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

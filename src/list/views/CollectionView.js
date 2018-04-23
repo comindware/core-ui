@@ -120,7 +120,7 @@ const ListView = Marionette.CollectionView.extend({
 
     _showCollection() {
         const models = this.collection.visibleModels;
-        
+
         models.forEach((child, index) => {
             this._addChild(child, index);
         });
@@ -303,6 +303,7 @@ const ListView = Marionette.CollectionView.extend({
         if (this.state.viewportHeight === undefined || this.collection.length <= this.state.viewportHeight || this.internalScroll) {
             return;
         }
+
         const newPosition = Math.max(0, Math.floor(this.el.parentElement.scrollTop / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
     },
@@ -322,9 +323,9 @@ const ListView = Marionette.CollectionView.extend({
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
-            const scrollTop
-                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
-                * this.childHeight;
+            const scrollTop =
+                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
+                this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
@@ -354,7 +355,7 @@ const ListView = Marionette.CollectionView.extend({
         // Computing new elementHeight and viewportHeight
         this.state.viewportHeight = Math.max(1, Math.floor(Math.min(elementHeight, window.innerHeight) / this.childHeight));
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
-        const allItemsHeight = this.state.allItemsHeight = this.childHeight * this.collection.length;
+        const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (allItemsHeight !== oldAllItemsHeight) {
             this.$el.height(allItemsHeight);

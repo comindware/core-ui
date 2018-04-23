@@ -31,7 +31,7 @@ const rootView = Marionette.View.extend({
     }
 });
 
-setFixtures('<div class="js-app-region"></div>');
+document.body.insertAdjacentHTML('afterbegin', '<div class="js-app-region"></div>');
 
 const Application = Marionette.Application.extend({
     region: {
@@ -80,14 +80,12 @@ const Application = Marionette.Application.extend({
             },
             serviceInitializer() {}
         });
+
+        const context = require.context('./specs', true, /.+\.spec\.jsx?$/);
+        context.keys().forEach(context);
     }
 });
 
 const app = new Application();
 window.app = app;
 app.start();
-
-const context = require.context('./specs', true, /.+\.spec\.jsx?$/);
-context.keys().forEach(context);
-
-export default context;

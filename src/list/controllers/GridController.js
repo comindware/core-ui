@@ -1,8 +1,6 @@
 //@flow
-import utils from 'utils';
 import GridView from '../views/GridView';
 import meta from '../meta';
-import CellViewFactory from '../CellViewFactory';
 import VirtualCollection from '../../collections/VirtualCollection';
 import factory from '../factory';
 
@@ -14,7 +12,8 @@ import factory from '../factory';
  */
 
 const defaultOptions = {
-    isSliding: true
+    isSliding: true,
+    showHeader: true
 };
 
 export default Marionette.Object.extend({
@@ -144,7 +143,7 @@ export default Marionette.Object.extend({
     __getSelectedItems(collection) {
         const selected = (this.options.showSelection ? collection.checked : collection.selected) || {};
         if (selected instanceof Backbone.Model) {
-            return [ selected ];
+            return [selected];
         }
         return Object.values(selected);
     },
@@ -203,7 +202,7 @@ export default Marionette.Object.extend({
         this.trigger('execute', model, selected);
     },
 
-    __onItemClick( model) {
+    __onItemClick(model) {
         this.trigger('click', model);
     },
 
