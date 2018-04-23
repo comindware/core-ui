@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('MemberEditorView', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -16,7 +16,10 @@ describe('Editors', () => {
                 groups: new Backbone.Collection()
             });
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

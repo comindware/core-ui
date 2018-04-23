@@ -5,7 +5,7 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('Multieditor editor', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const view = new core.form.editors.NewExpressionEditor({
                 title: 'EE',
                 collection: new Backbone.Collection(),
@@ -185,7 +185,10 @@ describe('Editors', () => {
                 ontologyService: null
             });
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

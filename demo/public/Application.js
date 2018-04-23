@@ -1,5 +1,3 @@
-
-
 import localizationMapEn from 'localizationMapEn';
 import localizationMapDe from 'localizationMapDe';
 import localizationMapRu from 'localizationMapRu';
@@ -35,17 +33,6 @@ export default Marionette.Application.extend({
 
         const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
         const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('serviceWorker.js').then(reg => {
-                reg.addEventListener('updatefound', () => {
-                    window.dispatchEvent(new CustomEvent('message', { detail: 'skipWaiting' }));
-                    reg.update();
-                });
-            }).catch(error => {
-                console.log(`Registration failed with ${error}`);
-            });
-        }
 
         this.showView(new rootView());
 

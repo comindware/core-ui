@@ -73,7 +73,8 @@ const factory = {
         const listViewOptions = _.extend(
             {
                 collection,
-                emptyView: EmptyListView
+                emptyView: EmptyListView,
+                showHeader: true
             },
             options.listViewOptions
         );
@@ -116,7 +117,8 @@ const factory = {
                 emptyView: EmptyGridView,
                 emptyViewOptions: {
                     text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
-                }
+                },
+                showHeader: true
             },
             options.gridViewOptions
         );

@@ -144,7 +144,7 @@ describe('Components', () => {
                 text.click();
             });
 
-            expect(helpTexts.length).toEqual(4);
+            expect(helpTexts.length).toEqual(5);
         });
     });
 });

@@ -15,7 +15,7 @@ describe('Editors', () => {
             view.calendarDropdownView.panelView.$('.today:visible').click();
         };
 
-        it('should get focus when focus() is called', function() {
+        it('should get focus when focus() is called', () => {
             // arrange
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -24,18 +24,19 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
-            // act
             view.focus();
 
-            // assert
-            //expect(findDateInput(view)).toBeFocused();
-            //expect(view.calendarDropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
+            expect(findDateInput(view)).toBeFocused();
+            expect(view.calendarDropdownView.isOpen).toEqual(true, 'Must open dropdown on focus.');
             expect(view.hasFocus()).toEqual(true, 'Must have focus.');
         });
 
-        it('should lose focus when blur() is called', function() {
+        it('should lose focus when blur() is called', () => {
             // arrange
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -44,7 +45,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.focus();
 
             // act
@@ -57,7 +61,7 @@ describe('Editors', () => {
             //expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
         });
 
-        it('should have `value` matched with initial value', function() {
+        it('should have `value` matched with initial value', () => {
             // arrange
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -66,7 +70,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const value = view.getValue();
@@ -78,13 +85,16 @@ describe('Editors', () => {
             expect(value).toEqual(expected);
         });
 
-        it('should have `value` matched with initial value (w/o data binding).', function() {
+        it('should have `value` matched with initial value (w/o data binding).', () => {
             // arrange
             const expected = '2015-07-20T10:46:37.000Z';
             const view = new core.form.editors.DateTimeEditor({
                 value: expected
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const value = view.getValue();
@@ -95,7 +105,7 @@ describe('Editors', () => {
             expect(value).toEqual(expected);
         });
 
-        it('should update `value` and send `change` on user change.', function() {
+        it('should update `value` and send `change` on user change.', () => {
             // arrange
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -106,7 +116,10 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -120,7 +133,7 @@ describe('Editors', () => {
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should update `value` and send `change` on user change (w/o data binding).', function() {
+        it('should update `value` and send `change` on user change (w/o data binding).', () => {
             // arrange
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const expected = '2015-07-20T10:46:37.000Z';
@@ -128,7 +141,10 @@ describe('Editors', () => {
                 value: expected,
                 autocommit: true
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
             // act
@@ -143,7 +159,7 @@ describe('Editors', () => {
             */
         });
 
-        it('should update `value` on model change', function() {
+        it('should update `value` on model change', () => {
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -153,7 +169,10 @@ describe('Editors', () => {
                 key: 'data',
                 autocommit: true
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
 
             model.set('data', '2016-01-01T00:00:06.000Z');
@@ -166,7 +185,7 @@ describe('Editors', () => {
             expect(onChangeCallback).not.toHaveBeenCalled();
         });
 
-        it('should not commit if `autocommit: false`', function() {
+        it('should not commit if `autocommit: false`', () => {
             // arrange
             const expected = '2015-07-20T10:46:37.000Z';
             const model = new Backbone.Model({
@@ -178,7 +197,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
 
@@ -192,7 +214,7 @@ describe('Editors', () => {
             expect(onCommitCallback).not.toHaveBeenCalled();
         });
 
-        it('should commit if `autocommit: true`', function() {
+        it('should commit if `autocommit: true`', () => {
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
             });
@@ -204,7 +226,10 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.on('change', onChangeCallback);
             view.on('value:committed', onCommitCallback);
@@ -219,7 +244,7 @@ describe('Editors', () => {
             expect(onCommitCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should have `isEmptyValue() === true` if null', function() {
+        it('should have `isEmptyValue() === true` if null', () => {
             // arrange
             const model = new Backbone.Model({
                 data: null
@@ -228,7 +253,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const isEmpty = view.isEmptyValue();
@@ -237,7 +265,7 @@ describe('Editors', () => {
             expect(isEmpty).toEqual(true);
         });
 
-        it('should have `isEmptyValue() === false` if has value', function() {
+        it('should have `isEmptyValue() === false` if has value', () => {
             // arrange
             const model = new Backbone.Model({
                 data: '2015-07-20T10:46:37.000Z'
@@ -246,7 +274,10 @@ describe('Editors', () => {
                 model,
                 key: 'data'
             });
-            window.app.getView().getRegion('contentRegion').show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // act
             const isEmpty = view.isEmptyValue();
 

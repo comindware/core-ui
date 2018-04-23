@@ -1,5 +1,5 @@
 import { objectPropertyTypes } from '../Meta';
-import { helpers, dateHelpers } from 'utils';
+import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 
 const factory = {

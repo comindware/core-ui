@@ -1,8 +1,6 @@
 //@flow
-import utils from 'utils';
 import GridView from '../views/GridView';
 import meta from '../meta';
-import CellViewFactory from '../CellViewFactory';
 import VirtualCollection from '../../collections/VirtualCollection';
 import factory from '../factory';
 
