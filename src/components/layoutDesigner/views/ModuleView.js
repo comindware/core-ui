@@ -1,3 +1,4 @@
+//@flow
 import ElementsPaletteView from './elementPalette/ElementsPaletteView';
 import template from '../templates/module.html';
 import CanvasController from '../controllers/CanvasController';

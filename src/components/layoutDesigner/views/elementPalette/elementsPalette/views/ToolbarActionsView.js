@@ -1,3 +1,4 @@
+//@flow
 import ActionView from './ActionView';
 
 export default Marionette.CollectionView.extend({

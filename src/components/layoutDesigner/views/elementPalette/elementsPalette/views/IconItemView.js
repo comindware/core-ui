@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/iconItem.html';
 import itemDragHelper from '../templates/itemDragHelper.html';
 

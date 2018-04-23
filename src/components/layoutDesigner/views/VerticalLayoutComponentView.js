@@ -1,11 +1,10 @@
-import shared from 'modules/shared';
+//@flow
 import template from '../templates/verticalLayoutComponent.html';
 import DropzoneView from './DropzoneView';
 import ComponentBehavior from '../behaviors/ComponentBehavior';
 import VerticalDropzoneView from './VerticalDropzoneView';
 
 const collapsedClass = 'dev-collapsed';
-const componentTypes = shared.meta.componentTypes;
 
 export default Marionette.CompositeView.extend({
     initialize(options) {
@@ -63,15 +62,15 @@ export default Marionette.CompositeView.extend({
     },
 
     onRender() {
-        const fieldType = this.model.get('fieldType');
-        if (fieldType === componentTypes.CHEVRON) {
+        if (this.model.get('horizontalDrops')) {
             this.__addOneDropZone();
             return;
         }
-        if (![componentTypes.COLLECTION, componentTypes.COLLECTION_COLUMN].includes(fieldType)) {
+        if (this.model.get('horizontalDrops')) {
             this.__addDropZones(this.children);
+
+            this.__renderColumnDropZones();
         }
-        this.__renderColumnDropZones();
     },
 
     onBeforeRemoveChild(view) {
@@ -140,7 +139,7 @@ export default Marionette.CompositeView.extend({
                 if (v.context.axis === 'x') {
                     childMaxDesc = parent.get('maximumDescendantsByX');
                     collection = containerModel.collection;
-                } else  {
+                } else {
                     childMaxDesc = containerModel.get('maximumDescendantsByY');
                     collection = containerModel.getChildren();
                 }
@@ -162,10 +161,6 @@ export default Marionette.CompositeView.extend({
     },
 
     __renderColumnDropZones() {
-        if ([componentTypes.COLLECTION, componentTypes.CHEVRON, 'SystemView'].includes(this.model.get('fieldType'))) {
-            return;
-        }
-
         const index = this.model.collection.indexOf(this.model);
 
         if (index === 0) {
@@ -205,7 +200,7 @@ export default Marionette.CompositeView.extend({
             }
         }
 
-        if (![componentTypes.COLLECTION, componentTypes.COLLECTION_COLUMN, componentTypes.HORIZONTAL_LAYOUT, componentTypes.CHEVRON].includes(this.model.get('fieldType'))) {
+        if (this.model.get('horizontalDrop')) {
             view.$el.after(this.__renderDropzone(view.model));
         }
     },

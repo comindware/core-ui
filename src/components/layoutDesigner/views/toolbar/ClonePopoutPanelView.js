@@ -1,4 +1,4 @@
-import commonGrid from 'modules/commonGrid';
+//@flow
 import template from '../../templates/clonePopoutPanel.html';
 
 export default Marionette.View.extend({
@@ -34,13 +34,13 @@ export default Marionette.View.extend({
             {
                 id: 'id',
                 displayText: Localizer.get('PROCESS.FORMDESIGNER.TOOLBAR.ID'),
-                type: commonGrid.config.columnType.STRING,
+                type: 'string',
                 width: 0.2
             },
             {
                 id: 'name',
                 displayText: Localizer.get('PROCESS.FORMDESIGNER.TOOLBAR.NAME'),
-                type: commonGrid.config.columnType.STRING,
+                type: 'string',
                 width: 0.8
             }
         ];
@@ -49,7 +49,7 @@ export default Marionette.View.extend({
     __createGrid() {
         const excludeActions = 'all';
 
-        this.grid = new commonGrid.CommonGridController({
+        this.grid = new Core.list.controllers.GridController({
             columns: this.columns,
             excludeActions,
             collection: this.options.collection,

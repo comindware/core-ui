@@ -1,13 +1,11 @@
-import shared from 'modules/shared';
+//@flow
 import ModuleView from '../views/ModuleView';
 import ErrorService from '../services/ErrorService';
-import PropertyPathService from 'services/PropertyPathService';
-import FormModel from '../../shared/models/RelationalModel';
+//import PropertyPathService from 'services/PropertyPathService';
+import FormModel from '../models/RelationalModel';
 import ComponentModel from '../models/ComponentModel';
 import ComponentBehavior from '../behaviors/ComponentBehavior';
 import VerticalLayoutComponentView from '../views/VerticalLayoutComponentView';
-
-const componentTypes = shared.meta.componentTypes;
 
 export default Marionette.Object.extend({
     initialize(options = {}) {
@@ -167,15 +165,14 @@ export default Marionette.Object.extend({
         const component = this.canvasComponents[elementModel.get('fieldType')];
         const model = new component.model(elementModel.toJSON());
 
-        const path = PropertyPathService.getPropertyPath(model);
-
+        //const path = PropertyPathService.getPropertyPath(model);
         model.set(
             {
-                path,
-                pathNames: PropertyPathService.getPropertyPathNames(model),
+                //path,
+                //pathNames: PropertyPathService.getPropertyPathNames(model),
                 formComponents: this.formModel.get('formComponents'),
                 dataSourceInfo: {
-                    propertyPath: path,
+                    //propertyPath: path,
                     type: model.get('fieldType')
                 }
             },
@@ -306,14 +303,14 @@ export default Marionette.Object.extend({
             if (model.collection.length === 1) {
                 model.deselect();
                 const parent = model.parent;
-                if (parent && parent.collection && ![componentTypes.CHEVRON, componentTypes.TAB_PANEL].includes(parent.get('fieldType'))) {
+                if (parent && parent.collection && !model.get('horizontalDrop')) {
                     parent.collection.remove(parent);
                 } else {
                     model.collection.remove(model);
                 }
             } else {
                 model.deselect();
-                if (model.get('fieldType') === componentTypes.VERTICAL_LAYOUT) {
+                if (model.get('container')) {
                     this.__handleRemovingColumn(model, model.collection);
                 } else {
                     model.collection.remove(model);

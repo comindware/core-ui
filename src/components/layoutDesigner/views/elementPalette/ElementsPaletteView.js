@@ -1,3 +1,4 @@
+//@flow
 import template from './elementsPalette/templates/elementsPalette.html';
 import PaletteToolbarView from './elementsPalette/views/PaletteToolbarView';
 import ContextPaletteView from './elementsPalette/views/ContextPaletteView';

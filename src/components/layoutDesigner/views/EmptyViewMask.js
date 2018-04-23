@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/emptyViewMask.html';
 
 export default Marionette.View.extend({

@@ -1,6 +1,7 @@
+//@flow
 import template from '../templates/customContextPalette.html';
 import CustomAttributesView from './CustomAttributesView';
-import ContextModel from '../../../form/editors/context/models/ContextModel';
+import ContextModel from '../../../../models/ContextModel';
 
 export default Marionette.View.extend({
     initialize() {

@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/customContextPalette.html';
 import CustomAttributesItemView from './CustomAttributesItemView';
 import CustomAttributesEmptyView from './CustomAttributesEmptyView';

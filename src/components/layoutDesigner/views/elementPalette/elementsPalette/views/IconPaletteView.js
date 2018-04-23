@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/iconPalette.html';
 import IconItemView from './IconItemView';
 

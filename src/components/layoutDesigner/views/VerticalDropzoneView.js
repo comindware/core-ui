@@ -1,3 +1,4 @@
+//@flow
 import DropzoneView from './DropzoneView';
 
 const classes = {

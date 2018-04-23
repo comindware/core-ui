@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/customContextPaletteEmpty.html';
 
 export default Marionette.View.extend({

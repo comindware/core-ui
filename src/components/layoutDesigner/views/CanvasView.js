@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/canvas.html';
 import EmptyViewMask from '../views/EmptyViewMask';
 import VerticalLayoutComponentView from '../views/VerticalLayoutComponentView';
@@ -19,7 +20,8 @@ export default Marionette.View.extend({
 
     onRender() {
         const rootModel = this.model.get('root');
-        this.showChildView('formRegion',
+        this.showChildView(
+            'formRegion',
             this.createView(rootModel, {
                 model: rootModel,
                 reqres: this.getOption('reqres'),
