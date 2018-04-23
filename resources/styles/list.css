@@ -214,7 +214,7 @@
 .grid-header-column-content {
     font-size: 12px;
     color: #888E94;
-    line-height: 50px;
+    line-height: 31px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -962,4 +962,73 @@ svg.svg-grid-icons {
 
 .fr-collection .task-links {
     margin: 0;
+}
+
+
+/* New grid */
+.row{
+    display:flex;
+    width:100%;
+    height: 25px;
+    position: relative;
+    left: inherit;
+    right: inherit;
+}
+.row:hover {
+    background-color: #F5F5F5;
+}
+
+.cell{
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    color: #000;
+    cursor: default;
+    min-width: 100px;
+    box-shadow: 0 1px 0 0 #dfe4e8;
+}
+
+.cell .editor{
+    height: 100%;
+    padding: 0 2px;
+    line-height: initial;
+    border: none;
+}
+
+.cell .editor:after{
+    display: none;
+}
+
+.cell .editor_focused{
+    outline: 1px solid #0575bd;
+    outline-offset: -1px;
+}
+
+.cell .editor_checkbox.editor_focused{
+    outline: none;
+}
+
+.cell .checkbox {
+    width: 16px;
+    height: 16px;
+    top: 4px;
+    left: 5px;
+}
+
+.cell .date-view,
+.cell .time-view,
+.cell .editor > div{
+    height: 100%;
+    line-height: initial;
+}
+
+.cell .input{
+    border-bottom: none;
 }
