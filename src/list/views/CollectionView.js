@@ -304,7 +304,7 @@ const ListView = Marionette.CollectionView.extend({
             return;
         }
 
-        const newPosition = Math.max(0, Math.floor(this.el.parentElement.scrollTop / this.childHeight));
+        const newPosition = Math.max(0, Math.floor(this.$el.parent().scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
     },
 

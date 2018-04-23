@@ -39,7 +39,8 @@ export default Marionette.View.extend({
 
     ui: {
         checkbox: '.js-checkbox',
-        dots: '.js-dots'
+        dots: '.js-dots',
+        index: '.js-index'
     },
 
     events: {
@@ -136,7 +137,13 @@ export default Marionette.View.extend({
     },
 
     __updateTop(top) {
-        requestAnimationFrame(() => (this.el.style.top = top));
+        requestAnimationFrame(() => {
+            this.el.style.top = top;
+            if (this.getOption('showRowIndex') && this.model) {
+                const index = this.model.collection.indexOf(this.model) + 1;
+                this.ui.index.text(index);
+            }
+        });
     },
 
     __handleSelection() {
