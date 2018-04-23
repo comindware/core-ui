@@ -489,16 +489,15 @@ describe('Editors', () => {
                 showCheckboxes: true
             });
 
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(view);
+            const appView = window.app.getView();
+
+            appView.getRegion('contentRegion').show(view);
 
             view.focus();
 
             view.on('view:ready', () => {
-                expect(view.$('.js-core-ui__global-popup-region').find('.bubbles__i').length).toEqual(3);
-                expect(view.$('.js-core-ui__global-popup-region').find('.js-checkbox').length).toEqual(3);
+                expect(appView.getRegion('popupStackRegion').$el.find('.dd-list__i').length).toEqual(3);
+                expect(appView.getRegion('popupStackRegion').$el.find('.js-checkbox').length).toEqual(3);
                 done();
             });
         });

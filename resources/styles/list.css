@@ -140,6 +140,10 @@
     width: 30px;
 }
 
+.selection-cell-wrp .checkbox {
+    left: 0;
+}
+
 .selection-cell-dots {
     width: 25px;
     height: 20px;

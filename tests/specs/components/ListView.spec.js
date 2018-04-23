@@ -37,9 +37,8 @@ describe('Components', () => {
 
         it('should update visible models on scroll', done => {
             window.app
-                .getView()
-                .getRegion('contentRegion')
-                .$el.css({
+                .getView().$('.js-content-region')
+                .css({
                     height: 1000,
                     width: 1000,
                     overflow: 'auto',
@@ -56,7 +55,19 @@ describe('Components', () => {
 
             window.innerHeight = 1920;
 
-            listView.$el.on('scroll', () =>
+            listView.on('attach', () => {
+                expect(listView.collection.visibleLength).toBe(60, 'Visible models: items on page + buffer');
+                expect(listView.el.clientHeight).toBe(250000);
+                expect(listView.$el.parent().height()).toBe(1000);
+                listView.$el.parent().scrollTop(1000);
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(listView);
+
+            listView.$el.parent().on('scroll', () =>
                 setTimeout(() => {
                     // waiting style updates
                     expect(listView.collection.visibleLength).toBe(60);
@@ -65,17 +76,6 @@ describe('Components', () => {
                     done();
                 }, 0)
             );
-
-            listView.on('attach', () => {
-                expect(listView.collection.visibleLength).toBe(60, 'Visible models: items on page + buffer');
-                expect(listView.el.clientHeight).toBe(250000);
-                expect(listView.el.parentElement.clientHeight).toBe(1000);
-                listView.el.parentElement.scrollTop = 1000;
-            });
-            window.app
-                .getView()
-                .getRegion('contentRegion')
-                .show(listView);
         });
     });
 });
