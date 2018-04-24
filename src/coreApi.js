@@ -49,8 +49,9 @@ import MobileService from './services/MobileService';
 
 import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
-
 import Toolbar from './components/toolbar/ToolbarView';
+
+import LayoutDesigner from './components/layoutDesigner';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -162,7 +163,8 @@ const core = {
     components: {
         NavigationDrawer,
         Toolbar,
-        BreadCrumbs
+        BreadCrumbs,
+        LayoutDesigner
     }
 };
 

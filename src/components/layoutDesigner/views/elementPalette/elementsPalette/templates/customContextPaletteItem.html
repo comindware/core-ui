@@ -1,0 +1,18 @@
+<div class="ld-list-item__link js-drag-handle" title="{{text}}">
+    {{#if iconClass}}
+        <i class="dev-ld-list-item-icon fa fa-lg fa-{{iconClass}}" aria-hidden="true"></i>
+    {{else}}
+        <div class="ld-list-item-icon"></div>
+    {{/if}}
+
+    {{#if hasChildren}}
+    <span class="js-toggle ld-list-item-arrow dev-list-item-arrow"></span>
+    {{/if}}
+    <div class="ld-list-item-title">
+        <span class="ld-list-item-title__name {{#if hasChildren}}ld-list-item-title__name_group{{/if}} js-name">{{title}}</span>
+        <span class="ld-list-item-title__system js-text">{{text}}</span>
+    </div>
+</div>
+{{#if hasChildren}}
+    <div class="js-context-items-container ld-list-item__sublink"></div>
+{{/if}}
