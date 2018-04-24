@@ -139,7 +139,7 @@ export default Marionette.View.extend({
     __updateTop(top) {
         requestAnimationFrame(() => {
             this.el.style.top = top;
-            if (this.getOption('showRowIndex') && this.model) {
+            if (this.getOption('showRowIndex') && this.model && this.isRendered()) {
                 const index = this.model.collection.indexOf(this.model) + 1;
                 this.ui.index.text(index);
             }

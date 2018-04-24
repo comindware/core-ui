@@ -256,7 +256,7 @@ const calculateSelectedLength = _.debounce((collection) => {
     if (selectedLength > 0 && selectedLength < length) {
         collection.trigger('select:some', collection);
     }
-}, 100);
+}, 10);
 
 export default SelectableBehavior;
 export var Selectable = SelectableBehavior.Selectable;

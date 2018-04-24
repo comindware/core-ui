@@ -1093,7 +1093,7 @@ input[type="color"], .colorpicker{
 .editor_checked .svg-icons-wrp_checked{
     display: inline-block;
 }
-.editor_checked_some .checkbox:after{
+.editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after{
     content: '';
     position: absolute;
     left: 2px;
