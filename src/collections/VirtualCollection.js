@@ -200,6 +200,8 @@ const VirtualCollection = Backbone.Collection.extend(
         __rebuildModels(options) {
             const oldModels = this.visibleModels.concat();
             this._reset();
+            this.visibleModels = [];
+            this.visibleLength = 0;
             this.__buildModelsInternal(this.index);
             if (!this.models.length) {
                 this.trigger('reset', this);

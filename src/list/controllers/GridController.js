@@ -30,7 +30,7 @@ export default Marionette.Object.extend({
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
         const collection = factory.createWrappedCollection(this.options);
 
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection));
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
         this.__updateActions(allToolbarActions, collection);
         if (this.options.showToolbar) {
             if (this.options.showSelection) {

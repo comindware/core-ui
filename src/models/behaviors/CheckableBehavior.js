@@ -137,7 +137,7 @@ const calculateCheckedLength = _.debounce(collection => {
     if (checkedLength > 0 && checkedLength < length) {
         collection.trigger('check:some', collection);
     }
-}, 100);
+}, 10);
 
 export default CheckableBehavior;
 export const CheckableCollection = CheckableBehavior.CheckableCollection;
