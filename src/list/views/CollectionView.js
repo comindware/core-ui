@@ -1,3 +1,4 @@
+//@flow
 import { keyCode, helpers, htmlHelpers } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 
