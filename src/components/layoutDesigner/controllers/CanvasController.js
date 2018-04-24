@@ -1,3 +1,4 @@
+//@flow
 import CanvasView from '../views/CanvasView';
 
 export default Marionette.Object.extend({

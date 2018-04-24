@@ -10,7 +10,10 @@ export default {
 
         const rootView = window.app.getView();
 
-        rootView.addRegion('popupStackRegion', { el: __popupStackRegionEl });
+        rootView.addRegion('popupStackRegion', {
+            el: __popupStackRegionEl,
+            replaceElement: true
+        });
 
         this.__popupStackView = new PopupStackView();
 

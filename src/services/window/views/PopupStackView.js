@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/PopupStack.hbs';
 
 const classes = {
@@ -57,7 +58,9 @@ export default Marionette.View.extend({
         }
 
         this.$el.append(regionEl);
-        this.addRegion(popupId, { el: regionEl });
+        this.addRegion(popupId, {
+            el: regionEl
+        });
         this.getRegion(popupId).show(view);
 
         if (fadeBackground) {

@@ -25,11 +25,11 @@ export default Marionette.View.extend({
     onRender() {
         const columns = [
             {
-                key: 'textCell',
+                key: 'name',
                 type: 'String',
                 title: 'TextCell',
                 sorting: 'asc',
-                width: 300
+                width: 240
             }
         ];
 
@@ -38,9 +38,11 @@ export default Marionette.View.extend({
                 columns,
                 selectableBehavior: 'multi',
                 isTree: true,
-                childrenAttribute: 'children'
+                childrenAttribute: 'children',
+                showHeader: false,
+                expandOnShow: false
             },
-            collection: this.model.get('children')
+            collection: this.model.get('context')
         });
 
         this.showChildView('popoutWrapper', listView);
