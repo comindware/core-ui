@@ -23,3 +23,5 @@ deploy:
       tags: true
       repo: comindware/core-ui
       branch: 1.4/release
+addons:
+  firefox: "latest"

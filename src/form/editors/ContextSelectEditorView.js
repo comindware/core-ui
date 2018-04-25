@@ -6,6 +6,7 @@ import ContextModel from './impl/context/models/ContextModel';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import dropdownFactory from '../../dropdown/factory';
+import VirtualCollection from '../../collections/VirtualCollection';
 
 const defaultOptions = {
     recordTypeId: undefined,
@@ -28,6 +29,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
             instanceRecordTypeId: this.options.instanceRecordTypeId,
             allowBlank: this.options.allowBlank
         });
+
+        model.set({ context: this.__createTreeCollection(this.options.context, this.options.recordTypeId) });
 
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model({
@@ -117,5 +120,28 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     __applyContext(selected) {
         this.popoutView.close();
         this.__value(selected, true);
+    },
+
+    __createTreeCollection(context, recordTypeId) {
+        Object.keys(context).forEach(key => {
+            context[key] = new VirtualCollection(new Backbone.Collection(context[key]));
+        });
+
+        Object.values(context).forEach(entry =>
+            entry.forEach(innerEntry => {
+                if (innerEntry.get('type') === 'Instance') {
+                    innerEntry.children = context[innerEntry.get('instanceTypeId')];
+                    innerEntry.collapsed = true;
+                    if (innerEntry.children) {
+                        innerEntry.children.parent = innerEntry;
+                    }
+                }
+                delete innerEntry.id; //todo wtf
+
+                return innerEntry;
+            })
+        );
+
+        return context[recordTypeId];
     }
 }));

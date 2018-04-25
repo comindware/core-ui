@@ -16,8 +16,8 @@ const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(gro
     const it = groupingOptions.iterator;
     return _.isString(it)
         ? function(model) {
-            return model.get(it) || model[it];
-        }
+              return model.get(it) || model[it];
+          }
         : it;
 };
 
@@ -26,8 +26,8 @@ const getNormalizedGroupingComparator = function getNormalizedGroupingComparator
     return cmp !== undefined
         ? _.isString(cmp)
             ? function(model) {
-                return model.get(cmp) || model[cmp];
-            }
+                  return model.get(cmp) || model[cmp];
+              }
             : cmp
         : groupingOptions.iterator;
 };
@@ -37,18 +37,18 @@ const getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFac
     return modelFactory !== undefined
         ? _.isString(modelFactory)
             ? function(model) {
-                return new Backbone.Model({
-                    displayText: model.get(modelFactory),
-                    groupingModel: true
-                });
-            }
+                  return new Backbone.Model({
+                      displayText: model.get(modelFactory),
+                      groupingModel: true
+                  });
+              }
             : modelFactory
         : function(model) {
-            return new Backbone.Model({
-                displayText: groupingOptions.iterator(model),
-                groupingModel: true
-            });
-        };
+              return new Backbone.Model({
+                  displayText: groupingOptions.iterator(model),
+                  groupingModel: true
+              });
+          };
 };
 
 const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
@@ -218,19 +218,22 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         __addModel(model, options) {
-            this.trigger('add', model, this, Object.assign({}, options, { at: this.models.indexOf(model)}));
+            this.trigger('add', model, this, Object.assign({}, options, { at: this.models.indexOf(model) }));
             this._addReference(model);
         },
 
         __removeModels(removed, options) {
-            this.trigger('update', this, Object.assign({}, options,
-                {
-                changes: {
-                    removed,
-                    added: [],
-                    merged: []
-                },
-            }));
+            this.trigger(
+                'update',
+                this,
+                Object.assign({}, options, {
+                    changes: {
+                        removed,
+                        added: [],
+                        merged: []
+                    }
+                })
+            );
         },
 
         __buildModelsInternal(list, level = 0) {
@@ -353,7 +356,7 @@ const VirtualCollection = Backbone.Collection.extend(
                     this.visibleModels.unshift(...newValues);
                 }
                 this.__removeModels(oldValues);
-                newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0} : {}));
+                newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0 } : {}));
                 this.state.position = newPosition;
                 this.visibleLength = this.visibleModels.length;
             } else {
@@ -374,19 +377,21 @@ const VirtualCollection = Backbone.Collection.extend(
             const added = [];
             const removed = [];
 
-            Object.values(diffObject).sort((a, b) => a.t - b.t).forEach(object => {
-                switch (object.t) {
-                    case 0:
-                        this.trigger('update:child:top', object.elem);
-                        break;
-                    case -1:
-                        removed.push(object.elem);
-                        break;
-                    case 1:
-                        added.push(object.elem);
-                        break;
-                }
-            });
+            Object.values(diffObject)
+                .sort((a, b) => a.t - b.t)
+                .forEach(object => {
+                    switch (object.t) {
+                        case 0:
+                            this.trigger('update:child:top', object.elem);
+                            break;
+                        case -1:
+                            removed.push(object.elem);
+                            break;
+                        case 1:
+                            added.push(object.elem);
+                            break;
+                    }
+                });
 
             // it's important remove items before add
             this.__removeModels(removed, options);
@@ -400,7 +405,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
         filter(filterFn) {
             this.filterFn = filterFn;
-            this.__rebuildIndex({} , true);
+            this.__rebuildIndex({}, true);
         },
 
         __filterModels(models) {
@@ -573,7 +578,6 @@ const VirtualCollection = Backbone.Collection.extend(
 
             if (rebuildRequired || isPartialUpdate) {
                 this.__rebuildIndex(options);
-
             }
         },
 

@@ -1,3 +1,4 @@
+//@flow
 import { objectPropertyTypes } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';

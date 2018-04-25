@@ -1,3 +1,4 @@
+//@flow
 import '../resources/styles/bootstrap-datetimepicker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
@@ -8,19 +9,20 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
+import '../resources/styles/layout-designer.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';
 import utilsApi from 'utils';
 import dropdownApi from 'dropdown';
-import * as layoutApi from 'layout';
+import * as layoutApi from './layout';
 import formApi from 'form';
 import listApi from 'list';
 
 import meta_ from './Meta';
 
-import Controller from 'controller/Controller';
-import Application from 'Application';
+import Controller from './controller/Controller';
+import Application from './Application';
 
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
@@ -49,8 +51,8 @@ import MobileService from './services/MobileService';
 
 import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
-
 import Toolbar from './components/toolbar/ToolbarView';
+import LayoutDesigner from './components/layoutDesigner';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
@@ -162,7 +164,8 @@ const core = {
     components: {
         NavigationDrawer,
         Toolbar,
-        BreadCrumbs
+        BreadCrumbs,
+        LayoutDesigner
     }
 };
 
@@ -178,8 +181,5 @@ export const views = core.views;
 export const dropdown = core.dropdown;
 export const form = core.form;
 export const list = core.list;
-export const nativeGrid = core.nativeGrid;
-export const editableGrid = core.editableGrid;
 export const utils = core.utils;
 export const meta = core.meta;
-export const initialize = core.initialize;

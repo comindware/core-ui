@@ -37,7 +37,8 @@ describe('Components', () => {
 
         it('should update visible models on scroll', done => {
             window.app
-                .getView().$('.js-content-region')
+                .getView()
+                .$('.js-content-region')
                 .css({
                     height: 1000,
                     width: 1000,

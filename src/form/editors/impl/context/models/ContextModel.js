@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import { objectPropertyTypes } from '../../../../../Meta';
 import VirtualCollection from '../../../../../collections/VirtualCollection';
 
@@ -24,22 +23,31 @@ var ContextModel = Backbone.Model.extend({
         let hasChildren = false;
         const checkedProperties = {};
 
-        _.each(this.get('context')[this.get('instanceTypeId')], attributes => {
-            const propertyTypes = this.get('propertyTypes');
-            const usePropertyTypes = this.get('usePropertyTypes');
+        _.each(
+            this.get('context')[this.get('instanceTypeId')],
+            attributes => {
+                const propertyTypes = this.get('propertyTypes');
+                const usePropertyTypes = this.get('usePropertyTypes');
 
-            if (!this.checkPropertyType(attributes, true, checkedProperties)) { return; }
+                if (!this.checkPropertyType(attributes, true, checkedProperties)) {
+                    return;
+                }
 
-            hasChildren = true;
-            const modelAttributes = _.extend({
-                context: this.get('context'),
-                propertyTypes,
-                usePropertyTypes,
-                parent: this,
-                children: new ContextCollection(undefined, { comparator: model => model.get('name') })
-            }, attributes);
-            this.get('children').add(modelAttributes);
-        }, this);
+                hasChildren = true;
+                const modelAttributes = _.extend(
+                    {
+                        context: this.get('context'),
+                        propertyTypes,
+                        usePropertyTypes,
+                        parent: this,
+                        children: new ContextCollection(undefined, { comparator: model => model.get('name') })
+                    },
+                    attributes
+                );
+                this.get('children').add(modelAttributes);
+            },
+            this
+        );
         this.set('hasChildren', hasChildren);
     },
 
@@ -53,7 +61,7 @@ var ContextModel = Backbone.Model.extend({
 
     setCollapsed(value) {
         this.collapsed = value;
-        this.trigger((value ? 'collapsed' : 'expanded'), this);
+        this.trigger(value ? 'collapsed' : 'expanded', this);
     },
 
     getCollapsed() {
@@ -62,7 +70,7 @@ var ContextModel = Backbone.Model.extend({
 
     setSelected(value) {
         this.selected = value;
-        this.trigger((value ? 'selected' : 'deselected'), this);
+        this.trigger(value ? 'selected' : 'deselected', this);
     },
 
     getSelected() {
@@ -126,7 +134,9 @@ var ContextModel = Backbone.Model.extend({
     },
 
     checkPropertyType(options, checkChildren, checkedProperties) {
-        if (!this.get('usePropertyTypes')) { return true; }
+        if (!this.get('usePropertyTypes')) {
+            return true;
+        }
 
         if (!checkedProperties) {
             checkedProperties = {};
@@ -148,9 +158,13 @@ var ContextModel = Backbone.Model.extend({
                 return checkedProperties[options.id];
             }
             checkedProperties[options.id] = false;
-            const result = _.any(this.get('context')[options.instanceTypeId], function(attributes) {
-                return this.checkPropertyType(attributes, true, checkedProperties);
-            }, this);
+            const result = _.any(
+                this.get('context')[options.instanceTypeId],
+                function(attributes) {
+                    return this.checkPropertyType(attributes, true, checkedProperties);
+                },
+                this
+            );
             checkedProperties[options.id] = result;
             return result;
         }

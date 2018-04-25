@@ -227,6 +227,17 @@ export default {
             ]
         },
         {
+            id: 'sandbox',
+            displayName: 'Sandbox',
+            groups: [
+                {
+                    id: 'LayoutDesigner',
+                    displayName: 'Layout Designer',
+                    description: 'Layout Designer'
+                }
+            ]
+        },
+        {
             id: 'services',
             displayName: 'Core services',
             groups: [

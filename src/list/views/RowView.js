@@ -214,7 +214,7 @@ export default Marionette.View.extend({
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
                             this.model.collapsed === false ? classes.expanded : ''
-                            }" style="margin-left:${margin}px;"></span>`
+                        }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {
                     el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);

@@ -4,6 +4,12 @@ import localizationMapRu from 'localizationMapRu';
 import ajaxMap from './ajaxMap.json';
 import dataProvider from 'demoPage/dataProvider';
 
+import core from 'comindware/core';
+
+const root = typeof global !== 'undefined' ? global : window;
+
+root.core = core;
+
 const rootView = Marionette.View.extend({
     template: Handlebars.compile(`
         <div class="js-navigation-drawer-region"></div>
