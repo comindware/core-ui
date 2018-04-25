@@ -80,7 +80,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 30px;
+    width: 26px;
 }
 
 .grid-content-view > .list-view {
@@ -214,7 +214,7 @@
 .grid-header-column-content {
     font-size: 12px;
     color: #888E94;
-    line-height: 50px;
+    line-height: 31px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -962,4 +962,143 @@ svg.svg-grid-icons {
 
 .fr-collection .task-links {
     margin: 0;
+}
+
+
+/* New grid */
+.row{
+    display:flex;
+    width:100%;
+    height: 25px;
+    position: relative;
+    left: inherit;
+    right: inherit;
+}
+.row:hover {
+    background-color: #F5F5F5;
+}
+
+.cell{
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    color: #000;
+    cursor: default;
+    min-width: 100px;
+    box-shadow: 0 1px 0 0 #dfe4e8;
+    overflow: hidden;
+}
+
+.cell_selection{
+    position: absolute;
+    left: 0;
+    right: 0;
+    color: #999;
+    background-color: #f6f6f6;
+    box-shadow: inset 1px 0 0 0 #dfe4e8, inset -1px 0 0 0 #dfe4e8, 0 1px 0 0 #dfe4e8;
+    display: flex;
+    flex: none;
+    min-width: inherit;
+}
+
+.cell_selection-index{
+    width: 53px;
+    padding-left: 10px;
+}
+
+.cell.selected{
+    outline: 1px solid #0575bd;
+    outline-offset: -1px;
+}
+
+.cell .editor{
+    height: 100%;
+    padding: 0 2px;
+    line-height: initial;
+    border: none;
+}
+
+.cell .editor:after{
+    display: none;
+}
+
+.cell .editor_focused{
+    outline: 1px solid #0575bd;
+    outline-offset: -1px;
+}
+
+.cell .editor_checkbox.editor_focused{
+    outline: none;
+}
+
+.cell .checkbox {
+    width: 14px;
+    height: 14px;
+    top: 5px;
+    left: 5px;
+    position: absolute;
+}
+
+.cell .date-view,
+.cell .time-view,
+.cell .editor > div{
+    height: 100%;
+    line-height: initial;
+}
+
+.cell .input{
+    border-bottom: none;
+    padding-right: 2px;
+}
+.cell .input:hover{
+    padding-right: 20px;
+}
+
+.cell .svg-icons{
+    margin-top: 2px;
+}
+.cell .svg-icons_checked{
+    margin: -1px 0 0 -1px;
+}
+
+.cell__dots{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    padding: 0 25px 0 2px;
+    visibility: hidden;
+    z-index: 1;
+    cursor: move;
+}
+
+.cell:hover .cell__dots{
+    visibility: visible;
+}
+
+.cell__dots svg{
+    fill: #c9caca;
+}
+
+.cell__index {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cell .checkbox_cell-selection{
+    left: auto;
+    right: 6px;
+    visibility: hidden;
+    z-index: 2;
+}
+.cell:hover .checkbox_cell-selection{
+    visibility: visible;
 }

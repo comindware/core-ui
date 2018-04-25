@@ -28,7 +28,7 @@ const defaultOptions = {
  * @param {Number} [options.paddingRight=10] Правый отступ
  * */
 export default Marionette.View.extend({
-    className: 'record-row grid-row',
+    className: 'row',
 
     ui: {
         cells: '.js-grid-cell',
@@ -116,7 +116,7 @@ export default Marionette.View.extend({
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model);
             if (typeof cell !== 'string') {
                 const cellView = new cell({
-                    className: `grid-cell ${columnClass}`,
+                    className: `cell ${columnClass}`,
                     schema: gridColumn,
                     model: this.model,
                     key: gridColumn.key
@@ -129,7 +129,7 @@ export default Marionette.View.extend({
 
                 this.cellViews.push(cellView);
             } else {
-                this.el.insertAdjacentHTML('beforeend', `<div class="grid-cell ${columnClass}">${cell}</div>`);
+                this.el.insertAdjacentHTML('beforeend', `<div class="cell ${columnClass}">${cell}</div>`);
                 if (this.getOption('isTree') && index === 0) {
                     this.insertFirstCellHtml();
                 }

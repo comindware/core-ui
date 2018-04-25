@@ -35,7 +35,7 @@ export default Marionette.View.extend({
         };
     },
 
-    className: 'selection-cell-wrp',
+    className: 'cell cell_selection',
 
     ui: {
         checkbox: '.js-checkbox',
@@ -65,7 +65,7 @@ export default Marionette.View.extend({
         this.__updateState();
         // todo: release it by stylesheet?
         if (this.options.showRowIndex) {
-            this.el.classList.add('grid-selection-index');
+            this.el.classList.add('cell_selection-index');
         }
         if (this.getOption('selectionType') === selectionTypes.all) {
             this.listenTo(this.collection, 'check:all check:none check:some', this.__updateState);
