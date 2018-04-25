@@ -1,3 +1,4 @@
+//@flow
 /* Data & Datatime utils*/
 import moment_ from 'moment-timezone';
 import 'moment/locale/ru';

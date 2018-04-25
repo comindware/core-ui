@@ -495,9 +495,11 @@ describe('Editors', () => {
 
             view.focus();
 
+            const dropdownEl = document.body.getElementsByClassName('js-core-ui__global-popup-region')[0];
+
             view.on('view:ready', () => {
-                expect(appView.getRegion('popupStackRegion').$el.find('.dd-list__i').length).toEqual(3);
-                expect(appView.getRegion('popupStackRegion').$el.find('.js-checkbox').length).toEqual(3);
+                expect(dropdownEl.getElementsByClassName('dd-list__i').length).toEqual(3);
+                expect(dropdownEl.getElementsByClassName('js-checkbox').length).toEqual(3);
                 done();
             });
         });

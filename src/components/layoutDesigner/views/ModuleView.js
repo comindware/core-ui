@@ -5,7 +5,10 @@ import CanvasController from '../controllers/CanvasController';
 import ClonePopoutButtonView from './toolbar/ClonePopoutButtonView';
 import ClonePopoutPanelView from './toolbar/ClonePopoutPanelView';
 import SaveAsView from './toolbar/SaveAsView';
-import { defaultToolbarButtonId, defaultToolbarButton } from '../meta';
+//import { defaultToolbarButtonId, defaultToolbarButton } from '../meta';
+
+const defaultToolbarButtonId = {};
+const defaultToolbarButton = {};
 
 const constants = {
     MIN_WIDTH: 150

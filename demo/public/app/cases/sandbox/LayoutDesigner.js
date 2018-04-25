@@ -1,15 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/27/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-
-
 export default function() {
-    return new core.components.BreadCrumbs({
+    return new core.components.LayoutDesigner({
         collection: [
             {
                 title: 'First step',
@@ -23,8 +13,10 @@ export default function() {
                 id: 'Second',
                 url: 'url',
                 collection: new Backbone.Collection([
-                    { 1: 1,
-                        2: 2 }
+                    {
+                        1: 1,
+                        2: 2
+                    }
                 ])
             },
             {
