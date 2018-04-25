@@ -9,19 +9,20 @@ import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
 import '../resources/styles/codemirror.css';
+import '../resources/styles/layout-designer.css';
 import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';
 import utilsApi from 'utils';
 import dropdownApi from 'dropdown';
-import * as layoutApi from 'layout';
+import * as layoutApi from './layout';
 import formApi from 'form';
 import listApi from 'list';
 
 import meta_ from './Meta';
 
-import Controller from 'controller/Controller';
-import Application from 'Application';
+import Controller from './controller/Controller';
+import Application from './Application';
 
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
@@ -180,8 +181,5 @@ export const views = core.views;
 export const dropdown = core.dropdown;
 export const form = core.form;
 export const list = core.list;
-export const nativeGrid = core.nativeGrid;
-export const editableGrid = core.editableGrid;
 export const utils = core.utils;
 export const meta = core.meta;
-export const initialize = core.initialize;

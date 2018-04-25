@@ -1,36 +1,43 @@
 export default function() {
-    return new core.components.LayoutDesigner({
-        collection: [
-            {
-                title: 'First step',
-                subtitle: 'First step',
-                id: 'First',
-                url: 'url'
+    return new core.components.LayoutDesigner.Controller({
+        editorModel: new Backbone.Model(),
+        detachedToolbar: true,
+        palette: {
+            toolbar: {},
+            collection: new Backbone.Collection(),
+            elementsCollection: new Backbone.Collection([
+                {
+                    fieldType: 'Splitter',
+                    name: 'SPLITTER'
+                }
+            ]),
+            size: 'small'
+        },
+        canvas: {
+            collection: new Backbone.Collection(),
+            components: {
+                SempleView: {
+                    view: Marionette.View,
+                    model: Backbone.Model
+                },
+                Splitter: {
+                    view: Marionette.View,
+                    model: Backbone.Model
+                },
+                SystemView: Marionette.View
             },
-            {
-                title: 'Second step',
-                subtitle: 'Second step',
-                id: 'Second',
-                url: 'url',
-                collection: new Backbone.Collection([
-                    {
-                        1: 1,
-                        2: 2
-                    }
-                ])
+            dropZoneType: 'fixed',
+            focusOnShow: true
+        },
+        properties: {
+            components: {
+                SempleView: Marionette.View,
+                SystemView: Marionette.View
             },
-            {
-                title: 'Third step',
-                subtitle: 'Third step',
-                id: 'Third',
-                url: 'url'
-            },
-            {
-                title: 'Fourth step',
-                subtitle: 'Fourth step',
-                id: 'Fourth',
-                url: 'url'
-            }
-        ]
-    });
+            size: 'large'
+        },
+        toolbar: {
+            excludeActions: ['clone', 'delete']
+        }
+    }).view;
 }

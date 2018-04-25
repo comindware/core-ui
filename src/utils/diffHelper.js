@@ -116,7 +116,7 @@ export default function(a_: Array<any>, b_: Array<any>) {
         getlcs() {
             return lcs;
         },
-        getses() {
+        getses(): Array<diffObject> {
             return ses;
         },
         compose() {

@@ -8,7 +8,7 @@ import SaveAsView from './toolbar/SaveAsView';
 //import { defaultToolbarButtonId, defaultToolbarButton } from '../meta';
 
 const defaultToolbarButtonId = {};
-const defaultToolbarButton = {};
+const defaultToolbarButton = [];
 
 const constants = {
     MIN_WIDTH: 150
