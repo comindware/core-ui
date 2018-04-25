@@ -22,7 +22,7 @@ export default Marionette.CollectionView.extend({
     onRender() {
         // todo: find way to remove it
         if (this.options.showRowIndex) {
-            this.el.classList.add('grid-selection-index');
+            this.el.classList.add('cell_selection-index');
         }
     },
 
