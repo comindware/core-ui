@@ -7,6 +7,7 @@ const errorText = {
     emptyCollection: Localizer.get('PROCESS.FORMDESIGNER.PROPERTIES.VALIDATION.ERRORTEXT.EMPTYCOLLECTION')
 };
 */
+//@flow
 export default {
     validateCanvasComponents(formModel) {
         const validationErrors = [];

@@ -1,3 +1,4 @@
+//@flow
 export default Backbone.Model.extend({
     getChildren() {
         return this.get(this.get('childrenAttribute'));

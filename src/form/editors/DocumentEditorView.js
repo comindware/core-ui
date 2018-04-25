@@ -108,7 +108,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     childViewEvents: {
-        remove: 'onValueRemove'
+        remove: 'removeItem'
     },
 
     setValue(value) {
@@ -174,9 +174,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.__triggerChange();
     },
 
-    removeItem(model) {
-        this.collection.remove(model);
-        this.options.removeDocuments([model.get('id')]);
+    removeItem(view) {
+        this.collection.remove(view.model);
+        this.options.removeDocuments([view.model.get('id')]);
         this.__triggerChange();
     },
 
@@ -390,10 +390,6 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     onDomRefresh() {
         this.renderShowMore();
-    },
-
-    onValueRemove(model) {
-        this.trigger('removeItem', model);
     },
 
     onValueAdd(model) {

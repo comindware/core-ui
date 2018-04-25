@@ -1,5 +1,5 @@
+//@flow
 //import AliasService from 'services/AliasService';
-
 const extendParams = {
     relational: true,
     selected: false,

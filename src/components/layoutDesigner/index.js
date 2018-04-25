@@ -1,3 +1,4 @@
+//@flow
 /**
  * A class to represent Layout editor.
  * @class
