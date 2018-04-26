@@ -32,11 +32,6 @@
     position: relative;
 }
 
-.visible-collection > div {
-    position: absolute;
-    width: 100%
-}
-
 .visible-collection-view {
     height: inherit;
 }
@@ -966,19 +961,17 @@ svg.svg-grid-icons {
 
 
 /* New grid */
-.row{
-    display:flex;
-    width:100%;
+.row {
+    display: flex;
     height: 25px;
-    position: relative;
-    left: inherit;
-    right: inherit;
+    position: absolute;
+    width: 100%;
 }
 .row:hover {
     background-color: #F5F5F5;
 }
 
-.cell{
+.cell {
     display: inline-block;
     height: 24px;
     line-height: 24px;
@@ -986,9 +979,6 @@ svg.svg-grid-icons {
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 12px;
-    padding: 0;
-    margin: 0;
-    border: none;
     color: #000;
     cursor: default;
     min-width: 100px;
