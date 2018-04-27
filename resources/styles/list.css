@@ -154,9 +154,6 @@
     fill: #888E94
 }
 
-.dragover {
-    border-bottom: 1px solid #0575bd
-}
 
 .grid-selection-index {
     width: 55px;
@@ -328,94 +325,18 @@ svg.svg-grid-icons {
     flex: 1;
 }
 
-.editable-grid-header{
-    height: 38px;
-    padding: 0 10px;
-    white-space: nowrap;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex-line-pack: center;
-    align-content: center;
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 auto;
-    flex: 0 0 auto;
+.grid-toolbar-wrp{
+    width: 100%;
+    height: 33px;
+    border: 1px solid #dfe4e8;
     background: #f7f6f6;
     color: #636262;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-bottom: 1px solid #dfe4e8;
-}
-
-.editable-grid-header .tr-search {
-    padding: 0;
-}
-
-.collection-right-items-region {
     display: flex;
-    flex: 1 1 auto;
-    max-width: 50%;
-    justify-content: flex-end;
-}
-
-.editable-grid-header-search {
-    flex: 1 1 auto;
-}
-
-.form-label_editable-grid{
-    line-height: inherit;
-    flex: 1;
-    position: absolute;
-    margin-top: -14px;
-}
-
-.editable-grid-header-btn{
-    margin-top: 2px;
-}
-
-.editable-grid-header__btn{
-    cursor: pointer;
-    padding: 0 5px;
-    border-radius: 2px;
-    border: 1px solid transparent;
-    display: inline-block;
-}
-.editable-grid-header__btn:hover{
-    border-color: #bfc2c4;
-    box-shadow: inset 0 2px 3px #fff;
-
-}
-.editable-grid-header__btn.disabled,
-.editable-grid-header__btn.disabled:hover{
-    opacity: .6;
-    cursor: default;
-    border-color: transparent;
-    box-shadow: none;
-
-}
-.editable-grid-header-btn__icon {
-    display: inline-block;
-    vertical-align: middle;
-    width: 20px;
-    height: 17px;
-}
-
-.editable-grid-header-btn__text{
-    display: inline-block;
-    color: #636262;
-    font-size: 11px;
-    font-weight: 500;
-    margin-left: -3px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: none;
 }
 
 .editable-grid-field {
@@ -617,6 +538,11 @@ svg.svg-grid-icons {
     padding: 0 2px;
     line-height: initial;
     border: none;
+}
+
+.dragover,
+.dragover .cell{
+    border-bottom: 1px solid #0575bd
 }
 
 .cell .editor:after{
