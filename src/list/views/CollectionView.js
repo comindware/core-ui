@@ -53,7 +53,8 @@ const defaultOptions = {
  * @param {Boolean} options.forbidSelection запретить выделять элементы списка при помощи мыши
  * должны быть указаны cellView для каждой колонки.
  * */
-const ListView = Marionette.CollectionView.extend({
+
+export default Marionette.CollectionView.extend({
     initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError("ListView: you must specify a 'collection' option.");
@@ -487,5 +488,3 @@ const ListView = Marionette.CollectionView.extend({
         this.gridEventAggregator.trigger('collapse:change');
     }
 });
-
-export default ListView;

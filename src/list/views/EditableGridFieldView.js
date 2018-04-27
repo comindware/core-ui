@@ -1,3 +1,4 @@
+//@flow
 import FieldView from '../../form/fields/FieldView';
 import template from '../templates/editableCellField.hbs';
 

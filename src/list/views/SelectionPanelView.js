@@ -1,3 +1,4 @@
+//@flow
 import SelectionCellView from './SelectionCellView';
 
 export default Marionette.CollectionView.extend({

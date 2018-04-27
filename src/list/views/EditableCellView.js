@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/editableCell.hbs';
 import EditableGridFieldView from './EditableGridFieldView';
 
@@ -40,7 +41,7 @@ export default Marionette.View.extend({
         this.editorView = new EditableGridFieldView({
             schema: Object.assign({}, this.schema, { readonly, hidden, type: editorType }, schemaExtension),
             key: this.schema.key || this.schema.id,
-            model: this.model.get('rowModel'),
+            model: this.model.get('rowModel')
         });
         this.showChildView('editorRegion', this.editorView);
         this.editorIsShown = true;

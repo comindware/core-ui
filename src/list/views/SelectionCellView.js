@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/selectionCell.hbs';
 
 const selectionTypes = {
