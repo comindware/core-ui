@@ -147,14 +147,14 @@ a:hover {
 
 /* --------------- Search ----------------*/
 .tr-search {
-    height: 23px;
-    margin: 0 20px;
-    padding: 8px 0;
+    height: 100%;
+    margin: 0;
+    padding: 8px 10px 8px 0;
     display: none;
     position: relative;
     box-sizing: content-box;
-    border-bottom: solid 1px #ced3d7;
     z-index: 44;
+    border-right: 1px solid #dfe4e8;
 }
 
 .tr-search_report {
