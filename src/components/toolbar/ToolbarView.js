@@ -47,6 +47,9 @@ export default Marionette.View.extend({
     },
 
     rebuildView() {
+        if (this.isDestroyed()) {
+            return false;
+        }
         this.toolbarItemsCollection.reset(this.allItemsCollection.models);
         const toolbarActions = this.getRegion('toolbarItemsRegion')
             .$el.children()

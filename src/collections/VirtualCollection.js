@@ -2,7 +2,7 @@
 /*eslint-disable*/
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
-import { helpers, diffHelper } from 'utils';
+import { diffHelper } from 'utils';
 import GridItemBehavior from '../list/models/behaviors/GridItemBehavior';
 import CollapsibleBehavior from '../models/behaviors/CollapsibleBehavior';
 

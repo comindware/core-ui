@@ -703,8 +703,8 @@ input[type="checkbox"].checkbox {
     margin:1px;
     background: #f0f0f0;
     color: rgba(0,0,0,.87);
-    border-radius: 28px;
-    padding: 4px 9px;
+    border-radius: 20px;
+    padding: 2px 9px;
     transition: padding-right .2s;
 }
 

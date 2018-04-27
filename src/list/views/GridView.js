@@ -1,3 +1,4 @@
+//@flow
 /* eslint-disable no-param-reassign */
 
 import { htmlHelpers } from 'utils';
@@ -232,7 +233,7 @@ export default Marionette.View.extend({
             this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
             this.showChildView('selectionPanelRegion', this.selectionPanelView);
             if (this.getOption('draggable')) {
-                this.getRegion('selectionHeaderRegion').el.classList.add('grid-selection-index');
+                this.getRegion('selectionHeaderRegion').el.classList.add('cell_selection-index');
             }
         }
 

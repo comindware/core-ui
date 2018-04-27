@@ -312,10 +312,9 @@ export default Marionette.View.extend({
 
         const css: {
             top: number,
-            bottom: number
+            bottom?: number
         } = {
-            top,
-            bottom: 0
+            top
         };
         if (this.options.height === height.BOTTOM) {
             css.bottom = WINDOW_BORDER_OFFSET;
@@ -340,8 +339,7 @@ export default Marionette.View.extend({
         panelRect.width = $panelEl.outerWidth();
 
         const css = {
-            top: 0,
-            bottom: 0
+            top: 0
         };
 
         // calculate vertical position

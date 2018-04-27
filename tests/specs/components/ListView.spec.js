@@ -65,7 +65,12 @@ describe('Components', () => {
                         // waiting style updates
                         expect(listView.collection.visibleLength).toBe(60);
                         expect(listView.state.position).toBe(30, 'Scroll - half of the buffer');
-                        expect(listView.$el.children().first().css('top')).toBe('750px');
+                        expect(
+                            listView.$el
+                                .children()
+                                .first()
+                                .css('top')
+                        ).toBe('750px');
                         done();
                         listView.$el.parent().off('scroll');
                     }, 0)

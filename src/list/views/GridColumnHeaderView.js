@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/gridcolumnheader.hbs';
 
 /**

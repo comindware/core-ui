@@ -1,3 +1,4 @@
+//@flow
 import CTEventsService from '../services/CTEventsService';
 import WebSocketService from '../services/WebSocketService';
 import ToastNotificationService from '../services/ToastNotificationService';

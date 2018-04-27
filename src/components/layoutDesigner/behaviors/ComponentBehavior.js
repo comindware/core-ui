@@ -1,3 +1,4 @@
+//@flow
 import componentDragHelper from '../templates/componentDragHelper.html';
 import emptyDragHelper from '../templates/emptyComponentDragHelper.html';
 

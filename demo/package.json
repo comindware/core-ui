@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^8.3.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.2",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "clean-webpack-plugin": "^0.1.19",
@@ -29,7 +29,7 @@
     "prettier": "^1.12.1",
     "raw-loader": "^0.5.1",
     "source-map-loader": "^0.2.3",
-    "style-loader": "^0.20.3",
+    "style-loader": "^0.21.0",
     "text-loader": "^0.0.1",
     "url-loader": "^1.0.1",
     "webpack": "^4.6.0",
