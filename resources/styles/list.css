@@ -480,9 +480,7 @@ svg.svg-grid-icons {
     position: absolute;
     width: 100%;
 }
-.row:hover {
-    background-color: #F5F5F5;
-}
+
 
 .cell {
     display: inline-block;
@@ -499,6 +497,15 @@ svg.svg-grid-icons {
     overflow: hidden;
     padding: 0 2px;
 }
+
+.selected .cell{
+    background-color: #eaf5fc;
+}
+
+.row:hover .cell{
+    background-color: #F5F5F5;
+}
+
 
 .cell_selection{
     position: absolute;
