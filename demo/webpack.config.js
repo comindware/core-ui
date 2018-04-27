@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 
 const pathResolver = {
@@ -108,11 +109,7 @@ module.exports = () => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     include: [pathResolver.source()],
-                    exclude: [
-                        pathResolver.source('lib'),
-                        pathResolver.source('app/cases'),
-                        pathResolver.node_modules(),
-                    ],
+                    exclude: [pathResolver.source('lib'), pathResolver.source('app/cases'), pathResolver.node_modules()],
                     options: {
                         presets: ['env']
                     }
@@ -177,16 +174,16 @@ module.exports = () => {
             ]
         },
         plugins: [
-            /*new CleanWebpackPlugin([pathResolver.client()], {
+            new CleanWebpackPlugin([pathResolver.client()], {
                 verbose: false,
                 exclude: ['localization']
-            }),*/
+            }),
             new HtmlWebpackPlugin({
                 filename: 'index.html',
                 template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
                 hash: PRODUCTION,
                 svgSprites: readSpritesFile(),
-                inject: 'body',
+                inject: false,
                 chunks: ['app'],
                 minify: {
                     collapseWhitespace: false
@@ -208,7 +205,25 @@ module.exports = () => {
                 skipWaiting: true,
                 importWorkboxFrom: 'local',
                 directoryIndex: './index.html'
-            })
+            }),
+            new CopyWebpackPlugin([
+                {
+                    from: pathResolver.source('App.controller.js'),
+                    to: pathResolver.client()
+                },
+                {
+                    from: pathResolver.source('App.view.xml'),
+                    to: pathResolver.client()
+                },
+                {
+                    from: pathResolver.source('Change.fragment.xml'),
+                    to: pathResolver.client()
+                },
+                {
+                    from: pathResolver.source('Display.fragment.xml'),
+                    to: pathResolver.client()
+                }
+            ])
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

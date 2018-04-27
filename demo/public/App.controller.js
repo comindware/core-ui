@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Fragment', 'sap/ui/core/mvc/Con
             this.getView().bindElement('/SupplierCollection/0');
 
             // Set the initial form to be the display one
-            this._showFormFragment('Display');
+            this._showFormFragment('Change');
         },
 
         onExit: function() {
