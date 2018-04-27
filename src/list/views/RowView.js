@@ -5,7 +5,8 @@ const classes = {
     selected: 'selected',
     expanded: 'collapsible-btn_expanded',
     collapsible: 'js-collapsible-button',
-    dragover: 'dragover'
+    dragover: 'dragover',
+    cellFocused: 'cell-focused'
 };
 
 const defaultOptions = {
@@ -50,6 +51,7 @@ export default Marionette.View.extend({
     modelEvents: {
         selected: '__handleSelection',
         deselected: '__handleDeselection',
+        'select:pointed': '__selectPointed',
         highlighted: '__handleHighlight',
         unhighlighted: '__handleUnhighlight',
         change: '__handleChange',
@@ -60,7 +62,7 @@ export default Marionette.View.extend({
 
     initialize() {
         _.defaults(this.options, defaultOptions);
-
+        this.gridEventAggregator = this.options.gridEventAggregator;
         // TODO: think about implementation in tree or grouped grids
         // this.listenTo(this.model, 'checked', this.__onModelChecked);
         // this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
@@ -74,6 +76,9 @@ export default Marionette.View.extend({
         const model = this.model;
         if (model.selected) {
             this.__handleSelection();
+            if (this.gridEventAggregator.isEditable && this.gridEventAggregator.pointedCell !== undefined) {
+                this.__selectPointed(this.gridEventAggregator.pointedCell);
+            }
         }
         if (model.highlighted) {
             this.__handleHighlight(model.highlightedFragment);
@@ -142,7 +147,7 @@ export default Marionette.View.extend({
         const changed = this.model.changedAttributes();
         if (changed) {
             this.getOption('columns').forEach((column, index) => {
-                if (changed[column.key] && !column.cellView) {
+                if (changed[column.key] && !column.cellView && !column.editable) {
                     const elements = this.el.getElementsByClassName(this.columnClasses[index]);
                     if (elements.length) {
                         elements[0].innerHTML = CellViewFactory.getCellHtml(column, this.model);
@@ -227,6 +232,13 @@ export default Marionette.View.extend({
         const model = this.model;
         const selectFn = model.collection.selectSmart || model.collection.select;
         if (selectFn) {
+            if (this.gridEventAggregator.isEditable) {
+                const cellIndex = this.__getFocusedCellIndex(e);
+                if (cellIndex > -1) {
+                    this.gridEventAggregator.pointedCell = cellIndex;
+                    this.__selectPointed(cellIndex);
+                }
+            }
             selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey);
         }
         this.trigger('click', this.model);
@@ -246,6 +258,10 @@ export default Marionette.View.extend({
 
     __handleDeselection() {
         this.el.classList.remove(classes.selected);
+        if (this.lastPointedEl) {
+            // this.lastPointedEl.style.outline = '';
+            this.lastPointedEl.classList.remove(classes.cellFocused);
+        }
     },
 
     __toggleCollapse() {
@@ -296,5 +312,39 @@ export default Marionette.View.extend({
                 parentModel.checkSome();
             }
         }
+    },
+
+    __selectPointed(pointed) {
+        if (this.lastPointedEl) {
+            // this.lastPointedEl.style.outline = '';
+            this.lastPointedEl.classList.remove(classes.cellFocused);
+        }
+        const pointedEls = this.el.getElementsByClassName(this.columnClasses[pointed]);
+        if (pointedEls && pointedEls.length) {
+            const pointedEl = pointedEls[0];
+            // pointedEl.style.outline = '1px solid #0575bd';
+            pointedEl.classList.add(classes.cellFocused);
+            // const editors = pointedEl.getElementsByTagName('input') || pointedEl.getElementsByClassName('editor');
+            const editor = pointedEl.querySelector('input') || pointedEl.querySelector('[class~=editor]');
+            if (editor) {
+                editor.focus();
+            }
+            this.lastPointedEl = pointedEl;
+        }
+    },
+
+    __getFocusedCellIndex(e) {
+        let current = e.target;
+        let result = -1;
+        let parent = current.parentElement;
+        while (current && parent && parent !== this.el) {
+            const index = this.columnClasses.findIndex(className => parent.className.includes(className));
+            if (index > -1 && this.getOption('columns')[index].editable) {
+                result = index;
+            }
+            current = parent;
+            parent = current.parentElement;
+        }
+        return result;
     }
 });

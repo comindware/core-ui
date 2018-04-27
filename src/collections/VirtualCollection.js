@@ -382,7 +382,7 @@ const VirtualCollection = Backbone.Collection.extend(
                 .forEach(object => {
                     switch (object.t) {
                         case 0:
-                            this.trigger('update:child:top', object.elem);
+                            this.trigger('update:child', object.elem);
                             break;
                         case -1:
                             removed.push(object.elem);

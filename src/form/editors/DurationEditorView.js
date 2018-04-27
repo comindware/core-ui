@@ -287,6 +287,9 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __keydown(event) {
+        if (event.ctrlKey) {
+            return;
+        }
         const position = this.getCaretPos();
         const index = this.getSegmentIndex(position);
         const focusablePart = this.focusableParts[index];
