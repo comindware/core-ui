@@ -116,7 +116,10 @@ export default Marionette.CollectionView.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
-        this.listenTo(this.collection, 'update:child:top', model => this.__updateChildTop(this.children.findByModel(model)));
+        this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
+        if (this.collection.visibleLength) {
+            this.collection.select(this.collection.at(0), false, false, false);
+        }
         this.$el.parent().on('scroll', this.__onScroll.bind(this));
     },
 
@@ -174,17 +177,21 @@ export default Marionette.CollectionView.extend({
 
     __handleKeydown(e) {
         let delta;
-        if (e.target.tagName === 'INPUT') {
-            return;
-        }
+        const handle = !this.getOption('isEditable') || e.ctrlKey;
+        const eventResult = !handle && (e.target.tagName === 'INPUT');
         const selectedModels = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
-        switch (event.keyCode) {
+        e.stopPropagation();
+        switch (e.keyCode) {
             case keyCode.UP:
-                this.moveCursorBy(-1, e.shiftKey);
-                return false;
+                if (handle) {
+                    this.moveCursorBy(-1, e.shiftKey);
+                }
+                return eventResult;
             case keyCode.DOWN:
-                this.moveCursorBy(+1, e.shiftKey);
-                return false;
+                if (handle) {
+                    this.moveCursorBy(1, e.shiftKey);
+                }
+                return eventResult;
             case keyCode.PAGE_UP:
                 delta = Math.ceil(this.state.viewportHeight * 0.8);
                 this.moveCursorBy(-delta, e.shiftKey);
@@ -194,33 +201,37 @@ export default Marionette.CollectionView.extend({
                 this.moveCursorBy(delta, e.shiftKey);
                 return false;
             case keyCode.SPACE:
-                selectedModels.forEach(model => model.toggleChecked());
-                return false;
+                if (handle) {
+                    selectedModels.forEach(model => model.toggleChecked());
+                }
+                return eventResult;
             case keyCode.LEFT:
-                if (this.options.isTree) {
-                    selectedModels.forEach(model => model.collapse());
-                    return false;
+                if (handle) {
+                    this.collection.trigger('move:left');
                 }
-                break;
+                return eventResult;
             case keyCode.RIGHT:
-                if (this.options.isTree) {
-                    selectedModels.forEach(model => model.expand());
-                    return false;
+                if (handle) {
+                    this.collection.trigger('move:right');
                 }
-                break;
+                return eventResult;
+            case keyCode.TAB:
+                return false;
             case keyCode.ENTER:
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
             case keyCode.ESCAPE:
-            case keyCode.TAB: {
                 break;
-            }
             case keyCode.HOME:
-                this.__moveCursorTo(0, e.shiftKey);
-                return false;
+                if (handle) {
+                    this.__moveCursorTo(0, e.shiftKey);
+                }
+                return eventResult;
             case keyCode.END:
-                this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
-                return false;
+                if (handle) {
+                    this.__moveCursorTo(this.collection.length - 1, e.shiftKey);
+                }
+                return eventResult;
             default:
                 break;
         }
@@ -283,7 +294,7 @@ export default Marionette.CollectionView.extend({
 
     scrollTo(index) {
         const indexDelta = index - this.state.position;
-        const criticalOffset = 2;
+        const criticalOffset = 7;
         if (indexDelta < criticalOffset || indexDelta > this.state.viewportHeight - criticalOffset) {
             const centerItemDelta = Math.floor(this.state.viewportHeight / 2 - 1);
             const newPosition = this.state.position + indexDelta - centerItemDelta;
@@ -431,7 +442,7 @@ export default Marionette.CollectionView.extend({
                 return;
             }
             child.el.style.top = top;
-            childModel.trigger('update:top', top);
+            childModel.trigger('update:model', top);
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
                 child.insertFirstCellHtml();
             }

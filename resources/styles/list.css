@@ -592,6 +592,11 @@ svg.svg-grid-icons {
     padding: 0;
 }
 
+.cell-focused {
+    outline: 1px solid #0575bd;
+    outline-offset: -1px;
+}
+
 .cell_selection-index{
     width: 53px;
     padding-left: 10px;
@@ -616,11 +621,6 @@ svg.svg-grid-icons {
 
 .cell .editor:after{
     display: none;
-}
-
-.cell .editor_focused{
-    outline: 1px solid #0575bd;
-    outline-offset: -1px;
 }
 
 .cell .editor_checkbox.editor_focused{

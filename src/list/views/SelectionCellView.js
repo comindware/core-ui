@@ -54,7 +54,7 @@ export default Marionette.View.extend({
     },
 
     modelEvents: {
-        'update:top': '__updateTop',
+        'update:model': '__updateTop',
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         dragover: '__handleModelDragOver',
@@ -138,13 +138,11 @@ export default Marionette.View.extend({
     },
 
     __updateTop(top) {
-        requestAnimationFrame(() => {
-            this.el.style.top = top;
-            if (this.getOption('showRowIndex') && this.model && this.isRendered()) {
-                const index = this.model.collection.indexOf(this.model) + 1;
-                this.ui.index.text(index);
-            }
-        });
+        this.el.style.top = top;
+        if (this.getOption('showRowIndex') && this.model && this.isRendered()) {
+            const index = this.model.collection.indexOf(this.model) + 1;
+            this.ui.index.text(index);
+        }
     },
 
     __handleSelection() {

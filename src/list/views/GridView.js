@@ -105,6 +105,19 @@ export default Marionette.View.extend({
             isTree: this.options.isTree
         });
 
+        this.isEditable = options.columns.some(column => column.editable);
+        if (this.isEditable) {
+            this.editableCellsIndexes = [];
+            this.options.columns.forEach((column, index) => {
+                if (column.editable) {
+                    this.editableCellsIndexes.push(index);
+                }
+            });
+            this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
+            this.listenTo(this.collection, 'move:right', () => this.__onCursorMove(+1));
+            this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
+        }
+
         this.listView = new ListView({
             collection: this.collection,
             gridEventAggregator: this,
@@ -120,7 +133,8 @@ export default Marionette.View.extend({
             maxRows: options.maxRows,
             height: options.height,
             forbidSelection: this.forbidSelection,
-            isTree: this.options.isTree
+            isTree: this.options.isTree,
+            isEditable: this.isEditable
         });
 
         if (this.options.showSelection) {
@@ -178,6 +192,17 @@ export default Marionette.View.extend({
         }
     },
 
+    __onCursorMove(delta) {
+        const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
+        const newPosition = Math.min(this.editableCellsIndexes.length - 1, Math.max(0, currentSelectedIndex + delta));
+        const newSelectedIndex = this.editableCellsIndexes[newPosition];
+        this.pointedCell = newSelectedIndex;
+        const pointed = this.collection.find(model => model.cid === this.collection.cursorCid);
+        if (pointed) {
+            pointed.trigger('select:pointed', this.pointedCell);
+        }
+    },
+
     __updateHeight(sender, args) {
         args.gridHeight = args.listViewHeight + constants.gridHeaderHeight;
         this.$el.height(args.gridHeight);
@@ -204,6 +229,10 @@ export default Marionette.View.extend({
         title: '.js-grid-title',
         tools: '.js-grid-tools',
         header: '.js-grid-header'
+    },
+
+    events: {
+        keydown: '__handleKeydown'
     },
 
     className: 'fr-collection',
