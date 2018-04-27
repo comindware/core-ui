@@ -38,9 +38,7 @@ module.exports = options => {
                         pathResolver.tests(),
                         pathResolver.demo()
                     ],
-                    include: [
-                        pathResolver.source()
-                    ],
+                    include: [pathResolver.source()],
                     options: {
                         quiet: true,
                         //fix: true,
@@ -50,12 +48,19 @@ module.exports = options => {
                 {
                     test: /\.js$/,
                     loader: 'babel-loader',
-                    exclude: [
-                        pathResolver.node_modules(),
-                        pathResolver.source('external/rangyinputs-jquery-src.js')
-                    ],
+                    exclude: [pathResolver.node_modules(), pathResolver.source('external/rangyinputs-jquery-src.js')],
                     options: {
-                        presets: ['flow', 'env'],
+                        presets: [
+                            ['flow'],
+                            [
+                                'env',
+                                {
+                                    targets: {
+                                        browsers: ['ie 11', '> 0.25%', 'not chrome 29']
+                                    }
+                                }
+                            ]
+                        ],
                         cacheDirectory: true
                     }
                 },
@@ -74,7 +79,7 @@ module.exports = options => {
                                     plugins: () => {
                                         const plugins = [
                                             autoprefixer({
-                                                browsers: ['last 2 versions']
+                                                browsers: ['ie 11', '> 0.25%', 'not chrome 29']
                                             })
                                         ];
                                         if (UGLIFY) {
@@ -264,7 +269,7 @@ module.exports = options => {
             new ExtractTextPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
             //new FlowWebpackPlugin()
         ],
         resolve: {
