@@ -13,9 +13,9 @@ after_script:
 deploy:
   - provider: npm
     skip_cleanup: true
-    email: me@sburg.net
+    email: comindware-awesome-bot@comindware.com
     api_key:
-      secure: K7YPT8VJo56HeoCPImXbBgGpnVXhO/S8L+pwMYzQesefujP5UWQkG1bFLYCBmyrom5L6stLqvZMToDAvQgE6yFBHLXSW9WVTWIAp87Uw89WBndKHMvBlUqiKEfJTVuZ0D2IE5eahA+h/C8Nd12nB2yrXI+LW3OVm8cEQxFZ6rn2ECmEKCBoQaXqH+0P2E1uaHu3vfJIgvQtAGMhk8fsEUkWnPa23uJVJklyUIm+ZKYtOL3ZROetY7lsMxL7PGTWgPg6FQnyqBaK1o5d0fIszdKGngs1KimTSOPCBxo/RGInhDfygz6C/CuOyk6FyHY8PoqKzHr9C7dVidIF117YyyfsrIKvq96qjvbishf2tZxz70xZZbXkf61CXno42RUEsFoVgFdFYeseHhfelrZvwoxWSRLsM/lQkvZKVrYVanxqoSIZXrWPb3YFy5LkJSejGBpZm1tgwBDQObiSjjMquomW6VVD8Ad4epuZtQVYjxj54hTf8gFttGcnwg/xMv/qhDdX2BkE9PbLNZz/hfY6NaGRIQzdcg+gJOfFeSTVqJjWnVesPR4EHvARPGcBhCujdDycJDxD0Njfq1OggSiCIJm/8lvrl4VeWPASsDN2zwKLYO6M71eCUdOrUdA0vwCFOtOFbqAhSn9ifPD/Hlw2B/uf3XbZ+o/OgN3PnzmMDoAU=
+      secure: EKJsVIsPEuYKRB9Dani3eSkWuLk8WUU9eVs0rG4ai1ga4lXSEYaZSnGsyRoG91fEbVCIs+eictbdKs8AKN4hNbe/4p99hPtqiRjuIkS/KQl/lF313l6B2Tn8YLM9TpoKG2O0QY/+m7Zd8yCwu1AR7PYCt60UOrFRNtSGt8HHuJF38epEha0JyJ4e2xQIWZSAi6mRPvJ3mIOQ0SLYoAnUHT7u9x+VFbXhcfZ01c2/pokYFKo0ERFSGUR4W+N25T8HLHnQ9OpL0xXjYLnbOvUVbX/+3hfWQZ9OnQlLl74LKwPoqHZS1rQmoq9J+Xsc/sWp1xcCVscYaHFB4/QtWtIJ+s03G5ZU6Q+UJUfF5YvUDBuetdq+rizW8WnvhiCs6KYYp2gb8Qya4twnnsymlS2iVckiHdM5qj+4LxI/9o57AmYqBdKsE+p6Zo6hDqpIKG/3H51C2jeey4kUPCfw5Ux0Jjy6yBioP2dSgOHTp/4qZ//wR70QvIN8RQzh3FiQTW+ntBtyuevJ+o40it/RZvyaJr8P9r0bGnhL6cWNUpCeSe+9vfDlgI5xBt8jRGBT3kO1/DHJqsJWjClLhPJNxgxgOg22kSJ/+/eMRpUtiPPZl5V0Rvu4Lfd36dqoD2cnM5TwLwhjZ2OEd2LcJ1Pzlzpwjpek/HOLRimUC4y+rxUwCSU=
     on:
       tags: true
       repo: comindware/core-ui
