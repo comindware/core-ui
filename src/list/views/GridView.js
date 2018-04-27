@@ -290,6 +290,9 @@ export default Marionette.View.extend({
         }
         document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
+        if (this.collection.visibleLength) {
+            this.collection.select(this.collection.at(0), false, false, false);
+        }
     },
 
     __executeAction(actionKind) {

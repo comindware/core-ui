@@ -98,10 +98,12 @@ export default Marionette.View.extend({
         if (!this.collection.dragginModel) {
             return;
         }
-        if (this.selectAllCell) {
-            this.collection.trigger('dragover:head', event);
-        } else {
-            this.model.trigger('dragover', event);
+        if (this.collection.dragginModel !== this.model) {
+            if (this.selectAllCell) {
+                this.collection.trigger('dragover:head', event);
+            } else {
+                this.model.trigger('dragover', event);
+            }
         }
         event.preventDefault();
     },
