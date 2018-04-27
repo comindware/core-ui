@@ -1,13 +1,27 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
 	<meta charset="UTF-8" />
 	<title>Core UI demo page</title>
+	<script id='sap-ui-bootstrap' src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js' data-sap-ui-theme='sap_belize'
+	 data-sap-ui-libs='sap.m' data-sap-ui-resourceroots='{"HelloWorld": "./"}'>
+	</script>
+	<script>
+		sap.ui.getCore().attachInit(function () {
+			sap.ui.xmlview({
+				viewName: "HelloWorld.App"
+			}).placeAt("content");
+		});
+	</script>
 </head>
+
 <body>
-<div class="visually-hidden">
-    {{{htmlWebpackPlugin.options.svgSprites}}}
-</div>
-<div class="js-app-region app-container"></div>
+	<div class="visually-hidden">
+		{{{htmlWebpackPlugin.options.svgSprites}}}
+	</div>
+	<div class="js-app-region app-container"></div>
+	<div class='sapUiBody' id='content'></div>
 </body>
+
 </html>

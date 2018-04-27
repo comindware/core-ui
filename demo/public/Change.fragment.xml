@@ -1,0 +1,115 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:Form id="FormChange480_Trial"
+			editable="true">
+			<f:title>
+				<core:Title text="Supplier" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="0"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="3"
+					columnsL="2"
+					columnsM="2"
+					singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Address">
+					<f:formElements>
+						<f:FormElement label="Name">
+							<f:fields>
+								<Input value="{SupplierName}" id="name"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Street">
+							<f:fields>
+								<Input value="{Street}" />
+								<Input value="{HouseNumber}">
+									<layoutData>
+										<l:GridData span="XL2 L2 M2 S4" />
+									</layoutData>
+								</Input>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="ZIP Code/City">
+							<f:fields>
+								<Input value="{ZIPCode}">
+									<layoutData>
+										<l:GridData span="XL2 L2 M2 S4" />
+									</layoutData>
+								</Input>
+								<Input value="{City}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Country">
+							<f:fields>
+								<Select id="country" selectedKey="{Country}">
+									<items>
+										<core:Item text="England" key="England"/>
+										<core:Item text="Germany" key="Germany"/>
+										<core:Item text="USA" key="USA"/>
+									</items>
+								</Select>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Contact">
+					<f:formElements>
+						<f:FormElement label="Web">
+							<f:fields>
+								<Input value="{Url}" type="Url"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Twitter">
+							<f:fields>
+								<Input value="{Twitter}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Email">
+							<f:fields>
+								<Input value="{Email}" type="Email"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Tel.">
+							<f:fields>
+								<Input value="{Tel}" type="Tel"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="SMS">
+							<f:fields>
+								<Input value="{Sms}" type="Tel"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Other">
+					<f:formElements>
+						<f:FormElement label="Rating">
+							<f:fields>
+								<RatingIndicator value="{Rating}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Disposable">
+							<f:fields>
+								<ProgressIndicator percentValue="{Disposable}" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+</core:FragmentDefinition>
