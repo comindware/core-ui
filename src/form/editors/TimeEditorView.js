@@ -8,7 +8,7 @@
 
 'use strict';
 
-import { Handlebars } from 'lib';
+import { Handlebars, moment } from 'lib';
 import template from './templates/timeEditor.hbs';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import TimeView from './impl/dateTime/views/TimeView';
@@ -16,6 +16,7 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
+    timezoneOffset: -moment().utcOffset(),
     timeDisplayFormat: null,
     showTitle: true
 };
@@ -53,6 +54,7 @@ formRepository.editors.Time = BaseLayoutEditorView.extend(/** @lends module:core
         this.timeView = new TimeView({
             model: this.timeModel,
             allowEmptyValue: this.options.allowEmptyValue,
+            timezoneOffset: this.options.timezoneOffset,
             timeDisplayFormat: this.options.timeDisplayFormat,
             showTitle: this.options.showTitle
         });
