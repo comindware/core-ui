@@ -111,7 +111,7 @@
 }
 
 .grid-selection-cell-all {
-    height: 21px;
+    height: 20px;
     min-width: 26px;
     position: relative;
     flex: none;
@@ -122,9 +122,10 @@
 }
 
 .grid-selection-cell-all .cell_selection{
-    height: 21px;
+    height: 20px;
     position: relative;
     line-height: 20px;
+    box-shadow: inset 1px 1px 0 0 #dfe4e8, inset -1px -1px 0 0 #dfe4e8;
 }
 
 .selection-cell-wrp {
@@ -172,11 +173,11 @@
 .grid-header-view {
     position: relative;
     width: 100%;
-    height: 21px;
-    border-bottom: 1px solid #DFE4E8;
+    height: 20px;
     border-collapse: collapse;
     overflow: hidden;
     flex: none;
+    overflow-y: scroll;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -192,6 +193,7 @@
     position: relative;
     height: 20px;
     width: 100%;
+
 }
 
 .grid-header-column {
@@ -199,6 +201,11 @@
     position: relative;
     overflow: hidden;
     min-width: 100px;
+    box-shadow: inset -1px -1px 0 0 #dfe4e8, inset 0 1px 0 0 #dfe4e8;
+}
+
+.grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
+    box-shadow: inset -1px -1px 0 0 #dfe4e8, inset 1px 1px 0 0 #dfe4e8;
 }
 
 
@@ -217,7 +224,7 @@
 
 .grid-header-dragger {
     position: absolute;
-    right: 2px;
+    right: 1px;
     top: 0;
     bottom: 0;
     width: 7px;
@@ -484,6 +491,10 @@ svg.svg-grid-icons {
     height: 25px;
 }
 
+.row.selected{
+    background: transparent;
+}
+
 .cell {
     display: inline-block;
     height: 25px;
@@ -495,9 +506,14 @@ svg.svg-grid-icons {
     color: #000;
     cursor: default;
     min-width: 100px;
-    border-bottom: 1px solid #dfe4e8;
+    /*border-bottom: 1px solid #dfe4e8;*/
+    box-shadow: inset -1px -1px 0 0 #dfe4e8;
     overflow: hidden;
     padding: 0 2px;
+}
+
+.grid-selection-panel-region:empty + .grid-content-view .row .cell:first-child {
+    box-shadow: inset -1px -1px 0 0 #dfe4e8, inset 1px 0 0 0 #dfe4e8;
 }
 
 .selected .cell{
@@ -521,7 +537,8 @@ svg.svg-grid-icons {
     flex: none;
     min-width: inherit;
     padding: 0;
-    border-bottom: 1px solid #dfe4e8;
+    /*border-bottom: 1px solid #dfe4e8;*/
+    box-shadow: inset 1px -1px 0 0 #dfe4e8, inset -1px 0 0 0 #dfe4e8;
 }
 
 .cell-focused {
