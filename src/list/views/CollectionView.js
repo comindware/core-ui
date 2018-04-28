@@ -335,7 +335,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __onScroll() {
-        if (this.state.viewportHeight === undefined || this.collection.length <= this.state.viewportHeight || this.internalScroll) {
+        if (this.state.viewportHeight === undefined || this.collection.length <= this.state.viewportHeight || this.internalScroll || this.isDestroyed()) {
             return;
         }
 
