@@ -367,17 +367,6 @@ svg.svg-grid-icons {
     background: transparent;
 }
 
-.editable-grid-field.error .editor{
-    outline: 1px solid #e61212;
-    outline-offset: -1px;
-}
-
-.editable-grid-field.error .editor_focused,
-.editable-grid-field .editor_focused{
-    outline: 1px solid #0575bd;
-    outline-offset: -1px;
-}
-
 .editable-grid-field.readonly .editor,
 .editable-grid-field.disabled .editor,
 .editable-grid-field .editor_checkbox{
