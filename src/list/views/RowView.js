@@ -161,7 +161,9 @@ export default Marionette.View.extend({
         if (!this.model.collection.dragginModel) {
             return;
         }
-        this.model.trigger('dragover', event);
+        if (this.model.collection.dragginModel !== this.model) {
+            this.model.trigger('dragover', event);
+        }
         event.preventDefault();
     },
 

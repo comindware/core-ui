@@ -218,7 +218,8 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         __addModel(model, options) {
-            this.trigger('add', model, this, Object.assign({}, options, { at: this.models.indexOf(model) }));
+            const index = this.visibleModels.indexOf(model);
+            this.trigger('add', model, this, Object.assign({}, options, { at: index, index })); // both add and index to correct inserting in dom
             this._addReference(model);
         },
 
@@ -356,7 +357,8 @@ const VirtualCollection = Backbone.Collection.extend(
                     this.visibleModels.unshift(...newValues);
                 }
                 this.__removeModels(oldValues);
-                newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0 } : {}));
+                // newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0 } : {}));
+                newValues.forEach(value => this.__addModel(value));
                 this.state.position = newPosition;
                 this.visibleLength = this.visibleModels.length;
             } else {
@@ -395,7 +397,9 @@ const VirtualCollection = Backbone.Collection.extend(
 
             // it's important remove items before add
             this.__removeModels(removed, options);
-            added.forEach(model => this.__addModel(model, options));
+            added.
+                sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).
+                forEach(model => this.__addModel(model, options));
         },
 
         __normalizePosition(position) {

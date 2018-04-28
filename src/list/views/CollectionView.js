@@ -1,6 +1,7 @@
 //@flow
 import { keyCode, helpers, htmlHelpers } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
+import template from '../templates/collection.hbs';
 
 /*
     Public interface:
@@ -54,7 +55,7 @@ const defaultOptions = {
  * должны быть указаны cellView для каждой колонки.
  * */
 
-export default Marionette.CollectionView.extend({
+export default Marionette.CompositeView.extend({
     initialize(options) {
         if (this.collection === undefined) {
             helpers.throwInvalidOperationError("ListView: you must specify a 'collection' option.");
@@ -105,6 +106,14 @@ export default Marionette.CollectionView.extend({
         };
     },
 
+    template: Handlebars.compile(template),
+
+    childViewContainer: '.js-visible-collection-wrp',
+
+    ui: {
+        childViewContainer: '.js-visible-collection-wrp'
+    },
+
     events: {
         keydown: '__handleKeydown'
     },
@@ -117,9 +126,6 @@ export default Marionette.CollectionView.extend({
             htmlHelpers.forbidSelection(this.el);
         }
         this.listenTo(this.collection, 'update:child', model => this.__updateChildTop(this.children.findByModel(model)));
-        if (this.collection.visibleLength) {
-            this.collection.select(this.collection.at(0), false, false, false);
-        }
         this.$el.parent().on('scroll', this.__onScroll.bind(this));
     },
 
@@ -130,6 +136,22 @@ export default Marionette.CollectionView.extend({
             this._addChild(child, index);
         });
         this.children._updateLength();
+    },
+
+    // override default method to correct add twhen index === 0 in visible collection
+    _onCollectionAdd(child, collection, opts) {
+        // `index` is present when adding with `at` since BB 1.2; indexOf fallback for < 1.2
+        let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
+
+
+        if (this.filter || index === false) {
+            index = _.indexOf(this._filteredSortedModels(index), child);
+        }
+
+        if (this._shouldAddChild(child, index)) {
+            this._destroyEmptyView();
+            this._addChild(child, index);
+        }
     },
 
     childView(child) {
@@ -319,6 +341,11 @@ export default Marionette.CollectionView.extend({
 
         const newPosition = Math.max(0, Math.floor(this.$el.parent().scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
+        const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
+        this.ui.childViewContainer.css('top', top);
+        if (this.gridEventAggregator) {
+            this.gridEventAggregator.trigger('update:top', top);
+        }
     },
 
     updatePosition(newPosition) {
@@ -437,11 +464,11 @@ export default Marionette.CollectionView.extend({
         }
         requestAnimationFrame(() => {
             const childModel = child.model;
-            const top = `${this.collection.indexOf(childModel) * this.childHeight}px`;
-            if (child.el.style.top === top) {
-                return;
-            }
-            child.el.style.top = top;
+            // const top = `${this.collection.indexOf(childModel) * this.childHeight}px`;
+            // if (child.el.style.top === top) {
+            //     return;
+            // }
+            // child.el.style.top = top;
             childModel.trigger('update:model', top);
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
                 child.insertFirstCellHtml();
@@ -460,8 +487,9 @@ export default Marionette.CollectionView.extend({
                 this.collection.expand(firstModel);
             }
         }
-
-        this.gridEventAggregator.trigger('collapse:change');
+        if (this.gridEventAggregator) {
+            this.gridEventAggregator.trigger('collapse:change');
+        }
     },
 
     __updateTreeCollapse(collection, collapsed) {
@@ -495,7 +523,9 @@ export default Marionette.CollectionView.extend({
                 break;
             }
         }
-        this.gridEventAggregator.trigger('update:collapse:all', collapsed);
-        this.gridEventAggregator.trigger('collapse:change');
+        if (this.gridEventAggregator) {
+            this.gridEventAggregator.trigger('update:collapse:all', collapsed);
+            this.gridEventAggregator.trigger('collapse:change');
+        }
     }
 });

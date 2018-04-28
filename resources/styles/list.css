@@ -32,6 +32,10 @@
     position: relative;
 }
 
+.visible-collection-wrp, .selection-panel-wrp {
+    position: relative;
+}
+
 .visible-collection-view {
     height: inherit;
 }
@@ -69,6 +73,7 @@
 .grid-selection-panel-region {
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .grid-selection-panel {
@@ -117,7 +122,7 @@
 }
 
 .grid-selection-cell-all .cell_selection{
-    height: 20px;
+    height: 21px;
     position: relative;
     line-height: 20px;
 }
@@ -477,15 +482,12 @@ svg.svg-grid-icons {
 .row {
     display: flex;
     height: 25px;
-    position: absolute;
-    width: 100%;
 }
-
 
 .cell {
     display: inline-block;
-    height: 24px;
-    line-height: 24px;
+    height: 25px;
+    line-height: 25px;
     vertical-align: middle;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -493,7 +495,7 @@ svg.svg-grid-icons {
     color: #000;
     cursor: default;
     min-width: 100px;
-    box-shadow: 0 1px 0 0 #dfe4e8;
+    border-bottom: 1px solid #dfe4e8;
     overflow: hidden;
     padding: 0 2px;
 }
@@ -508,16 +510,18 @@ svg.svg-grid-icons {
 
 
 .cell_selection{
-    position: absolute;
+    position: relative;
+    height: 25px;
+    line-height: 25px;
     left: 0;
     right: 0;
     color: #999;
     background-color: #f6f6f6;
-    box-shadow: inset 1px 0 0 0 #dfe4e8, inset -1px 0 0 0 #dfe4e8, 0 1px 0 0 #dfe4e8;
     display: flex;
     flex: none;
     min-width: inherit;
     padding: 0;
+    border-bottom: 1px solid #dfe4e8;
 }
 
 .cell-focused {
@@ -527,6 +531,9 @@ svg.svg-grid-icons {
 
 .cell_selection-index{
     width: 53px;
+}
+
+.cell_selection.cell_selection-index{
     padding-left: 10px;
 }
 

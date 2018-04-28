@@ -285,7 +285,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleModelDragOver() {
-        this.el.classList.add(classes.dragover);
+        this.el.parentElement && this.el.parentElement.classList.add(classes.dragover);
     },
 
     __handleDragLeave(event) {
@@ -293,7 +293,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleModelDragLeave() {
-        this.el.classList.remove(classes.dragover);
+        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
     },
 
     __handleDrop(event) {
@@ -301,7 +301,7 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleModelDrop() {
-        this.el.classList.remove(classes.dragover);
+        this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
         if (this.collection.dragginModel) {
             this.trigger('drag:drop', this.collection.dragginModel, this.model);
         }
