@@ -16,7 +16,6 @@ import formRepository from '../formRepository';
 
 const defaultOptions = {
     allowEmptyValue: true,
-    timezoneOffset: -moment().utcOffset(),
     dateDisplayFormat: null,
     showTitle: true
 };
@@ -53,7 +52,6 @@ formRepository.editors.Date = BaseLayoutEditorView.extend(/** @lends module:core
 
         this.dateView = new DateView({
             model: this.dateModel,
-            timezoneOffset: this.options.timezoneOffset,
             allowEmptyValue: this.options.allowEmptyValue,
             dateDisplayFormat: this.options.dateDisplayFormat,
             showTitle: this.options.showTitle
