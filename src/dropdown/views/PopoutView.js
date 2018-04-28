@@ -215,12 +215,10 @@ export default Marionette.View.extend({
         panelRect.width = $panelEl.outerWidth();
 
         const css: {
-            left: number,
-            right: number
-        } = {
-            left: 0,
-            right: 0
-        };
+            left?: number,
+            right?: number
+        } = {};
+
         switch (this.options.popoutFlow) {
             case popoutFlow.RIGHT: {
                 const leftCenter = anchorRect.left + anchorRect.width / 2;
@@ -314,8 +312,8 @@ export default Marionette.View.extend({
             top: number,
             bottom?: number
         } = {
-            top
-        };
+                top
+            };
         if (this.options.height === height.BOTTOM) {
             css.bottom = WINDOW_BORDER_OFFSET;
         }
