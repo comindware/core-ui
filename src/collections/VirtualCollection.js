@@ -3,8 +3,7 @@
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper } from 'utils';
-import GridItemBehavior from '../list/models/behaviors/GridItemBehavior';
-import CollapsibleBehavior from '../models/behaviors/CollapsibleBehavior';
+import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
 
 const selectableBehavior = {
     none: null,
@@ -246,8 +245,7 @@ const VirtualCollection = Backbone.Collection.extend(
                 model.collection = this;
                 model.level = level;
 
-                _.extend(model, new GridItemBehavior(this));
-                _.extend(model, new CollapsibleBehavior(this));
+                Object.assign(model, GridItemBehavior(this));
 
                 if (!model.collapsed && model.children) {//Skip building children models, if parent model is collapsed
                     if (this.isTree) {
