@@ -99,21 +99,22 @@ export default Marionette.View.extend({
             if (collaspibleButtons.length) {
                 collaspibleButtons[0].classList.add(classes.expanded);
             }
-        } else {
+        } else if (collaspibleButtons.length) {
             // this.model.collapse();
-            if (collaspibleButtons.length) {
-                collaspibleButtons[0].classList.remove(classes.expanded);
-            }
+            collaspibleButtons[0].classList.remove(classes.expanded);
         }
     },
 
     _renderTemplate() {
         this.cellViews = [];
         this.columnClasses = [];
+        const isTree = this.getOption('isTree');
+        const uniqueId = this.getOption('uniqueId');
 
         this.options.columns.forEach((gridColumn, index) => {
-            const columnClass = `${this.getOption('uniqueId')}-column${index}`;
+            const columnClass = `${uniqueId}-column${index}`;
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model);
+
             if (typeof cell !== 'string') {
                 const cellView = new cell({
                     className: `cell ${columnClass}`,
@@ -121,7 +122,7 @@ export default Marionette.View.extend({
                     model: this.model,
                     key: gridColumn.key
                 });
-                if (this.getOption('isTree') && index === 0) {
+                if (isTree && index === 0) {
                     cellView.on('render', () => this.insertFirstCellHtml());
                 }
                 cellView.render();
@@ -130,7 +131,7 @@ export default Marionette.View.extend({
                 this.cellViews.push(cellView);
             } else {
                 this.el.insertAdjacentHTML('beforeend', `<div class="cell ${columnClass}">${cell}</div>`);
-                if (this.getOption('isTree') && index === 0) {
+                if (isTree && index === 0) {
                     this.insertFirstCellHtml();
                 }
             }
@@ -203,7 +204,7 @@ export default Marionette.View.extend({
                 const margin = level * this.options.levelMargin;
                 const hasChildren = this.model.children && this.model.children.length;
                 const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
-                if (this.lastHasChildren === hasChildren && this.lastMargin  === margin) {
+                if (this.lastHasChildren === hasChildren && this.lastMargin === margin) {
                     return;
                 }
 
@@ -214,7 +215,7 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                            this.model.collapsed === false ? classes.expanded : ''
+                        this.model.collapsed === false ? classes.expanded : ''
                         }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {

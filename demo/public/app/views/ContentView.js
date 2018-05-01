@@ -6,10 +6,6 @@ import Prism from 'prism';
 import markdown from 'markdown';
 
 export default Marionette.View.extend({
-    modelEvents: {
-        change: 'render'
-    },
-
     className: 'demo-content_wrapper',
 
     template: Handlebars.compile(template),
