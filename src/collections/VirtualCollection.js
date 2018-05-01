@@ -403,7 +403,7 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         __normalizePosition(position) {
-            const maxPos = Math.max(0, this.parentCollection.length - 1);
+            const maxPos = Math.max(0, this.length - 1);
             return Math.max(0, Math.min(maxPos, position));
         },
 
@@ -594,12 +594,12 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         collapse(model) {
-            model.collapse(true);
+            model.collapse();
             this.__rebuildIndex();
         },
 
         expand(model) {
-            model.expand(true);
+            model.expand();
             this.__rebuildIndex();
         },
 

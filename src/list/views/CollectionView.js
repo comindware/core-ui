@@ -94,9 +94,9 @@ export default Marionette.CompositeView.extend({
             this.collection.updatePosition(0);
         }
 
-        const debouncedHandleResize = _.debounce(() => this.handleResize(), 100);
-        this.listenTo(GlobalEventService, 'window:resize', debouncedHandleResize);
-        this.listenTo(this.collection.parentCollection, 'add remove reset ', debouncedHandleResize);
+        this.debouncedHandleResize = _.debounce(() => this.handleResize(), 100);
+        this.listenTo(GlobalEventService, 'window:resize', this.debouncedHandleResize);
+        this.listenTo(this.collection.parentCollection, 'add remove reset ', this.debouncedHandleResize);
         // this.on('render', this.__onRender);
     },
 
@@ -341,6 +341,10 @@ export default Marionette.CompositeView.extend({
 
         const newPosition = Math.max(0, Math.floor(this.$el.parent().scrollTop() / this.childHeight));
         this.__updatePositionInternal(newPosition, false);
+        this.__updateTop();
+    },
+
+    __updateTop() {
         const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
         this.ui.childViewContainer.css('top', top);
         if (this.gridEventAggregator) {
@@ -369,6 +373,7 @@ export default Marionette.CompositeView.extend({
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
+            this.__updateTop();
             _.delay(() => (this.internalScroll = false), 100);
         }
 
@@ -379,7 +384,7 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const elementHeight = this.el.clientHeight || window.innerHeight;
+        const availableHeight = (this.el.parentElement && this.el.parentElement.clientHeight) || window.innerHeight;
 
         if (this.children && this.children.length && !this.isEmpty()) {
             const firstChild = this.children.first().el;
@@ -393,7 +398,7 @@ export default Marionette.CompositeView.extend({
         }
 
         // Computing new elementHeight and viewportHeight
-        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(elementHeight, window.innerHeight) / this.childHeight));
+        this.state.viewportHeight = Math.max(1, Math.floor(Math.min(availableHeight, window.innerHeight) / this.childHeight));
         const visibleCollectionSize = (this.state.visibleCollectionSize = this.state.viewportHeight);
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
@@ -481,6 +486,7 @@ export default Marionette.CompositeView.extend({
         //todo: find better way to rebuild models
         if (this.collection.length) {
             const firstModel = this.collection.at(0);
+            firstModel.collapsed = !collapsed;
             if (collapsed) {
                 this.collection.collapse(firstModel);
             } else {
@@ -490,6 +496,7 @@ export default Marionette.CompositeView.extend({
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('collapse:change');
         }
+        this.debouncedHandleResize();
     },
 
     __updateTreeCollapse(collection, collapsed) {
@@ -527,5 +534,6 @@ export default Marionette.CompositeView.extend({
             this.gridEventAggregator.trigger('update:collapse:all', collapsed);
             this.gridEventAggregator.trigger('collapse:change');
         }
+        this.debouncedHandleResize();
     }
 });

@@ -57,7 +57,8 @@ export default Marionette.View.extend({
         change: '__handleChange',
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
-        drop: '__handleModelDrop'
+        drop: '__handleModelDrop',
+        'toggle:collapse': 'updateCollapsed'
     },
 
     initialize() {
@@ -91,21 +92,15 @@ export default Marionette.View.extend({
         }
     },
 
-    updateCollapsed(collapsed, external) {
+    updateCollapsed(collapsed) {
         const collaspibleButtons = this.el.getElementsByClassName(classes.collapsible);
         if (!collapsed) {
-            this.model.expand();
-            if (external) {
-                this.model.hidden = false;
-            }
+            // this.model.expand();
             if (collaspibleButtons.length) {
                 collaspibleButtons[0].classList.add(classes.expanded);
             }
         } else {
-            this.model.collapse();
-            if (this.model.level && external) {
-                this.model.hidden = true;
-            }
+            // this.model.collapse();
             if (collaspibleButtons.length) {
                 collaspibleButtons[0].classList.remove(classes.expanded);
             }
@@ -207,13 +202,12 @@ export default Marionette.View.extend({
                 const level = this.model.level || 0;
                 const margin = level * this.options.levelMargin;
                 const hasChildren = this.model.children && this.model.children.length;
-                this.lastHasChildren = hasChildren;
                 const treeFirstCell = el.getElementsByClassName('js-tree-first-cell')[0];
-                if (treeFirstCell) {
-                    if (this.lastHasChildren === hasChildren) {
-                        return;
-                    }
+                if (this.lastHasChildren === hasChildren && this.lastMargin  === margin) {
+                    return;
+                }
 
+                if (treeFirstCell) {
                     el.removeChild(treeFirstCell);
                 }
                 if (hasChildren) {
@@ -226,6 +220,8 @@ export default Marionette.View.extend({
                 } else {
                     el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
                 }
+                this.lastHasChildren = hasChildren;
+                this.lastMargin = margin;
             }
         }
     },
@@ -268,6 +264,11 @@ export default Marionette.View.extend({
 
     __toggleCollapse() {
         this.updateCollapsed(this.model.collapsed === undefined ? false : !this.model.collapsed);
+        if (this.model.collapsed === undefined ? false : !this.model.collapsed) {
+            this.model.collapse();
+        } else {
+            this.model.expand();
+        }
         this.trigger('toggle:collapse', this.model);
         return false;
     },
