@@ -39,7 +39,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.popupPanel = Core.dropdown.factory.createDropdown({
+        this.popupPanel = Core.dropdown.factory.createPopout({
             buttonView: IconButtonView,
             panelView: IconPanelView,
             buttonViewOptions: {
@@ -50,7 +50,8 @@ export default Marionette.View.extend({
                 model: new Backbone.Model({
                     searchKey: ''
                 })
-            }
+            },
+            customAnchor: true
         });
 
         this.popupPanel.on('panel:click:item', id => {

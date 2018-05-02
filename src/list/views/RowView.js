@@ -114,21 +114,22 @@ export default Marionette.View.extend({
             const columnClass = `${uniqueId}-column${index}`;
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model);
 
-            if (typeof cell !== 'string') {
-                const cellView = new cell({
-                    className: `cell ${columnClass}`,
-                    schema: gridColumn,
-                    model: this.model,
-                    key: gridColumn.key
-                });
-                cellView.render();
-                this.el.insertAdjacentElement('beforeend', cellView.el);
-
-                this.cellViews.push(cellView);
-            } else {
-                this.el.insertAdjacentHTML('beforeend', `<div class="cell ${columnClass}">${cell}</div>`);
-            }
             this.columnClasses.push(columnClass);
+
+            if (typeof cell === 'string') {
+                return this.el.insertAdjacentHTML('beforeend', `<div class="cell ${columnClass}">${cell}</div>`);
+            }
+
+            const cellView = new cell({
+                className: `cell ${columnClass}`,
+                schema: gridColumn,
+                model: this.model,
+                key: gridColumn.key
+            });
+            cellView.render();
+            this.el.insertAdjacentElement('beforeend', cellView.el);
+
+            this.cellViews.push(cellView);
         });
         if (this.getOption('isTree')) {
             this.insertFirstCellHtml();
@@ -211,7 +212,7 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                        this.model.collapsed === false ? classes.expanded : ''
+                            this.model.collapsed === false ? classes.expanded : ''
                         }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {

@@ -3,7 +3,7 @@ import { objectPropertyTypes } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 
-const factory = {
+export default {
     getCellViewForColumn(column, model) {
         if (column.editable) {
             return EditableGridFieldView;
@@ -13,40 +13,41 @@ const factory = {
     },
 
     getCellViewByDataType(type) {
+        //Used by Product server Grid
         let result;
 
         switch (type) {
             case objectPropertyTypes.STRING:
-                result = factory.getTextCellView();
+                result = this.getTextCellView();
                 break;
             case objectPropertyTypes.INSTANCE:
-                result = factory.getReferenceCellView();
+                result = this.getReferenceCellView();
                 break;
             case objectPropertyTypes.ACCOUNT:
-                result = factory.getUserCellView();
+                result = this.getUserCellView();
                 break;
             case objectPropertyTypes.ENUM:
-                result = factory.getEnumCellView();
+                result = this.getEnumCellView();
                 break;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                result = factory.getNumberCellView();
+                result = this.getNumberCellView();
                 break;
             case objectPropertyTypes.DURATION:
-                result = factory.getDurationCellView();
+                result = this.getDurationCellView();
                 break;
             case objectPropertyTypes.BOOLEAN:
-                result = factory.getBooleanCellView();
+                result = this.getBooleanCellView();
                 break;
             case objectPropertyTypes.DATETIME:
-                result = factory.getDateTimeCellView();
+                result = this.getDateTimeCellView();
                 break;
             case objectPropertyTypes.DOCUMENT:
-                result = factory.getDocumentCellView();
+                result = this.getDocumentCellView();
                 break;
             default:
-                result = factory.getHtmlCellView();
+                result = this.getHtmlCellView();
                 break;
         }
 
@@ -61,7 +62,7 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{highlightFragment value highlightedFragment}}', extention);
+        return this.__getSimpleView('{{highlightFragment value highlightedFragment}}', extention);
     },
 
     getReferenceCellView() {
@@ -72,15 +73,15 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}', extention);
+        return this.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}', extention);
     },
 
     getUserCellView() {
-        return factory.__getAccountView();
+        return this.__getAccountView();
     },
 
     getEnumCellView() {
-        return factory.__getEnumView();
+        return this.__getEnumView();
     },
 
     getNumberCellView() {
@@ -91,7 +92,7 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{value}}', extention);
+        return this.__getSimpleView('{{value}}', extention);
     },
 
     getDurationCellView() {
@@ -102,7 +103,7 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{renderShortDuration value}}', extention);
+        return this.__getSimpleView('{{renderShortDuration value}}', extention);
     },
 
     getBooleanCellView() {
@@ -116,7 +117,7 @@ const factory = {
             }
         };
 
-        return factory.__getSimpleView(
+        return this.__getSimpleView(
             '{{#if showIcon}}' +
                 '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
                 '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
@@ -133,11 +134,11 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{#if value}}{{renderFullDateTime value}}{{/if}}', extention);
+        return this.__getSimpleView('{{#if value}}{{renderFullDateTime value}}{{/if}}', extention);
     },
 
     getDocumentCellView() {
-        return factory.__getDocumentView();
+        return this.__getDocumentView();
     },
 
     __getSimpleView(simpleTemplate, extention) {
@@ -257,50 +258,44 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{{value}}}', extention);
+        return this.__getSimpleView('{{{value}}}', extention);
     },
 
     getCellHtml(column, model) {
-        let result = '';
         const type = column.type;
         const value = model.get(column.key);
+
         if (value === null || value === undefined) {
-            return result;
+            return '';
         }
         switch (type) {
             case objectPropertyTypes.STRING:
-                result = value;
-                break;
+                return value;
             case objectPropertyTypes.INSTANCE:
-                result = value ? value.name : '';
-                break;
+                return value ? value.name : '';
             case objectPropertyTypes.ACCOUNT:
                 if (value && value.length > 0) {
-                    result = _.chain(value)
+                    return value
                         .map(item => ({
                             id: item.id,
                             text: item.text || item.name || (item.columns && item.columns[0])
                         }))
-                        .sortBy(member => member.text)
+                        .sort((a, b) => a.text > b.text)
                         .reduce((memo, member) => {
                             if (memo) {
                                 return `${memo}, ${member.text}`;
                             }
                             return member.text;
-                        }, null)
-                        .value();
+                        }, null);
                 } else if (value && value.name) {
-                    result = value.name;
+                    return value.name;
                 }
-                break;
             case objectPropertyTypes.ENUM:
-                result = value ? value.valueExplained : '';
-                break;
+                return value ? value.valueExplained : '';
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                result = value ? value.toString() : '';
-                break;
+                return value ? value.toString() : '';
             case objectPropertyTypes.DURATION: {
                 if (value === 0) {
                     return '0';
@@ -308,6 +303,7 @@ const factory = {
                 if (!value) {
                     return '';
                 }
+                let result = '';
                 const duration = dateHelpers.durationISOToObject(value);
                 if (duration.days) {
                     result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
@@ -318,22 +314,19 @@ const factory = {
                 if (duration.minutes) {
                     result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
                 }
-                result.trim();
-                break;
+                return result.trim();
             }
             case objectPropertyTypes.BOOLEAN:
                 if (value === true) {
-                    result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
+                    return '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
                 } else if (value === false) {
-                    result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
+                    return '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
                 }
-                break;
             case objectPropertyTypes.DATETIME:
-                result = dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime');
-                break;
+                return dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime');
             case objectPropertyTypes.DOCUMENT:
                 if (value && value.length > 0) {
-                    result = value
+                    return value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
@@ -342,12 +335,8 @@ const factory = {
                         .sort((a, b) => a.text > b.text)
                         .join(', ');
                 }
-                break;
             default:
-                result = value;
-                break;
+                return value;
         }
-        return result;
     }
 };
-export default factory;
