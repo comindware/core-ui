@@ -54,7 +54,7 @@
     "chance": "^1.0.16",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
-    "coveralls": "^3.0.0",
+    "coveralls": "^3.0.1",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",

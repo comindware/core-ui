@@ -108,7 +108,6 @@ export default Marionette.View.extend({
     _renderTemplate() {
         this.cellViews = [];
         this.columnClasses = [];
-        const isTree = this.getOption('isTree');
         const uniqueId = this.getOption('uniqueId');
 
         this.options.columns.forEach((gridColumn, index) => {
@@ -122,21 +121,18 @@ export default Marionette.View.extend({
                     model: this.model,
                     key: gridColumn.key
                 });
-                if (isTree && index === 0) {
-                    cellView.on('render', () => this.insertFirstCellHtml());
-                }
                 cellView.render();
                 this.el.insertAdjacentElement('beforeend', cellView.el);
 
                 this.cellViews.push(cellView);
             } else {
                 this.el.insertAdjacentHTML('beforeend', `<div class="cell ${columnClass}">${cell}</div>`);
-                if (isTree && index === 0) {
-                    this.insertFirstCellHtml();
-                }
             }
             this.columnClasses.push(columnClass);
         });
+        if (this.getOption('isTree')) {
+            this.insertFirstCellHtml();
+        }
     },
 
     __handleChange() {
