@@ -3,13 +3,15 @@ import { objectPropertyTypes } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 
-export default {
+let factory;
+
+export default factory = {
     getCellViewForColumn(column, model) {
         if (column.editable) {
             return EditableGridFieldView;
         }
 
-        return this.getCellHtml(column, model);
+        return factory.getCellHtml(column, model);
     },
 
     getCellViewByDataType(type) {
@@ -18,36 +20,36 @@ export default {
 
         switch (type) {
             case objectPropertyTypes.STRING:
-                result = this.getTextCellView();
+                result = factory.getTextCellView();
                 break;
             case objectPropertyTypes.INSTANCE:
-                result = this.getReferenceCellView();
+                result = factory.getReferenceCellView();
                 break;
             case objectPropertyTypes.ACCOUNT:
-                result = this.getUserCellView();
+                result = factory.getUserCellView();
                 break;
             case objectPropertyTypes.ENUM:
-                result = this.getEnumCellView();
+                result = factory.getEnumCellView();
                 break;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                result = this.getNumberCellView();
+                result = factory.getNumberCellView();
                 break;
             case objectPropertyTypes.DURATION:
-                result = this.getDurationCellView();
+                result = factory.getDurationCellView();
                 break;
             case objectPropertyTypes.BOOLEAN:
-                result = this.getBooleanCellView();
+                result = factory.getBooleanCellView();
                 break;
             case objectPropertyTypes.DATETIME:
-                result = this.getDateTimeCellView();
+                result = factory.getDateTimeCellView();
                 break;
             case objectPropertyTypes.DOCUMENT:
-                result = this.getDocumentCellView();
+                result = factory.getDocumentCellView();
                 break;
             default:
-                result = this.getHtmlCellView();
+                result = factory.getHtmlCellView();
                 break;
         }
 
@@ -62,7 +64,7 @@ export default {
                 };
             }
         };
-        return this.__getSimpleView('{{highlightFragment value highlightedFragment}}', extention);
+        return factory.__getSimpleView('{{highlightFragment value highlightedFragment}}', extention);
     },
 
     getReferenceCellView() {
@@ -73,15 +75,15 @@ export default {
                 };
             }
         };
-        return this.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}', extention);
+        return factory.__getSimpleView('{{#if value}}{{#if value.name}}{{highlightFragment value.name highlightedFragment}}{{/if}}{{/if}}', extention);
     },
 
     getUserCellView() {
-        return this.__getAccountView();
+        return factory.__getAccountView();
     },
 
     getEnumCellView() {
-        return this.__getEnumView();
+        return factory.__getEnumView();
     },
 
     getNumberCellView() {
@@ -92,7 +94,7 @@ export default {
                 };
             }
         };
-        return this.__getSimpleView('{{value}}', extention);
+        return factory.__getSimpleView('{{value}}', extention);
     },
 
     getDurationCellView() {
@@ -103,7 +105,7 @@ export default {
                 };
             }
         };
-        return this.__getSimpleView('{{renderShortDuration value}}', extention);
+        return factory.__getSimpleView('{{renderShortDuration value}}', extention);
     },
 
     getBooleanCellView() {
@@ -117,11 +119,11 @@ export default {
             }
         };
 
-        return this.__getSimpleView(
+        return factory.__getSimpleView(
             '{{#if showIcon}}' +
-                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-                '{{/if}}',
+            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+            '{{/if}}',
             extention
         );
     },
@@ -134,11 +136,11 @@ export default {
                 };
             }
         };
-        return this.__getSimpleView('{{#if value}}{{renderFullDateTime value}}{{/if}}', extention);
+        return factory.__getSimpleView('{{#if value}}{{renderFullDateTime value}}{{/if}}', extention);
     },
 
     getDocumentCellView() {
-        return this.__getDocumentView();
+        return factory.__getDocumentView();
     },
 
     __getSimpleView(simpleTemplate, extention) {
@@ -152,7 +154,7 @@ export default {
                         unhighlighted: '__handleHighlightedFragmentChange'
                     },
                     __handleHighlightedFragmentChange() {
-                        this.render();
+                        factory.render();
                     },
                     className: 'grid-cell'
                 },
