@@ -806,6 +806,12 @@ a:hover {
     text-overflow: ellipsis;
     user-select: none;
     padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-btn__text > .editor_checkbox {
+    padding-right: 10px;
 }
 
 .toolbar-btn:hover .toolbar-btn__text {

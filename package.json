@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.5.0-beta.14",
+  "version": "1.5.0-beta.15",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -91,7 +91,7 @@
     "karma-coverage": "^1.1.1",
     "karma-firefox-launcher": "^1.1.0",
     "karma-ie-launcher": "^1.0.0",
-    "karma-jasmine": "^1.1.1",
+    "karma-jasmine": "^1.1.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.0",
     "postcss-loader": "^2.1.4",

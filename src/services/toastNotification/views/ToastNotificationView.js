@@ -28,6 +28,6 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     hideView() {
-        this.$el.fadeOut(300, () => this.model.collection.remove(this.model));
+        this.$el.fadeOut(300, () => this.model.collection && this.model.collection.remove(this.model));
     }
 });
