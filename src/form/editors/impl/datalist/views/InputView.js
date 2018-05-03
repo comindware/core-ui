@@ -46,6 +46,10 @@ export default Marionette.View.extend({
         this.ui.input.focus();
     },
 
+    blur() {
+        this.ui.input.blur();
+    },
+
     __getFilterValue() {
         return (
             this.ui.input

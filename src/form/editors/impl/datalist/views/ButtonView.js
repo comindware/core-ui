@@ -39,6 +39,19 @@ export default Marionette.CollectionView.extend({
         }
     },
 
+    blur() {
+        console.log('done');
+        const fakeInputModel = this.__findFakeInputModel();
+        if (!fakeInputModel) {
+            return;
+        }
+        const input = this.children.findByModel(fakeInputModel);
+
+        if (input && input.blur) {
+            input.blur();
+        }
+    },
+
     updateInput() {
         const fakeInputModel = this.__findFakeInputModel();
         if (fakeInputModel) {

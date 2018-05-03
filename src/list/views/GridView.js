@@ -81,7 +81,8 @@ export default Marionette.View.extend({
             gridColumnHeaderView: options.gridColumnHeaderView,
             styleSheet: this.styleSheet,
             uniqueId: this.uniqueId,
-            isTree: this.options.isTree
+            isTree: this.options.isTree,
+            expandOnShow: options.expandOnShow
         });
 
         this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
@@ -97,6 +98,8 @@ export default Marionette.View.extend({
             this.forbidSelection = typeof options.forbidSelection === 'boolean' ? options.forbidSelection : true;
         }
         const childView = options.childView || RowView;
+
+        const showRowIndex = this.getOption('showRowIndex');
 
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
@@ -134,12 +137,12 @@ export default Marionette.View.extend({
             height: options.height,
             forbidSelection: this.forbidSelection,
             isTree: this.options.isTree,
-            isEditable: this.isEditable
+            isEditable: this.isEditable,
+            showRowIndex
         });
 
         if (this.options.showSelection) {
             const draggable = this.getOption('draggable');
-            const showRowIndex = this.getOption('showRowIndex');
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
                 gridEventAggregator: this,
@@ -290,6 +293,9 @@ export default Marionette.View.extend({
         }
         document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
+        if (this.options.showSearch) {
+            this.searchView.focus();
+        }
         // if (this.collection.visibleLength) {
         //     this.collection.select(this.collection.at(0), false, false, false);
         // }

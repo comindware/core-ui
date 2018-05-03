@@ -54,7 +54,7 @@ export default Marionette.View.extend({
     },
 
     modelEvents: {
-        'update:model': '__updateTop',
+        'update:model': '__updateIndex',
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         dragover: '__handleModelDragOver',
@@ -87,18 +87,18 @@ export default Marionette.View.extend({
     },
 
     __handleDragStart() {
-        this.collection.dragginModel = this.model;
+        this.collection.draggingModel = this.model;
     },
 
     __handleDragEnd() {
-        delete this.collection.dragginModel;
+        delete this.collection.draggingModel;
     },
 
     __handleDragOver(event) {
-        if (!this.collection.dragginModel) {
+        if (!this.collection.draggingModel) {
             return;
         }
-        if (this.collection.dragginModel !== this.model) {
+        if (this.collection.draggingModel !== this.model) {
             if (this.selectAllCell) {
                 this.collection.trigger('dragover:head', event);
             } else {
@@ -134,15 +134,13 @@ export default Marionette.View.extend({
 
     __handleModelDrop() {
         this.el.classList.remove(classes.DRAGOVER);
-        if (this.collection.dragginModel) {
-            this.trigger('drag:drop', this.collection.dragginModel, this.model);
+        if (this.collection.draggingModel) {
+            this.trigger('drag:drop', this.collection.draggingModel, this.model);
         }
     },
 
-    __updateTop(top) {
-        this.el.style.top = top;
-        if (this.getOption('showRowIndex') && this.model && this.isRendered()) {
-            const index = this.model.collection.indexOf(this.model) + 1;
+    __updateIndex(index) {
+        if (this.model && this.isRendered()) {
             this.ui.index.text(index);
         }
     },

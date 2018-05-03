@@ -469,12 +469,10 @@ export default Marionette.CompositeView.extend({
         }
         requestAnimationFrame(() => {
             const childModel = child.model;
-            // const top = `${this.collection.indexOf(childModel) * this.childHeight}px`;
-            // if (child.el.style.top === top) {
-            //     return;
-            // }
-            // child.el.style.top = top;
-            childModel.trigger('update:model', top);
+            if (this.getOption('showRowIndex')) {
+                const index = childModel.collection.indexOf(childModel) + 1;
+                childModel.trigger('update:model', index);
+            }
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
                 child.insertFirstCellHtml();
             }

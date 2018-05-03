@@ -34,6 +34,12 @@ export default Marionette.View.extend({
         this.ui.clear.toggle(!!this.ui.input.val());
     },
 
+    focus() {
+        if (this.isRendered()) {
+            this.ui.input.focus();
+        }
+    },
+
     __search() {
         const value = this.ui.input.val();
         this.__triggerSearch(value);
