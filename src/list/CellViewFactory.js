@@ -3,16 +3,19 @@ import { objectPropertyTypes } from '../Meta';
 import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 
-const factory = {
+let factory;
+
+export default factory = {
     getCellViewForColumn(column, model) {
         if (column.editable) {
             return EditableGridFieldView;
         }
 
-        return this.getCellHtml(column, model);
+        return factory.getCellHtml(column, model);
     },
 
     getCellViewByDataType(type) {
+        //Used by Product server Grid
         let result;
 
         switch (type) {
@@ -118,9 +121,9 @@ const factory = {
 
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
-                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-                '{{/if}}',
+            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+            '{{/if}}',
             extention
         );
     },
@@ -151,7 +154,7 @@ const factory = {
                         unhighlighted: '__handleHighlightedFragmentChange'
                     },
                     __handleHighlightedFragmentChange() {
-                        this.render();
+                        factory.render();
                     },
                     className: 'grid-cell'
                 },
@@ -257,50 +260,44 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{{value}}}', extention);
+        return this.__getSimpleView('{{{value}}}', extention);
     },
 
     getCellHtml(column, model) {
-        let result = '';
         const type = column.type;
         const value = model.get(column.key);
+
         if (value === null || value === undefined) {
-            return result;
+            return '';
         }
         switch (type) {
             case objectPropertyTypes.STRING:
-                result = value;
-                break;
+                return value;
             case objectPropertyTypes.INSTANCE:
-                result = value ? value.name : '';
-                break;
+                return value ? value.name : '';
             case objectPropertyTypes.ACCOUNT:
                 if (value && value.length > 0) {
-                    result = _.chain(value)
+                    return value
                         .map(item => ({
                             id: item.id,
                             text: item.text || item.name || (item.columns && item.columns[0])
                         }))
-                        .sortBy(member => member.text)
+                        .sort((a, b) => a.text > b.text)
                         .reduce((memo, member) => {
                             if (memo) {
                                 return `${memo}, ${member.text}`;
                             }
                             return member.text;
-                        }, null)
-                        .value();
+                        }, null);
                 } else if (value && value.name) {
-                    result = value.name;
+                    return value.name;
                 }
-                break;
             case objectPropertyTypes.ENUM:
-                result = value ? value.valueExplained : '';
-                break;
+                return value ? value.valueExplained : '';
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                result = value ? value.toString() : '';
-                break;
+                return value ? value.toString() : '';
             case objectPropertyTypes.DURATION: {
                 if (value === 0) {
                     return '0';
@@ -308,6 +305,7 @@ const factory = {
                 if (!value) {
                     return '';
                 }
+                let result = '';
                 const duration = dateHelpers.durationISOToObject(value);
                 if (duration.days) {
                     result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
@@ -318,22 +316,19 @@ const factory = {
                 if (duration.minutes) {
                     result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
                 }
-                result.trim();
-                break;
+                return result.trim();
             }
             case objectPropertyTypes.BOOLEAN:
                 if (value === true) {
-                    result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
+                    return '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
                 } else if (value === false) {
-                    result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
+                    return '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
                 }
-                break;
             case objectPropertyTypes.DATETIME:
-                result = dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime');
-                break;
+                return dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime');
             case objectPropertyTypes.DOCUMENT:
                 if (value && value.length > 0) {
-                    result = value
+                    return value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
@@ -342,12 +337,8 @@ const factory = {
                         .sort((a, b) => a.text > b.text)
                         .join(', ');
                 }
-                break;
             default:
-                result = value;
-                break;
+                return value;
         }
-        return result;
     }
 };
-export default factory;

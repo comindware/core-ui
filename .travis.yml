@@ -6,6 +6,7 @@ script:
   - npm run deploy
 after_script:
   - node ./node_modules/coveralls/bin/coveralls.js -v < ./reports/report-lcov/lcov.info
+sudo: required
 deploy:
   - provider: npm
     skip_cleanup: true

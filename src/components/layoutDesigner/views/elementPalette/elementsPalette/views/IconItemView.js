@@ -67,15 +67,15 @@ export default Marionette.CollectionView.extend({
         this.trigger('drag:move', this.dragContext, event, ui, this);
     },
 
-    __onChildDragStart(parentView, dragContext, event, ui, view) {
+    __onChildDragStart(dragContext, event, ui, view) {
         this.trigger('drag:start', dragContext, event, ui, view);
     },
 
-    __onChildDragStop(parentView, dragContext, event, ui, view) {
+    __onChildDragStop(dragContext, event, ui, view) {
         this.trigger('drag:stop', dragContext, event, ui, view);
     },
 
-    __onChildDragMove(parentView, dragContext, event, ui, view) {
+    __onChildDragMove(dragContext, event, ui, view) {
         this.trigger('drag:move', dragContext, event, ui, view);
     },
 

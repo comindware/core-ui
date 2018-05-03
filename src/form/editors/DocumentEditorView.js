@@ -31,7 +31,7 @@ const defaultOptions = {
                 documentsId: [documents[0].id]
             }
         ]),
-    removeDocuments: () => {},
+    removeDocuments: () => { },
     displayText: ''
 };
 
@@ -301,7 +301,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
             method: 'POST',
             encoding: 'multipart/form-data',
             enctype: 'multipart/form-data',
-            mimeType: 'multipart/form-data'
+            mimeType: 'multipart/form-data',
+            body: form
         })
             .then(response => response.json())
             .then(tempResult => {
@@ -433,11 +434,11 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     collapseShowMore() {
-        if (!this.$childViewContainer || !this.$childViewContainer.children() || !this.$childViewContainer.children().length) {
+        if (!this.getChildViewContainer(this) || !this.getChildViewContainer(this).children() || !this.getChildViewContainer(this).children().length) {
             return;
         }
         const affordabletWidth = this.$el.width();
-        const childViews = this.$childViewContainer.children();
+        const childViews = this.getChildViewContainer(this).children();
         let visibleCounter = 1;
         let visibleWidth = /*60 +*/ childViews[0].offsetWidth;
         const length = this.collection.length;
@@ -462,7 +463,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     expandShowMore() {
-        this.$childViewContainer.children().show();
+        this.getChildViewContainer(this).children().show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },

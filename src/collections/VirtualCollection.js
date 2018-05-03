@@ -3,8 +3,7 @@
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper } from 'utils';
-import GridItemBehavior from '../list/models/behaviors/GridItemBehavior';
-import CollapsibleBehavior from '../models/behaviors/CollapsibleBehavior';
+import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
 
 const selectableBehavior = {
     none: null,
@@ -15,9 +14,9 @@ const selectableBehavior = {
 const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
     const it = groupingOptions.iterator;
     return _.isString(it)
-        ? function(model) {
-              return model.get(it) || model[it];
-          }
+        ? function (model) {
+            return model.get(it) || model[it];
+        }
         : it;
 };
 
@@ -25,9 +24,9 @@ const getNormalizedGroupingComparator = function getNormalizedGroupingComparator
     const cmp = groupingOptions.comparator;
     return cmp !== undefined
         ? _.isString(cmp)
-            ? function(model) {
-                  return model.get(cmp) || model[cmp];
-              }
+            ? function (model) {
+                return model.get(cmp) || model[cmp];
+            }
             : cmp
         : groupingOptions.iterator;
 };
@@ -36,19 +35,19 @@ const getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFac
     const modelFactory = groupingOptions.modelFactory;
     return modelFactory !== undefined
         ? _.isString(modelFactory)
-            ? function(model) {
-                  return new Backbone.Model({
-                      displayText: model.get(modelFactory),
-                      groupingModel: true
-                  });
-              }
+            ? function (model) {
+                return new Backbone.Model({
+                    displayText: model.get(modelFactory),
+                    groupingModel: true
+                });
+            }
             : modelFactory
-        : function(model) {
-              return new Backbone.Model({
-                  displayText: groupingOptions.iterator(model),
-                  groupingModel: true
-              });
-          };
+        : function (model) {
+            return new Backbone.Model({
+                displayText: groupingOptions.iterator(model),
+                groupingModel: true
+            });
+        };
 };
 
 const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
@@ -107,6 +106,7 @@ const VirtualCollection = Backbone.Collection.extend(
     /** @lends module:core.collections.VirtualCollection.prototype */ {
         constructor(collection, options = {}) {
             this.options = options;
+            this.isTree = this.options.isTree;
             if (options.delayedAdd === undefined) {
                 options.delayedAdd = true;
             }
@@ -238,29 +238,27 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         __buildModelsInternal(list, level = 0) {
-            for (let i = 0, len = list.length; i < len; i++) {
+            list.forEach(model => {
                 this.length++;
-                const model = list.at(i);
-                // this._removeReference(model);
                 this.models.push(model);
-                // this._addReference(model);
+
                 model.collection = this;
                 model.level = level;
-                _.extend(model, new GridItemBehavior(this));
-                _.extend(model, new CollapsibleBehavior(this));
-                const skipChild = model.collapsed;
-                if (!skipChild && model.children) {
-                    if (this.options.isTree) {
+
+                Object.assign(model, GridItemBehavior(this));
+
+                if (!model.collapsed && model.children) {//Skip building children models, if parent model is collapsed
+                    if (this.isTree) {
                         this.stopListening(model.children, 'add remove reset');
                         this.listenToOnce(model.children, 'add remove reset', this.__debounceRebuild);
                     }
-                    if (this.options.isTree && this.filterFn && model.filteredChildren) {
+                    if (this.isTree && this.filterFn && model.filteredChildren) {
                         this.__buildModelsInternal(new Backbone.Collection(model.filteredChildren), level + 1);
                     } else {
                         this.__buildModelsInternal(model.children, level + 1);
                     }
                 }
-            }
+            });
         },
 
         __createIndexTree(models, i) {
@@ -455,7 +453,7 @@ const VirtualCollection = Backbone.Collection.extend(
             // TODO: maybe this is unnecessary
             if (options.at !== undefined) {
                 // Updating index
-                const addToIndex = function(ctx, list) {
+                const addToIndex = function (ctx, list) {
                     for (let i = 0, len = list.length; i < len; i++) {
                         if (ctx.position === ctx.targetPosition) {
                             list.add(ctx.model, { at: i });
@@ -491,7 +489,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
             // collecting items in index
             function createIteratorValueChecker(iteratorValue) {
-                return function(m) {
+                return function (m) {
                     return m.iteratorValue === iteratorValue;
                 };
             }
@@ -611,7 +609,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
 // methods that alter data should proxy to the parent collection
 ['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update', 'where', 'findWhere'].forEach(methodName => {
-    VirtualCollection.prototype[methodName] = function() {
+    VirtualCollection.prototype[methodName] = function () {
         return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };
 });

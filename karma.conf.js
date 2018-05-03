@@ -1,6 +1,6 @@
 const webpackConfigFactory = require('./build/webpack.config.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
     const TEST_COVERAGE = config.coverage === true;
 
     const result = {
@@ -11,7 +11,7 @@ module.exports = function(config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jasmine'],
 
-        plugins: ['karma-chrome-launcher', 'karma-firefox-launcher', 'karma-phantomjs-launcher', 'karma-jasmine', 'karma-sourcemap-loader', 'karma-webpack', 'karma-coverage'],
+        plugins: ['karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine', 'karma-sourcemap-loader', 'karma-webpack', 'karma-coverage'],
 
         // list of files / patterns to load in the browser
         files: ['node_modules/babel-polyfill/dist/polyfill.js', 'tests/tests.bundle.js', 'dist/core.css'],

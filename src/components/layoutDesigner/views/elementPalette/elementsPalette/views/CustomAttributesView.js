@@ -35,16 +35,16 @@ export default Marionette.CollectionView.extend({
         'element:dblclick': '__onDblClick'
     },
 
-    __onChildDragStart(parentView, dragContext, event, ui, view) {
+    __onChildDragStart(dragContext, event, ui, view) {
         this.__updateDragElementClass(ui.helper, dragContext.model);
         this.trigger('element:drag:start', view, dragContext, event, ui);
     },
 
-    __onChildDragStop(parentView, dragContext, event, ui, view) {
+    __onChildDragStop(dragContext, event, ui, view) {
         this.trigger('element:drag:stop', view, dragContext, event, ui);
     },
 
-    __onChildDragMove(parentView, dragContext, event, ui, view) {
+    __onChildDragMove(dragContext, event, ui, view) {
         this.trigger('element:drag:move', view, dragContext, event, ui);
     },
 
@@ -59,7 +59,7 @@ export default Marionette.CollectionView.extend({
         dragHelper.addClass(draggableHelperClassNameSuffix + draggableItemSuffix);
     },
 
-    __onDblClick(view, model) {
+    __onDblClick(model) {
         if (this.getOption('isStaticTree')) {
             this.trigger('element:dblclick', model);
         }

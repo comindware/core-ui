@@ -49,16 +49,16 @@ export default Marionette.View.extend({
         this.trigger('toolbar:update:searchModel', this.customCollection);
     },
 
-    __onDragStart(view, dragContext, event, ui) {
-        this.trigger('element:drag:start', view, dragContext, event, ui);
+    __onDragStart(dragContext, event, ui) {
+        this.trigger('element:drag:start', dragContext, event, ui);
     },
 
-    __onDragStop(view, dragContext, event, ui) {
-        this.trigger('element:drag:stop', view, dragContext, event, ui);
+    __onDragStop(dragContext, event, ui) {
+        this.trigger('element:drag:stop', dragContext, event, ui);
     },
 
-    __onDragMove(view, dragContext, event, ui) {
-        this.trigger('element:drag:move', view, dragContext, event, ui);
+    __onDragMove(dragContext, event, ui) {
+        this.trigger('element:drag:move', dragContext, event, ui);
     },
 
     __onDblClick(model) {
