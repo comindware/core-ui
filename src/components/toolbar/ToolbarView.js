@@ -42,7 +42,8 @@ export default Marionette.View.extend({
 
     __createActionsGroupsView() {
         return new CustomActionGroupView({
-            collection: this.toolbarItemsCollection
+            collection: this.toolbarItemsCollection,
+            reqres: this.options.reqres
         });
     },
 

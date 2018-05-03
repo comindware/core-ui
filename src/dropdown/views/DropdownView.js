@@ -259,7 +259,7 @@ export default Marionette.View.extend({
         this.isOpen = false;
 
         this.trigger('close', this, ...args);
-        if (this.options.renderAfterClose) {
+        if (this.options.renderAfterClose && !this.isDestroyed) {
             this.button.render();
         }
     },
