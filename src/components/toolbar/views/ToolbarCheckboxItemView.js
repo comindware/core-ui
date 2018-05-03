@@ -6,10 +6,6 @@ const classes = {
 };
 
 export default Marionette.View.extend({
-    initialize() {
-        this.isShowAliases = this.options.model.get('isShowAliases');
-    },
-
     className: 'toolbar-btn',
 
     template: Handlebars.compile(template),
@@ -19,7 +15,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        if (this.isShowAliases) {
+        if (this.model.get('isChecked')) {
             this.ui.check.toggleClass(classes.CHECKED);
         }
     },
@@ -29,8 +25,8 @@ export default Marionette.View.extend({
     },
 
     __handleClick() {
-        this.isShowAliases = !this.isShowAliases;
-        this.ui.check.toggleClass(classes.CHECKED);
-        this.trigger('action:click', this.model);
+        const newState = !this.model.get('isChecked');
+        this.trigger('action:click', this.model, newState);
+        this.model.set('isChecked', newState);
     }
 });

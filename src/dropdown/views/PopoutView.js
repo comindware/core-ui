@@ -566,7 +566,7 @@ export default Marionette.View.extend({
         this.stopListening(GlobalEventService);
 
         this.trigger('close', this, ...args);
-        if (this.options.renderAfterClose) {
+        if (this.options.renderAfterClose && !this.isDestroyed) {
             this.render();
         }
     }

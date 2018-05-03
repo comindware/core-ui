@@ -54,7 +54,7 @@ export default {
         if (options.trigger === undefined) {
             options.trigger = true;
         }
-        shouldCheckUrl = options.trigger;
+        shouldCheckUrl = options.trigger || activeUrl === url;
         Backbone.history.navigate(url, options);
     },
 
