@@ -87,6 +87,7 @@ const GridHeaderView = Marionette.View.extend({
         this.__columnEls = [];
 
         let isFirstChild = true;
+        this.collapsed = !this.getOption('expandOnShow');
 
         this.ui.gridHeaderColumn.each((i, el) => {
             const column = this.columns[i];
@@ -101,7 +102,8 @@ const GridHeaderView = Marionette.View.extend({
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
             if (this.options.isTree && isFirstChild) {
-                view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button"></span>`);
+                view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button ${
+                    this.collapsed === false ? classes.expanded : ''}"></span>`);
                 isFirstChild = false;
             }
             el.classList.add(`${this.getOption('uniqueId')}-column${i}`);
@@ -110,7 +112,6 @@ const GridHeaderView = Marionette.View.extend({
         // if (this.options.expandOnShow) {
         //     this.__updateCollapseAll(false);
         // }
-        this.collapsed = !this.getOption('expandOnShow');
     },
 
     onAttach() {
@@ -277,7 +278,7 @@ const GridHeaderView = Marionette.View.extend({
         this.$('.js-collapsible-button').toggleClass(classes.expanded, !collapsed);
     },
     __handleDragOver(event) {
-        if (!this.collection.dragginModel) {
+        if (!this.collection.draggingModel) {
             return;
         }
         this.collection.trigger('dragover:head', event);
@@ -302,8 +303,8 @@ const GridHeaderView = Marionette.View.extend({
 
     __handleModelDrop() {
         this.el.parentElement && this.el.parentElement.classList.remove(classes.dragover);
-        if (this.collection.dragginModel) {
-            this.trigger('drag:drop', this.collection.dragginModel, this.model);
+        if (this.collection.draggingModel) {
+            this.trigger('drag:drop', this.collection.draggingModel, this.model);
         }
     }
 });

@@ -351,6 +351,10 @@ svg.svg-grid-icons {
     flex: none;
 }
 
+.grid-toolbar-region {
+    flex: 1 1 auto;
+}
+
 .editable-grid-field {
     width: 100%;
 }

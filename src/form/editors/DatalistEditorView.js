@@ -196,6 +196,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     blur(): void {
         this.dropdownView.close();
+        this.__blurButton();
     },
 
     __adjustValue(value: DataValue): any {
@@ -319,6 +320,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __focusButton(): void {
         if (this.dropdownView.button) {
             this.dropdownView.button.focus();
+        }
+    },
+
+    __blurButton(): void {
+        if (this.dropdownView.button) {
+            this.dropdownView.button.blur();
         }
     },
 

@@ -92,20 +92,21 @@ export default Marionette.View.extend({
         }
     },
 
-    updateCollapsed(collapsed) {
+    updateCollapsed(model) {
         const collaspibleButtons = this.el.getElementsByClassName(classes.collapsible);
-        if (!collapsed) {
-            // this.model.expand();
+        if (!model.collapsed) {
             if (collaspibleButtons.length) {
                 collaspibleButtons[0].classList.add(classes.expanded);
             }
         } else if (collaspibleButtons.length) {
-            // this.model.collapse();
             collaspibleButtons[0].classList.remove(classes.expanded);
         }
     },
 
     _renderTemplate() {
+        if (this.cellViews) {
+            this.cellViews.forEach(view => view.destroy());
+        }
         this.cellViews = [];
         this.columnClasses = [];
         const uniqueId = this.getOption('uniqueId');
@@ -151,10 +152,10 @@ export default Marionette.View.extend({
     },
 
     __handleDragOver(event) {
-        if (!this.model.collection.dragginModel) {
+        if (!this.model.collection.draggingModel) {
             return;
         }
-        if (this.model.collection.dragginModel !== this.model) {
+        if (this.model.collection.draggingModel !== this.model) {
             this.model.trigger('dragover', event);
         }
         event.preventDefault();
@@ -193,7 +194,7 @@ export default Marionette.View.extend({
     },
 
     insertFirstCellHtml() {
-        if (this.isRendered) {
+        if (this.isRendered()) {
             const elements = this.el.getElementsByClassName(this.columnClasses[0]);
             if (elements.length) {
                 const el = elements[0];
@@ -212,7 +213,7 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                            this.model.collapsed === false ? classes.expanded : ''
+                        this.model.collapsed === false ? classes.expanded : ''
                         }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {
@@ -261,7 +262,7 @@ export default Marionette.View.extend({
     },
 
     __toggleCollapse() {
-        this.updateCollapsed(this.model.collapsed === undefined ? false : !this.model.collapsed);
+        this.updateCollapsed(this.model);
         if (this.model.collapsed === undefined ? false : !this.model.collapsed) {
             this.model.collapse();
         } else {
