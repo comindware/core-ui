@@ -61,7 +61,7 @@ export default Marionette.CompositeView.extend({
         }
     },
 
-    onRender() {
+    onBeforeAttach() {
         if (this.model.get('horizontalDrops')) {
             this.__addOneDropZone();
             return;
