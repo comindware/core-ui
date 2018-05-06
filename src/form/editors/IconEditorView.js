@@ -1,3 +1,4 @@
+//@flow
 import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';

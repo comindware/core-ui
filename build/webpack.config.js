@@ -269,8 +269,8 @@ module.exports = options => {
             new ExtractTextPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/)
-            //new FlowWebpackPlugin()
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),
+            new FlowWebpackPlugin()
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

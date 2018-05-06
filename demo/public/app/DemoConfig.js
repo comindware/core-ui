@@ -66,107 +66,254 @@ export default {
                 {
                     id: 'MultiEditorEditor',
                     displayName: 'Multi-editor editor',
-                    description: 'Multi-editor editor'
+                    description: 'Multi-editor editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'AudioEditor',
                     displayName: 'Audio Editor',
-                    description: 'Simple audio editor'
+                    description: 'Simple audio editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'TextEditor',
                     displayName: 'Text Editor',
-                    description: 'Simple text editor'
+                    description: 'Simple text editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'CodeEditor',
                     displayName: 'Code Editor',
-                    description: 'Simple code editor'
+                    description: 'Simple code editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'IconEditor',
                     displayName: 'Icon Editor',
-                    description: 'Icon editor'
+                    description: 'Icon editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'ContextEditor',
                     displayName: 'Context Editor',
-                    description: 'Context editor'
+                    description: 'Context editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'RangeEditor',
                     displayName: 'Range Editor',
-                    description: 'Simple range editor'
+                    description: 'Simple range editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'ColorPickerEditor',
                     displayName: 'Color Picker',
-                    description: 'Simple color picker editor'
+                    description: 'Simple color picker editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'TextAreaEditor',
                     displayName: 'Text Area Editor',
-                    description: 'Text area editor'
+                    description: 'Text area editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'NumberEditor',
                     displayName: 'Number Editor',
-                    description: 'Simple number editor'
+                    description: 'Simple number editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'BooleanEditor',
                     displayName: 'Boolean Editor',
-                    description: 'Simple boolean editor'
+                    description: 'Simple boolean editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'DateEditor',
                     displayName: 'Date Editor',
-                    description: 'Date editor without time'
+                    description: 'Date editor without time',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'DateTimeEditor',
                     displayName: 'DateTime Editor',
-                    description: 'Date editor'
+                    description: 'Date editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'TimeEditor',
                     displayName: 'Time Editor',
-                    description: 'Time editor without time'
+                    description: 'Time editor without time',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'DocumentEditor',
                     displayName: 'Document editor',
-                    description: 'Document editor'
+                    description: 'Document editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'DurationEditor',
                     displayName: 'Duration Editor',
-                    description: 'Duration editor'
+                    description: 'Duration editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'DropdownEditor',
                     displayName: 'Dropdown Editor',
-                    description: 'Dropdown editor'
+                    description: 'Dropdown editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'RadioGroupEditor',
                     displayName: 'Radio Group Editor',
-                    description: 'Radio Group Editor'
+                    description: 'Radio Group Editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'MemberSelectEditor',
                     displayName: 'Member Select Editor',
-                    description: 'Simple text editor'
+                    description: 'Simple text editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'DatalistEditor',
                     displayName: 'Reference Bubble Editor',
-                    description: 'Data list editor with search'
+                    description: 'Data list editor with search',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 },
                 {
                     id: 'AvatarEditor',
                     displayName: 'Avatar Editor',
-                    description: 'Simple text editor'
+                    description: 'Simple text editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
                 }
             ]
         },
