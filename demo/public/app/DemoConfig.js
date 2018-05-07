@@ -312,6 +312,26 @@ export default {
                             attribute: 'autocommit',
                             values: 'true, false',
                             default: 'false'
+                        },
+                        {
+                            attribute: 'removable',
+                            values: 'true, false',
+                            default: 'true'
+                        },
+                        {
+                            attribute: 'autoUpload',
+                            values: 'true, false',
+                            default: 'false'
+                        },
+                        {
+                            attribute: 'refreshPreviewAfterUpload',
+                            values: 'true, false',
+                            default: 'false'
+                        },
+                        {
+                            attribute: 'controller',
+                            values: 'BaseAvatarEditorController',
+                            default: 'undefined'
                         }
                     ]
                 }
