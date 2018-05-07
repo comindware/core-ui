@@ -3,6 +3,7 @@ import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
 import iconPalette from './impl/iconEditor/iconPalette';
+import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
 const constants = {
     iconPropertyDefaultName: 'iconClass'
@@ -15,7 +16,7 @@ const constants = {
  * @param modelIconProperty - name of model property. 'iconClass' as default
  */
 
-export default Marionette.View.extend({
+export default BaseLayoutEditorView.extend({
     initialize(options) {
         const modelIconProperty = options.modelIconProperty;
         if (modelIconProperty && modelIconProperty !== constants.iconPropertyDefaultName) {
@@ -59,6 +60,7 @@ export default Marionette.View.extend({
             this.ui.deleteIconButton.show();
             this.model.set('iconClass', id);
             this.trigger('click:item', id);
+            this.close();
         });
 
         this.showChildView('iconSelectorHeaderRegion', this.popupPanel);
@@ -85,6 +87,10 @@ export default Marionette.View.extend({
         this.trigger('click:item', null);
         this.ui.deleteIconButton.hide();
         this.popupPanel.render();
+    },
+
+    open() {
+        this.popupPanel.open();
     },
 
     close() {

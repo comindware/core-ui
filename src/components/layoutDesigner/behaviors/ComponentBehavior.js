@@ -50,7 +50,7 @@ export default Marionette.Behavior.extend({
             this.$el.draggable({
                 appendTo: '.js-module-region',
                 helper() {
-                    return $(this).hasClass('js-system-container') && $(this.parentElement).hasClass('js-form-region') ? $(emptyDragHelper) : $(componentDragHelper);
+                    return this.$el.hasClass('js-system-container') && this.$el.parentElement.hasClass('js-form-region') ? $(emptyDragHelper) : $(componentDragHelper);
                 },
                 cursorAt: {
                     top: -45,
