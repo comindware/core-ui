@@ -66,6 +66,7 @@ const GridHeaderView = Marionette.View.extend({
         'mousedown .grid-header-dragger': '__handleDraggerMousedown',
         'click .js-collapsible-button': '__toggleCollapseAll',
         dragover: '__handleDragOver',
+        dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop'
     },
@@ -285,12 +286,22 @@ const GridHeaderView = Marionette.View.extend({
         event.preventDefault();
     },
 
+    __handleDragEnter() {
+        if (!this.collection.draggingModel) {
+            return;
+        }
+        this.collection.dragoverModel = undefined;
+        this.collection.trigger('dragover:head', event);
+    },
+
     __handleModelDragOver() {
         this.el.parentElement && this.el.parentElement.classList.add(classes.dragover);
     },
 
     __handleDragLeave(event) {
-        this.collection.trigger('dragleave:head', event);
+        if (!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== this.model) {
+            this.collection.trigger('dragleave:head', event);
+        }
     },
 
     __handleModelDragLeave() {
