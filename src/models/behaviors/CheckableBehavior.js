@@ -3,7 +3,7 @@
 
 const CheckableBehavior = {};
 
-CheckableBehavior.CheckableCollection = function(collection) {
+CheckableBehavior.CheckableCollection = function (collection) {
     this.collection = collection;
     this.checked = {};
     collection.on('add remove reset', () => {
@@ -68,10 +68,39 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         } else {
             this.checkAll();
         }
+    },
+
+    updateTreeNodesCheck(model, updateParent = true) {
+        if (model.children && model.children.length) {
+            model.children.forEach(child => {
+                if (model.checked) {
+                    child.check();
+                } else {
+                    child.uncheck();
+                }
+                this.updateTreeNodesCheck(child, false);
+            })
+        }
+        if (!updateParent) {
+            return;
+        }
+        let parent = model.parentModel;
+        while (parent && parent.children) {
+            const length = parent.children.length;
+            const checkedLength = parent.children.filter(child => child.checked || child.checked === null).length;
+            if (checkedLength === length) {
+                parent.check()
+            } else if (checkedLength > 0 && checkedLength < length) {
+                parent.checkSome();
+            } else if (checkedLength === 0) {
+                parent.uncheck();
+            }
+            parent = parent.parentModel;
+        }
     }
 });
 
-CheckableBehavior.CheckableModel = function(model) {
+CheckableBehavior.CheckableModel = function (model) {
     this.model = model;
 };
 

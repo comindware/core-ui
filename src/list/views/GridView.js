@@ -149,7 +149,8 @@ export default Marionette.View.extend({
                 showRowIndex: this.options.showRowIndex,
                 childViewOptions: {
                     draggable,
-                    showRowIndex
+                    showRowIndex,
+                    bindSelection: this.getOption('bindSelection')
                 }
             });
 

@@ -645,3 +645,13 @@ svg.svg-grid-icons {
 .cell:hover .checkbox_cell-selection{
     visibility: visible;
 }
+
+.cell .editor_checked_some {
+    visibility: visible;
+    border: none;
+}
+
+.cell:hover .editor_checked_some {
+    visibility: visible;
+    border: solid 1px #838c92;
+}

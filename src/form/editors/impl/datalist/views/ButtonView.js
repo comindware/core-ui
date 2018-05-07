@@ -40,7 +40,6 @@ export default Marionette.CollectionView.extend({
     },
 
     blur() {
-        console.log('done');
         const fakeInputModel = this.__findFakeInputModel();
         if (!fakeInputModel) {
             return;
