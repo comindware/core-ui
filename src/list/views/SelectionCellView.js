@@ -20,6 +20,7 @@ export default Marionette.View.extend({
             this.selectAllCell = true;
         } else {
             this.collection = options.model.collection;
+            this.model.currentIndex = this.model.collection.indexOf(this.model) + 1;
         }
     },
 
@@ -83,6 +84,9 @@ export default Marionette.View.extend({
             this.collection.toggleCheckAll();
         } else {
             this.model.toggleChecked();
+            if (this.getOption('bindSelection')) {
+                this.model.collection.updateTreeNodesCheck(this.model);
+            }
         }
     },
 
@@ -141,6 +145,7 @@ export default Marionette.View.extend({
 
     __updateIndex(index) {
         if (this.model && this.isRendered()) {
+            this.model.currentIndex = index;
             this.ui.index.text(index);
         }
     },
