@@ -43,18 +43,18 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         this.model
             ? this.model.set(
-                  {
-                      readonly: this.readonly,
-                      enabled: this.enabled,
-                      value: this.value
-                  },
-                  { silent: true }
-              )
+                {
+                    readonly: this.readonly,
+                    enabled: this.enabled,
+                    value: this.value
+                },
+                { silent: true }
+            )
             : (this.model = new Backbone.Model({
-                  readonly: this.readonly,
-                  enabled: this.enabled,
-                  value: this.value
-              }));
+                readonly: this.readonly,
+                enabled: this.enabled,
+                value: this.value
+            }));
     },
 
     ui: {
@@ -68,10 +68,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave',
         'focus @ui.timeInput': '__delayedShowTimeEditor',
-        'blur @ui.timeInput': '__timeBlur',
         'mousedown @ui.timeInput': '__showTimeEditor',
         'click @ui.dateInput': '__showDateEditor',
-        'blur @ui.dateInput': '__dateBlur',
         'focus @ui.dateInput': '__delayedShowDateEditor'
     },
 
