@@ -67,13 +67,14 @@
     position: relative;
     flex: 1 1 auto;
     display: flex;
-    overflow-y: auto;
+    overflow: scroll;
 }
 
 .grid-selection-panel-region {
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    overflow-x: scroll;
 }
 
 .grid-selection-panel {
@@ -564,9 +565,10 @@ svg.svg-grid-icons {
     border: none;
 }
 
-.dragover,
-.dragover .cell{
-    border-bottom: 1px solid #0575bd
+.dragover .cell,
+.dragover.cell,
+.dragover .grid-header-column{
+    border-bottom: 1px solid #0575bd;
 }
 
 .cell .editor:after{

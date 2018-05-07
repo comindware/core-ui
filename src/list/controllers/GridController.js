@@ -187,7 +187,7 @@ export default Marionette.Object.extend({
                     }
                 });
                 break;
-            case 'addNew':
+            case 'add':
             default:
                 this.__triggerAction(model, selected);
                 break;

@@ -44,6 +44,7 @@ export default Marionette.View.extend({
         keypress: '__handleKeydown',
         'click @ui.collapsibleButton': '__toggleCollapse',
         dragover: '__handleDragOver',
+        dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop'
     },
@@ -152,13 +153,27 @@ export default Marionette.View.extend({
     },
 
     __handleDragOver(event) {
+        event.preventDefault();
+    },
+
+    __handleDragEnter(event) {
         if (!this.model.collection.draggingModel) {
             return;
         }
-        if (this.model.collection.draggingModel !== this.model) {
+        this.model.collection.dragoverModel = this.model;
+        if (this.model.collection.draggingModel !== this.model && !this.__findInParents(this.model.collection.draggingModel, this.model)) {
             this.model.trigger('dragover', event);
         }
-        event.preventDefault();
+    },
+
+    __findInParents(draggingModel, model) {
+        if (model === draggingModel) {
+            return true;
+        }
+        if (model.parentModel) {
+            return this.__findInParents(draggingModel, model.parentModel);
+        }
+        return false;
     },
 
     __handleModelDragOver() {
@@ -166,7 +181,10 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        this.model.trigger('dragleave', event);
+        if (!this.el.contains(event.relatedTarget) && this.model.collection.dragoverModel !== this.model) {
+            this.model.trigger('dragleave', event);
+            delete this.model.dragover;
+        }
     },
 
     __handleModelDragLeave() {
