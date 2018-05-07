@@ -50,6 +50,7 @@ export default Marionette.View.extend({
         'dragstart @ui.dots': '__handleDragStart',
         'dragend @ui.dots': '__handleDragEnd',
         dragover: '__handleDragOver',
+        dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop'
     },
@@ -96,20 +97,35 @@ export default Marionette.View.extend({
 
     __handleDragEnd() {
         delete this.collection.draggingModel;
+        delete this.collection.dragoverModel;
     },
 
     __handleDragOver(event) {
+        event.preventDefault();
+    },
+
+    __handleDragEnter(event) {
         if (!this.collection.draggingModel) {
             return;
         }
-        if (this.collection.draggingModel !== this.model) {
+        this.collection.dragoverModel = this.model;
+        if (this.collection.draggingModel !== this.model && !this.__findInParents(this.collection.draggingModel, this.model)) {
             if (this.selectAllCell) {
                 this.collection.trigger('dragover:head', event);
             } else {
                 this.model.trigger('dragover', event);
             }
         }
-        event.preventDefault();
+    },
+
+    __findInParents(draggingModel, model) {
+        if (model === draggingModel) {
+            return true;
+        }
+        if (model && model.parentModel) {
+            return this.__findInParents(draggingModel, model.parentModel);
+        }
+        return false;
     },
 
     __handleModelDragOver() {
@@ -117,10 +133,13 @@ export default Marionette.View.extend({
     },
 
     __handleDragLeave(event) {
-        if (this.selectAllCell) {
-            this.collection.trigger('dragleave:head', event);
-        } else {
-            this.model.trigger('dragleave', event);
+        if (!this.el.contains(event.relatedTarget) && this.collection.dragoverModel !== this.model) {
+            if (this.selectAllCell) {
+                this.collection.trigger('dragleave:head', event);
+            } else {
+                this.model.trigger('dragleave', event);
+                delete this.model.dragover;
+            }
         }
     },
 
