@@ -49,16 +49,14 @@ describe('Editors', () => {
                 .getView()
                 .getRegion('contentRegion')
                 .show(view);
+
             view.focus();
 
-            // act
             view.blur();
 
-            // assert
-            return true;
-            //expect(findDateInput(view)).toBeFocused(); // Closing dropdown doesn't clear activeDocument to keep dropdown nesting
-            //expect(view.dateView.calendarDropdownView.isOpen).toEqual(false, 'Dropdown mustn\'t be open.');
-            //expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
+            expect(findDateInput(view)).toBeFocused(); // Closing dropdown doesn't clear activeDocument to keep dropdown nesting
+            expect(view.calendarDropdownView.isOpen).toEqual(false, "Dropdown mustn't be open.");
+            //expect(view.hasFocus()).toEqual(false, "Mustn't have focus.");
         });
 
         it('should have `value` matched with initial value', () => {
@@ -134,7 +132,6 @@ describe('Editors', () => {
         });
 
         it('should update `value` and send `change` on user change (w/o data binding).', () => {
-            // arrange
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const expected = '2015-07-20T10:46:37.000Z';
             const view = new core.form.editors.DateTimeEditor({
@@ -283,6 +280,51 @@ describe('Editors', () => {
 
             // assert
             expect(isEmpty).toEqual(false);
+        });
+
+        it('should open time editor if input clicked', () => {
+            const model = new Backbone.Model({
+                data: '2015-07-20T10:46:37.000Z'
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                key: 'data'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            document.getElementsByClassName('js-time-input')[0].click();
+
+            expect(view.isTimeDropdownShown).toEqual(true);
+        });
+
+        it('should set time on time select', done => {
+            const model = new Backbone.Model({
+                data: '2015-07-20T10:46:37.000Z'
+            });
+
+            const view = new core.form.editors.DateTimeEditor({
+                model,
+                key: 'data'
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
+            model.on('change', () => {
+                expect(view.getValue()).toEqual('2015-07-19T22:00:00.000Z');
+                done();
+            });
+
+            document.getElementsByClassName('js-time-input')[0].click();
+
+            document.getElementsByClassName('time-dropdown__i')[4].click();
         });
     });
 });
