@@ -470,7 +470,9 @@ export default Marionette.CompositeView.extend({
             const childModel = child.model;
             if (this.getOption('showRowIndex')) {
                 const index = childModel.collection.indexOf(childModel) + 1;
-                childModel.trigger('update:model', index);
+                if (index !== childModel.currentIndex) {
+                    childModel.trigger('update:model', index);
+                }
             }
             if (this.getOption('isTree') && typeof child.insertFirstCellHtml === 'function') {
                 child.insertFirstCellHtml();
