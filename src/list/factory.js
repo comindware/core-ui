@@ -6,6 +6,18 @@ import EmptyGridView from './views/EmptyGridView';
 import GridView from './views/GridView';
 import GridColumnHeaderView from './views/GridColumnHeaderView';
 
+export const getDefaultComparator = (columns = []) =>  {
+    const sortingColumn = columns.find(column => column.sorting);
+    let comparator;
+    if (sortingColumn) {
+        comparator = sortingColumn.sorting === 'asc' ? sortingColumn.sortAsc : sortingColumn.sortDesc;
+        if (!comparator) {
+            comparator = helpers.comparatorFor(comparators.getComparatorByDataType(sortingColumn.dataType || sortingColumn.type, sortingColumn.sorting), sortingColumn.key);
+        }
+    }
+    return comparator;
+};
+
 export const createWrappedCollection = options => {
     const collection = options.collection;
     const childrenAttribute = options.childrenAttribute;
@@ -97,15 +109,6 @@ const factory = {
      * @returns {Backbone.View} NativeGridView View-списка
      * */
     createDefaultGrid(options) {
-        const columns = options.columns || options.gridViewOptions.columns || [];
-        const sortingColumn = columns.find(column => column.sorting);
-        let comparator;
-        if (sortingColumn) {
-            comparator = sortingColumn.sorting === 'asc' ? sortingColumn.sortAsc : sortingColumn.sortDesc;
-            if (!comparator) {
-                comparator = helpers.comparatorFor(comparators.getComparatorByDataType(sortingColumn.dataType || sortingColumn.type, sortingColumn.sorting), sortingColumn.key);
-            }
-        }
         const collection = createWrappedCollection({
             collection: options.collection,
             childrenAttribute: options.gridViewOptions.childrenAttribute,
@@ -113,7 +116,7 @@ const factory = {
             isTree: options.gridViewOptions.isTree,
             expandOnShow: options.gridViewOptions.expandOnShow,
             isSliding: true,
-            comparator
+            comparator: getDefaultComparator(options.columns || options.gridViewOptions.columns || [])
         });
 
         const gridViewOptions = Object.assign(
@@ -145,6 +148,8 @@ const factory = {
      * @returns {Object}
      * @returns {Backbone.Collection} collection Коллекция элементов списка
      * */
-    createWrappedCollection
+    createWrappedCollection,
+
+    getDefaultComparator
 };
 export default factory;
