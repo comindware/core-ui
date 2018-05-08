@@ -7,16 +7,20 @@ describe('Components', () => {
     describe('Layout designer', () => {
         /*
         it('should set text', () => {
+          
+            const reqres = Backbone.Radio.channel(_.uniqueId());
+
             const view = new core.components.LayoutDesigner.Controller({
                 editorModel: new Backbone.Model(),
+                componentReqres: reqres,
                 detachedToolbar: true,
                 palette: {
                     toolbar: {},
                     collection: new Backbone.Collection(),
                     elementsCollection: new Backbone.Collection([
                         {
-                            fieldType: 'Splitter',
-                            name: 'SPLITTER'
+                            fieldType: 'Tabs',
+                            name: 'Tabs'
                         }
                     ]),
                     size: 'small'
@@ -28,8 +32,11 @@ describe('Components', () => {
                             view: Marionette.View,
                             model: editorModel
                         },
-                        Splitter: {
+                        Tabs: {
                             view: Marionette.View,
+                            model: editorModel
+                        },
+                        VerticalLayout: {
                             model: editorModel
                         },
                         SystemView: Marionette.View
@@ -40,6 +47,7 @@ describe('Components', () => {
                 properties: {
                     components: {
                         SempleView: Marionette.View,
+                        Tabs: Marionette.View,
                         SystemView: Marionette.View
                     },
                     size: 'large'

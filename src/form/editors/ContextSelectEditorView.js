@@ -107,7 +107,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         let instanceTypeId = panelModel.get('instanceTypeId');
 
         let text = '';
-        panelModel.get('context')[instanceTypeId].forEach(context => {
+
+        this.options.context[instanceTypeId].forEach(context => {
             if (context.id === selectedItem) {
                 text = context.name;
                 instanceTypeId = context.instanceTypeId;
@@ -115,7 +116,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
             }
         });
 
-        return _.without(text, false).join('/');
+        return text;
     },
 
     __applyContext(selected) {
