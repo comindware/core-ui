@@ -22,7 +22,7 @@ export default function () {
             this.selected = false;
             this.trigger('deselected', this);
 
-            if (this.collection) {
+            if (this.collection && this.collection.deselect) {
                 this.collection.deselect(this);
             }
         },

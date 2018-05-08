@@ -105,7 +105,7 @@ describe('Components', () => {
             contextType: core.list.meta.contextTypes.one
         }
     ];
-    /*
+
     describe('EditableGrid', () => {
         it('should initialize', () => {
             const collection = new Backbone.Collection(data);
@@ -157,7 +157,7 @@ describe('Components', () => {
 
             gridController.view.$(searchInput).trigger('keyup');
         });
-
+        /*
         it('should update toolbar on row checkbox select', done => {
             const collection = new Backbone.Collection(data);
 
@@ -216,6 +216,6 @@ describe('Components', () => {
             firstChechbox.click();
             secondChechbox.click();
         });
+        */
     });
-    */
 });
