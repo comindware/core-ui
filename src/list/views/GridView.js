@@ -173,12 +173,6 @@ export default Marionette.View.extend({
             }
         });
 
-        this.listenTo(this.listView, 'positionChanged', (sender, args) => {
-            this.trigger('positionChanged', this, args);
-        });
-
-        this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
-
         if (this.collection.length) {
             //this.__presortCollection(options.columns); TODO WFT
         }
@@ -207,12 +201,6 @@ export default Marionette.View.extend({
         }
     },
 
-    __updateHeight(sender, args) {
-        args.gridHeight = args.listViewHeight + constants.gridHeaderHeight;
-        this.$el.height(args.gridHeight);
-        this.trigger('viewportHeightChanged', this, args);
-    },
-
     onColumnSort(column, comparator) {
         this.collection.comparator = comparator;
         this.collection.sort();
@@ -232,7 +220,8 @@ export default Marionette.View.extend({
     ui: {
         title: '.js-grid-title',
         tools: '.js-grid-tools',
-        header: '.js-grid-header'
+        header: '.js-grid-header',
+        content: '.js-grid-content'
     },
 
     events: {
@@ -297,6 +286,7 @@ export default Marionette.View.extend({
         if (this.options.showSearch) {
             this.searchView.focus();
         }
+        this.ui.content.css('maxHeight', window.innerHeight);
         // if (this.collection.visibleLength) {
         //     this.collection.select(this.collection.at(0), false, false, false);
         // }

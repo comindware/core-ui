@@ -183,7 +183,11 @@ const VirtualCollection = Backbone.Collection.extend(
             _.extend(this, new CheckableBehavior.CheckableCollection(this));
         },
 
-        __rebuildIndex(options, immediate) {
+        rebuild() {
+            this.__rebuildIndex({}, true);
+        },
+
+        __rebuildIndex(options = {}, immediate) {
             let parentModels = this.parentCollection.models;
             if (this.filterFn !== undefined && typeof this.filterFn === 'function') {
                 parentModels = this.__filterModels(this.parentCollection.models);
@@ -238,6 +242,14 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         __buildModelsInternal(list, level = 0) {
+            // Run sort based on type of `comparator`.
+            if (this.comparator) {
+                if (_.isString(this.comparator) || this.comparator.length === 1) {
+                    _.sortBy(list.models, this.comparator, this);
+                } else {
+                    list.models.sort(_.bind(this.comparator, this));
+                }
+            }
             list.forEach(model => {
                 this.length++;
                 this.models.push(model);
@@ -285,23 +297,6 @@ const VirtualCollection = Backbone.Collection.extend(
             if (!this.comparator) {
                 return new Backbone.Collection(models);
             }
-
-            // Run sort based on type of `comparator`.
-            if (_.isString(this.comparator) || this.comparator.length === 1) {
-                models = _.sortBy(models, this.comparator, this);
-            } else {
-                models.sort(_.bind(this.comparator, this));
-            }
-
-            models.forEach(model => {
-                if (model.children && !model.children.comparator) {
-                    model.children.comparator = this.comparator;
-                    model.children.sort();
-                }
-                if (this.index) {
-                    this._removeReference(model);
-                }
-            });
 
             return new Backbone.Collection(models);
         },
