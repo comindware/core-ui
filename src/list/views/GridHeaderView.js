@@ -137,7 +137,7 @@ const GridHeaderView = Marionette.View.extend({
         column.sorting = sorting;
         let comparator = sorting === 'desc' ? column.sortDesc : column.sortAsc;
         if (!comparator) {
-            comparator = helpers.comparatorFor(comparators.getComparatorByDataType(column.type, sorting), column.key);
+            comparator = helpers.comparatorFor(comparators.getComparatorByDataType(column.dataType || column.type, sorting), column.key);
         }
         if (comparator) {
             this.updateSorting();
