@@ -482,25 +482,17 @@ export default Marionette.CompositeView.extend({
 
     __toggleCollapseAll(collapsed) {
         this.__updateTreeCollapse(this.collection, collapsed);
-        //todo: find better way to rebuild models
-        if (this.collection.length) {
-            const firstModel = this.collection.at(0);
-            firstModel.collapsed = !collapsed;
-            if (collapsed) {
-                this.collection.collapse(firstModel);
-            } else {
-                this.collection.expand(firstModel);
-            }
-        }
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('collapse:change');
         }
+        this.collection.rebuild();
         this.debouncedHandleResize();
     },
 
     __updateTreeCollapse(collection, collapsed) {
         collection.forEach(model => {
             model.collapsed = collapsed;
+            model.trigger('toggle:collapse', model);
             if (model.children && model.children.length) {
                 this.__updateTreeCollapse(model.children, collapsed);
             }
@@ -521,14 +513,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __updateCollapseAll() {
-        let collapsed = true;
-        for (let i = 0; i < this.children.length; i++) {
-            const row = this.children.findByIndex(i);
-            if (row.model.level === 0 && row.model.collapsed === false) {
-                collapsed = false;
-                break;
-            }
-        }
+        const collapsed = !this.collection.parentCollection.some(model => model.collapsed === false);
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:collapse:all', collapsed);
             this.gridEventAggregator.trigger('collapse:change');

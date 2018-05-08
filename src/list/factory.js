@@ -1,4 +1,4 @@
-import { helpers } from 'utils';
+import { comparators, helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
 import ListView from './views/CollectionView';
 import EmptyListView from './views/EmptyListView';
@@ -97,13 +97,23 @@ const factory = {
      * @returns {Backbone.View} NativeGridView View-списка
      * */
     createDefaultGrid(options) {
+        const columns = options.columns || options.gridViewOptions.columns || [];
+        const sortingColumn = columns.find(column => column.sorting);
+        let comparator;
+        if (sortingColumn) {
+            comparator = sortingColumn.sorting === 'asc' ? sortingColumn.sortAsc : sortingColumn.sortDesc;
+            if (!comparator) {
+                comparator = helpers.comparatorFor(comparators.getComparatorByDataType(sortingColumn.dataType || sortingColumn.type, sortingColumn.sorting), sortingColumn.key);
+            }
+        }
         const collection = createWrappedCollection({
             collection: options.collection,
             childrenAttribute: options.gridViewOptions.childrenAttribute,
             selectableBehavior: options.gridViewOptions.selectableBehavior,
             isTree: options.gridViewOptions.isTree,
             expandOnShow: options.gridViewOptions.expandOnShow,
-            isSliding: true
+            isSliding: true,
+            comparator
         });
 
         const gridViewOptions = Object.assign(
