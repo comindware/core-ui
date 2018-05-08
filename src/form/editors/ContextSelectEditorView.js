@@ -6,7 +6,6 @@ import ContextModel from './impl/context/models/ContextModel';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import dropdownFactory from '../../dropdown/factory';
-import VirtualCollection from '../../collections/VirtualCollection';
 
 const defaultOptions = {
     recordTypeId: undefined,
@@ -76,12 +75,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         });
 
         this.showChildView('contextPopoutRegion', this.popoutView);
-        this.listenTo(this.popoutView, 'before:open', () => {
-            const model = this.viewModel.get('panel');
-            model.populateChildren();
-            model.selectPath(this.getValue());
-        });
-        this.listenTo(this.popoutView, 'element:path:select', this.__applyContext);
+
+        this.listenTo(this.popoutView, 'panel:context:selected', this.__applyContext);
     },
 
     setValue(value) {
@@ -111,37 +106,37 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         if (!selectedItem || selectedItem === 'False') return '';
         let instanceTypeId = panelModel.get('instanceTypeId');
 
-        const buttonText = selectedItem.map(id => {
-            let text = '';
-            panelModel.get('context')[instanceTypeId].forEach(context => {
-                if (context.id === id) {
-                    text = context.name;
-                    instanceTypeId = context.instanceTypeId;
-                    return false;
-                }
-            });
-            return text;
+        let text = '';
+        panelModel.get('context')[instanceTypeId].forEach(context => {
+            if (context.id === selectedItem) {
+                text = context.name;
+                instanceTypeId = context.instanceTypeId;
+                return false;
+            }
         });
 
-        return _.without(buttonText, false).join('/');
+        return _.without(text, false).join('/');
     },
 
     __applyContext(selected) {
         this.popoutView.close();
-        this.__value(selected, true);
+        this.__value(selected.get('id'), true);
     },
 
     __createTreeCollection(context, recordTypeId) {
-        Object.keys(context).forEach(key => {
-            context[key] = new VirtualCollection(new Backbone.Collection(context[key]));
+        const deepContext = _.cloneDeep(context);
+
+        Object.keys(deepContext).forEach(key => {
+            deepContext[key] = new Backbone.Collection(deepContext[key]);
         });
 
-        Object.values(context).forEach(entry =>
+        Object.values(deepContext).forEach(entry =>
             entry.forEach(innerEntry => {
                 if (innerEntry.get('type') === 'Instance') {
-                    innerEntry.children = context[innerEntry.get('instanceTypeId')];
-                    innerEntry.collapsed = true;
-                    if (innerEntry.children) {
+                    const model = deepContext[innerEntry.get('instanceTypeId')];
+                    if (model) {
+                        innerEntry.children = new Backbone.Collection(model.toJSON());
+                        innerEntry.collapsed = true;
                         innerEntry.children.parent = innerEntry;
                     }
                 }
@@ -151,6 +146,22 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
             })
         );
 
-        return context[recordTypeId];
+        const collection = deepContext[recordTypeId];
+
+        collection.on('expand', model => {
+            model.children && model.children.forEach(child => {
+                if (child.get('type') === 'Instance') {
+                    const newChild = deepContext[child.get('instanceTypeId')];
+
+                    if (newChild) {
+                        child.children = new Backbone.Collection(newChild.toJSON());
+                        child.collapsed = true;
+                        child.children.parent = child;
+                    }
+                }
+            });
+        });
+
+        return collection;
     }
 }));

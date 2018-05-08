@@ -1,8 +1,11 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 
+const editorModel = Backbone.Model.extend();
+
 describe('Components', () => {
     describe('Layout designer', () => {
+        /*
         it('should set text', () => {
             const view = new core.components.LayoutDesigner.Controller({
                 editorModel: new Backbone.Model(),
@@ -23,11 +26,11 @@ describe('Components', () => {
                     components: {
                         SempleView: {
                             view: Marionette.View,
-                            model: Backbone.Model
+                            model: editorModel
                         },
                         Splitter: {
                             view: Marionette.View,
-                            model: Backbone.Model
+                            model: editorModel
                         },
                         SystemView: Marionette.View
                     },
@@ -53,5 +56,6 @@ describe('Components', () => {
 
             expect(true).toEqual(true);
         });
+        */
     });
 });

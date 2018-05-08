@@ -3,15 +3,15 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('DateTimeEditorView', () => {
-        const findDateInput = function(view) {
+        const findDateInput = function (view) {
             return view.$('.js-date-input');
         };
 
-        const findTimeInput = function(view) {
+        const findTimeInput = function (view) {
             return view.$('.js-time-input');
         };
 
-        const selectTodayOnOpenPanel = function(view) {
+        const selectTodayOnOpenPanel = function (view) {
             view.calendarDropdownView.panelView.$('.today:visible').click();
         };
 

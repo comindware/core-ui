@@ -594,11 +594,13 @@ const VirtualCollection = Backbone.Collection.extend(
         collapse(model) {
             model.collapse();
             this.__rebuildIndex();
+            this.parentCollection.trigger('collapse', model);
         },
 
         expand(model) {
             model.expand();
             this.__rebuildIndex();
+            this.parentCollection.trigger('expand', model);
         },
 
         getState() {
