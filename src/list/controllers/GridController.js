@@ -28,7 +28,8 @@ export default Marionette.Object.extend({
 
     __createView(options) {
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
-        const collection = factory.createWrappedCollection(this.options);
+        const comparator = factory.getDefaultComparator(options.columns);
+        const collection = factory.createWrappedCollection(Object.assign({}, options, { comparator }));
 
         const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
         this.__updateActions(allToolbarActions, collection);

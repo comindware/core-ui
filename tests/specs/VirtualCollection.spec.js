@@ -566,9 +566,9 @@ describe('VirtualCollection', () => {
                 collection.at(2),
                 collection.at(0),
                 virtualCollection.at(3),
+                newTask,
                 collection.at(3),
-                collection.at(1),
-                newTask
+                collection.at(1)
             ]);
         });
 
@@ -600,9 +600,9 @@ describe('VirtualCollection', () => {
                 collection.at(2),
                 collection.at(0),
                 virtualCollection.at(3),
+                newTask,
                 collection.at(3),
-                collection.at(1),
-                newTask
+                collection.at(1)
             ]);
         });
     });

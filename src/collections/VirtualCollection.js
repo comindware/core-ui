@@ -245,7 +245,7 @@ const VirtualCollection = Backbone.Collection.extend(
             // Run sort based on type of `comparator`.
             if (this.comparator) {
                 if (_.isString(this.comparator) || this.comparator.length === 1) {
-                    _.sortBy(list.models, this.comparator, this);
+                    list.models = _.sortBy(list.models, this.comparator, this);
                 } else {
                     list.models.sort(_.bind(this.comparator, this));
                 }
@@ -293,11 +293,6 @@ const VirtualCollection = Backbone.Collection.extend(
                         .value()
                 );
             }
-            // Applying comparator to the ultimate items
-            if (!this.comparator) {
-                return new Backbone.Collection(models);
-            }
-
             return new Backbone.Collection(models);
         },
 
