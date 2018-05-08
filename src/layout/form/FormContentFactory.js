@@ -79,11 +79,13 @@ export default {
                             );
                         }
                     }
-                    const view = new child.view(_.omit(child, 'view'));
+                    const childContructor = new child.view(_.omit(child, 'view'));
+
                     if (child.viewEvents) {
-                        Object.keys(child.viewEvents).forEach(key => view.on(key, child.viewEvents[key]));
+                        Object.keys(child.viewEvents).forEach(key => childContructor.on(key, child.viewEvents[key]));
                     }
-                    return view;
+
+                    return childContructor.view ? childContructor.view : childContructor;
                 }
             }
         });

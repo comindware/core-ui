@@ -65,7 +65,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
 
     canAdd: false,
 
-    className: 'document-field editor',
+    className: 'editor editor_document',
 
     template: Handlebars.compile(template),
 

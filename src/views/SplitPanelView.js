@@ -90,9 +90,9 @@ export default Marionette.View.extend({
             containerWidth: this.$el.width(),
             panel1InitialWidth: this.ui.panel1.width()
         };
-        $(document)
-            .mousemove(this.__handleDocumentMouseMove)
-            .mouseup(this.__handleDocumentMouseUp);
+
+        document.addEventListener('mousemove', this.__handleDocumentMouseMove);
+        document.addEventListener('mouseup', this.__handleDocumentMouseUp);
     },
 
     __stopDragging() {
@@ -100,11 +100,10 @@ export default Marionette.View.extend({
             return;
         }
 
-        const $document = $(document);
-        $document.unbind('mousemove', this.__handleDocumentMouseMove);
-        $document.unbind('mouseup', this.__handleDocumentMouseUp);
+        document.removeEventListener('mousemove', this.__handleDocumentMouseMove);
+        document.removeEventListener('mouseup', this.__handleDocumentMouseUp);
+
         this.dragContext = null;
-        $(window).trigger('resize');
     },
 
     __updatePanelClasses($panelEl) {

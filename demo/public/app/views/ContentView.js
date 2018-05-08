@@ -37,6 +37,7 @@ export default Marionette.View.extend({
         const code = requireCode(`./${path}`).default;
         const text = requireText(`./${path}`);
 
+        this.ui.code.text(text);
         this.model.set('sourceCode', text);
         const representationView = code();
         this.showChildView('caseRepresentationRegion', representationView);
@@ -44,40 +45,40 @@ export default Marionette.View.extend({
         const attributesConfig = this.model.get('attributesConfig');
 
         if (attributesConfig) {
-            this.showChildViewv('attributesConfigurationRegion', this.__createAttributesConfigurationView(attributesConfig));
+            this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView(attributesConfig));
         }
     },
 
-    __createAttributesConfigurationView() {
+    __createAttributesConfigurationView(attributesConfig) {
         const columns = [
             {
-                key: 'textCell',
-                type: 'Text',
-                title: 'TextCell',
-                required: true,
-                viewModel: new Backbone.Model({ displayText: 'TextCell' }),
+                key: 'attribute',
+                type: 'String',
+                title: 'Attribute',
                 sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
-                sorting: 'asc'
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
             },
             {
-                key: 'numberCell',
-                type: 'Number',
-                title: 'Number Cell',
-                getReadonly: model => model.get('numberCell') % 2,
-                viewModel: new Backbone.Model({ displayText: 'Number Cell' }),
+                key: 'values',
+                type: 'String',
+                title: 'Possible values',
+                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
+            },
+            {
+                key: 'default',
+                type: 'String',
+                title: 'Default value',
                 sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
                 sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell')
             }
         ];
 
-        return new core.editableGrid.views.EditableGridView({
+        const gridController = new core.list.controllers.GridController({
             columns,
-            selectableBehavior: 'multi',
-            collection: new Backbone.Collection([]),
-            title: 'Attributes configuration',
-            showSearch: true,
-            searchColumns: ['textCell']
+            collection: new Backbone.Collection(attributesConfig)
         });
+
+        return gridController.view;
     }
 });

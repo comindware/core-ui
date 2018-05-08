@@ -15,7 +15,7 @@ export default Marionette.View.extend({
     className: 'icons-panel-category',
 
     __onItemClick(data) {
-        const id = $(data.target).data('id') || $(data.target.parentElement).data('id');
+        const id = data.target.getAttribute('data-id') || data.target.parentElement.getAttribute('data-id');
         this.trigger('click:item', id);
     }
 });

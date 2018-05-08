@@ -609,6 +609,10 @@ svg.svg-grid-icons {
     margin: -1px 0 0 -1px;
 }
 
+.cell .svg-icons_attach{
+    margin: 0;
+}
+
 .cell__dots{
     position: absolute;
     left: 0;

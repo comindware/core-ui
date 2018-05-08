@@ -324,6 +324,15 @@ rgba(5,117,189,.5) // user avatar btn
     width: calc(100% - 38px);
 }
 
+.editor_document{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
 .editor_readonly:after,
 .editor_disabled:after{
     width: 0;
@@ -883,6 +892,53 @@ input[type="checkbox"].checkbox {
 /*-------------// End Form Erorr // -------------*/
 
 
+/*------------------ Button ------------------*/
+.btn{
+    display: inline-block;
+    max-width: 100%;
+    line-height: 18px;
+    vertical-align: middle;
+    white-space: nowrap;
+    background: #f7f6f6;
+    border: 1px solid #dfe4e8;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 0;
+}
+.btn:hover{
+    border-color: #bfc2c4;
+    box-shadow: inset 0 2px 3px #fff;
+}
+.btn:active{
+    box-shadow: inset 1px 1px 3px hsla(0,0%,78%,.7);
+}
+
+.btn_attach{
+    height: 20px;
+    padding: 0 5px;
+    flex: none;
+    margin-right: 3px;
+}
+
+.btn__text{
+    display: inline-block;
+    max-width: 100%;
+    font-size: 11px;
+    font-weight: 500;
+    color: #636262;
+    line-height: inherit;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/*-------------// End Button // -------------*/
+
 
 /* Avatar editor */
 .user-avatar-wrp{
@@ -1241,6 +1297,10 @@ svg.svg-icons{
     transform: scale(.9) translate(0, 1px)
 }
 
+.svg-icons_attach{
+    transform:scale(.8) translate(0, -1px)
+}
+
 .svg-icons-wrp_edit-reference{
     display: inline-block;
     position: absolute;
@@ -1253,6 +1313,7 @@ svg.svg-icons{
 .editor_disabled .svg-icons-wrp_edit-reference{
     display: none;
 }
+
 
 
 .d-svg-icons{

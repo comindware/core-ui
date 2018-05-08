@@ -39,12 +39,13 @@ export default Marionette.View.extend({
                 selectableBehavior: 'multi',
                 isTree: true,
                 childrenAttribute: 'children',
-                showHeader: false,
                 expandOnShow: false
             },
             collection: this.model.get('context')
         });
 
         this.showChildView('popoutWrapper', listView);
+
+        listView.on('childview:dblclick', model => this.trigger('context:selected', model));
     }
 });

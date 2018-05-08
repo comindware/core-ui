@@ -9,7 +9,7 @@ export default {
 
     __fillConfiguration(schemaTree: Array<any>, schemaPlain: Object) {
         schemaTree.forEach(item => {
-            item.type.includes('container')
+            item.type && item.type.includes('container')
                 ? this.__fillConfiguration(item.items, schemaPlain)
                 : item.key && (schemaPlain[item.key] = Object.assign(_.omit(item, ['key']), { type: item.type.replace('-field', '').replace('-editor', '') }));
         });

@@ -68,10 +68,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave',
         'focus @ui.timeInput': '__delayedShowTimeEditor',
-        'blur @ui.timeInput': '__timeBlur',
-        'mousedown @ui.timeInput': '__showTimeEditor',
+        'click @ui.timeInput': '__showTimeEditor',
         'click @ui.dateInput': '__showDateEditor',
-        'blur @ui.dateInput': '__dateBlur',
         'focus @ui.dateInput': '__delayedShowDateEditor'
     },
 
@@ -304,7 +302,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.listenTo(this.timeDropdownView, 'button:calendar:open', this.__onTimeButtonCalendarOpen, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
-
 
         if (this.enabled && !this.readonly) {
             this.timeDropdownView.open();

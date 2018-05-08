@@ -143,7 +143,6 @@ export default Marionette.CompositeView.extend({
         // `index` is present when adding with `at` since BB 1.2; indexOf fallback for < 1.2
         let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
 
-
         if (this.filter || index === false) {
             index = _.indexOf(this._filteredSortedModels(index), child);
         }
@@ -200,7 +199,7 @@ export default Marionette.CompositeView.extend({
     __handleKeydown(e) {
         let delta;
         const handle = !this.getOption('isEditable') || e.ctrlKey;
-        const eventResult = !handle && (e.target.tagName === 'INPUT');
+        const eventResult = !handle && e.target.tagName === 'INPUT';
         const selectedModels = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
         e.stopPropagation();
         switch (e.keyCode) {
