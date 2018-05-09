@@ -15,9 +15,9 @@ export default Marionette.View.extend({
                 showPaletteAsIcons: options.config.showPaletteAsIcons,
                 reqres: options.reqres
             });
-            this.listenTo(this.elementsView, 'element:drag:start', (view, dragContext, event, ui) => this.trigger('element:drag:start', view, dragContext, event, ui));
-            this.listenTo(this.elementsView, 'element:drag:stop', (view, dragContext, event, ui) => this.trigger('element:drag:stop', view, dragContext, event, ui));
-            this.listenTo(this.elementsView, 'element:drag:move', (view, dragContext, event, ui) => this.trigger('element:drag:move', view, dragContext, event, ui));
+            this.listenTo(this.elementsView, 'element:drag:start', (dragContext, event, ui) => this.trigger('element:drag:start', dragContext, event, ui));
+            this.listenTo(this.elementsView, 'element:drag:stop', (dragContext, event, ui) => this.trigger('element:drag:stop', dragContext, event, ui));
+            this.listenTo(this.elementsView, 'element:drag:move', (dragContext, event, ui) => this.trigger('element:drag:move', dragContext, event, ui));
             this.listenTo(this.elementsView, 'context:toggle', () => this.trigger('context:toggle'));
         }
 
@@ -26,9 +26,9 @@ export default Marionette.View.extend({
             this.toolbarView = this.__createToolbarView(options.reqres, this.config);
 
             this.listenTo(this.listView, 'toolbar:update:searchModel', toolbarCollection => this.toolbarView.updateSearchModel(toolbarCollection));
-            this.listenTo(this.listView, 'element:drag:start', (view, dragContext, event, ui) => this.trigger('element:drag:start', view, dragContext, event, ui));
-            this.listenTo(this.listView, 'element:drag:stop', (view, dragContext, event, ui) => this.trigger('element:drag:stop', view, dragContext, event, ui));
-            this.listenTo(this.listView, 'element:drag:move', (view, dragContext, event, ui) => this.trigger('element:drag:move', view, dragContext, event, ui));
+            this.listenTo(this.listView, 'element:drag:start', (dragContext, event, ui) => this.trigger('element:drag:start', dragContext, event, ui));
+            this.listenTo(this.listView, 'element:drag:stop', (dragContext, event, ui) => this.trigger('element:drag:stop', dragContext, event, ui));
+            this.listenTo(this.listView, 'element:drag:move', (dragContext, event, ui) => this.trigger('element:drag:move', dragContext, event, ui));
             this.listenTo(this.listView, 'element:dblclick', model => this.trigger('element:dblclick', model));
             this.listenTo(this.listView, 'context:toggle', () => this.trigger('context:toggle'));
             this.listenTo(this.listView, 'show:attribute', () => this.trigger('show:attribute'));
