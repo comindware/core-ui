@@ -26,6 +26,8 @@ export default Marionette.Object.extend({
         this.listenTo(this.view, 'handle:edit', view => this.trigger('handle:edit', view));
 
         this.listenTo(this.view, 'toolbar:execute', (id, item) => this.__onActionExecute(id, item));
+
+        this.listenTo(this.view, 'destroy', () => this.destroy());
     },
 
     __onActionExecute(id, item) {

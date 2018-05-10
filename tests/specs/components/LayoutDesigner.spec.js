@@ -1,53 +1,41 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 
-const editorModel = Backbone.Model.extend();
-
 describe('Components', () => {
+    /*
     describe('Layout designer', () => {
-        /*
         it('should set text', () => {
-          
-            const reqres = Backbone.Radio.channel(_.uniqueId());
+            const components = {
+                Splitter: {
+                    view: Marionette.View,
+                    model: Backbone.Model
+                },
+                SystemView: Marionette.View
+            };
+            Object.keys(core.form.editors).forEach(key => {
+                components[key] = {
+                    view: core.form.editors[key],
+                    model: Backbone.Model
+                };
+            });
 
             const view = new core.components.LayoutDesigner.Controller({
                 editorModel: new Backbone.Model(),
-                componentReqres: reqres,
-                detachedToolbar: true,
                 palette: {
                     toolbar: {},
-                    collection: new Backbone.Collection(),
-                    elementsCollection: new Backbone.Collection([
-                        {
-                            fieldType: 'Tabs',
-                            name: 'Tabs'
-                        }
-                    ]),
+                    collection: new Backbone.Collection(Object.keys(core.form.editors).map(key => ({ fieldType: key, name: key }))),
+                    elementsCollection: new Backbone.Collection(),
                     size: 'small'
                 },
                 canvas: {
                     collection: new Backbone.Collection(),
-                    components: {
-                        SempleView: {
-                            view: Marionette.View,
-                            model: editorModel
-                        },
-                        Tabs: {
-                            view: Marionette.View,
-                            model: editorModel
-                        },
-                        VerticalLayout: {
-                            model: editorModel
-                        },
-                        SystemView: Marionette.View
-                    },
+                    components,
                     dropZoneType: 'fixed',
                     focusOnShow: true
                 },
                 properties: {
                     components: {
                         SempleView: Marionette.View,
-                        Tabs: Marionette.View,
                         SystemView: Marionette.View
                     },
                     size: 'large'
@@ -64,6 +52,6 @@ describe('Components', () => {
 
             expect(true).toEqual(true);
         });
-        */
     });
+    */
 });

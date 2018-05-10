@@ -49,7 +49,8 @@ const Application = Marionette.Application.extend({
             localizationService: {
                 langCode: 'en',
                 localizationMap,
-                warningAsError: true
+                warningAsError: true,
+                timeZone: 'Europe/Moscow'
             },
             userService: {
                 dataProvider
@@ -78,7 +79,7 @@ const Application = Marionette.Application.extend({
                 popupRegion: $('.js-popup-region'),
                 toastNotificationRegion: $('.js-toast-notification-region')
             },
-            serviceInitializer() {}
+            serviceInitializer() { }
         });
 
         const context = require.context('./specs', true, /.+\.spec\.jsx?$/);
