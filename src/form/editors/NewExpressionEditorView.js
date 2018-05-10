@@ -144,7 +144,8 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         }
         this.typeEditor = new DatalistEditorView({
             collection: this.valueTypeCollection,
-            allowEmptyValue: false
+            allowEmptyValue: false,
+            valueType: 'id'
         });
         this.typeEditor.on('change', () => {
             this.__updateEditorValue();
