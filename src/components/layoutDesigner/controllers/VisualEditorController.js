@@ -9,25 +9,9 @@ import VerticalLayoutComponentView from '../views/VerticalLayoutComponentView';
 
 export default Marionette.Object.extend({
     initialize(options = {}) {
-        const reqres = this.__createAndBindChannel();
-
         this.canvasComponents = options.canvas.components;
         this.__createModel(options.editorModel, options.canvas.collection);
-        this.view = this.__createView(options, reqres);
-
-        this.listenToOnce(this.view, 'render', () => this.toggleEmptyViewMask(options.canvas.collection));
-        if (options.validateOnShow) {
-            this.listenToOnce(this.view, 'show', this.performValidation);
-        }
-        this.listenTo(this.view, 'add:attribute', this.__handleAdding);
-        this.listenTo(this.view, 'remove:attribute', this.__handleRemoving);
-        this.listenTo(this.view, 'edit:attribute', event => this.trigger('edit:attribute', event));
-        this.listenTo(this.view, 'handle:action', actionId => this.trigger('handle:action', actionId));
-        this.listenTo(this.view, 'handle:edit', view => this.trigger('handle:edit', view));
-
-        this.listenTo(this.view, 'toolbar:execute', (id, item) => this.__onActionExecute(id, item));
-
-        this.listenTo(this.view, 'destroy', () => this.destroy());
+        this.view = this.__createView(options);
     },
 
     __onActionExecute(id, item) {
@@ -149,8 +133,10 @@ export default Marionette.Object.extend({
         );
     },
 
-    __createView(options, reqres) {
-        return new ModuleView({
+    __createView(options) {
+        const reqres = this.__createAndBindChannel();
+
+        const view = new ModuleView({
             reqres,
             model: this.model,
             configurationModel: this.configurationModel,
@@ -161,6 +147,22 @@ export default Marionette.Object.extend({
             componentReqres: this.getOption('componentReqres'),
             detachedToolbar: options.detachedToolbar
         });
+
+        this.listenToOnce(view, 'render', () => this.toggleEmptyViewMask(options.canvas.collection));
+        if (options.validateOnShow) {
+            this.listenToOnce(view, 'show', this.performValidation);
+        }
+        this.listenTo(view, 'add:attribute', this.__handleAdding);
+        this.listenTo(view, 'remove:attribute', this.__handleRemoving);
+        this.listenTo(view, 'edit:attribute', event => this.trigger('edit:attribute', event));
+        this.listenTo(view, 'handle:action', actionId => this.trigger('handle:action', actionId));
+        this.listenTo(view, 'handle:edit', editedView => this.trigger('handle:edit', editedView));
+
+        this.listenTo(view, 'toolbar:execute', (id, item) => this.__onActionExecute(id, item));
+
+        this.listenTo(view, 'destroy', () => this.destroy());
+
+        return view;
     },
 
     __createElement(elementModel) {
