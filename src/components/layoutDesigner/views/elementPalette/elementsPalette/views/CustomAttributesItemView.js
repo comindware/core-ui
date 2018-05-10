@@ -73,7 +73,7 @@ export default Marionette.CompositeView.extend({
         });
     },
 
-    childEvents: {
+    childViewEvents: {
         'drag:start': '__onChildDragStart',
         'drag:stop': '__onChildDragStop',
         'drag:move': '__onChildDragMove',
@@ -155,16 +155,16 @@ export default Marionette.CompositeView.extend({
         this.trigger('drag:move', this.dragContext, event, ui, this);
     },
 
-    __onChildDragStart(dragContext, event, ui, view) {
-        this.trigger('drag:start', dragContext, event, ui, view);
+    __onChildDragStart(dragContext, event, ui) {
+        this.trigger('drag:start', dragContext, event, ui);
     },
 
-    __onChildDragStop(dragContext, event, ui, view) {
-        this.trigger('drag:stop', dragContext, event, ui, view);
+    __onChildDragStop(dragContext, event, ui) {
+        this.trigger('drag:stop', dragContext, event, ui);
     },
 
-    __onChildDragMove(dragContext, event, ui, view) {
-        this.trigger('drag:move', dragContext, event, ui, view);
+    __onChildDragMove(dragContext, event, ui) {
+        this.trigger('drag:move', dragContext, event, ui);
     },
 
     __updateDragElementClass(dragHelper, componentModel) {
