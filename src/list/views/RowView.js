@@ -1,4 +1,5 @@
 //@flow
+import { objectPropertyTypes } from '../../Meta';
 import CellViewFactory from '../CellViewFactory';
 
 const classes = {
@@ -115,11 +116,16 @@ export default Marionette.View.extend({
         this.options.columns.forEach((gridColumn, index) => {
             const columnClass = `${uniqueId}-column${index}`;
             const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model);
+            const type = gridColumn.type;
+            let alignClass = '';
 
             this.columnClasses.push(columnClass);
 
             if (typeof cell === 'string') {
-                return this.el.insertAdjacentHTML('beforeend', `<div class="cell ${columnClass}">${cell}</div>`);
+                if (_.contains([objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL], type)) {
+                    alignClass = 'cell-right';
+                }
+                return this.el.insertAdjacentHTML('beforeend', `<div class="cell ${alignClass} ${columnClass}">${cell}</div>`);
             }
 
             const cellView = new cell({
@@ -231,7 +237,7 @@ export default Marionette.View.extend({
                     el.insertAdjacentHTML(
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
-                        this.model.collapsed === false ? classes.expanded : ''
+                            this.model.collapsed === false ? classes.expanded : ''
                         }" style="margin-left:${margin}px;"></span>`
                     );
                 } else {

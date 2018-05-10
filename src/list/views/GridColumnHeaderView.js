@@ -1,4 +1,5 @@
 //@flow
+import { objectPropertyTypes } from '../../Meta';
 import template from '../templates/gridcolumnheader.hbs';
 
 /**
@@ -15,7 +16,12 @@ import template from '../templates/gridcolumnheader.hbs';
 
 export default Marionette.View.extend({
     initialize(options) {
+        const type = options.column.type;
         this.column = options.column;
+        this.alignRight = _.contains([objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL], type);
+        if (this.alignRight) {
+            this.$el.addClass('grid-header-right');
+        }
     },
 
     template: Handlebars.compile(template),
@@ -39,7 +45,8 @@ export default Marionette.View.extend({
         return {
             sortingAsc: this.column.sorting === 'asc',
             sortingDesc: this.column.sorting === 'desc',
-            displayText: this.options.title
+            displayText: this.options.title,
+            alignRight: this.alignRight
         };
     }
 });

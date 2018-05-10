@@ -661,3 +661,7 @@ svg.svg-grid-icons {
     visibility: visible;
     border: solid 1px #838c92;
 }
+
+.cell-right, .grid-header-right {
+    text-align: right;
+}
