@@ -633,7 +633,8 @@ a:hover {
 /* mselect new */
 .member-split{
     width: 100%;
-    height: 100%;
+    display: flex;
+    flex: 0 1 auto;
 }
 
 .member-split__wrp{
@@ -646,8 +647,7 @@ a:hover {
     height: 100%;
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid #CED3D7;
-    border-bottom: 1px solid #CED3D7;
+    border: 1px solid #CED3D7;
     margin-top: 0;
 }
 
@@ -690,6 +690,11 @@ a:hover {
     width: 100%;
 }
 
+.columns-select .tr-search{
+    border-right: none;
+    border-bottom: 1px solid #CED3D7;
+}
+
 .columns-select__btn {
     width: 50px;
     border-left: 1px solid #CED3D7;
@@ -700,11 +705,19 @@ a:hover {
     justify-content: center;
 }
 
+.columns-select__items{
+    flex: 1 1;
+    overflow: hidden;
+}
+
 .columns-select-list {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    overflow-y: auto;
 }
+
+
 
 .button-arrow {
     width: 32px;
@@ -755,7 +768,10 @@ a:hover {
 .button-arrow_all-left:hover {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAYAAABi8KSDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0NDU2QTEzQUE0RkQxMUU2ODc0NkJBOTIwQ0Y3OTIwNSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo0NDU2QTEzQkE0RkQxMUU2ODc0NkJBOTIwQ0Y3OTIwNSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjQ0NTZBMTM4QTRGRDExRTY4NzQ2QkE5MjBDRjc5MjA1IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjQ0NTZBMTM5QTRGRDExRTY4NzQ2QkE5MjBDRjc5MjA1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+uMTM4wAAAIZJREFUeNpiZJj9jwENdAHxBSBehi7GhKawGogTgPgaNjEWJMF8KHYG4svYxGCKQTorgNgByVQMMZDicCBuhArehCrEJsYAcjMzlP0LyUnYxMAmg3zNA8SHoW67iUOMAebmWUDMD8R7kSQxxJBDoxtq2gEkt6KIsaCFcz3UNG8kj8HFAAIMAICVJs95qbZcAAAAAElFTkSuQmCC');
 }
-
+.editor_readonly .button-arrow,
+.editor_disabled .button-arrow{
+    visibility: hidden;
+}
 /* End Two Columns Switch */
 
 /* Toolbar component */

@@ -537,6 +537,17 @@ body {
 .editor_container, .canvas-wrap {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.editor-region-wrp{
+    overflow: hidden;
+    max-height: 100%;
+    width: 100%;
+    flex: 0 1 auto;
+    display: flex;
 }
 
 .body-container {
