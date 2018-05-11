@@ -27,7 +27,7 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    childEvents: {
+    childViewEvents: {
         'drag:start': '__onChildDragStart',
         'drag:stop': '__onChildDragStop',
         'drag:move': '__onChildDragMove',
@@ -35,17 +35,17 @@ export default Marionette.CollectionView.extend({
         'element:dblclick': '__onDblClick'
     },
 
-    __onChildDragStart(dragContext, event, ui, view) {
+    __onChildDragStart(dragContext, event, ui) {
         this.__updateDragElementClass(ui.helper, dragContext.model);
-        this.trigger('element:drag:start', view, dragContext, event, ui);
+        this.trigger('element:drag:start', dragContext, event, ui);
     },
 
-    __onChildDragStop(dragContext, event, ui, view) {
-        this.trigger('element:drag:stop', view, dragContext, event, ui);
+    __onChildDragStop(dragContext, event, ui) {
+        this.trigger('element:drag:stop', dragContext, event, ui);
     },
 
-    __onChildDragMove(dragContext, event, ui, view) {
-        this.trigger('element:drag:move', view, dragContext, event, ui);
+    __onChildDragMove(dragContext, event, ui) {
+        this.trigger('element:drag:move', dragContext, event, ui);
     },
 
     __onChildContextToggle() {

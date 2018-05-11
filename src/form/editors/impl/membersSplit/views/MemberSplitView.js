@@ -1,5 +1,5 @@
 import ItemSplitView from '../../splitEditor/view/ItemSplitView';
-import MembersListItemView from './MembersListItemView';
+import MembersListView from './MembersListItemView';
 import MembersToolbarView from './membersToolbarView';
 import LocalizationService from '../../../../../services/LocalizationService';
 
@@ -8,7 +8,7 @@ export default ItemSplitView.extend({
         return {
             maxQuantityText: LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.MAXQUANTITY'),
             itemsToolbarView: MembersToolbarView,
-            itemListItemView: MembersListItemView
+            itemListView: MembersListView
         };
     }
 });

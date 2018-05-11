@@ -21,7 +21,7 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    childEvents: {
+    childViewEvents: {
         'drag:start': '__onChildDragStart',
         'drag:stop': '__onChildDragStop',
         'drag:move': '__onChildDragMove',

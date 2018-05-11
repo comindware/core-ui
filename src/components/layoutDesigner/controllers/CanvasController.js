@@ -75,13 +75,13 @@ export default Marionette.Object.extend({
         this.model.eachComponent(componentModel => componentModel.unhover && componentModel.unhover());
     },
 
-    handleElementDragStart(view, dragContext, event, ui) {
+    handleElementDragStart(dragContext, event, ui) {
         const minCount = dragContext.model.parent && dragContext.model.parent.get('minimumDescendants');
         if (minCount && minCount >= dragContext.model.parent.getChildren().length) {
             return false;
         }
         if (this.getOption('config').dropZoneType !== 'fixed') {
-            this.canvasReqres.request('component:drag:start', view, dragContext, event, ui);
+            this.canvasReqres.request('component:drag:start', dragContext, event, ui);
         } else {
             this.activeDropZones = this.collectDropZones(dragContext).filter(dropzone => this.__validateDropzone(dragContext, dropzone.context));
             this.activeDropZones.forEach(zone => zone.activate());
@@ -95,12 +95,12 @@ export default Marionette.Object.extend({
         return zones;
     },
 
-    handleElementDragStop(view, dragContext, event, ui) {
+    handleElementDragStop(dragContext, event, ui) {
         if (this.getOption('config').dropZoneType !== 'fixed') {
-            this.canvasReqres.request('component:drag:stop', view, dragContext, event, ui);
+            this.canvasReqres.request('component:drag:stop', dragContext, event, ui);
         } else {
             try {
-                if (!this.__isDropBack(view, dragContext)) {
+                if (!this.__isDropBack(dragContext)) {
                     if (this.view.canDrop) {
                         if (event.ctrlKey) {
                             const model = dragContext.model.clone();
@@ -129,12 +129,12 @@ export default Marionette.Object.extend({
         }
     },
 
-    handleElementDragMove(view, dragContext, event, ui) {
+    handleElementDragMove(dragContext, event, ui) {
         if (this.getOption('config').dropZoneType !== 'fixed') {
-            this.canvasReqres.request('component:drag:move', view, dragContext, event, ui);
+            this.canvasReqres.request('component:drag:move', dragContext, event, ui);
         } else {
             this.activeDropZones.forEach(zone => zone.leave());
-            if (this.view.canDrop && !this.__isDropBack(view, dragContext)) {
+            if (this.view.canDrop && !this.__isDropBack(dragContext)) {
                 const closestZone = this.__findClosestDropZone(event);
                 if (closestZone) {
                     closestZone.enter();
@@ -223,8 +223,9 @@ export default Marionette.Object.extend({
         return closestZone;
     },
 
-    __isDropBack(view, dragContext) {
-        return !!(dragContext.operation === 'move' && view.isOver());
+    __isDropBack(dragContext) {
+        //todo wtf
+        return false; //!!(dragContext.operation === 'move' && view.isOver());
     },
 
     __toggleCollapse(model, collapsed, options) {

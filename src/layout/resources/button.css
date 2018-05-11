@@ -10,6 +10,8 @@
     border: 1px solid #dfe4e8;
     border-radius: 2px;
     background: #f7f6f6;
+    width: auto;
+    flex: none;
 }
 
 .layout__button-view:hover {

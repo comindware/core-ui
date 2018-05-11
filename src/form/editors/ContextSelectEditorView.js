@@ -90,11 +90,11 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.setValue();
     },
 
-    __value(value, triggerChange) {
+    __value(value, triggerChange, newValue) {
         if (this.value === value) {
             return;
         }
-        this.value = value;
+        this.value = newValue || value;
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -107,7 +107,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         let instanceTypeId = panelModel.get('instanceTypeId');
 
         let text = '';
-        panelModel.get('context')[instanceTypeId].forEach(context => {
+
+        this.options.context[instanceTypeId].forEach(context => {
             if (context.id === selectedItem) {
                 text = context.name;
                 instanceTypeId = context.instanceTypeId;
@@ -115,12 +116,14 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
             }
         });
 
-        return _.without(text, false).join('/');
+        return text;
     },
 
     __applyContext(selected) {
+        const newValue = this.__collectPropertyPath(selected);
+
         this.popoutView.close();
-        this.__value(selected.get('id'), true);
+        this.__value(selected.get('id'), true, newValue);
     },
 
     __createTreeCollection(context, recordTypeId) {
@@ -137,7 +140,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
                     if (model) {
                         innerEntry.children = new Backbone.Collection(model.toJSON());
                         innerEntry.collapsed = true;
-                        innerEntry.children.parent = innerEntry;
+                        innerEntry.children.forEach(childModel => childModel.parent = innerEntry);
                     }
                 }
                 delete innerEntry.id; //todo wtf
@@ -156,12 +159,22 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
                     if (newChild) {
                         child.children = new Backbone.Collection(newChild.toJSON());
                         child.collapsed = true;
-                        child.children.parent = child;
+                        child.children.forEach(childModel => childModel.parent = child);
                     }
                 }
             });
         });
 
         return collection;
+    },
+
+    __collectPropertyPath(selectedModel, collectedPath = []) {
+        collectedPath.push(selectedModel.get('id'));
+
+        if (selectedModel.parent) {
+            return this.__collectPropertyPath(selectedModel.parent, collectedPath);
+        }
+
+        return collectedPath;
     }
 }));

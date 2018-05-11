@@ -1,39 +1,35 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 
-const editorModel = Backbone.Model.extend();
-
 describe('Components', () => {
+    /*
     describe('Layout designer', () => {
-        /*
         it('should set text', () => {
+            const components = {
+                Splitter: {
+                    view: Marionette.View,
+                    model: Backbone.Model
+                },
+                SystemView: Marionette.View
+            };
+            Object.keys(core.form.editors).forEach(key => {
+                components[key] = {
+                    view: core.form.editors[key],
+                    model: Backbone.Model
+                };
+            });
+
             const view = new core.components.LayoutDesigner.Controller({
                 editorModel: new Backbone.Model(),
-                detachedToolbar: true,
                 palette: {
                     toolbar: {},
-                    collection: new Backbone.Collection(),
-                    elementsCollection: new Backbone.Collection([
-                        {
-                            fieldType: 'Splitter',
-                            name: 'SPLITTER'
-                        }
-                    ]),
+                    collection: new Backbone.Collection(Object.keys(core.form.editors).map(key => ({ fieldType: key, name: key }))),
+                    elementsCollection: new Backbone.Collection(),
                     size: 'small'
                 },
                 canvas: {
                     collection: new Backbone.Collection(),
-                    components: {
-                        SempleView: {
-                            view: Marionette.View,
-                            model: editorModel
-                        },
-                        Splitter: {
-                            view: Marionette.View,
-                            model: editorModel
-                        },
-                        SystemView: Marionette.View
-                    },
+                    components,
                     dropZoneType: 'fixed',
                     focusOnShow: true
                 },
@@ -56,6 +52,6 @@ describe('Components', () => {
 
             expect(true).toEqual(true);
         });
-        */
     });
+    */
 });

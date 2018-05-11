@@ -6,7 +6,7 @@ export default Marionette.CollectionView.extend({
 
     childView: ActionView,
 
-    childEvents: {
+    childViewEvents: {
         'action:clicked': '__handleActionClick'
     },
 
