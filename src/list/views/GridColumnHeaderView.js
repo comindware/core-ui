@@ -16,18 +16,16 @@ import template from '../templates/gridcolumnheader.hbs';
 
 export default Marionette.View.extend({
     initialize(options) {
-        const type = options.column.type;
         this.column = options.column;
-        this.alignRight = _.contains([objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL], type);
-        if (this.alignRight) {
-            this.$el.addClass('grid-header-right');
-        }
     },
 
     template: Handlebars.compile(template),
 
-    className: 'grid-header-column-content',
-
+    className() {
+        const type = this.options.column.type;
+        this.alignRight = [objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL].includes(type);
+        return `grid-header-column-content ${this.alignRight ? 'grid-header-right' : ''}`;
+    },
     events: {
         click: '__handleSorting'
     },

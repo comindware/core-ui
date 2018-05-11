@@ -122,10 +122,15 @@ export default Marionette.View.extend({
             this.columnClasses.push(columnClass);
 
             if (typeof cell === 'string') {
-                if (_.contains([objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL], type)) {
+                if ([objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL].includes(type)) {
                     alignClass = 'cell-right';
                 }
-                return this.el.insertAdjacentHTML('beforeend', `<div class="cell ${alignClass} ${columnClass}">${cell}</div>`);
+                return this.el.insertAdjacentHTML(
+                    'beforeend',
+                    `<div class="cell ${alignClass} ${columnClass}">
+                        <span class="cell-value">${cell}</span>
+                    </div>`
+                );
             }
 
             const cellView = new cell({

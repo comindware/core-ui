@@ -662,6 +662,9 @@ svg.svg-grid-icons {
     border: solid 1px #838c92;
 }
 
+.cell-right .cell-value {
+    margin-right: 8px;
+}
 .cell-right, .grid-header-right {
     text-align: right;
 }
