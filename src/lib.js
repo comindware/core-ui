@@ -20,7 +20,11 @@ import * as Handlebars_ from 'handlebars';
 import $_ from 'jquery';
 import 'rangyinputs';
 import 'jquery-autosize';
+
 import numeral_ from 'numeral';
+import 'numeral/locales/ru';
+import 'numeral/locales/de';
+
 import codemirror_ from 'codemirror/lib/codemirror';
 import 'innersvg-polyfill';
 import jsencrypt from 'jsencrypt';

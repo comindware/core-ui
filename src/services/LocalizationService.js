@@ -1,8 +1,4 @@
 //@flow
-numeral.locale('en');
-numeral.locale('de');
-numeral.locale('ru');
-
 const global = window;
 const defaultLangCode = 'en';
 
