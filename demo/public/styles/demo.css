@@ -7,7 +7,9 @@ body {
 .wrapper {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1 1;
+    width: 100%;
+    overflow: hidden;
 }
 .app-region-container {
     display: flex;
@@ -229,16 +231,24 @@ body {
 
 
 --------------*/
+.demo-content__present{
+    position: relative;
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
+}
+
 /*-----------
 
 
 --------------*/
-.attributes-configuration-region {
+.demo-content__attributes{
     position: relative;
     padding: 10px;
+    margin-top: 15px;
     box-shadow: 0 0 3px rgba(0,0,0,0.2);
     overflow: auto;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
 }
 
 .demo-content_container {
@@ -252,17 +262,18 @@ body {
     justify-content: space-between;
 }
 .demo-content__function {
+    width: 100%;
+    max-width: 100%;
     position: relative;
     padding: 10px;
     box-shadow: 0 0 3px rgba(0,0,0,0.2);
     overflow: auto;
-    flex: 1 1 auto;
+    flex: 1 1;
 }
 .demo-content__description {
     font-size: 16px;
-    line-height: 18px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    padding: 0.5rem;
+    line-height: 21px;
+    padding: 0 0.5rem;
     flex: 1 1;
     margin: 15px 15px 0 15px;
 }
@@ -548,6 +559,7 @@ body {
     width: 100%;
     flex: 0 1 auto;
     display: flex;
+    padding-bottom: 1px;
 }
 
 .body-container {
@@ -556,4 +568,10 @@ body {
     flex: 1;
     width: 100%;
     overflow: hidden;
+}
+
+
+.new-expression-editor-field{
+    width: 100%;
+    overflow: auto;
 }
