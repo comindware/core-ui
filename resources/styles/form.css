@@ -286,7 +286,6 @@ rgba(5,117,189,.5) // user avatar btn
     width: 100%;
 }
 
-
 .editor:after {
     content: '';
     position: absolute;
@@ -308,6 +307,13 @@ rgba(5,117,189,.5) // user avatar btn
 
 .editor_focused {
     color:#384650;
+}
+
+.editor_code{
+    height: inherit;
+}
+.editor_code:after{
+    display: none;
 }
 
 .editor_color{
