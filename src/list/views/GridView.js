@@ -225,7 +225,7 @@ export default Marionette.View.extend({
     },
 
     events: {
-        keydown: '__handleKeydown'
+        dragleave: '__handleDragLeave'
     },
 
     className: 'fr-collection',
@@ -376,6 +376,17 @@ export default Marionette.View.extend({
             } else {
                 this.onColumnSort(sortingColumn, sortingColumn.sortDesc);
             }
+        }
+    },
+
+    __handleDragLeave(e) {
+        if (!this.el.contains(e.relatedTarget)) {
+            if (this.collection.dragoverModel) {
+                this.collection.dragoverModel.trigger('dragleave');
+            } else {
+                this.collection.trigger('dragleave:head');
+            }
+            this.collection.dragoverModel = null;
         }
     }
 });

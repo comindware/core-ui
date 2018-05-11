@@ -315,6 +315,7 @@ const VirtualCollection = Backbone.Collection.extend(
             if (this.state.windowSize === undefined) {
                 throw 'updatePosition() has been called before setting window size';
             }
+            this.internalUpdate = true;
 
             newPosition = this.__normalizePosition(newPosition);
             if (newPosition === this.state.position) {
@@ -356,6 +357,7 @@ const VirtualCollection = Backbone.Collection.extend(
                 this.visibleLength = this.visibleModels.length;
                 this.__processDiffs(oldModels);
             }
+            this.internalUpdate = false;
 
             return newPosition;
         },

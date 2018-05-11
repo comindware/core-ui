@@ -7,6 +7,9 @@ CheckableBehavior.CheckableCollection = function (collection) {
     this.collection = collection;
     this.checked = {};
     collection.on('add remove reset', () => {
+        if (collection.internalUpdate) {
+            return;
+        }
         calculateCheckedLength(collection);
         Object.entries(this.checked).forEach(entry => {
             if (!collection.get(entry[0])) {

@@ -200,7 +200,6 @@
 .grid-header-column {
     display: inline-block;
     position: relative;
-    overflow: hidden;
     min-width: 100px;
     box-shadow: inset -1px -1px 0 0 #dfe4e8, inset 0 1px 0 0 #dfe4e8;
 }
@@ -225,7 +224,7 @@
 
 .grid-header-dragger {
     position: absolute;
-    right: 1px;
+    right: -3px;
     top: 0;
     bottom: 0;
     width: 7px;
@@ -660,4 +659,11 @@ svg.svg-grid-icons {
 .cell:hover .editor_checked_some {
     visibility: visible;
     border: solid 1px #838c92;
+}
+
+.cell-right .cell-value {
+    margin-right: 8px;
+}
+.cell-right, .grid-header-right {
+    text-align: right;
 }
