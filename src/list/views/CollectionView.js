@@ -90,7 +90,7 @@ export default Marionette.CompositeView.extend({
             position: 0
         };
 
-        if (this.collection.getState().position !== 0) {
+        if (this.collection.getState().position !== 0 && this.collection.isSliding) {
             this.collection.updatePosition(0);
         }
 
@@ -198,7 +198,7 @@ export default Marionette.CompositeView.extend({
 
     __handleKeydown(e) {
         let delta;
-        const handle = !this.getOption('isEditable') || e.ctrlKey;
+        const handle = (!this.getOption('isEditable') || e.ctrlKey) && this.collection.isSliding;
         const eventResult = !handle && e.target.tagName === 'INPUT';
         const selectedModels = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
         e.stopPropagation();
@@ -358,7 +358,7 @@ export default Marionette.CompositeView.extend({
     __updatePositionInternal(position, triggerEvents) {
         let newPosition = position;
         newPosition = this.__normalizePosition(newPosition);
-        if (newPosition === this.state.position) {
+        if (newPosition === this.state.position || !this.collection.isSliding) {
             return;
         }
 
@@ -380,6 +380,9 @@ export default Marionette.CompositeView.extend({
     },
 
     handleResize() {
+        if (!this.collection.isSliding) {
+            return;
+        }
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
