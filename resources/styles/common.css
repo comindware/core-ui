@@ -640,6 +640,8 @@ a:hover {
 .member-split__wrp{
     width: 100%;
     height: 100%;
+    position: relative;
+    top: 15px;
 }
 
 .columns-select {
@@ -654,7 +656,7 @@ a:hover {
 .columns-select__header {
     position: absolute;
     width: calc(50% - 25px);
-    top: -29px;
+    top: -15px;
     font-size: 13px;
     font-weight: 500;
     color: #182026;

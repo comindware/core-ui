@@ -86,6 +86,6 @@ export default BaseSplitController.extend({
 
     __onItemsMove(typeFrom, typeTo, all) {
         this.moveItems(typeFrom, typeTo, all);
-        this.updateMembers();
+        setTimeout(() => this.updateMembers(), 100);
     }
 });
