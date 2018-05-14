@@ -169,7 +169,7 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     ensureOption(options, optionName) {
         if (!options) {
-            this.throwError('The options object is required.', 'MissingOptionError');
+            Core.InterfaceError.logError('The options object is required.', 'MissingOptionError');
         }
         let recursiveOptions = options;
 
@@ -179,12 +179,15 @@ export default /** @lends module:core.utils.helpers */ {
                 let name = selector[i];
                 if (recursiveOptions[name] === undefined) {
                     name = _.take(selector, i + 1).join('.');
-                    this.throwError(`The option \`${name}\` is required.`, 'MissingOptionError');
+                    Core.InterfaceError.logError(`The option \`${name}\` is required.`, 'MissingOptionError');
                 }
                 recursiveOptions = recursiveOptions[name];
             }
         } else if (options[optionName] === undefined) {
-            this.throwError(`The option \`${optionName}\` is required.`, 'MissingOptionError');
+            Core.InterfaceError.logError({
+                error: `The option \`${optionName}\` is required.`,
+                object: options
+            });
         }
     },
 

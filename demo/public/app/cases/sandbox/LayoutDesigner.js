@@ -1,10 +1,31 @@
-export default function() {
+export default function () {
+    const customView = Marionette.View;
+
+    const systemView = Marionette.CompositeView.extend({
+        className: 'dev-canvas-wrp js-system-container',
+
+        template: Handlebars.compile(''),
+
+        onRender() {
+            this.listenTo(this.model.parent, 'change', this.__updateView);
+            this.__updateView(this.model.parent);
+        },
+
+        __updateView(model) {
+            this.ui.name.text(model.get('name'));
+        },
+
+        __toggleCollapse() {
+            this.model.set('collapsed', !this.model.get('collapsed'));
+        }
+    });
+
     const components = {
         Splitter: {
-            view: Marionette.View,
+            view: customView,
             model: Backbone.Model
         },
-        SystemView: Marionette.View
+        SystemView: systemView
     };
     Object.keys(core.form.editors).forEach(key => {
         components[key] = {
@@ -31,9 +52,20 @@ export default function() {
         properties: {
             components: {
                 SempleView: Marionette.View,
-                SystemView: Marionette.View
-            },
-            size: 'large'
+                SystemView: class {
+                    constructor() {
+                        return new Core.layout.Form({
+                            model: new Backbone.Model(),
+                            schema: [
+                                {
+                                    type: 'v-container',
+                                    items: []
+                                }]
+                        });
+                    }
+                },
+                size: 'large'
+            }
         },
         toolbar: {
             excludeActions: ['clone', 'delete']

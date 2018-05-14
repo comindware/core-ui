@@ -3,11 +3,14 @@ import template from '../templates/verticalLayoutComponent.html';
 import DropzoneView from './DropzoneView';
 import ComponentBehavior from '../behaviors/ComponentBehavior';
 import VerticalDropzoneView from './VerticalDropzoneView';
+import { helpers } from 'utils';
 
 const collapsedClass = 'dev-collapsed';
 
 export default Marionette.CompositeView.extend({
     initialize(options) {
+        helpers.ensureOption(options, 'model');
+
         this.reqres = options.reqres;
         this.componentReqres = options.componentReqres;
 
@@ -16,11 +19,7 @@ export default Marionette.CompositeView.extend({
         this.listenTo(options.canvasAggregator, 'drop-zone:collect', this.__collectDropzones);
     },
 
-    behaviors: {
-        ComponentBehavior: {
-            behaviorClass: ComponentBehavior
-        }
-    },
+    behaviors: [ComponentBehavior],
 
     className: 'ld-canvas-wrp js-system-container',
 
