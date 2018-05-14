@@ -299,7 +299,7 @@ export default Marionette.View.extend({
     __onSearch(text) {
         this.trigger('search', text);
         if (this.options.isTree) {
-            this.nativeGridView.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
+            this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
         }
     },
 

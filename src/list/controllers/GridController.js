@@ -64,10 +64,6 @@ export default Marionette.Object.extend({
             this.__clearFilter(collection);
             this.__unhighlightCollection(collection);
         }
-
-        if (this.options.isTree) {
-            this.__toggleCollapseAll(text && !this.options.expandOnShow);
-        }
     },
 
     __applyFilter(regexp, columns, collection) {

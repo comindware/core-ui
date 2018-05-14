@@ -61,6 +61,7 @@
 .grid-header-wrp {
     display: flex;
     flex: 0 0 auto;
+    overflow-y: scroll;
 }
 
 .grid-content-view {
@@ -178,7 +179,6 @@
     border-collapse: collapse;
     overflow: hidden;
     flex: none;
-    overflow-y: scroll;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {

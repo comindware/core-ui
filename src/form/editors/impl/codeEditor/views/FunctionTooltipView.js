@@ -10,8 +10,8 @@ export default Marionette.View.extend({
     className: 'dev-code-editor-tooltip',
 
     regions: {
-        functionOverloadsContainer: '.js-function-overloads-container',
-        functionParametersContainer: '.js-function-parameters-container'
+        functionOverloadsRegion: '.js-function-overloads-container',
+        functionParametersRegion: '.js-function-parameters-container'
     },
 
     events: {
@@ -33,11 +33,12 @@ export default Marionette.View.extend({
                 maxRows: FUNCTIONS_MAX_ROWS
             }
         });
-        this.functionOverloads.on('childview:selected', child => {
-            this.functionParametersContainer.show(new FunctionParametersView(child.model));
+        this.functionOverloads.on('childview:selected', model => {
+            this.showChildView('functionParametersRegion', new FunctionParametersView(model));
         });
         this.functionOverloads.on('childview:peek', () => this.trigger('peek'));
-        this.functionOverloadsContainer.show(this.functionOverloads);
+        this.showChildView('functionOverloadsRegion', this.functionOverloads);
+
         if (this.options.isFull) {
             collection.at(0).select();
         }

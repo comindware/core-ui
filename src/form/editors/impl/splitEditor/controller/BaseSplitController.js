@@ -19,7 +19,7 @@ export default Marionette.Object.extend({
 
     updateMembers() {
         const allSelectedModels = _.clone(this.model.get('selected'));
-        allSelectedModels.filter(null);
+        // allSelectedModels.filter(null);
         this.options.selected = allSelectedModels.models.map(model => model.id);
         this.__fillDisplayText && this.__fillDisplayText();
         this.trigger('popup:ok');
@@ -146,6 +146,7 @@ export default Marionette.Object.extend({
                 model: ItemModel
             }),
             {
+                isSliding: true,
                 selectableBehavior: 'multi',
                 comparator: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name')
             }
@@ -164,6 +165,7 @@ export default Marionette.Object.extend({
                 model: ItemModel
             }),
             {
+                isSliding: true,
                 selectableBehavior: 'multi',
                 comparator: selectedComparator
             }

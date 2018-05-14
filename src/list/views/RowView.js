@@ -142,7 +142,7 @@ export default Marionette.View.extend({
         const changed = this.model.changedAttributes();
         if (changed) {
             this.getOption('columns').forEach((column, index) => {
-                if (changed[column.key] && !column.cellView && !column.editable) {
+                if (Object.prototype.hasOwnProperty.call(changed, column.key) && !column.cellView && !column.editable) {
                     const elements = this.el.getElementsByClassName(this.columnClasses[index]);
                     if (elements.length) {
                         elements[0].innerHTML = CellViewFactory.getCellHtml(column, this.model);
