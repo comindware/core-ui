@@ -72,7 +72,7 @@ describe('Editors', () => {
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -110,7 +110,7 @@ describe('Editors', () => {
                                     expect(view.getValue()).toEqual([]);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -148,7 +148,7 @@ describe('Editors', () => {
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -186,7 +186,7 @@ describe('Editors', () => {
                                     expect(view.getValue()).toEqual([]);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -224,7 +224,7 @@ describe('Editors', () => {
                                     expect(view.getValue().length).toEqual(11);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -261,7 +261,7 @@ describe('Editors', () => {
                                     expect(view.getValue()).toEqual([]);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
