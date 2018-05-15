@@ -34,7 +34,7 @@ export default Marionette.View.extend({
             }
         });
         this.functionOverloads.on('childview:selected', model => {
-            this.showChildView('functionParametersRegion', new FunctionParametersView(model));
+            this.showChildView('functionParametersRegion', new FunctionParametersView({ model }));
         });
         this.functionOverloads.on('childview:peek', () => this.trigger('peek'));
         this.showChildView('functionOverloadsRegion', this.functionOverloads);

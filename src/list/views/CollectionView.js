@@ -62,11 +62,7 @@ export default Marionette.CompositeView.extend({
         }
         this.gridEventAggregator = options.gridEventAggregator;
 
-        this.__createReqres();
         options.childViewOptions && (this.childViewOptions = options.childViewOptions);
-        this.childViewOptions = Object.assign(options.childViewOptions || {}, {
-            internalListViewReqres: this.internalReqres
-        });
         options.emptyView && (this.emptyView = options.emptyView);
         options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions);
         options.childView && (this.childView = options.childView);
@@ -256,15 +252,6 @@ export default Marionette.CompositeView.extend({
             default:
                 break;
         }
-    },
-
-    __createReqres() {
-        this.internalReqres = Backbone.Radio.channel(_.uniqueId('listV'));
-        this.internalReqres.reply('childViewEvent', this.__handleChildViewEvent, this);
-    },
-
-    __handleChildViewEvent(view, eventName, eventArguments) {
-        this.trigger.apply(this, [`childview:${eventName}`, view].concat(eventArguments));
     },
 
     __moveCursorTo(newCursorIndex, shiftPressed) {

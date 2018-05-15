@@ -31,13 +31,6 @@ const eventBubblingIgnoreList = ['before:render',
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
-        helpers.ensureOption(view.options, 'internalListViewReqres');
-        this.listenTo(view, 'all', eventName => {
-            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-                return;
-            }
-            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
-        });
         this.__debounceClickHandle = _.debounce(this.__handleDebouncedClick, 300, true);
     },
 
