@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.5.0-beta.24",
+  "version": "1.5.0-beta.25",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -72,7 +72,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^7.0.1",
     "gulp-jsdoc3": "^2.0.0",
-    "gulp-rename": "^1.2.2",
+    "gulp-rename": "^1.2.3",
     "gulp-svgmin": "^1.2.3",
     "gulp-svgstore": "^6.1.1",
     "gulp-util": "^3.0.7",
