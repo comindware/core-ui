@@ -58,13 +58,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, options.schema || options, defaultOptions);
 
-
-        this.controller =
-            this.options.controller ||
-            new StaticController({
-                collection: options.collection
-            });
-
         let collection = [];
         if (options.collection) {
             if (Array.isArray(options.collection)) {
@@ -74,6 +67,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             }
         }
         this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
+        this.controller =
+            this.options.controller ||
+            new StaticController({
+                collection: this.panelCollection
+            });
 
         this.value = this.__adjustValue(this.value);
 
