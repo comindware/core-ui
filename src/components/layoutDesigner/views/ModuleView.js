@@ -1,5 +1,5 @@
 //@flow
-import ElementsPaletteView from './elementPalette/ElementsPaletteView';
+import ElementsPaletteView from './ElementsPaletteView';
 import template from '../templates/module.html';
 import CanvasController from '../controllers/CanvasController';
 import ClonePopoutButtonView from './toolbar/ClonePopoutButtonView';
@@ -305,5 +305,11 @@ export default Marionette.View.extend({
 
     __createPopupCollection() {
         return this.componentReqres.request('toolbarItems:get');
+    },
+
+    onDestroy() {
+        this.options.reqres.stopReplying();
+        this.toolbar.destroy();
+        this.canvasController.destroy();
     }
 });

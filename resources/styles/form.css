@@ -286,7 +286,6 @@ rgba(5,117,189,.5) // user avatar btn
     width: 100%;
 }
 
-
 .editor:after {
     content: '';
     position: absolute;
@@ -308,6 +307,13 @@ rgba(5,117,189,.5) // user avatar btn
 
 .editor_focused {
     color:#384650;
+}
+
+.editor_code{
+    height: inherit;
+}
+.editor_code:after{
+    display: none;
 }
 
 .editor_color{
@@ -710,17 +716,23 @@ input[type="checkbox"].checkbox {
     font-size: 12px;
     position: relative;
     flex: 0 0 auto;
-    margin:1px;
-    background: #f0f0f0;
+    margin: 1px;
     color: rgba(0,0,0,.87);
-    border-radius: 20px;
-    padding: 2px 9px;
+    border-radius: 5px;
+    padding: 2px 5px;
     transition: padding-right .2s;
 }
 
 .bubbles__i-edit-btn:hover {
-    padding-right: 43px;
+    background: #f0f0f0;
+    padding-right: 36px;
     transition: padding-right .2s;
+}
+.editor_disabled .bubbles__i-edit-btn,
+.editor_disabled .bubbles__i-edit-btn:hover,
+.editor_readonly .bubbles__i-edit-btn,
+.editor_readonly .bubbles__i-edit-btn:hover{
+    background: transparent;
 }
 
 .bubbles__link {
@@ -738,9 +750,11 @@ input[type="checkbox"].checkbox {
 }
 
 
-.editor_disabled .bubbles__i ,
-.editor_readonly .bubbles__i {
-    padding-right: 10px;
+.editor_disabled .bubbles__i,
+.editor_disabled .bubbles__i:hover,
+.editor_readonly .bubbles__i,
+.editor_readonly .bubbles__i:hover {
+    padding: 2px 5px;
 }
 
 .editor_disabled .bubbles__i .svg-icons-wrp,

@@ -241,6 +241,7 @@
     left: 5px;
     width: 16px;
     height: 16px;
+    position: absolute;
 }
 .dd-list__i_checkbox .checkbox {
     top: 4px;

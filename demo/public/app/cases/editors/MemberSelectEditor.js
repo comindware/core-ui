@@ -12,7 +12,7 @@ export default function () {
             key: 'selected',
             autocommit: true,
             users: Core.services.UserService.listUsers(),
-            groups: new Backbone.Collection(),
+            groups: Core.services.UserService.listGroups()
         }),
         presentation: '\'{{memberValue}}\'',
         isEditor: true

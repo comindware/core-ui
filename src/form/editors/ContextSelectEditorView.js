@@ -2,7 +2,6 @@
 import template from './templates/contextSelectEditor.html';
 import PopoutButtonView from './impl/context/views/PopoutButtonView';
 import PopoutWrapperView from './impl/context/views/PopoutWrapperView';
-import ContextModel from './impl/context/models/ContextModel';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import dropdownFactory from '../../dropdown/factory';
@@ -20,7 +19,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        const model = new ContextModel({
+        const model = new Backbone.Model({
             instanceTypeId: this.options.recordTypeId,
             context: this.options.context,
             propertyTypes: this.options.propertyTypes,

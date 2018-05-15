@@ -248,5 +248,10 @@ export default Marionette.Object.extend({
             });
             root.set('collapsed', rootCollapsed, { skip: true });
         }
+    },
+
+    onBeforeDestroy() {
+        this.canvasReqres.stopReplying();
+        this.canvasAggregator.stopReplying();
     }
 });

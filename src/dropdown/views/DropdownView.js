@@ -1,7 +1,6 @@
 // @flow
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
-import template from '../templates/dropdown.hbs';
 import GlobalEventService from '../../services/GlobalEventService';
 
 const THROTTLE_DELAY = 100;
@@ -134,7 +133,9 @@ export default Marionette.View.extend({
     },
 
     onDestroy() {
-        this.button.destroy();
+        if (this.button) {
+            this.button.destroy();
+        }
         if (this.isOpen) {
             WindowService.closePopup(this.popupId);
         }

@@ -111,7 +111,37 @@ export default {
                 userName: (nameSplit[0][0] + nameSplit[1]).toLowerCase(),
                 abbreviation: nameSplit[0][0] + nameSplit[1][0],
                 avatarUrl: `/avatars?id=${id}`,
-                url: `#People/${i + 1}`
+                url: `#People/${i + 1}`,
+                type: 'users'
+            };
+        });
+    },
+
+    listGroups() {
+        const names = [
+            'Kerry Group',
+            'Terry Group',
+            'Natasha Group',
+            'Doyle Group',
+            'Teresa Group',
+            'Maggie Group',
+            'Patricia Group',
+            'Carol Group',
+            'Lillie Group',
+            'Alfred Group',
+            'Nichole Group'
+        ];
+        return names.map((name, i) => {
+            const id = `group.${i + 1}`;
+            const nameSplit = name.split(' ');
+            return {
+                id,
+                name,
+                userName: (nameSplit[0][0] + nameSplit[1]).toLowerCase(),
+                abbreviation: nameSplit[0][0] + nameSplit[1][0],
+                avatarUrl: null,
+                url: `#People/${i + 1}`,
+                type: 'groups'
             };
         });
     }

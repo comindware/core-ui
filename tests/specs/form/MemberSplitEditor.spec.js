@@ -272,5 +272,48 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
         });
+
+        it('should correctly filter items by type on toolbar type select', done => {
+            const model = new Backbone.Model({
+                selected: []
+            });
+
+            const view = new core.form.editors.MembersSplitPanelEditor({
+                model,
+                key: 'selected',
+                autocommit: true,
+                users: core.services.UserService.listUsers().slice(0, 3),
+                groups: core.services.UserService.listGroups().slice(0, 3)
+            });
+
+            view.on('render', () => {
+                view.controller.view.on('attach', () => {
+                    const first = setInterval(() => {
+                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                            clearTimeout(first);
+                            view.$('.js-users-button').click();
+                            const second = setInterval(() => {
+                                if (view.$('.js-available-members-container .js-menu-select-item').length === 3) {
+                                    clearTimeout(second);
+                                    view.$('.js-groups-button').click();
+                                    const third = setInterval(() => {
+                                        if (view.$('.js-available-members-container .js-menu-select-item').length === 3) {
+                                            clearTimeout(third);
+                                            expect(true).toEqual(true);
+                                            done();
+                                        }
+                                    }, 10);
+                                }
+                            }, 10);
+                        }
+                    }, 10);
+                });
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
     });
 });
