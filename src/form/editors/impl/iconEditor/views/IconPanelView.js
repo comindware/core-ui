@@ -14,7 +14,8 @@ export default Marionette.View.extend({
     regions: {
         searchInputRegion: '.js-search-input-region',
         searchAreaRegion: '.js-search-area',
-        collectionAreaRegion: '.js-collection-area'
+        collectionAreaRegion: '.js-collection-area',
+        colorPickerRegion: '.js-color-picker-region'
     },
 
     modelEvents: {
@@ -29,6 +30,14 @@ export default Marionette.View.extend({
             autocommit: true
         });
 
+        this.colorPicker = new Core.form.editors.ColorPickerEditor({
+            model: this.model,
+            key: 'color',
+            changeMode: 'keydown',
+            autocommit: true
+        });
+
+        this.showChildView('colorPickerRegion', this.colorPicker);
         this.showChildView('searchInputRegion', this.search);
 
         const iconCollectionView = new IconCollectionView({
@@ -38,6 +47,10 @@ export default Marionette.View.extend({
         this.showChildView('collectionAreaRegion', iconCollectionView);
 
         this.listenTo(iconCollectionView, 'click:item', id => this.trigger('click:item', id));
+        this.listenTo(this.model, 'change:color', this.__setIconsColor);
+
+        this.__setIconsColor();
+        this.trigger('change:color', this.model.get('color'));
     },
 
     __changeSearchKey(model) {
@@ -94,5 +107,9 @@ export default Marionette.View.extend({
             });
         });
         return matchesItems;
+    },
+
+    __setIconsColor() {
+        this.getRegion('collectionAreaRegion').$el.css({ color: this.model.get('color') });
     }
 });

@@ -29,6 +29,8 @@
 }
 
 .dropdown__wrp_down {
+    height: 400px;
+    position: fixed;
 }
 
 .dropdown__wrp_up-over {
