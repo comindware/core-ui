@@ -1,7 +1,7 @@
 // @flow
 import template from './templates/mentionEditor.hbs';
 import dropdown from 'dropdown';
-import 'utils';
+import { keyCode } from 'utils';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import membersFactory from './impl/members/services/factory';
 import TextAreaEditorView from './TextAreaEditorView';
@@ -48,6 +48,10 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
         dropdownRegion: '.js-dropdown-region'
     },
 
+    events: {
+        'keydown:captured': '__handleKeydown'
+    },
+
     onRender() {
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
@@ -86,30 +90,35 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
         this.setValue(this.value);
     },
 
-    keyboardShortcuts: {
-        up() {
-            if (!this.dropdownView.isOpen) {
-                return true;
-            }
-            this.__sendPanelCommand('up');
-            this.__updateMentionInText();
-        },
-        down() {
-            if (!this.dropdownView.isOpen) {
-                return true;
-            }
-            this.__sendPanelCommand('down');
-            this.__updateMentionInText();
-        },
-        'enter,num_enter'() {
-            if (!this.dropdownView.isOpen) {
-                return true;
-            }
-            this.__updateMentionInText();
-            this.dropdownView.close();
-        },
-        escape() {
-            this.dropdownView.close();
+    __handleKeydown(e) {
+        switch (e.keyCode) {
+            case keyCode.UP:
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
+                this.__sendPanelCommand('up');
+                this.__updateMentionInText();
+                return false;
+            case keyCode.DOWN:
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
+                this.__sendPanelCommand('down');
+                this.__updateMentionInText();
+                return false;
+            case keyCode.ENTER:
+            case keyCode.NUMPAD_ENTER:
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
+                this.__updateMentionInText();
+                this.dropdownView.close();
+                return false;
+            case keyCode.ESCAPE:
+                this.dropdownView.close();
+                return false;
+            default:
+                break;
         }
     },
 

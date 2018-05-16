@@ -12,18 +12,10 @@ export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(view.options, 'columns');
         helpers.ensureOption(view.options, 'gridEventAggregator');
-        helpers.ensureOption(view.options, 'internalListViewReqres');
         helpers.ensureOption(options, 'padding');
 
         this.padding = options.padding;
         this.columns = view.options.columns;
-
-        this.listenTo(view, 'all', eventName => {
-            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-                return;
-            }
-            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
-        });
     },
 
     modelEvents: {

@@ -167,9 +167,9 @@ export default Marionette.View.extend({
             }
         }
 
-        this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
+        this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
             if (eventName.startsWith('childview')) {
-                this.trigger.apply(this, [eventName, view].concat(eventArguments));
+                this.trigger.apply(this, [eventName].concat(eventArguments));
             }
         });
 
