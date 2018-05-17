@@ -141,6 +141,7 @@ export default Marionette.View.extend({
             });
             cellView.render();
             this.el.insertAdjacentElement('beforeend', cellView.el);
+            cellView.triggerMethod('attach');
 
             this.cellViews.push(cellView);
         });

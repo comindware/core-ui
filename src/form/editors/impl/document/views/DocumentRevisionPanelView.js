@@ -11,6 +11,8 @@ export default Marionette.CompositeView.extend({
         };
     },
 
+    className: 'dropdown__wrp',
+
     childView: DocumentRevisionItemView,
 
     childViewContainer: '.js-revision-list'
