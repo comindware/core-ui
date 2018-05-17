@@ -806,6 +806,17 @@ input[type="checkbox"].checkbox {
 /* /Bubbles/ */
 
 
+.editor_icon{
+
+}
+
+.icons-wrp{
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
 /* reference-field */
 .editor_reference{
 
@@ -1284,6 +1295,12 @@ svg.svg-icons{
 .svg-icons_remove-bubble{
     transform: scale(0.9) translate(5px, 5px);
 }
+.svg-icons-wrp__remove-icons{
+    position: relative;
+    top: -3px;
+    left: -2px;
+}
+
 
 .svg-icons_date{
     transform: translate(3px, 2px);
@@ -1329,7 +1346,6 @@ svg.svg-icons{
 .editor_disabled .svg-icons-wrp_edit-reference{
     display: none;
 }
-
 
 
 .d-svg-icons{
