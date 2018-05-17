@@ -11,7 +11,7 @@ export default Marionette.Object.extend({
         this.channel.on('items:select', this.selectItemsByToolbar, this);
         this.channel.on('items:move', this.moveItems, this);
         this.channel.on('items:update', this.updateMembers, this);
-        this.channel.on('items:cancel', this.__cancelMembers, this);
+        this.channel.on('items:cancel', this.cancelMembers, this);
         this.__createModel();
         this.__fillDisplayText();
 
@@ -106,7 +106,7 @@ export default Marionette.Object.extend({
         this.trigger('popup:ok');
     },
 
-    __cancelMembers() {
+    cancelMembers() {
         this.trigger('popup:cancel');
     },
 

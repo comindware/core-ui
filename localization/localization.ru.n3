@@ -132,7 +132,7 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#maxQuantity> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0}"; l10n:originalData "Maximum users allowed: {0},Maximum users allowed: {0}"].
 
-<http://comindware.com/text/core/form/editors/memberSplit#membersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Назначьте профиль навигации пользователям"; l10n:originalData "Select users to be assigned the side navigation"].
+<http://comindware.com/text/core/form/editors/memberSplit#membersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей или группы"; l10n:originalData "Select users or groups"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#people> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Люди"; l10n:originalData "People"].
 

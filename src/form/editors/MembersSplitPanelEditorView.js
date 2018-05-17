@@ -48,11 +48,12 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         this.options.selected = this.getValue();
 
         this.controller = new MembersSplitPanelController(this.options);
-
-        this.controller.on('popup:ok', () => {
-            this.__value(this.options.selected, true);
-            this.__updateEditor();
-        });
+        if (this.getOption('showMode') !== 'button') {
+            this.controller.on('popup:ok', () => {
+                this.__value(this.options.selected, true);
+                this.__updateEditor();
+            });
+        }
     },
 
     className: 'member-split',
@@ -80,7 +81,8 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
 
     templateContext() {
         return {
-            displayText: this.options.displayText
+            displayText: this.options.displayText,
+            showButton: this.getOption('showMode') === 'button'
         };
     },
 
@@ -89,16 +91,50 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
     },
 
     onRender() {
-        this.controller.initItems();
-        this.showChildView('splitPanelRegion', this.controller.view);
+        if (this.getOption('showMode') !== 'button') {
+            this.controller.initItems();
+
+            this.showChildView('splitPanelRegion', this.controller.view);
+        }
     },
 
     __showPopup() {
         if (!this.getEnabled()) {
             return;
         }
+        this.options.selected = this.getValue();
         this.controller.initItems();
-        WindowService.showPopup(this.controller.view);
+
+        const popup = new Core.layout.Popup({
+            size: {
+                width: '980px',
+                height: '700px'
+            },
+            header: this.getOption('title') || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE'),
+            buttons: [
+                {
+                    id: 'save',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+                    handler: () => {
+                        this.controller.updateMembers();
+                        this.__value(this.options.selected, true);
+                        this.__updateEditor();
+                        Core.services.WindowService.closePopup();
+                    }
+                },
+                {
+                    id: 'close',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+                    handler: () => {
+                        this.controller.cancelMembers();
+                        Core.services.WindowService.closePopup();
+                    }
+                }
+            ],
+            content: this.controller.view
+        });
+
+        WindowService.showPopup(popup);
     },
 
     __updateEditor() {
