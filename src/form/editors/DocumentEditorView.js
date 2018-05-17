@@ -231,7 +231,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         const input = e.target;
         const files = input.files;
 
-        if (this.__validate(files)) {
+        if (this.__validate(files) && !this.readonly) {
             this._uploadFiles(files);
         }
     },
@@ -239,9 +239,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     _uploadFiles(files, items) {
         this.trigger('beforeUpload');
         //todo loading
-        if (!files || this.readonly) return;
-
         if (items) {
+            //todo wtf
             Promise.resolve(this._readFileEntries(items)).then(fileEntrie => {
                 this._sendFilesToServer(fileEntrie);
             });
@@ -325,13 +324,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 this.trigger('uploaded', resultObjects);
             },
             error: () => {
-                this._fallback();
+                this.trigger('failed');
             }
         });
-    },
-
-    _fallback() {
-        this.trigger('failed');
     },
 
     __validate(files) {

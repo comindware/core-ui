@@ -44,7 +44,6 @@ import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonV
 import DatalistButtonView from './editors/impl/datalist/views/ButtonView';
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
-import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
 import AudioEditor from './editors/AudioEditor';
@@ -138,19 +137,6 @@ const api = /** @lends module:core.form */ {
                 ReferencePanelView,
                 UserReferenceButtonView,
                 UserReferenceListItemView
-            }
-        },
-        /**
-         * Document editor data providers and internal implementation.
-         * @namespace
-         * */
-        document: {
-            /**
-             * Base implementation of data providers for DocumentEditorView.
-             * @namespace
-             * */
-            views: {
-                UploadDocumentButtonView
             }
         },
         BooleanEditor: BooleanEditorView,

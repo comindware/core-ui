@@ -116,7 +116,7 @@ describe('Editors', () => {
             expect(document.getElementsByClassName('js-clear-button').length).toEqual(0);
         });
 
-        it('should show revision on revion button click', (done) => {
+        it('should show revision on revion button click', done => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -148,7 +148,7 @@ describe('Editors', () => {
             }, 100);
         });
 
-        it('change value after upload ', (done) => {
+        it('change value after upload ', done => {
             const model = new Backbone.Model({
                 value: [
                     {
@@ -192,7 +192,7 @@ describe('Editors', () => {
             }, 100);
         });
 
-        it('show add values after twice upload by default', (done) => {
+        it('show add values after twice upload by default', done => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -226,7 +226,7 @@ describe('Editors', () => {
                         documentsId: ['firstFile1', 'secondFile2'],
                         url: null,
                         type: 'secondFile'
-                    },
+                    }
                 ]);
                 view._uploadFiles([new File([], 'thirdFile')]);
                 setTimeout(() => {
@@ -258,7 +258,7 @@ describe('Editors', () => {
             }, 100);
         });
 
-        it('show should reset value after any update if multiple restricted', (done) => {
+        it('show should reset value after any update if multiple restricted', done => {
             const model = new Backbone.Model({
                 value: null
             });
