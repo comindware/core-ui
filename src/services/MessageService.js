@@ -1,4 +1,3 @@
-import MessageView from './message/views/MessageView';
 import WindowService from './WindowService';
 import LocalizationService from './LocalizationService';
 
@@ -49,18 +48,20 @@ export default {
 
     showMessageDialog(description, text, buttons, iconId = iconIds.NONE) {
         return new Promise(resolve => {
-            const view = new MessageView({
-                model: new Backbone.Model({
-                    iconId,
-                    text,
-                    description,
-                    buttons: buttons || []
-                })
+            const view = new Core.layout.Popup({
+                header: text,
+                buttons: buttons.map(button => ({
+                    id: button.id,
+                    text: button.text,
+                    handler() {
+                        WindowService.closePopup(this.openedPopupId);
+                        this.openedPopupId = null;
+                        resolve(button.id);
+                    }
+                })),
+                content: description
             });
-            view.once('close', result => {
-                this.openedPopupId = null;
-                resolve(result);
-            });
+
             if (this.openedPopupId) {
                 WindowService.closePopup(this.openedPopupId);
             }

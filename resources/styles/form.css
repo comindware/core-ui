@@ -1197,17 +1197,6 @@ input[type="color"], .colorpicker{
     margin-right: 4px;
 }
 
-.multiselect-i_selected .svg-icons-wrp_multiselect{
-    opacity: 1;
-}
-
-.multiselect-i .svg-icons_multiselect{
-    visibility: hidden;
-}
-.multiselect-i_selected .svg-icons_multiselect{
-    visibility: visible;
-}
-
 .svg-icons-wrp_add{
     left: 0;
     right: auto;
