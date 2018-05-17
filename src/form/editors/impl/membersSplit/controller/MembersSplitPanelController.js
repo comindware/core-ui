@@ -9,7 +9,6 @@ export default Marionette.Object.extend({
         this.options = options;
         this.channel = new Backbone.Radio.channel(_.uniqueId('splitC'));
         this.channel.on('items:select', this.selectItemsByToolbar, this);
-        this.channel.on('items:search', this.selectItemsByFilter, this);
         this.channel.on('items:move', this.moveItems, this);
         this.channel.on('items:update', this.updateMembers, this);
         this.channel.on('items:cancel', this.__cancelMembers, this);
@@ -18,7 +17,6 @@ export default Marionette.Object.extend({
 
         this.channel = new Backbone.Radio.channel(_.uniqueId('membersSplitPanel'));
         this.channel.on('items:select', this.selectItemsByToolbar, this);
-        this.channel.on('items:search', this.selectItemsByFilter, this);
         this.channel.on('items:move', this.__onItemsMove, this);
     },
 
@@ -41,7 +39,6 @@ export default Marionette.Object.extend({
             selectedItemsText: this.options.selectedItemsText,
             confirmEdit: true,
             showToolbar: true,
-            searchPlaceholder: this.options.searchPlaceholder,
             emptyListText: this.options.emptyListText
         });
     },
@@ -103,7 +100,7 @@ export default Marionette.Object.extend({
 
     updateMembers() {
         const allSelectedModels = _.clone(this.model.get('selected'));
-        allSelectedModels.filter(null);
+        //allSelectedModels.filter(null); todo figure it out, WHY?!
         this.options.selected = allSelectedModels.models.map(model => model.id);
         this.__fillDisplayText && this.__fillDisplayText();
         this.trigger('popup:ok');
@@ -115,11 +112,6 @@ export default Marionette.Object.extend({
 
     selectItemsByToolbar(type, value) {
         this.collectionFilterValue[type] = value;
-        this.__applyFilter(type);
-    },
-
-    selectItemsByFilter(type, value) {
-        this.collectionSearchValue[type] = value.toLowerCase();
         this.__applyFilter(type);
     },
 
@@ -138,9 +130,9 @@ export default Marionette.Object.extend({
         this.collection.filter(model => {
             const modelType = model.get('type');
             const modelName = model.get('name');
+
             return (filterValue ? modelType && modelType === filterValue : true) && (searchValue ? modelName && modelName.toLowerCase().indexOf(searchValue) !== -1 : true);
         });
-        searchValue && this.collection.highlight(searchValue);
     },
 
     moveItems(typeFrom, typeTo, all) {
@@ -221,6 +213,7 @@ export default Marionette.Object.extend({
                 model: ItemModel
             }),
             {
+                isSliding: true,
                 selectableBehavior: 'multi',
                 comparator: Core.utils.helpers.comparatorFor(Core.utils.comparators.stringComparator2Asc, 'name')
             }
@@ -239,6 +232,7 @@ export default Marionette.Object.extend({
                 model: ItemModel
             }),
             {
+                isSliding: true,
                 selectableBehavior: 'multi',
                 comparator: selectedComparator
             }

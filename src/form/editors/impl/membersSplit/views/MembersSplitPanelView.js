@@ -11,7 +11,7 @@ export default Marionette.View.extend({
     constructor(options) {
         Marionette.View.prototype.constructor.apply(this, arguments);
         this.channel = options.channel;
-        _.bindAll(this, '__onSelectedItemsSelect', '__onSelectedSearch', '__moveRight', '__moveLeft', '__moveRightAll', '__moveLeftAll');
+        _.bindAll(this, '__onSelectedItemsSelect', '__moveRight', '__moveLeft', '__moveRightAll', '__moveLeftAll');
         this.eventAggregator = [];
 
         this.model.set('isDisplayedAvailable', false);
@@ -23,8 +23,6 @@ export default Marionette.View.extend({
     className: 'columns-select',
 
     ui: {
-        availableSearchRegion: '.js-available-search-region',
-        selectedSearchRegion: '.js-selected-search-region',
         maxQuantityInfo: '.js-max-quantity-info'
     },
 
@@ -40,10 +38,8 @@ export default Marionette.View.extend({
     regions: {
         availableItemsListRegion: '.js-available-items-list-region',
         availableItemsToolbarRegion: '.js-available-items-toolbar-region',
-        availableSearchRegion: '.js-available-search-region',
         selectedItemsListRegion: '.js-selected-items-list-region',
-        selectedItemsToolbarRegion: '.js-selected-items-toolbar-region',
-        selectedSearchRegion: '.js-selected-search-region'
+        selectedItemsToolbarRegion: '.js-selected-items-toolbar-region'
     },
 
     onRender() {
@@ -52,6 +48,24 @@ export default Marionette.View.extend({
             this.ui.maxQuantityInfo.text(helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
         }
 
+        if (this.model.get('showToolbar')) {
+            // Available toolbar
+            const availableItemsToolbarView = new MembersToolbarView({
+                model: this.model
+            });
+            this.listenTo(availableItemsToolbarView, 'select', this.__onAvailableItemsSelect);
+            this.showChildView('availableItemsToolbarRegion', availableItemsToolbarView);
+
+            // Selected toolbar
+            const selectedMembersToolbarView = new MembersToolbarView({
+                model: this.model
+            });
+            this.showChildView('selectedItemsToolbarRegion', selectedMembersToolbarView);
+            this.listenTo(selectedMembersToolbarView, 'select', this.__onSelectedItemsSelect);
+        }
+    },
+
+    onAttach() {
         const availableList = new Core.list.controllers.GridController({
             collection: this.model.get('available'),
             selectableBehavior: 'multi',
@@ -102,22 +116,6 @@ export default Marionette.View.extend({
         selectedList.on('childview:dblclick', this.__moveLeft);
 
         this.showChildView('selectedItemsListRegion', selectedList);
-
-        if (this.model.get('showToolbar')) {
-            // Available toolbar
-            const availableItemsToolbarView = new MembersToolbarView({
-                model: this.model
-            });
-            this.listenTo(availableItemsToolbarView, 'select', this.__onAvailableItemsSelect);
-            this.showChildView('availableItemsToolbarRegion', availableItemsToolbarView);
-
-            // Selected toolbar
-            const selectedMembersToolbarView = new MembersToolbarView({
-                model: this.model
-            });
-            this.showChildView('selectedItemsToolbarRegion', selectedMembersToolbarView);
-            this.listenTo(selectedMembersToolbarView, 'select', this.__onSelectedItemsSelect);
-        }
     },
 
     __moveRight() {
@@ -140,16 +138,8 @@ export default Marionette.View.extend({
         this.channel.trigger('items:select', 'available', id);
     },
 
-    __onAvailableSearch(value) {
-        this.channel.trigger('items:search', 'available', value);
-    },
-
     __onSelectedItemsSelect(id) {
         this.channel.trigger('items:select', 'selected', id);
-    },
-
-    __onSelectedSearch(value) {
-        this.channel.trigger('items:search', 'selected', value);
     },
 
     __accept() {
