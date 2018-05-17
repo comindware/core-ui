@@ -538,6 +538,9 @@ svg.svg-grid-icons {
     outline: 1px solid #0575bd;
     outline-offset: -1px;
 }
+.disabled.cell-focused {
+    outline: none;
+}
 
 .cell_selection-index{
     width: 53px;

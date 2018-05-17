@@ -39,6 +39,15 @@ export default {
 
         Backbone.history.start();
         Backbone.history.checkUrl();
+
+        window.addEventListener('beforeunload', e => {
+            const canLeave = this.activeModule.leave(true);
+
+            if (canLeave !== true) { // We need just to return smth to show default drowser leaving alert
+                (e || window.event).returnValue = '42';
+                return '42';
+            }
+        });
     },
 
     canNavigateBack() {

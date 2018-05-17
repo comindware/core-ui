@@ -29,9 +29,7 @@ export default Marionette.View.extend({
     },
 
     startEditing() {
-        const value = this.model.get('value');
-        const editableText = value ? moment(value).format(this.editDateFormat) : '';
-        this.ui.dateInput.val(editableText);
+        this.updateDisplayValue();
     },
 
     endEditing() {

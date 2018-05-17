@@ -721,6 +721,12 @@ input[type="checkbox"].checkbox {
     border-radius: 5px;
     padding: 2px 5px;
     transition: padding-right .2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+.bubbles__i:hover {
+    padding-right: 17px;
 }
 
 .bubbles__i-edit-btn:hover {
@@ -780,7 +786,9 @@ input[type="checkbox"].checkbox {
 }
 .bubbles__input {
     width: 100%;
+    height: 100%;
     border: 0;
+    background: transparent;
 }
 
 .editor_disabled .bubbles__input,
@@ -791,7 +799,22 @@ input[type="checkbox"].checkbox {
 .bubbles__input.empty{
     color: inherit;
 }
+
+.cell .bubbles{
+    border: none;
+}
 /* /Bubbles/ */
+
+
+.editor_icon{
+
+}
+
+.icons-wrp{
+    display: inline-block;
+    cursor: pointer;
+}
+
 
 
 /* reference-field */
@@ -1185,17 +1208,6 @@ input[type="color"], .colorpicker{
     margin-right: 4px;
 }
 
-.multiselect-i_selected .svg-icons-wrp_multiselect{
-    opacity: 1;
-}
-
-.multiselect-i .svg-icons_multiselect{
-    visibility: hidden;
-}
-.multiselect-i_selected .svg-icons_multiselect{
-    visibility: visible;
-}
-
 .svg-icons-wrp_add{
     left: 0;
     right: auto;
@@ -1283,6 +1295,12 @@ svg.svg-icons{
 .svg-icons_remove-bubble{
     transform: scale(0.9) translate(5px, 5px);
 }
+.svg-icons-wrp__remove-icons{
+    position: relative;
+    top: -3px;
+    left: -2px;
+}
+
 
 .svg-icons_date{
     transform: translate(3px, 2px);
@@ -1328,7 +1346,6 @@ svg.svg-icons{
 .editor_disabled .svg-icons-wrp_edit-reference{
     display: none;
 }
-
 
 
 .d-svg-icons{

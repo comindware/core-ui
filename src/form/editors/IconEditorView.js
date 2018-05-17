@@ -26,7 +26,7 @@ export default BaseLayoutEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'icon-editor-wrp',
+    className: 'editor editor_icon',
 
     regions: {
         iconSelectorHeaderRegion: '.js-icon-selector-header'
@@ -41,7 +41,9 @@ export default BaseLayoutEditorView.extend({
     },
 
     onRender() {
-        this.popupPanel = Core.dropdown.factory.createPopout({
+        !this.model.get('color') && this.model.set('color', '#000000');
+
+        this.popupPanel = Core.dropdown.factory.createDropdown({
             buttonView: IconButtonView,
             panelView: IconPanelView,
             buttonViewOptions: {
@@ -49,11 +51,9 @@ export default BaseLayoutEditorView.extend({
             },
             panelViewOptions: {
                 collection: this.__getConfig(),
-                model: new Backbone.Model({
-                    searchKey: ''
-                })
+                model: this.model
             },
-            customAnchor: true
+            autoOpen: true
         });
 
         this.popupPanel.on('panel:click:item', id => {
@@ -70,16 +70,12 @@ export default BaseLayoutEditorView.extend({
     },
 
     __getConfig() {
-        const groupItems = [];
-        const groupItemsObj = this.__groupIcon();
-        const groupItemsNames = Object.keys(groupItemsObj);
-        _.each(groupItemsNames, item => {
-            groupItems.push({
-                name: item,
-                groupItems: groupItemsObj[item]
-            });
-        });
-        return new Backbone.Collection(groupItems);
+        return new Backbone.Collection(
+            Object.entries(this.__groupIcon()).map(item => ({
+                name: item[0],
+                groupItems: item[1]
+            }))
+        );
     },
 
     __onDeleteIconClick() {

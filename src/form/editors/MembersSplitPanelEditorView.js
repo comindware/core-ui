@@ -3,6 +3,7 @@ import template from './templates/membersSplitPanelEditor.html';
 import MembersSplitPanelController from './impl/membersSplit/controller/MembersSplitPanelController';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import WindowService from '../../services/WindowService';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
@@ -25,8 +26,8 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
     initialize(options = {}) {
         const defOps = Object.assign(defaultOptions(), {
             users:
-                options.users
-                || options.schema.cacheService.GetUsers().map(user => ({
+                options.users ||
+                options.schema.cacheService.GetUsers().map(user => ({
                     id: user.Id,
                     name: user.Text || user.Username,
                     abbreviation: user.abbreviation,
@@ -34,8 +35,8 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
                     type: 'users'
                 })),
             groups:
-                options.groups
-                || options.schema.cacheService.GetGroups().map(group => ({
+                options.groups ||
+                options.schema.cacheService.GetGroups().map(group => ({
                     id: group.id,
                     name: group.name,
                     type: 'groups'
@@ -47,9 +48,12 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         this.options.selected = this.getValue();
 
         this.controller = new MembersSplitPanelController(this.options);
-        this.controller.on('popup:ok', () => {
-            this.__value(this.options.selected, true);
-        });
+        if (this.getOption('showMode') !== 'button') {
+            this.controller.on('popup:ok', () => {
+                this.__value(this.options.selected, true);
+                this.__updateEditor();
+            });
+        }
     },
 
     className: 'member-split',
@@ -69,11 +73,16 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         membersText: '.js-members-text'
     },
 
+    events: {
+        'click @ui.membersEditor': '__showPopup'
+    },
+
     template: Handlebars.compile(template),
 
     templateContext() {
         return {
-            displayText: this.options.displayText
+            displayText: this.options.displayText,
+            showButton: this.getOption('showMode') === 'button'
         };
     },
 
@@ -82,12 +91,59 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
     },
 
     onRender() {
+        if (this.getOption('showMode') !== 'button') {
+            this.controller.initItems();
+
+            this.showChildView('splitPanelRegion', this.controller.view);
+        }
+    },
+
+    __showPopup() {
+        if (!this.getEnabled()) {
+            return;
+        }
+        this.options.selected = this.getValue();
         this.controller.initItems();
-        this.showChildView('splitPanelRegion', this.controller.view);
+
+        const popup = new Core.layout.Popup({
+            size: {
+                width: '980px',
+                height: '700px'
+            },
+            header: this.getOption('title') || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE'),
+            buttons: [
+                {
+                    id: 'save',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+                    handler: () => {
+                        this.controller.updateMembers();
+                        this.__value(this.options.selected, true);
+                        this.__updateEditor();
+                        Core.services.WindowService.closePopup();
+                    }
+                },
+                {
+                    id: 'close',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+                    handler: () => {
+                        this.controller.cancelMembers();
+                        Core.services.WindowService.closePopup();
+                    }
+                }
+            ],
+            content: this.controller.view
+        });
+
+        WindowService.showPopup(popup);
+    },
+
+    __updateEditor() {
+        this.ui.membersText.text(this.options.displayText);
     },
 
     __value(value, triggerChange) {
         this.value = value;
+
         if (triggerChange) {
             this.__triggerChange();
         }

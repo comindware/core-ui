@@ -78,7 +78,6 @@ describe('Components', () => {
             }).view;
 
             view.on('attach', () => {
-                console.log('123');
                 expect(true).toEqual(true);
                 done();
             });

@@ -12,7 +12,8 @@ export default function () {
             key: 'selected',
             autocommit: true,
             users: Core.services.UserService.listUsers(),
-            groups: Core.services.UserService.listGroups()
+            groups: Core.services.UserService.listGroups(),
+            showMode: 'button'
         }),
         presentation: '\'{{memberValue}}\'',
         isEditor: true
