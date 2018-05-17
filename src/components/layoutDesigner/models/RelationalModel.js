@@ -42,7 +42,7 @@ const relationalCollection = Backbone.Collection.extend(extendParams);
 export default Backbone.Model.extend({
     defaults() {
         return {
-            name: Localizer.get('PROCESS.FORMDESIGNER.NEWFORM'),
+            name: Localizer.get('CORE.FORM.NEWFORM'), //todo remvoe it
             alias: 'newForm',
             root: new Backbone.Model({
                 width: 0,

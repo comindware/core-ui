@@ -63,11 +63,11 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-menu-select-item').length) {
+                        if (document.getElementsByClassName('js-available-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-menu-select-item').first().click().dblclick();
+                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click().dblclick();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
@@ -101,11 +101,12 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
                             clearTimeout(first);
-                            view.$('.js-selected-members-container .js-menu-select-item').first().click().dblclick();
+                            view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().first().click().dblclick();
+
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length === 0) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
                                     done();
@@ -138,12 +139,12 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-available-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-menu-select-item').first().click();
+                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click();
                             view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
@@ -160,7 +161,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move all items fron available to selected container on move all button click', done => {
+        it('should move item fron available to selected container on move right button click', done => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -176,14 +177,14 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-available-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-selected-members-container .js-menu-select-item').first().click();
-                            view.$('.js-move-left-button').click();
+                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click();
+                            view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length === 0) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 1) {
                                     clearTimeout(second);
-                                    expect(view.getValue()).toEqual([]);
+                                    expect(view.getValue()).toEqual(['user.10']);
                                     done();
                                 }
                             }, 100);
@@ -198,7 +199,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item fron selected to available container on move button click', done => {
+        it('should move item from selected to available container on move button click', done => {
             const model = new Backbone.Model({
                 selected: ['user.1']
             });
@@ -214,14 +215,14 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-menu-select-item').first().click();
-                            view.$('.js-move-right-all-button').click();
+                            view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().first().click();
+                            view.$('.js-move-left-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
                                     clearTimeout(second);
-                                    expect(view.getValue().length).toEqual(11);
+                                    expect(view.getValue().length).toEqual(0);
                                     done();
                                 }
                             }, 100);
@@ -252,11 +253,11 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
                             clearTimeout(first);
                             view.$('.js-move-left-all-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length === 0) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
                                     done();
@@ -289,15 +290,17 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
                             clearTimeout(first);
                             view.$('.js-users-button').click();
+
                             const second = setInterval(() => {
-                                if (view.$('.js-available-members-container .js-menu-select-item').length === 3) {
+                                if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 3) {
                                     clearTimeout(second);
                                     view.$('.js-groups-button').click();
+
                                     const third = setInterval(() => {
-                                        if (view.$('.js-available-members-container .js-menu-select-item').length === 3) {
+                                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 3) {
                                             clearTimeout(third);
                                             expect(true).toEqual(true);
                                             done();

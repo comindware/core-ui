@@ -3,6 +3,7 @@ import template from './templates/membersSplitPanelEditor.html';
 import MembersSplitPanelController from './impl/membersSplit/controller/MembersSplitPanelController';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
+import WindowService from '../../services/WindowService';
 
 // used as function because Localization service is not initialized yet
 const defaultOptions = () => ({
@@ -25,8 +26,8 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
     initialize(options = {}) {
         const defOps = Object.assign(defaultOptions(), {
             users:
-                options.users
-                || options.schema.cacheService.GetUsers().map(user => ({
+                options.users ||
+                options.schema.cacheService.GetUsers().map(user => ({
                     id: user.Id,
                     name: user.Text || user.Username,
                     abbreviation: user.abbreviation,
@@ -34,8 +35,8 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
                     type: 'users'
                 })),
             groups:
-                options.groups
-                || options.schema.cacheService.GetGroups().map(group => ({
+                options.groups ||
+                options.schema.cacheService.GetGroups().map(group => ({
                     id: group.id,
                     name: group.name,
                     type: 'groups'
@@ -47,8 +48,10 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         this.options.selected = this.getValue();
 
         this.controller = new MembersSplitPanelController(this.options);
+
         this.controller.on('popup:ok', () => {
             this.__value(this.options.selected, true);
+            this.__updateEditor();
         });
     },
 
@@ -69,6 +72,10 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         membersText: '.js-members-text'
     },
 
+    events: {
+        'click @ui.membersEditor': '__showPopup'
+    },
+
     template: Handlebars.compile(template),
 
     templateContext() {
@@ -86,8 +93,21 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
         this.showChildView('splitPanelRegion', this.controller.view);
     },
 
+    __showPopup() {
+        if (!this.getEnabled()) {
+            return;
+        }
+        this.controller.initItems();
+        WindowService.showPopup(this.controller.view);
+    },
+
+    __updateEditor() {
+        this.ui.membersText.text(this.options.displayText);
+    },
+
     __value(value, triggerChange) {
         this.value = value;
+
         if (triggerChange) {
             this.__triggerChange();
         }

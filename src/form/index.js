@@ -23,12 +23,10 @@ import DocumentEditorView from './editors/DocumentEditorView';
 import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
-import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
-import WorkSpaceItemsEditorView from './editors/WorkSpaceItemsEditorView';
 import editorsImplCommonMembersFactory from './editors/impl/members/services/factory';
 import editorsImplCommonMembersCollection from './editors/impl/members/collections/MembersCollection';
 import editorsImplCommonMemberModel from './editors/impl/members/models/MemberModel';
@@ -172,18 +170,17 @@ const api = /** @lends module:core.form */ {
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
         BooleanSwitchEditor: BooleanSwitchEditorView,
-        MembersSplitEditor: MembersSplitEditorView,
         MembersSplitPanelEditor: MembersSplitPanelEditorView,
         ExpressionEditor: ExpressionEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,
-        WorkSpaceItemsEditor: WorkSpaceItemsEditorView,
         IconEditor: IconEditorView,
         ColorPickerEditor,
         RangeEditor,
         AudioEditor
     }
 };
+
 export default api;
 export const editors = api.editors;
 export const behaviors = api.behaviors;

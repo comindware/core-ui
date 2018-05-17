@@ -14,7 +14,7 @@ export default Marionette.View.extend({
     templateContext() {
         const value = this.model.get('value');
         return {
-            buttonText: value || Localizer.get('WIDGETS.WTABLE.EMPTYVALUE')
+            buttonText: value || Localizer.get('CORE.GRID.NOTSET')
         };
     },
 
