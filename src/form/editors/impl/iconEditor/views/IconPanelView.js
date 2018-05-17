@@ -9,7 +9,7 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'icons-panel',
+    className: 'dropdown__wrp dropdown__icons',
 
     regions: {
         searchInputRegion: '.js-search-input-region',

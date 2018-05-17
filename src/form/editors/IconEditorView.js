@@ -26,7 +26,7 @@ export default BaseLayoutEditorView.extend({
 
     template: Handlebars.compile(template),
 
-    className: 'icon-editor-wrp',
+    className: 'editor editor_icon',
 
     regions: {
         iconSelectorHeaderRegion: '.js-icon-selector-header'
