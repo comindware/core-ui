@@ -379,7 +379,7 @@ describe('Editors', () => {
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
             let panel = document.getElementsByClassName('dropdown__wrp')[0];
-            expect(panel.clientHeight).toEqual(410);
+            expect(panel.clientHeight).toEqual(400);
         });
         /*
         it('should remove items on uncheck in panel', done => {

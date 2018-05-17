@@ -284,7 +284,9 @@ export default Marionette.View.extend({
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl)) || document.getElementsByClassName('sp-container')[0].contains(testedEl); //Color picker custom el container;
+        const palet = document.getElementsByClassName('sp-container')[0];
+
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl)) || !palet || palet.contains(testedEl); //Color picker custom el container;
     },
 
     __handleBlur() {

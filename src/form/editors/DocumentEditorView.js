@@ -26,12 +26,14 @@ const defaultOptions = {
     showRevision: true,
     createDocuments: documents =>
         // todo: strange method
-        Promise.resolve(documents.map(doc => ({
-            id: doc.id,
-            fileName: doc.fileName,
-            documentsId: documents.map(item => item.id)
-        }))),
-    removeDocuments: () => { },
+        Promise.resolve(
+            documents.map(doc => ({
+                id: doc.id,
+                fileName: doc.fileName,
+                documentsId: documents.map(item => item.id)
+            }))
+        ),
+    removeDocuments: () => {},
     displayText: ''
 };
 
@@ -164,8 +166,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     renderUploadButton(isReadonly) {
-        if (!isReadonly) {
-        } else {
+        if (isReadonly) {
             this.ui.addRegion.hide();
         }
     },
@@ -466,7 +467,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     expandShowMore() {
-        this.getChildViewContainer(this).children().show();
+        this.getChildViewContainer(this)
+            .children()
+            .show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },

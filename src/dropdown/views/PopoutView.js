@@ -312,8 +312,8 @@ export default Marionette.View.extend({
             top: number,
             bottom?: number
         } = {
-                top
-            };
+            top
+        };
         if (this.options.height === height.BOTTOM) {
             css.bottom = WINDOW_BORDER_OFFSET;
         }
@@ -478,9 +478,15 @@ export default Marionette.View.extend({
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId)
-            .map(x => x.el)
-            .some(el => el === testedEl || el.contains(testedEl)) || document.getElementsByClassName('sp-container')[0].contains(testedEl); //Color picker custom el container
+        const palet = document.getElementsByClassName('sp-container')[0];
+
+        return (
+            WindowService.get(this.popupId)
+                .map(x => x.el)
+                .some(el => el === testedEl || el.contains(testedEl)) ||
+            !palet ||
+            palet.contains(testedEl)
+        ); //Color picker custom el container
     },
 
     __handleBlur() {
