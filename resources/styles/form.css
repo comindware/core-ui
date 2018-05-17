@@ -1442,11 +1442,15 @@ svg.svg-icons{
 
 .task-links__i {
     max-width: 100%;
-    margin: 5px 10px 5px 0;
     padding: 0 18px 0 0;
     display: inline-block;
     vertical-align: top;
     position: relative;
+    display: flex;
+}
+
+.cell .task-links__i {
+    line-height: 25px;
 }
 
 .task-links__link {
@@ -1524,12 +1528,19 @@ svg.svg-icons{
     color: #636262;
 }
 
+.documents {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: baseline;
+}
+
 .dev-btn-document-revise{
-    position: absolute;
-    right: 18px;
+    position: relative;
     display: inline-block;
     top: 0px;
-    margin-top: -4px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 .dev-revision-container{

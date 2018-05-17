@@ -1,6 +1,7 @@
 import { $ } from 'lib'; //todo wtf
 import core from 'coreApi';
 import { dataProvider } from './utils/testData';
+import ajaxStub from './utils/ajaxStub';
 import localizationMap from 'localizationMap';
 import 'jasmine-jquery';
 
@@ -81,6 +82,8 @@ const Application = Marionette.Application.extend({
             },
             serviceInitializer() { }
         });
+
+        ajaxStub.initialize();
 
         const context = require.context('./specs', true, /.+\.spec\.jsx?$/);
         context.keys().forEach(context);
