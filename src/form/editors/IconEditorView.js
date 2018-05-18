@@ -19,6 +19,7 @@ const constants = {
 export default BaseLayoutEditorView.extend({
     initialize(options) {
         const modelIconProperty = options.modelIconProperty;
+
         if (modelIconProperty && modelIconProperty !== constants.iconPropertyDefaultName) {
             this.model.set('iconClass', this.model.get(options.modelIconProperty));
         }
@@ -69,6 +70,33 @@ export default BaseLayoutEditorView.extend({
         }
     },
 
+    open() {
+        this.popupPanel.open();
+    },
+
+    close() {
+        this.popupPanel.close();
+    },
+
+    isEmptyValue() {
+        return !this.model.has('iconClass');
+    },
+
+    __groupIcon() {
+        const groupItemsObj = {};
+
+        iconPalette.forEach(item => {
+            item.categories.forEach(categoryItem => {
+                if (!groupItemsObj[categoryItem]) {
+                    groupItemsObj[categoryItem] = [];
+                }
+                groupItemsObj[categoryItem].push(item);
+            });
+        });
+
+        return groupItemsObj;
+    },
+
     __getConfig() {
         return new Backbone.Collection(
             Object.entries(this.__groupIcon()).map(item => ({
@@ -82,27 +110,5 @@ export default BaseLayoutEditorView.extend({
         this.model.set('iconClass', null);
         this.trigger('click:item', null);
         this.ui.deleteIconButton.hide();
-        this.popupPanel.render();
-    },
-
-    open() {
-        this.popupPanel.open();
-    },
-
-    close() {
-        this.popupPanel.close();
-    },
-
-    __groupIcon() {
-        const groupItemsObj = {};
-        _.each(iconPalette, item => {
-            _.each(item.categories, categoryItem => {
-                if (!groupItemsObj[categoryItem]) {
-                    groupItemsObj[categoryItem] = [];
-                }
-                groupItemsObj[categoryItem].push(item);
-            });
-        });
-        return groupItemsObj;
     }
 });
