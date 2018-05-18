@@ -1,6 +1,6 @@
 // @flow
 import template from './templates/membersSplitPanelEditor.html';
-import MembersSplitPanelController from './impl/membersSplit/controller/MembersSplitPanelController';
+import MembersSplitController from './impl/membersSplit/controller/MembersSplitController';
 import formRepository from '../formRepository';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import WindowService from '../../services/WindowService';
@@ -47,7 +47,7 @@ export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.
 
         this.options.selected = this.getValue();
 
-        this.controller = new MembersSplitPanelController(this.options);
+        this.controller = new MembersSplitController(this.options);
         if (this.getOption('showMode') !== 'button') {
             this.controller.on('popup:ok', () => {
                 this.__value(this.options.selected, true);
