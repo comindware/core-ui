@@ -67,10 +67,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             }
         }
         this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
+
         this.controller =
             this.options.controller ||
             new StaticController({
-                collection: this.panelCollection
+                collection: options.collection
             });
 
         this.value = this.__adjustValue(this.value);

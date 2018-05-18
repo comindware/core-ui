@@ -19,10 +19,11 @@ const defaultOptions = () => ({
     searchPlaceholder: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.SEARCHUSERS'),
     emptyListText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST'),
     users: undefined,
-    groups: undefined
+    groups: undefined,
+    showMode: null
 });
 
-export default (formRepository.editors.MembersSplitPanel = BaseLayoutEditorView.extend({
+export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         const defOps = Object.assign(defaultOptions(), {
             users:
