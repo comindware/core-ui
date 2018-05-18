@@ -286,7 +286,7 @@ export default Marionette.View.extend({
     __isNestedInPanel(testedEl) {
         const palet = document.getElementsByClassName('sp-container')[0]; //Color picker custom el container;
 
-        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl)) || !palet || palet.contains(testedEl);
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl)) || (palet && palet.contains(testedEl));
     },
 
     __handleBlur() {
