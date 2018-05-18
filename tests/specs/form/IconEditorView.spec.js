@@ -4,7 +4,7 @@ import core from 'coreApi';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    describe('IconEDitorView', () => {
+    describe('IconEditorView', () => {
         it('should render', () => {
             const model = new Backbone.Model({
                 iconClass: 'user'
@@ -20,7 +20,7 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            expect(document.getElementsByClassName('icon-editor-wrp').length).toEqual(1);
+            expect(document.getElementsByClassName('icons-wrp').length).toEqual(1);
         });
 
         it('should set initial value', () => {
@@ -55,7 +55,6 @@ describe('Editors', () => {
                 .getView()
                 .getRegion('contentRegion')
                 .show(view);
-
 
             document.getElementsByClassName('js-delete-icon')[0].click();
 

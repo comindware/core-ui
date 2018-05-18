@@ -103,8 +103,7 @@ const GridHeaderView = Marionette.View.extend({
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
             if (this.options.isTree && isFirstChild) {
-                view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button ${
-                    this.collapsed === false ? classes.expanded : ''}"></span>`);
+                view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>`);
                 isFirstChild = false;
             }
             el.classList.add(`${this.getOption('uniqueId')}-column${i}`);
@@ -286,7 +285,7 @@ const GridHeaderView = Marionette.View.extend({
         event.preventDefault();
     },
 
-    __handleDragEnter() {
+    __handleDragEnter(event) {
         if (!this.collection.draggingModel) {
             return;
         }

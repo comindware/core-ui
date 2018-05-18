@@ -26,7 +26,7 @@ const defaultOptions = {
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
 
-formRepository.editors.Avatar = BaseItemEditorView.extend({
+export default (formRepository.editors.Avatar = BaseItemEditorView.extend({
     className: 'user-avatar-wrp',
 
     attributes: {
@@ -191,6 +191,4 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
 
         previewURL && this.ui.image.css('background-image', `url("${previewURL}")`);
     }
-});
-
-export default formRepository.editors.Avatar;
+}));

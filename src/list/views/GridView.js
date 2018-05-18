@@ -281,7 +281,7 @@ export default Marionette.View.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
-        document.body.appendChild(this.styleSheet);
+        document.body && document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
         if (this.options.showSearch) {
             this.searchView.focus();

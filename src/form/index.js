@@ -23,7 +23,7 @@ import DocumentEditorView from './editors/DocumentEditorView';
 import CodeEditorView from './editors/CodeEditorView';
 import ContextSelectEditorView from './editors/ContextSelectEditorView';
 import BooleanSwitchEditorView from './editors/BooleanSwitchEditorView';
-import MembersSplitPanelEditorView from './editors/MembersSplitPanelEditorView';
+import MembersSplitEditorView from './editors/MembersSplitEditorView';
 import ExpressionEditorView from './editors/ExpressionEditorView';
 import DocumentExpressionEditorView from './editors/DocumentExpressionEditorView';
 import NewExpressionEditorView from './editors/NewExpressionEditorView';
@@ -44,7 +44,6 @@ import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonV
 import DatalistButtonView from './editors/impl/datalist/views/ButtonView';
 import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
 import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
-import UploadDocumentButtonView from './editors/impl/document/views/UploadDocumentButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
 import AudioEditor from './editors/AudioEditor';
@@ -140,19 +139,6 @@ const api = /** @lends module:core.form */ {
                 UserReferenceListItemView
             }
         },
-        /**
-         * Document editor data providers and internal implementation.
-         * @namespace
-         * */
-        document: {
-            /**
-             * Base implementation of data providers for DocumentEditorView.
-             * @namespace
-             * */
-            views: {
-                UploadDocumentButtonView
-            }
-        },
         BooleanEditor: BooleanEditorView,
         NumberEditor: NumberEditorView,
         TextAreaEditor: TextAreaEditorView,
@@ -170,7 +156,7 @@ const api = /** @lends module:core.form */ {
         CodeEditor: CodeEditorView,
         ContextSelectEditor: ContextSelectEditorView,
         BooleanSwitchEditor: BooleanSwitchEditorView,
-        MembersSplitPanelEditor: MembersSplitPanelEditorView,
+        MembersSplitEditor: MembersSplitEditorView,
         ExpressionEditor: ExpressionEditorView,
         DocumentExpressionEditor: DocumentExpressionEditorView,
         NewExpressionEditor: NewExpressionEditorView,

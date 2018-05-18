@@ -7,7 +7,7 @@ export default function () {
     });
 
     return new CanvasView({
-        view: new core.form.editors.MembersSplitPanelEditor({
+        view: new core.form.editors.MembersSplitEditor({
             model,
             key: 'selected',
             autocommit: true,
