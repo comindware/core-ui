@@ -5,7 +5,7 @@ import EditableGridFieldView from './views/EditableGridFieldView';
 
 let factory;
 
-export default factory = {
+export default (factory = {
     getCellViewForColumn(column, model) {
         if (column.editable) {
             return EditableGridFieldView;
@@ -121,9 +121,9 @@ export default factory = {
 
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
-            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-            '{{/if}}',
+                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+                '{{/if}}',
             extention
         );
     },
@@ -154,7 +154,7 @@ export default factory = {
                         unhighlighted: '__handleHighlightedFragmentChange'
                     },
                     __handleHighlightedFragmentChange() {
-                        factory.render();
+                        this.render();
                     },
                     className: 'grid-cell'
                 },
@@ -341,4 +341,4 @@ export default factory = {
                 return value;
         }
     }
-};
+});
