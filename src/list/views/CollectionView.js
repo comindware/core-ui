@@ -332,7 +332,8 @@ export default Marionette.CompositeView.extend({
 
     __updateTop() {
         const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-        this.ui.childViewContainer.css('top', top);
+        this.ui.childViewContainer[0].style.top = `${top}px`;
+
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:top', top);
         }

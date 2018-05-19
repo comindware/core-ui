@@ -34,6 +34,7 @@
 
 .visible-collection-wrp, .selection-panel-wrp {
     position: relative;
+    will-change: top;
 }
 
 .visible-collection-view {
