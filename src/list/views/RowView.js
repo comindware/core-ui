@@ -114,15 +114,10 @@ export default Marionette.View.extend({
         this.cellViews = [];
 
         this.options.columns.forEach(gridColumn => {
-            const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model);
-            const type = gridColumn.type;
-            let alignClass = '';
+            const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
-                if ([objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL].includes(type)) {
-                    alignClass = 'cell-right';
-                }
-                return this.el.insertAdjacentHTML('beforeend', `<div class="cell ${alignClass} ${gridColumn.columnClass}">${cell}</div>`);
+                return this.el.insertAdjacentHTML('beforeend', cell);
             }
 
             const cellView = new cell({

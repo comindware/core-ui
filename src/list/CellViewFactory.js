@@ -268,16 +268,16 @@ export default (factory = {
         const value = model.get(column.key);
 
         if (value === null || value === undefined) {
-            return '';
+            return `<div class="cell ${column.columnClass}"></div>`;
         }
         switch (type) {
             case objectPropertyTypes.STRING:
-                return value;
+                return `<div class="cell ${column.columnClass}">${value}</div>`;
             case objectPropertyTypes.INSTANCE:
-                return value ? value.name : '';
+                return `<div class="cell ${column.columnClass}">${value ? value.name : ''}</div>`;
             case objectPropertyTypes.ACCOUNT:
                 if (value && value.length > 0) {
-                    return value
+                    return `<div class="cell ${column.columnClass}">${value
                         .map(item => ({
                             id: item.id,
                             text: item.text || item.name || (item.columns && item.columns[0])
@@ -288,22 +288,22 @@ export default (factory = {
                                 return `${memo}, ${member.text}`;
                             }
                             return member.text;
-                        }, null);
+                        }, null)}</div>`;
                 } else if (value && value.name) {
-                    return value.name;
+                    return `<div class="cell ${column.columnClass}">${value.name}</div>`;
                 }
             case objectPropertyTypes.ENUM:
-                return value ? value.valueExplained : '';
+                return `<div class="cell ${column.columnClass}">${value ? value.valueExplained : ''}</div>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                return value ? value.toString() : '';
+                return `<div class="cell cell-right ${column.columnClass}">${value ? value.toString() : ''}</div>`;
             case objectPropertyTypes.DURATION: {
                 if (value === 0) {
-                    return '0';
+                    return `<div class="cell ${column.columnClass}">${'0'}</div>`;
                 }
                 if (!value) {
-                    return '';
+                    return `<div class="cell ${column.columnClass}"></div>`;
                 }
                 let result = '';
                 const duration = dateHelpers.durationISOToObject(value);
@@ -316,29 +316,29 @@ export default (factory = {
                 if (duration.minutes) {
                     result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
                 }
-                return result.trim();
+                return `<div class="cell ${column.columnClass}">${result.trim()}</div>`;
             }
             case objectPropertyTypes.BOOLEAN:
                 if (value === true) {
-                    return '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
+                    return `<div class="cell ${column.columnClass}"><svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg></div>`;
                 } else if (value === false) {
-                    return '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
+                    return `<div class="cell ${column.columnClass}"><svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg></div>`;
                 }
             case objectPropertyTypes.DATETIME:
-                return dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime');
+                return `<div class="cell ${column.columnClass}">${dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime')}</div>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value && value.length > 0) {
-                    return value
+                    return `<div class="cell ${column.columnClass}">${value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
                             return `<a href="${url}">${text}</a>`;
                         })
                         .sort((a, b) => a.text > b.text)
-                        .join(', ');
+                        .join(', ')}</div>`;
                 }
             default:
-                return value;
+                return `<div class="cell ${column.columnClass}">${value}</div>`;
         }
     }
 });
