@@ -3,13 +3,13 @@ export default function() {
     // Select this model, and tell our
     // collection that we're selected
     return {
-        select() {
+        select(isSilent = false) {
             if (this.selected) {
                 return;
             }
 
             this.selected = true;
-            this.trigger('selected', this);
+            !isSilent && this.trigger('selected', this);
 
             if (this.collection) {
                 this.collection.select(this);

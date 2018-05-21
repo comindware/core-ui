@@ -269,9 +269,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const selectedItems = _.filter(this.viewModel.button.selected.models, model => model !== this.fakeInputModel);
-
-        return this.getEnabled() && !this.getReadonly() && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
+        return this.getEnabled() && !this.getReadonly();
     },
 
     __onValueEdit(value) {

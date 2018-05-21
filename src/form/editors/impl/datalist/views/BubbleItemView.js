@@ -50,7 +50,9 @@ export default Marionette.View.extend({
     __click(e) {
         if (e.target.tagName === 'A') {
             e.stopPropagation();
+            return;
         }
+        this.reqres.request('button:click');
     },
 
     __edit() {

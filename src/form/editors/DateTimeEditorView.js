@@ -10,6 +10,7 @@ import DatePanelView from './impl/dateTime/views/DatePanelView';
 import dropdown from 'dropdown';
 import TimeInputView from './impl/dateTime/views/TimeInputView';
 import { dateHelpers } from 'utils';
+import GlobalEventService from '../../services/GlobalEventService';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -55,6 +56,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                   enabled: this.enabled,
                   value: this.value
               }));
+
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
     },
 
     ui: {
@@ -105,6 +108,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     modelEvents: {
         'change:value': '__change'
+    },
+
+    __keyAction(event) {
+        const dropdownView = this.calendarDropdownView;
+        if (dropdownView.isOpen && event.keyCode === 13) {
+            const newValue = dropdownView.button.ui.dateInput.val();
+            dropdownView.panelView.updatePickerPanelValue(newValue);
+        }
     },
 
     onRender(): void {
