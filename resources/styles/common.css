@@ -693,7 +693,7 @@ a:hover {
 }
 
 .grid-toolbar__search{
-    width: 100%;
+    flex: 0 0 auto;
 }
 
 .grid-toolbar__search .tr-search{
@@ -904,6 +904,7 @@ a:hover {
 
 .toolbar-container .popout__action-btn {
     padding: 0 10px;
+    line-height: 30px;
 }
 
 .toolbar-btn .dropdown__button {
