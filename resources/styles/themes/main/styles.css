@@ -1,0 +1,56 @@
+.editor:after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background-color: var(--blue-100);
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  transition: width .4s;
+}
+.editor_focused:after {
+  width: 100%;
+}
+.editor_readonly:after,
+.editor_disabled:after{
+    width: 0;
+}
+
+.editor_checkbox:after,
+.editor_radiobutton:after {
+  width: 0;
+}
+
+.editor_checkbox {
+  height: 18px;
+  line-height: 18px;
+}
+
+.input:hover {
+  border-color: var(--input-hover-color);
+}
+
+.textarea:hover {
+  border-color: var(--input-hover-color);
+}
+
+.checkbox {
+  border-radius: var(--checkbox-radius);
+}
+
+.editor_focused .checkbox,
+.editor_focused .radiobutton {
+  box-shadow: 0 0 5px rgba(47,152,248,.5);
+}
+.checkbox-text {
+  line-height: 18px;
+}
+
+.editor_radiobutton {
+  height: 19px;
+  line-height: 19px;
+}
+
+.radiobutton {
+  transition: box-shadow .5s;
+}

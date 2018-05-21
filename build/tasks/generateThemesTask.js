@@ -1,23 +1,32 @@
 /*eslint-env node*/
 const gulp = require('gulp');
+const concat = require('gulp-concat');
 const merge = require('merge-stream');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const postCSSCustomProperties = require('postcss-custom-properties');
+const apply = require('postcss-apply');
 const pathResolver = require('../pathResolver');
 
 const themes = ['main', 'new'];
 
 const themeTask = name => {
-    const variables = require(pathResolver.resources(`styles/themes/${name}/variables`));
+    const themePath = `styles/themes/${name}`;
+    const theme = require(pathResolver.resources(themePath));
+    const sources = [pathResolver.resources(`${themePath}/styles.css`), pathResolver.resources('styles/themes/theme.css')];
+
     return gulp
-        .src(pathResolver.resources('styles/themes/theme.css'))
+        .src(sources)
         .pipe(
             postcss([
                 postCSSCustomProperties({
                     preserve: false,
-                    variables
+                    warnings: true,
+                    variables: theme.variables
+                }),
+                apply({
+                    sets: theme.apply
                 }),
                 autoprefixer({
                     browsers: ['ie 11', '> 0.25%', 'not chrome 29']
@@ -34,6 +43,7 @@ const themeTask = name => {
                 })
             ])
         )
+        .pipe(concat('theme.css'))
         .pipe(gulp.dest(pathResolver.compiled(`themes/${name}`)));
 };
 

@@ -65,10 +65,6 @@ body.non-selectable {
     min-width: 0px;
 }
 
-body, input, textarea, select {
-    font: normal 12px/1.4 Arial, 'OpenSans', sans-serif;
-}
-
 .noselect {
     user-select: none;
 }

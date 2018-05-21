@@ -1,0 +1,14 @@
+.editor_focused .input,
+.editor_focused .textarea {
+  border-color: var(--input-active-border-color);
+}
+
+.checkbox,
+.radiobutton {
+  background: var(--light-gradient);
+}
+
+.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox {
+  background: var(--checkbox-checked-color);
+  border-color: var(--checkbox-checked-color);
+}

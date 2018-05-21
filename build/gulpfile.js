@@ -32,7 +32,7 @@ gulp.task('watch:generateSprites', () => {
 
 gulp.task('generateThemes', require('./tasks/generateThemesTask'));
 gulp.task('watch:generateThemes', () => {
-    gulp.watch(pathResolver.resources('styles/themes/*'), ['generateThemes']);
+    gulp.watch(pathResolver.resources('styles/themes/**/*'), ['generateThemes']);
 });
 
 gulp.task('jsdoc', require('./tasks/jsdocTask'));
@@ -108,6 +108,8 @@ gulp.task('build', callback => runSequence(['build:core:prod', 'jsdoc'], 'locali
 
 gulp.task('build:min', callback => runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', callback));
 
-gulp.task('deploy', callback => runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish', callback));
+gulp.task('deploy', callback =>
+    runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish', callback)
+);
 
 gulp.task('default', ['start']);

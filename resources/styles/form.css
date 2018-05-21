@@ -278,35 +278,8 @@ rgba(5,117,189,.5) // user avatar btn
 }
 
 .editor {
-    height: 20px;
-    line-height: 20px;
-    font-size: 12px;
     position: relative;
-    color:#384650;
     width: 100%;
-}
-
-.editor:after {
-    content: '';
-    position: absolute;
-    height: 2px;
-    background: #0575bd;
-    left:0;
-    bottom: -1px;
-    width: 0;
-    transition: width .4s;
-}
-
-.editor_focused:after {
-    width: 100%;
-}
-
-.editor_empty{
-    color:#d3d5d6;
-}
-
-.editor_focused {
-    color:#384650;
 }
 
 .editor_code{
@@ -339,12 +312,6 @@ rgba(5,117,189,.5) // user avatar btn
     justify-content: flex-start;
 }
 
-
-.editor_readonly:after,
-.editor_disabled:after{
-    width: 0;
-}
-
 .editor_readonly,
 .editor_disabled{
     cursor: default;
@@ -375,20 +342,11 @@ input[type="checkbox"].checkbox {
 }
 .editor_checkbox {
     max-width: 100%;
-    height: 18px;
-    line-height: 18px;
     display: flex;
 }
 
-.editor_checkbox:after {
-    width: 0;
-}
-
-.editor_checkbox.editor_empty{
-    color:#384650;
-}
-
 .checkbox {
+    position: relative;
     width: 16px;
     height: 16px;
     border-radius: 2px;
@@ -399,17 +357,10 @@ input[type="checkbox"].checkbox {
     transition: box-shadow .5s;
 }
 
-.editor_focused .checkbox {
-    box-shadow: 0 0 5px rgba(47,152,248,.5);
-}
-
 .editor_readonly .checkbox,
 .editor_disabled .checkbox {
-    filter: alpha(opacity=60);
-    opacity: .6;
     cursor: auto;
 }
-
 
 .checkbox-text {
     color: inherit;
@@ -433,61 +384,32 @@ input[type="checkbox"].checkbox {
 
 /* radiobutton */
 .editor_radiobutton {
-    height: 19px;
-    padding: 0 0 0 19px;
-    line-height: 19px;
+    display: flex;
     cursor: pointer;
-}
-
-.editor_radiobutton:after {
-    width: 0;
-}
-
-.editor_radiobutton.editor_empty{
-    color:#384650;
+    align-items: flex-start;
 }
 
 .radiobutton {
-    width: 12px;
-    height: 12px;
-    margin: 0;
+    position: relative;
     overflow: hidden;
     display: block;
-    position: absolute;
-    top: 4px;
-    left: 0;
-    border: solid 1px #838c92;
     border-radius: 50%;
-    transition: box-shadow .5s;
-}
-
-.editor_disabled .radiobutton,
-.editor_readonly .radiobutton {
-    filter: alpha(opacity=60);
-    opacity: .6;
-    cursor: default;
-}
-
-.editor_focused .radiobutton {
-    box-shadow: 0 0 5px rgba(47,152,248,.5);
 }
 
 .editor_checked .radiobutton:after {
     content: '';
     position: absolute;
-    width: 6px;
-    height: 6px;
     border-radius: 50%;
-    background: #0575bd;
-    margin: 2px 0 0 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .radiobutton-text {
     line-height: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
-    display: inline-block;
+    max-width: 90%;
     white-space: nowrap;
 }
 
@@ -507,31 +429,17 @@ input[type="checkbox"].checkbox {
 /* input */
 .input {
     width: 100%;
-    height: inherit;
     margin: 0;
-    padding: 0 20px 0 0;
     display: inline-block;
     color: inherit;
     font-weight: inherit;
-    line-height: inherit;
-    border: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     box-sizing: border-box;
-    border-bottom:1px solid #edeff0;
     vertical-align: top;
     background: transparent none 100% 50% no-repeat ;
     transition: background, border-color .2s ease-in-out;
 }
-
-.input:hover {
-    border-bottom-color:#b9bcbd;
-}
-
-.error .editor .input{
-    border-bottom-color:#cb4e30;
-}
-
 
 .editor_reference .input{
     padding-right: 45px;
@@ -541,40 +449,17 @@ input[type="checkbox"].checkbox {
 
 
 /* textarea */
-.editor_textarea {
-    height: auto;
-    line-height: 18px;
-}
-
 .textarea {
     overflow-y: auto;
     width: 100%;
-    min-height: 26px;
-    padding: 0 0 2px;
     resize: none;
-    border: 0;
     margin: 0;
     vertical-align: top;
-    border-bottom: 1px solid #edeff0;
     outline: none;
-    line-height: inherit;
     font-size: inherit;
     color: inherit;
 }
 
-.textarea:hover {
-    border-bottom-color:#b9bcbd;
-}
-
-.error .editor .textarea{
-    border-bottom-color:#cb4e30;
-}
-
-.editor_disabled .textarea,
-.editor_readonly .textarea{
-    border-bottom-color:transparent;
-    resize: none;
-}
 /* /textarea/ */
 
 
@@ -596,10 +481,6 @@ input[type="checkbox"].checkbox {
 .editor_readonly.editor_date-time:hover {
     border-bottom-color:transparent;
     background:none
-}
-
-.error .editor_date-time {
-    border-bottom-color: #cb4e30;
 }
 
 .date-view,
@@ -694,10 +575,6 @@ input[type="checkbox"].checkbox {
 
 .bubbles:hover {
     border-bottom-color:#b9bcbd;
-}
-
-.error .editor .bubbles{
-    border-bottom-color:#cb4e30;
 }
 
 .editor_disabled .bubbles,
@@ -1069,10 +946,6 @@ input[type="checkbox"].checkbox {
     border-bottom-color: #b9bcbd;
 }
 
-.error .editor .popout-field-user{
-    border-bottom-color:#cb4e30;
-}
-
 .editor_disabled .popout-field-user,
 .editor_disabled .popout-field-user:hover,
 .editor_readonly .popout-field-user,
@@ -1151,13 +1024,10 @@ input[type="color"], .colorpicker{
 
 
 /* svg icons */
-.svg-icons-wrp{
+.svg-icons-wrp,
+.svg-icons-wrp__empty {
     display: inline-block;
     position: absolute;
-    right: 0;
-    top: 0;
-    width: 16px;
-    height: 16px;
     vertical-align: middle;
     overflow: hidden;
 }
@@ -1179,12 +1049,9 @@ input[type="color"], .colorpicker{
 .editor_checked_some .checkbox:after, .checkbox.editor_checked_some:after{
     content: '';
     position: absolute;
-    left: 2px;
-    top: 2px;
-    width: 8px;
-    height: 8px;
-    background-color: #278ed9;
-    border-radius: 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .svg-icons-wrp_multiselect {
@@ -1221,13 +1088,8 @@ input[type="color"], .colorpicker{
     top:2px;
 }
 
-.svg-icons-wrp__empty{
-    overflow: hidden;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 0;
-    top: 0;
+.svg-icons-wrp__empty,
+.svg-icons-wrp__remove {
     visibility: hidden;
     transition: visibility .3s ease-in-out;
 
@@ -1244,11 +1106,7 @@ input[type="color"], .colorpicker{
 
 .svg-icons-wrp__remove{
     overflow: hidden;
-    width: 20px;
-    height: 20px;
     cursor: pointer;
-    visibility: hidden;
-    transition: visibility .3s ease-in-out;
 }
 
 .svg-icons-wrp__remove_dd-title{
@@ -1377,14 +1235,6 @@ svg.svg-icons{
 
 
 
-
-.editor_disabled .input,
-.editor_disabled .input:hover,
-.editor_readonly .input,
-.editor_readonly .input:hover{
-    border-bottom-color: transparent;
-    background: none;
-}
 .input::-ms-clear {
     display: none;
 }
