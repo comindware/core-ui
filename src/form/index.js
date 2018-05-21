@@ -38,12 +38,9 @@ import BaseReferenceEditorController from './editors/impl/reference/controllers/
 import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
 import ReferenceListItemView from './editors/impl/reference/views/ReferenceListItemView';
-import UserReferenceListItemView from './editors/impl/reference/views/UserReferenceListItemView';
 import LoadingView from './editors/impl/reference/views/LoadingView';
 import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
 import DatalistButtonView from './editors/impl/datalist/views/ButtonView';
-import UserReferenceButtonView from './editors/impl/reference/views/UserReferenceButtonView';
-import ReferencePanelView from './editors/impl/reference/views/ReferencePanelView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
 import AudioEditor from './editors/AudioEditor';
@@ -133,10 +130,7 @@ const api = /** @lends module:core.form */ {
                 ReferenceListItemView,
                 LoadingView,
                 ReferenceButtonView,
-                DatalistButtonView,
-                ReferencePanelView,
-                UserReferenceButtonView,
-                UserReferenceListItemView
+                DatalistButtonView
             }
         },
         BooleanEditor: BooleanEditorView,
