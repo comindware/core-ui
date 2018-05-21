@@ -31,7 +31,16 @@ const service: LocalizationService = {
         this.localizationMap = options.localizationMap;
 
         //TODO remove this then server start to return full date
-        moment().utcOffset(moment.tz.zone(this.timeZone).utcOffset(new Date()));
+        const offset = moment.tz.zone(this.timeZone).utcOffset(new Date());
+        const unpacked = {
+            name: 'Custom/CMW',
+            abbrs: ['CMWC', 'CMWC'],
+            offsets: [offset, offset],
+            untils: [-1988164200000, null]
+        };
+        moment.tz.add(moment.tz.pack(unpacked));
+
+        moment.tz.setDefault('Custom/CMW');
         //moment.tz.setDefault(this.timeZone); //this line is perfect, use it
         //End of hack
 

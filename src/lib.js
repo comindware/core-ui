@@ -1,6 +1,7 @@
 //@flow
 /* Data & Datatime utils*/
 import moment_ from 'moment-timezone';
+import '../node_modules/moment-timezone/moment-timezone-utils';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
