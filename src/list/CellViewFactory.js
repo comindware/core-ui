@@ -121,9 +121,9 @@ export default (factory = {
 
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
-                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-                '{{/if}}',
+            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+            '{{/if}}',
             extention
         );
     },
@@ -264,19 +264,19 @@ export default (factory = {
     },
 
     getCellHtml(column, model) {
-        const type = column.type;
         const value = model.get(column.key);
 
         if (value === null || value === undefined) {
             return `<div class="cell ${column.columnClass}"></div>`;
         }
-        switch (type) {
+
+        switch (column.type) {
             case objectPropertyTypes.STRING:
                 return `<div class="cell ${column.columnClass}">${value}</div>`;
             case objectPropertyTypes.INSTANCE:
                 return `<div class="cell ${column.columnClass}">${value ? value.name : ''}</div>`;
             case objectPropertyTypes.ACCOUNT:
-                if (value && value.length > 0) {
+                if (value.length > 0) {
                     return `<div class="cell ${column.columnClass}">${value
                         .map(item => ({
                             id: item.id,
@@ -289,7 +289,7 @@ export default (factory = {
                             }
                             return member.text;
                         }, null)}</div>`;
-                } else if (value && value.name) {
+                } else if (value.name) {
                     return `<div class="cell ${column.columnClass}">${value.name}</div>`;
                 }
             case objectPropertyTypes.ENUM:
@@ -327,7 +327,7 @@ export default (factory = {
             case objectPropertyTypes.DATETIME:
                 return `<div class="cell ${column.columnClass}">${dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime')}</div>`;
             case objectPropertyTypes.DOCUMENT:
-                if (value && value.length > 0) {
+                if (value.length > 0) {
                     return `<div class="cell ${column.columnClass}">${value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);

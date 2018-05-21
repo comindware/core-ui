@@ -30,11 +30,7 @@ export default Marionette.Object.extend({
                 return false;
             }
 
-            if (moduleLeaveHandler.length === 3) {
-                return Core.services.MessageService.showMessageDialog.apply(Core.services.MessageService, moduleLeaveHandler);
-            }
-
-            return Core.services.MessageService.confirm.apply(Core.services.MessageService, moduleLeaveHandler);
+            return Core.services.MessageService.showSystemMessage(moduleLeaveHandler);
         }
 
         return true;

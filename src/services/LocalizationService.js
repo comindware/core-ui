@@ -30,7 +30,11 @@ const service: LocalizationService = {
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
 
-        moment.tz.setDefault(this.timeZone);
+        //TODO remove this then server start to return full date
+        moment().utcOffset(moment.tz.zone(this.timeZone).utcOffset(new Date()));
+        //moment.tz.setDefault(this.timeZone); //this line is perfect, use it
+        //End of hack
+
         moment.locale(this.langCode);
         numeral.locale(this.langCode);
     },
