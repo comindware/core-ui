@@ -79,11 +79,11 @@ export default Marionette.View.extend({
     },
 
     __createDropdownActionsView() {
-        return Core.dropdown.factory.createDropdown({
-            buttonView: Marionette.View.extend({ template: false }),
-            panelView: Marionette.View.extend({ template: false }),
+        return Core.dropdown.factory.createMenu({
             text: actionsMenuLabel,
-            items: this.menuItemsCollection
+            items: this.menuItemsCollection,
+            popoutFlow: 'right',
+            customAnchor: true
         });
     }
 });

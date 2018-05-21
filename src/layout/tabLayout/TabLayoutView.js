@@ -225,6 +225,9 @@ export default Marionette.View.extend({
         const selected = model.get('selected');
 
         model.get('regionEl').classList.toggle(classes.HIDDEN, !selected);
+
+        // todo: find bettter way to initiate child resize
+        Core.services.GlobalEventService.trigger('window:resize');
     },
 
     __handleStepperSelect(model: Backbone.Model): void {
