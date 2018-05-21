@@ -228,6 +228,44 @@
 
 <http://comindware.com/text/core/grid#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "notSet"].
 
+<http://comindware.com/text/core/grid/actions#add> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить"; l10n:originalData "Add"].
+
+<http://comindware.com/text/core/grid/actions#archive> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Архивировать"; l10n:originalData "Archive"].
+
+<http://comindware.com/text/core/grid/actions#delete> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Delete"].
+
+<http://comindware.com/text/core/grid/actions#unArchive> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивировать"; l10n:originalData "Unarchive"].
+
+<http://comindware.com/text/core/grid/actions/archive#confirm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Подтверждение"; l10n:originalData "Confirm"].
+
+<http://comindware.com/text/core/grid/actions/archive/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
+
+<http://comindware.com/text/core/grid/actions/archive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите архивировать выбранные объекты?"; l10n:originalData "Do you want to archive selected items?"].
+
+<http://comindware.com/text/core/grid/actions/archive/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Архивирование"; l10n:originalData "Archiving"].
+
+<http://comindware.com/text/core/grid/actions/archive/confirm#yesButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Архивировать"; l10n:originalData "Archive"].
+
+<http://comindware.com/text/core/grid/actions/delete#confirm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Подтверждение"; l10n:originalData "Confirm"].
+
+<http://comindware.com/text/core/grid/actions/delete/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
+
+<http://comindware.com/text/core/grid/actions/delete/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите удалить выбранные объекты?"; l10n:originalData "Do you want to delete selected items?"].
+
+<http://comindware.com/text/core/grid/actions/delete/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удаление"; l10n:originalData "Deleting"].
+
+<http://comindware.com/text/core/grid/actions/delete/confirm#yesButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Delete"].
+
+<http://comindware.com/text/core/grid/actions/unArchive#confirm> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Подверждение"; l10n:originalData "Confirm"].
+
+<http://comindware.com/text/core/grid/actions/unArchive/confirm#noButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Cancel"].
+
+<http://comindware.com/text/core/grid/actions/unArchive/confirm#text> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Вы хотите разархивировать выбранные объекты?"; l10n:originalData "Do you want to unarchive selected items?"].
+
+<http://comindware.com/text/core/grid/actions/unArchive/confirm#title> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивирование"; l10n:originalData "Unarchiving"].
+
+<http://comindware.com/text/core/grid/actions/unArchive/confirm#yesButtonText> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Разархивровать"; l10n:originalData "Unarchive"].
+
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#no> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Нет"; l10n:originalData "No"].
 
 <http://comindware.com/text/core/grid/cellViewFactory/booleanCellView#yes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Да"; l10n:originalData "Yes"].
@@ -237,10 +275,6 @@
 <http://comindware.com/text/core/grid/loadingRow#loading> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "ЗАГРУЗКА"; l10n:originalData "LOADING"].
 
 <http://comindware.com/text/core/grid/noColumnsView#allColumnsHidden> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Все столбцы скрыты"; l10n:originalData "All columns are hidden."].
-
-<http://comindware.com/text/core/grid/toolbar#create> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Создать"; l10n:originalData "Create"].
-
-<http://comindware.com/text/core/grid/toolbar#delete> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Удалить"; l10n:originalData "Delete"].
 
 <http://comindware.com/text/core/layoutDesigner#addHint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перетащите элементы из левой панели"; l10n:originalData "Drag elements from left panel"].
 

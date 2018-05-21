@@ -109,10 +109,11 @@ export default Marionette.Object.extend({
 
     __getToolbarActions() {
         let toolbarActions = [];
+        const defaultActions = meta.getDefaultActions();
         if (!this.options.excludeActions) {
-            toolbarActions = meta.defaultActions;
+            toolbarActions = defaultActions;
         } else if (this.options.excludeActions !== 'all') {
-            toolbarActions = meta.defaultActions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
+            toolbarActions = defaultActions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
         }
         if (this.options.additionalActions) {
             toolbarActions = toolbarActions.concat(this.options.additionalActions);
@@ -150,10 +151,10 @@ export default Marionette.Object.extend({
         switch (model.get('id')) {
             case 'delete':
                 this.__confirmUserAction(
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
                         this.__triggerAction(model, selected);
@@ -162,10 +163,10 @@ export default Marionette.Object.extend({
                 break;
             case 'archive':
                 this.__confirmUserAction(
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
                         this.__triggerAction(model, selected);
@@ -174,10 +175,10 @@ export default Marionette.Object.extend({
                 break;
             case 'unarchive':
                 this.__confirmUserAction(
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
                         this.__triggerAction(model, selected);

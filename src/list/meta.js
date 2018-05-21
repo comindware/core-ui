@@ -13,25 +13,25 @@ export const columnTypes = {
     DOCUMENT: 'document'
 };
 
-export const defaultActions = [
+export const getDefaultActions = () => [
     {
         id: 'add',
-        name: 'add',
+        name: Localizer.get('CORE.GRID.ACTIONS.ADD'),
         iconClass: 'plus'
     },
     {
         id: 'archive',
-        name: 'archive',
+        name: Localizer.get('CORE.GRID.ACTIONS.ARCHIVE'),
         contextType: contextTypes.any
     },
     {
         id: 'unarchive',
-        name: 'unarchive',
+        name: Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE'),
         contextType: contextTypes.any
     },
     {
         id: 'delete',
-        name: 'delete',
+        name: Localizer.get('CORE.GRID.ACTIONS.DELETE'),
         contextType: contextTypes.any
     }
 ];
@@ -39,5 +39,5 @@ export const defaultActions = [
 export default {
     contextTypes,
     columnTypes,
-    defaultActions
+    getDefaultActions
 };
