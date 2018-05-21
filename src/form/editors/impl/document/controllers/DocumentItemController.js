@@ -19,5 +19,6 @@ export default Marionette.Object.extend({
                 version: item.revisionIndex
             }));
         }
+        return [];
     }
 });

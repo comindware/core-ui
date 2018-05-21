@@ -23,8 +23,6 @@ import GlobalEventService from '../../services/GlobalEventService';
  * @param {Backbone.View} options.gridColumnHeaderView View используемый для отображения заголовка (шапки) списка
  * */
 
-/*eslint-disable*/
-
 const classes = {
     expanded: 'collapsible-btn_expanded',
     dragover: 'dragover'
@@ -87,7 +85,6 @@ const GridHeaderView = Marionette.View.extend({
         }
         this.__columnEls = [];
 
-        let isFirstChild = true;
         this.collapsed = !this.getOption('expandOnShow');
 
         this.ui.gridHeaderColumn.each((i, el) => {
@@ -102,13 +99,15 @@ const GridHeaderView = Marionette.View.extend({
             this.__columnEls.push(view);
             this.listenTo(view, 'columnSort', this.__handleColumnSort);
             el.appendChild(view.render().el);
-            if (this.options.isTree && isFirstChild) {
-                view.el.insertAdjacentHTML('afterbegin', `<span class="collapsible-btn js-collapsible-button ${
-                    this.collapsed === false ? classes.expanded : ''}"></span>`);
-                isFirstChild = false;
-            }
-            el.classList.add(`${this.getOption('uniqueId')}-column${i}`);
+            el.classList.add(column.columnClass);
         });
+
+        if (this.options.isTree) {
+            this.__columnEls[0].el.insertAdjacentHTML(
+                'afterbegin',
+                `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>`
+            );
+        }
 
         // if (this.options.expandOnShow) {
         //     this.__updateCollapseAll(false);
@@ -224,6 +223,9 @@ const GridHeaderView = Marionette.View.extend({
     },
 
     __handleResizeInternal() {
+        if (!this.isRendered()) {
+            return;
+        }
         this.ui.gridHeaderColumn.each(i => {
             this.__setColumnWidth(i, this.columns[i].width);
         });
@@ -286,7 +288,7 @@ const GridHeaderView = Marionette.View.extend({
         event.preventDefault();
     },
 
-    __handleDragEnter() {
+    __handleDragEnter(event) {
         if (!this.collection.draggingModel) {
             return;
         }

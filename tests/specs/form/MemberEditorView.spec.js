@@ -8,7 +8,7 @@ describe('Editors', () => {
                 selected: []
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,

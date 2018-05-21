@@ -688,9 +688,14 @@ a:hover {
     width: 100%;
 }
 
-.columns-select .tr-search{
-    border-right: none;
-    border-bottom: 1px solid #CED3D7;
+.grid-toolbar__search{
+    width: 100%;
+}
+
+.grid-toolbar__search .tr-search{
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .columns-select__btn {
@@ -776,7 +781,6 @@ a:hover {
 
 .toolbar-btn {
     display: inline-flex;
-    max-width: 250px;
     height: 30px;
     line-height: 30px;
     white-space: nowrap;

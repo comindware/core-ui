@@ -46,6 +46,10 @@ export default Marionette.View.extend({
         this.__updateState();
     },
 
+    onAttach() {
+        this.columns.forEach(view => view.triggerMethod('attach'));
+    },
+
     update() {
         this.columns.forEach(view => {
             if (view.update) {

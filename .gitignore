@@ -4,9 +4,3 @@ node_modules/
 localization/.backup/
 demo/public/assets/
 reports/
-dist/core.js.map
-dist/core.css
-dist/core.js
-dist/core.min.css
-dist/core.min.js.map
-dist/core.min.js

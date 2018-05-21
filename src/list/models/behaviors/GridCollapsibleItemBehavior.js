@@ -1,10 +1,12 @@
 //@flow
-export default function () {
+export default function() {
     // Select this model, and tell our
     // collection that we're selected
     return {
         select() {
-            if (this.selected) { return; }
+            if (this.selected) {
+                return;
+            }
 
             this.selected = true;
             this.trigger('selected', this);
@@ -17,7 +19,9 @@ export default function () {
         // Deselect this model, and tell our
         // collection that we're deselected
         deselect() {
-            if (!this.selected) { return; }
+            if (!this.selected) {
+                return;
+            }
 
             this.selected = false;
             this.trigger('deselected', this);
@@ -48,7 +52,9 @@ export default function () {
         },
 
         check() {
-            if (this.checked) { return; }
+            if (this.checked) {
+                return;
+            }
 
             this.checked = true;
             this.trigger('checked', this);
@@ -59,7 +65,9 @@ export default function () {
         },
 
         uncheck() {
-            if (this.checked === false) { return; }
+            if (this.checked === false) {
+                return;
+            }
 
             this.checked = false;
             this.trigger('unchecked', this);
@@ -70,7 +78,9 @@ export default function () {
         },
 
         checkSome() {
-            if (this.checked === null) { return; }
+            if (this.checked === null) {
+                return;
+            }
 
             this.checked = null;
             this.trigger('checked:some', this);
@@ -87,7 +97,7 @@ export default function () {
             }
         },
 
-        highlight(text) {
+        highlight(text: String) {
             if (this.highlighted) {
                 return;
             }
@@ -110,7 +120,7 @@ export default function () {
             this.trigger('unhighlighted', this);
         },
 
-        collapse(internal) {
+        collapse(internal: Boolean) {
             if (this.collapsed) {
                 return;
             }
@@ -124,7 +134,7 @@ export default function () {
             }
         },
 
-        expand(internal) {
+        expand(internal: Boolean) {
             if (this.collapsed === false) {
                 return;
             }

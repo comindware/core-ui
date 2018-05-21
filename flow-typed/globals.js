@@ -13,7 +13,10 @@ declare var Handlebars: {
 declare var Marionette: {
     View: any,
     CompositeView: any,
-    CollectionView: any
+    CollectionView: any,
+    Object: any,
+    Behavior: any,
+    Application: any
 }; //todo ad types
 
 declare var _: Underscore;

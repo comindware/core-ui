@@ -18,11 +18,22 @@ export default Marionette.Object.extend({
         this.moduleId = options.config.id;
     },
 
-    leave() {
+    leave(isCalledByUnloadEvent) {
         if (_.isFunction(this.onLeave)) {
-            return this.onLeave();
+            const moduleLeaveHandler = this.onLeave();
+
+            if (typeof moduleLeaveHandler === 'boolean') {
+                return moduleLeaveHandler;
+            }
+
+            if (isCalledByUnloadEvent) {
+                return false;
+            }
+
+            return Core.services.MessageService.showSystemMessage(moduleLeaveHandler);
         }
-        return Promise.resolve(true);
+
+        return true;
     },
 
     setLoading(isLoading) {

@@ -683,6 +683,17 @@ input[type="checkbox"].checkbox {
 /* /Bubbles/ */
 
 
+.editor_icon{
+
+}
+
+.icons-wrp{
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
 /* reference-field */
 .editor_reference{
 
@@ -1064,17 +1075,6 @@ input[type="color"], .colorpicker{
     margin-right: 4px;
 }
 
-.multiselect-i_selected .svg-icons-wrp_multiselect{
-    opacity: 1;
-}
-
-.multiselect-i .svg-icons_multiselect{
-    visibility: hidden;
-}
-.multiselect-i_selected .svg-icons_multiselect{
-    visibility: visible;
-}
-
 .svg-icons-wrp_add{
     left: 0;
     right: auto;
@@ -1153,6 +1153,12 @@ svg.svg-icons{
 .svg-icons_remove-bubble{
     transform: scale(0.9) translate(5px, 5px);
 }
+.svg-icons-wrp__remove-icons{
+    position: relative;
+    top: -3px;
+    left: -2px;
+}
+
 
 .svg-icons_date{
     transform: translate(3px, 2px);
@@ -1198,7 +1204,6 @@ svg.svg-icons{
 .editor_disabled .svg-icons-wrp_edit-reference{
     display: none;
 }
-
 
 
 .d-svg-icons{
@@ -1287,11 +1292,15 @@ svg.svg-icons{
 
 .task-links__i {
     max-width: 100%;
-    margin: 5px 10px 5px 0;
     padding: 0 18px 0 0;
     display: inline-block;
     vertical-align: top;
     position: relative;
+    display: flex;
+}
+
+.cell .task-links__i {
+    line-height: 25px;
 }
 
 .task-links__link {
@@ -1369,12 +1378,19 @@ svg.svg-icons{
     color: #636262;
 }
 
+.documents {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: baseline;
+}
+
 .dev-btn-document-revise{
-    position: absolute;
-    right: 18px;
+    position: relative;
     display: inline-block;
     top: 0px;
-    margin-top: -4px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 .dev-revision-container{

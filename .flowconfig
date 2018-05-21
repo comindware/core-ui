@@ -1,5 +1,5 @@
 [ignore]
-.*/doc_/.*
+.*/doc/.*
 .*/external/.*
 .*/reports/.*
 .*/dist/.*
@@ -11,7 +11,7 @@
 [include]
 
 [libs]
-<PROJECT_ROOT>/flow-typed/*
+
 [lints]
 
 [options]

@@ -1,7 +1,6 @@
 //@flow
 import template from '../templates/customContextPalette.html';
 import CustomAttributesView from './CustomAttributesView';
-import ContextModel from '../../../models/ContextModel';
 
 export default Marionette.View.extend({
     initialize() {
@@ -72,15 +71,15 @@ export default Marionette.View.extend({
 
     __refreshModel(model, staticModel) {
         if (model) {
-            const contextModel = new ContextModel({
+            const contextModel = new Backbone.Model({
                 instanceTypeId: this.options.recordTypeId,
                 context: model,
                 propertyTypes: [],
                 usePropertyTypes: false
             });
-            contextModel.populateChildren();
+            //contextModel.populateChildren();
             this.customCollection = contextModel.get('children');
-
+            //todo add logic for population
             const staticCollection = staticModel || this.options.config.collection;
             if (staticCollection) {
                 this.customCollection.add(staticCollection.models);

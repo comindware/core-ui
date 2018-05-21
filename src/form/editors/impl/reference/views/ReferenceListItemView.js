@@ -2,7 +2,6 @@ import template from '../templates/referenceListItem.hbs';
 import list from 'list';
 
 const classes = {
-    BASE: 'multiselect-i',
     SELECTED: 'editor_checked'
 };
 

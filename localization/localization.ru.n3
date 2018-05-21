@@ -132,7 +132,7 @@
 
 <http://comindware.com/text/core/form/editors/memberSplit#maxQuantity> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0},Макс. допустимое число пользователей: {0}"; l10n:originalData "Maximum users allowed: {0},Maximum users allowed: {0}"].
 
-<http://comindware.com/text/core/form/editors/memberSplit#membersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Назначьте профиль навигации пользователям"; l10n:originalData "Select users to be assigned the side navigation"].
+<http://comindware.com/text/core/form/editors/memberSplit#membersTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выберите пользователей или группы"; l10n:originalData "Select users or groups"].
 
 <http://comindware.com/text/core/form/editors/memberSplit#people> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Люди"; l10n:originalData "People"].
 
@@ -253,6 +253,12 @@
 <http://comindware.com/text/core/services/message/buttons#yes> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Да"; l10n:originalData "Yes"].
 
 <http://comindware.com/text/core/services/message/title#confirmation> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Предупреждение"; l10n:originalData "Warning"].
+
+<http://comindware.com/text/core/services/message/unsavedChanges#description> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выйти без сохранения?"; l10n:originalData "Exit without saving?"].
+
+<http://comindware.com/text/core/services/message/unsavedChanges#leave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выйти"; l10n:originalData "leave"].
+
+<http://comindware.com/text/core/services/message/unsavedChanges#stay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Остаться"; l10n:originalData "stay"].
 
 <http://comindware.com/text/core/views/behaviors/loading#defaultLoadingSmall> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].
 
