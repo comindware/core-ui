@@ -288,6 +288,12 @@
 
 <http://comindware.com/text/core/services/message/title#confirmation> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Предупреждение"; l10n:originalData "Warning"].
 
+<http://comindware.com/text/core/services/message/unsavedChanges#description> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выйти без сохранения?"; l10n:originalData "Exit without saving?"].
+
+<http://comindware.com/text/core/services/message/unsavedChanges#leave> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выйти"; l10n:originalData "leave"].
+
+<http://comindware.com/text/core/services/message/unsavedChanges#stay> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Остаться"; l10n:originalData "stay"].
+
 <http://comindware.com/text/core/views/behaviors/loading#defaultLoadingSmall> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Загрузка"; l10n:originalData "Loading"].
 
 <http://comindware.com/text/core/views/searchBar#placeholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Начните ввод для отображения вариантов"; l10n:originalData "Start typing to get suggestions"].

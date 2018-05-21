@@ -8,6 +8,10 @@ const iconIds = {
 };
 
 export default {
+    systemMessagesTypes: {
+        unsavedChanges: 'unsavedChanges'
+    },
+
     confirm(description) {
         return this.askYesNo(description, LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.CONFIRMATION'));
     },
@@ -59,7 +63,7 @@ export default {
                         resolve(button.id);
                     }
                 })),
-                content: description
+                content: `<div class='systemMessageBody'>${description}</div>`
             });
 
             if (this.openedPopupId) {
@@ -67,5 +71,31 @@ export default {
             }
             this.openedPopupId = WindowService.showPopup(view);
         });
+    },
+
+    showSystemMessage(messageConfiguration) {
+        const systemMessages = {
+            unsavedChanges: {
+                description: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.DESCRIPTION'),
+                buttons: [
+                    {
+                        id: true,
+                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE')
+                    },
+                    {
+                        id: false,
+                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY')
+                    }
+                ]
+            }
+        };
+
+        switch (messageConfiguration.type) {
+            case this.systemMessagesTypes.unsavedChanges: {
+                return this.showMessageDialog(systemMessages.unsavedChanges.description, systemMessages.unsavedChanges.text, systemMessages.unsavedChanges.buttons);
+            }
+            default:
+                break;
+        }
     }
 };

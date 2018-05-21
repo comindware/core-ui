@@ -41,7 +41,7 @@ export default {
         Backbone.history.checkUrl();
 
         window.addEventListener('beforeunload', e => {
-            const canLeave = this.activeModule.leave(true);
+            const canLeave = this.activeModule ? this.activeModule.leave(true) : true;
 
             if (canLeave !== true) { // We need just to return smth to show default drowser leaving alert
                 (e || window.event).returnValue = '42';

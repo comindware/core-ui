@@ -66,6 +66,8 @@ export default Marionette.View.extend({
     initialize() {
         _.defaults(this.options, defaultOptions);
         this.gridEventAggregator = this.options.gridEventAggregator;
+        this.columnClasses = this.options.columnClasses;
+
         // TODO: think about implementation in tree or grouped grids
         // this.listenTo(this.model, 'checked', this.__onModelChecked);
         // this.listenTo(this.model, 'unchecked', this.__onModelUnchecked);
@@ -110,31 +112,16 @@ export default Marionette.View.extend({
             this.cellViews.forEach(view => view.destroy());
         }
         this.cellViews = [];
-        this.columnClasses = [];
-        const uniqueId = this.getOption('uniqueId');
 
-        this.options.columns.forEach((gridColumn, index) => {
-            const columnClass = `${uniqueId}-column${index}`;
-            const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model);
-            const type = gridColumn.type;
-            let alignClass = '';
-
-            this.columnClasses.push(columnClass);
+        this.options.columns.forEach(gridColumn => {
+            const cell = gridColumn.cellView || CellViewFactory.getCellViewForColumn(gridColumn, this.model); // move to factory
 
             if (typeof cell === 'string') {
-                if ([objectPropertyTypes.INTEGER, objectPropertyTypes.DOUBLE, objectPropertyTypes.DECIMAL].includes(type)) {
-                    alignClass = 'cell-right';
-                }
-                return this.el.insertAdjacentHTML(
-                    'beforeend',
-                    `<div class="cell ${alignClass} ${columnClass}">
-                        <span class="cell-value">${cell}</span>
-                    </div>`
-                );
+                return this.el.insertAdjacentHTML('beforeend', cell);
             }
 
             const cellView = new cell({
-                className: `cell ${columnClass}`,
+                className: `cell ${gridColumn.columnClass}`,
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key

@@ -25,11 +25,6 @@ import SearchBarView from '../../views/SearchBarView';
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
 
-const constants = {
-    gridRowHeight: 32,
-    gridHeaderHeight: 30
-};
-
 /**
  * @name GridView
  * @memberof module:core.list.views
@@ -74,6 +69,14 @@ export default Marionette.View.extend({
 
         const HeaderView = this.options.headerView || GridHeaderView;
 
+        const columnClasses = [];
+        options.columns.forEach((c, i) => {
+            const cClass = `${this.uniqueId}-column${i}`;
+
+            columnClasses.push(cClass);
+            c.columnClass = cClass;
+        });
+
         this.headerView = new HeaderView({
             columns: options.columns,
             gridEventAggregator: this,
@@ -104,7 +107,7 @@ export default Marionette.View.extend({
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this,
-            uniqueId: this.uniqueId,
+            columnClasses,
             isTree: this.options.isTree
         });
 

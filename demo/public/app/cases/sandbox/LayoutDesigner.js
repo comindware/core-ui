@@ -1,10 +1,16 @@
 export default function () {
     const customView = Marionette.View;
 
-    const systemView = Marionette.CompositeView.extend({
+    const systemView = Marionette.CollectionView.extend({
         className: 'dev-canvas-wrp js-system-container',
 
-        template: Handlebars.compile(''),
+        template: Handlebars.compile(`<div class="ld-canvas-wrp__info">
+        <span class="js-toggle ld-group-toggle">
+            <svg viewBox="0 0 12 12"><polygon class="d-svg-icons d-svg-icons_arrow" points="8,2 4.5,5.5 1,2 0,2 0,3 4,7 5,7 9,3 9,2 "/></svg>
+        </span>
+        <span class="ld-canvas-wrp-info js-name">{{name}}</span>
+    </div>
+    <div class="js-container"></div>`),
 
         onRender() {
             this.listenTo(this.model.parent, 'change', this.__updateView);
@@ -33,6 +39,26 @@ export default function () {
             model: Backbone.Model
         };
     });
+
+    components.VerticalLayout = {
+        model: Backbone.Model.extend({
+            defaults: {
+                childrenAttribute: 'rows',
+                rows: new Backbone.Collection(),
+                componentType: 'container',
+                fieldType: 'VerticalLayout',
+                type: 'VerticalLayout',
+                canBeNested: true
+            },
+
+            parse(data) {
+                if (_.isArray(data.rows)) {
+                    data.rows = new Backbone.Collection(data.rows);
+                }
+                return data;
+            }
+        })
+    };
 
     return new core.components.LayoutDesigner.Controller({
         editorModel: new Backbone.Model(),
