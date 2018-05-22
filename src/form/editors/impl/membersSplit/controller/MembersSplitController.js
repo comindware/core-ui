@@ -38,7 +38,7 @@ export default Marionette.Object.extend({
             itemsToSelectText: this.options.itemsToSelectText,
             selectedItemsText: this.options.selectedItemsText,
             confirmEdit: true,
-            showToolbar: true,
+            showToolbar: !this.options.hideToolbar,
             emptyListText: this.options.emptyListText
         });
     },
@@ -58,13 +58,15 @@ export default Marionette.Object.extend({
                     membersCount[members[id].type]++;
                 }
             });
-        this.options.displayText = this.options.hideUsers
-            ? ''
-            : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
-        this.options.displayText += this.options.displayText.length > 0 ? ' ' : '';
-        this.options.displayText += this.options.hideGroups
-            ? ''
-            : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        if (!this.options.displayText) {
+            this.options.displayText = this.options.hideUsers
+                ? ''
+                : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
+            this.options.displayText += this.options.displayText.length > 0 ? ' ' : '';
+            this.options.displayText += this.options.hideGroups
+                ? ''
+                : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        }
     },
 
     __getFullMemberSplitTitle() {

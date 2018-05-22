@@ -11,6 +11,7 @@ const defaultOptions = () => ({
     displayText: '',
     hideUsers: false,
     hideGroups: false,
+    hideToolbar: false,
     maxQuantitySelected: null,
     allowRemove: true,
     title: '',
