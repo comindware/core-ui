@@ -148,14 +148,13 @@ export default Marionette.View.extend({
 
         const bottom = viewportHeight - buttonRect.top - buttonRect.height;
 
-        const panelRect = panelEl.offsetHeight;
-        //panelRect.height = panelEl.outerHeight(); todo
+        const offsetHeight = panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
 
-        if (position === panelPosition.DOWN && bottom < panelRect.height && buttonRect.top > bottom) {
+        if (position === panelPosition.DOWN && bottom < offsetHeight && buttonRect.top > bottom) {
             position = panelPosition.UP;
-        } else if (position === panelPosition.UP && buttonRect.top < panelRect.height && bottom > buttonRect.top) {
+        } else if (position === panelPosition.UP && buttonRect.top < offsetHeight && bottom > buttonRect.top) {
             position = panelPosition.DOWN;
         }
 
@@ -167,18 +166,18 @@ export default Marionette.View.extend({
         let top: number = 0;
         switch (position) {
             case panelPosition.UP:
-                top = buttonRect.top - panelRect.height;
+                top = buttonRect.top - offsetHeight;
                 break;
             case panelPosition.DOWN:
-                top = buttonRect.top + buttonRect.height;
+                top = buttonRect.top + buttonRect;
                 break;
             default:
                 break;
         }
 
         // trying to fit into viewport
-        if (top + panelRect.height > viewportHeight - WINDOW_BORDER_OFFSET) {
-            top = viewportHeight - WINDOW_BORDER_OFFSET - panelRect.height;
+        if (top + offsetHeight > viewportHeight - WINDOW_BORDER_OFFSET) {
+            top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight;
         }
         if (top <= WINDOW_BORDER_OFFSET) {
             top = WINDOW_BORDER_OFFSET;
