@@ -20,24 +20,25 @@ const defaultOptions = () => ({
     emptyListText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST'),
     users: undefined,
     groups: undefined,
-    showMode: null
+    showMode: null,
+    cacheService: undefined
 });
 
 export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
+
         const defOps = Object.assign(defaultOptions(), {
-            users:
-                options.users ||
-                options.schema.cacheService.GetUsers().map(user => ({
+            users: options.users ||
+                options.cacheService.GetUsers().map(user => ({
                     id: user.Id,
                     name: user.Text || user.Username,
                     abbreviation: user.abbreviation,
                     userpicUri: user.userpicUri,
                     type: 'users'
                 })),
-            groups:
-                options.groups ||
-                options.schema.cacheService.GetGroups().map(group => ({
+            groups: options.groups ||
+                options.cacheService.GetGroups().map(group => ({
                     id: group.id,
                     name: group.name,
                     type: 'groups'
@@ -112,25 +113,24 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
                 height: '700px'
             },
             header: this.getOption('title') || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE'),
-            buttons: [
-                {
-                    id: 'save',
-                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
-                    handler: () => {
-                        this.controller.updateMembers();
-                        this.__value(this.options.selected, true);
-                        this.__updateEditor();
-                        Core.services.WindowService.closePopup();
-                    }
-                },
-                {
-                    id: 'close',
-                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
-                    handler: () => {
-                        this.controller.cancelMembers();
-                        Core.services.WindowService.closePopup();
-                    }
+            buttons: [{
+                id: 'save',
+                text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+                handler: () => {
+                    this.controller.updateMembers();
+                    this.__value(this.options.selected, true);
+                    this.__updateEditor();
+                    Core.services.WindowService.closePopup();
                 }
+            },
+            {
+                id: 'close',
+                text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+                handler: () => {
+                    this.controller.cancelMembers();
+                    Core.services.WindowService.closePopup();
+                }
+            }
             ],
             content: this.controller.view
         });
