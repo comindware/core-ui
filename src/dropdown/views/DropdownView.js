@@ -169,7 +169,7 @@ export default Marionette.View.extend({
                 top = buttonRect.top - offsetHeight;
                 break;
             case panelPosition.DOWN:
-                top = buttonRect.top + buttonRect;
+                top = buttonRect.top + buttonRect.height;
                 break;
             default:
                 break;
