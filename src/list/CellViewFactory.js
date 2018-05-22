@@ -5,6 +5,10 @@ import EditableGridFieldView from './views/EditableGridFieldView';
 
 let factory;
 
+type CellExtention = {
+    templateContext(): Object
+}
+
 export default (factory = {
     getCellViewForColumn(column, model) {
         if (column.editable) {
@@ -14,7 +18,7 @@ export default (factory = {
         return factory.getCellHtml(column, model);
     },
 
-    getCellViewByDataType(type) {
+    getCellViewByDataType(type: string) {
         //Used by Product server Grid
         let result;
 
@@ -143,7 +147,7 @@ export default (factory = {
         return factory.__getDocumentView();
     },
 
-    __getSimpleView(simpleTemplate, extention) {
+    __getSimpleView(simpleTemplate: string, extention: CellExtention) {
         return Marionette.View.extend(
             Object.assign(
                 {
