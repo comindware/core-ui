@@ -223,8 +223,8 @@ const VirtualCollection = Backbone.Collection.extend(
 
         __addModel(model, options) {
             const index = this.visibleModels.indexOf(model);
-            this.trigger('add', model, this, Object.assign({}, options, { at: index, index })); // both add and index to correct inserting in dom
             this._addReference(model);
+            this.trigger('add', model, this, Object.assign({}, options, { at: index, index })); // both add and index to correct inserting in dom
         },
 
         __removeModels(removed, options) {

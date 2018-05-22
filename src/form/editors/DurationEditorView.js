@@ -183,7 +183,12 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             mode: stateModes.VIEW,
             displayValue: newValueObject
         });
-        const newValue = moment.duration(this.state.displayValue).toISOString();
+        let newValue = null;
+        if (!_.isEqual(newValueObject, this.state.displayValue)) {
+            newValue = moment.duration(this.state.displayValue).toISOString();
+        } else {
+            this.ui.input.val(newValue);
+        }
         this.__value(newValue, true);
     },
 
