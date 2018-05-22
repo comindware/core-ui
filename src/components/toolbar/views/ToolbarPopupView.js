@@ -26,7 +26,7 @@ export default Marionette.View.extend({
         const reqres = this.getOption('reqres');
         const options = this.model.get('options');
 
-        this.popup = Core.dropdown.factory.createDropdown({
+        this.popup = Core.dropdown.factory.createPopout({
             customAnchor: true,
             buttonView: options.buttonView,
             panelView: options.panelView,
@@ -34,6 +34,7 @@ export default Marionette.View.extend({
             popoutFlow: 'right',
             popoutDirection: 'down'
         });
+
         this.listenTo(this.popup, 'panel:click:row', model => {
             this.__closePopout();
             reqres.request('form:clone', model.id);

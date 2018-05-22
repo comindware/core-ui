@@ -10,6 +10,8 @@ declare var Handlebars: {
     compile: (template: string) => Function
 };
 
+declare var rangyinputs: any;
+
 declare var Marionette: {
     View: any,
     CompositeView: any,
