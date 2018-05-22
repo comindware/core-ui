@@ -157,4 +157,136 @@ body, input, textarea, select {
   width: 20px;
   height: 20px;
 }
+.svg-icons-wrp_add{
+  left: 0;
+  right: auto;
+  top: 50%;
+  margin-top: -10px;
+}
+
+.svg-icons-wrp_bubble{
+  width: 18px;
+  height: 18px;
+  top:2px;
+}
+.svg-icons-wrp_edit-reference{
+  top:0;
+  right: 18px;
+}
 /* /svg icons/ */
+
+
+/* List/Grid CSS */
+
+.grid-header {
+  height: var(--grid-header-height);
+}
+
+.grid-header-column {
+  background-color: var(--grid-header-bg);
+  box-shadow: var(--grid-header-border);
+}
+
+.grid-selection-cell-all:empty + .grid-header-view .grid-header-column:first-child {
+  box-shadow: var(--grid-header-border-first);
+}
+.grid-selection-cell-all:empty + .grid-header-view .grid-header-column:last-child {
+  box-shadow: var(--grid-header-border-last);
+}
+
+.grid-header-column-content {
+  font-size: var(--grid-header-font-size);
+  color: var(--grid-header-color);
+  line-height: var(--grid-header-height);
+  padding: var(--grid-header-padding);
+}
+
+.row {
+  height: var(--grid-cell-height);
+}
+
+.row.selected{
+  background: transparent;
+}
+
+.cell {
+  height: var(--grid-cell-height);
+  line-height: var(--grid-cell-height);
+  font-size: var(--grid-header-font-size);
+  color: var(--text-color);
+  box-shadow: var(--grid-cell-border);
+  padding: var(--grid-cell-padding);
+  background-color: var(--grid-cell-bg);
+}
+
+.cell_selection{
+  line-height: inherit;
+  color: var(--grid-selection-color);
+  background-color: var(--grid-cell-selection-bg);
+  box-shadow: var(--grid-cell-border-first);
+}
+
+.grid-selection-panel-region:empty + .grid-content-view .row .cell:first-child {
+  box-shadow: var(--grid-cell-border-first);
+}
+
+.selected .cell{
+  background-color: #eaf5fc;
+}
+
+.row:hover .cell{
+  background-color: #F5F5F5;
+}
+
+.sort_down, .sort_up {
+  width: var(--grid-sort-icon-size);
+  height: var(--grid-sort-icon-size);
+  background-image: var(--grid-sort-icon);
+  top: var(--grid-sort-icon-offset-y);
+}
+
+.sort_up {
+  transform: rotate(180deg);
+}
+
+.cell .checkbox {
+  width: var(--grid-checkbox-size);
+  height: var(--grid-checkbox-size);
+}
+
+.grid-selection-cell-all {
+  height: var(--grid-header-height);
+}
+
+.grid-selection-cell-all .cell_selection{
+  height: var(--grid-header-height);
+  line-height: var(--grid-header-height);
+  box-shadow: var(--grid-header-border-first);
+  background-color: var(--grid-header-selection-bg);
+}
+
+.cell_selection-index {
+  width: var(--grid-cell-index-width);
+}
+
+.cell_selection.cell_selection-index{
+  padding: 0 var(--grid-cell-index-padding-x);
+}
+
+.cell_selection-index:not(:empty) + .grid-header-view {
+  width: calc(100% - var(--grid-cell-index-width));
+}
+
+.cell__dots{
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--grid-dots-width);
+  padding: var(--grid-dots-padding);
+}
+
+.cell__dots svg{
+  width: var(--grid-dots-icon-size);
+  height: var(--grid-dots-icon-size);
+  fill: var(--grid-dots-color);
+}

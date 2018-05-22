@@ -54,3 +54,14 @@
 .radiobutton {
   transition: box-shadow .5s;
 }
+
+.cell .checkbox_cell-selection{
+  visibility: hidden;
+}
+
+.cell:hover .checkbox_cell-selection{
+  visibility: visible;
+}
+.grid-selection-cell-all .checkbox_cell-selection{
+  visibility: visible;
+}

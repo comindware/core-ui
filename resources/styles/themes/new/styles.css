@@ -8,7 +8,8 @@
   background: var(--light-gradient);
 }
 
-.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox {
+.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
+.editor_checked.checkbox {
   background: var(--checkbox-checked-color);
   border-color: var(--checkbox-checked-color);
 }

@@ -1075,19 +1075,6 @@ input[type="color"], .colorpicker{
     margin-right: 4px;
 }
 
-.svg-icons-wrp_add{
-    left: 0;
-    right: auto;
-    top: 50%;
-    margin-top: -10px;
-}
-
-.svg-icons-wrp_bubble{
-    width: 18px;
-    height: 18px;
-    top:2px;
-}
-
 .svg-icons-wrp__empty,
 .svg-icons-wrp__remove {
     visibility: hidden;
@@ -1195,8 +1182,6 @@ svg.svg-icons{
 .svg-icons-wrp_edit-reference{
     display: inline-block;
     position: absolute;
-    top:0;
-    right: 18px;
     z-index: 10;
     cursor: pointer;
 }
