@@ -83,7 +83,7 @@ describe('Editors', () => {
 
             view.$('.task-links__i').trigger('mouseenter');
 
-            document.getElementsByClassName('js-clear-button')[0].click();
+            document.getElementsByClassName('js-bubble-delete')[0].click();
 
             expect(view.getValue()).toEqual([]);
         });
@@ -113,7 +113,7 @@ describe('Editors', () => {
 
             view.$('.task-links__i').trigger('mouseenter');
 
-            expect(document.getElementsByClassName('js-clear-button').length).toEqual(0);
+            expect(document.getElementsByClassName('js-bubble-delete').length).toEqual(0);
         });
 
         it('should show revision on revion button click', done => {
