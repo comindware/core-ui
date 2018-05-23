@@ -1,15 +1,15 @@
 //@flow
-export default function() {
+export default function () {
     // Select this model, and tell our
     // collection that we're selected
     return {
-        select() {
+        select(options: { isSilent: boolean } = { isSilent: false }) {
             if (this.selected) {
                 return;
             }
 
             this.selected = true;
-            this.trigger('selected', this);
+            this.trigger('selected', this, options.isSilent);
 
             if (this.collection) {
                 this.collection.select(this);
@@ -18,13 +18,15 @@ export default function() {
 
         // Deselect this model, and tell our
         // collection that we're deselected
-        deselect() {
+        deselect(options: { isSilent: boolean } = { isSilent: false }) {
             if (!this.selected) {
                 return;
             }
 
             this.selected = false;
-            this.trigger('deselected', this);
+            if (!options.isSilent) {
+                this.trigger('deselected', this);
+            }
 
             if (this.collection && this.collection.deselect) {
                 this.collection.deselect(this);

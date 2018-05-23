@@ -8,7 +8,7 @@ const defaults = {
 };
 
 const classes = {
-    CLASS_NAME: 'layout__group',
+    CLASS_NAME: 'layout-group',
     COLLAPSED_CLASS: 'layout__group-collapsed__button'
 };
 

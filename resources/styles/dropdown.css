@@ -464,4 +464,7 @@
     height: auto;
 }
 
+.source-text {
+    flex: 1;
+}
 /*-----//------*/
