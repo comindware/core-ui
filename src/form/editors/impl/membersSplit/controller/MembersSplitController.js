@@ -20,7 +20,7 @@ export default Marionette.Object.extend({
         this.channel.on('items:move', this.__onItemsMove, this);
     },
 
-    __fillInModel() {
+    fillInModel() {
         const users = this.options.users;
         const groups = this.options.groups;
         const members = {};
@@ -246,7 +246,7 @@ export default Marionette.Object.extend({
         });
 
         this.model.set('allowRemove', this.options.allowRemove);
-        this.__fillInModel();
+        this.fillInModel();
     },
 
     setValue() {
