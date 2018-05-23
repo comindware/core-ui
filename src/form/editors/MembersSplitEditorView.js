@@ -101,6 +101,13 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         }
     },
 
+    reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
+        this.options.users = users;
+        this.options.groups = groups;
+
+        this.controller.initItems();
+    },
+
     __showPopup() {
         if (!this.getEnabled()) {
             return;

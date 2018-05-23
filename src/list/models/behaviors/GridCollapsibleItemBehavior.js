@@ -1,9 +1,9 @@
 //@flow
-export default function() {
+export default function () {
     // Select this model, and tell our
     // collection that we're selected
     return {
-        select(options: { isSilent: boolean } = {}) {
+        select(options: { isSilent: boolean } = { isSilent: false }) {
             if (this.selected) {
                 return;
             }
@@ -18,7 +18,7 @@ export default function() {
 
         // Deselect this model, and tell our
         // collection that we're deselected
-        deselect(options: { isSilent: boolean } = {}) {
+        deselect(options: { isSilent: boolean } = { isSilent: false }) {
             if (!this.selected) {
                 return;
             }
