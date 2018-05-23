@@ -577,7 +577,6 @@ const VirtualCollection = Backbone.Collection.extend(
 
         __onReset(collection, options) {
             this.__rebuildIndex(options, true);
-            this.trigger('reset:collection:items', this);
         },
 
         sort(options) {

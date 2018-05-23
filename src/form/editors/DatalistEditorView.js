@@ -64,6 +64,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 collection = options.collection;
             } else {
                 collection = options.collection.toJSON();
+                this.listenTo(options.collection, 'reset', panelCollection => this.__onResetCollection(panelCollection));
             }
         }
         this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
@@ -78,7 +79,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
-        this.listenTo(this.controller.collection, 'reset:collection:items', panelCollection => this.__onResetCollection(panelCollection));
     },
 
     regions: {
