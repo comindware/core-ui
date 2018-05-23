@@ -78,6 +78,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
+        this.listenTo(this.controller.collection, 'reset:collection:items', panelCollection => this.__onResetCollection(panelCollection));
     },
 
     regions: {
@@ -200,7 +201,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __adjustValue(value: DataValue): any {
         if ((typeof value === 'string' || typeof value === 'number') && value) {
-            return this.panelCollection.get(value) || [];
+            return this.panelCollection.get(value) || [{ id: value, text: ' ' }];
         }
         if (_.isUndefined(value) || value === null) {
             return [];
@@ -231,6 +232,18 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         if (triggerChange) {
             this.__triggerChange();
+        }
+    },
+
+    __onResetCollection(panelCollection) {
+        const editorId = this.model.get(this.key);
+        if (editorId) {
+            this.panelCollection.reset(panelCollection.models);
+
+            const selectedItem = panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
+            if (selectedItem) {
+                selectedItem.select();
+            }
         }
     },
 
