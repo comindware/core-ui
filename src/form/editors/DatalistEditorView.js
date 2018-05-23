@@ -201,7 +201,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __adjustValue(value: DataValue): any {
         if ((typeof value === 'string' || typeof value === 'number') && value) {
-            return this.panelCollection.get(value) || [{ id: value, text: ' ' }];
+            return this.panelCollection.get(value) || [];
         }
         if (_.isUndefined(value) || value === null) {
             return [];
@@ -240,8 +240,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         if (editorId) {
             this.panelCollection.reset(panelCollection.models);
 
-            const selectedItem = panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
+            const selectedItem = this.panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
             if (selectedItem) {
+                this.setValue(selectedItem.toJSON());
                 selectedItem.select();
             }
         }
