@@ -975,8 +975,10 @@ a:hover {
     min-height: 200px;
     overflow-y: auto;
     position: fixed;
+    width: 247px;
     background-color: white;
     max-height: 500px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
 }
 
 .data-source-popout-view .data-source-popout{
