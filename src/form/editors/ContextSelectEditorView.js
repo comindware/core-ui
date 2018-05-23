@@ -51,6 +51,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     template: Handlebars.compile(template),
 
+    className: 'editor',
+
     onRender() {
         if (!this.enabled) {
             this.contextPopoutRegion.show(
@@ -175,5 +177,9 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         }
 
         return collectedPath;
+    },
+
+    isEmptyValue() {
+        return false;
     }
 }));
