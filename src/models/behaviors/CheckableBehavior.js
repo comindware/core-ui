@@ -6,7 +6,7 @@ const CheckableBehavior = {};
 CheckableBehavior.CheckableCollection = function (collection) {
     this.collection = collection;
     this.checked = {};
-    collection.on('add remove reset', () => {
+    collection.on('add remove reset update', () => {
         if (collection.internalUpdate) {
             return;
         }
