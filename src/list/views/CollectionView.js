@@ -454,7 +454,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __updateChildTop(child) {
-        if (!child) {
+        if (!child || !this.collection.length) {
             return;
         }
         requestAnimationFrame(() => {

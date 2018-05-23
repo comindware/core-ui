@@ -5,8 +5,12 @@ import EditableGridFieldView from './views/EditableGridFieldView';
 
 let factory;
 
+type CellExtention = {
+    templateContext(): Object
+};
+
 export default (factory = {
-    getCellViewForColumn(column, model) {
+    getCellViewForColumn(column, model: Backbone.Model) {
         if (column.editable) {
             return EditableGridFieldView;
         }
@@ -14,7 +18,7 @@ export default (factory = {
         return factory.getCellHtml(column, model);
     },
 
-    getCellViewByDataType(type) {
+    getCellViewByDataType(type: string) {
         //Used by Product server Grid
         let result;
 
@@ -121,9 +125,9 @@ export default (factory = {
 
         return factory.__getSimpleView(
             '{{#if showIcon}}' +
-            '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
-            '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
-            '{{/if}}',
+                '{{#if value}}<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>{{/if}}' +
+                '{{#unless value}}<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>{{/unless}}' +
+                '{{/if}}',
             extention
         );
     },
@@ -143,7 +147,7 @@ export default (factory = {
         return factory.__getDocumentView();
     },
 
-    __getSimpleView(simpleTemplate, extention) {
+    __getSimpleView(simpleTemplate: string, extention: CellExtention) {
         return Marionette.View.extend(
             Object.assign(
                 {
@@ -203,7 +207,7 @@ export default (factory = {
 
     __getDocumentView() {
         return Marionette.View.extend({
-            template: Handlebars.compile('{{#each documents}}<a href="{{url}}">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
+            template: Handlebars.compile('{{#each documents}}<a href="{{url}}" target="_blank">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
 
             templateContext() {
                 const value = this.model.get(this.options.key);
@@ -263,21 +267,28 @@ export default (factory = {
         return this.__getSimpleView('{{{value}}}', extention);
     },
 
-    getCellHtml(column, model) {
+    getCellHtml(column, model: Backbone.Model) {
         const value = model.get(column.key);
 
         if (value === null || value === undefined) {
             return `<div class="cell ${column.columnClass}"></div>`;
         }
+        let adjustedValue = value;
 
-        switch (column.type) {
+        switch (column.dataType || column.type) {
             case objectPropertyTypes.STRING:
-                return `<div class="cell ${column.columnClass}">${value}</div>`;
+                adjustedValue = this.__adjustValue(value);
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.INSTANCE:
-                return `<div class="cell ${column.columnClass}">${value ? value.name : ''}</div>`;
+                if (Array.isArray(value)) {
+                    adjustedValue = value.map(v => v && v.name).join(', ');
+                } else if (value && value.name) {
+                    adjustedValue = value.name;
+                }
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue || ''}">${adjustedValue || ''}</div>`;
             case objectPropertyTypes.ACCOUNT:
                 if (value.length > 0) {
-                    return `<div class="cell ${column.columnClass}">${value
+                    adjustedValue = value
                         .map(item => ({
                             id: item.id,
                             text: item.text || item.name || (item.columns && item.columns[0])
@@ -288,57 +299,87 @@ export default (factory = {
                                 return `${memo}, ${member.text}`;
                             }
                             return member.text;
-                        }, null)}</div>`;
+                        }, null);
+                    return `<div class="cell ${column.columnClass}" title="${adjustedValue} || ''">${adjustedValue}</div>`;
                 } else if (value.name) {
-                    return `<div class="cell ${column.columnClass}">${value.name}</div>`;
+                    return `<div class="cell ${column.columnClass}" title="${value.name}">${value.name}</div>`;
                 }
             case objectPropertyTypes.ENUM:
-                return `<div class="cell ${column.columnClass}">${value ? value.valueExplained : ''}</div>`;
+                adjustedValue = value ? value.valueExplained : '';
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                return `<div class="cell cell-right ${column.columnClass}">${value ? value.toString() : ''}</div>`;
+                adjustedValue = this.__adjustValue(value) || '';
+                return `<div class="cell cell-right ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DURATION: {
-                if (value === 0) {
-                    return `<div class="cell ${column.columnClass}">${'0'}</div>`;
-                }
-                if (!value) {
-                    return `<div class="cell ${column.columnClass}"></div>`;
-                }
-                let result = '';
-                const duration = dateHelpers.durationISOToObject(value);
-                if (duration.days) {
-                    result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
-                }
-                if (duration.hours) {
-                    result += `${duration.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
-                }
-                if (duration.minutes) {
-                    result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
-                }
-                return `<div class="cell ${column.columnClass}">${result.trim()}</div>`;
+                adjustedValue = Array.isArray(value) ? value : [value];
+                adjustedValue = adjustedValue
+                    .map(v => {
+                        let result = '';
+                        if (value === 0) {
+                            return '0';
+                        }
+                        if (!value) {
+                            return '';
+                        }
+
+                        const duration = dateHelpers.durationISOToObject(value);
+                        if (duration.days) {
+                            result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
+                        }
+                        if (duration.hours) {
+                            result += `${duration.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
+                        }
+                        if (duration.minutes) {
+                            result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                        }
+                        return result;
+                    })
+                    .join(', ')
+                    .trim();
+
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             }
             case objectPropertyTypes.BOOLEAN:
-                if (value === true) {
-                    return `<div class="cell ${column.columnClass}"><svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg></div>`;
-                } else if (value === false) {
-                    return `<div class="cell ${column.columnClass}"><svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg></div>`;
-                }
+                adjustedValue = Array.isArray(value) ? value : [value || ''];
+                adjustedValue = adjustedValue
+                    .map(v => {
+                        let result = '';
+                        if (v  === true) {
+                            result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
+                        } else if (v === false) {
+                            result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
+                        }
+                        return result;
+                    })
+                    .join(', ');
+                return `<div class="cell ${column.columnClass}">${adjustedValue}</div>`;
             case objectPropertyTypes.DATETIME:
-                return `<div class="cell ${column.columnClass}">${dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime')}</div>`;
+                adjustedValue = Array.isArray(value) ? value : [value];
+                adjustedValue = adjustedValue
+                    .map(v => dateHelpers.dateToDateTimeString(v, column.format || 'condensedDateTime')).join(', ');
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {
                     return `<div class="cell ${column.columnClass}">${value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
-                            return `<a href="${url}">${text}</a>`;
+                            return `<a href="${url}"  target="_blank" title="${text}">${text}</a>`;
                         })
                         .sort((a, b) => a.text > b.text)
                         .join(', ')}</div>`;
                 }
             default:
-                return `<div class="cell ${column.columnClass}">${value}</div>`;
+                return `<div class="cell ${column.columnClass}"></div>`;
         }
+    },
+
+    __adjustValue(value) {
+        if (Array.isArray(value)) {
+            return value.join(', ');
+        }
+        return value;
     }
 });

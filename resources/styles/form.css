@@ -679,6 +679,7 @@ input[type="checkbox"].checkbox {
 
 .cell .bubbles{
     border: none;
+    flex-wrap: nowrap;
 }
 /* /Bubbles/ */
 

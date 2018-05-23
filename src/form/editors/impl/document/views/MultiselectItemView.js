@@ -4,7 +4,7 @@ import template from '../templates/MultiselectItem.html';
 import DocumentRevisionButtonView from './DocumentRevisionButtonView';
 import DocumentRevisionPanelView from './DocumentRevisionPanelView';
 import DocumentItemController from '../controllers/DocumentItemController';
-import iconWrapRemove from '../../../iconsWraps/iconWrapRemove.html';
+import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 
 const savedDocumentPrefix = 'document';
 
@@ -34,7 +34,7 @@ export default Marionette.View.extend({
     className: 'task-links__i dev-task-links__links__i',
 
     ui: {
-        remove: '.js-clear-button',
+        remove: '.js-bubble-delete',
         revise: '.js-revise-button-region',
         link: '.js-link'
     },
@@ -64,7 +64,7 @@ export default Marionette.View.extend({
 
     __onMouseenter() {
         if (this.options.allowDelete) {
-            this.el.insertAdjacentHTML('beforeend', iconWrapRemove);
+            this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
         if (this.model.get('id').indexOf(savedDocumentPrefix) > -1 && this.options.showRevision) {
             if (!this.isRevisonButtonShown) {

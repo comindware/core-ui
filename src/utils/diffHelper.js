@@ -5,7 +5,7 @@ type diffObject = {
     t: -1 | 0 | 1
 };
 
-export default function(a_: Array<any>, b_: Array<any>) {
+export default function (a_: Array<any>, b_: Array<any>) {
     let a = a_;
     let b = b_;
     let m = a.length;
@@ -14,7 +14,7 @@ export default function(a_: Array<any>, b_: Array<any>) {
     let ed = null;
     let offset = m + 1;
     const path = [];
-    const pathposi = [];
+    const pathposi: Array<{ x: number, y: number, k: number }> = [];
     const ses: Array<diffObject> = [];
     let lcs = '';
     const SES_DELETE = -1;
@@ -23,7 +23,7 @@ export default function(a_: Array<any>, b_: Array<any>) {
     let tmp1;
     let tmp2;
 
-    const init = function() {
+    const init = function () {
         if (m >= n) {
             tmp1 = a;
             tmp2 = m;
@@ -36,7 +36,9 @@ export default function(a_: Array<any>, b_: Array<any>) {
         }
     };
 
-    const P = function(x, y, k) {
+    const P = function (x: number, y: number, k: ?number): {
+        x: number, y: number, k: ?number
+    } {
         return {
             x,
             y,
@@ -44,17 +46,18 @@ export default function(a_: Array<any>, b_: Array<any>) {
         };
     };
 
-    const seselem = function(elem, t) {
+    const seselem = function (elem, t) {
         return {
             elem,
             t
         };
     };
 
-    const snake = function(k, p, pp) {
-        let r;
-        let x;
-        let y;
+    const snake = function (k: number, p, pp) {
+        let r: number;
+        let x: number;
+        let y: number;
+
         if (p > pp) {
             r = path[k - 1 + offset];
         } else {
@@ -73,7 +76,7 @@ export default function(a_: Array<any>, b_: Array<any>) {
         return y;
     };
 
-    const recordseq = function(epc) {
+    const recordseq = function (epc) {
         let px_idx;
         let py_idx;
         let i;
@@ -120,10 +123,10 @@ export default function(a_: Array<any>, b_: Array<any>) {
             return ses;
         },
         compose() {
-            let p;
-            let r;
-            let i;
-            let k;
+            let p: number;
+            let r: number;
+            let i: number;
+            let k: number;
             const delta = n - m;
             const size = m + n + 3;
             const fp = {};
@@ -149,8 +152,11 @@ export default function(a_: Array<any>, b_: Array<any>) {
 
             const epc = [];
             while (r !== -1) {
-                epc[epc.length] = new P(pathposi[r].x, pathposi[r].y, null);
-                r = pathposi[r].k;
+                const curpathpos = pathposi[r];
+                if (curpathpos) {
+                    epc[epc.length] = new P(curpathpos.x, curpathpos.y, null);
+                    r = curpathpos.k;
+                }
             }
             recordseq(epc);
         }

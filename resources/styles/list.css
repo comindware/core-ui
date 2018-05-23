@@ -321,10 +321,13 @@ svg.svg-grid-icons {
 
 .grid-toolbar-region {
     flex: 1 1 auto;
+    overflow: hidden;
+    padding-left: 5px;
 }
 
 .editable-grid-field {
     width: 100%;
+    height: 25px;
 }
 
 .editable-grid-field .form-editor{
@@ -412,10 +415,6 @@ svg.svg-grid-icons {
 .editable-grid-field .editor .date-time,
 .editable-grid-field .editor .input_date{
     width: 100%;
-}
-
-.editable-grid-field .svg-icons-wrp:not(.svg-icons-wrp_checked){
-    margin-top: 2px;
 }
 
 /* /Editable Grid */
@@ -534,6 +533,10 @@ svg.svg-grid-icons {
 
 .cell .svg-icons {
     margin-top: 2px;
+}
+
+.cell .svg-icons.svg-icons_remove-bubble {
+    margin-top: 1px;
 }
 
 .cell .svg-icons_checked{

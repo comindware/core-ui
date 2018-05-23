@@ -65,9 +65,9 @@ export default Marionette.CompositeView.extend({
             this.__addOneDropZone();
             return;
         }
-        if (this.model.get('horizontalDrops')) {
-            this.__addDropZones(this.children);
+        this.__addDropZones(this.children);
 
+        if (this.model.get('horizontalDrops')) {
             this.__renderColumnDropZones();
         }
     },
