@@ -465,14 +465,6 @@ svg.svg-grid-icons {
     overflow: hidden;
 }
 
-.selected .cell{
-    background-color: #eaf5fc;
-}
-
-.row:hover .cell{
-    background-color: #F5F5F5;
-}
-
 .cell_selection {
     position: relative;
     display: flex;
@@ -483,7 +475,6 @@ svg.svg-grid-icons {
 }
 
 .cell-focused {
-    outline: 1px solid #0575bd;
     outline-offset: -1px;
 }
 .disabled.cell-focused {
@@ -495,7 +486,6 @@ svg.svg-grid-icons {
 }
 
 .cell.selected{
-    outline: 1px solid #0575bd;
     outline-offset: -1px;
 }
 
@@ -559,8 +549,6 @@ svg.svg-grid-icons {
     left: 0;
     top: 0;
     bottom: 0;
-    width: 50px;
-    padding: 0 25px 0 2px;
     visibility: hidden;
     z-index: 1;
     cursor: move;

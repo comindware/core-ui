@@ -13,3 +13,7 @@
   background: var(--checkbox-checked-color);
   border-color: var(--checkbox-checked-color);
 }
+
+.cell__index {
+  display: none;
+}

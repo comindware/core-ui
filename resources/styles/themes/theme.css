@@ -170,7 +170,7 @@ body, input, textarea, select {
   top:2px;
 }
 .svg-icons-wrp_edit-reference{
-  top:0;
+  top: 0;
   right: 18px;
 }
 /* /svg icons/ */
@@ -231,11 +231,11 @@ body, input, textarea, select {
 }
 
 .selected .cell{
-  background-color: #eaf5fc;
+  background-color: var(--grid-row-selected-color);
 }
 
 .row:hover .cell{
-  background-color: #F5F5F5;
+  background-color: var(--grid-row-hover-color);
 }
 
 .sort_down, .sort_up {
@@ -286,7 +286,12 @@ body, input, textarea, select {
 }
 
 .cell__dots svg{
-  width: var(--grid-dots-icon-size);
-  height: var(--grid-dots-icon-size);
   fill: var(--grid-dots-color);
+}
+
+.cell-focused {
+  outline: 1px solid #0575bd;
+}
+.cell.selected{
+  outline: 1px solid #0575bd;
 }

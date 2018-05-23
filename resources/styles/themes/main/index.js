@@ -2,6 +2,7 @@
 const variables = {
     // colors
     red: '#cb4e30',
+    'blue-extra-light': '#eaf5fc',
     'blue-100': '#278ed9',
     'blue-200': '#0575bd',
 
@@ -89,10 +90,11 @@ const variables = {
     'grid-cell-height': '25px',
     'grid-cell-padding': '0 2px',
     'grid-selection-color': 'var(--grey-900)',
-    'grid-dots-icon-size': 'var(--grid-cell-height)',
     'grid-dots-width': '50px',
     'grid-dots-padding': '0 25px 0 2px',
     'grid-dots-color': 'var(--grey-600)',
+    'grid-row-selected-color': 'var(--blue-extra-light)',
+    'grid-row-hover-color': 'var(--grey-100)',
     'grid-sort-icon-size': '11px',
     'grid-sort-icon-offset-y': '2px',
     'grid-sort-icon':
