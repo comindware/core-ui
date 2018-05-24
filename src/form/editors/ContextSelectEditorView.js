@@ -19,16 +19,16 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
+        this.context = this.options.context;
+
         const model = new Backbone.Model({
             instanceTypeId: this.options.recordTypeId,
-            context: this.options.context,
+            context: this.__createTreeCollection(this.context, this.options.recordTypeId),
             propertyTypes: this.options.propertyTypes,
             usePropertyTypes: this.options.usePropertyTypes,
             instanceRecordTypeId: this.options.instanceRecordTypeId,
             allowBlank: this.options.allowBlank
         });
-
-        model.set({ context: this.__createTreeCollection(this.options.context, this.options.recordTypeId) });
 
         this.viewModel = new Backbone.Model({
             button: new Backbone.Model(),
@@ -86,8 +86,10 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     updateContext(recordTypeId, context) {
         const panelModel = this.viewModel.get('panel');
+
+        this.context = context;
         panelModel.set('instanceTypeId', recordTypeId);
-        panelModel.set('context', this.__createTreeCollection(context, recordTypeId));
+        panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
         this.setValue();
         this.render();
     },
@@ -110,7 +112,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
         let text = '';
 
-        this.options.context[instanceTypeId].forEach(context => {
+        this.context[instanceTypeId].forEach(context => {
             if (context.id === selectedItem) {
                 text = context.name;
                 instanceTypeId = context.instanceTypeId;
@@ -129,6 +131,10 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __createTreeCollection(context, recordTypeId) {
+        if (!context) {
+            return new Backbone.Collection();
+        }
+
         const deepContext = _.cloneDeep(context);
 
         Object.keys(deepContext).forEach(key => {
