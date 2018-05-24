@@ -10,7 +10,7 @@ type CellExtention = {
 };
 
 export default (factory = {
-    getCellViewForColumn(column, model) {
+    getCellViewForColumn(column, model: Backbone.Model) {
         if (column.editable) {
             return EditableGridFieldView;
         }
@@ -267,7 +267,7 @@ export default (factory = {
         return this.__getSimpleView('{{{value}}}', extention);
     },
 
-    getCellHtml(column, model) {
+    getCellHtml(column, model: Backbone.Model) {
         const value = model.get(column.key);
 
         if (value === null || value === undefined) {

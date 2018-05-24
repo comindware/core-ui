@@ -64,6 +64,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 collection = options.collection;
             } else {
                 collection = options.collection.toJSON();
+                this.listenTo(options.collection, 'reset', panelCollection => this.__onResetCollection(panelCollection));
             }
         }
         this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
@@ -231,6 +232,19 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
         if (triggerChange) {
             this.__triggerChange();
+        }
+    },
+
+    __onResetCollection(panelCollection) {
+        const editorId = this.model.get(this.key);
+        if (editorId) {
+            this.panelCollection.reset(panelCollection.models);
+
+            const selectedItem = this.panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
+            if (selectedItem) {
+                this.setValue(selectedItem.toJSON());
+                selectedItem.select();
+            }
         }
     },
 

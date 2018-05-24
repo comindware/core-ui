@@ -11,6 +11,7 @@ const defaultOptions = () => ({
     displayText: '',
     hideUsers: false,
     hideGroups: false,
+    hideToolbar: false,
     maxQuantitySelected: null,
     allowRemove: true,
     title: '',
@@ -98,6 +99,13 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
 
             this.showChildView('splitPanelRegion', this.controller.view);
         }
+    },
+
+    reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
+        this.options.users = users;
+        this.options.groups = groups;
+        this.controller.fillInModel();
+        this.controller.initItems();
     },
 
     __showPopup() {
