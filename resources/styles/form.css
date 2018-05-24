@@ -71,6 +71,12 @@ rgba(5,117,189,.5) // user avatar btn
     font-size: 0;
 }
 
+.form-group + .form-group,
+.field-width + .field-width{
+    margin-top: 10px;
+}
+
+
 /*------------------ Form Label ------------------*/
 .form-label {
     max-width: 100%;
