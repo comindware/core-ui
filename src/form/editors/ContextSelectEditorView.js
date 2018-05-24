@@ -51,7 +51,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     template: Handlebars.compile(template),
 
-    className: 'editor',
+    className: 'editor context_select',
 
     onRender() {
         if (!this.enabled) {
@@ -87,8 +87,9 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     updateContext(recordTypeId, context) {
         const panelModel = this.viewModel.get('panel');
         panelModel.set('instanceTypeId', recordTypeId);
-        panelModel.set('context', context);
+        panelModel.set('context', this.__createTreeCollection(context, recordTypeId));
         this.setValue();
+        this.render();
     },
 
     __value(value, triggerChange, newValue) {

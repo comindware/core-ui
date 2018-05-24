@@ -1575,3 +1575,7 @@ svg.svg-icons{
     border: 1px solid #8f84ff;
     border-radius: 2px;
 }
+
+.context_select {
+    cursor: pointer;
+}
