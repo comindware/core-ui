@@ -54,7 +54,6 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         if (this.getOption('showMode') !== 'button') {
             this.controller.on('popup:ok', () => {
                 this.__value(this.options.selected, true);
-                this.__updateEditor();
             });
         }
     },
@@ -127,7 +126,6 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
                 handler: () => {
                     this.controller.updateMembers();
                     this.__value(this.options.selected, true);
-                    this.__updateEditor();
                     Core.services.WindowService.closePopup();
                 }
             },
@@ -146,11 +144,14 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         WindowService.showPopup(popup);
     },
 
-    __updateEditor() {
-        this.ui.membersText.text(this.options.displayText);
+    __updateText() {
+        this.ui.membersText.text(this.controller.getDisplayText());
     },
 
     __value(value, triggerChange) {
+        if (this.getOption('showMode') === 'button') {
+            this.__updateText();
+        }
         this.value = value;
 
         if (triggerChange) {

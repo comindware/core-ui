@@ -46,7 +46,6 @@ export default Marionette.View.extend({
         },
         BackboneFormBehavior: {
             behaviorClass: form.behaviors.BackboneFormBehavior,
-            renderStrategy: 'manual',
             model() {
                 return this.model;
             },
@@ -59,7 +58,6 @@ export default Marionette.View.extend({
 
     onRender() {
         this.showChildView('contentRegion', this.content);
-        this.renderForm();
         this.__updateState();
     },
 
