@@ -26,10 +26,6 @@ footer, header, hgroup, menu, nav, section {
     display: block;
 }
 
-body {
-    line-height: 1;
-}
-
 ol, ul {
     list-style: none;
 }
@@ -230,9 +226,6 @@ a:hover {
 }
 /*-----//------*/
 
-.selected {
-    background: #eaf5fc
-}
 
 /* ------------------------------ user-avatar ------------------------------ */
 .user-avatar {
@@ -620,8 +613,6 @@ a:hover {
     top: 80px;
     bottom: 70px;
     left: 50%;
-    border-left: 1px solid #CED3D7;
-    border-right: 1px solid #CED3D7;
     z-index: 1;
 }
 
@@ -645,7 +636,6 @@ a:hover {
     height: 100%;
     display: flex;
     justify-content: space-between;
-    border: 1px solid #CED3D7;
     margin-top: 0;
 }
 
@@ -700,8 +690,6 @@ a:hover {
 
 .columns-select__btn {
     width: 50px;
-    border-left: 1px solid #CED3D7;
-    border-right: 1px solid #CED3D7;
     flex: none;
     display: flex;
     flex-direction: column;
@@ -719,7 +707,9 @@ a:hover {
     overflow: hidden;
     overflow-y: auto;
 }
-
+.columns-select .cell_selection {
+    box-shadow: none;
+}
 
 
 .btn.btn_arrow {

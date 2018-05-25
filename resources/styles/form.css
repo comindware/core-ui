@@ -347,12 +347,9 @@ input[type="checkbox"].checkbox {
 
 .checkbox {
     position: relative;
-    width: 16px;
-    height: 16px;
-    border-radius: 2px;
     overflow: hidden;
     display: block;
-    border: solid 1px #838c92;
+    text-align: center;
     cursor: pointer;
     transition: box-shadow .5s;
 }
@@ -467,49 +464,14 @@ input[type="checkbox"].checkbox {
 /* Date Time */
 .editor_date-time {
     padding-right: 16px;
-    border-bottom: 1px solid #edeff0;
     display: flex;
 }
 
-.editor_date-time:hover {
-    border-bottom-color: #b9bcbd
-}
-
-.editor_disabled.editor_date-time,
-.editor_disabled.editor_date-time:hover,
-.editor_readonly.editor_date-time,
-.editor_readonly.editor_date-time:hover {
-    border-bottom-color:transparent;
-    background:none
-}
-
-.date-view,
-.time-view{
-    height: 20px;
-}
-
-.date-time{
-    display: inline-block;
-}
-
-.editor .date-time .input{
-    border-bottom-color: transparent;
-    background: none !important;
+.editor_date-time .input{
+    border: 0;
     padding-right: 0;
 }
 
-.editor .date-time .input_date{
-    width: 110px;
-}
-
-.editor .date-time .input_time{
-    width: 90px;
-}
-
-.date-time .btn-remove_date,
-.date-time .btn-remove_time{
-    display: none !important;
-}
 /* /Date Time/ */
 
 
@@ -1066,14 +1028,11 @@ input[type="color"], .colorpicker{
     transform: translate(-50%, -50%);
 }
 
-.svg-icons-wrp_multiselect {
-    position: static;
-    width: 14px;
-    height: 14px;
-    border: solid 1px #838c92;
-    opacity: .6;
-    border-radius: 2px;
-    margin-right: 4px;
+.svg-icons_checked{
+    visibility: hidden;
+}
+.editor_checked .svg-icons_checked{
+    visibility: visible;
 }
 
 .svg-icons-wrp__empty,
@@ -1128,82 +1087,9 @@ input[type="color"], .colorpicker{
     visibility: hidden;
 }
 
-svg.svg-icons{
-    width:20px;
-    height: 20px;
-    pointer-events: none;
-}
-
-
-.svg-icons_remove{
-    transform: translate(6px, 5px);
-}
-.svg-icons_remove-bubble{
-    transform: scale(0.9) translate(5px, 5px);
-}
-.svg-icons-wrp__remove-icons{
-    position: relative;
-    top: -3px;
-    left: -2px;
-}
-
-
-.svg-icons_date{
-    transform: translate(3px, 2px);
-}
-.svg-icons_time{
-    transform: translate(2px, 1px);
-}
-.svg-icons_dropdown{
-    transform: translate(7px, 6px);
-}
-.svg-icons_member{
-    transform: translate(2px, 1px);
-}
-.svg-icons_checked{
-    transform: scale(1.2) translate(3px, 4px);
-    visibility: hidden;
-}
-.editor_checked .svg-icons_checked{
-    visibility: visible;
-    transform: scale(1.1) translate(2px, 3px);
-}
-.editor_checked .svg-icons_checked-reference{
-    transform: scale(1.1) translate(2px, 3px);
-}
-
-.svg-icons_multiselect{
-    transform: scale(.9) translate(0, 1px)
-}
-
-.svg-icons_attach{
-    transform:scale(.8) translate(0, -1px)
-}
-
-.svg-icons-wrp_edit-reference{
-    display: inline-block;
-    position: absolute;
-    z-index: 10;
-    cursor: pointer;
-}
 .editor_readonly .svg-icons-wrp_edit-reference,
 .editor_disabled .svg-icons-wrp_edit-reference{
     display: none;
-}
-
-
-.d-svg-icons{
-    fill: #8d8888;
-}
-
-.d-svg-icons_remove{
-    fill: #ca4e30;
-}
-.d-svg-icons_plus{
-    fill: #4d4d4d;
-}
-.d-svg-icons_checked{
-    fill: #0575bd;
 }
 
 /* /svg icons/ */

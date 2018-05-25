@@ -1,6 +1,7 @@
 /*eslint-env node*/
 const variables = {
     // colors
+    white: '#ffffff',
     red: '#cb4e30',
     'blue-extra-light': '#eaf5fc',
     'blue-100': '#278ed9',
@@ -17,7 +18,9 @@ const variables = {
     'grey-900': '#838c92',
 
     'text-color': '#384650',
+    'main-color': 'var(--blue-200)',
     'error-color': 'var(--red)',
+    'selected-color': 'var(--blue-extra-light)',
 
     // font
     'base-font-size': '12px',
@@ -31,7 +34,6 @@ const variables = {
     'editor-font-size': 'var(--base-font-size)',
     'editor-text-color': 'var(--text-color)',
     'editor-empty-text-color': 'var(--grey-500)',
-    'editor-focused-text-color': 'var(--text-color)',
 
     // input
     'input-padding': '0 20px 0 0',
@@ -61,15 +63,9 @@ const variables = {
     'radio-inner-size': '6px',
     'radio-checked-disabled-color': 'var(--grey-800)',
 
-    // svg-icons
-    'svg-icon-right': '0',
-    'svg-icon-top': '0',
-    'svg-icon-width': '16px',
-    'svg-icon-height': '16px',
-    'svg-icon-transform': 'none',
-
     // grid
     'grid-checkbox-size': '14px',
+    'grid-checkbox-icon-size': '12px',
     'grid-header-font-size': 'var(--base-font-size)',
     'grid-header-color': 'var(--grey-900)',
     'grid-header-bg': 'transparent',
@@ -82,23 +78,34 @@ const variables = {
     'grid-header-selection-bg': 'var(--grey-100)',
 
     'grid-cell-bg': 'var(--white)',
-    'grid-cell-selection-bg': 'var(--grid-header-selection-bg)',
-    'grid-cell-index-width': '53px',
-    'grid-cell-index-padding-x': '10px',
     'grid-cell-border': 'inset -1px -1px 0 0 var(--grid-header-border-color)',
     'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 0 0 0 var(--grid-header-border-color)',
     'grid-cell-height': '25px',
     'grid-cell-padding': '0 2px',
-    'grid-selection-color': 'var(--grey-900)',
     'grid-dots-width': '50px',
     'grid-dots-padding': '0 25px 0 2px',
     'grid-dots-color': 'var(--grey-600)',
     'grid-row-selected-color': 'var(--blue-extra-light)',
     'grid-row-hover-color': 'var(--grey-100)',
+
+    'grid-selection-color': 'var(--grey-900)',
+    'grid-selection-width': '26px',
+    'grid-selection-bg': 'var(--grid-header-selection-bg)',
+    'grid-selection-index-width': '53px',
+    'grid-selection-index-padding-x': '10px',
+
     'grid-sort-icon-size': '11px',
     'grid-sort-icon-offset-y': '2px',
     'grid-sort-icon':
-        'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozNDQ4NDJBRDQzQ0MxMUU0OTlENjlCNTY0NjYxODgwNyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozNDQ4NDJBRTQzQ0MxMUU0OTlENjlCNTY0NjYxODgwNyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM0NDg0MkFCNDNDQzExRTQ5OUQ2OUI1NjQ2NjE4ODA3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjM0NDg0MkFDNDNDQzExRTQ5OUQ2OUI1NjQ2NjE4ODA3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+4m7sIQAAAKtJREFUeNqMkbENwkAMRe8o6KAlFbAAe4QMwAzZAJggrJARQAI6yB4sEEQTajqa8L7kk05RQHzpyTr72c354+nsLDPYQAYJNHCBHdwlDExM4QY5TGFoNbd+GuQ57GHk+qP+QZ7kLYw7gu9ZWEteuv+SSZ78uBi/E8nPqNFGgrd3SCP52rnWdmpIJbmA15eFEM0LyTWsehZiUfM6fEoFCyjhAW+rpfU1dx8BBgDWbSIkm9JfYQAAAABJRU5ErkJggg==)'
+        'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NDkxMSwgMjAxMy8xMC8yOS0xMTo0NzoxNiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozNDQ4NDJBRDQzQ0MxMUU0OTlENjlCNTY0NjYxODgwNyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozNDQ4NDJBRTQzQ0MxMUU0OTlENjlCNTY0NjYxODgwNyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjM0NDg0MkFCNDNDQzExRTQ5OUQ2OUI1NjQ2NjE4ODA3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjM0NDg0MkFDNDNDQzExRTQ5OUQ2OUI1NjQ2NjE4ODA3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+4m7sIQAAAKtJREFUeNqMkbENwkAMRe8o6KAlFbAAe4QMwAzZAJggrJARQAI6yB4sEEQTajqa8L7kk05RQHzpyTr72c354+nsLDPYQAYJNHCBHdwlDExM4QY5TGFoNbd+GuQ57GHk+qP+QZ7kLYw7gu9ZWEteuv+SSZ78uBi/E8nPqNFGgrd3SCP52rnWdmpIJbmA15eFEM0LyTWsehZiUfM6fEoFCyjhAW+rpfU1dx8BBgDWbSIkm9JfYQAAAABJRU5ErkJggg==)',
+
+    'columns-select-border': '1px solid var(--grey-400)',
+    'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
+
+    'dropdown-font-size': 'var(--base-font-size)',
+    'dropdown-item-padding': '5px 10px',
+    'dropdown-item-checkbox-padding': '5px',
+    'dropdown-item-hover-color': 'var(--grey-100)'
 };
 
 module.exports.variables = variables;
@@ -123,6 +130,17 @@ module.exports.apply = {
         opacity: '.6',
         cursor: 'auto'
     },
-    'check-button-disabled-theme': {},
-    'radio-disabled-theme': {}
+    'checkbox-disabled-theme': {},
+    'radio-disabled-theme': {},
+    'svg-icon-wrp-theme': {
+        right: '0',
+        top: '0',
+        width: '16px',
+        height: '16px'
+    },
+    'svg-icons-theme': {
+        width: '20px',
+        height: '20px',
+        'pointer-events': 'none'
+    }
 };
