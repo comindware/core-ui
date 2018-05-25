@@ -278,7 +278,7 @@ export default (factory = {
         switch (column.dataType || column.type) {
             case objectPropertyTypes.STRING:
                 adjustedValue = this.__adjustValue(value);
-                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
+                return `<div class="cell ${column.columnClass}" title="${column.format === 'HTML' ? '' : adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.INSTANCE:
                 if (Array.isArray(value)) {
                     adjustedValue = value.map(v => v && v.name).join(', ');

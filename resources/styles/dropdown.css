@@ -29,7 +29,7 @@
 }
 
 .dropdown__wrp_down {
-    height: 400px;
+    max-height: 400px;
     position: fixed;
 }
 
@@ -389,8 +389,6 @@
 /*-----//------*/
 
 .dropdown__wrp_list{
-    height: 410px;
-    position: relative;
     overflow-y: auto;
 }
 
@@ -438,4 +436,7 @@
     height: auto;
 }
 
+.source-text {
+    flex: 1;
+}
 /*-----//------*/

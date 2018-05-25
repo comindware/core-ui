@@ -13,14 +13,13 @@ export default Marionette.Object.extend({
         this.channel.on('items:update', this.updateMembers, this);
         this.channel.on('items:cancel', this.cancelMembers, this);
         this.__createModel();
-        this.__fillDisplayText();
 
         this.channel = new Backbone.Radio.channel(_.uniqueId('membersSplitPanel'));
         this.channel.on('items:select', this.selectItemsByToolbar, this);
         this.channel.on('items:move', this.__onItemsMove, this);
     },
 
-    __fillInModel() {
+    fillInModel() {
         const users = this.options.users;
         const groups = this.options.groups;
         const members = {};
@@ -43,30 +42,35 @@ export default Marionette.Object.extend({
         });
     },
 
-    __fillDisplayText() {
+    getDisplayText() {
+        let resultText = '';
         const members = this.model.get('items');
         const membersCount = {
             users: 0,
             groups: 0
         };
 
-        const selected = this.options.selected;
+        let selected = this.options.selected;
 
-        selected
-            && selected.forEach(id => {
+        if (selected) {
+            if (!Array.isArray(selected)) {
+                selected = [selected];
+            }
+            selected.forEach(id => {
                 if (members[id]) {
                     membersCount[members[id].type]++;
                 }
             });
-        if (!this.options.displayText) {
-            this.options.displayText = this.options.hideUsers
-                ? ''
-                : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
-            this.options.displayText += this.options.displayText.length > 0 ? ' ' : '';
-            this.options.displayText += this.options.hideGroups
-                ? ''
-                : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
         }
+
+        resultText = this.options.hideUsers
+            ? ''
+            : helpers.getPluralForm(membersCount.users, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.USERS')).replace('{0}', membersCount.users);
+        resultText += resultText.length > 0 ? ' ' : '';
+        resultText += this.options.hideGroups
+            ? ''
+            : helpers.getPluralForm(membersCount.groups, LocalizationService.get('CORE.FORM.EDITORS.MEMBERSPLIT.GROUPS')).replace('{0}', membersCount.groups);
+        return resultText;
     },
 
     __getFullMemberSplitTitle() {
@@ -104,7 +108,6 @@ export default Marionette.Object.extend({
         const allSelectedModels = _.clone(this.model.get('selected'));
         //allSelectedModels.filter(null); todo figure it out, WHY?!
         this.options.selected = allSelectedModels.models.map(model => model.id);
-        this.__fillDisplayText && this.__fillDisplayText();
         this.trigger('popup:ok');
     },
 
@@ -246,7 +249,7 @@ export default Marionette.Object.extend({
         });
 
         this.model.set('allowRemove', this.options.allowRemove);
-        this.__fillInModel();
+        this.fillInModel();
     },
 
     setValue() {
