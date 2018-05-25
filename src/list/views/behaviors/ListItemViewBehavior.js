@@ -93,11 +93,11 @@ export default Marionette.Behavior.extend({
         const model = this.view.model;
         if (model.selected) {
             model.deselect({ isSilent: true });
-        } else {
-            const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
-            if (selectFn) {
-                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
-            }
+        }
+
+        const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
+        if (selectFn) {
+            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
         }
     }
 });
