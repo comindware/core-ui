@@ -236,7 +236,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onDateBeforeClose() {
-        if (this.calendarDropdownView.isDestroyed) {
+        if (this.calendarDropdownView.isDestroyed()) {
             return;
         }
         this.calendarDropdownView.button.endEditing();
