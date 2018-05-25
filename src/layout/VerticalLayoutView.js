@@ -43,7 +43,10 @@ export default Marionette.View.extend({
                 view
             });
         });
-        this.__updateState();
+    },
+
+    onAttach() {
+        this.rows.forEach(view => view.triggerMethod('attach'));
     },
 
     update() {

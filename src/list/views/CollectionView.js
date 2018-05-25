@@ -374,7 +374,9 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight = (this.el.parentElement && this.el.parentElement.clientHeight) || window.innerHeight;
+        const availableHeight = this.el.parentElement && this.el.parentElement.clientHeight !== this.childHeight
+            ? this.el.parentElement.clientHeight
+            : window.innerHeight;
 
         if (this.children && this.children.length && !this.isEmpty()) {
             const firstChild = this.children.first().el;
@@ -454,7 +456,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __updateChildTop(child) {
-        if (!child) {
+        if (!child || !this.collection.length) {
             return;
         }
         requestAnimationFrame(() => {

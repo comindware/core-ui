@@ -434,6 +434,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     collapseShowMore() {
+        if (this.isDestroyed()) {
+            return;
+        }
         if (!this.getChildViewContainer(this) || !this.getChildViewContainer(this).children() || !this.getChildViewContainer(this).children().length) {
             this.ui.showMore.hide();
             return;

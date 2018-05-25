@@ -12,6 +12,7 @@
     background: #f7f6f6;
     width: auto;
     flex: none;
+    align-self: flex-start;
 }
 
 .layout__button-view:hover {

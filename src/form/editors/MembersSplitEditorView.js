@@ -11,6 +11,7 @@ const defaultOptions = () => ({
     displayText: '',
     hideUsers: false,
     hideGroups: false,
+    hideToolbar: false,
     maxQuantitySelected: null,
     allowRemove: true,
     title: '',
@@ -20,24 +21,25 @@ const defaultOptions = () => ({
     emptyListText: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.EMPTYLIST'),
     users: undefined,
     groups: undefined,
-    showMode: null
+    showMode: null,
+    cacheService: undefined
 });
 
 export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({
     initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
+
         const defOps = Object.assign(defaultOptions(), {
-            users:
-                options.users ||
-                options.schema.cacheService.GetUsers().map(user => ({
+            users: options.users ||
+                options.cacheService.GetUsers().map(user => ({
                     id: user.Id,
                     name: user.Text || user.Username,
                     abbreviation: user.abbreviation,
                     userpicUri: user.userpicUri,
                     type: 'users'
                 })),
-            groups:
-                options.groups ||
-                options.schema.cacheService.GetGroups().map(group => ({
+            groups: options.groups ||
+                options.cacheService.GetGroups().map(group => ({
                     id: group.id,
                     name: group.name,
                     type: 'groups'
@@ -52,7 +54,6 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         if (this.getOption('showMode') !== 'button') {
             this.controller.on('popup:ok', () => {
                 this.__value(this.options.selected, true);
-                this.__updateEditor();
             });
         }
     },
@@ -99,6 +100,13 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         }
     },
 
+    reloadCollection(users: Array<{ id: string, name: string }>, groups: Array<{ id: string, name: string }>): void {
+        this.options.users = users;
+        this.options.groups = groups;
+        this.controller.fillInModel();
+        this.controller.initItems();
+    },
+
     __showPopup() {
         if (!this.getEnabled()) {
             return;
@@ -112,25 +120,23 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
                 height: '700px'
             },
             header: this.getOption('title') || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE'),
-            buttons: [
-                {
-                    id: 'save',
-                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
-                    handler: () => {
-                        this.controller.updateMembers();
-                        this.__value(this.options.selected, true);
-                        this.__updateEditor();
-                        Core.services.WindowService.closePopup();
-                    }
-                },
-                {
-                    id: 'close',
-                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
-                    handler: () => {
-                        this.controller.cancelMembers();
-                        Core.services.WindowService.closePopup();
-                    }
+            buttons: [{
+                id: 'save',
+                text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+                handler: () => {
+                    this.controller.updateMembers();
+                    this.__value(this.options.selected, true);
+                    Core.services.WindowService.closePopup();
                 }
+            },
+            {
+                id: 'close',
+                text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+                handler: () => {
+                    this.controller.cancelMembers();
+                    Core.services.WindowService.closePopup();
+                }
+            }
             ],
             content: this.controller.view
         });
@@ -138,11 +144,14 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         WindowService.showPopup(popup);
     },
 
-    __updateEditor() {
-        this.ui.membersText.text(this.options.displayText);
+    __updateText() {
+        this.ui.membersText.text(this.controller.getDisplayText());
     },
 
     __value(value, triggerChange) {
+        if (this.getOption('showMode') === 'button') {
+            this.__updateText();
+        }
         this.value = value;
 
         if (triggerChange) {

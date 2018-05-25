@@ -71,6 +71,12 @@ rgba(5,117,189,.5) // user avatar btn
     font-size: 0;
 }
 
+.form-group + .form-group,
+.field-width + .field-width{
+    margin-top: 10px;
+}
+
+
 /*------------------ Form Label ------------------*/
 .form-label {
     max-width: 100%;
@@ -124,8 +130,8 @@ rgba(5,117,189,.5) // user avatar btn
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    font-size: 8px;
-    line-height: 10px;
+    font-size: 9px;
+    line-height: 11px;
     font-weight: bold;
     position: absolute;
     top: 1px;
@@ -802,6 +808,7 @@ input[type="checkbox"].checkbox {
 
 .cell .bubbles{
     border: none;
+    flex-wrap: nowrap;
 }
 /* /Bubbles/ */
 
@@ -1573,4 +1580,8 @@ svg.svg-icons{
 .field-error-view_text .selected {
     border: 1px solid #8f84ff;
     border-radius: 2px;
+}
+
+.context_select {
+    cursor: pointer;
 }

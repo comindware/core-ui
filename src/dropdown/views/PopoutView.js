@@ -336,9 +336,12 @@ export default Marionette.View.extend({
         panelRect.height = $panelEl.outerHeight();
         panelRect.width = $panelEl.outerWidth();
 
-        const css = {
-            top: 0
-        };
+        const css: {
+            top?: number,
+            bottom?: number
+        } = {
+                top: 0
+            };
 
         // calculate vertical position
         let direction = this.options.direction;

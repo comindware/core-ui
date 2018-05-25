@@ -62,7 +62,7 @@ export default Marionette.View.extend({
         let childWidth = 0;
         let findingItem = -1;
         toolbarActions.each((i, val) => {
-            childWidth += val.getBoundingClientRect().width + itemMarginLeft;
+            childWidth += val.getBoundingClientRect().width;
             if (childWidth + menuActionsWidth > toolbarWidth) {
                 findingItem = i;
                 return false;
@@ -79,11 +79,11 @@ export default Marionette.View.extend({
     },
 
     __createDropdownActionsView() {
-        return Core.dropdown.factory.createDropdown({
-            buttonView: Marionette.View.extend({ template: false }),
-            panelView: Marionette.View.extend({ template: false }),
+        return Core.dropdown.factory.createMenu({
             text: actionsMenuLabel,
-            items: this.menuItemsCollection
+            items: this.menuItemsCollection,
+            popoutFlow: 'right',
+            customAnchor: true
         });
     }
 });
