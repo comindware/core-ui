@@ -6,7 +6,7 @@
 	],
 	"settings": { 
 		   "workbench.iconTheme": "material-icon-theme",
-		"workbench.colorTheme": "Material Theme",
+		"workbench.colorTheme": "Material Theme Darker",
 		"workbench.activityBar.visible": false,
 		"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
 		"flow.useNPMPackagedFlow": true,

@@ -5,7 +5,7 @@ type diffObject = {
     t: -1 | 0 | 1
 };
 
-export default function (a_: Array<any>, b_: Array<any>) {
+export default function(a_: Array<any>, b_: Array<any>) {
     let a = a_;
     let b = b_;
     let m = a.length;
@@ -23,7 +23,7 @@ export default function (a_: Array<any>, b_: Array<any>) {
     let tmp1;
     let tmp2;
 
-    const init = function () {
+    const init = function() {
         if (m >= n) {
             tmp1 = a;
             tmp2 = m;
@@ -36,8 +36,14 @@ export default function (a_: Array<any>, b_: Array<any>) {
         }
     };
 
-    const P = function (x: number, y: number, k: ?number): {
-        x: number, y: number, k: ?number
+    const P = function(
+        x: number,
+        y: number,
+        k: ?number
+    ): {
+        x: number,
+        y: number,
+        k: ?number
     } {
         return {
             x,
@@ -46,14 +52,14 @@ export default function (a_: Array<any>, b_: Array<any>) {
         };
     };
 
-    const seselem = function (elem, t) {
+    const seselem = function(elem, t) {
         return {
             elem,
             t
         };
     };
 
-    const snake = function (k: number, p, pp) {
+    const snake = function(k: number, p, pp) {
         let r: number;
         let x: number;
         let y: number;
@@ -76,7 +82,7 @@ export default function (a_: Array<any>, b_: Array<any>) {
         return y;
     };
 
-    const recordseq = function (epc) {
+    const recordseq = function(epc) {
         let px_idx;
         let py_idx;
         let i;

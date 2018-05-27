@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --open"
   },
   "devDependencies": {
-    "autoprefixer": "^8.5.0",
+    "autoprefixer": "^8.5.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
@@ -32,7 +32,7 @@
     "style-loader": "^0.21.0",
     "text-loader": "^0.0.1",
     "url-loader": "^1.0.1",
-    "webpack": "^4.8.3",
+    "webpack": "^4.9.1",
     "webpack-cli": "^2.1.4",
     "webpack-dev-server": "^3.1.4",
     "webpack-pwa-manifest": "^3.6.2",

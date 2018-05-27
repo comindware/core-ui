@@ -20,7 +20,7 @@ import 'jstorage';
 import * as Handlebars_ from 'handlebars';
 import $_ from 'jquery';
 import 'rangyinputs';
-import 'jquery-autosize';
+import autosize from 'autosize';
 
 import numeral_ from 'numeral';
 import 'numeral/locales/ru';
@@ -50,7 +50,8 @@ const api = {
     Marionette: Marionette_,
     numeral: numeral_,
     codemirror: codemirror_,
-    JSEncrypt: jsencrypt.JSEncrypt
+    JSEncrypt: jsencrypt.JSEncrypt,
+    autosize
 };
 
 const moment = api.moment;
@@ -61,5 +62,6 @@ const Backbone = backbone;
 const Marionette = Marionette_;
 const numeral = api.numeral;
 const codemirror = api.codemirror;
+
 export default api;
-export { moment, Handlebars, $, _, Backbone, Marionette, numeral, codemirror };
+export { moment, Handlebars, $, _, Backbone, Marionette, numeral, codemirror, autosize };
