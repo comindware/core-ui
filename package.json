@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.5.0-beta.37",
+  "version": "1.5.0-beta.41",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -67,7 +67,7 @@
     "expose-loader": "^0.7.5",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
-    "flow-bin": "^0.72.0",
+    "flow-bin": "^0.73.0",
     "flow-webpack-plugin": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^7.0.1",

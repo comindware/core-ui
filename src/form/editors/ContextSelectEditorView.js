@@ -131,7 +131,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     },
 
     __createTreeCollection(context, recordTypeId) {
-        if (!context) {
+        if (!context || !context[recordTypeId]) {
             return new Backbone.Collection();
         }
 

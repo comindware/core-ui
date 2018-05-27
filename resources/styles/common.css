@@ -972,11 +972,11 @@ a:hover {
 /* -------- context select ------*/
 .data-source-popout-view {
     min-width: 165px;
-    min-height: 200px;
-    overflow-y: auto;
+    overflow: hidden;
     position: fixed;
     width: 247px;
     background-color: white;
+    min-height: 200px;
     max-height: 500px;
     z-index: 200;
     box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
@@ -997,6 +997,11 @@ a:hover {
 
 .data-source__text_notset + .data-source-popout{
     top:20px;
+}
+
+.data-source-popout-view .fr-collection{
+    min-height: 200px;
+    max-height: 400px;
 }
 
 
