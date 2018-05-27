@@ -575,3 +575,12 @@ body {
     width: 100%;
     overflow: auto;
 }
+
+.header-content {
+    display: flex;
+    direction: row;
+}
+
+.demo-content__toolbar {
+    flex: 1;
+}

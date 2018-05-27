@@ -4,7 +4,6 @@ import template from './templates/toolbarView.html';
 
 const actionsMenuLabel = '⋮';
 const menuActionsWidth = 30;
-const itemMarginLeft = 10;
 
 export default Marionette.View.extend({
     initialize() {
