@@ -67,7 +67,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 this.listenTo(options.collection, 'reset', panelCollection => this.__onResetCollection(panelCollection));
             }
         }
-        this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
+        this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), {
+            isSliding: true,
+            selectableBehavior: 'multi'
+        });
 
         this.controller =
             this.options.controller ||
@@ -300,11 +303,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onFilterText(options) {
         const text = (options && options.text) || null;
         this.text = text;
+        this.dropdownView.panelView.setLoading(true);
         return this.controller.fetch(options).then(data => {
             if (this.text === text) {
                 this.panelCollection.reset(data.collection);
                 this.viewModel.panel.set('totalCount', data.totalCount);
                 this.__tryPointFirstRow();
+                this.dropdownView.panelView.setLoading(false);
             }
         });
     },

@@ -374,7 +374,7 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight = this.el.parentElement && this.el.parentElement.clientHeight !== this.childHeight
+        const availableHeight = this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
             ? this.el.parentElement.clientHeight
             : window.innerHeight;
 

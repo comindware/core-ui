@@ -5,6 +5,7 @@ import LocalizationService from '../../../../../services/LocalizationService';
 import LoadingView from './../../reference/views/LoadingView';
 import AddNewButtonView from './../../reference/views/AddNewButtonView';
 import ElementsQuantityWarningView from './ElementsQuantityWarningView';
+import LoadingBehavior from '../../../../../views/behaviors/LoadingBehavior';
 
 const config = {
     CHILD_HEIGHT: 25
@@ -40,7 +41,14 @@ export default Marionette.View.extend({
         loadingRegion: '.js-loading-region',
         addNewButtonRegion: '.js-add-new-button-region',
         listTitleRegion: '.js-list-title-region',
-        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
+        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region',
+    },
+
+    behaviors: {
+        LoadingBehavior: {
+            behaviorClass: LoadingBehavior,
+            region: 'loadingRegion'
+        }
     },
 
     onAttach() {
@@ -73,6 +81,12 @@ export default Marionette.View.extend({
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
         this.getRegion('elementsQuantityWarningRegion').$el.hide();
         this.updateFilter(null, true);
+    },
+
+    setLoading(state) {
+        if (!this.isDestroyed()) {
+            this.loading.setLoading(state);
+        }
     },
 
     handleCommand(command) {

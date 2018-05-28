@@ -258,7 +258,9 @@ export default Marionette.View.extend({
         }
 
         if (this.options.showSelection) {
-            this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
+            if (this.options.showHeader) {
+                this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
+            }
             this.showChildView('selectionPanelRegion', this.selectionPanelView);
             if (this.getOption('showRowIndex')) {
                 this.getRegion('selectionHeaderRegion').el.classList.add('cell_selection-index');

@@ -47,8 +47,7 @@ const GridHeaderView = Marionette.View.extend({
         this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
         this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
         this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort', 'handleResize');
-        this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
+        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
 
