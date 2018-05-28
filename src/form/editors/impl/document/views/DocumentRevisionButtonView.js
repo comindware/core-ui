@@ -1,4 +1,6 @@
 //@flow
 export default Marionette.View.extend({
-    template: false
+    template: false,
+
+    className: 'anchor'
 });

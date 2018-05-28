@@ -37,8 +37,7 @@ module.exports = () => {
     return {
         mode: PRODUCTION ? 'production' : 'development',
         entry: {
-            app: ['./public/index'],
-            vendor: ['comindware/core']
+            app: ['./public/index']
         },
         devtool: 'source-map',
         output: {
@@ -50,56 +49,56 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                          test: /\.css$/,
-                          loader: ExtractTextPlugin.extract({
-                              fallback: 'style-loader',
-                              use: [
-                                  {
-                                      loader: 'css-loader',
-                                      options: {
-                                          sourceMap: true
-                                      }
-                                  },
-                                  {
-                                      loader: 'postcss-loader',
-                                      options: {
-                                          sourceMap: true,
-                                          plugins: () => [
-                                              autoprefixer({
-                                                  browsers: ['last 2 versions']
-                                              }),
-                                              cssnano()
-                                          ]
-                                      }
-                                  }
-                              ]
-                          })
-                      }
+                        test: /\.css$/,
+                        loader: ExtractTextPlugin.extract({
+                            fallback: 'style-loader',
+                            use: [
+                                {
+                                    loader: 'css-loader',
+                                    options: {
+                                        sourceMap: true
+                                    }
+                                },
+                                {
+                                    loader: 'postcss-loader',
+                                    options: {
+                                        sourceMap: true,
+                                        plugins: () => [
+                                            autoprefixer({
+                                                browsers: ['last 2 versions']
+                                            }),
+                                            cssnano()
+                                        ]
+                                    }
+                                }
+                            ]
+                        })
+                    }
                     : {
-                          test: /\.css$/,
-                          use: [
-                              {
-                                  loader: 'style-loader'
-                              },
-                              {
-                                  loader: 'css-loader',
-                                  options: {
-                                      sourceMap: true
-                                  }
-                              },
-                              {
-                                  loader: 'postcss-loader',
-                                  options: {
-                                      sourceMap: true,
-                                      plugins: [
-                                          autoprefixer({
-                                              browsers: ['last 2 versions']
-                                          })
-                                      ]
-                                  }
-                              }
-                          ]
-                      },
+                        test: /\.css$/,
+                        use: [
+                            {
+                                loader: 'style-loader'
+                            },
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    sourceMap: true
+                                }
+                            },
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: true,
+                                    plugins: [
+                                        autoprefixer({
+                                            browsers: ['last 2 versions']
+                                        })
+                                    ]
+                                }
+                            }
+                        ]
+                    },
                 {
                     test: /core\.js$/,
                     enforce: 'pre',
@@ -109,10 +108,12 @@ module.exports = () => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     include: [pathResolver.source()],
-                    exclude: [pathResolver.source('lib'), pathResolver.source('app/cases')],
+                    exclude: [
+                        pathResolver.source('lib'),
+                        pathResolver.node_modules()
+                    ],
                     options: {
-                        presets: ['env'],
-                        plugins: ['transform-runtime']
+                        presets: ['env']
                     }
                 },
                 {
@@ -185,7 +186,7 @@ module.exports = () => {
                 hash: PRODUCTION,
                 svgSprites: readSpritesFile(),
                 inject: 'body',
-                chunks: ['vendor', 'app'],
+                chunks: ['app'],
                 minify: {
                     collapseWhitespace: false
                 }

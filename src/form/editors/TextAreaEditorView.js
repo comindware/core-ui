@@ -3,6 +3,7 @@ import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import { keyCode, helpers } from 'utils';
+import { autosize } from 'lib';
 import formRepository from '../formRepository';
 
 const changeMode = {
@@ -92,7 +93,7 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
                     const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
                     this.ui.textarea.css('maxHeight', maxHeight);
                 }
-                this.ui.textarea.autosize({ append: '' });
+                autosize(this.ui.textarea);
                 break;
             case size.fixed:
                 this.ui.textarea.attr('rows', this.options.height);
@@ -176,10 +177,10 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
     },
 
     __keyup(e) {
-        if ([keyCode.LEFT,
-keyCode.RIGHT,
-keyCode.HOME,
-keyCode.END].indexOf(e.keyCode) === -1) {
+        if (e.ctrlKey) {
+            return;
+        }
+        if ([keyCode.LEFT, keyCode.RIGHT, keyCode.HOME, keyCode.END].indexOf(e.keyCode) === -1) {
             return;
         }
 

@@ -4,13 +4,8 @@ const requireText = require.context('raw-loader!../cases', true);
 import template from 'text-loader!../templates/content.html';
 import Prism from 'prism';
 import markdown from 'markdown';
-import core from 'comindware/core';
 
 export default Marionette.View.extend({
-    modelEvents: {
-        change: 'render'
-    },
-
     className: 'demo-content_wrapper',
 
     template: Handlebars.compile(template),
@@ -23,7 +18,8 @@ export default Marionette.View.extend({
 
     regions: {
         caseRepresentationRegion: '.js-case-representation-region',
-        attributesConfigurationRegion: '.js-attributes-configuration-region'
+        attributesConfigurationRegion: '.js-attributes-configuration-region',
+        toolbarRegion: '.js-toolbar-region'
     },
 
     ui: {
@@ -42,6 +38,7 @@ export default Marionette.View.extend({
         const code = requireCode(`./${path}`).default;
         const text = requireText(`./${path}`);
 
+        this.ui.code.text(text);
         this.model.set('sourceCode', text);
         const representationView = code();
         this.showChildView('caseRepresentationRegion', representationView);
@@ -49,40 +46,92 @@ export default Marionette.View.extend({
         const attributesConfig = this.model.get('attributesConfig');
 
         if (attributesConfig) {
-            this.showChildViewv('attributesConfigurationRegion', this.__createAttributesConfigurationView(attributesConfig));
+            this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView(attributesConfig));
         }
     },
 
-    __createAttributesConfigurationView() {
+    onAttach() {
+        const toolbar = new core.components.Toolbar({
+            allItemsCollection: new Backbone.Collection([
+                {
+                    iconClass: 'plus',
+                    id: 'component',
+                    name: 'Component',
+                    type: 'Checkbox',
+                    severity: 'Low',
+                    resultType: 'CustomClientAction',
+                    context: 'Void'
+                },
+                {
+                    iconType: 'Undefined',
+                    id: 'attributes',
+                    name: 'Attributes',
+                    severity: 'None',
+                    defaultTheme: true,
+                    type: 'Checkbox'
+                },
+                {
+                    iconType: 'Undefined',
+                    id: 'code',
+                    name: 'Code',
+                    severity: 'None',
+                    defaultTheme: true,
+                    type: 'Checkbox'
+                }
+            ])
+        });
+
+        this.listenTo(toolbar, 'command:execute', model => this.__handleToolbarClick(model));
+
+        this.showChildView('toolbarRegion', toolbar);
+    },
+
+    __createAttributesConfigurationView(attributesConfig) {
         const columns = [
             {
-                key: 'textCell',
-                type: 'Text',
-                title: 'TextCell',
-                required: true,
-                viewModel: new Backbone.Model({ displayText: 'TextCell' }),
+                key: 'attribute',
+                type: 'String',
+                title: 'Attribute',
                 sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
-                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell'),
-                sorting: 'asc'
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
             },
             {
-                key: 'numberCell',
-                type: 'Number',
-                title: 'Number Cell',
-                getReadonly: model => model.get('numberCell') % 2,
-                viewModel: new Backbone.Model({ displayText: 'Number Cell' }),
+                key: 'values',
+                type: 'String',
+                title: 'Possible values',
+                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
+            },
+            {
+                key: 'default',
+                type: 'String',
+                title: 'Default value',
                 sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
                 sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell')
             }
         ];
 
-        return new core.editableGrid.views.EditableGridView({
+        const gridController = new core.list.controllers.GridController({
             columns,
-            selectableBehavior: 'multi',
-            collection: new Backbone.Collection([]),
-            title: 'Attributes configuration',
-            showSearch: true,
-            searchColumns: ['textCell']
+            collection: new Backbone.Collection(attributesConfig)
         });
+
+        return gridController.view;
+    },
+
+    __handleToolbarClick(model) {
+        switch (model.id) {
+            case 'component':
+                this.$('.js-case-representation-region').toggle();
+                break;
+            case 'attribute':
+                this.$('.js-attributes-configuration-region').toggle();
+                break;
+            case 'code':
+                this.$('.demo-content__code').toggle();
+                break;
+            default:
+                break;
+        }
     }
 });

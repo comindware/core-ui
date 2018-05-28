@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/emptyGrid.hbs';
 import LocalizationService from '../../services/LocalizationService';
 

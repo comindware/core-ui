@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import ListCanvasView from 'demoPage/views/ListCanvasView';
 
 export default function() {
@@ -59,10 +59,6 @@ export default function() {
         }
     ];
 
-    // 3. Create VirtualCollection
-    const collection = new core.collections.VirtualCollection();
-    collection.reset(dataArray);
-
     // 4. Create grid
     const gridView = core.list.factory.createDefaultGrid({
         gridViewOptions: {
@@ -70,7 +66,7 @@ export default function() {
             childHeight: 40,
             useDefaultRowView: true
         },
-        collection
+        collection: dataArray
     });
 
     // 7. Show created views

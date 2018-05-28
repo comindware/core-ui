@@ -8,6 +8,10 @@
     align-items: stretch;
 }
 
+.layout__horizontal-layout > * {
+    flex: 1;
+}
+
 .layout__horizontal-layout-list {
     height: 100%;
     display: flex;

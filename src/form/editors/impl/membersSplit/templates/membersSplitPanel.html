@@ -1,27 +1,23 @@
 {{#if showToolbar}}
-    <h3 class="columns-select__header {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}">{{itemsToSelectText}}</h3>
-    <h3 class="columns-select__header columns-select__header_right {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}">{{selectedItemsText}}{{#if maxQuantitySelected}}<span class="mselect__header-info js-max-quantity-info"></span>{{/if}}</h3>
+<h3 class="columns-select__header {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}">{{itemsToSelectText}}</h3>
+<h3 class="columns-select__header columns-select__header_right {{#if maxQuantitySelected}}columns-select__header_2line{{/if}}">{{selectedItemsText}}{{#if maxQuantitySelected}}
+    <span class="mselect__header-info js-max-quantity-info"></span>{{/if}}</h3>
 {{/if}}
 <div class="columns-select__panel">
-    {{#if showToolbar}}<div class="js-available-items-toolbar-region "> </div>{{/if}}
-    <div class="columns-select__search js-available-search-region" title="{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}"></div>
-    <div class="columns-select__items js-available-members-container">
-        <div class="columns-select-list js-available-items-list-region"></div>
-    </div>
+    {{#if showToolbar}}
+    <div class="js-available-items-toolbar-region "> </div>{{/if}}
+    <div class="columns-select-list js-available-items-list-region"></div>
 </div>
 <div class="columns-select__btn">
-    <div class="button-arrow button-arrow_right js-move-right-button"></div>
-    <div class="button-arrow button-arrow_all-right js-move-right-all-button"></div>
+    <div class="btn btn_arrow btn_arrow-right js-move-right-button"></div>
+    <div class="btn btn_arrow btn_arrow-all-right js-move-right-all-button"></div>
     {{#if allowRemove}}
-    <div class="button-arrow button-arrow_left js-move-left-button"></div>
-    <div class="button-arrow button-arrow_all-left js-move-left-all-button"></div>
+    <div class="btn btn_arrow btn_arrow-left js-move-left-button"></div>
+    <div class="btn btn_arrow btn_arrow-all-left js-move-left-all-button"></div>
     {{/if}}
 </div>
 <div class="columns-select__panel">
-    {{#if showToolbar}}<div class="js-selected-items-toolbar-region"></div>{{/if}}
-    <div class="columns-select__search js-selected-search-region" title="{{localize 'CORE.FORM.EDITORS.SPLITEDITOR.SEARCH'}}"></div>
-    <div class="js-selected-members-container columns-select__items">
-        <div class="columns-select-list js-selected-items-list-region"></div>
-        <div class="l-scrollbar js-selected-items-scrollbar-region"></div>
-    </div>
+    {{#if showToolbar}}
+    <div class="js-selected-items-toolbar-region"></div>{{/if}}
+    <div class="columns-select-list js-selected-items-list-region"></div>
 </div>

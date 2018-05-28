@@ -29,7 +29,8 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
     events: {
         change: '__change',
         'change @ui.colorpicker': '__changedColorPicker',
-        'change @ui.hexcolor': '__changedHex'
+        'change @ui.hexcolor': '__changedHex',
+        'click .js-clear-button': '__clear'
     },
 
     className: 'editor editor_color',
@@ -96,5 +97,9 @@ export default (formRepository.editors.ColorPicker = BaseItemEditorView.extend({
         if (triggerChange) {
             this.__triggerChange();
         }
+    },
+
+    onBeforeDestroy() {
+        this.ui.colorpicker.spectrum('destroy');
     }
 }));

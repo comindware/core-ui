@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/loading.hbs';
 
 export default Marionette.View.extend({

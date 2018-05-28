@@ -5,7 +5,7 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('CodeEditorView', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const model = new Backbone.Model({
                 value: null
             });
@@ -16,7 +16,10 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

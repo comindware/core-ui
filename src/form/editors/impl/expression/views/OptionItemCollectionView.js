@@ -7,7 +7,7 @@ export default Marionette.CollectionView.extend({
         execute: '__execute'
     },
 
-    __execute(view, data) {
+    __execute(data) {
         this.options.parent.close();
         this.options.parent.trigger('execute', data.model.id, data.model);
     }

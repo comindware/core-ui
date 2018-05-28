@@ -29,9 +29,7 @@ export default Marionette.View.extend({
     },
 
     startEditing() {
-        const value = this.model.get('value');
-        const editableText = value ? moment(value).format(this.editDateFormat) : '';
-        this.ui.dateInput.val(editableText);
+        this.updateDisplayValue();
     },
 
     endEditing() {
@@ -100,7 +98,7 @@ export default Marionette.View.extend({
     },
 
     updateDisplayValue() {
-        if (this.isDestroyed) {
+        if (this.isDestroyed()) {
             return;
         }
         const displayValue = DateTimeService.getDateDisplayValue(this.model.get('value'), this.options.dateDisplayFormat);

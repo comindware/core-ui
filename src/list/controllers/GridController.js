@@ -1,8 +1,6 @@
 //@flow
-import utils from 'utils';
 import GridView from '../views/GridView';
 import meta from '../meta';
-import CellViewFactory from '../CellViewFactory';
 import VirtualCollection from '../../collections/VirtualCollection';
 import factory from '../factory';
 
@@ -14,7 +12,8 @@ import factory from '../factory';
  */
 
 const defaultOptions = {
-    isSliding: true
+    isSliding: true,
+    showHeader: true
 };
 
 export default Marionette.Object.extend({
@@ -23,11 +22,16 @@ export default Marionette.Object.extend({
         this.__createView(this.options);
     },
 
+    setLoading(state) {
+        this.view.setLoading(state);
+    },
+
     __createView(options) {
         const allToolbarActions = new VirtualCollection(new Backbone.Collection(this.__getToolbarActions()));
-        const collection = factory.createWrappedCollection(this.options);
+        const comparator = factory.getDefaultComparator(options.columns);
+        const collection = factory.createWrappedCollection(Object.assign({}, options, { comparator }));
 
-        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection));
+        const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
         this.__updateActions(allToolbarActions, collection);
         if (this.options.showToolbar) {
             if (this.options.showSelection) {
@@ -49,6 +53,7 @@ export default Marionette.Object.extend({
         this.listenTo(this.view, 'execute:action', model => this.__executeAction(model, collection));
         this.listenTo(this.view, 'childview:click', this.__onItemClick);
         this.listenTo(this.view, 'childview:dblclick', this.__onItemDblClick);
+        this.listenTo(this.view, 'drag:drop', this.__onItemMoved);
     },
 
     __onSearch(text, columns, collection) {
@@ -58,10 +63,6 @@ export default Marionette.Object.extend({
         } else {
             this.__clearFilter(collection);
             this.__unhighlightCollection(collection);
-        }
-
-        if (this.options.isTree) {
-            this.__toggleCollapseAll(text && !this.options.expandOnShow);
         }
     },
 
@@ -108,10 +109,11 @@ export default Marionette.Object.extend({
 
     __getToolbarActions() {
         let toolbarActions = [];
+        const defaultActions = meta.getDefaultActions();
         if (!this.options.excludeActions) {
-            toolbarActions = meta.defaultActions;
+            toolbarActions = defaultActions;
         } else if (this.options.excludeActions !== 'all') {
-            toolbarActions = meta.defaultActions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
+            toolbarActions = defaultActions.filter(action => this.options.excludeActions.indexOf(action.id) === -1);
         }
         if (this.options.additionalActions) {
             toolbarActions = toolbarActions.concat(this.options.additionalActions);
@@ -139,7 +141,7 @@ export default Marionette.Object.extend({
     __getSelectedItems(collection) {
         const selected = (this.options.showSelection ? collection.checked : collection.selected) || {};
         if (selected instanceof Backbone.Model) {
-            return [ selected ];
+            return [selected];
         }
         return Object.values(selected);
     },
@@ -149,10 +151,10 @@ export default Marionette.Object.extend({
         switch (model.get('id')) {
             case 'delete':
                 this.__confirmUserAction(
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.DELETE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
                         this.__triggerAction(model, selected);
@@ -161,10 +163,10 @@ export default Marionette.Object.extend({
                 break;
             case 'archive':
                 this.__confirmUserAction(
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.ARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
                         this.__triggerAction(model, selected);
@@ -173,17 +175,17 @@ export default Marionette.Object.extend({
                 break;
             case 'unarchive':
                 this.__confirmUserAction(
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
-                    Localizer.get('PROCESS.COMMON.VIEW.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.TITLE'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.YESBUTTONTEXT'),
+                    Localizer.get('CORE.GRID.ACTIONS.UNARCHIVE.CONFIRM.NOBUTTONTEXT')
                 ).then(result => {
                     if (result) {
                         this.__triggerAction(model, selected);
                     }
                 });
                 break;
-            case 'addNew':
+            case 'add':
             default:
                 this.__triggerAction(model, selected);
                 break;
@@ -198,11 +200,15 @@ export default Marionette.Object.extend({
         this.trigger('execute', model, selected);
     },
 
-    __onItemClick(childView, model) {
+    __onItemClick(model) {
         this.trigger('click', model);
     },
 
-    __onItemDblClick(childView, model) {
+    __onItemDblClick(model) {
         this.trigger('dblclick', model);
+    },
+
+    __onItemMoved(...args) {
+        this.trigger('move', ...args);
     }
 });

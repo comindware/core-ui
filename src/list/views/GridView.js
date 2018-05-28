@@ -1,3 +1,4 @@
+//@flow
 /* eslint-disable no-param-reassign */
 
 import { htmlHelpers } from 'utils';
@@ -23,11 +24,6 @@ import SearchBarView from '../../views/SearchBarView';
         collection change (via Backbone.Collection events)
         position change (when we scroll with scrollbar for example): updatePosition(newPosition)
  */
-
-const constants = {
-    gridRowHeight: 32,
-    gridHeaderHeight: 30
-};
 
 /**
  * @name GridView
@@ -73,6 +69,14 @@ export default Marionette.View.extend({
 
         const HeaderView = this.options.headerView || GridHeaderView;
 
+        const columnClasses = [];
+        options.columns.forEach((c, i) => {
+            const cClass = `${this.uniqueId}-column${i}`;
+
+            columnClasses.push(cClass);
+            c.columnClass = cClass;
+        });
+
         this.headerView = new HeaderView({
             columns: options.columns,
             gridEventAggregator: this,
@@ -80,7 +84,8 @@ export default Marionette.View.extend({
             gridColumnHeaderView: options.gridColumnHeaderView,
             styleSheet: this.styleSheet,
             uniqueId: this.uniqueId,
-            isTree: this.options.isTree
+            isTree: this.options.isTree,
+            expandOnShow: options.expandOnShow
         });
 
         this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
@@ -92,16 +97,32 @@ export default Marionette.View.extend({
         }
         options.noColumnsViewOptions && (this.noColumnsViewOptions = options.noColumnsViewOptions); // jshint ignore:line
 
-        this.forbidSelection = typeof options.forbidSelection === 'boolean' ? options.forbidSelection : true;
-
+        if (!options.draggable) {
+            this.forbidSelection = typeof options.forbidSelection === 'boolean' ? options.forbidSelection : true;
+        }
         const childView = options.childView || RowView;
+
+        const showRowIndex = this.getOption('showRowIndex');
 
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this,
-            uniqueId: this.uniqueId,
+            columnClasses,
             isTree: this.options.isTree
         });
+
+        this.isEditable = options.columns.some(column => column.editable);
+        if (this.isEditable) {
+            this.editableCellsIndexes = [];
+            this.options.columns.forEach((column, index) => {
+                if (column.editable) {
+                    this.editableCellsIndexes.push(index);
+                }
+            });
+            this.listenTo(this.collection, 'move:left', () => this.__onCursorMove(-1));
+            this.listenTo(this.collection, 'move:right', () => this.__onCursorMove(+1));
+            this.listenTo(this.collection, 'select:some select:one', () => this.__onCursorMove(0));
+        }
 
         this.listView = new ListView({
             collection: this.collection,
@@ -118,33 +139,42 @@ export default Marionette.View.extend({
             maxRows: options.maxRows,
             height: options.height,
             forbidSelection: this.forbidSelection,
-            isTree: this.options.isTree
+            isTree: this.options.isTree,
+            isEditable: this.isEditable,
+            showRowIndex
         });
 
         if (this.options.showSelection) {
+            const draggable = this.getOption('draggable');
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
-                gridEventAggregator: this
+                gridEventAggregator: this,
+                showRowIndex: this.options.showRowIndex,
+                childViewOptions: {
+                    draggable,
+                    showRowIndex,
+                    bindSelection: this.getOption('bindSelection')
+                }
             });
 
             this.selectionHeaderView = new SelectionCellView({
                 collection: this.collection,
                 selectionType: 'all',
-                gridEventAggregator: this
+                gridEventAggregator: this,
+                showRowIndex
             });
+
+            if (draggable) {
+                this.listenTo(this.selectionPanelView, 'childview:drag:drop', (...args) => this.trigger('drag:drop', ...args));
+                this.listenTo(this.selectionHeaderView, 'drag:drop', (...args) => this.trigger('drag:drop', ...args));
+            }
         }
 
-        //this.listenTo(this.listView, 'all', (eventName, view, eventArguments) => {
-        //    if (eventName.startsWith(eventName, 'childview')) {
-        //        this.trigger.apply(this, [eventName, view].concat(eventArguments));
-        //    }
-        //});
-
-        this.listenTo(this.listView, 'positionChanged', (sender, args) => {
-            this.trigger('positionChanged', this, args);
+        this.listenTo(this.listView, 'all', (eventName, eventArguments) => {
+            if (eventName.startsWith('childview')) {
+                this.trigger.apply(this, [eventName].concat(eventArguments));
+            }
         });
-
-        this.listenTo(this.listView, 'viewportHeightChanged', this.__updateHeight, this);
 
         if (this.collection.length) {
             //this.__presortCollection(options.columns); TODO WFT
@@ -163,10 +193,15 @@ export default Marionette.View.extend({
         }
     },
 
-    __updateHeight(sender, args) {
-        args.gridHeight = args.listViewHeight + constants.gridHeaderHeight;
-        this.$el.height(args.gridHeight);
-        this.trigger('viewportHeightChanged', this, args);
+    __onCursorMove(delta) {
+        const currentSelectedIndex = this.editableCellsIndexes.indexOf(this.pointedCell);
+        const newPosition = Math.min(this.editableCellsIndexes.length - 1, Math.max(0, currentSelectedIndex + delta));
+        const newSelectedIndex = this.editableCellsIndexes[newPosition];
+        this.pointedCell = newSelectedIndex;
+        const pointed = this.collection.find(model => model.cid === this.collection.cursorCid);
+        if (pointed) {
+            pointed.trigger('select:pointed', this.pointedCell);
+        }
     },
 
     onColumnSort(column, comparator) {
@@ -188,7 +223,12 @@ export default Marionette.View.extend({
     ui: {
         title: '.js-grid-title',
         tools: '.js-grid-tools',
-        header: '.js-grid-header'
+        header: '.js-grid-header',
+        content: '.js-grid-content'
+    },
+
+    events: {
+        dragleave: '__handleDragLeave'
     },
 
     className: 'fr-collection',
@@ -209,11 +249,17 @@ export default Marionette.View.extend({
         }
 
         this.showChildView('contentRegion', this.listView);
-        this.showChildView('headerRegion', this.headerView);
+
+        if (this.options.showHeader) {
+            this.showChildView('headerRegion', this.headerView);
+        }
 
         if (this.options.showSelection) {
-            //this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
-            //this.showChildView('selectionPanelRegion', this.selectionPanelView);
+            this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
+            this.showChildView('selectionPanelRegion', this.selectionPanelView);
+            if (this.getOption('showRowIndex')) {
+                this.getRegion('selectionHeaderRegion').el.classList.add('cell_selection-index');
+            }
         }
 
         if (this.options.showToolbar) {
@@ -238,8 +284,15 @@ export default Marionette.View.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
-        document.body.appendChild(this.styleSheet);
+        document.body && document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
+        if (this.options.showSearch) {
+            this.searchView.focus();
+        }
+        this.ui.content.css('maxHeight', window.innerHeight);
+        // if (this.collection.visibleLength) {
+        //     this.collection.select(this.collection.at(0), false, false, false);
+        // }
     },
 
     __executeAction(actionKind) {
@@ -249,7 +302,7 @@ export default Marionette.View.extend({
     __onSearch(text) {
         this.trigger('search', text);
         if (this.options.isTree) {
-            this.nativeGridView.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
+            this.trigger('toggle:collapse:all', !text && !this.options.expandOnShow);
         }
     },
 
@@ -257,7 +310,7 @@ export default Marionette.View.extend({
         const headerRegionEl = this.getRegion('headerRegion').el;
         const selectionPanelRegionEl = this.options.showSelection && this.getRegion('selectionPanelRegion').el;
 
-        this.listView.el.addEventListener('scroll', event => {
+        this.getRegion('contentRegion').el.addEventListener('scroll', event => {
             headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
             if (selectionPanelRegionEl) {
                 selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
@@ -266,8 +319,7 @@ export default Marionette.View.extend({
     },
 
     onDestroy() {
-        //console.log(this.styleSheet);
-        //this.styleSheet && document.body.removeChild(this.styleSheet);
+        this.styleSheet && document.body && document.body.removeChild(this.styleSheet);
     },
 
     sortBy(columnIndex, sorting) {
@@ -313,6 +365,12 @@ export default Marionette.View.extend({
         this.headerView.handleResize();
     },
 
+    setLoading(state) {
+        if (!this.isDestroyed()) {
+            this.loading.setLoading(state);
+        }
+    },
+
     __presortCollection(columns) {
         const sortingColumn = columns.find(column => column.sorting);
         if (sortingColumn) {
@@ -321,6 +379,17 @@ export default Marionette.View.extend({
             } else {
                 this.onColumnSort(sortingColumn, sortingColumn.sortDesc);
             }
+        }
+    },
+
+    __handleDragLeave(e) {
+        if (!this.el.contains(e.relatedTarget)) {
+            if (this.collection.dragoverModel) {
+                this.collection.dragoverModel.trigger('dragleave');
+            } else {
+                this.collection.trigger('dragleave:head');
+            }
+            this.collection.dragoverModel = null;
         }
     }
 });

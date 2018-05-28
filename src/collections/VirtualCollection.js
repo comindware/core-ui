@@ -2,9 +2,8 @@
 /*eslint-disable*/
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
-import { helpers, diffHelper } from 'utils';
-import GridItemBehavior from '../list/models/behaviors/GridItemBehavior';
-import CollapsibleBehavior from '../models/behaviors/CollapsibleBehavior';
+import { diffHelper } from 'utils';
+import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
 
 const selectableBehavior = {
     none: null,
@@ -15,7 +14,7 @@ const selectableBehavior = {
 const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
     const it = groupingOptions.iterator;
     return _.isString(it)
-        ? function(model) {
+        ? function (model) {
             return model.get(it) || model[it];
         }
         : it;
@@ -25,7 +24,7 @@ const getNormalizedGroupingComparator = function getNormalizedGroupingComparator
     const cmp = groupingOptions.comparator;
     return cmp !== undefined
         ? _.isString(cmp)
-            ? function(model) {
+            ? function (model) {
                 return model.get(cmp) || model[cmp];
             }
             : cmp
@@ -36,14 +35,14 @@ const getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFac
     const modelFactory = groupingOptions.modelFactory;
     return modelFactory !== undefined
         ? _.isString(modelFactory)
-            ? function(model) {
+            ? function (model) {
                 return new Backbone.Model({
                     displayText: model.get(modelFactory),
                     groupingModel: true
                 });
             }
             : modelFactory
-        : function(model) {
+        : function (model) {
             return new Backbone.Model({
                 displayText: groupingOptions.iterator(model),
                 groupingModel: true
@@ -107,6 +106,7 @@ const VirtualCollection = Backbone.Collection.extend(
     /** @lends module:core.collections.VirtualCollection.prototype */ {
         constructor(collection, options = {}) {
             this.options = options;
+            this.isTree = this.options.isTree;
             if (options.delayedAdd === undefined) {
                 options.delayedAdd = true;
             }
@@ -140,7 +140,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
             this.state = {
                 position: options.position || 0,
-                windowSize: options.windowSize || 0
+                windowSize: options.windowSize || 1
             };
             this.visibleModels = [];
 
@@ -183,7 +183,11 @@ const VirtualCollection = Backbone.Collection.extend(
             _.extend(this, new CheckableBehavior.CheckableCollection(this));
         },
 
-        __rebuildIndex(options, immediate) {
+        rebuild() {
+            this.__rebuildIndex({}, true);
+        },
+
+        __rebuildIndex(options = {}, immediate) {
             let parentModels = this.parentCollection.models;
             if (this.filterFn !== undefined && typeof this.filterFn === 'function') {
                 parentModels = this.__filterModels(this.parentCollection.models);
@@ -200,6 +204,8 @@ const VirtualCollection = Backbone.Collection.extend(
         __rebuildModels(options) {
             const oldModels = this.visibleModels.concat();
             this._reset();
+            this.visibleModels = [];
+            this.visibleLength = 0;
             this.__buildModelsInternal(this.index);
             if (!this.models.length) {
                 this.trigger('reset', this);
@@ -216,38 +222,55 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         __addModel(model, options) {
-            this.trigger('add', model, this, Object.assign({}, options, { at: this.models.indexOf(model)}));
+            const index = this.visibleModels.indexOf(model);
             this._addReference(model);
+            this.trigger('add', model, this, Object.assign({}, options, { at: index, index })); // both add and index to correct inserting in dom
         },
 
-        __removeModel(model, options) {
-            this.trigger('remove', model, this, options);
+        __removeModels(removed, options) {
+            this.trigger(
+                'update',
+                this,
+                Object.assign({}, options, {
+                    changes: {
+                        removed,
+                        added: [],
+                        merged: []
+                    }
+                })
+            );
         },
 
         __buildModelsInternal(list, level = 0) {
-            for (let i = 0, len = list.length; i < len; i++) {
+            // Run sort based on type of `comparator`.
+            if (this.comparator) {
+                if (_.isString(this.comparator) || this.comparator.length === 1) {
+                    list.models = _.sortBy(list.models, this.comparator, this);
+                } else {
+                    list.models.sort(_.bind(this.comparator, this));
+                }
+            }
+            list.forEach(model => {
                 this.length++;
-                const model = list.at(i);
-                // this._removeReference(model);
                 this.models.push(model);
-                // this._addReference(model);
+
                 model.collection = this;
                 model.level = level;
-                _.extend(model, new GridItemBehavior(this));
-                _.extend(model, new CollapsibleBehavior(this));
-                const skipChild = model.collapsed;
-                if (!skipChild && model.children) {
-                    if (this.options.isTree) {
+
+                Object.assign(model, GridItemBehavior(this));
+
+                if (!model.collapsed && model.children) {//Skip building children models, if parent model is collapsed
+                    if (this.isTree) {
                         this.stopListening(model.children, 'add remove reset');
                         this.listenToOnce(model.children, 'add remove reset', this.__debounceRebuild);
                     }
-                    if (this.options.isTree && this.filterFn && model.filteredChildren) {
+                    if (this.isTree && this.filterFn && model.filteredChildren) {
                         this.__buildModelsInternal(new Backbone.Collection(model.filteredChildren), level + 1);
                     } else {
                         this.__buildModelsInternal(model.children, level + 1);
                     }
                 }
-            }
+            });
         },
 
         __createIndexTree(models, i) {
@@ -270,28 +293,6 @@ const VirtualCollection = Backbone.Collection.extend(
                         .value()
                 );
             }
-            // Applying comparator to the ultimate items
-            if (!this.comparator) {
-                return new Backbone.Collection(models);
-            }
-
-            // Run sort based on type of `comparator`.
-            if (_.isString(this.comparator) || this.comparator.length === 1) {
-                models = _.sortBy(models, this.comparator, this);
-            } else {
-                models.sort(_.bind(this.comparator, this));
-            }
-
-            models.forEach(model => {
-                if (model.children && !model.children.comparator) {
-                    model.children.comparator = this.comparator;
-                    model.children.sort();
-                }
-                if (this.index) {
-                    this._removeReference(model);
-                }
-            });
-
             return new Backbone.Collection(models);
         },
 
@@ -314,6 +315,7 @@ const VirtualCollection = Backbone.Collection.extend(
             if (this.state.windowSize === undefined) {
                 throw 'updatePosition() has been called before setting window size';
             }
+            this.internalUpdate = true;
 
             newPosition = this.__normalizePosition(newPosition);
             if (newPosition === this.state.position) {
@@ -327,34 +329,25 @@ const VirtualCollection = Backbone.Collection.extend(
             if (Math.abs(delta) < actualWindowSize) {
                 // update collection via add/remove
                 if (delta > 0) {
-                    // oldValues = this.innerCollection.first(delta);
                     oldValues = this.visibleModels.splice(0, delta);
                     this.visibleLength -= oldValues.length;
-                    // this.innerCollection.remove(oldValues);
-                    // oldValues.forEach(value => this.trigger('remove', value, this));
-                    // newValues = this.parentCollection.chain().rest(this.state.position + actualWindowSize).first(delta).value();
                     newValues = this.models.slice(this.state.position + actualWindowSize, this.state.position + actualWindowSize + delta);
                     this.visibleLength += newValues.length;
-                    // newValues.forEach(value => this.trigger('add', value, this));
                     this.visibleModels.push(...newValues);
-                    // this.innerCollection.add(newValues);
                 } else {
                     if (this.visibleLength >= this.state.windowSize) {
                         // oldValues = this.innerCollection.last(-delta);
                         oldValues = this.visibleModels.splice(this.visibleModels.length + delta, this.visibleModels.length);
                         this.visibleLength -= oldValues.length;
-                        // this.innerCollection.remove(oldValues);
                     }
 
                     newValues = this.models.slice(newPosition, newPosition - delta);
                     this.visibleLength += newValues.length;
                     this.visibleModels.unshift(...newValues);
-                    // this.innerCollection.add(newValues, {
-                    //     at: 0
-                    // });
                 }
-                oldValues.forEach(value => this.trigger('remove', value, this));
-                newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0} : {}));
+                this.__removeModels(oldValues);
+                // newValues.forEach(value => this.trigger('add', value, this, delta < 0 ? { at: 0 } : {}));
+                newValues.forEach(value => this.__addModel(value));
                 this.state.position = newPosition;
                 this.visibleLength = this.visibleModels.length;
             } else {
@@ -364,6 +357,7 @@ const VirtualCollection = Backbone.Collection.extend(
                 this.visibleLength = this.visibleModels.length;
                 this.__processDiffs(oldModels);
             }
+            this.internalUpdate = false;
 
             return newPosition;
         },
@@ -372,29 +366,40 @@ const VirtualCollection = Backbone.Collection.extend(
             const diff = new diffHelper(oldModels, this.visibleModels);
             diff.compose();
             const diffObject = diff.getses();
-            Object.values(diffObject).sort((a, b) => a.t - b.t).forEach(object => {
-                switch (object.t) {
-                    case 0:
-                        this.trigger('update:child:top', object.elem);
-                        break;
-                    case -1:
-                        this.__removeModel(object.elem, options);
-                        break;
-                    case 1:
-                        this.__addModel(object.elem, options);
-                        break;
-                }
-            })
+            const added = [];
+            const removed = [];
+
+            Object.values(diffObject)
+                .sort((a, b) => a.t - b.t)
+                .forEach(object => {
+                    switch (object.t) {
+                        case 0:
+                            this.trigger('update:child', object.elem);
+                            break;
+                        case -1:
+                            removed.push(object.elem);
+                            break;
+                        case 1:
+                            added.push(object.elem);
+                            break;
+                    }
+                });
+
+            // it's important remove items before add
+            this.__removeModels(removed, options);
+            added.
+                sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).
+                forEach(model => this.__addModel(model, options));
         },
 
         __normalizePosition(position) {
-            const maxPos = Math.max(0, this.parentCollection.length - 1);
+            const maxPos = Math.max(0, this.length - 1);
             return Math.max(0, Math.min(maxPos, position));
         },
 
         filter(filterFn) {
             this.filterFn = filterFn;
-            this.__rebuildIndex({} , true);
+            this.__rebuildIndex({}, true);
         },
 
         __filterModels(models) {
@@ -440,7 +445,7 @@ const VirtualCollection = Backbone.Collection.extend(
             // TODO: maybe this is unnecessary
             if (options.at !== undefined) {
                 // Updating index
-                const addToIndex = function(ctx, list) {
+                const addToIndex = function (ctx, list) {
                     for (let i = 0, len = list.length; i < len; i++) {
                         if (ctx.position === ctx.targetPosition) {
                             list.add(ctx.model, { at: i });
@@ -476,7 +481,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
             // collecting items in index
             function createIteratorValueChecker(iteratorValue) {
-                return function(m) {
+                return function (m) {
                     return m.iteratorValue === iteratorValue;
                 };
             }
@@ -567,7 +572,6 @@ const VirtualCollection = Backbone.Collection.extend(
 
             if (rebuildRequired || isPartialUpdate) {
                 this.__rebuildIndex(options);
-
             }
         },
 
@@ -580,13 +584,15 @@ const VirtualCollection = Backbone.Collection.extend(
         },
 
         collapse(model) {
-            model.collapse(true);
+            model.collapse();
             this.__rebuildIndex();
+            this.parentCollection.trigger('collapse', model);
         },
 
         expand(model) {
-            model.expand(true);
+            model.expand();
             this.__rebuildIndex();
+            this.parentCollection.trigger('expand', model);
         },
 
         getState() {
@@ -597,7 +603,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
 // methods that alter data should proxy to the parent collection
 ['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update', 'where', 'findWhere'].forEach(methodName => {
-    VirtualCollection.prototype[methodName] = function() {
+    VirtualCollection.prototype[methodName] = function () {
         return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };
 });

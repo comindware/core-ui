@@ -102,7 +102,7 @@ export default Marionette.View.extend({
     },
 
     setLoading(loading) {
-        if (!this.isDestroyed) {
+        if (!this.isDestroyed()) {
             this.loading.setLoading(loading);
         }
     }

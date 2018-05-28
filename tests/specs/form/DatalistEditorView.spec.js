@@ -1,24 +1,27 @@
-
 import core from 'coreApi';
 import 'jasmine-jquery';
 
 const $ = core.lib.$;
 
 describe('Editors', () => {
-    const findInput = function(view) {
+    const findInput = function (view) {
         return view.$('.js-input');
     };
 
-    const collectionData = [{
-        id: 1,
-        name: 1
-    }, {
-        id: 2,
-        name: 2
-    }, {
-        id: 3,
-        name: 3
-    }];
+    const collectionData = [
+        {
+            id: 1,
+            name: 1
+        },
+        {
+            id: 2,
+            name: 2
+        },
+        {
+            id: 3,
+            name: 3
+        }
+    ];
 
     const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
         fetch() {
@@ -52,7 +55,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -72,7 +78,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -114,7 +123,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
         });
@@ -133,7 +145,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -156,7 +171,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -177,7 +195,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -198,7 +219,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.setValue([{ id: 2, name: 2 }]);
 
@@ -217,7 +241,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -236,7 +263,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -259,7 +289,10 @@ describe('Editors', () => {
                 maxQuantitySelected: Infinity
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.focus();
 
@@ -281,16 +314,19 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.on('change', () => {
                 expect(true).toEqual(true);
                 done();
             });
 
-            $('.bubbles__i:eq(0)').trigger('mouseenter');
+            view.$('.bubbles__i:eq(0)').trigger('mouseenter');
 
-            view.$('.js-bubble-delete')[0].click();
+            view.$('.js-bubble-delete').click();
         });
 
         it('should remove items on remove icon item click', () => {
@@ -306,16 +342,19 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
-            $('.bubbles__i:eq(1)').trigger('mouseenter');
+            view.$('.bubbles__i:eq(1)').trigger('mouseenter');
 
-            $('.js-bubble-delete')[0].click();
+            view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([{ id: 1, name: 1 }]);
 
-            $('.bubbles__i:eq(0)').trigger('mouseenter');
+            view.$('.bubbles__i:eq(0)').trigger('mouseenter');
 
-            $('.js-bubble-delete')[0].click();
+            view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([]);
         });
 
@@ -332,12 +371,15 @@ describe('Editors', () => {
                 autocommit: true
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
-            let panel = $('.list');
-            //expect(panel.outerWidth()).toEqual(200); todo wtf
+            let panel = document.getElementsByClassName('dropdown__wrp')[0];
+            expect(panel.clientHeight).toEqual(75);
         });
         /*
         it('should remove items on uncheck in panel', done => {
@@ -361,14 +403,16 @@ describe('Editors', () => {
             });
 
             view.on('view:ready', () => {
-                console.log(1);
                 $('.dd-list__i')[0].click();
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.focus();
         });
-        */
+        
         it('should uncheck items on remove items click', done => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
@@ -385,19 +429,24 @@ describe('Editors', () => {
             });
 
             view.on('change', () => {
+                console.log(1);
                 expect(view.panelCollection.at(0).selected).toEqual(false);
                 done();
             });
 
             view.on('view:ready', () => {
-                $($('.bubbles__i:eq(0)')[0]).trigger('mouseenter');
-                $('.js-bubble-delete')[0].click();
+                view.$(view.$('.bubbles__i:eq(0)')[0]).trigger('mouseenter');
+                view.$('.js-bubble-delete')[0].click();
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+
             view.focus();
         });
-
+        */
         it('should use default parameters if non is passed', () => {
             const model = new Backbone.Model({
                 value: null
@@ -409,18 +458,23 @@ describe('Editors', () => {
                 key: 'value'
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
-            expect(view.options).toEqual(jasmine.objectContaining({
-                displayAttribute: 'name',
-                controller: null,
-                showAddNewButton: false,
-                showEditButton: false,
-                showCheckboxes: false,
-                textFilterDelay: 300,
-                maxQuantitySelected: 1,
-                canDeleteItem: true
-            }));
+            expect(view.options).toEqual(
+                jasmine.objectContaining({
+                    displayAttribute: 'name',
+                    controller: null,
+                    showAddNewButton: false,
+                    showEditButton: false,
+                    showCheckboxes: false,
+                    textFilterDelay: 300,
+                    maxQuantitySelected: 1,
+                    canDeleteItem: true
+                })
+            );
         });
 
         it('should show checkboxes and have correct style if showCheckboxes parameter set to true', done => {
@@ -435,13 +489,17 @@ describe('Editors', () => {
                 showCheckboxes: true
             });
 
-            window.application.contentRegion.show(view);
+            const appView = window.app.getView();
+
+            appView.getRegion('contentRegion').show(view);
 
             view.focus();
 
+            const dropdownEl = document.body.getElementsByClassName('js-core-ui__global-popup-region')[0];
+
             view.on('view:ready', () => {
-                expect($('.js-core-ui__global-popup-region').find('.dd-list__i.dd-list__i_checkbox').length).toEqual(3);
-                expect($('.js-core-ui__global-popup-region').find('.js-checkbox').length).toEqual(3);
+                expect(dropdownEl.getElementsByClassName('dd-list__i').length).toEqual(3);
+                expect(dropdownEl.getElementsByClassName('js-checkbox').length).toEqual(3);
                 done();
             });
         });

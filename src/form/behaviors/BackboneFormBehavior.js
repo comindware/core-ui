@@ -280,7 +280,6 @@ const constants = {
  * @name BackboneFormBehavior
  * @memberof module:core.form.behaviors
  * @class This behavior turns any Marionette.View into Backbone.Form. To do this Backbone.Form scans this.$el at the moment
- * defined by <code>options.renderStrategy</code> and puts field and editors defined in <code>options.schema</code> into
  * DOM-elements with corresponding Backbone.Form data-attributes.
  * It's important to note that Backbone.Form will scan the whole this.$el including nested regions that might lead to unexpected behavior.
  * Possible events:<ul>
@@ -291,7 +290,6 @@ const constants = {
  * @param {Object} options Options object.
  * @param {Object|Function} options.schema Backbone.Form schema as it's listed in [docs](https://github.com/powmedia/backbone-forms).
  * @param {Object|Function} [options.model] Backbone.Model that the form binds it's editors to. <code>this.model</code> is used by default.
- * @param {String} [options.renderStrategy='show'] Defines a moment when the form is applied to the view. May be one of:<ul>
  *     <li><code>'render'</code> - On view's 'render' event.</li>
  *     <li><code>'show'</code> - On view's 'show' event.</li>
  *     <li><code>'manual'</code> - Form render method (<code>renderForm()</code>) must be called manually.</li>
@@ -307,7 +305,6 @@ export default Marionette.Behavior.extend({
     },
 
     defaults: {
-        renderStrategy: constants.RENDER_STRATEGY_SHOW,
         model() {
             return this.model;
         },
@@ -316,7 +313,7 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    onRender() {
+    onAttach() {
         this.__renderForm();
     },
 

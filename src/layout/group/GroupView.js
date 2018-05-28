@@ -8,7 +8,7 @@ const defaults = {
 };
 
 const classes = {
-    CLASS_NAME: 'layout__group',
+    CLASS_NAME: 'layout-group',
     COLLAPSED_CLASS: 'layout__group-collapsed__button'
 };
 
@@ -66,9 +66,9 @@ export default Marionette.View.extend({
     __onCollapsedChange(model, collapsed) {
         this.ui.toggleCollapseButton.toggleClass(classes.COLLAPSED_CLASS, collapsed);
         if (collapsed) {
-            this.containerRegion.$el.hide(200);
+            this.getRegion('containerRegion').$el.hide(200);
         } else {
-            this.containerRegion.$el.show(200);
+            this.getRegion('containerRegion').$el.show(200);
         }
         return false;
     }

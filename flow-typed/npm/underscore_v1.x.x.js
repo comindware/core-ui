@@ -1,5 +1,5 @@
-// flow-typed signature: fd7ab273a44d105db412efa5fe2f6b5f
-// flow-typed version: d6519a5bfc/underscore_v1.x.x/flow_>=v0.50.x
+// flow-typed signature: 9e6778eb1c8ab415b73fb185001cf2e6
+// flow-typed version: 3d998a6003/underscore_v1.x.x/flow_>=v0.50.x
 
 // @flow
 /* eslint-disable */
@@ -587,7 +587,7 @@ declare module "underscore" {
     identity<U>(value: U): U;
     constant<U>(value: U): () => U;
     noop(): void;
-    times(n: number, iteratee: Function, context?: mixed): void;
+    times<T>(n: number, iteratee: (index: number) => T, context?: mixed): Array<T>;
     random(min: number, max: number): number;
     // TODO: Is this right?
     mixin(object: Object): Underscore & Object;
@@ -615,7 +615,7 @@ declare module "underscore" {
     reduceRight<U>(iteratee: (memo: U, value: T, index?: number) => U, init: U): U;
     find(predicate: (value: T) => boolean): ?T;
     filter(predicate: (value: T) => boolean): Array<T>;
-    filter(predicate: {[string]: T}): Array<T>;    
+    filter(predicate: {[string]: T}): Array<T>;
     where(properties: Object): Array<T>;
     findWhere(properties: $Shape<T>): ?T;
     reject(predicate: (value: T) => boolean, context?: mixed): Array<T>;

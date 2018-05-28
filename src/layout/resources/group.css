@@ -1,40 +1,66 @@
 
-.layout__group {
+.layout-group {
     width: 100%;
-    min-width: 0;
-    margin: 22px -10px;
-    padding: 0 25px 16px;
     font-size: 12px;
     color: #000;
-    box-sizing: border-box;
-    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-    border-radius: 3px;
+    border: 1px solid #a5a4a4;
+    position: relative;
+    padding: 10px;
+    overflow: visible;
+    margin-top: 5px;
 }
 
-.layout__group__legend {
-    display: inline-block;
+.layout-group__head {
+    display: flex;
+    height: 16px;
+    line-height: 16px;
     white-space: nowrap;
+    width: auto;
+    max-width: calc(100% - 20px);
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 14px;
     font-weight: 400;
     color: #70787f;
-    background: #fff;
-    margin: 5px 0 5px -15px;
+    background-color: #fff;
+    padding: 0 5px;
+    position: absolute;
+    top:-9px;
 }
 
-
-.layout__group-collapsed__button {
-    transform: rotate(-90deg);
-    margin-top: -3px;
-}
-
-.layout__group-toggle {
+.group-title{
+    flex: 1 1 auto;
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    white-space: nowrap;
+    max-width: 100%;
+    color: #70787f;
+    font-size: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.group-toggle {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
     vertical-align: middle;
-    margin-right: 5px;
     overflow: hidden;
     cursor: pointer;
+    flex: none;
+}
+
+.group-toggle svg{
+    transform: translateY(2px);
+}
+
+.layout__group-collapsed__button svg {
+    transform: rotate(-90deg) translate(1px);
+}
+
+.group-title.layout__group-collapsed__button{
+    transform: rotate(0);
+}
+
+.layout-group__content{
+
 }

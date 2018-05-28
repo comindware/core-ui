@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/comindware/core-ui.svg)](https://travis-ci.org/comindware/core-ui)
 
+[![Coverage Status](https://coveralls.io/repos/github/comindware/core-ui/badge.svg?branch=1.5%2Frelease)](https://coveralls.io/github/comindware/core-ui?branch=1.5%2Frelease)
+
 # core-ui
 
 Comindware Core UI is a set of components based on Marionette framework and some other third-party libraries. It's built in the best tradition of Marionette and enables you to create complex modular UI by nesting powerful ready-to-use components.

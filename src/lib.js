@@ -1,5 +1,7 @@
+//@flow
 /* Data & Datatime utils*/
 import moment_ from 'moment-timezone';
+import '../node_modules/moment-timezone/moment-timezone-utils';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
@@ -18,8 +20,12 @@ import 'jstorage';
 import * as Handlebars_ from 'handlebars';
 import $_ from 'jquery';
 import 'rangyinputs';
-import 'jquery-autosize';
+import autosize from 'autosize';
+
 import numeral_ from 'numeral';
+import 'numeral/locales/ru';
+import 'numeral/locales/de';
+
 import codemirror_ from 'codemirror/lib/codemirror';
 import 'innersvg-polyfill';
 import jsencrypt from 'jsencrypt';
@@ -44,7 +50,8 @@ const api = {
     Marionette: Marionette_,
     numeral: numeral_,
     codemirror: codemirror_,
-    JSEncrypt: jsencrypt.JSEncrypt
+    JSEncrypt: jsencrypt.JSEncrypt,
+    autosize
 };
 
 const moment = api.moment;
@@ -55,5 +62,6 @@ const Backbone = backbone;
 const Marionette = Marionette_;
 const numeral = api.numeral;
 const codemirror = api.codemirror;
+
 export default api;
-export { moment, Handlebars, $, _, Backbone, Marionette, numeral, codemirror };
+export { moment, Handlebars, $, _, Backbone, Marionette, numeral, codemirror, autosize };

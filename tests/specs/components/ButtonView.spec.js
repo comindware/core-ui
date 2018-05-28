@@ -1,4 +1,3 @@
-
 import core from 'coreApi';
 import 'jasmine-jquery';
 
@@ -7,10 +6,13 @@ describe('Components', () => {
         it('should set text', () => {
             const button = new core.layout.Button({
                 text: 'Button text',
-                handler: () => { }
+                handler: () => {}
             });
 
-            window.application.contentRegion.show(button);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(button);
 
             expect(button.$('.layout__button-view-text').html()).toEqual('Button text');
         });
@@ -26,7 +28,10 @@ describe('Components', () => {
                 }
             });
 
-            window.application.contentRegion.show(button);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(button);
 
             button.$el.click();
 

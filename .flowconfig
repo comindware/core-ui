@@ -1,5 +1,5 @@
 [ignore]
-.*/doc_/.*
+.*/doc/.*
 .*/external/.*
 .*/reports/.*
 .*/dist/.*
@@ -11,7 +11,7 @@
 [include]
 
 [libs]
-<PROJECT_ROOT>/flow-typed/*
+.*/src/external.*
 [lints]
 
 [options]
@@ -28,5 +28,8 @@ module.name_mapper='^utils' -> '<PROJECT_ROOT>/src/utils/index.js'
 module.name_mapper='^services/UserService' -> '<PROJECT_ROOT>/src/services/UserService.js'
 module.name_mapper='^dropdown' -> '<PROJECT_ROOT>/src/dropdown/index.js'
 module.name_mapper='^list' -> '<PROJECT_ROOT>/src/list/index.js'
+module.name_mapper='^rangyinputs' -> '<PROJECT_ROOT>/src/external/rangyinputs-jquery-src.js'
+module.name_mapper='^jquery-ui' -> '<PROJECT_ROOT>/src/external/jquery-ui.js'
+module.name_mapper='^backbone.trackit' -> '<PROJECT_ROOT>/src/external/backbone.trackit.js'
 
 [strict]

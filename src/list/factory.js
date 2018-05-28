@@ -1,10 +1,22 @@
-import { helpers } from 'utils';
+import { comparators, helpers } from 'utils';
 import VirtualCollection from '../collections/VirtualCollection';
 import ListView from './views/CollectionView';
 import EmptyListView from './views/EmptyListView';
 import EmptyGridView from './views/EmptyGridView';
 import GridView from './views/GridView';
 import GridColumnHeaderView from './views/GridColumnHeaderView';
+
+export const getDefaultComparator = (columns = []) =>  {
+    const sortingColumn = columns.find(column => column.sorting);
+    let comparator;
+    if (sortingColumn) {
+        comparator = sortingColumn.sorting === 'asc' ? sortingColumn.sortAsc : sortingColumn.sortDesc;
+        if (!comparator) {
+            comparator = helpers.comparatorFor(comparators.getComparatorByDataType(sortingColumn.dataType || sortingColumn.type, sortingColumn.sorting), sortingColumn.key);
+        }
+    }
+    return comparator;
+};
 
 export const createWrappedCollection = options => {
     const collection = options.collection;
@@ -73,7 +85,8 @@ const factory = {
         const listViewOptions = _.extend(
             {
                 collection,
-                emptyView: EmptyListView
+                emptyView: EmptyListView,
+                showHeader: true
             },
             options.listViewOptions
         );
@@ -102,7 +115,8 @@ const factory = {
             selectableBehavior: options.gridViewOptions.selectableBehavior,
             isTree: options.gridViewOptions.isTree,
             expandOnShow: options.gridViewOptions.expandOnShow,
-            isSliding: true
+            isSliding: true,
+            comparator: getDefaultComparator(options.columns || options.gridViewOptions.columns || [])
         });
 
         const gridViewOptions = Object.assign(
@@ -116,7 +130,8 @@ const factory = {
                 emptyView: EmptyGridView,
                 emptyViewOptions: {
                     text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
-                }
+                },
+                showHeader: true
             },
             options.gridViewOptions
         );
@@ -133,6 +148,8 @@ const factory = {
      * @returns {Object}
      * @returns {Backbone.Collection} collection Коллекция элементов списка
      * */
-    createWrappedCollection
+    createWrappedCollection,
+
+    getDefaultComparator
 };
 export default factory;

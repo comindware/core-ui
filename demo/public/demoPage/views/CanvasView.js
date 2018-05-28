@@ -1,6 +1,5 @@
 
 import template from 'text-loader!../templates/editorCanvas.html';
-import core from 'comindware/core';
 import PresentationItemView from './PresentationItemView';
 
 export default Marionette.View.extend({

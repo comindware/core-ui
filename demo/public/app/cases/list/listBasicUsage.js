@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import ListCanvasView from 'demoPage/views/ListCanvasView';
 
 export default function() {
@@ -26,7 +26,7 @@ export default function() {
         // a regular Backbone.Collection or even plain javascript array
         listViewOptions: {
             childView: ListView,
-            childHeight: 34
+            childHeight: 25
         }
     });
 

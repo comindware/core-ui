@@ -21,7 +21,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
 
             actionParameters.push('/*optional*/ callback');
             const actionBody = helpers.format(
-                'return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}), \'{3}\', \'{4}\', callback);',
+                'return window.Ajax.getJsApiResponse(\'{0}\', [ {1} ], _.take(arguments, {2}) || [], \'{3}\', \'{4}\', callback);',
                 actionInfo.url,
                 actionInfo.parameters.map(p => `'${p.name}'`).join(', '),
                 actionInfo.parameters.length,

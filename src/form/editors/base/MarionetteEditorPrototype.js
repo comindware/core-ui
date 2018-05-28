@@ -86,7 +86,7 @@ const onChange = function() {
  * */
 
 export default {
-    create(viewClass: Marionette.View | Marionette.View | Marionette.CollectionView | Marionette.ComsiteView) {
+    create(viewClass: Marionette.View | Marionette.View | Marionette.CollectionView | Marionette.CompositeView) {
         return {
             classes: {
                 disabled: 'editor_disabled',

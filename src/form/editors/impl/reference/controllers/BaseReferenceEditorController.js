@@ -33,6 +33,7 @@ export default Marionette.Object.extend(
         fetch(options = {}) {
             const filterText = options.text ? options.text.trim().toUpperCase() : '';
             return this.collection.fetch({ data: { filter: filterText } }).then(() => {
+                this.collection.rebuild();
                 this.totalCount = this.collection.parentCollection ? this.collection.parentCollection.totalCount : this.collection.totalCount;
 
                 return {

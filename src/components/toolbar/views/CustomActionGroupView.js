@@ -56,7 +56,7 @@ export default Marionette.CollectionView.extend({
         'action:click': '__handleClick'
     },
 
-    __handleClick(view, action) {
+    __handleClick(action) {
         this.trigger('actionSelected', action);
     }
 });

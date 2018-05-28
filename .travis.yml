@@ -1,11 +1,13 @@
 language: node_js
 node_js:
   - '8'
+#os: osx todo restore safari
 install: ./build/npm-install.sh
 script:
   - npm run deploy
 after_script:
   - node ./node_modules/coveralls/bin/coveralls.js -v < ./reports/report-lcov/lcov.info
+sudo: required
 deploy:
   - provider: npm
     skip_cleanup: true
@@ -23,3 +25,5 @@ deploy:
       tags: true
       repo: comindware/core-ui
       branch: 1.4/release
+addons:
+  firefox: "latest"
