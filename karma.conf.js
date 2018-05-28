@@ -11,7 +11,7 @@ module.exports = function(config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jasmine'],
 
-        plugins: ['karma-safari-launcher', 'karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine', 'karma-sourcemap-loader', 'karma-webpack', 'karma-coverage'],
+        plugins: [/*'karma-safari-launcher',*/ 'karma-chrome-launcher', 'karma-firefox-launcher', 'karma-jasmine', 'karma-sourcemap-loader', 'karma-webpack', 'karma-coverage'],
 
         // list of files / patterns to load in the browser
         files: ['node_modules/babel-polyfill/dist/polyfill.js', 'tests/tests.bundle.js', 'dist/core.css'],
@@ -44,7 +44,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['ChromeWithViewport', 'FirefoxHeadless', 'Safari'],
+        browsers: ['ChromeWithViewport', 'FirefoxHeadless' /*, 'Safari'*/],
 
         customLaunchers: {
             FirefoxHeadless: {

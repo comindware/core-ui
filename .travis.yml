@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - '8'
-os: osx
+#os: osx todo restore safari
 install: ./build/npm-install.sh
 script:
   - npm run deploy
