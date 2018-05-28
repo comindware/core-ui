@@ -1,4 +1,3 @@
-
 import config from './DemoConfig';
 
 function findDefaultGroup(sectionId) {
@@ -50,21 +49,24 @@ export default {
         const section = config.sections.find(s => s.id === sectionId);
         const group = section.groups.find(g => g.id.toLowerCase() === groupId.toLowerCase());
 
-        return group.cases && group.cases.map(c => {
-            const url = this.getModuleUrlByName({
-                section: sectionId,
-                group: groupId,
-                case: c.id
-            });
-            return {
-                id: c.id,
-                displayName: c.displayName,
-                description: c.description,
-                url,
-                sectionId,
-                groupId
-            };
-        });
+        return (
+            group.cases &&
+            group.cases.map(c => {
+                const url = this.getModuleUrlByName({
+                    section: sectionId,
+                    group: groupId,
+                    case: c.id
+                });
+                return {
+                    id: c.id,
+                    displayName: c.displayName,
+                    description: c.description,
+                    url,
+                    sectionId,
+                    groupId
+                };
+            })
+        );
     },
 
     getCase(sectionId, groupId, caseId) {
@@ -89,7 +91,8 @@ export default {
             description: activeGroup.description,
             url,
             sectionId,
-            groupId
+            groupId,
+            attributesConfig: activeGroup.attributesConfig
         };
     }
 };

@@ -29,6 +29,27 @@ export default Marionette.View.extend({
         pickerInput: '.js-datetimepicker'
     },
 
+    updatePickerPanelValue(value: string) {
+        let data = new Date(value);
+        if (isNaN(data)) {
+            data = new Date();
+        }
+
+        this.ui.pickerInput.datetimepicker('setDate', data);
+
+        const oldValue = new Date(this.model.get('value'));
+
+        const newVal = moment({
+            year: data.getFullYear(),
+            month: data.getMonth(),
+            date: data.getDate(),
+            hour: oldValue.getHours(),
+            minute: oldValue.getMinutes()
+        }).toISOString();
+
+        this.model.set({ value: newVal });
+    },
+
     updatePickerDate() {
         const val = this.model.get('value');
         const format = defaultOptions.pickerFormat;

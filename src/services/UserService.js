@@ -22,5 +22,9 @@ export default {
 
     listUsers() {
         return dataProvider.listUsers();
+    },
+
+    listGroups() {
+        return dataProvider.listGroups();
     }
 };

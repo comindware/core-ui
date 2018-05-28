@@ -171,12 +171,7 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(1),
-                virtualCollection.at(2),
-                collection.at(0)
-            ]);
+            expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(1), virtualCollection.at(2), collection.at(0)]);
         });
 
         it('should accept group comparator as a model attrubute name', () => {
@@ -198,12 +193,7 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(1),
-                virtualCollection.at(2),
-                collection.at(0)
-            ]);
+            expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(1), virtualCollection.at(2), collection.at(0)]);
         });
 
         it('should accept group modelFactory as a model attrubute name', () => {
@@ -223,12 +213,7 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(1),
-                virtualCollection.at(2),
-                collection.at(0)
-            ]);
+            expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(1), virtualCollection.at(2), collection.at(0)]);
             expect(virtualCollection.at(0).get('displayText')).toEqual(collection.at(1).get('title'));
             expect(virtualCollection.at(0).get('groupingModel')).toEqual(true);
         });
@@ -248,12 +233,7 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            expectCollectionsToBeEqual(virtualCollection, [
-                virtualCollection.at(0),
-                collection.at(1),
-                virtualCollection.at(2),
-                collection.at(0)
-            ]);
+            expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(1), virtualCollection.at(2), collection.at(0)]);
             expect(virtualCollection.at(0).get('displayText')).toEqual(collection.at(1).get('title'));
             expect(virtualCollection.at(0).get('groupingModel')).toEqual(true);
         });
@@ -273,13 +253,8 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            virtualCollection.on('add remove', () => {
-                expectCollectionsToBeEqual(virtualCollection, [
-                    virtualCollection.at(0),
-                    collection.at(0),
-                    virtualCollection.at(2),
-                    collection.at(1)
-                ]);
+            virtualCollection.on('add update', () => {
+                expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(0), virtualCollection.at(2), collection.at(1)]);
                 done();
             });
 
@@ -303,9 +278,9 @@ describe('VirtualCollection', () => {
             const removeCallback = jasmine.createSpy('removeCallback');
             virtualCollection.on('reset', resetCallback);
             virtualCollection.on('add', addCallback);
-            virtualCollection.on('remove', removeCallback);
+            virtualCollection.on('update', removeCallback);
 
-            virtualCollection.on('add remove', () => {
+            virtualCollection.on('add update', () => {
                 expectCollectionsToBeEqual(virtualCollection, [
                     virtualCollection.at(0),
                     collection.at(2),
@@ -337,7 +312,7 @@ describe('VirtualCollection', () => {
             );
             const resetCallback = jasmine.createSpy('resetCallback');
             virtualCollection.on('reset', resetCallback);
-            virtualCollection.on('add remove', () => {
+            virtualCollection.on('add update', () => {
                 expectCollectionsToBeEqual(virtualCollection, [
                     virtualCollection.at(0),
                     collection.at(0),
@@ -374,7 +349,7 @@ describe('VirtualCollection', () => {
                 collection.at(3)
             ]);
 
-            virtualCollection.on('add remove', () => {
+            virtualCollection.on('add update', () => {
                 // Verify outcome
                 expectCollectionsToBeEqual(virtualCollection, [
                     virtualCollection.at(0),
@@ -409,7 +384,7 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            virtualCollection.on('add remove', () => {
+            virtualCollection.on('add update', () => {
                 // Verify outcome
                 expectCollectionsToBeEqual(virtualCollection, [
                     virtualCollection.at(0),
@@ -472,8 +447,8 @@ describe('VirtualCollection', () => {
             const removeCallback = jasmine.createSpy('removeCallback');
             virtualCollection.on('reset', resetCallback);
             virtualCollection.on('add', addCallback);
-            virtualCollection.on('remove', removeCallback);
-            virtualCollection.on('remove', () => {
+            virtualCollection.on('update', removeCallback);
+            virtualCollection.on('update', () => {
                 expectToHaveSameMembers(virtualCollection.models, collection.models);
                 expect(addCallback).not.toHaveBeenCalled();
                 expect(resetCallback).not.toHaveBeenCalled();
@@ -493,13 +468,8 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            virtualCollection.on('remove', () => {
-                expectCollectionsToBeEqual(virtualCollection, [
-                    virtualCollection.at(0),
-                    collection.at(0),
-                    virtualCollection.at(2),
-                    collection.at(1)
-                ]);
+            virtualCollection.on('update', () => {
+                expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(0), virtualCollection.at(2), collection.at(1)]);
                 done();
             });
             collection.remove(collection.at(1));
@@ -515,14 +485,8 @@ describe('VirtualCollection', () => {
                 }
             );
 
-            virtualCollection.on('remove', () => {
-                expectCollectionsToBeEqual(virtualCollection, [
-                    virtualCollection.at(0),
-                    collection.at(0),
-                    collection.at(1),
-                    virtualCollection.at(3),
-                    collection.at(2)
-                ]);
+            virtualCollection.on('update', () => {
+                expectCollectionsToBeEqual(virtualCollection, [virtualCollection.at(0), collection.at(0), collection.at(1), virtualCollection.at(3), collection.at(2)]);
                 done();
             });
             collection.remove(collection.at(1));
@@ -530,19 +494,18 @@ describe('VirtualCollection', () => {
     });
 
     describe('When adding item', () => {
-        it('should add item with without reset and remove', done => {
+        it('should add item with without reset', done => {
             const { collection, virtualCollection } = createFixture(generateTaskArray(3), { delayedAdd: false });
             const newTask = generateTask();
             const resetCallback = jasmine.createSpy('resetCallback');
             const addCallback = jasmine.createSpy('addCallback');
-            const removeCallback = jasmine.createSpy('removeCallback');
+
             virtualCollection.on('reset', resetCallback);
             virtualCollection.on('add', addCallback);
-            virtualCollection.on('remove', removeCallback);
+
             virtualCollection.on('add', () => {
                 expectToHaveSameMembers(virtualCollection.models, collection.models);
                 expect(resetCallback).not.toHaveBeenCalled();
-                expect(removeCallback).not.toHaveBeenCalled();
                 done();
             });
 
@@ -603,9 +566,9 @@ describe('VirtualCollection', () => {
                 collection.at(2),
                 collection.at(0),
                 virtualCollection.at(3),
+                newTask,
                 collection.at(3),
-                collection.at(1),
-                newTask
+                collection.at(1)
             ]);
         });
 
@@ -637,9 +600,9 @@ describe('VirtualCollection', () => {
                 collection.at(2),
                 collection.at(0),
                 virtualCollection.at(3),
+                newTask,
                 collection.at(3),
-                collection.at(1),
-                newTask
+                collection.at(1)
             ]);
         });
     });

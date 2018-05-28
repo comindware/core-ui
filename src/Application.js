@@ -1,3 +1,4 @@
+//@flow
 import AjaxService from './services/AjaxService';
 import GlobalEventService from './services/GlobalEventService';
 import UserService from './services/UserService';
@@ -23,10 +24,11 @@ export default {
         GlobalEventService.initialize();
         InterfaceErrorMessageService.initialize();
 
-        if (window.application.toastNotificationRegion) {
+        const toastNotificationRegion = options.toastNotificationRegion;
+        if (toastNotificationRegion) {
             ToastNotificationService.initialize({
-                toastNotificationRegion: window.application.toastNotificationRegion,
-                toastNotificationRegionEl: window.application.ui.toastNotificationRegion
+                toastNotificationRegion,
+                toastNotificationRegionEl: toastNotificationRegion.el
             });
         }
 

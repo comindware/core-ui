@@ -146,8 +146,8 @@ describe('Components', () => {
 
             const popupEl = $('.js-core-ui__global-popup-region').find('.js-window');
 
-            expect(popupEl.height()).toEqual(500);
-            expect(popupEl.width()).toEqual(700);
+            expect(popupEl.height()).toEqual(150);
+            expect(popupEl.width()).toEqual(400);
         });
 
         it('should match it configuration header', () => {

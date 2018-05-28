@@ -10,7 +10,7 @@ export default Marionette.View.extend({
     template: false,
 
     tagName() {
-        return this.url ? 'a' : 'li';
+        return this.options.createValueUrl(this.model.attributes) ? 'a' : 'li';
     },
 
     attributes() {
@@ -50,7 +50,9 @@ export default Marionette.View.extend({
     __click(e) {
         if (e.target.tagName === 'A') {
             e.stopPropagation();
+            return;
         }
+        this.reqres.request('button:click');
     },
 
     __edit() {

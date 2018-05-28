@@ -1,10 +1,14 @@
-
-import core from 'comindware/core';
 import localizationMapEn from 'localizationMapEn';
 import localizationMapDe from 'localizationMapDe';
 import localizationMapRu from 'localizationMapRu';
 import ajaxMap from './ajaxMap.json';
 import dataProvider from 'demoPage/dataProvider';
+
+import core from 'comindware/core';
+
+const root = typeof global !== 'undefined' ? global : window;
+
+root.core = core;
 
 const rootView = Marionette.View.extend({
     template: Handlebars.compile(`
@@ -35,17 +39,6 @@ export default Marionette.Application.extend({
 
         const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
         const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('serviceWorker.js').then(reg => {
-                reg.addEventListener('updatefound', () => {
-                    window.dispatchEvent(new CustomEvent('message', { detail: 'skipWaiting' }));
-                    reg.update();
-                });
-            }).catch(error => {
-                console.log(`Registration failed with ${error}`);
-            });
-        }
 
         this.showView(new rootView());
 

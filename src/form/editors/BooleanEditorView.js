@@ -104,6 +104,9 @@ export default (formRepository.editors.Boolean = BaseItemEditorView.extend(
         },
 
         __onKeyDown(event) {
+            if (event.ctrlKey) {
+                return;
+            }
             if (event.keyCode === keyCode.SPACE) {
                 this.__toggle();
                 event.preventDefault();

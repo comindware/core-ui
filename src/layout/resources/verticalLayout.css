@@ -2,12 +2,6 @@
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    margin: -8px 0;
-}
-
-.layout__vertical-layout-item {
-    flex: none;
-    margin: 8px 0;
 }
 
 .layout__vertical-layout-title {

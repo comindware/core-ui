@@ -5,16 +5,25 @@ import DemoPageView from './app/views/DemoPageView';
 
 export default Marionette.Object.extend({
     index() {
-        window.app.getView().getRegion('headerRegion').$el.hide();
-        window.app.getView().showChildView('contentRegion', new IndexPageView({
-            collection: new Backbone.Collection(DemoService.getSections())
-        }));
+        window.app
+            .getView()
+            .getRegion('headerRegion')
+            .$el.hide();
+        window.app.getView().showChildView(
+            'contentRegion',
+            new IndexPageView({
+                collection: new Backbone.Collection(DemoService.getSections())
+            })
+        );
     },
 
     showCase(sectionId, groupId, caseId) {
         const sections = new Backbone.Collection(DemoService.getSections());
         sections.find(s => s.id === sectionId).set('selected', true);
-        window.app.getView().getRegion('headerRegion').$el.show();
+        window.app
+            .getView()
+            .getRegion('headerRegion')
+            .$el.show();
         const groups = DemoService.getGroups(sectionId);
 
         if (!this.navBarView || !this.DemoPageView) {

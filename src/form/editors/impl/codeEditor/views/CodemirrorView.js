@@ -52,9 +52,9 @@ export default Marionette.View.extend({
     },
 
     regions: {
-        toolbarContainer: '.js-code-toolbar-container',
-        tooltipContainer: '.js-code-tooltip-container',
-        editorContainer: '.js-code-editor-container'
+        toolbarRegion: '.js-code-toolbar-container',
+        tooltipRegion: '.js-code-tooltip-container',
+        editorRegion: '.js-code-editor-container'
     },
 
     ui: {
@@ -79,7 +79,7 @@ export default Marionette.View.extend({
         });
         this.toolbar.on('minimize', this.__onMinimize);
 
-        this.showChildView('toolbarContainer', this.toolbar);
+        this.showChildView('toolbarRegion', this.toolbar);
 
         this.ui.editor.css('height', this.options.height);
         this.hintIsShown = false;
@@ -353,7 +353,7 @@ export default Marionette.View.extend({
         });
         this.listenTo(this.tooltip, 'syntax:changed', syntax => (token.currentSyntax = syntax));
         this.listenTo(this.tooltip, 'peek', this.__onTooltipPeek);
-        this.tooltipContainer.show(this.tooltip);
+        this.showChildView('tooltipRegion', this.tooltip);
 
         const tooltipMargin = 10;
         const hintPanel = $(hintEl).parent();
@@ -414,7 +414,8 @@ export default Marionette.View.extend({
             }
 
             this.tooltip = new tooltipView({ model: tooltipModel });
-            this.tooltipContainer.show(this.tooltip);
+            this.showChildView('tooltipRegion', this.tooltip);
+
             const documentWidth = document.body.offsetWidth;
             const documentHeight = document.body.offsetHeight;
             const tooltipWidth = this.tooltip.$el.width();

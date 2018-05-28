@@ -29,9 +29,7 @@ export default Marionette.View.extend({
     },
 
     startEditing() {
-        const value = this.model.get('value');
-        const editableText = value ? DateTimeService.getDateDisplayValue(value, this.editDateFormat) : '';
-        this.ui.dateInput.val(editableText);
+        this.updateDisplayValue();
     },
 
     endEditing() {
@@ -101,7 +99,8 @@ export default Marionette.View.extend({
         if (this.isDestroyed()) {
             return;
         }
-        const displayValue = DateTimeService.getDateDisplayValue(this.model.get('value'), this.options.dateDisplayFormat);
+        const value = this.model.get('value');
+        const displayValue = value ? DateTimeService.getDateDisplayValue(value, this.editDateFormat) : '';
         this.ui.dateInput.val(displayValue);
         if (this.getOption('showTitle')) {
             this.$el.prop('title', displayValue);

@@ -1,4 +1,3 @@
-import core from 'comindware/core';
 import CanvasView from 'demoPage/views/CanvasView';
 
 export default () => {
@@ -29,6 +28,7 @@ export default () => {
         {
             key: 'textCell',
             type: 'Text',
+            dataType: 'String',
             title: 'TextCell',
             required: true,
             sorting: 'asc',
@@ -38,22 +38,23 @@ export default () => {
         {
             key: 'numberCell',
             type: 'Number',
+            dataType: 'Integer',
             title: 'Number Cell',
-            getReadonly: model => model.get('numberCell') % 2,
             editable: true,
             autocommit: true
         },
         {
             key: 'dateTimeCell',
             type: 'DateTime',
+            dataType: 'DateTime',
             title: 'DateTime Cell',
-            getHidden: model => model.get('numberCell') % 2,
             editable: true,
             autocommit: true
         },
         {
             key: 'durationCell',
             type: 'Duration',
+            dataType: 'Duration',
             title: 'Duration Cell',
             editable: true,
             autocommit: true
@@ -61,24 +62,29 @@ export default () => {
         {
             key: 'booleanCell',
             type: 'Boolean',
+            dataType: 'Boolean',
             title: 'Boolean Cell',
             editable: true,
-            autocommit: true
+            autocommit: true,
+            getHidden: model => model.get('numberCell') % 2
         },
         {
             key: 'documentCell',
             type: 'Document',
+            dataType: 'Document',
             title: 'Document',
-            editable: true,
+            // editable: true,
             autocommit: true
         },
         {
             key: 'referenceCell',
             type: 'Datalist',
+            dataType: 'Instance',
             title: 'Reference Cell',
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
-            autocommit: true
+            autocommit: true,
+            getReadonly: model => model.get('numberCell') % 2,
         }
     ];
 
@@ -91,7 +97,7 @@ export default () => {
         showToolbar: true,
         showSearch: true,
         showSelection: true,
-        showHeader: false,
+        showRowIndex: true,
         collection,
         title: 'Editable grid'
     });

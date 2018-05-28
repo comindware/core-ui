@@ -1,5 +1,5 @@
 
-import core from 'comindware/core';
+
 import CanvasView from 'demoPage/views/CanvasView';
 
 // 1. Get some data
@@ -64,7 +64,9 @@ export default function() {
         selectableBehavior: 'multi',
         showSearch: true,
         showSelection: true,
-        collection: new Backbone.Collection(dataArray)
+        collection: new Backbone.Collection(dataArray),
+        draggable: true,
+        showRowIndex: true
     });
 
     // 4. Show created views

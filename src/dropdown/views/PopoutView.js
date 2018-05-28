@@ -215,12 +215,10 @@ export default Marionette.View.extend({
         panelRect.width = $panelEl.outerWidth();
 
         const css: {
-            left: number,
-            right: number
-        } = {
-            left: 0,
-            right: 0
-        };
+            left?: number,
+            right?: number
+        } = {};
+
         switch (this.options.popoutFlow) {
             case popoutFlow.RIGHT: {
                 const leftCenter = anchorRect.left + anchorRect.width / 2;
@@ -312,11 +310,10 @@ export default Marionette.View.extend({
 
         const css: {
             top: number,
-            bottom: number
+            bottom?: number
         } = {
-            top,
-            bottom: 0
-        };
+                top
+            };
         if (this.options.height === height.BOTTOM) {
             css.bottom = WINDOW_BORDER_OFFSET;
         }
@@ -339,10 +336,12 @@ export default Marionette.View.extend({
         panelRect.height = $panelEl.outerHeight();
         panelRect.width = $panelEl.outerWidth();
 
-        const css = {
-            top: 0,
-            bottom: 0
-        };
+        const css: {
+            top?: number,
+            bottom?: number
+        } = {
+                top: 0
+            };
 
         // calculate vertical position
         let direction = this.options.direction;
@@ -482,9 +481,14 @@ export default Marionette.View.extend({
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId)
-            .map(x => x.el)
-            .some(el => el === testedEl || el.contains(testedEl));
+        const palet = document.getElementsByClassName('sp-container')[0];
+
+        return (
+            WindowService.get(this.popupId)
+                .map(x => x.el)
+                .some(el => el === testedEl || el.contains(testedEl)) ||
+            (palet && palet.contains(testedEl))
+        ); //Color picker custom el container
     },
 
     __handleBlur() {
@@ -570,7 +574,7 @@ export default Marionette.View.extend({
         this.stopListening(GlobalEventService);
 
         this.trigger('close', this, ...args);
-        if (this.options.renderAfterClose) {
+        if (this.options.renderAfterClose && !this.isDestroyed) {
             this.render();
         }
     }

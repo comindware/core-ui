@@ -1,3 +1,4 @@
+//@flow
 import template from '../templates/searchBar.hbs';
 import LocalizationService from '../services/LocalizationService';
 
@@ -31,6 +32,12 @@ export default Marionette.View.extend({
 
     onRender() {
         this.ui.clear.toggle(!!this.ui.input.val());
+    },
+
+    focus() {
+        if (this.isRendered()) {
+            this.ui.input.focus();
+        }
     },
 
     __search() {

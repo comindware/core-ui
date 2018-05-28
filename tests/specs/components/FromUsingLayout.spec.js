@@ -3,86 +3,89 @@ import 'jasmine-jquery';
 
 describe('Components', () => {
     describe('Form Layout', () => {
-        it('should initialize', function() {
-            window.application.contentRegion.show(
-                new core.layout.Form({
-                    model: new Backbone.Model({
-                        1: 'bar',
-                        2: 123,
-                        3: 'foo',
-                        4: '2015-07-20T10:46:37Z',
-                        5: true,
-                        6: 'aaa',
-                        7: 456,
-                        8: '2015-07-20T10:46:37Z',
-                        9: 'dddddddddddddd',
-                        10: 789
-                    }),
-                    schema: [
-                        {
-                            type: 'v-container',
-                            items: [
-                                {
-                                    type: 'Text-editor',
-                                    key: 1
-                                },
-                                {
-                                    type: 'TextArea-editor',
-                                    key: 2
-                                },
-                                {
-                                    type: 'Number-editor',
-                                    key: 3
-                                },
-                                {
-                                    type: 'DateTime-editor',
-                                    key: 4
-                                },
-                                {
-                                    type: 'Boolean-editor',
-                                    key: 5,
-                                    displayText: 'Make me some tea!'
-                                },
-                                {
-                                    type: 'h-container',
-                                    items: [
-                                        {
-                                            type: 'Text-editor',
-                                            key: 6
-                                        },
-                                        {
-                                            type: 'v-container',
-                                            items: [
-                                                {
-                                                    type: 'Number-editor',
-                                                    key: 7
-                                                },
-                                                {
-                                                    type: 'DateTime-editor',
-                                                    key: 8
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            type: 'TextArea-editor',
-                                            key: 9
-                                        },
-                                        {
-                                            type: 'Number-editor',
-                                            key: 10
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                })
-            );
+        it('should initialize', () => {
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(
+                    new core.layout.Form({
+                        model: new Backbone.Model({
+                            1: 'bar',
+                            2: 123,
+                            3: 'foo',
+                            4: '2015-07-20T10:46:37Z',
+                            5: true,
+                            6: 'aaa',
+                            7: 456,
+                            8: '2015-07-20T10:46:37Z',
+                            9: 'dddddddddddddd',
+                            10: 789
+                        }),
+                        schema: [
+                            {
+                                type: 'v-container',
+                                items: [
+                                    {
+                                        type: 'Text-editor',
+                                        key: 1
+                                    },
+                                    {
+                                        type: 'TextArea-editor',
+                                        key: 2
+                                    },
+                                    {
+                                        type: 'Number-editor',
+                                        key: 3
+                                    },
+                                    {
+                                        type: 'DateTime-editor',
+                                        key: 4
+                                    },
+                                    {
+                                        type: 'Boolean-editor',
+                                        key: 5,
+                                        displayText: 'Make me some tea!'
+                                    },
+                                    {
+                                        type: 'h-container',
+                                        items: [
+                                            {
+                                                type: 'Text-editor',
+                                                key: 6
+                                            },
+                                            {
+                                                type: 'v-container',
+                                                items: [
+                                                    {
+                                                        type: 'Number-editor',
+                                                        key: 7
+                                                    },
+                                                    {
+                                                        type: 'DateTime-editor',
+                                                        key: 8
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                type: 'TextArea-editor',
+                                                key: 9
+                                            },
+                                            {
+                                                type: 'Number-editor',
+                                                key: 10
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    })
+                );
             // assert
             expect(true).toBe(true);
         });
 
-        it('should correctly use required validator', function() {
+        it('should correctly use required validator', () => {
             const model = new Backbone.Model({
                 1: null,
                 2: null,
@@ -167,7 +170,10 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(10);
 
@@ -187,7 +193,7 @@ describe('Components', () => {
             expect(form.form.validate()).toEqual(null);
         });
 
-        it('should correctly use length validator', function() {
+        it('should correctly use length validator', () => {
             const model = new Backbone.Model({
                 1: null
             });
@@ -202,7 +208,10 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
@@ -233,7 +242,10 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
@@ -270,7 +282,10 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
@@ -299,7 +314,7 @@ describe('Components', () => {
             expect(form.form.validate()).toEqual(null);
         });
 
-        it('should correctly use email validator', function() {
+        it('should correctly use email validator', () => {
             const model = new Backbone.Model({
                 1: null
             });
@@ -319,7 +334,10 @@ describe('Components', () => {
                 ]
             });
 
-            window.application.contentRegion.show(form);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(form);
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
 
@@ -334,7 +352,6 @@ describe('Components', () => {
             });
 
             expect(Object.keys(form.form.validate()).length).toEqual(1);
-            
 
             model.set({
                 1: 'correctemail@gmail.com'

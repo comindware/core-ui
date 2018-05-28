@@ -1,5 +1,3 @@
-import core from 'comindware/core';
-
 export default function() {
     const model = new Backbone.Model({
         title: 'foo',
@@ -11,48 +9,59 @@ export default function() {
 
     const view = new core.layout.Form({
         model,
-        schema: [{
-            cType: 'container',
-            layout: 'vertical',
-            items: [{
-                cType: 'field',
-                key: 'title',
-                title: 'Title',
-                type: 'Text'
-            }, {
+        schema: [
+            {
                 cType: 'container',
-                layout: 'horizontal',
-                items: [{
-                    cType: 'field',
-                    key: 'idealDays',
-                    title: 'Ideal Days',
+                layout: 'vertical',
+                items: [
+                    {
+                        cType: 'field',
+                        key: 'title',
+                        title: 'Title',
+                        type: 'Text'
+                    },
+                    {
+                        cType: 'container',
+                        layout: 'horizontal',
+                        items: [
+                            {
+                                cType: 'field',
+                                key: 'idealDays',
+                                title: 'Ideal Days',
 
-                    type: 'Number'
-                }, {
-                    cType: 'field',
-                    key: 'dueDate',
-                    type: 'DateTime',
-                    title: 'Due Date',
-                }],
-            }, {
-                cType: 'field',
-                key: 'description',
-                title: 'Description',
-                type: 'TextArea'
-            }, {
-                cType: 'field',
-                key: 'blocked',
-                type: 'Boolean',
-                displayText: 'Blocked by another task'
-            }, {
-                text: 'Commit',
-                cType: 'button',
-                handler() {
-                    view.form.commit();
-                    alert(JSON.stringify(model.toJSON(), null, 4));
-                }
-            }]
-        }]
+                                type: 'Number'
+                            },
+                            {
+                                cType: 'field',
+                                key: 'dueDate',
+                                type: 'DateTime',
+                                title: 'Due Date'
+                            }
+                        ]
+                    },
+                    {
+                        cType: 'field',
+                        key: 'description',
+                        title: 'Description',
+                        type: 'TextArea'
+                    },
+                    {
+                        cType: 'field',
+                        key: 'blocked',
+                        type: 'Boolean',
+                        displayText: 'Blocked by another task'
+                    },
+                    {
+                        text: 'Commit',
+                        cType: 'Button',
+                        handler() {
+                            view.form.commit();
+                            alert(JSON.stringify(model.toJSON(), null, 4));
+                        }
+                    }
+                ]
+            }
+        ]
     });
 
     return view;

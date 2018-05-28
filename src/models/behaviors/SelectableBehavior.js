@@ -74,13 +74,13 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
 
         this.selected[model.cid] = model;
         model.select();
-        calculateSelectedLength(this);
         if (selectOnCursor === false) {
             this.pointOff();
             model.pointTo();
             this.lastPointedModel = model;
             this.cursorCid = model.cid;
         }
+        calculateSelectedLength(this);
     },
 
     // Select a specified model and update selection for the whole collection according to the key modifiers
@@ -93,7 +93,12 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
             collection.cursorCid = model.cid;
         } else if (!ctrlPressed && !shiftPressed) {
             // with no hotkeys we select this item and deselect the others
-            collection.selectNone();
+            // collection.selectNone();
+            Object.values(collection.selected).forEach(selected => {
+                if (selected !== model) {
+                    selected.deselect();
+                }
+            });
             model.select();
             collection.lastSelectedModel = model.cid;
             collection.cursorCid = model.cid;
@@ -102,7 +107,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
             const lastSelectedModel = collection.lastSelectedModel;
             if (!lastSelectedModel) {
                 // we select this item alone if this is the first click
-                collection.selectNone();
+                Object.values(collection.selected).forEach(selected => {
+                    if (selected !== model) {
+                        selected.deselect();
+                    }
+                });
                 model.select();
                 collection.cursorCid = model.cid;
             } else {
@@ -120,7 +129,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
                 const startIndex = Math.min(lastSelectedIndex, thisIndex);
                 const endIndex = Math.max(lastSelectedIndex, thisIndex);
                 const models = collection.models;
-                collection.selectNone();
+                Object.values(collection.selected).forEach(selected => {
+                    if (selected !== model) {
+                        selected.deselect();
+                    }
+                });
                 for (let i = startIndex; i <= endIndex; i++) {
                     models[i].select();
                 }
@@ -256,7 +269,7 @@ const calculateSelectedLength = _.debounce((collection) => {
     if (selectedLength > 0 && selectedLength < length) {
         collection.trigger('select:some', collection);
     }
-}, 100);
+}, 10);
 
 export default SelectableBehavior;
 export var Selectable = SelectableBehavior.Selectable;

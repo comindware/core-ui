@@ -183,7 +183,12 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             mode: stateModes.VIEW,
             displayValue: newValueObject
         });
-        const newValue = moment.duration(this.state.displayValue).toISOString();
+        let newValue;
+        newValue = moment.duration(this.state.displayValue).toISOString();
+        if (Object.values(newValueObject).every(value => value === 0)) {
+            newValue = null;
+            this.ui.input.val(null);
+        }
         this.__value(newValue, true);
     },
 
@@ -287,6 +292,9 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __keydown(event) {
+        if (event.ctrlKey) {
+            return;
+        }
         const position = this.getCaretPos();
         const index = this.getSegmentIndex(position);
         const focusablePart = this.focusableParts[index];

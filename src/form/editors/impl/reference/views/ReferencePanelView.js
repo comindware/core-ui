@@ -160,7 +160,7 @@ export default Marionette.View.extend({
     },
 
     __setLoading(isLoading) {
-        if (this.isDestroyed) {
+        if (this.isDestroyed()) {
             return;
         }
         this.isLoading = isLoading;

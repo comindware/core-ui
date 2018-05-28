@@ -1,9 +1,9 @@
 import core from 'coreApi';
 import 'jasmine-jquery';
 /*eslint-ignore*/
-describe('Editors', function() {
-    describe('DurationEditor', function() {
-        it('should get focus when focus() is called', function() {
+describe('Editors', () => {
+    describe('DurationEditor', () => {
+        it('should get focus when focus() is called', () => {
             const findInput = function(view) {
                 return view.$('input');
             };
@@ -15,7 +15,10 @@ describe('Editors', function() {
                 model,
                 key: 'value'
             });
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             view.focus();
@@ -25,7 +28,7 @@ describe('Editors', function() {
             expect(view.hasFocus).toEqual(true, 'Must have focus.');
         });
 
-        it('should lose focus when blur() is called', function() {
+        it('should lose focus when blur() is called', () => {
             const findInput = function(view) {
                 return view.$('input');
             };
@@ -37,7 +40,10 @@ describe('Editors', function() {
                 model,
                 key: 'data'
             });
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             view.focus();
 
             // act
@@ -45,10 +51,10 @@ describe('Editors', function() {
 
             // assert
             expect(findInput(view)).not.toBeFocused();
-            expect(view.hasFocus).toEqual(false, 'Mustn\'t have focus.');
+            expect(view.hasFocus).toEqual(false, "Mustn't have focus.");
         });
 
-        it('should have `value` matched with initial value', function() {
+        it('should have `value` matched with initial value', () => {
             // arrange
             const model = new Backbone.Model({
                 value: 'P3DT3H4M'
@@ -57,7 +63,10 @@ describe('Editors', function() {
                 model,
                 key: 'value'
             });
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
 
             // act
             const value = view.getValue();

@@ -2,7 +2,7 @@ export default config => {
     const options = _.extend(
         {
             type: 'email',
-            message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.EMAIL')
+            message: Localizer.get('CORE.FORM.VALIDATION.EMAIL')
         },
         config
     );

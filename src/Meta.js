@@ -1,3 +1,4 @@
+//@flow
 export const objectPropertyTypes = {
     STRING: 'String',
     BOOLEAN: 'Boolean',

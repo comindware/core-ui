@@ -3,12 +3,12 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('MemberEditorView', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const model = new Backbone.Model({
                 selected: []
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -16,7 +16,10 @@ describe('Editors', () => {
                 groups: new Backbone.Collection()
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });

@@ -1,17 +1,27 @@
+//@flow
 import { objectPropertyTypes } from '../Meta';
-import { helpers, dateHelpers } from 'utils';
+import { dateHelpers } from 'utils';
 import EditableGridFieldView from './views/EditableGridFieldView';
 
-const factory = {
-    getCellViewForColumn(column, model) {
+let factory;
+
+type CellExtention = {
+    templateContext(): Object
+};
+
+type Column = { key: string, columnClass: string, editable: boolean, type: string, dataType: string, format: string }; //todo wtf datatype
+
+export default (factory = {
+    getCellViewForColumn(column: Column, model: Backbone.Model) {
         if (column.editable) {
             return EditableGridFieldView;
         }
 
-        return this.getCellHtml(column, model);
+        return factory.getCellHtml(column, model);
     },
 
-    getCellViewByDataType(type) {
+    getCellViewByDataType(type: string) {
+        //Used by Product server Grid
         let result;
 
         switch (type) {
@@ -139,24 +149,20 @@ const factory = {
         return factory.__getDocumentView();
     },
 
-    __getSimpleView(simpleTemplate, extention) {
-        return Marionette.View.extend(
-            Object.assign(
-                {
-                    template: Handlebars.compile(simpleTemplate),
-                    modelEvents: {
-                        'change:highlightedFragment': '__handleHighlightedFragmentChange',
-                        highlighted: '__handleHighlightedFragmentChange',
-                        unhighlighted: '__handleHighlightedFragmentChange'
-                    },
-                    __handleHighlightedFragmentChange() {
-                        this.render();
-                    },
-                    className: 'grid-cell'
-                },
-                extention
-            )
-        );
+    __getSimpleView(simpleTemplate: string, extention: CellExtention) {
+        return Marionette.View.extend({
+            template: Handlebars.compile(simpleTemplate),
+            modelEvents: {
+                'change:highlightedFragment': '__handleHighlightedFragmentChange',
+                highlighted: '__handleHighlightedFragmentChange',
+                unhighlighted: '__handleHighlightedFragmentChange'
+            },
+            __handleHighlightedFragmentChange() {
+                this.render();
+            },
+            className: 'grid-cell',
+            templateContext: extention.templateContext
+        });
     },
 
     __getAccountView() {
@@ -199,7 +205,7 @@ const factory = {
 
     __getDocumentView() {
         return Marionette.View.extend({
-            template: Handlebars.compile('{{#each documents}}<a href="{{url}}">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
+            template: Handlebars.compile('{{#each documents}}<a href="{{url}}" target="_blank">{{text}}</a>{{#unless @last}}, {{/unless}}{{/each}}'),
 
             templateContext() {
                 const value = this.model.get(this.options.key);
@@ -256,97 +262,121 @@ const factory = {
                 };
             }
         };
-        return factory.__getSimpleView('{{{value}}}', extention);
+        return this.__getSimpleView('{{{value}}}', extention);
     },
 
-    getCellHtml(column, model) {
-        let result = '';
-        const type = column.type;
+    getCellHtml(column: Column, model: Backbone.Model) {
         const value = model.get(column.key);
+
         if (value === null || value === undefined) {
-            return result;
+            return `<div class="cell ${column.columnClass}"></div>`;
         }
-        switch (type) {
+        let adjustedValue = value;
+
+        switch (column.dataType || column.type) {
             case objectPropertyTypes.STRING:
-                result = value;
-                break;
+                adjustedValue = this.__adjustValue(value);
+                return `<div class="cell ${column.columnClass}" title="${column.format === 'HTML' ? '' : adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.INSTANCE:
-                result = value ? value.name : '';
-                break;
+                if (Array.isArray(value)) {
+                    adjustedValue = value.map(v => v && v.name).join(', ');
+                } else if (value && value.name) {
+                    adjustedValue = value.name;
+                }
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue || ''}">${adjustedValue || ''}</div>`;
             case objectPropertyTypes.ACCOUNT:
-                if (value && value.length > 0) {
-                    result = _.chain(value)
+                if (value.length > 0) {
+                    adjustedValue = value
                         .map(item => ({
                             id: item.id,
                             text: item.text || item.name || (item.columns && item.columns[0])
                         }))
-                        .sortBy(member => member.text)
+                        .sort((a, b) => a.text > b.text)
                         .reduce((memo, member) => {
                             if (memo) {
                                 return `${memo}, ${member.text}`;
                             }
                             return member.text;
-                        }, null)
-                        .value();
-                } else if (value && value.name) {
-                    result = value.name;
+                        }, null);
+                    return `<div class="cell ${column.columnClass}" title="${adjustedValue} || ''">${adjustedValue}</div>`;
+                } else if (value.name) {
+                    return `<div class="cell ${column.columnClass}" title="${value.name}">${value.name}</div>`;
                 }
-                break;
             case objectPropertyTypes.ENUM:
-                result = value ? value.valueExplained : '';
-                break;
+                adjustedValue = value ? value.valueExplained : '';
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.INTEGER:
             case objectPropertyTypes.DOUBLE:
             case objectPropertyTypes.DECIMAL:
-                result = value ? value.toString() : '';
-                break;
+                adjustedValue = this.__adjustValue(value) || '';
+                return `<div class="cell cell-right ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DURATION: {
-                if (value === 0) {
-                    return '0';
-                }
-                if (!value) {
-                    return '';
-                }
-                const duration = dateHelpers.durationISOToObject(value);
-                if (duration.days) {
-                    result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
-                }
-                if (duration.hours) {
-                    result += `${duration.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
-                }
-                if (duration.minutes) {
-                    result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
-                }
-                result.trim();
-                break;
+                adjustedValue = Array.isArray(value) ? value : [value];
+                adjustedValue = adjustedValue
+                    .map(v => {
+                        let result = '';
+                        if (value === 0) {
+                            return '0';
+                        }
+                        if (!value) {
+                            return '';
+                        }
+
+                        const duration = dateHelpers.durationISOToObject(value);
+                        if (duration.days) {
+                            result += `${duration.days + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS')} `;
+                        }
+                        if (duration.hours) {
+                            result += `${duration.hours + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS')} `;
+                        }
+                        if (duration.minutes) {
+                            result += `${duration.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
+                        }
+                        return result;
+                    })
+                    .join(', ')
+                    .trim();
+
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             }
             case objectPropertyTypes.BOOLEAN:
-                if (value === true) {
-                    result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
-                } else if (value === false) {
-                    result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
-                }
-                break;
+                adjustedValue = Array.isArray(value) ? value : [value || ''];
+                adjustedValue = adjustedValue
+                    .map(v => {
+                        let result = '';
+                        if (v === true) {
+                            result = '<svg class="svg-grid-icons svg-icons_flag-yes"><use xlink:href="#icon-checked"></use></svg>';
+                        } else if (v === false) {
+                            result = '<svg class="svg-grid-icons svg-icons_flag-none"><use xlink:href="#icon-remove"></use></svg>';
+                        }
+                        return result;
+                    })
+                    .join(', ');
+                return `<div class="cell ${column.columnClass}">${adjustedValue}</div>`;
             case objectPropertyTypes.DATETIME:
-                result = dateHelpers.dateToDateTimeString(value, column.format || 'condensedDateTime');
-                break;
+                adjustedValue = Array.isArray(value) ? value : [value];
+                adjustedValue = adjustedValue.map(v => dateHelpers.dateToDateTimeString(v, column.format || 'condensedDateTime')).join(', ');
+                return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DOCUMENT:
-                if (value && value.length > 0) {
-                    result = value
+                if (value.length > 0) {
+                    return `<div class="cell ${column.columnClass}">${value
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
-                            return `<a href="${url}">${text}</a>`;
+                            return `<a href="${url}"  target="_blank" title="${text}">${text}</a>`;
                         })
                         .sort((a, b) => a.text > b.text)
-                        .join(', ');
+                        .join(', ')}</div>`;
                 }
-                break;
             default:
-                result = value;
-                break;
+                return `<div class="cell ${column.columnClass}"></div>`;
         }
-        return result;
+    },
+
+    __adjustValue(value: Array<string | number> | string) {
+        if (Array.isArray(value)) {
+            return value.join(', ');
+        }
+        return value;
     }
-};
-export default factory;
+});

@@ -175,7 +175,7 @@ export default Marionette.View.extend({
             this.editor.setReadonly(this.schema.getReadonly(this.model));
         }
         if (_.isFunction(this.schema.getHidden)) {
-            this.editor.setHidden(this.schema.getHidden(this.model));
+            this.editor.setHidden(Boolean(this.schema.getHidden(this.model)));
         }
     },
 
@@ -205,6 +205,6 @@ export default Marionette.View.extend({
     },
 
     __checkUiReady() {
-        return this.__rendered && !this.isDestroyed;
+        return this.__rendered && !this.isDestroyed();
     }
 });

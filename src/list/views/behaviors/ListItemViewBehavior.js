@@ -31,13 +31,6 @@ const eventBubblingIgnoreList = ['before:render',
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
-        helpers.ensureOption(view.options, 'internalListViewReqres');
-        this.listenTo(view, 'all', eventName => {
-            if (eventBubblingIgnoreList.indexOf(eventName) !== -1) {
-                return;
-            }
-            view.options.internalListViewReqres.request('childViewEvent', view, eventName, _.rest(arguments, 1));
-        });
         this.__debounceClickHandle = _.debounce(this.__handleDebouncedClick, 300, true);
     },
 
@@ -99,12 +92,12 @@ export default Marionette.Behavior.extend({
     __handleDebouncedClick(e) {
         const model = this.view.model;
         if (model.selected) {
-            model.deselect();
-        } else {
-            const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
-            if (selectFn) {
-                selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
-            }
+            model.deselect({ isSilent: true });
+        }
+
+        const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
+        if (selectFn) {
+            selectFn.call(model.collection, model, e.ctrlKey, e.shiftKey, this.getOption('selectOnCursor'));
         }
     }
 });

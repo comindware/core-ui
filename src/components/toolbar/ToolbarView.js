@@ -4,7 +4,6 @@ import template from './templates/toolbarView.html';
 
 const actionsMenuLabel = '⋮';
 const menuActionsWidth = 30;
-const itemMarginLeft = 10;
 
 export default Marionette.View.extend({
     initialize() {
@@ -18,7 +17,7 @@ export default Marionette.View.extend({
         this.listenTo(this.popupMenu, 'execute', (action, model) => this.trigger('command:execute', model));
         const debounceRebuild = _.debounce(() => this.rebuildView(), 100);
         this.listenTo(Core.services.GlobalEventService, 'window:resize', debounceRebuild);
-        this.listenTo(this.allItemsCollection, 'change add remove reset', debounceRebuild);
+        this.listenTo(this.allItemsCollection, 'change add remove reset update', debounceRebuild);
     },
 
     className: 'js-toolbar-actions toolbar-container',
@@ -42,13 +41,19 @@ export default Marionette.View.extend({
 
     __createActionsGroupsView() {
         return new CustomActionGroupView({
-            collection: this.toolbarItemsCollection
+            collection: this.toolbarItemsCollection,
+            reqres: this.options.reqres
         });
     },
 
     rebuildView() {
+        if (this.isDestroyed()) {
+            return false;
+        }
         this.toolbarItemsCollection.reset(this.allItemsCollection.models);
-        const toolbarActions = this.getRegion('toolbarItemsRegion').$el.children().children();
+        const toolbarActions = this.getRegion('toolbarItemsRegion')
+            .$el.children()
+            .children();
         if (toolbarActions.length === 0) {
             return;
         }
@@ -56,7 +61,7 @@ export default Marionette.View.extend({
         let childWidth = 0;
         let findingItem = -1;
         toolbarActions.each((i, val) => {
-            childWidth += val.getBoundingClientRect().width + itemMarginLeft;
+            childWidth += val.getBoundingClientRect().width;
             if (childWidth + menuActionsWidth > toolbarWidth) {
                 findingItem = i;
                 return false;
@@ -73,11 +78,11 @@ export default Marionette.View.extend({
     },
 
     __createDropdownActionsView() {
-        return Core.dropdown.factory.createDropdown({
-            buttonView: Marionette.View.extend({ template: false }),
-            panelView: Marionette.View.extend({ template: false }),
+        return Core.dropdown.factory.createMenu({
             text: actionsMenuLabel,
-            items: this.menuItemsCollection
+            items: this.menuItemsCollection,
+            popoutFlow: 'right',
+            customAnchor: true
         });
     }
 });

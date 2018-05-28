@@ -1,4 +1,3 @@
-import MessageView from './message/views/MessageView';
 import WindowService from './WindowService';
 import LocalizationService from './LocalizationService';
 
@@ -9,6 +8,10 @@ const iconIds = {
 };
 
 export default {
+    systemMessagesTypes: {
+        unsavedChanges: 'unsavedChanges'
+    },
+
     confirm(description) {
         return this.askYesNo(description, LocalizationService.get('CORE.SERVICES.MESSAGE.TITLE.CONFIRMATION'));
     },
@@ -49,22 +52,50 @@ export default {
 
     showMessageDialog(description, text, buttons, iconId = iconIds.NONE) {
         return new Promise(resolve => {
-            const view = new MessageView({
-                model: new Backbone.Model({
-                    iconId,
-                    text,
-                    description,
-                    buttons: buttons || []
-                })
+            const view = new Core.layout.Popup({
+                header: text,
+                buttons: buttons.map(button => ({
+                    id: button.id,
+                    text: button.text,
+                    handler() {
+                        WindowService.closePopup(this.openedPopupId);
+                        this.openedPopupId = null;
+                        resolve(button.id);
+                    }
+                })),
+                content: `<div class='systemMessageBody'>${description}</div>`
             });
-            view.once('close', result => {
-                this.openedPopupId = null;
-                resolve(result);
-            });
+
             if (this.openedPopupId) {
                 WindowService.closePopup(this.openedPopupId);
             }
             this.openedPopupId = WindowService.showPopup(view);
         });
+    },
+
+    showSystemMessage(messageConfiguration) {
+        const systemMessages = {
+            unsavedChanges: {
+                description: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.DESCRIPTION'),
+                buttons: [
+                    {
+                        id: true,
+                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE')
+                    },
+                    {
+                        id: false,
+                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY')
+                    }
+                ]
+            }
+        };
+
+        switch (messageConfiguration.type) {
+            case this.systemMessagesTypes.unsavedChanges: {
+                return this.showMessageDialog(systemMessages.unsavedChanges.description, systemMessages.unsavedChanges.text, systemMessages.unsavedChanges.buttons);
+            }
+            default:
+                break;
+        }
     }
 };

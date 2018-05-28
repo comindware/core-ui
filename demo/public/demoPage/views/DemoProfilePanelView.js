@@ -1,4 +1,3 @@
-import core from 'comindware/core';
 import template from 'text-loader!../templates/demoProfilePanel.html';
 
 export default Marionette.View.extend({

@@ -31,7 +31,7 @@ export default ListPanelView.extend({
         execute: '__execute'
     },
 
-    __execute(child, model) {
+    __execute(model) {
         this.options.parent.close();
         this.options.parent.trigger('execute', model.id, model);
     }

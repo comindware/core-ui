@@ -43,8 +43,10 @@ export default {
                             columns: this.__parseConfiguration(child.items)
                         })
                     );
+                case 'Popup':
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
+                case 'Button':
                 case 'button':
                     return new Button({
                         text: child.text,
@@ -77,11 +79,13 @@ export default {
                             );
                         }
                     }
-                    const view = new child.view(_.omit(child, 'view'));
+                    const childContructor = new child.view(_.omit(child, 'view'));
+
                     if (child.viewEvents) {
-                        Object.keys(child.viewEvents).forEach(key => view.on(key, child.viewEvents[key]));
+                        Object.keys(child.viewEvents).forEach(key => childContructor.on(key, child.viewEvents[key]));
                     }
-                    return view;
+
+                    return childContructor.view ? childContructor.view : childContructor;
                 }
             }
         });
@@ -125,6 +129,7 @@ export default {
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
                 case 'button':
+                case 'Button':
                     return new Button(_.omit(child, 'cType'));
                 case 'plainText':
                     return new PlainText(_.omit(child, 'cType'));

@@ -3,7 +3,7 @@ import 'jasmine-jquery';
 
 describe('Editors', () => {
     describe('RangeEditorView', () => {
-        it('should initialize', function () {
+        it('should initialize', () => {
             const model = new Backbone.Model({
                 value: '5'
             });
@@ -17,7 +17,10 @@ describe('Editors', () => {
                 step: 1
             });
 
-            window.application.contentRegion.show(view);
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
             // assert
             expect(true).toBe(true);
         });
