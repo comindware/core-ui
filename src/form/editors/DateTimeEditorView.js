@@ -163,10 +163,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onClear(): boolean {
-        this.__value(null, true, true);
-        this.value = null;
-        this.focus();
-
+        this.model.set('value', null);
         return false;
     },
 
@@ -268,8 +265,10 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onDateButtonCalendarOpen() {
-        this.calendarDropdownView.open();
-        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
+        if (this.enabled && !this.readonly) {
+            this.calendarDropdownView.open();
+            this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
+        }
     },
 
     __onDateButtonFocus() {
@@ -421,7 +420,9 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onTimeButtonCalendarOpen() {
-        this.timeDropdownView.open();
+        if (this.enabled && !this.readonly) {
+            this.timeDropdownView.open();
+        }
     },
 
     __onTimeButtonFocus() {
