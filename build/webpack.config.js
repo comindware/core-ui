@@ -179,15 +179,6 @@ module.exports = options => {
                     }
                 },
                 {
-                    test: /jquery-autosize/,
-                    use: [
-                        {
-                            loader: 'imports-loader',
-                            options: 'jquery'
-                        }
-                    ]
-                },
-                {
                     test: /rangyinputs/,
                     use: [
                         {

@@ -18,7 +18,8 @@ export default Marionette.View.extend({
 
     regions: {
         caseRepresentationRegion: '.js-case-representation-region',
-        attributesConfigurationRegion: '.js-attributes-configuration-region'
+        attributesConfigurationRegion: '.js-attributes-configuration-region',
+        toolbarRegion: '.js-toolbar-region'
     },
 
     ui: {
@@ -47,6 +48,42 @@ export default Marionette.View.extend({
         if (attributesConfig) {
             this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView(attributesConfig));
         }
+    },
+
+    onAttach() {
+        const toolbar = new core.components.Toolbar({
+            allItemsCollection: new Backbone.Collection([
+                {
+                    iconClass: 'plus',
+                    id: 'component',
+                    name: 'Component',
+                    type: 'Checkbox',
+                    severity: 'Low',
+                    resultType: 'CustomClientAction',
+                    context: 'Void'
+                },
+                {
+                    iconType: 'Undefined',
+                    id: 'attributes',
+                    name: 'Attributes',
+                    severity: 'None',
+                    defaultTheme: true,
+                    type: 'Checkbox'
+                },
+                {
+                    iconType: 'Undefined',
+                    id: 'code',
+                    name: 'Code',
+                    severity: 'None',
+                    defaultTheme: true,
+                    type: 'Checkbox'
+                }
+            ])
+        });
+
+        this.listenTo(toolbar, 'command:execute', model => this.__handleToolbarClick(model));
+
+        this.showChildView('toolbarRegion', toolbar);
     },
 
     __createAttributesConfigurationView(attributesConfig) {
@@ -80,5 +117,21 @@ export default Marionette.View.extend({
         });
 
         return gridController.view;
+    },
+
+    __handleToolbarClick(model) {
+        switch (model.id) {
+            case 'component':
+                this.$('.js-case-representation-region').toggle();
+                break;
+            case 'attribute':
+                this.$('.js-attributes-configuration-region').toggle();
+                break;
+            case 'code':
+                this.$('.demo-content__code').toggle();
+                break;
+            default:
+                break;
+        }
     }
 });
