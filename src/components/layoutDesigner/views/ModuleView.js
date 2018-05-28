@@ -305,5 +305,11 @@ export default Marionette.View.extend({
 
     __createPopupCollection() {
         return this.componentReqres.request('toolbarItems:get');
+    },
+
+    onDestroy() {
+        this.options.reqres.stopReplying();
+        this.toolbar.destroy();
+        this.canvasController.destroy();
     }
 });

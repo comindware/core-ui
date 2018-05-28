@@ -58,22 +58,22 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
         _.defaults(this.options, options.schema || options, defaultOptions);
 
-
-        this.controller =
-            this.options.controller ||
-            new StaticController({
-                collection: options.collection
-            });
-
         let collection = [];
         if (options.collection) {
             if (Array.isArray(options.collection)) {
                 collection = options.collection;
             } else {
                 collection = options.collection.toJSON();
+                this.listenTo(options.collection, 'reset', panelCollection => this.__onResetCollection(panelCollection));
             }
         }
         this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
+
+        this.controller =
+            this.options.controller ||
+            new StaticController({
+                collection: options.collection
+            });
 
         this.value = this.__adjustValue(this.value);
 
@@ -235,6 +235,19 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
+    __onResetCollection(panelCollection) {
+        const editorId = this.model.get(this.key);
+        this.panelCollection.reset(panelCollection.models);
+
+        if (editorId) {
+            const selectedItem = this.panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
+            if (selectedItem) {
+                this.setValue(selectedItem.toJSON());
+                selectedItem.select();
+            }
+        }
+    },
+
     __onValueSelect(): void {
         if (this.panelCollection.lastPointedModel) {
             this.panelCollection.lastPointedModel.toggleSelected();
@@ -243,13 +256,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    __onValueSet(model?: Backbone.Model): void {
+    __onValueSet(model?: Backbone.Model, isSilent: boolean = false): void {
         const canAddItemOldValue = this.__canAddItem();
         const value = model ? model.toJSON() : null;
         this.__value(value, true);
         this.__updateFakeInputModel();
 
-        if (this.options.maxQuantitySelected === 1) {
+        if (this.options.maxQuantitySelected === 1 && !isSilent) {
             this.dropdownView.close();
             this.__updateButtonInput();
             this.__focusButton();
@@ -271,8 +284,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __canAddItem(): boolean {
         const selectedItems = _.filter(this.viewModel.button.selected.models, model => model !== this.fakeInputModel);
-
-        return this.getEnabled() && !this.getReadonly() && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
+        const isAccess = this.getEnabled() && !this.getReadonly();
+        return isAccess && (this.options.maxQuantitySelected === 1 || !this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
     },
 
     __onValueEdit(value) {

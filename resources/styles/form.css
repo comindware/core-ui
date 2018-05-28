@@ -71,6 +71,12 @@ rgba(5,117,189,.5) // user avatar btn
     font-size: 0;
 }
 
+.form-group + .form-group,
+.field-width + .field-width{
+    margin-top: 10px;
+}
+
+
 /*------------------ Form Label ------------------*/
 .form-label {
     max-width: 100%;
@@ -124,8 +130,8 @@ rgba(5,117,189,.5) // user avatar btn
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    font-size: 8px;
-    line-height: 10px;
+    font-size: 9px;
+    line-height: 11px;
     font-weight: bold;
     position: absolute;
     top: 1px;
@@ -721,6 +727,12 @@ input[type="checkbox"].checkbox {
     border-radius: 5px;
     padding: 2px 5px;
     transition: padding-right .2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+.bubbles__i:hover {
+    padding-right: 17px;
 }
 
 .bubbles__i-edit-btn:hover {
@@ -780,7 +792,9 @@ input[type="checkbox"].checkbox {
 }
 .bubbles__input {
     width: 100%;
+    height: 100%;
     border: 0;
+    background: transparent;
 }
 
 .editor_disabled .bubbles__input,
@@ -791,7 +805,23 @@ input[type="checkbox"].checkbox {
 .bubbles__input.empty{
     color: inherit;
 }
+
+.cell .bubbles{
+    border: none;
+    flex-wrap: nowrap;
+}
 /* /Bubbles/ */
+
+
+.editor_icon{
+
+}
+
+.icons-wrp{
+    display: inline-block;
+    cursor: pointer;
+}
+
 
 
 /* reference-field */
@@ -1185,17 +1215,6 @@ input[type="color"], .colorpicker{
     margin-right: 4px;
 }
 
-.multiselect-i_selected .svg-icons-wrp_multiselect{
-    opacity: 1;
-}
-
-.multiselect-i .svg-icons_multiselect{
-    visibility: hidden;
-}
-.multiselect-i_selected .svg-icons_multiselect{
-    visibility: visible;
-}
-
 .svg-icons-wrp_add{
     left: 0;
     right: auto;
@@ -1283,6 +1302,12 @@ svg.svg-icons{
 .svg-icons_remove-bubble{
     transform: scale(0.9) translate(5px, 5px);
 }
+.svg-icons-wrp__remove-icons{
+    position: relative;
+    top: -3px;
+    left: -2px;
+}
+
 
 .svg-icons_date{
     transform: translate(3px, 2px);
@@ -1328,7 +1353,6 @@ svg.svg-icons{
 .editor_disabled .svg-icons-wrp_edit-reference{
     display: none;
 }
-
 
 
 .d-svg-icons{
@@ -1425,11 +1449,15 @@ svg.svg-icons{
 
 .task-links__i {
     max-width: 100%;
-    margin: 5px 10px 5px 0;
     padding: 0 18px 0 0;
     display: inline-block;
     vertical-align: top;
     position: relative;
+    display: flex;
+}
+
+.cell .task-links__i {
+    line-height: 25px;
 }
 
 .task-links__link {
@@ -1507,12 +1535,19 @@ svg.svg-icons{
     color: #636262;
 }
 
+.documents {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: baseline;
+}
+
 .dev-btn-document-revise{
-    position: absolute;
-    right: 18px;
+    position: relative;
     display: inline-block;
     top: 0px;
-    margin-top: -4px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 .dev-revision-container{
@@ -1545,4 +1580,8 @@ svg.svg-icons{
 .field-error-view_text .selected {
     border: 1px solid #8f84ff;
     border-radius: 2px;
+}
+
+.context_select {
+    cursor: pointer;
 }

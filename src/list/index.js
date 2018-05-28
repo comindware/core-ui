@@ -6,7 +6,6 @@ import GridView from './views/GridView';
 import ListView from './views/CollectionView';
 import RowView from './views/RowView';
 import EditableGridFieldView from './views/EditableGridFieldView';
-import ListGroupViewBehavior from './views/behaviors/ListGroupViewBehavior';
 import ListItemViewBehavior from './views/behaviors/ListItemViewBehavior';
 import GridItemViewBehavior from './views/behaviors/GridItemViewBehavior';
 import LoadingRowModel from './models/LoadingRowModel';
@@ -48,7 +47,6 @@ export default {
         EditableGridFieldView,
 
         behaviors: {
-            ListGroupViewBehavior,
             ListItemViewBehavior,
             GridItemViewBehavior
         }

@@ -23,15 +23,17 @@ const defaultOptions = {
     allowDelete: true,
     multiple: true,
     fileFormat: undefined,
+    showRevision: true,
     createDocuments: documents =>
-        Promise.resolve([
-            {
-                id: documents[0].id,
-                fileName: documents[0].fileName,
-                documentsId: [documents[0].id]
-            }
-        ]),
-    removeDocuments: () => { },
+        // todo: strange method
+        Promise.resolve(
+            documents.map(doc => ({
+                id: doc.id,
+                fileName: doc.fileName,
+                documentsId: documents.map(item => item.id)
+            }))
+        ),
+    removeDocuments: () => {},
     displayText: ''
 };
 
@@ -42,6 +44,15 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.initcollection();
 
         this.on('change', this.checkEmpty.bind(this));
+        this.on('uploaded', documents => {
+            if (this.options.multiple === false) {
+                this.collection.reset();
+                if (this.value && this.value.length && this.value[0].id.indexOf(savedDocumentPrefix) > -1) {
+                    documents[0].documentId = this.value[0].id;
+                }
+            }
+            this.uploadDocumentOnServer(documents);
+        });
 
         this.reqres = Backbone.Radio.channel(_.uniqueId('mSelect'));
 
@@ -76,7 +87,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     childViewOptions() {
         return {
             attachmentsController: this.attachmentsController,
-            hideRemoveBtn: this.options.hideRemoveBtn
+            allowDelete: this.options.allowDelete,
+            showRevision: this.options.showRevision
         };
     },
 
@@ -154,17 +166,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     renderUploadButton(isReadonly) {
-        if (!isReadonly) {
-            this.on('uploaded', documents => {
-                if (this.options.multiple === false) {
-                    this.collection.reset();
-                    if (this.value && this.value.length && this.value[0].id.indexOf(savedDocumentPrefix) > -1) {
-                        documents[0].documentId = this.value[0].id;
-                    }
-                }
-                this.uploadDocumentOnServer(documents);
-            });
-        } else {
+        if (isReadonly) {
             this.ui.addRegion.hide();
         }
     },
@@ -229,7 +231,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         const input = e.target;
         const files = input.files;
 
-        if (this.__validate(files)) {
+        if (this.__validate(files) && !this.readonly) {
             this._uploadFiles(files);
         }
     },
@@ -237,9 +239,8 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     _uploadFiles(files, items) {
         this.trigger('beforeUpload');
         //todo loading
-        if (!files || this.readonly) return;
-
         if (items) {
+            //todo wtf
             Promise.resolve(this._readFileEntries(items)).then(fileEntrie => {
                 this._sendFilesToServer(fileEntrie);
             });
@@ -297,15 +298,17 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 form.append(`file${i + 1}`, files[i]);
             }
         }
-        fetch(this.uploadUrl, {
-            method: 'POST',
+        $.ajax({
+            url: this.uploadUrl,
+            data: form,
+            processData: false,
+            type: 'POST',
+            contentType: false,
             encoding: 'multipart/form-data',
             enctype: 'multipart/form-data',
             mimeType: 'multipart/form-data',
-            body: form
-        })
-            .then(response => response.json())
-            .then(tempResult => {
+            success: data => {
+                const tempResult = JSON.parse(data);
                 const resultObjects = [];
                 for (let i = 0; i < tempResult.fileIds.length; i++) {
                     const currFileName = files[i].name;
@@ -319,14 +322,11 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 this.ui.fileUpload[0].value = null;
                 this.ui.form.trigger('reset');
                 this.trigger('uploaded', resultObjects);
-            })
-            .catch(e => {
-                this._fallback();
-            });
-    },
-
-    _fallback() {
-        this.trigger('failed');
+            },
+            error: () => {
+                this.trigger('failed');
+            }
+        });
     },
 
     __validate(files) {
@@ -389,7 +389,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         this.dropdownView.open();
     },
 
-    onDomRefresh() {
+    onAttach() {
         this.renderShowMore();
     },
 
@@ -434,7 +434,11 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     collapseShowMore() {
+        if (this.isDestroyed()) {
+            return;
+        }
         if (!this.getChildViewContainer(this) || !this.getChildViewContainer(this).children() || !this.getChildViewContainer(this).children().length) {
+            this.ui.showMore.hide();
             return;
         }
         const affordabletWidth = this.$el.width();
@@ -444,9 +448,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
         const length = this.collection.length;
         // visible children
         while (visibleCounter < length && visibleWidth + childViews[visibleCounter].clientWidth < affordabletWidth) {
-            visibleWidth += $(childViews[visibleCounter])
-                .show()
-                .width();
+            visibleWidth += childViews[visibleCounter].clientWidth;
             visibleCounter++;
         }
         // invisible children
@@ -463,7 +465,9 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
     },
 
     expandShowMore() {
-        this.getChildViewContainer(this).children().show();
+        this.getChildViewContainer(this)
+            .children()
+            .show();
         this.ui.showMoreText.html(LocalizationService.get('CORE.FORM.EDITORS.DOCUMENT.HIDE'));
         this.ui.invisibleCount.html('');
     },

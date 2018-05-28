@@ -62,11 +62,7 @@ export default Marionette.CompositeView.extend({
         }
         this.gridEventAggregator = options.gridEventAggregator;
 
-        this.__createReqres();
         options.childViewOptions && (this.childViewOptions = options.childViewOptions);
-        this.childViewOptions = Object.assign(options.childViewOptions || {}, {
-            internalListViewReqres: this.internalReqres
-        });
         options.emptyView && (this.emptyView = options.emptyView);
         options.emptyViewOptions && (this.emptyViewOptions = options.emptyViewOptions);
         options.childView && (this.childView = options.childView);
@@ -258,15 +254,6 @@ export default Marionette.CompositeView.extend({
         }
     },
 
-    __createReqres() {
-        this.internalReqres = Backbone.Radio.channel(_.uniqueId('listV'));
-        this.internalReqres.reply('childViewEvent', this.__handleChildViewEvent, this);
-    },
-
-    __handleChildViewEvent(view, eventName, eventArguments) {
-        this.trigger.apply(this, [`childview:${eventName}`, view].concat(eventArguments));
-    },
-
     __moveCursorTo(newCursorIndex, shiftPressed) {
         const cid = this.collection.cursorCid;
         let index = 0;
@@ -345,7 +332,8 @@ export default Marionette.CompositeView.extend({
 
     __updateTop() {
         const top = Math.max(0, this.collection.indexOf(this.collection.visibleModels[0]) * this.childHeight);
-        this.ui.childViewContainer.css('top', top);
+        this.ui.childViewContainer[0].style.top = `${top}px`;
+
         if (this.gridEventAggregator) {
             this.gridEventAggregator.trigger('update:top', top);
         }
@@ -386,7 +374,9 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight = (this.el.parentElement && this.el.parentElement.clientHeight) || window.innerHeight;
+        const availableHeight = this.el.parentElement && this.el.parentElement.clientHeight !== this.childHeight
+            ? this.el.parentElement.clientHeight
+            : window.innerHeight;
 
         if (this.children && this.children.length && !this.isEmpty()) {
             const firstChild = this.children.first().el;
@@ -466,7 +456,7 @@ export default Marionette.CompositeView.extend({
     },
 
     __updateChildTop(child) {
-        if (!child) {
+        if (!child || !this.collection.length) {
             return;
         }
         requestAnimationFrame(() => {

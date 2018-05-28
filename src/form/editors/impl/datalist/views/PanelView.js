@@ -158,7 +158,7 @@ export default Marionette.View.extend({
                 if (collection.length > 0 && this.model.get('value')) {
                     this.model.get('value').forEach(model => {
                         if (collection.has(model.id)) {
-                            collection.get(model.id).select();
+                            collection.get(model.id).select({ isSilent: true });
                         }
                     });
                     this.__toggleElementsQuantityWarning(collection.totalCount);

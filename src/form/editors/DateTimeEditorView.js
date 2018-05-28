@@ -10,6 +10,7 @@ import DatePanelView from './impl/dateTime/views/DatePanelView';
 import dropdown from 'dropdown';
 import TimeInputView from './impl/dateTime/views/TimeInputView';
 import { dateHelpers } from 'utils';
+import GlobalEventService from '../../services/GlobalEventService';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -107,6 +108,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         'change:value': '__change'
     },
 
+    __keyAction(event) {
+        const dropdownView = this.calendarDropdownView;
+        if (dropdownView.isOpen && event.keyCode === 13) {
+            const newValue = dropdownView.button.ui.dateInput.val();
+            dropdownView.panelView.updatePickerPanelValue(newValue);
+        }
+    },
+
     onRender(): void {
         this.__updateClearButton();
         if (this.options.showTitle) {
@@ -154,10 +163,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onClear(): boolean {
-        this.__value(null, true, true);
-        this.value = null;
-        this.focus();
-
+        this.model.set('value', null);
         return false;
     },
 
@@ -247,6 +253,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             return;
         }
         this.calendarDropdownView.button.endEditing();
+        this.stopListening(GlobalEventService);
     },
 
     __onDateOpen() {
@@ -258,7 +265,10 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onDateButtonCalendarOpen() {
-        this.calendarDropdownView.open();
+        if (this.enabled && !this.readonly) {
+            this.calendarDropdownView.open();
+            this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
+        }
     },
 
     __onDateButtonFocus() {
@@ -410,7 +420,9 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onTimeButtonCalendarOpen() {
-        this.timeDropdownView.open();
+        if (this.enabled && !this.readonly) {
+            this.timeDropdownView.open();
+        }
     },
 
     __onTimeButtonFocus() {

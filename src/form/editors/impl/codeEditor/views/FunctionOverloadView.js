@@ -17,6 +17,6 @@ export default Marionette.View.extend({
     },
 
     __onSelected() {
-        this.trigger('selected');
+        this.trigger('selected', this.model);
     }
 });

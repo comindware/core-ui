@@ -2,7 +2,7 @@ export default config => {
     const options = _.extend(
         {
             type: 'invalidIdentifier',
-            message: Localizer.get('PROJECT.COMMON.FORM.VALIDATION.SYSTEMNAME')
+            message: Localizer.get('CORE.FORM.VALIDATION.SYSTEMNAME')
         },
         config
     );

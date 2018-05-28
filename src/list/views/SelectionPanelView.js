@@ -36,7 +36,6 @@ export default Marionette.CompositeView.extend({
         // `index` is present when adding with `at` since BB 1.2; indexOf fallback for < 1.2
         let index = opts.at !== undefined && (opts.index !== undefined ? opts.index : collection.indexOf(child));
 
-
         if (this.filter || index === false) {
             index = _.indexOf(this._filteredSortedModels(index), child);
         }
@@ -59,6 +58,6 @@ export default Marionette.CompositeView.extend({
     },
 
     __updateTop(top) {
-        this.ui.childViewContainer.css('top', top);
+        this.ui.childViewContainer[0].style.top = `${top}px`;
     }
 });

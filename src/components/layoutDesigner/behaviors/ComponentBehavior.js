@@ -1,6 +1,7 @@
 //@flow
 import componentDragHelper from '../templates/componentDragHelper.html';
 import emptyDragHelper from '../templates/emptyComponentDragHelper.html';
+//import { helpers } from 'utils';
 
 const classes = {
     SELECTED: 'selected',
@@ -15,6 +16,7 @@ const defaultOptions = {
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
+        //helpers.ensureOption(options, 'canvasReqres');
         const viewOptions = view.options;
 
         this.view.reqres = viewOptions.reqres;

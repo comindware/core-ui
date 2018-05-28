@@ -34,6 +34,7 @@
 
 .visible-collection-wrp, .selection-panel-wrp {
     position: relative;
+    will-change: top;
 }
 
 .visible-collection-view {
@@ -61,6 +62,7 @@
 .grid-header-wrp {
     display: flex;
     flex: 0 0 auto;
+    overflow-y: scroll;
 }
 
 .grid-content-view {
@@ -178,7 +180,6 @@
     border-collapse: collapse;
     overflow: hidden;
     flex: none;
-    overflow-y: scroll;
 }
 
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
@@ -340,7 +341,6 @@ svg.svg-grid-icons {
 .grid-toolbar-wrp{
     width: 100%;
     height: 33px;
-    border: 1px solid #dfe4e8;
     background: #f7f6f6;
     color: #636262;
     box-sizing: border-box;
@@ -353,10 +353,13 @@ svg.svg-grid-icons {
 
 .grid-toolbar-region {
     flex: 1 1 auto;
+    overflow: hidden;
+    padding-left: 5px;
 }
 
 .editable-grid-field {
     width: 100%;
+    height: 25px;
 }
 
 .editable-grid-field .form-editor{
@@ -444,10 +447,6 @@ svg.svg-grid-icons {
 .editable-grid-field .editor .date-time,
 .editable-grid-field .editor .input_date{
     width: 100%;
-}
-
-.editable-grid-field .svg-icons-wrp:not(.svg-icons-wrp_checked){
-    margin-top: 2px;
 }
 
 /* /Editable Grid */
@@ -538,6 +537,9 @@ svg.svg-grid-icons {
     outline: 1px solid #0575bd;
     outline-offset: -1px;
 }
+.disabled.cell-focused {
+    outline: none;
+}
 
 .cell_selection-index{
     width: 53px;
@@ -604,6 +606,11 @@ svg.svg-grid-icons {
 .cell .svg-icons{
     margin-top: 2px;
 }
+
+.cell .svg-icons.svg-icons_remove-bubble {
+    margin-top: 1px;
+}
+
 .cell .svg-icons_checked{
     margin: -1px 0 0 -1px;
 }

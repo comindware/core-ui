@@ -176,7 +176,7 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
     },
 
     __keyup(e) {
-        if (event.ctrlKey) {
+        if (e.ctrlKey) {
             return;
         }
         if ([keyCode.LEFT, keyCode.RIGHT, keyCode.HOME, keyCode.END].indexOf(e.keyCode) === -1) {

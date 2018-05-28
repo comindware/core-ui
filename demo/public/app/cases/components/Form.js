@@ -1,6 +1,6 @@
 import CanvasView from 'demoPage/views/CanvasView';
 
-export default function() {
+export default function () {
     // 1. Create form template
     const template =
         '<div class="field-width" data-fields="text"></div>' +
@@ -8,7 +8,8 @@ export default function() {
         '<div class="field-width" data-fields="dateTime"></div>' +
         '<div class="field-width" data-fields="duration"></div>' +
         '<div class="field-width" data-fields="dropdown"></div>' +
-        '<div class="field-width" data-fields="wrongInstance"></div>';
+        '<div class="field-width" data-fields="wrongInstance"></div>' +
+        '<div class="field-width" data-fields="dateTime2"></div>';
 
     // 2. Create form model
     const model = new Backbone.Model({
@@ -16,7 +17,8 @@ export default function() {
         number: 451,
         dateTime: new Date(1984, 0, 24),
         duration: 'P14DT4H15M',
-        dropdown: 'd.2'
+        dropdown: 'd.2',
+        dateTime2: new Date()
     });
 
     // 3. Create view with BackboneFormBehavior and construct form scheme
@@ -69,6 +71,11 @@ export default function() {
                         wrongInstance: {
                             type: 'Datalist',
                             title: 'Dropdown',
+                            helpText: 'Some help information'
+                        },
+                        dateTime2: {
+                            type: 'DateTime',
+                            title: 'DateTime',
                             helpText: 'Some help information'
                         }
                     };

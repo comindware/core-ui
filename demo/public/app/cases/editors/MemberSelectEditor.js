@@ -7,12 +7,13 @@ export default function () {
     });
 
     return new CanvasView({
-        view: new core.form.editors.MembersSplitPanelEditor({
+        view: new core.form.editors.MembersSplitEditor({
             model,
             key: 'selected',
             autocommit: true,
             users: Core.services.UserService.listUsers(),
-            groups: new Backbone.Collection(),
+            groups: Core.services.UserService.listGroups(),
+            showMode: 'button'
         }),
         presentation: '\'{{memberValue}}\'',
         isEditor: true

@@ -27,7 +27,7 @@ export default {
         const toastNotificationRegion = options.toastNotificationRegion;
         if (toastNotificationRegion) {
             ToastNotificationService.initialize({
-                toastNotificationRegion: toastNotificationRegion,
+                toastNotificationRegion,
                 toastNotificationRegionEl: toastNotificationRegion.el
             });
         }

@@ -10,7 +10,7 @@ describe('Editors', () => {
                 selected: []
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -31,7 +31,7 @@ describe('Editors', () => {
                 selected: ['user.1']
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -52,7 +52,7 @@ describe('Editors', () => {
                 selected: []
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -63,16 +63,16 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-menu-select-item').length) {
+                        if (document.getElementsByClassName('js-available-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-menu-select-item').first().click().dblclick();
+                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click().dblclick();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -90,7 +90,7 @@ describe('Editors', () => {
                 selected: ['user.1']
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -101,16 +101,17 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
                             clearTimeout(first);
-                            view.$('.js-selected-members-container .js-menu-select-item').first().click().dblclick();
+                            view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().first().click().dblclick();
+
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length === 0) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -127,7 +128,7 @@ describe('Editors', () => {
                 selected: []
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -138,17 +139,17 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-available-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-menu-select-item').first().click();
+                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click();
                             view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual(['user.10']);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -160,12 +161,12 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move all items fron available to selected container on move all button click', done => {
+        it('should move item fron available to selected container on move right button click', done => {
             const model = new Backbone.Model({
                 selected: []
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -176,17 +177,17 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-available-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-selected-members-container .js-menu-select-item').first().click();
-                            view.$('.js-move-left-button').click();
+                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click();
+                            view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length === 0) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 1) {
                                     clearTimeout(second);
-                                    expect(view.getValue()).toEqual([]);
+                                    expect(view.getValue()).toEqual(['user.10']);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -198,12 +199,12 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item fron selected to available container on move button click', done => {
+        it('should move item from selected to available container on move button click', done => {
             const model = new Backbone.Model({
                 selected: ['user.1']
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -214,17 +215,17 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-menu-select-item').first().click();
-                            view.$('.js-move-right-all-button').click();
+                            view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().first().click();
+                            view.$('.js-move-left-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
                                     clearTimeout(second);
-                                    expect(view.getValue().length).toEqual(11);
+                                    expect(view.getValue().length).toEqual(0);
                                     done();
                                 }
-                            }, 10);
+                            }, 100);
                         }
                     }, 10);
                 });
@@ -241,7 +242,7 @@ describe('Editors', () => {
                 selected: ['user.1', 'user.2', 'user.3', 'user.4', 'user.5']
             });
 
-            const view = new core.form.editors.MembersSplitPanelEditor({
+            const view = new core.form.editors.MembersSplitEditor({
                 model,
                 key: 'selected',
                 autocommit: true,
@@ -252,14 +253,59 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-members-container').length) {
+                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
                             clearTimeout(first);
                             view.$('.js-move-left-all-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-members-container .js-menu-select-item').length === 0) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
                                     clearTimeout(second);
                                     expect(view.getValue()).toEqual([]);
                                     done();
+                                }
+                            }, 100);
+                        }
+                    }, 10);
+                });
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+        });
+
+        it('should correctly filter items by type on toolbar type select', done => {
+            const model = new Backbone.Model({
+                selected: []
+            });
+
+            const view = new core.form.editors.MembersSplitEditor({
+                model,
+                key: 'selected',
+                autocommit: true,
+                users: core.services.UserService.listUsers().slice(0, 3),
+                groups: core.services.UserService.listGroups().slice(0, 3)
+            });
+
+            view.on('render', () => {
+                view.controller.view.on('attach', () => {
+                    const first = setInterval(() => {
+                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
+                            clearTimeout(first);
+                            view.$('.js-users-button').click();
+
+                            const second = setInterval(() => {
+                                if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 3) {
+                                    clearTimeout(second);
+                                    view.$('.js-groups-button').click();
+
+                                    const third = setInterval(() => {
+                                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length === 3) {
+                                            clearTimeout(third);
+                                            expect(true).toEqual(true);
+                                            done();
+                                        }
+                                    }, 10);
                                 }
                             }, 10);
                         }

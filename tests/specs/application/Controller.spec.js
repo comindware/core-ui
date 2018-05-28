@@ -26,9 +26,6 @@ describe('Application', () => {
                 requests: {
                     'create:app': {
                         url: 'SolutionConfigurationApi/Post',
-                        notifications: {
-                            onSuccess: Localizer.get('PROCESS.COMMON.SOLUTIONS.NOTIFICATIONS.CREATED')
-                        },
                         onSuccess() { }
                     },
                     'get:app': {
@@ -36,9 +33,6 @@ describe('Application', () => {
                     },
                     'edit:app': {
                         url: 'SolutionConfigurationApi/Put',
-                        notifications: {
-                            onSuccess: Localizer.get('PROCESS.COMMON.SOLUTIONS.NOTIFICATIONS.EDITED')
-                        },
                         onSuccess() { }
                     }
                 }
