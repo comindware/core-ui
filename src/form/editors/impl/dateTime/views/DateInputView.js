@@ -6,7 +6,7 @@ import template from '../templates/dateInput.hbs';
 export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'allowEmptyValue');
-        this.editDateFormat = dateHelpers.getDateEditFormat();
+        this.editDateFormat = options.dateDisplayFormat;
     },
 
     template: Handlebars.compile(template),
@@ -41,8 +41,6 @@ export default Marionette.View.extend({
         } else if (parsedInputValue.isValid()) {
             this.__setModelValue(parsedInputValue);
         }
-
-        this.updateDisplayValue();
     },
 
     __getParsedInputValue() {
@@ -101,7 +99,8 @@ export default Marionette.View.extend({
         if (this.isDestroyed()) {
             return;
         }
-        const displayValue = DateTimeService.getDateDisplayValue(this.model.get('value'), this.options.dateDisplayFormat);
+        const value = this.model.get('value');
+        const displayValue = value ? DateTimeService.getDateDisplayValue(value, this.editDateFormat) : '';
         this.ui.dateInput.val(displayValue);
         if (this.getOption('showTitle')) {
             this.$el.prop('title', displayValue);
