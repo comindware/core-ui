@@ -221,3 +221,13 @@ svg.svg-grid-icons {
 .time-view{
   height: 20px;
 }
+
+/* Button */
+
+.layout__button-view:hover .layout__button-view-text {
+  color:#000;
+}
+
+.layout__button-view:active .layout__button-view-text {
+  color:#000;
+}

@@ -137,6 +137,7 @@
 
 
 /* dropdown list */
+
 .dropdown__wrp_reference {
     min-width: 200px;
     max-width: 100%;
@@ -202,23 +203,7 @@
 }
 
 .dd-list__i_group {
-    font-size: 11px;
-    font-weight: 500;
-    color: #000;
     cursor: default;
-}
-.dd-list__i_group:after {
-    content: '';
-    position: absolute;
-    top:33px;
-    left:2px;
-    right:2px;
-    height: 1px;
-    background: #b6c1ca;
-}
-
-.dd-list__i_group:hover {
-    background:transparent;
 }
 
 .dev_dd-list__i_with_checkbox {
@@ -369,22 +354,12 @@
     overflow-y: auto;
 }
 .time-dropdown__i {
-    height: 25px;
-    padding: 0 10px;
-    line-height: 26px;
-    font-size: 12px;
-    font-weight: normal;
     text-align: left;
-    color: #43525d;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
-}
-
-.time-dropdown__i:hover {
-    background: #f5f5f5;
 }
 /*-----//------*/
 

@@ -1,8 +1,17 @@
 /*eslint-env node*/
+const utils = require('../utils');
+
+const icons = {
+    arrowIcon:
+        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E",
+    angleRight:
+        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E"
+};
 
 const variables = {
     // colors
     white: '#ffffff',
+    black: '#313131',
     red: '#e1462c',
 
     'grey-100': '#f5f5f5',
@@ -21,9 +30,17 @@ const variables = {
 
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
 
+    border: '1px solid var(--grey-400)',
+
     // font
     'base-font-size': '14px',
     font: "normal var(--base-font-size)/1.4 'OpenSans', Arial, sans-serif",
+
+    'form-field-margin': '15px',
+    'form-label-font-size': 'var(--base-font-size)',
+    'form-label-font-weight': '600',
+    'form-label-color': 'var(--black)',
+    'form-label-margin': '8px',
 
     // form editor
     'editor-font-size': 'inherit',
@@ -68,7 +85,7 @@ const variables = {
     'grid-header-bg': 'var(--blue-300)',
     'grid-header-border-color': 'var(--grid-header-bg)',
     'grid-header-height': '35px',
-    'grid-header-padding': '0 10px 0 15px',
+    'grid-header-padding': '0 5px 0 15px',
     'grid-header-border': 'inset -1px 0 0 0 var(--blue-200), inset 0 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-first': 'inset -1px 0 0 0 var(--blue-200), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-last': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
@@ -79,6 +96,7 @@ const variables = {
     'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grey-400), inset 1px 0 0 0 var(--grey-400)',
     'grid-cell-height': 'var(--grid-header-height)',
     'grid-cell-padding': '0 15px',
+    'grid-cell-input-padding': '0',
     'grid-row-selected-color': 'var(--blue-100)',
     'grid-row-hover-color': 'var(--grid-row-selected-color)',
 
@@ -94,23 +112,40 @@ const variables = {
 
     'grid-sort-icon-size': 'var(--base-font-size)',
     'grid-sort-icon-offset-y': '1px',
-    'grid-sort-icon': "url(\"data:image/svg+xml,%3Csvg fill='var(--white)' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E\")".replace(
-        /#/g,
-        '%23'
-    ),
+    'grid-sort-icon': `url(${utils.buildIcon(icons.arrowIcon, 'var(--white)')})`,
 
     'columns-select-border': '1px solid var(--grey-400)',
     'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
 
     'dropdown-font-size': 'var(--base-font-size)',
+    'dropdown-group-fontsize': '12px',
+    'dropdown-group-color': 'var(--black)',
     'dropdown-item-padding': '8px 20px',
     'dropdown-item-checkbox-padding': '10px',
-    'dropdown-item-hover-color': 'var(--blue-100)'
+    'dropdown-item-hover-color': 'var(--blue-100)',
+
+    'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
+    'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`
 };
 
 module.exports.variables = variables;
 
 module.exports.apply = {
+    'button-theme': {
+        color: '#fff',
+        'font-size': '15px',
+        'line-height': '1.5',
+        padding: '4px 15px',
+        'border-radius': '4px',
+        'background-color': variables['blue-300']
+    },
+    'button-hover-theme': {
+        'background-color': variables['blue-400']
+    },
+    'button-active-theme': {
+        'background-color': variables['blue-400'],
+        'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+    },
     'input-theme': {
         border: `1px solid ${variables['grey-400']}`
     },

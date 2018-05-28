@@ -58,12 +58,13 @@
     border-top: 1px solid #dfe4e8;
     text-align: right;
 }
-.layout__popup-view-button-list >.layout__horizontal-layout  {
+.layout__popup-view-button-list > .layout__horizontal-layout  {
     display: flex;
     justify-content: flex-end;
-    margin: 0 -7px;
 }
-
+.layout__popup-view-button-list .layout__button-view + .layout__button-view {
+    margin-left: 5px;
+}
 .layout__popup-view-button-list .layout__horizontal-layout-list-item {
     flex: 1 1 auto;
 }

@@ -24,7 +24,7 @@ const pathResolver = {
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 const readSpritesFile = () => {
-    const svgSpritesFile = `${__dirname}/../dist/sprites.svg`;
+    const svgSpritesFile = `${__dirname}/../dist/themes/new/sprites.svg`;
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 

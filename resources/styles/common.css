@@ -592,20 +592,6 @@ a:hover {
 
 .mselect__search {}
 
-.mselect__group {
-    height: 34px;
-    padding: 7px 0;
-    margin: 0 25px 0 0;
-    line-height: 20px;
-    border-top: solid 1px #dfe4e8;
-    border-bottom: solid 1px #dfe4e8;
-    cursor: pointer;
-}
-
-.mselect__group:first-child {
-    border-top-color: transparent;
-}
-
 .mselect__button-panel {
     width: 50px;
     margin-left: -25px;
