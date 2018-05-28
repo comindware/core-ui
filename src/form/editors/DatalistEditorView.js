@@ -237,9 +237,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __onResetCollection(panelCollection) {
         const editorId = this.model.get(this.key);
-        if (editorId) {
-            this.panelCollection.reset(panelCollection.models);
+        this.panelCollection.reset(panelCollection.models);
 
+        if (editorId) {
             const selectedItem = this.panelCollection.find(collectionItem => collectionItem.get('id').toString() === editorId.toString());
             if (selectedItem) {
                 this.setValue(selectedItem.toJSON());

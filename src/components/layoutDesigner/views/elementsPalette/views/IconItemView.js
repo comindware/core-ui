@@ -31,7 +31,7 @@ export default Marionette.CollectionView.extend({
         this.$el.addClass(paletteItemClassNameSuffix + itemSuffix);
         this.ui.dragHandle.draggable({
             appendTo: '.js-module-region',
-            helper: () => $(itemDragHelper),
+            helper: () => itemDragHelper,
             cursorAt: {
                 top: -30,
                 left: -20

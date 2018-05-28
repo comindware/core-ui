@@ -16,6 +16,7 @@
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
     z-index: 600;
+    max-height: 400px;
 }
 
 .dropdown__wrp .dropdown__wrp{
