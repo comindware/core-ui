@@ -54,12 +54,6 @@ export default Marionette.CompositeView.extend({
         return this.reqres.request('component:resolve', childModel);
     },
 
-    onBeforeRender() {
-        if (!this.dropzones) {
-            this.dropzones = {};
-        }
-    },
-
     onBeforeAttach() {
         if (this.model.get('horizontalDrops')) {
             this.__addOneDropZone();
@@ -114,7 +108,7 @@ export default Marionette.CompositeView.extend({
             }
         });
 
-        let id = modelBefore ? modelBefore.cid : null;
+        let id = modelBefore ? modelBefore.cid : '';
         id = `addColumn${id}${prefix}`;
 
         this.dropzones[id] = verticalDropzoneView;

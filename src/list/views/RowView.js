@@ -1,5 +1,4 @@
 //@flow
-import { objectPropertyTypes } from '../../Meta';
 import CellViewFactory from '../CellViewFactory';
 
 const classes = {

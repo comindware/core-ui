@@ -62,7 +62,7 @@ export default Marionette.CompositeView.extend({
         this.__updateChildren(true);
         this.ui.dragHandle.draggable({
             appendTo: '.js-module-region',
-            helper: () => $(itemDragHelper),
+            helper: () => itemDragHelper,
             cursorAt: {
                 top: -30,
                 left: -20
