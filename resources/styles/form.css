@@ -330,7 +330,7 @@ input[type="checkbox"].checkbox {
 }
 .editor_checkbox {
     max-width: 100%;
-    display: flex;
+    display: inline-flex;
 }
 
 .checkbox {

@@ -535,3 +535,71 @@ svg.svg-grid-icons {
 .layout__tab-layout--move .layout__tab-layout__header-region {
   padding: var(--tab-header-padding-with-move);
 }
+
+
+/* Toolbar component */
+
+.toolbar-btn {
+  @apply --button-theme;
+  border-radius: 0;
+}
+.toolbar-btn:first-child {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+.toolbar-btn:last-child {
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.toolbar-btn:hover {
+  @apply --button-hover-theme;
+}
+
+.toolbar-btn:active {
+  @apply --button-active-theme;
+}
+
+/* .toolbar-btn__text {
+  display: inline-block;
+  max-width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+  color: #636262;
+} */
+
+.toolbar-btn_red {
+  background-color: #fbe2e2;
+  border-color: #fbe2e2;
+}
+
+.toolbar-btn_green {
+  background-color: #d7fdf4;
+  border-color: #d7fdf4;
+}
+
+.toolbar-btn_blue {
+  background-color: #d6f4fa;
+  border-color: #d6f4fa;
+}
+
+.toolbar-btn_yellow {
+  background-color: #f9f8c9;
+  border-color: #f9f8c9;
+}
+
+.toolbar-btn_dark {
+  background-color: #e1e1e1;
+  border-color: #e1e1e1;
+}
+
+.toolbar__icons {
+  margin-right: 5px;
+}
+
+.toolbar__icons .fa {
+  font-size: 14px;
+}
+
+.toolbar-btn__text > .editor_checkbox {
+  padding-right: 5px;
+  vertical-align: middle;
+}

@@ -33,6 +33,7 @@ const variables = {
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
 
     border: '1px solid #c1c1c1',
+    'border-radius': '4px',
 
     // font
     'base-font-size': '14px',

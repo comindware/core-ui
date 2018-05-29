@@ -2,7 +2,7 @@
 const variables = {
     // colors
     white: '#ffffff',
-    red: '#BA0C08',
+    red: '#ba0c08',
     'blue-extra-light': '#eaf5fc',
     'blue-100': '#278ed9',
     'blue-200': '#0575bd',
@@ -23,6 +23,7 @@ const variables = {
     'selected-color': 'var(--blue-extra-light)',
 
     border: '1px solid var(--grey-400)',
+    'border-radius': '2px',
 
     // font
     'base-font-size': '12px',
@@ -139,7 +140,7 @@ module.exports.variables = variables;
 module.exports.apply = {
     'button-theme': {
         color: variables['text-color'],
-        'font-size': '11px',
+        'font-size': '12px',
         padding: '0 10px',
         height: '30px',
         'line-height': '26px',

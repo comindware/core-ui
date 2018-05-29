@@ -257,3 +257,27 @@ svg.svg-grid-icons {
 .layout__tab-layout_move-button .d-svg-icons {
   fill: red
 }
+
+.toolbar-btn {
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.toolbar-btn:hover {
+  transition: box-shadow .2s;
+  box-shadow: 0 3px 4px -1px rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+}
+
+.toolbar-btn:active {
+  box-shadow: none;
+  transition: box-shadow .2s;
+}
+.toolbar-btn:hover .toolbar-btn__text {
+  color: #000;
+}
+.toolbar-btn_red,
+.toolbar-btn_green,
+.toolbar-btn_blue,
+.toolbar-btn_yellow,
+.toolbar-btn_dark {
+  z-index: 2;
+}
