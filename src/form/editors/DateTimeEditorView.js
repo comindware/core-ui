@@ -147,6 +147,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     focus(): void {
         if (this.enabled && !this.readonly) {
             this.calendarDropdownView.open();
+            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
             this.calendarDropdownView.button.focus();
         }
     },
@@ -177,6 +178,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     __onMouseleave() {
         this.el.removeChild(this.el.lastElementChild);
+    },
+
+    __getDateByValue(value) {
+        if (!value) {
+            return new Date();
+        }
+
+        return new Date(value);
     },
 
     __createDateDropdownEditor() {
@@ -227,6 +236,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     __onDateButtonCalendarOpen() {
         if (this.enabled && !this.readonly) {
             this.calendarDropdownView.open();
+            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
             this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         }
     },
@@ -234,6 +244,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     __onDateButtonFocus() {
         if (this.enabled && !this.readonly) {
             this.calendarDropdownView.open();
+            this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
         }
     },
 
@@ -308,7 +319,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onTimePanelSelect(time) {
-        const oldValue = new Date(this.value);
+        const oldValue = this.__getDateByValue(this.value);
         let newVal = null;
 
         if (!isNaN(oldValue)) {

@@ -37,8 +37,7 @@ export default Marionette.View.extend({
     },
 
     setPlaceholder() {
-        this.placeholder = LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER');
-        this.ui.input.prop('placeholder', this.placeholder);
+        this.ui.input.prop('placeholder', LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'));
     },
 
     __onFocus() {

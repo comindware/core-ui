@@ -1,4 +1,4 @@
-import { helpers, dateHelpers } from 'utils';
+import { helpers } from 'utils';
 import LocalizationService from '../../../../../services/LocalizationService';
 import DateTimeService from '../../../services/DateTimeService';
 import template from '../templates/dateInput.hbs';
@@ -6,7 +6,6 @@ import template from '../templates/dateInput.hbs';
 export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'allowEmptyValue');
-        this.editDateFormat = options.dateDisplayFormat;
     },
 
     template: Handlebars.compile(template),
@@ -23,6 +22,7 @@ export default Marionette.View.extend({
     },
 
     onRender() {
+        this.setPlaceholder();
         this.setValue(this.options.value);
     },
 
@@ -31,8 +31,7 @@ export default Marionette.View.extend({
     },
 
     setPlaceholder() {
-        this.placeholder = LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER');
-        this.ui.dateInput.prop('placeholder', this.placeholder);
+        this.ui.dateInput.prop('placeholder', LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'));
     },
 
     setValue(value) {
