@@ -90,8 +90,13 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             this.__updateTitle();
         }
 
-        this.__createTimeDropdownView();
-        this.__createDateDropdownEditor();
+        if (this.options.showTime !== false) {
+            this.__createTimeDropdownView();
+        }
+
+        if (this.options.showDate !== false) {
+            this.__createDateDropdownEditor();
+        }
     },
 
     __updateClearButton(): void {
@@ -113,8 +118,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         }
 
         if (updateUi) {
-            this.calendarDropdownView.button.setValue(value);
-            this.timeDropdownView.button.setValue(value);
+            this.calendarDropdownView && this.calendarDropdownView.button.setValue(value);
+            this.timeDropdownView && this.timeDropdownView.button.setValue(value);
         }
 
         if (triggerChange) {
