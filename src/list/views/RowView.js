@@ -11,7 +11,7 @@ const classes = {
 
 const defaultOptions = {
     levelMargin: 15,
-    collapsibleButtonWidth: 14
+    collapsibleButtonWidth: 24
 };
 
 /**

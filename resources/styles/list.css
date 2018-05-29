@@ -182,6 +182,10 @@
     flex: none;
 }
 
+.grid-header-view:empty {
+    display: none;
+}
+
 .grid-selection-cell-all:not(:empty) + .grid-header-view {
     width: calc(100% - 26px);
 }

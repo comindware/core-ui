@@ -45,6 +45,7 @@ export default Marionette.Object.extend({
     getDisplayText() {
         let resultText = '';
         const members = this.model.get('items');
+
         const membersCount = {
             users: 0,
             groups: 0
@@ -61,6 +62,12 @@ export default Marionette.Object.extend({
                     membersCount[members[id].type]++;
                 }
             });
+        } else {
+            selected = [];
+        }
+
+        if (_.isFunction(this.options.getDisplayText)) {
+            return this.options.getDisplayText(selected);
         }
 
         resultText = this.options.hideUsers
