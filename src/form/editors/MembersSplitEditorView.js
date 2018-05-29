@@ -22,7 +22,8 @@ const defaultOptions = () => ({
     users: undefined,
     groups: undefined,
     showMode: null,
-    cacheService: undefined
+    cacheService: undefined,
+    getDisplayText: null
 });
 
 export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.extend({

@@ -17,6 +17,7 @@
     position: fixed;
     z-index: 600;
     max-height: 400px;
+    min-height: 30px;
 }
 
 .dropdown__wrp .dropdown__wrp{
@@ -366,6 +367,10 @@
 
 .dropdown__wrp_list{
     overflow-y: auto;
+}
+
+.dropdown-loading:not(:empty) + .dropdown__wrp_list {
+    min-height: 200px;
 }
 
 

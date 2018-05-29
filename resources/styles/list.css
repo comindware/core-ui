@@ -172,6 +172,10 @@
     flex: none;
 }
 
+.grid-header-view:empty {
+    display: none;
+}
+
 .grid-header {
     display: inline-flex;
     position: relative;
