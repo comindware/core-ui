@@ -210,18 +210,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         const oldValue = new Date(this.value);
         let newVal = null;
 
-        if (oldValue) {
+        if (!isNaN(oldValue)) {
             newVal = moment(oldValue)
                 .year(date.getFullYear())
                 .month(date.getMonth())
                 .date(date.getDate())
                 .toISOString();
         } else {
-            newVal = moment(oldValue)
-                .year(date.getFullYear())
-                .month(date.getMonth())
-                .date(date.getDate())
-                .toISOString();
+            newVal = moment(date).toISOString();
         }
 
         this.__value(newVal, updateView, true);
@@ -315,7 +311,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         const oldValue = new Date(this.value);
         let newVal = null;
 
-        if (oldValue) {
+        if (!isNaN(oldValue)) {
             newVal = moment(oldValue)
                 .hour(time.hour())
                 .minute(time.minute())
@@ -323,10 +319,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 .millisecond(0)
                 .toISOString();
         } else {
-            newVal = time
-                .clone()
-                .minute(time.clone().minute())
-                .toISOString();
+            newVal = time.toISOString();
         }
 
         this.__value(newVal, true, true);
