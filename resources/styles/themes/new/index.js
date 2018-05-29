@@ -5,7 +5,9 @@ const icons = {
     arrowIcon:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E",
     angleRight:
-        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E"
+        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E",
+    search:
+        "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z'/%3E%3C/svg%3E"
 };
 
 const variables = {
@@ -30,7 +32,7 @@ const variables = {
 
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
 
-    border: '1px solid var(--grey-400)',
+    border: '1px solid #c1c1c1',
 
     // font
     'base-font-size': '14px',
@@ -53,6 +55,8 @@ const variables = {
     'input-line-height': '1.95',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
+    'input-search-padding': '0 24px 0 10px',
+    'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
     'textarea-padding': '15px 10px 15px 10px',
@@ -114,8 +118,7 @@ const variables = {
     'grid-sort-icon-offset-y': '1px',
     'grid-sort-icon': `url(${utils.buildIcon(icons.arrowIcon, 'var(--white)')})`,
 
-    'columns-select-border': '1px solid var(--grey-400)',
-    'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
+    'columns-select-border': '0',
 
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '12px',
@@ -125,7 +128,14 @@ const variables = {
     'dropdown-item-hover-color': 'var(--blue-100)',
 
     'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
-    'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`
+    'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
+
+    // tabs
+    'tab-item-padding': '4px 15px',
+    'tab-item-font-size': 'var(--base-font-size)',
+    'tab-panel-container-padding': '20px 15px',
+    'tab-header-justify': 'flex-start',
+    'tab-header-padding-with-move': '0 30px'
 };
 
 module.exports.variables = variables;
@@ -135,25 +145,46 @@ module.exports.apply = {
         color: '#fff',
         'font-size': '15px',
         'line-height': '1.5',
-        padding: '4px 15px',
+        padding: '3px 15px',
         'border-radius': '4px',
-        'background-color': variables['blue-300']
+        'background-color': variables['blue-300'],
+        border: `1px solid ${variables['blue-300']}`
     },
     'button-hover-theme': {
-        'background-color': variables['blue-400']
+        'background-color': variables['blue-400'],
+        'border-color': variables['blue-400']
     },
     'button-active-theme': {
+        'border-color': variables['blue-400'],
         'background-color': variables['blue-400'],
         'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
     },
+    'button-outline-theme': {
+        'background-color': variables.white,
+        'border-color': variables['grey-400'],
+        color: variables['blue-300']
+    },
+    'button-outline-hover-theme': {
+        color: variables['blue-400']
+    },
+    'button-outline-active-theme': {
+        color: variables['blue-400'],
+        'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+    },
     'input-theme': {
-        border: `1px solid ${variables['grey-400']}`
+        border: variables.border,
+        'background-color': variables.white,
+        'border-radius': '4px'
     },
     'input-disabled-theme': {
         'background-color': variables['grey-100']
     },
+    'input-search-clear-theme': {
+        display: 'none'
+    },
     'textarea-theme': {
-        border: `1px solid ${variables['grey-400']}`
+        border: variables.border,
+        'border-radius': '4px'
     },
     'custom-cotrol-disabled-theme': {
         filter: 'alpha(opacity=60)',
@@ -181,5 +212,49 @@ module.exports.apply = {
         height: '1em',
         fill: 'currentColor',
         'pointer-events': 'none'
+    },
+    'tab-item-theme': {
+        border: variables.border,
+        color: variables['text-color'],
+        position: 'relative',
+        'z-index': '1',
+        'background-color': variables['grey-100'],
+        'margin-right': '5px',
+        'margin-bottom': '-1px',
+        'border-radius': '4px 4px 0 0',
+        flex: '0 1 auto'
+    },
+    'tab-item-active-theme': {
+        'background-color': variables.white,
+        'border-bottom-color': variables.white
+    },
+    'tab-item-error-theme': {
+        color: variables.red
+    },
+    'tab-item-disabled-theme': {
+        color: variables['grey-400'],
+        cursor: 'not-allowed'
+    },
+    'tab-panel-container-theme': {
+        border: variables.border,
+        'background-color': variables.white,
+        'border-radius': '0 4px 4px 4px'
+    },
+    'tab-move-btn-theme': {
+        right: '0',
+        padding: '4px',
+        display: 'flex',
+        'align-items': 'center',
+        transform: 'rotate(-90deg)'
+    },
+    'tab-move-btn-prev-theme': {
+        left: '0',
+        right: 'auto',
+        transform: 'rotate(90deg)'
+    },
+    'columns-select-list-theme': {
+        padding: '10px',
+        border: variables.border,
+        'border-radius': '0 4px 4px 4px'
     }
 };

@@ -14,7 +14,12 @@
   background: var(--checkbox-checked-color);
   border-color: var(--checkbox-checked-color);
 }
-
+.tr-search__input {
+  @apply --input-theme;
+  height: var(--input-height);
+  line-height: var(--input-line-height);
+  background-size: 14px;
+}
 /* dropdown-list */
 
 .dd-list__i.selected,
@@ -38,4 +43,15 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .grid-header-column-content .collapsible-btn {
   background-image: var(--collapse-icon-header);
   top: -1px;
+}
+
+/* Tabs */
+
+.layout__tab-layout_move-button {
+  @apply --button-theme;
+  @apply --button-outline-theme;
+}
+
+.layout__tab-layout--move .layout__tab-layout__panel-container {
+  border-radius: 4px;
 }

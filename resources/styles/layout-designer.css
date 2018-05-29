@@ -402,7 +402,7 @@
 }
 
 .ld-list-item-title__name_group{
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .ld-list-item-title__system{
@@ -417,7 +417,7 @@
     line-height: 14px;
 }
 .ld-list-item-title__system_group{
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .ld-list-item__sublink .ld-list-item-title{
@@ -742,7 +742,7 @@
 
 .ld-view-setting__h2 {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     display: inline-block;
     width: 100%;
     white-space: nowrap;
@@ -880,7 +880,7 @@
     color: #c85e44;
     font-size: 14px;
     line-height: 14px;
-    font-weight: 500;
+    font-weight: 600;
     position: absolute;
     top: 50%;
     left: 0;

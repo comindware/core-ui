@@ -14,7 +14,7 @@ const themes = ['main', 'new'];
 const themeTask = name => {
     const themePath = `styles/themes/${name}`;
     const theme = require(pathResolver.resources(themePath));
-    const sources = [pathResolver.resources(`${themePath}/styles.css`), pathResolver.resources('styles/themes/theme.css')];
+    const sources = [pathResolver.resources('styles/themes/theme.css'), pathResolver.resources(`${themePath}/styles.css`)];
 
     return gulp
         .src(sources)

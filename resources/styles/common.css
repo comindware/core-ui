@@ -122,7 +122,7 @@ a:hover {
     line-height: 24px;
     font-size: 12px;
     color: #0575bd;
-    font-weight: 500;
+    font-weight: 600;
     display: block;
     text-align: center;
     position: absolute;
@@ -141,12 +141,10 @@ a:hover {
 .tr-search {
     height: 100%;
     margin: 0;
-    padding: 8px 10px 8px 0;
     display: none;
     position: relative;
     box-sizing: content-box;
     z-index: 44;
-    border-right: 1px solid #dfe4e8;
 }
 
 .tr-search_report {
@@ -164,14 +162,9 @@ a:hover {
 
 .tr-search__input {
     width: 100%;
-    height: inherit;
     margin: 0;
-    padding: 0 0 0 25px;
-    font-size: 13px;
-    color: #333;
     border: 0;
     outline: 0;
-    background: no-repeat 6px 50% transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMJJREFUeNpinDlzJgMU2ANxERAbQ/lngbgPiA8yIAEmKF0BxPOBeAEQm0PxAqhYBbIGFqjJUUBsCMQfkeTWA/E+ID4MxEegGGxDCxDXoCmGgY9QuRZkJ+miuxMNgGwxQPcDIcCMrOEy1B+4gBM0xOAaYG7kx6IYJNYOVQPXAHL/MiA+D8SBQCwBxYFQMZBzkmHOgvmhA4gTgTgBqug8lJ0IDW5pIJ4D0sSCZP1BPKHlD8RbgHgRsaH0HYh9gPgXQIABAKFrJnBTJSNWAAAAAElFTkSuQmCC);
     display: block;
     box-sizing: border-box;
 }
@@ -202,18 +195,12 @@ a:hover {
 }
 
 .tr-search__clear {
-    width: 26px;
-    height: 26px;
-    margin-top: -13px;
     position: absolute;
     top: 50%;
-    right: 0;
     cursor: pointer;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-    filter: alpha(opacity=80);
-    opacity: .8;
-    background: no-repeat 50% 50% url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHZJREFUeNpinDlzpj0DA0M7EPsD8WsGCBAF4i1AXMYEJLqA2BKId0ElQHgvEJuB5FiAhA9UwABKg4AuEF8GybFAjXWGSupCFVyGir1mYiAAmJDshBl7GcoGiYmyQF2ri2QsA5KGLSATKoH4FMxOJDedBckBBBgAX6IbvaqTe1UAAAAASUVORK5CYII=);
+    transform: translateY(-50%);
 }
+
 
 .tr-search__clear:hover {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -427,14 +414,9 @@ a:hover {
 /*------------------ Tabs ------------------*/
 
 .tabs {
-    width: 100%;
-    height: 40px;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
-    border-bottom: 1px solid #ced3d7;
     flex-wrap: nowrap;
-    margin-bottom: 10px;
 }
 
 .tabs_columns-select {
@@ -443,50 +425,12 @@ a:hover {
 
 .tabs__i {
     display: inline-block;
-    flex: 1 1;
-    height: 40px;
-    line-height: 46px;
     text-align: center;
-    font-size: 13px;
-    color: #838c93;
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-.tabs__i:hover {
-    color: #009bfe;
-}
-
-.tabs__i_current {
-    font-weight: 500;
-    color: #0575bd;
-    border-bottom: 2px solid #2b81c2;
-}
-
-.tabs__i_error {
-    color: #BA0C08;
-    border-bottom-color: #BA0C08;
-}
-
-.tabs__i_error:hover {
-    color: #BA0C08;
-    font-weight: 500;
-}
-
-.tabs__i.disabled {
-    color: #d3d5d6 !important;
-    border-bottom-color: #d3d5d6 !important;
-}
-
-.tabs__link {
-    display: inline-block;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 
 /*-----------------// End tabs //----------------*/
 
@@ -530,7 +474,7 @@ a:hover {
 .mselect__header {
     line-height: 16px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     color: #182026;
     position: absolute;
     white-space: nowrap;
@@ -618,11 +562,9 @@ a:hover {
 }
 
 .columns-select {
-    width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 0;
 }
 
 .columns-select__header {
@@ -630,7 +572,7 @@ a:hover {
     width: calc(50% - 25px);
     top: -15px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     color: #182026;
     white-space: nowrap;
     overflow: hidden;
@@ -647,7 +589,6 @@ a:hover {
 }
 
 .columns-select__panel {
-    padding: 0;
     position: relative;
     display: flex;
     flex: 1 0;
@@ -693,10 +634,6 @@ a:hover {
     overflow: hidden;
     overflow-y: auto;
 }
-.columns-select .cell_selection {
-    box-shadow: none;
-}
-
 
 .btn.btn_arrow {
     width: 26px;
@@ -770,7 +707,7 @@ a:hover {
     display: inline-block;
     max-width: 100%;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     color: #636262;
     line-height: inherit;
     vertical-align: middle;
@@ -994,7 +931,7 @@ a:hover {
     display: inline-block;
     cursor: default;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: normal;
     color: #70787f;
     overflow: hidden;

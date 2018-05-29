@@ -116,7 +116,17 @@ body {
   line-height: var(--input-line-height);
 }
 
+.tr-search__input {
+  padding: var(--input-search-padding);
+  color: var(--text-color);
+
+  background: var(--input-search-bg);
+}
+.tr-search__clear {
+  @apply --input-search-clear-theme;
+}
 /* /input/ */
+
 
 /* textarea */
 .textarea {
@@ -432,17 +442,16 @@ svg.svg-grid-icons {
 
 /* columns select */
 
+
 .columns-select {
   border: var(--columns-select-border);
 }
-
+.columns-select-list {
+  @apply --columns-select-list-theme;
+}
 .columns-select__btn {
   border-left: var(--columns-select-border);
   border-right: var(--columns-select-border);
-}
-
-.columns-select .cell_selection {
-  box-shadow: var(--columns-select-cell-border);
 }
 
 
@@ -462,4 +471,67 @@ svg.svg-grid-icons {
 
 .layout__button-view:active {
   @apply --button-active-theme;
+}
+
+/* tabs */
+.tabs {
+  justify-content: var(--tab-header-justify);
+}
+
+.tabs__i {
+  @apply --tab-item-theme;
+  padding: var(--tab-item-padding);
+  font-size: var(--tab-item-font-size);
+}
+
+.tabs__i_current {
+  @apply --tab-item-active-theme;
+}
+
+.tabs__i_error {
+  @apply --tab-item-error-theme;
+}
+
+.tabs__i.disabled {
+  @apply --tab-item-disabled-theme;
+}
+
+.layout__tab-layout__header-view {
+  justify-content: var(--tab-header-justify);
+}
+
+.layout__tab-layout__header-view-item {
+  @apply --tab-item-theme;
+  padding: var(--tab-item-padding);
+  font-size: var(--tab-item-font-size);
+}
+
+.layout__tab-layout__header-view-item_selected {
+  @apply --tab-item-active-theme;
+}
+
+.layout__tab-layout__header-view-item_error {
+  @apply --tab-item-error-theme;
+}
+
+.layout__tab-layout__header-view-item_disabled {
+  @apply --tab-item-disabled-theme;
+}
+
+.layout__tab-layout__panel-container {
+  @apply --tab-panel-container-theme;
+  padding: var(--tab-panel-container-padding);
+}
+
+.layout__tab-layout_move-button {
+  @apply --tab-move-btn-theme;
+}
+
+.layout__tab-layout_move-button.prev-layout_move-button{
+  @apply --tab-move-btn-prev-theme;
+}
+
+/* tabs with move button */
+.layout__tab-layout--move .layout__tab-layout__header-region {
+  padding: var(--tab-header-padding-with-move);
 }

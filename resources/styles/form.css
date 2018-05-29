@@ -238,7 +238,7 @@ rgba(5,117,189,.5) // user avatar btn
     color: #c85e44;
     font-size: 14px;
     line-height: 14px;
-    font-weight: 500;
+    font-weight: 600;
     position: absolute;
     top: 50%;
     left: 0;
@@ -422,7 +422,6 @@ input[type="checkbox"].checkbox {
     text-overflow: ellipsis;
     box-sizing: border-box;
     vertical-align: top;
-    background: transparent none 100% 50% no-repeat ;
     transition: background, border-color .2s ease-in-out;
 }
 
@@ -742,7 +741,7 @@ input[type="checkbox"].checkbox {
 .form-error{
     font-size: 11px;
     color: #cb4e30;
-    font-weight: 500;
+    font-weight: 600;
     max-width: 100%;
     padding: 0;
     display: inline-block;
@@ -799,7 +798,7 @@ input[type="checkbox"].checkbox {
     display: inline-block;
     max-width: 100%;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
     color: #636262;
     line-height: inherit;
     vertical-align: middle;
@@ -1264,7 +1263,7 @@ input[type="color"], .colorpicker{
 
 .dev-revision-container tr th{
     padding: 5px 10px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .dev-revision-container tr td{
