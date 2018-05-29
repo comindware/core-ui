@@ -21,65 +21,31 @@ export default Marionette.View.extend({
 
     className: 'dropdown__wrp dropdown__wrp_datepicker',
 
-    modelEvents: {
-        'change:value': 'updatePickerDate'
-    },
-
     ui: {
         pickerInput: '.js-datetimepicker'
     },
 
-    updatePickerPanelValue(value: string) {
-        let data = new Date(value);
-        if (isNaN(data)) {
-            data = new Date();
+    updatePickerDate(val) {
+        let value = val;
+        if (isNaN(val)) {
+            value = new Date();
+            return;
         }
 
-        this.ui.pickerInput.datetimepicker('setDate', data);
-
-        const oldValue = new Date(this.model.get('value'));
-
-        const newVal = moment({
-            year: data.getFullYear(),
-            month: data.getMonth(),
-            date: data.getDate(),
-            hour: oldValue.getHours(),
-            minute: oldValue.getMinutes()
-        }).toISOString();
-
-        this.model.set({ value: newVal });
-    },
-
-    updatePickerDate() {
-        const val = this.model.get('value');
         const format = defaultOptions.pickerFormat;
         const pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment({}).format(format);
-
+        this.ui.pickerInput.datetimepicker('setDate', value);
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
         this.ui.pickerInput.datetimepicker('update');
     },
 
     updateValue(date) {
-        let newVal = null;
-
-        if (date === null || date === '') {
-            newVal = null;
-        } else {
-            newVal = moment({
-                year: date.getFullYear(),
-                month: date.getMonth(),
-                date: date.getDate()
-            }).toISOString();
-        }
-
-        this.model.set({ value: newVal });
+        this.updatePickerDate(date);
+        this.trigger('select', date);
     },
 
     onAttach() {
-        this.ui.pickerInput.datetimepicker(this.pickerOptions).on('changeDate', e => {
-            this.updateValue(e.date);
-            this.trigger('select');
-        });
-        this.updatePickerDate();
+        this.ui.pickerInput.datetimepicker(this.pickerOptions).on('changeDate', e => this.updateValue(e.date));
+        this.updatePickerDate(new Date(this.options.value));
     }
 });
