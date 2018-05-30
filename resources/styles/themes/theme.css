@@ -4,7 +4,9 @@ body, input, textarea, select {
 body {
   color: var(--text-color);
 }
-
+/* a {
+  line-height: var(--line-height)
+} */
 .selected {
   background-color: var(--selected-color);
 }
@@ -40,8 +42,8 @@ body {
   color: #b0b9c0;
   border: 1px solid #c4c9ce;
   background: #fff;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   font-size: 9px;
   line-height: 11px;
@@ -235,6 +237,9 @@ svg.svg-grid-icons {
 .svg-icons-wrp,
 .svg-icons-wrp__empty {
   @apply --svg-icon-wrp-theme;
+}
+.svg-icons-wrp_edit-reference{
+  right: 20px;
 }
 /* /svg icons/ */
 
@@ -454,6 +459,27 @@ svg.svg-grid-icons {
 /* Dropdown Bubbles */
 .bubbles {
   @apply --input-theme;
+  @apply --dropdown-theme;
+}
+.bubbles::after {
+  @apply --dropdown-caret-theme;
+}
+
+.bubbles__i {
+  /* line-height: 18px; */
+  font-size: 12px;
+  margin: 0 2px 2px 0;
+  border-radius: 5px;
+  padding: 2px 5px;
+  transition: padding-right .2s;
+}
+.bubbles__i:hover {
+  padding-right: 17px;
+}
+
+.bubbles__i-edit-btn:hover {
+  background: #f0f0f0;
+  padding-right: 38px;
 }
 
 /* columns select */

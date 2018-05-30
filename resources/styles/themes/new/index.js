@@ -4,6 +4,8 @@ const utils = require('../utils');
 const icons = {
     arrowIcon:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E",
+    angleDown:
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='{{fill}}' viewBox='0 0 320 512'%3E%3Cpath d='M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z'/%3E%3C/svg%3E",
     angleRight:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E",
     search:
@@ -38,7 +40,8 @@ const variables = {
 
     // font
     'base-font-size': '14px',
-    font: "normal var(--base-font-size)/1.4 'OpenSans', Arial, sans-serif",
+    'line-height': '1.4',
+    font: "normal var(--base-font-size)/var(--line-height) 'OpenSans', Arial, sans-serif",
 
     'form-field-margin': '15px',
     'form-label-font-size': 'var(--base-font-size)',
@@ -177,6 +180,20 @@ module.exports.apply = {
     'button-outline-active-theme': {
         color: variables['blue-400'],
         'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+    },
+    'dropdown-theme': {
+        background: variables['light-gradient'],
+        'padding-right': '20px'
+    },
+    'dropdown-caret-theme': {
+        content: '""',
+        position: 'absolute',
+        right: '5px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: '1em',
+        height: '1em',
+        background: `url(${utils.buildIcon(icons.angleDown, variables['blue-300'])}) center no-repeat`
     },
     'input-theme': {
         border: variables.border,

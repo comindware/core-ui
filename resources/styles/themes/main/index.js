@@ -27,7 +27,8 @@ const variables = {
 
     // font
     'base-font-size': '12px',
-    font: "normal var(--base-font-size)/1.4 Arial, 'OpenSans', sans-serif",
+    'line-height': '1.4',
+    font: "normal var(--base-font-size)/var(--line-height) Arial, 'OpenSans', sans-serif",
 
     'form-field-margin': '10px',
     'form-label-font-size': '11px',
@@ -164,6 +165,10 @@ module.exports.apply = {
         'border-color': variables['grey-800'],
         'box-shadow': 'inset 0 1px 5px rgba(180,180,180,.5)'
     },
+    'dropdown-theme': {
+        'min-height': '20px'
+    },
+    'dropdown-caret-theme': {},
     'input-theme': {
         'border-bottom': `1px solid ${variables['grey-200']}`,
         border: '0',

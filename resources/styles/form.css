@@ -79,6 +79,7 @@ rgba(5,117,189,.5) // user avatar btn
 }
 
 .form-label__txt {
+    margin: 0;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -96,52 +97,6 @@ rgba(5,117,189,.5) // user avatar btn
     display: inline-block;
     margin-left: 3px;
 }
-
-.form-label__info-button {
-    position: relative;
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-}
-
-.form-label__info-button:before {
-    content: '?';
-    color: #b0b9c0;
-    border: 1px solid #c4c9ce;
-    background: #fff;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    font-size: 9px;
-    line-height: 11px;
-    font-weight: bold;
-    position: absolute;
-    top: 1px;
-    left: 0;
-    text-align: center;
-    cursor: pointer;
-}
-
-.form-label__info-button:hover:before {
-    color: #70787f;
-    border-color: #70787f;
-}
-
-.form-label__info-button:hover:before {
-    color: #70787f;
-    border-color: #70787f;
-}
-
-.form-label__info-button-anchor{
-    position:absolute;
-    width:0;
-    top:-2px;
-    bottom:-4px;
-    left:5px;
-
-}
-
-
 
 .form-label__error {
     position: relative;
@@ -371,7 +326,7 @@ input[type="checkbox"].checkbox {
 .editor_radiobutton {
     display: flex;
     cursor: pointer;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .radiobutton {
@@ -517,6 +472,7 @@ input[type="checkbox"].checkbox {
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
+    padding-left: 0;
 }
 
 .editor_disabled .bubbles,
@@ -528,31 +484,14 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles__i {
-    max-width: 100%;
-    line-height: 18px;
     display: inline-block;
-    vertical-align: top;
-    font-size: 12px;
     position: relative;
     flex: 0 0 auto;
-    margin: 1px;
-    color: rgba(0,0,0,.87);
-    border-radius: 5px;
-    padding: 2px 5px;
-    transition: padding-right .2s;
     overflow: hidden;
     text-overflow: ellipsis;
     box-sizing: border-box;
 }
-.bubbles__i:hover {
-    padding-right: 17px;
-}
 
-.bubbles__i-edit-btn:hover {
-    background: #f0f0f0;
-    padding-right: 36px;
-    transition: padding-right .2s;
-}
 .editor_disabled .bubbles__i-edit-btn,
 .editor_disabled .bubbles__i-edit-btn:hover,
 .editor_readonly .bubbles__i-edit-btn,
