@@ -449,20 +449,21 @@ input[type="checkbox"].checkbox {
 
 
 /* Date Time */
+.date-dropdown-wrp:not(:empty),
+.time-dropdown-wrp:not(:empty) {
+    flex-grow: 1;
+}
 .editor_date-time {
     padding-right: 16px;
     display: flex;
+    align-items: center;
 }
-.editor_date-time .js-date-dropdown-region:not(:empty),
-.editor_date-time .js-time-dropdown-region:not(:empty) {
-    flex: 1 0 auto;
-}
+
 .editor_date-time .input{
-    width: auto;
-    flex: 1 0 auto;
     border: 0;
     padding-right: 0;
 }
+
 
 /* /Date Time/ */
 
@@ -498,10 +499,6 @@ input[type="checkbox"].checkbox {
 
 
 /* Bubbles */
-.editor_bubble{
-    height: auto;
-    min-height: 20px;
-}
 
 .bubble_editor__elements_quantity_warning {
     padding: 0 0 0.5rem;
@@ -515,20 +512,11 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles {
-    width: 100%;
-    height: auto;
-    min-height: 20px;
     overflow: hidden;
-    padding: 0;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
-    border-bottom:1px solid #edeff0;
-}
-
-.bubbles:hover {
-    border-bottom-color:#b9bcbd;
 }
 
 .editor_disabled .bubbles,

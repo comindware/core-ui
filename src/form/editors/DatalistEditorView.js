@@ -140,6 +140,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
+                showRemoveButton: this.options.maxQuantitySelected > 1 && !this.options.canDeleteItem,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()
@@ -379,6 +380,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __updateFakeInputModel(): void {
         const selectedModels = this.viewModel.button.selected;
 
+        if (this.options.maxQuantitySelected === 1) {
+            if (this.fakeInputModel) {
+                selectedModels.remove(this.fakeInputModel);
+                delete this.fakeInputModel;
+            }
+            return;
+        }
         if (this.__canAddItem() && !this.fakeInputModel) {
             this.fakeInputModel = new FakeInputModel();
             selectedModels.add(this.fakeInputModel, { at: selectedModels.length });

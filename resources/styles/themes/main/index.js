@@ -76,6 +76,9 @@ const variables = {
     'radio-checked-disabled-color': 'var(--grey-800)',
 
     // grid
+    'grid-toolbar-padding': '2px 0',
+    'grid-toolbar-bg-color': 'var(--grey-100)',
+
     'grid-checkbox-size': '14px',
     'grid-checkbox-icon-size': '12px',
     'grid-header-font-size': 'var(--base-font-size)',
@@ -130,7 +133,9 @@ const variables = {
     'tab-item-font-size': '13px',
     'tab-panel-container-padding': '10px 5px',
     'tab-header-justify': 'space-between',
-    'tab-header-padding-with-move': '0 20px'
+    'tab-header-padding-with-move': '0 20px',
+
+    'btn-separator-width': '20px'
 };
 
 module.exports.variables = variables;
@@ -223,5 +228,41 @@ module.exports.apply = {
         left: '0',
         right: 'auto'
     },
-    'columns-select-list-theme': {}
+    'columns-select-list-theme': {},
+
+    'toolbar-btn-theme': {},
+    'toolbar-btn-low-theme': {
+        'background-color': '#e1e1e1',
+        'border-color': '#e1e1e1'
+    },
+    'toolbar-btn-low-hover-theme': {},
+    'toolbar-btn-low-active-theme': {},
+
+    'toolbar-btn-normal-theme': {
+        'background-color': '#d7fdf4',
+        'border-color': '#d7fdf4'
+    },
+    'toolbar-btn-normal-hover-theme': {},
+    'toolbar-btn-normal-active-theme': {},
+
+    'toolbar-btn-major-theme': {
+        'background-color': '#d6f4fa',
+        'border-color': '#d6f4fa'
+    },
+    'toolbar-btn-major-hover-theme': {},
+    'toolbar-btn-major-active-theme': {},
+
+    'toolbar-btn-critical-theme': {
+        'background-color': '#f9f8c9',
+        'border-color': '#f9f8c9'
+    },
+    'toolbar-btn-critical-hover-theme': {},
+    'toolbar-btn-critical-active-theme': {},
+
+    'toolbar-btn-fatal-theme': {
+        'background-color': '#fbe2e2',
+        'border-color': '#fbe2e2'
+    },
+    'toolbar-btn-fatal-hover-theme': {},
+    'toolbar-btn-fatal-active-theme': {}
 };

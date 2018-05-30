@@ -6,27 +6,27 @@ export const severity = {
         id: 'None'
     },
     Low: {
-        class: 'toolbar-btn toolbar-btn_dark',
+        class: 'toolbar-btn toolbar-btn_low',
         text: 'Low',
         id: 'Low'
     },
     Normal: {
-        class: 'toolbar-btn toolbar-btn_green',
+        class: 'toolbar-btn toolbar-btn_normal',
         text: 'Normal',
         id: 'Normal'
     },
     Major: {
-        class: 'toolbar-btn toolbar-btn_blue',
+        class: 'toolbar-btn toolbar-btn_major',
         text: 'Major',
         id: 'Major'
     },
     Critical: {
-        class: 'toolbar-btn toolbar-btn_yellow',
+        class: 'toolbar-btn toolbar-btn_critical',
         text: 'Critical',
         id: 'Critical'
     },
     Fatal: {
-        class: 'toolbar-btn toolbar-btn_red',
+        class: 'toolbar-btn toolbar-btn_fatal',
         text: 'Fatal',
         id: 'Fatal'
     }

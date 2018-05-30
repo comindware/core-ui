@@ -15,6 +15,7 @@ const variables = {
     white: '#ffffff',
     black: '#313131',
     red: '#e1462c',
+    'red-dark': '#d63a1f',
 
     'grey-100': '#f5f5f5',
     'grey-200': '#efefef',
@@ -83,6 +84,9 @@ const variables = {
     'radio-checked-disabled-color': 'var(--blue-300)',
 
     // grid
+    'grid-toolbar-padding': '10px 6px 10px 0',
+    'grid-toolbar-bg-color': 'transparent',
+
     'grid-checkbox-size': '16px',
     'grid-checkbox-icon-size': '12px',
     'grid-header-font-size': 'var(--base-font-size)',
@@ -136,7 +140,9 @@ const variables = {
     'tab-item-font-size': 'var(--base-font-size)',
     'tab-panel-container-padding': '20px 15px',
     'tab-header-justify': 'flex-start',
-    'tab-header-padding-with-move': '0 30px'
+    'tab-header-padding-with-move': '0 30px',
+
+    'btn-separator-width': '15px'
 };
 
 module.exports.variables = variables;
@@ -254,8 +260,57 @@ module.exports.apply = {
         transform: 'rotate(90deg)'
     },
     'columns-select-list-theme': {
-        padding: '10px',
+        padding: '10px 9px 10px 15px',
         border: variables.border,
         'border-radius': '0 4px 4px 4px'
+    },
+    'toolbar-btn-theme': {
+        'margin-right': '5px'
+    },
+    'toolbar-btn-low-theme': {},
+    'toolbar-btn-low-hover-theme': {},
+    'toolbar-btn-low-active-theme': {},
+
+    'toolbar-btn-normal-theme': {},
+    'toolbar-btn-normal-hover-theme': {},
+    'toolbar-btn-normal-active-theme': {},
+
+    'toolbar-btn-major-theme': {
+        'background-color': '#d6af45',
+        'border-color': '#d6af45'
+    },
+    'toolbar-btn-major-hover-theme': {
+        'background-color': '#d1a62e',
+        'border-color': '#d1a62e'
+    },
+    'toolbar-btn-major-active-theme': {
+        'background-color': '#d1a62e',
+        'border-color': '#d1a62e'
+    },
+
+    'toolbar-btn-critical-theme': {
+        'background-color': '#e1742c',
+        'border-color': '#e1742c'
+    },
+    'toolbar-btn-critical-hover-theme': {
+        'background-color': '#d6681f',
+        'border-color': '#d6681f'
+    },
+    'toolbar-btn-critical-active-theme': {
+        'background-color': '#d6681f',
+        'border-color': '#d6681f'
+    },
+
+    'toolbar-btn-fatal-theme': {
+        'background-color': variables.red,
+        'border-color': variables.red
+    },
+    'toolbar-btn-fatal-hover-theme': {
+        'background-color': variables['red-dark'],
+        'border-color': variables['red-dark']
+    },
+    'toolbar-btn-fatal-active-theme': {
+        'background-color': variables['red-dark'],
+        'border-color': variables['red-dark']
     }
 };

@@ -605,16 +605,6 @@ a:hover {
     width: 100%;
 }
 
-.grid-toolbar__search{
-    flex: 0 0 auto;
-}
-
-.grid-toolbar__search .tr-search{
-    border: none;
-    width: 100%;
-    box-sizing: border-box;
-}
-
 .columns-select__btn {
     width: 50px;
     flex: none;
@@ -685,9 +675,8 @@ a:hover {
 }
 
 .toolbar-btn__text {
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: inline-flex;
+    align-items: center;
     user-select: none;
 }
 
@@ -698,6 +687,10 @@ a:hover {
     overflow: hidden;
     vertical-align: middle;
     color: #636262;
+}
+
+.btn-separator {
+    display: inline-block;
 }
 
 .toolbar-btn__icon + .toolbar-btn__text {

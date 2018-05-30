@@ -241,6 +241,17 @@ svg.svg-grid-icons {
 
 /* List/Grid CSS */
 
+.grid-toolbar-wrp{
+  padding: var(--grid-toolbar-padding);
+  background-color: var(--grid-toolbar-bg-color);
+}
+
+.grid-toolbar__search .tr-search{
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .grid-header {
   height: var(--grid-header-height);
 }
@@ -417,7 +428,7 @@ svg.svg-grid-icons {
   padding-left: var(--dropdown-item-checkbox-padding);
 }
 .dd-list__i:hover {
-  background: var(--dropdown-item-hover-color);
+  background-color: var(--dropdown-item-hover-color);
 }
 .dd-list__i_group {
   font-size: var(--dropdown-group-fontsize);
@@ -439,6 +450,11 @@ svg.svg-grid-icons {
   background-color: var(--dropdown-item-hover-color);
 }
 /*-----//------*/
+
+/* Dropdown Bubbles */
+.bubbles {
+  @apply --input-theme;
+}
 
 /* columns select */
 
@@ -541,13 +557,10 @@ svg.svg-grid-icons {
 
 .toolbar-btn {
   @apply --button-theme;
-  border-radius: 0;
-}
-.toolbar-btn:first-child {
-  border-radius: var(--border-radius) 0 0 var(--border-radius);
+  @apply --toolbar-btn-theme;
 }
 .toolbar-btn:last-child {
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  margin-right: 0
 }
 
 .toolbar-btn:hover {
@@ -566,29 +579,54 @@ svg.svg-grid-icons {
   color: #636262;
 } */
 
-.toolbar-btn_red {
-  background-color: #fbe2e2;
-  border-color: #fbe2e2;
+.toolbar-btn_low {
+  @apply --toolbar-btn-low-theme;
+}
+.toolbar-btn_low:hover {
+  @apply --toolbar-btn-low-hover-theme;
+}
+.toolbar-btn_low:active {
+  @apply --toolbar-btn-low-active-theme;
 }
 
-.toolbar-btn_green {
-  background-color: #d7fdf4;
-  border-color: #d7fdf4;
+.toolbar-btn_normal {
+  @apply --toolbar-btn-normal-theme;
+}
+.toolbar-btn_normal:hover {
+  @apply --toolbar-btn-normal-hover-theme;
+}
+.toolbar-btn_normal:active {
+  @apply --toolbar-btn-normal-active-theme;
 }
 
-.toolbar-btn_blue {
-  background-color: #d6f4fa;
-  border-color: #d6f4fa;
+.toolbar-btn_major {
+  @apply --toolbar-btn-major-theme;
+}
+.toolbar-btn_major:hover {
+  @apply --toolbar-btn-major-hover-theme;
+}
+.toolbar-btn_major:active {
+  @apply --toolbar-btn-major-active-theme;
 }
 
-.toolbar-btn_yellow {
-  background-color: #f9f8c9;
-  border-color: #f9f8c9;
+.toolbar-btn_critical {
+  @apply --toolbar-btn-critical-theme;
+}
+.toolbar-btn_critical:hover {
+  @apply --toolbar-btn-critical-hover-theme;
+}
+.toolbar-btn_critical:active {
+  @apply --toolbar-btn-critical-active-theme;
 }
 
-.toolbar-btn_dark {
-  background-color: #e1e1e1;
-  border-color: #e1e1e1;
+.toolbar-btn_fatal {
+  @apply --toolbar-btn-fatal-theme;
+}
+.toolbar-btn_fatal:hover {
+  @apply --toolbar-btn-fatal-hover-theme;
+}
+.toolbar-btn_fatal:active {
+  @apply --toolbar-btn-fatal-active-theme;
 }
 
 .toolbar__icons {
@@ -601,5 +639,9 @@ svg.svg-grid-icons {
 
 .toolbar-btn__text > .editor_checkbox {
   padding-right: 5px;
-  vertical-align: middle;
+}
+
+.btn-separator {
+  display: inline-block;
+  width: var(--btn-separator-width);
 }
