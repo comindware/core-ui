@@ -299,7 +299,7 @@ describe('Editors', () => {
 
             document.getElementsByClassName('js-time-input')[0].click();
 
-            expect(view.isTimeDropdownShown).toEqual(true);
+            expect(view.timeDropdownView.isOpen).toEqual(true);
         });
 
         it('should set time on time select', done => {
@@ -309,6 +309,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DateTimeEditor({
                 model,
+                autocommit: true,
                 key: 'data'
             });
 
@@ -317,7 +318,7 @@ describe('Editors', () => {
                 .getRegion('contentRegion')
                 .show(view);
 
-            model.on('change', () => {
+            view.on('change', () => {
                 expect(view.getValue()).toEqual('2015-07-19T22:00:00.000Z');
                 done();
             });
