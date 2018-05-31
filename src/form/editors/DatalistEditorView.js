@@ -91,7 +91,20 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    className: 'editor editor_bubble',
+    className() {
+        const classList = [];
+        const maxQuantity = this.options.maxQuantitySelected || defaultOptions.maxQuantitySelected;
+        if (maxQuantity === 1) {
+            classList.push('editor_bubble--single');
+        }
+        if (this.options.showEditButton || defaultOptions.showEditButton) {
+            classList.push('editor_bubble--edit');
+        }
+        if ((this.options.canDeleteItem || defaultOptions.canDeleteItem) && maxQuantity > 1) {
+            classList.push('editor_bubble--delete');
+        }
+        return `editor editor_bubble ${classList.join(' ')}`;
+    },
 
     template: Handlebars.compile(template),
 

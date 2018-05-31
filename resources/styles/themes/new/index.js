@@ -43,11 +43,16 @@ const variables = {
     'line-height': '1.4',
     font: "normal var(--base-font-size)/var(--line-height) 'OpenSans', Arial, sans-serif",
 
+    'form-input-padding': '10px',
+
     'form-field-margin': '15px',
     'form-label-font-size': 'var(--base-font-size)',
     'form-label-font-weight': '600',
     'form-label-color': 'var(--black)',
     'form-label-margin': '8px',
+    'form-label-padding': '0 0 0 var(--form-input-padding)',
+    'form-label-icon-size': '14px',
+    'form-label-icon-margin-x': '5px',
 
     // form editor
     'editor-font-size': 'inherit',
@@ -55,16 +60,16 @@ const variables = {
     'editor-empty-text-color': 'var(--text-color)',
 
     // input
-    'input-padding': '0 20px 0 10px',
+    'input-padding': '0 20px 0 var(--form-input-padding)',
     'input-height': 'auto',
     'input-line-height': '1.95',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
-    'input-search-padding': '0 24px 0 10px',
+    'input-search-padding': '0 24px 0 var(--form-input-padding)',
     'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
-    'textarea-padding': '15px 10px 15px 10px',
+    'textarea-padding': '15px var(--form-input-padding)',
     'textarea-line-height': 'inherit',
     'textarea-min-height': '45px',
 
@@ -134,6 +139,8 @@ const variables = {
     'dropdown-item-padding': '8px 20px',
     'dropdown-item-checkbox-padding': '10px',
     'dropdown-item-hover-color': 'var(--blue-100)',
+    'bubbles-item-delete-padding': '15px',
+    'bubbles-item-edit-delete-padding': '40px',
 
     'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
     'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
@@ -152,6 +159,8 @@ module.exports.variables = variables;
 
 module.exports.apply = {
     'button-theme': {
+        display: 'inline-block',
+        'vertical-align': 'middle',
         color: '#fff',
         'font-size': '15px',
         'line-height': '1.5',
@@ -182,8 +191,7 @@ module.exports.apply = {
         'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
     },
     'dropdown-theme': {
-        background: variables['light-gradient'],
-        'padding-right': '20px'
+        background: variables['light-gradient']
     },
     'dropdown-caret-theme': {
         content: '""',
@@ -194,6 +202,34 @@ module.exports.apply = {
         width: '1em',
         height: '1em',
         background: `url(${utils.buildIcon(icons.angleDown, variables['blue-300'])}) center no-repeat`
+    },
+    'form-label-icon-theme': {
+        width: variables['form-label-icon-size'],
+        height: variables['form-label-icon-size'],
+        color: variables['text-color'],
+        border: `1px solid ${variables['text-color']}`,
+        'border-radius': '50%',
+        'font-size': '12px',
+        'line-height': '12px',
+        position: 'absolute',
+        top: '2px',
+        left: '0',
+        'text-align': 'center',
+        opacity: '0.7'
+    },
+    'form-label-info-icon-theme': {
+        content: '"?"'
+    },
+    'form-label-error-icon-theme': {
+        content: '"!"',
+        color: variables.red,
+        'border-color': variables.red
+    },
+    'bubbles-item-theme': {
+        color: variables['text-color'],
+        margin: '0 5px 0 0',
+        padding: '4px 5px 4px 0',
+        transition: 'padding-right .3s'
     },
     'input-theme': {
         border: variables.border,
@@ -211,7 +247,6 @@ module.exports.apply = {
         'border-radius': '4px'
     },
     'custom-cotrol-disabled-theme': {
-        filter: 'alpha(opacity=60)',
         opacity: '.6',
         cursor: 'not-allowed'
     },

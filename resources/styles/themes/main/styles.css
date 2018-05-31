@@ -42,7 +42,13 @@
   height: 18px;
   line-height: 18px;
 }
-
+.editor_disabled .bubbles,
+.editor_disabled .bubbles:hover,
+.editor_readonly .bubbles,
+.editor_readonly .bubbles:hover{
+    border-bottom-color:transparent;
+    background: transparent;
+}
 /*------------------ Input ------------------*/
 .input:hover {
   border-color: var(--input-hover-color);
@@ -289,4 +295,40 @@ svg.svg-grid-icons {
 
 .bubbles:hover {
   border-bottom-color:#b9bcbd;
+}
+.editor:not(.editor_readonly).bubbles__i:hover,
+.editor:not(.editor_disabled).bubbles__i:hover {
+  background: #f0f0f0;
+}
+
+/*------------------ Form Label ------------------*/
+
+.required .form-label {
+  padding-left: 10px;
+}
+
+.required .form-label::before, .cell.required::before {
+  content: '*';
+  margin: -5px 0 0;
+  color: #c85e44;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+.cell.required::before {
+  margin: 0 0 0 1px;
+  top: 0;
+}
+
+.cell.error.required::before {
+  display:none;
+}
+
+.btn_attach {
+  height: 20px;
+  padding: 0 5px;
+  margin-right: 3px;
 }

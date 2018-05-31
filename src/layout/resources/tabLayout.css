@@ -16,6 +16,7 @@
     align-items: flex-end;
     flex-wrap: nowrap;
     padding-left: 0;
+    margin-bottom: 0;
 }
 
 .layout__tab-layout__header-view-item {

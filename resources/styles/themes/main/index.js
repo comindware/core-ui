@@ -35,6 +35,9 @@ const variables = {
     'form-label-font-weight': '400',
     'form-label-color': 'var(--grey-800)',
     'form-label-margin': '2px',
+    'form-label-padding': '0',
+    'form-label-icon-size': '12px',
+    'form-label-icon-margin-x': '3px',
 
     // form editor
     'editor-height': '20px',
@@ -125,6 +128,8 @@ const variables = {
     'dropdown-item-padding': '5px 10px',
     'dropdown-item-checkbox-padding': '5px',
     'dropdown-item-hover-color': 'var(--grey-100)',
+    'bubbles-item-delete-padding': '17px',
+    'bubbles-item-edit-delete-padding': '38px',
 
     'collapse-icon':
         'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjlFRUI4RTM2NDk2NDExRThBMzI4OTMyMzI4MjYxQjJGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjlFRUI4RTM3NDk2NDExRThBMzI4OTMyMzI4MjYxQjJGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OUVFQjhFMzQ0OTY0MTFFOEEzMjg5MzIzMjgyNjFCMkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6OUVFQjhFMzU0OTY0MTFFOEEzMjg5MzIzMjgyNjFCMkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz42Z48yAAAAeklEQVR42mL8//8/AzmAiYFMwILMYWRkxKsY2XW4bPwHxH0gs/CaAsNIIAyIfwDxSiBmx6oWh0YQcADi90C8H4gFSNEIAjpA/AiIL6NrJBSqIGeykeJHEHAG4k+kOjUKiH+SEzig6OhHjy5ktSzkpiiykxwjuYkcIMAA6W6BsPef8/UAAAAASUVORK5CYII=)',
@@ -169,10 +174,42 @@ module.exports.apply = {
         'min-height': '20px'
     },
     'dropdown-caret-theme': {},
+    'form-label-icon-theme': {
+        width: variables['form-label-icon-size'],
+        height: variables['form-label-icon-size'],
+        border: '1px solid #70787f',
+        'background-color': '#fff',
+        'border-radius': '50%',
+        'font-size': '9px',
+        'line-height': '11px',
+        'font-weight': 'bold',
+        position: 'absolute',
+        top: '1px',
+        left: '0',
+        'text-align': 'center',
+        opacity: '0.7'
+    },
+    'form-label-info-icon-theme': {
+        content: '"?"',
+        color: '#70787f'
+    },
+    'form-label-error-icon-theme': {
+        content: '"!"',
+        color: '#b12a23',
+        'border-color': '#b12a23'
+    },
+    'bubbles-item-theme': {
+        color: variables['text-color'],
+        margin: '0 2px 2px 0',
+        'border-radius': '5px',
+        padding: '2px 5px',
+        transition: 'padding-right .2s'
+    },
     'input-theme': {
         'border-bottom': `1px solid ${variables['grey-200']}`,
         border: '0',
-        background: 'transparent none 100% 50% no-repeat'
+        background: 'transparent none 100% 50% no-repeat',
+        'line-height': variables['line-height']
     },
     'input-disabled-theme': {
         'border-bottom-color': 'transparent',

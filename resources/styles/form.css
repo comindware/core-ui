@@ -75,76 +75,34 @@ rgba(5,117,189,.5) // user avatar btn
     cursor: default;
     position: relative;
     display: flex;
-    align-items: center;
 }
 
 .form-label__txt {
-    margin: 0;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     position: relative;
+    margin-bottom: 0;
 }
 
-.form-label__info{
+.form-label__info {
     position: relative;
     line-height: inherit;
     display: none;
-}
-
-.form-label__info:not(:empty) {
-    display: inline-block;
-    margin-left: 3px;
 }
 
 .form-label__error {
     position: relative;
-    line-height: inherit;
     display: none;
 }
-
-.error .form-label__error {
-    display: inline-block;
-    margin-left: 3px;
-}
-
-.form-label__error-button {
-    position: relative;
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-}
-
-.form-label__error:before {
-    content: '!';
-    color: #cc5336;
-    border: 1px solid #cb4e30;
-    background: #fff;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    font-size: 8px;
-    line-height: 10px;
-    font-weight: bold;
-    position: absolute;
-    top: 1px;
-    left: 0;
-    text-align: center;
-    cursor: pointer;
-}
-
-.form-label__error-button:hover:before {
-    color: #b12a23;
-    border-color: #b12a23;
-}
-
-.form-label__error-button-anchor {
-    position:absolute;
-    width: 0;
-    top:-2px;
-    bottom:-4px;
-    left:5px;
+.form-label__info-button-anchor,
+.form-label__error-button-anchor { 
+    position:absolute; 
+    width:0; 
+    top:-2px; 
+    bottom:-4px; 
+    left:5px; 
 }
 
 .form-label__tooltip-panel {
@@ -177,34 +135,6 @@ rgba(5,117,189,.5) // user avatar btn
 
 .form-label__error-icon-warning svg{
     fill: rgb(255, 218, 68);
-}
-
-.form-label__error-text {
-    padding-left: 21px;
-}
-
-.required .form-label {
-    padding-left: 10px;
-}
-
-.required .form-label::before, .editable-grid-field.required::before {
-    content: '*';
-    margin: -5px 0 0;
-    color: #c85e44;
-    font-size: 14px;
-    line-height: 14px;
-    font-weight: 600;
-    position: absolute;
-    top: 50%;
-    left: 0;
-}
-.editable-grid-field.required::before {
-    margin: 0 0 0 1px;
-    top: 0;
-}
-
-.editable-cell .error.required::before {
-    display:none;
 }
 
 .disabled .form-label {
@@ -467,36 +397,21 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles {
-    overflow: hidden;
     display: flex;
-    justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
     padding-left: 0;
-}
-
-.editor_disabled .bubbles,
-.editor_disabled .bubbles:hover,
-.editor_readonly .bubbles,
-.editor_readonly .bubbles:hover{
-    border-bottom-color:transparent;
-    background: transparent;
+    margin-bottom: 0;
 }
 
 .bubbles__i {
+    max-width: 100%;
     display: inline-block;
     position: relative;
     flex: 0 0 auto;
     overflow: hidden;
     text-overflow: ellipsis;
     box-sizing: border-box;
-}
-
-.editor_disabled .bubbles__i-edit-btn,
-.editor_disabled .bubbles__i-edit-btn:hover,
-.editor_readonly .bubbles__i-edit-btn,
-.editor_readonly .bubbles__i-edit-btn:hover{
-    background: transparent;
 }
 
 .bubbles__link {
@@ -514,13 +429,6 @@ input[type="checkbox"].checkbox {
 }
 
 
-.editor_disabled .bubbles__i,
-.editor_disabled .bubbles__i:hover,
-.editor_readonly .bubbles__i,
-.editor_readonly .bubbles__i:hover {
-    padding: 2px 5px;
-}
-
 .editor_disabled .bubbles__i .svg-icons-wrp,
 .editor_readonly .bubbles__i .svg-icons-wrp {
    display: none;
@@ -534,13 +442,12 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles__form {
-    flex-grow: 1;
+    flex-grow: 1 1 10px;
     max-width: 100%;
     margin: 0;
     padding: 0;
-    line-height: 20px;
     display: inline-block;
-    vertical-align: top;
+    align-self: center;
 }
 .bubbles__input {
     width: 100%;
@@ -558,10 +465,6 @@ input[type="checkbox"].checkbox {
     color: inherit;
 }
 
-.cell .bubbles{
-    border: none;
-    flex-wrap: nowrap;
-}
 /* /Bubbles/ */
 
 
@@ -690,36 +593,7 @@ input[type="checkbox"].checkbox {
 
 
 /*------------------ Button ------------------*/
-.btn{
-    display: inline-block;
-    max-width: 100%;
-    line-height: 18px;
-    vertical-align: middle;
-    white-space: nowrap;
-    background: #f7f6f6;
-    border: 1px solid #dfe4e8;
-    border-radius: 2px;
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    padding: 0 10px;
-    font-size: 0;
-}
-.btn:hover{
-    border-color: #bfc2c4;
-    box-shadow: inset 0 2px 3px #fff;
-}
-.btn:active{
-    box-shadow: inset 1px 1px 3px hsla(0,0%,78%,.7);
-}
 
-.btn_attach{
-    height: 20px;
-    padding: 0 5px;
-    flex: none;
-    margin-right: 3px;
-}
 
 .btn__text{
     display: inline-block;
@@ -983,18 +857,6 @@ input[type="color"], .colorpicker{
     visibility: visible;
 }
 
-.editor .bubbles__i .svg-icons-wrp__remove_bubble,
-.editor:hover .bubbles__i .svg-icons-wrp__remove_bubble{
-    width: 18px;
-    height: 18px;
-    visibility: hidden;
-    top: -1px;
-}
-
-.editor .bubbles__i:hover .svg-icons-wrp__remove_bubble{
-    visibility: visible;
-}
-
 .dd-list__filter_reference:hover .svg-icons-wrp__remove{
     visibility: visible;
 }
@@ -1172,7 +1034,8 @@ input[type="color"], .colorpicker{
 .documents {
     display: flex;
     flex-wrap: wrap;
-    align-self: baseline;
+    padding: 0;
+    margin: 0;
 }
 
 .dev-btn-document-revise{

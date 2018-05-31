@@ -22,56 +22,45 @@ body {
     font-size: var(--form-label-font-size);
     font-weight: var(--form-label-font-weight);
     color: var(--form-label-color);
-    margin-bottom: var(--form-label-margin);
+    padding: var(--form-label-padding);
+}
+.form-label:not(.form-label--empty) {
+  margin-bottom: var(--form-label-margin);
 }
 
-.form-label__info:not(:empty) {
+.form-label__info:not(:empty),
+.error .form-label__error {
   display: inline-block;
-  margin-left: 3px;
+  margin-left: var(--form-label-icon-margin-x);
 }
 
-.form-label__info-button {
-  position: relative;
-  display: inline-block;
-  height: 12px;
-  width: 12px;
+.form-label__info-button,
+.form-label__error-button {
+  height: var(--form-label-icon-size);
+  width: var(--form-label-icon-size);
 }
 
 .form-label__info-button:before {
-  content: '?';
-  color: #b0b9c0;
-  border: 1px solid #c4c9ce;
-  background: #fff;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  font-size: 9px;
-  line-height: 11px;
-  font-weight: bold;
-  position: absolute;
-  top: 1px;
-  left: 0;
-  text-align: center;
-  cursor: pointer;
+  @apply --form-label-icon-theme;
+  @apply --form-label-info-icon-theme;
 }
 
-.form-label__info-button:hover:before {
-  color: #70787f;
-  border-color: #70787f;
+.form-label__info-button:hover:before,
+.form-label__error-button:hover:before  {
+  opacity: 1;
 }
 
-.form-label__info-button:hover:before {
-  color: #70787f;
-  border-color: #70787f;
+.form-label__error-button:before {
+  @apply --form-label-icon-theme;
+  @apply --form-label-error-icon-theme;
 }
 
-.form-label__info-button-anchor{
-  position:absolute;
-  width:0;
-  top:-2px;
-  bottom:-4px;
-  left:5px;
+.form-label__error-text {
+  padding-left: 20px;
+}
 
+.required .form-label {
+  padding-left: 10px;
 }
 
 /*------------------ Form Editor ------------------*/
@@ -89,7 +78,11 @@ body {
 .editor_readonly .input,
 .editor_readonly .input:hover,
 .editor_disabled .textarea,
-.editor_readonly .textarea{
+.editor_readonly .textarea,
+.editor_disabled .bubbles,
+.editor_disabled .bubbles:hover,
+.editor_readonly .bubbles,
+.editor_readonly .bubbles:hover {
   @apply --input-disabled-theme;
 }
 
@@ -459,29 +452,36 @@ svg.svg-grid-icons {
 /* Dropdown Bubbles */
 .bubbles {
   @apply --input-theme;
-  @apply --dropdown-theme;
+  padding: var(--input-padding);
 }
 .bubbles::after {
   @apply --dropdown-caret-theme;
 }
 
 .bubbles__i {
-  /* line-height: 18px; */
-  font-size: 12px;
-  margin: 0 2px 2px 0;
-  border-radius: 5px;
-  padding: 2px 5px;
-  transition: padding-right .2s;
-}
-.bubbles__i:hover {
-  padding-right: 17px;
+  @apply --bubbles-item-theme;
 }
 
-.bubbles__i-edit-btn:hover {
-  background: #f0f0f0;
-  padding-right: 38px;
+.editor_bubble--single .bubbles {
+  @apply --dropdown-theme;
 }
-
+.editor_bubble--delete .bubbles__i:hover {
+  padding-right: var(--bubbles-item-delete-padding);
+}
+.editor_bubble--edit.editor_bubble--delete .bubbles__i:hover {
+  padding-right: var(--bubbles-item-edit-delete-padding);
+}
+.cell .bubbles {
+  height: 100%;
+  border: none;
+  background: transparent;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.cell .editor_disabled .bubbles,
+.cell .editor_readonly .bubbles {
+  background: transparent;
+}
 /* columns select */
 
 
@@ -498,20 +498,25 @@ svg.svg-grid-icons {
 
 
 /* button */
-
-.layout__button-view {
+.btn{
   @apply --button-theme;
-  display: inline-block;
-  cursor: pointer;
-  flex: none;
-  align-self: flex-start;
+}
+.btn:hover{
+  @apply --button-hover-theme;
+}
+.btn:active{
+  @apply --button-active-theme;
 }
 
-.layout__button-view:hover {
+.layout__button-view-text {
+  @apply --button-theme;
+}
+
+.layout__button-view-text:hover {
   @apply --button-hover-theme;
 }
 
-.layout__button-view:active {
+.layout__button-view-text:active {
   @apply --button-active-theme;
 }
 
