@@ -51,6 +51,7 @@ export default Marionette.View.extend({
     focus() {
         this.ui.input.focus();
         this.trigger('focus');
+        this.trigger('calendar:open');
     },
 
     __hasSeconds(format) {
