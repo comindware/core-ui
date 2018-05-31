@@ -102,22 +102,21 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         if (triggerChange) {
             this.__triggerChange();
         }
-        this.viewModel.get('button').set('value', this.__getButtonText(value));
+        this.viewModel.get('button').set('value', this.__getButtonText(this.value));
     },
 
     __getButtonText(selectedItem) {
-        const panelModel = this.viewModel.get('panel');
         if (!selectedItem || selectedItem === 'False') return '';
-        let instanceTypeId = panelModel.get('instanceTypeId');
 
+        const itemId = selectedItem[selectedItem.length - 1];
         let text = '';
 
-        this.context[instanceTypeId].forEach(context => {
-            if (context.id === selectedItem) {
-                text = context.name;
-                instanceTypeId = context.instanceTypeId;
-                return false;
-            }
+        Object.values(this.context).forEach(value => {
+            value.forEach(context => {
+                if (context.id === itemId) {
+                    text = context.name;
+                }
+            });
         });
 
         return text;
@@ -148,7 +147,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
                     if (model) {
                         innerEntry.children = new Backbone.Collection(model.toJSON());
                         innerEntry.collapsed = true;
-                        innerEntry.children.forEach(childModel => childModel.parent = innerEntry);
+                        innerEntry.children.forEach(childModel => (childModel.parent = innerEntry));
                     }
                 }
                 delete innerEntry.id; //todo wtf
@@ -160,17 +159,18 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         const collection = deepContext[recordTypeId];
 
         collection.on('expand', model => {
-            model.children && model.children.forEach(child => {
-                if (child.get('type') === 'Instance') {
-                    const newChild = deepContext[child.get('instanceTypeId')];
+            model.children &&
+                model.children.forEach(child => {
+                    if (child.get('type') === 'Instance') {
+                        const newChild = deepContext[child.get('instanceTypeId')];
 
-                    if (newChild) {
-                        child.children = new Backbone.Collection(newChild.toJSON());
-                        child.collapsed = true;
-                        child.children.forEach(childModel => childModel.parent = child);
+                        if (newChild) {
+                            child.children = new Backbone.Collection(newChild.toJSON());
+                            child.collapsed = true;
+                            child.children.forEach(childModel => (childModel.parent = child));
+                        }
                     }
-                }
-            });
+                });
         });
 
         return collection;

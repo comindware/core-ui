@@ -4,7 +4,7 @@ import 'jasmine-jquery';
 const $ = core.lib.$;
 
 describe('Editors', () => {
-    const findInput = function (view) {
+    const findInput = function(view) {
         return view.$('.js-input');
     };
 
@@ -379,7 +379,7 @@ describe('Editors', () => {
             view.$('.js-button-region').outerWidth(70);
             view.$('.bubbles').click();
             let panel = document.getElementsByClassName('dropdown__wrp')[0];
-            expect(panel.clientHeight).toEqual(75);
+            expect(panel.clientHeight).toEqual(200);
         });
         /*
         it('should remove items on uncheck in panel', done => {
