@@ -88,9 +88,12 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         const panelModel = this.viewModel.get('panel');
 
         this.context = context;
-        panelModel.set('instanceTypeId', recordTypeId);
         panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
-        this.setValue();
+
+        if (panelModel.get('instanceTypeId') !== recordTypeId || !this.__isInstanceInContext(this.value)) {
+            panelModel.set('instanceTypeId', recordTypeId);
+            this.setValue();
+        }
         this.render();
     },
 
@@ -120,6 +123,11 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         });
 
         return text;
+    },
+
+    __isInstanceInContext(item) {
+        if (!item || item === 'False') return false;
+        return Object.values(this.context).find(value => value.find(context => context.id === item[item.length - 1]));
     },
 
     __applyContext(selected) {
