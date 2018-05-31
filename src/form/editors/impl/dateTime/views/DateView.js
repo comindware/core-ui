@@ -57,7 +57,10 @@ export default Marionette.LayoutView.extend({
         if (this.isDropdownShown) {
             return;
         }
-        this.el.firstElementChild && this.el.firstElementChild.remove();
+        const firstElementChild = this.el.firstElementChild;
+
+        firstElementChild && this.el.removeChild(firstElementChild);
+
         this.calendarDropdownView = dropdown.factory.createDropdown({
             buttonView: InputView,
             buttonViewOptions: {

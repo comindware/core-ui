@@ -33,7 +33,7 @@ export default Marionette.LayoutView.extend({
     className: 'task-links__i dev-task-links__links__i',
 
     ui: {
-        remove: '.js-remove-button',
+        remove: '.js-clear-button',
         revise: '.js-revise-button-region',
         link: '.js-link'
     },

@@ -41,11 +41,12 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
         });
 
         this.viewModel = new Backbone.Model({
-            button: new Backbone.Model({
-                value: this.__getButtonText(this.getValue())
-            }),
+            button: new Backbone.Model(),
             panel: model
         });
+
+        const buttonValue = this.__getButtonText(this.getValue());
+        this.viewModel.get('button').set('value', buttonValue);
     },
 
     focusElement: null,
@@ -92,6 +93,13 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
         this.__value(value, false);
     },
 
+    updateContext(recordTypeId, context) {
+        const panelModel = this.viewModel.get('panel');
+        panelModel.set('instanceTypeId', recordTypeId);
+        panelModel.set('context', context);
+        this.setValue();
+    },
+
     __value(value, triggerChange) {
         if (this.value === value) {
             return;
@@ -104,12 +112,13 @@ formRepository.editors.ContextSelect = BaseLayoutEditorView.extend({
     },
 
     __getButtonText(selectedItem) {
+        const panelModel = this.viewModel.get('panel');
         if (!selectedItem || selectedItem === 'False') return '';
-        let instanceTypeId = this.options.recordTypeId;
+        let instanceTypeId = panelModel.get('instanceTypeId');
 
         const buttonText = selectedItem.map(id => {
             let text = '';
-            this.options.context[instanceTypeId].forEach(context => {
+            panelModel.get('context')[instanceTypeId].forEach(context => {
                 if (context.id === id) {
                     text = context.name;
                     instanceTypeId = context.instanceTypeId;
