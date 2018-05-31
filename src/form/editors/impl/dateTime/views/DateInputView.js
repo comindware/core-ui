@@ -13,6 +13,7 @@ export default Marionette.View.extend({
     className: 'date-view',
 
     ui: {
+        click: '__onClick',
         dateInput: '.js-date-input'
     },
 
@@ -40,7 +41,16 @@ export default Marionette.View.extend({
         }
     },
 
+    __onClick() {
+        this.trigger('calendar:open');
+    },
+
     __onFocus() {
+        this.trigger('focus');
+    },
+
+    focus() {
+        this.ui.dateInput.focus();
         this.trigger('focus');
     }
 });
