@@ -19,7 +19,6 @@ export default Marionette.View.extend({
     className: 'time-view',
 
     events: {
-        click: '__onClick',
         'focus @ui.input': '__onFocus'
     },
 
@@ -42,16 +41,6 @@ export default Marionette.View.extend({
 
     __onFocus() {
         this.trigger('focus');
-    },
-
-    __onClick() {
-        this.trigger('calendar:open');
-    },
-
-    focus() {
-        this.ui.input.focus();
-        this.trigger('focus');
-        this.trigger('calendar:open');
     },
 
     __hasSeconds(format) {

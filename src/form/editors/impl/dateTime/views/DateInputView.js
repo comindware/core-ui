@@ -17,17 +17,12 @@ export default Marionette.View.extend({
     },
 
     events: {
-        click: '__onClick',
         'focus @ui.dateInput': '__onFocus'
     },
 
     onRender() {
         this.setPlaceholder();
         this.setValue(this.options.value);
-    },
-
-    __onClick() {
-        this.trigger('calendar:open');
     },
 
     setPlaceholder() {
@@ -47,11 +42,5 @@ export default Marionette.View.extend({
 
     __onFocus() {
         this.trigger('focus');
-    },
-
-    focus() {
-        this.ui.dateInput.focus();
-        this.trigger('focus');
-        this.trigger('calendar:open');
     }
 });
