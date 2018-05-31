@@ -42,7 +42,7 @@
     }
   ],
   "devDependencies": {
-    "autoprefixer": "^8.5.1",
+    "autoprefixer": "^8.5.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -101,12 +101,12 @@
     "postcss-apply": "^0.10.0",
     "postcss-custom-properties": "^7.0.0",
     "postcss-loader": "^2.1.5",
-    "prettier": "^1.12.1",
+    "prettier": "^1.13.3",
     "puppeteer": "^1.4.0",
     "run-sequence": "^2.2.1",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
-    "webpack": "^4.9.1"
+    "webpack": "^4.10.2"
   },
   "dependencies": {
     "autosize": "^4.0.2",
