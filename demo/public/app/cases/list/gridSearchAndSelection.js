@@ -1,5 +1,3 @@
-
-
 import CanvasView from 'demoPage/views/CanvasView';
 
 // 1. Get some data
@@ -64,6 +62,7 @@ export default function() {
         selectableBehavior: 'multi',
         showSearch: true,
         showSelection: true,
+        showToolbar: true,
         collection: new Backbone.Collection(dataArray),
         draggable: true,
         showRowIndex: true

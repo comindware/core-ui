@@ -86,7 +86,7 @@ export default Marionette.View.extend({
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
             this.el.insertAdjacentHTML('beforeend', iconWrapPencil);
         }
-        if (this.options.enabled) {
+        if (this.options.enabled && this.options.showRemoveButton) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
     },
@@ -95,7 +95,7 @@ export default Marionette.View.extend({
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
             this.el.removeChild(this.el.lastElementChild);
         }
-        if (this.options.enabled) {
+        if (this.options.enabled && this.options.showRemoveButton) {
             this.el.removeChild(this.el.lastElementChild);
         }
     }

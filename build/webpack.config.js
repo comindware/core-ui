@@ -1,14 +1,15 @@
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const pathResolver = require('./pathResolver');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const FlowWebpackPlugin = require('flow-webpack-plugin');
+const pathResolver = require('./pathResolver');
+
 const jsFileName = 'core.js';
 const jsFileNameMin = 'core.min.js';
 const cssFileName = 'core.css';
 const cssFileNameMin = 'core.min.css';
-const FlowWebpackPlugin = require('flow-webpack-plugin');
 
 module.exports = options => {
     const PRODUCTION = options.uglify;
@@ -66,42 +67,38 @@ module.exports = options => {
                 },
                 {
                     test: /\.css$/,
-                    use: ExtractTextPlugin.extract({
-                        fallback: 'style-loader',
-                        use: [
-                            {
-                                loader: 'css-loader'
-                            },
-                            {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: () => {
-                                        const plugins = [
-                                            autoprefixer({
-                                                browsers: ['ie 11', '> 0.25%', 'not chrome 29']
-                                            })
-                                        ];
-                                        if (UGLIFY) {
-                                            plugins.push(
-                                                cssnano({
-                                                    preset: [
-                                                        'default',
-                                                        {
-                                                            discardComments: {
-                                                                removeAll: true
-                                                            }
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        'css-loader',
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true,
+                                plugins: () => {
+                                    const plugins = [
+                                        autoprefixer({
+                                            browsers: ['ie 11', '> 0.25%', 'not chrome 29']
+                                        })
+                                    ];
+                                    if (UGLIFY) {
+                                        plugins.push(
+                                            cssnano({
+                                                preset: [
+                                                    'default',
+                                                    {
+                                                        discardComments: {
+                                                            removeAll: true
                                                         }
-                                                    ]
-                                                })
-                                            );
-                                        }
-                                        return plugins;
+                                                    }
+                                                ]
+                                            })
+                                        );
                                     }
+                                    return plugins;
                                 }
                             }
-                        ]
-                    })
+                        }
+                    ]
                 },
                 {
                     test: /\.hbs$/,
@@ -257,7 +254,7 @@ module.exports = options => {
             ]
         },
         plugins: [
-            new ExtractTextPlugin({
+            new MiniCssExtractPlugin({
                 filename: UGLIFY ? cssFileNameMin : cssFileName
             }),
             new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|ru|en/),

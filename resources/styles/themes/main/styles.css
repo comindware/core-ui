@@ -1,0 +1,346 @@
+/*------------------ Form Editor ------------------*/
+.editor {
+  height: var(--editor-height);
+  line-height: var(--editor-line-height);
+  font-size: var(--editor-font-size);
+  color: var(--editor-text-color);
+}
+.editor_bubble{
+  height: auto;
+}
+.editor_code{
+  height: inherit;
+}
+.editor_code:after{
+  display: none;
+}
+
+.editor:after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background-color: var(--blue-100);
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  transition: width .4s;
+}
+.editor_focused:after {
+  width: 100%;
+}
+.editor_readonly:after,
+.editor_disabled:after{
+    width: 0;
+}
+
+.editor_checkbox:after,
+.editor_radiobutton:after {
+  width: 0;
+}
+
+.editor_checkbox {
+  height: 18px;
+  line-height: 18px;
+}
+.editor_disabled .bubbles,
+.editor_disabled .bubbles:hover,
+.editor_readonly .bubbles,
+.editor_readonly .bubbles:hover{
+    border-bottom-color:transparent;
+    background: transparent;
+}
+/*------------------ Input ------------------*/
+.input:hover {
+  border-color: var(--input-hover-color);
+}
+
+.tr-search {
+  padding: 8px 10px 8px 0;
+  border-right: 1px solid #dfe4e8;
+}
+
+.textarea:hover {
+  border-color: var(--input-hover-color);
+}
+
+.checkbox {
+  border-radius: var(--checkbox-radius);
+}
+
+.editor_focused .checkbox,
+.editor_focused .radiobutton {
+  box-shadow: 0 0 5px rgba(47,152,248,.5);
+}
+.checkbox-text {
+  line-height: 18px;
+}
+
+.editor_radiobutton {
+  height: 19px;
+  line-height: 19px;
+}
+
+.radiobutton {
+  transition: box-shadow .5s;
+}
+
+/* textarea */
+.editor_textarea {
+  height: var(--editor-textarea-height);
+  line-height: var(--editor-textarea-line-height);
+}
+
+.textarea {
+  line-height: var(--textarea-line-height);
+}
+
+/*------------------ SVG Icons ------------------*/
+
+.svg-icons_remove{
+  transform: translate(6px, 5px);
+}
+.svg-icons_remove-bubble{
+  transform: scale(0.9) translate(5px, 5px);
+}
+.svg-icons-wrp__remove-icons{
+  position: relative;
+  top: -3px;
+  left: -2px;
+}
+
+
+.svg-icons_date{
+  transform: translate(3px, 2px);
+}
+.svg-icons_time{
+  transform: translate(2px, 1px);
+}
+.svg-icons_dropdown{
+  transform: translate(7px, 6px);
+}
+.svg-icons_member{
+  transform: translate(2px, 1px);
+}
+.svg-icons_checked{
+  transform: scale(1.2) translate(3px, 4px);
+}
+.editor_checked .svg-icons_checked{
+  transform: scale(1.1) translate(2px, 3px);
+}
+.editor_checked .svg-icons_checked-reference{
+  transform: scale(1.1) translate(2px, 3px);
+}
+
+svg.svg-grid-icons {
+  height: 45px;
+}
+
+.svg-icons_multiselect{
+  transform: scale(.9) translate(0, 1px)
+}
+
+.svg-icons_attach{
+  transform:scale(.8) translate(0, -1px)
+}
+
+.svg-icons-wrp_edit-reference{
+  display: inline-block;
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.svg-icons-wrp__empty {
+  width: 20px;
+  height: 20px;
+}
+.svg-icons-wrp__remove {
+  width: 20px;
+  height: 20px;
+}
+.svg-icons-wrp_add{
+  left: 0;
+  right: auto;
+  top: 50%;
+  margin-top: -10px;
+}
+
+.svg-icons-wrp_bubble{
+  width: 18px;
+  height: 18px;
+  top:2px;
+}
+
+.d-svg-icons {
+  fill: #8d8888;
+}
+
+.d-svg-icons_remove{
+  fill: #ca4e30;
+}
+.d-svg-icons_plus{
+  fill: #4d4d4d;
+}
+.d-svg-icons_checked{
+  fill: #0575bd;
+}
+
+/*------------------ Grid/List ------------------*/
+
+.cell .checkbox_cell-selection{
+  visibility: hidden;
+}
+
+.cell:hover .checkbox_cell-selection{
+  visibility: visible;
+}
+.grid-selection-cell-all .checkbox_cell-selection{
+  visibility: visible;
+}
+
+.cell .svg-icons {
+  margin-top: 2px;
+}
+
+.cell .svg-icons.svg-icons_remove-bubble {
+  margin-top: 1px;
+}
+
+.cell .svg-icons_checked{
+  margin: -1px 0 0 -1px;
+}
+
+.cell .svg-icons_attach{
+  margin: 0;
+}
+.cell .date-view,
+.cell .time-view,
+.cell .editor > div{
+    height: 100%;
+    line-height: initial;
+}
+
+/* Date Time */
+
+.editor_date-time:hover {
+  border-color: var(--input-hover-color);
+}
+
+.date-view,
+.time-view{
+  height: 20px;
+}
+
+/* Button */
+
+.layout__button-view:hover .layout__button-view-text {
+  color:#000;
+}
+
+.layout__button-view:active .layout__button-view-text {
+  color:#000;
+}
+
+/* Tabs */
+.layout__tab-layout__header-view {
+  border-bottom: var(--border);
+}
+.layout__tab-layout__header-view-item:not(.layout__tab-layout__header-view-item_disabled):hover,
+.tabs__i:not(.disabled):hover {
+  color: #009bfe;
+}
+
+.layout__tab-layout_move-button .svg-icons_dropdown {
+  width: 35px;
+  height: 35px;
+  transform: rotate(-90deg) translate(5px, -2px);
+}
+.layout__tab-layout_move-button.prev-layout_move-button .svg-icons_dropdown {
+  transform: rotate(90deg) translate(12px, 19px);
+}
+.layout__tab-layout_move-button .d-svg-icons {
+  fill: red
+}
+
+.toolbar-btn {
+  border-color: transparent;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.toolbar-btn:hover {
+  border-color: transparent;
+  transition: box-shadow .2s;
+  box-shadow: 0 3px 4px -1px rgba(0,0,0,.2), 0 6px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+}
+
+.toolbar-btn:active {
+  border-color: transparent;
+  box-shadow: none;
+  transition: box-shadow .2s;
+}
+.toolbar-btn:hover .toolbar-btn__text {
+  color: #000;
+}
+.toolbar-btn_low,
+.toolbar-btn_normal,
+.toolbar-btn_major,
+.toolbar-btn_critical,
+.toolbar-btn_fatal {
+  z-index: 2;
+}
+
+.grid-toolbar-region {
+  padding-left: 5px;
+}
+
+.bubbles:hover {
+  border-bottom-color:#b9bcbd;
+}
+.editor:not(.editor_readonly).bubbles__i:hover,
+.editor:not(.editor_disabled).bubbles__i:hover {
+  background: #f0f0f0;
+}
+
+/*------------------ Form Label ------------------*/
+
+.required .form-label {
+  padding-left: 10px;
+}
+
+.required .form-label::before, .cell.required::before {
+  content: '*';
+  margin: -5px 0 0;
+  color: #c85e44;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+.cell.required::before {
+  margin: 0 0 0 1px;
+  top: 0;
+}
+
+.cell.error.required::before {
+  display:none;
+}
+
+.btn_attach {
+  height: 20px;
+  padding: 0 5px;
+  margin-right: 3px;
+}
+
+.group-toggle svg{
+  transform: translateY(2px);
+}
+
+.layout__group-collapsed__button svg {
+  transform: rotate(-90deg) translate(1px);
+}
+
+.group-title.layout__group-collapsed__button{
+  transform: rotate(0);
+}

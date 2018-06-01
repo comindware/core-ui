@@ -24,7 +24,7 @@ const pathResolver = {
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 const readSpritesFile = () => {
-    const svgSpritesFile = `${__dirname}/../dist/sprites.svg`;
+    const svgSpritesFile = `${__dirname}/../dist/themes/main/sprites.svg`;
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
@@ -108,10 +108,7 @@ module.exports = () => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     include: [pathResolver.source()],
-                    exclude: [
-                        pathResolver.source('lib'),
-                        pathResolver.node_modules()
-                    ],
+                    exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
                     options: {
                         presets: ['env']
                     }

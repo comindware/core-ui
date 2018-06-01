@@ -1,0 +1,125 @@
+.editor_focused:not(.editor_readonly):not(.editor_disabled) .input,
+.editor_focused:not(.editor_readonly):not(.editor_disabled) .textarea {
+  border-color: var(--input-active-border-color);
+}
+.editor_disabled.editor_bubble--single .bubbles,
+.editor_readonly.editor_bubble--single .bubbles {
+    @apply --custom-cotrol-disabled-theme;
+}
+.checkbox,
+.radiobutton {
+  background: var(--light-gradient);
+}
+
+.editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
+.editor_checked.checkbox {
+  color: var(--white);
+  background: var(--checkbox-checked-color);
+  border-color: var(--checkbox-checked-color);
+}
+.toolbar-btn .editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
+.grid-header-wrp .editor_checked.checkbox {
+  color: var(--checkbox-checked-color);
+  background: var(--light-gradient);
+  border-color: var(--checkbox-border-color);
+}
+.tr-search__input {
+  @apply --input-theme;
+  height: var(--input-height);
+  line-height: var(--input-line-height);
+  background-size: 14px;
+}
+
+/* dropdown-list */
+
+.dd-list__i.selected,
+.selected .dd-list__i,
+.dd-list__i:hover,
+.time-dropdown__i:hover {
+  font-weight: 600;
+  color: var(--blue-300);
+}
+.bubbles {
+  min-height: 29px;
+}
+/* icons */
+
+svg.svg-icons.svg-icons_remove {
+  fill: var(--red);
+}
+svg.svg-grid-icons.svg-icons_flag-yes {
+  fill: var(--main-color);
+}
+svg.svg-grid-icons.svg-icons_flag-none {
+  fill: var(--error-color);
+}
+
+.grid-header-column-content .collapsible-btn {
+  background-image: var(--collapse-icon-header);
+  top: -1px;
+}
+.svg-icons-wrp__remove-bubble {
+  right: 2px;
+}
+
+/* Tabs */
+
+.layout__tab-layout_move-button {
+  @apply --button-theme;
+  @apply --button-outline-theme;
+  @apply --tab-move-btn-theme;
+}
+
+.layout__tab-layout--move .layout__tab-layout__panel-container {
+  border-radius: 4px;
+}
+
+.grid-toolbar-region {
+  padding-right: 10px;
+}
+
+.grid-toolbar__search{
+  order: 2;
+}
+
+/*------------------ Form Label ------------------*/
+
+.error .form-label {
+  color: var(--error-color);
+}
+.required .form-label__txt::after, .cell.required::before {
+  content: '*';
+  color: var(--error-color);
+}
+.cell.required::before {
+  margin: 0 0 0 1px;
+  top: 0;
+}
+
+.cell.error.required::before {
+  display:none;
+}
+
+.layout__form-view .layout__vertical-layout, 
+.layout__form-view .layout__horizontal-layout {
+  width: auto;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.layout__form-view .layout__vertical-layout > div, 
+.layout__form-view .layout__horizontal-layout > div {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.layout__vertical-layout > div {
+  margin-bottom: 20px;
+}
+
+.btn_attach {
+  padding: 3px 7px;
+  margin-right: 3px;
+}
+
+.group-toggle {
+  order: 2;
+}
