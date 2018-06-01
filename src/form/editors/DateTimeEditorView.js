@@ -9,7 +9,7 @@ import DateInputView from './impl/dateTime/views/DateInputView';
 import DatePanelView from './impl/dateTime/views/DatePanelView';
 import dropdown from 'dropdown';
 import TimeInputView from './impl/dateTime/views/TimeInputView';
-import { dateHelpers } from 'utils';
+import { dateHelpers, keyCode } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 
 const defaultOptions = {
@@ -54,8 +54,14 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     regions: {
-        timeDropdownRegion: '.js-time-dropdown-region',
-        dateDropdownRegion: '.js-date-dropdown-region'
+        timeDropdownRegion: {
+            el: '.js-time-dropdown-region',
+            replaceElement: true
+        },
+        dateDropdownRegion: {
+            el: '.js-date-dropdown-region',
+            replaceElement: true
+        }
     },
 
     className: 'editor editor_date-time',
@@ -76,7 +82,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     __keyAction(event) {
         const dropdownView = this.calendarDropdownView;
-        if (dropdownView.isOpen && event.keyCode === 13) {
+        if (dropdownView.isOpen && event.keyCode === keyCode.ENTER) {
             const newValue = dropdownView.button.ui.dateInput.val();
             const newDate = new Date(newValue);
             dropdownView.panelView.updatePickerDate(newDate);
@@ -230,6 +236,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         }
 
         this.__value(newVal, updateView, true);
+        this.stopListening(GlobalEventService);
         this.calendarDropdownView.close();
     },
 
@@ -245,6 +252,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         if (this.enabled && !this.readonly) {
             this.calendarDropdownView.open();
             this.calendarDropdownView.panelView.updatePickerDate(this.__getDateByValue(this.value));
+            this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         }
     },
 
@@ -265,21 +273,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __createTimeDropdownView() {
-        const timeArray = [];
-
-        for (let h = 0; h < 24; h++) {
-            for (let m = 0; m < 60; m += 15) {
-                const val = { hours: h, minutes: m };
-                const time = moment(val);
-                const formattedTime = dateHelpers.getDisplayTime(time);
-
-                timeArray.push({
-                    time,
-                    formattedTime
-                });
-            }
-        }
-
         this.timeDropdownView = dropdown.factory.createDropdown({
             buttonView: TimeInputView,
             buttonViewOptions: {
@@ -289,7 +282,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 showTitle: this.options.showTitle
             },
             panelView: Marionette.CollectionView.extend({
-                collection: new Backbone.Collection(timeArray),
+                collection: new Backbone.Collection(),
                 tagName: 'ul',
                 className: 'dropdown__wrp dropdown__wrp_time',
                 childViewEvents: {
@@ -337,15 +330,42 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.timeDropdownView.close();
     },
 
+    __timeDropdownOpen() {
+        this.timeDropdownView.open();
+        const panelView = this.timeDropdownView.panelView;
+        if (!panelView.collection.length) {
+            panelView.collection.reset(this.__getTimeCollection());
+        }
+    },
+
+    __getTimeCollection() {
+        const timeArray = [];
+
+        for (let h = 0; h < 24; h++) {
+            for (let m = 0; m < 60; m += 15) {
+                const val = { hours: h, minutes: m };
+                const time = moment(val);
+                const formattedTime = dateHelpers.getDisplayTime(time);
+
+                timeArray.push({
+                    time,
+                    formattedTime
+                });
+            }
+        }
+
+        return timeArray;
+    },
+
     __onTimeButtonCalendarOpen() {
         if (this.enabled && !this.readonly) {
-            this.timeDropdownView.open();
+            this.__timeDropdownOpen();
         }
     },
 
     __onTimeButtonFocus() {
         if (this.enabled && !this.readonly) {
-            this.timeDropdownView.open();
+            this.__timeDropdownOpen();
         }
     }
 }));

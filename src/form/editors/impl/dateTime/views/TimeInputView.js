@@ -40,12 +40,12 @@ export default Marionette.View.extend({
         this.ui.input.prop('placeholder', LocalizationService.get('CORE.FORM.EDITORS.TIME.EMPTYPLACEHOLDER'));
     },
 
-    __onFocus() {
-        this.trigger('focus');
-    },
-
     __onClick() {
         this.trigger('calendar:open');
+    },
+
+    __onFocus() {
+        this.trigger('focus');
     },
 
     focus() {
