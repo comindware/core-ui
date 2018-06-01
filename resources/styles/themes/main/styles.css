@@ -332,3 +332,15 @@ svg.svg-grid-icons {
   padding: 0 5px;
   margin-right: 3px;
 }
+
+.group-toggle svg{
+  transform: translateY(2px);
+}
+
+.layout__group-collapsed__button svg {
+  transform: rotate(-90deg) translate(1px);
+}
+
+.group-title.layout__group-collapsed__button{
+  transform: rotate(0);
+}

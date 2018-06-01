@@ -306,5 +306,25 @@ module.exports.apply = {
         'border-color': '#fbe2e2'
     },
     'toolbar-btn-fatal-hover-theme': {},
-    'toolbar-btn-fatal-active-theme': {}
+    'toolbar-btn-fatal-active-theme': {},
+
+    'group-theme': {
+        border: `1px solid ${variables['grey-600']}`,
+        padding: '10px',
+        'margin-top': '5px'
+    },
+    'group-head-theme': {
+        height: '16px',
+        'line-height': '16px',
+        'max-width': 'calc(100% - 20px)',
+        'background-color': '#fff',
+        'padding': '0 5px',
+        position: 'absolute',
+        top:'-8px',
+    },
+    'group-title-theme': {
+        color: variables['grey-800'],
+        cursor: 'pointer'
+    },
+    'group-content-theme': {}
 };

@@ -74,9 +74,9 @@ export default {
         marionetteApp.start();
 
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
-        
-        options.themeService && ThemeService.initialize(options.themeService)
-        
+
+        options.themeService && ThemeService.initialize(options.themeService);
+
         return marionetteApp;
     },
 

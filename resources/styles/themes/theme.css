@@ -678,3 +678,29 @@ svg.svg-grid-icons {
   display: inline-block;
   width: var(--btn-separator-width);
 }
+
+/* Group */
+
+.layout-group {
+  @apply --group-theme;
+}
+
+.layout-group__head {
+  @apply --group-head-theme;
+}
+
+.group-title{
+  @apply --group-title-theme;
+}
+
+.layout-group__content {
+  @apply --group-content-theme;
+}
+
+.layout__group-collapsed__button svg {
+  transform: rotate(-90deg);
+}
+
+.group-title.layout__group-collapsed__button{
+  transform: rotate(0);
+}

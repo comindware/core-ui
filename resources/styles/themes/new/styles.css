@@ -119,3 +119,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
   padding: 3px 7px;
   margin-right: 3px;
 }
+
+.group-toggle {
+  order: 2;
+}

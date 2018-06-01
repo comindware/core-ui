@@ -364,5 +364,22 @@ module.exports.apply = {
     'toolbar-btn-fatal-active-theme': {
         'background-color': variables['red-dark'],
         'border-color': variables['red-dark']
+    },
+
+    'group-theme': {},
+    'group-head-theme': {
+        'font-size': '18px',
+        'font-weight': '600',
+        'margin-bottom': '15px',
+        'align-items': 'center'
+
+    },
+    'group-title-theme': {
+        'padding-left': '30px'
+    },
+    'group-content-theme': {
+        padding: '20px',
+        'border-radius': '7px',
+        'background-color': variables["grey-100"]
     }
 };
