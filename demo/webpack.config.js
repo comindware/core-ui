@@ -49,56 +49,56 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                          test: /\.css$/,
-                          loader: ExtractTextPlugin.extract({
-                              fallback: 'style-loader',
-                              use: [
-                                  {
-                                      loader: 'css-loader',
-                                      options: {
-                                          sourceMap: true
-                                      }
-                                  },
-                                  {
-                                      loader: 'postcss-loader',
-                                      options: {
-                                          sourceMap: true,
-                                          plugins: () => [
-                                              autoprefixer({
-                                                  browsers: ['last 2 versions']
-                                              }),
-                                              cssnano()
-                                          ]
-                                      }
-                                  }
-                              ]
-                          })
-                      }
+                        test: /\.css$/,
+                        loader: ExtractTextPlugin.extract({
+                            fallback: 'style-loader',
+                            use: [
+                                {
+                                    loader: 'css-loader',
+                                    options: {
+                                        sourceMap: true
+                                    }
+                                },
+                                {
+                                    loader: 'postcss-loader',
+                                    options: {
+                                        sourceMap: true,
+                                        plugins: () => [
+                                            autoprefixer({
+                                                browsers: ['last 2 versions']
+                                            }),
+                                            cssnano()
+                                        ]
+                                    }
+                                }
+                            ]
+                        })
+                    }
                     : {
-                          test: /\.css$/,
-                          use: [
-                              {
-                                  loader: 'style-loader'
-                              },
-                              {
-                                  loader: 'css-loader',
-                                  options: {
-                                      sourceMap: true
-                                  }
-                              },
-                              {
-                                  loader: 'postcss-loader',
-                                  options: {
-                                      sourceMap: true,
-                                      plugins: [
-                                          autoprefixer({
-                                              browsers: ['last 2 versions']
-                                          })
-                                      ]
-                                  }
-                              }
-                          ]
-                      },
+                        test: /\.css$/,
+                        use: [
+                            {
+                                loader: 'style-loader'
+                            },
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    sourceMap: true
+                                }
+                            },
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: true,
+                                    plugins: [
+                                        autoprefixer({
+                                            browsers: ['last 2 versions']
+                                        })
+                                    ]
+                                }
+                            }
+                        ]
+                    },
                 {
                     test: /core\.js$/,
                     enforce: 'pre',
@@ -210,14 +210,12 @@ module.exports = () => {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'comindware/core': `${__dirname}/../dist/core.js`,
-                mainTheme: `${__dirname}/../dist/themes/main/theme.css`,
                 prism: `${__dirname}/public/lib/prism/prism.js`,
                 markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                 localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,
                 localizationMapDe: `${__dirname}/../dist/localization/localization.de.json`,
                 localizationMapRu: `${__dirname}/../dist/localization/localization.ru.json`,
                 ajaxMap: `${__dirname}/public/ajax/ajaxMap.js`
-                
             }
         },
         resolveLoader: {

@@ -31,12 +31,14 @@
 /* panel */
 
 .layout__tab-layout__panel-container {
+    height: 100%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
 }
 
 .layout__tab-layout__panel-region {
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
 }

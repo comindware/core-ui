@@ -276,7 +276,6 @@ input[type="checkbox"].checkbox {
 }
 
 .radiobutton-text {
-    line-height: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 90%;

@@ -183,7 +183,9 @@ body {
   margin-right: var(--radio-right-margin);
   border: 1px solid var(--checkbox-border-color);
 }
-
+.radiobutton-text {
+  line-height: var(--line-height);
+}
 .editor_disabled .radiobutton,
 .editor_readonly .radiobutton {
   @apply --custom-cotrol-disabled-theme;
