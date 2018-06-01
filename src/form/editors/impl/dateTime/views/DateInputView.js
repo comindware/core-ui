@@ -26,10 +26,6 @@ export default Marionette.View.extend({
         this.setValue(this.options.value);
     },
 
-    __onClick() {
-        this.trigger('calendar:open');
-    },
-
     setPlaceholder() {
         this.ui.dateInput.prop('placeholder', LocalizationService.get('CORE.FORM.EDITORS.DATE.EMPTYPLACEHOLDER'));
     },
@@ -43,6 +39,10 @@ export default Marionette.View.extend({
         if (this.getOption('showTitle')) {
             this.$el.prop('title', displayValue);
         }
+    },
+
+    __onClick() {
+        this.trigger('calendar:open');
     },
 
     __onFocus() {
