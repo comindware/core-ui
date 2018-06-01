@@ -1,6 +1,6 @@
 import '../node_modules/font-awesome/css/font-awesome.css';
 import '../../dist/core.css';
-import '../../dist/themes/new/theme.css';
+import '../../dist/themes/main/themes.css';
 import 'styles/demo.css';
 import 'lib/prism/prism.css';
 import core from 'comindware/core';

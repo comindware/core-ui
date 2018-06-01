@@ -9,11 +9,11 @@ const svgmin = require('gulp-svgmin');
 
 const pathResolver = require('../pathResolver');
 
-const iconPacks = ['new'];
+const iconPacks = ['main', 'new'];
 
 const spriteTask = name => {
-    const iconsPath = name ? `sprites/themes/${name}/*.svg` : 'sprites/*.svg';
-    const destPath = name ? `themes/${name}` : '';
+    const iconsPath = name !== 'main' ? `sprites/themes/${name}/*.svg` : 'sprites/*.svg';
+    const destPath = `themes/${name}`;
 
     return gulp
         .src(pathResolver.resources(iconsPath))

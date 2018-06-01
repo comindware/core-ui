@@ -24,7 +24,7 @@ const pathResolver = {
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 const readSpritesFile = () => {
-    const svgSpritesFile = `${__dirname}/../dist/themes/new/sprites.svg`;
+    const svgSpritesFile = `${__dirname}/../dist/themes/main/sprites.svg`;
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
@@ -49,56 +49,56 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                        test: /\.css$/,
-                        loader: ExtractTextPlugin.extract({
-                            fallback: 'style-loader',
-                            use: [
-                                {
-                                    loader: 'css-loader',
-                                    options: {
-                                        sourceMap: true
-                                    }
-                                },
-                                {
-                                    loader: 'postcss-loader',
-                                    options: {
-                                        sourceMap: true,
-                                        plugins: () => [
-                                            autoprefixer({
-                                                browsers: ['last 2 versions']
-                                            }),
-                                            cssnano()
-                                        ]
-                                    }
-                                }
-                            ]
-                        })
-                    }
+                          test: /\.css$/,
+                          loader: ExtractTextPlugin.extract({
+                              fallback: 'style-loader',
+                              use: [
+                                  {
+                                      loader: 'css-loader',
+                                      options: {
+                                          sourceMap: true
+                                      }
+                                  },
+                                  {
+                                      loader: 'postcss-loader',
+                                      options: {
+                                          sourceMap: true,
+                                          plugins: () => [
+                                              autoprefixer({
+                                                  browsers: ['last 2 versions']
+                                              }),
+                                              cssnano()
+                                          ]
+                                      }
+                                  }
+                              ]
+                          })
+                      }
                     : {
-                        test: /\.css$/,
-                        use: [
-                            {
-                                loader: 'style-loader'
-                            },
-                            {
-                                loader: 'css-loader',
-                                options: {
-                                    sourceMap: true
-                                }
-                            },
-                            {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: [
-                                        autoprefixer({
-                                            browsers: ['last 2 versions']
-                                        })
-                                    ]
-                                }
-                            }
-                        ]
-                    },
+                          test: /\.css$/,
+                          use: [
+                              {
+                                  loader: 'style-loader'
+                              },
+                              {
+                                  loader: 'css-loader',
+                                  options: {
+                                      sourceMap: true
+                                  }
+                              },
+                              {
+                                  loader: 'postcss-loader',
+                                  options: {
+                                      sourceMap: true,
+                                      plugins: [
+                                          autoprefixer({
+                                              browsers: ['last 2 versions']
+                                          })
+                                      ]
+                                  }
+                              }
+                          ]
+                      },
                 {
                     test: /core\.js$/,
                     enforce: 'pre',
@@ -108,10 +108,7 @@ module.exports = () => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     include: [pathResolver.source()],
-                    exclude: [
-                        pathResolver.source('lib'),
-                        pathResolver.node_modules()
-                    ],
+                    exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
                     options: {
                         presets: ['env']
                     }
@@ -213,12 +210,14 @@ module.exports = () => {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 'comindware/core': `${__dirname}/../dist/core.js`,
+                mainTheme: `${__dirname}/../dist/themes/main/theme.css`,
                 prism: `${__dirname}/public/lib/prism/prism.js`,
                 markdown: `${__dirname}/public/lib/markdown-js/markdown.js`,
                 localizationMapEn: `${__dirname}/../dist/localization/localization.en.json`,
                 localizationMapDe: `${__dirname}/../dist/localization/localization.de.json`,
                 localizationMapRu: `${__dirname}/../dist/localization/localization.ru.json`,
                 ajaxMap: `${__dirname}/public/ajax/ajaxMap.js`
+                
             }
         },
         resolveLoader: {
