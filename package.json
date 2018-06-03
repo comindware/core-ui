@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.5.0-beta.41",
+  "version": "1.5.0-beta.43",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -42,7 +42,7 @@
     }
   ],
   "devDependencies": {
-    "autoprefixer": "^8.5.2",
+    "autoprefixer": "^8.6.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -101,7 +101,7 @@
     "postcss-apply": "^0.10.0",
     "postcss-custom-properties": "^7.0.0",
     "postcss-loader": "^2.1.5",
-    "prettier": "^1.13.3",
+    "prettier": "^1.13.4",
     "puppeteer": "^1.4.0",
     "run-sequence": "^2.2.1",
     "style-loader": "^0.21.0",
@@ -121,10 +121,10 @@
     "jquery": "^3.3.1",
     "jsencrypt": "^2.3.1",
     "jstorage": "^0.4.8",
-    "moment": "^2.22.1",
+    "moment": "^2.22.2",
     "moment-timezone": "^0.5.17",
     "numeral": "^2.0.6",
     "spectrum-colorpicker": "^1.8.0",
-    "underscore": "^1.9.0"
+    "underscore": "^1.9.1"
   }
 }

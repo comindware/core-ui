@@ -1,3 +1,5 @@
+import { $ } from 'lib';
+
 const defaultOptions = {
     themesPath: './themes/',
     theme: 'main'
@@ -6,7 +8,7 @@ const defaultOptions = {
 export default class ThemeService {
     static initialize(options) {
         this.options = Object.assign(defaultOptions, options);
-        this.setTheme();
+        this.setTheme(this.options.theme);
     }
 
     static setTheme(name) {
@@ -23,7 +25,7 @@ export default class ThemeService {
 
     static _setStyle() {
         const url = `${this.url}/theme.css`;
-        document.head.insertAdjacentHTML('beforeend', `<link id="core-ui-theme-styles" href="${url}" rel="stylesheet">`);
+        document.head.insertAdjacentHTML('beforeend', `<link rel='stylesheet' type='text/css' id="core-ui-theme-styles" href="${url}"></style>`);
     }
 
     static _setSprite() {
@@ -31,8 +33,9 @@ export default class ThemeService {
         $.get(url, data => {
             const div = document.createElement('div');
             div.id = 'core-ui-sprites';
+            div.classList.add('visually-hidden');
             div.innerHTML = new XMLSerializer().serializeToString(data.documentElement);
-            document.body.insertBefore(div, document.body.childNodes[0]);
+            document.body.insertAdjacentElement('afterbegin', div);
         });
     }
 
