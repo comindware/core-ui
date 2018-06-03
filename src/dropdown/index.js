@@ -1,10 +1,8 @@
-import PopoutView from './views/PopoutView';
 import DropdownView from './views/DropdownView';
 import ListPanelView from './views/ListPanelView';
 import MenuItemView from './views/MenuItemView';
 import MenuPanelView from './views/MenuPanelView';
 import DefaultButtonView from './views/DefaultButtonView';
-import CustomAnchorBehavior from './views/behaviors/CustomAnchorBehavior';
 import factory from './factory';
 
 export default /** @lends module:core.dropdown */ {
@@ -17,10 +15,6 @@ export default /** @lends module:core.dropdown */ {
          * Marionette Behavior which are required on panel/button views when some config options are enabled.
          * @namespace
          * */
-        behaviors: {
-            CustomAnchorBehavior
-        },
-        PopoutView,
         DropdownView,
         ListPanelView,
         MenuItemView,

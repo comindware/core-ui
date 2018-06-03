@@ -12,8 +12,6 @@ import InterfaceErrorMessageService from './services/InterfaceErrorMessageServic
 import MobileService from './services/MobileService';
 import ThemeService from './services/ThemeService';
 
-import 'backbone.trackit';
-
 export default {
     start(options) {
         const marionetteApp = new Marionette.Application();
