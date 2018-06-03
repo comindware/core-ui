@@ -32,6 +32,14 @@ export default /** @lends module:core.dropdown.factory */ {
      * @returns {DropdownView} Экземпляр DropdownView
      * */
     createDropdown(options) {
+        if (!options.buttonView) {
+            options.buttonView = DefaultButtonView;
+        }
+
+        if (!options.panelView) {
+            options.panelView = MenuPanelView;
+        }
+
         return new DropdownView(options);
     }
 };
