@@ -704,3 +704,21 @@ svg.svg-grid-icons {
 .group-title.layout__group-collapsed__button{
   transform: rotate(0);
 }
+
+/* Popup */
+
+.layout__popup-view-window {
+  background: var(--popup-window-bg);
+}
+
+.layout__popup-view-header {
+  @apply --popup-header-theme;
+}
+
+.layout__popup-view-button-list {
+  @apply --popup-footer-theme;
+}
+
+.layout__popup-view-header__close {
+  @apply --popup-close-theme;
+}

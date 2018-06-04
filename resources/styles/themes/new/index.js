@@ -37,6 +37,7 @@ const variables = {
 
     border: '1px solid #c1c1c1',
     'border-radius': '4px',
+    'border-radius-big': '7px',
 
     // font
     'base-font-size': '14px',
@@ -152,7 +153,9 @@ const variables = {
     'tab-header-justify': 'flex-start',
     'tab-header-padding-with-move': '0 30px',
 
-    'btn-separator-width': '15px'
+    'btn-separator-width': '15px',
+
+    'popup-window-bg': 'var(--grey-100)'
 };
 
 module.exports.variables = variables;
@@ -380,5 +383,20 @@ module.exports.apply = {
         padding: '20px',
         'border-radius': '7px',
         'background-color': variables['grey-100']
+    },
+
+    'popup-header-theme': {
+        padding: '15px 20px',
+        'font-size': '18px',
+        'font-weight': '600',
+        display: 'flex',
+        'align-items': 'center'
+    },
+    'popup-footer-theme': {
+        padding: '15px 20px'
+    },
+    'popup-close-theme': {
+        width: '12px',
+        height: '12px'
     }
 };
