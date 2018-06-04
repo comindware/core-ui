@@ -170,11 +170,6 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
 
         let value = this.value.value;
 
-        if (Array.isArray(value) && value.length === 1) {
-            value = value[0];
-            this.options.valueEditorOptions.displayAttribute = 'name';
-        }
-
         this.valueEditor = new this.options.valueEditor(
             _.extend(this.options.valueEditorOptions, {
                 value: this.value.type === valueTypes.value ? value : null
