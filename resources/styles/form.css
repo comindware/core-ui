@@ -892,7 +892,6 @@ input[type="checkbox"].checkbox {
 
 
 .editor__common-empty-view {
-    position: absolute;
     display: flex;
     width: 100%;
     align-items: center;
