@@ -512,18 +512,6 @@ svg.svg-grid-icons {
   @apply --button-active-theme;
 }
 
-.layout__button-view-text {
-  @apply --button-theme;
-}
-
-.layout__button-view-text:hover {
-  @apply --button-hover-theme;
-}
-
-.layout__button-view-text:active {
-  @apply --button-active-theme;
-}
-
 /* tabs */
 .tabs {
   justify-content: var(--tab-header-justify);

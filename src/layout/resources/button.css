@@ -1,10 +1,10 @@
-.layout__button-view {
+.btn {
     display: inline-block;
     cursor: pointer;
     flex: none;
     align-self: flex-start;
   }
-.layout__button-view-text {
+.btn__text {
     display: inline-block;
     line-height: inherit;
 }

@@ -588,25 +588,6 @@ input[type="checkbox"].checkbox {
 /*-------------// End Form Erorr // -------------*/
 
 
-/*------------------ Button ------------------*/
-
-
-.btn__text{
-    display: inline-block;
-    max-width: 100%;
-    font-size: 11px;
-    font-weight: 600;
-    color: #636262;
-    line-height: inherit;
-    vertical-align: middle;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-/*-------------// End Button // -------------*/
-
-
 /* Avatar editor */
 .user-avatar-wrp{
     display: inline-block;

@@ -233,11 +233,11 @@ svg.svg-grid-icons {
 
 /* Button */
 
-.layout__button-view:hover .layout__button-view-text {
+.btn:hover .btn__text {
   color:#000;
 }
 
-.layout__button-view:active .layout__button-view-text {
+.btn:active .btn__text {
   color:#000;
 }
 
