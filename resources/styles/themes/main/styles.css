@@ -250,6 +250,10 @@ svg.svg-grid-icons {
   color: #009bfe;
 }
 
+.layout__tab-layout_move-button {
+  @apply --tab-move-btn-theme;
+}
+
 .layout__tab-layout_move-button .svg-icons_dropdown {
   width: 35px;
   height: 35px;
@@ -355,4 +359,24 @@ svg.svg-grid-icons {
 }
 .layout__popup-view-header__close:active {
   box-shadow: inset 1px 1px 3px rgba(200,200,200,.7);
+}
+
+.btn.btn_arrow {
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  line-height: 26px;
+  background: #f7f6f6 50% 50% no-repeat;
+}
+
+.layout__horizontal-layout-list {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.layout__horizontal-layout-list-item {
+  padding-left: 10px;
+  padding-right: 10px;
 }

@@ -333,16 +333,14 @@ input[type="checkbox"].checkbox {
 
 
 /* Date Time */
-.date-dropdown-wrp:not(:empty),
-.time-dropdown-wrp:not(:empty) {
-    flex-grow: 1;
-}
 .editor_date-time {
     padding-right: 16px;
     display: flex;
     align-items: center;
 }
-
+.editor_date-time .dropdown {
+    flex-grow: 1;
+}
 .editor_date-time .input{
     border: 0;
     padding-right: 0;

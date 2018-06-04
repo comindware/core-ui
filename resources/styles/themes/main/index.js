@@ -273,6 +273,11 @@ module.exports.apply = {
         right: 'auto'
     },
     'columns-select-list-theme': {},
+    'columns-header-theme': {
+        'font-size': '13px',
+        'font-weight': '600',
+        color: '#182026'
+    },
 
     'toolbar-btn-theme': {},
     'toolbar-btn-low-theme': {

@@ -497,7 +497,9 @@ svg.svg-grid-icons {
   border-left: var(--columns-select-border);
   border-right: var(--columns-select-border);
 }
-
+.columns-select__header {
+  @apply --columns-header-theme;
+}
 
 /* button */
 .btn{
@@ -570,10 +572,6 @@ svg.svg-grid-icons {
 .layout__tab-layout__panel-container {
   @apply --tab-panel-container-theme;
   padding: var(--tab-panel-container-padding);
-}
-
-.layout__tab-layout_move-button {
-  @apply --tab-move-btn-theme;
 }
 
 .layout__tab-layout_move-button.prev-layout_move-button{
@@ -663,6 +661,7 @@ svg.svg-grid-icons {
 }
 
 .toolbar__icons {
+  display: inline-block;
   margin-right: 5px;
 }
 

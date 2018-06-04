@@ -164,6 +164,7 @@ module.exports.apply = {
     'button-theme': {
         display: 'inline-block',
         'vertical-align': 'middle',
+        cursor: 'pointer',
         color: '#fff',
         'font-size': '15px',
         'line-height': '1.5',
@@ -192,6 +193,12 @@ module.exports.apply = {
     'button-outline-active-theme': {
         color: variables['blue-400'],
         'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
+    },
+    'button-icon-theme': {
+        width: '30px',
+        height: '30px',
+        padding: '3px 0',
+        'text-align': 'center'
     },
     'dropdown-theme': {
         background: variables['light-gradient']
@@ -306,7 +313,6 @@ module.exports.apply = {
         right: '0',
         padding: '4px',
         display: 'flex',
-        'align-items': 'center',
         transform: 'rotate(-90deg)'
     },
     'tab-move-btn-prev-theme': {
@@ -315,9 +321,16 @@ module.exports.apply = {
         transform: 'rotate(90deg)'
     },
     'columns-select-list-theme': {
+        'background-color': variables.white,
         padding: '10px 9px 10px 15px',
         border: variables.border,
         'border-radius': '0 4px 4px 4px'
+    },
+    'columns-header-theme': {
+        'font-size': variables['base-font-size'],
+        'font-weight': variables['form-label-font-weight'],
+        color: variables.black,
+        'margin-bottom': variables['form-label-margin']
     },
     'toolbar-btn-theme': {
         'margin-right': '5px'
