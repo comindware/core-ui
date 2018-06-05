@@ -180,17 +180,19 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
     },
 
     __keyup(e) {
+        //todo fix caret
         if (e.ctrlKey) {
             return;
         }
-        if ([keyCode.LEFT,
-keyCode.RIGHT,
-keyCode.HOME,
-keyCode.END].indexOf(e.keyCode) === -1) {
+        if ([keyCode.LEFT, keyCode.RIGHT, keyCode.HOME, keyCode.END].indexOf(e.keyCode) === -1) {
             return;
         }
 
-        const caret = this.ui.textarea.getSelection();
+        const caret = {
+            start: this.ui.textarea[0].selectionStart,
+            end: this.ui.textarea[0].selectionEnd
+        };
+
         if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
             return;
         }
@@ -201,13 +203,18 @@ keyCode.END].indexOf(e.keyCode) === -1) {
     },
 
     __triggerInput() {
+        //todo fix caret
         const text = this.ui.textarea.val();
         if (this.oldText === text) {
             return;
         }
 
         this.oldText = text;
-        const caret = this.ui.textarea.getSelection();
+
+        const caret = {
+            start: this.ui.textarea[0].selectionStart,
+            end: this.ui.textarea[0].selectionEnd
+        };
 
         this.trigger('input', text, {
             start: caret.start,

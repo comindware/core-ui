@@ -193,7 +193,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     getCaretPos() {
-        return this.ui.input.getSelection().start;
+        return this.ui.input[0].selectionStart;
     },
 
     fixCaretPos(pos) {
