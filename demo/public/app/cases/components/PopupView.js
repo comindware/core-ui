@@ -1,5 +1,3 @@
-
-
 export default function() {
     const model = new Backbone.Model({
         name: 'new operation',
@@ -32,64 +30,64 @@ export default function() {
         },
         expression: {
             type: 'TextArea'
-        },
+        }
     };
 
-    const createPopup = () => new core.layout.Popup({
-        size: {
-            width: '800px',
-            height: '700px'
-        },
-        header: 'New Operation',
-        buttons: [
-            {
-                id: true,
-                text: 'Save',
-                handler(popup) {
-                    popup.content.form.commit();
-                    core.services.WindowService.closePopup();
-                    alert(JSON.stringify(model.toJSON(), null, 4));
-                }
+    const createPopup = () =>
+        new core.layout.Popup({
+            size: {
+                width: '800px',
+                height: '700px'
             },
-            {
-                id: false,
-                text: 'Cancel',
-                handler(popup) {
-                    core.services.WindowService.closePopup();
-                }
-            }
-        ],
-        content: new core.layout.Form({
-            model,
-            schema: formSchema,
-            content: new core.layout.TabLayout({
-                tabs: [
-                    {
-                        id: 'general',
-                        name: 'General',
-                        view: new core.layout.VerticalLayout({
-                            rows: [
-                                core.layout.createFieldAnchor('name'),
-                                new core.layout.HorizontalLayout({
-                                    columns: [
-                                        core.layout.createFieldAnchor('idealDays'),
-                                        core.layout.createFieldAnchor('dueDate')
-                                    ]
-                                }),
-                                core.layout.createFieldAnchor('description'),
-                                core.layout.createEditorAnchor('computed')
-                            ]
-                        })
-                    },
-                    {
-                        id: 'expression',
-                        name: 'Computed Expression',
-                        view: core.layout.createEditorAnchor('expression')
+            header: 'New Operation',
+            buttons: [
+                {
+                    id: false,
+                    text: 'Cancel',
+                    customClass: 'btn-small btn-outline',
+                    handler(popup) {
+                        core.services.WindowService.closePopup();
                     }
-                ]
+                },
+                {
+                    id: true,
+                    text: 'Save',
+                    customClass: 'btn-small',
+                    handler(popup) {
+                        popup.content.form.commit();
+                        core.services.WindowService.closePopup();
+                        alert(JSON.stringify(model.toJSON(), null, 4));
+                    }
+                }
+            ],
+            content: new core.layout.Form({
+                model,
+                schema: formSchema,
+                content: new core.layout.TabLayout({
+                    tabs: [
+                        {
+                            id: 'general',
+                            name: 'General',
+                            view: new core.layout.VerticalLayout({
+                                rows: [
+                                    core.layout.createFieldAnchor('name'),
+                                    new core.layout.HorizontalLayout({
+                                        columns: [core.layout.createFieldAnchor('idealDays'), core.layout.createFieldAnchor('dueDate')]
+                                    }),
+                                    core.layout.createFieldAnchor('description'),
+                                    core.layout.createEditorAnchor('computed')
+                                ]
+                            })
+                        },
+                        {
+                            id: 'expression',
+                            name: 'Computed Expression',
+                            view: core.layout.createEditorAnchor('expression')
+                        }
+                    ]
+                })
             })
-        })
-    });
+        });
 
     const View = Marionette.View.extend({
         template: Handlebars.compile('<input class="js-show-popup" type="button" value="Show Popup" />'),

@@ -43,6 +43,11 @@ export default {
                     description: 'Popup View'
                 },
                 {
+                    id: 'MessageBox',
+                    displayName: 'Message Box',
+                    description: 'Message Box'
+                },
+                {
                     id: 'NavigationDrawer',
                     displayName: 'Navigation Drawer',
                     description: 'Navigation Drawer'

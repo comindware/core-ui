@@ -143,7 +143,10 @@ const variables = {
 
     'btn-separator-width': '20px',
 
-    'popup-window-bg': '#fff'
+    'popup-window-bg': '#fff',
+    'popup-content-padding': '0 20px',
+    'popup-footer-btn-margin': '5px',
+    'system-message-font-size': '18px'
 };
 
 module.exports.variables = variables;
@@ -233,6 +236,9 @@ module.exports.apply = {
         filter: 'alpha(opacity=60)',
         opacity: '.6',
         cursor: 'auto'
+    },
+    'checkbox-theme': {
+        'line-height': 'normal'
     },
     'checkbox-disabled-theme': {},
     'radio-disabled-theme': {},

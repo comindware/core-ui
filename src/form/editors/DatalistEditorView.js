@@ -302,7 +302,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __canAddItem(): boolean {
         const selectedItems = _.filter(this.viewModel.button.selected.models, model => model !== this.fakeInputModel);
         const isAccess = this.getEnabled() && !this.getReadonly();
-        return isAccess && (this.options.maxQuantitySelected === 1 || !this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
+        return isAccess && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
     },
 
     __onValueEdit(value) {
@@ -362,7 +362,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        if (this.__canAddItem()) {
+        if (this.__canAddItem() || this.options.maxQuantitySelected === 1) {
             this.dropdownView.open();
         }
     },
