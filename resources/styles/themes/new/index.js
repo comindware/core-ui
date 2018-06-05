@@ -81,7 +81,7 @@ const variables = {
     'checkbox-size': '18px',
     'checkbox-checked-color': 'var(--blue-300)',
     'checkbox-border-color': 'var(--grey-400)',
-    'checkbox-radius': '0',
+    'checkbox-radius': 'var(--border-radius)',
     'checkbox-intermediate-color': 'var(--blue-200)',
     'checkbox-intermediate-size': '10px',
 
@@ -155,7 +155,10 @@ const variables = {
 
     'btn-separator-width': '15px',
 
-    'popup-window-bg': 'var(--grey-100)'
+    'popup-window-bg': 'var(--grey-100)',
+    'popup-content-padding': '0 15px',
+    'popup-footer-btn-margin': '10px',
+    'system-message-font-size': '15px'
 };
 
 module.exports.variables = variables;
@@ -165,7 +168,7 @@ module.exports.apply = {
         display: 'inline-block',
         'vertical-align': 'middle',
         cursor: 'pointer',
-        color: '#fff',
+        color: variables['blue-100'],
         'font-size': '15px',
         'line-height': '1.5',
         padding: '3px 15px',
@@ -259,6 +262,11 @@ module.exports.apply = {
     'custom-cotrol-disabled-theme': {
         opacity: '.6',
         cursor: 'not-allowed'
+    },
+    'checkbox-theme': {
+        display: 'flex',
+        'align-items': 'center',
+        'justify-content': 'center'
     },
     'checkbox-disabled-theme': {
         color: variables['blue-300'],
@@ -399,17 +407,22 @@ module.exports.apply = {
     },
 
     'popup-header-theme': {
-        padding: '15px 20px',
+        padding: '15px',
         'font-size': '18px',
         'font-weight': '600',
         display: 'flex',
         'align-items': 'center'
     },
     'popup-footer-theme': {
-        padding: '15px 20px'
+        padding: '15px'
     },
     'popup-close-theme': {
         width: '12px',
         height: '12px'
+    },
+    'popup-form-content-theme': {
+        padding: '15px',
+        'background-color': variables.white,
+        'border-radius': variables['border-radius-big']
     }
 };

@@ -138,8 +138,8 @@ body {
 }
 
 .checkbox {
+  @apply --checkbox-theme;
   font-size: var(--base-font-size);
-  line-height: normal;
   width: var(--checkbox-size);
   height: var(--checkbox-size);
   border-radius: var(--checkbox-radius);
@@ -708,4 +708,14 @@ svg.svg-grid-icons {
 
 .layout__popup-view-header__close {
   @apply --popup-close-theme;
+}
+.layout__popup-view-content {
+  padding: var(--popup-content-padding);
+
+}
+.layout__popup-view-button-list .btn + .btn {
+  margin-left: var(--popup-footer-btn-margin);
+}
+.systemMessageBody {
+  font-size: var(--system-message-font-size);
 }
