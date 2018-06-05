@@ -141,7 +141,9 @@ const variables = {
     'tab-header-justify': 'space-between',
     'tab-header-padding-with-move': '0 20px',
 
-    'btn-separator-width': '20px'
+    'btn-separator-width': '20px',
+
+    'popup-window-bg': '#fff'
 };
 
 module.exports.variables = variables;
@@ -271,6 +273,11 @@ module.exports.apply = {
         right: 'auto'
     },
     'columns-select-list-theme': {},
+    'columns-header-theme': {
+        'font-size': '13px',
+        'font-weight': '600',
+        color: '#182026'
+    },
 
     'toolbar-btn-theme': {},
     'toolbar-btn-low-theme': {
@@ -318,13 +325,35 @@ module.exports.apply = {
         'line-height': '16px',
         'max-width': 'calc(100% - 20px)',
         'background-color': '#fff',
-        'padding': '0 5px',
+        padding: '0 5px',
         position: 'absolute',
-        top:'-8px',
+        top: '-8px'
     },
     'group-title-theme': {
         color: variables['grey-800'],
         cursor: 'pointer'
     },
-    'group-content-theme': {}
+    'group-content-theme': {},
+
+    'popup-header-theme': {
+        padding: '5px 40px',
+        'font-size': '18px',
+        color: variables['grey-800'],
+        'text-align': 'center'
+    },
+    'popup-footer-theme': {
+        padding: '7px',
+        'background-color': variables['grey-100'],
+        'border-top': `1px solid ${variables['grey-400']}`
+    },
+    'popup-close-theme': {
+        width: '22px',
+        height: '22px',
+        padding: '4px',
+        position: 'absolute',
+        right: '4px',
+        top: '4px',
+        border: '1px solid transparent',
+        'border-radius': '2px'
+    }
 };

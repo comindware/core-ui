@@ -30,6 +30,47 @@
   background-size: 14px;
 }
 
+/* Buttons */
+.btn_attach {
+  padding: 3px 7px;
+  margin-right: 3px;
+}
+
+.btn.btn-outline{
+  @apply --button-outline-theme;;
+}
+.btn.btn-outline:hover{
+  @apply --button-outline-hover-theme;
+}
+.btn.btn-outline:active{
+  @apply --button-outline-active-theme;
+}
+
+.btn.btn-icon {
+  @apply --button-icon-theme;
+}
+.btn.btn-icon svg {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  top: 0.125em;
+  position: relative;
+}
+
+.btn.btn_arrow {
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+.btn.btn-small {
+  padding: 2px 15px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.btn.btn-large {
+  padding: 4px 15px;
+  font-size: 20px;
+}
 /* dropdown-list */
 
 .dd-list__i.selected,
@@ -100,26 +141,46 @@ svg.svg-grid-icons.svg-icons_flag-none {
   display:none;
 }
 
-.layout__form-view .layout__vertical-layout, 
-.layout__form-view .layout__horizontal-layout {
+.layout__form-view .layout__horizontal-layout,
+.layout__horizontal-layout-list {
   width: auto;
   margin-left: -5px;
   margin-right: -5px;
 }
-.layout__form-view .layout__vertical-layout > div, 
-.layout__form-view .layout__horizontal-layout > div {
+
+.layout__form-view .layout__horizontal-layout > div,
+.layout__horizontal-layout-list-item {
   padding-left: 5px;
   padding-right: 5px;
 }
-.layout__vertical-layout > div {
+.layout__vertical-layout > div,
+.layout__vertical-layout-item {
   margin-bottom: 20px;
-}
-
-.btn_attach {
-  padding: 3px 7px;
-  margin-right: 3px;
 }
 
 .group-toggle {
   order: 2;
+}
+
+.layout-group .layout-group__content > .layout-group .group-title {
+  font-size: 15px;
+  padding-left: 0
+}
+.layout-group .layout-group__content > .layout-group .layout-group__content {
+  background-color: #fff;
+}
+
+.layout__popup-view-window {
+  border-radius: var(--border-radius-big);
+}
+
+.layout__popup-view-header-text {
+  flex: 1 1 auto;
+  padding-right: 10px;
+}
+.layout__popup-view-header__close {
+  opacity: 0.5;
+}
+.layout__popup-view-header__close:hover {
+  opacity: 1;
 }

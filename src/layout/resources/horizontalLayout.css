@@ -16,12 +16,10 @@
     height: 100%;
     display: flex;
     flex-flow: row nowrap;
-    margin: 0 -10px;
 }
 
 .layout__horizontal-layout-list-item {
     flex: 1;
-    margin: 0 10px;
 }
 
 .layout__horizontal-layout-title {

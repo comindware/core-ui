@@ -233,11 +233,11 @@ svg.svg-grid-icons {
 
 /* Button */
 
-.layout__button-view:hover .layout__button-view-text {
+.btn:hover .btn__text {
   color:#000;
 }
 
-.layout__button-view:active .layout__button-view-text {
+.btn:active .btn__text {
   color:#000;
 }
 
@@ -248,6 +248,10 @@ svg.svg-grid-icons {
 .layout__tab-layout__header-view-item:not(.layout__tab-layout__header-view-item_disabled):hover,
 .tabs__i:not(.disabled):hover {
   color: #009bfe;
+}
+
+.layout__tab-layout_move-button {
+  @apply --tab-move-btn-theme;
 }
 
 .layout__tab-layout_move-button .svg-icons_dropdown {
@@ -343,4 +347,36 @@ svg.svg-grid-icons {
 
 .group-title.layout__group-collapsed__button{
   transform: rotate(0);
+}
+
+.layout__popup-view-window {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.layout__popup-view-header__close:hover {
+  background: #f7f6f6;
+  border-color: #dfe4e8;
+}
+.layout__popup-view-header__close:active {
+  box-shadow: inset 1px 1px 3px rgba(200,200,200,.7);
+}
+
+.btn.btn_arrow {
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  line-height: 26px;
+  background: #f7f6f6 50% 50% no-repeat;
+}
+
+.layout__horizontal-layout-list {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.layout__horizontal-layout-list-item {
+  padding-left: 10px;
+  padding-right: 10px;
 }
