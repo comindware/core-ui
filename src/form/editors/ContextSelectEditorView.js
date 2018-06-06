@@ -90,10 +90,11 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.context = context;
         panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
 
-        if (!this.__isInstanceInContext(this.value)) {
+        if (this.__isInstanceInContext(this.value)) {
             panelModel.set('instanceTypeId', recordTypeId);
             this.setValue();
         }
+
         this.render();
     },
 
