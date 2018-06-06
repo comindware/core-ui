@@ -145,7 +145,6 @@ const variables = {
 
     'popup-window-bg': '#fff',
     'popup-content-padding': '0 20px',
-    'popup-footer-btn-margin': '5px',
     'system-message-font-size': '18px'
 };
 
