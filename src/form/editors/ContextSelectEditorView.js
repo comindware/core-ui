@@ -35,8 +35,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
             panel: model
         });
 
-        const buttonValue = this.__getButtonText(this.getValue());
-        this.viewModel.get('button').set('value', buttonValue);
+        this.__updateDisplayValue();
     },
 
     focusElement: null,
@@ -90,11 +89,18 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         this.context = context;
         panelModel.set('context', this.__createTreeCollection(this.context, recordTypeId));
 
-        if (panelModel.get('instanceTypeId') !== recordTypeId || !this.__isInstanceInContext(this.value)) {
+        if (this.__isInstanceInContext(this.value)) {
             panelModel.set('instanceTypeId', recordTypeId);
+            this.__updateDisplayValue();
+        } else {
             this.setValue();
         }
+
         this.render();
+    },
+
+    isEmptyValue() {
+        return false;
     },
 
     __value(value, triggerChange, newValue) {
@@ -105,7 +111,8 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         if (triggerChange) {
             this.__triggerChange();
         }
-        this.viewModel.get('button').set('value', this.__getButtonText(this.value));
+
+        this.__updateDisplayValue();
     },
 
     __getButtonText(selectedItem) {
@@ -127,6 +134,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     __isInstanceInContext(item) {
         if (!item || item === 'False') return false;
+
         return Object.values(this.context).find(value => value.find(context => context.id === item[item.length - 1]));
     },
 
@@ -194,7 +202,7 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         return collectedPath;
     },
 
-    isEmptyValue() {
-        return false;
+    __updateDisplayValue() {
+        this.viewModel.get('button').set('value', this.__getButtonText(this.value));
     }
 }));
