@@ -376,7 +376,6 @@ svg.svg-grid-icons {
 .collection-right-items-region {
     display: flex;
     flex: 1 1 auto;
-    max-width: 50%;
     justify-content: flex-end;
 }
 
@@ -387,10 +386,15 @@ svg.svg-grid-icons {
 .form-label_editable-grid{
     line-height: inherit;
     flex: 1;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .editable-grid-header-btn{
     margin-top: 2px;
+    display: flex;
 }
 
 .editable-grid-header__btn{
@@ -398,7 +402,7 @@ svg.svg-grid-icons {
     padding: 0 5px;
     border-radius: 2px;
     border: 1px solid transparent;
-    display: inline-block;
+    display: flex;
 }
 .editable-grid-header__btn:hover{
     border-color: #bfc2c4;
