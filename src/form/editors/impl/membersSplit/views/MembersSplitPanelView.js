@@ -71,11 +71,14 @@ export default Marionette.View.extend({
             selectableBehavior: 'multi',
             showSearch: true,
             showSelection: true,
-            columns: [{
-                title: 'name',
-                type: 'String',
-                key: 'name'
-            }],
+            showHeader: false,
+            columns: [
+                {
+                    title: 'name',
+                    type: 'String',
+                    key: 'name'
+                }
+            ],
             listViewOptions: {
                 height: 'auto',
                 childView: MembersListItemView,
@@ -95,12 +98,15 @@ export default Marionette.View.extend({
         const selectedList = new Core.list.controllers.GridController({
             collection: this.model.get('selected'),
             selectableBehavior: 'multi',
-            columns: [{
-                title: 'name',
-                type: 'String',
-                key: 'name'
-            }],
+            columns: [
+                {
+                    title: 'name',
+                    type: 'String',
+                    key: 'name'
+                }
+            ],
             showSearch: true,
+            showHeader: false,
             listViewOptions: {
                 height: 'auto',
                 childView: MembersListItemView,

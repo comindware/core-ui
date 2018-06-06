@@ -9,16 +9,11 @@
 
 .editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
 .editor_checked.checkbox {
-  color: var(--white);
-  background: var(--checkbox-checked-color);
-  border-color: var(--checkbox-checked-color);
-}
-.toolbar-btn .editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
-.grid-header-wrp .editor_checked.checkbox {
   color: var(--checkbox-checked-color);
   background: var(--light-gradient);
   border-color: var(--checkbox-border-color);
 }
+
 .tr-search__input {
   @apply --input-theme;
   height: var(--input-height);
@@ -137,7 +132,9 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .error .form-label {
   color: var(--error-color);
 }
-.required .form-label__txt::after, .cell.required::before {
+.required .form-label__txt::after,
+.form-label_required .form-label__txt::after,
+.cell.required::before {
   content: '*';
   color: var(--error-color);
 }
@@ -152,14 +149,14 @@ svg.svg-grid-icons.svg-icons_flag-none {
   display:none;
 }
 
-.layout__form-view .layout__horizontal-layout,
+.layout__horizontal-layout,
 .layout__horizontal-layout-list {
   width: auto;
   margin-left: -5px;
   margin-right: -5px;
 }
 
-.layout__form-view .layout__horizontal-layout > div,
+.layout__horizontal-layout > div,
 .layout__horizontal-layout-list-item {
   padding-left: 5px;
   padding-right: 5px;

@@ -110,8 +110,8 @@ const variables = {
     'grid-header-selection-bg': 'var(--grid-header-bg)',
 
     'grid-cell-bg': 'var(--white)',
-    'grid-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
-    'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grey-400), inset 1px 0 0 0 var(--grey-400)',
+    'grid-cell-border': 'inset -1px -1px 0 0 var(--grey-300)',
+    'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 0 0 0 var(--grey-300)',
     'grid-cell-height': 'var(--grid-header-height)',
     'grid-cell-padding': '0 15px',
     'grid-cell-input-padding': '0',
@@ -157,7 +157,6 @@ const variables = {
 
     'popup-window-bg': 'var(--grey-100)',
     'popup-content-padding': '0 15px',
-    'popup-footer-btn-margin': '10px',
     'system-message-font-size': '15px'
 };
 
@@ -265,6 +264,7 @@ module.exports.apply = {
     },
     'checkbox-theme': {
         display: 'flex',
+        'flex-shrink': '0',
         'align-items': 'center',
         'justify-content': 'center'
     },

@@ -6,7 +6,7 @@ import EmptyGridView from './views/EmptyGridView';
 import GridView from './views/GridView';
 import GridColumnHeaderView from './views/GridColumnHeaderView';
 
-export const getDefaultComparator = (columns = []) =>  {
+export const getDefaultComparator = (columns = []) => {
     const sortingColumn = columns.find(column => column.sorting);
     let comparator;
     if (sortingColumn) {
@@ -85,8 +85,7 @@ const factory = {
         const listViewOptions = _.extend(
             {
                 collection,
-                emptyView: EmptyListView,
-                showHeader: true
+                emptyView: EmptyListView
             },
             options.listViewOptions
         );
@@ -130,8 +129,7 @@ const factory = {
                 emptyView: EmptyGridView,
                 emptyViewOptions: {
                     text: Localizer.get('CORE.GRID.EMPTYVIEW.EMPTY')
-                },
-                showHeader: true
+                }
             },
             options.gridViewOptions
         );

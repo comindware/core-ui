@@ -1,7 +1,9 @@
+.layout__button {
+    flex: none;
+}
 .btn {
     display: inline-block;
     cursor: pointer;
-    flex: none;
     align-self: flex-start;
   }
 .btn__text {

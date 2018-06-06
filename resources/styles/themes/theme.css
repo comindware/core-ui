@@ -22,7 +22,9 @@ body {
     font-size: var(--form-label-font-size);
     font-weight: var(--form-label-font-weight);
     color: var(--form-label-color);
-    padding: var(--form-label-padding);
+}
+.form-group .form-label {
+  padding: var(--form-label-padding);
 }
 .form-label:not(.form-label--empty) {
   margin-bottom: var(--form-label-margin);
@@ -713,9 +715,7 @@ svg.svg-grid-icons {
   padding: var(--popup-content-padding);
 
 }
-.layout__popup-view-button-list .btn + .btn {
-  margin-left: var(--popup-footer-btn-margin);
-}
+
 .systemMessageBody {
   font-size: var(--system-message-font-size);
 }

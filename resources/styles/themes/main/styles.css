@@ -311,7 +311,7 @@ svg.svg-grid-icons {
   padding-left: 10px;
 }
 
-.required .form-label::before, .cell.required::before {
+.required .form-label::before, .form-label_required:before, .cell.required::before {
   content: '*';
   margin: -5px 0 0;
   color: #c85e44;
@@ -322,6 +322,7 @@ svg.svg-grid-icons {
   top: 50%;
   left: 0;
 }
+
 .cell.required::before {
   margin: 0 0 0 1px;
   top: 0;
