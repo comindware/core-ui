@@ -711,3 +711,11 @@ svg.svg-grid-icons {
 .systemMessageBody {
   font-size: var(--system-message-font-size);
 }
+
+/* Context Editor */
+.editor.context_select {
+  @apply --input-theme;
+  padding: var(--input-padding);
+  height: var(--input-height);
+  line-height: var(--input-line-height);
+}

@@ -349,19 +349,21 @@ module.exports.apply = {
     'toolbar-btn-normal-active-theme': {},
 
     'toolbar-btn-major-theme': {
-        'background-color': '#d6af45',
-        'border-color': '#d6af45'
+        color: variables.white,
+        'background-color': '#e19e35',
+        'border-color': '#e19e35'
     },
     'toolbar-btn-major-hover-theme': {
-        'background-color': '#d1a62e',
-        'border-color': '#d1a62e'
+        'background-color': '#de9621',
+        'border-color': '#de9621'
     },
     'toolbar-btn-major-active-theme': {
-        'background-color': '#d1a62e',
-        'border-color': '#d1a62e'
+        'background-color': '#de9621',
+        'border-color': '#de9621'
     },
 
     'toolbar-btn-critical-theme': {
+        color: variables.white,
         'background-color': '#e1742c',
         'border-color': '#e1742c'
     },
@@ -375,6 +377,7 @@ module.exports.apply = {
     },
 
     'toolbar-btn-fatal-theme': {
+        color: variables.white,
         'background-color': variables.red,
         'border-color': variables.red
     },
