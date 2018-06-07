@@ -77,6 +77,10 @@ export default Marionette.View.extend({
             c.columnClass = cClass;
         });
 
+        if (this.options.showHeader !== false) {
+            this.options.showHeader = true;
+        }
+
         if (this.options.showHeader) {
             this.headerView = new HeaderView({
                 columns: options.columns,
