@@ -194,11 +194,9 @@ rgba(5,117,189,.5) // user avatar btn
 .editor_disabled span,
 .editor_disabled input,
 .editor_disabled textarea{
-    cursor: default !important;
     -webkit-user-select: none !important;
     -moz-user-select: none !important;
     user-select: none !important;
-    background-color: transparent;
     pointer-events: none;
 }
 
@@ -242,11 +240,6 @@ input[type="checkbox"].checkbox {
     white-space: nowrap;
     line-height: 18px;
     margin-left: 10px;
-}
-
-.editor_readonly .checkbox-text,
-.editor_disabled .checkbox-text {
-    cursor: default;
 }
 
 /* /checkbox */
@@ -845,8 +838,8 @@ input[type="color"], .colorpicker{
     visibility: hidden;
 }
 
-.editor_readonly .svg-icons-wrp_edit-reference,
-.editor_disabled .svg-icons-wrp_edit-reference{
+.editor_readonly .svg-icons_edit-reference,
+.editor_disabled .svg-icons_edit-reference {
     display: none;
 }
 

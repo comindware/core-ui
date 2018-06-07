@@ -2,9 +2,17 @@
 .editor_focused:not(.editor_readonly):not(.editor_disabled) .textarea {
   border-color: var(--input-active-border-color);
 }
+.editor_disabled {
+  @apply --custom-cotrol-disabled-theme;
+}
 .editor_disabled.editor_bubble--single .bubbles,
 .editor_readonly.editor_bubble--single .bubbles {
     @apply --custom-cotrol-disabled-theme;
+    color: var(--grey-400);
+}
+.editor_disabled .checkbox-text,
+.editor_disabled .radiobutton-text {
+  color: var(--grey-400);
 }
 
 .editor_checked:not(.editor_readonly):not(.editor_disabled) .checkbox,
@@ -99,12 +107,18 @@ svg.svg-grid-icons.svg-icons_flag-none {
   fill: var(--error-color);
 }
 
+.svg-icons_edit-reference,
+.svg-icons_remove-bubble {
+  cursor: pointer;
+  position: relative;
+  top: 0.125em;
+  margin-right: 2px;
+  display: inline;
+}
+
 .grid-header-column-content .collapsible-btn {
   background-image: var(--collapse-icon-header);
   top: -1px;
-}
-.svg-icons-wrp__remove-bubble {
-  right: 2px;
 }
 
 /* Tabs */

@@ -82,7 +82,7 @@ const variables = {
     'checkbox-checked-color': 'var(--blue-300)',
     'checkbox-border-color': 'var(--grey-400)',
     'checkbox-radius': 'var(--border-radius)',
-    'checkbox-intermediate-color': 'var(--blue-200)',
+    'checkbox-intermediate-color': 'var(--blue-300)',
     'checkbox-intermediate-size': '10px',
 
     // radio
@@ -90,7 +90,7 @@ const variables = {
     'radio-right-margin': '10px',
     'radio-checked-color': 'var(--checkbox-checked-color)',
     'radio-inner-size': '10px',
-    'radio-checked-disabled-color': 'var(--blue-300)',
+    'radio-checked-disabled-color': 'var(--grey-400)',
 
     // grid
     'grid-toolbar-padding': '10px 6px 10px 0',
@@ -140,8 +140,6 @@ const variables = {
     'dropdown-item-padding': '8px 20px',
     'dropdown-item-checkbox-padding': '10px',
     'dropdown-item-hover-color': 'var(--blue-100)',
-    'bubbles-item-delete-padding': '15px',
-    'bubbles-item-edit-delete-padding': '40px',
 
     'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
     'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
@@ -259,7 +257,6 @@ module.exports.apply = {
         'border-radius': '4px'
     },
     'custom-cotrol-disabled-theme': {
-        opacity: '.6',
         cursor: 'not-allowed'
     },
     'checkbox-theme': {
@@ -269,12 +266,12 @@ module.exports.apply = {
         'justify-content': 'center'
     },
     'checkbox-disabled-theme': {
-        color: variables['blue-300'],
-        'border-color': variables['blue-200'],
-        background: variables['blue-200']
+        color: variables['grey-400'],
+        'border-color': variables['grey-400'],
+        background: variables['grey-300']
     },
     'radio-disabled-theme': {
-        background: variables['blue-200']
+        background: variables['grey-300']
     },
     'svg-icon-wrp-theme': {
         right: '5px',

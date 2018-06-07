@@ -100,7 +100,6 @@ body {
   width: var(--checkbox-intermediate-size);
   height: var(--checkbox-intermediate-size);
   background-color: var(--checkbox-intermediate-color);
-  border-radius: var(--checkbox-radius);
 }
 
 /*------------------ End Form Editor ------------------*/
@@ -235,9 +234,7 @@ svg.svg-grid-icons {
 .svg-icons-wrp__empty {
   @apply --svg-icon-wrp-theme;
 }
-.svg-icons-wrp_edit-reference{
-  right: 20px;
-}
+
 /* /svg icons/ */
 
 
@@ -469,12 +466,7 @@ svg.svg-grid-icons {
 .editor_bubble--single .bubbles {
   @apply --dropdown-theme;
 }
-.editor_bubble--delete .bubbles__i:hover {
-  padding-right: var(--bubbles-item-delete-padding);
-}
-.editor_bubble--edit.editor_bubble--delete .bubbles__i:hover {
-  padding-right: var(--bubbles-item-edit-delete-padding);
-}
+
 .cell .bubbles {
   height: 100%;
   border: none;
