@@ -44,13 +44,13 @@
   margin-right: 3px;
 }
 
-.btn.btn-outline{
-  @apply --button-outline-theme;;
+.btn.btn-outline, .sp-cancel {
+  @apply --button-outline-theme;
 }
-.btn.btn-outline:hover{
+.btn.btn-outline:hover, .sp-cancel:hover {
   @apply --button-outline-hover-theme;
 }
-.btn.btn-outline:active{
+.btn.btn-outline:active, .sp-cancel:active {
   @apply --button-outline-active-theme;
 }
 
@@ -79,6 +79,7 @@
   padding: 4px 15px;
   font-size: 20px;
 }
+
 /* dropdown-list */
 
 .dd-list__i.selected,
@@ -88,8 +89,10 @@
   font-weight: 600;
   color: var(--blue-300);
 }
-.bubbles {
-  /* min-height: 29px; */
+.bubbles .icon-remove {
+  position: relative;
+  right: auto;
+  top: 2px;
 }
 .bubbles:empty:before {
   content: '--';
@@ -105,15 +108,6 @@ svg.svg-grid-icons.svg-icons_flag-yes {
 }
 svg.svg-grid-icons.svg-icons_flag-none {
   fill: var(--error-color);
-}
-
-.svg-icons_edit-reference,
-.svg-icons_remove-bubble {
-  cursor: pointer;
-  position: relative;
-  top: 0.125em;
-  margin-right: 2px;
-  display: inline;
 }
 
 .grid-header-column-content .collapsible-btn {

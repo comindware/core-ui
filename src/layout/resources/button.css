@@ -4,7 +4,6 @@
 .btn {
     display: inline-block;
     cursor: pointer;
-    align-self: flex-start;
   }
 .btn__text {
     display: inline-block;
