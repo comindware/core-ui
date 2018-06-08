@@ -7,10 +7,11 @@ const selectionTypes = {
 };
 
 const classes = {
-    CHECKED: 'editor_checked',
-    CHECKED_SOME: 'editor_checked_some',
-    SELECTED: 'selected',
-    DRAGOVER: 'dragover'
+    checked: 'editor_checked',
+    checked_some: 'editor_checked_some',
+    selected: 'selected',
+    dragover: 'dragover',
+    hover: 'hover'
 };
 
 export default Marionette.View.extend({
@@ -52,7 +53,9 @@ export default Marionette.View.extend({
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
-        drop: '__handleDrop'
+        drop: '__handleDrop',
+        mouseenter: '__handleMouseEnter',
+        mouseleave: '__handleMouseLeave'
     },
 
     modelEvents: {
@@ -61,7 +64,9 @@ export default Marionette.View.extend({
         deselected: '__handleDeselection',
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
-        drop: '__handleModelDrop'
+        drop: '__handleModelDrop',
+        mouseenter: '__handleModelMouseEnter',
+        mouseleave: '__handleModelMouseLeave'
     },
 
     onRender() {
@@ -129,7 +134,7 @@ export default Marionette.View.extend({
     },
 
     __handleModelDragOver() {
-        this.el.classList.add(classes.DRAGOVER);
+        this.el.classList.add(classes.dragover);
     },
 
     __handleDragLeave(event) {
@@ -144,7 +149,7 @@ export default Marionette.View.extend({
     },
 
     __handleModelDragLeave() {
-        this.el.classList.remove(classes.DRAGOVER);
+        this.el.classList.remove(classes.dragover);
     },
 
     __handleDrop(event) {
@@ -156,7 +161,7 @@ export default Marionette.View.extend({
     },
 
     __handleModelDrop() {
-        this.el.classList.remove(classes.DRAGOVER);
+        this.el.classList.remove(classes.dragover);
         if (this.collection.draggingModel) {
             this.trigger('drag:drop', this.collection.draggingModel, this.model);
         }
@@ -170,11 +175,11 @@ export default Marionette.View.extend({
     },
 
     __handleSelection() {
-        this.ui.checkbox.addClass(classes.SELECTED);
+        this.ui.checkbox.addClass(classes.selected);
     },
 
     __handleDeselection() {
-        this.ui.checkbox.removeClass(classes.SELECTED);
+        this.ui.checkbox.removeClass(classes.selected);
     },
 
     __updateState() {
@@ -185,14 +190,30 @@ export default Marionette.View.extend({
             state = this.model.checked;
         }
         if (state) {
-            this.ui.checkbox.addClass(classes.CHECKED);
-            this.ui.checkbox.removeClass(classes.CHECKED_SOME);
+            this.ui.checkbox.addClass(classes.checked);
+            this.ui.checkbox.removeClass(classes.checked_some);
         } else if (state === null) {
-            this.ui.checkbox.removeClass(classes.CHECKED);
-            this.ui.checkbox.addClass(classes.CHECKED_SOME);
+            this.ui.checkbox.removeClass(classes.checked);
+            this.ui.checkbox.addClass(classes.checked_some);
         } else {
-            this.ui.checkbox.removeClass(classes.CHECKED);
-            this.ui.checkbox.removeClass(classes.CHECKED_SOME);
+            this.ui.checkbox.removeClass(classes.checked);
+            this.ui.checkbox.removeClass(classes.checked_some);
         }
+    },
+
+    __handleMouseEnter() {
+        this.model.trigger('mouseenter');
+    },
+
+    __handleModelMouseEnter() {
+        this.el.classList.add(classes.hover);
+    },
+
+    __handleMouseLeave() {
+        this.model.trigger('mouseleave');
+    },
+
+    __handleModelMouseLeave() {
+        this.el.classList.remove(classes.hover);
     }
 });
