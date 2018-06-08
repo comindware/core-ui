@@ -202,7 +202,9 @@ export default Marionette.View.extend({
     },
 
     __handleMouseEnter() {
-        this.model.trigger('mouseenter');
+        if (this.model) {
+            this.model.trigger('mouseenter');
+        }
     },
 
     __handleModelMouseEnter() {
@@ -210,7 +212,9 @@ export default Marionette.View.extend({
     },
 
     __handleMouseLeave() {
-        this.model.trigger('mouseleave');
+        if (this.model) {
+            this.model.trigger('mouseleave');
+        }
     },
 
     __handleModelMouseLeave() {
