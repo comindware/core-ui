@@ -99,15 +99,6 @@
 .svg-icons_remove{
   transform: translate(6px, 5px);
 }
-.svg-icons_remove-bubble{
-  transform: scale(0.9) translate(5px, 5px);
-}
-.svg-icons-wrp__remove-icons{
-  position: relative;
-  top: -3px;
-  left: -2px;
-}
-
 
 .svg-icons_date{
   transform: translate(3px, 2px);
@@ -143,33 +134,26 @@ svg.svg-grid-icons {
   transform:scale(.8) translate(0, -1px)
 }
 
-.svg-icons-wrp_edit-reference{
-  display: inline-block;
-  position: absolute;
-  z-index: 10;
-  cursor: pointer;
-}
-
 .svg-icons-wrp__empty {
   width: 20px;
   height: 20px;
 }
-.svg-icons-wrp__remove {
-  width: 20px;
-  height: 20px;
-}
+
 .svg-icons-wrp_add{
   left: 0;
   right: auto;
   top: 50%;
   margin-top: -10px;
 }
-
-.svg-icons-wrp_bubble{
-  width: 18px;
-  height: 18px;
-  top:2px;
+.bubbles .editor__icons {
+  font-size: 14px;
+  position: absolute;
+  transform: translateY(-50%);
+  right: 0;
 }
+.editor_bubble--edit.editor_bubble--delete .icon-edit {
+  right: 15px;
+}  
 
 .d-svg-icons {
   fill: #8d8888;
@@ -202,9 +186,9 @@ svg.svg-grid-icons {
   margin-top: 2px;
 }
 
-.cell .svg-icons.svg-icons_remove-bubble {
+/* .cell .svg-icons.svg-icons_remove-bubble {
   margin-top: 1px;
-}
+} */
 
 .cell .svg-icons_checked{
   margin: -1px 0 0 -1px;
@@ -295,6 +279,14 @@ svg.svg-grid-icons {
 
 .grid-toolbar-region {
   padding-left: 5px;
+}
+
+.editor_bubble--delete .bubbles__i:hover,
+.editor_bubble--edit .bubbles__i:hover {
+  padding-right: var(--bubbles-item-delete-padding);
+}
+.editor_bubble--edit.editor_bubble--delete .bubbles__i:hover {
+  padding-right: var(--bubbles-item-edit-delete-padding);
 }
 
 .bubbles:hover {
