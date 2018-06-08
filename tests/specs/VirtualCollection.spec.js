@@ -34,7 +34,7 @@ describe('VirtualCollection', () => {
     }
 
     function createFixture(list, virtualCollectionOptions, collectionOptions) {
-        const options = _.extend({ model: TaskModel }, collectionOptions);
+        const options = Object.Assign({ model: TaskModel }, collectionOptions);
         const collection = new Backbone.Collection(list, options);
         const virtualCollection = new core.collections.VirtualCollection(collection, virtualCollectionOptions);
         return {

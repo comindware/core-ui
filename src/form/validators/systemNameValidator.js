@@ -1,5 +1,5 @@
 export default config => {
-    const options = _.extend(
+    const options = Object.Assign(
         {
             type: 'invalidIdentifier',
             message: Localizer.get('CORE.FORM.VALIDATION.SYSTEMNAME')

@@ -58,7 +58,7 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
         }
         this.dropdownView = dropdown.factory.createDropdown({
             buttonView: TextAreaEditorView,
-            buttonViewOptions: _.extend({}, this.options.editorOptions || {}, {
+            buttonViewOptions: Object.Assign({}, this.options.editorOptions || {}, {
                 model: this.model,
                 readonly: this.getReadonly(),
                 enabled: this.getEnabled(),
@@ -81,7 +81,7 @@ export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
         this.listenTo(this.dropdownView, 'button:input', this.__onInput);
         this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
-        _.each(this.keyboardShortcuts, (v, k) => {
+        this.keyboardShortcuts.forEach((v, k) => {
             this.dropdownView.button.addKeyboardListener(k, v.bind(this));
         });
 

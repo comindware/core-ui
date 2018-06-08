@@ -1,10 +1,10 @@
 import CollapsibleBehavior from '../../../models/behaviors/CollapsibleBehavior';
 
 const ListGroupBehavior = function(model) {
-    _.extend(this, new CollapsibleBehavior(model));
+    Object.Assign(this, new CollapsibleBehavior(model));
 };
 
-_.extend(ListGroupBehavior.prototype, {
+Object.Assign(ListGroupBehavior.prototype, {
     deselect() {},
 
     select() {}

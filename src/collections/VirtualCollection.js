@@ -178,9 +178,9 @@ const VirtualCollection = Backbone.Collection.extend(
                 SelectableBehaviorClass = selectableBehavior.single;
             }
             if (SelectableBehaviorClass) {
-                _.extend(this, new SelectableBehaviorClass(this));
+                Object.Assign(this, new SelectableBehaviorClass(this));
             }
-            _.extend(this, new CheckableBehavior.CheckableCollection(this));
+            Object.Assign(this, new CheckableBehavior.CheckableCollection(this));
         },
 
         rebuild() {

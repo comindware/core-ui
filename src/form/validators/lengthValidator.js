@@ -3,7 +3,7 @@
 import LocalizationService from '../../services/LocalizationService';
 
 export default function(options) {
-    options = _.extend({
+    options = Object.Assign({
         type: 'length',
         message: LocalizationService.get('CORE.FORM.VALIDATION.LENGTH')
     }, options);

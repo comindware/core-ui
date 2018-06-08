@@ -113,7 +113,7 @@ export default Marionette.View.extend({
         if (this.button) {
             this.stopListening(this.button);
         }
-        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
+        this.button = new this.options.buttonView(Object.Assign({ parent: this }, this.options.buttonViewOptions));
         this.buttonView = this.button;
         this.listenTo(this.button, 'all', (...args) => {
             args[0] = `button:${args[0]}`;
@@ -204,7 +204,7 @@ export default Marionette.View.extend({
         }
         this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(this.options.panelViewOptions || {}, {
+        const panelViewOptions = Object.Assign(this.options.panelViewOptions || {}, {
             parent: this
         });
         this.el.classList.add(classes.OPEN);

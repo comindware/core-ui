@@ -23,7 +23,7 @@ export default Marionette.Behavior.extend({
         this.view.canvasAggregator = viewOptions.canvasAggregator;
         this.canvasReqres = viewOptions.canvasReqres;
         this.view.componentReqres = viewOptions.componentReqres;
-        _.extend(this.options, defaultOptions, options);
+        Object.Assign(this.options, defaultOptions, options);
         _.bindAll(this, '__startDragging', '__stopDragging', '__dragDragging');
         this.view.isOver = this.__isOver;
     },

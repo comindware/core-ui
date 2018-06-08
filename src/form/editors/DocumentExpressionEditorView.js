@@ -64,7 +64,7 @@ export default NewExpressionEditorView.extend({
         });
 
         this.templateEditor = new DatalistEditorView(
-            _.extend(this.options.templateEditorOptions, {
+            Object.Assign(this.options.templateEditorOptions, {
                 value: this.value.type === valueTypes.template ? this.value.value : null
             })
         );

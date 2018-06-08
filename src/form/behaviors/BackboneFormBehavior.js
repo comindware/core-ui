@@ -120,7 +120,7 @@ const Form = Marionette.Object.extend({
 
         // Otherwise return entire form
         const values = {};
-        _.each(this.fields, field => {
+        this.fields.forEach(field => {
             values[field.key] = field.getValue();
         });
 

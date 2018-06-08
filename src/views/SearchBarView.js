@@ -9,7 +9,7 @@ const defaultOptions = () => ({
 
 export default Marionette.View.extend({
     initialize(options) {
-        _.extend(this.options, defaultOptions(), options || {});
+        Object.Assign(this.options, defaultOptions(), options || {});
         this.model = new Backbone.Model({
             placeholder: this.options.placeholder
         });

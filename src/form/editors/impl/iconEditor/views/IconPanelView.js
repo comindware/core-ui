@@ -93,7 +93,7 @@ export default Marionette.View.extend({
         };
 
         this.iconGroupsCollection.each(groupItem => {
-            _.each(groupItem.get('groupItems'), item => {
+            groupItem.get('groupItems').forEach(item => {
                 if (
                     matchSearch(item.id) ||
                     (item.filter && item.filter.find(filterItem => matchSearch(filterItem))) ||
