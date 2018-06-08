@@ -57,6 +57,7 @@ export default {
                 buttons: buttons.map(button => ({
                     id: button.id,
                     text: button.text,
+                    customClass: button.customClass,
                     handler() {
                         WindowService.closePopup(this.openedPopupId);
                         this.openedPopupId = null;
@@ -80,11 +81,13 @@ export default {
                 buttons: [
                     {
                         id: true,
-                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE')
+                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.LEAVE'),
+                        customClass: 'btn-small btn-outline'
                     },
                     {
                         id: false,
-                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY')
+                        text: Localizer.get('CORE.SERVICES.MESSAGE.UNSAVEDCHANGES.STAY'),
+                        customClass: 'btn-small'
                     }
                 ]
             }

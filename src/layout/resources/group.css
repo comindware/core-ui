@@ -1,40 +1,15 @@
 
 .layout-group {
-    width: 100%;
-    font-size: 12px;
-    color: #000;
-    border: 1px solid #a5a4a4;
     position: relative;
-    padding: 10px;
-    overflow: visible;
-    margin-top: 5px;
 }
 
 .layout-group__head {
     display: flex;
-    height: 16px;
-    line-height: 16px;
-    white-space: nowrap;
-    width: auto;
-    max-width: calc(100% - 20px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 400;
-    color: #70787f;
-    background-color: #fff;
-    padding: 0 5px;
-    position: absolute;
-    top:-9px;
 }
 
 .group-title{
     flex: 1 1 auto;
-    display: inline-block;
     white-space: nowrap;
-    max-width: 100%;
-    color: #70787f;
-    font-size: 12px;
-    cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -44,21 +19,8 @@
     width: 16px;
     height: 16px;
     vertical-align: middle;
-    overflow: hidden;
     cursor: pointer;
     flex: none;
-}
-
-.group-toggle svg{
-    transform: translateY(2px);
-}
-
-.layout__group-collapsed__button svg {
-    transform: rotate(-90deg) translate(1px);
-}
-
-.group-title.layout__group-collapsed__button{
-    transform: rotate(0);
 }
 
 .layout-group__content{

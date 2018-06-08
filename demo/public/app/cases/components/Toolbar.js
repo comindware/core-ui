@@ -1,5 +1,3 @@
-
-
 export default function() {
     return new core.components.Toolbar({
         allItemsCollection: new Backbone.Collection([
@@ -58,14 +56,14 @@ export default function() {
             {
                 iconType: 'Undefined',
                 type: 'Checkbox',
-                id: '5',
+                id: '6',
                 name: 'Check the checkbox',
                 severity: 'Critical'
             },
             {
                 iconType: 'Undefined',
                 type: 'Action',
-                id: '6',
+                id: '7',
                 name: 'Check the checkbox',
                 severity: 'Fatal'
             }
