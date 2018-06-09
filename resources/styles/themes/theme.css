@@ -33,36 +33,42 @@ body {
 .form-label__info:not(:empty),
 .error .form-label__error {
   display: inline-block;
-  margin-left: var(--form-label-icon-margin-x);
+  margin: 0 var(--form-label-icon-margin-x);
 }
 
 .form-label__info-button,
 .form-label__error-button {
-  height: var(--form-label-icon-size);
-  width: var(--form-label-icon-size);
+  font-size: var(--form-label-icon-size);
 }
 
-.form-label__info-button:before {
-  @apply --form-label-icon-theme;
-  @apply --form-label-info-icon-theme;
+.form-label__info-button,
+.form-label__error-button {
+  opacity: 0.8;
 }
 
-.form-label__info-button:hover:before,
-.form-label__error-button:hover:before  {
+.form-label__info-button:hover,
+.form-label__error-button:hover {
   opacity: 1;
 }
 
-.form-label__error-button:before {
-  @apply --form-label-icon-theme;
-  @apply --form-label-error-icon-theme;
+.form-label__error-button {
+  color: var(--error-color);
 }
 
 .form-label__error-text {
-  padding-left: 20px;
+  margin-left: 10px;
 }
 
 .required .form-label {
   padding-left: 10px;
+}
+
+.form-label__error-icon-error{
+  color: var(--error-color);
+}
+
+.form-label__error-icon-warning{
+  color: var(--warning-color);
 }
 
 /*------------------ Form Editor ------------------*/

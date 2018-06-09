@@ -21,6 +21,7 @@ const variables = {
     'link-color': 'var(--blue-200)',
     'main-color': 'var(--blue-200)',
     'error-color': 'var(--red)',
+    'warning-color': '#ffda44',
     'selected-color': 'var(--blue-extra-light)',
 
     border: '1px solid var(--grey-400)',
@@ -181,30 +182,6 @@ module.exports.apply = {
         'min-height': '20px'
     },
     'dropdown-caret-theme': {},
-    'form-label-icon-theme': {
-        width: variables['form-label-icon-size'],
-        height: variables['form-label-icon-size'],
-        border: '1px solid #70787f',
-        'background-color': '#fff',
-        'border-radius': '50%',
-        'font-size': '9px',
-        'line-height': '11px',
-        'font-weight': 'bold',
-        position: 'absolute',
-        top: '1px',
-        left: '0',
-        'text-align': 'center',
-        opacity: '0.7'
-    },
-    'form-label-info-icon-theme': {
-        content: '"?"',
-        color: '#70787f'
-    },
-    'form-label-error-icon-theme': {
-        content: '"!"',
-        color: '#b12a23',
-        'border-color': '#b12a23'
-    },
     'bubbles-item-theme': {
         color: variables['text-color'],
         margin: '0 2px 2px 0',
