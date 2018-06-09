@@ -85,9 +85,14 @@
 .dd-list__i.selected,
 .selected .dd-list__i,
 .dd-list__i:hover,
-.time-dropdown__i:hover {
-  font-weight: 600;
+.time-dropdown__i:hover,
+.popout-menu__i:hover .popout-menu__txt {
   color: var(--blue-300);
+}
+
+.dd-list__i.selected,
+.selected .dd-list__i {
+  font-weight: 600;
 }
 .bubbles .icon-remove {
   position: relative;
