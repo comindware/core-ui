@@ -18,7 +18,7 @@ const classes = {
     FLOW_RIGHT: 'popout__flow-right',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
-    DEFAULT_ANCHOR: 'anchor'
+    DEFAULT_ANCHOR: 'fa fa-angle-down anchor'
 };
 
 const popoutFlow = {
@@ -165,7 +165,7 @@ export default Marionette.View.extend({
         this.showChildView('buttonRegion', this.button);
 
         if (!this.options.customAnchor) {
-            this.getRegion('buttonRegion').$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
+            this.getRegion('buttonRegion').$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
         }
 
         this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);

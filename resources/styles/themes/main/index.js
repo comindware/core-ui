@@ -18,6 +18,7 @@ const variables = {
     'grey-900': '#838c92',
 
     'text-color': '#384650',
+    'link-color': 'var(--blue-200)',
     'main-color': 'var(--blue-200)',
     'error-color': 'var(--red)',
     'selected-color': 'var(--blue-extra-light)',

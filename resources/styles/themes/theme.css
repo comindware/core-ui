@@ -102,6 +102,9 @@ body {
   background-color: var(--checkbox-intermediate-color);
 }
 
+.editor_icons .caret {
+    color: var(--text-color);
+}
 /*------------------ End Form Editor ------------------*/
 
 /* input */
@@ -437,7 +440,8 @@ svg.svg-grid-icons {
   border-top-color: transparent;
 }
 
-.dd-list__i {
+.dd-list__i,
+.popout-menu__txt {
   padding: var(--dropdown-item-padding);
   font-size: var(--dropdown-font-size);
 }
@@ -445,7 +449,8 @@ svg.svg-grid-icons {
 .dd-list__i_checkbox{
   padding-left: var(--dropdown-item-checkbox-padding);
 }
-.dd-list__i:hover {
+.dd-list__i:hover,
+.popout-menu__i:hover {
   background-color: var(--dropdown-item-hover-color);
 }
 .dd-list__i_group {
@@ -856,4 +861,13 @@ svg.svg-grid-icons {
   height: 7px;
   border-radius: 50%;
   background: transparent;
+}
+
+
+.task-links__link {
+  color: var(--text-color);
+}
+
+.task-links__link:hover {
+  color: var(--link-color);
 }

@@ -884,31 +884,19 @@ input[type="color"], .colorpicker{
 }
 
 .task-links__i {
-    max-width: 100%;
     padding: 0 18px 0 0;
-    display: inline-block;
-    vertical-align: top;
     position: relative;
     display: flex;
-}
-
-.cell .task-links__i {
-    line-height: 25px;
+    align-items: baseline;
 }
 
 .task-links__link {
-    color: #000;
+    flex: none;
     text-decoration: none;
     display: block;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
-}
-
-.task-links__link:hover {
-    color: #009bfe;
 }
 
 .dev-field-documents {
@@ -979,12 +967,12 @@ input[type="color"], .colorpicker{
 }
 
 .dev-btn-document-revise{
+    width: 20px;
+    font-size: 16px;
     position: relative;
     display: inline-block;
-    top: 0px;
-    width: 20px;
-    height: 20px;
     cursor: pointer;
+    text-align: center;
 }
 
 .dev-revision-container{
