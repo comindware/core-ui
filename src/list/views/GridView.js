@@ -96,7 +96,6 @@ export default Marionette.View.extend({
             this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
         }
 
-
         if (options.noColumnsView) {
             this.noColumnsView = options.noColumnsView;
         } else {
@@ -259,6 +258,8 @@ export default Marionette.View.extend({
 
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
+        } else {
+            this.el.classList.add('grid__headless');
         }
 
         if (this.options.showSelection) {

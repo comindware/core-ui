@@ -99,6 +99,8 @@ const variables = {
     'grid-cell-bg': 'var(--white)',
     'grid-cell-border': 'inset -1px -1px 0 0 var(--grid-header-border-color)',
     'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 0 0 0 var(--grid-header-border-color)',
+    'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0px 1px 0 0 var(--grid-header-border-color)',
+    'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-cell-height': '25px',
     'grid-cell-padding': '0 2px',
     'grid-cell-input-padding': '0 2px 0 0',

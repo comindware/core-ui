@@ -299,10 +299,18 @@ svg.svg-grid-icons {
   background-color: var(--grid-cell-bg);
 }
 
+.grid__headless .row:first-child .cell{
+  box-shadow: var(--grid-cell-border-headless);
+}
+
 .cell_selection {
   color: var(--grid-selection-color);
   background-color: var(--grid-selection-bg);
   box-shadow: var(--grid-cell-border-first);
+}
+
+.grid__headless .cell_selection:first-child {
+  box-shadow: var(--grid-cell-border-first-headless);
 }
 
 .grid-selection-panel-region:empty + .grid-content-view .row .cell:first-child {
@@ -313,7 +321,7 @@ svg.svg-grid-icons {
   background-color: var(--grid-row-selected-color);
 }
 
-.row:hover .cell{
+.row.hover .cell, .cell_selection.hover {
   background-color: var(--grid-row-hover-color);
 }
 
