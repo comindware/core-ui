@@ -857,12 +857,8 @@ input[type="color"], .colorpicker{
     margin: 3px 0 0;
 }
 
-.l-task-links .field-documents__more {
-    display: none;
-}
-
-.l-task-links {
-    font-size: 12px;
+.field-documents__more {
+    cursor: pointer;
 }
 
 .task-links_doc {
@@ -873,7 +869,7 @@ input[type="color"], .colorpicker{
     padding: 0 18px 0 0;
     position: relative;
     display: flex;
-    align-items: baseline;
+    align-items: center;
 }
 
 .task-links__link {
@@ -959,6 +955,7 @@ input[type="color"], .colorpicker{
     display: inline-block;
     cursor: pointer;
     text-align: center;
+    line-height: 1;
 }
 
 .dev-revision-container{

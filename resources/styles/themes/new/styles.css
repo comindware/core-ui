@@ -39,10 +39,6 @@
 }
 
 /* Buttons */
-.btn_attach {
-  padding: 3px 7px;
-  margin-right: 3px;
-}
 
 .btn.btn-outline, .sp-cancel {
   @apply --button-outline-theme;
@@ -217,4 +213,35 @@ svg.svg-grid-icons.svg-icons_flag-none {
 .layout__popup-view-content .layout__form-view > .layout__vertical-layout,
 .layout__popup-view-content .layout__form-view > .layout__horizontal-layout {
   @apply --popup-form-content-theme;
+}
+
+/* Document upload */
+.editor_document {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.documents {
+  margin: 20px 0 10px 15px;
+  flex-direction: column;
+}
+.task-links__i {
+  margin-bottom: 10px;
+}
+.task-links__i:before {
+  content: "●";
+  color: var(--grey-400);
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.field-documents__more {
+  margin-left: 15px;
+}
+.show-more-counter:not(:empty) {
+  border-radius: 10px;
+  background-color: var(--grey-400);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  padding: 2px 6px;
 }

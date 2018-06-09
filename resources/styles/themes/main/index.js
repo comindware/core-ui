@@ -160,9 +160,7 @@ module.exports.apply = {
     'button-theme': {
         color: variables['text-color'],
         'font-size': '12px',
-        padding: '0 10px',
-        height: '30px',
-        'line-height': '26px',
+        padding: '4px 10px',
         'white-space': 'nowrap',
         'text-overflow': 'ellipsis',
         overflow: 'hidden',
