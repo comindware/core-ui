@@ -317,7 +317,7 @@ export default {
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
             },
 
-            sideEditorEffect(func: Function | string, options): void {
+            sideEditorEffect(func: Function | string, options: Object): void {
                 if (typeof func === 'string') {
                     if (!formRepository.sideEditorEffects[func]) {
                         throw new Error(`SideEditorEffect "${func}" not found`);
