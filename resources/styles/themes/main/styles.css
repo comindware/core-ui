@@ -5,10 +5,15 @@
   font-size: var(--editor-font-size);
   color: var(--editor-text-color);
 }
-.editor_bubble{
+.editor_bubble,
+.editor_document {
+  line-height: inherit;
   height: auto;
 }
-.editor_code{
+.editor_document .btn {
+  margin-right: 5px;
+}
+.editor_code {
   height: inherit;
 }
 .editor_code:after{
@@ -216,7 +221,9 @@ svg.svg-grid-icons {
 }
 
 /* Button */
-
+.btn-icon {
+  font-size: 14px;
+}
 .btn:hover .btn__text {
   color:#000;
 }
@@ -322,12 +329,6 @@ svg.svg-grid-icons {
 
 .cell.error.required::before {
   display:none;
-}
-
-.btn_attach {
-  height: 20px;
-  padding: 0 5px;
-  margin-right: 3px;
 }
 
 .group-toggle svg{

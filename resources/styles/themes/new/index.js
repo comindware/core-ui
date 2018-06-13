@@ -32,6 +32,7 @@ const variables = {
     'link-color': 'var(--blue-300)',
     'main-color': 'var(--blue-300)',
     'error-color': 'var(--red)',
+    'warning-color': '#e19e35',
     'selected-color': 'var(--grey-100)',
 
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
@@ -216,28 +217,6 @@ module.exports.apply = {
         height: '1em',
         background: `url(${utils.buildIcon(icons.angleDown, variables['blue-300'])}) center no-repeat`
     },
-    'form-label-icon-theme': {
-        width: variables['form-label-icon-size'],
-        height: variables['form-label-icon-size'],
-        color: variables['text-color'],
-        border: `1px solid ${variables['text-color']}`,
-        'border-radius': '50%',
-        'font-size': '12px',
-        'line-height': '12px',
-        position: 'absolute',
-        top: '2px',
-        left: '0',
-        'text-align': 'center',
-        opacity: '0.7'
-    },
-    'form-label-info-icon-theme': {
-        content: '"?"'
-    },
-    'form-label-error-icon-theme': {
-        content: '"!"',
-        color: variables.red,
-        'border-color': variables.red
-    },
     'bubbles-item-theme': {
         color: variables['text-color'],
         margin: '0 5px 0 0',
@@ -353,8 +332,8 @@ module.exports.apply = {
 
     'toolbar-btn-major-theme': {
         color: variables.white,
-        'background-color': '#e19e35',
-        'border-color': '#e19e35'
+        'background-color': variables['warning-color'],
+        'border-color': variables['warning-color']
     },
     'toolbar-btn-major-hover-theme': {
         'background-color': '#de9621',

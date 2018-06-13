@@ -123,20 +123,6 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
-.form-label__error-icon{
-    width: 16px;
-    height: 16px;
-    position: absolute;
-}
-
-.form-label__error-icon-error svg{
-    fill: rgb(216, 0, 39);
-}
-
-.form-label__error-icon-warning svg{
-    fill: rgb(255, 218, 68);
-}
-
 .disabled .form-label {
     color:#70787f;
 }
@@ -871,12 +857,8 @@ input[type="color"], .colorpicker{
     margin: 3px 0 0;
 }
 
-.l-task-links .field-documents__more {
-    display: none;
-}
-
-.l-task-links {
-    font-size: 12px;
+.field-documents__more {
+    cursor: pointer;
 }
 
 .task-links_doc {
@@ -887,7 +869,7 @@ input[type="color"], .colorpicker{
     padding: 0 18px 0 0;
     position: relative;
     display: flex;
-    align-items: baseline;
+    align-items: center;
 }
 
 .task-links__link {
@@ -973,6 +955,7 @@ input[type="color"], .colorpicker{
     display: inline-block;
     cursor: pointer;
     text-align: center;
+    line-height: 1;
 }
 
 .dev-revision-container{
