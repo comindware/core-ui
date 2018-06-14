@@ -424,7 +424,7 @@
 .multiselect-panel{
     min-width: 200px;
     max-width: 100%;
-    padding: 25px 0;
+    padding: 25px 0 0 0;
     position: relative;
 }
 .multiselect-panel__list{
@@ -436,20 +436,18 @@
 .multiselect-panel__btn{
     width: 100%;
     height: 25px;
-    padding: 0 12px;
-    line-height: 25px;
-    text-align: left;
+    padding: 0 25px 0 10px;
     font-size: 12px;
     font-weight: 500;
     position: absolute;
     background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .multiselect-panel__btn_top{
     top: 0;
     border-bottom: 1px solid #dee3e8;
-    text-align: right;
-    white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 .multiselect-panel__btn_bottom {
