@@ -95,6 +95,7 @@ formRepository.editors.MultiSelect = BaseLayoutEditorView.extend(/** @lends modu
         this.listenTo(this.dropdownView, 'button:value:set', this.__onValueSet);
 
         this.listenTo(this.dropdownView, 'panel:select:all', this.__selectAll);
+        this.listenTo(this.dropdownView, 'panel:deselect:all', this.__deselectAll);
         this.listenTo(this.dropdownView, 'panel:apply', this.__applyValue);
         this.listenTo(this.dropdownView, 'panel:close', () => this.dropdownView.close());
 

@@ -1,12 +1,25 @@
+{{#if explicitApply}}
+<div style="padding: 0 0 25px 0;">
+{{/if}}
 <div class="multiselect-panel__btn multiselect-panel__btn_top">
-    <div class="js-select-all multiselect-panel-btn multiselect-panel-btn_selectall">{{localize 'CORE.FORM.EDITORS.MULTISELECT.SELECTALL'}}</div>
+    <div class="editor editor_checkbox js-header-checkbox">
+        <span class="checkbox js-checkbox">
+            <span class="svg-icons-wrp svg-icons-wrp_checked">
+                <svg class="svg-icons svg-icons_checked">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-checked"></use>
+                </svg>
+            </span>
+        </span>
+    </div>
+{{#unless explicitApply}}
+    <div class="js-close btn multiselect-panel-btn">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>
+{{/unless}}
 </div>
 <div class="js-list multiselect-panel__list"></div>
-<div class="multiselect-panel__btn multiselect-panel__btn_bottom">
 {{#if explicitApply}}
+<div class="multiselect-panel__btn multiselect-panel__btn_bottom">
     <div class="js-cancel multiselect-panel-btn multiselect-panel-btn_cancel">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CANCEL'}}</div>
     <div class="js-apply btn multiselect-panel-btn multiselect-panel-btn_apply">{{localize 'CORE.FORM.EDITORS.MULTISELECT.APPLY'}}</div>
-{{else}}
-    <div class="js-close btn multiselect-panel-btn multiselect-panel-btn_cancel">{{localize 'CORE.FORM.EDITORS.MULTISELECT.CLOSE'}}</div>
-{{/if}}
 </div>
+</div>
+{{/if}}
