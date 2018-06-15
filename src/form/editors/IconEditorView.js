@@ -82,26 +82,11 @@ export default BaseLayoutEditorView.extend({
         return !this.model.has('iconClass');
     },
 
-    __groupIcon() {
-        const groupItemsObj = {};
-
-        iconPalette.forEach(item => {
-            item.categories.forEach(categoryItem => {
-                if (!groupItemsObj[categoryItem]) {
-                    groupItemsObj[categoryItem] = [];
-                }
-                groupItemsObj[categoryItem].push(item);
-            });
-        });
-
-        return groupItemsObj;
-    },
-
     __getConfig() {
         return new Backbone.Collection(
-            Object.entries(this.__groupIcon()).map(item => ({
-                name: item[0],
-                groupItems: item[1]
+            Object.entries(iconPalette).map((keyValue) => ({
+                name: keyValue[1].label,
+                groupItems: keyValue[1].icons
             }))
         );
     },
