@@ -84,9 +84,9 @@ export default BaseLayoutEditorView.extend({
 
     __getConfig() {
         return new Backbone.Collection(
-            Object.entries(iconPalette).map((keyValue) => ({
-                name: keyValue[1].label,
-                groupItems: keyValue[1].icons
+            Object.values(iconPalette).map((value) => ({
+                name: value.label,
+                groupItems: value.icons
             }))
         );
     },
