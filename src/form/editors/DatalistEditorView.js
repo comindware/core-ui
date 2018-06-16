@@ -110,7 +110,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     setValue(value): void {
         this.value = [];
-        this.viewModel.button.selected.reset();
+        this.viewModel && this.viewModel.button.selected.reset();
         this.__value(value, false);
         delete this.fakeInputModel;
         this.__updateFakeInputModel();
