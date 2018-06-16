@@ -5,6 +5,8 @@ import '../node_modules/moment-timezone/moment-timezone-utils';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
+import CoreModel from './models/CoreModel';
+import CoreCollection from './models/CoreCollection';
 /* --- */
 import underscoreLib from 'underscore';
 import mixin from './utils/underscore';
@@ -39,7 +41,9 @@ window.numeral = numeral_;
 $_.browser = {
     msie: /msie|trident/i.test(navigator.userAgent)
 };
-
+console.time('m');
+backbone.Model = CoreModel;
+backbone.Collection = CoreCollection;
 const api = {
     'jquery-ui': jqui,
     moment: moment_,
