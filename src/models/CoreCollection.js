@@ -41,14 +41,14 @@ export default class {
     }
 
     forEach() {
-        this.models.forEach.call(...args);
+        this.models.forEach.call(...arguments);
     }
 
     map() {
-        return this.models.map.call(...args);
+        return this.models.map.call(...arguments);
     }
 
     find() {
-        return this.models.find.call(...args);
+        return this.models.find.call(...arguments);
     }
 }
