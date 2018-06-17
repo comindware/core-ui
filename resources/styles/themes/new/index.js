@@ -29,14 +29,17 @@ const variables = {
     'blue-300': '#0575bd',
     'blue-400': '#04619d',
     'text-color': '#404040',
+    'link-color': 'var(--blue-300)',
     'main-color': 'var(--blue-300)',
     'error-color': 'var(--red)',
+    'warning-color': '#e19e35',
     'selected-color': 'var(--grey-100)',
 
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
 
     border: '1px solid #c1c1c1',
     'border-radius': '4px',
+    'border-radius-big': '7px',
 
     // font
     'base-font-size': '14px',
@@ -80,8 +83,8 @@ const variables = {
     'checkbox-size': '18px',
     'checkbox-checked-color': 'var(--blue-300)',
     'checkbox-border-color': 'var(--grey-400)',
-    'checkbox-radius': '0',
-    'checkbox-intermediate-color': 'var(--blue-200)',
+    'checkbox-radius': 'var(--border-radius)',
+    'checkbox-intermediate-color': 'var(--blue-300)',
     'checkbox-intermediate-size': '10px',
 
     // radio
@@ -89,7 +92,7 @@ const variables = {
     'radio-right-margin': '10px',
     'radio-checked-color': 'var(--checkbox-checked-color)',
     'radio-inner-size': '10px',
-    'radio-checked-disabled-color': 'var(--blue-300)',
+    'radio-checked-disabled-color': 'var(--grey-400)',
 
     // grid
     'grid-toolbar-padding': '10px 6px 10px 0',
@@ -109,8 +112,10 @@ const variables = {
     'grid-header-selection-bg': 'var(--grid-header-bg)',
 
     'grid-cell-bg': 'var(--white)',
-    'grid-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
-    'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grey-400), inset 1px 0 0 0 var(--grey-400)',
+    'grid-cell-border': 'inset -1px -1px 0 0 var(--grey-300)',
+    'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 0 0 0 var(--grey-300)',
+    'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grey-300), inset 0px 1px 0 0 var(--grey-300)',
+    'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grey-300), inset 1px 1px 0 0 var(--grey-300)',
     'grid-cell-height': 'var(--grid-header-height)',
     'grid-cell-padding': '0 15px',
     'grid-cell-input-padding': '0',
@@ -139,8 +144,6 @@ const variables = {
     'dropdown-item-padding': '8px 20px',
     'dropdown-item-checkbox-padding': '10px',
     'dropdown-item-hover-color': 'var(--blue-100)',
-    'bubbles-item-delete-padding': '15px',
-    'bubbles-item-edit-delete-padding': '40px',
 
     'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
     'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
@@ -152,7 +155,11 @@ const variables = {
     'tab-header-justify': 'flex-start',
     'tab-header-padding-with-move': '0 30px',
 
-    'btn-separator-width': '15px'
+    'btn-separator-width': '15px',
+
+    'popup-window-bg': 'var(--grey-100)',
+    'popup-content-padding': '0 15px',
+    'system-message-font-size': '15px'
 };
 
 module.exports.variables = variables;
@@ -161,7 +168,8 @@ module.exports.apply = {
     'button-theme': {
         display: 'inline-block',
         'vertical-align': 'middle',
-        color: '#fff',
+        cursor: 'pointer',
+        color: variables['blue-100'],
         'font-size': '15px',
         'line-height': '1.5',
         padding: '3px 15px',
@@ -190,6 +198,12 @@ module.exports.apply = {
         color: variables['blue-400'],
         'box-shadow': 'inset 0 3px 5px rgba(0,0,0,.125)'
     },
+    'button-icon-theme': {
+        width: '30px',
+        height: '30px',
+        padding: '3px 0',
+        'text-align': 'center'
+    },
     'dropdown-theme': {
         background: variables['light-gradient']
     },
@@ -202,28 +216,6 @@ module.exports.apply = {
         width: '1em',
         height: '1em',
         background: `url(${utils.buildIcon(icons.angleDown, variables['blue-300'])}) center no-repeat`
-    },
-    'form-label-icon-theme': {
-        width: variables['form-label-icon-size'],
-        height: variables['form-label-icon-size'],
-        color: variables['text-color'],
-        border: `1px solid ${variables['text-color']}`,
-        'border-radius': '50%',
-        'font-size': '12px',
-        'line-height': '12px',
-        position: 'absolute',
-        top: '2px',
-        left: '0',
-        'text-align': 'center',
-        opacity: '0.7'
-    },
-    'form-label-info-icon-theme': {
-        content: '"?"'
-    },
-    'form-label-error-icon-theme': {
-        content: '"!"',
-        color: variables.red,
-        'border-color': variables.red
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
@@ -247,16 +239,21 @@ module.exports.apply = {
         'border-radius': '4px'
     },
     'custom-cotrol-disabled-theme': {
-        opacity: '.6',
         cursor: 'not-allowed'
     },
+    'checkbox-theme': {
+        display: 'flex',
+        'flex-shrink': '0',
+        'align-items': 'center',
+        'justify-content': 'center'
+    },
     'checkbox-disabled-theme': {
-        color: variables['blue-300'],
-        'border-color': variables['blue-200'],
-        background: variables['blue-200']
+        color: variables['grey-400'],
+        'border-color': variables['grey-400'],
+        background: variables['grey-300']
     },
     'radio-disabled-theme': {
-        background: variables['blue-200']
+        background: variables['grey-300']
     },
     'svg-icon-wrp-theme': {
         right: '5px',
@@ -303,7 +300,6 @@ module.exports.apply = {
         right: '0',
         padding: '4px',
         display: 'flex',
-        'align-items': 'center',
         transform: 'rotate(-90deg)'
     },
     'tab-move-btn-prev-theme': {
@@ -312,9 +308,16 @@ module.exports.apply = {
         transform: 'rotate(90deg)'
     },
     'columns-select-list-theme': {
+        'background-color': variables.white,
         padding: '10px 9px 10px 15px',
         border: variables.border,
         'border-radius': '0 4px 4px 4px'
+    },
+    'columns-header-theme': {
+        'font-size': variables['base-font-size'],
+        'font-weight': variables['form-label-font-weight'],
+        color: variables.black,
+        'margin-bottom': variables['form-label-margin']
     },
     'toolbar-btn-theme': {
         'margin-right': '5px'
@@ -328,19 +331,21 @@ module.exports.apply = {
     'toolbar-btn-normal-active-theme': {},
 
     'toolbar-btn-major-theme': {
-        'background-color': '#d6af45',
-        'border-color': '#d6af45'
+        color: variables.white,
+        'background-color': variables['warning-color'],
+        'border-color': variables['warning-color']
     },
     'toolbar-btn-major-hover-theme': {
-        'background-color': '#d1a62e',
-        'border-color': '#d1a62e'
+        'background-color': '#de9621',
+        'border-color': '#de9621'
     },
     'toolbar-btn-major-active-theme': {
-        'background-color': '#d1a62e',
-        'border-color': '#d1a62e'
+        'background-color': '#de9621',
+        'border-color': '#de9621'
     },
 
     'toolbar-btn-critical-theme': {
+        color: variables.white,
         'background-color': '#e1742c',
         'border-color': '#e1742c'
     },
@@ -354,6 +359,7 @@ module.exports.apply = {
     },
 
     'toolbar-btn-fatal-theme': {
+        color: variables.white,
         'background-color': variables.red,
         'border-color': variables.red
     },
@@ -369,17 +375,36 @@ module.exports.apply = {
     'group-theme': {},
     'group-head-theme': {
         'font-size': '18px',
-        'font-weight': '600',
+        'font-weight': '700',
         'margin-bottom': '15px',
         'align-items': 'center'
-
     },
     'group-title-theme': {
-        'padding-left': '30px'
+        'padding-left': '20px'
     },
     'group-content-theme': {
         padding: '20px',
         'border-radius': '7px',
-        'background-color': variables["grey-100"]
+        'background-color': variables['grey-100']
+    },
+
+    'popup-header-theme': {
+        padding: '15px',
+        'font-size': '18px',
+        'font-weight': '600',
+        display: 'flex',
+        'align-items': 'center'
+    },
+    'popup-footer-theme': {
+        padding: '15px'
+    },
+    'popup-close-theme': {
+        width: '12px',
+        height: '12px'
+    },
+    'popup-form-content-theme': {
+        padding: '15px',
+        'background-color': variables.white,
+        'border-radius': variables['border-radius-big']
     }
 };

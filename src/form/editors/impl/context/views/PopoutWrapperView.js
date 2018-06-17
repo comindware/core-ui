@@ -39,6 +39,7 @@ export default Marionette.View.extend({
                 selectableBehavior: 'multi',
                 isTree: true,
                 childrenAttribute: 'children',
+                showHeader: false,
                 expandOnShow: false
             },
             collection: this.model.get('context')

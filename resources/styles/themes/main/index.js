@@ -18,8 +18,10 @@ const variables = {
     'grey-900': '#838c92',
 
     'text-color': '#384650',
+    'link-color': 'var(--blue-200)',
     'main-color': 'var(--blue-200)',
     'error-color': 'var(--red)',
+    'warning-color': '#ffda44',
     'selected-color': 'var(--blue-extra-light)',
 
     border: '1px solid var(--grey-400)',
@@ -99,6 +101,8 @@ const variables = {
     'grid-cell-bg': 'var(--white)',
     'grid-cell-border': 'inset -1px -1px 0 0 var(--grid-header-border-color)',
     'grid-cell-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 0 0 0 var(--grid-header-border-color)',
+    'grid-cell-border-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0px 1px 0 0 var(--grid-header-border-color)',
+    'grid-cell-border-first-headless': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-cell-height': '25px',
     'grid-cell-padding': '0 2px',
     'grid-cell-input-padding': '0 2px 0 0',
@@ -141,7 +145,11 @@ const variables = {
     'tab-header-justify': 'space-between',
     'tab-header-padding-with-move': '0 20px',
 
-    'btn-separator-width': '20px'
+    'btn-separator-width': '20px',
+
+    'popup-window-bg': '#fff',
+    'popup-content-padding': '0 20px',
+    'system-message-font-size': '18px'
 };
 
 module.exports.variables = variables;
@@ -152,9 +160,7 @@ module.exports.apply = {
     'button-theme': {
         color: variables['text-color'],
         'font-size': '12px',
-        padding: '0 10px',
-        height: '30px',
-        'line-height': '26px',
+        padding: '4px 10px',
         'white-space': 'nowrap',
         'text-overflow': 'ellipsis',
         overflow: 'hidden',
@@ -174,30 +180,6 @@ module.exports.apply = {
         'min-height': '20px'
     },
     'dropdown-caret-theme': {},
-    'form-label-icon-theme': {
-        width: variables['form-label-icon-size'],
-        height: variables['form-label-icon-size'],
-        border: '1px solid #70787f',
-        'background-color': '#fff',
-        'border-radius': '50%',
-        'font-size': '9px',
-        'line-height': '11px',
-        'font-weight': 'bold',
-        position: 'absolute',
-        top: '1px',
-        left: '0',
-        'text-align': 'center',
-        opacity: '0.7'
-    },
-    'form-label-info-icon-theme': {
-        content: '"?"',
-        color: '#70787f'
-    },
-    'form-label-error-icon-theme': {
-        content: '"!"',
-        color: '#b12a23',
-        'border-color': '#b12a23'
-    },
     'bubbles-item-theme': {
         color: variables['text-color'],
         margin: '0 2px 2px 0',
@@ -231,6 +213,9 @@ module.exports.apply = {
         filter: 'alpha(opacity=60)',
         opacity: '.6',
         cursor: 'auto'
+    },
+    'checkbox-theme': {
+        'line-height': 'normal'
     },
     'checkbox-disabled-theme': {},
     'radio-disabled-theme': {},
@@ -271,6 +256,11 @@ module.exports.apply = {
         right: 'auto'
     },
     'columns-select-list-theme': {},
+    'columns-header-theme': {
+        'font-size': '13px',
+        'font-weight': '600',
+        color: '#182026'
+    },
 
     'toolbar-btn-theme': {},
     'toolbar-btn-low-theme': {
@@ -318,13 +308,35 @@ module.exports.apply = {
         'line-height': '16px',
         'max-width': 'calc(100% - 20px)',
         'background-color': '#fff',
-        'padding': '0 5px',
+        padding: '0 5px',
         position: 'absolute',
-        top:'-8px',
+        top: '-8px'
     },
     'group-title-theme': {
         color: variables['grey-800'],
         cursor: 'pointer'
     },
-    'group-content-theme': {}
+    'group-content-theme': {},
+
+    'popup-header-theme': {
+        padding: '5px 40px',
+        'font-size': '18px',
+        color: variables['grey-800'],
+        'text-align': 'center'
+    },
+    'popup-footer-theme': {
+        padding: '7px',
+        'background-color': variables['grey-100'],
+        'border-top': `1px solid ${variables['grey-400']}`
+    },
+    'popup-close-theme': {
+        width: '22px',
+        height: '22px',
+        padding: '4px',
+        position: 'absolute',
+        right: '4px',
+        top: '4px',
+        border: '1px solid transparent',
+        'border-radius': '2px'
+    }
 };

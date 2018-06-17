@@ -168,12 +168,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
             text: LocalizationService.get('CORE.FORM.EDITORS.EXPRESSION.VALUE')
         });
 
-        let value = this.value.value;
-
-        if (Array.isArray(value) && value.length === 1) {
-            value = value[0];
-            this.options.valueEditorOptions.displayAttribute = 'name';
-        }
+        const value = this.value.value;
 
         this.valueEditor = new this.options.valueEditor(
             Object.Assign(this.options.valueEditorOptions, {

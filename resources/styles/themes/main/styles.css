@@ -5,10 +5,15 @@
   font-size: var(--editor-font-size);
   color: var(--editor-text-color);
 }
-.editor_bubble{
+.editor_bubble,
+.editor_document {
+  line-height: inherit;
   height: auto;
 }
-.editor_code{
+.editor_document .btn {
+  margin-right: 5px;
+}
+.editor_code {
   height: inherit;
 }
 .editor_code:after{
@@ -99,15 +104,6 @@
 .svg-icons_remove{
   transform: translate(6px, 5px);
 }
-.svg-icons_remove-bubble{
-  transform: scale(0.9) translate(5px, 5px);
-}
-.svg-icons-wrp__remove-icons{
-  position: relative;
-  top: -3px;
-  left: -2px;
-}
-
 
 .svg-icons_date{
   transform: translate(3px, 2px);
@@ -143,33 +139,26 @@ svg.svg-grid-icons {
   transform:scale(.8) translate(0, -1px)
 }
 
-.svg-icons-wrp_edit-reference{
-  display: inline-block;
-  position: absolute;
-  z-index: 10;
-  cursor: pointer;
-}
-
 .svg-icons-wrp__empty {
   width: 20px;
   height: 20px;
 }
-.svg-icons-wrp__remove {
-  width: 20px;
-  height: 20px;
-}
+
 .svg-icons-wrp_add{
   left: 0;
   right: auto;
   top: 50%;
   margin-top: -10px;
 }
-
-.svg-icons-wrp_bubble{
-  width: 18px;
-  height: 18px;
-  top:2px;
+.bubbles .editor__icons {
+  font-size: 14px;
+  position: absolute;
+  transform: translateY(-50%);
+  right: 0;
 }
+.editor_bubble--edit.editor_bubble--delete .icon-edit {
+  right: 15px;
+}  
 
 .d-svg-icons {
   fill: #8d8888;
@@ -202,9 +191,9 @@ svg.svg-grid-icons {
   margin-top: 2px;
 }
 
-.cell .svg-icons.svg-icons_remove-bubble {
+/* .cell .svg-icons.svg-icons_remove-bubble {
   margin-top: 1px;
-}
+} */
 
 .cell .svg-icons_checked{
   margin: -1px 0 0 -1px;
@@ -232,12 +221,14 @@ svg.svg-grid-icons {
 }
 
 /* Button */
-
-.layout__button-view:hover .layout__button-view-text {
+.btn-icon {
+  font-size: 14px;
+}
+.btn:hover .btn__text {
   color:#000;
 }
 
-.layout__button-view:active .layout__button-view-text {
+.btn:active .btn__text {
   color:#000;
 }
 
@@ -248,6 +239,10 @@ svg.svg-grid-icons {
 .layout__tab-layout__header-view-item:not(.layout__tab-layout__header-view-item_disabled):hover,
 .tabs__i:not(.disabled):hover {
   color: #009bfe;
+}
+
+.layout__tab-layout_move-button {
+  @apply --tab-move-btn-theme;
 }
 
 .layout__tab-layout_move-button .svg-icons_dropdown {
@@ -293,6 +288,14 @@ svg.svg-grid-icons {
   padding-left: 5px;
 }
 
+.editor_bubble--delete .bubbles__i:hover,
+.editor_bubble--edit .bubbles__i:hover {
+  padding-right: var(--bubbles-item-delete-padding);
+}
+.editor_bubble--edit.editor_bubble--delete .bubbles__i:hover {
+  padding-right: var(--bubbles-item-edit-delete-padding);
+}
+
 .bubbles:hover {
   border-bottom-color:#b9bcbd;
 }
@@ -307,7 +310,7 @@ svg.svg-grid-icons {
   padding-left: 10px;
 }
 
-.required .form-label::before, .cell.required::before {
+.required .form-label::before, .form-label_required:before, .cell.required::before {
   content: '*';
   margin: -5px 0 0;
   color: #c85e44;
@@ -318,6 +321,7 @@ svg.svg-grid-icons {
   top: 50%;
   left: 0;
 }
+
 .cell.required::before {
   margin: 0 0 0 1px;
   top: 0;
@@ -325,12 +329,6 @@ svg.svg-grid-icons {
 
 .cell.error.required::before {
   display:none;
-}
-
-.btn_attach {
-  height: 20px;
-  padding: 0 5px;
-  margin-right: 3px;
 }
 
 .group-toggle svg{
@@ -343,4 +341,36 @@ svg.svg-grid-icons {
 
 .group-title.layout__group-collapsed__button{
   transform: rotate(0);
+}
+
+.layout__popup-view-window {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.layout__popup-view-header__close:hover {
+  background: #f7f6f6;
+  border-color: #dfe4e8;
+}
+.layout__popup-view-header__close:active {
+  box-shadow: inset 1px 1px 3px rgba(200,200,200,.7);
+}
+
+.btn.btn_arrow {
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  line-height: 26px;
+  background: #f7f6f6 50% 50% no-repeat;
+}
+
+.layout__horizontal-layout-list {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.layout__horizontal-layout-list-item {
+  padding-left: 10px;
+  padding-right: 10px;
 }

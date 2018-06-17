@@ -77,6 +77,10 @@ export default Marionette.View.extend({
             c.columnClass = cClass;
         });
 
+        if (this.options.showHeader !== false) {
+            this.options.showHeader = true;
+        }
+
         if (this.options.showHeader) {
             this.headerView = new HeaderView({
                 columns: options.columns,
@@ -91,7 +95,6 @@ export default Marionette.View.extend({
             this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
             this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
         }
-
 
         if (options.noColumnsView) {
             this.noColumnsView = options.noColumnsView;
@@ -255,6 +258,8 @@ export default Marionette.View.extend({
 
         if (this.options.showHeader) {
             this.showChildView('headerRegion', this.headerView);
+        } else {
+            this.el.classList.add('grid__headless');
         }
 
         if (this.options.showSelection) {
