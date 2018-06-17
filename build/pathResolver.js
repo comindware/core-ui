@@ -3,17 +3,17 @@ const _ = require('underscore');
 
 const rootDir = path.resolve(__dirname, '../');
 
-const resolve = function(baseDir, nextDir, args) {
+const resolve = function (baseDir, nextDir, args) {
     const pathArray = [baseDir];
     if (nextDir) {
         pathArray.push(nextDir);
     }
-    return path.resolve.apply(path.resolve, pathArray.concat(Array.toArray(args)));
+    return path.resolve.apply(path.resolve, pathArray.concat(Array.from(args)));
 };
 
 module.exports = {
     createResolver(baseDir) {
-        return function() {
+        return function () {
             return resolve(baseDir, null, arguments);
         };
     },
