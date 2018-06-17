@@ -339,10 +339,6 @@ svg.svg-grid-icons {
   transform: rotate(-90deg) translate(1px);
 }
 
-.group-title__collapsible {
-  cursor: pointer;
-}
-
 .group-title.layout__group-collapsed__button{
   transform: rotate(0);
 }
