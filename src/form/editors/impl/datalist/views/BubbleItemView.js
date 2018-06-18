@@ -1,28 +1,29 @@
 // @flow
 import iconWrapRemoveBubble from '../../../iconsWraps/iconWrapRemoveBubble.html';
 import iconWrapPencil from '../../../iconsWraps/iconWrapPencil.html';
+import template from '../templates/bubbleItem.hbs';
 
 export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
 
-    template: false,
+    template: Handlebars.compile(template),
 
-    tagName() {
-        return this.options.createValueUrl(this.model.attributes) ? 'a' : 'li';
+    templateContext() {
+        return {
+            url: this.options.createValueUrl(this.model.attributes),
+            text: this.options.getDisplayText(this.options.model.attributes)
+        };
     },
 
-    attributes() {
-        this.text = this.options.getDisplayText(this.options.model.attributes);
+    tagName: 'li',
 
+    attributes() {
         return {
             draggable: true,
-            title: this.text,
-            target: '_blank',
-            tabindex: '-1',
-            href: this.options.createValueUrl(this.model.attributes),
-            text: this.text
+            title: this.options.getDisplayText(this.options.model.attributes),
+            tabindex: '-1'
         };
     },
 
@@ -71,8 +72,6 @@ export default Marionette.View.extend({
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
             this.el.classList.add('bubbles__i-edit-btn');
         }
-
-        this.$el.html(this.text);
     },
 
     __handleDrag(event) {
@@ -86,7 +85,7 @@ export default Marionette.View.extend({
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
             this.el.insertAdjacentHTML('beforeend', iconWrapPencil);
         }
-        if (this.options.enabled) {
+        if (this.options.enabled && this.options.showRemoveButton) {
             this.el.insertAdjacentHTML('beforeend', iconWrapRemoveBubble);
         }
     },
@@ -95,7 +94,7 @@ export default Marionette.View.extend({
         if (this.options.showEditButton && Boolean(this.model.attributes)) {
             this.el.removeChild(this.el.lastElementChild);
         }
-        if (this.options.enabled) {
+        if (this.options.enabled && this.options.showRemoveButton) {
             this.el.removeChild(this.el.lastElementChild);
         }
     }

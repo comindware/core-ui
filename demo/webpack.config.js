@@ -8,6 +8,7 @@ const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const pathResolver = {
     client() {
@@ -24,7 +25,7 @@ const pathResolver = {
 const removeBom = text => text.replace(/^\uFEFF/, '');
 
 const readSpritesFile = () => {
-    const svgSpritesFile = `${__dirname}/../dist/sprites.svg`;
+    const svgSpritesFile = `${__dirname}/../dist/themes/main/sprites.svg`;
     return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
 };
 
@@ -49,56 +50,56 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                        test: /\.css$/,
-                        loader: ExtractTextPlugin.extract({
-                            fallback: 'style-loader',
-                            use: [
-                                {
-                                    loader: 'css-loader',
-                                    options: {
-                                        sourceMap: true
-                                    }
-                                },
-                                {
-                                    loader: 'postcss-loader',
-                                    options: {
-                                        sourceMap: true,
-                                        plugins: () => [
-                                            autoprefixer({
-                                                browsers: ['last 2 versions']
-                                            }),
-                                            cssnano()
-                                        ]
-                                    }
-                                }
-                            ]
-                        })
-                    }
+                          test: /\.css$/,
+                          loader: ExtractTextPlugin.extract({
+                              fallback: 'style-loader',
+                              use: [
+                                  {
+                                      loader: 'css-loader',
+                                      options: {
+                                          sourceMap: true
+                                      }
+                                  },
+                                  {
+                                      loader: 'postcss-loader',
+                                      options: {
+                                          sourceMap: true,
+                                          plugins: () => [
+                                              autoprefixer({
+                                                  browsers: ['last 2 versions']
+                                              }),
+                                              cssnano()
+                                          ]
+                                      }
+                                  }
+                              ]
+                          })
+                      }
                     : {
-                        test: /\.css$/,
-                        use: [
-                            {
-                                loader: 'style-loader'
-                            },
-                            {
-                                loader: 'css-loader',
-                                options: {
-                                    sourceMap: true
-                                }
-                            },
-                            {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: [
-                                        autoprefixer({
-                                            browsers: ['last 2 versions']
-                                        })
-                                    ]
-                                }
-                            }
-                        ]
-                    },
+                          test: /\.css$/,
+                          use: [
+                              {
+                                  loader: 'style-loader'
+                              },
+                              {
+                                  loader: 'css-loader',
+                                  options: {
+                                      sourceMap: true
+                                  }
+                              },
+                              {
+                                  loader: 'postcss-loader',
+                                  options: {
+                                      sourceMap: true,
+                                      plugins: [
+                                          autoprefixer({
+                                              browsers: ['last 2 versions']
+                                          })
+                                      ]
+                                  }
+                              }
+                          ]
+                      },
                 {
                     test: /core\.js$/,
                     enforce: 'pre',
@@ -108,10 +109,7 @@ module.exports = () => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     include: [pathResolver.source()],
-                    exclude: [
-                        pathResolver.source('lib'),
-                        pathResolver.node_modules()
-                    ],
+                    exclude: [pathResolver.source('lib'), pathResolver.node_modules()],
                     options: {
                         presets: ['env']
                     }
@@ -184,7 +182,6 @@ module.exports = () => {
                 filename: 'index.html',
                 template: `handlebars-loader!${pathResolver.source('index.hbs')}`,
                 hash: PRODUCTION,
-                svgSprites: readSpritesFile(),
                 inject: 'body',
                 chunks: ['app'],
                 minify: {
@@ -207,7 +204,13 @@ module.exports = () => {
                 skipWaiting: true,
                 importWorkboxFrom: 'local',
                 directoryIndex: './index.html'
-            })
+            }),
+            new CopyWebpackPlugin([
+                {
+                    from: `${__dirname}/../dist/themes`,
+                    to: pathResolver.client('themes')
+                }
+            ])
         ],
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],

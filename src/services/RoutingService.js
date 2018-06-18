@@ -80,7 +80,7 @@ export default {
         this.defaultUrl = newDefaultUrl;
     },
 
-    __onModuleLoaded(callbackName, routingArgs, config, Module) {
+    async __onModuleLoaded(callbackName, routingArgs, config, Module) {
         WindowService.closePopup();
         this.loadingContext = {
             config,
@@ -90,19 +90,17 @@ export default {
         if (!this.activeModule) {
             window.app.getView().getRegion('contentLoadingRegion').show(new ContentLoadingView());
         } else {
-            this.loadingContext.leavingPromise = Promise.resolve(this.activeModule.leave());
-            this.loadingContext.leavingPromise.then(canLeave => {
-                if (!canLeave && this.getPreviousUrl()) {
-                    // getting back to last url
-                    this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
-                    return;
-                }
-                //clear all promises of the previous module
-                Core.services.PromiseService.cancelAll();
-                if (!this.loadingContext.loaded) {
-                    this.activeModule.view.setModuleLoading(true);
-                }
-            });
+            const canLeave = await this.activeModule.leave();
+            if (!canLeave && this.getPreviousUrl()) {
+                // getting back to last url
+                this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
+                return;
+            }
+            //clear all promises of the previous module
+            Core.services.PromiseService.cancelAll();
+            if (!this.loadingContext.loaded) {
+                this.activeModule.view.setModuleLoading(true);
+            }
         }
 
         // reject race condition
@@ -111,51 +109,45 @@ export default {
         }
 
         this.loadingContext.loaded = true;
-        Promise.resolve(this.loadingContext.leavingPromise ? this.loadingContext.leavingPromise : true).then(canLeave => {
-            if (!canLeave) {
+        // reset loading region
+        window.app.getView().getRegion('contentLoadingRegion').reset();
+        if (this.activeModule) {
+            this.activeModule.view.setModuleLoading(false);
+        }
+        const movingOut = this.activeModule && this.activeModule.options.config.module !== config.module;
+
+        // destroy active module
+        if (this.activeModule && movingOut) {
+            this.activeModule.destroy();
+        }
+
+        // construct new module
+        if (!this.activeModule || movingOut) {
+            this.activeModule = new Module({
+                config,
+                region: window.app.getView().getRegion('contentRegion')
+            });
+        }
+
+        // navigate to new module
+        this.loadingContext = null;
+        if (this.activeModule.onRoute) {
+            this.activeModule.routerAction = callbackName;
+            const continueHandling = await this.activeModule.onRoute.apply(this.activeModule, routingArgs);
+            if (continueHandling === false) {
                 return;
             }
-
-            // reset loading region
-            window.app.getView().getRegion('contentLoadingRegion').reset();
-            if (this.activeModule) {
-                this.activeModule.view.setModuleLoading(false);
+        }
+        if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
+            const configuration = this.activeModule.routingActions[callbackName];
+            configuration.routingAction = callbackName;
+            this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
+        } else {
+            const routingCallback = this.activeModule[callbackName];
+            if (!routingCallback) {
+                Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
             }
-            const movingOut = this.activeModule && this.activeModule.options.config.module !== config.module;
-
-            // destroy active module
-            if (this.activeModule && movingOut) {
-                this.activeModule.destroy();
-            }
-
-            // construct new module
-            if (!this.activeModule || movingOut) {
-                this.activeModule = new Module({
-                    config,
-                    region: window.app.getView().getRegion('contentRegion')
-                });
-            }
-
-            // navigate to new module
-            this.loadingContext = null;
-            if (this.activeModule.onRoute) {
-                this.activeModule.routerAction = callbackName;
-                const continueHandling = this.activeModule.onRoute.apply(this.activeModule, routingArgs);
-                if (continueHandling === false) {
-                    return;
-                }
-            }
-            if (this.activeModule.routingActions && this.activeModule.routingActions[callbackName]) {
-                const configuration = this.activeModule.routingActions[callbackName];
-                configuration.routingAction = callbackName;
-                this.activeModule.handleRouterEvent.call(this.activeModule, configuration, routingArgs);
-            } else {
-                const routingCallback = this.activeModule[callbackName];
-                if (!routingCallback) {
-                    Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
-                }
-                routingCallback.apply(this.activeModule, routingArgs);
-            }
-        });
+            routingCallback.apply(this.activeModule, routingArgs);
+        }
     }
 };

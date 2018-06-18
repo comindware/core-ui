@@ -355,7 +355,8 @@ export default (factory = {
                 return `<div class="cell ${column.columnClass}">${adjustedValue}</div>`;
             case objectPropertyTypes.DATETIME:
                 adjustedValue = Array.isArray(value) ? value : [value];
-                adjustedValue = adjustedValue.map(v => dateHelpers.dateToDateTimeString(v, column.format || 'condensedDateTime')).join(', ');
+                adjustedValue = adjustedValue
+                    .map(v => dateHelpers.dateToDateTimeString(v, column.format || 'generalDateShortTime')).join(', ');
                 return `<div class="cell ${column.columnClass}" title="${adjustedValue}">${adjustedValue}</div>`;
             case objectPropertyTypes.DOCUMENT:
                 if (value.length > 0) {

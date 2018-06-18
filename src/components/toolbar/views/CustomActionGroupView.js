@@ -9,7 +9,7 @@ import ToolbarPopupView from '../views/ToolbarPopupView';
 import meta from '../meta';
 
 export default Marionette.CollectionView.extend({
-    className: 'js-icon-container',
+    className: 'js-icon-container toolbar-items-wrp',
 
     template: Handlebars.compile(template),
 

@@ -550,11 +550,11 @@ li.CodeMirror-hint-active {
     padding-right: 20px;
 }
 
-.dev-code-editor-field:hover .svg-icons-wrp__remove {
+.dev-code-editor-field:hover .editor__icons.icon-remove {
     visibility: visible;
 }
 
-.editor_empty.dev-code-editor-field:hover .svg-icons-wrp__remove {
+.editor_empty.dev-code-editor-field:hover .editor__icons.icon-remove {
     visibility: hidden;
 }
 
@@ -600,7 +600,7 @@ li.CodeMirror-hint-active {
 }
 
 .dev-code-editor-tooltip-parameter-type {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .dev-code-editor-tooltip-parameter-name {

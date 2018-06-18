@@ -10,6 +10,7 @@ import RoutingService from './services/RoutingService';
 import ToastNotificationService from './services/ToastNotificationService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
 import MobileService from './services/MobileService';
+import ThemeService from './services/ThemeService';
 
 import 'backbone.trackit';
 
@@ -36,18 +37,6 @@ export default {
             options.moduleConfiguration.ModuleService.initialize({ modules: options.routerConfiguration.modules });
         }
 
-        if (options.navigationConfiguration) {
-            marionetteApp.navigationController = new options.navigationConfiguration.controller({
-                context: options.navigationConfiguration.context,
-                configurationKey: options.navigationConfiguration.configurationKey
-            });
-
-            RoutingService.initialize({
-                defaultUrl: window.application.navigationController.getDefaultUrl(),
-                modules: options.routerConfiguration.modules
-            });
-        }
-
         options.userService && UserService.initialize(options.userService);
         WindowService.initialize();
         LocalizationService.initialize(options.localizationService);
@@ -62,6 +51,18 @@ export default {
         CTEventsService.initialize();
         MobileService.initialize();
 
+        if (options.navigationConfiguration) {
+            marionetteApp.navigationController = new options.navigationConfiguration.controller({
+                context: options.navigationConfiguration.context,
+                configurationKey: options.navigationConfiguration.configurationKey
+            });
+
+            RoutingService.initialize({
+                defaultUrl: window.application.navigationController.getDefaultUrl(),
+                modules: options.routerConfiguration.modules
+            });
+        }
+
         if (options.webSocketConfiguration && options.webSocketConfiguration.activateOnStart) {
             WebSocketService.initialize({ url: options.webSocketConfiguration.url });
         }
@@ -73,6 +74,8 @@ export default {
         marionetteApp.start();
 
         options.serviceInitializer && options.serviceInitializer.apply(marionetteApp);
+
+        ThemeService.initialize(options.themeService);
 
         return marionetteApp;
     },

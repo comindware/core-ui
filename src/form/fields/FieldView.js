@@ -20,7 +20,7 @@ export default Marionette.View.extend({
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(options, this.fieldId, formRepository.editors[options.schema.type]);
+        this.__createEditor(options, this.fieldId,  _.isString(this.schema.type) ? formRepository.editors[this.schema.type] : this.schema.type);
         if (this.schema.getReadonly || this.schema.getHidden) {
             this.listenTo(this.model, 'change', this.__updateExternalChange);
         }

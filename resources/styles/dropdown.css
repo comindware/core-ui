@@ -12,7 +12,6 @@
     margin: 0;
     font-size: 12px;
     background: #fff;
-    -webkit-box-shadow: 0 0 8px rgba(0,0,0,.2);
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
     z-index: 600;
@@ -138,6 +137,7 @@
 
 
 /* dropdown list */
+
 .dropdown__wrp_reference {
     min-width: 200px;
     max-width: 100%;
@@ -172,7 +172,7 @@
     padding: 3px 20px 3px 5px;
     line-height: 19px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -192,13 +192,8 @@
 }
 
 .dd-list__i {
-    height: 25px;
-    padding: 0 10px;
-    line-height: 26px;
-    font-size: 12px;
     font-weight: normal;
     text-align: left;
-    color: #384650;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -207,50 +202,17 @@
     display: flex;
 }
 
-.dd-list__i:hover {
-    background: #f5f5f5;
-}
-
 .dd-list__i_group {
-    font-size: 11px;
-    font-weight: 500;
-    color: #000;
     cursor: default;
-}
-.dd-list__i_group:after {
-    content: '';
-    position: absolute;
-    top:33px;
-    left:2px;
-    right:2px;
-    height: 1px;
-    background: #b6c1ca;
-}
-
-.dd-list__i_group:hover {
-    background:transparent;
 }
 
 .dev_dd-list__i_with_checkbox {
     padding: 0 4px;
 }
 
-.dd-list__i_checkbox{
-    padding-left: 27px;
-}
-
 .dd-list__i_checkbox .checkbox {
-    top: 4px;
-    left: 5px;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-}
-.dd-list__i_checkbox .checkbox {
-    top: 4px;
-    left: 5px;
-    width: 16px;
-    height: 16px;
+    margin-right: 6px;
+    flex-shrink: 0;
 }
 
 .dd-list__btn{
@@ -266,23 +228,19 @@
 }
 
 .reference-btn{
-    display: inline-block;
+    display: flex;
+    align-items: center;
     color: #4d4d4d;
-    font-weight: 500;
-    position: relative;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    vertical-align: middle;
-    height: 25px;
-    line-height: 24px;
-    padding-left: 22px;
 }
 
 
 .reference-btn-more{
     color: #4d4d4d;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 40px;
     text-align: center;
     cursor: pointer;
@@ -396,27 +354,21 @@
     overflow-y: auto;
 }
 .time-dropdown__i {
-    height: 25px;
-    padding: 0 10px;
-    line-height: 26px;
-    font-size: 12px;
-    font-weight: normal;
     text-align: left;
-    color: #43525d;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
 }
-
-.time-dropdown__i:hover {
-    background: #f5f5f5;
-}
 /*-----//------*/
 
 .dropdown__wrp_list{
     overflow-y: auto;
+}
+
+.dropdown-loading:not(:empty) + .dropdown__wrp_list {
+    min-height: 200px;
 }
 
 

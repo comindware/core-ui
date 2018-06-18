@@ -51,6 +51,9 @@ export default Marionette.Application.extend({
                 localizationMap,
                 warningAsError: isProduction
             },
+            themeService: {
+                theme: 'new'
+            },
             userService: {
                 dataProvider
             }

@@ -47,7 +47,11 @@ export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
     className() {
-        return `${classes.CLASS_NAME} ${this.getOption('bodyClass')}`;
+        const classList = [];
+        classList.push(this.getOption('bodyClass') || '');
+        classList.push(this.getOption('showMoveButtons') ? 'layout__tab-layout--move' : '');
+
+        return `${classes.CLASS_NAME} ${classList.join(' ')}`;
     },
 
     regions: {
