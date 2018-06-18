@@ -117,7 +117,7 @@
     "backbone.modelbinder": "^1.1.0",
     "backbone.radio": "^2.0.0",
     "codemirror": "^5.38.0",
-    "font-awesome": "^4.7.0",
+    "@fortawesome/fontawesome-free": "^5.1.0-4",
     "jquery": "^3.3.1",
     "jsencrypt": "^2.3.1",
     "jstorage": "^0.4.8",
