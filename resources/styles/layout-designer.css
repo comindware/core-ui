@@ -127,15 +127,6 @@
 
 }
 
-.ld-list-toolbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0 10px 0 5px;
-    border-bottom: 1px solid #dfe4e8;
-}
-
 
 .ld-list-toolbar__search{
     display: flex;

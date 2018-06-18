@@ -4,7 +4,8 @@ import template from './group.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const defaults = {
-    collapsed: false
+    collapsed: false,
+    collapsible: true
 };
 
 const classes = {
@@ -59,8 +60,10 @@ export default Marionette.View.extend({
     },
 
     __toggleCollapse() {
-        this.model.set('collapsed', !this.model.get('collapsed'));
-        return false;
+        if (this.model.get('collapsible')) {
+            this.model.set('collapsed', !this.model.get('collapsed'));
+            return false;
+        }
     },
 
     __onCollapsedChange(model, collapsed) {
