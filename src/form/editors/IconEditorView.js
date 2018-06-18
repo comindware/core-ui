@@ -3,6 +3,7 @@ import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
 import iconPalette from './impl/iconEditor/iconPalette';
+import icons from './impl/iconEditor/icons';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
 const constants = {
@@ -86,7 +87,10 @@ export default BaseLayoutEditorView.extend({
         return new Backbone.Collection(
             Object.values(iconPalette).map((value) => ({
                 name: value.label,
-                groupItems: value.icons
+                groupItems: value.icons.map(icon => Object.assign({
+                        filter: icons[icon.id].search.terms
+                    }, icon)
+                )
             }))
         );
     },

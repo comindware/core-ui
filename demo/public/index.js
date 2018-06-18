@@ -1,4 +1,6 @@
-import '../node_modules/font-awesome/css/font-awesome.css';
+import 'styles/defaultFontawesome.css';
+import '../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';
+import '../node_modules/@fortawesome/fontawesome-free/css/solid.css';
 import '../../dist/core.css';
 import 'styles/demo.css';
 import 'lib/prism/prism.css';

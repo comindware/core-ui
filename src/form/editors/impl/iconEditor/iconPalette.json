@@ -2,10 +2,6 @@
   "accessibility": {
     "icons": [
     {
-		"name": "accessible-icon",
-		"id": "accessible-icon"
-	},
-    {
 		"name": "american-sign-language-interpreting",
 		"id": "american-sign-language-interpreting"
 	},
@@ -2144,10 +2140,6 @@
   },
   "health": {
     "icons": [
-    {
-		"name": "accessible-icon",
-		"id": "accessible-icon"
-	},
     {
 		"name": "ambulance",
 		"id": "ambulance"
@@ -4815,10 +4807,6 @@
   "users-people": {
     "icons": [
     {
-		"name": "accessible-icon",
-		"id": "accessible-icon"
-	},
-    {
 		"name": "address-book",
 		"id": "address-book"
 	},
@@ -4991,10 +4979,6 @@
   },
   "vehicles": {
     "icons": [
-    {
-		"name": "accessible-icon",
-		"id": "accessible-icon"
-	},
     {
 		"name": "ambulance",
 		"id": "ambulance"
