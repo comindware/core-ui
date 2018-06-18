@@ -52,6 +52,8 @@ export default {
                         text: child.text,
                         handler: child.handler
                     });
+                case 'plainText':
+                    return new PlainText(_.omit(child, 'type'));
                 case 'custom':
                 default: {
                     if (child.type) {
