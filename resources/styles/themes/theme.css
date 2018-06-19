@@ -268,7 +268,6 @@ svg.svg-grid-icons {
 .grid-toolbar__search .tr-search{
   border: none;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .grid-header {
@@ -351,13 +350,8 @@ svg.svg-grid-icons {
   height: var(--grid-checkbox-size);
 }
 
-.cell .input{
+.cell .input {
   padding: var(--grid-cell-input-padding);
-}
-
-.cell-focused .input,
-.cell .input:hover{
-    padding-right: 18px;
 }
 
 .grid-selection-cell-all {
@@ -504,6 +498,7 @@ svg.svg-grid-icons {
 }
 
 .cell .bubbles {
+  padding-left: 0;
   height: 100%;
   border: none;
   background: transparent;

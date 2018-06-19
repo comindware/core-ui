@@ -92,7 +92,7 @@ const variables = {
     'grid-header-bg': 'transparent',
     'grid-header-border-color': 'var(--grey-400)',
     'grid-header-height': '20px',
-    'grid-header-padding': '0 0 0 2px',
+    'grid-header-padding': '0 10px 0 2px',
     'grid-header-border': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-last': 'var(--grid-header-border)',

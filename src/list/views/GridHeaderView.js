@@ -104,7 +104,7 @@ const GridHeaderView = Marionette.View.extend({
         if (this.options.isTree) {
             this.__columnEls[0].el.insertAdjacentHTML(
                 'afterbegin',
-                `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>`
+                `<span class="collapsible-btn js-collapsible-button ${this.collapsed === false ? classes.expanded : ''}"></span>&nbsp;`
             );
         }
 

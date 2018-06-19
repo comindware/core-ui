@@ -191,6 +191,12 @@ svg.svg-grid-icons {
   margin-top: 2px;
 }
 
+.cell-focused .input,
+.cell .input:hover,
+.cell .editor_date-time:hover{
+    padding-right: 18px;
+}
+
 /* .cell .svg-icons.svg-icons_remove-bubble {
   margin-top: 1px;
 } */
@@ -219,6 +225,16 @@ svg.svg-grid-icons {
 .time-view{
   height: 20px;
 }
+.editor_date-time {
+  padding-right: 16px;
+}
+
+.editor_date-time .input{
+  padding-right: 0;
+}
+
+
+/* /Date Time/ */
 
 /* Button */
 .btn-icon {
@@ -308,6 +324,9 @@ svg.svg-grid-icons {
 
 .required .form-label {
   padding-left: 10px;
+}
+.disabled .form-label {
+  color: var(--grey-800);
 }
 
 .required .form-label::before, .form-label_required:before, .cell.required::before {
