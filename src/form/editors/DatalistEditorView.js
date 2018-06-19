@@ -72,9 +72,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selectableBehavior: 'multi'
         });
 
-        this.controller
-            = this.options.controller
-            || new StaticController({
+        this.controller =
+            this.options.controller ||
+            new StaticController({
                 collection: options.collection
             });
 
@@ -302,7 +302,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __canAddItem(): boolean {
         const selectedItems = _.filter(this.viewModel.button.selected.models, model => model !== this.fakeInputModel);
         const isAccess = this.getEnabled() && !this.getReadonly();
-        return isAccess && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
+        const maxQuantity = this.options.maxQuantitySelected;
+        return isAccess && (!maxQuantity || maxQuantity === 1 || maxQuantity !== selectedItems.length);
     },
 
     __onValueEdit(value) {
@@ -362,7 +363,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        if (this.__canAddItem() || this.options.maxQuantitySelected === 1) {
+        if (this.__canAddItem()) {
             this.dropdownView.open();
         }
     },

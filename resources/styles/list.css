@@ -194,7 +194,6 @@
     white-space: nowrap;
     text-align: left;
     cursor: default;
-    margin-right: 10px;
 }
 
 .grid-header-dragger {
@@ -299,7 +298,6 @@
 }
 
 .grid-toolbar-wrp{
-    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -319,7 +317,6 @@
 .grid-toolbar__search .tr-search{
     border: none;
     width: 100%;
-    box-sizing: border-box;
 }
 
 .editable-grid-field {
@@ -460,8 +457,6 @@
 
 .cell .editor{
     height: 100%;
-    margin: 0 -2px;
-    padding: 0 2px;
     line-height: initial;
     border: none;
     background-color: transparent;

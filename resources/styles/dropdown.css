@@ -10,7 +10,6 @@
 
 .dropdown__wrp {
     margin: 0;
-    font-size: 12px;
     background: #fff;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
@@ -18,25 +17,15 @@
     max-height: 400px;
 }
 
-.dropdown__wrp .dropdown__wrp{
+.dropdown__wrp .dropdown__wrp {
     margin: 0;
-    background: #fff;
     box-shadow: none;
     position: relative;
-}
-
-.dropdown__wrp_up {
 }
 
 .dropdown__wrp_down {
     max-height: 400px;
     position: fixed;
-}
-
-.dropdown__wrp_up-over {
-}
-
-.dropdown__wrp_down-over {
 }
 
 .dropdown__wrp_footer {
@@ -57,7 +46,6 @@
     bottom: 0;
     left: 0;
     border-top: solid 1px #dee3e8;
-    box-sizing: border-box;
 }
 
 .dropdown__btn {
@@ -71,7 +59,6 @@
     max-height: 310px;
     padding: 1px;
     overflow: hidden;
-    box-sizing: border-box;
     position: fixed;
     background-color: white;
     box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
@@ -84,7 +71,6 @@
     font-size: 13px;
     font-weight: normal;
     color: #43525d;
-    box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -118,7 +104,6 @@
     padding: 0 5px;
     display: inline-block;
     vertical-align: top;
-    box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -304,7 +289,6 @@
     left: 30px !important;
     color: #bcc6cf;
     cursor: text;
-    box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

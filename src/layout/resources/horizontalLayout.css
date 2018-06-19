@@ -9,7 +9,7 @@
 }
 
 .layout__horizontal-layout > * {
-    flex: 1;
+    flex: 1 1 auto;
 }
 
 .layout__horizontal-layout-list {
@@ -19,7 +19,7 @@
 }
 
 .layout__horizontal-layout-list-item {
-    flex: 1;
+    flex: 1 1 auto;
 }
 
 .layout__horizontal-layout-title {

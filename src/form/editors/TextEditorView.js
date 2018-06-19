@@ -175,13 +175,13 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     __onMouseenter() {
-        if (this.options.allowEmptyValue) {
+        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
             this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
         }
     },
 
     __onMouseleave() {
-        if (this.options.allowEmptyValue) {
+        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
             this.el.lastElementChild.remove();
         }
     }
