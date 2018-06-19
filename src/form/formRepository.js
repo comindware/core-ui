@@ -5,6 +5,9 @@ import PhoneValidator from './validators/phoneValidator';
 import SystemNameValidator from './validators/systemNameValidator';
 import EmailValidator from './validators/emailValidator';
 
+import passToEmptyEditor from './sideEditorEffects/passToEmptyEditor';
+import translitToSystemName from './sideEditorEffects/translitToSystemName';
+
 export default {
     editors: {},
     validators: {
@@ -14,5 +17,9 @@ export default {
         phone: PhoneValidator,
         systemName: SystemNameValidator,
         email: EmailValidator
+    },
+    sideEditorEffects: {
+        passToEmptyEditor,
+        translitToSystemName
     }
 };

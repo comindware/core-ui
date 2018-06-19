@@ -43,6 +43,9 @@ const onChange = function() {
             this.field.validate();
         }
     }
+    if (this.schema.sideEditorEffect) {
+        this.sideEditorEffect(...this.schema.sideEditorEffect);
+    }
     this.__updateEmpty();
 };
 
@@ -312,6 +315,17 @@ export default {
                 }
                 this.trigger(`${this.key}:committed`, this, this.model, this.getValue());
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
+            },
+
+            sideEditorEffect(func: Function | string, options: Object): void {
+                if (typeof func === 'string') {
+                    if (!formRepository.sideEditorEffects[func]) {
+                        throw new Error(`SideEditorEffect "${func}" not found`);
+                    }
+                    formRepository.sideEditorEffects[func].call(this, options);
+                } else {
+                    func.call(this, options);
+                }
             },
 
             isEmptyValue() {
