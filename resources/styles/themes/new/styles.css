@@ -261,7 +261,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .editor_date-time .input.input_time,
 .editor_date-time .input.input_date {
-  padding: 0;
+  padding-right: 0;
 }
 
 
