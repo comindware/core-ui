@@ -123,10 +123,6 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
-.disabled .form-label {
-    color:#70787f;
-}
-
 /*---------------// End Form Label //-------------*/
 
 
@@ -283,7 +279,6 @@ input[type="checkbox"].checkbox {
     font-weight: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-sizing: border-box;
     vertical-align: top;
     transition: background, border-color .2s ease-in-out;
 }
@@ -313,7 +308,6 @@ input[type="checkbox"].checkbox {
 
 /* Date Time */
 .editor_date-time {
-    padding-right: 16px;
     display: flex;
     align-items: center;
 }
@@ -322,7 +316,6 @@ input[type="checkbox"].checkbox {
 }
 .editor_date-time .input{
     border: 0;
-    padding-right: 0;
 }
 
 
@@ -387,7 +380,7 @@ input[type="checkbox"].checkbox {
     flex: 0 0 auto;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-sizing: border-box;
+    white-space: nowrap;
 }
 
 .bubbles__link {
@@ -703,8 +696,6 @@ input[type="checkbox"].checkbox {
 input[type="color"], .colorpicker{
     height: 28px;
     padding: 0;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     width: 35px;
     background: transparent;
     margin: -4px 5px 0 -2px;

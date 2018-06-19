@@ -190,7 +190,6 @@
     max-height: 227px;
     font-size: 12px;
     overflow-y: auto;
-    box-sizing: border-box;
     display: none;
     text-align: left;
 }
@@ -201,7 +200,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    box-sizing: border-box;
     vertical-align: middle;
     display: flex;
 }
