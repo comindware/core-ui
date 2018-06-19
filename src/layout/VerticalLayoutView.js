@@ -19,7 +19,9 @@ export default Marionette.View.extend({
 
     template: false,
 
-    className: classes.CLASS_NAME,
+    className() {
+        return `${classes.CLASS_NAME} ${this.options.class ? this.options.class : ''}`;
+    },
 
     behaviors: {
         LayoutBehavior: {

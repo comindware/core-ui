@@ -16,6 +16,10 @@ export default Marionette.View.extend({
         }
     },
 
+    className() {
+        return this.options.class ? this.options.class : '';
+    },
+
     template: false,
 
     behaviors: {

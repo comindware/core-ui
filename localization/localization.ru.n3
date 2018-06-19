@@ -112,6 +112,8 @@
 
 <http://comindware.com/text/core/form/editors/expression#valueAlias> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Знач."; l10n:originalData "valueAlias"].
 
+<http://comindware.com/text/core/form/editors/iconEditor#searchTitle> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Результаты поиска"; l10n:originalData "searchTitle"].
+
 <http://comindware.com/text/core/form/editors/memberSelect#notSet> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "Not set"].
 
 <http://comindware.com/text/core/form/editors/memberSelect#searchPlaceholder> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Поиск..."; l10n:originalData "Search..."].

@@ -3,6 +3,7 @@ import IconButtonView from './impl/iconEditor/views/IconButtonView';
 import IconPanelView from './impl/iconEditor/views/IconPanelView';
 import template from './impl/iconEditor/templates/iconEditorComponentView.html';
 import iconPalette from './impl/iconEditor/iconPalette';
+import icons from './impl/iconEditor/icons';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 
 const constants = {
@@ -82,26 +83,14 @@ export default BaseLayoutEditorView.extend({
         return !this.model.has('iconClass');
     },
 
-    __groupIcon() {
-        const groupItemsObj = {};
-
-        iconPalette.forEach(item => {
-            item.categories.forEach(categoryItem => {
-                if (!groupItemsObj[categoryItem]) {
-                    groupItemsObj[categoryItem] = [];
-                }
-                groupItemsObj[categoryItem].push(item);
-            });
-        });
-
-        return groupItemsObj;
-    },
-
     __getConfig() {
         return new Backbone.Collection(
-            Object.entries(this.__groupIcon()).map(item => ({
-                name: item[0],
-                groupItems: item[1]
+            Object.values(iconPalette).map((value) => ({
+                name: value.label,
+                groupItems: value.icons.map(icon => Object.assign({
+                        filter: icons[icon.id].search.terms
+                    }, icon)
+                )
             }))
         );
     },
