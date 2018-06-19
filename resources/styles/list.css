@@ -429,6 +429,7 @@
     white-space: nowrap;
     cursor: default;
     overflow: hidden;
+    min-width: 100px;
 }
 
 .cell_selection {
