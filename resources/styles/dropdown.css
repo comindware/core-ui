@@ -10,31 +10,15 @@
 
 .dropdown__wrp {
     margin: 0;
-    background: #fff;
+    background-color: #fff;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
     position: fixed;
     z-index: 600;
     max-height: 400px;
 }
 
-.dropdown__wrp .dropdown__wrp {
-    margin: 0;
-    box-shadow: none;
-    position: relative;
-}
-
-.dropdown__wrp_down {
+.dropdown__wrp.dropdown__wrp_down {
     max-height: 400px;
-    position: fixed;
-}
-
-.dropdown__wrp_footer {
-    padding-bottom: 38px;
-}
-
-.dropdown__wrp_right {
-    left: auto;
-    right: -10px;
 }
 
 /* dropdown-list */
@@ -128,7 +112,6 @@
     max-width: 100%;
     padding: 0;
     position: fixed;
-    background-color: white;
     display: flex;
     flex-direction: column;
 }
@@ -179,14 +162,15 @@
 .dd-list__i {
     font-weight: normal;
     text-align: left;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     cursor: pointer;
     position: relative;
     display: flex;
 }
-
+.dd-list__text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .dd-list__i_group {
     cursor: default;
 }
@@ -203,13 +187,13 @@
 .dd-list__btn{
     width: 100%;
     height: 25px;
-    border-top: 1px solid #dee3e8;
     background-color: #fff;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
+    flex: 1 0 auto;
 }
 
 .reference-btn{

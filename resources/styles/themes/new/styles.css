@@ -99,8 +99,18 @@
   content: '--';
   padding: 3px 5px 4px 0;
 }
+.dropdown.open.dropdown__wrp_down .bubbles {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 .dropdown__wrp {
-  margin-top: 5px;
+  padding: 1px 0;
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+.dropdown__wrp.dropdown__wrp_down {
+  margin-top: -1px;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 /* icons */
 
@@ -258,11 +268,9 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 /* Date Time */
 
-
 .editor_date-time .input.input_time,
 .editor_date-time .input.input_date {
   padding-right: 0;
 }
-
 
 /* /Date Time/ */

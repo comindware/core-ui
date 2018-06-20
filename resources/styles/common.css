@@ -382,6 +382,9 @@ a:hover {
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0,0,0,.1);
 }
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+}
 
 
 

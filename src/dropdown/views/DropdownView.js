@@ -157,6 +157,8 @@ export default Marionette.View.extend({
         }
 
         // class adjustments
+        this.el.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
+        this.el.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
         panelEl.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
         panelEl.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
 
@@ -184,7 +186,7 @@ export default Marionette.View.extend({
         const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
 
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelEl.style.minWidth = `${panelWidth}px`;
+            panelEl.style.width = `${panelWidth}px`;
         }
 
         if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {

@@ -463,6 +463,10 @@ svg.svg-grid-icons {
   background: transparent;
 }
 
+.dd-list__btn{
+  border-top: var(--border);
+}
+
 /* dropdown time list */
 .time-dropdown__i {
   padding: var(--dropdown-item-padding);
