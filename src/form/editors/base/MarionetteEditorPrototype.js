@@ -313,7 +313,6 @@ export default {
                 this.trigger(`${this.key}:committed`, this, this.model, this.getValue());
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
             },
-
             isEmptyValue() {
                 return !this.getValue();
             },
