@@ -3,7 +3,8 @@ import CanvasView from 'demoPage/views/CanvasView';
 export default function () {
     // 1. Create form template
     const template =
-        '<div class="field-width" data-fields="text"></div>' +
+        '<div class="field-width" data-fields="name"></div>' +
+        '<div class="field-width" data-fields="alias"></div>' +
         '<div class="field-width" data-fields="number"></div>' +
         '<div class="field-width" data-fields="dateTime"></div>' +
         '<div class="field-width" data-fields="duration"></div>' +
@@ -12,8 +13,35 @@ export default function () {
         '<div class="field-width" data-fields="dateTime2"></div>';
 
     // 2. Create form model
-    const model = new Backbone.Model({
-        text: 'Text Example',
+    const newClass = Backbone.Model.extend({
+        initialize() {
+            this.computedFields = new Backbone.ComputedFields(this);
+        },
+
+        computed: {
+            alias: {
+                depends: ['name', 'alias'],
+                get(fields) {
+                    if (fields.alias) {
+                        return fields.alias;
+                    }
+                    return fields.name;
+                }
+            },
+            name: {
+                depends: ['name', 'alias'],
+                get(fields) {
+                    if (fields.name) {
+                        return fields.name;
+                    }
+                    return this.previous('name');
+                }
+            }
+        }
+    });
+    const model = new newClass({
+        name: 'some name',
+        alias: 'some alias',
         number: 451,
         dateTime: new Date(1984, 0, 24),
         duration: 'P14DT4H15M',
@@ -34,10 +62,16 @@ export default function () {
                 behaviorClass: core.form.behaviors.BackboneFormBehavior,
                 schema() {
                     return {
-                        text: {
+                        name: {
+                            title: 'Name',
                             type: 'Text',
-                            title: 'Text',
-                            helpText: 'Some help information'
+                            helpText: 'Some help information',
+                            autocommit: true
+                        },
+                        alias: {
+                            title: 'Alias',
+                            type: 'Text',
+                            autocommit: true
                         },
                         number: {
                             type: 'Number',

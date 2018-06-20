@@ -84,25 +84,37 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         'keyup @ui.input': '__keyup',
         'change @ui.input': '__change',
         'click @ui.clearButton': '__clear',
+        'blur @ui.input': '__checkChange',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave'
     },
 
-    __keyup() {
+    __keyup(event) {
         if (this.options.changeMode === changeMode.keydown) {
             this.__value(this.ui.input.val(), false, true);
         }
 
         this.trigger('keyup', this);
+        if (event.keyCode === 13) {
+            this.__checkChange();
+        }
     },
 
     __change() {
         this.__value(this.ui.input.val(), false, true);
     },
 
+    __checkChange() {
+        if (this.model) {
+            if (this.value !== this.model.get(this.key)) {
+                this.__triggerChange();
+            }
+        }
+    },
+
     __clear() {
-        this.__value(null, true, true);
-        this.focus();
+        this.ui.input.trigger('focus');
+        this.__value(null, true, false);
         return false;
     },
 
