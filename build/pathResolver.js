@@ -8,7 +8,7 @@ const resolve = function(baseDir, nextDir, args) {
     if (nextDir) {
         pathArray.push(nextDir);
     }
-    return path.resolve.apply(path.resolve, pathArray.concat(_.toArray(args)));
+    return path.resolve.apply(path.resolve, pathArray.concat(Array.toArray(args)));
 };
 
 module.exports = {

@@ -1,6 +1,6 @@
 //@flow
 export default Marionette.View.extend({
-    className: 'btn-separator toolbar-btn__icon',
+    className: 'btn-separator',
 
     template: false
 });

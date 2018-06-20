@@ -150,8 +150,8 @@ export default /** @lends module:core.utils.helpers */ {
      * */
     applyBehavior(target) {
         const behaviors = _.rest(arguments, 1);
-        _.each(behaviors, Behavior => {
-            _.extend(target, new Behavior(target));
+        behaviors.forEach(Behavior => {
+            Object.Assign(target, new Behavior(target));
         });
     },
 

@@ -89,11 +89,6 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
         switch (this.options.size) {
             case size.auto:
                 this.ui.textarea.attr('rows', this.options.minHeight);
-                if (this.options.maxHeight) {
-                    const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
-                    this.ui.textarea.css('maxHeight', maxHeight);
-                }
-                autosize(this.ui.textarea);
                 break;
             case size.fixed:
                 this.ui.textarea.attr('rows', this.options.height);
@@ -102,7 +97,15 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
                 helpers.throwArgumentError('Invalid `size parameter`.');
         }
     },
-
+    onAttach() {
+        if (this.options.size === size.auto) {
+            if (this.options.maxHeight) {
+                const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
+                this.ui.textarea.css('maxHeight', maxHeight);
+            }
+            autosize(this.ui.textarea);
+        }
+    },
     setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
@@ -177,6 +180,7 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
     },
 
     __keyup(e) {
+        //todo fix caret
         if (e.ctrlKey) {
             return;
         }
@@ -184,7 +188,11 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
             return;
         }
 
-        const caret = this.ui.textarea.getSelection();
+        const caret = {
+            start: this.ui.textarea[0].selectionStart,
+            end: this.ui.textarea[0].selectionEnd
+        };
+
         if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
             return;
         }
@@ -195,13 +203,18 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
     },
 
     __triggerInput() {
+        //todo fix caret
         const text = this.ui.textarea.val();
         if (this.oldText === text) {
             return;
         }
 
         this.oldText = text;
-        const caret = this.ui.textarea.getSelection();
+
+        const caret = {
+            start: this.ui.textarea[0].selectionStart,
+            end: this.ui.textarea[0].selectionEnd
+        };
 
         this.trigger('input', text, {
             start: caret.start,

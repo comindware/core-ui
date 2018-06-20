@@ -60,7 +60,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
     initialize(options = {}) {
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-        _.extend(this, _.pick(options, 'field'));
+        Object.Assign(this, _.pick(options, 'field'));
         if (_.isString(this.options.valueEditor)) {
             this.options.valueEditor = formRepository.editors[this.options.valueEditor];
         }
@@ -70,7 +70,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
                 value: null
             };
         }
-        this.options.valueEditorOptions = _.extend(this.options.valueEditorOptions, {
+        this.options.valueEditorOptions = Object.Assign(this.options.valueEditorOptions, {
             enabled: this.options.enabled
         });
     },
@@ -176,7 +176,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
         }
 
         this.valueEditor = new this.options.valueEditor(
-            _.extend(this.options.valueEditorOptions, {
+            Object.Assign(this.options.valueEditorOptions, {
                 value: this.value.type === valueTypes.value ? value : null
             })
         );
@@ -192,7 +192,7 @@ export default (formRepository.editors.NewExpression = BaseLayoutEditorView.exte
 
         const contextOptions = _.pick(this.options.schema || this.options, 'recordTypeId', 'context', 'propertyTypes', 'usePropertyTypes', 'popoutFlow', 'allowBlank');
 
-        _.extend(contextOptions, {
+        Object.Assign(contextOptions, {
             value: this.value.type === valueTypes.context ? this.value.value : null
         });
 

@@ -47,8 +47,7 @@ const GridHeaderView = Marionette.View.extend({
         this.listenTo(this.collection, 'dragover:head', this.__handleModelDragOver);
         this.listenTo(this.collection, 'dragleave:head', this.__handleModelDragLeave);
         this.listenTo(this.collection, 'drop:head', this.__handleModelDrop);
-        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleResizeInternal', '__handleColumnSort', 'handleResize');
-        this.listenTo(GlobalEventService, 'window:resize', this.handleResize);
+        _.bindAll(this, '__draggerMouseUp', '__draggerMouseMove', '__handleColumnSort');
         this.listenTo(this.gridEventAggregator, 'update:collapse:all', this.__updateCollapseAll);
     },
 
@@ -114,10 +113,6 @@ const GridHeaderView = Marionette.View.extend({
         // }
     },
 
-    onAttach() {
-        this.__handleResizeInternal();
-    },
-
     onDestroy() {
         if (this.__columnEls) {
             this.__columnEls.forEach(c => c.destroy());
@@ -126,7 +121,6 @@ const GridHeaderView = Marionette.View.extend({
 
     updateSorting() {
         this.render();
-        this.__handleResizeInternal();
     },
 
     __handleColumnSort(sender, args) {
@@ -210,25 +204,8 @@ const GridHeaderView = Marionette.View.extend({
         return false;
     },
 
-    handleResize() {
-        if (this.isDestroyed()) {
-            return;
-        }
-        this.__handleResizeInternal();
-        this.gridEventAggregator.trigger('columnsResize');
-    },
-
     __getFullWidth() {
         return this.el.clientWidth;
-    },
-
-    __handleResizeInternal() {
-        if (!this.isRendered()) {
-            return;
-        }
-        this.ui.gridHeaderColumn.each(i => {
-            this.__setColumnWidth(i, this.columns[i].width);
-        });
     },
 
     updateColumnAndNeighbourWidths(index, delta) {
@@ -237,38 +214,13 @@ const GridHeaderView = Marionette.View.extend({
         if (newColumnWidth < this.constants.MIN_COLUMN_WIDTH) {
             return;
         }
-        // this.ui.gridHeaderColumn[index].style.width = `${newColumnWidth}px`;
-        this.__setColumnWidth(index, newColumnWidth);
+
+        this.trigger('update:width', index, newColumnWidth);
 
         this.gridEventAggregator.trigger('singleColumnResize', newColumnWidth);
 
         this.el.style.width = `${this.dragContext.tableInitialWidth + delta + 1}px`;
         this.columns[index].width = newColumnWidth;
-    },
-
-    __setColumnWidth(index, width = 0) {
-        const style = this.styleSheet;
-        const selector = `.${this.getOption('uniqueId')}-column${index}`;
-        const regexp = new RegExp(`${selector} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
-        let basis;
-        if (width > 0) {
-            if (width < 1) {
-                basis = `${width * 100}%`;
-            } else {
-                basis = `${width}px`;
-            }
-        } else {
-            basis = '0%';
-        }
-
-        const grow = width > 0 ? 0 : 1;
-        const newValue = `${selector} { flex: ${grow} 0 ${basis}; } `;
-
-        if (regexp.test(style.innerHTML)) {
-            style.innerHTML = style.innerHTML.replace(regexp, newValue);
-        } else {
-            style.innerHTML += newValue;
-        }
     },
 
     __toggleCollapseAll() {

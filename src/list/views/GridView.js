@@ -69,26 +69,29 @@ export default Marionette.View.extend({
 
         const HeaderView = this.options.headerView || GridHeaderView;
 
-        const columnClasses = [];
+        this.columnClasses = [];
         options.columns.forEach((c, i) => {
             const cClass = `${this.uniqueId}-column${i}`;
 
-            columnClasses.push(cClass);
+            this.columnClasses.push(cClass);
             c.columnClass = cClass;
         });
 
-        this.headerView = new HeaderView({
-            columns: options.columns,
-            gridEventAggregator: this,
-            checkBoxPadding: options.checkBoxPadding || 0,
-            gridColumnHeaderView: options.gridColumnHeaderView,
-            styleSheet: this.styleSheet,
-            uniqueId: this.uniqueId,
-            isTree: this.options.isTree,
-            expandOnShow: options.expandOnShow
-        });
+        if (this.options.showHeader) {
+            this.headerView = new HeaderView({
+                columns: options.columns,
+                gridEventAggregator: this,
+                checkBoxPadding: options.checkBoxPadding || 0,
+                gridColumnHeaderView: options.gridColumnHeaderView,
+                uniqueId: this.uniqueId,
+                isTree: this.options.isTree,
+                expandOnShow: options.expandOnShow
+            });
 
-        this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
+            this.listenTo(this.headerView, 'onColumnSort', this.onColumnSort, this);
+            this.listenTo(this.headerView, 'update:width', this.__setColumnWidth);
+        }
+
 
         if (options.noColumnsView) {
             this.noColumnsView = options.noColumnsView;
@@ -107,11 +110,11 @@ export default Marionette.View.extend({
         const childViewOptions = Object.assign(options.childViewOptions || {}, {
             columns: options.columns,
             gridEventAggregator: this,
-            columnClasses,
+            columnClasses: this.columnClasses,
             isTree: this.options.isTree
         });
 
-        this.isEditable = options.columns.some(column => column.editable);
+        this.isEditable = _.isBoolean(options.editable) ? options.editable : options.columns.some(column => column.editable);
         if (this.isEditable) {
             this.editableCellsIndexes = [];
             this.options.columns.forEach((column, index) => {
@@ -255,7 +258,9 @@ export default Marionette.View.extend({
         }
 
         if (this.options.showSelection) {
-            this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
+            if (this.options.showHeader) {
+                this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
+            }
             this.showChildView('selectionPanelRegion', this.selectionPanelView);
             if (this.getOption('showRowIndex')) {
                 this.getRegion('selectionHeaderRegion').el.classList.add('cell_selection-index');
@@ -284,6 +289,9 @@ export default Marionette.View.extend({
         if (this.forbidSelection) {
             htmlHelpers.forbidSelection(this.el);
         }
+        this.options.columns.forEach((column, i) => {
+            this.__setColumnWidth(i, column.width);
+        });
         document.body && document.body.appendChild(this.styleSheet);
         this.__bindListRegionScroll();
         if (this.options.showSearch) {
@@ -307,11 +315,13 @@ export default Marionette.View.extend({
     },
 
     __bindListRegionScroll() {
-        const headerRegionEl = this.getRegion('headerRegion').el;
+        const headerRegionEl = this.options.showHeader && this.getRegion('headerRegion').el;
         const selectionPanelRegionEl = this.options.showSelection && this.getRegion('selectionPanelRegion').el;
 
         this.getRegion('contentRegion').el.addEventListener('scroll', event => {
-            headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
+            if (headerRegionEl) {
+                headerRegionEl.scrollLeft = event.currentTarget.scrollLeft;
+            }
             if (selectionPanelRegionEl) {
                 selectionPanelRegionEl.scrollTop = event.currentTarget.scrollTop;
             }
@@ -358,11 +368,15 @@ export default Marionette.View.extend({
             }
         }
         this.onColumnSort(column, this.collection.comparator);
-        this.headerView.updateSorting();
+        if (this.options.showHeader) {
+            this.headerView.updateSorting();
+        }
     },
 
     handleResize() {
-        this.headerView.handleResize();
+        if (this.options.showHeader) {
+            this.headerView.handleResize();
+        }
     },
 
     setLoading(state) {
@@ -390,6 +404,31 @@ export default Marionette.View.extend({
                 this.collection.trigger('dragleave:head');
             }
             this.collection.dragoverModel = null;
+        }
+    },
+
+    __setColumnWidth(index, width = 0) {
+        const style = this.styleSheet;
+        const columnClass = this.columnClasses[index];
+        const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
+        let basis;
+        if (width > 0) {
+            if (width < 1) {
+                basis = `${width * 100}%`;
+            } else {
+                basis = `${width}px`;
+            }
+        } else {
+            basis = '0%';
+        }
+
+        const grow = width > 0 ? 0 : 1;
+        const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
+
+        if (regexp.test(style.innerHTML)) {
+            style.innerHTML = style.innerHTML.replace(regexp, newValue);
+        } else {
+            style.innerHTML += newValue;
         }
     }
 });

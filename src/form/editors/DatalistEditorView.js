@@ -67,11 +67,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 this.listenTo(options.collection, 'reset', panelCollection => this.__onResetCollection(panelCollection));
             }
         }
-        this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), { selectableBehavior: 'multi' });
+        this.panelCollection = new VirtualCollection(new ReferenceCollection(collection), {
+            isSliding: true,
+            selectableBehavior: 'multi'
+        });
 
-        this.controller =
-            this.options.controller ||
-            new StaticController({
+        this.controller
+            = this.options.controller
+            || new StaticController({
                 collection: options.collection
             });
 
@@ -88,7 +91,20 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
     },
 
-    className: 'editor editor_bubble',
+    className() {
+        const classList = [];
+        const maxQuantity = this.options.maxQuantitySelected || defaultOptions.maxQuantitySelected;
+        if (maxQuantity === 1) {
+            classList.push('editor_bubble--single');
+        }
+        if (this.options.showEditButton || defaultOptions.showEditButton) {
+            classList.push('editor_bubble--edit');
+        }
+        if ((this.options.canDeleteItem || defaultOptions.canDeleteItem) && maxQuantity > 1) {
+            classList.push('editor_bubble--delete');
+        }
+        return `editor editor_bubble ${classList.join(' ')}`;
+    },
 
     template: Handlebars.compile(template),
 
@@ -137,6 +153,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
+                canDeleteItem: this.options.maxQuantitySelected > 1 && this.options.canDeleteItem,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()
@@ -300,11 +317,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onFilterText(options) {
         const text = (options && options.text) || null;
         this.text = text;
+        this.dropdownView.panelView.setLoading(true);
         return this.controller.fetch(options).then(data => {
             if (this.text === text) {
                 this.panelCollection.reset(data.collection);
                 this.viewModel.panel.set('totalCount', data.totalCount);
                 this.__tryPointFirstRow();
+                this.dropdownView.panelView.setLoading(false);
             }
         });
     },
@@ -374,6 +393,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __updateFakeInputModel(): void {
         const selectedModels = this.viewModel.button.selected;
 
+        if (this.options.maxQuantitySelected === 1) {
+            if (this.fakeInputModel) {
+                selectedModels.remove(this.fakeInputModel);
+                delete this.fakeInputModel;
+            }
+            return;
+        }
         if (this.__canAddItem() && !this.fakeInputModel) {
             this.fakeInputModel = new FakeInputModel();
             selectedModels.add(this.fakeInputModel, { at: selectedModels.length });

@@ -178,9 +178,9 @@ const VirtualCollection = Backbone.Collection.extend(
                 SelectableBehaviorClass = selectableBehavior.single;
             }
             if (SelectableBehaviorClass) {
-                _.extend(this, new SelectableBehaviorClass(this));
+                Object.Assign(this, new SelectableBehaviorClass(this));
             }
-            _.extend(this, new CheckableBehavior.CheckableCollection(this));
+            Object.Assign(this, new CheckableBehavior.CheckableCollection(this));
         },
 
         rebuild() {
@@ -223,7 +223,6 @@ const VirtualCollection = Backbone.Collection.extend(
 
         __addModel(model, options) {
             const index = this.visibleModels.indexOf(model);
-            this._addReference(model);
             this.trigger('add', model, this, Object.assign({}, options, { at: index, index })); // both add and index to correct inserting in dom
         },
 
@@ -253,6 +252,7 @@ const VirtualCollection = Backbone.Collection.extend(
             list.forEach(model => {
                 this.length++;
                 this.models.push(model);
+                this._addReference(model);
 
                 model.collection = this;
                 model.level = level;

@@ -29,7 +29,7 @@ export default Backbone.Marionette.View.extend({
     },
 
     initialize(options, className) {
-        _.extend(this.options, options || {});
+        Object.Assign(this.options, options || {});
         if (className) {
             this.className = className;
         }

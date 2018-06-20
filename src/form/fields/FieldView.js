@@ -20,7 +20,7 @@ export default Marionette.View.extend({
 
         this.fieldId = _.uniqueId('field-');
 
-        this.__createEditor(options, this.fieldId, formRepository.editors[options.schema.type]);
+        this.__createEditor(options, this.fieldId, _.isString(this.schema.type) ? formRepository.editors[this.schema.type] : this.schema.type);
         if (this.schema.getReadonly || this.schema.getHidden) {
             this.listenTo(this.model, 'change', this.__updateExternalChange);
         }
@@ -52,15 +52,14 @@ export default Marionette.View.extend({
                 errorText: null
             });
 
-            const infoPopout = dropdown.factory.createPopout({
+            const infoPopout = dropdown.factory.createDropdown({
                 buttonView: InfoButtonView,
                 panelView: TooltipPanelView,
                 panelViewOptions: {
                     model: this.__viewModel,
                     textAttribute: 'helpText'
                 },
-                popoutFlow: 'right',
-                customAnchor: true
+                autoopen: true
             });
             this.showChildView('helpTextRegion', infoPopout);
         }
@@ -92,14 +91,13 @@ export default Marionette.View.extend({
         this.$el.addClass(classes.ERROR);
         this.errorCollection ? this.errorCollection.reset(errors) : (this.errorCollection = new Backbone.Collection(errors));
         if (!this.isErrorShown) {
-            const errorPopout = dropdown.factory.createPopout({
+            const errorPopout = dropdown.factory.createDropdown({
                 buttonView: ErrorButtonView,
                 panelView: ErrosPanelView,
                 panelViewOptions: {
                     collection: this.errorCollection
                 },
-                popoutFlow: 'right',
-                customAnchor: true
+                autoopen: true
             });
             this.showChildView('errorTextRegion', errorPopout);
             this.isErrorShown = true;

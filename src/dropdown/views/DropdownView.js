@@ -82,8 +82,6 @@ export default Marionette.View.extend({
 
         _.bindAll(this, 'open', 'close', '__onBlur');
 
-        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
-
         this.__observedEntities = [];
         this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
     },
@@ -115,7 +113,7 @@ export default Marionette.View.extend({
         if (this.button) {
             this.stopListening(this.button);
         }
-        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
+        this.button = new this.options.buttonView(Object.Assign({ parent: this }, this.options.buttonViewOptions));
         this.buttonView = this.button;
         this.listenTo(this.button, 'all', (...args) => {
             args[0] = `button:${args[0]}`;
@@ -206,7 +204,7 @@ export default Marionette.View.extend({
         }
         this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(this.options.panelViewOptions || {}, {
+        const panelViewOptions = Object.Assign(this.options.panelViewOptions || {}, {
             parent: this
         });
         this.el.classList.add(classes.OPEN);
@@ -229,6 +227,7 @@ export default Marionette.View.extend({
         this.__listenToElementMoveOnce(this.el, this.close);
         this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
+        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
 
         const activeElement = document.activeElement;
         if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {
@@ -257,6 +256,7 @@ export default Marionette.View.extend({
 
         this.__stopListeningToElementMove();
         this.stopListening(GlobalEventService);
+        this.stopListening(WindowService);
         this.button.$el.focus();
         this.isOpen = false;
 

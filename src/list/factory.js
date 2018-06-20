@@ -82,7 +82,7 @@ const factory = {
             )
         );
 
-        const listViewOptions = _.extend(
+        const listViewOptions = Object.Assign(
             {
                 collection,
                 emptyView: EmptyListView,

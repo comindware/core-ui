@@ -3,7 +3,7 @@
 import LocalizationService from '../../services/LocalizationService';
 
 export default function(config) {
-    let options = _.extend({
+    let options = Object.Assign({
         type: 'required',
         message: LocalizationService.get('CORE.FORM.VALIDATION.REQUIRED')
     }, config);

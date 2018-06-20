@@ -182,8 +182,8 @@ export default function() {
             recordTypeId: 'oa.1',
             propertyTypes: [],
             usePropertyTypes: false,
-            popoutFlow: 'right',
             autocommit: true,
+            autoopen: true,
             ontologyService: null
         }),
         presentation: '{{#if booleanValue}}true{{else}}false{{/if}}',

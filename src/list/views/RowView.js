@@ -11,7 +11,7 @@ const classes = {
 
 const defaultOptions = {
     levelMargin: 15,
-    collapsibleButtonWidth: 14
+    collapsibleButtonWidth: 24
 };
 
 /**
@@ -261,10 +261,6 @@ export default Marionette.View.extend({
         this.trigger('dblclick', this.model);
     },
 
-    setFitToView() {
-        this.__setInitialWidth();
-    },
-
     __handleSelection() {
         this.el.classList.add(classes.selected);
     },
@@ -272,7 +268,6 @@ export default Marionette.View.extend({
     __handleDeselection() {
         this.el.classList.remove(classes.selected);
         if (this.lastPointedEl) {
-            // this.lastPointedEl.style.outline = '';
             this.lastPointedEl.classList.remove(classes.cellFocused);
         }
     },
@@ -334,17 +329,14 @@ export default Marionette.View.extend({
 
     __selectPointed(pointed) {
         if (this.lastPointedEl) {
-            // this.lastPointedEl.style.outline = '';
             this.lastPointedEl.classList.remove(classes.cellFocused);
         }
         const pointedEls = this.el.getElementsByClassName(this.columnClasses[pointed]);
         if (pointedEls && pointedEls.length) {
             const pointedEl = pointedEls[0];
-            // pointedEl.style.outline = '1px solid #0575bd';
             pointedEl.classList.add(classes.cellFocused);
-            // const editors = pointedEl.getElementsByTagName('input') || pointedEl.getElementsByClassName('editor');
             const editor = pointedEl.querySelector('input') || pointedEl.querySelector('[class~=editor]');
-            if (editor) {
+            if (editor && !pointedEl.contains(document.activeElement)) {
                 editor.focus();
             }
             this.lastPointedEl = pointedEl;
