@@ -20,7 +20,7 @@ Backbone.history.checkUrl = () => {
 
 export default {
     initialize(options) {
-        //Object.assign(this, Backbone.Events);
+        Object.assign(this, Backbone.Events);
         this.defaultUrl = options.defaultUrl;
         options.modules.forEach(config => {
             const moduleProxy = new ModuleProxy({ config });
