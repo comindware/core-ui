@@ -101,8 +101,8 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     __clear() {
-        this.__value(null, true, true);
-        this.focus();
+        this.ui.input.focus();
+        this.__value(null, true, false);
         return false;
     },
 
