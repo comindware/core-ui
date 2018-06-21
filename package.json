@@ -1,6 +1,6 @@
 {
   "name": "comindware.core.ui",
-  "version": "1.5.0-beta.62",
+  "version": "1.5.0-beta.63",
   "license": "MIT",
   "description": "Comindware Core UI provides the basic components like editors, lists, dropdowns, popups that we so desperately need while creating Marionette-based single-page applications.",
   "homepage": "http://comindware.github.io/core-ui/",
@@ -109,7 +109,7 @@
     "webpack": "^4.12.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.1.0-4",
+    "@fortawesome/fontawesome-free": "^5.1.0",
     "autosize": "^4.0.2",
     "backbone": "^1.3.3",
     "backbone-associations": "^0.6.2",
@@ -117,7 +117,7 @@
     "backbone.marionette": "^3.5.1",
     "backbone.modelbinder": "^1.1.0",
     "backbone.radio": "^2.0.0",
-    "codemirror": "^5.38.0",
+    "codemirror": "^5.39.0",
     "jquery": "^3.3.1",
     "jsencrypt": "^2.3.1",
     "jstorage": "^0.4.8",
