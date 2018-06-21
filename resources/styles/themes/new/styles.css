@@ -270,7 +270,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .editor_date-time .input.input_time,
 .editor_date-time .input.input_date {
-  padding-right: 0;
+  padding: 0;
 }
 
 /* /Date Time/ */

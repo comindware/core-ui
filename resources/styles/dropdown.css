@@ -384,6 +384,7 @@
 }
 
 .source-text {
-    flex: 1;
+    display: inline-block;
+    width: 100%;
 }
 /*-----//------*/
