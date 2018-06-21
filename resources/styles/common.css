@@ -382,6 +382,9 @@ a:hover {
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0,0,0,.1);
 }
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+}
 
 
 
@@ -1059,9 +1062,9 @@ a:hover {
 /* -------- context select ------*/
 .data-source-popout-view {
     min-width: 165px;
+    max-width: 250px;
     overflow: hidden;
     position: fixed;
-    width: 247px;
     background-color: white;
     min-height: 200px;
     max-height: 500px;

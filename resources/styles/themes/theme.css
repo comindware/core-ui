@@ -90,7 +90,9 @@ body {
 .editor_disabled .bubbles,
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
-.editor_readonly .bubbles:hover {
+.editor_readonly .bubbles:hover,
+.editor.context_select.editor_readonly,
+.editor.context_select.editor_disabled {
   @apply --input-disabled-theme;
 }
 
@@ -222,6 +224,7 @@ body {
 /* Date Time */
 .editor_date-time {
   @apply --input-theme;
+  padding: var(--input-padding);
 }
 
 .editor_disabled.editor_date-time,
@@ -461,6 +464,10 @@ svg.svg-grid-icons {
 
 .dd-list__i_group:hover {
   background: transparent;
+}
+
+.dd-list__btn{
+  border-top: var(--border);
 }
 
 /* dropdown time list */
