@@ -6,6 +6,7 @@
 * */
 
 import formRepository from '../../formRepository';
+import { keyCode } from 'utils';
 
 const classes = {
     disabled: 'editor_disabled',
@@ -25,9 +26,11 @@ const onRender = function() {
     if (this.focusElement) {
         this.$el.on('focus', this.focusElement, this.onFocus);
         this.$el.on('blur', this.focusElement, this.onBlur);
+        this.$el.on('keyup', this.focusElement, this.onKeyup);
     } else if (this.focusElement !== null) {
         this.$el.on('focus', this.onFocus);
         this.$el.on('blur', this.onBlur);
+        this.$el.on('keyup', this.onKeyup);
     }
     this.__updateEmpty();
 };
@@ -99,7 +102,7 @@ export default {
             hasFocus: false,
 
             constructor(options: Object = {}) {
-                _.bindAll(this, 'onFocus', 'onBlur');
+                _.bindAll(this, 'onFocus', 'onBlur', 'checkChange', 'onKeyup');
 
                 //Set initial value
                 if (options.model) {
@@ -388,12 +391,27 @@ export default {
                 throw new Error('Invalid validator');
             },
 
+            checkChange() {
+                if (this.model) {
+                    if (this.value !== this.model.get(this.key)) {
+                        this.__triggerChange();
+                    }
+                }
+            },
+
+            onKeyup(event) {
+                if (event.keyCode === keyCode.ENTER) {
+                    this.checkChange();
+                }
+            },
+
             onFocus() {
                 this.$el.addClass(classes.FOCUSED);
                 this.trigger('focus', this);
             },
 
             onBlur() {
+                this.checkChange();
                 this.$el.removeClass(classes.FOCUSED);
                 this.trigger('blur', this);
             }

@@ -55,6 +55,10 @@ export default function () {
             this.model = model;
         },
 
+        onRender() {
+            this.listenTo(this.model, 'change', () => console.log(this.model.changed));
+        },
+
         template: Handlebars.compile(template),
 
         behaviors: {
@@ -76,7 +80,8 @@ export default function () {
                         number: {
                             type: 'Number',
                             title: 'Number',
-                            helpText: 'Some help information'
+                            helpText: 'Some help information',
+                            autocommit: true
                         },
                         dateTime: {
                             type: 'DateTime',
