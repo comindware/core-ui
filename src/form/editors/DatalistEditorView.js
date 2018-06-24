@@ -35,7 +35,9 @@ const defaultOptions = {
     collection: null,
     maxQuantitySelected: 1,
     canDeleteItem: true,
-    valueType: 'normal'
+    valueType: 'normal',
+    showRemoveButton: true,
+    showSearch: true
 };
 
 /**
@@ -153,7 +155,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
-                canDeleteItem: this.options.maxQuantitySelected > 1 && this.options.canDeleteItem,
+                canDeleteItem: this.options.canDeleteItem,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()
@@ -394,7 +396,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __updateFakeInputModel(): void {
         const selectedModels = this.viewModel.button.selected;
 
-        if (this.options.maxQuantitySelected === 1) {
+        if (!this.options.showSearch) {
             if (this.fakeInputModel) {
                 selectedModels.remove(this.fakeInputModel);
                 delete this.fakeInputModel;
