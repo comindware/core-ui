@@ -302,7 +302,7 @@ describe('Editors', () => {
             expect(onChangeCallback).toHaveBeenCalledTimes(1);
         });
 
-        it('should clear value and trigger change event on remove button click', () => {
+        it('should clear value, dont change attribute and dont trigger change event on remove button click', () => {
             const onChangeCallback = jasmine.createSpy('onChangeCallback');
             const model = new Backbone.Model({
                 data: 'text'
@@ -322,6 +322,37 @@ describe('Editors', () => {
 
             view.$el.trigger('mouseenter');
             view.$('.js-clear-button').click();
+
+            const isEmpty = view.isEmptyValue();
+            const input = findInput(view);
+
+            expect(model.get('data')).toEqual('text');
+            expect(isEmpty).toEqual(true);
+            expect(onChangeCallback).toHaveBeenCalledTimes(0);
+            expect(input.val()).toEqual('');
+        });
+
+        it('should clear attribute and value and trigger change event on remove button click and then blur()', () => {
+            const onChangeCallback = jasmine.createSpy('onChangeCallback');
+            const model = new Backbone.Model({
+                data: 'text'
+            });
+            const view = new core.form.editors.TextEditor({
+                model,
+                key: 'data',
+                changeMode: 'keydown',
+                autocommit: true
+            });
+
+            window.app
+                .getView()
+                .getRegion('contentRegion')
+                .show(view);
+            view.on('change', onChangeCallback);
+
+            view.$el.trigger('mouseenter');
+            view.$('.js-clear-button').click();
+            view.blur();
 
             const isEmpty = view.isEmptyValue();
             const input = findInput(view);
