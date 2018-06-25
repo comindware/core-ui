@@ -18,8 +18,6 @@ export default Marionette.View.extend({
 
     template: Handlebars.compile(template),
 
-    tagName: 'li',
-
     className: 'bubbles__form',
 
     ui: {

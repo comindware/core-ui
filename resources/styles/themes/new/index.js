@@ -4,8 +4,6 @@ const utils = require('../utils');
 const icons = {
     arrowIcon:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E",
-    angleDown:
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='{{fill}}' viewBox='0 0 320 512'%3E%3Cpath d='M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z'/%3E%3C/svg%3E",
     angleRight:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E",
     search:
@@ -208,14 +206,12 @@ module.exports.apply = {
         background: variables['light-gradient']
     },
     'dropdown-caret-theme': {
-        content: '""',
+        'font-size': '16px',
         position: 'absolute',
-        right: '5px',
+        right: '6px',
         top: '50%',
         transform: 'translateY(-50%)',
-        width: '1em',
-        height: '1em',
-        background: `url(${utils.buildIcon(icons.angleDown, variables['blue-300'])}) center no-repeat`
+        color: variables['blue-300']
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
@@ -278,7 +274,8 @@ module.exports.apply = {
         'margin-right': '5px',
         'margin-bottom': '-1px',
         'border-radius': '4px 4px 0 0',
-        flex: '0 1 auto'
+        flex: '0 1 auto',
+        'min-height': '30px'
     },
     'tab-item-active-theme': {
         'background-color': variables.white,
