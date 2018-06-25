@@ -924,20 +924,8 @@ a:hover {
 .toolbar-items-wrp {
     display: flex;
 }
-.toolbar-btn {
-    display: inline-flex;
-    white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    align-items: center;
-    z-index: 1;
-}
 
 .toolbar-btn__text {
-    display: inline-flex;
-    align-items: center;
     user-select: none;
 }
 
