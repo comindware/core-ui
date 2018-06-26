@@ -36,7 +36,6 @@ const defaultOptions = {
     maxQuantitySelected: 1,
     canDeleteItem: true,
     valueType: 'normal',
-    showRemoveButton: true,
     showSearch: true
 };
 
@@ -58,7 +57,7 @@ const defaultOptions = {
  * */
 export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, options.schema || options, defaultOptions);
+        _.defaults(this.options, options.schema || options);
 
         let collection = [];
         if (options.collection) {
@@ -74,9 +73,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selectableBehavior: 'multi'
         });
 
-        this.controller
-            = this.options.controller
-            || new StaticController({
+        this.controller =
+            this.options.controller ||
+            new StaticController({
                 collection: options.collection
             });
 
@@ -94,6 +93,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     className() {
+        _.defaults(this.options, defaultOptions);
         const classList = [];
         const maxQuantity = this.options.maxQuantitySelected;
 
