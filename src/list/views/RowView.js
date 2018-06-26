@@ -6,6 +6,7 @@ const classes = {
     expanded: 'collapsible-btn_expanded',
     collapsible: 'js-collapsible-button',
     dragover: 'dragover',
+    hover: 'hover',
     cellFocused: 'cell-focused'
 };
 
@@ -46,7 +47,9 @@ export default Marionette.View.extend({
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
-        drop: '__handleDrop'
+        drop: '__handleDrop',
+        mouseenter: '__handleMouseEnter',
+        mouseleave: '__handleMouseLeave'
     },
 
     modelEvents: {
@@ -59,6 +62,8 @@ export default Marionette.View.extend({
         dragover: '__handleModelDragOver',
         dragleave: '__handleModelDragLeave',
         drop: '__handleModelDrop',
+        mouseenter: '__handleModelMouseEnter',
+        mouseleave: '__handleModelMouseLeave',
         'toggle:collapse': 'updateCollapsed'
     },
 
@@ -230,7 +235,7 @@ export default Marionette.View.extend({
                         'afterbegin',
                         `<span class="js-tree-first-cell collapsible-btn ${classes.collapsible} ${
                             this.model.collapsed === false ? classes.expanded : ''
-                        }" style="margin-left:${margin}px;"></span>`
+                        }" style="margin-left:${margin}px;"></span>&nbsp;`
                     );
                 } else {
                     el.insertAdjacentHTML('afterbegin', `<span class="js-tree-first-cell" style="margin-left:${margin + defaultOptions.collapsibleButtonWidth}px;"></span>`);
@@ -356,5 +361,21 @@ export default Marionette.View.extend({
             parent = current.parentElement;
         }
         return result;
+    },
+
+    __handleMouseEnter() {
+        this.model.trigger('mouseenter');
+    },
+
+    __handleModelMouseEnter() {
+        this.el.classList.add(classes.hover);
+    },
+
+    __handleMouseLeave() {
+        this.model.trigger('mouseleave');
+    },
+
+    __handleModelMouseLeave() {
+        this.el.classList.remove(classes.hover);
     }
 });

@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --open"
   },
   "devDependencies": {
-    "autoprefixer": "^8.5.1",
+    "autoprefixer": "^8.6.3",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
@@ -16,7 +16,7 @@
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "exports-loader": "^0.7.0",
     "expose-loader": "^0.7.5",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -26,19 +26,19 @@
     "html-webpack-plugin": "^3.2.0",
     "imports-loader": "^0.8.0",
     "postcss-loader": "^2.1.5",
-    "prettier": "^1.12.1",
+    "prettier": "^1.13.6",
     "raw-loader": "^0.5.1",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.21.0",
     "text-loader": "^0.0.1",
     "url-loader": "^1.0.1",
-    "webpack": "^4.9.1",
-    "webpack-cli": "^2.1.4",
+    "webpack": "^4.12.1",
+    "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.4",
     "webpack-pwa-manifest": "^3.6.2",
-    "workbox-webpack-plugin": "^3.2.0"
+    "workbox-webpack-plugin": "^3.3.0"
   },
   "dependencies": {
-    "font-awesome": "^4.7.0"
+    "@fortawesome/fontawesome-free": "^5.1.0"
   }
 }

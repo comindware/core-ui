@@ -28,6 +28,11 @@ export default {
                     description: 'Group'
                 },
                 {
+                    id: 'GroupNestedView',
+                    displayName: 'Nested Group',
+                    description: 'Nested Group'
+                },
+                {
                     id: 'Button',
                     displayName: 'Button',
                     description: 'Button'
@@ -36,6 +41,11 @@ export default {
                     id: 'PopupView',
                     displayName: 'Popup View',
                     description: 'Popup View'
+                },
+                {
+                    id: 'MessageBox',
+                    displayName: 'Message Box',
+                    description: 'Message Box'
                 },
                 {
                     id: 'NavigationDrawer',

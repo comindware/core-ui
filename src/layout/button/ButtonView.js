@@ -4,7 +4,7 @@ import template from './button.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
-    CLASS_NAME: 'layout__button-view'
+    CLASS_NAME: 'layout__button'
 };
 
 export default Marionette.View.extend({
@@ -17,6 +17,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
+            customClass: this.options.customClass || '',
             text: this.options.text
         };
     },

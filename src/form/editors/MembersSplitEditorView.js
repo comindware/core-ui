@@ -31,7 +31,8 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions())), defaultOptions());
 
         const defOps = Object.assign(defaultOptions(), {
-            users: options.users ||
+            users:
+                options.users ||
                 options.cacheService.GetUsers().map(user => ({
                     id: user.Id,
                     name: user.Text || user.Username,
@@ -39,7 +40,8 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
                     userpicUri: user.userpicUri,
                     type: 'users'
                 })),
-            groups: options.groups ||
+            groups:
+                options.groups ||
                 options.cacheService.GetGroups().map(group => ({
                     id: group.id,
                     name: group.name,
@@ -121,23 +123,26 @@ export default (formRepository.editors.MembersSplit = BaseLayoutEditorView.exten
                 height: '700px'
             },
             header: this.getOption('title') || Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.MEMBERSTITLE'),
-            buttons: [{
-                id: 'save',
-                text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
-                handler: () => {
-                    this.controller.updateMembers();
-                    this.__value(this.options.selected, true);
-                    Core.services.WindowService.closePopup();
+            buttons: [
+                {
+                    id: 'close',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
+                    customClass: 'btn-small btn-outline',
+                    handler: () => {
+                        this.controller.cancelMembers();
+                        Core.services.WindowService.closePopup();
+                    }
+                },
+                {
+                    id: 'save',
+                    text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.APPLY'),
+                    customClass: 'btn-small',
+                    handler: () => {
+                        this.controller.updateMembers();
+                        this.__value(this.options.selected, true);
+                        Core.services.WindowService.closePopup();
+                    }
                 }
-            },
-            {
-                id: 'close',
-                text: Localizer.get('CORE.FORM.EDITORS.MEMBERSPLIT.CANCEL'),
-                handler: () => {
-                    this.controller.cancelMembers();
-                    Core.services.WindowService.closePopup();
-                }
-            }
             ],
             content: this.controller.view
         });

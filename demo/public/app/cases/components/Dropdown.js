@@ -1,5 +1,3 @@
-
-
 export default function() {
     return new core.layout.VerticalLayout({
         rows: [
@@ -8,19 +6,19 @@ export default function() {
                 collection: new Backbone.Collection([
                     {
                         id: '1',
-                        name: 1
+                        name: 'Item 1'
                     },
                     {
                         id: '2',
-                        name: 2
+                        name: 'Other Item'
                     },
                     {
                         id: '3',
-                        name: 3
+                        name: 'Text'
                     },
                     {
                         id: '4',
-                        name: 4
+                        name: 'Long long long long long Item'
                     }
                 ])
             })

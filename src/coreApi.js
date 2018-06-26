@@ -39,6 +39,7 @@ import AjaxService from './services/AjaxService';
 import PromiseService from './services/PromiseService';
 import UserService from './services/UserService';
 import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
+import ThemeService from './services/ThemeService';
 
 import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
@@ -89,7 +90,8 @@ const core = {
         GlobalEventService,
         PromiseService,
         UserService,
-        MobileService
+        MobileService,
+        ThemeService
     },
     /**
      * Backbone collections of general use.
