@@ -95,17 +95,18 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     className() {
         const classList = [];
-        const maxQuantity = this.options.maxQuantitySelected || defaultOptions.maxQuantitySelected;
-        const showRemoveButton = this.options.showRemoveButton || defaultOptions.showRemoveButton;
+        const maxQuantity = this.options.maxQuantitySelected;
+
         if (maxQuantity === 1) {
             classList.push('editor_bubble--single');
         }
-        if (this.options.showEditButton || defaultOptions.showEditButton) {
+        if (this.options.showEditButton) {
             classList.push('editor_bubble--edit');
         }
-        if ((this.options.canDeleteItem || defaultOptions.canDeleteItem) && showRemoveButton) {
+        if (this.options.canDeleteItem) {
             classList.push('editor_bubble--delete');
         }
+
         return `editor editor_bubble ${classList.join(' ')}`;
     },
 
@@ -303,10 +304,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const selectedItems = _.filter(this.viewModel.button.selected.models, model => model !== this.fakeInputModel);
+        const selectedItems = this.viewModel.button.selected.models.filter(model => model !== this.fakeInputModel);
         const isAccess = this.getEnabled() && !this.getReadonly();
         const maxQuantity = this.options.maxQuantitySelected;
-        return isAccess && (!maxQuantity || maxQuantity === 1 || maxQuantity !== selectedItems.length);
+
+        return isAccess && maxQuantity > selectedItems.length;
     },
 
     __onValueEdit(value) {
@@ -366,7 +368,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        if (this.__canAddItem()) {
+        if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
     },
