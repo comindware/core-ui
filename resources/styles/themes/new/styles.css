@@ -30,7 +30,6 @@
 .tr-search__input {
   @apply --input-theme;
   height: var(--input-height);
-  line-height: var(--input-line-height);
   background-size: 14px;
 }
 
