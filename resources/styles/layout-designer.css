@@ -1040,7 +1040,3 @@
 .ld-container-columns {
     display: flex;
 }
-
-.fd-collection__header .toolbar-btn{
-    height: 24px;
-}

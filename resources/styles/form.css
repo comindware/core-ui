@@ -366,13 +366,14 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles {
+    position: relative;
+}
+
+.bubbles__list {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
 }
-
 .bubbles__i {
     max-width: 100%;
     display: inline-block;

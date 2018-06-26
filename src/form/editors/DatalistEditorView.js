@@ -74,9 +74,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selectableBehavior: 'multi'
         });
 
-        this.controller =
-            this.options.controller ||
-            new StaticController({
+        this.controller
+            = this.options.controller
+            || new StaticController({
                 collection: options.collection
             });
 
@@ -96,13 +96,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     className() {
         const classList = [];
         const maxQuantity = this.options.maxQuantitySelected || defaultOptions.maxQuantitySelected;
+        const showRemoveButton = this.options.showRemoveButton || defaultOptions.showRemoveButton;
         if (maxQuantity === 1) {
             classList.push('editor_bubble--single');
         }
         if (this.options.showEditButton || defaultOptions.showEditButton) {
             classList.push('editor_bubble--edit');
         }
-        if ((this.options.canDeleteItem || defaultOptions.canDeleteItem) && maxQuantity > 1) {
+        if ((this.options.canDeleteItem || defaultOptions.canDeleteItem) && showRemoveButton) {
             classList.push('editor_bubble--delete');
         }
         return `editor editor_bubble ${classList.join(' ')}`;
@@ -199,14 +200,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
+        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
     },
 
     setEnabled(enabled: Boolean): void {
         BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
+        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
     },
 
     focus(): void {
@@ -418,7 +419,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __updateButtonInput(): void {
         if (this.dropdownView.button) {
-            this.dropdownView.button.updateInput();
+            this.dropdownView.button.collectionView.updateInput();
         }
     },
 
