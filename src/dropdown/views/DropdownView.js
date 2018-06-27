@@ -247,7 +247,7 @@ export default Marionette.View.extend({
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !document.contains(this.el)) {
+        if (!this.isOpen || !document.body.contains(this.el)) {
             return;
         }
         this.trigger('before:close', this);
