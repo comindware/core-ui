@@ -6,6 +6,8 @@ const methodName = {
     WebApi: 'WebApi'
 };
 
+let beforeSent = null;
+
 export default (window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
@@ -41,7 +43,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
         });
 
         if (options.beforeSent) {
-            this.beforeSend = options.beforeSent;
+            beforeSent = options.beforeSent;
         }
     },
 
@@ -61,8 +63,8 @@ export default (window.Ajax = new (Marionette.Object.extend({
             options || {}
         );
 
-        if (this.beforeSend) {
-            const canProceed = await this.beforeSend();
+        if (beforeSent) {
+            const canProceed = await beforeSent();
 
             if (canProceed) {
                 return PromiseService.registerPromise($.ajax(config));
