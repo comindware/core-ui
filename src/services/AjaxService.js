@@ -39,11 +39,16 @@ export default (window.Ajax = new (Marionette.Object.extend({
             eval(`controller[actionInfo.methodName] = ${actionFn};`);
             /* eslint-enable */
         });
+
+        if (options.beforeSent) {
+            this.beforeSend = options.beforeSent;
+        }
     },
 
-    getResponse(type, url, data, options) {
+    async getResponse(type, url, data, options) {
         helpers.assertArgumentNotFalsy(type, 'type');
         helpers.assertArgumentNotFalsy(url, 'url');
+
         const config = Object.assign(
             {
                 type,
@@ -56,7 +61,15 @@ export default (window.Ajax = new (Marionette.Object.extend({
             options || {}
         );
 
-        return PromiseService.registerPromise($.ajax(config));
+        if (this.beforeSend) {
+            const canProceed = await this.beforeSend();
+
+            if (canProceed) {
+                return PromiseService.registerPromise($.ajax(config));
+            }
+        } else {
+            return PromiseService.registerPromise($.ajax(config));
+        }
     },
 
     sendFormData(url, formData) {
