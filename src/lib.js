@@ -1,66 +1,67 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/21/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+//@flow
+/* Data & Datatime utils*/
 import moment_ from 'moment-timezone';
+import '../node_modules/moment-timezone/moment-timezone-utils';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
-import Bluebird_ from 'bluebird';
-import * as Handlebars_ from 'handlebars';
-import 'underscore';
-import * as underscoreString from 'underscore.string';
-import { Backbone as Backbone_ } from 'backbone';
-import 'backbone-associations';
+/* --- */
+import underscoreLib from 'underscore';
+import mixin from './utils/underscore';
+/* Core.Model utils */
+import backbone from 'backbone';
 import * as Marionette_ from 'backbone.marionette';
+import 'backbone.modelbinder';
+import 'backbone-computedfields';
+import 'backbone.radio';
+import 'backbone-associations';
+/* --- */
+import 'jstorage';
+import * as Handlebars_ from 'handlebars';
 import $_ from 'jquery';
-import 'jquery.inputmask/dist/jquery.inputmask.bundle';
 import 'rangyinputs';
-import 'jquery-mousewheel';
-import 'jquery-autosize';
-import * as keypress_ from 'keypress';
-import 'bootstrap-datetime-picker';
+import autosize from 'autosize';
+
 import numeral_ from 'numeral';
+import 'numeral/locales/ru';
+import 'numeral/locales/de';
 
-// Replacing ES6 promise with bluebird
-window.Promise = Bluebird_;
+import codemirror_ from 'codemirror/lib/codemirror';
+import 'innersvg-polyfill';
+import jsencrypt from 'jsencrypt';
+import * as jqui from 'jquery-ui';
 
-window.Promise.config({
-    warnings: true,
-    longStackTraces: true,
-    cancellation: true
-});
+window._ = underscoreLib;
+window._.mixin(mixin);
 
-window._.string = window._.str = underscoreString;
-
-Backbone_.Associations.EVENTS_NC = true;
+window.numeral = numeral_;
 
 $_.browser = {
-    msie: (/msie|trident/i).test(navigator.userAgent)
+    msie: /msie|trident/i.test(navigator.userAgent)
 };
 
 const api = {
-    keypress: keypress_,
+    'jquery-ui': jqui,
     moment: moment_,
     Handlebars: Handlebars_,
-    Bluebird: Bluebird_,
     $: $_,
     _: window._,
-    Backbone: Backbone_,
+    Backbone: backbone,
     Marionette: Marionette_,
-    numeral: numeral_
+    numeral: numeral_,
+    codemirror: codemirror_,
+    JSEncrypt: jsencrypt.JSEncrypt,
+    autosize
 };
-export var keypress = api.keypress;
-export var moment = api.moment;
-export var Handlebars = api.Handlebars;
-export var Bluebird = api.Bluebird;
-export var $ = api.$;
-export var _ = window._;
-export var Backbone = Backbone_;
-export var Marionette = Marionette_;
-export var numeral = api.numeral;
+
+const moment = api.moment;
+const Handlebars = api.Handlebars;
+const $ = api.$;
+const _ = window._;
+const Backbone = backbone;
+const Marionette = Marionette_;
+const numeral = api.numeral;
+const codemirror = api.codemirror;
+
 export default api;
+export { moment, Handlebars, $, _, Backbone, Marionette, numeral, codemirror, autosize };

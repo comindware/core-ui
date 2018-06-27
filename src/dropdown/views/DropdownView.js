@@ -1,35 +1,25 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/27/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { $, Handlebars } from 'lib';
+// @flow
 import { helpers } from 'utils';
 import WindowService from '../../services/WindowService';
-import template from '../templates/dropdown.hbs';
-import BlurableBehavior from '../utils/BlurableBehavior';
 import GlobalEventService from '../../services/GlobalEventService';
-import ListenToElementMoveBehavior from '../utils/ListenToElementMoveBehavior';
-import WrapperView from './WrapperView';
+
+const THROTTLE_DELAY = 100;
 
 const classes = {
     OPEN: 'open',
     DROPDOWN_DOWN: 'dropdown__wrp_down',
     DROPDOWN_WRP_OVER: 'dropdown__wrp_down-over',
     DROPDOWN_UP: 'dropdown__wrp_up',
-    DROPDOWN_UP_OVER: 'dropdown__wrp_up-over'
+    DROPDOWN_UP_OVER: 'dropdown__wrp_up-over',
+    VISIBLE_COLLECTION: 'visible-collection'
 };
 
 const WINDOW_BORDER_OFFSET = 10;
+const MAX_DROPDOWN_PANEL_WIDTH = 200;
 
 const panelPosition = {
     DOWN: 'down',
-    DOWN_OVER: 'down-over',
-    UP: 'up',
-    UP_OVER: 'up-over'
+    UP: 'up'
 };
 
 const panelMinWidth = {
@@ -41,7 +31,8 @@ const defaultOptions = {
     autoOpen: true,
     renderAfterClose: true,
     panelPosition: panelPosition.DOWN,
-    panelMinWidth: panelMinWidth.BUTTON_WIDTH
+    panelMinWidth: panelMinWidth.BUTTON_WIDTH,
+    allowNestedFocus: true
 };
 
 /**
@@ -67,7 +58,7 @@ const defaultOptions = {
  * <li><code>'panel:\*' </code> - all events the panelView triggers are repeated by this view with 'panel:' prefix.</li>
  * </ul>
  * @constructor
- * @extends Marionette.LayoutView
+ * @extends Marionette.View
  * @param {Object} options Options object.
  * @param {Marionette.View} options.buttonView View class for displaying the button.
  * @param {(Object|Function)} [options.buttonViewOptions] Options passed into the view on its creation.
@@ -82,40 +73,29 @@ const defaultOptions = {
  * @param {Boolean} [options.renderAfterClose=true] Whether to trigger button render when the panel has closed.
  * */
 
-export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.views.DropdownView.prototype */ {
+export default Marionette.View.extend({
     initialize(options) {
-        _.extend(this.options, _.clone(defaultOptions), options || {});
         helpers.ensureOption(options, 'buttonView');
         helpers.ensureOption(options, 'panelView');
-        _.bindAll(this, 'open', 'close');
 
-        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
+        _.defaults(this.options, _.clone(defaultOptions), options);
+
+        _.bindAll(this, 'open', 'close', '__onBlur');
+
+        this.__observedEntities = [];
+        this.__checkElements = _.throttle(this.__checkElements.bind(this), THROTTLE_DELAY);
     },
 
-    template: Handlebars.compile(template),
+    template: false,
 
     className: 'dropdown',
-
-    regions: {
-        buttonRegion: '.js-button-region'
-    },
 
     ui: {
         button: '.js-button-region'
     },
 
     events: {
-        'click @ui.button': '__handleClick'
-    },
-
-    behaviors: {
-        BlurableBehavior: {
-            behaviorClass: BlurableBehavior,
-            onBlur: '__handleBlur'
-        },
-        ListenToElementMoveBehavior: {
-            behaviorClass: ListenToElementMoveBehavior
-        }
+        blur: '__onBlur'
     },
 
     /**
@@ -133,108 +113,88 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.button) {
             this.stopListening(this.button);
         }
-        this.button = new this.options.buttonView(_.extend({ parent: this }, _.result(this.options, 'buttonViewOptions')));
+        this.button = new this.options.buttonView(_.extend({ parent: this }, this.options.buttonViewOptions));
         this.buttonView = this.button;
         this.listenTo(this.button, 'all', (...args) => {
             args[0] = `button:${args[0]}`;
             this.triggerMethod(...args);
         });
+        const el = this.button.render().$el;
+        this.$el.append(el);
 
-        if (this.isShown) {
-            this.buttonRegion.show(this.button);
-        }
-    },
-
-    onShow() {
-        this.buttonRegion.show(this.button);
         this.isShown = true;
+        this.button.on('change:content', () => this.panelEl && this.__adjustPosition(this.panelEl));
+
+        el.on('click', this.__handleClick.bind(this));
+
+        this.$el.attr('tabindex', -1);
     },
 
     onDestroy() {
+        if (this.button) {
+            this.button.destroy();
+        }
         if (this.isOpen) {
             WindowService.closePopup(this.popupId);
         }
     },
 
-    __adjustPosition($panelEl) {
+    __adjustPosition(panelEl) {
         const viewportHeight = window.innerHeight;
-        const $buttonEl = this.buttonRegion.$el;
-        const buttonRect = $buttonEl.offset();
-        buttonRect.height = $buttonEl.outerHeight();
-        buttonRect.width = $buttonEl.outerWidth();
-        buttonRect.bottom = viewportHeight - buttonRect.top - buttonRect.height;
-        const panelRect = $panelEl.offset();
-        panelRect.height = $panelEl.outerHeight();
+        const buttonEl = this.button.el;
+        const buttonRect = buttonEl.getBoundingClientRect();
+
+        const bottom = viewportHeight - buttonRect.top - buttonRect.height;
+
+        const offsetHeight = panelEl.offsetHeight;
 
         let position = this.options.panelPosition;
 
-        // switching position if there is not enough space
-        switch (position) {
-            case panelPosition.DOWN:
-                if (buttonRect.bottom < panelRect.height && buttonRect.top > buttonRect.bottom) {
-                    position = panelPosition.UP;
-                }
-                break;
-            case panelPosition.DOWN_OVER:
-                if (buttonRect.bottom + buttonRect.height < panelRect.height && buttonRect.top > buttonRect.bottom) {
-                    position = panelPosition.UP_OVER;
-                }
-                break;
-            case panelPosition.UP:
-                if (buttonRect.top < panelRect.height && buttonRect.bottom > buttonRect.top) {
-                    position = panelPosition.UP;
-                }
-                break;
-            case panelPosition.UP_OVER:
-                if (buttonRect.top + buttonRect.height < panelRect.height && buttonRect.bottom > buttonRect.top) {
-                    position = panelPosition.UP;
-                }
-                break;
-            default:
-                break;
+        if (position === panelPosition.DOWN && bottom < offsetHeight && buttonRect.top > bottom) {
+            position = panelPosition.UP;
+        } else if (position === panelPosition.UP && buttonRect.top < offsetHeight && bottom > buttonRect.top) {
+            position = panelPosition.DOWN;
         }
 
         // class adjustments
-        $panelEl.toggleClass(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
-        $panelEl.toggleClass(classes.DROPDOWN_WRP_OVER, position === panelPosition.DOWN_OVER);
-        $panelEl.toggleClass(classes.DROPDOWN_UP, position === panelPosition.UP);
-        $panelEl.toggleClass(classes.DROPDOWN_UP_OVER, position === panelPosition.UP_OVER);
+        this.el.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
+        this.el.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
+        panelEl.classList.toggle(classes.DROPDOWN_DOWN, position === panelPosition.DOWN);
+        panelEl.classList.toggle(classes.DROPDOWN_UP, position === panelPosition.UP);
 
         // panel positioning
-        let top;
+        let top: number = 0;
         switch (position) {
             case panelPosition.UP:
-                top = buttonRect.top - panelRect.height;
-                break;
-            case panelPosition.UP_OVER:
-                top = buttonRect.top + buttonRect.height - panelRect.height;
+                top = buttonRect.top - offsetHeight;
                 break;
             case panelPosition.DOWN:
                 top = buttonRect.top + buttonRect.height;
-                break;
-            case panelPosition.DOWN_OVER:
-                top = buttonRect.top;
                 break;
             default:
                 break;
         }
 
         // trying to fit into viewport
-        if (top + panelRect.height > viewportHeight - WINDOW_BORDER_OFFSET) {
-            top = viewportHeight - WINDOW_BORDER_OFFSET - panelRect.height;
+        if (top + offsetHeight > viewportHeight - WINDOW_BORDER_OFFSET) {
+            top = viewportHeight - WINDOW_BORDER_OFFSET - offsetHeight;
         }
         if (top <= WINDOW_BORDER_OFFSET) {
             top = WINDOW_BORDER_OFFSET;
         }
 
-        const panelCss = {
-            top,
-            left: buttonRect.left
-        };
+        const panelWidth = buttonRect.width > MAX_DROPDOWN_PANEL_WIDTH ? buttonRect.width : MAX_DROPDOWN_PANEL_WIDTH;
+
         if (this.options.panelMinWidth === panelMinWidth.BUTTON_WIDTH) {
-            panelCss['min-width'] = buttonRect.width;
+            panelEl.style.width = `${panelWidth}px`;
         }
-        $panelEl.css(panelCss);
+
+        if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
+            this.panelView.el.style.width = `${panelWidth}px`;
+        }
+
+        panelEl.style.top = `${top}px`;
+        panelEl.style.left = `${buttonRect.left}px`;
     },
 
     /**
@@ -246,33 +206,36 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         }
         this.trigger('before:open', this);
 
-        const panelViewOptions = _.extend(_.result(this.options, 'panelViewOptions') || {}, {
+        const panelViewOptions = _.extend(this.options.panelViewOptions || {}, {
             parent: this
         });
-        this.$el.addClass(classes.OPEN);
+        this.el.classList.add(classes.OPEN);
         this.panelView = new this.options.panelView(panelViewOptions);
         this.panelView.on('all', (...args) => {
             args[0] = `panel:${args[0]}`;
             this.triggerMethod(...args);
         });
 
-        const wrapperView = new WrapperView({
-            view: this.panelView,
-            className: 'dropdown__wrp'
-        });
-        this.popupId = WindowService.showTransientPopup(wrapperView, {
+        this.popupId = WindowService.showTransientPopup(this.panelView, {
             hostEl: this.el
         });
-        this.__adjustPosition(wrapperView.$el);
+        this.panelEl = this.panelView.el;
 
-        this.listenToElementMoveOnce(this.el, this.close);
+        this.__adjustPosition(this.panelEl);
+        //const buttonWidth = this.button.el.getBoundingClientRect().width;
+
+        //this.panelView.el.getElementsByClassName(classes.VISIBLE_COLLECTION)[0].style.width = `${panelWidth}`;
+
+        this.__listenToElementMoveOnce(this.el, this.close);
+        this.listenTo(GlobalEventService, 'window:keydown:captured', (document, event) => this.__keyAction(event));
         this.listenTo(GlobalEventService, 'window:mousedown:captured', this.__handleGlobalMousedown);
+        this.listenTo(WindowService, 'popup:close', this.__onWindowServicePopupClose);
 
         const activeElement = document.activeElement;
         if (!this.__isNestedInButton(activeElement) && !this.__isNestedInPanel(activeElement)) {
-            this.panelView.$el.focus();
+            //this.panelView.$el.focus(); todo
         } else {
-            this.focus(activeElement);
+            this.__focus(activeElement);
         }
         this.__suppressHandlingBlur = false;
         this.isOpen = true;
@@ -284,23 +247,30 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !$.contains(document.documentElement, this.el)) {
+        if (!this.isOpen || !document.body.contains(this.el)) {
             return;
         }
         this.trigger('before:close', this);
 
-        this.$el.removeClass(classes.OPEN);
+        this.el.classList.remove(classes.OPEN);
 
         WindowService.closePopup(this.popupId);
 
-        this.stopListeningToElementMove();
+        this.__stopListeningToElementMove();
         this.stopListening(GlobalEventService);
+        this.stopListening(WindowService);
         this.button.$el.focus();
         this.isOpen = false;
 
         this.trigger('close', this, ...args);
-        if (this.options.renderAfterClose) {
+        if (this.options.renderAfterClose && !this.isDestroyed) {
             this.button.render();
+        }
+    },
+
+    __keyAction(event) {
+        if (event.keyCode === 27) {
+            this.close();
         }
     },
 
@@ -311,11 +281,13 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
     },
 
     __isNestedInButton(testedEl) {
-        return this.el === testedEl || $.contains(this.el, testedEl);
+        return this.el === testedEl || this.el.contains(testedEl);
     },
 
     __isNestedInPanel(testedEl) {
-        return WindowService.get(this.popupId).map(x => x.el).some(el => el === testedEl || $.contains(el, testedEl));
+        const palet = document.getElementsByClassName('sp-container')[0]; //Color picker custom el container;
+
+        return WindowService.get(this.popupId).some(x => x.el.contains(testedEl) || this.el.contains(testedEl)) || (palet && palet.contains(testedEl));
     },
 
     __handleBlur() {
@@ -336,5 +308,65 @@ export default Marionette.LayoutView.extend(/** @lends module:core.dropdown.view
         if (this.isOpen && this.popupId === popupId) {
             this.close();
         }
+    },
+
+    __focus(focusedEl) {
+        if (!focusedEl) {
+            this.__getFocusableEl().focus();
+        } else if (document.activeElement) {
+            document.activeElement.addEventListener('blur', this.__onBlur);
+        }
+        this.isFocused = true;
+    },
+
+    __onBlur() {
+        _.defer(() => {
+            this.isFocused = false;
+            this.__handleBlur();
+        });
+        if (document.activeElement) {
+            document.activeElement.removeEventListener('blur', this.__onBlur);
+        }
+    },
+
+    __listenToElementMoveOnce(el, callback) {
+        if (this.__observedEntities.length === 0) {
+            this.listenTo(GlobalEventService, 'window:wheel:captured', this.__checkElements);
+            this.listenTo(GlobalEventService, 'window:mouseup:captured', this.__checkElements);
+            this.listenTo(GlobalEventService, 'window:keydown:captured', this.__checkElements);
+        }
+
+        // saving el position relative to the viewport for further check
+        const { left, top } = el.getBoundingClientRect();
+        this.__observedEntities.push({
+            anchorViewportPos: {
+                left: Math.floor(left),
+                top: Math.floor(top)
+            },
+            el,
+            callback
+        });
+    },
+
+    __stopListeningToElementMove(el = null) {
+        if (!el) {
+            this.__observedEntities = [];
+        } else {
+            this.__observedEntities.splice(this.__observedEntities.findIndex(x => x.el === el), 1);
+        }
+    },
+
+    __checkElements() {
+        setTimeout(() => {
+            if (this.isDestroyed()) {
+                return;
+            }
+            this.__observedEntities.forEach(x => {
+                const { left, top } = x.el.getBoundingClientRect();
+                if (Math.floor(left) !== x.anchorViewportPos.left || Math.floor(top) !== x.anchorViewportPos.top) {
+                    x.callback.call(this);
+                }
+            });
+        }, 50);
     }
 });

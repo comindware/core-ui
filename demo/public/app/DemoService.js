@@ -1,81 +1,58 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/7/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
+import config from './DemoConfig';
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+function findDefaultGroup(sectionId) {
+    const section = config.sections.find(section => sectionId.toLowerCase() === section.id.toLowerCase());
+    const defaultGroupId = section.groups[0].id;
 
-define([
-    './DemoConfig'
-], function (config) {
-    'use strict';
+    return section.groups.find(group => defaultGroupId.toLowerCase() === group.id.toLowerCase());
+}
 
-    function findDefaultGroup(sectionId) {
-        var section = _.find(config.sections, function(section) {
-            return sectionId.toLowerCase() === section.id.toLowerCase();
+export default {
+    getModuleUrlByName(options) {
+        return `#demo/${options.section}/${options.group}/${options.case}`;
+    },
+
+    getSections() {
+        return config.sections.map(section => {
+            const group = findDefaultGroup(section.id);
+            const url = this.getModuleUrlByName({
+                section: section.id,
+                group: group.id,
+                case: group.cases ? group.cases[0].id : 'default'
+            });
+            return {
+                id: section.id,
+                displayName: section.displayName,
+                url
+            };
         });
-        var defaultGroupId = section.groups[0].id;
-        return _.find(section.groups, function(group) {
-            return defaultGroupId.toLowerCase() === group.id.toLowerCase();
+    },
+
+    getGroups(sectionId) {
+        const section = config.sections.find(s => s.id.toLowerCase() === sectionId.toLowerCase());
+
+        return section.groups.map(group => {
+            const url = this.getModuleUrlByName({
+                section: section.id,
+                group: group.id,
+                case: group.cases ? group.cases[0].id : 'default'
+            });
+            return {
+                id: group.id,
+                displayName: group.displayName,
+                url
+            };
         });
-    }
+    },
 
-    return {
-        getModuleUrlByName: function (options) {
-            return '#demo/' + options.section + '/' + options.group + '/' + options.case;
-        },
+    getCases(sectionId, groupId) {
+        const section = config.sections.find(s => s.id === sectionId);
+        const group = section.groups.find(g => g.id.toLowerCase() === groupId.toLowerCase());
 
-        getSections: function () {
-            return _.map(config.sections, function (section) {
-                var group = findDefaultGroup(section.id);
-                var url = this.getModuleUrlByName({
-                    section: section.id,
-                    group: group.id,
-                    case: group.cases ? group.cases[0].id : 'default'
-                });
-                return {
-                    id: section.id,
-                    displayName: section.displayName,
-                    url: url
-                };
-            }, this);
-        },
-
-        getGroups: function (sectionId) {
-            var section = _.find(config.sections, function(s) {
-                return s.id.toLowerCase() === sectionId.toLowerCase();
-            });
-
-            return _.map(section.groups, function (group) {
-                var url = this.getModuleUrlByName({
-                    section: section.id,
-                    group: group.id,
-                    case: group.cases ? group.cases[0].id : 'default'
-                });
-                return {
-                    id: group.id,
-                    displayName: group.displayName,
-                    url: url
-                };
-            }, this);
-        },
-
-        getCases: function (sectionId, groupId) {
-            var section = _.find(config.sections, function(s) {
-                return s.id === sectionId;
-            });
-            var group = _.find(section.groups, function(g) {
-                return g.id.toLowerCase() === groupId.toLowerCase();
-            });
-
-            return _.map(group.cases, function(c) {
-                var url = this.getModuleUrlByName({
+        return (
+            group.cases &&
+            group.cases.map(c => {
+                const url = this.getModuleUrlByName({
                     section: sectionId,
                     group: groupId,
                     case: c.id
@@ -84,41 +61,38 @@ define([
                     id: c.id,
                     displayName: c.displayName,
                     description: c.description,
-                    url: url,
-                    sectionId: sectionId,
-                    groupId: groupId
+                    url,
+                    sectionId,
+                    groupId
                 };
-            }, this);
-        },
+            })
+        );
+    },
 
-        getCase: function(sectionId, groupId, caseId) {
-            var cases = this.getCases(sectionId, groupId);
-            var activeCase = _.find(cases, function(c) {
-                return c.id.toLowerCase() === caseId.toLowerCase();
-            }, this);
+    getCase(sectionId, groupId, caseId) {
+        const cases = this.getCases(sectionId, groupId);
+        if (cases) {
+            const activeCase = cases.find(c => c.id.toLowerCase() === caseId.toLowerCase());
             if (activeCase) {
                 return activeCase;
             }
-
-            var activeSection = _.find(config.sections, function(section) {
-                return section.id === sectionId;
-            });
-            var activeGroup = _.find(activeSection.groups, function(group) {
-                return group.id.toLowerCase() === groupId.toLowerCase();
-            });
-            var url = this.getModuleUrlByName({
-                section: sectionId,
-                group: groupId,
-                case: 'default'
-            });
-            return {
-                id: null,
-                displayName: activeGroup.displayName,
-                description: activeGroup.description,
-                url: url,
-                sectionId: sectionId,
-                groupId: groupId
-            };
         }
-    };
-});
+
+        const activeSection = config.sections.find(section => section.id === sectionId);
+        const activeGroup = activeSection.groups.find(group => group.id.toLowerCase() === groupId.toLowerCase());
+        const url = this.getModuleUrlByName({
+            section: sectionId,
+            group: groupId,
+            case: 'default'
+        });
+        return {
+            id: null,
+            displayName: activeGroup.displayName,
+            description: activeGroup.description,
+            url,
+            sectionId,
+            groupId,
+            attributesConfig: activeGroup.attributesConfig
+        };
+    }
+};

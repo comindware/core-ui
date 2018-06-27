@@ -1,15 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/1/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars } from 'lib';
-
+import or from './or';
+import join from './join';
 import debug from './debug';
 import equal from './equal';
 import isNull from './isNull';
@@ -21,6 +11,8 @@ import renderFullDate from './renderFullDate';
 import renderFullDateTime from './renderFullDateTime';
 import renderShortDuration from './renderShortDuration';
 
+Handlebars.registerHelper('or', or);
+Handlebars.registerHelper('join', join);
 Handlebars.registerHelper('debug', debug);
 Handlebars.registerHelper('equal', equal);
 Handlebars.registerHelper('isNull', isNull);

@@ -1,19 +1,11 @@
-/**
- * Developer: Ksenia Kartvelishvili
- * Date: 26.12.2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars, moment } from 'lib';
+// @flow
 import { keyCode, dateHelpers, helpers } from 'utils';
 import LocalizationService from '../../services/LocalizationService';
 import template from './templates/durationEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
+import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
+import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
 
 const focusablePartId = {
     DAYS: 'days',
@@ -91,13 +83,10 @@ const stateModes = {
  * @param {Boolean} [options.allowSeconds=true] Whether to display the second segment. At least one segment must be displayed.
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:core.form.editors.DurationEditorView.prototype */{
-    initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+
+export default (formRepository.editors.Duration = BaseItemEditorView.extend({
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.focusableParts = createFocusableParts(this.options);
 
@@ -127,7 +116,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         'focus @ui.input': '__focus',
         'click @ui.input': '__focus',
         'blur @ui.input': '__blur',
-        'keydown @ui.input': '__keydown'
+        'keydown @ui.input': '__keydown',
+        mouseenter: '__onMouseenter',
+        mouseleave: '__onMouseleave'
     },
 
     setPermissions(enabled, readonly) {
@@ -192,7 +183,12 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             mode: stateModes.VIEW,
             displayValue: newValueObject
         });
-        const newValue = moment.duration(this.state.displayValue).toISOString();
+        let newValue;
+        newValue = moment.duration(this.state.displayValue).toISOString();
+        if (Object.values(newValueObject).every(value => value === 0)) {
+            newValue = null;
+            this.ui.input.val(null);
+        }
         this.__value(newValue, true);
     },
 
@@ -207,7 +203,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         const focusablePart2 = this.focusableParts[index + 1];
         if (pos >= focusablePart1.start && pos <= focusablePart1.end) {
             resultPosition = pos;
-        } else if (pos > focusablePart1.end && (focusablePart2 ? (pos < focusablePart2.start) : true)) {
+        } else if (pos > focusablePart1.end && (focusablePart2 ? pos < focusablePart2.start : true)) {
             resultPosition = focusablePart1.end;
         }
         return resultPosition !== undefined ? resultPosition : focusablePart1.start;
@@ -219,8 +215,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     getSegmentIndex(pos) {
         // returns the index of the segment where we are at
-        let i,
-            segmentIndex;
+        let i;
+        let segmentIndex;
+
         segmentIndex = this.focusableParts.length - 1;
         this.initSegmentStartEnd();
         for (i = 0; i < this.focusableParts.length; i++) {
@@ -234,7 +231,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             if (focusablePart2) {
                 if (focusablePart1.end < pos && pos < focusablePart2.start) {
                     const whitespaceLength = 1;
-                    if (pos < (focusablePart2.start - whitespaceLength)) {
+                    if (pos < focusablePart2.start - whitespaceLength) {
                         // the position is at '1 <here>d 2 h' >> first fragment
                         segmentIndex = i;
                     } else {
@@ -261,7 +258,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     setSegmentValue(index, value, replace) {
         let val = this.getSegmentValue(index);
-        val = !replace ? (parseInt(val) + value) : value;
+        val = !replace ? parseInt(val) + value : value;
         if (val < 0) {
             return false;
         }
@@ -276,12 +273,12 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
 
     atSegmentEnd(position) {
         const index = this.getSegmentIndex(position);
-        return (position) === this.focusableParts[index].end;
+        return position === this.focusableParts[index].end;
     },
 
     atSegmentStart(position) {
         const index = this.getSegmentIndex(position);
-        return (position) === this.focusableParts[index].start;
+        return position === this.focusableParts[index].start;
     },
 
     __value(value, triggerChange) {
@@ -295,6 +292,9 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
     },
 
     __keydown(event) {
+        if (event.ctrlKey) {
+            return;
+        }
         const position = this.getCaretPos();
         const index = this.getSegmentIndex(position);
         const focusablePart = this.focusableParts[index];
@@ -378,27 +378,28 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             case keyCode.ENTER:
                 this.__blur();
                 return false;
-            case keyCode.TAB:
+            case keyCode.TAB: {
                 const delta = event.shiftKey ? -1 : 1;
                 if (this.focusableParts[index + delta]) {
                     this.setCaretPos(this.focusableParts[index + delta].start);
                     return false;
                 }
                 break;
+            }
             case keyCode.HOME:
                 this.setCaretPos(this.focusableParts[0].start);
                 return false;
             case keyCode.END:
                 this.setCaretPos(this.focusableParts[this.focusableParts.length - 1].end);
                 return false;
-            default:
-                var charValue = null;
+            default: {
+                let charValue = null;
                 if (event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) {
                     charValue = event.keyCode - keyCode.NUM_0;
                 } else if (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) {
                     charValue = event.keyCode - keyCode.NUMPAD_0;
                 }
-                var valid = charValue !== null;
+                const valid = charValue !== null;
                 if (!valid) {
                     return false;
                 }
@@ -410,6 +411,7 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
                 if (this.getSegmentValue(index).length >= focusablePart.maxLength) {
                     return false;
                 }
+            }
         }
     },
 
@@ -454,15 +456,17 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
                 // returns string like '0d 4h 32m'
                 return filledSegments.reduce((p, seg) => `${p}${data[seg.id]}${seg.text} `, '').trim();
             }
-                // returns string like '0d'
+            // returns string like '0d'
             return `0${this.focusableParts[0].text}`;
         }
-            // always returns string with all editable segments like '0 d 5 h 2 m'
-        return this.focusableParts.map(seg => {
-            const val = data[seg.id];
-            const valStr = _.isNumber(val) ? String(val) : '';
-            return valStr + seg.text;
-        }).join(' ');
+        // always returns string with all editable segments like '0 d 5 h 2 m'
+        return this.focusableParts
+            .map(seg => {
+                const val = data[seg.id];
+                const valStr = _.isNumber(val) ? String(val) : '';
+                return valStr + seg.text;
+            })
+            .join(' ');
     },
 
     __normalizeDuration(value) {
@@ -500,9 +504,8 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
         // updates inner state variables
         // updates UI
 
-        if (!newState.mode ||
-            (newState.mode === stateModes.EDIT && newState.displayValue !== undefined)) {
-            helpers.throwInvalidOperationError('The operation is inconsistent or isn\'t supported by this logic.');
+        if (!newState.mode || (newState.mode === stateModes.EDIT && newState.displayValue !== undefined)) {
+            helpers.throwInvalidOperationError("The operation is inconsistent or isn't supported by this logic.");
         }
 
         if (this.state.mode === newState.mode && newState.mode === stateModes.EDIT) {
@@ -522,7 +525,13 @@ formRepository.editors.Duration = BaseItemEditorView.extend(/** @lends module:co
             this.$el.prop('title', val);
         }
         this.$el.toggleClass(classes.FOCUSED, inEditMode);
-    }
-});
+    },
 
-export default formRepository.editors.Duration;
+    __onMouseenter() {
+        this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapNumber);
+    },
+
+    __onMouseleave() {
+        this.el.removeChild(this.el.lastElementChild);
+    }
+}));

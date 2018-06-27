@@ -1,23 +1,28 @@
-.layout__group__legend {
-    max-width: calc(100% - 10px);
+
+.layout-group {
+    position: relative;
+}
+
+.layout-group__head {
+    display: flex;
+}
+
+.group-title{
+    flex: 1 1 auto;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin: -9px 0 16px -10px;
-    padding: 0 10px;
-    font-size: 11px;
-    font-weight: 400;
-    color: #70787f;
-    background: #fff;
 }
 
-.layout__group {
-    width: calc(100% + 20px);
-    min-width: 0;
-    margin: 22px -10px;
-    padding: 0 25px 16px;
-    font-size: 12px;
-    color: #000;
-    border: 1px solid #a5a4a4;
-    box-sizing: border-box;
+.group-toggle {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    cursor: pointer;
+    flex: none;
+}
+
+.layout-group__content{
+
 }

@@ -1,14 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/1/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
-
-const classes = {
+//@flow
+const classes: { ANCHOR: string } = {
     ANCHOR: 'anchor anchor_inline'
 };
 
@@ -28,11 +19,8 @@ const classes = {
  * @param {Marionette.View} view A view the behavior is applied to.
  * */
 
-export default Marionette.Behavior.extend(/** @lends module:core.dropdown.views.behaviors.CustomAnchorBehavior.prototype */ {
-    initialize(options, view) {
-    },
-
-    onRender() {
+export default Marionette.Behavior.extend({
+    onRender(): void {
         let $el;
         if (this.options.anchor) {
             $el = this.$(this.options.anchor);

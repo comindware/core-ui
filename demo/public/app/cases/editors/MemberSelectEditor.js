@@ -1,17 +1,21 @@
-define([ 'comindware/core', 'demoPage/views/EditorCanvasView' ], function (core, EditorCanvasView) {
-    'use strict';
-    return function () {
-        var model = new Backbone.Model({
-            memberValue: 'user.1'
-        });
 
-        return new EditorCanvasView({
-            editor: new core.form.editors.MemberSelectEditor({
-                model: model,
-                key: 'memberValue',
-                autocommit: true
-            }),
-            presentation: '\'{{memberValue}}\''
-        });
-    };
-});
+import CanvasView from 'demoPage/views/CanvasView';
+
+export default function () {
+    const model = new Backbone.Model({
+        selected: ['user.1']
+    });
+
+    return new CanvasView({
+        view: new core.form.editors.MembersSplitEditor({
+            model,
+            key: 'selected',
+            autocommit: true,
+            users: Core.services.UserService.listUsers(),
+            groups: Core.services.UserService.listGroups(),
+            showMode: 'button'
+        }),
+        presentation: '\'{{memberValue}}\'',
+        isEditor: true
+    });
+}

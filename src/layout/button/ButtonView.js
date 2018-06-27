@@ -1,21 +1,13 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/28/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
+// @flow
 import { helpers } from 'utils';
 import template from './button.hbs';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
 const classes = {
-    CLASS_NAME: 'layout__button-view'
+    CLASS_NAME: 'layout__button'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'text');
         helpers.ensureOption(options, 'handler');
@@ -23,8 +15,9 @@ export default Marionette.ItemView.extend({
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
+            customClass: this.options.customClass || '',
             text: this.options.text
         };
     },
@@ -41,13 +34,13 @@ export default Marionette.ItemView.extend({
         click: '__onClick'
     },
 
-    onShow() {
+    onRender() {
         this.__updateState();
     },
 
     __onClick() {
         this.trigger('click');
-        this.options.handler();
+        this.options.handler(this.options.context);
     },
 
     update() {

@@ -1,13 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 5/21/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-
+//@flow
 import '../resources/styles/bootstrap-datetimepicker.css';
 import '../resources/styles/fonts.css';
 import '../resources/styles/common.css';
@@ -17,24 +8,29 @@ import '../resources/styles/form.css';
 import '../resources/styles/dropdown.css';
 import '../resources/styles/popout.css';
 import '../resources/styles/list.css';
+import '../resources/styles/codemirror.css';
+import '../resources/styles/layout-designer.css';
+import '../node_modules/spectrum-colorpicker/spectrum.css';
 
 import libApi from 'lib';
 import utilsApi from 'utils';
 import dropdownApi from 'dropdown';
-import * as layoutApi from 'layout';
-import listApi from 'list';
-import nativeGridApi from './nativeGrid/nativeGridApi';
+import * as layoutApi from './layout';
 import formApi from 'form';
+import listApi from 'list';
 
 import meta_ from './Meta';
-import bootstrapper from './Bootstrapper';
+
+import Controller from './controller/Controller';
+import Application from './Application';
 
 import LoadingView from './views/LoadingView';
 import LoadingBehavior from './views/behaviors/LoadingBehavior';
 import SearchBarView from './views/SearchBarView';
 import SplitPanelView from './views/SplitPanelView';
 
-import RoutingServiceBase from './services/RoutingServiceBase';
+import RoutingService from './services/RoutingService';
+import ToastNotifications from './services/ToastNotificationService';
 import MessageService from './services/MessageService';
 import WindowService from './services/WindowService';
 import GlobalEventService from './services/GlobalEventService';
@@ -42,6 +38,8 @@ import LocalizationService from './services/LocalizationService';
 import AjaxService from './services/AjaxService';
 import PromiseService from './services/PromiseService';
 import UserService from './services/UserService';
+import InterfaceErrorMessageService from './services/InterfaceErrorMessageService';
+import ThemeService from './services/ThemeService';
 
 import SlidingWindowCollection from './collections/SlidingWindowCollection';
 import VirtualCollection from './collections/VirtualCollection';
@@ -49,20 +47,31 @@ import CollectionHighlightableBehavior from './collections/behaviors/Highlightab
 import CollapsibleBehavior from './models/behaviors/CollapsibleBehavior';
 import HighlightableBehavior from './models/behaviors/HighlightableBehavior';
 import SelectableBehavior from './models/behaviors/SelectableBehavior';
+import CheckableBehavior from './models/behaviors/CheckableBehavior';
+import MobileService from './services/MobileService';
+
+import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
+import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
+import Toolbar from './components/toolbar/ToolbarView';
+import LayoutDesigner from './components/layoutDesigner';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
  * @name module:core
  * */
 const core = {
+    Controller,
+    Application,
+    RoutingService,
+    ToastNotifications,
     lib: libApi,
+    InterfaceError: InterfaceErrorMessageService,
     /**
      * Services of general use the UI is built on.
      * @namespace
      * @memberof module:core
      * */
     services: {
-        RoutingServiceBase,
         MessageService,
         /**
          * The service is responsible for displaying global windows. For example, modal dialogs (popups).
@@ -77,10 +86,12 @@ const core = {
          * to them through <code>this.listenTo(GlobalEventService, ...)</code> in you views.
          * @namespace
          * @memberof module:core.services
-        * */
+         * */
         GlobalEventService,
         PromiseService,
-        UserService
+        UserService,
+        MobileService,
+        ThemeService
     },
     /**
      * Backbone collections of general use.
@@ -108,7 +119,8 @@ const core = {
         behaviors: {
             CollapsibleBehavior,
             HighlightableBehavior,
-            SelectableBehavior
+            SelectableBehavior,
+            CheckableBehavior
         }
     },
     views: {
@@ -140,12 +152,6 @@ const core = {
      * */
     list: listApi,
     /**
-     * List and Grid components without data virtualization.
-     * @namespace
-     * @memberof module:core
-     * */
-    nativeGrid: nativeGridApi,
-    /**
      * Combines useful helper classes, functions and constants.
      * @namespace
      * @memberof module:core
@@ -157,20 +163,25 @@ const core = {
      * @memberof module:core
      * */
     meta: meta_,
-    initialize: bootstrapper.initialize.bind(bootstrapper)
+    components: {
+        NavigationDrawer,
+        Toolbar,
+        BreadCrumbs,
+        LayoutDesigner
+    }
 };
 
+window.Core = core;
+
 export default core;
-export var lib = core.lib;
-export var layout = core.layout;
-export var services = core.services;
-export var collections = core.collections;
-export var models = core.models;
-export var views = core.views;
-export var dropdown = core.dropdown;
-export var form = core.form;
-export var list = core.list;
-export var nativeGrid = core.nativeGrid;
-export var utils = core.utils;
-export var meta = core.meta;
-export var initialize = core.initialize;
+export const lib = core.lib;
+export const layout = core.layout;
+export const services = core.services;
+export const collections = core.collections;
+export const models = core.models;
+export const views = core.views;
+export const dropdown = core.dropdown;
+export const form = core.form;
+export const list = core.list;
+export const utils = core.utils;
+export const meta = core.meta;

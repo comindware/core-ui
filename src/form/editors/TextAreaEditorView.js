@@ -1,18 +1,9 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 10/13/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
+// @flow
 import template from './templates/textAreaEditor.hbs';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import LocalizationService from '../../services/LocalizationService';
-import { Handlebars, keypress } from 'lib';
-import { keyCode, helpers, htmlHelpers } from 'utils';
+import { keyCode, helpers } from 'utils';
+import { autosize } from 'lib';
 import formRepository from '../formRepository';
 
 const changeMode = {
@@ -25,20 +16,19 @@ const size = {
     fixed: 'fixed'
 };
 
-const defaultOptions = function() {
-    return {
-        changeMode: changeMode.blur,
-        size: size.auto,
-        emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
-        readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
-        disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
-        maxLength: null,
-        height: null,
-        minHeight: 2,
-        maxHeight: null,
-        showTitle: true
-    };
-};
+// used as function because Localization service is not initialized yet
+const defaultOptions = () => ({
+    changeMode: changeMode.blur,
+    size: size.auto,
+    emptyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.PLACEHOLDER'),
+    readonlyPlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.READONLYPLACEHOLDER'),
+    disablePlaceholder: LocalizationService.get('CORE.FORM.EDITORS.TEXTAREAEDITOR.DISABLEPLACEHOLDER'),
+    maxLength: null,
+    height: null,
+    minHeight: 2,
+    maxHeight: null,
+    showTitle: true
+});
 
 /**
  * @name TextAreaEditorView
@@ -63,14 +53,10 @@ const defaultOptions = function() {
  * @param {Number} [options.maxHeight=30] The maximum height of the editor (in rows).
  * @param {Boolean} {options.showTitle=true} Whether to show title attribute.
  * */
-formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:core.form.editors.TextAreaEditorView.prototype */{
-    initialize(options) {
-        const defaults = defaultOptions();
-        if (options.schema) {
-            _.extend(this.options, defaults, _.pick(options.schema, _.keys(defaults)));
-        } else {
-            _.extend(this.options, defaults, _.pick(options || {}, _.keys(defaults)));
-        }
+export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
+    initialize(options = {}) {
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
 
         this.placeholder = this.options.emptyPlaceholder;
     },
@@ -90,37 +76,11 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return this.options;
     },
 
     onRender() {
-        // Keyboard shortcuts listener
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.textarea[0]);
-    },
-
-    /**
-     * Позволяет добавить callback-функцию на ввод определенной клавиши или комбинации клавиш. Использует метод simple_combo плагина
-     * [Keypress](https://dmauro.github.io/Keypress/).
-     * @param {String} key Комбинация клавиш или несколько комбинаций, разделенных запятыми.
-     * Полный список с названиями клавиш указан в исходном файле плагина:
-     * [keypress.coffee](https://github.com/dmauro/Keypress/blob/master/keypress.coffee#L750-912).
-     * @param {String} callback Callback-функция, вызываемая по срабатыванию комбо.
-     * */
-    addKeyboardListener(key, callback) {
-        if (!this.keyListener) {
-            helpers.throwInvalidOperationError('You must apply keyboard listener after \'render\' event has happened.');
-        }
-        const keys = key.split(',');
-        _.each(keys, function(k) {
-            this.keyListener.simple_combo(k, callback);
-        }, this);
-    },
-
-    onShow() {
         const value = this.getValue() || '';
         this.ui.textarea.val(value);
         if (this.options.showTitle) {
@@ -129,14 +89,6 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
         switch (this.options.size) {
             case size.auto:
                 this.ui.textarea.attr('rows', this.options.minHeight);
-                if (this.options.maxHeight) {
-                    const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
-                    this.ui.textarea.css('maxHeight', maxHeight);
-                }
-                if (!htmlHelpers.isElementInDom(this.el)) {
-                    helpers.throwInvalidOperationError('Auto-sized TextAreaEditor MUST be in DOM while rendering (bad height computing otherwise).');
-                }
-                this.ui.textarea.autosize({ append: '' });
                 break;
             case size.fixed:
                 this.ui.textarea.attr('rows', this.options.height);
@@ -145,7 +97,15 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
                 helpers.throwArgumentError('Invalid `size parameter`.');
         }
     },
-
+    onAttach() {
+        if (this.options.size === size.auto) {
+            if (this.options.maxHeight) {
+                const maxHeight = parseInt(this.ui.textarea.css('line-height'), 10) * this.options.maxHeight;
+                this.ui.textarea.css('maxHeight', maxHeight);
+            }
+            autosize(this.ui.textarea);
+        }
+    },
     setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
         this.setPlaceholder();
@@ -220,12 +180,13 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
     },
 
     __keyup(e) {
-        if ([
-            keyCode.LEFT,
-            keyCode.RIGHT,
-            keyCode.HOME,
-            keyCode.END
-        ].indexOf(e.keyCode) === -1) {
+        if (e.ctrlKey) {
+            return;
+        }
+        if ([keyCode.LEFT,
+keyCode.RIGHT,
+keyCode.HOME,
+keyCode.END].indexOf(e.keyCode) === -1) {
             return;
         }
 
@@ -260,6 +221,4 @@ formRepository.editors.TextArea = BaseItemEditorView.extend(/** @lends module:co
     select() {
         this.ui.textarea.select();
     }
-});
-
-export default formRepository.editors.TextArea;
+}));

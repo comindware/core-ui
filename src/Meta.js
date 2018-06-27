@@ -1,14 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/3/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-export var objectPropertyTypes = {
+//@flow
+export const objectPropertyTypes = {
     STRING: 'String',
     BOOLEAN: 'Boolean',
     DATETIME: 'DateTime',

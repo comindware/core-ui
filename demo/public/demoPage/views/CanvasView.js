@@ -1,45 +1,107 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/14/2015
- * Copyright: 2009-2015 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer */
+import template from 'text-loader!../templates/editorCanvas.html';
+import PresentationItemView from './PresentationItemView';
 
-define([
-    'comindware/core',
-    'text!../templates/canvas.html'
-], function (core, template) {
-    'use strict';
+export default Marionette.View.extend({
+    initialize(options) {
+        this.view = options.view;
+    },
 
-    return Marionette.LayoutView.extend({
-        initialize: function (options) {
-            core.utils.helpers.ensureOption(options, 'view');
-        },
+    template: Handlebars.compile(template),
 
-        template: Handlebars.compile(template),
+    className: 'editor_container',
 
-        regions: {
-            view: '.js-view-region'
-        },
+    ui: {
+        editorRegion: '.js-editor-region',
+        collapseButton: '.js-content-collapse'
+    },
 
-        onShow: function () {
-            if (this.options.canvas) {
-                this.$el.css(this.options.canvas);
-            }
+    regions: {
+        editorRegion: '.js-editor-region',
+        modelRegion: '.js-model-region',
+        editorModeRegion: '.js-editor-mode-region'
+    },
 
-            if (this.options.region) {
-                this.listenTo(this.view, 'before:show', function () {
-                    this.view.$el.css(this.options.region);
-                }.bind(this));
-            }
-
-            this.view.show(this.options.view);
+    onRender() {
+        this.showChildView('editorRegion', this.view);
+        if (this.options.canvasWidth) {
+            this.ui.editorRegion.css('width', this.options.canvasWidth);
         }
-    });
+
+        let presentationView;
+        if (this.options.presentation) {
+            if (_.isString(this.options.presentation)) {
+                presentationView = new PresentationItemView({
+                    model: this.view.model,
+                    template: Handlebars.compile(`<span style="vertical-align: top;">model[${this.view.key}]: </span><span>${this.options.presentation}</span>`)
+                });
+            } else {
+                presentationView = new this.options.presentation({
+                    model: this.view.model
+                });
+            }
+            this.showChildView('modelRegion', presentationView);
+        }
+
+        if (this.getOption('isEditor')) {
+            const editorModeView = new core.form.editors.RadioGroupEditor({
+                value: 'none',
+                radioOptions: [
+                    {
+                        id: 'none',
+                        displayText: 'Normal'
+                    },
+                    {
+                        id: 'readonly',
+                        displayText: 'Readonly'
+                    },
+                    {
+                        id: 'disabled',
+                        displayText: 'Disabled'
+                    },
+                    {
+                        id: 'hidden',
+                        displayText: 'Hidden'
+                    }
+                ]
+            });
+            this.showChildView('editorModeRegion', editorModeView);
+            this.listenTo(editorModeView, 'change', this.updateEditorModel);
+        } else {
+            this.ui.editorRegion.addClass('canvas-wrap');
+        }
+    },
+
+    updateEditorModel(editor) {
+        const editorMode = editor.getValue();
+        switch (editorMode) {
+            case 'none':
+                this.view.setEnabled(true);
+                this.view.setReadonly(false);
+                this.view.setHidden(false);
+                break;
+            case 'disabled':
+                this.view.setEnabled(false);
+                this.view.setReadonly(false);
+                this.view.setHidden(false);
+                break;
+            case 'readonly':
+                this.view.setEnabled(true);
+                this.view.setReadonly(true);
+                this.view.setHidden(false);
+                break;
+            case 'hidden':
+                this.view.setEnabled(true);
+                this.view.setReadonly(false);
+                this.view.setHidden(true);
+                break;
+            default:
+                break;
+        }
+    },
+
+    __toggleCollapse() {
+        this.collapsed = !this.collapsed;
+        this.$el.width(this.collapsed ? 40 : 250);
+    }
 });

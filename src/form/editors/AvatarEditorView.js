@@ -1,14 +1,4 @@
-/**
- * Developer: Oleg Verevkin
- * Date: 02/19/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars } from 'lib';
+// @flow
 import { helpers } from 'utils';
 import BaseItemEditorView from './base/BaseItemEditorView';
 import template from './templates/avatarEditor.hbs';
@@ -17,7 +7,8 @@ import formRepository from '../formRepository';
 const defaultOptions = {
     removable: true,
     autoUpload: false,
-    refreshPreviewAfterUpload: false
+    refreshPreviewAfterUpload: false,
+    controller: undefined
 };
 
 /**
@@ -34,47 +25,44 @@ const defaultOptions = {
  * @param {BaseAvatarEditorController} options.controller - Data provider controller in the form of subclass of
  * {@link module:core.form.editors.avatar.controllers.BaseAvatarEditorController BaseAvatarEditorController}.
  */
-formRepository.editors.Avatar = BaseItemEditorView.extend({
+
+export default (formRepository.editors.Avatar = BaseItemEditorView.extend({
     className: 'user-avatar-wrp',
-    
+
     attributes: {
         tabindex: 0
     },
-    
+
     focusElement: null,
-    
+
     template: Handlebars.compile(template),
-    
+
     ui: {
         image: '.js-image',
         remove: '.js-remove',
         initials: '.js-initials',
         tooltip: '.js-tooltip'
     },
-    
+
     events: {
         click: '__attach',
         'click @ui.remove': '__remove'
     },
-    
-    initialize(options) {
-        if (options.schema) {
-            Object.assign(this.options, defaultOptions, options.schema);
-        } else {
-            Object.assign(this.options, defaultOptions, options);
-        }
-        
+
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
+
         helpers.ensureOption(this.options, 'controller');
         this.controller = this.getOption('controller');
-        
+
         this.__removed = false;
         this.__previewURL = null;
         this.__initFileInput();
     },
-    
+
     onRender() {
         this.ui.initials.append(this.__getInitials(this.getOption('fullName') || ''));
-        
+
         if (this.getValue()) {
             this.__preview(this.controller.getImage(this.getValue()));
         } else if (this.getOption('fullName')) {
@@ -82,16 +70,16 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
         } else {
             this.__preview(this.controller.getImage());
         }
-        
+
         this.ui.tooltip.hide();
         this.ui.remove.hide();
-        
+
         this.$el.hover(
             () => {
                 if (this.getEnabled() && !this.getReadonly()) {
                     this.ui.tooltip.show();
                 }
-                
+
                 if (this.getEnabled() && !this.getReadonly() && this.getOption('removable') && this.ui.image.css('background-image') !== 'none') {
                     this.ui.remove.show();
                 }
@@ -102,15 +90,15 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
             }
         );
     },
-    
+
     onBeforeDestroy() {
         URL.revokeObjectURL(this.__previewURL);
     },
-    
+
     upload() {
         const file = this.fileInput.files[0];
         this.__initFileInput();
-        
+
         if (file) {
             return this.controller.upload(file).then(data => {
                 if (!this.__removed) {
@@ -125,30 +113,30 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
         }
         return Promise.resolve();
     },
-    
+
     __initFileInput() {
         this.fileInput = document.createElement('input');
         this.fileInput.type = 'file';
         this.fileInput.accept = 'image/*';
         this.fileInput.style.display = 'none';
-        
+
         this.fileInput.oninput = this.fileInput.onchange = () => {
             if (!(this.fileInput.files && this.fileInput.files.length)) {
                 return;
             }
-            
+
             this.__removed = false;
             this.__preview(this.fileInput.files[0]);
-            
+
             if (this.getOption('autoUpload')) {
                 this.upload();
             }
         };
     },
-    
+
     __getInitials(fullName) {
         const words = fullName.split(' ');
-        
+
         switch (words.length) {
             case 0:
                 return null;
@@ -161,15 +149,17 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
                 return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
         }
     },
-    
+
     __attach() {
-        if (this.getEnabled() && !this.getReadonly()) {
+        if (this.getEnabled() && !this.getReadonly() && document.body) {
             document.body.appendChild(this.fileInput);
             this.fileInput.click();
-            document.body.removeChild(this.fileInput);
+            if (document.body) {
+                document.body.removeChild(this.fileInput);
+            }
         }
     },
-    
+
     __remove() {
         if (this.getEnabled() && !this.getReadonly()) {
             this.setValue(null);
@@ -182,23 +172,23 @@ formRepository.editors.Avatar = BaseItemEditorView.extend({
 
             this.__removed = true;
         }
-        
+
         return false;
     },
-    
+
     __preview(image) {
         this.ui.initials.hide();
         URL.revokeObjectURL(this.__previewURL);
         let previewURL;
-        
-        if (_.isString(image)) { // URL
+
+        if (_.isString(image)) {
+            // URL
             previewURL = image;
-        } else if (_.isObject(image) && {}.toString.call(image).slice(8, -1) === 'File') { // file
+        } else if (_.isObject(image) && {}.toString.call(image).slice(8, -1) === 'File') {
+            // file
             previewURL = this.__previewURL = URL.createObjectURL(image);
         }
-        
-        this.ui.image.css('background-image', `url("${previewURL}")`);
-    }
-});
 
-export default formRepository.editors.Avatar;
+        previewURL && this.ui.image.css('background-image', `url("${previewURL}")`);
+    }
+}));

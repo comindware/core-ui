@@ -1,25 +1,17 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/7/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 import { helpers } from 'utils';
-import { $ } from 'lib';
 
 const defaultOptions = {
-    selector: null,
+    selector: undefined,
     allowNestedFocus: true,
-    onBlur: null
+    onBlur: undefined
 };
 
 export default Marionette.Behavior.extend({
     initialize(options, view) {
         helpers.ensureOption(options, 'onBlur');
 
-        _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
+        _.extend(this.options, defaultOptions, _.pick(options || {}, Object.keys(defaultOptions)));
 
         _.bindAll(this, '__onBlur');
 
@@ -50,8 +42,8 @@ export default Marionette.Behavior.extend({
     __focus(focusedEl) {
         if (!focusedEl) {
             this.__getFocusableEl().focus();
-        } else {
-            $(document.activeElement).one('blur', this.__onBlur);
+        } else if (document.activeElement) {
+            document.activeElement.addEventListener('blur', this.__onBlur);
         }
         this.view.isFocused = true;
     },
@@ -66,5 +58,8 @@ export default Marionette.Behavior.extend({
                 callback.call(this.view);
             }
         });
+        if (document.activeElement) {
+            document.activeElement.removeEventListener('blur', this.__onBlur);
+        }
     }
 });

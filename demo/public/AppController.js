@@ -1,43 +1,62 @@
-define([
-    'Application',
-    'comindware/core',
-    './app/DemoService',
-    './app/views/NavBarView',
-    './app/views/IndexPageView',
-    './app/views/DemoPageView'
-], function(Application, core, DemoService, NavBarView, IndexPageView, DemoPageView) {
-    'use strict';
+import DemoService from './app/DemoService';
+import NavBarView from './app/views/NavBarView';
+import IndexPageView from './app/views/IndexPageView';
+import DemoPageView from './app/views/DemoPageView';
 
-    
-
-    return Marionette.Object.extend({
-        index: function() {
-            Application.headerRegion.show(new NavBarView({
-                collection: new Backbone.Collection([
-                    {
-                        displayName: 'Welcome',
-                        selected: true
-                    }
-                ])
-            }));
-            Application.contentRegion.show(new IndexPageView({
+export default Marionette.Object.extend({
+    index() {
+        window.app
+            .getView()
+            .getRegion('headerRegion')
+            .$el.hide();
+        window.app.getView().showChildView(
+            'contentRegion',
+            new IndexPageView({
                 collection: new Backbone.Collection(DemoService.getSections())
-            }));
-        },
+            })
+        );
+    },
 
-        showCase: function(sectionId, groupId, caseId) {
-            var sections = new Backbone.Collection(DemoService.getSections());
-            sections.find(function (s) {
-                return s.id === sectionId;
-            }).set('selected', true);
-            Application.headerRegion.show(new NavBarView({
-                collection: sections
-            }));
-            Application.contentRegion.show(new DemoPageView({
+    showCase(sectionId, groupId, caseId) {
+        const sections = new Backbone.Collection(DemoService.getSections());
+        sections.find(s => s.id === sectionId).set('selected', true);
+        window.app
+            .getView()
+            .getRegion('headerRegion')
+            .$el.show();
+        const groups = DemoService.getGroups(sectionId);
+
+        if (!this.navBarView || !this.DemoPageView) {
+            this.navBarView = new NavBarView({
+                collection: sections,
+                activeSectionId: sectionId
+            });
+
+            this.demoPageView = new DemoPageView({
                 activeSectionId: sectionId,
                 activeGroupId: groupId,
                 activeCaseId: caseId
-            }));
+            });
+
+            this.drawer = new Core.components.NavigationDrawer({
+                collection: groups,
+                collapsed: Core.services.MobileService.isMobile,
+                isAbsolute: Core.services.MobileService.isMobile,
+                title: 'Comindware Core-UI Demo'
+            });
+
+            window.app.getView().showChildView('headerRegion', this.navBarView);
+            window.app.getView().showChildView('contentRegion', this.demoPageView);
+            window.app.getView().showChildView('navigationDrawerRegion', this.drawer);
+        } else {
+            this.demoPageView.reloadView({
+                activeSectionId: sectionId,
+                activeGroupId: groupId,
+                activeCaseId: caseId
+            });
+
+            this.drawer.collection.reset(groups);
+            this.navBarView.collection.reset(sections.models);
         }
-    });
+    }
 });

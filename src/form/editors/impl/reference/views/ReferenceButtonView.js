@@ -1,26 +1,17 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
 import template from '../../reference/templates/referenceButton.hbs';
 
 const classes = {
     ARROW_BUTTON: 'input_dropdown'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
     },
-    
+
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         const value = this.model.get('value');
         return {
             hasValue: Boolean(value),

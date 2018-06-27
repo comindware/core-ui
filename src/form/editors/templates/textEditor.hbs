@@ -1,13 +1,1 @@
-{{#if maxLength}}
-    <input type="text" class="input input_text js-input" placeholder="{{placeholder}}" maxlength="{{maxLength}}" title="{{title}}">
-{{else}}
-    <input type="text" class="input input_text js-input" placeholder="{{placeholder}}" title="{{title}}">
-{{/if}}
-<div class="svg-icons-wrp">
-    <div class="svg-icons-wrp__empty">
-        <svg class="svg-icons svg-icons_text"><use xlink:href="#icon-text" /> </svg>
-    </div>
-    <div class="js-clear-button svg-icons-wrp__remove">
-        <svg class="svg-icons svg-icons_remove"><use xlink:href="#icon-remove" /> </svg>
-    </div>
-</div>
+<input type="text" class="input input_text js-input" placeholder="{{placeholder}}" {{#if maxLength}}maxlength="{{maxLength}}"{{/if}} title="{{title}}" id="{{fieldId}}">

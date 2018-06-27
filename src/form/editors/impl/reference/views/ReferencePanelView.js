@@ -1,19 +1,9 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { keypress, Handlebars } from 'lib';
 import { helpers } from 'utils';
 import list from 'list';
 import template from '../templates/referencePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 import LoadingView from './LoadingView';
 import AddNewButtonView from './AddNewButtonView';
-import ElementsQuantityWarningView from './ElementsQuantityWarningView';
 
 const config = {
     CHILD_HEIGHT: 25
@@ -23,7 +13,7 @@ const classes = {
     EMPTY_VIEW: 'editor__common-empty-view'
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.reqres = options.reqres;
         this.showAddNewButton = this.options.showAddNewButton;
@@ -31,12 +21,11 @@ export default Marionette.LayoutView.extend({
         this.timeoutId = null;
     },
 
-    className: 'dd-list dd-list_reference',
+    className: 'dropdown__wrp dropdown__wrp_reference 111',
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
-        const value = this.model.get('value');
+    templateContext() {
         return {
             text: this.options.getDisplayText(this.model.get('value')),
             showAddNewButton: this.showAddNewButton
@@ -58,21 +47,19 @@ export default Marionette.LayoutView.extend({
 
     regions: {
         listRegion: '.js-list-region',
-        scrollbarRegion: '.js-scrollbar-region',
         loadingRegion: '.js-loading-region',
-        addNewButtonRegion: '.js-add-new-button-region',
-        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
+        addNewButtonRegion: '.js-add-new-button-region'
     },
 
     onRender() {
         this.__assignKeyboardShortcuts();
     },
 
-    onShow() {
-        const result = list.factory.createDefaultList({
+    onAttach() {
+        this.listView = list.factory.createDefaultList({
             collection: this.model.get('collection'),
             listViewOptions: {
-                childView: this.options.listItemView,
+                childView: this.options.listView,
                 childViewOptions: {
                     reqres: this.reqres,
                     getDisplayText: this.options.getDisplayText
@@ -85,73 +72,58 @@ export default Marionette.LayoutView.extend({
             }
         });
 
-        this.listView = result.listView;
-        this.eventAggregator = result.eventAggregator;
-
         if (this.showAddNewButton) {
-            this.$el.addClass('dd-list_reference-button');
+            this.$el.addClass('dropdown__wrp_reference-button');
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
-            this.addNewButtonRegion.show(addNewButton);
+            this.showChildView('addNewButtonRegion', addNewButton);
         }
 
-        this.listRegion.show(result.listView);
-
-        this.scrollbarRegion.show(result.scrollbarView);
+        this.showChildView('listRegion', this.listView);
 
         if (this.getOption('hideSearchBar')) {
             this.ui.searchBarContainer.hide();
         }
 
-        this.elementsQuantityWarningRegion.show(new ElementsQuantityWarningView());
-        this.elementsQuantityWarningRegion.$el.hide();
-
         this.__updateFilter(true);
-    },
-
-    __assignKeyboardShortcuts() {
-        if (this.keyListener) {
-            this.keyListener.reset();
-        }
-        this.keyListener = new keypress.Listener(this.ui.input[0]);
-        _.each(this.keyboardShortcuts, function(value, key) {
-            const keys = key.split(',');
-            _.each(keys, function(k) {
-                this.keyListener.simple_combo(k, value.bind(this));
-            }, this);
-        }, this);
-    },
-
-    keyboardShortcuts: {
-        up() {
-            this.listView.moveCursorBy(-1, false);
-        },
-        down() {
-            this.listView.moveCursorBy(1, false);
-        },
-        'enter,num_enter,tab'() {
-            if (this.isLoading) {
-                return;
-            }
-
-            if (this.timeoutId) {
-                clearTimeout(this.timeoutId);
-                this.__updateFilter(true);
-                return;
-            }
-
-            const selectedModel = this.model.get('collection').selected;
-            this.reqres.request('value:set', selectedModel);
-        },
-        esc() {
-            this.trigger('cancel');
-        }
     },
 
     __clear() {
         this.reqres.request('value:set', null);
     },
 
-    __onTextChange() {
+    __onTextChange(e) {
+        switch (e.keyCode) {
+            case 9:
+            case 8: {
+                if (this.isLoading) {
+                    return;
+                }
+
+                if (this.timeoutId) {
+                    clearTimeout(this.timeoutId);
+                    this.__updateFilter(true);
+                    return;
+                }
+
+                const selectedModel = this.model.get('collection').selected;
+                this.reqres.request('value:set', selectedModel);
+                break;
+            }
+            case 27: {
+                this.trigger('cancel');
+                break;
+            }
+            case 38: {
+                this.listView.moveCursorBy(-1, false);
+                break;
+            }
+            case 40: {
+                this.listView.moveCursorBy(1, false);
+                break;
+            }
+            default:
+                break;
+        }
         this.__updateFilter(false);
     },
 
@@ -160,25 +132,26 @@ export default Marionette.LayoutView.extend({
         if (this.activeText === text) {
             return;
         }
-        const updateNow = function() {
+        const updateNow = () => {
             this.activeText = text;
             this.__setLoading(true);
             const collection = this.model.get('collection');
             collection.deselect();
-            this.reqres.request('filter:text', {
-                text
-            }).then(() => {
-                this.timeoutId = null;
-                if (collection.length > 0) {
-                    if (!collection.contains(collection.selected)) {
-                        const model = collection.at(0);
-                        model.select();
+            this.reqres
+                .request('filter:text', {
+                    text
+                })
+                .then(() => {
+                    this.timeoutId = null;
+                    if (collection.length > 0) {
+                        if (!collection.contains(collection.selected)) {
+                            const model = collection.at(0);
+                            model.select();
+                        }
                     }
-                    this.__toggleElementsQuantityWarning(this.model.get('totalCount'));
-                }
-                this.__setLoading(false);
-            });
-        }.bind(this);
+                    this.__setLoading(false);
+                });
+        };
         if (immediate) {
             updateNow();
         } else {
@@ -187,24 +160,16 @@ export default Marionette.LayoutView.extend({
     },
 
     __setLoading(isLoading) {
-        if (this.isDestroyed) {
+        if (this.isDestroyed()) {
             return;
         }
         this.isLoading = isLoading;
         if (isLoading) {
-            this.loadingRegion.show(new LoadingView());
+            this.showChildView('loadingRegion', new LoadingView());
             this.ui.input.blur();
         } else {
             this.ui.input.focus();
             this.loadingRegion.reset();
-        }
-    },
-
-    __toggleElementsQuantityWarning(count) {
-        if (this.elementsQuantityWarningRegion) {
-            count > 100
-                ? this.elementsQuantityWarningRegion.$el.show()
-                : this.elementsQuantityWarningRegion.$el.hide();
         }
     }
 });

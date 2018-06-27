@@ -1,15 +1,4 @@
-/**
- * Developer: Grigory Kuznetsov
- * Date: 10.09.2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars, moment } from 'lib';
-import { helpers, dateHelpers } from 'utils';
+import { dateHelpers } from 'utils';
 import template from '../templates/datePanel.hbs';
 import LocalizationService from '../../../../../services/LocalizationService';
 
@@ -17,12 +6,10 @@ const defaultOptions = {
     pickerFormat: 'YYYY-MM-DD'
 };
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     template: Handlebars.compile(template),
 
-    initialize(options) {
-        helpers.ensureOption(options, 'timezoneOffset');
-        
+    initialize() {
         this.pickerOptions = {
             minView: 2,
             format: this.options.pickerFormat,
@@ -32,47 +19,33 @@ export default Marionette.ItemView.extend({
         };
     },
 
-    className: 'datepicker_panel',
-
-    modelEvents: {
-        'change:value': 'updatePickerDate'
-    },
+    className: 'dropdown__wrp dropdown__wrp_datepicker',
 
     ui: {
         pickerInput: '.js-datetimepicker'
     },
 
-    updatePickerDate() {
-        let val = this.model.get('value'),
-            format = defaultOptions.pickerFormat,
-            pickerFormattedDate = val ? moment.utc(new Date(val)).utcOffset(this.getOption('timezoneOffset')).format(format) : moment.utc({}).format(format);
+    updatePickerDate(val) {
+        let value = val;
+        if (isNaN(val)) {
+            value = new Date();
+            return;
+        }
 
+        const format = defaultOptions.pickerFormat;
+        const pickerFormattedDate = val ? moment(new Date(val)).format(format) : moment({}).format(format);
+        this.ui.pickerInput.datetimepicker('setDate', value);
         this.ui.pickerInput.attr('data-date', pickerFormattedDate);
         this.ui.pickerInput.datetimepicker('update');
     },
 
     updateValue(date) {
-        let newVal = null;
-
-        if (date === null || date === '') {
-            newVal = null;
-        } else {
-            newVal = moment.utc({
-                year: date.getFullYear(),
-                month: date.getMonth(),
-                date: date.getDate()
-            }).minute(-this.getOption('timezoneOffset')).toISOString();
-        }
-
-        this.model.set({ value: newVal });
+        this.updatePickerDate(date);
+        this.trigger('select', date);
     },
 
-    onShow() {
-        this.ui.pickerInput.datetimepicker(this.pickerOptions)
-            .on('changeDate', e => {
-                this.updateValue(e.date);
-                this.trigger('select');
-            });
-        this.updatePickerDate();
+    onAttach() {
+        this.ui.pickerInput.datetimepicker(this.pickerOptions).on('changeDate', e => this.updateValue(e.date));
+        this.updatePickerDate(new Date(this.options.value));
     }
 });

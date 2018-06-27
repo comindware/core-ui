@@ -1,17 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/23/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import 'lib';
-
-const CollapsibleBehavior = function(model) {
-};
+const CollapsibleBehavior = function() {};
 
 _.extend(CollapsibleBehavior.prototype, {
     collapse(internal) {
@@ -29,7 +16,7 @@ _.extend(CollapsibleBehavior.prototype, {
     },
 
     expand(internal) {
-        if (!this.collapsed) {
+        if (this.collapsed === false) {
             return;
         }
 

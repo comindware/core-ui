@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/15/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars } from 'lib';
+//@flow
 import template from '../templates/splitPanel.hbs';
 import GlobalEventService from '../services/GlobalEventService';
 
@@ -29,15 +19,13 @@ const defaultOptions = {
     panel2Min: 20
 };
 
-export default Marionette.LayoutView.extend({
+export default Marionette.View.extend({
     constructor() {
-        Marionette.LayoutView.prototype.constructor.apply(this, arguments);
+        Marionette.View.prototype.constructor.apply(this, arguments);
 
         _.defaults(this.options, defaultOptions);
 
-        _.bindAll(this,
-            '__startDragging', '__stopDragging', '__handleDocumentMouseMove',
-            '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
+        _.bindAll(this, '__startDragging', '__stopDragging', '__handleDocumentMouseMove', '__handleDocumentMouseUp', '__handleResizerMousedown', '__handleWindowResize');
 
         this.listenTo(GlobalEventService, 'window:resize', _.throttle(this.__handleWindowResize, config.throttleDelay));
         this.on('render', () => {
@@ -81,8 +69,7 @@ export default Marionette.LayoutView.extend({
             return;
         }
 
-        const newPanel1Width = Math.min(
-            Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
+        const newPanel1Width = Math.min(Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
         const leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
         const rightWidthPx = 100 - leftWidthPx;
         this.ui.panel1.css('width', `${leftWidthPx}%`);
@@ -103,7 +90,9 @@ export default Marionette.LayoutView.extend({
             containerWidth: this.$el.width(),
             panel1InitialWidth: this.ui.panel1.width()
         };
-        $(document).mousemove(this.__handleDocumentMouseMove).mouseup(this.__handleDocumentMouseUp);
+
+        document.addEventListener('mousemove', this.__handleDocumentMouseMove);
+        document.addEventListener('mouseup', this.__handleDocumentMouseUp);
     },
 
     __stopDragging() {
@@ -111,11 +100,10 @@ export default Marionette.LayoutView.extend({
             return;
         }
 
-        const $document = $(document);
-        $document.unbind('mousemove', this.__handleDocumentMouseMove);
-        $document.unbind('mouseup', this.__handleDocumentMouseUp);
+        document.removeEventListener('mousemove', this.__handleDocumentMouseMove);
+        document.removeEventListener('mouseup', this.__handleDocumentMouseUp);
+
         this.dragContext = null;
-        $(window).trigger('resize');
     },
 
     __updatePanelClasses($panelEl) {

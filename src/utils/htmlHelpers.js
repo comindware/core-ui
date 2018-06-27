@@ -1,26 +1,16 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/7/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars } from 'lib';
 import UserService from 'services/UserService';
 
 export default /** @lends module:core.utils.htmlHelpers */ {
     /**
      * Highlights fragments within a text with &lt;span class='highlight'&gt;&lt;/span&gt;.
-     * @param {String} text Text to highlight.
+     * @param {String} rawText Text to highlight.
      * @param {String} fragment highlighted fragment.
      * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied to
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightText(text, fragment, escape) {
+    highlightText(rawText, fragment, escape) {
+        let text = rawText;
         if (!text) {
             return '';
         }
@@ -47,12 +37,13 @@ export default /** @lends module:core.utils.htmlHelpers */ {
 
     /**
      * Highlights mentions within a text with &lt;a href='...'&gt;&lt;/a&gt;.
-     * @param {String} text Text to highlight.
+     * @param {String} rawText Text to highlight.
      * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied to
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightMentions(text, escape) {
+    highlightMentions(rawText, escape) {
+        let text = rawText;
         if (!text) {
             return '';
         }
@@ -79,12 +70,13 @@ export default /** @lends module:core.utils.htmlHelpers */ {
 
     /**
      * Highlights urls within a text with &lt;a href='...'&gt;&lt;/a&gt;.
-     * @param {String} text Text to highlight.
+     * @param {String} rawText Text to highlight.
      * @param {Boolean} [escape=true] If true, <code>Handlebars.Utils.escapeExpression</code> will be applied on to
      * the <code>text</code> before highlighting.
      * @return {String} Highlighted text
      * */
-    highlightUrls(text, escape) {
+    highlightUrls(rawText, escape) {
+        let text = rawText;
         if (!text) {
             return '';
         }
@@ -121,28 +113,5 @@ export default /** @lends module:core.utils.htmlHelpers */ {
 
         el.onselectstart = stopAndPreventDefault;
         el.ondragstart = stopAndPreventDefault;
-    },
-
-    /**
-     * Use jQuery <code>.offset()</code>.
-     * @deprecated
-     */
-    getDocumentPosition(el) {
-        if (el instanceof window.jQuery) {
-            el = el[0];
-        }
-
-        let left = 0;
-        let top = 0;
-        do {
-            if (!isNaN(el.offsetLeft)) {
-                left += el.offsetLeft;
-            }
-            if (!isNaN(el.offsetTop)) {
-                top += el.offsetTop;
-            }
-            el = el.offsetParent;
-        } while (el);
-        return { x: left, y: top };
     }
 };

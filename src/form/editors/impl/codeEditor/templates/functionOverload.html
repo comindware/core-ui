@@ -1,0 +1,10 @@
+{{#if parameters}}
+    {{text}}(
+    {{#each this.parameters}}
+    <span class="dev-code-editor-tooltip-parameter-name">{{this.name}}</span>:<span class="dev-code-editor-tooltip-parameter-type">{{this.type}}</span>{{#unless @last}}, {{/unless}}{{#if @last}} ){{/if}}
+    {{/each}}
+    {{#if returns}}: <span class="dev-code-editor-tooltip-parameter-type">{{returns}}</span>{{/if}}
+{{else}}
+    {{text}}()
+    {{#if returns}}: <span class="dev-code-editor-tooltip-parameter-type">{{returns}}</span>{{/if}}
+{{/if}}

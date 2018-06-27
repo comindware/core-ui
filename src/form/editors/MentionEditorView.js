@@ -1,25 +1,15 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
+// @flow
 import template from './templates/mentionEditor.hbs';
-import { Handlebars } from 'lib';
 import dropdown from 'dropdown';
-import 'utils';
+import { keyCode } from 'utils';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
-import membersFactory from './impl/common/members/services/factory';
+import membersFactory from './impl/members/services/factory';
 import TextAreaEditorView from './TextAreaEditorView';
 import LocalizationService from '../../services/LocalizationService';
 import formRepository from '../formRepository';
 
 const defaultOptions = {
-    editorOptions: null
+    editorOptions: undefined
 };
 
 /**
@@ -32,13 +22,9 @@ const defaultOptions = {
  * @param {Object} options Options object. All the properties of {@link module:core.form.editors.base.BaseEditorView BaseEditorView} class are also supported.
  * @param {Number} [options.editorOptions=Object] Опции для используемого {@link module:core.form.editors.TextAreaEditorView TextAreaEditorView}.
  * */
-formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:core.form.editors.MentionEditorView.prototype */{
-    initialize(options) {
-        if (options.schema) {
-            _.extend(this.options, defaultOptions, _.pick(options.schema, _.keys(defaultOptions)));
-        } else {
-            _.extend(this.options, defaultOptions, _.pick(options || {}, _.keys(defaultOptions)));
-        }
+export default (formRepository.editors.Mention = BaseLayoutEditorView.extend({
+    initialize(options = {}) {
+        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
         this.__createViewModel();
     },
@@ -47,10 +33,13 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         this.viewModel = new Backbone.Model();
         const membersCollection = membersFactory.createMembersCollection();
         this.viewModel.set('availableMembers', membersCollection);
-        this.viewModel.set('membersByUserName', membersCollection.reduce((memo, value) => {
-            memo[value.get('userName')] = value;
-            return memo;
-        }, {}));
+        this.viewModel.set(
+            'membersByUserName',
+            membersCollection.reduce((memo, value) => {
+                memo[value.get('userName')] = value;
+                return memo;
+            }, {})
+        );
     },
 
     template: Handlebars.compile(template),
@@ -59,7 +48,11 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         dropdownRegion: '.js-dropdown-region'
     },
 
-    onShow() {
+    events: {
+        'keydown:captured': '__handleKeydown'
+    },
+
+    onRender() {
         if (this.dropdownView) {
             this.stopListening(this.dropdownView);
         }
@@ -81,68 +74,73 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
             renderAfterClose: false
         });
 
-        this.dropdownRegion.show(this.dropdownView);
+        this.showChildView('dropdownRegion', this.dropdownView);
         this.listenTo(this.dropdownView, 'button:change', this.__onTextChange);
         this.listenTo(this.dropdownView, 'button:focus', this.__onFocus);
         this.listenTo(this.dropdownView, 'button:blur', this.__onBlur);
         this.listenTo(this.dropdownView, 'button:input', this.__onInput);
         this.listenTo(this.dropdownView, 'button:caretChange', this.__onCaretChange);
         this.listenTo(this.dropdownView, 'panel:member:select', this.__onMemberSelect);
-        _.each(this.keyboardShortcuts, function(v, k) {
+        _.each(this.keyboardShortcuts, (v, k) => {
             this.dropdownView.button.addKeyboardListener(k, v.bind(this));
-        }, this);
+        });
 
         // We discarded it during render phase, so we do it now.
         this.setPermissions(this.enabled, this.readonly);
         this.setValue(this.value);
     },
 
-    keyboardShortcuts: {
-        up() {
-            if (!this.dropdownView.isOpen) {
-                return true;
-            }
-            this.__sendPanelCommand('up');
-            this.__updateMentionInText();
-        },
-        down() {
-            if (!this.dropdownView.isOpen) {
-                return true;
-            }
-            this.__sendPanelCommand('down');
-            this.__updateMentionInText();
-        },
-        'enter,num_enter'() {
-            if (!this.dropdownView.isOpen) {
-                return true;
-            }
-            this.__updateMentionInText();
-            this.dropdownView.close();
-        },
-        escape() {
-            this.dropdownView.close();
+    __handleKeydown(e) {
+        switch (e.keyCode) {
+            case keyCode.UP:
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
+                this.__sendPanelCommand('up');
+                this.__updateMentionInText();
+                return false;
+            case keyCode.DOWN:
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
+                this.__sendPanelCommand('down');
+                this.__updateMentionInText();
+                return false;
+            case keyCode.ENTER:
+            case keyCode.NUMPAD_ENTER:
+                if (!this.dropdownView.isOpen) {
+                    return true;
+                }
+                this.__updateMentionInText();
+                this.dropdownView.close();
+                return false;
+            case keyCode.ESCAPE:
+                this.dropdownView.close();
+                return false;
+            default:
+                break;
         }
     },
 
-    __value(value) {
+    __value(value): void {
         this.setValue(value);
         this.__triggerChange();
     },
 
-    __onTextChange() {
+    __onTextChange(): void {
         this.value = this.dropdownView.button.getValue();
         this.__triggerChange();
     },
 
-    __onFocus() {
+    __onFocus(): void {
         this.trigger('focus', this);
     },
 
-    __onBlur() {
+    __onBlur(): void {
         this.trigger('blur', this);
     },
 
-    __onInput(text, caret) {
+    __onInput(text: string, caret: { start: number, end: number }): void {
         // 1. Open dropdown when: @ is immediately before caret, @ is at start or prepended by whitespace
         // 2. Maintain dropdown open (and filter the list) when: text between caret and @ matches username pattern [a-zA-Z0-9_\.]
         // 3. Hide dropdown when: username text doesn't match
@@ -177,12 +175,12 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         }
     },
 
-    __onMemberSelect() {
+    __onMemberSelect(): void {
         this.__updateMentionInText();
         this.dropdownView.close();
     },
 
-    __updateMentionInText() {
+    __updateMentionInText(): void {
         const selectedMember = this.viewModel.get('availableMembers').selected;
         if (!selectedMember) {
             return;
@@ -196,9 +194,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
             mention += ' ';
         }
 
-        const updatedText = text.substring(0, this.mentionState.start) +
-            mention +
-            text.substring(this.mentionState.end);
+        const updatedText = text.substring(0, this.mentionState.start) + mention + text.substring(this.mentionState.end);
         editor.setValue(updatedText);
         editor.setCaretPos(this.mentionState.start + mention.length);
         this.value = updatedText;
@@ -209,7 +205,7 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
      * Получить список пользователей, упомянутых в тексте.
      * @return {String[]} Список строковых идентификаторов пользователей, упомянутых в тексте.
      * */
-    getMentions() {
+    getMentions(): Array<any> {
         const text = this.getValue();
         const regex = /(?:\s|^)@([a-z0-9_\.]+)/gi;
         const members = this.viewModel.get('membersByUserName');
@@ -244,19 +240,17 @@ formRepository.editors.Mention = BaseLayoutEditorView.extend(/** @lends module:c
         }
     },
 
-    __setEnabled(enabled) {
+    __setEnabled(enabled: boolean): void {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         if (this.dropdownView) {
             this.dropdownView.button.setEnabled(enabled);
         }
     },
 
-    __setReadonly(readonly) {
+    __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         if (this.dropdownView) {
             this.dropdownView.button.setReadonly(readonly);
         }
     }
-});
-
-export default formRepository.editors.Mention;
+}));

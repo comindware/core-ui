@@ -1,13 +1,5 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/19/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 import FieldView from '../fields/FieldView';
-import helpers from '../../utils/helpers';
+import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 
 const Form = Marionette.Object.extend({
     /**
@@ -16,53 +8,57 @@ const Form = Marionette.Object.extend({
      * @param {Object} [options.schema]
      * @param {Backbone.Model} [options.model]
      */
-    initialize(options) {
-        this.options = options = options || {};
+    initialize(options = {}) {
+        this.options = options;
 
-        this.__regionManager = new Marionette.RegionManager();
         this.schema = _.result(options, 'schema');
         this.model = options.model;
 
         this.fields = {};
-        _.each(this.schema, function(fieldSchema, key) {
-            const FieldType = fieldSchema.field || options.field || FieldView;
-            const field = new FieldType({
-                form: this,
-                key,
-                schema: fieldSchema,
-                model: this.model
-            });
-            this.listenTo(field.editor, 'all', this.__handleEditorEvent);
-            this.fields[key] = field;
-        }, this);
+
+        Object.entries(this.schema).forEach(entry => {
+            const FieldType = entry[1].field || options.field || FieldView; //TODO fix api
+            let field;
+            try {
+                field = new FieldType({
+                    key: entry[0],
+                    schema: entry[1],
+                    model: this.model
+                });
+                this.listenTo(field.editor, 'all', this.__handleEditorEvent);
+            } catch (e) {
+                field = new ErrorPlaceholderView();
+                Core.InterfaceError.logError(e, field.getId());
+            } finally {
+                this.fields[entry[0]] = field;
+            }
+        });
 
         const $target = this.options.$target;
+        const rootView = window.app.getView();
 
-        const usedFields = {};
         //Render standalone editors
         $target.find('[data-editors]').each((i, el) => {
-            const $editorRegion = $(el);
-            const key = $editorRegion.attr('data-editors');
-            const regionName = `${key}Region`;
-            if (usedFields[key]) {
-                helpers.throwFormatError(`Duplicated field '${key}'.`);
+            //TODO Merge with previous
+            if ((!this.model.has('uniqueFormId') && !el.hasAttribute('editor-for')) || el.getAttribute('editor-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-editors');
+                const regionName = `${key}Region`;
+
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key].editor);
             }
-            this.__regionManager.addRegion(regionName, { el: $editorRegion });
-            this.__regionManager.get(regionName).show(this.fields[key].editor);
-            usedFields[key] = true;
         });
 
         //Render standalone fields
         $target.find('[data-fields]').each((i, el) => {
-            const $fieldRegion = $(el);
-            const key = $fieldRegion.attr('data-fields');
-            const regionName = `${key}Region`;
-            if (usedFields[key]) {
-                helpers.throwFormatError(`Duplicated field '${key}'.`);
+            //TODO Merge with previous
+            if ((!this.model.has('uniqueFormId') && !el.hasAttribute('field-for')) || el.getAttribute('field-for') === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute('data-fields');
+                const regionName = `${key}Region`;
+
+                rootView.addRegion(regionName, { el });
+                this.fields[key] && rootView.showChildView(regionName, this.fields[key]);
             }
-            this.__regionManager.addRegion(regionName, { el: $fieldRegion });
-            this.__regionManager.get(regionName).show(this.fields[key]);
-            usedFields[key] = true;
         });
     },
 
@@ -73,10 +69,8 @@ const Form = Marionette.Object.extend({
      *
      * @return {Object}  Validation errors
      */
-    commit(options) {
+    commit(options = {}) {
         // Validate
-        options = options || {};
-
         const errors = this.validate({
             skipModelValidate: !options.validate
         });
@@ -86,11 +80,14 @@ const Form = Marionette.Object.extend({
 
         // Commit
         let modelError = null;
-        const setOptions = Object.assign({
-            error(model, e) {
-                modelError = e;
-            }
-        }, options);
+        const setOptions = Object.assign(
+            {
+                error(model, e) {
+                    modelError = e;
+                }
+            },
+            options
+        );
 
         this.model.set(this.getValue(), setOptions);
         return modelError;
@@ -109,10 +106,6 @@ const Form = Marionette.Object.extend({
             throw new Error(`Field not found: ${key}`);
         }
         return field.editor;
-    },
-
-    onDestroy() {
-        this.__regionManager.destroy();
     },
 
     /**
@@ -155,7 +148,7 @@ const Form = Marionette.Object.extend({
         });
     },
 
-    __handleEditorEvent(event, editor, field) {
+    __handleEditorEvent(event, editor) {
         switch (event) {
             case 'change':
                 this.trigger('change', this, editor);
@@ -169,7 +162,7 @@ const Form = Marionette.Object.extend({
                 break;
             case 'blur':
                 if (this.hasFocus) {
-                    const focusedField = _.find(this.fields, f => f.editor.hasFocus);
+                    const focusedField = Object.values(this.fields).find(f => f.editor.hasFocus);
                     if (!focusedField) {
                         this.hasFocus = false;
                         this.trigger('blur', this);
@@ -182,10 +175,10 @@ const Form = Marionette.Object.extend({
     },
 
     setErrors(errors) {
-        _.each(errors, (value, key) => {
-            const field = this.fields[key];
+        Object.entries(errors).forEach(entry => {
+            const field = this.fields[entry[0]];
             if (field) {
-                field.setError(value);
+                field.setError(entry[1]);
             }
         });
     },
@@ -194,15 +187,13 @@ const Form = Marionette.Object.extend({
      * Validate the data
      * @return {Object} Validation errors
      */
-    validate(options) {
+    validate(options = {}) {
         const fields = this.fields;
         const model = this.model;
         const errors = {};
 
-        options = options || {};
-
         //Collect errors from schema validation
-        _.each(fields, field => {
+        Object.values(fields).forEach(field => {
             const error = field.validate(options);
             if (error) {
                 errors[field.key] = error;
@@ -214,7 +205,7 @@ const Form = Marionette.Object.extend({
             const modelErrors = model.validate(this.getValue());
 
             if (modelErrors) {
-                const isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+                const isDictionary = _.isObject(modelErrors) && !Array.isArray(modelErrors);
 
                 //If errors are not in object form then just store on the error object
                 if (!isDictionary) {
@@ -224,16 +215,16 @@ const Form = Marionette.Object.extend({
 
                 //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
                 if (isDictionary) {
-                    _.each(modelErrors, (val, key) => {
+                    Object.entries(modelErrors).forEach(entrie => {
                         //Set error on field if there isn't one already
-                        if (fields[key] && !errors[key]) {
-                            fields[key].setError(val);
-                            errors[key] = val;
+                        if (fields[entrie[0]] && !errors[entrie[0]]) {
+                            fields[entrie[0]].setError(entrie[1]);
+                            errors[entrie[0]] = entrie[1];
                         } else {
-                            //Otherwise add to '_others' key
+                            //Otherwise add to '_others' entrie[0]
                             errors._others = errors._others || [];
                             errors._others.push({
-                                [key]: val
+                                [entrie[0]]: entrie[1]
                             });
                         }
                     });
@@ -241,8 +232,9 @@ const Form = Marionette.Object.extend({
             }
         }
 
-        const result = _.isEmpty(errors) ? null : errors;
+        const result = Object.keys(errors).length === 0 ? null : errors;
         this.trigger('form:validated', !result, result);
+
         return result;
     },
 
@@ -269,7 +261,7 @@ const Form = Marionette.Object.extend({
             return;
         }
 
-        const focusedField = _.find(this.fields, field => field.editor.hasFocus);
+        const focusedField = Object.values(this.fields).forEach(field => field.editor.hasFocus);
         if (focusedField) {
             focusedField.editor.blur();
         }
@@ -288,7 +280,6 @@ const constants = {
  * @name BackboneFormBehavior
  * @memberof module:core.form.behaviors
  * @class This behavior turns any Marionette.View into Backbone.Form. To do this Backbone.Form scans this.$el at the moment
- * defined by <code>options.renderStrategy</code> and puts field and editors defined in <code>options.schema</code> into
  * DOM-elements with corresponding Backbone.Form data-attributes.
  * It's important to note that Backbone.Form will scan the whole this.$el including nested regions that might lead to unexpected behavior.
  * Possible events:<ul>
@@ -299,7 +290,6 @@ const constants = {
  * @param {Object} options Options object.
  * @param {Object|Function} options.schema Backbone.Form schema as it's listed in [docs](https://github.com/powmedia/backbone-forms).
  * @param {Object|Function} [options.model] Backbone.Model that the form binds it's editors to. <code>this.model</code> is used by default.
- * @param {String} [options.renderStrategy='show'] Defines a moment when the form is applied to the view. May be one of:<ul>
  *     <li><code>'render'</code> - On view's 'render' event.</li>
  *     <li><code>'show'</code> - On view's 'show' event.</li>
  *     <li><code>'manual'</code> - Form render method (<code>renderForm()</code>) must be called manually.</li>
@@ -309,13 +299,12 @@ const constants = {
  * @param {Marionette.View} view A view the behavior is applied to.
  * */
 
-export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.BackboneFormBehavior.prototype */{
+export default Marionette.Behavior.extend({
     initialize(options, view) {
         view.renderForm = this.__renderForm.bind(this);
     },
 
     defaults: {
-        renderStrategy: constants.RENDER_STRATEGY_SHOW,
         model() {
             return this.model;
         },
@@ -324,16 +313,8 @@ export default Marionette.Behavior.extend(/** @lends module:core.form.behaviors.
         }
     },
 
-    onRender() {
-        if (this.options.renderStrategy === constants.RENDER_STRATEGY_RENDER) {
-            this.__renderForm();
-        }
-    },
-
-    onShow() {
-        if (this.options.renderStrategy === constants.RENDER_STRATEGY_SHOW) {
-            this.__renderForm();
-        }
+    onAttach() {
+        this.__renderForm();
     },
 
     onDestroy() {

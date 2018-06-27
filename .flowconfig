@@ -1,0 +1,35 @@
+[ignore]
+.*/doc/.*
+.*/external/.*
+.*/reports/.*
+.*/dist/.*
+.*/build/.*
+.*/localization/.*
+.*/tests/.*
+.*/resources/.*
+.*/demo/.*
+[include]
+
+[libs]
+.*/src/external.*
+[lints]
+
+[options]
+include_warnings=true
+
+module.name_mapper.extension='html' -> '<PROJECT_ROOT>/flow-stubs/htmlDummy.js'
+module.name_mapper.extension='hbs' -> '<PROJECT_ROOT>/flow-stubs/hbsDummy.js'
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow-stubs/hbsDummy.js'
+
+module.name_mapper='^services/WindowService' -> '<PROJECT_ROOT>/src/services/WindowService.js'
+module.name_mapper='^form' -> '<PROJECT_ROOT>/src/form/index.js'
+module.name_mapper='^lib' -> '<PROJECT_ROOT>/src/lib.js'
+module.name_mapper='^utils' -> '<PROJECT_ROOT>/src/utils/index.js'
+module.name_mapper='^services/UserService' -> '<PROJECT_ROOT>/src/services/UserService.js'
+module.name_mapper='^dropdown' -> '<PROJECT_ROOT>/src/dropdown/index.js'
+module.name_mapper='^list' -> '<PROJECT_ROOT>/src/list/index.js'
+module.name_mapper='^rangyinputs' -> '<PROJECT_ROOT>/src/external/rangyinputs-jquery-src.js'
+module.name_mapper='^jquery-ui' -> '<PROJECT_ROOT>/src/external/jquery-ui.js'
+module.name_mapper='^backbone.trackit' -> '<PROJECT_ROOT>/src/external/backbone.trackit.js'
+
+[strict]

@@ -1,26 +1,16 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/27/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-"use strict";
-
 import core from 'coreApi';
 
 export var UserModel = Backbone.Model.extend({});
 
 export var TaskModel = Backbone.Model.extend({
-    initialize: function () {
+    initialize() {
         _.extend(this, new core.list.models.behaviors.ListItemBehavior(this));
     }
 });
 
-export function addChanceMixins (chance) {
+export function addChanceMixins(chance) {
     chance.mixin({
-        'user': function (predefinedAttributes) {
+        user(predefinedAttributes) {
             return new UserModel({
                 id: (predefinedAttributes && predefinedAttributes.id) || _.uniqueId(),
                 name: (predefinedAttributes && predefinedAttributes.name) || chance.name()
@@ -28,14 +18,14 @@ export function addChanceMixins (chance) {
         }
     });
 
-    const users = _.times(10, function () { return chance.user(); });
-    const titles = _.times(100, function () { return chance.sentence({ min: 4, max: 10 }); });
+    const users = _.times(10, () => chance.user());
+    const titles = _.times(100, () => chance.sentence({ min: 4, max: 10 }));
 
     chance.mixin({
-        'task': function (predefinedAttributes) {
+        task(predefinedAttributes) {
             return {
                 id: (predefinedAttributes && predefinedAttributes.id) || _.uniqueId(),
-                title: (predefinedAttributes && predefinedAttributes.title) || titles[chance.integer({min: 0, max: titles.length - 1})],
+                title: (predefinedAttributes && predefinedAttributes.title) || titles[chance.integer({ min: 0, max: titles.length - 1 })],
                 assignee: (predefinedAttributes && predefinedAttributes.assignee) || users[chance.integer({ min: 0, max: users.length - 1 })]
             };
         }
@@ -47,8 +37,8 @@ export function addChanceMixins (chance) {
 }
 
 export var dataProvider = {
-    listUsers: function () {
-        let names = [
+    listUsers() {
+        const names = [
             'Kerry Torres',
             'Terry Ross',
             'Natasha Becker',
@@ -62,15 +52,43 @@ export var dataProvider = {
             'Nichole Tran'
         ];
         return names.map((name, i) => {
-            let id = 'user.' + (i+1);
-            let nameSplit = name.split(' ');
+            const id = `user.${i + 1}`;
+            const nameSplit = name.split(' ');
+
             return {
-                id: id,
-                name: name,
+                id,
+                name,
                 userName: (nameSplit[0][0] + nameSplit[1]).toLowerCase(),
                 abbreviation: nameSplit[0][0] + nameSplit[1][0],
                 avatarUrl: null,
-                url: '#People/' + (i+1)
+                url: `#People/${i + 1}`,
+                type: 'users'
+            };
+        });
+    },
+
+    listGroups() {
+        const names = [
+            'Kerry Group',
+            'Terry Group',
+            'Natasha Group',
+            'Doyle Group',
+            'Teresa Group',
+            'Maggie Group',
+            'Patricia Group',
+            'Carol Group',
+            'Lillie Group',
+            'Alfred Group',
+            'Nichole Group'
+        ];
+        return names.map((name, i) => {
+            const id = `group.${i + 1}`;
+            const nameSplit = name.split(' ');
+
+            return {
+                id,
+                name,
+                type: 'groups'
             };
         });
     }

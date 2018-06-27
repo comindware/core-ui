@@ -1,15 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/26/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import 'lib';
-
+// @flow
 /**
  * @name ListPanelView
  * @memberof module:core.dropdown.views
@@ -20,8 +9,5 @@ import 'lib';
  * */
 
 export default Marionette.CollectionView.extend({
-    initialize() {
-    },
-
     tagName: 'ul'
 });

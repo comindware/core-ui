@@ -1,6 +1,6 @@
 .layout__tab-layout {
+    position: relative;
     height: 100%;
-    width: 100%;
     display: flex;
     flex-flow: column nowrap;
 }
@@ -8,62 +8,22 @@
 /* header */
 
 .layout__tab-layout__header-region {
-    overflow: hidden;
+    flex: 0 0 auto;
 }
 
 .layout__tab-layout__header-view {
-    width: 100%;
-    height: 40px;
     display: flex;
-    justify-content: space-between;
     align-items: flex-end;
-    border-bottom: 1px solid #ced3d7;
     flex-wrap: nowrap;
-    margin-bottom: 10px;
+    padding-left: 0;
+    margin-bottom: 0;
 }
 
 .layout__tab-layout__header-view-item {
     display: inline-block;
-    flex: 1 1;
-    height: 40px;
-    line-height: 46px;
     text-align: center;
-    font-size: 13px;
-    color: #838c93;
     cursor: pointer;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.layout__tab-layout__header-view-item:hover {
-    color: #009bfe;
-}
-
-.layout__tab-layout__header-view-item_selected {
-    font-weight: 500;
-    color: #0575bd;
-    border-bottom: 2px solid #2b81c2;
-}
-
-.layout__tab-layout__header-view-item_error {
-    color: #BA0C08;
-    border-bottom-color: #BA0C08;
-}
-
-.layout__tab-layout__header-view-item_error:hover {
-    color: #BA0C08;
-    font-weight: 500;
-}
-
-.layout__tab-layout__header-view-item_disabled {
-    color: #d3d5d6 !important;
-    border-bottom-color: #d3d5d6 !important;
-}
-
-.layout__tab-layout__header-view-item-text {
-    display: inline-block;
-    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -71,14 +31,34 @@
 /* panel */
 
 .layout__tab-layout__panel-container {
-    flex: 1;
-    overflow: hidden;
+    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .layout__tab-layout__panel-region {
-    width: 100%;
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 0 5px;
+}
+
+.layout__tab-layout_move-button {
+    position: absolute;
+    cursor: pointer;
+    text-align: center;
+}
+
+.layout__tab-layout__stepper_container {
+    width: 100%;
+    display: flex;
+}
+
+.layout__tab-layout__stepper_view-item {
+    cursor: pointer;
+    flex: 1;
+}
+
+.layout__tab-layout__stepper_view-item .stepper-view_content {
+    text-align: center;
 }

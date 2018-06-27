@@ -1,17 +1,8 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/4/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
+/*eslint-disable*/
 
 import { objectPropertyTypes } from '../Meta';
-import { moment } from 'lib';
 
-export var stringComparator2Asc = function(a, b) {
+export const stringComparator2Asc = function(a, b) {
     if (a) {
         if (b) {
             return a.localeCompare(b);
@@ -23,7 +14,7 @@ export var stringComparator2Asc = function(a, b) {
     return 0;
 };
 
-export var stringComparator2Desc = function(a, b) {
+export const stringComparator2Desc = function(a, b) {
     if (a) {
         if (b) {
             return -a.localeCompare(b);
@@ -35,15 +26,15 @@ export var stringComparator2Desc = function(a, b) {
     return 0;
 };
 
-export var numberComparator2Asc = function(a, b) {
+export const numberComparator2Asc = function(a, b) {
     return a - b;
 };
 
-export var numberComparator2Desc = function(a, b) {
+export const numberComparator2Desc = function(a, b) {
     return b - a;
 };
 
-export var durationComparator2Asc = function(a, b) {
+export const durationComparator2Asc = function(a, b) {
     if (a) {
         a = moment.duration(a);
     }
@@ -53,7 +44,7 @@ export var durationComparator2Asc = function(a, b) {
     return a ? (b ? a - b : 1) : (b ? -1 : 0);
 };
 
-export var durationComparator2Desc = function(a, b) {
+export const durationComparator2Desc = function(a, b) {
     if (a) {
         a = moment.duration(a);
     }
@@ -63,12 +54,12 @@ export var durationComparator2Desc = function(a, b) {
     return b ? (a ? b - a : 1) : (a ? -1 : 0);
 };
 
-export var booleanComparator2Asc = function(a, b) {
+export const booleanComparator2Asc = function(a, b) {
     // true goes first
     return a ? (b ? 0 : -1) : (b ? 1 : 0);
 };
 
-export var dateComparator2Asc = function(a, b) {
+export const dateComparator2Asc = function(a, b) {
     if (a) {
         a = moment(a);
     }
@@ -78,7 +69,7 @@ export var dateComparator2Asc = function(a, b) {
     return a ? (b ? a - b : 1) : (b ? -1 : 0);
 };
 
-export var dateComparator2Desc = function(a, b) {
+export const dateComparator2Desc = function(a, b) {
     if (a) {
         a = moment(a);
     }
@@ -88,25 +79,26 @@ export var dateComparator2Desc = function(a, b) {
     return b ? (a ? b - a : 1) : (a ? -1 : 0);
 };
 
-export var booleanComparator2Desc = function(a, b) {
+export const booleanComparator2Desc = function(a, b) {
     return a ? (b ? 0 : 1) : (b ? -1 : 0);
 };
 
-export var referenceComparator2Asc = function(a, b) {
+export const referenceComparator2Asc = function(a, b) {
     const effectiveA = a ? a.name ? a.name : '' : '';
     const effectiveB = b ? b.name ? b.name : '' : '';
     return stringComparator2Asc(effectiveA, effectiveB);
 };
 
-export var referenceComparator2Desc = function(a, b) {
+export const referenceComparator2Desc = function(a, b) {
     const effectiveA = a ? a.name ? a.name : '' : '';
     const effectiveB = b ? b.name ? b.name : '' : '';
     return stringComparator2Desc(effectiveA, effectiveB);
 };
 
-export var getComparatorByDataType = function(dataType, sorting) {
-    let comparator,
-        isDesc = sorting === 'desc';
+export const getComparatorByDataType = function(dataType, sorting) {
+    let comparator;
+    const isDesc = sorting === 'desc';
+
     switch (dataType) {
         case objectPropertyTypes.STRING:
             comparator = isDesc ? stringComparator2Desc : stringComparator2Asc;
@@ -139,11 +131,11 @@ export var getComparatorByDataType = function(dataType, sorting) {
     return comparator;
 };
 
-export var stringComparator1 = function(a) {
+export const stringComparator1 = function(a) {
     return a;
 };
 
-export var emptyComparator = function() {
+export const emptyComparator = function() {
     return 0;
 };
 

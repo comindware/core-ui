@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/17/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { Handlebars } from 'lib';
+//@flow
 import template from '../templates/emptyGrid.hbs';
 import LocalizationService from '../../services/LocalizationService';
 
@@ -19,12 +9,12 @@ import LocalizationService from '../../services/LocalizationService';
  * @class EmptyGridView
  * @constructor
  * @description View для отображения списка без колонок
- * @extends Marionette.ItemView
+ * @extends Marionette.View
  * @param {Object} options Constructor options
  * @param {string} [options.text=Список пуст] отображаемый текст
  * */
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         this.model = new Backbone.Model({
             text: options.text || LocalizationService.get('CORE.GRID.EMPTYVIEW.EMPTY')

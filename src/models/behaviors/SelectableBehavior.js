@@ -1,14 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/19/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import 'lib';
+/*eslint-disable*/
 
 /*
 * This is a modified version of Backbone.Picky with extended list of features related to multiselect collections
@@ -79,20 +69,36 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     // Select a specified model, make sure the
     // model knows it's selected, and hold on to
     // the selected model.
-    select(model) {
+    select(model, ctrlPressed, shiftPressed, selectOnCursor) {
         if (this.selected[model.cid]) { return; }
 
         this.selected[model.cid] = model;
         model.select();
+        if (selectOnCursor === false) {
+            this.pointOff();
+            model.pointTo();
+            this.lastPointedModel = model;
+            this.cursorCid = model.cid;
+        }
         calculateSelectedLength(this);
     },
 
     // Select a specified model and update selection for the whole collection according to the key modifiers
-    selectSmart(model, ctrlPressed, shiftPressed) {
+    selectSmart(model, ctrlPressed, shiftPressed, selectOnCursor) {
         const collection = this;
-        if (!ctrlPressed && !shiftPressed) {
+        if (selectOnCursor === false) {
+            collection.pointOff();
+            model.pointTo();
+            collection.lastPointedModel = model;
+            collection.cursorCid = model.cid;
+        } else if (!ctrlPressed && !shiftPressed) {
             // with no hotkeys we select this item and deselect the others
-            collection.selectNone();
+            // collection.selectNone();
+            Object.values(collection.selected).forEach(selected => {
+                if (selected !== model) {
+                    selected.deselect();
+                }
+            });
             model.select();
             collection.lastSelectedModel = model.cid;
             collection.cursorCid = model.cid;
@@ -101,7 +107,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
             const lastSelectedModel = collection.lastSelectedModel;
             if (!lastSelectedModel) {
                 // we select this item alone if this is the first click
-                collection.selectNone();
+                Object.values(collection.selected).forEach(selected => {
+                    if (selected !== model) {
+                        selected.deselect();
+                    }
+                });
                 model.select();
                 collection.cursorCid = model.cid;
             } else {
@@ -119,7 +129,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
                 const startIndex = Math.min(lastSelectedIndex, thisIndex);
                 const endIndex = Math.max(lastSelectedIndex, thisIndex);
                 const models = collection.models;
-                collection.selectNone();
+                Object.values(collection.selected).forEach(selected => {
+                    if (selected !== model) {
+                        selected.deselect();
+                    }
+                });
                 for (let i = startIndex; i <= endIndex; i++) {
                     models[i].select();
                 }
@@ -153,6 +167,11 @@ _.extend(SelectableBehavior.MultiSelect.prototype, {
     selectNone() {
         this.each(model => { model.deselect(); });
         calculateSelectedLength(this);
+    },
+
+    pointOff() {
+        this.lastPointedModel && this.lastPointedModel.pointOff();
+        delete this.lastPointedModel;
     },
 
     // Toggle select all / none. If some are selected, it
@@ -204,6 +223,16 @@ _.extend(SelectableBehavior.Selectable.prototype, {
         }
     },
 
+    pointTo() {
+        this.pointed = true;
+        this.trigger('pointed', this);
+    },
+
+    pointOff() {
+        this.pointed = false;
+        this.trigger('unpointed', this);
+    },
+
     // Change selected to the opposite of what
     // it currently is
     toggleSelected() {
@@ -221,7 +250,7 @@ _.extend(SelectableBehavior.Selectable.prototype, {
 // Calculate the number of selected items in a collection
 // and update the collection with that length. Trigger events
 // from the collection based on the number of selected items.
-const calculateSelectedLength = function(collection) {
+const calculateSelectedLength = _.debounce((collection) => {
     collection.selectedLength = _.filter(collection.models, model => model.selected).length;
 
     const selectedLength = collection.selectedLength;
@@ -240,7 +269,7 @@ const calculateSelectedLength = function(collection) {
     if (selectedLength > 0 && selectedLength < length) {
         collection.trigger('select:some', collection);
     }
-};
+}, 10);
 
 export default SelectableBehavior;
 export var Selectable = SelectableBehavior.Selectable;

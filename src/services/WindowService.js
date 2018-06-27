@@ -1,29 +1,25 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 7/6/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { $ } from 'lib';
 import PopupStackView from './window/views/PopupStackView';
 
-const windowService = /** @lends module:core.services.WindowService */ {
+export default {
     initialize() {
-        this.__$popupStackRegionEl = $(document.createElement('div'));
-        this.__$popupStackRegionEl.appendTo(document.body);
+        Object.assign(this, Backbone.Events);
 
-        const regionManager = new Marionette.RegionManager();
-        regionManager.addRegion('popupStackRegion', { el: this.__$popupStackRegionEl });
+        const __popupStackRegionEl = document.createElement('div');
 
-        const popupStackRegion = regionManager.get('popupStackRegion');
+        document.body.appendChild(__popupStackRegionEl);
+
+        const rootView = window.app.getView();
+
+        rootView.addRegion('popupStackRegion', {
+            el: __popupStackRegionEl,
+            replaceElement: true
+        });
+
         this.__popupStackView = new PopupStackView();
-        popupStackRegion.show(this.__popupStackView);
 
-        this.__popupStackView.on('popup:close', ...args => this.trigger('popup:close', ...args));
+        rootView.showChildView('popupStackRegion', this.__popupStackView);
+
+        this.__popupStackView.on('popup:close', popupId => this.trigger('popup:close', popupId));
     },
 
     /**
@@ -45,7 +41,7 @@ const windowService = /** @lends module:core.services.WindowService */ {
      * @param {string} [popupId=null]
      * */
     closePopup(popupId = null) {
-        this.__popupStackView.closePopup(popupId);
+        this.__popupStackView && this.__popupStackView.closePopup(popupId);
     },
 
     /**
@@ -68,11 +64,12 @@ const windowService = /** @lends module:core.services.WindowService */ {
         return this.__popupStackView.get(popupId);
     },
 
+    isPopupOpen() {
+        const stack = this.__popupStackView.getStack();
+        return stack.length > 0;
+    },
+
     fadeBackground(fade) {
         this.__popupStackView.fadeBackground(fade);
     }
 };
-
-_.extend(windowService, Backbone.Events);
-
-export default windowService;

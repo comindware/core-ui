@@ -1,11 +1,4 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 11/15/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
+// @flow
 import GlobalEventService from '../../services/GlobalEventService';
 
 const THROTTLE_DELAY = 100;
@@ -48,7 +41,7 @@ export default Marionette.Behavior.extend({
 
     __checkElements() {
         setTimeout(() => {
-            if (this.view.isDestroyed) {
+            if (this.view.isDestroyed()) {
                 return;
             }
             this.__observedEntities.forEach(x => {

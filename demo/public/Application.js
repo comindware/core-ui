@@ -1,40 +1,64 @@
-define([
-	'comindware/core',
-    'localizationMapEn',
-    'localizationMapDe',
-    'localizationMapRu',
-    './ajaxMap.json',
-    'demoPage/dataProvider'
-], function(core, localizationMapEn, localizationMapDe, localizationMapRu, ajaxMap, dataProvider) {
-    'use strict';
+import localizationMapEn from 'localizationMapEn';
+import localizationMapDe from 'localizationMapDe';
+import localizationMapRu from 'localizationMapRu';
+import ajaxMap from './ajaxMap.json';
+import dataProvider from 'demoPage/dataProvider';
 
-    var Application = new Marionette.Application();
+import core from 'comindware/core';
 
-    Application.addRegions({
+const root = typeof global !== 'undefined' ? global : window;
+
+root.core = core;
+
+const rootView = Marionette.View.extend({
+    template: Handlebars.compile(`
+        <div class="js-navigation-drawer-region"></div>
+        <div class="wrapper">
+            <div class="js-header-region header-container"></div>
+		    <div class="js-content-region content-container"></div>
+		</div>
+    `),
+
+    className: 'app-region-container',
+
+    regions: {
         headerRegion: '.js-header-region',
-        contentRegion: '.js-content-region'
-    });
+        contentRegion: '.js-content-region',
+        navigationDrawerRegion: '.js-navigation-drawer-region'
+    }
+});
 
-    Application.addInitializer(function() {
-        let isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
+export default Marionette.Application.extend({
+    region: {
+        el: '.js-app-region',
+        replaceElement: true
+    },
 
-        let langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
-        let localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
+    onStart() {
+        const isProduction = process.env.NODE_ENV === 'production'; // jshint ignore:line
 
-        core.initialize({
+        const langCode = 'en'; // could be: window.navigator.language.substring(0, 2).toLowerCase();
+        const localizationMap = { en: localizationMapEn, de: localizationMapDe, ru: localizationMapRu }[langCode];
+
+        this.showView(new rootView());
+
+        core.Application.start({
             ajaxService: {
-                ajaxMap: ajaxMap
+                ajaxMap
             },
             localizationService: {
-                langCode: langCode,
-                localizationMap: localizationMap,
+                langCode,
+                localizationMap,
                 warningAsError: isProduction
             },
+            themeService: {
+                theme: 'new'
+            },
             userService: {
-                dataProvider: dataProvider
+                dataProvider
             }
         });
-    });
 
-    return Application;
+        Backbone.history.start();
+    }
 });

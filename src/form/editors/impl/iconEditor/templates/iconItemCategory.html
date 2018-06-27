@@ -1,0 +1,9 @@
+<div class="icons-panel-category__name">{{name}}</div>
+<div class="js-item-palette icons-panel-category__palette">
+    {{#each groupItems}}
+        <div data-id="{{this.id}}" class="icons-panel-i js-icon-item">
+            <i class="icons-panel-i__img fa default-fontawesome fa-{{this.id}}" aria-hidden="true"></i>
+            <div class="icons-panel-i__text" title="{{this.name}}">{{this.name}}</div>
+        </div>
+    {{/each}}
+</div>

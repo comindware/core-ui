@@ -1,65 +1,137 @@
-/**
- * Developer: Alexander Makarov
- * Date: 13.07.2015
- * Copyright: 2009-2015 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
+const requireCode = require.context('babel-loader!../cases', true);
+const requireText = require.context('raw-loader!../cases', true);
 
-/* global define, require, Handlebars, Backbone, Marionette, $, _, Localizer, Prism */
+import template from 'text-loader!../templates/content.html';
+import Prism from 'prism';
+import markdown from 'markdown';
 
-"use strict";
+export default Marionette.View.extend({
+    className: 'demo-content_wrapper',
 
-var requireCode = require.context("babel!../cases", true);
-var requireText = require.context("raw!../cases", true);
+    template: Handlebars.compile(template),
 
-define(['text!../templates/content.html', 'comindware/core', 'prism', 'markdown'],
-    function (template, core, Prism, markdown) {
-        return Marionette.LayoutView.extend({
-            initialize: function (options) {
-            },
+    templateContext() {
+        return {
+            description: markdown.toHTML(this.model.get('description') || '')
+        };
+    },
 
-            modelEvents: {
-                'change': 'render'
-            },
+    regions: {
+        caseRepresentationRegion: '.js-case-representation-region',
+        attributesConfigurationRegion: '.js-attributes-configuration-region',
+        toolbarRegion: '.js-toolbar-region'
+    },
 
-            template: Handlebars.compile(template),
+    ui: {
+        code: '.js-code'
+    },
 
-            templateHelpers: function () {
-                return {
-                    description: markdown.toHTML(this.model.get('description') || '')
-                };
-            },
+    onRender() {
+        Prism.highlightElement(this.ui.code[0]);
+        let path;
+        if (this.model.id) {
+            path = `${this.model.get('sectionId')}/${this.model.get('groupId')}/${this.model.id}`;
+        } else {
+            path = `${this.model.get('sectionId')}/${this.model.get('groupId')}`;
+        }
 
-            regions: {
-                caseRepresentationRegion: '.js-case-representation-region'
-            },
+        const code = requireCode(`./${path}`).default;
+        const text = requireText(`./${path}`);
 
-            ui: {
-                code: '.js-code'
-            },
+        this.ui.code.text(text);
+        this.model.set('sourceCode', text);
+        const representationView = code();
+        this.showChildView('caseRepresentationRegion', representationView);
 
-            onRender: function () {
-                Prism.highlightElement(this.ui.code[0]);
-            },
+        const attributesConfig = this.model.get('attributesConfig');
 
-            onShow: function() {
-                let path;
-                if (this.model.id) {
-                    path = this.model.get('sectionId') +'/' + this.model.get('groupId') + '/' + this.model.id;
-                } else {
-                    path = this.model.get('sectionId') +'/' + this.model.get('groupId');
+        if (attributesConfig) {
+            this.showChildView('attributesConfigurationRegion', this.__createAttributesConfigurationView(attributesConfig));
+        }
+    },
+
+    onAttach() {
+        const toolbar = new core.components.Toolbar({
+            allItemsCollection: new Backbone.Collection([
+                {
+                    iconClass: 'plus',
+                    id: 'component',
+                    name: 'Component',
+                    type: 'Checkbox',
+                    severity: 'Low',
+                    resultType: 'CustomClientAction',
+                    context: 'Void'
+                },
+                {
+                    iconType: 'Undefined',
+                    id: 'attributes',
+                    name: 'Attributes',
+                    severity: 'None',
+                    defaultTheme: true,
+                    type: 'Checkbox'
+                },
+                {
+                    iconType: 'Undefined',
+                    id: 'code',
+                    name: 'Code',
+                    severity: 'None',
+                    defaultTheme: true,
+                    type: 'Checkbox'
                 }
-
-                let code = requireCode('./' + path);
-                let text = requireText('./' + path);
-
-                this.model.set('sourceCode', text);
-                var representationView = code();
-                this.caseRepresentationRegion.show(representationView);
-            }
+            ])
         });
-    });
+
+        this.listenTo(toolbar, 'command:execute', model => this.__handleToolbarClick(model));
+
+        this.showChildView('toolbarRegion', toolbar);
+    },
+
+    __createAttributesConfigurationView(attributesConfig) {
+        const columns = [
+            {
+                key: 'attribute',
+                type: 'String',
+                title: 'Attribute',
+                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
+            },
+            {
+                key: 'values',
+                type: 'String',
+                title: 'Possible values',
+                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Asc, 'textCell'),
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.stringComparator2Desc, 'textCell')
+            },
+            {
+                key: 'default',
+                type: 'String',
+                title: 'Default value',
+                sortAsc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Asc, 'numberCell'),
+                sortDesc: core.utils.helpers.comparatorFor(core.utils.comparators.numberComparator2Desc, 'numberCell')
+            }
+        ];
+
+        const gridController = new core.list.controllers.GridController({
+            columns,
+            collection: new Backbone.Collection(attributesConfig)
+        });
+
+        return gridController.view;
+    },
+
+    __handleToolbarClick(model) {
+        switch (model.id) {
+            case 'component':
+                this.$('.js-case-representation-region').toggle();
+                break;
+            case 'attribute':
+                this.$('.js-attributes-configuration-region').toggle();
+                break;
+            case 'code':
+                this.$('.demo-content__code').toggle();
+                break;
+            default:
+                break;
+        }
+    }
+});

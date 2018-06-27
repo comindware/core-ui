@@ -1,11 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/2/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
 /*
 * Usage
 *
@@ -18,13 +10,8 @@
 *
 * */
 
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
-'use strict';
-
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
-const webpack = require('webpack');
 const karma = require('karma');
 
 const pathResolver = require('./pathResolver');
@@ -33,16 +20,19 @@ const pathResolver = require('./pathResolver');
 // Worker tasks
 // ###
 
-gulp.task('clean', require('./tasks/cleanTask'));
-
 gulp.task('localization', require('./tasks/localizationTask'));
 gulp.task('watch:localization', () => {
-    gulp.watch(pathResolver.localizationSource('*'), [ 'localization' ]);
+    gulp.watch(pathResolver.localizationSource('*'), ['localization']);
 });
 
 gulp.task('generateSprites', require('./tasks/generateSpritesTask'));
 gulp.task('watch:generateSprites', () => {
-    gulp.watch(pathResolver.resources('sprites/*'), [ 'generateSprites' ]);
+    gulp.watch(pathResolver.resources('sprites/*'), ['generateSprites']);
+});
+
+gulp.task('generateThemes', require('./tasks/generateThemesTask'));
+gulp.task('watch:generateThemes', () => {
+    gulp.watch(pathResolver.resources('styles/themes/**/*'), ['generateThemes']);
 });
 
 gulp.task('jsdoc', require('./tasks/jsdocTask'));
@@ -51,44 +41,75 @@ gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
 
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
 gulp.task('watch:build:core:dev', () => {
-    gulp.watch([ pathResolver.source('**/*'), pathResolver.resources('**/*') ], [ 'build:core:dev' ]);
+    gulp.watch([pathResolver.source('**/*'), pathResolver.resources('**/*')], ['build:core:dev', 'generateSprites']);
 });
 
 gulp.task('build:core:prod', require('./tasks/buildProdTask')(false));
-gulp.task('build:core:prod:min', require('./tasks/buildProdTask')(true));
-
+gulp.task('build:core:deploy', require('./tasks/buildProdTask')(true));
 // ###
 // Public tasks
 // ###
 
 gulp.task('deploy:pages', require('./tasks/deployPagesTask'));
 
-gulp.task('test', function (done) {
-    new karma.Server({
-        configFile: pathResolver.root('karma.conf.js'),
-        singleRun: true
-    }, done).start();
+gulp.task('test', done => {
+    new karma.Server(
+        {
+            configFile: pathResolver.root('karma.conf.js'),
+            singleRun: true
+        },
+        done
+    ).start();
 });
 
-gulp.task('test:coverage', function (done) {
-    new karma.Server({
-        configFile: pathResolver.root('karma.conf.js'),
-        singleRun: true,
-        coverage: true
-    }, done).start();
+gulp.task('test:watch', done => {
+    new karma.Server(
+        {
+            configFile: pathResolver.root('karma.conf.js'),
+            singleRun: false,
+            coverage: false
+        },
+        done
+    ).start();
 });
 
-gulp.task('test:watch', function (done) {
-    new karma.Server({
-        configFile: pathResolver.root('karma.conf.js')
-    }, done).start();
+gulp.task('test:coverage', done => {
+    new karma.Server(
+        {
+            configFile: pathResolver.root('karma.conf.js'),
+            singleRun: true,
+            coverage: true
+        },
+        done
+    ).start();
+});
+
+gulp.task('test:watch', done => {
+    new karma.Server(
+        {
+            configFile: pathResolver.root('karma.conf.js')
+        },
+        done
+    ).start();
 });
 
 gulp.task('start', callback =>
-    runSequence('localization', 'generateSprites', 'build:core:dev', ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites'], callback));
+    runSequence(
+        'localization',
+        'build:core:dev',
+        'generateSprites',
+        'generateThemes',
+        ['watch:localization', 'watch:build:core:dev', 'watch:generateSprites', 'watch:generateThemes', 'test:watch'],
+        callback
+    )
+);
 
-gulp.task('build', callback => runSequence('clean', 'localization', 'generateSprites', ['build:core:prod', 'build:core:prod:min', 'jsdoc'], callback));
+gulp.task('build', callback => runSequence(['build:core:prod', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', callback));
 
-gulp.task('deploy', callback => runSequence('build', 'test:coverage', 'prepareToPublish', callback));
+gulp.task('build:min', callback => runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', callback));
+
+gulp.task('deploy', callback =>
+    runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish', callback)
+);
 
 gulp.task('default', ['start']);

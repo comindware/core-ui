@@ -1,12 +1,3 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/4/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
 import { helpers } from 'utils';
 import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
 import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
@@ -34,7 +25,9 @@ export default Backbone.Collection.extend({
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
 
-    parse(response, options) {
+    parse(responseData, options) {
+        const response = responseData.data;
+
         this.totalCount = response.totalCount;
         return Backbone.Collection.prototype.parse.call(this, response.options, options);
     },

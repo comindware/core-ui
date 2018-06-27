@@ -1,16 +1,8 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 2/27/2017
- * Copyright: 2009-2017 Stepan Burguchev®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import 'lib';
+// @flow
 import { helpers } from 'utils';
 import LayoutBehavior from '../behaviors/LayoutBehavior';
 
-export default Marionette.ItemView.extend({
+export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'key');
     },
@@ -19,7 +11,8 @@ export default Marionette.ItemView.extend({
 
     attributes() {
         return {
-            'data-fields': this.options.key
+            'data-fields': this.options.key,
+            'field-for': this.options.uniqueFormId
         };
     },
 
@@ -29,7 +22,7 @@ export default Marionette.ItemView.extend({
         }
     },
 
-    onShow() {
+    onRender() {
         this.__updateState();
     },
 

@@ -1,19 +1,6 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 9/1/2015
- * Copyright: 2009-2016 Comindware
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-/* global module */
-
-'use strict';
-
-import 'lib';
 import { dateHelpers } from '../index';
 
-module.exports = function(duration) {
+export default function(duration) {
     if (duration === 0) {
         return '0';
     }
@@ -31,5 +18,5 @@ module.exports = function(duration) {
     if (o.minutes) {
         result += `${o.minutes + Localizer.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES')} `;
     }
-    return _.string.rtrim(result);
-};
+    return result.trimRight();
+}

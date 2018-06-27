@@ -1,41 +1,36 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/2/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-/* global define, require, Handlebars, Backbone, Marionette, $, _ */
-
+// @flow
 /*
 *
 * Marionette-based Backbone.Form editor. MUST NOT be used directly. Use EditorBase*View base views instead while implementing Marionette editors.
 *
 * */
 
-import 'lib';
 import formRepository from '../../formRepository';
+import { keyCode } from 'utils';
 
 const classes = {
     disabled: 'editor_disabled',
     readonly: 'editor_readonly',
+    hidden: 'editor_hidden',
     FOCUSED: 'editor_focused',
     EMPTY: 'editor_empty'
 };
 
 const onRender = function() {
     if (this.id) {
-        this.$el.attr('id', this.id);
+        this.el.setAttribute('id', this.id);
     }
     this.setPermissions(this.enabled, this.readonly);
+    this.setHidden(this.hidden);
     this.setValue(this.value);
     if (this.focusElement) {
         this.$el.on('focus', this.focusElement, this.onFocus);
         this.$el.on('blur', this.focusElement, this.onBlur);
+        this.$el.on('keyup', this.focusElement, this.onKeyup);
     } else if (this.focusElement !== null) {
         this.$el.on('focus', this.onFocus);
         this.$el.on('blur', this.onBlur);
+        this.$el.on('keyup', this.onKeyup);
     }
     this.__updateEmpty();
 };
@@ -83,7 +78,7 @@ const onChange = function() {
  *                                           Can be changed later on by calling <code>setReadonly()</code> method.
  * @param {Boolean} [options.model] A model which contains an attributes edited by this editor.
  *                                  Can only be used if the editor is created standalone (without a form).
-*                                   Must be used together with  <code>key</code> options.
+ *                                   Must be used together with  <code>key</code> options.
  * @param {Boolean} [options.key] The name of an attribute in <code>options.model</code> edited by this editor.
  *                                Can only be used if the editor is created standalone (without a form).
  *                                Must be used together with  <code>model</code> options.
@@ -94,26 +89,23 @@ const onChange = function() {
  * */
 
 export default {
-    create(viewClass) {
-        return /** @lends module:core.form.editors.base.BaseEditorView.prototype */ {
-            defaultValue: null,
+    create(viewClass: Marionette.View | Marionette.View | Marionette.CollectionView | Marionette.CompositeView) {
+        return {
+            classes: {
+                disabled: 'editor_disabled',
+                readonly: 'editor_readonly',
+                hidden: 'editor_hidden',
+                FOCUSED: 'editor_focused',
+                EMPTY: 'editor_empty'
+            },
 
-            /**
-             * Indicates whether the editor has focus.
-             * */
             hasFocus: false,
 
-            constructor(options) {
-                options = options || {};
-
-                _.bindAll(this, 'onFocus', 'onBlur');
+            constructor(options: Object = {}) {
+                _.bindAll(this, 'onFocus', 'onBlur', 'checkChange', 'onKeyup');
 
                 //Set initial value
                 if (options.model) {
-                    if (!options.key) {
-                        throw new Error("Missing option: 'key'");
-                    }
-
                     this.model = options.model;
                     this.value = this.model.get(options.key);
                 } else if (options.value !== undefined) {
@@ -121,13 +113,14 @@ export default {
                 }
 
                 if (this.value === undefined) {
-                    this.value = this.defaultValue;
+                    this.value = null;
                 }
 
-                //Store important data
-                _.extend(this, _.pick(options, 'key', 'form'));
+                this.key = options.key;
+                this.form = options.form;
+                this.field = options.field;
 
-                const schema = this.schema = options.schema || {};
+                const schema = (this.schema = options.schema || {});
 
                 this.validators = options.validators || schema.validators;
                 this.__validatedOnce = false;
@@ -143,10 +136,9 @@ export default {
 
                 schema.autocommit = schema.autocommit || options.autocommit;
 
-                this.enabled = schema.enabled = schema.enabled || options.enabled ||
-                              (schema.enabled === undefined && options.enabled === undefined);
-                this.readonly = schema.readonly = schema.readonly || options.readonly ||
-                               (schema.readonly !== undefined && options.readonly !== undefined);
+                this.enabled = schema.enabled = schema.enabled || options.enabled || (schema.enabled === undefined && options.enabled === undefined);
+                this.readonly = schema.readonly = schema.readonly || options.readonly || (schema.readonly !== undefined && options.readonly !== undefined);
+                this.hidden = schema.hidden = schema.hidden || options.hidden || (schema.hidden !== undefined && options.hidden !== undefined);
                 schema.forceCommit = options.forceCommit || schema.forceCommit;
 
                 viewClass.prototype.constructor.apply(this, arguments);
@@ -154,8 +146,6 @@ export default {
                     this.listenTo(this.model, `change:${this.key}`, this.updateValue);
                     this.listenTo(this.model, 'sync', this.updateValue);
                 }
-
-                this.classes = classes;
             },
 
             __updateEmpty() {
@@ -185,7 +175,7 @@ export default {
                 return this.$el;
             },
 
-            __triggerChange(...args) {
+            __triggerChange(...args: Array<any>) {
                 this.trigger('change', this, ...args);
             },
 
@@ -201,11 +191,11 @@ export default {
              * Sets new internal editor's value.
              * @param {*} value The new value.
              */
-            setValue(value) {
+            setValue(value: Number | String) {
                 this.value = value;
             },
 
-            setPermissions(enabled, readonly) {
+            setPermissions(enabled: Boolean, readonly: Boolean) {
                 this.__setEnabled(enabled);
                 this.__setReadonly(readonly);
             },
@@ -215,7 +205,7 @@ export default {
              * It's implied that the value doesn't make sense.
              * @param {Boolean} enabled New flag value.
              */
-            setEnabled(enabled) {
+            setEnabled(enabled: Boolean) {
                 const readonly = this.getReadonly();
                 this.setPermissions(enabled, readonly);
             },
@@ -224,12 +214,21 @@ export default {
              * Sets a new value of <code>readonly</code> flag. While readonly, the editor's value cannot be changed but can be copied by the user.
              * @param {Boolean} readonly New flag value.
              */
-            setReadonly(readonly) {
+            setReadonly(readonly: Boolean) {
                 const enabled = this.getEnabled();
                 this.setPermissions(enabled, readonly);
             },
 
-            __setEnabled(enabled) {
+            /**
+             * Sets a new value of <code>hidden</code> flag.
+             * @param {Boolean} hidden New flag value.
+             */
+            setHidden(hidden: Boolean) {
+                this.hidden = hidden;
+                this.$el.toggleClass(classes.hidden, hidden);
+            },
+
+            __setEnabled(enabled: Boolean) {
                 this.enabled = enabled;
                 this.trigger('enabled', enabled);
                 if (!this.enabled) {
@@ -247,7 +246,15 @@ export default {
                 return this.enabled;
             },
 
-            __setReadonly(readonly) {
+            /**
+             * Returns the value of `enabled` flag.
+             * @return {Boolean}
+             */
+            getHidden() {
+                return this.hidden;
+            },
+
+            __setReadonly(readonly: Boolean) {
                 this.readonly = readonly;
                 this.trigger('readonly', readonly);
                 if (this.readonly && this.getEnabled()) {
@@ -288,8 +295,7 @@ export default {
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails
              * and <code>options.forceCommit</code> is turned off. <code>undefined</code> otherwise.
              */
-            commit(options) {
-                options = options || {};
+            commit(options: Object = {}) {
                 let error = this.validate(true);
                 if (error && !this.schema.forceCommit) {
                     return error;
@@ -310,7 +316,6 @@ export default {
                 this.trigger(`${this.key}:committed`, this, this.model, this.getValue());
                 this.trigger('value:committed', this, this.model, this.key, this.getValue());
             },
-
             isEmptyValue() {
                 return !this.getValue();
             },
@@ -319,7 +324,7 @@ export default {
              * Check validity with built-in validator functions (initially passed into constructor options).
              * @return {Object|undefined} Returns an error object <code>{ type, message }</code> if validation fails. <code>undefined</code> otherwise.
              */
-            validate(internal) {
+            validate(internal: Boolean) {
                 let error = null;
                 const value = this.getValue();
                 const formValues = this.form ? this.form.getValue() : {};
@@ -332,7 +337,7 @@ export default {
 
                 if (validators) {
                     //Run through validators until an error is found
-                    _.every(validators, validator => {
+                    validators.every(validator => {
                         error = getValidator(validator)(value, formValues);
                         return !error;
                     });
@@ -341,17 +346,17 @@ export default {
                 return error;
             },
 
-            trigger(event) {
+            trigger(event: 'focus' | 'blur') {
                 if (event === 'focus') {
                     this.hasFocus = true;
                 } else if (event === 'blur') {
                     this.hasFocus = false;
                 }
 
-                return Marionette.ItemView.prototype.trigger.apply(this, arguments);
+                return Marionette.View.prototype.trigger.apply(this, arguments);
             },
 
-            getValidator(validator) {
+            getValidator(validator: string | Function) {
                 const validators = formRepository.validators;
 
                 //Convert regular expressions to validators
@@ -360,7 +365,7 @@ export default {
                 }
 
                 //Use a built-in validator if given a string
-                if (_.isString(validator)) {
+                if (typeof validator === 'string') {
                     if (!validators[validator]) {
                         throw new Error(`Validator "${validator}" not found`);
                     }
@@ -383,7 +388,21 @@ export default {
                 }
 
                 //Unknown validator type
-                throw new Error(`Invalid validator: ${validator}`);
+                throw new Error('Invalid validator');
+            },
+
+            checkChange() {
+                if (this.model) {
+                    if (this.value !== this.model.get(this.key)) {
+                        this.__triggerChange();
+                    }
+                }
+            },
+
+            onKeyup(event) {
+                if (event.keyCode === keyCode.ENTER) {
+                    this.checkChange();
+                }
             },
 
             onFocus() {
@@ -392,6 +411,7 @@ export default {
             },
 
             onBlur() {
+                this.checkChange();
                 this.$el.removeClass(classes.FOCUSED);
                 this.trigger('blur', this);
             }

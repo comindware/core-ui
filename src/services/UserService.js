@@ -1,17 +1,6 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 6/10/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
 import helpers from 'utils/helpers';
 
 let dataProvider;
-
 
 /**
  * @name UserService
@@ -33,5 +22,9 @@ export default {
 
     listUsers() {
         return dataProvider.listUsers();
+    },
+
+    listGroups() {
+        return dataProvider.listGroups();
     }
 };

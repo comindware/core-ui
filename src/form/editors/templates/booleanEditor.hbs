@@ -1,7 +1,10 @@
-<span class="checkbox js-toggle-button">
-    <span class="svg-icons-wrp svg-icons-wrp_checked">
-        <svg class="svg-icons svg-icons_checked"><use xlink:href="#icon-checked" /> </svg>
-    </span>
+<span class="js-toggle-button checkbox">
+    <svg class="svg-icons svg-icons_checked"><use xlink:href="#icon-checked" /> </svg>
 </span>
-<span class="checkbox-text js-display-text">{{#if displayHtml}}{{{displayHtml}}}{{else}}{{displayText}}{{/if}}</span>
-
+{{#if displayText}}
+<span class="checkbox-text js-display-text">{{displayText}}</span>
+{{else}}
+    {{#if displayHtml}}
+        <span class="checkbox-text js-display-text">{{{displayHtml}}}</span>
+    {{/if}}
+{{/if}}

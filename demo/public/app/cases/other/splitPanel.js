@@ -1,36 +1,38 @@
-define([ 'comindware/core', 'demoPage/views/CanvasView' ], function (core, CanvasView) {
-    'use strict';
 
-    return function () {
-        // Important layout note: SplitPanelView expect that region element has computed size != 0.
 
-        var Panel1View = Marionette.ItemView.extend({
-            template: Handlebars.compile('Panel 1'),
-            className: 'demo-split-panel demo-split-panel_left'
-        });
+import CanvasView from 'demoPage/views/CanvasView';
 
-        var Panel2View = Marionette.ItemView.extend({
-            template: Handlebars.compile('Panel 2'),
-            className: 'demo-split-panel demo-split-panel_right'
-        });
+export default function() {
+    // Important layout note: SplitPanelView expect that region element has computed size != 0.
 
-        var MySplitPanel = core.views.SplitPanelView.extend({
-            options: {
-                panel1Min: 100,
-                panel2Min: 100
-            },
+    const Panel1View = Marionette.View.extend({
+        template: Handlebars.compile('Panel 1'),
+        className: 'demo-split-panel demo-split-panel_left'
+    });
 
-            onShow: function () {
-                this.panel1Region.show(new Panel1View());
-                this.panel2Region.show(new Panel2View());
-            }
-        });
+    const Panel2View = Marionette.View.extend({
+        template: Handlebars.compile('Panel 2'),
+        className: 'demo-split-panel demo-split-panel_right'
+    });
 
-        return new CanvasView({
-            view: new MySplitPanel(),
-            canvas: {
-                height: '250px'
-            }
-        });
-    };
-});
+    const MySplitPanel = core.views.SplitPanelView.extend({
+        options: {
+            panel1Min: 100,
+            panel2Min: 100
+        },
+
+        onRender() {
+            this.showChildView('panel1Region', new Panel1View());
+            this.showChildView('panel2Region', new Panel2View());
+        }
+    });
+
+    return new CanvasView({
+        view: new MySplitPanel(),
+
+        canvas: {
+            height: '250px',
+            width: '400px'
+        }
+    });
+}

@@ -1,59 +1,68 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 8/4/2015
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-'use strict';
-
-import { moment, numeral } from 'lib';
-import { helpers } from 'utils';
-import numeralRu from 'numeral/languages/ru';
-import numeralEn from 'numeral/languages/en-gb';
-import numeralDe from 'numeral/languages/de';
-
-numeral.language('en', numeralEn);
-numeral.language('de', numeralDe);
-numeral.language('ru', numeralRu);
-
+//@flow
 const global = window;
 const defaultLangCode = 'en';
 
-global.Localizer = {
-    initialize(options) {
-        helpers.ensureOption(options, 'langCode');
-        helpers.ensureOption(options, 'localizationMap');
-        helpers.ensureOption(options, 'warningAsError');
+type locOpt = {
+    langCode?: string,
+    timeZone?: string,
+    localizationMap?: Object
+};
 
+type LocalizationService = {
+    initialize: locOpt => void,
+
+    langCode?: string,
+
+    timeZone?: string,
+
+    localizationMap?: Object,
+
+    get(locId: string): string,
+
+    tryGet(locId: string): ?string,
+
+    resolveLocalizedText(localizedText: Object): string
+};
+
+const service: LocalizationService = {
+    initialize(options: locOpt = {}) {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
-        this.warningAsError = options.warningAsError;
 
-        moment.tz.setDefault(this.timeZone);
+        //TODO remove this then server start to return full date
+        const offset = moment.tz.zone(this.timeZone).utcOffset(new Date());
+        const unpacked = {
+            name: 'Custom/CMW',
+            abbrs: ['CMWC', 'CMWC'],
+            offsets: [offset, offset],
+            untils: [-1988164200000, null]
+        };
+        moment.tz.add(moment.tz.pack(unpacked));
+
+        moment.tz.setDefault('Custom/CMW');
+        //moment.tz.setDefault(this.timeZone); //this line is perfect, use it
+        //End of hack
+
         moment.locale(this.langCode);
-        numeral.language(this.langCode);
+        numeral.locale(this.langCode);
     },
 
-    get(locId) {
+    get(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
         const text = this.localizationMap[locId];
+
         if (text === undefined) {
-            if (this.warningAsError) {
-                throw new Error(`Failed to find localization constant ${locId}`);
-            } else {
-                console.error(`Missing localization constant: ${locId}`);
-            }
+            console.error(`Missing localization constant: ${locId}`);
+
             return `<missing:${locId}>`;
         }
         return text;
     },
 
-    tryGet(locId) {
+    tryGet(locId: string) {
         if (!locId) {
             throw new Error(`Bad localization id: (locId = ${locId})`);
         }
@@ -64,7 +73,7 @@ global.Localizer = {
         return text;
     },
 
-    resolveLocalizedText(localizedText) {
+    resolveLocalizedText(localizedText: Object) {
         if (!localizedText) {
             return '';
         }
@@ -73,4 +82,4 @@ global.Localizer = {
     }
 };
 
-export default global.Localizer;
+export default (global.Localizer = service);

@@ -1,41 +1,48 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/3/2014
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- * Published under the MIT license
- */
-
-import { Handlebars } from 'lib';
 import template from '../templates/referenceListItem.hbs';
 import list from 'list';
 
-export default Marionette.ItemView.extend({
-    initialize(options) {
-        this.reqres = options.reqres;
+const classes = {
+    SELECTED: 'editor_checked'
+};
+
+export default Marionette.View.extend({
+    className() {
+        return `dd-list__i${this.options.showCheckboxes ? ' dd-list__i_checkbox' : ''}`;
     },
 
-    behaviors: {
-        ListItemViewBehavior: {
-            behaviorClass: list.views.behaviors.ListItemViewBehavior
-        }
-    },
-
-    className: 'dd-list__i',
+    behaviors: [{
+        behaviorClass: list.views.behaviors.ListItemViewBehavior,
+        multiSelect: true,
+        selectOnCursor: false
+    }],
 
     template: Handlebars.compile(template),
 
-    templateHelpers() {
+    templateContext() {
         return {
-            text: this.options.getDisplayText(this.model.toJSON())
+            text: this.options.getDisplayText(this.model.toJSON()),
+            showCheckboxes: this.options.showCheckboxes
         };
     },
 
-    events: {
-        click: '__select'
+    onRender() {
+        if (this.model.selected) {
+            this.__markSelected();
+        } else {
+            this.__markDeselected();
+        }
     },
 
-    __select() {
-        this.reqres.request('value:set', this.model);
+    modelEvents: {
+        selected: '__markSelected',
+        deselected: '__markDeselected'
+    },
+
+    __markSelected() {
+        this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').addClass(classes.SELECTED);
+    },
+
+    __markDeselected() {
+        this.$el.find('.js-checkbox') && this.$el.find('.js-checkbox').removeClass(classes.SELECTED);
     }
 });

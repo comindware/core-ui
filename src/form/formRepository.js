@@ -1,15 +1,18 @@
-/**
- * Developer: Stepan Burguchev
- * Date: 12/12/2016
- * Copyright: 2009-2016 Comindware®
- *       All Rights Reserved
- *
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Comindware
- *       The copyright notice above does not evidence any
- *       actual or intended publication of such source code.
- */
+import RequiredValidator from './validators/requiredValidator';
+import LengthValidator from './validators/lengthValidator';
+import PasswordValidator from './validators/passwordValidator';
+import PhoneValidator from './validators/phoneValidator';
+import SystemNameValidator from './validators/systemNameValidator';
+import EmailValidator from './validators/emailValidator';
 
 export default {
     editors: {},
-    validators: {}
+    validators: {
+        required: RequiredValidator,
+        length: LengthValidator,
+        password: PasswordValidator,
+        phone: PhoneValidator,
+        systemName: SystemNameValidator,
+        email: EmailValidator
+    }
 };
