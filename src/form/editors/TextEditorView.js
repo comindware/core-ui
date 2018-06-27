@@ -182,7 +182,7 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
 
     __onMouseleave() {
         if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
-            this.el.lastElementChild.remove();
+            this.el.removeChild(this.el.lastElementChild);
         }
     }
 }));

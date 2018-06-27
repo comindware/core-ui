@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
@@ -50,30 +50,23 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                          test: /\.css$/,
-                          loader: ExtractTextPlugin.extract({
-                              fallback: 'style-loader',
-                              use: [
-                                  {
-                                      loader: 'css-loader',
-                                      options: {
-                                          sourceMap: true
-                                      }
-                                  },
-                                  {
-                                      loader: 'postcss-loader',
-                                      options: {
-                                          sourceMap: true,
-                                          plugins: () => [
-                                              autoprefixer({
-                                                  browsers: ['last 2 versions']
-                                              }),
-                                              cssnano()
-                                          ]
-                                      }
-                                  }
-                              ]
-                          })
+                        test: /\.css$/,
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            'css-loader',
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: true,
+                                    plugins: () => {
+                                        autoprefixer({
+                                            browsers: ['last 2 versions']
+                                        })
+                                        cssnano();
+                                    }
+                                }
+                            }
+                        ]
                       }
                     : {
                           test: /\.css$/,
@@ -238,7 +231,9 @@ module.exports = () => {
                     }
                 ]
             }),
-            new ExtractTextPlugin('[name].css'),
+            new MiniCssExtractPlugin({
+                filename: '[name].css'
+            }),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new GenerateSW({
                 swDest: pathResolver.client('sw.js'),

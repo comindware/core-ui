@@ -120,7 +120,6 @@ body {
   @apply --input-theme;
   padding: var(--input-padding);
   height: var(--input-height);
-  line-height: var(--input-line-height);
 }
 
 .tr-search__input {
@@ -755,7 +754,6 @@ svg.svg-grid-icons {
   @apply --input-theme;
   padding: var(--input-padding);
   height: var(--input-height);
-  line-height: var(--input-line-height);
 }
 
 /* color picker */
@@ -840,7 +838,6 @@ svg.svg-grid-icons {
   font: var(--font);
   padding: var(--input-padding);
   height: var(--input-height);
-  line-height: var(--input-line-height);
 }
 .sp-color, .sp-hue, .sp-clear {
   border: var(--border);

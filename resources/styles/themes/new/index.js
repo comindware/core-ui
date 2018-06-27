@@ -61,9 +61,8 @@ const variables = {
     'editor-empty-text-color': 'var(--text-color)',
 
     // input
-    'input-padding': '0 20px 0 var(--form-input-padding)',
+    'input-padding': '4px 20px 4px var(--form-input-padding)',
     'input-height': 'auto',
-    'input-line-height': '1.95',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
     'input-search-padding': '0 24px 0 var(--form-input-padding)',
@@ -216,7 +215,6 @@ module.exports.apply = {
     'bubbles-item-theme': {
         color: variables['text-color'],
         margin: '0 5px 0 0',
-        padding: '4px 5px 4px 0',
         transition: 'padding-right .3s'
     },
     'input-theme': {
@@ -232,7 +230,8 @@ module.exports.apply = {
     },
     'textarea-theme': {
         border: variables.border,
-        'border-radius': '4px'
+        'border-radius': '4px',
+        'line-height': '1.5',
     },
     'custom-cotrol-disabled-theme': {
         cursor: 'not-allowed'

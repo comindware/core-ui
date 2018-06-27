@@ -40,6 +40,10 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     focusElement: null,
 
+    ui: {
+        clearButton: '.js-clear-button'
+    },
+
     attributes: {
         tabindex: 0
     },
@@ -51,6 +55,10 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
     template: Handlebars.compile(template),
 
     className: 'editor context_select',
+
+    events: {
+        'click @ui.clearButton': '__clear'
+    },
 
     onRender() {
         if (!this.enabled) {
@@ -97,10 +105,6 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
         }
 
         this.render();
-    },
-
-    isEmptyValue() {
-        return false;
     },
 
     __value(value, triggerChange, newValue) {
@@ -204,5 +208,10 @@ export default (formRepository.editors.ContextSelect = BaseLayoutEditorView.exte
 
     __updateDisplayValue() {
         this.viewModel.get('button').set('value', this.__getButtonText(this.value));
+    },
+
+    __clear() {
+        this.__value(null, true);
+        return false;
     }
 }));

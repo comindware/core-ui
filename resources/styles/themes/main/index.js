@@ -53,7 +53,6 @@ const variables = {
     // input
     'input-padding': '0 20px 0 0',
     'input-height': 'inherit',
-    'input-line-height': 'inherit',
     'input-hover-color': 'var(--grey-600)',
     'input-search-padding': '0 0 0 25px',
     'input-search-bg':
