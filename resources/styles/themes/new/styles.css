@@ -103,9 +103,6 @@
   content: '--';
   padding: 3px 5px 4px 0;
 }
-.bubbles__form {
-  padding: 3px 0;
-}
 .dropdown.open.dropdown__wrp_down .bubbles {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;

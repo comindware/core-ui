@@ -65,7 +65,7 @@ const variables = {
     'input-height': 'auto',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
-    'input-search-padding': '0 24px 0 var(--form-input-padding)',
+    'input-search-padding': '4px 24px 4px var(--form-input-padding)',
     'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
@@ -135,6 +135,7 @@ const variables = {
 
     'columns-select-border': '0',
 
+    'dropdown-padding': '0 20px 4px var(--form-input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '12px',
     'dropdown-group-color': 'var(--black)',
@@ -214,7 +215,7 @@ module.exports.apply = {
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
-        margin: '0 5px 0 0',
+        padding: '4px 5px 0px 0',
         transition: 'padding-right .3s'
     },
     'input-theme': {

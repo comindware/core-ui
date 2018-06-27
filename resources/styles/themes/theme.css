@@ -484,7 +484,7 @@ svg.svg-grid-icons {
 
 .bubbles {
   @apply --input-theme;
-  padding: var(--input-padding);
+  padding: var(--dropdown-padding);
 }
 .bubbles__caret {
   @apply --dropdown-caret-theme;
