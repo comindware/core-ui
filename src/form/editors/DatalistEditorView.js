@@ -57,7 +57,7 @@ const defaultOptions = {
  * */
 export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     initialize(options = {}) {
-        _.defaults(this.options, options.schema || options);
+        _.defaults(this.options, options.schema || options, defaultOptions);
 
         let collection = [];
         if (options.collection) {
@@ -93,7 +93,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     className() {
-        _.defaults(this.options, defaultOptions);
+        _.defaults(this.options, this.options.schema || this.options, defaultOptions);
+
         const classList = [];
         const maxQuantity = this.options.maxQuantitySelected;
 

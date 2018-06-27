@@ -6,6 +6,8 @@ const methodName = {
     WebApi: 'WebApi'
 };
 
+let beforeSent = null;
+
 export default (window.Ajax = new (Marionette.Object.extend({
     load(options) {
         helpers.ensureOption(options, 'ajaxMap');
@@ -39,11 +41,16 @@ export default (window.Ajax = new (Marionette.Object.extend({
             eval(`controller[actionInfo.methodName] = ${actionFn};`);
             /* eslint-enable */
         });
+
+        if (options.beforeSent) {
+            beforeSent = options.beforeSent;
+        }
     },
 
-    getResponse(type, url, data, options) {
+    async getResponse(type, url, data, options) {
         helpers.assertArgumentNotFalsy(type, 'type');
         helpers.assertArgumentNotFalsy(url, 'url');
+
         const config = Object.assign(
             {
                 type,
@@ -56,7 +63,15 @@ export default (window.Ajax = new (Marionette.Object.extend({
             options || {}
         );
 
-        return PromiseService.registerPromise($.ajax(config));
+        if (beforeSent) {
+            const canProceed = await beforeSent();
+
+            if (canProceed) {
+                return PromiseService.registerPromise($.ajax(config));
+            }
+        } else {
+            return PromiseService.registerPromise($.ajax(config));
+        }
     },
 
     sendFormData(url, formData) {
