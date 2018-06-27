@@ -80,7 +80,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             });
 
         this.value = this.__adjustValue(this.value);
-
+        this.__updateWithDelay = _.debounce(this.__updateFilter, this.options.textFilterDelay);
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
     },
@@ -130,9 +130,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 })
             },
             panel: new Backbone.Model({
-                value: this.value,
-                collection: this.panelCollection,
-                totalCount: this.controller.totalCount || 0
+                collection: this.panelCollection
             })
         };
 
@@ -145,9 +143,8 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             'button:click': this.__onButtonClick.bind(this),
             'value:select': this.__onValueSelect.bind(this),
             'value:edit': this.__onValueEdit.bind(this),
-            'filter:text': this.__onFilterText.bind(this),
             'add:new:item': this.__onAddNewItem.bind(this),
-            'view:ready': this.__triggerReady.bind(this)
+            'try:value:select': this.__proxyValueSelect.bind(this)
         });
 
         this.dropdownView = dropdown.factory.createDropdown({
@@ -218,6 +215,25 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     blur(): void {
         this.dropdownView.close();
         this.__blurButton();
+    },
+
+    updateFilter(value, immediate) {
+        this.searchText = (value || '').trim();
+
+        if (immediate) {
+            return this.__updateFilter();
+        }
+        this.isFilterDeayed = true;
+        return this.__updateWithDelay();
+    },
+
+    __updateFilter() {
+        if (this.activeText === this.searchText) {
+            return;
+        }
+        this.activeText = this.searchText;
+        this.isFilterDeayed = false;
+        return this.__onFilterText();
     },
 
     __adjustValue(value: DataValue): any {
@@ -316,21 +332,22 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onInputSearch(value, immediate: boolean): void {
-        this.__onButtonClick();
-        this.dropdownView.panelView.updateFilter(value, immediate);
+        this.updateFilter(value, immediate);
     },
 
-    __onFilterText(options) {
-        const text = (options && options.text) || null;
-        this.text = text;
-        this.dropdownView.panelView.setLoading(true);
-        return this.controller.fetch(options).then(data => {
-            if (this.text === text) {
-                this.panelCollection.reset(data.collection);
-                this.viewModel.panel.set('totalCount', data.totalCount);
-                this.__tryPointFirstRow();
-                this.dropdownView.panelView.setLoading(false);
+    __onFilterText() {
+        this.dropdownView.buttonView.setLoading(true);
+        return this.controller.fetch({text: this.searchText}).then(data => {
+            this.panelCollection.reset(data.collection);
+            if (this.panelCollection.length > 0 && this.value) {
+                this.value.forEach(model => {
+                    if (this.panelCollection.has(model.id)) {
+                        this.panelCollection.get(model.id).select({ isSilent: true });
+                    }
+                });
             }
+            this.dropdownView.buttonView.setLoading(false);
+            this.__triggerReady();
         });
     },
 
@@ -369,7 +386,16 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __onButtonClick(): void {
         if (this.getEnabled() && !this.getReadonly()) {
-            this.dropdownView.open();
+            const promise = this.updateFilter(null, true);
+            if (promise) {
+                promise
+                    .then(() => this.dropdownView.open())
+                    .catch(e => {
+                        console.log(e.message);
+                    });
+            } else {
+                this.dropdownView.open();
+            }
         }
     },
 
@@ -470,5 +496,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onDropdownClose() {
         this.onBlur();
         this.panelCollection.pointOff();
+    },
+
+    __proxyValueSelect() {
+        if (this.isFilterDeayed) {
+            this.updateFilter(this.searchText, true);
+        } else {
+            this.__onValueSelect();
+        }
     }
 }));

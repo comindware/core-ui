@@ -94,6 +94,14 @@
 .selected .dd-list__i {
   font-weight: 600;
 }
+.bubbles .bubbles__caret,
+.bubbles .spinner {
+  @apply --absolute-center-theme;
+}
+.bubbles .spinner {
+  line-height: 1;
+  right: 25px;
+}
 .bubbles .icon-remove {
   position: relative;
   right: auto;
@@ -103,9 +111,16 @@
   content: '--';
   padding: 3px 5px 4px 0;
 }
+.bubbles__form {
+  padding-top: 4px;
+}
 .dropdown.open.dropdown__wrp_down .bubbles {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+.dropdown.open.dropdown__wrp_up .bubbles {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 .dropdown__wrp {
   padding: 1px 0;
@@ -115,6 +130,10 @@
 .dropdown__wrp.dropdown__wrp_down {
   margin-top: -1px;
   border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+.dropdown__wrp.dropdown__wrp_up {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  margin-top: 1px;
 }
 /* icons */
 
