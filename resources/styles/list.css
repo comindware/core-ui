@@ -62,21 +62,19 @@
 .grid-header-wrp {
     display: flex;
     flex: 0 0 auto;
-    overflow-y: scroll;
 }
 
 .grid-content-view {
     position: relative;
     flex: 1 1 auto;
     display: flex;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .grid-selection-panel-region {
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
-    overflow-x: scroll;
 }
 
 .grid-selection-panel {
