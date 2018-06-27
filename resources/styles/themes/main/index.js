@@ -125,6 +125,7 @@ const variables = {
     'columns-select-border': 'var(--border)',
     'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
 
+    'dropdown-padding': 'var(--input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '11px',
     'dropdown-group-color': '#000',
