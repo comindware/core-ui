@@ -228,7 +228,13 @@ export default Marionette.View.extend({
     __updateTabRegion(model: Backbone.Model): void {
         const selected = model.get('selected');
 
-        model.get('regionEl').classList.toggle(classes.HIDDEN, !selected);
+        if(selected) {
+            model.get('regionEl').classList.remove(classes.HIDDEN);
+        } else {
+            model.get('regionEl').classList.add(classes.HIDDEN);
+        }
+
+        // model.get('regionEl').classList.toggle(classes.HIDDEN, !selected); //second argument don't work in IE 11;
 
         // todo: find bettter way to initiate child resize
         Core.services.GlobalEventService.trigger('window:resize');
