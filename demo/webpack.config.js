@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
@@ -50,30 +50,23 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                          test: /\.css$/,
-                          loader: ExtractTextPlugin.extract({
-                              fallback: 'style-loader',
-                              use: [
-                                  {
-                                      loader: 'css-loader',
-                                      options: {
-                                          sourceMap: true
-                                      }
-                                  },
-                                  {
-                                      loader: 'postcss-loader',
-                                      options: {
-                                          sourceMap: true,
-                                          plugins: () => [
-                                              autoprefixer({
-                                                  browsers: ['last 2 versions']
-                                              }),
-                                              cssnano()
-                                          ]
-                                      }
-                                  }
-                              ]
-                          })
+                        test: /\.css$/,
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            'css-loader',
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: true,
+                                    plugins: () => {
+                                        autoprefixer({
+                                            browsers: ['last 2 versions']
+                                        })
+                                        cssnano();
+                                    }
+                                }
+                            }
+                        ]
                       }
                     : {
                           test: /\.css$/,
@@ -194,9 +187,53 @@ module.exports = () => {
                 background_color: '#ffffff',
                 display: 'standalone',
                 theme_color: '#0575bd',
-                orientation: 'landscape-secondary'
+                orientation: 'landscape-secondary',
+                icons: [
+                    {
+                        src: 'public/styles/icons/icon-72x72.png',
+                        sizes: '72x72',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-96x96.png',
+                        sizes: '96x96',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-128x128.png',
+                        sizes: '128x128',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-144x144.png',
+                        sizes: '144x144',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-152x152.png',
+                        sizes: '152x152',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-192x192.png',
+                        sizes: '192x192',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-384x384.png',
+                        sizes: '384x384',
+                        type: 'image/png'
+                    },
+                    {
+                        src: 'public/styles/icons/icon-512x512.png',
+                        sizes: '512x512',
+                        type: 'image/png'
+                    }
+                ]
             }),
-            new ExtractTextPlugin('[name].css'),
+            new MiniCssExtractPlugin({
+                filename: '[name].css'
+            }),
             new webpack.optimize.ModuleConcatenationPlugin(),
             new GenerateSW({
                 swDest: pathResolver.client('sw.js'),

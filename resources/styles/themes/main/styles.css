@@ -5,10 +5,15 @@
   font-size: var(--editor-font-size);
   color: var(--editor-text-color);
 }
-.editor_bubble{
+.editor_bubble,
+.editor_document {
+  line-height: inherit;
   height: auto;
 }
-.editor_code{
+.editor_document .btn {
+  margin-right: 5px;
+}
+.editor_code {
   height: inherit;
 }
 .editor_code:after{
@@ -186,6 +191,12 @@ svg.svg-grid-icons {
   margin-top: 2px;
 }
 
+.cell-focused .input,
+.cell .input:hover,
+.cell .editor_date-time:hover{
+    padding-right: 18px;
+}
+
 /* .cell .svg-icons.svg-icons_remove-bubble {
   margin-top: 1px;
 } */
@@ -214,9 +225,21 @@ svg.svg-grid-icons {
 .time-view{
   height: 20px;
 }
+.editor_date-time {
+  padding-right: 16px;
+}
+
+.editor_date-time .input{
+  padding-right: 0;
+}
+
+
+/* /Date Time/ */
 
 /* Button */
-
+.btn-icon {
+  font-size: 14px;
+}
 .btn:hover .btn__text {
   color:#000;
 }
@@ -302,6 +325,9 @@ svg.svg-grid-icons {
 .required .form-label {
   padding-left: 10px;
 }
+.disabled .form-label {
+  color: var(--grey-800);
+}
 
 .required .form-label::before, .form-label_required:before, .cell.required::before {
   content: '*';
@@ -322,12 +348,6 @@ svg.svg-grid-icons {
 
 .cell.error.required::before {
   display:none;
-}
-
-.btn_attach {
-  height: 20px;
-  padding: 0 5px;
-  margin-right: 3px;
 }
 
 .group-toggle svg{

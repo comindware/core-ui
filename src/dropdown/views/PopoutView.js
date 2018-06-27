@@ -18,7 +18,7 @@ const classes = {
     FLOW_RIGHT: 'popout__flow-right',
     CUSTOM_ANCHOR_BUTTON: 'popout__action-btn',
     DEFAULT_ANCHOR_BUTTON: 'popout__action',
-    DEFAULT_ANCHOR: 'anchor'
+    DEFAULT_ANCHOR: 'fa fa-angle-down anchor'
 };
 
 const popoutFlow = {
@@ -165,7 +165,7 @@ export default Marionette.View.extend({
         this.showChildView('buttonRegion', this.button);
 
         if (!this.options.customAnchor) {
-            this.getRegion('buttonRegion').$el.append(`<span class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></span>`);
+            this.getRegion('buttonRegion').$el.append(`<i class="js-default-anchor ${classes.DEFAULT_ANCHOR}"></i>`);
         }
 
         this.ui.button.toggleClass(classes.CUSTOM_ANCHOR_BUTTON, this.options.customAnchor);
@@ -205,6 +205,7 @@ export default Marionette.View.extend({
             height: window.innerHeight,
             width: window.innerWidth
         };
+
         const anchorRect = $anchorEl.offset();
         anchorRect.height = $anchorEl.outerHeight();
         anchorRect.width = $anchorEl.outerWidth();
@@ -222,6 +223,7 @@ export default Marionette.View.extend({
         switch (this.options.popoutFlow) {
             case popoutFlow.RIGHT: {
                 const leftCenter = anchorRect.left + anchorRect.width / 2;
+
                 if (leftCenter < WINDOW_BORDER_OFFSET) {
                     css.left = WINDOW_BORDER_OFFSET;
                 } else if (leftCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
@@ -233,6 +235,7 @@ export default Marionette.View.extend({
             }
             case popoutFlow.LEFT: {
                 const anchorRightCenter = viewport.width - (anchorRect.left + anchorRect.width / 2);
+
                 if (anchorRightCenter < WINDOW_BORDER_OFFSET) {
                     css.right = WINDOW_BORDER_OFFSET;
                 } else if (anchorRightCenter + panelRect.width > viewport.width - WINDOW_BORDER_OFFSET) {
@@ -312,8 +315,8 @@ export default Marionette.View.extend({
             top: number,
             bottom?: number
         } = {
-                top
-            };
+            top
+        };
         if (this.options.height === height.BOTTOM) {
             css.bottom = WINDOW_BORDER_OFFSET;
         }
@@ -340,8 +343,8 @@ export default Marionette.View.extend({
             top?: number,
             bottom?: number
         } = {
-                top: 0
-            };
+            top: 0
+        };
 
         // calculate vertical position
         let direction = this.options.direction;
@@ -416,10 +419,7 @@ export default Marionette.View.extend({
         const panelRect = $panelEl.offset();
         panelRect.width = $panelEl.outerWidth();
 
-        const css = {
-            left: 0,
-            right: 0
-        };
+        const css = {};
 
         let displacement = this.options.displacement;
         switch (displacement) {
@@ -561,7 +561,7 @@ export default Marionette.View.extend({
      * @param {...*} arguments Arguments transferred into the <code>'close'</code> event.
      * */
     close(...args) {
-        if (!this.isOpen || !document.contains(this.el)) {
+        if (!this.isOpen || !document.body.contains(this.el)) {
             return;
         }
         this.trigger('before:close', this);

@@ -35,7 +35,8 @@ const defaultOptions = {
     collection: null,
     maxQuantitySelected: 1,
     canDeleteItem: true,
-    valueType: 'normal'
+    valueType: 'normal',
+    showSearch: true
 };
 
 /**
@@ -72,9 +73,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selectableBehavior: 'multi'
         });
 
-        this.controller
-            = this.options.controller
-            || new StaticController({
+        this.controller =
+            this.options.controller ||
+            new StaticController({
                 collection: options.collection
             });
 
@@ -92,17 +93,21 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     className() {
+        _.defaults(this.options, this.options.schema || this.options, defaultOptions);
+
         const classList = [];
-        const maxQuantity = this.options.maxQuantitySelected || defaultOptions.maxQuantitySelected;
+        const maxQuantity = this.options.maxQuantitySelected;
+
         if (maxQuantity === 1) {
             classList.push('editor_bubble--single');
         }
-        if (this.options.showEditButton || defaultOptions.showEditButton) {
+        if (this.options.showEditButton) {
             classList.push('editor_bubble--edit');
         }
-        if ((this.options.canDeleteItem || defaultOptions.canDeleteItem) && maxQuantity > 1) {
+        if (this.options.canDeleteItem) {
             classList.push('editor_bubble--delete');
         }
+
         return `editor editor_bubble ${classList.join(' ')}`;
     },
 
@@ -110,7 +115,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     setValue(value): void {
         this.value = [];
-        this.viewModel.button.selected.reset();
+        this.viewModel && this.viewModel.button.selected.reset();
         this.__value(value, false);
         delete this.fakeInputModel;
         this.__updateFakeInputModel();
@@ -153,7 +158,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 reqres,
                 getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
                 showEditButton: this.options.showEditButton,
-                canDeleteItem: this.options.maxQuantitySelected > 1 && this.options.canDeleteItem,
+                canDeleteItem: this.options.canDeleteItem,
                 createValueUrl: this.controller.createValueUrl.bind(this.controller),
                 enabled: this.getEnabled(),
                 readonly: this.getReadonly()
@@ -197,14 +202,14 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         BaseLayoutEditorView.prototype.setReadonly.call(this, readonly);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
+        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
     },
 
     setEnabled(enabled: Boolean): void {
         BaseLayoutEditorView.prototype.setEnabled.call(this, enabled);
         const isEnabled = this.getEnabled() && !this.getReadonly();
         this.dropdownView.options.buttonViewOptions.enabled = isEnabled;
-        this.dropdownView.button.updateEnabled(isEnabled);
+        this.dropdownView.button.collectionView.updateEnabled(isEnabled);
     },
 
     focus(): void {
@@ -300,9 +305,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __canAddItem(): boolean {
-        const selectedItems = _.filter(this.viewModel.button.selected.models, model => model !== this.fakeInputModel);
+        const selectedItems = this.viewModel.button.selected.models.filter(model => model !== this.fakeInputModel);
         const isAccess = this.getEnabled() && !this.getReadonly();
-        return isAccess && (!this.options.maxQuantitySelected || this.options.maxQuantitySelected !== selectedItems.length);
+        const maxQuantity = this.options.maxQuantitySelected;
+
+        return isAccess && maxQuantity > selectedItems.length;
     },
 
     __onValueEdit(value) {
@@ -362,7 +369,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        if (this.__canAddItem() || this.options.maxQuantitySelected === 1) {
+        if (this.getEnabled() && !this.getReadonly()) {
             this.dropdownView.open();
         }
     },
@@ -393,7 +400,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __updateFakeInputModel(): void {
         const selectedModels = this.viewModel.button.selected;
 
-        if (this.options.maxQuantitySelected === 1) {
+        if (!this.options.showSearch) {
             if (this.fakeInputModel) {
                 selectedModels.remove(this.fakeInputModel);
                 delete this.fakeInputModel;
@@ -415,7 +422,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __updateButtonInput(): void {
         if (this.dropdownView.button) {
-            this.dropdownView.button.updateInput();
+            this.dropdownView.button.collectionView.updateInput();
         }
     },
 

@@ -20,6 +20,7 @@ Backbone.history.checkUrl = () => {
 
 export default {
     initialize(options) {
+        Object.assign(this, Backbone.Events);
         this.defaultUrl = options.defaultUrl;
         options.modules.forEach(config => {
             const moduleProxy = new ModuleProxy({ config });
@@ -41,9 +42,13 @@ export default {
         Backbone.history.checkUrl();
 
         window.addEventListener('beforeunload', e => {
+            this.trigger('module:leave', {
+                page: this.activeModule.moduleId
+            });
             const canLeave = this.activeModule ? this.activeModule.leave(true) : true;
 
-            if (canLeave !== true) { // We need just to return smth to show default drowser leaving alert
+            if (canLeave !== true) {
+                // We need just to return smth to show default drowser leaving alert
                 (e || window.event).returnValue = '42';
                 return '42';
             }
@@ -88,14 +93,23 @@ export default {
             loaded: false
         };
         if (!this.activeModule) {
-            window.app.getView().getRegion('contentLoadingRegion').show(new ContentLoadingView());
+            window.app
+                .getView()
+                .getRegion('contentLoadingRegion')
+                .show(new ContentLoadingView());
         } else {
+            this.trigger('module:before:leave', {
+                page: this.activeModule.moduleId
+            });
             const canLeave = await this.activeModule.leave();
             if (!canLeave && this.getPreviousUrl()) {
                 // getting back to last url
                 this.navigateToUrl(this.getPreviousUrl(), { replace: true, trigger: false });
                 return;
             }
+            this.trigger('module:leave', {
+                page: this.activeModule.moduleId
+            });
             //clear all promises of the previous module
             Core.services.PromiseService.cancelAll();
             if (!this.loadingContext.loaded) {
@@ -110,7 +124,10 @@ export default {
 
         this.loadingContext.loaded = true;
         // reset loading region
-        window.app.getView().getRegion('contentLoadingRegion').reset();
+        window.app
+            .getView()
+            .getRegion('contentLoadingRegion')
+            .reset();
         if (this.activeModule) {
             this.activeModule.view.setModuleLoading(false);
         }
@@ -128,7 +145,9 @@ export default {
                 region: window.app.getView().getRegion('contentRegion')
             });
         }
-
+        this.trigger('module:loaded', {
+            page: this.activeModule.moduleId
+        });
         // navigate to new module
         this.loadingContext = null;
         if (this.activeModule.onRoute) {

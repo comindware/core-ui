@@ -59,14 +59,14 @@ export default Marionette.View.extend({
             const matchesItems = this.__searchItem(value);
             this.__showSearchResult(matchesItems);
         } else {
-            this.collectionArea.$el.show();
-            this.searchArea.$el.hide();
+            this.getRegion('collectionAreaRegion').$el.show();
+            this.getRegion('searchAreaRegion').$el.hide();
         }
     },
 
     __showSearchResult(matchesItems) {
         const model = new Backbone.Model({
-            name: Localizer.get('MODULES.SEARCH.SEARCHTITLE'),
+            name: Localizer.get('CORE.FORM.EDITORS.ICONEDITOR.SEARCHTITLE'),
             groupItems: matchesItems
         });
 
@@ -76,8 +76,8 @@ export default Marionette.View.extend({
 
         const searchAreaRegion = this.getRegion('searchAreaRegion');
         searchAreaRegion.show(iconItemCategoryView);
-        searchAreaRegion.$el.hide();
-        this.getRegion('searchArea').$el.show();
+        searchAreaRegion.$el.show();
+        this.getRegion('collectionAreaRegion').$el.hide();
         this.listenTo(iconItemCategoryView, 'click:item', id => this.trigger('click:item', id));
     },
 
@@ -96,8 +96,7 @@ export default Marionette.View.extend({
             _.each(groupItem.get('groupItems'), item => {
                 if (
                     matchSearch(item.id) ||
-                    (item.filter && item.filter.find(filterItem => matchSearch(filterItem))) ||
-                    (item.aliases && item.aliases.find(aliasesItem => matchSearch(aliasesItem)))
+                    (item.filter && item.filter.find(filterItem => matchSearch(filterItem)))
                 ) {
                     const isItemExistInCollection = _.some(matchesItems, matchesItem => item.id === matchesItem.id);
                     if (!matchesItems.length || !isItemExistInCollection) {

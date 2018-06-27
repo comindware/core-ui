@@ -1,7 +1,7 @@
 
 import CanvasView from 'demoPage/views/CanvasView';
 
-export default function() {
+export default function () {
     return new CanvasView({
         view: new core.layout.Group({
             name: 'Group',

@@ -4,8 +4,6 @@ const utils = require('../utils');
 const icons = {
     arrowIcon:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath d='M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z'/%3E%3C/svg%3E",
-    angleDown:
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='{{fill}}' viewBox='0 0 320 512'%3E%3Cpath d='M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z'/%3E%3C/svg%3E",
     angleRight:
         "data:image/svg+xml,%3Csvg fill='{{fill}}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'/%3E%3C/svg%3E",
     search:
@@ -29,8 +27,10 @@ const variables = {
     'blue-300': '#0575bd',
     'blue-400': '#04619d',
     'text-color': '#404040',
+    'link-color': 'var(--blue-300)',
     'main-color': 'var(--blue-300)',
     'error-color': 'var(--red)',
+    'warning-color': '#e19e35',
     'selected-color': 'var(--grey-100)',
 
     'light-gradient': 'linear-gradient(#ffffff 35%, #e9e9e9)',
@@ -61,16 +61,15 @@ const variables = {
     'editor-empty-text-color': 'var(--text-color)',
 
     // input
-    'input-padding': '0 20px 0 var(--form-input-padding)',
+    'input-padding': '4px 20px 4px var(--form-input-padding)',
     'input-height': 'auto',
-    'input-line-height': '1.95',
     'input-active-border-color': 'var(--blue-300)',
     'input-error-color': 'var(--red)',
-    'input-search-padding': '0 24px 0 var(--form-input-padding)',
+    'input-search-padding': '4px 24px 4px var(--form-input-padding)',
     'input-search-bg': `calc(100% - 5px) 50% url(${utils.buildIcon(icons.search, 'var(--grey-400)')}) no-repeat`,
 
     // textarea
-    'textarea-padding': '15px var(--form-input-padding)',
+    'textarea-padding': '8px var(--form-input-padding)',
     'textarea-line-height': 'inherit',
     'textarea-min-height': '45px',
 
@@ -103,7 +102,7 @@ const variables = {
     'grid-header-bg': 'var(--blue-300)',
     'grid-header-border-color': 'var(--grid-header-bg)',
     'grid-header-height': '35px',
-    'grid-header-padding': '0 5px 0 15px',
+    'grid-header-padding': '0 15px',
     'grid-header-border': 'inset -1px 0 0 0 var(--blue-200), inset 0 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-first': 'inset -1px 0 0 0 var(--blue-200), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-last': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
@@ -136,6 +135,7 @@ const variables = {
 
     'columns-select-border': '0',
 
+    'dropdown-padding': '0 20px 4px var(--form-input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '12px',
     'dropdown-group-color': 'var(--black)',
@@ -206,41 +206,16 @@ module.exports.apply = {
         background: variables['light-gradient']
     },
     'dropdown-caret-theme': {
-        content: '""',
+        'font-size': '16px',
         position: 'absolute',
-        right: '5px',
+        right: '6px',
         top: '50%',
         transform: 'translateY(-50%)',
-        width: '1em',
-        height: '1em',
-        background: `url(${utils.buildIcon(icons.angleDown, variables['blue-300'])}) center no-repeat`
-    },
-    'form-label-icon-theme': {
-        width: variables['form-label-icon-size'],
-        height: variables['form-label-icon-size'],
-        color: variables['text-color'],
-        border: `1px solid ${variables['text-color']}`,
-        'border-radius': '50%',
-        'font-size': '12px',
-        'line-height': '12px',
-        position: 'absolute',
-        top: '2px',
-        left: '0',
-        'text-align': 'center',
-        opacity: '0.7'
-    },
-    'form-label-info-icon-theme': {
-        content: '"?"'
-    },
-    'form-label-error-icon-theme': {
-        content: '"!"',
-        color: variables.red,
-        'border-color': variables.red
+        color: variables['blue-300']
     },
     'bubbles-item-theme': {
         color: variables['text-color'],
-        margin: '0 5px 0 0',
-        padding: '4px 5px 4px 0',
+        padding: '4px 5px 0px 0',
         transition: 'padding-right .3s'
     },
     'input-theme': {
@@ -256,7 +231,8 @@ module.exports.apply = {
     },
     'textarea-theme': {
         border: variables.border,
-        'border-radius': '4px'
+        'border-radius': '4px',
+        'line-height': '1.5',
     },
     'custom-cotrol-disabled-theme': {
         cursor: 'not-allowed'
@@ -298,7 +274,8 @@ module.exports.apply = {
         'margin-right': '5px',
         'margin-bottom': '-1px',
         'border-radius': '4px 4px 0 0',
-        flex: '0 1 auto'
+        flex: '0 1 auto',
+        'min-height': '30px'
     },
     'tab-item-active-theme': {
         'background-color': variables.white,
@@ -352,8 +329,8 @@ module.exports.apply = {
 
     'toolbar-btn-major-theme': {
         color: variables.white,
-        'background-color': '#e19e35',
-        'border-color': '#e19e35'
+        'background-color': variables['warning-color'],
+        'border-color': variables['warning-color']
     },
     'toolbar-btn-major-hover-theme': {
         'background-color': '#de9621',

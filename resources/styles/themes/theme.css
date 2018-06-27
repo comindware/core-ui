@@ -33,36 +33,42 @@ body {
 .form-label__info:not(:empty),
 .error .form-label__error {
   display: inline-block;
-  margin-left: var(--form-label-icon-margin-x);
+  margin: 0 var(--form-label-icon-margin-x);
 }
 
 .form-label__info-button,
 .form-label__error-button {
-  height: var(--form-label-icon-size);
-  width: var(--form-label-icon-size);
+  font-size: var(--form-label-icon-size);
 }
 
-.form-label__info-button:before {
-  @apply --form-label-icon-theme;
-  @apply --form-label-info-icon-theme;
+.form-label__info-button,
+.form-label__error-button {
+  opacity: 0.8;
 }
 
-.form-label__info-button:hover:before,
-.form-label__error-button:hover:before  {
+.form-label__info-button:hover,
+.form-label__error-button:hover {
   opacity: 1;
 }
 
-.form-label__error-button:before {
-  @apply --form-label-icon-theme;
-  @apply --form-label-error-icon-theme;
+.form-label__error-button {
+  color: var(--error-color);
 }
 
 .form-label__error-text {
-  padding-left: 20px;
+  margin-left: 10px;
 }
 
 .required .form-label {
   padding-left: 10px;
+}
+
+.form-label__error-icon-error{
+  color: var(--error-color);
+}
+
+.form-label__error-icon-warning{
+  color: var(--warning-color);
 }
 
 /*------------------ Form Editor ------------------*/
@@ -84,7 +90,9 @@ body {
 .editor_disabled .bubbles,
 .editor_disabled .bubbles:hover,
 .editor_readonly .bubbles,
-.editor_readonly .bubbles:hover {
+.editor_readonly .bubbles:hover,
+.editor.context_select.editor_readonly,
+.editor.context_select.editor_disabled {
   @apply --input-disabled-theme;
 }
 
@@ -102,6 +110,9 @@ body {
   background-color: var(--checkbox-intermediate-color);
 }
 
+.editor_icons .caret {
+    color: var(--text-color);
+}
 /*------------------ End Form Editor ------------------*/
 
 /* input */
@@ -109,7 +120,6 @@ body {
   @apply --input-theme;
   padding: var(--input-padding);
   height: var(--input-height);
-  line-height: var(--input-line-height);
 }
 
 .tr-search__input {
@@ -213,6 +223,7 @@ body {
 /* Date Time */
 .editor_date-time {
   @apply --input-theme;
+  padding: var(--input-padding);
 }
 
 .editor_disabled.editor_date-time,
@@ -259,7 +270,6 @@ svg.svg-grid-icons {
 .grid-toolbar__search .tr-search{
   border: none;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .grid-header {
@@ -342,13 +352,8 @@ svg.svg-grid-icons {
   height: var(--grid-checkbox-size);
 }
 
-.cell .input{
+.cell .input {
   padding: var(--grid-cell-input-padding);
-}
-
-.cell-focused .input,
-.cell .input:hover{
-    padding-right: 18px;
 }
 
 .grid-selection-cell-all {
@@ -437,7 +442,8 @@ svg.svg-grid-icons {
   border-top-color: transparent;
 }
 
-.dd-list__i {
+.dd-list__i,
+.popout-menu__txt {
   padding: var(--dropdown-item-padding);
   font-size: var(--dropdown-font-size);
 }
@@ -445,7 +451,8 @@ svg.svg-grid-icons {
 .dd-list__i_checkbox{
   padding-left: var(--dropdown-item-checkbox-padding);
 }
-.dd-list__i:hover {
+.dd-list__i:hover,
+.popout-menu__i:hover {
   background-color: var(--dropdown-item-hover-color);
 }
 .dd-list__i_group {
@@ -456,6 +463,10 @@ svg.svg-grid-icons {
 
 .dd-list__i_group:hover {
   background: transparent;
+}
+
+.dd-list__btn{
+  border-top: var(--border);
 }
 
 /* dropdown time list */
@@ -473,9 +484,9 @@ svg.svg-grid-icons {
 
 .bubbles {
   @apply --input-theme;
-  padding: var(--input-padding);
+  padding: var(--dropdown-padding);
 }
-.bubbles::after {
+.bubbles__caret {
   @apply --dropdown-caret-theme;
 }
 .bubbles .editor__icons {
@@ -493,6 +504,7 @@ svg.svg-grid-icons {
 }
 
 .cell .bubbles {
+  padding-left: 0;
   height: 100%;
   border: none;
   background: transparent;
@@ -742,7 +754,6 @@ svg.svg-grid-icons {
   @apply --input-theme;
   padding: var(--input-padding);
   height: var(--input-height);
-  line-height: var(--input-line-height);
 }
 
 /* color picker */
@@ -827,7 +838,6 @@ svg.svg-grid-icons {
   font: var(--font);
   padding: var(--input-padding);
   height: var(--input-height);
-  line-height: var(--input-line-height);
 }
 .sp-color, .sp-hue, .sp-clear {
   border: var(--border);
@@ -856,4 +866,13 @@ svg.svg-grid-icons {
   height: 7px;
   border-radius: 50%;
   background: transparent;
+}
+
+
+.task-links__link {
+  color: var(--text-color);
+}
+
+.task-links__link:hover {
+  color: var(--link-color);
 }

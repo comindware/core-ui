@@ -17,8 +17,6 @@ export default Marionette.View.extend({
         };
     },
 
-    tagName: 'li',
-
     attributes() {
         return {
             draggable: true,

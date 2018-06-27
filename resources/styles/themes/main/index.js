@@ -18,8 +18,10 @@ const variables = {
     'grey-900': '#838c92',
 
     'text-color': '#384650',
+    'link-color': 'var(--blue-200)',
     'main-color': 'var(--blue-200)',
     'error-color': 'var(--red)',
+    'warning-color': '#ffda44',
     'selected-color': 'var(--blue-extra-light)',
 
     border: '1px solid var(--grey-400)',
@@ -51,7 +53,6 @@ const variables = {
     // input
     'input-padding': '0 20px 0 0',
     'input-height': 'inherit',
-    'input-line-height': 'inherit',
     'input-hover-color': 'var(--grey-600)',
     'input-search-padding': '0 0 0 25px',
     'input-search-bg':
@@ -90,7 +91,7 @@ const variables = {
     'grid-header-bg': 'transparent',
     'grid-header-border-color': 'var(--grey-400)',
     'grid-header-height': '20px',
-    'grid-header-padding': '0 0 0 2px',
+    'grid-header-padding': '0 10px 0 2px',
     'grid-header-border': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 0 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-first': 'inset -1px -1px 0 0 var(--grid-header-border-color), inset 1px 1px 0 0 var(--grid-header-border-color)',
     'grid-header-border-last': 'var(--grid-header-border)',
@@ -124,6 +125,7 @@ const variables = {
     'columns-select-border': 'var(--border)',
     'columns-select-cell-border': 'inset -1px -1px 0 0 var(--grey-400)',
 
+    'dropdown-padding': 'var(--input-padding)',
     'dropdown-font-size': 'var(--base-font-size)',
     'dropdown-group-fontsize': '11px',
     'dropdown-group-color': '#000',
@@ -158,9 +160,7 @@ module.exports.apply = {
     'button-theme': {
         color: variables['text-color'],
         'font-size': '12px',
-        padding: '0 10px',
-        height: '30px',
-        'line-height': '26px',
+        padding: '4px 10px',
         'white-space': 'nowrap',
         'text-overflow': 'ellipsis',
         overflow: 'hidden',
@@ -179,30 +179,8 @@ module.exports.apply = {
     'dropdown-theme': {
         'min-height': '20px'
     },
-    'dropdown-caret-theme': {},
-    'form-label-icon-theme': {
-        width: variables['form-label-icon-size'],
-        height: variables['form-label-icon-size'],
-        border: '1px solid #70787f',
-        'background-color': '#fff',
-        'border-radius': '50%',
-        'font-size': '9px',
-        'line-height': '11px',
-        'font-weight': 'bold',
-        position: 'absolute',
-        top: '1px',
-        left: '0',
-        'text-align': 'center',
-        opacity: '0.7'
-    },
-    'form-label-info-icon-theme': {
-        content: '"?"',
-        color: '#70787f'
-    },
-    'form-label-error-icon-theme': {
-        content: '"!"',
-        color: '#b12a23',
-        'border-color': '#b12a23'
+    'dropdown-caret-theme': {
+        display: 'none'
     },
     'bubbles-item-theme': {
         color: variables['text-color'],

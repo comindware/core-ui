@@ -123,24 +123,6 @@ rgba(5,117,189,.5) // user avatar btn
     text-overflow: ellipsis;
 }
 
-.form-label__error-icon{
-    width: 16px;
-    height: 16px;
-    position: absolute;
-}
-
-.form-label__error-icon-error svg{
-    fill: rgb(216, 0, 39);
-}
-
-.form-label__error-icon-warning svg{
-    fill: rgb(255, 218, 68);
-}
-
-.disabled .form-label {
-    color:#70787f;
-}
-
 /*---------------// End Form Label //-------------*/
 
 
@@ -297,7 +279,6 @@ input[type="checkbox"].checkbox {
     font-weight: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-sizing: border-box;
     vertical-align: top;
     transition: background, border-color .2s ease-in-out;
 }
@@ -327,7 +308,6 @@ input[type="checkbox"].checkbox {
 
 /* Date Time */
 .editor_date-time {
-    padding-right: 16px;
     display: flex;
     align-items: center;
 }
@@ -336,7 +316,6 @@ input[type="checkbox"].checkbox {
 }
 .editor_date-time .input{
     border: 0;
-    padding-right: 0;
 }
 
 
@@ -387,13 +366,15 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
+    position: relative;
 }
 
+.bubbles__list {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
 .bubbles__i {
     max-width: 100%;
     display: inline-block;
@@ -401,7 +382,7 @@ input[type="checkbox"].checkbox {
     flex: 0 0 auto;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-sizing: border-box;
+    white-space: nowrap;
 }
 
 .bubbles__link {
@@ -432,10 +413,8 @@ input[type="checkbox"].checkbox {
 }
 
 .bubbles__form {
-    flex-grow: 1 1 10px;
+    flex: 1 1 10px;
     max-width: 100%;
-    margin: 0;
-    padding: 0;
     display: inline-block;
     align-self: center;
 }
@@ -443,6 +422,7 @@ input[type="checkbox"].checkbox {
     width: 100%;
     height: 100%;
     border: 0;
+    padding: 0;
     background: transparent;
 }
 
@@ -717,8 +697,6 @@ input[type="checkbox"].checkbox {
 input[type="color"], .colorpicker{
     height: 28px;
     padding: 0;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     width: 35px;
     background: transparent;
     margin: -4px 5px 0 -2px;
@@ -809,7 +787,9 @@ input[type="color"], .colorpicker{
 }
 
 .editor_readonly .icon-edit,
-.editor_disabled .icon-edit {
+.editor_disabled .icon-edit,
+.editor.editor_readonly .editor__icons.icon-remove,
+.editor.editor_disabled .editor__icons.icon-remove {
     display: none;
 }
 
@@ -871,12 +851,8 @@ input[type="color"], .colorpicker{
     margin: 3px 0 0;
 }
 
-.l-task-links .field-documents__more {
-    display: none;
-}
-
-.l-task-links {
-    font-size: 12px;
+.field-documents__more {
+    cursor: pointer;
 }
 
 .task-links_doc {
@@ -884,31 +860,19 @@ input[type="color"], .colorpicker{
 }
 
 .task-links__i {
-    max-width: 100%;
     padding: 0 18px 0 0;
-    display: inline-block;
-    vertical-align: top;
     position: relative;
     display: flex;
-}
-
-.cell .task-links__i {
-    line-height: 25px;
+    align-items: center;
 }
 
 .task-links__link {
-    color: #000;
+    flex: none;
     text-decoration: none;
     display: block;
     overflow: hidden;
     white-space: nowrap;
-    -o-text-overflow: ellipsis;
-    -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
-}
-
-.task-links__link:hover {
-    color: #009bfe;
 }
 
 .dev-field-documents {
@@ -979,12 +943,13 @@ input[type="color"], .colorpicker{
 }
 
 .dev-btn-document-revise{
+    width: 20px;
+    font-size: 16px;
     position: relative;
     display: inline-block;
-    top: 0px;
-    width: 20px;
-    height: 20px;
     cursor: pointer;
+    text-align: center;
+    line-height: 1;
 }
 
 .dev-revision-container{
@@ -1021,4 +986,8 @@ input[type="color"], .colorpicker{
 
 .context_select {
     cursor: pointer;
+}
+
+.group-title__collapsible {
+  cursor: pointer;
 }

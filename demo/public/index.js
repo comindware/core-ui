@@ -1,4 +1,6 @@
-import '../node_modules/font-awesome/css/font-awesome.css';
+import 'styles/defaultFontawesome.css';
+import '../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';
+import '../node_modules/@fortawesome/fontawesome-free/css/solid.css';
 import '../../dist/core.css';
 import 'styles/demo.css';
 import 'lib/prism/prism.css';
@@ -18,3 +20,16 @@ Application.appRouter = new AppRouter({
 const app = new Application();
 window.app = app;
 app.start();
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+            .register('./sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}

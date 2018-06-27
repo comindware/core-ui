@@ -101,8 +101,8 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     __clear() {
-        this.__value(null, true, true);
-        this.focus();
+        this.ui.input.focus();
+        this.__value(null, true, false);
         return false;
     },
 
@@ -175,14 +175,14 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
     },
 
     __onMouseenter() {
-        if (this.options.allowEmptyValue) {
+        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
             this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapText);
         }
     },
 
     __onMouseleave() {
-        if (this.options.allowEmptyValue) {
-            this.el.lastElementChild.remove();
+        if (this.getEnabled() && !this.getReadonly() && this.options.allowEmptyValue) {
+            this.el.removeChild(this.el.lastElementChild);
         }
     }
 }));
