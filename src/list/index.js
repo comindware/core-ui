@@ -9,9 +9,6 @@ import EditableGridFieldView from './views/EditableGridFieldView';
 import ListItemViewBehavior from './views/behaviors/ListItemViewBehavior';
 import GridItemViewBehavior from './views/behaviors/GridItemViewBehavior';
 import LoadingRowModel from './models/LoadingRowModel';
-import ListGroupBehavior from './models/behaviors/ListGroupBehavior';
-import ListItemBehavior from './models/behaviors/ListItemBehavior';
-import GridItemBehavior from './models/behaviors/GridItemBehavior';
 import factory from './factory';
 import cellFactory from './CellViewFactory';
 import GridController from './controllers/GridController';
@@ -56,12 +53,7 @@ export default {
      * @namespace
      * */
     models: {
-        LoadingRowModel,
-        behaviors: {
-            ListGroupBehavior,
-            ListItemBehavior,
-            GridItemBehavior
-        }
+        LoadingRowModel
     },
 
     meta

@@ -7,12 +7,12 @@
     "start": "webpack-dev-server --open"
   },
   "devDependencies": {
-    "autoprefixer": "^8.6.2",
+    "autoprefixer": "^8.6.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^4.5.1",
+    "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^0.28.11",
     "cssnano": "^3.10.0",
     "eslint-config-prettier": "^2.9.0",

@@ -1,5 +1,5 @@
 (factory => {
-    factory(require('jquery'));
+    factory();
 })($ => {
     let DPGlobal;
     let dates;
@@ -18,7 +18,7 @@
     }
 
     // Picker object
-    const Datetimepicker = function(element, options) {
+    const Datetimepicker = function (element, options) {
         this.element = $(element);
 
         this.language = 'en';
@@ -712,15 +712,15 @@
                 test =
                     dir === -1
                         ? // If going back one month, make sure month is not current month
-                          // (eg, Mar 31 -> Feb 31 === Feb 28, not Mar 02)
-                          function() {
-                              return new_date.getUTCMonth() === month;
-                          }
+                        // (eg, Mar 31 -> Feb 31 === Feb 28, not Mar 02)
+                        function () {
+                            return new_date.getUTCMonth() === month;
+                        }
                         : // If going forward one month, make sure month is as expected
-                          // (eg, Jan 31 -> Feb 31 === Feb 28, not Mar 02)
-                          function() {
-                              return new_date.getUTCMonth() !== new_month;
-                          };
+                        // (eg, Jan 31 -> Feb 31 === Feb 28, not Mar 02)
+                        function () {
+                            return new_date.getUTCMonth() !== new_month;
+                        };
                 new_month = month + dir;
                 new_date.setUTCMonth(new_month);
                 // Dec -> Jan (12) or Jan -> Dec (-1) -- limit expected date to 0-11
@@ -737,7 +737,7 @@
                 // ...then reset the day, keeping it in the new month
                 new_month = new_date.getUTCMonth();
                 new_date.setUTCDate(day);
-                test = function() {
+                test = function () {
                     return new_month !== new_date.getUTCMonth();
                 };
             }
@@ -923,11 +923,11 @@
         }
     };
 
-    $.fn.datetimepicker = function(option) {
+    $.fn.datetimepicker = function (option) {
         const args = Array.apply(null, arguments);
         args.shift();
         let internal_return;
-        this.each(function() {
+        this.each(function () {
             const $this = $(this);
             let data = $this.data('datetimepicker');
             const options = typeof option === 'object' && option;
@@ -1329,7 +1329,7 @@
     /* DATETIMEPICKER NO CONFLICT
    * =================== */
 
-    $.fn.datetimepicker.noConflict = function() {
+    $.fn.datetimepicker.noConflict = function () {
         $.fn.datetimepicker = old;
         return this;
     };
@@ -1337,7 +1337,7 @@
     /* DATETIMEPICKER DATA-API
    * ================== */
 
-    $(document).on('focus.datetimepicker.data-api click.datetimepicker.data-api', '[data-provide="datetimepicker"]', function(e) {
+    $(document).on('focus.datetimepicker.data-api click.datetimepicker.data-api', '[data-provide="datetimepicker"]', function (e) {
         const $this = $(this);
         if ($this.data('datetimepicker')) return;
         e.preventDefault();

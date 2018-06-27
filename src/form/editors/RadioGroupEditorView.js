@@ -1,9 +1,9 @@
 // @flow
 import BaseCollectionEditorView from './base/BaseCollectionEditorView';
 import RadioButtonView from './impl/radioGroup/views/RadioButtonView';
-import RadioGroupCollection from './impl/radioGroup/collections/RadioGroupCollection';
 import formRepository from '../formRepository';
 import keyCode from '../../utils/keyCode';
+import VirtualCollection from '../../collections/VirtualCollection';
 
 const defaultOptions = {
     radioOptions: [{ id: '', displayText: '' }]
@@ -24,7 +24,7 @@ formRepository.editors.RadioGroup = BaseCollectionEditorView.extend(
         initialize(options = {}) {
             _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
 
-            this.collection = new RadioGroupCollection(this.options.radioOptions);
+            this.collection = new VirtualCollection(this.options.radioOptions);
             this.listenTo(this.collection, 'select:one', this.__onSelectChild);
         },
 
