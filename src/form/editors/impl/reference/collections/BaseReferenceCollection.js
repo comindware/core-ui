@@ -1,19 +1,11 @@
 import { helpers } from 'utils';
-import HighlightableBehavior from '../../../../../collections/behaviors/HighlightableBehavior';
-import SelectableBehavior from '../../../../../models/behaviors/SelectableBehavior';
-import DefaultReferenceModel from '../models/DefaultReferenceModel';
+import VirtualCollection from '../../../../../collections/VirtualCollection';
 
 const defaultOptions = {
     DEFAULT_COUNT: 200
 };
 
-export default Backbone.Collection.extend({
-    constructor() {
-        Backbone.Collection.prototype.constructor.apply(this, arguments);
-        Object.Assign(this, new HighlightableBehavior(this));
-        Object.Assign(this, new SelectableBehavior.SingleSelect(this));
-    },
-
+export default VirtualCollection.extend({
     fetch(options) {
         helpers.ensureOption(options, 'data.filter');
         if (options.data.count === undefined) {
@@ -22,7 +14,7 @@ export default Backbone.Collection.extend({
         if (options.reset === undefined) {
             options.reset = true;
         }
-        return Backbone.Collection.prototype.fetch.call(this, options);
+        return VirtualCollection.prototype.fetch.call(this, options);
     },
 
     parse(responseData, options) {
@@ -31,8 +23,6 @@ export default Backbone.Collection.extend({
         this.totalCount = response.totalCount;
         return Backbone.Collection.prototype.parse.call(this, response.options, options);
     },
-
-    model: DefaultReferenceModel,
 
     url: null
 });

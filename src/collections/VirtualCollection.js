@@ -1,7 +1,5 @@
 // @flow
 /*eslint-disable*/
-import SelectableBehavior from '../models/behaviors/SelectableBehavior';
-import CheckableBehavior from '../models/behaviors/CheckableBehavior';
 import { diffHelper } from 'utils';
 import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
 
@@ -177,10 +175,12 @@ const VirtualCollection = Backbone.Collection.extend(
             } else {
                 SelectableBehaviorClass = selectableBehavior.single;
             }
+            /*
             if (SelectableBehaviorClass) {
                 Object.Assign(this, new SelectableBehaviorClass(this));
             }
             Object.Assign(this, new CheckableBehavior.CheckableCollection(this));
+            */
         },
 
         rebuild() {

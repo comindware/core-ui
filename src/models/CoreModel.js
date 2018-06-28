@@ -3,12 +3,12 @@ export default class {
     constructor(attriutes: {} = {}, options) {
         this.attributes = attriutes;
 
-        this.id = attriutes.id || Symbol();
+        this.id = attriutes.id || Symbol('');
 
         this.initialize();
     }
 
-    initialize() {}
+    initialize() { }
 
     get(attributeKey: string): any {
         return this.attributes[attributeKey];
@@ -25,9 +25,9 @@ export default class {
         return Object.assign(this, extendObject);
     }
 
-    on() {}
+    on() { }
 
-    off() {}
+    off() { }
 
     has(attributeKey: string) {
         return attributeKey in this.attributes;

@@ -1,11 +1,11 @@
 //@flow
 import CrumbTextView from './views/CrumbTextView';
-import GroupsCollection from './collections/GroupsCollection';
 import template from './templates/navigationDrawer.html';
+import VirtualCollection from '../../collections/VirtualCollection';
 
 export default Marionette.CompositeView.extend({
     initialize(options) {
-        this.collection = new GroupsCollection(options.collection);
+        this.collection = new VirtualCollection(options.collection);
         this.collapsed = options.collapsed;
         this.absolute = options.isAbsolute;
     },

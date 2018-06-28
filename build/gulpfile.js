@@ -35,8 +35,6 @@ gulp.task('watch:generateThemes', () => {
     gulp.watch(pathResolver.resources('styles/themes/**/*'), ['generateThemes']);
 });
 
-gulp.task('jsdoc', require('./tasks/jsdocTask'));
-
 gulp.task('prepareToPublish', require('./tasks/prepareToPublishTask'));
 
 gulp.task('build:core:dev', require('./tasks/buildDevTask'));
@@ -104,12 +102,12 @@ gulp.task('start', callback =>
     )
 );
 
-gulp.task('build', callback => runSequence(['build:core:prod', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', callback));
+gulp.task('build', callback => runSequence(['build:core:prod'], 'localization', 'generateSprites', 'generateThemes', callback));
 
-gulp.task('build:min', callback => runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', callback));
+gulp.task('build:min', callback => runSequence(['build:core:prod', 'build:core:deploy'], 'localization', 'generateSprites', 'generateThemes', callback));
 
 gulp.task('deploy', callback =>
-    runSequence(['build:core:prod', 'build:core:deploy', 'jsdoc'], 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish', callback)
+    runSequence(['build:core:prod', 'build:core:deploy'], 'localization', 'generateSprites', 'generateThemes', 'test:coverage', 'prepareToPublish', callback)
 );
 
 gulp.task('default', ['start']);
