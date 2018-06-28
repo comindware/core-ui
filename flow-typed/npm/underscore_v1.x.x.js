@@ -447,7 +447,7 @@ declare module "underscore" {
     ): Object;
     pairs<K, V>(object: {[keys: K]: V}): Array<[K, V]>;
     invert<K, V>(object: {[keys: K]: V}): {[keys: V]: K};
-    // TODO: _.create
+    // TODO: Object.create
     functions(object: Object): Array<string>;
     findKey<K, V>(object: {[keys: K]: V}, predicate: (V, K, {[keys: K]: V}) => boolean, context?: mixed): ?string;
     extend: typeof $underscore$Extend;
@@ -495,7 +495,7 @@ declare module "underscore" {
     map<T>(mapFn: (v: any, k: $Keys<WrappedObj>, obj: WrappedObj) => T): UnderscoreChainedList<T>;
     pairs(): UnderscoreChainedList<[any, any]>;
     invert(): UnderscoreChainedObject<WrappedObj>;
-    // TODO: _.create
+    // TODO: Object.create
     functions(): UnderscoreChainedList<string>;
     findKey(predicate: ($Values<WrappedObj>, $Keys<WrappedObj>, WrappedObj) => boolean, context?: mixed): UnderscoreChainedValue<?$Keys<WrappedObj>>;
     // TODO: Reimplement these when you can get them to return UnderscoreChainedObject
@@ -545,7 +545,7 @@ declare module "underscore" {
     ): NewObj;
     pairs<K, V>(): Array<[K, V]>;
     invert<K, V>(): {[keys: V]: K};
-    // TODO: _.create
+    // TODO: Object.create
     functions(): Array<string>;
     find(predicate: (v: any, k: $Keys<WrappedObj>, obj: WrappedObj) => boolean): ?any;
     findKey(predicate: ($Values<WrappedObj>, $Keys<WrappedObj>, WrappedObj) => boolean, context?: mixed): ?$Keys<WrappedObj>;

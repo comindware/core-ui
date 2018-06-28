@@ -264,8 +264,9 @@ module.exports = options => {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
                 rangyinputs: pathResolver.source('external/rangyinputs-jquery-src'),
-                'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
-                'jquery-ui': pathResolver.source('external/jquery-ui.js'),
+                backbone: pathResolver.source('external/backbone.js'),
+                underscore: pathResolver.source('external/underscore.js'),
+                'backbone.radio': pathResolver.source('external/backbone.radio.js'),
                 handlebars: 'handlebars/dist/handlebars',
                 localizationMap: pathResolver.compiled('localization/localization.en.json')
             }

@@ -1,7 +1,7 @@
 ﻿// @flow
 import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
-import 'spectrum-colorpicker';
+//import 'spectrum-colorpicker';
 import colorPicker from './templates/colorPicker.hbs';
 
 /**
