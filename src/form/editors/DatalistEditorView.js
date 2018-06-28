@@ -338,8 +338,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __onFilterText() {
         this.dropdownView.buttonView.setLoading(true);
-        return this.controller.fetch({text: this.searchText}).then(data => {
+        return this.controller.fetch({ text: this.searchText }).then(data => {
             this.panelCollection.reset(data.collection);
+            this.panelCollection.totalCount = data.totalCount;
+
             if (this.panelCollection.length > 0 && this.value) {
                 this.value.forEach(model => {
                     if (this.panelCollection.has(model.id)) {
