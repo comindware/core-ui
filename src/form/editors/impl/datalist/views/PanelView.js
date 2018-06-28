@@ -64,11 +64,10 @@ export default Marionette.View.extend({
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
             this.showChildView('addNewButtonRegion', addNewButton);
         }
-        this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
         this.showChildView('listRegion', this.listView);
 
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
-        this.getRegion('elementsQuantityWarningRegion').$el.hide();
+        this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
     },
 
     handleCommand(command) {
