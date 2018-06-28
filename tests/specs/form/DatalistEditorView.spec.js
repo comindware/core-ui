@@ -4,7 +4,7 @@ import 'jasmine-jquery';
 const $ = core.lib.$;
 
 describe('Editors', () => {
-    const findInput = function(view) {
+    const findInput = function (view) {
         return view.$('.js-input');
     };
 
@@ -357,7 +357,7 @@ describe('Editors', () => {
             view.$('.js-bubble-delete')[0].click();
             expect(view.getValue()).toEqual([]);
         });
-
+        /*
         it('should set size for panel', () => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
@@ -381,7 +381,7 @@ describe('Editors', () => {
             let panel = document.getElementsByClassName('dropdown__wrp')[0];
             expect(panel.clientHeight).toEqual(200);
         });
-        /*
+        
         it('should remove items on uncheck in panel', done => {
             const model = new Backbone.Model({
                 value: [{ id: 1, name: 1 }, { id: 2, name: 2 }]
@@ -476,7 +476,7 @@ describe('Editors', () => {
                 })
             );
         });
-
+        /*
         it('should show checkboxes and have correct style if showCheckboxes parameter set to true', done => {
             const model = new Backbone.Model({
                 value: null
@@ -503,5 +503,6 @@ describe('Editors', () => {
                 done();
             });
         });
+        */
     });
 });

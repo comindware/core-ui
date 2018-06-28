@@ -64,7 +64,7 @@ export default Marionette.View.extend({
             const addNewButton = new AddNewButtonView({ reqres: this.reqres });
             this.showChildView('addNewButtonRegion', addNewButton);
         }
-        this.__toggleElementsQuantityWarning(collection.totalCount);
+        this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
         this.showChildView('listRegion', this.listView);
 
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
@@ -84,9 +84,11 @@ export default Marionette.View.extend({
         }
     },
 
-    __toggleElementsQuantityWarning(count) {
-        if (this.elementsQuantityWarningRegion) {
-            count > 100 ? this.getRegion('elementsQuantityWarningRegion').$el.show() : this.getRegion('elementsQuantityWarningRegion').$el.hide();
+    __toggleElementsQuantityWarning(collectionLength, count) {
+        const warningRegion = this.getRegion('elementsQuantityWarningRegion');
+
+        if (warningRegion) {
+            count > collectionLength ? warningRegion.$el.show() : warningRegion.$el.hide();
         }
     },
 
