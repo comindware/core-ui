@@ -59,5 +59,5 @@ export default Marionette.View.extend({
         } else {
             this.getRegion('loadingRegion').reset();
         }
-    },
+    }
 });

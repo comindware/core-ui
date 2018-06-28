@@ -210,7 +210,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     focus(): void {
-        this.dropdownView.open();
+        this.__onButtonClick();
     },
 
     blur(): void {
@@ -350,7 +350,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 });
             }
             this.dropdownView.buttonView.setLoading(false);
-            this.__triggerReady();
         });
     },
 
@@ -392,12 +391,16 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             const promise = this.updateFilter(null, true);
             if (promise) {
                 promise
-                    .then(() => this.dropdownView.open())
+                    .then(() => {
+                        this.dropdownView.open();
+                        this.__triggerReady();
+                    })
                     .catch(e => {
-                        console.log(e.message);
+                        console.error(e.message);
                     });
             } else {
                 this.dropdownView.open();
+                this.__triggerReady();
             }
         }
     },
