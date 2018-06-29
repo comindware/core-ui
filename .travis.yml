@@ -17,13 +17,13 @@ deploy:
     on:
       tags: true
       repo: comindware/core-ui
-      branch: 1.4/release
+      branch: master
   - provider: script
     script: npm run deploy:pages
     skip_cleanup: true
     on:
       tags: true
       repo: comindware/core-ui
-      branch: 1.4/release
+      branch: master
 addons:
   firefox: "latest"
