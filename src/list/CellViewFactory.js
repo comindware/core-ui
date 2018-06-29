@@ -364,7 +364,7 @@ export default (factory = {
                         .map(item => {
                             const text = item.text || item.name || (item.columns && item.columns[0]);
                             const url = item.url || (item.columns && item.columns[1]);
-                            return `<a href="${url}"  target="_blank" title="${text}">${text}</a>`;
+                            return `<a href="${url}" target="_blank" title="${text}">${text}</a>`;
                         })
                         .sort((a, b) => a.text > b.text)
                         .join(', ')}</div>`;

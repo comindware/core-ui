@@ -62,19 +62,25 @@
 .grid-header-wrp {
     display: flex;
     flex: 0 0 auto;
+    overflow-y: scroll;
+    -ms-scrollbar-arrow-color: white;
+    -ms-scrollbar-track-color: white;
 }
 
 .grid-content-view {
     position: relative;
     flex: 1 1 auto;
     display: flex;
-    overflow: auto;
+    overflow: scroll;
 }
 
 .grid-selection-panel-region {
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    overflow-x: scroll;
+    -ms-scrollbar-arrow-color: white;
+    -ms-scrollbar-track-color: white;
 }
 
 .grid-selection-panel {
