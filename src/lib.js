@@ -22,10 +22,6 @@ import $_ from 'jquery';
 import 'rangyinputs';
 import autosize from 'autosize';
 
-import numeral_ from 'numeral';
-import 'numeral/locales/ru';
-import 'numeral/locales/de';
-
 import codemirror_ from 'codemirror/lib/codemirror';
 import 'innersvg-polyfill';
 import jsencrypt from 'jsencrypt';
@@ -33,8 +29,6 @@ import * as jqui from 'jquery-ui';
 
 window._ = underscoreLib;
 window._.mixin(mixin);
-
-window.numeral = numeral_;
 
 $_.browser = {
     msie: /msie|trident/i.test(navigator.userAgent)
@@ -48,7 +42,6 @@ const api = {
     _: window._,
     Backbone: backbone,
     Marionette: Marionette_,
-    numeral: numeral_,
     codemirror: codemirror_,
     JSEncrypt: jsencrypt.JSEncrypt,
     autosize
@@ -60,8 +53,7 @@ const $ = api.$;
 const _ = window._;
 const Backbone = backbone;
 const Marionette = Marionette_;
-const numeral = api.numeral;
 const codemirror = api.codemirror;
 
 export default api;
-export { moment, Handlebars, $, _, Backbone, Marionette, numeral, codemirror, autosize };
+export { moment, Handlebars, $, _, Backbone, Marionette, codemirror, autosize };

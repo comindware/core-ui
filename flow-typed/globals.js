@@ -2,7 +2,6 @@
 import coreApi from '../src/coreApi';
 import momentT from 'moment';
 import Underscore from 'underscore';
-import numeralT from 'numeral';
 import backboneT from 'backbone';
 import LocalizationService from '../src/services/LocalizationService';
 
@@ -26,8 +25,6 @@ declare var Core: coreApi;
 declare var moment: momentT;
 
 declare var Backbone: backboneT;
-
-declare var numeral: numeralT;
 
 declare var Localizer: LocalizationService;
 
