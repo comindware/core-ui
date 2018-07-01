@@ -151,10 +151,12 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         let val = value;
 
         if (typeof val === 'string' && val !== '') {
+            /*
             if (numeral.localeData().delimiters.decimal !== '.') {
                 val = val.replace('.', numeral.localeData().delimiters.decimal);
             }
             val = numeral._.stringToNumber(val);
+            */
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;
             } else if (val === Number.NEGATIVE_INFINITY) {
