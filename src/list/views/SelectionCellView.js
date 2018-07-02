@@ -175,11 +175,11 @@ export default Marionette.View.extend({
     },
 
     __handleSelection() {
-        this.ui.checkbox.addClass(classes.selected);
+        this.el.classList.add(classes.selected);
     },
 
     __handleDeselection() {
-        this.ui.checkbox.removeClass(classes.selected);
+        this.el.classList.remove(classes.selected);
     },
 
     __updateState() {

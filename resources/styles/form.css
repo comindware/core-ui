@@ -312,7 +312,8 @@ input[type="checkbox"].checkbox {
     align-items: center;
 }
 .editor_date-time .dropdown {
-    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100px;
 }
 .editor_date-time .input{
     border: 0;

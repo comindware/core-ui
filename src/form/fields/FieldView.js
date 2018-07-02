@@ -182,6 +182,8 @@ export default Marionette.View.extend({
     __createEditor(options, fieldId, ConstructorFn) {
         this.editor = new ConstructorFn({
             schema: this.schema,
+            form: options.form,
+            field: this,
             key: options.key,
             model: this.model,
             id: this.__createEditorId(options.key),
