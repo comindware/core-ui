@@ -1,7 +1,7 @@
 import list from 'list';
 import DefaultReferenceModel from '../models/DefaultReferenceModel';
 
-const createDemoData = function() {
+const createDemoData = function () {
     return _.times(1000, i => {
         const id = `task.${i + 1}`;
         return {
@@ -46,7 +46,7 @@ export default Marionette.Object.extend({
                     this.collection.filter(null);
                 }
 
-                this.totalCount = 1000;
+                this.totalCount = 1001;
                 resolve({
                     collection: this.collection.toJSON(),
                     totalCount: this.totalCount
