@@ -16,8 +16,7 @@ export default function () {
             min: -300,
             max: 300,
             step: 3,
-            allowFloat: false,
-            format: 'currency'
+            allowFloat: false
         }),
         presentation: '{{numberValue}}',
         isEditor: true

@@ -194,6 +194,18 @@ export default {
                     ]
                 },
                 {
+                    id: 'CurrencyEditor',
+                    displayName: 'Currency Editor',
+                    description: 'Simple Currency editor',
+                    attributesConfig: [
+                        {
+                            attribute: 'autocommit',
+                            values: 'true, false',
+                            default: 'false'
+                        }
+                    ]
+                },
+                {
                     id: 'BooleanEditor',
                     displayName: 'Boolean Editor',
                     description: 'Simple boolean editor',
