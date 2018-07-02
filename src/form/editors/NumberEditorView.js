@@ -117,8 +117,10 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
                     value = Math.floor(value);
                 }
                 if (this.options.format) {
-                    formattedValue = numeral(value).format(this.options.format);
-                    value = numeral._.stringToNumber(formattedValue);
+                    formattedValue = new Intl.NumberFormat(Core.services.LocalizationService.langCode, {
+                        style: 'currency',
+                        currency: 'RUB'
+                    }).format(value);
                 }
             } else {
                 return;

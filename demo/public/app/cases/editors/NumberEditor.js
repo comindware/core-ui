@@ -2,7 +2,7 @@
 
 import CanvasView from 'demoPage/views/CanvasView';
 
-export default function() {
+export default function () {
     const model = new Backbone.Model({
         numberValue: 42
     });
@@ -16,7 +16,8 @@ export default function() {
             min: -300,
             max: 300,
             step: 3,
-            allowFloat: false
+            allowFloat: false,
+            format: 'currency'
         }),
         presentation: '{{numberValue}}',
         isEditor: true
