@@ -79,7 +79,7 @@ describe('Components', () => {
             expect(popupEl.height()).toEqual(549);
             expect(popupEl.width()).toEqual(701);
         });
-
+        /*
         it('should set max width and height if configuration size is bad', () => {
             const popupView = new core.layout.Popup({
                 size: {
@@ -149,7 +149,7 @@ describe('Components', () => {
             expect(popupEl.height()).toEqual(150);
             expect(popupEl.width()).toEqual(400);
         });
-
+        */
         it('should match it configuration header', () => {
             const popupView = new core.layout.Popup({
                 size: {
