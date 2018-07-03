@@ -49,7 +49,7 @@ module.exports = options => {
                 {
                     test: /\.js$/,
                     loader: 'babel-loader',
-                    exclude: [pathResolver.node_modules(), pathResolver.source('external/rangyinputs-jquery-src.js')],
+                    exclude: [pathResolver.node_modules()],
                     options: {
                         presets: [
                             ['flow'],
@@ -176,15 +176,6 @@ module.exports = options => {
                     }
                 },
                 {
-                    test: /rangyinputs/,
-                    use: [
-                        {
-                            loader: 'imports-loader',
-                            options: 'jquery'
-                        }
-                    ]
-                },
-                {
                     test: /bootstrap-datetime-picker/,
                     use: [
                         {
@@ -263,7 +254,6 @@ module.exports = options => {
         resolve: {
             modules: [pathResolver.source(), pathResolver.node_modules()],
             alias: {
-                rangyinputs: pathResolver.source('external/rangyinputs-jquery-src'),
                 'backbone.trackit': pathResolver.source('external/backbone.trackit.js'),
                 'jquery-ui': pathResolver.source('external/jquery-ui.js'),
                 handlebars: 'handlebars/dist/handlebars',
