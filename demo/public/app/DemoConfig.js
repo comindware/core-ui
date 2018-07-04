@@ -397,6 +397,11 @@ export default {
                     id: 'treeGrid',
                     displayName: 'Tree Grid',
                     description: 'Tree-like Grid'
+                },
+                {
+                    id: 'complexGrid',
+                    displayName: 'Complex grid',
+                    description: 'Mega Grid'
                 }
             ]
         },

@@ -481,6 +481,7 @@
 }
 
 .cell .editor_checkbox {
+    display: flex!important;
     align-items: center;
 }
 
