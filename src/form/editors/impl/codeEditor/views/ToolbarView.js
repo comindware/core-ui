@@ -37,15 +37,18 @@ export default Marionette.View.extend({
         this.ui.minimize.show();
     },
 
+    minimize() {
+        this.ui.maximize.show();
+        this.ui.minimize.hide();
+    },
+
     __onMaximize() {
-        this.ui.maximize.hide();
-        this.ui.minimize.show();
+        this.maximize();
         this.trigger('maximize');
     },
 
     __onMinimize() {
-        this.ui.maximize.show();
-        this.ui.minimize.hide();
+        this.minimize();
         this.trigger('minimize');
     }
 });
