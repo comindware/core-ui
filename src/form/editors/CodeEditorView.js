@@ -4,6 +4,7 @@ import template from './impl/codeEditor/templates/codeEditor.html';
 import BaseLayoutEditorView from './base/BaseLayoutEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
+import { keyCode } from 'utils';
 
 const showModes = {
     normal: 'normal',
@@ -48,7 +49,8 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
 
     events: {
         'click @ui.editBtn': '__onEdit',
-        'click @ui.clearBtn': '__onClear'
+        'click @ui.clearBtn': '__onClear',
+        keydown: '__handleKeydown'
     },
 
     template: Handlebars.compile(template),
@@ -61,6 +63,18 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
         _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
     },
 
+    __handleKeydown(e) {
+        switch (e.keyCode) {
+            case keyCode.ESCAPE:
+                this.editor.minimize();
+                this.__onMinimize();
+                break;
+            default:
+                break;
+        }
+        e.stopPropagation();
+    },
+
     onRender() {
         this.editor = new CodemirrorView({
             mode: this.options.mode,
@@ -69,12 +83,7 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
         });
         this.editor.on('change', this.__change, this);
         this.editor.on('maximize', () => this.ui.fadingPanel.show());
-        this.editor.on('minimize', () => {
-            this.ui.fadingPanel.hide();
-            if (this.options.showMode === showModes.button) {
-                this.ui.editor.hide();
-            }
-        });
+        this.editor.on('minimize', () => this.__onMinimize());
         this.showChildView('editorContainer', this.editor);
         this.editor.setValue(this.value || '');
         this.ui.fadingPanel.hide();
@@ -119,6 +128,13 @@ export default (formRepository.editors.Code = BaseLayoutEditorView.extend({
         this.ui.editor.show();
         this.ui.fadingPanel.show();
         this.editor.maximize();
+    },
+
+    __onMinimize() {
+        this.ui.fadingPanel.hide();
+        if (this.options.showMode === showModes.button) {
+            this.ui.editor.hide();
+        }
     },
 
     __onClear() {
