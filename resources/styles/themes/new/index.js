@@ -163,6 +163,11 @@ const variables = {
 module.exports.variables = variables;
 
 module.exports.apply = {
+    'absolute-center-theme': {
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)'
+    },
     'button-theme': {
         display: 'inline-block',
         'vertical-align': 'middle',
@@ -207,10 +212,7 @@ module.exports.apply = {
     },
     'dropdown-caret-theme': {
         'font-size': '16px',
-        position: 'absolute',
         right: '6px',
-        top: '50%',
-        transform: 'translateY(-50%)',
         color: variables['blue-300']
     },
     'bubbles-item-theme': {

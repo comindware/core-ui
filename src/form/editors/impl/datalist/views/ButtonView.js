@@ -1,6 +1,7 @@
 // @flow
 import template from '../templates/button.hbs';
 import BubbleCollection from './BubbleCollectionView';
+import LoadingView from './../../reference/views/LoadingView';
 
 const classes = {
     CLASS_NAME: 'bubbles',
@@ -22,7 +23,8 @@ export default Marionette.View.extend({
         collectionRegion: {
             el: '.js-collection-region',
             replaceElement: true
-        }
+        },
+        loadingRegion: '.js-loading-region'
     },
 
     events: {
@@ -45,5 +47,17 @@ export default Marionette.View.extend({
 
     blur() {
         this.collectionView.blur();
+    },
+
+    setLoading(state) {
+        if (this.isDestroyed()) {
+            return;
+        }
+        // this.isLoading = state;
+        if (state) {
+            this.showChildView('loadingRegion', new LoadingView());
+        } else {
+            this.getRegion('loadingRegion').reset();
+        }
     }
 });
