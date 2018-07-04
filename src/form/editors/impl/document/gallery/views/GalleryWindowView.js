@@ -39,10 +39,11 @@ export default Marionette.View.extend({
     },
 
     setLoading(visible) {
+        const loadingRegion = this.getRegion('loadingRegion');
         if (visible) {
-            this.showChildView('loadingRegion', new LoadingView());
+            loadingRegion.show(new LoadingView());
         } else {
-            this.loadingRegion.reset();
+            loadingRegion.reset();
         }
     },
 
