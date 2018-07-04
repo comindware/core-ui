@@ -313,7 +313,7 @@ export default Marionette.Behavior.extend({
         }
     },
 
-    onAttach() {
+    onRender() {
         this.__renderForm();
     },
 
