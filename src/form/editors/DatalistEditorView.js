@@ -73,9 +73,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selectableBehavior: 'multi'
         });
 
-        this.controller =
-            this.options.controller ||
-            new StaticController({
+        this.controller
+            = this.options.controller
+            || new StaticController({
                 collection: options.collection
             });
 
@@ -508,6 +508,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         if (this.isFilterDeayed) {
             this.updateFilter(this.searchText, true);
         } else {
+            this.__tryPointFirstRow();
             this.__onValueSelect();
         }
     }
