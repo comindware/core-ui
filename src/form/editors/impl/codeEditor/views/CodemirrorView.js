@@ -161,6 +161,11 @@ export default Marionette.View.extend({
         this.__onMaximize();
     },
 
+    minimize() {
+        this.toolbar.minimize();
+        this.__onMinimize();
+    },
+
     setReadonly(readonly) {
         if (this.codemirror) {
             this.codemirror.setOption('readOnly', readonly);
@@ -182,6 +187,7 @@ export default Marionette.View.extend({
         this.$el.addClass(classes.maximized);
         this.ui.editor.css('height', '100%');
         this.codemirror.refresh();
+        this.codemirror.focus();
         this.isMaximized = true;
     },
 
