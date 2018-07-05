@@ -377,6 +377,8 @@
 
 <http://comindware.com/text/core/grid/actions#delete> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2018-05-21T13:14:40.8953858Z"; l10n:modificationDate "2018-05-21T13:14:48.2850066Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Delete"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
+<http://comindware.com/text/core/grid/actions#showArchived> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Pavel Koroteev"; l10n:modifiedBy "Pavel Koroteev"; l10n:creationDate "2018-07-04T13:25:58.5376814Z"; l10n:modificationDate "2018-07-04T13:26:03.1076814Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Show archived"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
+
 <http://comindware.com/text/core/grid/actions#unArchive> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2018-05-21T13:20:18.5327626Z"; l10n:modificationDate "2018-05-21T13:20:19.9428802Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Unarchive"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].
 
 <http://comindware.com/text/core/grid/actions/archive#confirm> a l10n:Resource; l10n:descr ""; l10n:isLocalizable true; l10n:needsReview true; l10n:createdBy "Stanislav Guryev"; l10n:modifiedBy "Stanislav Guryev"; l10n:creationDate "2018-05-21T13:18:18.7596962Z"; l10n:modificationDate "2018-05-21T13:18:19.8827897Z"; l10n:text [a l10n:Text; l10n:lang l10n:en; l10n:data "Confirm"; l10n:originalData "{62D69EB8-800C-480F-9571-E11F3DF477C0}"].

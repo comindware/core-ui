@@ -13,7 +13,8 @@ export default function() {
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
             referenceCell: { name: 'Ref 1' },
             enumCell: { valueExplained: ['123'] },
-            documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }]
+            documentCell: [{ id: '1', columns: ['Doc 1', 'url'] }, { id: '2', columns: ['Doc 2', 'url2'] }],
+            isDisabled: !!(i % 2)
         });
     }
 
@@ -53,6 +54,11 @@ export default function() {
             key: 'documentCell',
             type: 'Document',
             title: 'Document Cell'
+        },
+        {
+            key: 'isDisabled',
+            type: 'Boolean',
+            title: 'Status'
         }
     ];
 

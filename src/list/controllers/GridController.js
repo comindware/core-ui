@@ -20,6 +20,8 @@ export default Marionette.Object.extend({
     initialize(options = {}) {
         this.options = Object.assign({}, defaultOptions, options);
         this.__createView(this.options);
+        this.__toggleShowArchived();
+        this.__toggleShowArchived();
     },
 
     setLoading(state) {
@@ -93,6 +95,17 @@ export default Marionette.Object.extend({
 
     __clearFilter(collection) {
         collection.filter();
+    },
+
+    __toggleShowArchived(model) {
+        this.__showDisabled = !this.__showDisabled;
+        model && model.set('checked', this.__showDisabled);
+
+        if (this.__showDisabled) {
+            this.options.collection.filter();
+        } else {
+            this.options.collection.filter((mod) => !mod.get('isDisabled'));
+        }
     },
 
     __highlightCollection(text, collection) {
@@ -185,6 +198,8 @@ export default Marionette.Object.extend({
                     }
                 });
                 break;
+            case 'toggleShowArchived':
+                this.__toggleShowArchived(model, selected);
             case 'add':
             default:
                 this.__triggerAction(model, selected);
