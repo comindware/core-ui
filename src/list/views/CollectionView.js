@@ -354,9 +354,9 @@ export default Marionette.CompositeView.extend({
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
-            const scrollTop =
-                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
-                this.childHeight;
+            const scrollTop
+                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
+                * this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }
@@ -374,9 +374,10 @@ export default Marionette.CompositeView.extend({
         const oldViewportHeight = this.state.viewportHeight;
         const oldAllItemsHeight = this.state.allItemsHeight;
 
-        const availableHeight = this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
-            ? this.el.parentElement.clientHeight
-            : window.innerHeight;
+        const availableHeight =
+            this.el.parentElement && this.el.parentElement.clientHeight && this.el.parentElement.clientHeight !== this.childHeight
+                ? this.el.parentElement.clientHeight
+                : window.innerHeight;
 
         if (this.children && this.children.length && !this.isEmpty()) {
             const firstChild = this.children.first().el;
@@ -395,7 +396,7 @@ export default Marionette.CompositeView.extend({
         const allItemsHeight = (this.state.allItemsHeight = this.childHeight * this.collection.length);
 
         if (allItemsHeight !== oldAllItemsHeight) {
-            this.$el.height(allItemsHeight);
+            this.$el.height(allItemsHeight || '');
             if (this.gridEventAggregator) {
                 this.gridEventAggregator.trigger('update:height', allItemsHeight);
             }

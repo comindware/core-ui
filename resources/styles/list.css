@@ -434,7 +434,10 @@
     overflow: hidden;
     min-width: 100px;
 }
-
+.cell_editable {
+    display: flex;
+    align-items: center;
+}
 .cell_selection {
     position: relative;
     display: flex;
@@ -460,12 +463,18 @@
 }
 
 .cell .editor{
+    display: inline-block;
     height: 100%;
     line-height: initial;
     border: none;
     background-color: transparent;
 }
-
+.cell .js-tree-first-cell {
+    flex: none;
+}
+.cell .js-tree-first-cell + .editor {
+    flex: 1 1 auto;
+}
 .dragover .cell,
 .dragover.cell,
 .dragover .grid-header-column{
@@ -481,7 +490,7 @@
 }
 
 .cell .editor_checkbox {
-    display: flex!important;
+    display: flex;
     align-items: center;
 }
 
