@@ -104,7 +104,7 @@ export default Marionette.Object.extend({
         if (this.__showDisabled) {
             this.options.collection.filter();
         } else {
-            this.options.collection.filter((mod) => mod.get('isDisabled'));
+            this.options.collection.filter((mod) => !mod.get('isDisabled'));
         }
     },
 
