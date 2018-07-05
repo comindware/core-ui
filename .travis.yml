@@ -3,6 +3,7 @@ node_js:
   - '8'
 #os: osx todo restore safari
 install: ./build/npm-install.sh
+before_install: if [[ `npm -v` != 6* ]]; then npm i -g npm; fi
 script:
   - npm run deploy
 after_script:
@@ -17,13 +18,13 @@ deploy:
     on:
       tags: true
       repo: comindware/core-ui
-      branch: 1.4/release
+      branch: master
   - provider: script
     script: npm run deploy:pages
     skip_cleanup: true
     on:
       tags: true
       repo: comindware/core-ui
-      branch: 1.4/release
+      branch: master
 addons:
   firefox: "latest"

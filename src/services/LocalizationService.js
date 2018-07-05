@@ -45,7 +45,6 @@ const service: LocalizationService = {
         //End of hack
 
         moment.locale(this.langCode);
-        numeral.locale(this.langCode);
     },
 
     get(locId: string) {

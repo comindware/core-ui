@@ -22,10 +22,6 @@ export default Marionette.View.extend({
 
     className: 'columns-select',
 
-    ui: {
-        maxQuantityInfo: '.js-max-quantity-info'
-    },
-
     events: {
         'click .js-move-right-button': '__moveRight',
         'click .js-move-left-button': '__moveLeft',
@@ -44,9 +40,6 @@ export default Marionette.View.extend({
 
     onRender() {
         const maxQuantitySelected = this.model.get('maxQuantitySelected');
-        if (maxQuantitySelected) {
-            this.ui.maxQuantityInfo.text(helpers.getPluralForm(maxQuantitySelected, this.options.maxQuantityText).replace('{0}', maxQuantitySelected));
-        }
 
         if (this.model.get('showToolbar')) {
             // Available toolbar

@@ -160,7 +160,8 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
      * @param {Number} position Новая позиция курсора.
      * */
     setCaretPos(position) {
-        this.ui.textarea.setSelection(position, position);
+        this.ui.textarea.selectionStart = position;
+        this.ui.textarea.selectionEnd = position;
     },
 
     setValue(value) {
@@ -183,14 +184,15 @@ export default (formRepository.editors.TextArea = BaseItemEditorView.extend({
         if (e.ctrlKey) {
             return;
         }
-        if ([keyCode.LEFT,
-keyCode.RIGHT,
-keyCode.HOME,
-keyCode.END].indexOf(e.keyCode) === -1) {
+        if ([keyCode.LEFT, keyCode.RIGHT, keyCode.HOME, keyCode.END].indexOf(e.keyCode) === -1) {
             return;
         }
 
-        const caret = this.ui.textarea.getSelection();
+        const caret = {
+            start: this.ui.textarea[0].selectionStart,
+            end: this.ui.textarea[0].selectionEnd
+        };
+
         if (this.oldCaret && this.oldCaret.start === caret.start && this.oldCaret.end === caret.end) {
             return;
         }
@@ -207,7 +209,11 @@ keyCode.END].indexOf(e.keyCode) === -1) {
         }
 
         this.oldText = text;
-        const caret = this.ui.textarea.getSelection();
+
+        const caret = {
+            start: this.ui.textarea[0].selectionStart,
+            end: this.ui.textarea[0].selectionEnd
+        };
 
         this.trigger('input', text, {
             start: caret.start,

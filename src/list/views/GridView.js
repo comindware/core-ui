@@ -11,6 +11,7 @@ import GridHeaderView from './GridHeaderView';
 import NoColumnsDefaultView from './NoColumnsView';
 import LoadingChildView from './LoadingRowView';
 import ToolbarView from '../../components/toolbar/ToolbarView';
+import MobileService from '../../services/MobileService';
 import LoadingBehavior from '../../views/behaviors/LoadingBehavior';
 import SearchBarView from '../../views/SearchBarView';
 
@@ -417,11 +418,14 @@ export default Marionette.View.extend({
         const columnClass = this.columnClasses[index];
         const regexp = new RegExp(`.${columnClass} { flex: [0,1] 0 [+, -]?\\S+\\.?\\S*; } `);
         let basis;
+        let widthCell = '';
         if (width > 0) {
             if (width < 1) {
                 basis = `${width * 100}%`;
+                widthCell = `max-width: ${width * 100}%`;
             } else {
                 basis = `${width}px`;
+                widthCell = `max-width: ${width}px`;
             }
         } else {
             basis = '0%';
@@ -429,6 +433,18 @@ export default Marionette.View.extend({
 
         const grow = width > 0 ? 0 : 1;
         const newValue = `.${columnClass} { flex: ${grow} 0 ${basis}; } `;
+
+        if (MobileService.isIE) {
+            if (widthCell) {
+                const regexpCells = new RegExp(`.cell.${columnClass} { max-width: [0-9]*\\.?[0-9]*[%,px;]* } `);
+                const newCellValue = `.cell.${columnClass} { ${widthCell}; } `;
+                if (regexpCells.test(style.innerHTML)) {
+                    style.innerHTML = style.innerHTML.replace(regexpCells, newCellValue);
+                } else {
+                    style.innerHTML += newCellValue;
+                }
+            }
+        }
 
         if (regexp.test(style.innerHTML)) {
             style.innerHTML = style.innerHTML.replace(regexp, newValue);

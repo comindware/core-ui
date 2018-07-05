@@ -2,7 +2,7 @@
 
 import CanvasView from 'demoPage/views/CanvasView';
 
-export default function() {
+export default function () {
     const model = new Backbone.Model({
         numberValue: 42
     });

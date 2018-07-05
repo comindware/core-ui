@@ -114,14 +114,18 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             parsed = this.__parse(value);
             if (parsed !== null) {
                 if (!this.options.allowFloat) {
-                    value = Math.floor(value);
+                    value = Math.floor(parsed);
+                } else {
+                    value = parsed;
                 }
                 if (this.options.format) {
-                    formattedValue = numeral(value).format(this.options.format);
-                    value = numeral._.stringToNumber(formattedValue);
+                    formattedValue = new Intl.NumberFormat(Core.services.LocalizationService.langCode, {
+                        minimumIntegerDigits: 1,
+                        minimumFractionDigits: 2
+                    }).format(parsed);
                 }
             } else {
-                return;
+                value = null;
             }
         } else if (value === '') {
             value = null;
@@ -135,12 +139,11 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
                 this.$el.prop('title', value);
             }
         }
-        if (!suppressRender) {
-            if (formattedValue) {
-                this.ui.input.val(formattedValue);
-            } else {
-                this.ui.input.val(value);
-            }
+
+        if (formattedValue) {
+            this.ui.input.val(formattedValue);
+        } else {
+            this.ui.input.val(value);
         }
         if (triggerChange) {
             this.__triggerChange();
@@ -151,10 +154,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         let val = value;
 
         if (typeof val === 'string' && val !== '') {
-            if (numeral.localeData().delimiters.decimal !== '.') {
-                val = val.replace('.', numeral.localeData().delimiters.decimal);
-            }
-            val = numeral._.stringToNumber(val);
+            val = this.__parseNumber(val);
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;
             } else if (val === Number.NEGATIVE_INFINITY) {
@@ -177,5 +177,17 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         this.ui.input[0].setAttribute('min', this.options.min);
         this.ui.input[0].setAttribute('max', this.options.max);
         this.ui.input[0].setAttribute('step', this.options.step);
+    },
+
+    __getNumberSeparator() {
+        return new Intl.NumberFormat(Core.services.LocalizationService.langCode).format(1111).substring(1, 2);
+    },
+
+    __parseNumber(value) {
+        const hundredsSeparator = this.__getNumberSeparator();
+
+        const newValue = value.replace(new RegExp(`${hundredsSeparator}*`, 'g'), '');
+
+        return parseFloat(newValue.replace(/[^\d\.\,]*/g, ''));
     }
 }));

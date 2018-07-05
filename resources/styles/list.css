@@ -63,6 +63,8 @@
     display: flex;
     flex: 0 0 auto;
     overflow-y: scroll;
+    -ms-scrollbar-arrow-color: white;
+    -ms-scrollbar-track-color: white;
 }
 
 .grid-content-view {
@@ -77,6 +79,8 @@
     overflow: hidden;
     flex-shrink: 0;
     overflow-x: scroll;
+    -ms-scrollbar-arrow-color: white;
+    -ms-scrollbar-track-color: white;
 }
 
 .grid-selection-panel {
@@ -477,6 +481,7 @@
 }
 
 .cell .editor_checkbox {
+    display: flex!important;
     align-items: center;
 }
 

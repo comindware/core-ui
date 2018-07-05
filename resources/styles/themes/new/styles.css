@@ -246,10 +246,13 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 
 .cell .editor {
-  position: absolute;
   left: 0;
   right: 0;
-  padding: 0 20px 0 15px;
+  padding: 0;
+  display: inline;
+}
+.cell .editor .icon-remove {
+  margin-right: -15px; 
 }
 .cell .editor.editor_bubble {
   padding: 0 9px 0 15px;
