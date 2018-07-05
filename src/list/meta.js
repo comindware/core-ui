@@ -33,6 +33,11 @@ export const getDefaultActions = () => [
         id: 'delete',
         name: Localizer.get('CORE.GRID.ACTIONS.DELETE'),
         contextType: contextTypes.any
+    },
+    {
+        id: 'toggleShowArchived',
+        name: Localizer.get('CORE.GRID.ACTIONS.SHOWARCHIVED'),
+        checkbox: true
     }
 ];
 

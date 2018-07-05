@@ -240,7 +240,7 @@ module.exports.apply = {
         cursor: 'not-allowed'
     },
     'checkbox-theme': {
-        display: 'flex',
+        display: 'inline-flex',
         'flex-shrink': '0',
         'align-items': 'center',
         'justify-content': 'center'
