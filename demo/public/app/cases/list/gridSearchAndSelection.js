@@ -61,15 +61,24 @@ export default function() {
         columns,
         selectableBehavior: 'multi',
         showSearch: true,
-        showSelection: true,
+        showCheckbox: true,
         showToolbar: true,
         collection: new Backbone.Collection(dataArray),
         draggable: true,
-        showRowIndex: true
+        showRowIndex: true,
+        excludeActions: ['delete'],
+        additionalActions: [
+            {
+                id: 'showArchived',
+                name: 'showArchived',
+                type: 'Checkbox',
+                isChecked: true
+            }
+        ]
     });
 
     // 4. Show created views
-    return new CanvasView({
+    const canvasView = new CanvasView({
         view: gridController.view,
         canvas: {
             height: '250px',
@@ -79,4 +88,27 @@ export default function() {
             float: 'left'
         }
     });
+
+    canvasView.__executeAction = (model, selected) => {
+        switch (model.get('id')) {
+            case 'add':
+                //some code here
+                break;
+            case 'archive':
+                //some code here
+                break;
+            case 'unarchive':
+                //some code here
+                break;
+            case 'showArchived':
+                console.log(model.get('isChecked'));
+                break;
+            default:
+                break;
+        };
+    }
+
+    canvasView.listenTo(gridController, 'execute', canvasView.__executeAction);
+
+    return canvasView;
 }
