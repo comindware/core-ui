@@ -28,7 +28,7 @@ export default Marionette.Object.extend({
                 model
             });
             this.__togglePopupRegion(true);
-            window.application.popupRegion.show(this.view);
+            Core.services.WindowService.showPopup(this.view);
             return false;
         }
         return true;
@@ -36,7 +36,7 @@ export default Marionette.Object.extend({
 
     __closeGallery() {
         this.__togglePopupRegion(false);
-        window.application.popupRegion.empty();
+        Core.services.WindowService.closePopup();
     },
 
     __getImage(model) {

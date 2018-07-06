@@ -323,6 +323,10 @@ export default Marionette.Behavior.extend({
         }
     },
 
+    onAttach() {
+        Object.keys(this.form.fields).forEach(key => this.form.fields[key].triggerMethod('attach'));
+    },
+
     __renderForm() {
         let model = this.options.model;
         if (_.isFunction(model)) {

@@ -36,11 +36,12 @@ export default Marionette.View.extend({
         },
         addNewButtonRegion: '.js-add-new-button-region',
         listTitleRegion: '.js-list-title-region',
-        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region',
+        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
     },
 
     onAttach() {
         const collection = this.model.get('collection');
+
         this.listView = list.factory.createDefaultList({
             collection,
             listViewOptions: {

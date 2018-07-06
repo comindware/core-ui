@@ -50,11 +50,14 @@ export default Marionette.View.extend({
 
     __getFilterValue() {
         return (
-            this.ui.input
-                .val()
+            this.__getRawValue()
                 .toLowerCase()
                 .trim() || ''
         );
+    },
+
+    __getRawValue() {
+        return this.ui.input.val();
     },
 
     updateInput(value = '') {
@@ -65,7 +68,7 @@ export default Marionette.View.extend({
         const value = this.__getFilterValue();
         switch (e.keyCode) {
             case 8: {
-                if (value.length === 0) {
+                if (this.__getRawValue().length === 0) {
                     if (!this.options.enabled) {
                         return;
                     }
