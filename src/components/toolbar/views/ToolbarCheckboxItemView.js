@@ -26,7 +26,7 @@ export default Marionette.View.extend({
 
     __handleClick() {
         const newState = !this.model.get('isChecked');
-        this.trigger('action:click', this.model, newState);
         this.model.set('isChecked', newState);
+        this.trigger('action:click', this.model);
     }
 });

@@ -6,9 +6,9 @@ import factory from '../factory';
 
 /*
  * @param {Array} options.excludeActions Array of strings. Example: <code>[ 'archive', 'delete' ]</code>.
- * @param {Array} options.additionalActions Array of objects <code>[ id,  displayText,
- * type=button'|'checkbox', defaultValue, onChange, contextType, className ]</code>.
- * @param {Boolean} options.disableMultiSelection show or hide checkbox
+ * @param {Array} options.additionalActions Array of objects <code>[ id,  name,
+ * type=button'|'checkbox', isChecked, iconClass, severity]</code>.
+ * @param {Boolean} options.showCheckbox show or hide checkbox
  */
 
 const defaultOptions = {
@@ -34,7 +34,7 @@ export default Marionette.Object.extend({
         const debounceUpdateAction = _.debounce(() => this.__updateActions(allToolbarActions, collection), 10);
         this.__updateActions(allToolbarActions, collection);
         if (this.options.showToolbar) {
-            if (this.options.showSelection) {
+            if (this.options.showCheckbox) {
                 this.listenTo(collection, 'check:all check:some check:none', debounceUpdateAction);
             } else {
                 this.listenTo(collection, 'select:all select:some select:none deselect:one select:one', debounceUpdateAction);
@@ -139,7 +139,7 @@ export default Marionette.Object.extend({
     },
 
     __getSelectedItems(collection) {
-        const selected = (this.options.showSelection ? collection.checked : collection.selected) || {};
+        const selected = (this.options.showCheckbox ? collection.checked : collection.selected) || {};
         if (selected instanceof Backbone.Model) {
             return [selected];
         }
