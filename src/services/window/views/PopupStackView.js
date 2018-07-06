@@ -136,7 +136,7 @@ export default Marionette.View.extend({
 
     __removePopup(popupDef) {
         this.removeRegion(popupDef.popupId);
-        popupDef.regionEl.remove();
+        this.el.removeChild(popupDef.regionEl);
         this.__stack.splice(this.__stack.indexOf(popupDef), 1);
         this.trigger('popup:close', popupDef.popupId);
     },
