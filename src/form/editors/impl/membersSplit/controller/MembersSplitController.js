@@ -101,8 +101,8 @@ export default Marionette.Object.extend({
         });
     },
 
-    __onItemsMove(typeFrom, typeTo, all) {
-        this.moveItems(typeFrom, typeTo, all);
+    __onItemsMove(...args) {
+        this.moveItems(...args);
         setTimeout(() => this.updateMembers(), 100);
     },
 
@@ -147,7 +147,7 @@ export default Marionette.Object.extend({
         });
     },
 
-    moveItems(typeFrom, typeTo, all) {
+    moveItems(typeFrom, typeTo, all, model) {
         const modelsTo = this.model.get(typeTo);
         const allSelectedModels = _.clone(modelsTo);
         const modelsFrom = this.model.get(typeFrom);
@@ -160,7 +160,8 @@ export default Marionette.Object.extend({
             }
         }
 
-        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.selected);
+        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.checked);
+        model && selected.push(model);
         if (!all && !selected.length) {
             return;
         }
@@ -193,9 +194,9 @@ export default Marionette.Object.extend({
             modelsFrom.remove(model);
             modelsTo.add(model, { delayed: false });
             model.unhighlight();
-            if (newSelectedFragment) {
-                model.highlight(newSelectedFragment);
-            }
+            // if (newSelectedFragment) {
+            //     model.highlight(newSelectedFragment);
+            // }
             if (!all) {
                 model.select();
             }
