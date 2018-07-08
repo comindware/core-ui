@@ -63,7 +63,7 @@ export default {
                 case 'custom':
                 default: {
                     if (child.type) {
-                        if (child.type.includes('field') !== -1) {
+                        if (child.type.includes('field')) {
                             return elementsFactory.createFieldAnchor(
                                 child.key,
                                 Object.assign(
@@ -74,7 +74,7 @@ export default {
                                     { uniqueFormId: this.__uniqueFormId }
                                 )
                             );
-                        } else if (child.type.includes('editor') !== -1) {
+                        } else if (child.type.includes('editor')) {
                             return elementsFactory.createEditorAnchor(
                                 child.key,
                                 Object.assign(

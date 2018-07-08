@@ -71,6 +71,7 @@ export default function() {
                     },
                     {
                         type: 'grid',
+                        class: 'my-custon__class',
                         columns: [
                             {
                                 key: '11',
