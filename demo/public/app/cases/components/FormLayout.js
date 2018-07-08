@@ -1,7 +1,7 @@
 export default function() {
     return new core.layout.Form({
         model: new Backbone.Model({
-            1: 'bar',
+            1: 'text',
             2: 123,
             3: 'foo',
             4: '2015-07-20T10:46:37Z',
@@ -17,6 +17,11 @@ export default function() {
             {
                 type: 'v-container',
                 items: [
+                    {
+                        type: 'plainText',
+                        class: 'my-awsome__class',
+                        text: '<div style="background-color:red;"></div>'
+                    },
                     {
                         type: 'Text-editor',
                         class: 'my-awsome__class',
