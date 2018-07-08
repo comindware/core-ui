@@ -1,5 +1,3 @@
-
-
 export default function() {
     return new core.layout.Form({
         model: new Backbone.Model({
@@ -12,7 +10,8 @@ export default function() {
             7: 456,
             8: '2015-07-20T10:46:37Z',
             9: 'dddddddddddddd',
-            10: 789
+            10: 789,
+            11: new Backbone.Collection([{}, {}])
         }),
         schema: [
             {
@@ -20,6 +19,7 @@ export default function() {
                 items: [
                     {
                         type: 'Text-editor',
+                        class: 'my-awsome__class',
                         key: 1
                     },
                     {
@@ -68,6 +68,18 @@ export default function() {
                                 key: 10
                             }
                         ]
+                    },
+                    {
+                        type: 'grid',
+                        columns: [
+                            {
+                                key: '11',
+                                dataType: 'String',
+                                title: 'My awsome column'
+                            }
+                        ],
+                        collection: new Backbone.Collection([{}, {}, {}, {}, {}, {}]),
+                        key: 11
                     }
                 ]
             }
