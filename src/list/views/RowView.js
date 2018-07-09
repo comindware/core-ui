@@ -40,9 +40,6 @@ export default Marionette.View.extend({
     events: {
         click: '__onClick',
         dblclick: '__onDblClick',
-        keydown: '__handleKeydown',
-        keydoup: '__handleKeydown',
-        keypress: '__handleKeydown',
         'click @ui.collapsibleButton': '__toggleCollapse',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',

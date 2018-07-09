@@ -111,16 +111,19 @@ export default Marionette.View.extend({
         }).view;
 
         selectedList.on('childview:dblclick', this.__moveLeft);
+        
+        this.listenTo(this.model.get('available'), 'move:right enter', this.__moveRight);
+        this.listenTo(this.model.get('selected'), 'move:left enter', this.__moveLeft);
 
         this.showChildView('selectedItemsListRegion', selectedList);
     },
 
-    __moveRight(modelOrEvent) {
-        this.channel.trigger('items:move', 'available', 'selected', false, (modelOrEvent instanceof Backbone.Model && modelOrEvent));
+    __moveRight(model) {
+        this.channel.trigger('items:move', 'available', 'selected', false, (model instanceof Backbone.Model && model));
     },
 
-    __moveLeft(modelOrEvent) {
-        this.channel.trigger('items:move', 'selected', 'available', false, (modelOrEvent instanceof Backbone.Model && modelOrEvent));
+    __moveLeft(model) {
+        this.channel.trigger('items:move', 'selected', 'available', false, (model instanceof Backbone.Model && model));
     },
 
     __moveRightAll() {

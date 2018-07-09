@@ -235,6 +235,10 @@ export default Marionette.CompositeView.extend({
             case keyCode.TAB:
                 return false;
             case keyCode.ENTER:
+                if (handle) {
+                    this.collection.trigger('enter');
+                }
+                return eventResult;
             case keyCode.DELETE:
             case keyCode.BACKSPACE:
             case keyCode.ESCAPE:
