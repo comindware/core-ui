@@ -96,7 +96,7 @@ export default () => {
         selectableBehavior: 'multi',
         showToolbar: true,
         showSearch: true,
-        showSelection: true,
+        showCheckbox: true,
         showRowIndex: true,
         collection,
         title: 'Editable grid'

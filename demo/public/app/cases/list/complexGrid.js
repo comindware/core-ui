@@ -95,7 +95,7 @@ export default function () {
             draggable: true,
             showToolbar: true,
             showSearch: true,
-            showSelection: true,
+            showCheckbox: true,
             draggable: true,
             showRowIndex: true,
             childrenAttribute: 'children'
