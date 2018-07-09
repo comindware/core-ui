@@ -69,6 +69,8 @@ export default Marionette.View.extend({
 
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
         this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
+
+        this.listenTo(this.listView, 'update:height', () => this.trigger('change:content'));
     },
 
     handleCommand(command) {
