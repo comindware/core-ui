@@ -22,6 +22,8 @@
 
 <http://comindware.com/text/core/form/editors/code#clear> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Очистить"; l10n:originalData "clear"].
 
+<http://comindware.com/text/core/form/editors/code#compile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Компилировать"; l10n:originalData "Compile"].
+
 <http://comindware.com/text/core/form/editors/code#edit> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Редактировать"; l10n:originalData "edit"].
 
 <http://comindware.com/text/core/form/editors/code#empty> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Не задано"; l10n:originalData "empty"].
@@ -38,7 +40,11 @@
 
 <http://comindware.com/text/core/form/editors/code#minimize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Свернуть"; l10n:originalData "Minimize"].
 
+<http://comindware.com/text/core/form/editors/code#nosuggestions> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "нет предложений"; l10n:originalData "no suggestions"].
+
 <http://comindware.com/text/core/form/editors/code#redo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Повторить"; l10n:originalData "Redo"].
+
+<http://comindware.com/text/core/form/editors/code#successfulcompile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Успешная компиляция"; l10n:originalData "Successful compile"].
 
 <http://comindware.com/text/core/form/editors/code#undo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Undo"].
 
@@ -203,6 +209,8 @@
 <http://comindware.com/text/core/form/editors/workSpaceItemSplit#usersSections> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Выбрано"; l10n:originalData "Selected"].
 
 <http://comindware.com/text/core/form/fields#errorField> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Ошибка при инициализации поля"; l10n:originalData "errorView"].
+
+<http://comindware.com/text/core/form/validation#code> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отношение кода к комментарию должно быть не менее 25%"; l10n:originalData "Ratio of the code to the commentary should not be less than 25%"].
 
 <http://comindware.com/text/core/form/validation#email> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Неверный формат адреса электронной почты"; l10n:originalData "email"].
 

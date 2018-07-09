@@ -1,11 +1,15 @@
 import template from '../templates/toolbar.html';
 
 export default Marionette.View.extend({
+    initialize(options) {
+        this.editor = options.editor;
+    },
     className: 'dev-code-editor-toolbar',
 
     template: Handlebars.compile(template),
 
     ui: {
+        compile: '.js-code-editor-compile',
         undo: '.js-code-editor-undo',
         redo: '.js-code-editor-redo',
         format: '.js-code-editor-format',
@@ -16,6 +20,7 @@ export default Marionette.View.extend({
     },
 
     triggers: {
+        'click @ui.compile': 'compile',
         'click @ui.undo': 'undo',
         'click @ui.redo': 'redo',
         'click @ui.format': 'format',
