@@ -693,6 +693,11 @@ svg.svg-grid-icons {
   padding-right: 5px;
 }
 
+.toolbar__icons_arrow {
+  display: inline-block;
+  margin: 0 -3px 0 5px;
+}
+
 .btn-separator {
   display: inline-block;
   width: var(--btn-separator-width);
