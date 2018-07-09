@@ -13,7 +13,7 @@ export default Marionette.View.extend({
 
         this.toolbarActions = this.__createActionsGroupsView();
         this.popupMenu = this.__createDropdownActionsView(this.menuItemsCollection);
-        this.listenTo(this.toolbarActions, 'actionSelected', action => this.trigger('command:execute', action));
+        this.listenTo(this.toolbarActions, 'actionSelected', model => this.trigger('command:execute', model));
         this.listenTo(this.popupMenu, 'execute', (action, model) => this.trigger('command:execute', model));
         const debounceRebuild = _.debounce(() => this.rebuildView(), 100);
         this.listenTo(Core.services.GlobalEventService, 'window:resize', debounceRebuild);

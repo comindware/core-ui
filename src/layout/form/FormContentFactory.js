@@ -7,6 +7,7 @@ import Group from '../group/GroupView';
 import Button from '../button/ButtonView';
 import Popup from '../popup/PopupView';
 import PlainText from '../plainText/PlainTextView';
+import GridController from '../../list/controllers/GridController';
 
 export default {
     __uniqueFormId: '',
@@ -52,12 +53,17 @@ export default {
                         text: child.text,
                         handler: child.handler
                     });
+                case 'grid': {
+                    const controller = new GridController(child);
+
+                    return controller.view;
+                }
                 case 'plainText':
                     return new PlainText(_.omit(child, 'type'));
                 case 'custom':
                 default: {
                     if (child.type) {
-                        if (child.type.includes('field') !== -1) {
+                        if (child.type.includes('field')) {
                             return elementsFactory.createFieldAnchor(
                                 child.key,
                                 Object.assign(
@@ -68,7 +74,7 @@ export default {
                                     { uniqueFormId: this.__uniqueFormId }
                                 )
                             );
-                        } else if (child.type.includes('editor') !== -1) {
+                        } else if (child.type.includes('editor')) {
                             return elementsFactory.createEditorAnchor(
                                 child.key,
                                 Object.assign(

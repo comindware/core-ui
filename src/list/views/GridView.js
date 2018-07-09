@@ -151,7 +151,7 @@ export default Marionette.View.extend({
             showRowIndex
         });
 
-        if (this.options.showSelection) {
+        if (this.options.showCheckbox) {
             const draggable = this.getOption('draggable');
             this.selectionPanelView = new SelectionPanelView({
                 collection: this.listView.collection,
@@ -238,7 +238,9 @@ export default Marionette.View.extend({
         dragleave: '__handleDragLeave'
     },
 
-    className: 'fr-collection',
+    className() {
+        return `${this.options.class || ''} fr-collection`;
+    },
 
     template: Handlebars.compile(template),
 
@@ -263,7 +265,7 @@ export default Marionette.View.extend({
             this.el.classList.add('grid__headless');
         }
 
-        if (this.options.showSelection) {
+        if (this.options.showCheckbox) {
             if (this.options.showHeader) {
                 this.showChildView('selectionHeaderRegion', this.selectionHeaderView);
             }
@@ -309,8 +311,8 @@ export default Marionette.View.extend({
         // }
     },
 
-    __executeAction(actionKind) {
-        this.trigger('execute:action', actionKind);
+    __executeAction(model) {
+        this.trigger('execute:action', model);
     },
 
     __onSearch(text) {
@@ -322,7 +324,7 @@ export default Marionette.View.extend({
 
     __bindListRegionScroll() {
         const headerRegionEl = this.options.showHeader && this.getRegion('headerRegion').el;
-        const selectionPanelRegionEl = this.options.showSelection && this.getRegion('selectionPanelRegion').el;
+        const selectionPanelRegionEl = this.options.showCheckbox && this.getRegion('selectionPanelRegion').el;
 
         this.getRegion('contentRegion').el.addEventListener('scroll', event => {
             if (headerRegionEl) {

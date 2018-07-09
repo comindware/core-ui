@@ -19,7 +19,8 @@ const defaultOptions = () => ({
     maskPlaceholder: '_',
     maskOptions: {},
     showTitle: true,
-    allowEmptyValue: true
+    allowEmptyValue: true,
+    class: undefined
 });
 
 /**
@@ -41,10 +42,7 @@ const defaultOptions = () => ({
  * */
 
 export default (formRepository.editors.Text = BaseItemEditorView.extend({
-    initialize(options = {}) {
-        const defOps = defaultOptions();
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defOps)), defOps);
-
+    initialize() {
         this.placeholder = this.options.emptyPlaceholder;
     },
 
@@ -70,7 +68,12 @@ export default (formRepository.editors.Text = BaseItemEditorView.extend({
         clearButton: '.js-clear-button'
     },
 
-    className: 'editor',
+    className() {
+        const defOps = defaultOptions();
+        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defOps)), defOps);
+
+        return `${this.options.class || ''} editor`;
+    },
 
     template: Handlebars.compile(template),
 
