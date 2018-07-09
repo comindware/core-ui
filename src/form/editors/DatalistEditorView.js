@@ -73,9 +73,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             selectableBehavior: 'multi'
         });
 
-        this.controller
-            = this.options.controller
-            || new StaticController({
+        this.controller =
+            this.options.controller ||
+            new StaticController({
                 collection: options.collection
             });
 
@@ -350,6 +350,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 });
             }
             this.dropdownView.buttonView.setLoading(false);
+            this.__tryPointFirstRow();
         });
     },
 
@@ -387,7 +388,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        if (this.getEnabled() && !this.getReadonly()) {
+        if (this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen) {
             const promise = this.updateFilter(null, true);
             if (promise) {
                 promise
@@ -502,13 +503,13 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onDropdownClose() {
         this.onBlur();
         this.panelCollection.pointOff();
+        this.activeText = null;
     },
 
     __proxyValueSelect() {
         if (this.isFilterDeayed) {
             this.updateFilter(this.searchText, true);
         } else {
-            this.__tryPointFirstRow();
             this.__onValueSelect();
         }
     }
