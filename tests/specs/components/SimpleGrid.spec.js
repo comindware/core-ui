@@ -61,7 +61,7 @@ describe('Components', () => {
                 columns,
                 selectableBehavior: 'multi',
                 showSearch: true,
-                showSelection: true,
+                showCheckbox: true,
                 collection: new Backbone.Collection(data)
             });
 

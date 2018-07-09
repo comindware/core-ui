@@ -63,7 +63,7 @@ export default Marionette.View.extend({
             collection: this.model.get('available'),
             selectableBehavior: 'multi',
             showSearch: true,
-            showSelection: true,
+            showCheckbox: true,
             showHeader: false,
             columns: [
                 {
@@ -109,7 +109,7 @@ export default Marionette.View.extend({
                 },
                 maxRows: 10
             },
-            showSelection: true
+            showCheckbox: true
         }).view;
 
         selectedList.on('childview:dblclick', this.__moveLeft);

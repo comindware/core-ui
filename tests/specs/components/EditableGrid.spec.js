@@ -115,7 +115,7 @@ describe('Components', () => {
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
-                showSelection: true,
+                showCheckbox: true,
                 collection,
                 title: 'Editable grid'
             });
@@ -136,7 +136,7 @@ describe('Components', () => {
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
-                showSelection: true,
+                showCheckbox: true,
                 collection,
                 title: 'Editable grid'
             });
@@ -166,7 +166,7 @@ describe('Components', () => {
                 selectableBehavior: 'multi',
                 showToolbar: true,
                 showSearch: true,
-                showSelection: true,
+                showCheckbox: true,
                 collection,
                 title: 'Editable grid',
                 excludeActions,

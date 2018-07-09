@@ -1,7 +1,7 @@
 import CanvasView from 'demoPage/views/CanvasView';
 
 // 1. Get some data
-export default function() {
+export default function () {
     const data = [];
     const childLength = 3;
     const treeHeight = 4;
