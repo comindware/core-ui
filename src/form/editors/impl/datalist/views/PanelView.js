@@ -36,11 +36,12 @@ export default Marionette.View.extend({
         },
         addNewButtonRegion: '.js-add-new-button-region',
         listTitleRegion: '.js-list-title-region',
-        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region',
+        elementsQuantityWarningRegion: '.js-elements-quantity-warning-region'
     },
 
     onAttach() {
         const collection = this.model.get('collection');
+
         this.listView = list.factory.createDefaultList({
             collection,
             listViewOptions: {
@@ -68,6 +69,8 @@ export default Marionette.View.extend({
 
         this.showChildView('elementsQuantityWarningRegion', new ElementsQuantityWarningView());
         this.__toggleElementsQuantityWarning(collection.length, collection.totalCount);
+
+        this.listenTo(this.listView, 'update:height', () => this.trigger('change:content'));
     },
 
     handleCommand(command) {

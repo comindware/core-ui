@@ -7,12 +7,13 @@ const classes = {
     collapsible: 'js-collapsible-button',
     dragover: 'dragover',
     hover: 'hover',
-    cellFocused: 'cell-focused'
+    cellFocused: 'cell-focused',
+    cellEditable: 'cell_editable'
 };
 
 const defaultOptions = {
-    levelMargin: 15,
-    collapsibleButtonWidth: 24
+    levelMargin: 10,
+    collapsibleButtonWidth: 20
 };
 
 /**
@@ -120,9 +121,11 @@ export default Marionette.View.extend({
             if (typeof cell === 'string') {
                 return this.el.insertAdjacentHTML('beforeend', cell);
             }
+            let cellClasses = '';
+            if (gridColumn.editable) cellClasses += classes.cellEditable;
 
             const cellView = new cell({
-                className: `cell ${gridColumn.columnClass}`,
+                className: `cell ${gridColumn.columnClass} ${cellClasses}`,
                 schema: gridColumn,
                 model: this.model,
                 key: gridColumn.key

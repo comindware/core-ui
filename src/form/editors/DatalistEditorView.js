@@ -36,7 +36,8 @@ const defaultOptions = {
     maxQuantitySelected: 1,
     canDeleteItem: true,
     valueType: 'normal',
-    showSearch: true
+    showSearch: true,
+    class: undefined
 };
 
 /**
@@ -108,7 +109,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             classList.push('editor_bubble--delete');
         }
 
-        return `editor editor_bubble ${classList.join(' ')}`;
+        return `${this.options.class || ''} editor editor_bubble ${classList.join(' ')}`;
     },
 
     template: Handlebars.compile(template),
@@ -350,6 +351,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
                 });
             }
             this.dropdownView.buttonView.setLoading(false);
+            this.__tryPointFirstRow();
         });
     },
 
@@ -387,7 +389,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     __onButtonClick(): void {
-        if (this.getEnabled() && !this.getReadonly()) {
+        if (this.getEnabled() && !this.getReadonly() && !this.dropdownView.isOpen) {
             const promise = this.updateFilter(null, true);
             if (promise) {
                 promise
@@ -502,6 +504,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     __onDropdownClose() {
         this.onBlur();
         this.panelCollection.pointOff();
+        this.activeText = null;
     },
 
     __proxyValueSelect() {

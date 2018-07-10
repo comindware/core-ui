@@ -43,7 +43,7 @@ export default {
 
         window.addEventListener('beforeunload', e => {
             this.trigger('module:leave', {
-                page: this.activeModule.moduleId
+                page: this.activeModule ? this.activeModule.moduleId : null
             });
             const canLeave = this.activeModule ? this.activeModule.leave(true) : true;
 
@@ -99,7 +99,7 @@ export default {
                 .show(new ContentLoadingView());
         } else {
             this.trigger('module:before:leave', {
-                page: this.activeModule.moduleId
+                page: this.activeModule ? this.activeModule.moduleId : null
             });
             const canLeave = await this.activeModule.leave();
             if (!canLeave && this.getPreviousUrl()) {
@@ -108,7 +108,7 @@ export default {
                 return;
             }
             this.trigger('module:leave', {
-                page: this.activeModule.moduleId
+                page: this.activeModule ? this.activeModule.moduleId : null
             });
             //clear all promises of the previous module
             Core.services.PromiseService.cancelAll();
@@ -146,7 +146,7 @@ export default {
             });
         }
         this.trigger('module:loaded', {
-            page: this.activeModule.moduleId
+            page: this.activeModule ? this.activeModule.moduleId : null
         });
         // navigate to new module
         this.loadingContext = null;

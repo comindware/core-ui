@@ -9,7 +9,7 @@ type optionsT = {
 
 export default Marionette.View.extend({
     initialize(options: optionsT) {
-        this.text = options.text;
+        this.text = options.text || '';
         this.key = options.key;
         if (this.model && this.key) {
             this.listenTo(this.model, `change:${this.key}`, (model, newValue) => this.$el.text(newValue));
@@ -30,9 +30,9 @@ export default Marionette.View.extend({
 
     onRender() {
         if (this.model && this.key) {
-            this.$el.text(this.model.get(this.key));
+            this.el.innerHTML = this.model.get(this.key);
         } else {
-            this.$el.text(this.text);
+            this.el.innerHTML = this.text;
         }
     },
 

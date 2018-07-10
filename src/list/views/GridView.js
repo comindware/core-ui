@@ -238,7 +238,9 @@ export default Marionette.View.extend({
         dragleave: '__handleDragLeave'
     },
 
-    className: 'fr-collection',
+    className() {
+        return `${this.options.class || ''} fr-collection`;
+    },
 
     template: Handlebars.compile(template),
 

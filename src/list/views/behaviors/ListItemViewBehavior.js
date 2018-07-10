@@ -92,7 +92,8 @@ export default Marionette.Behavior.extend({
     __handleDebouncedClick(e) {
         const model = this.view.model;
         if (model.selected) {
-            model.deselect({ isSilent: true });
+            model.deselect();
+            return;
         }
 
         const selectFn = this.getOption('multiSelect') ? model.collection.select : model.collection.selectSmart || model.collection.select;
