@@ -606,9 +606,6 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
     };
 });
 
-// Object.assign(VirtualCollection.prototype, CheckableBehavior.CheckableCollection.prototype);
 Object.assign(VirtualCollection.prototype, Backbone.Events);
-
-console.log(VirtualCollection.prototype, CheckableBehavior.CheckableCollection.prototype);
 
 export default VirtualCollection;

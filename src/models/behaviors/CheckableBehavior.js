@@ -6,14 +6,13 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
     constructor(collection) {
         super();
         this.collection = collection;
-        this.checked = {};
+        this.__updateChecked();
         collection.on('add remove reset update', () => {
             if (collection.internalUpdate) {
                 return;
             }
-            updateChecked(collection);
-            calculateCheckedLength(collection);
-        });  
+            this.__updateChecked();
+        });
     }
 
     check(model) {
@@ -21,7 +20,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
 
         this.checked[model.cid] = model;
         model.check();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     }
 
     uncheck(model) {
@@ -29,7 +28,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
 
         delete this.checked[model.cid];
         model.uncheck();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     }
 
     checkSome(model) {
@@ -37,7 +36,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
 
         delete this.checked[model.cid];
         model.checkSome();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     }
 
     checkAll() {
@@ -47,7 +46,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
             model.check();
         });
         this.internalCheck = false;
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     }
 
     uncheckAll() {
@@ -57,7 +56,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
             model.uncheck();
         });
         this.internalCheck = false;
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     }
 
     toggleCheckAll() {
@@ -94,6 +93,35 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
                 parent.uncheck();
             }
             parent = parent.parentModel;
+        }
+    }
+
+    __updateChecked() {
+        this.checked = {};
+        this.each(model => {
+            if (model.checked) {
+                this.checked[model.cid] = model;
+            }
+        });
+        this.__triggerCheck();
+    }
+
+    __triggerCheck() {
+        const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
+        const length = this.length;
+    
+        if (checkedLength === length) {
+            this.trigger('check:all', this);
+            return;
+        }
+    
+        if (checkedLength === 0) {
+            this.trigger('check:none', this);
+            return;
+        }
+    
+        if (checkedLength > 0 && checkedLength < length) {
+            this.trigger('check:some', this);
         }
     }
 }
@@ -143,36 +171,6 @@ CheckableBehavior.CheckableModel = class {
         }
     }
 }
-
-const updateChecked = collection => {
-    collection.checked = {};
-    collection.each(model => {
-        if (model.checked) {
-            collection.checked[model.cid] = model;
-        }
-    });
-};
-
-const calculateCheckedLength = _.debounce(collection => {
-    collection.checkedLength = _.filter(collection.models, model => model.checked).length;
-
-    const checkedLength = collection.checkedLength;
-    const length = collection.length;
-
-    if (checkedLength === length) {
-        collection.trigger('check:all', collection);
-        return;
-    }
-
-    if (checkedLength === 0) {
-        collection.trigger('check:none', collection);
-        return;
-    }
-
-    if (checkedLength > 0 && checkedLength < length) {
-        collection.trigger('check:some', collection);
-    }
-}, 10);
 
 export default CheckableBehavior;
 export const CheckableCollection = CheckableBehavior.CheckableCollection;
