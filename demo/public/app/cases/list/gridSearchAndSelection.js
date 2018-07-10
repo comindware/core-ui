@@ -60,6 +60,7 @@ export default function() {
     const gridController = new core.list.controllers.GridController({
         columns,
         selectableBehavior: 'multi',
+        // disableMultiSelection: true, //another case of API
         showSearch: true,
         showCheckbox: true,
         showToolbar: true,

@@ -41,9 +41,6 @@ export default Marionette.View.extend({
     events: {
         click: '__onClick',
         dblclick: '__onDblClick',
-        keydown: '__handleKeydown',
-        keydoup: '__handleKeydown',
-        keypress: '__handleKeydown',
         'click @ui.collapsibleButton': '__toggleCollapse',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
@@ -251,6 +248,13 @@ export default Marionette.View.extend({
 
     __onClick(e) {
         const model = this.model;
+
+        if (model.selected) {
+            model.deselect();
+            this.trigger('click', this.model);
+            return;
+        }
+
         const selectFn = model.collection.selectSmart || model.collection.select;
         if (selectFn) {
             if (this.gridEventAggregator.isEditable) {
