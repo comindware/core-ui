@@ -10,12 +10,8 @@ CheckableBehavior.CheckableCollection = function (collection) {
         if (collection.internalUpdate) {
             return;
         }
+        updateChecked(collection);
         calculateCheckedLength(collection);
-        Object.entries(this.checked).forEach(entry => {
-            if (!collection.get(entry[0])) {
-                delete this.checked[entry[0]]
-            }
-        })
     });
 };
 
@@ -149,6 +145,15 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
         }
     }
 });
+
+const updateChecked = collection => {
+    collection.checked = {};
+    collection.each(model => {
+        if (model.checked) {
+            collection.checked[model.cid] = model;
+        }
+    });
+};
 
 const calculateCheckedLength = _.debounce(collection => {
     collection.checkedLength = _.filter(collection.models, model => model.checked).length;
