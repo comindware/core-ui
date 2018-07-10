@@ -4,7 +4,7 @@ import core from 'coreApi';
 import 'jasmine-jquery';
 
 describe('Editors', () => {
-    describe('Bound list editor', () => {
+    describe('Member Split Editor', () => {
         it('should be initialized', () => {
             const model = new Backbone.Model({
                 selected: []
@@ -123,7 +123,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move value fron available to selected container on move button click', done => {
+        it('should move item from available to selected container on move right button click', done => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -141,7 +141,7 @@ describe('Editors', () => {
                     const first = setInterval(() => {
                         if (document.getElementsByClassName('js-available-items-list-region').length) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click();
+                            view.$('.js-available-items-list-region .js-selection-panel-wrp').children().first().children().click();
                             view.$('.js-move-right-button').click();
                             const second = setInterval(() => {
                                 if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
@@ -161,7 +161,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item fron available to selected container on move right button click', done => {
+        it('should move all items fron available to selected container on move right all button click', done => {
             const model = new Backbone.Model({
                 selected: []
             });
@@ -177,14 +177,13 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-available-items-list-region').length) {
+                        if (view.$('.js-available-items-list-region .js-visible-collection-wrp').children().length) {
                             clearTimeout(first);
-                            view.$('.js-available-items-list-region .js-visible-collection-wrp').children().first().click();
-                            view.$('.js-move-right-button').click();
+                            view.$('.js-move-right-all-button').click();
                             const second = setInterval(() => {
-                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 1) {
+                                if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length) {
                                     clearTimeout(second);
-                                    expect(view.getValue()).toEqual(['user.10']);
+                                    expect(view.getValue().sort()).toEqual(core.services.UserService.listUsers().map(user => user.id).sort());
                                     done();
                                 }
                             }, 100);
@@ -199,7 +198,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move item from selected to available container on move button click', done => {
+        it('should move item from selected to available container on move left button click', done => {
             const model = new Backbone.Model({
                 selected: ['user.1']
             });
@@ -215,9 +214,9 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
+                        if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 1) {
                             clearTimeout(first);
-                            view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().first().click();
+                            view.$('.js-selected-items-list-region .js-selection-panel-wrp').children().first().children().click();
                             view.$('.js-move-left-button').click();
                             const second = setInterval(() => {
                                 if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 0) {
@@ -237,7 +236,7 @@ describe('Editors', () => {
                 .show(view);
         });
 
-        it('should move all item fron selected to available container on move button click', done => {
+        it('should move all items from selected to available container on move left all button click', done => {
             const model = new Backbone.Model({
                 selected: ['user.1', 'user.2', 'user.3', 'user.4', 'user.5']
             });
@@ -253,7 +252,7 @@ describe('Editors', () => {
             view.on('render', () => {
                 view.controller.view.on('attach', () => {
                     const first = setInterval(() => {
-                        if (document.getElementsByClassName('js-selected-items-list-region').length) {
+                        if (view.$('.js-selected-items-list-region .js-visible-collection-wrp').children().length === 5) {
                             clearTimeout(first);
                             view.$('.js-move-left-all-button').click();
                             const second = setInterval(() => {

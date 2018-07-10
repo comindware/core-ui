@@ -101,8 +101,8 @@ export default Marionette.Object.extend({
         });
     },
 
-    __onItemsMove(typeFrom, typeTo, all) {
-        this.moveItems(typeFrom, typeTo, all);
+    __onItemsMove(...args) {
+        this.moveItems(...args);
         setTimeout(() => this.updateMembers(), 100);
     },
 
@@ -147,7 +147,7 @@ export default Marionette.Object.extend({
         });
     },
 
-    moveItems(typeFrom, typeTo, all) {
+    moveItems(typeFrom, typeTo, all, model) {
         const modelsTo = this.model.get(typeTo);
         const allSelectedModels = _.clone(modelsTo);
         const modelsFrom = this.model.get(typeFrom);
@@ -160,7 +160,8 @@ export default Marionette.Object.extend({
             }
         }
 
-        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.selected);
+        let selected = all ? [].concat(modelsFrom.models) : Object.values(modelsFrom.checked);
+        model && selected.push(model);
         if (!all && !selected.length) {
             return;
         }
@@ -175,29 +176,32 @@ export default Marionette.Object.extend({
 
         modelsFrom.selectNone && modelsFrom.selectNone();
         modelsTo.selectNone && modelsTo.selectNone();
+        modelsFrom.uncheckAll && modelsFrom.uncheckAll();
+        modelsTo.uncheckAll && modelsTo.uncheckAll();
+
         const newSelectedFragment = this.collectionSearchValue[typeTo];
 
-        selected.forEach(model => {
-            if (!(model instanceof ItemModel)) {
+        selected.forEach(mod => {
+            if (!(mod instanceof ItemModel)) {
                 return;
             }
             if (this.options.orderEnabled) {
                 if (typeTo === 'selected') {
                     const newOrder = modelsTo.length ? modelsTo.at(modelsTo.length - 1).get('order') + 1 : 1;
-                    model.set('order', newOrder);
+                    mod.set('order', newOrder);
                 } else {
-                    model.unset('order');
+                    mod.unset('order');
                 }
             }
-            !all && selectedIndexFrom.push(modelsFrom.indexOf(model));
-            modelsFrom.remove(model);
-            modelsTo.add(model, { delayed: false });
-            model.unhighlight();
+            !all && selectedIndexFrom.push(modelsFrom.indexOf(mod));
+            modelsFrom.remove(mod);
+            modelsTo.add(mod, { delayed: false });
+            mod.unhighlight();
             if (newSelectedFragment) {
                 model.highlight(newSelectedFragment);
             }
             if (!all) {
-                model.select();
+                mod.select();
             }
         });
 
