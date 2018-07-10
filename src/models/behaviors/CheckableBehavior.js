@@ -1,19 +1,20 @@
 /*eslint-disable*/
 
+
 const CheckableBehavior = {};
 
-CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
-    constructor(collection) {
-        super();
-        this.collection = collection;
+CheckableBehavior.CheckableCollection = function (collection) {
+    this.collection = collection;
+    this.__updateChecked();
+    collection.on('add remove reset update', () => {
+        if (collection.internalUpdate) {
+            return;
+        }
         this.__updateChecked();
-        collection.on('add remove reset update', () => {
-            if (collection.internalUpdate) {
-                return;
-            }
-            this.__updateChecked();
-        });
-    }
+    });
+};
+
+_.extend(CheckableBehavior.CheckableCollection.prototype, {
 
     check(model) {
         if (this.internalCheck || this.checked[model.cid]) { return; }
@@ -21,7 +22,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
         this.checked[model.cid] = model;
         model.check();
         this.__triggerCheck();
-    }
+    },
 
     uncheck(model) {
         if (this.internalCheck || !this.checked[model.cid]) { return; }
@@ -29,7 +30,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
         delete this.checked[model.cid];
         model.uncheck();
         this.__triggerCheck();
-    }
+    },
 
     checkSome(model) {
         if (!this.checked[model.cid]) { return; }
@@ -37,7 +38,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
         delete this.checked[model.cid];
         model.checkSome();
         this.__triggerCheck();
-    }
+    },
 
     checkAll() {
         this.internalCheck = true;
@@ -47,7 +48,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
         });
         this.internalCheck = false;
         this.__triggerCheck();
-    }
+    },
 
     uncheckAll() {
         this.internalCheck = true;
@@ -57,7 +58,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
         });
         this.internalCheck = false;
         this.__triggerCheck();
-    }
+    },
 
     toggleCheckAll() {
         if (this.checkedLength === this.length) {
@@ -65,7 +66,7 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
         } else {
             this.checkAll();
         }
-    }
+    },
 
     updateTreeNodesCheck(model, updateParent = true) {
         if (model.children && model.children.length) {
@@ -94,42 +95,42 @@ CheckableBehavior.CheckableCollection = class extends Backbone.Collection {
             }
             parent = parent.parentModel;
         }
-    }
-
+    },
     __updateChecked() {
         this.checked = {};
-        this.each(model => {
+        this.collection.each(model => {
             if (model.checked) {
                 this.checked[model.cid] = model;
             }
         });
         this.__triggerCheck();
-    }
+    },
 
     __triggerCheck() {
         const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
         const length = this.length;
     
         if (checkedLength === length) {
-            this.trigger('check:all', this);
+            this.collection.trigger('check:all', this);
             return;
         }
     
         if (checkedLength === 0) {
-            this.trigger('check:none', this);
+            this.collection.trigger('check:none', this);
             return;
         }
     
         if (checkedLength > 0 && checkedLength < length) {
-            this.trigger('check:some', this);
+            this.collection.trigger('check:some', this);
         }
     }
-}
+});
 
-CheckableBehavior.CheckableModel = class {
-    constructor(model) {
-        this.model = model;
-    }
+CheckableBehavior.CheckableModel = function (model) {
+    this.model = model;
+};
+
+_.extend(CheckableBehavior.CheckableModel.prototype, {
 
     check() {
         if (this.checked) { return; }
@@ -140,7 +141,7 @@ CheckableBehavior.CheckableModel = class {
         if (this.collection) {
             this.collection.check(this);
         }
-    }
+    },
 
     uncheck() {
         if (this.checked === false) { return; }
@@ -151,7 +152,7 @@ CheckableBehavior.CheckableModel = class {
         if (this.collection) {
             this.collection.uncheck(this);
         }
-    }
+    },
 
     checkSome() {
         if (this.checked === null) { return; }
@@ -161,7 +162,7 @@ CheckableBehavior.CheckableModel = class {
         if (this.collection) {
             this.collection.checkSome(this);
         }
-    }
+    },
 
     toggleChecked() {
         if (this.checked) {
@@ -170,7 +171,7 @@ CheckableBehavior.CheckableModel = class {
             this.check();
         }
     }
-}
+});
 
 export default CheckableBehavior;
 export const CheckableCollection = CheckableBehavior.CheckableCollection;

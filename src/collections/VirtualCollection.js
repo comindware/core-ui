@@ -102,11 +102,9 @@ const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
  * </ul>.
  * */
 
-const VirtualCollection = class VirtualCollection extends CheckableBehavior.CheckableCollection {
-    /** @lends module:core.collections.VirtualCollection.prototype */
+const VirtualCollection = Backbone.Collection.extend(
+    /** @lends module:core.collections.VirtualCollection.prototype */ {
         constructor(collection, options = {}) {
-            super(collection);
-            this.grouping = [];
             this.options = options;
             this.isTree = this.options.isTree;
             if (options.delayedAdd === undefined) {
@@ -182,11 +180,12 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             if (SelectableBehaviorClass) {
                 _.extend(this, new SelectableBehaviorClass(this));
             }
-        }
+            _.extend(this, new CheckableBehavior.CheckableCollection(this));
+        },
 
         rebuild() {
             this.__rebuildIndex({}, true);
-        }
+        },
 
         __rebuildIndex(options = {}, immediate) {
             let parentModels = this.parentCollection.models;
@@ -200,7 +199,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             } else {
                 this.__debounceRebuild(options);
             }
-        }
+        },
 
         __rebuildModels(options) {
             const oldModels = this.visibleModels.concat();
@@ -220,12 +219,12 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             }
             this.visibleLength = this.visibleModels.length;
             this.__processDiffs(oldModels, options);
-        }
+        },
 
         __addModel(model, options) {
             const index = this.visibleModels.indexOf(model);
             this.trigger('add', model, this, Object.assign({}, options, { at: index, index })); // both add and index to correct inserting in dom
-        }
+        },
 
         __removeModels(removed, options) {
             this.trigger(
@@ -239,7 +238,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
                     }
                 })
             );
-        }
+        },
 
         __buildModelsInternal(list, level = 0) {
             // Run sort based on type of `comparator`.
@@ -272,7 +271,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
                     }
                 }
             });
-        }
+        },
 
         __createIndexTree(models, i) {
             const self = this;
@@ -295,7 +294,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
                 );
             }
             return new Backbone.Collection(models);
-        }
+        },
 
         updateWindowSize(newWindowSize) {
             if (this.state.windowSize !== newWindowSize) {
@@ -306,7 +305,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
                 this.visibleLength = this.visibleModels.length;
                 this.__processDiffs(oldModels);
             }
-        }
+        },
 
         /**
          * Обновить позицию скользящего окна
@@ -361,7 +360,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             this.internalUpdate = false;
 
             return newPosition;
-        }
+        },
 
         __processDiffs(oldModels, options = {}) {
             const diff = new diffHelper(oldModels, this.visibleModels);
@@ -391,17 +390,17 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             added.
                 sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).
                 forEach(model => this.__addModel(model, options));
-        }
+        },
 
         __normalizePosition(position) {
             const maxPos = Math.max(0, this.length - 1);
             return Math.max(0, Math.min(maxPos, position));
-        }
+        },
 
         filter(filterFn) {
             this.filterFn = filterFn;
             this.__rebuildIndex({}, true);
-        }
+        },
 
         __filterModels(models) {
             const result = [];
@@ -414,7 +413,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
                 }
             });
             return result;
-        }
+        },
 
         group(grouping) {
             if (grouping !== undefined) {
@@ -422,11 +421,13 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             }
 
             this.__rebuildIndex();
-        }
+        },
 
         __bindLifecycle(view, methodName) {
             view.on(methodName, _.bind(this.stopListening, this));
-        }
+        },
+
+        grouping: [],
 
         __onSort(collection, options) {
             if (this.comparator !== undefined) {
@@ -434,11 +435,11 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             }
 
             this.__rebuildIndex(options);
-        }
+        },
 
         __onSync(collection, resp, options) {
             this.trigger('sync', collection, resp, options);
-        }
+        },
 
         __onAdd(model, collection, options) {
             // TODO: maybe this is unnecessary
@@ -472,7 +473,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             }
 
             this.__rebuildIndex();
-        }
+        },
 
         __onRemove(model, options = {}) {
             let i;
@@ -516,7 +517,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             }
 
             this.__rebuildIndex(options);
-        }
+        },
 
         __onUpdate(collection, updateConfiguration, options) {
             const changes = updateConfiguration.changes;
@@ -527,7 +528,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             if (changes.removed && changes.removed.length) {
                 changes.removed.forEach(model => this.__onRemove(model, options));
             }
-        }
+        },
 
         __removeFromModels(model, options) {
             if (!this.get(model)) {
@@ -540,7 +541,7 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             this.models.splice(index, 1);
             this.length--;
             this._removeReference(model, options);
-        }
+        },
 
         __onChange(model, options, isPartialUpdate) {
             if (this.options.skipRebuildOnChange) {
@@ -572,32 +573,33 @@ const VirtualCollection = class VirtualCollection extends CheckableBehavior.Chec
             if (rebuildRequired || isPartialUpdate) {
                 this.__rebuildIndex(options);
             }
-        }
+        },
 
         __onReset(collection, options) {
             this.__rebuildIndex(options, true);
-        }
+        },
 
         sort(options) {
             this.__rebuildIndex(options);
-        }
+        },
 
         collapse(model) {
             model.collapse();
             this.__rebuildIndex();
             this.parentCollection.trigger('collapse', model);
-        }
+        },
 
         expand(model) {
             model.expand();
             this.__rebuildIndex();
             this.parentCollection.trigger('expand', model);
-        }
+        },
 
         getState() {
             return this.state;
         }
-};
+    }
+);
 
 // methods that alter data should proxy to the parent collection
 ['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update', 'where', 'findWhere'].forEach(methodName => {
