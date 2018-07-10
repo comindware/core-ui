@@ -197,9 +197,9 @@ export default Marionette.Object.extend({
             modelsFrom.remove(mod);
             modelsTo.add(mod, { delayed: false });
             mod.unhighlight();
-            // if (newSelectedFragment) {
-            //     model.highlight(newSelectedFragment);
-            // }
+            if (newSelectedFragment) {
+                model.highlight(newSelectedFragment);
+            }
             if (!all) {
                 mod.select();
             }
