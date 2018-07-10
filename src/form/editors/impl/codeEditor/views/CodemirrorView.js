@@ -64,12 +64,6 @@ export default Marionette.View.extend({
             this.intelliAssist = options.ontologyService;
             codemirror.hintWords['text/x-csharp'] = [];
         }
-
-        const timerId = setInterval(() => {
-            if (this.codemirror) {
-                this.trigger('commentsCheck', this.__checkComments());
-            }
-        }, 5000);
     },
 
     regions: {
@@ -90,7 +84,6 @@ export default Marionette.View.extend({
     className: 'dev-codemirror',
 
     onRender() {
-
         this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
@@ -162,8 +155,8 @@ export default Marionette.View.extend({
             this.hintIsShown = false;
         });
         if (this.options.mode === 'expression') {
-            $(this.codemirror.getWrapperElement()).bind('mouseover', this.__onMouseover);
-            $(this.codemirror.getWrapperElement()).bind('mouseleave', this.__onMouseleave);
+            this.codemirror.getWrapperElement().onmouseover = this.__onMouseover;
+            this.codemirror.getWrapperElement().onmouseleave = this.__onMouseleave;
         }
         this.codemirror.on('inputRead', (editor, change) => {
             if (this.intelliAssist) {
@@ -174,7 +167,7 @@ export default Marionette.View.extend({
         });
 
         this.listenTo(this.output, 'changeCursorPos', (pos, type) => {
-            $('.dev-codemirror').scrollTop(0);
+            '.dev-codemirror'.scrollTo(0, 0);
             if (this.currentHighlightedLine) {
                 this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-error');
                 this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-warning');
