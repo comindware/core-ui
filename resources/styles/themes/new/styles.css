@@ -247,6 +247,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 
 .cell .editor {
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
   padding: 0 20px 0 15px;
