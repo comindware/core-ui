@@ -992,3 +992,11 @@ input[type="color"], .colorpicker{
 .group-title__collapsible {
   cursor: pointer;
 }
+
+.dev-expression-editor-field-inline {
+    display: flex;
+}
+
+.dev-expression-editor-field-inline .editor {
+    position: relative!important;
+}

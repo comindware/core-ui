@@ -14,7 +14,7 @@ const focusablePartId = {
     SECONDS: 'seconds'
 };
 
-const createFocusableParts = function(options) {
+const createFocusableParts = function (options) {
     const result = [];
     if (options.allowDays) {
         result.push({
@@ -156,10 +156,11 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         if (this.readonly) {
             return;
         }
+        const curretPos = this.getCaretPos();
         this.__updateState({
             mode: stateModes.EDIT
         });
-        const pos = this.fixCaretPos(this.getCaretPos());
+        const pos = this.fixCaretPos(curretPos);
         this.setCaretPos(pos);
     },
 
@@ -193,7 +194,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     getCaretPos() {
-        return this.ui.input.selectionStart;
+        return this.ui.input[0].selectionStart;
     },
 
     fixCaretPos(pos) {

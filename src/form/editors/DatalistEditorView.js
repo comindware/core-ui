@@ -36,7 +36,8 @@ const defaultOptions = {
     maxQuantitySelected: 1,
     canDeleteItem: true,
     valueType: 'normal',
-    showSearch: true
+    showSearch: true,
+    class: undefined
 };
 
 /**
@@ -108,7 +109,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             classList.push('editor_bubble--delete');
         }
 
-        return `editor editor_bubble ${classList.join(' ')}`;
+        return `${this.options.class || ''} editor editor_bubble ${classList.join(' ')}`;
     },
 
     template: Handlebars.compile(template),

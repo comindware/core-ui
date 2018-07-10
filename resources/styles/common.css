@@ -962,10 +962,15 @@ a:hover {
     max-width: 400px;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+    z-index: 600;
 }
 
 .toolbar-panel_container .toolbar-btn {
-    width: 100%;
+    width: calc(100% - 6px);
+    margin: 3px;
 }
 
 .toolbar-container .popout__action-btn {
