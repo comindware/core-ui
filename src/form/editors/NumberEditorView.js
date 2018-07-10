@@ -15,7 +15,8 @@ const defaultOptions = {
     allowFloat: false,
     changeMode: changeMode.blur,
     format: undefined,
-    showTitle: true
+    showTitle: true,
+    class: undefined
 };
 
 /**
@@ -35,15 +36,15 @@ const defaultOptions = {
  * */
 
 export default (formRepository.editors.Number = BaseItemEditorView.extend({
-    initialize(options = {}) {
-        _.defaults(this.options, _.pick(options.schema ? options.schema : options, Object.keys(defaultOptions)), defaultOptions);
-    },
-
     template: Handlebars.compile(template),
 
     focusElement: '.js-input',
 
-    className: 'editor editor_number',
+    className() {
+        _.defaults(this.options, _.pick(this.options.schema ? this.options.schema : this.options, Object.keys(defaultOptions)), defaultOptions);
+
+        return `${this.options.class || ''} editor editor_number`;
+    },
 
     ui: {
         input: '.js-input'
