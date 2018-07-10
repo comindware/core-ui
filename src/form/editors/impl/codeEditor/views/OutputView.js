@@ -20,88 +20,14 @@ export default Marionette.View.extend({
 
     onRender() {
         this.errorsGridController = new Core.list.controllers.GridController({
-            columns: [
-                {
-                    title: 'Line',
-                    key: 'line',
-                    type: Core.meta.objectPropertyTypes.INTEGER,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.15
-                },
-                {
-                    title: 'Column',
-                    key: 'column',
-                    type: Core.meta.objectPropertyTypes.INTEGER,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.15
-                },
-                {
-                    title: 'Messcode',
-                    key: 'messcode',
-                    type: Core.meta.objectPropertyTypes.STRING,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.2
-                },
-                {
-                    title: 'Message',
-                    key: 'message',
-                    type: Core.meta.objectPropertyTypes.STRING,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.5
-                }
-            ],
+            columns: this.__getErrorsColumns(),
             excludeActions: 'all',
             collection: this.model.get('errors')
         });
         this.errorsGrid = this.errorsGridController.view;
 
         this.warningsGridController = new Core.list.controllers.GridController({
-            columns: [
-                {
-                    title: 'Line',
-                    key: 'line',
-                    type: Core.meta.objectPropertyTypes.INTEGER,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.1
-                },
-                {
-                    title: 'Column',
-                    key: 'column',
-                    type: Core.meta.objectPropertyTypes.INTEGER,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.1
-                },
-                {
-                    title: 'Messcode',
-                    key: 'messcode',
-                    type: Core.meta.objectPropertyTypes.STRING,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.2
-                },
-                {
-                    title: 'Message',
-                    key: 'message',
-                    type: Core.meta.objectPropertyTypes.STRING,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.4
-                },
-                {
-                    title: 'Warning level',
-                    key: 'warningLevel',
-                    type: Core.meta.objectPropertyTypes.INTEGER,
-                    displayText: 'Boolean Cell',
-                    autocommit: true,
-                    width: 0.1
-                }
-            ],
+            columns: this.__getWarningsColumns(),
             excludeActions: 'all',
             collection: this.model.get('warnings')
         });
@@ -131,6 +57,79 @@ export default Marionette.View.extend({
         this.showChildView('tabsRegion', this.tabsPanelsView);
     },
 
+    __getErrorsColumns() {
+        return [
+            {
+                title: 'Line',
+                key: 'line',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.15
+            },
+            {
+                title: 'Column',
+                key: 'column',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.15
+            },
+            {
+                title: 'Messcode',
+                key: 'messcode',
+                type: Core.meta.objectPropertyTypes.STRING,
+                autocommit: true,
+                width: 0.2
+            },
+            {
+                title: 'Message',
+                key: 'message',
+                type: Core.meta.objectPropertyTypes.STRING,
+                autocommit: true,
+                width: 0.5
+            }
+        ];
+    },
+
+    __getWarningsColumns() {
+        return [
+            {
+                title: 'Line',
+                key: 'line',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.1
+            },
+            {
+                title: 'Column',
+                key: 'column',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.1
+            },
+            {
+                title: 'Messcode',
+                key: 'messcode',
+                type: Core.meta.objectPropertyTypes.STRING,
+                autocommit: true,
+                width: 0.2
+            },
+            {
+                title: 'Message',
+                key: 'message',
+                type: Core.meta.objectPropertyTypes.STRING,
+                autocommit: true,
+                width: 0.4
+            },
+            {
+                title: 'Warning level',
+                key: 'warningLevel',
+                type: Core.meta.objectPropertyTypes.INTEGER,
+                autocommit: true,
+                width: 0.1
+            }
+        ];
+    },
+
     __getTabs() {
         return [
             {
@@ -145,7 +144,7 @@ export default Marionette.View.extend({
             },
             {
                 id: 'tab3',
-                name: 'Tab 3',
+                name: 'Info',
                 view: new Core.list.factory.createDefaultGrid({
                     gridViewOptions: {
                         columns: [
@@ -153,7 +152,6 @@ export default Marionette.View.extend({
                                 title: 'Line',
                                 key: 'line',
                                 type: Core.meta.objectPropertyTypes.INTEGER,
-                                displayText: 'Boolean Cell',
                                 autocommit: true,
                                 width: 0.15
                             },
@@ -161,7 +159,6 @@ export default Marionette.View.extend({
                                 title: 'Column',
                                 key: 'column',
                                 type: Core.meta.objectPropertyTypes.INTEGER,
-                                displayText: 'Boolean Cell',
                                 autocommit: true,
                                 width: 0.15
                             },
@@ -169,7 +166,6 @@ export default Marionette.View.extend({
                                 title: 'Messcode',
                                 key: 'messcode',
                                 type: Core.meta.objectPropertyTypes.STRING,
-                                displayText: 'Boolean Cell',
                                 autocommit: true,
                                 width: 0.2
                             },
@@ -177,7 +173,6 @@ export default Marionette.View.extend({
                                 title: 'Message',
                                 key: 'message',
                                 type: Core.meta.objectPropertyTypes.STRING,
-                                displayText: 'Boolean Cell',
                                 autocommit: true,
                                 width: 0.5
                             }

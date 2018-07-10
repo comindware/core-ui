@@ -90,8 +90,7 @@ export default Marionette.View.extend({
     className: 'dev-codemirror',
 
     onRender() {
-        // this.header = new HeaderView();
-        // this.showChildView('ediorHeaderContainer', HeaderView());
+
         this.toolbar = new ToolbarView({ maximized: this.options.maximized, editor: this });
         this.toolbar.on('undo', this.__undo);
         this.toolbar.on('redo', this.__redo);
