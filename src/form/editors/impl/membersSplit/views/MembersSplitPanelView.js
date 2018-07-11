@@ -26,9 +26,7 @@ export default Marionette.View.extend({
         'click .js-move-right-button': '__moveRight',
         'click .js-move-left-button': '__moveLeft',
         'click .js-move-right-all-button': '__moveRightAll',
-        'click .js-move-left-all-button': '__moveLeftAll',
-        'dblclick .js-available-items-list-region .js-menu-select-item': '__moveRight',
-        'dblclick .js-selected-items-list-region .js-menu-select-item': '__moveLeft'
+        'click .js-move-left-all-button': '__moveLeftAll'
     },
 
     regions: {
@@ -113,16 +111,19 @@ export default Marionette.View.extend({
         }).view;
 
         selectedList.on('childview:dblclick', this.__moveLeft);
+        
+        this.listenTo(this.model.get('available'), 'move:right enter', this.__moveRight);
+        this.listenTo(this.model.get('selected'), 'move:left enter', this.__moveLeft);
 
         this.showChildView('selectedItemsListRegion', selectedList);
     },
 
-    __moveRight() {
-        this.channel.trigger('items:move', 'available', 'selected');
+    __moveRight(model) {
+        this.channel.trigger('items:move', 'available', 'selected', false, (model instanceof Backbone.Model && model));
     },
 
-    __moveLeft() {
-        this.channel.trigger('items:move', 'selected', 'available');
+    __moveLeft(model) {
+        this.channel.trigger('items:move', 'selected', 'available', false, (model instanceof Backbone.Model && model));
     },
 
     __moveRightAll() {
