@@ -182,22 +182,24 @@ export default Marionette.View.extend({
         this.el.classList.remove(classes.selected);
     },
 
-    __updateState() {
-        let state;
+    __updateState(model, stateCollection) {
         if (this.selectAllCell) {
-            state = this.collection.checkedLength ? (this.collection.checkedLength === this.collection.length ? true : null) : false;
+            if (stateCollection === 'none') {
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+            }
+            if (stateCollection === 'all') {
+                this.ui.checkbox.addClass(classes.checked);
+                this.ui.checkbox.removeClass(classes.checked_some);
+            }
+            if (stateCollection === 'some') {
+                this.ui.checkbox.removeClass(classes.checked);
+                this.ui.checkbox.addClass(classes.checked_some);
+            }
+        } else if (this.model.checked) {
+                this.ui.checkbox.addClass(classes.checked);
         } else {
-            state = this.model.checked;
-        }
-        if (state) {
-            this.ui.checkbox.addClass(classes.checked);
-            this.ui.checkbox.removeClass(classes.checked_some);
-        } else if (state === null) {
-            this.ui.checkbox.removeClass(classes.checked);
-            this.ui.checkbox.addClass(classes.checked_some);
-        } else {
-            this.ui.checkbox.removeClass(classes.checked);
-            this.ui.checkbox.removeClass(classes.checked_some);
+                this.ui.checkbox.removeClass(classes.checked);
         }
     },
 

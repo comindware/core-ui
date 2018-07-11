@@ -1,21 +1,17 @@
 /*eslint-disable*/
 
+//can't use Backbone.Collection for checked because VirtualCollection change prototype
 
 const CheckableBehavior = {};
 
 CheckableBehavior.CheckableCollection = function (collection) {
     this.collection = collection;
-    this.checked = {};
+    this.__updateChecked();
     collection.on('add remove reset update', () => {
-        if (collection.internalUpdate) {
+        if (this.internalCheck) {
             return;
         }
-        calculateCheckedLength(collection);
-        Object.entries(this.checked).forEach(entry => {
-            if (!collection.get(entry[0])) {
-                delete this.checked[entry[0]]
-            }
-        })
+        this.__updateChecked();
     });
 };
 
@@ -26,7 +22,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
         this.checked[model.cid] = model;
         model.check();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     uncheck(model) {
@@ -34,7 +30,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
         delete this.checked[model.cid];
         model.uncheck();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     checkSome(model) {
@@ -42,7 +38,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
 
         delete this.checked[model.cid];
         model.checkSome();
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     checkAll() {
@@ -52,7 +48,7 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
             model.check();
         });
         this.internalCheck = false;
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     uncheckAll() {
@@ -62,11 +58,12 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
             model.uncheck();
         });
         this.internalCheck = false;
-        calculateCheckedLength(this);
+        this.__triggerCheck();
     },
 
     toggleCheckAll() {
-        if (this.checkedLength === this.length) {
+        const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
+        if (checkedLength === this.length) {
             this.uncheckAll();
         } else {
             this.checkAll();
@@ -99,6 +96,34 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
                 parent.uncheck();
             }
             parent = parent.parentModel;
+        }
+    },
+    __updateChecked() {
+        this.checked = {};
+        this.collection.each(model => {
+            if (model.checked) {
+                this.checked[model.cid] = model;
+            }
+        });
+        this.__triggerCheck();
+    },
+
+    __triggerCheck() {
+        const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
+        const length = this.length;
+    
+        if (checkedLength === length) {
+            this.collection.trigger('check:all', this, 'all');
+            return;
+        }
+    
+        if (checkedLength === 0) {
+            this.collection.trigger('check:none', this, 'none');
+            return;
+        }
+    
+        if (checkedLength > 0 && checkedLength < length) {
+            this.collection.trigger('check:some', this, 'some');
         }
     }
 });
@@ -149,27 +174,6 @@ _.extend(CheckableBehavior.CheckableModel.prototype, {
         }
     }
 });
-
-const calculateCheckedLength = _.debounce(collection => {
-    collection.checkedLength = _.filter(collection.models, model => model.checked).length;
-
-    const checkedLength = collection.checkedLength;
-    const length = collection.length;
-
-    if (checkedLength === length) {
-        collection.trigger('check:all', collection);
-        return;
-    }
-
-    if (checkedLength === 0) {
-        collection.trigger('check:none', collection);
-        return;
-    }
-
-    if (checkedLength > 0 && checkedLength < length) {
-        collection.trigger('check:some', collection);
-    }
-}, 10);
 
 export default CheckableBehavior;
 export const CheckableCollection = CheckableBehavior.CheckableCollection;
