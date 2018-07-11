@@ -181,27 +181,27 @@ export default Marionette.Object.extend({
 
         const newSelectedFragment = this.collectionSearchValue[typeTo];
 
-        selected.forEach(mod => {
-            if (!(mod instanceof ItemModel)) {
+        selected.forEach(selectedModel => {
+            if (!(selectedModel instanceof ItemModel)) {
                 return;
             }
             if (this.options.orderEnabled) {
                 if (typeTo === 'selected') {
                     const newOrder = modelsTo.length ? modelsTo.at(modelsTo.length - 1).get('order') + 1 : 1;
-                    mod.set('order', newOrder);
+                    selectedModel.set('order', newOrder);
                 } else {
-                    mod.unset('order');
+                    selectedModel.unset('order');
                 }
             }
-            !all && selectedIndexFrom.push(modelsFrom.indexOf(mod));
-            modelsFrom.remove(mod);
-            modelsTo.add(mod, { delayed: false });
-            mod.unhighlight();
+            !all && selectedIndexFrom.push(modelsFrom.indexOf(selectedModel));
+            modelsFrom.remove(selectedModel);
+            modelsTo.add(selectedModel, { delayed: false });
+            selectedModel.unhighlight();
             if (newSelectedFragment) {
-                model.highlight(newSelectedFragment);
+                selectedModel.highlight(newSelectedFragment);
             }
             if (!all) {
-                mod.select();
+                selectedModel.select();
             }
         });
 

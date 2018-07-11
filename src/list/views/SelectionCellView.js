@@ -196,12 +196,10 @@ export default Marionette.View.extend({
                 this.ui.checkbox.removeClass(classes.checked);
                 this.ui.checkbox.addClass(classes.checked_some);
             }
-        } else {
-            if (this.model.checked) {
+        } else if (this.model.checked) {
                 this.ui.checkbox.addClass(classes.checked);
-            } else {
+        } else {
                 this.ui.checkbox.removeClass(classes.checked);
-            }
         }
     },
 
