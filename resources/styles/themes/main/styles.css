@@ -152,13 +152,7 @@ svg.svg-grid-icons {
 }
 .bubbles .editor__icons {
   font-size: 14px;
-  position: absolute;
-  transform: translateY(-50%);
-  right: 0;
 }
-.editor_bubble--edit.editor_bubble--delete .icon-edit {
-  right: 15px;
-}  
 
 .d-svg-icons {
   fill: #8d8888;
@@ -302,14 +296,6 @@ svg.svg-grid-icons {
 
 .grid-toolbar-region {
   padding-left: 5px;
-}
-
-.editor_bubble--delete .bubbles__i:hover,
-.editor_bubble--edit .bubbles__i:hover {
-  padding-right: var(--bubbles-item-delete-padding);
-}
-.editor_bubble--edit.editor_bubble--delete .bubbles__i:hover {
-  padding-right: var(--bubbles-item-edit-delete-padding);
 }
 
 .bubbles:hover {

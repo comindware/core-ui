@@ -142,6 +142,9 @@ const variables = {
     'dropdown-item-padding': '8px 20px',
     'dropdown-item-checkbox-padding': '10px',
     'dropdown-item-hover-color': 'var(--blue-100)',
+    'bubbles-item-delete-padding': '20px',
+    'bubbles-item-edit-delete-padding': '40px',
+    'bubbles-icon-offset-x': '6px',
 
     'collapse-icon-header': `url(${utils.buildIcon(icons.angleRight, 'var(--white)')})`,
     'collapse-icon': `url(${utils.buildIcon(icons.angleRight, 'var(--text-color)')})`,
@@ -234,7 +237,7 @@ module.exports.apply = {
     'textarea-theme': {
         border: variables.border,
         'border-radius': '4px',
-        'line-height': '1.5',
+        'line-height': '1.5'
     },
     'custom-cotrol-disabled-theme': {
         cursor: 'not-allowed'

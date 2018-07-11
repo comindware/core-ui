@@ -492,9 +492,19 @@ svg.svg-grid-icons {
 }
 .bubbles .editor__icons {
   cursor: pointer;
-  position: static;
-  margin-right: 2px;
   transform: none;
+  top: var(--bubbles-icon-offset-x);
+  right: 0;
+}
+.editor_bubble--edit.editor_bubble--delete .icon-edit {
+  right: 15px;
+}  
+.editor_bubble--delete .bubbles__i:hover,
+.editor_bubble--edit .bubbles__i:hover {
+  padding-right: var(--bubbles-item-delete-padding);
+}
+.editor_bubble--edit.editor_bubble--delete .bubbles__i:hover {
+  padding-right: var(--bubbles-item-edit-delete-padding);
 }
 .bubbles__i {
   @apply --bubbles-item-theme;
@@ -502,6 +512,15 @@ svg.svg-grid-icons {
 
 .editor_bubble--single .bubbles {
   @apply --dropdown-theme;
+}
+
+.bubbles .bubbles__caret,
+.bubbles .spinner {
+  @apply --absolute-center-theme;
+}
+.bubbles .spinner {
+  line-height: 1;
+  right: 0;
 }
 
 .cell .bubbles {

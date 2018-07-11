@@ -94,18 +94,8 @@
 .selected .dd-list__i {
   font-weight: 600;
 }
-.bubbles .bubbles__caret,
 .bubbles .spinner {
-  @apply --absolute-center-theme;
-}
-.bubbles .spinner {
-  line-height: 1;
   right: 25px;
-}
-.bubbles .icon-remove {
-  position: relative;
-  right: auto;
-  top: 2px;
 }
 .bubbles__list:empty:before {
   content: '--';
