@@ -1,5 +1,6 @@
 /*eslint-disable*/
 
+//can't use Backbone.Collection for checked because VirtualCollection change prototype
 
 const CheckableBehavior = {};
 
@@ -7,7 +8,7 @@ CheckableBehavior.CheckableCollection = function (collection) {
     this.collection = collection;
     this.__updateChecked();
     collection.on('add remove reset update', () => {
-        if (collection.internalUpdate) {
+        if (this.internalCheck) {
             return;
         }
         this.__updateChecked();
@@ -61,7 +62,8 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
     },
 
     toggleCheckAll() {
-        if (this.checkedLength === this.length) {
+        const checkedLength = this.checked ? Object.keys(this.checked).length : 0;
+        if (checkedLength === this.length) {
             this.uncheckAll();
         } else {
             this.checkAll();
@@ -111,17 +113,17 @@ _.extend(CheckableBehavior.CheckableCollection.prototype, {
         const length = this.length;
     
         if (checkedLength === length) {
-            this.collection.trigger('check:all', this);
+            this.collection.trigger('check:all', this, 'all');
             return;
         }
     
         if (checkedLength === 0) {
-            this.collection.trigger('check:none', this);
+            this.collection.trigger('check:none', this, 'none');
             return;
         }
     
         if (checkedLength > 0 && checkedLength < length) {
-            this.collection.trigger('check:some', this);
+            this.collection.trigger('check:some', this, 'some');
         }
     }
 });
