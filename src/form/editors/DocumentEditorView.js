@@ -6,7 +6,7 @@ import BaseCompositeEditorView from './base/BaseCompositeEditorView';
 import formRepository from '../formRepository';
 import LocalizationService from '../../services/LocalizationService';
 import dropdown from 'dropdown';
-import ReferencePanelView from './impl/reference/views/ReferencePanelView';
+import DatalistPanelView from './impl/datalist/views/PanelView';
 import MultiselectItemView from './impl/document/views/MultiselectItemView';
 import AttachmentsController from './impl/document/gallery/AttachmentsController';
 
@@ -376,7 +376,7 @@ export default (formRepository.editors.Document = BaseCompositeEditorView.extend
                 model: this.dropdownModel.button,
                 reqres: this.reqres
             },
-            panelView: ReferencePanelView,
+            panelView: DatalistPanelView,
             panelViewOptions: {
                 model: this.dropdownModel.panel,
                 reqres: this.reqres

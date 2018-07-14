@@ -399,7 +399,7 @@ export default {
                 }
             },
 
-            onKeyup(event) {
+            onKeyup(event: Event) {
                 if (event.keyCode === keyCode.ENTER) {
                     this.checkChange();
                 }

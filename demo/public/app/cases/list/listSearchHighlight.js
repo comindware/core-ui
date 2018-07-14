@@ -1,33 +1,20 @@
-
-
 import ListSearchCanvasView from 'demoPage/views/ListSearchCanvasView';
 
 // Most of this steps came from 'Basic Usage' example.
 // New steps required for search & highlight marked with 'NEW'
 
 export default function() {
-    // 1. Create Backbone.Model that implement ListItemBehavior
-    const ListItemModel = Backbone.Model.extend({
-        initialize() {
-            core.utils.helpers.applyBehavior(this, core.list.models.behaviors.ListItemBehavior);
-        }
-    });
-
     // 2. Create VirtualCollection that use this model (and do other stuff maybe)
-    // [NEW] apply HighlightableBehavior on it
-    const ListItemCollection = core.collections.VirtualCollection.extend({
-        initialize() {
-            core.utils.helpers.applyBehavior(this, core.collections.behaviors.HighlightableBehavior);
-        },
-        model: ListItemModel
-    });
+    const ListItemCollection = core.collections.VirtualCollection();
 
     // 3. Get some data (inline or by collection.fetch)
     const collection = new ListItemCollection(undefined, { isSliding: true });
-    collection.reset(_.times(1000, i => ({
-        id: i + 1,
-        title: `My Task ${i + 1}`
-    })));
+    collection.reset(
+        _.times(1000, i => ({
+            id: i + 1,
+            title: `My Task ${i + 1}`
+        }))
+    );
 
     // 4. Create child view that display list rows.
     // - you MUST implement ListItemViewBehavior
@@ -39,7 +26,7 @@ export default function() {
             title: '.js-title'
         },
 
-        behaviors: [ core.list.views.behaviors.ListItemViewBehavior],
+        behaviors: [core.list.views.behaviors.ListItemViewBehavior],
 
         // It's your responsibility to visualize text highlight
         onHighlighted(fragment) {

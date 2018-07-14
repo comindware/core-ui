@@ -35,11 +35,8 @@ import BaseAvatarEditorController from './editors/impl/avatar/controllers/BaseAv
 import DemoAvatarEditorController from './editors/impl/avatar/controllers/DemoAvatarEditorController';
 import DemoReferenceEditorController from './editors/impl/reference/controllers/DemoReferenceEditorController';
 import BaseReferenceEditorController from './editors/impl/reference/controllers/BaseReferenceEditorController';
-import BaseReferenceCollection from './editors/impl/reference/collections/BaseReferenceCollection';
 import DefaultReferenceModel from './editors/impl/reference/models/DefaultReferenceModel';
-import ReferenceListItemView from './editors/impl/reference/views/ReferenceListItemView';
 import LoadingView from './editors/impl/reference/views/LoadingView';
-import ReferenceButtonView from './editors/impl/reference/views/ReferenceButtonView';
 import DatalistButtonView from './editors/impl/datalist/views/ButtonView';
 import ColorPickerEditor from './editors/ColorPickerEditor';
 import RangeEditor from './editors/RangeEditor';
@@ -120,16 +117,11 @@ const api = /** @lends module:core.form */ {
                 DemoReferenceEditorController,
                 BaseReferenceEditorController
             },
-            collections: {
-                BaseReferenceCollection
-            },
             models: {
                 DefaultReferenceModel
             },
             views: {
-                ReferenceListItemView,
                 LoadingView,
-                ReferenceButtonView,
                 DatalistButtonView
             }
         },

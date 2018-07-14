@@ -2,7 +2,6 @@
 import { comparators, helpers } from 'utils';
 import GridColumnHeaderView from './GridColumnHeaderView';
 import template from '../templates/gridheader.hbs';
-import GlobalEventService from '../../services/GlobalEventService';
 
 /*
 *

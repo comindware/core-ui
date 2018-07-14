@@ -196,7 +196,8 @@ export default Marionette.CompositeView.extend({
         let delta;
         const handle = (!this.getOption('isEditable') || e.ctrlKey) && this.collection.isSliding;
         const eventResult = !handle && e.target.tagName === 'INPUT';
-        const selectedModels = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
+        const selectedModels: Array<any> = this.collection.selected instanceof Backbone.Model ? [this.collection.selected] : Object.values(this.collection.selected || {});
+
         e.stopPropagation();
         switch (e.keyCode) {
             case keyCode.UP:
@@ -354,9 +355,9 @@ export default Marionette.CompositeView.extend({
         this.state.position = newPosition;
         if (triggerEvents) {
             this.internalScroll = true;
-            const scrollTop
-                = Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition)
-                * this.childHeight;
+            const scrollTop =
+                Math.max(0, newPosition > (this.collection.length - config.VISIBLE_COLLECTION_RESERVE) / 2 ? newPosition + config.VISIBLE_COLLECTION_RESERVE : newPosition) *
+                this.childHeight;
             if (this.el.parentNode) {
                 this.$el.parent().scrollTop(scrollTop);
             }

@@ -1,5 +1,4 @@
 //@flow
-
 type diffObject = {
     elem: {},
     t: -1 | 0 | 1

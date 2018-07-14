@@ -70,7 +70,7 @@ export default Marionette.View.extend({
         }
 
         const newPanel1Width = Math.min(Math.max(ctx.panel1InitialWidth + event.pageX - ctx.pageX, this.options.panel1Min), ctx.containerWidth - this.options.panel2Min);
-        const leftWidthPx = newPanel1Width / ctx.containerWidth * 100;
+        const leftWidthPx = (newPanel1Width / ctx.containerWidth) * 100;
         const rightWidthPx = 100 - leftWidthPx;
         this.ui.panel1.css('width', `${leftWidthPx}%`);
         this.ui.resizer.css('left', `${leftWidthPx}%`);

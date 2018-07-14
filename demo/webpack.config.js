@@ -22,13 +22,6 @@ const pathResolver = {
     }
 };
 
-const removeBom = text => text.replace(/^\uFEFF/, '');
-
-const readSpritesFile = () => {
-    const svgSpritesFile = `${__dirname}/../dist/themes/main/sprites.svg`;
-    return removeBom(fs.readFileSync(svgSpritesFile, 'utf8'));
-};
-
 module.exports = () => {
     const PRODUCTION = process.argv.includes('-p');
 
@@ -50,23 +43,23 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                        test: /\.css$/,
-                        use: [
-                            MiniCssExtractPlugin.loader,
-                            'css-loader',
-                            {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: () => {
-                                        autoprefixer({
-                                            browsers: ['last 2 versions']
-                                        })
-                                        cssnano();
-                                    }
-                                }
-                            }
-                        ]
+                          test: /\.css$/,
+                          use: [
+                              MiniCssExtractPlugin.loader,
+                              'css-loader',
+                              {
+                                  loader: 'postcss-loader',
+                                  options: {
+                                      sourceMap: true,
+                                      plugins: () => {
+                                          autoprefixer({
+                                              browsers: ['last 2 versions']
+                                          });
+                                          cssnano();
+                                      }
+                                  }
+                              }
+                          ]
                       }
                     : {
                           test: /\.css$/,

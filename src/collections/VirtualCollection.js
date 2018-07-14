@@ -2,7 +2,7 @@
 /*eslint-disable*/
 import SelectableBehavior from '../models/behaviors/SelectableBehavior';
 import CheckableBehavior from '../models/behaviors/CheckableBehavior';
-import { diffHelper } from 'utils';
+import diffHelper from '../utils/diffHelper';
 import GridItemBehavior from '../list/models/behaviors/GridCollapsibleItemBehavior';
 
 const selectableBehavior = {
@@ -14,9 +14,9 @@ const selectableBehavior = {
 const getNormalizedGroupingIterator = function getNormalizedGroupingIterator(groupingOptions) {
     const it = groupingOptions.iterator;
     return _.isString(it)
-        ? function (model) {
-            return model.get(it) || model[it];
-        }
+        ? function(model) {
+              return model.get(it) || model[it];
+          }
         : it;
 };
 
@@ -24,9 +24,9 @@ const getNormalizedGroupingComparator = function getNormalizedGroupingComparator
     const cmp = groupingOptions.comparator;
     return cmp !== undefined
         ? _.isString(cmp)
-            ? function (model) {
-                return model.get(cmp) || model[cmp];
-            }
+            ? function(model) {
+                  return model.get(cmp) || model[cmp];
+              }
             : cmp
         : groupingOptions.iterator;
 };
@@ -35,19 +35,19 @@ const getNormalizedGroupingModelFactory = function getNormalizedGroupingModelFac
     const modelFactory = groupingOptions.modelFactory;
     return modelFactory !== undefined
         ? _.isString(modelFactory)
-            ? function (model) {
-                return new Backbone.Model({
-                    displayText: model.get(modelFactory),
-                    groupingModel: true
-                });
-            }
+            ? function(model) {
+                  return new Backbone.Model({
+                      displayText: model.get(modelFactory),
+                      groupingModel: true
+                  });
+              }
             : modelFactory
-        : function (model) {
-            return new Backbone.Model({
-                displayText: groupingOptions.iterator(model),
-                groupingModel: true
-            });
-        };
+        : function(model) {
+              return new Backbone.Model({
+                  displayText: groupingOptions.iterator(model),
+                  groupingModel: true
+              });
+          };
 };
 
 const fixGroupingOptions = function fixGroupingOptions(groupingOptions) {
@@ -259,7 +259,8 @@ const VirtualCollection = Backbone.Collection.extend(
 
                 Object.assign(model, GridItemBehavior(this));
 
-                if (!model.collapsed && model.children) {//Skip building children models, if parent model is collapsed
+                if (!model.collapsed && model.children) {
+                    //Skip building children models, if parent model is collapsed
                     if (this.isTree) {
                         this.stopListening(model.children, 'add remove reset');
                         this.listenToOnce(model.children, 'add remove reset', this.__debounceRebuild);
@@ -369,27 +370,23 @@ const VirtualCollection = Backbone.Collection.extend(
             const added = [];
             const removed = [];
 
-            Object.values(diffObject)
-                .sort((a, b) => a.t - b.t)
-                .forEach(object => {
-                    switch (object.t) {
-                        case 0:
-                            this.trigger('update:child', object.elem);
-                            break;
-                        case -1:
-                            removed.push(object.elem);
-                            break;
-                        case 1:
-                            added.push(object.elem);
-                            break;
-                    }
-                });
+            diffObject.sort((a, b) => a.t - b.t).forEach(object => {
+                switch (object.t) {
+                    case 0:
+                        this.trigger('update:child', object.elem);
+                        break;
+                    case -1:
+                        removed.push(object.elem);
+                        break;
+                    case 1:
+                        added.push(object.elem);
+                        break;
+                }
+            });
 
             // it's important remove items before add
             this.__removeModels(removed, options);
-            added.
-                sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).
-                forEach(model => this.__addModel(model, options));
+            added.sort((a, b) => this.visibleModels.indexOf(a) - this.visibleModels.indexOf(b)).forEach(model => this.__addModel(model, options));
         },
 
         __normalizePosition(position) {
@@ -445,7 +442,7 @@ const VirtualCollection = Backbone.Collection.extend(
             // TODO: maybe this is unnecessary
             if (options.at !== undefined) {
                 // Updating index
-                const addToIndex = function (ctx, list) {
+                const addToIndex = function(ctx, list) {
                     for (let i = 0, len = list.length; i < len; i++) {
                         if (ctx.position === ctx.targetPosition) {
                             list.add(ctx.model, { at: i });
@@ -481,7 +478,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
             // collecting items in index
             function createIteratorValueChecker(iteratorValue) {
-                return function (m) {
+                return function(m) {
                     return m.iteratorValue === iteratorValue;
                 };
             }
@@ -603,7 +600,7 @@ const VirtualCollection = Backbone.Collection.extend(
 
 // methods that alter data should proxy to the parent collection
 ['add', 'remove', 'set', 'reset', 'push', 'pop', 'unshift', 'shift', 'slice', 'sync', 'fetch', 'update', 'where', 'findWhere'].forEach(methodName => {
-    VirtualCollection.prototype[methodName] = function () {
+    VirtualCollection.prototype[methodName] = function() {
         return this.parentCollection[methodName].apply(this.parentCollection, Array.from(arguments));
     };
 });

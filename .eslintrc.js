@@ -1,46 +1,38 @@
 module.exports = {
-    'parser': 'babel-eslint',
-    'env': {
-        'browser': true,
-        'amd': true,
-        'es6': true,
-        'jquery': true
+    parser: 'babel-eslint',
+    env: {
+        browser: true,
+        amd: true,
+        es6: true,
+        jquery: true
     },
-    'plugins': [
-        'prettier'
-    ],
-    'globals': {
-        '__DEV__': true,
-        'Backbone': true,
-        'Handlebars': true,
-        'Localizer': true,
-        'Ajax': true,
-        'Marionette': true,
-        '_': true,
-        'describe': true,
-        'it': true,
-        'beforeEach': true,
-        'afterEach': true,
-        'moment': true,
-        'numeral': true,
-        'arguments': true,
-        'CKEDITOR': true,
-        'Context': true,
-        'Core': true
+    plugins: ['prettier'],
+    globals: {
+        __DEV__: true,
+        Backbone: true,
+        Handlebars: true,
+        Localizer: true,
+        Ajax: true,
+        Marionette: true,
+        _: true,
+        describe: true,
+        moment: true,
+        arguments: true,
+        CKEDITOR: true,
+        Context: true,
+        Core: true
     },
-    'extends': [
-        'prettier'
-    ],
-    'rules': {
+    extends: ['prettier'],
+    rules: {
         'prettier/prettier': 'warn',
-        'new-cap': ['off', { 'newIsCap': true, 'capIsNew': false }],
+        'new-cap': ['off', { newIsCap: true, capIsNew: false }],
         'quote-props': ['error', 'as-needed'],
         'no-console': ['warn'],
         'arrow-parens': ['warn', 'as-needed'],
         'global-require': 'error',
-        'no-param-reassign': ['error', { 'props': false }],
+        'no-param-reassign': ['error', { props: false }],
         'linebreak-style': 'off',
-        'indent': ['warn', 4, { 'SwitchCase': 1, 'VariableDeclarator': 1 }],
+        indent: ['warn', 4, { SwitchCase: 1, VariableDeclarator: 1 }],
         'operator-linebreak': ['warn', 'before'],
         'multiline-ternary': ['warn', 'always-multiline'],
         'prefer-arrow-callback': 'warn',
@@ -49,27 +41,38 @@ module.exports = {
         'spaced-comment': 0,
         'prefer-const': 'error',
         'array-bracket-spacing': ['warn', 'never'],
-        'array-element-newline' : ['warn', {
-            'multiline': true,
-            'minItems': 4
-        }],
+        'array-element-newline': [
+            'warn',
+            {
+                multiline: true,
+                minItems: 4
+            }
+        ],
         'arrow-body-style': ['error', 'as-needed'],
         'object-curly-spacing': ['warn', 'always'],
         'object-shorthand': ['warn', 'always'],
         'no-useless-constructor': 'error',
-        'no-trailing-spaces': ['warn', { 'skipBlankLines': true }],
-        'no-unused-vars': ['warn', { 'vars': 'local' }],
-        'max-len': ['warn', 180, 4, {
-            'ignoreUrls': true,
-            'ignoreComments': false,
-            'ignoreStrings': true,
-            'ignoreTemplateLiterals': true
-        }],
-        'no-useless-rename': ['error', {
-            'ignoreDestructuring': false,
-            'ignoreImport': false,
-            'ignoreExport': false
-        }],
+        'no-trailing-spaces': ['warn', { skipBlankLines: true }],
+        'no-unused-vars': ['warn', { vars: 'local' }],
+        'max-len': [
+            'warn',
+            180,
+            4,
+            {
+                ignoreUrls: true,
+                ignoreComments: false,
+                ignoreStrings: true,
+                ignoreTemplateLiterals: true
+            }
+        ],
+        'no-useless-rename': [
+            'error',
+            {
+                ignoreDestructuring: false,
+                ignoreImport: false,
+                ignoreExport: false
+            }
+        ],
         'consistent-return': 0, //enable after refactoring
         'no-cond-assign': ['error', 'except-parens'],
         'space-before-function-paren': ['warn', 'never'],
@@ -84,9 +87,12 @@ module.exports = {
         complexity: ['off', 11],
         // enforce that class methods use 'this'
         // http://eslint.org/docs/rules/class-methods-use-this
-        'class-methods-use-this': ['off', {
-            exceptMethods: [],
-        }],
+        'class-methods-use-this': [
+            'off',
+            {
+                exceptMethods: []
+            }
+        ],
         // specify curly brace conventions for all control statements
         curly: ['error', 'multi-line'],
         // require default case in switch statements
@@ -115,13 +121,12 @@ module.exports = {
         'no-else-return': 'error',
         // disallow empty functions, except for standalone funcs/arrows
         // http://eslint.org/docs/rules/no-empty-function
-        'no-empty-function': ['error', {
-            allow: [
-                'arrowFunctions',
-                'functions',
-                'methods',
-            ]
-        }],
+        'no-empty-function': [
+            'error',
+            {
+                allow: ['arrowFunctions', 'functions', 'methods']
+            }
+        ],
         // disallow empty destructuring patterns
         // http://eslint.org/docs/rules/no-empty-pattern
         'no-empty-pattern': 'error',
@@ -143,12 +148,15 @@ module.exports = {
         'no-global-assign': ['error', { exceptions: [] }],
         // disallow implicit type conversions
         // http://eslint.org/docs/rules/no-implicit-coercion
-        'no-implicit-coercion': ['off', {
-            boolean: false,
-            number: true,
-            string: true,
-            allow: [],
-        }],
+        'no-implicit-coercion': [
+            'off',
+            {
+                boolean: false,
+                number: true,
+                string: true,
+                allow: []
+            }
+        ],
         // disallow var and named functions in global scope
         // http://eslint.org/docs/rules/no-implicit-globals
         'no-implicit-globals': 'off',
@@ -164,12 +172,15 @@ module.exports = {
         'no-lone-blocks': 'error',
         // disallow magic numbers
         // http://eslint.org/docs/rules/no-magic-numbers
-        'no-magic-numbers': ['off', {
-            ignore: [],
-            ignoreArrayIndexes: true,
-            enforceConst: true,
-            detectObjects: false,
-        }],
+        'no-magic-numbers': [
+            'off',
+            {
+                ignore: [],
+                ignoreArrayIndexes: true,
+                enforceConst: true,
+                detectObjects: false
+            }
+        ],
         // disallow use of multiple spaces
         'no-multi-spaces': 'warn',
         // disallow use of multiline strings
@@ -189,21 +200,27 @@ module.exports = {
         'no-redeclare': 'error',
         // disallow certain object properties
         // http://eslint.org/docs/rules/no-restricted-properties
-        'no-restricted-properties': ['error', {
-            object: 'arguments',
-            property: 'callee',
-            message: 'arguments.callee is deprecated',
-        }, {
-            property: '__defineGetter__',
-            message: 'Please use Object.defineProperty instead.',
-        }, {
-            property: '__defineSetter__',
-            message: 'Please use Object.defineProperty instead.',
-        }, {
-            object: 'Math',
-            property: 'pow',
-            message: 'Use the exponentiation operator (**) instead.',
-        }],
+        'no-restricted-properties': [
+            'error',
+            {
+                object: 'arguments',
+                property: 'callee',
+                message: 'arguments.callee is deprecated'
+            },
+            {
+                property: '__defineGetter__',
+                message: 'Please use Object.defineProperty instead.'
+            },
+            {
+                property: '__defineSetter__',
+                message: 'Please use Object.defineProperty instead.'
+            },
+            {
+                object: 'Math',
+                property: 'pow',
+                message: 'Use the exponentiation operator (**) instead.'
+            }
+        ],
         // disallow use of `javascript:` urls.
         'no-script-url': 'error',
         // disallow self assignment
@@ -217,11 +234,14 @@ module.exports = {
         // http://eslint.org/docs/rules/no-unmodified-loop-condition
         'no-unmodified-loop-condition': 'off',
         // disallow usage of expressions in statement position
-        'no-unused-expressions': ['error', {
-            allowShortCircuit: true,
-            allowTernary: true,
-            allowTaggedTemplates: false,
-        }],
+        'no-unused-expressions': [
+            'error',
+            {
+                allowShortCircuit: true,
+                allowTernary: true,
+                allowTaggedTemplates: false
+            }
+        ],
         // disallow unused labels
         // http://eslint.org/docs/rules/no-unused-labels
         'no-unused-labels': 'error',
@@ -272,11 +292,15 @@ module.exports = {
         'no-extra-boolean-cast': 'error',
         // disallow unnecessary parentheses
         // http://eslint.org/docs/rules/no-extra-parens
-        'no-extra-parens': ['off', 'all', {
-            conditionalAssign: true,
-            nestedBinaryExpressions: false,
-            returnAssign: false,
-        }],
+        'no-extra-parens': [
+            'off',
+            'all',
+            {
+                conditionalAssign: true,
+                nestedBinaryExpressions: false,
+                returnAssign: false
+            }
+        ],
         // disallow unnecessary semicolons
         'no-extra-semi': 'error',
         // disallow overwriting functions written as function declarations
@@ -340,9 +364,12 @@ module.exports = {
         'import/max-dependencies': ['off', { max: 10 }],
         // prevent importing the submodules of other modules
         // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-internal-modules.md
-        'import/no-internal-modules': ['off', {
-            allow: [],
-        }],
+        'import/no-internal-modules': [
+            'off',
+            {
+                allow: []
+            }
+        ],
         // Warn if a module could be mistakenly parsed as a script by a consumer
         // leveraging Unambiguous JavaScript Grammar
         // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/unambiguous.md
@@ -380,9 +407,12 @@ module.exports = {
         'generator-star-spacing': ['error', { before: false, after: true }],
         // disallow arrow functions where they could be confused with comparisons
         // http://eslint.org/docs/rules/no-confusing-arrow
-        'no-confusing-arrow': ['error', {
-            allowParens: true,
-        }],
+        'no-confusing-arrow': [
+            'error',
+            {
+                allowParens: true
+            }
+        ],
         // disallow modifying variables that are declared using const
         'no-const-assign': 'error',
         // disallow duplicate class members
@@ -423,11 +453,14 @@ module.exports = {
         'rest-spread-spacing': ['error', 'never'],
         // import sorting
         // http://eslint.org/docs/rules/sort-imports
-        'sort-imports': ['off', {
-            ignoreCase: false,
-            ignoreMemberSort: false,
-            memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-        }],
+        'sort-imports': [
+            'off',
+            {
+                ignoreCase: false,
+                ignoreMemberSort: false,
+                memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single']
+            }
+        ],
         // require a Symbol description
         // http://eslint.org/docs/rules/symbol-description
         'symbol-description': 'error',
@@ -446,18 +479,22 @@ module.exports = {
         camelcase: ['off', { properties: 'always' }],
         // enforce or disallow capitalization of the first letter of a comment
         // http://eslint.org/docs/rules/capitalized-comments
-        'capitalized-comments': ['off', 'never', {
-            line: {
-                ignorePattern: '.*',
-                ignoreInlineComments: true,
-                ignoreConsecutiveComments: true,
-            },
-            block: {
-                ignorePattern: '.*',
-                ignoreInlineComments: true,
-                ignoreConsecutiveComments: true,
-            },
-        }],
+        'capitalized-comments': [
+            'off',
+            'never',
+            {
+                line: {
+                    ignorePattern: '.*',
+                    ignoreInlineComments: true,
+                    ignoreConsecutiveComments: true
+                },
+                block: {
+                    ignorePattern: '.*',
+                    ignoreInlineComments: true,
+                    ignoreConsecutiveComments: true
+                }
+            }
+        ],
         // enforce spacing before and after comma
         'comma-spacing': ['error', { before: false, after: true }],
         // enforce one true comma style
@@ -474,9 +511,13 @@ module.exports = {
         // requires function names to match the name of the variable or property to which they are
         // assigned
         // http://eslint.org/docs/rules/func-name-matching
-        'func-name-matching': ['off', 'always', {
-            includeCommonJSModuleExports: false
-        }],
+        'func-name-matching': [
+            'off',
+            'always',
+            {
+                includeCommonJSModuleExports: false
+            }
+        ],
         // Blacklist certain identifiers to prevent them being used
         // http://eslint.org/docs/rules/id-blacklist
         'id-blacklist': 'off',
@@ -491,32 +532,41 @@ module.exports = {
         // enforces spacing between keys and values in object literal properties
         'key-spacing': ['error', { beforeColon: false, afterColon: true }],
         // require a space before & after certain keywords
-        'keyword-spacing': ['warn', {
-            before: true,
-            after: true,
-            overrides: {
-                return: { after: true },
-                throw: { after: true },
-                case: { after: true }
+        'keyword-spacing': [
+            'warn',
+            {
+                before: true,
+                after: true,
+                overrides: {
+                    return: { after: true },
+                    throw: { after: true },
+                    case: { after: true }
+                }
             }
-        }],
+        ],
         // enforces empty lines around comments
         'lines-around-comment': 'off',
         // require or disallow newlines around directives
         // http://eslint.org/docs/rules/lines-around-directive
-        'lines-around-directive': ['error', {
-            before: 'always',
-            after: 'always',
-        }],
+        'lines-around-directive': [
+            'error',
+            {
+                before: 'always',
+                after: 'always'
+            }
+        ],
         // specify the maximum depth that blocks can be nested
         'max-depth': ['off', 4],
         // specify the max number of lines in a file
         // http://eslint.org/docs/rules/max-lines
-        'max-lines': ['off', {
-            max: 300,
-            skipBlankLines: true,
-            skipComments: true
-        }],
+        'max-lines': [
+            'off',
+            {
+                max: 300,
+                skipBlankLines: true,
+                skipComments: true
+            }
+        ],
         // specify the maximum depth callbacks can be nested
         'max-nested-callbacks': 'off',
         // limits the number of parameters that can be used in the function declaration.
@@ -549,14 +599,12 @@ module.exports = {
         'no-lonely-if': 'error',
         // disallow un-paren'd mixes of different operators
         // http://eslint.org/docs/rules/no-mixed-operators
-        'no-mixed-operators': ['error', {
-            groups: [
-                ['&', '|', '^', '~', '<<', '>>', '>>>'],
-                ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
-                ['&&', '||'],
-                ['in', 'instanceof']
-            ]
-        }],
+        'no-mixed-operators': [
+            'error',
+            {
+                groups: [['&', '|', '^', '~', '<<', '>>', '>>>'], ['==', '!=', '===', '!==', '>', '>=', '<', '<='], ['&&', '||'], ['in', 'instanceof']]
+            }
+        ],
         // disallow mixed spaces and tabs for indentation
         'no-mixed-spaces-and-tabs': 'warn',
         // disallow use of chained assignment expressions
@@ -577,20 +625,22 @@ module.exports = {
             'error',
             {
                 selector: 'ForInStatement',
-                message: 'for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array.',
+                message:
+                    'for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array.'
             },
             {
                 selector: 'ForOfStatement',
-                message: 'iterators/generators require regenerator-runtime, which is too heavyweight for this guide to allow them. Separately, loops should be avoided in favor of array iterations.',
+                message:
+                    'iterators/generators require regenerator-runtime, which is too heavyweight for this guide to allow them. Separately, loops should be avoided in favor of array iterations.'
             },
             {
                 selector: 'LabeledStatement',
-                message: 'Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand.',
+                message: 'Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand.'
             },
             {
                 selector: 'WithStatement',
-                message: '`with` is disallowed in strict mode because it makes code impossible to predict and optimize.',
-            },
+                message: '`with` is disallowed in strict mode because it makes code impossible to predict and optimize.'
+            }
         ],
         // disallow space between function identifier and application
         'no-spaced-func': 'warn',
@@ -610,11 +660,14 @@ module.exports = {
         'nonblock-statement-body-position': 'off',
         // enforce 'same line' or 'multiple line' on object properties.
         // http://eslint.org/docs/rules/object-property-newline
-        'object-property-newline': ['error', {
-            allowMultiplePropertiesPerLine: true,
-        }],
+        'object-property-newline': [
+            'error',
+            {
+                allowMultiplePropertiesPerLine: true
+            }
+        ],
         // allow just one var statement per function
-        'one-var': ['error', { var: 'never', let: 'never', const: 'never' } ],
+        'one-var': ['error', { var: 'never', let: 'never', const: 'never' }],
         // require a newline around variable declaration
         // http://eslint.org/docs/rules/one-var-declaration-per-line
         'one-var-declaration-per-line': ['error', 'always'],
@@ -644,12 +697,14 @@ module.exports = {
         'space-infix-ops': 'warn',
         // Require or disallow spaces before/after unary operators
         // http://eslint.org/docs/rules/space-unary-ops
-        'space-unary-ops': ['warn', {
-            words: true,
-            nonwords: false,
-            overrides: {
-            },
-        }],
+        'space-unary-ops': [
+            'warn',
+            {
+                words: true,
+                nonwords: false,
+                overrides: {}
+            }
+        ],
         // require or disallow the Unicode Byte Order Mark
         // http://eslint.org/docs/rules/unicode-bom
         'unicode-bom': ['error', 'never'],

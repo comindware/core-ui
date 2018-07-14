@@ -23,21 +23,6 @@ describe('Editors', () => {
         }
     ];
 
-    const dynamicController = core.form.editors.reference.controllers.BaseReferenceEditorController.extend({
-        fetch() {
-            return new Promise(resolve => {
-                this.collection.reset(collectionData);
-
-                this.totalCount = 3;
-
-                return resolve({
-                    collection: collectionData,
-                    totalCount: this.totalCount
-                });
-            });
-        }
-    });
-
     afterEach(() => {
         core.services.WindowService.closePopup();
     });
@@ -141,9 +126,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
-                }),
+                url: 'dynamic/mock',
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -191,9 +174,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
-                }),
+                url: 'dynamic/mock',
                 key: 'value',
                 maxQuantitySelected: Infinity
             });
@@ -288,9 +269,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
-                }),
+                url: 'dynamic/mock',
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
@@ -371,9 +350,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
-                }),
+                url: 'dynamic/mock',
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
@@ -402,9 +379,7 @@ describe('Editors', () => {
 
             const view = new core.form.editors.DatalistEditor({
                 model,
-                controller: new dynamicController({
-                    collection: new core.form.editors.reference.collections.BaseReferenceCollection()
-                }),
+                url: 'dynamic/mock',
                 key: 'value',
                 maxQuantitySelected: Infinity,
                 autocommit: true
