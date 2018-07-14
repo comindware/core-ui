@@ -1,22 +1,26 @@
-
 export default {
-    cloneDeep: function(obj) {
-        var out,
-            i;
-        if (Array.isArray(obj)) {
+    cloneDeep(obj) {
+        let out;
+        let i;
+        const pureJSType = obj && obj.toJSON ? obj.toJSON() : obj; //converting Backbone to js
+
+        if (Array.isArray(pureJSType)) {
             out = [];
-            for (i = obj.length; i;) {
+            for (i = pureJSType.length; i; ) {
                 --i;
-                out[i] = _.cloneDeep(obj[i]);
+                out[i] = _.cloneDeep(pureJSType[i]);
             }
+
             return out;
         }
 
-        if (_.isObject(obj) && typeof obj !== 'function') {
+        if (_.isObject(pureJSType) && typeof pureJSType !== 'function') {
             out = {};
-            for (i in obj) { out[i] = _.cloneDeep(obj[i]); }
+            Object.entries(pureJSType).forEach(entrie => (out[entrie[0]] = _.cloneDeep(entrie[1])));
+
             return out;
         }
-        return obj;
+
+        return pureJSType;
     }
 };
