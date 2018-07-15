@@ -84,6 +84,57 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.__updateWithDelay = _.debounce(this.__updateFilter, this.options.textFilterDelay);
         this.listenTo(this.panelCollection, 'selected', this.__onValueSet);
         this.listenTo(this.panelCollection, 'deselected', this.__onValueUnset);
+
+        this.viewModel = {
+            button: {
+                selected: new Backbone.Collection(this.value, {
+                    comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
+                })
+            },
+            panel: new Backbone.Model({
+                collection: this.panelCollection
+            })
+        };
+
+        const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
+
+        reqres.reply({
+            'bubble:delete': this.__onBubbleDelete.bind(this),
+            'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
+            'input:search': this.__onInputSearch.bind(this),
+            'input:up': this.__onInputUp.bind(this),
+            'input:down': this.__onInputDown.bind(this),
+            'button:click': this.__onButtonClick.bind(this),
+            'value:select': this.__onValueSelect.bind(this),
+            'value:edit': this.__onValueEdit.bind(this),
+            'add:new:item': this.__onAddNewItem.bind(this),
+            'try:value:select': this.__proxyValueSelect.bind(this)
+        });
+
+        this.dropdownView = dropdown.factory.createDropdown({
+            buttonView: this.options.buttonView,
+            buttonViewOptions: {
+                model: this.viewModel.button,
+                reqres,
+                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
+                showEditButton: this.options.showEditButton,
+                canDeleteItem: this.options.canDeleteItem,
+                createValueUrl: this.controller.createValueUrl.bind(this.controller),
+                enabled: this.getEnabled(),
+                readonly: this.getReadonly()
+            },
+            panelView: PanelView,
+            panelViewOptions: {
+                model: this.viewModel.panel,
+                reqres,
+                showAddNewButton: this.options.showAddNewButton,
+                showCheckboxes: this.options.showCheckboxes,
+                listItemView: this.options.listItemView,
+                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
+                textFilterDelay: this.options.textFilterDelay
+            },
+            autoOpen: false
+        });
     },
 
     regions: {
@@ -123,56 +174,6 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     onRender(): void {
-        const reqres = Backbone.Radio.channel(_.uniqueId('datalistE'));
-
-        this.viewModel = {
-            button: {
-                selected: new Backbone.Collection(this.value, {
-                    comparator: helpers.comparatorFor(comparators.stringComparator2Asc, 'text')
-                })
-            },
-            panel: new Backbone.Model({
-                collection: this.panelCollection
-            })
-        };
-
-        reqres.reply({
-            'bubble:delete': this.__onBubbleDelete.bind(this),
-            'bubble:delete:last': this.__onBubbleDeleteLast.bind(this),
-            'input:search': this.__onInputSearch.bind(this),
-            'input:up': this.__onInputUp.bind(this),
-            'input:down': this.__onInputDown.bind(this),
-            'button:click': this.__onButtonClick.bind(this),
-            'value:select': this.__onValueSelect.bind(this),
-            'value:edit': this.__onValueEdit.bind(this),
-            'add:new:item': this.__onAddNewItem.bind(this),
-            'try:value:select': this.__proxyValueSelect.bind(this)
-        });
-
-        this.dropdownView = dropdown.factory.createDropdown({
-            buttonView: this.options.buttonView,
-            buttonViewOptions: {
-                model: this.viewModel.button,
-                reqres,
-                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
-                showEditButton: this.options.showEditButton,
-                canDeleteItem: this.options.canDeleteItem,
-                createValueUrl: this.controller.createValueUrl.bind(this.controller),
-                enabled: this.getEnabled(),
-                readonly: this.getReadonly()
-            },
-            panelView: PanelView,
-            panelViewOptions: {
-                model: this.viewModel.panel,
-                reqres,
-                showAddNewButton: this.options.showAddNewButton,
-                showCheckboxes: this.options.showCheckboxes,
-                listItemView: this.options.listItemView,
-                getDisplayText: value => this.__getDisplayText(value, this.options.displayAttribute),
-                textFilterDelay: this.options.textFilterDelay
-            },
-            autoOpen: false
-        });
         this.listenTo(this.dropdownView, 'open', this.__onDropdownOpen);
         this.listenTo(this.dropdownView, 'close', this.__onDropdownClose);
 

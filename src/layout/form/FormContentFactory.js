@@ -8,6 +8,7 @@ import Button from '../button/ButtonView';
 import Popup from '../popup/PopupView';
 import PlainText from '../plainText/PlainTextView';
 import GridController from '../../list/controllers/GridController';
+import ToolbarView from '../../components/toolbar/ToolbarView';
 
 export default {
     __uniqueFormId: '',
@@ -20,12 +21,20 @@ export default {
     __parseConfiguration(schema: Array<any>) {
         return schema.map(child => {
             switch (child.type) {
-                case 'v-container':
+                //auto layout components
+                case 'v-container': // vertical layout container
                     return new VerticalLayout(
                         Object.assign(child, {
                             rows: this.__parseConfiguration(child.items)
                         })
                     );
+                case 'h-container': // horizontal layout container
+                    return new HorizontalLayout(
+                        Object.assign(child, {
+                            columns: this.__parseConfiguration(child.items)
+                        })
+                    );
+                //complex components
                 case 'tab':
                     return new TabLayoutView(
                         Object.assign(child, {
@@ -36,12 +45,6 @@ export default {
                     return new Group(
                         Object.assign(child, {
                             view: this.__parseConfiguration(child.items)[0]
-                        })
-                    );
-                case 'h-container':
-                    return new HorizontalLayout(
-                        Object.assign(child, {
-                            columns: this.__parseConfiguration(child.items)
                         })
                     );
                 case 'Popup':
@@ -57,6 +60,15 @@ export default {
                     const controller = new GridController(child);
 
                     return controller.view;
+                }
+                case 'toolbar': {
+                    const toolbar = new ToolbarView(child);
+
+                    toolbar.on('command:execute', function (...args) {
+                        child.handler.apply(this, args);
+                    });
+
+                    return toolbar;
                 }
                 case 'plainText':
                     return new PlainText(_.omit(child, 'type'));
