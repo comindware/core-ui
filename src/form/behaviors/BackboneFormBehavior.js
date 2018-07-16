@@ -1,6 +1,11 @@
 import FieldView from '../fields/FieldView';
 import ErrorPlaceholderView from '../fields/ErrorPlaceholderView';
 
+const componentTypes = {
+    editor: 'editor',
+    field: 'field'
+};
+
 const Form = Marionette.Object.extend({
     /**
      * Constructor
@@ -15,6 +20,7 @@ const Form = Marionette.Object.extend({
         this.model = options.model;
 
         this.fields = {};
+        this.regions = [];
 
         Object.entries(this.schema).forEach(entry => {
             const FieldType = entry[1].field || options.field || FieldView; //TODO fix api
@@ -34,32 +40,16 @@ const Form = Marionette.Object.extend({
             }
         });
 
-        const $target = this.options.$target;
-        const rootView = window.app.getView();
+        this.__renderComponents(componentTypes.editor);
+        this.__renderComponents(componentTypes.field);
+    },
 
-        //Render standalone editors
-        $target.find('[data-editors]').each((i, el) => {
-            //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !el.hasAttribute('editor-for')) || el.getAttribute('editor-for') === this.model.get('uniqueFormId')) {
-                const key = el.getAttribute('data-editors');
-                const regionName = `${key}Region`;
+    handleAttach() {
+        this.regions.forEach(region => region.currentView && region.currentView.triggerMethod('attach'));
+    },
 
-                rootView.addRegion(regionName, { el });
-                this.fields[key] && rootView.showChildView(regionName, this.fields[key].editor);
-            }
-        });
-
-        //Render standalone fields
-        $target.find('[data-fields]').each((i, el) => {
-            //TODO Merge with previous
-            if ((!this.model.has('uniqueFormId') && !el.hasAttribute('field-for')) || el.getAttribute('field-for') === this.model.get('uniqueFormId')) {
-                const key = el.getAttribute('data-fields');
-                const regionName = `${key}Region`;
-
-                rootView.addRegion(regionName, { el });
-                this.fields[key] && rootView.showChildView(regionName, this.fields[key]);
-            }
-        });
+    onDestroy() {
+        this.regions.forEach(region => region.destroy());
     },
 
     /**
@@ -265,14 +255,26 @@ const Form = Marionette.Object.extend({
         if (focusedField) {
             focusedField.editor.blur();
         }
+    },
+
+    __renderComponents(componentType) {
+        const $target = this.options.$target;
+        const rootView = window.app.getView();
+
+        $target.find(`[data-${componentType}s]`).each((i, el) => {
+            if ((!this.model.has('uniqueFormId') && !el.hasAttribute(`${componentType}-for`)) || el.getAttribute(`${componentType}-for`) === this.model.get('uniqueFormId')) {
+                const key = el.getAttribute(`data-${componentType}s`);
+                const regionName = `${key}Region`;
+                const fieldRegion = rootView.addRegion(regionName, { el });
+                this.regions.push(fieldRegion);
+                if (this.fields[key]) {
+                    const componentView = componentType === componentTypes.field ? this.fields[key] : this.fields[key].editor;
+                    rootView.showChildView(regionName, componentView);
+                }
+            }
+        });
     }
 });
-
-const constants = {
-    RENDER_STRATEGY_RENDER: 'render',
-    RENDER_STRATEGY_SHOW: 'show',
-    RENDER_STRATEGY_MANUAL: 'manual'
-};
 
 /**
  * Marionette.Behavior constructor shall never be called manually.
@@ -324,7 +326,7 @@ export default Marionette.Behavior.extend({
     },
 
     onAttach() {
-        Object.keys(this.form.fields).forEach(key => this.form.fields[key].triggerMethod('attach'));
+        this.form.handleAttach();
     },
 
     __renderForm() {
