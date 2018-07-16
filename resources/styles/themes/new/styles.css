@@ -163,6 +163,28 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 
 /*------------------ Form Label ------------------*/
+.form-label__info-button,
+.form-label__error-button {
+  transition: color 0.3s;
+}
+.form-label__info-button {
+  color: var(--grey-400);
+}
+.form-label__error-button {
+  color: var(--red);
+}
+
+.form-label__info-button:hover {
+  color: var(--text-color);
+}
+.form-label__error-button:hover {
+  color: var(--red-dark);
+}
+
+.form-label:not(.form-label--empty) + .editor_document,
+.form-label:not(.form-label--empty) + .editor_checkbox {
+  padding-left: var(--form-input-padding);
+}
 
 .error .form-label {
   color: var(--error-color);

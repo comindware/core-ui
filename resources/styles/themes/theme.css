@@ -41,16 +41,6 @@ body {
   font-size: var(--form-label-icon-size);
 }
 
-.form-label__info-button,
-.form-label__error-button {
-  opacity: 0.8;
-}
-
-.form-label__info-button:hover,
-.form-label__error-button:hover {
-  opacity: 1;
-}
-
 .form-label__error-button {
   color: var(--error-color);
 }
