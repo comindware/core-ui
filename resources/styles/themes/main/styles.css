@@ -307,6 +307,15 @@ svg.svg-grid-icons {
 }
 
 /*------------------ Form Label ------------------*/
+.form-label__info-button,
+.form-label__error-button {
+  opacity: 0.8;
+}
+
+.form-label__info-button:hover,
+.form-label__error-button:hover {
+  opacity: 1;
+}
 
 .required .form-label {
   padding-left: 10px;
