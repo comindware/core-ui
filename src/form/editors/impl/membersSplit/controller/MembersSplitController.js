@@ -277,7 +277,7 @@ export default Marionette.Object.extend({
                 }
             });
             const selected = this.options.selected;
-            let selectedItems = selected
+            let selectedItems = Array.isArray(selected)
                 ? this.options.selected.map(id => {
                     const model = items[id];
                     delete items[id];
