@@ -5,6 +5,11 @@ import '../node_modules/moment-timezone/moment-timezone-utils';
 import 'moment/locale/ru';
 import 'moment/locale/en-gb';
 import 'moment/locale/de';
+
+/* Text Mask */
+import maskInput from 'vanilla-text-mask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+
 /* --- */
 import underscoreLib from 'underscore';
 import mixin from './utils/underscore';
@@ -43,7 +48,9 @@ const api = {
     Marionette: Marionette_,
     codemirror: codemirror_,
     JSEncrypt: jsencrypt.JSEncrypt,
-    autosize
+    autosize,
+    maskInput,
+    createNumberMask
 };
 
 const moment = api.moment;
@@ -55,4 +62,4 @@ const Marionette = Marionette_;
 const codemirror = api.codemirror;
 
 export default api;
-export { moment, Handlebars, $, _, Backbone, Marionette, codemirror, autosize };
+export { moment, Handlebars, $, _, Backbone, Marionette, codemirror, autosize, createNumberMask, maskInput };

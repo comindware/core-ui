@@ -3,6 +3,7 @@ import BaseItemEditorView from './base/BaseItemEditorView';
 import formRepository from '../formRepository';
 import iconWrapRemove from './iconsWraps/iconWrapRemove.html';
 import iconWrapNumber from './iconsWraps/iconWrapNumber.html';
+import { maskInput, createNumberMask } from 'lib';
 
 const changeMode = {
     keydown: 'keydown',
@@ -46,6 +47,16 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         return `${this.options.class || ''} editor editor_number`;
     },
 
+    initialize(options) {
+        if (options.format) {
+            this.numberMask = createNumberMask({
+                prefix: '',
+                thousandsSeparatorSymbol: Core.services.LocalizationService.thousandsSeparatorSymbol,
+                decimalSymbol: Core.services.LocalizationService.decimalSymbol,
+                allowDecimal: options.allowFloat
+            });
+        }
+    },
     ui: {
         input: '.js-input'
     },
@@ -71,6 +82,19 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     onRender() {
         this.__setInputOptions();
         this.__value(this.value, false, false, true);
+    },
+
+    onAttach() {
+        if (this.options.format) {
+            this.maskedInputController = maskInput({
+                inputElement: this.ui.input[0],
+                mask: this.numberMask
+            });
+        }
+    },
+
+    onDestroy() {
+        this.maskedInputController && this.maskedInputController.destroy();
     },
 
     setValue(value) {
@@ -110,7 +134,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
             return;
         }
         let parsed;
-        let formattedValue = null;
         if (value !== '' && value !== null) {
             parsed = this.__parse(value);
             if (parsed !== null) {
@@ -118,12 +141,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
                     value = Math.floor(parsed);
                 } else {
                     value = parsed;
-                }
-                if (this.options.format) {
-                    formattedValue = new Intl.NumberFormat(Core.services.LocalizationService.langCode, {
-                        minimumIntegerDigits: 1,
-                        minimumFractionDigits: 2
-                    }).format(parsed);
                 }
             } else {
                 value = null;
@@ -134,18 +151,13 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
         this.value = value;
         if (this.options.showTitle) {
-            if (formattedValue) {
-                this.$el.prop('title', formattedValue);
-            } else {
-                this.$el.prop('title', value);
-            }
+            this.$el.prop('title', value);
         }
 
-        if (formattedValue) {
-            this.ui.input.val(formattedValue);
-        } else {
+        if (!this.options.format || this.ui.input.val() === '' || value === null) {
             this.ui.input.val(value);
         }
+
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -180,15 +192,12 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         this.ui.input[0].setAttribute('step', this.options.step);
     },
 
-    __getNumberSeparator() {
-        return new Intl.NumberFormat(Core.services.LocalizationService.langCode).format(1111).substring(1, 2);
-    },
-
     __parseNumber(value) {
-        const hundredsSeparator = this.__getNumberSeparator();
+        const thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
+        const decimalSymbol = Core.services.LocalizationService.decimalSymbol;
+        let newValue = value.replace(`/\\${thousandsSeparator}/g`, '');
+        newValue = newValue.replace(`/\\${decimalSymbol}/g`, '.');
 
-        const newValue = value.replace(new RegExp(`${hundredsSeparator}*`, 'g'), '');
-
-        return parseFloat(newValue.replace(/[^\d\.\,]*/g, ''));
+        return parseFloat(newValue.replace(/[^\d\.]*/g, ''));
     }
 }));
