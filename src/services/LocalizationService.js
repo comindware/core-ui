@@ -15,6 +15,10 @@ type LocalizationService = {
 
     timeZone?: string,
 
+    thousandsSeparatorSymbol?: string,
+
+    decimalSymbol?: string,
+
     localizationMap?: Object,
 
     get(locId: string): string,
@@ -29,6 +33,13 @@ const service: LocalizationService = {
         this.langCode = options.langCode;
         this.timeZone = options.timeZone || moment.tz.guess();
         this.localizationMap = options.localizationMap;
+
+        const formattedNumber = new Intl.NumberFormat(this.langCode, {
+            minimumFractionDigits: 2
+        }).format(1000);
+
+        this.thousandsSeparatorSymbol = formattedNumber.slice(1, 2);
+        this.decimalSymbol = formattedNumber.slice(-3, -2);
 
         //TODO remove this then server start to return full date
         const offset = moment.tz.zone(this.timeZone).utcOffset(new Date());
