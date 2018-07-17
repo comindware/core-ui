@@ -2,6 +2,7 @@
 import CTEventsService from '../services/CTEventsService';
 import WebSocketService from '../services/WebSocketService';
 import ToastNotificationService from '../services/ToastNotificationService';
+import PresenterService from '../services/PresenterService';
 
 export default Marionette.Object.extend({
     constructor(options = {}) {
@@ -38,6 +39,9 @@ export default Marionette.Object.extend({
 
     setLoading(isLoading) {
         this.view.setModuleLoading(isLoading);
+        if (isLoading === false) {
+            this.__onModuleReady();
+        }
     },
 
     contentViewOptions: null,
@@ -196,5 +200,11 @@ export default Marionette.Object.extend({
         }
 
         return callParams;
+    },
+
+    __onModuleReady() {
+        if (this.componentQuery) {
+            PresenterService.presentComponentSequence(this.componentQuery);
+        }
     }
 });
