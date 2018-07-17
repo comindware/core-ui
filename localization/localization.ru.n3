@@ -48,6 +48,24 @@
 
 <http://comindware.com/text/core/form/editors/code#undo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Undo"].
 
+<http://comindware.com/text/core/form/editors/code/output/errors#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "Column"].
+
+<http://comindware.com/text/core/form/editors/code/output/errors#line> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Строка"; l10n:originalData "Line"].
+
+<http://comindware.com/text/core/form/editors/code/output/errors#message> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сообщение"; l10n:originalData "message"].
+
+<http://comindware.com/text/core/form/editors/code/output/errors#messcode> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Код сообщения"; l10n:originalData "messcode"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "Column"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#line> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Строка"; l10n:originalData "Line"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#message> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Сообщение"; l10n:originalData "message"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#messcode> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Код сообщения"; l10n:originalData "Messcode"].
+
+<http://comindware.com/text/core/form/editors/code/output/warnings#warninglevel> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Уровень ошибки"; l10n:originalData "Warning level"].
+
 <http://comindware.com/text/core/form/editors/collection#addNewItem> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Добавить новый элемент"; l10n:originalData "Add a new item"].
 
 <http://comindware.com/text/core/form/editors/collection#emptyCollection> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Перед добавлением значений в таблицу необходимо создать запись"; l10n:originalData "You need to create record before adding values to the table"].

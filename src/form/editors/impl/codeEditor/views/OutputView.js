@@ -1,4 +1,5 @@
 import template from '../templates/output.html';
+import LocalizationService from '../../../../../services/LocalizationService';
 
 export default Marionette.View.extend({
     initialize(options) {
@@ -19,21 +20,21 @@ export default Marionette.View.extend({
     },
 
     onRender() {
-        this.errorsGridController = new Core.list.controllers.GridController({
+        const errorsGridController = new Core.list.controllers.GridController({
             columns: this.__getErrorsColumns(),
             excludeActions: 'all',
             collection: this.model.get('errors')
         });
-        this.errorsGrid = this.errorsGridController.view;
+        const errorsGrid = errorsGridController.view;
 
-        this.warningsGridController = new Core.list.controllers.GridController({
+        const warningsGridController = new Core.list.controllers.GridController({
             columns: this.__getWarningsColumns(),
             excludeActions: 'all',
             collection: this.model.get('warnings')
         });
-        this.warningsGrid = this.warningsGridController.view;
+        const warningsGrid = warningsGridController.view;
 
-        this.listenTo(this.errorsGridController, 'dblclick', model => {
+        this.listenTo(errorsGridController, 'dblclick', model => {
             const cursorPos = {
                 ch: model.get('column') - 1,
                 line: model.get('line') - 1
@@ -41,7 +42,7 @@ export default Marionette.View.extend({
             const type = 'error';
             this.trigger('changeCursorPos', cursorPos, type);
         });
-        this.listenTo(this.warningsGridController, 'dblclick', model => {
+        this.listenTo(warningsGridController, 'dblclick', model => {
             const cursorPos = {
                 ch: model.get('column') - 1,
                 line: model.get('line') - 1
@@ -50,38 +51,38 @@ export default Marionette.View.extend({
             this.trigger('changeCursorPos', cursorPos, type);
         });
 
-        this.tabsPanelsView = new Core.layout.TabLayout({
-            tabs: this.__getTabs()
+        const tabsPanelsView = new Core.layout.TabLayout({
+            tabs: this.__getTabs(errorsGrid, warningsGrid)
         });
 
-        this.showChildView('tabsRegion', this.tabsPanelsView);
+        this.showChildView('tabsRegion', tabsPanelsView);
     },
 
     __getErrorsColumns() {
         return [
             {
-                title: 'Line',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.ERRORS.LINE'),
                 key: 'line',
                 type: Core.meta.objectPropertyTypes.INTEGER,
                 autocommit: true,
                 width: 0.15
             },
             {
-                title: 'Column',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.ERRORS.COLUMN'),
                 key: 'column',
                 type: Core.meta.objectPropertyTypes.INTEGER,
                 autocommit: true,
                 width: 0.15
             },
             {
-                title: 'Messcode',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.ERRORS.MESSCODE'),
                 key: 'messcode',
                 type: Core.meta.objectPropertyTypes.STRING,
                 autocommit: true,
                 width: 0.2
             },
             {
-                title: 'Message',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.ERRORS.MESSAGE'),
                 key: 'message',
                 type: Core.meta.objectPropertyTypes.STRING,
                 autocommit: true,
@@ -93,35 +94,35 @@ export default Marionette.View.extend({
     __getWarningsColumns() {
         return [
             {
-                title: 'Line',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.LINE'),
                 key: 'line',
                 type: Core.meta.objectPropertyTypes.INTEGER,
                 autocommit: true,
                 width: 0.1
             },
             {
-                title: 'Column',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.COLUMN'),
                 key: 'column',
                 type: Core.meta.objectPropertyTypes.INTEGER,
                 autocommit: true,
                 width: 0.1
             },
             {
-                title: 'Messcode',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.MESSCODE'),
                 key: 'messcode',
                 type: Core.meta.objectPropertyTypes.STRING,
                 autocommit: true,
                 width: 0.2
             },
             {
-                title: 'Message',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.MESSAGE'),
                 key: 'message',
                 type: Core.meta.objectPropertyTypes.STRING,
                 autocommit: true,
                 width: 0.4
             },
             {
-                title: 'Warning level',
+                title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.WARNINGLEVEL'),
                 key: 'warningLevel',
                 type: Core.meta.objectPropertyTypes.INTEGER,
                 autocommit: true,
@@ -130,17 +131,17 @@ export default Marionette.View.extend({
         ];
     },
 
-    __getTabs() {
+    __getTabs(errorsGrid, warningsGrid) {
         return [
             {
                 id: 'tab1',
                 name: 'Errors',
-                view: this.errorsGrid
+                view: errorsGrid
             },
             {
                 id: 'tab2',
                 name: 'Warnings',
-                view: this.warningsGrid
+                view: warningsGrid
             },
             {
                 id: 'tab3',
