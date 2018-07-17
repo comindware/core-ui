@@ -1,9 +1,6 @@
 import template from '../templates/toolbar.html';
 
 export default Marionette.View.extend({
-    initialize(options) {
-        this.editor = options.editor;
-    },
     className: 'dev-code-editor-toolbar',
 
     template: Handlebars.compile(template),
