@@ -835,6 +835,7 @@ a:hover {
 
 /* mselect new */
 .member-split{
+    height: 100%;
     width: 100%;
     display: flex;
     flex: 0 1 auto;
@@ -856,6 +857,7 @@ a:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-shrink: 0;
 }
 
 .columns-select__panel {
