@@ -35,8 +35,8 @@ export default function () {
     const columns = [
         {
             key: 'textCell',
-            dataType: 'Text',
-            type: 'Text',
+            type: 'Datalist',
+            dataType: 'Instance',
             title: 'TextCell',
             sorting: 'asc',
             editable: true,

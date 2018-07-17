@@ -1,5 +1,4 @@
 import ContentLoadingView from './routing/ContentLoadingView';
-import ModuleProxy from './routing/ModuleProxy';
 import WindowService from './WindowService';
 
 // storing active url to get back to it while canceling module leave
@@ -23,10 +22,16 @@ export default {
         Object.assign(this, Backbone.Events);
         this.defaultUrl = options.defaultUrl;
         options.modules.forEach(config => {
-            const moduleProxy = new ModuleProxy({ config });
-            moduleProxy.on('module:loaded', this.__onModuleLoaded, this);
+            const controller = {};
+
+            Object.values(config.routes).forEach(callbackName => {
+                controller[callbackName] = (...theArgs) => {
+                    this.__onModuleLoaded(callbackName, theArgs, config, config.module);
+                };
+            });
+
             new Marionette.AppRouter({
-                controller: moduleProxy,
+                controller,
                 appRoutes: config.routes
             });
         });
@@ -148,6 +153,19 @@ export default {
         this.trigger('module:loaded', {
             page: this.activeModule ? this.activeModule.moduleId : null
         });
+
+        let componentQuery;
+        const lastArg = _.last(_.compact(routingArgs));
+        const index = routingArgs.indexOf(lastArg);
+
+        if (lastArg) {
+            componentQuery = lastArg.split('@');
+
+            if (componentQuery && componentQuery.length > 1) {
+                routingArgs[index] = componentQuery[0];
+            }
+        }
+
         // navigate to new module
         this.loadingContext = null;
         if (this.activeModule.onRoute) {
@@ -167,6 +185,12 @@ export default {
                 Core.utils.helpers.throwError(`Failed to find callback method \`${callbackName}\` for the module \`${config.id}` || `${config.module}\`.`);
             }
             routingCallback.apply(this.activeModule, routingArgs);
+        }
+
+        if (componentQuery && componentQuery.length > 1) {
+            this.activeModule.componentQuery = componentQuery[1];
+        } else {
+            this.activeModule.componentQuery = null;
         }
     }
 };

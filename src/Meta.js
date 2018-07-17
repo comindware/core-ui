@@ -14,6 +14,15 @@ export const objectPropertyTypes = {
     ENUM: 'Enum'
 };
 
+export const presentingComponentsTypes = {
+    form: 'form',
+    popup: 'popup',
+    group: 'group',
+    field: 'field',
+    tab: 'tab'
+};
+
 export default {
-    objectPropertyTypes
+    objectPropertyTypes,
+    presentingComponentsTypes
 };
