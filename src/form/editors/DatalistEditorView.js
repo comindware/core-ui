@@ -312,7 +312,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         const stopAddItems = canAddItemOldValue !== this.__canAddItem();
         if (stopAddItems) {
             this.dropdownView.close();
-        } else {
+        } else if (!isSilent) {
             this.__updateButtonInput();
             this.__focusButton();
         }
