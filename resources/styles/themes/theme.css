@@ -731,7 +731,7 @@ svg.svg-grid-icons {
 }
 
 .layout__group-collapsed__button svg {
-  transform: rotate(-90deg);
+  transform: rotate(+90deg);
 }
 
 .group-title.layout__group-collapsed__button{
