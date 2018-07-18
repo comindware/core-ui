@@ -73,9 +73,10 @@ export default Marionette.View.extend({
                     panelView: DocumentRevisionPanelView,
                     panelViewOptions: { collection: this.revisionCollection },
                     popoutFlow: 'right',
-                    autoOpen: false
+                    autoOpen: false,
+                    panelMinWidth: 'none'
                 });
-                this.documentRevisionPopout.on('close', () => this.isRevisionOpen = false);
+                this.documentRevisionPopout.on('close', () => (this.isRevisionOpen = false));
                 this.showChildView('reviseRegion', this.documentRevisionPopout);
                 this.isRevisonButtonShown = true;
             } else {
