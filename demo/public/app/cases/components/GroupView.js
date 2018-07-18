@@ -5,7 +5,7 @@ export default function () {
     return new CanvasView({
         view: new core.layout.Group({
             name: 'Group',
-            collapsible: true,
+            // collapsible: true, // defauft value -- false
             view: new core.layout.VerticalLayout({
                 rows: [
                     new core.form.editors.TextEditor({
