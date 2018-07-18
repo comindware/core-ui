@@ -190,7 +190,7 @@ export default Marionette.View.extend({
         }
 
         if (panelEl.clientWidth < MAX_DROPDOWN_PANEL_WIDTH) {
-            this.panelView.el.style.width = `${panelWidth}px`;
+            panelEl.style.minWidth = `${panelWidth}px`;
         }
 
         panelEl.style.top = `${top}px`;

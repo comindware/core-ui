@@ -1057,7 +1057,7 @@ a:hover {
 /* -------- context select ------*/
 .data-source-popout-view {
     min-width: 165px;
-    max-width: 250px;
+    max-width: 255px;
     overflow: hidden;
     position: fixed;
     background-color: white;
