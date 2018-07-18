@@ -24,28 +24,28 @@ export default {
                 //auto layout components
                 case 'v-container': // vertical layout container
                     return new VerticalLayout(
-                        Object.assign({
+                        Object.assign({}, child, {
                             rows: this.__parseConfiguration(child.items)
-                        }, child)
+                        })
                     );
                 case 'h-container': // horizontal layout container
                     return new HorizontalLayout(
-                        Object.assign({
+                        Object.assign({}, child, {
                             columns: this.__parseConfiguration(child.items)
-                        }, child)
+                        })
                     );
                 //complex components
                 case 'tab':
                     return new TabLayoutView(
-                        Object.assign({
+                        Object.assign({}, child, {
                             tabs: this.__parseConfiguration(child.items)
-                        }, child)
+                        })
                     );
                 case 'group':
                     return new Group(
-                        Object.assign({
+                        Object.assign({}, child, {
                             view: this.__parseConfiguration(child.items)[0]
-                        }, child)
+                        })
                     );
                 case 'Popup':
                 case 'popup':
@@ -118,28 +118,28 @@ export default {
                     switch (child.layout) {
                         case 'vertical':
                             return new VerticalLayout(
-                                Object.assign({
+                                Object.assign({}, child, {
                                     rows: this.__parseConfiguration(child.items)
-                                }, child)
+                                })
                             );
                         case 'tab':
                             return new TabLayoutView(
-                                Object.assign({
+                                Object.assign({}, child, {
                                     tabs: this.__parseConfiguration(child.items)
-                                }, child)
+                                })
                             );
                         case 'group':
                             return new Group(
-                                Object.assign({
+                                Object.assign({}, child, {
                                     view: this.__parseConfiguration(child.items)[0]
-                                }, child)
+                                })
                             );
                         case 'horizontal':
                         default:
                             return new HorizontalLayout(
-                                Object.assign({
+                                Object.assign({}, child, {
                                     columns: this.__parseConfiguration(child.items)
-                                }, child)
+                                })
                             );
                     }
                 case 'field':
