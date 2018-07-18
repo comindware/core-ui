@@ -24,7 +24,7 @@ export default Marionette.View.extend({
 
         const model = this.options.model;
         this.model = _.isFunction(model) ? model.call(this) : model;
-        this.model.set({ uniqueFormId: this.uniqueFormId }, { silent: true });
+        this.__addUniqueFormIdToModel();
     },
 
     template: Handlebars.compile('<div class="form-class"></div>'),
@@ -66,6 +66,13 @@ export default Marionette.View.extend({
             return this.model.get(key);
         }
         return this.form.getValue(key);
+    },
+
+    __addUniqueFormIdToModel() {
+        const modelUniqueFormId = this.model.get('uniqueFormId');
+        const setOfUniqueFormId = modelUniqueFormId instanceof Set ? modelUniqueFormId : new Set();
+        setOfUniqueFormId.add(this.uniqueFormId);
+        this.model.set('uniqueFormId', setOfUniqueFormId, { silent: true });
     },
 
     update() {

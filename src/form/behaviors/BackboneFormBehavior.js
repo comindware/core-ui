@@ -262,7 +262,7 @@ const Form = Marionette.Object.extend({
         const rootView = window.app.getView();
 
         $target.find(`[data-${componentType}s]`).each((i, el) => {
-            if ((!this.model.has('uniqueFormId') && !el.hasAttribute(`${componentType}-for`)) || el.getAttribute(`${componentType}-for`) === this.model.get('uniqueFormId')) {
+            if ((!this.model.has('uniqueFormId') && !el.hasAttribute(`${componentType}-for`)) || this.model.get('uniqueFormId').has(el.getAttribute(`${componentType}-for`))) {
                 const key = el.getAttribute(`data-${componentType}s`);
                 const regionName = `${key}Region`;
                 const fieldRegion = rootView.addRegion(regionName, { el });

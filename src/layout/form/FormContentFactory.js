@@ -24,26 +24,26 @@ export default {
                 //auto layout components
                 case 'v-container': // vertical layout container
                     return new VerticalLayout(
-                        Object.assign(child, {
+                        Object.assign({}, child, {
                             rows: this.__parseConfiguration(child.items)
                         })
                     );
                 case 'h-container': // horizontal layout container
                     return new HorizontalLayout(
-                        Object.assign(child, {
+                        Object.assign({}, child, {
                             columns: this.__parseConfiguration(child.items)
                         })
                     );
                 //complex components
                 case 'tab':
                     return new TabLayoutView(
-                        Object.assign(child, {
+                        Object.assign({}, child, {
                             tabs: this.__parseConfiguration(child.items)
                         })
                     );
                 case 'group':
                     return new Group(
-                        Object.assign(child, {
+                        Object.assign({}, child, {
                             view: this.__parseConfiguration(child.items)[0]
                         })
                     );
@@ -79,22 +79,22 @@ export default {
                             return elementsFactory.createFieldAnchor(
                                 child.key,
                                 Object.assign(
+                                    { uniqueFormId: this.__uniqueFormId },
                                     child,
                                     {
                                         type: child.type.replace('-field', '')
-                                    },
-                                    { uniqueFormId: this.__uniqueFormId }
+                                    }
                                 )
                             );
                         } else if (child.type.includes('editor')) {
                             return elementsFactory.createEditorAnchor(
                                 child.key,
                                 Object.assign(
+                                    { uniqueFormId: this.__uniqueFormId },
                                     child,
                                     {
                                         type: child.type.replace('-editor', '')
-                                    },
-                                    { uniqueFormId: this.__uniqueFormId }
+                                    }
                                 )
                             );
                         }
@@ -118,34 +118,34 @@ export default {
                     switch (child.layout) {
                         case 'vertical':
                             return new VerticalLayout(
-                                Object.assign(child, {
+                                Object.assign({}, child, {
                                     rows: this.__parseConfiguration(child.items)
                                 })
                             );
                         case 'tab':
                             return new TabLayoutView(
-                                Object.assign(child, {
+                                Object.assign({}, child, {
                                     tabs: this.__parseConfiguration(child.items)
                                 })
                             );
                         case 'group':
                             return new Group(
-                                Object.assign(child, {
+                                Object.assign({}, child, {
                                     view: this.__parseConfiguration(child.items)[0]
                                 })
                             );
                         case 'horizontal':
                         default:
                             return new HorizontalLayout(
-                                Object.assign(child, {
+                                Object.assign({}, child, {
                                     columns: this.__parseConfiguration(child.items)
                                 })
                             );
                     }
                 case 'field':
-                    return elementsFactory.createFieldAnchor(child.key, Object.assign(child, { uniqueFormId: this.__uniqueFormId }));
+                    return elementsFactory.createFieldAnchor(child.key, Object.assign({ uniqueFormId: this.__uniqueFormId }, child));
                 case 'editor':
-                    return elementsFactory.createEditorAnchor(child.key, Object.assign(child, { uniqueFormId: this.__uniqueFormId }));
+                    return elementsFactory.createEditorAnchor(child.key, Object.assign({ uniqueFormId: this.__uniqueFormId }, child));
                 case 'popup':
                     return new Popup(_.pick(child, ['size', 'header', 'content']));
                 case 'button':
