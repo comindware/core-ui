@@ -156,6 +156,7 @@ body {
   display: inline-block;
   white-space: nowrap;
   margin-left: 10px;
+  user-select: none;
 }
 
 .editor_readonly .checkbox-text,

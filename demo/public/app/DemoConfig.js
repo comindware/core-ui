@@ -23,6 +23,11 @@ export default {
                     description: 'Form Layout'
                 },
                 {
+                    id: 'FormOldSyntaxContent',
+                    displayName: '!! Deprecated!! Form Layout from old Syntax (content in options)',
+                    description: 'Deprecated!! Form Layout from old Syntax (content in options)'
+                },
+                {
                     id: 'GroupView',
                     displayName: 'Group',
                     description: 'Group'

@@ -67,8 +67,13 @@ export default function() {
                 {
                     id: 'tab2',
                     name: 'Tab 2',
-                    view: new core.form.editors.TextAreaEditor({
-                        value: 'Content 2'
+                    view: new core.form.editors.MembersSplitEditor({
+                        key: 'title', //wrong key, expect [''] structure in title,
+                        model,
+                        autocommit: true,
+                        users: Core.services.UserService.listUsers(),
+                        groups: Core.services.UserService.listGroups(),
+                        showMode: 'button'
                     })
                 },
                 {
@@ -83,8 +88,20 @@ export default function() {
                     id: 'tab4',
                     name: 'Tab 4',
                     error: 'Validation Error',
-                    view: new core.form.editors.TextAreaEditor({
-                        value: 'Content 4'
+                    view: new Core.layout.Form({
+                        model,
+                        schema: [{
+                            type: 'v-container',
+                            items: [{
+                                type: 'MembersSplit-field',
+                                key: 'title', //wrong key, expect [''] structure in title,
+                                model,
+                                autocommit: true,
+                                users: Core.services.UserService.listUsers(),
+                                groups: Core.services.UserService.listGroups(),
+                                showMode: 'button'
+                            }]
+                        }]
                     })
                 }
             ],

@@ -9,12 +9,14 @@ const classes = {
     CLASS_NAME: 'layout__form-view'
 };
 
+const anchors = ['field', 'editor'];
+
 export default Marionette.View.extend({
     initialize(options) {
         helpers.ensureOption(options, 'schema');
         helpers.ensureOption(options, 'model');
+        this.uniqueFormId = _.uniqueId('form-');
         if (!('content' in options)) {
-            this.uniqueFormId = _.uniqueId('form-');
             this.content = FormContentFactory.getContentFromSchema(options.schema, this.uniqueFormId);
             this.schema = FormSchemaFactory.getSchema(options.schema);
         } else {
@@ -23,7 +25,7 @@ export default Marionette.View.extend({
         }
 
         const model = this.options.model;
-        this.model = _.isFunction(model) ? model.call(this) : model;
+        this.model = typeof model === 'function' ? model.call(this) : model;
         this.__addUniqueFormIdToModel();
     },
 
@@ -58,6 +60,11 @@ export default Marionette.View.extend({
 
     onRender() {
         this.showChildView('contentRegion', this.content);
+        if ('content' in this.options) {
+            anchors.forEach((anchor) => {
+                this.content.$el.find(`[data-${anchor}s]`).each((i, el) => { el.setAttribute(`${anchor}-for`, this.uniqueFormId); });
+            });
+        }
         this.__updateState();
     },
 
