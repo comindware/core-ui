@@ -296,7 +296,6 @@ svg.svg-grid-icons {
   color: var(--text-color);
   box-shadow: var(--grid-cell-border);
   padding: var(--grid-cell-padding);
-  background-color: var(--grid-cell-bg);
 }
 
 .grid__headless .row:first-child .cell{
