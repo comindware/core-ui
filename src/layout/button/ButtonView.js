@@ -17,7 +17,7 @@ export default Marionette.View.extend({
 
     templateContext() {
         return {
-            customClass: this.options.customClass || '',
+            customClass: this.options.class || '',
             text: this.options.text
         };
     },
