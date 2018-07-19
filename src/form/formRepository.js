@@ -4,6 +4,8 @@ import PasswordValidator from './validators/passwordValidator';
 import PhoneValidator from './validators/phoneValidator';
 import SystemNameValidator from './validators/systemNameValidator';
 import EmailValidator from './validators/emailValidator';
+import CodeValidation from './validators/codeValidation';
+
 
 export default {
     editors: {},
@@ -13,6 +15,7 @@ export default {
         password: PasswordValidator,
         phone: PhoneValidator,
         systemName: SystemNameValidator,
-        email: EmailValidator
+        email: EmailValidator,
+        code: CodeValidation
     }
 };
