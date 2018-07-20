@@ -30,11 +30,15 @@
 
 <http://comindware.com/text/core/form/editors/code#emptyDescription> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Описание отсутствует"; l10n:originalData "emptyDescription"].
 
+<http://comindware.com/text/core/form/editors/code#errors> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Ошибки"; l10n:originalData "Errors"].
+
 <http://comindware.com/text/core/form/editors/code#find> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Найти"; l10n:originalData "Find"].
 
 <http://comindware.com/text/core/form/editors/code#format> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Форматировать"; l10n:originalData "Format"].
 
 <http://comindware.com/text/core/form/editors/code#hint> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Автозаполнение"; l10n:originalData "Autocomplete"].
+
+<http://comindware.com/text/core/form/editors/code#info> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Информация"; l10n:originalData "Info"].
 
 <http://comindware.com/text/core/form/editors/code#maximize> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Развернуть"; l10n:originalData "Maximize"].
 
@@ -47,6 +51,8 @@
 <http://comindware.com/text/core/form/editors/code#successfulcompile> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Успешная компиляция"; l10n:originalData "Successful compile"].
 
 <http://comindware.com/text/core/form/editors/code#undo> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Отменить"; l10n:originalData "Undo"].
+
+<http://comindware.com/text/core/form/editors/code#warnings> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Предупреждения"; l10n:originalData "Warnings"].
 
 <http://comindware.com/text/core/form/editors/code/output/errors#column> l10n:text [a l10n:Text; l10n:lang l10n:ru; l10n:data "Колонка"; l10n:originalData "Column"].
 

@@ -36,7 +36,7 @@ export default Marionette.View.extend({
 
         this.listenTo(errorsGridController, 'dblclick', model => {
             const cursorPos = {
-                ch: model.get('column') - 1,
+                ch: model.get('column') - 2,
                 line: model.get('line') - 1
             };
             const type = 'error';
@@ -44,7 +44,7 @@ export default Marionette.View.extend({
         });
         this.listenTo(warningsGridController, 'dblclick', model => {
             const cursorPos = {
-                ch: model.get('column') - 1,
+                ch: model.get('column') - 2,
                 line: model.get('line') - 1
             };
             const type = 'warning';
@@ -112,21 +112,21 @@ export default Marionette.View.extend({
                 key: 'messcode',
                 type: Core.meta.objectPropertyTypes.STRING,
                 autocommit: true,
-                width: 0.2
+                width: 0.1
             },
             {
                 title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.MESSAGE'),
                 key: 'message',
                 type: Core.meta.objectPropertyTypes.STRING,
                 autocommit: true,
-                width: 0.4
+                width: 0.35
             },
             {
                 title: LocalizationService.get('CORE.FORM.EDITORS.CODE.OUTPUT.WARNINGS.WARNINGLEVEL'),
                 key: 'warningLevel',
                 type: Core.meta.objectPropertyTypes.INTEGER,
                 autocommit: true,
-                width: 0.1
+                width: 0.25
             }
         ];
     },
@@ -135,17 +135,17 @@ export default Marionette.View.extend({
         return [
             {
                 id: 'tab1',
-                name: 'Errors',
+                name: LocalizationService.get('CORE.FORM.EDITORS.CODE.ERRORS'),
                 view: errorsGrid
             },
             {
                 id: 'tab2',
-                name: 'Warnings',
+                name: LocalizationService.get('CORE.FORM.EDITORS.CODE.WARNINGS'),
                 view: warningsGrid
             },
             {
                 id: 'tab3',
-                name: 'Info',
+                name: LocalizationService.get('CORE.FORM.EDITORS.CODE.INFO'),
                 view: new Core.list.factory.createDefaultGrid({
                     gridViewOptions: {
                         columns: [
