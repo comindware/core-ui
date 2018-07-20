@@ -92,9 +92,9 @@ export default function () {
             autocommit: true,
             usePropertyTypes: true,
             showContext: true,
-            showValue: false,
-            showExpression: false,
-            showScript: false,
+            showValue: true,
+            showExpression: true,
+            showScript: true,
             allowBlank: true,
             codeEditorMode: 'button',
             displayInline: true,
@@ -102,6 +102,9 @@ export default function () {
             width: 300,
             ontologyService: null,
             id: "pa.7",
+            schemaExtension: () => ({
+                propertyTypes: [_.uniqueId('type')]
+            }),
             context: {
                 'oa.1': [
                     {
