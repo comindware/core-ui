@@ -88,7 +88,7 @@ export default (window.Ajax = new (Marionette.Object.extend({
         );
     },
 
-    getJsApiResponse(url, parameterNames, parameters, httpMethod, protocol, callback) {
+    getJsApiResponse(url, parameterNames = [], parameters = [], httpMethod = 'GET', protocol = methodName.WebApi, callback) {
         if (callback && !_.isFunction(callback)) {
             helpers.throwArgumentError('Invalid argument: callback is set but not a function.');
         }
