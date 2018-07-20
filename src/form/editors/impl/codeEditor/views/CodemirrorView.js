@@ -182,7 +182,6 @@ export default Marionette.View.extend({
                 this.codemirror.addLineClass(pos.line, 'background', 'dev-code-editor-warning');
             }
             this.codemirror.setCursor(pos);
-            console.log(pos);
             this.currentHighlightedLine = pos.line;
         });
     },
