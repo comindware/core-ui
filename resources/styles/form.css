@@ -824,7 +824,7 @@ input[type="color"], .colorpicker{
 }
 
 .editor_hidden {
-    display: none;
+    display: none !important;
 }
 
 .grid-cell .dev-code-button-edit {
