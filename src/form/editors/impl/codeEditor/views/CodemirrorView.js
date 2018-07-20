@@ -43,7 +43,8 @@ export default Marionette.View.extend({
             '__jumpToLine',
             '__compile',
             '__noSuggestionHint',
-            '__checkComments'
+            '__checkComments',
+            '__countLineAndColumn'
         );
         if (options.mode === 'expression') {
             this.autoCompleteArray = [];
@@ -167,7 +168,7 @@ export default Marionette.View.extend({
         });
 
         this.listenTo(this.output, 'changeCursorPos', (pos, type) => {
-            '.dev-codemirror'.scrollTo(0, 0);
+            $('.dev-codemirror').scrollTop(0);
             if (this.currentHighlightedLine) {
                 this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-error');
                 this.codemirror.removeLineClass(this.currentHighlightedLine, 'background', 'dev-code-editor-warning');
@@ -181,6 +182,7 @@ export default Marionette.View.extend({
                 this.codemirror.addLineClass(pos.line, 'background', 'dev-code-editor-warning');
             }
             this.codemirror.setCursor(pos);
+            console.log(pos);
             this.currentHighlightedLine = pos.line;
         });
     },
@@ -299,6 +301,28 @@ export default Marionette.View.extend({
         return offset;
     },
 
+    __countLineAndColumn(offset) {
+        const content = this.codemirror.getValue();
+        let curLine = 1;
+        let curColumn = 1;
+        let j = 1;
+        for (let i = 0; i < content.length; i++) {
+            j++;
+            if (i < offset) {
+                if (content.charAt(i) === '\n') {
+                    curLine++;
+                    j = 1;
+                }
+            } else {
+                curColumn = j;
+                return {
+                    line: curLine,
+                    column: curColumn
+                };
+            }
+        }
+    },
+
     __getCSharpHints() {
         const completeHoverQuery = {
             SourceCode: this.codemirror.getValue(),
@@ -397,13 +421,19 @@ export default Marionette.View.extend({
         };
         if (this.intelliAssist) {
             this.intelliAssist.getCompile(userCompileQuery).then(ontologyModel => {
-               if (ontologyModel) {
+                if (ontologyModel) {
                     if (ontologyModel.get('compilerRemarks').length > 0) {
                         ontologyModel.get('compilerRemarks').forEach(el => {
-                            if (el.remark === 'Error') {
+                            if (el.severity === 'Error') {
+                                const obj = this.__countLineAndColumn(el.offsetStart);
+                                el.line = obj.line;
+                                el.column = obj.column;
                                 newArrErr = newArrErr.concat([el]);
                             }
-                            if (el.remark === 'Warning') {
+                            if (el.severity === 'Warning') {
+                                const obj = this.__countLineAndColumn(el.offsetStart);
+                                el.line = obj.line;
+                                el.column = obj.column;
                                 newArrWarn = newArrWarn.concat([el]);
                             }
                         });
@@ -459,7 +489,7 @@ export default Marionette.View.extend({
                     const style = mode.token(stream, state);
                     const cur = stream.current();
                     const cursor = cm.getCursor();
-                    const next = cm.getTokenAt({line: cursor.line, ch: cursor.char + 1});
+                    const next = cm.getTokenAt({ line: cursor.line, ch: cursor.char + 1 });
                     stream.start = stream.pos;
                     if (!atStartOfLine || /\S/.test(cur)) {
                         out += cur;

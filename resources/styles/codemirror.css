@@ -636,6 +636,10 @@ li.CodeMirror-hint-active {
     background: transparent no-repeat url(../images/icons-code_editor.png);
 }
 
+.dev-code-editor-toolbar_button-compile {
+    background-position: -100px -25px;
+}
+
 .dev-code-editor-toolbar_button-undo {
     background-position: 0px 0px;
 }
@@ -682,6 +686,16 @@ li.CodeMirror-hint-active {
 
 .dev-code-editor-operator:before {
     background-position:  -100px -25px;
+}
+
+.dev-code-editor-error {
+    color: #ffa5a0;
+    background: #ffa5a0;
+}
+
+.dev-code-editor-warning{
+    color: #feffa8;
+    background: #feffa8;
 }
 
 /* CodeEditor */
