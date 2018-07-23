@@ -72,12 +72,14 @@ export default Marionette.View.extend({
         toolbarContainer: '.js-code-toolbar-container',
         tooltipContainer: '.js-code-tooltip-container',
         editorContainer: '.js-code-editor-container',
-        editorOutputContainer: '.js-code-output-container'
+        editorOutputContainer: '.js-code-output-container',
+        outputTabs: '.output-tabs-region',
+        output: '.dev-code-editor-output'
     },
 
     ui: {
         toolbar: '.js-code-toolbar-container',
-        editor: '.js-code-editor-container'
+        editor: '.js-code-editor-container',
     },
 
     template: Handlebars.compile(template),
@@ -237,7 +239,11 @@ export default Marionette.View.extend({
 
     __onMaximize() {
         this.$el.addClass(classes.maximized);
-        this.ui.editor.css('height', '100%');
+        this.ui.editor.css('height', '80%');
+        $(this.regions.editorOutputContainer).css('height', '30%');
+        $(this.regions.output).css('height', '100%');
+        $(this.regions.outputTabs).css('height', '100%');
+
         this.codemirror.refresh();
         this.codemirror.focus();
         this.isMaximized = true;
