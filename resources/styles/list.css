@@ -315,16 +315,16 @@
     overflow: hidden;
 }
 
-.grid-toolbar__search{
+.columns-select-list .grid-toolbar__search{
     flex: 0 0 auto;
     width: 100%;
 }
 
-.grid-toolbar-wrp >.grid-toolbar__search{
+.columns-select-list .grid-toolbar-wrp >.grid-toolbar__search{
     order: initial;
 }
 
-.grid-toolbar__search .tr-search{
+.columns-select-list .grid-toolbar__search .tr-search{
     border: none;
     width: 100%;
 }
