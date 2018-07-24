@@ -502,6 +502,9 @@ svg.svg-grid-icons {
 .bubbles__caret {
   @apply --dropdown-caret-theme;
 }
+.editor_readonly .bubbles__caret, .editor_disabled .bubbles__caret {
+  color: inherit;
+}
 .bubbles .editor__icons {
   cursor: pointer;
   transform: none;
@@ -520,10 +523,6 @@ svg.svg-grid-icons {
 }
 .bubbles__i {
   @apply --bubbles-item-theme;
-}
-
-.editor_bubble--single .bubbles {
-  @apply --dropdown-theme;
 }
 
 .bubbles .bubbles__caret,
