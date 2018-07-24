@@ -1,9 +1,7 @@
 ﻿.fr-alert {
     min-height: 50px;
     max-width: 50%;
-    padding: 5px;
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 18px;
     line-height: 20px;
     color: #fff;
     text-align: left;
@@ -14,10 +12,43 @@
     z-index: 560;
     overflow-x: auto;
     margin: 0.5rem;
-    display: inline-block;
+    display: flex;
+}
+.fr-alert .icon-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 40px;
+    align-items: center;
+    background-color: white;
+    color: #26cce8;
+    font-size: 24px;
+}
+.fr-alert .text-container {
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+.fr-alert .close-button_container {
+    min-width: 20px;
+    padding: 3px 6px;
+    display: flex;
 }
 .fr-alert_error {
-    background: #b25640;
+    background: #FF7489;
+}
+
+.fr-alert_error .icon-container{
+    color: #FF7489;
+}
+
+.dev-alert_success {
+    background-color: #74C365;
+}
+
+.fr-alert.dev-alert_success .icon-container {
+    color: #74C365;
 }
 
 .dev-notification-container {

@@ -71,6 +71,11 @@ export default {
                     id: 'BreadCrumbs',
                     displayName: 'BreadCrumbs',
                     description: ''
+                },
+                {
+                    id: 'VideoChat',
+                    displayName: 'VideoChat',
+                    description: ''
                 }
             ]
         },

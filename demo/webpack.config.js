@@ -50,23 +50,23 @@ module.exports = () => {
             rules: [
                 PRODUCTION
                     ? {
-                        test: /\.css$/,
-                        use: [
-                            MiniCssExtractPlugin.loader,
-                            'css-loader',
-                            {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: () => {
-                                        autoprefixer({
-                                            browsers: ['last 2 versions']
-                                        })
-                                        cssnano();
-                                    }
-                                }
-                            }
-                        ]
+                          test: /\.css$/,
+                          use: [
+                              MiniCssExtractPlugin.loader,
+                              'css-loader',
+                              {
+                                  loader: 'postcss-loader',
+                                  options: {
+                                      sourceMap: true,
+                                      plugins: () => {
+                                          autoprefixer({
+                                              browsers: ['last 2 versions']
+                                          });
+                                          cssnano();
+                                      }
+                                  }
+                              }
+                          ]
                       }
                     : {
                           test: /\.css$/,
