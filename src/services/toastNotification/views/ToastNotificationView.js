@@ -22,12 +22,20 @@ export default Marionette.View.extend({
     },
 
     events: {
-        click: 'hideView'
+        'click .js-close-notification': 'hideView'
     },
 
     template: Handlebars.compile(template),
 
     hideView() {
-        this.$el.fadeOut(300, () => this.model.collection && this.model.collection.remove(this.model));
+        this.$el.fadeOut(200, () => this.model.collection && this.model.collection.remove(this.model));
+    },
+
+    templateContext() {
+        return {
+            isInfo: this.model.get('type') === notificationTypes.INFO,
+            isError: this.model.get('type') === notificationTypes.ERROR,
+            isSuccess: this.model.get('type') === notificationTypes.SUCCESS
+        };
     }
 });

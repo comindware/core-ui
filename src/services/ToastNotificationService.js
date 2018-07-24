@@ -5,6 +5,7 @@ const defaultTimeOfShow = 12000;
 export default class ToastNotificationService {
     static initialize(options = {}) {
         this.notificationCollection = new Backbone.Collection();
+
         options.toastNotificationRegion.show(
             new NotificationCollectionView({
                 collection: this.notificationCollection
@@ -19,7 +20,7 @@ export default class ToastNotificationService {
         Object.assign(this, Backbone.Events);
     }
 
-    static add(message, type, time) {
+    static add(message, type = this.notificationTypes.INFO, time) {
         if (!message) {
             return;
         }

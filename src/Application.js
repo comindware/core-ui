@@ -26,10 +26,10 @@ export default {
         InterfaceErrorMessageService.initialize();
 
         const toastNotificationRegion = options.toastNotificationRegion;
+
         if (toastNotificationRegion) {
             ToastNotificationService.initialize({
-                toastNotificationRegion,
-                toastNotificationRegionEl: toastNotificationRegion.el
+                toastNotificationRegion
             });
         }
 

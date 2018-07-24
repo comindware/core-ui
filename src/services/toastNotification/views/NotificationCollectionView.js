@@ -3,7 +3,6 @@ import ToastNotificationView from './ToastNotificationView';
 const maxNotification = 5;
 
 export default Marionette.CollectionView.extend({
-
     className: 'dev-notification-container',
 
     childView: ToastNotificationView,
