@@ -101,16 +101,16 @@ export default Marionette.View.extend({
         this.toolbar.on('minimize', this.__onMinimize);
 
         this.showChildView('toolbarContainer', this.toolbar);
-
-        this.editor = this;
-        this.tt.set('errors', new Backbone.Collection([]));
-        this.tt.set('warnings', new Backbone.Collection([]));
-        this.output = new OutputView({
-            editor: this.editor,
-            model: this.tt
-        });
-        this.showChildView('editorOutputContainer', this.output);
-
+        if (this.options.mode === 'script') {
+            this.editor = this;
+            this.tt.set('errors', new Backbone.Collection([]));
+            this.tt.set('warnings', new Backbone.Collection([]));
+            this.output = new OutputView({
+                editor: this.editor,
+                model: this.tt
+            });
+            this.showChildView('editorOutputContainer', this.output);
+        }
         this.ui.editor.css('height', this.options.height);
         this.hintIsShown = false;
 
@@ -306,14 +306,15 @@ export default Marionette.View.extend({
         return offset;
     },
 
-    __countLineAndColumn(offset) {
+    __countLineAndColumn(itemOffset, userCodeOffset) {
+        const userOffset = itemOffset - userCodeOffset;
         const content = this.codemirror.getValue();
         let curLine = 1;
         let curColumn = 1;
         let j = 1;
         for (let i = 0; i < content.length; i++) {
             j++;
-            if (i < offset) {
+            if (i < userOffset) {
                 if (content.charAt(i) === '\n') {
                     curLine++;
                     j = 1;
@@ -427,19 +428,22 @@ export default Marionette.View.extend({
         if (this.intelliAssist) {
             this.intelliAssist.getCompile(userCompileQuery).then(ontologyModel => {
                 if (ontologyModel) {
+                    const userCodeOffset = ontologyModel.get('userCodeOffsetStart');
                     if (ontologyModel.get('compilerRemarks').length > 0) {
                         ontologyModel.get('compilerRemarks').forEach(el => {
-                            if (el.severity === 'Error') {
-                                const obj = this.__countLineAndColumn(el.offsetStart);
-                                el.line = obj.line;
-                                el.column = obj.column;
-                                newArrErr = newArrErr.concat([el]);
-                            }
-                            if (el.severity === 'Warning') {
-                                const obj = this.__countLineAndColumn(el.offsetStart);
-                                el.line = obj.line;
-                                el.column = obj.column;
-                                newArrWarn = newArrWarn.concat([el]);
+                            if (el.offsetStart > userCodeOffset) {
+                                if (el.severity === 'Error') {
+                                    const obj = this.__countLineAndColumn(el.offsetStart, userCodeOffset);
+                                    el.line = obj.line;
+                                    el.column = obj.column;
+                                    newArrErr = newArrErr.concat([el]);
+                                }
+                                if (el.severity === 'Warning') {
+                                    const obj = this.__countLineAndColumn(el.offsetStart, userCodeOffset);
+                                    el.line = obj.line;
+                                    el.column = obj.column;
+                                    newArrWarn = newArrWarn.concat([el]);
+                                }
                             }
                         });
                     } else {
@@ -453,6 +457,7 @@ export default Marionette.View.extend({
                     errors: newArrErr,
                     warnings: newArrWarn
                 };
+
                 this.trigger('compile', OutputObj);
             });
         }
