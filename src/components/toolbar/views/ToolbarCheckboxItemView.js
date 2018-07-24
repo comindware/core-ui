@@ -1,12 +1,13 @@
 //@flow
 import template from '../templates/toolbarCheckboxItem.html';
+import meta from '../meta';
 
 const classes = {
     CHECKED: 'editor_checked'
 };
 
 export default Marionette.View.extend({
-    className: 'toolbar-btn',
+    className: meta.className,
 
     template: Handlebars.compile(template),
 
