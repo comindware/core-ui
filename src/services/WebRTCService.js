@@ -1,3 +1,6 @@
+let peerConn = {};
+const peerConnCfg = {};
+
 export default class {
     inialize(websocket) {
         this.wsc = websocket;
