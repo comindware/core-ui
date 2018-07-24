@@ -39,18 +39,21 @@ export default Marionette.View.extend({
     },
 
     events: {
-        click: '__onClick',
-        dblclick: '__onDblClick',
+        click: '__handleClick',
+        dblclick: '__handleDblClick',
         'click @ui.collapsibleButton': '__toggleCollapse',
         dragover: '__handleDragOver',
         dragenter: '__handleDragEnter',
         dragleave: '__handleDragLeave',
         drop: '__handleDrop',
         mouseenter: '__handleMouseEnter',
-        mouseleave: '__handleMouseLeave'
+        mouseleave: '__handleMouseLeave',
+        contextmenu: '__handleContextMenu'
     },
 
     modelEvents: {
+        click: '__handleModelClick',
+        dblclick: '__handleModelDblClick',
         selected: '__handleSelection',
         deselected: '__handleDeselection',
         'select:pointed': '__selectPointed',
@@ -155,6 +158,14 @@ export default Marionette.View.extend({
         }
     },
 
+    __handleClick(event) {
+        this.model.trigger('click', event);
+    },
+
+    __handleDblClick(event) {
+        this.model.trigger('dblclick', event);
+    },
+
     __handleDragOver(event) {
         event.preventDefault();
     },
@@ -202,6 +213,10 @@ export default Marionette.View.extend({
         this.el.classList.remove(classes.dragover);
     },
 
+    __handleContextMenu(event) {
+        this.model.trigger('contextmenu', event);
+    },
+
     __handleHighlight(fragment) {
         this.cellViews.forEach(cellView => {
             cellView.model.set('highlightedFragment', fragment);
@@ -246,7 +261,7 @@ export default Marionette.View.extend({
         }
     },
 
-    __onClick(e) {
+    __handleModelClick(e) {
         const model = this.model;
 
         if (model.selected) {
@@ -269,7 +284,7 @@ export default Marionette.View.extend({
         this.trigger('click', this.model);
     },
 
-    __onDblClick() {
+    __handleModelDblClick() {
         this.trigger('dblclick', this.model);
     },
 
