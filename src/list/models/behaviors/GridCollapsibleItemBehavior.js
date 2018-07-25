@@ -1,5 +1,5 @@
 //@flow
-export default function() {
+export default function () {
     // Select this model, and tell our
     // collection that we're selected
     return {
@@ -9,8 +9,10 @@ export default function() {
             }
 
             this.selected = true;
-            this.trigger('selected', this, options.isSilent);
 
+            if (!options.isSilent) {
+                this.trigger('selected', this, options.isSilent);
+            }
             if (this.collection) {
                 this.collection.select(this);
             }
@@ -24,8 +26,9 @@ export default function() {
             }
 
             this.selected = false;
+
             if (!options.isSilent) {
-                this.trigger('deselected', this);
+                this.trigger('deselected', this, options.isSilent);
             }
 
             if (this.collection && this.collection.deselect) {

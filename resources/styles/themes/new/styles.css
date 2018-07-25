@@ -9,7 +9,6 @@
 .editor_readonly.editor_bubble--single .bubbles {
     @apply --custom-cotrol-disabled-theme;
     color: var(--grey-400);
-    opacity: 0.7;
 }
 .editor_disabled.editor_bubble:not(.editor_bubble--single) .bubbles__caret,
 .editor_readonly.editor_bubble:not(.editor_bubble--single) .bubbles__caret {

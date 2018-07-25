@@ -1,2 +1,14 @@
-{{#if title}}<div class="dev-fr-alert-title">{{title}}</div>{{/if}}
-{{text}}
+<div class="icon-container">
+    {{#if isSuccess}}
+    <i class="fas fa-check-circle"></i>{{/if}} {{#if isInfo}}
+    <i class="fas fa-info-circle"></i>{{/if}} {{#if isError}}
+    <i class="fas fa-exclamation-circle"></i>{{/if}}
+</div>
+{{#if title}}
+<div class="notification-body_container">
+    <div class="fr-alert-title">{{title}}</div>
+    {{/if}}
+    <div class="text-container">
+        {{text}}
+    </div>
+</div>

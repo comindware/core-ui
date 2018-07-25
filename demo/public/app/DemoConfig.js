@@ -71,6 +71,11 @@ export default {
                     id: 'BreadCrumbs',
                     displayName: 'BreadCrumbs',
                     description: ''
+                },
+                {
+                    id: 'VideoChat',
+                    displayName: 'VideoChat',
+                    description: ''
                 }
             ]
         },
@@ -441,20 +446,14 @@ export default {
             displayName: 'Core services',
             groups: [
                 {
-                    id: 'LocalizationService',
-                    displayName: 'Localization Service'
-                },
-                {
                     id: 'ToastNotificationsService',
-                    displayName: 'Toast notification Service'
-                },
-                {
-                    id: 'WindowsService',
-                    displayName: 'Windows Service'
+                    displayName: 'Toast notification Service',
+                    description: 'Toast notification Service'
                 },
                 {
                     id: 'MessageService',
-                    displayName: 'Message Service'
+                    displayName: 'Message Service',
+                    description: 'Message Service'
                 }
             ]
         }

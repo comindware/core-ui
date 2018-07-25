@@ -191,8 +191,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
     },
 
     getValue() {
-        if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') === 1) {
-            return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
+        if (this.getOption('valueType') === 'id') {
+            if (this.getOption('maxQuantitySelected') === 1) {
+                return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
+            }
+            return Array.isArray(this.value) && this.value.map(value => (value.id ? value.id : value));
         }
         return this.value;
     },
@@ -245,6 +248,12 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
         if (_.isUndefined(value) || value === null) {
             return [];
+        }
+        if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') > 1) {
+            if (Array.isArray(value)) {
+                return value.map(v => this.panelCollection.get(v));
+            }
+            return this.panelCollection.get(value.id ? value.id : value);
         }
         return value;
     },
@@ -340,14 +349,17 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
     __onFilterText() {
         this.dropdownView.buttonView.setLoading(true);
+
         return this.controller.fetch({ text: this.searchText }).then(data => {
             this.panelCollection.reset(data.collection);
             this.panelCollection.totalCount = data.totalCount;
 
             if (this.panelCollection.length > 0 && this.value) {
-                this.value.forEach(model => {
-                    if (this.panelCollection.has(model.id)) {
-                        this.panelCollection.get(model.id).select({ isSilent: true });
+                this.value.forEach(value => {
+                    const id = value.id ? value.id : value;
+
+                    if (this.panelCollection.has(id)) {
+                        this.panelCollection.get(id).select({ isSilent: true });
                     }
                 });
             }
@@ -418,7 +430,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         selectedModels.remove(model);
 
         const selected = [].concat(this.getValue() || []);
-        const removingModelIndex = selected.findIndex(s => (s ? s.id : s) === model.get('id'));
+        const removingModelIndex = selected.findIndex(s => (s && s.id ? s.id : s) === model.get('id'));
         if (removingModelIndex !== -1) {
             selected.splice(removingModelIndex, 1);
         }
