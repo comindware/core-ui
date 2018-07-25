@@ -1,12 +1,15 @@
 //@flow
 import CustomActionGroupView from './views/CustomActionGroupView';
 import template from './templates/toolbarView.html';
+import { helpers } from 'utils';
 
 const actionsMenuLabel = '⋮';
 
 export default Marionette.View.extend({
     initialize() {
-        this.allItemsCollection = this.options.allItemsCollection || new Backbone.Collection();
+        helpers.ensureOption(this.options, 'allItemsCollection');
+        
+        this.allItemsCollection = this.options.allItemsCollection;
         this.toolbarItemsCollection = new Backbone.Collection(this.allItemsCollection.models);
         this.menuItemsCollection = new Backbone.Collection();
 
@@ -44,7 +47,7 @@ export default Marionette.View.extend({
     },
 
     rebuildView() {
-        if (!Core.services.GlobalEventService.__pageLoaded) {
+        if (!Core.services.GlobalEventService.pageLoaded) {
             return;
         }
         if (this.isDestroyed()) {
@@ -70,7 +73,7 @@ export default Marionette.View.extend({
                     }
                 }
                 notFitItem = i;
-                return false; // break .each
+                return false;
             }
         });
 

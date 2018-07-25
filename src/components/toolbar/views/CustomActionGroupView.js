@@ -1,5 +1,4 @@
 //@flow
-import { severity, icons } from '../meta';
 import template from '../templates/customActionGroupView.html';
 import CustomActionItemView from './CustomActionItemView';
 import ToolbarActionMenuView from '../views/ToolbarActionMenuView';

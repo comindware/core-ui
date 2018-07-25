@@ -1,18 +1,19 @@
 //@flow
-import template from '../templates/toolbarCheckboxItem.html';
-import meta from '../meta';
+import ButtonView from './ButtonView';
 
 const classes = {
     CHECKED: 'editor_checked'
 };
 
-export default Marionette.View.extend({
-    className: meta.className,
-
-    template: Handlebars.compile(template),
-
+export default ButtonView.extend({
     ui: {
         check: '.js-check'
+    },
+
+    templateContext() {
+        return {
+            checkbox: true
+        };
     },
 
     onRender() {

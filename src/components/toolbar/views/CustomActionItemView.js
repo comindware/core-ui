@@ -1,12 +1,7 @@
 //@flow
-import meta from '../meta';
-import template from '../templates/customActionItem.html';
+import ButtonView from './ButtonView';
 
-export default Marionette.View.extend({
-    className: meta.className,
-
-    template: Handlebars.compile(template),
-
+export default ButtonView.extend({
     events: {
         click: '__handleClick'
     },

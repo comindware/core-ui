@@ -45,7 +45,7 @@ const globalEventService = /** @lends module:core.services.GlobalEventService */
         this.__windowEvents.forEach(x => {
             window.addEventListener(x.name, x.handler, x.capture);
         });
-        this.listenTo(this, 'window:load', () => this.__pageLoaded = true);
+        this.listenTo(this, 'window:load', () => this.pageLoaded = true);
     },
 
     onDestroy() {

@@ -1,12 +1,7 @@
 //@flow
-import template from '../templates/customActionItem.html';
-import meta from '../meta';
+import ButtonView from './ButtonView';
 
-export default Marionette.View.extend({
-    template: Handlebars.compile(template),
-
-    className: meta.className,
-
+export default ButtonView.extend({
     templateContext() {
         return {
             isGroup: true
