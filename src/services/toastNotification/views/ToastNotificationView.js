@@ -22,7 +22,7 @@ export default Marionette.View.extend({
     },
 
     events: {
-        'click .js-close-notification': 'hideView'
+        click: 'hideView'
     },
 
     template: Handlebars.compile(template),

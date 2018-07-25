@@ -250,7 +250,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             return [];
         }
         if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') > 1) {
-            return Array.isArray(value) && value.map(v => this.panelCollection.get(v));
+            if (Array.isArray(value)) {
+                return value.map(v => this.panelCollection.get(v));
+            }
+            return this.panelCollection.get(value.id ? value.id : value);
         }
         return value;
     },

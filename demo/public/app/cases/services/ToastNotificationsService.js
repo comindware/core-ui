@@ -1,21 +1,30 @@
 import CanvasView from 'demoPage/views/CanvasView';
 
 const showInfo = function () {
-    const description = 'Confirm Message';
+    const description = 'Confirm your action';
 
-    core.ToastNotifications.add(description, 'Info');
+    core.ToastNotifications.add({
+        text: description,
+        title: 'Info'
+    }, 'Info');
 };
 
 const showSuccess = function () {
     const description = 'Message question';
 
-    core.ToastNotifications.add(description, 'Success');
+    core.ToastNotifications.add({
+        text: description,
+        title: 'Success'
+    }, 'Success');
 };
 
 const showError = function () {
     const description = 'Error message';
 
-    core.ToastNotifications.add(description, 'Error');
+    core.ToastNotifications.add({
+        text: description,
+        title: 'Error'
+    }, 'Error');
 };
 
 const View = Marionette.View.extend({
