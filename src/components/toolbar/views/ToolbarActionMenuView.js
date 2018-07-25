@@ -1,17 +1,9 @@
 //@flow
 import ActionMenuPanelView from './ActionMenuPanelView';
 import ActionMenuButtonView from './ActionMenuButtonView';
-import { severity } from '../meta';
 
 export default Marionette.View.extend({
     template: false,
-
-    className() {
-        const severityLevel = this.model.get('severity');
-        const severityItem = severity[severityLevel] || severity.None;
-
-        return this.model.has('severity') ? severityItem.class : 'toolbar-btn';
-    },
 
     onRender() {
         this.menu = new Core.dropdown.factory.createDropdown({

@@ -36,22 +36,6 @@ export default Marionette.CollectionView.extend({
         };
     },
 
-    onRender() {
-        if (this.model) {
-            const iconType = this.model.get('iconType');
-            const severityLevel = this.model.get('severity');
-            const severityItem = severity[severityLevel] || severity.None;
-
-            this.$el.addClass(severityItem.class);
-            if (iconType === icons.None) {
-                this.$el.children('.js-icon-container').hide();
-            } else {
-                this.$el.children('.js-icon-container').show();
-                this.$el.children('.js-icon-container').html(icons[iconType].icon);
-            }
-        }
-    },
-
     childViewEvents: {
         'action:click': '__handleClick'
     },

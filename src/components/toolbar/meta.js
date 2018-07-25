@@ -32,6 +32,13 @@ export const severity = {
     }
 };
 
+export function className() {
+    const severityLevel = this.model.get('severity');
+    const severityItem = severity[severityLevel] || severity.None;
+
+    return `${severityItem.class} ${this.model.get('class') || ''}`;
+}
+
 export const icons = {
     Undefined: {
         text: 'None',
@@ -159,5 +166,6 @@ export default {
         CHECKBOX: 'Checkbox'
     },
     severity,
+    className,
     icons
 };

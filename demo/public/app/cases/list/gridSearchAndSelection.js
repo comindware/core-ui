@@ -73,7 +73,22 @@ export default function() {
                 id: 'showArchived',
                 name: 'showArchived',
                 type: 'Checkbox',
-                isChecked: true
+                isChecked: true,
+                severity: 'Critical',
+                class: 'customizeClass'
+            },
+            {
+                name: 'Группа',
+                order: 5,
+                type: 'Group',
+                iconType: 'Undefined',
+                iconClass: 'low-vision',
+                severity: 'None',
+                class: 'customclass',
+                items:[{ class: 'customclass', userCommandId:'event.176', name: 'Delete', order: 0, type: 'Action', iconType: 'Undefined', iconClass: 'braille', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
+                { userCommandId: 'event.1', name: 'Create', order: 1, type: 'Action', iconType: 'Undefined', iconClass: 'wheelchair', severity: 'None', skipValidation: false, kind: 'Create', resultType: 'DataChange' },
+                { userCommandId: 'event.176', name: 'Delete', order: 2, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } },
+                { userCommandId: 'event.176', name: 'Delete', order: 3, type: 'Action', iconType: 'Undefined', severity: 'None', skipValidation: false, kind: 'Delete', resultType: 'DataChange', confirmation: { id: 'confirmation.27', title: 'New operation', text: 'Confirm operation', yesButtonText: 'Execute', noButtonText: 'Cancel', severity: 'None' } }]
             }
         ]
     });

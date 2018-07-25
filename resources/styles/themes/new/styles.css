@@ -154,7 +154,7 @@ svg.svg-grid-icons.svg-icons_flag-none {
 }
 
 .grid-toolbar-region {
-  padding-right: 10px;
+  padding-right: 40px; /* hot-fit: flex shrink second child (⋮) after calculate width */
 }
 
 .grid-toolbar__search{
