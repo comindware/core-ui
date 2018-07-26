@@ -88,7 +88,9 @@ export default Marionette.View.extend({
 
     template: false,
 
-    className: 'dropdown',
+    className() {
+        return `dropdown ${this.options.class}`;
+    },
 
     ui: {
         button: '.js-button-region'
