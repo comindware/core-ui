@@ -28,6 +28,10 @@
     text-overflow: ellipsis;
 }
 
+.layout__tab-layout__header-view-item:last-child {
+    margin-right: 0;
+}
+
 /* panel */
 
 .layout__tab-layout__panel-container {

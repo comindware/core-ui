@@ -296,7 +296,7 @@ module.exports.apply = {
     'tab-panel-container-theme': {
         border: variables.border,
         'background-color': variables.white,
-        'border-radius': '0 4px 4px 4px'
+        'border-radius': '0 0 4px 4px'
     },
     'tab-move-btn-theme': {
         right: '0',
