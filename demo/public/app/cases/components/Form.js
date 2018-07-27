@@ -86,12 +86,16 @@ export default function () {
                         dateTime: {
                             type: 'DateTime',
                             title: 'DateTime',
-                            helpText: 'Some help information'
+                            dateDisplayFormat: 'LL',
+                            timeDisplayFormat: 'LTS',
+                            helpText: 'Some help information',
+                            autocommit: true
                         },
                         duration: {
                             type: 'Duration',
                             title: 'Duration',
-                            helpText: 'Some help information'
+                            helpText: 'Some help information',
+                            autocommit: true
                         },
                         dropdown: {
                             type: 'Datalist',

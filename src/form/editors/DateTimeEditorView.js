@@ -8,7 +8,6 @@ import iconWrapDate from './iconsWraps/iconWrapDate.html';
 import DateInputView from './impl/dateTime/views/DateInputView';
 import DatePanelView from './impl/dateTime/views/DatePanelView';
 import dropdown from 'dropdown';
-import TimeInputView from './impl/dateTime/views/TimeInputView';
 import { dateHelpers, keyCode } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
 import DurationEditorView from './DurationEditorView';
@@ -342,7 +341,9 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     __setValueToTimeButton(dateISOstring) {
         const newDuration = dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
         this.timeDropdownView.button.setValue(newDuration);
-        this.timeDropdownView.button.model.set(this.key, newDuration);   
+        if (this.schema.autocommit) {
+            this.timeDropdownView.button.model.set(this.key, newDuration);   
+        }
     },
 
     __onTimePanelSelect(time) {
