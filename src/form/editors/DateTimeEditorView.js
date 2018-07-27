@@ -102,6 +102,10 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         if (this.options.showDate !== false) {
             this.__createDateDropdownEditor();
+            //calendar button readonly as don't develop mask validation
+            this.calendarDropdownView.button.ui.input
+                .prop('readonly', true)
+                .prop('tabindex', true ? -1 : 0);
         }
     },
 
@@ -136,11 +140,17 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     __setEnabled(enabled: boolean): void {
         BaseLayoutEditorView.prototype.__setEnabled.call(this, enabled);
         this.enabled = this.getEnabled();
+        //__setEnabled() from descendants
+        // this.calendarDropdownView && this.calendarDropdownView.button.setEnabled(enabled);
+        this.timeDropdownView && this.timeDropdownView.button.setEnabled(enabled);
     },
 
     __setReadonly(readonly: boolean): void {
         BaseLayoutEditorView.prototype.__setReadonly.call(this, readonly);
         this.readonly = this.getReadonly();
+        //__setReadonly() from descendants
+        // this.calendarDropdownView.button.setReadonly(readonly);
+        this.timeDropdownView && this.timeDropdownView.button.setReadonly(readonly);
     },
 
     __onClear(): boolean {

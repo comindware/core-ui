@@ -314,7 +314,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __keydown(event) {
-        if (event.ctrlKey) {
+        if (event.ctrlKey || this.readonly) {
             return;
         }
         const position = this.getCaretPos();
@@ -418,7 +418,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __keyup(event) {
-        if (event.ctrlKey) {
+        if (event.ctrlKey || this.readonly) {
             return;
         }
         if ((event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) || 
