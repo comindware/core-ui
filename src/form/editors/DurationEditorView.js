@@ -421,17 +421,44 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         if (event.ctrlKey) {
             return;
         }
-        if ((event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) || (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9)) {
+        if ((event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) || 
+        (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) || 
+        event.keyCode === keyCode.DELETE) {
+            const position = this.getCaretPos();
+            const index = this.getSegmentIndex(position);
+            const focusablePart = this.focusableParts[index];
+            const segmentValue = this.getSegmentValue(index);
+            if (segmentValue.length < focusablePart.maxLength) {
+                return;
+            }
+            if (this.atSegmentEnd(position)) {
+                if (this.options.normalTime) {
+                    this.setSegmentValue(index, this.__floorTime(segmentValue, focusablePart.id), true);
+                }
+                this.__setCaretToNextPart(index);
+            }
+        }
+        if (event.keyCode === keyCode.BACKSPACE) {
             const position = this.getCaretPos();
             const index = this.getSegmentIndex(position);
             const focusablePart = this.focusableParts[index];
             if (this.getSegmentValue(index).length < focusablePart.maxLength) {
                 return;
             }
-            if (this.atSegmentEnd(position)) {
-                this.__setCaretToNextPart(index);
+            if (this.atSegmentStart(position)) {
+                this.__setCaretToPreviousPart(index);
             }
         }
+    },
+
+    __floorTime(segValue, id) {
+        const maxValue = {
+            [focusablePartId.DAYS]: 31,
+            [focusablePartId.HOURS]: 23,
+            [focusablePartId.MINUTES]: 59,
+            [focusablePartId.SECONDS]: 59
+        };
+        return Number(segValue) > maxValue[id] ? maxValue[id] : segValue;
     },
 
     __setCaretToNextPart(index) {

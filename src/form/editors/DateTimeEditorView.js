@@ -11,6 +11,7 @@ import dropdown from 'dropdown';
 import TimeInputView from './impl/dateTime/views/TimeInputView';
 import { dateHelpers, keyCode } from 'utils';
 import GlobalEventService from '../../services/GlobalEventService';
+import DurationEditorView from './DurationEditorView';
 
 const defaultOptions = {
     allowEmptyValue: true,
@@ -125,7 +126,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
         if (updateUi) {
             this.calendarDropdownView && this.calendarDropdownView.button.setValue(value);
-            this.timeDropdownView && this.timeDropdownView.button.setValue(value);
+            this.__setValueToTimeButton(value);
         }
 
         if (triggerChange) {
@@ -212,7 +213,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
             },
             renderAfterClose: false,
             autoOpen: false,
-            panelMinWidth: 'none'
+            panelMinWidth: 'none',
+            class: 'editor_date-time_date'
         });
 
         this.listenTo(this.calendarDropdownView, 'button:focus', this.__onDateButtonFocus, this);
@@ -273,14 +275,31 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __createTimeDropdownView() {
+        const model = new Backbone.Model({
+            [this.key]: dateHelpers.dateISOToDuration(this.value, { days: false })
+        });
+        this.listenTo(model, 'change', this.__onTimeModelChange);
+
         this.timeDropdownView = dropdown.factory.createDropdown({
-            buttonView: TimeInputView,
-            buttonViewOptions: {
-                value: this.value,
-                allowEmptyValue: this.options.allowEmptyValue,
-                timeDisplayFormat: this.options.timeDisplayFormat,
-                showTitle: this.options.showTitle
-            },
+            buttonView: DurationEditorView,
+            buttonViewOptions: Object.assign({
+                allowDays: false,
+                allowHours: true,
+                allowMinutes: true,
+                allowSeconds: true,
+                showEmptyParts: true,
+                fillZero: true,
+                normalTime: true,
+                allFocusablePart: {
+                    maxLength: 2,
+                    text: ':',
+                },
+                seconds: {
+                    text: ''
+                }
+            }, this.options, {
+                model
+            }),
             panelView: Marionette.CollectionView.extend({
                 collection: new Backbone.Collection(),
                 tagName: 'ul',
@@ -302,7 +321,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 })
             }),
             renderAfterClose: false,
-            autoOpen: false
+            autoOpen: false,
+            class: 'editor_date-time_time'
         });
 
         this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
@@ -311,22 +331,22 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
 
+    __onTimeModelChange(model) {
+        const dateMoment = moment(this.model.get(this.key)).clone();
+        const timeDuration = moment.duration(model.get(this.key)).clone();
+        const prevTimeDuration = moment.duration(model.previous(this.key)).clone();
+        const diff = timeDuration.subtract(prevTimeDuration);
+        this.model.set(this.key, dateMoment.add(diff).toISOString(), { fromTime: true });
+    },
+
+    __setValueToTimeButton(dateISOstring) {
+        const newDuration = dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
+        this.timeDropdownView.button.setValue(newDuration);
+        this.timeDropdownView.button.model.set(this.key, newDuration);   
+    },
+
     __onTimePanelSelect(time) {
-        const oldValue = this.__getDateByValue(this.value);
-        let newVal = null;
-
-        if (!isNaN(oldValue)) {
-            newVal = moment(oldValue)
-                .hour(time.hour())
-                .minute(time.minute())
-                .second(0)
-                .millisecond(0)
-                .toISOString();
-        } else {
-            newVal = time.toISOString();
-        }
-
-        this.__value(newVal, true, true);
+        this.__setValueToTimeButton(time);
         this.timeDropdownView.close();
     },
 
