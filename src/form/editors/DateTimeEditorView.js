@@ -118,8 +118,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __value(newValue, updateUi, triggerChange): void {
-        let value = this.__adjustValue(newValue);
-        value = this.__updateTime(value);
+        const value = this.__adjustValue(newValue);
         if (this.value === value) {
             return;
         }
@@ -337,7 +336,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         });
 
         this.listenTo(this.timeDropdownView, 'button:focus', this.__onTimeButtonFocus, this);
-        this.listenTo(this.timeDropdownView, 'button:calendar:open', this.__onTimeButtonCalendarOpen, this);
+        this.listenTo(this.timeDropdownView, 'button:click', this.__onTimeButtonCalendarOpen, this);
         this.listenTo(this.timeDropdownView, 'panel:select', this.__onTimePanelSelect, this);
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
@@ -360,7 +359,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __onTimeModelChange() {
-        this.__value(this.value, false, true);
+        this.__value(this.__updateTime(this.value), false, true);
     },
 
     __setValueToTimeButton(dateISOstring) {

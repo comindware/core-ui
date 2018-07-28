@@ -138,7 +138,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     events: {
         'click @ui.clear': '__clear',
         'focus @ui.input': '__focus',
-        'click @ui.input': '__focus',
+        'click @ui.input': '__onClick',
         'blur @ui.input': '__blur',
         'keydown @ui.input': '__keydown',
         'keyup @ui.input': '__keyup',
@@ -175,6 +175,11 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         });
         this.__value(null, true);
         this.focus();
+    },
+
+    __onClick() {
+        this.trigger('click');
+        this.__focus();
     },
 
     __focus() {
