@@ -348,8 +348,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         }
         const dateMoment = moment(ISOstr || {}).clone();
         const timeDuration = moment.duration(valTimeModel).clone();
-        const newHours = timeDuration.hours();
-        dateMoment.hours(newHours);
+        dateMoment.hours(timeDuration.hours());
         dateMoment.minutes(timeDuration.minutes());
         dateMoment.seconds(timeDuration.seconds());
         return dateMoment.toISOString();
