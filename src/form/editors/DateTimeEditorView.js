@@ -342,9 +342,6 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __updateTime(ISOstr) { //replace time of ISO string to time from timebutton
-        if (ISOstr === null) {
-            return null;
-        }
         const valTimeModel = this.timeDropdownView && this.timeDropdownView.button.model.get(this.key);
         if (!valTimeModel) {
             return;
@@ -358,12 +355,15 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         return dateMoment.toISOString();
     },
 
-    __onTimeModelChange() {
+    __onTimeModelChange(model) {
+        if (model.get(this.key) === null) {
+            return;
+        }
         this.__value(this.__updateTime(this.value), false, true);
     },
 
     __setValueToTimeButton(dateISOstring) {
-        const newDuration = dateISOstring ? dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString() : moment.duration().toISOString();
+        const newDuration = dateISOstring && dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
         this.timeDropdownView && this.timeDropdownView.button.setValue(newDuration, true);
     },
 

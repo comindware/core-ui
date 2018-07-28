@@ -318,8 +318,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         if (value === this.value) {
             return;
         }
-        const val = value || moment.duration().toISOString();
-        this.value = val;
+        this.value = value;
         if (triggerChange) {
             this.__triggerChange();
         }
