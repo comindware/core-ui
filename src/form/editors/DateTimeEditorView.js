@@ -118,7 +118,8 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
     },
 
     __value(newValue, updateUi, triggerChange): void {
-        const value = this.__adjustValue(newValue);
+        let value = this.__adjustValue(newValue);
+        value = this.__updateTime(value);
         if (this.value === value) {
             return;
         }
@@ -285,7 +286,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
 
     __createTimeDropdownView() {
         const model = new Backbone.Model({
-            [this.key]: dateHelpers.dateISOToDuration(this.value, { days: false })
+            [this.key]: dateHelpers.dateISOToDuration(this.value, { days: false }).toISOString()
         });
         this.listenTo(model, 'change', this.__onTimeModelChange);
 
@@ -297,6 +298,7 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
                 allowMinutes: true,
                 allowSeconds: true,
                 showEmptyParts: true,
+                hideClearButton: true,
                 fillZero: true,
                 normalTime: true,
                 allFocusablePart: {
@@ -340,20 +342,30 @@ export default (formRepository.editors.DateTime = BaseLayoutEditorView.extend({
         this.showChildView('timeDropdownRegion', this.timeDropdownView);
     },
 
-    __onTimeModelChange(model) {
-        const dateMoment = moment(this.model.get(this.key)).clone();
-        const timeDuration = moment.duration(model.get(this.key)).clone();
-        const prevTimeDuration = moment.duration(model.previous(this.key)).clone();
-        const diff = timeDuration.subtract(prevTimeDuration);
-        this.model.set(this.key, dateMoment.add(diff).toISOString(), { fromTime: true });
+    __updateTime(ISOstr) { //replace time of ISO string to time from timebutton
+        if (ISOstr === null) {
+            return null;
+        }
+        const valTimeModel = this.timeDropdownView && this.timeDropdownView.button.model.get(this.key);
+        if (!valTimeModel) {
+            return;
+        }
+        const dateMoment = moment(ISOstr || {}).clone();
+        const timeDuration = moment.duration(valTimeModel).clone();
+        const newHours = timeDuration.hours();
+        dateMoment.hours(newHours);
+        dateMoment.minutes(timeDuration.minutes());
+        dateMoment.seconds(timeDuration.seconds());
+        return dateMoment.toISOString();
+    },
+
+    __onTimeModelChange() {
+        this.__value(this.value, false, true);
     },
 
     __setValueToTimeButton(dateISOstring) {
-        const newDuration = dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString();
-        this.timeDropdownView.button.setValue(newDuration);
-        if (this.schema.autocommit) {
-            this.timeDropdownView.button.model.set(this.key, newDuration);   
-        }
+        const newDuration = dateISOstring ? dateHelpers.dateISOToDuration(dateISOstring, { days: false }).toISOString() : moment.duration().toISOString();
+        this.timeDropdownView && this.timeDropdownView.button.setValue(newDuration, true);
     },
 
     __onTimePanelSelect(time) {

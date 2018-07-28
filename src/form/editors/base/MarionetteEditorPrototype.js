@@ -127,8 +127,8 @@ export default {
 
                 this.on('render', onRender.bind(this));
                 this.on('change', onChange.bind(this));
-                this.setValue = _.wrap(this.setValue, (fn, val) => {
-                    fn.call(this, val);
+                this.setValue = _.wrap(this.setValue, (fn, ...rest) => {
+                    fn.call(this, ...rest);
                     if (this.$el) {
                         this.__updateEmpty();
                     }

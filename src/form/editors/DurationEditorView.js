@@ -75,7 +75,13 @@ const defaultOptions = {
     allowHours: true,
     allowMinutes: true,
     allowSeconds: true,
-    showTitle: true
+    showTitle: true,
+    showEmptyParts: false,
+    hideClearButton: false,
+    fillZero: false,
+    normalTime: false
+    // allFocusablePart: undefined,
+    // seconds: undefined // days, minutes, hours
 };
 
 const classes = {
@@ -142,7 +148,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
 
     setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        if (enabled && !readonly) {
+        if (enabled && !readonly && !this.options.hideClearButton) {
             this.ui.clear.show();
         } else {
             this.ui.clear.hide();
@@ -307,7 +313,8 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         if (value === this.value) {
             return;
         }
-        this.value = value;
+        const val = value || moment.duration().toISOString();
+        this.value = val;
         if (triggerChange) {
             this.__triggerChange();
         }
@@ -571,8 +578,8 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         return result;
     },
 
-    setValue(value) {
-        this.__value(value, false);
+    setValue(value, triggerChange) {
+        this.__value(value, triggerChange);
         this.__updateState({
             mode: stateModes.VIEW,
             displayValue: dateHelpers.durationISOToObject(value)
@@ -607,10 +614,16 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __onMouseenter() {
+        if (this.options.hideClearButton) {
+            return;
+        }
         this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapNumber);
     },
 
     __onMouseleave() {
+        if (this.options.hideClearButton) {
+            return;
+        }
         this.el.removeChild(this.el.lastElementChild);
     }
 }));
