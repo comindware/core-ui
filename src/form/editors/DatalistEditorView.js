@@ -180,6 +180,10 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.showChildView('dropdownRegion', this.dropdownView);
 
         this.__updateFakeInputModel();
+
+        if (this.options.valueType === 'id' && (!this.options.collection || this.options.collection.length === 0)) {
+            this.__requestAndResetButtonViewData();
+        }
     },
 
     isEmptyValue(): boolean {
@@ -195,7 +199,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
             if (this.getOption('maxQuantitySelected') === 1) {
                 return Array.isArray(this.value) && this.value.length ? this.value[0].id : this.value && this.value.id;
             }
-            return Array.isArray(this.value) && this.value.map(value => (value.id ? value.id : value));
+            return Array.isArray(this.value) && this.value.map(value => (value && value.id ? value.id : value));
         }
         return this.value;
     },
@@ -239,6 +243,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
         this.activeText = this.searchText;
         this.isFilterDeayed = false;
+
         return this.__onFilterText();
     },
 
@@ -251,9 +256,9 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         }
         if (this.getOption('valueType') === 'id' && this.getOption('maxQuantitySelected') > 1) {
             if (Array.isArray(value)) {
-                return value.map(v => this.panelCollection.get(v));
+                return value.map(v => this.panelCollection.get(v) || v);
             }
-            return this.panelCollection.get(value.id ? value.id : value);
+            return this.panelCollection.get(value && value.id ? value.id : value);
         }
         return value;
     },
@@ -347,7 +352,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         this.updateFilter(value, immediate);
     },
 
-    __onFilterText() {
+    async __onFilterText() {
         this.dropdownView.buttonView.setLoading(true);
 
         return this.controller.fetch({ text: this.searchText }).then(data => {
@@ -356,7 +361,7 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
 
             if (this.panelCollection.length > 0 && this.value) {
                 this.value.forEach(value => {
-                    const id = value.id ? value.id : value;
+                    const id = value && value.id ? value.id : value;
 
                     if (this.panelCollection.has(id)) {
                         this.panelCollection.get(id).select({ isSilent: true });
@@ -526,5 +531,11 @@ export default (formRepository.editors.Datalist = BaseLayoutEditorView.extend({
         } else {
             this.__onValueSelect();
         }
+    },
+
+    async __requestAndResetButtonViewData() {
+        await this.__onFilterText();
+
+        this.setValue(this.value);
     }
 }));

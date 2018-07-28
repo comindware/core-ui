@@ -211,8 +211,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     setCaretPos(pos) {
-        this.ui.input.selectionStart = pos;
-        this.ui.input.selectionEnd = pos;
+        this.ui.input[0].setSelectionRange(pos, pos);
     },
 
     getSegmentIndex(pos) {

@@ -50,15 +50,17 @@
     color: #74C365;
 }
 
-.dev-notification-container {
+.notification-container {
     bottom: 0;
+    right: 0;
     height: auto;
     position: fixed;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
     z-index: 560;
+    pointer-events: none;
+    width: 50%;
+    align-items: flex-end;
 }
 
 .fr-alert-title {

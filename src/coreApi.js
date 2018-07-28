@@ -55,7 +55,7 @@ import NavigationDrawer from './components/navigationDrawer/NavigationDrawer';
 import BreadCrumbs from './components/breadCrumbs/BreadCrumbs';
 import Toolbar from './components/toolbar/ToolbarView';
 import LayoutDesigner from './components/layoutDesigner';
-import VideoChat from './components/VideoChat/VideoChat';
+import VideoChat from './components/videoChat/VideoChat';
 
 /**
  * Core UI components: основные компоненты для построение веб-интерфейса Comindware.
