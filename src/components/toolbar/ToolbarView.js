@@ -9,7 +9,7 @@ export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
         
-        this.allItemsCollection = this.options.allItemsCollection || new Backbone.Collection();
+        this.allItemsCollection = this.options.allItemsCollection;
         this.toolbarItemsCollection = new Backbone.Collection(this.allItemsCollection.models);
         this.menuItemsCollection = new Backbone.Collection();
 
