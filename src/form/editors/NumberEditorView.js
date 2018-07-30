@@ -65,15 +65,9 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         'click .js-clear-button': '__clear',
         'keydown @ui.input': '__keydown',
         'keypress @ui.input': '__keypress',
+        'keyup @ui.input': '__keyup',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave',
-        'keyup @ui.input'() {
-            if (this.options.changeMode === changeMode.keydown) {
-                this.__value(this.ui.input.val(), true, true, false);
-            } else {
-                this.__value(this.ui.input.val(), true, false, false);
-            }
-        },
         'change @ui.input'() {
             this.__value(this.ui.input.val(), false, true, false);
         }
@@ -95,6 +89,30 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     onDestroy() {
         this.maskedInputController && this.maskedInputController.destroy();
+    },
+
+    __keyup() {
+        const input = this.ui.input;
+        const max = input[0].getAttribute('max');
+        const min = input[0].getAttribute('min');
+        const value = this.__checkMaxMinValue(input.val(), max, min);
+
+        if (this.options.changeMode === changeMode.keydown) {
+            this.__value(value, true, true, false);
+        } else {
+            this.__value(value, true, false, false);
+        }
+    },
+
+    __checkMaxMinValue(value, max, min) {
+        let val = value;
+        if (max) {
+            val = Number(value) > Number(max) ? max : val;
+        }
+        if (min) {
+            val = Number(value) < Number(min) ? min : val;
+        }
+        return val;
     },
 
     setValue(value) {
@@ -130,15 +148,16 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     __value(newValue, suppressRender, triggerChange, force) {
         let value = newValue;
-        if (value === this.value && !force) {
+        if ((value === this.value && !force) || value === '-') {
             return;
         }
+
         let parsed;
         if (value !== '' && value !== null) {
             parsed = this.__parse(value);
             if (parsed !== null) {
                 if (!this.options.allowFloat) {
-                    value = Math.floor(parsed);
+                    value = Math.round(parsed);
                 } else {
                     value = parsed;
                 }
@@ -197,7 +216,8 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         const decimalSymbol = Core.services.LocalizationService.decimalSymbol;
         let newValue = value.replace(`/\\${thousandsSeparator}/g`, '');
         newValue = newValue.replace(`/\\${decimalSymbol}/g`, '.');
+        newValue = newValue.replace(/[^\d\.-]*/g, '');
 
-        return parseFloat(newValue.replace(/[^\d\.]*/g, ''));
+        return parseFloat(newValue);
     }
 }));
