@@ -55,7 +55,9 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
                 prefix: '',
                 thousandsSeparatorSymbol: this.thousandsSeparator,
                 decimalSymbol: this.decimalSymbol,
-                allowDecimal: options.allowFloat
+                allowDecimal: options.allowFloat,
+                requireDecimal: options.allowFloat,
+                allowNegative: true
             });
         }
     },
@@ -66,7 +68,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     events: {
         'click .js-clear-button': '__clear',
         'keyup @ui.input': '__keyup',
-        'blur @ui.input': '__onBlur',
+        'change @ui.input': '__onChange',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave'
     },
@@ -90,14 +92,18 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __keyup() {
+        const value = this.ui.input.val();
+        if (value === `-${this.decimalSymbol}`) {
+            return;
+        }
         if (this.options.changeMode === changeMode.keydown) {
-            this.__value(this.ui.input.val(), true, true, false);
+            this.__value(value, true, true, false);
         } else {
-            this.__value(this.ui.input.val(), true, false, false);
+            this.__value(value, true, false, false);
         }
     },
 
-    __onBlur() {
+    __onChange() {
         const input = this.ui.input;
         const max = input[0].getAttribute('max');
         const min = input[0].getAttribute('min');
@@ -226,6 +232,6 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __parseToString(number) {
-        return String(number).replace(new RegExp(`\\.`, 'g'), this.decimalSymbol);     
+        return String(number).replace(new RegExp('\\.', 'g'), this.decimalSymbol);     
     }
 }));
