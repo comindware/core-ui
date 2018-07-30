@@ -89,7 +89,7 @@ export default Marionette.View.extend({
     template: false,
 
     className() {
-        return `dropdown ${this.options.class}`;
+        return `dropdown ${this.options.class || ''}`;
     },
 
     ui: {
