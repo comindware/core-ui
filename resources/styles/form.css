@@ -312,10 +312,13 @@ input[type="checkbox"].checkbox {
     display: flex;
     align-items: center;
 }
-.editor_date-time .dropdown {
-    flex-shrink: 1;
-    flex-basis: 100px;
+.editor_date-time .dropdown.editor_date-time_date {
+    flex: 0 0 140px;
 }
+.editor_date-time .dropdown.editor_date-time_time {
+    flex: 1 0 70px;
+}
+
 .editor_date-time .input{
     border: 0;
 }

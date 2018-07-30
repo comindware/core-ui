@@ -16,35 +16,53 @@ const focusablePartId = {
 
 const createFocusableParts = function (options) {
     const result = [];
+    const settings = {};
+    settings.daysSettings = _.defaults(options.days, options.allFocusablePart, {
+        text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
+        maxLength: 4
+    });
+    settings.hoursSettings = _.defaults(options.hours, options.allFocusablePart, {
+        text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
+        maxLength: 4
+    });
+    settings.minutesSettings = _.defaults(options.minutes, options.allFocusablePart, {
+        text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
+        maxLength: 4
+    });
+    settings.secondsSettings = _.defaults(options.seconds, options.allFocusablePart, {
+        text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS'),
+        maxLength: 4
+    });
+    Object.values(settings).forEach(setting => setting.text = ` ${setting.text}`); //RegExp in getSegmentValue method based on ' ' (\s)
     if (options.allowDays) {
         result.push({
             id: focusablePartId.DAYS,
-            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.DAYS'),
-            maxLength: 4,
+            text: settings.daysSettings.text,
+            maxLength: settings.daysSettings.maxLength,
             milliseconds: 1000 * 60 * 60 * options.hoursPerDay
         });
     }
     if (options.allowHours) {
         result.push({
             id: focusablePartId.HOURS,
-            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.HOURS'),
-            maxLength: 4,
+            text: settings.hoursSettings.text,
+            maxLength: settings.hoursSettings.maxLength,
             milliseconds: 1000 * 60 * 60
         });
     }
     if (options.allowMinutes) {
         result.push({
             id: focusablePartId.MINUTES,
-            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.MINUTES'),
-            maxLength: 4,
+            text: settings.minutesSettings.text,
+            maxLength: settings.minutesSettings.maxLength,
             milliseconds: 1000 * 60
         });
     }
     if (options.allowSeconds) {
         result.push({
             id: focusablePartId.SECONDS,
-            text: LocalizationService.get('CORE.FORM.EDITORS.DURATION.WORKDURATION.SECONDS'),
-            maxLength: 4,
+            text: settings.secondsSettings.text,
+            maxLength: settings.secondsSettings.maxLength,
             milliseconds: 1000
         });
     }
@@ -57,7 +75,13 @@ const defaultOptions = {
     allowHours: true,
     allowMinutes: true,
     allowSeconds: true,
-    showTitle: true
+    showTitle: true,
+    showEmptyParts: false,
+    hideClearButton: false,
+    fillZero: false,
+    normalTime: false
+    // allFocusablePart: undefined,
+    // seconds: undefined // days, minutes, hours
 };
 
 const classes = {
@@ -114,16 +138,17 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     events: {
         'click @ui.clear': '__clear',
         'focus @ui.input': '__focus',
-        'click @ui.input': '__focus',
+        'click @ui.input': '__onClick',
         'blur @ui.input': '__blur',
         'keydown @ui.input': '__keydown',
+        'keyup @ui.input': '__keyup',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave'
     },
 
     setPermissions(enabled, readonly) {
         BaseItemEditorView.prototype.setPermissions.call(this, enabled, readonly);
-        if (enabled && !readonly) {
+        if (enabled && !readonly && !this.options.hideClearButton) {
             this.ui.clear.show();
         } else {
             this.ui.clear.hide();
@@ -150,6 +175,11 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         });
         this.__value(null, true);
         this.focus();
+    },
+
+    __onClick() {
+        this.trigger('click');
+        this.__focus();
     },
 
     __focus() {
@@ -186,9 +216,11 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         });
         let newValue;
         newValue = moment.duration(this.state.displayValue).toISOString();
-        if (Object.values(newValueObject).every(value => value === 0)) {
-            newValue = null;
-            this.ui.input.val(null);
+        if (!this.options.showEmptyParts) {
+            if (Object.values(newValueObject).every(value => value === 0)) {
+                newValue = null;
+                this.ui.input.val(null);
+            }
         }
         this.__value(newValue, true);
     },
@@ -293,7 +325,7 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __keydown(event) {
-        if (event.ctrlKey) {
+        if (event.ctrlKey || this.readonly) {
             return;
         }
         const position = this.getCaretPos();
@@ -326,49 +358,33 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
                 return false;
             case keyCode.LEFT:
                 if (this.atSegmentStart(position)) {
-                    if (this.focusableParts[index - 1]) {
-                        this.setCaretPos(this.focusableParts[index - 1].end);
-                    }
+                    this.__setCaretToPreviousPart(index);
                     return false;
                 }
                 break;
             case keyCode.RIGHT:
                 if (this.atSegmentEnd(position)) {
-                    if (this.focusableParts[index + 1]) {
-                        this.setCaretPos(this.focusableParts[index + 1].start);
-                    }
+                    this.__setCaretToNextPart(index);
                     return false;
                 }
                 break;
             case keyCode.DELETE:
-                if (this.atSegmentStart(position)) {
-                    const segmentValue = this.getSegmentValue(index);
-                    if (segmentValue.length === 1) {
-                        if (segmentValue !== '0') {
-                            this.setSegmentValue(index, 0, true);
-                            this.setCaretPos(position);
-                        }
-                        return false;
-                    }
-                }
                 if (this.atSegmentEnd(position)) {
+                    this.__setCaretToNextPart(index);
                     return false;
                 }
-                break;
+                this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '0');
+                this.setCaretPos(this.getCaretPos() + 1); //move right
+                event.preventDefault();
+                return false;
             case keyCode.BACKSPACE:
-                if (this.atSegmentEnd(position)) {
-                    if (this.getSegmentValue(index).length === 1) {
-                        this.setSegmentValue(index, 0, true);
-                        this.setCaretPos(focusablePart.start);
-                        return false;
-                    }
-                }
                 if (this.atSegmentStart(position)) {
-                    if (this.focusableParts[index - 1]) {
-                        this.setCaretPos(this.focusableParts[index - 1].end);
-                    }
+                    this.__setCaretToPreviousPart(index);
                     return false;
                 }
+                this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], '0', 'left');
+                this.setCaretPos(this.getCaretPos() - 1); //move left
+                event.preventDefault();
                 break;
             case keyCode.ESCAPE:
                 this.ui.input.blur();
@@ -404,16 +420,83 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
                 if (!valid) {
                     return false;
                 }
-                if (this.getSegmentValue(index) === '0') {
-                    this.setSegmentValue(index, parseInt(charValue));
-                    this.setCaretPos(focusablePart.end);
-                    return false;
-                }
+                this.__replaceModeFor(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
                 if (this.getSegmentValue(index).length >= focusablePart.maxLength) {
                     return false;
                 }
             }
         }
+    },
+
+    __keyup(event) {
+        if (event.ctrlKey || this.readonly) {
+            return;
+        }
+        if ((event.keyCode >= keyCode.NUM_0 && event.keyCode <= keyCode.NUM_9) || 
+        (event.keyCode >= keyCode.NUMPAD_0 && event.keyCode <= keyCode.NUMPAD_9) || 
+        event.keyCode === keyCode.DELETE) {
+            const position = this.getCaretPos();
+            const index = this.getSegmentIndex(position);
+            const focusablePart = this.focusableParts[index];
+            const segmentValue = this.getSegmentValue(index);
+            if (segmentValue.length < focusablePart.maxLength) {
+                return;
+            }
+            if (this.atSegmentEnd(position)) {
+                if (this.options.normalTime) {
+                    this.setSegmentValue(index, this.__floorTime(segmentValue, focusablePart.id), true);
+                }
+                this.__setCaretToNextPart(index);
+            }
+        }
+        if (event.keyCode === keyCode.BACKSPACE) {
+            const position = this.getCaretPos();
+            const index = this.getSegmentIndex(position);
+            const focusablePart = this.focusableParts[index];
+            if (this.getSegmentValue(index).length < focusablePart.maxLength) {
+                return;
+            }
+            if (this.atSegmentStart(position)) {
+                this.__setCaretToPreviousPart(index);
+            }
+        }
+    },
+
+    __floorTime(segValue, id) {
+        const maxValue = {
+            [focusablePartId.DAYS]: 31,
+            [focusablePartId.HOURS]: 23,
+            [focusablePartId.MINUTES]: 59,
+            [focusablePartId.SECONDS]: 59
+        };
+        return Number(segValue) > maxValue[id] ? maxValue[id] : segValue;
+    },
+
+    __setCaretToNextPart(index) {
+        if (this.focusableParts[index + 1]) {
+            this.setCaretPos(this.focusableParts[index + 1].start);
+        }
+    },
+
+    __setCaretToPreviousPart(index) {
+        if (this.focusableParts[index - 1]) {
+            this.setCaretPos(this.focusableParts[index - 1].end);
+        }
+    },
+
+    __replaceModeFor(arrChar, insertChar, direction = 'right') {
+        const inpValue = this.ui.input.val();
+        const dirClarity = direction === 'left' ? 1 : 0;
+        const caretPos = this.getCaretPos();
+        const valueAfterCaret = inpValue[caretPos - dirClarity];
+        if (arrChar.some(char => char === valueAfterCaret)) {
+            this.ui.input.val(this.__replaceChar(inpValue, caretPos - dirClarity, insertChar));
+            this.setCaretPos(caretPos);
+        }
+    },
+
+    __replaceChar(str, i, insertChar = '') {
+        return str.substr(0, i) + insertChar + str.slice(i + 1);
     },
 
     initSegmentStartEnd() {
@@ -447,12 +530,12 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             [focusablePartId.SECONDS]: seconds
         };
 
-        if (!editable) {
+        if (!this.options.showEmptyParts && !editable) {
             if (isNull) {
                 // null value is rendered as empty text
                 return '';
             }
-            const filledSegments = this.focusableParts.filter(x => Boolean(data[x.id]));
+            const filledSegments = this.focusableParts.filter(part => Boolean(data[part.id]));
             if (filledSegments.length > 0) {
                 // returns string like '0d 4h 32m'
                 return filledSegments.reduce((p, seg) => `${p}${data[seg.id]}${seg.text} `, '').trim();
@@ -464,10 +547,16 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         return this.focusableParts
             .map(seg => {
                 const val = data[seg.id];
-                const valStr = _.isNumber(val) ? String(val) : '';
+                let valStr = this.options.showEmptyParts ? String(val) : _.isNumber(val) ? String(val) : '';
+                valStr = this.options.fillZero ? this.__fillZero(valStr, seg.maxLength) : valStr;
                 return valStr + seg.text;
             })
             .join(' ');
+    },
+
+    __fillZero(string, length) {
+        const mask = '000000000000';
+        return (mask + string).slice(-length);
     },
 
     __normalizeDuration(value) {
@@ -493,8 +582,8 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
         return result;
     },
 
-    setValue(value) {
-        this.__value(value, false);
+    setValue(value, triggerChange) {
+        this.__value(value, triggerChange);
         this.__updateState({
             mode: stateModes.VIEW,
             displayValue: dateHelpers.durationISOToObject(value)
@@ -518,9 +607,9 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
             this.state.displayValue = newState.displayValue;
         }
 
-        const normalizedDisplayValue = this.__normalizeDuration(this.state.displayValue);
+        this.state.displayValue = this.__normalizeDuration(this.state.displayValue);
         const inEditMode = this.state.mode === stateModes.EDIT;
-        const val = this.__createInputString(normalizedDisplayValue, inEditMode);
+        const val = this.__createInputString(this.state.displayValue, inEditMode);
         this.ui.input.val(val);
         if (this.options.showTitle && !inEditMode) {
             this.$el.prop('title', val);
@@ -529,10 +618,16 @@ export default (formRepository.editors.Duration = BaseItemEditorView.extend({
     },
 
     __onMouseenter() {
+        if (this.options.hideClearButton) {
+            return;
+        }
         this.el.insertAdjacentHTML('beforeend', this.value ? iconWrapRemove : iconWrapNumber);
     },
 
     __onMouseleave() {
+        if (this.options.hideClearButton) {
+            return;
+        }
         this.el.removeChild(this.el.lastElementChild);
     }
 }));
