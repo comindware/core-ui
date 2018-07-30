@@ -6,11 +6,12 @@ export default Marionette.View.extend({
     template: false,
 
     onRender() {
-        this.menu = new Core.dropdown.factory.createDropdown({
+        this.menu = Core.dropdown.factory.createDropdown({
             buttonView: ActionMenuButtonView,
             panelView: ActionMenuPanelView,
             panelViewOptions: {
-                collection: new Backbone.Collection(this.model.get('items'))
+                collection: new Backbone.Collection(this.model.get('items')),
+                class: this.model.get('dropdownClass')
             },
             buttonViewOptions: {
                 model: this.model
