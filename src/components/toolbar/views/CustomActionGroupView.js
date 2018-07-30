@@ -1,5 +1,4 @@
 //@flow
-import { severity, icons } from '../meta';
 import template from '../templates/customActionGroupView.html';
 import CustomActionItemView from './CustomActionItemView';
 import ToolbarActionMenuView from '../views/ToolbarActionMenuView';
@@ -34,22 +33,6 @@ export default Marionette.CollectionView.extend({
         return {
             reqres: this.getOption('reqres')
         };
-    },
-
-    onRender() {
-        if (this.model) {
-            const iconType = this.model.get('iconType');
-            const severityLevel = this.model.get('severity');
-            const severityItem = severity[severityLevel] || severity.None;
-
-            this.$el.addClass(severityItem.class);
-            if (iconType === icons.None) {
-                this.$el.children('.js-icon-container').hide();
-            } else {
-                this.$el.children('.js-icon-container').show();
-                this.$el.children('.js-icon-container').html(icons[iconType].icon);
-            }
-        }
     },
 
     childViewEvents: {

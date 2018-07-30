@@ -1,11 +1,7 @@
 //@flow
-import template from '../templates/toolbarPopup.html';
+import ButtonView from './ButtonView';
 
-export default Marionette.View.extend({
-    template: Handlebars.compile(template),
-
-    className: 'toolbar-btn dev-form-designer-copy-button',
-
+export default ButtonView.extend({
     events: {
         'click .js-action': '__openPopout'
     },
