@@ -63,9 +63,8 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     events: {
         'click .js-clear-button': '__clear',
-        'keydown @ui.input': '__keydown',
-        'keypress @ui.input': '__keypress',
         'keyup @ui.input': '__keyup',
+        'blur @ui.input': '__onBlur',
         mouseenter: '__onMouseenter',
         mouseleave: '__onMouseleave',
         'change @ui.input'() {
@@ -92,16 +91,19 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
     },
 
     __keyup() {
+        if (this.options.changeMode === changeMode.keydown) {
+            this.__value(this.ui.input.val(), true, true, false);
+        } else {
+            this.__value(this.ui.input.val(), true, false, false);
+        }
+    },
+
+    __onBlur() {
         const input = this.ui.input;
         const max = input[0].getAttribute('max');
         const min = input[0].getAttribute('min');
         const value = this.__checkMaxMinValue(input.val(), max, min);
-
-        if (this.options.changeMode === changeMode.keydown) {
-            this.__value(value, true, true, false);
-        } else {
-            this.__value(value, true, false, false);
-        }
+        this.__value(value, true, true, false);
     },
 
     __checkMaxMinValue(value, max, min) {
