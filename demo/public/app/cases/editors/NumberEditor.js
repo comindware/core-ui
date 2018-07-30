@@ -14,9 +14,10 @@ export default function () {
             changeMode: 'keydown',
             autocommit: true,
             min: -300,
-            max: 300,
+            max: 300000,
             step: 3,
-            allowFloat: false
+            allowFloat: true,
+            format: '0,0[.]00'
         }),
         presentation: '{{numberValue}}',
         isEditor: true

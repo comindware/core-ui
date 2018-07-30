@@ -49,10 +49,12 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
 
     initialize(options) {
         if (options.format) {
+            this.thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
+            this.decimalSymbol = Core.services.LocalizationService.decimalSymbol;
             this.numberMask = createNumberMask({
                 prefix: '',
-                thousandsSeparatorSymbol: Core.services.LocalizationService.thousandsSeparatorSymbol,
-                decimalSymbol: Core.services.LocalizationService.decimalSymbol,
+                thousandsSeparatorSymbol: this.thousandsSeparator,
+                decimalSymbol: this.decimalSymbol,
                 allowDecimal: options.allowFloat
             });
         }
@@ -66,10 +68,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         'keyup @ui.input': '__keyup',
         'blur @ui.input': '__onBlur',
         mouseenter: '__onMouseenter',
-        mouseleave: '__onMouseleave',
-        'change @ui.input'() {
-            this.__value(this.ui.input.val(), false, true, false);
-        }
+        mouseleave: '__onMouseleave'
     },
 
     onRender() {
@@ -103,18 +102,23 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         const max = input[0].getAttribute('max');
         const min = input[0].getAttribute('min');
         const value = this.__checkMaxMinValue(input.val(), max, min);
-        this.__value(value, true, true, false);
+        this.__value(value, false, true, false);
+        if (this.options.format) {
+            this.maskedInputController && this.maskedInputController.textMaskInputElement.update(value);
+        } else {
+            this.ui.input.val(value);
+        }
     },
 
     __checkMaxMinValue(value, max, min) {
-        let val = value;
+        let val = this.__parseToNumber(value);
         if (max) {
-            val = Number(value) > Number(max) ? max : val;
+            val = val > Number(max) ? max : val;
         }
         if (min) {
-            val = Number(value) < Number(min) ? min : val;
+            val = val < Number(min) ? min : val;
         }
-        return val;
+        return this.__parseToString(val);
     },
 
     setValue(value) {
@@ -188,7 +192,7 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         let val = value;
 
         if (typeof val === 'string' && val !== '') {
-            val = this.__parseNumber(val);
+            val = this.__parseToNumber(val);
             if (val === Number.POSITIVE_INFINITY) {
                 val = Number.MAX_VALUE;
             } else if (val === Number.NEGATIVE_INFINITY) {
@@ -213,13 +217,15 @@ export default (formRepository.editors.Number = BaseItemEditorView.extend({
         this.ui.input[0].setAttribute('step', this.options.step);
     },
 
-    __parseNumber(value) {
-        const thousandsSeparator = Core.services.LocalizationService.thousandsSeparatorSymbol;
-        const decimalSymbol = Core.services.LocalizationService.decimalSymbol;
-        let newValue = value.replace(`/\\${thousandsSeparator}/g`, '');
-        newValue = newValue.replace(`/\\${decimalSymbol}/g`, '.');
+    __parseToNumber(string) {
+        let newValue = string.replace(new RegExp(`\\${this.thousandsSeparator}`, 'g'), '');
+        newValue = newValue.replace(new RegExp(`\\${this.decimalSymbol}`, 'g'), '.');
         newValue = newValue.replace(/[^\d\.-]*/g, '');
 
         return parseFloat(newValue);
+    },
+
+    __parseToString(number) {
+        return String(number).replace(new RegExp(`\\.`, 'g'), this.decimalSymbol);     
     }
 }));
