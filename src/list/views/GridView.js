@@ -190,7 +190,7 @@ export default Marionette.View.extend({
 
         if (options.showToolbar) {
             this.toolbarView = new ToolbarView({
-                allItemsCollection: options.actions
+                allItemsCollection: options.actions || new Backbone.Collection()
             });
             this.listenTo(this.toolbarView, 'command:execute', this.__executeAction);
         }

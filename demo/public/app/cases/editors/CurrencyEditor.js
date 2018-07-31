@@ -11,13 +11,13 @@ export default function () {
         view: new core.form.editors.NumberEditor({
             model,
             key: 'numberValue',
-            changeMode: 'keydown',
+            changeMode: 'keydown', //default - 'blur', like browser behavior
             autocommit: true,
-            min: -300,
-            max: 300,
+            min: 10000,
+            max: 300000,
             step: 3,
             allowFloat: true,
-            format: 'currency'
+            format: '0,0[.]00', //'currency' or format from numeraljs.com
         }),
         presentation: '{{numberValue}}',
         isEditor: true

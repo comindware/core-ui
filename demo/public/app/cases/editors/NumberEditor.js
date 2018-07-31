@@ -15,8 +15,7 @@ export default function () {
             autocommit: true,
             min: -300,
             max: 300,
-            step: 3,
-            allowFloat: false
+            step: 3
         }),
         presentation: '{{numberValue}}',
         isEditor: true
