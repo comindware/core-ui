@@ -11,7 +11,7 @@ export default () => {
             durationCell: 'P12DT5H42M',
             booleanCell: true,
             userCell: [{ id: 'user.1', columns: ['J. J.'] }],
-            referenceCell: { name: 'Ref 1' },
+            referenceCell: [{ name: 'Ref 1' }, { name: 'Ref 2' }, { name: 'Ref 3' }, { name: 'Ref 4' }],
             enumCell: { valueExplained: ['123'] },
             documentCell: [
                 {
@@ -46,6 +46,7 @@ export default () => {
         {
             key: 'dateTimeCell',
             type: 'DateTime',
+            simplefied: true,
             dataType: 'DateTime',
             title: 'DateTime Cell',
             editable: true,
@@ -81,6 +82,7 @@ export default () => {
             type: 'Datalist',
             dataType: 'Instance',
             title: 'Reference Cell',
+            simplefied: true,
             controller: new core.form.editors.reference.controllers.DemoReferenceEditorController(),
             editable: true,
             autocommit: true,
