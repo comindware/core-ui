@@ -21,14 +21,24 @@
     color: #26cce8;
     font-size: 24px;
 }
-.fr-alert .text-container {
+
+.notification-body_container{
     padding: 0.5rem;
-    text-align: center;
+}
+
+.fr-alert .text-container {
+    text-align: left;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     overflow-y: auto;
     max-height: calc(2em + 1rem);
+    font-size: .9em;
 }
+
+.fr-alert .fr-alert-title + .text-container{
+
+}
+
 .fr-alert .close-button_container {
     min-width: 20px;
     padding: 3px 6px;
@@ -63,8 +73,11 @@
     align-items: flex-end;
 }
 
+.notification-container > div{
+    pointer-events: auto;
+}
+
 .fr-alert-title {
-    padding-left: 0.5rem;
     font-weight: 600;
     overflow-y: auto;
     max-height: calc(1em + 1rem);
