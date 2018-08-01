@@ -8,7 +8,7 @@ const actionsMenuLabel = '⋮';
 export default Marionette.View.extend({
     initialize() {
         helpers.ensureOption(this.options, 'allItemsCollection');
-        
+
         this.allItemsCollection = this.options.allItemsCollection;
         this.toolbarItemsCollection = new Backbone.Collection(this.allItemsCollection.models);
         this.menuItemsCollection = new Backbone.Collection();
@@ -20,8 +20,6 @@ export default Marionette.View.extend({
         this.debounceRebuild = _.debounce(() => this.rebuildView(), 500);
         this.listenTo(Core.services.GlobalEventService, 'window:resize window:load', this.debounceRebuild);
         this.listenTo(this.allItemsCollection, 'change add remove reset update', this.debounceRebuild);
-
-        this.onAttach = () => this.debounceRebuild();
     },
 
     className: 'js-toolbar-actions toolbar-container',
@@ -31,6 +29,10 @@ export default Marionette.View.extend({
     regions: {
         toolbarItemsRegion: '.js-toolbar-items',
         popupMenuRegion: '.js-menu-actions-region'
+    },
+
+    onAttach() {
+        this.debounceRebuild();
     },
 
     onRender() {
@@ -47,9 +49,6 @@ export default Marionette.View.extend({
     },
 
     rebuildView() {
-        if (!Core.services.GlobalEventService.pageLoaded) {
-            return;
-        }
         if (this.isDestroyed()) {
             return false;
         }
