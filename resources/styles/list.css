@@ -410,16 +410,6 @@
     bottom: auto;
 }
 
-.editable-grid-field .date-view,
-.editable-grid-field .time-view {
-    height: 24px;
-}
-
-.editable-grid-field .editor .date-time,
-.editable-grid-field .editor .input_date{
-    width: 100%;
-}
-
 /* /Editable Grid */
 
 /* New grid */
@@ -469,7 +459,6 @@
 }
 
 .cell .editor{
-    display: inline-block;
     height: 100%;
     line-height: initial;
     border: none;
@@ -487,7 +476,7 @@
     border-bottom: 1px solid #0575bd;
 }
 
-.cell .editor:after{
+.cell > .editor:after{
     display: none;
 }
 

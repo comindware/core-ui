@@ -202,8 +202,6 @@ svg.svg-grid-icons {
 .cell .svg-icons_attach{
   margin: 0;
 }
-.cell .date-view,
-.cell .time-view,
 .cell .editor > div{
     height: 100%;
     line-height: initial;
@@ -215,10 +213,6 @@ svg.svg-grid-icons {
   border-color: var(--input-hover-color);
 }
 
-.date-view,
-.time-view{
-  height: 20px;
-}
 .editor_date-time {
   padding-right: 16px;
 }

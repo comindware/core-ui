@@ -182,13 +182,6 @@ rgba(5,117,189,.5) // user avatar btn
     pointer-events: none;
 }
 
-.editor_disabled div.time-view,
-.editor_disabled div.date-view {
-    pointer-events: auto;
-}
-
-
-
 /* checkbox */
 input[type="checkbox"].checkbox {
     display: none;
@@ -808,11 +801,6 @@ input[type="color"], .colorpicker{
 .editor_date-time.editor_empty{
     color:inherit;
 }
-
-.date-view .dropdown__wrp{
-    width: 220px;
-}
-
 
 /*-----//------*/
 

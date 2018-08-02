@@ -232,7 +232,7 @@ body {
 /* Date Time */
 .editor_date-time {
   @apply --input-theme;
-  padding: var(--input-padding);
+  overflow: hidden;
 }
 
 .editor_disabled.editor_date-time,
